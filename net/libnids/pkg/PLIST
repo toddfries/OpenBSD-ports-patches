@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:17:41 espie Exp $
+include/nids.h
+lib/libnids.a
+@man man/man3/libnids.3

@@ -1,0 +1,20 @@
+$OpenBSD: patch-resize_Makefile_in,v 1.2 2006/02/20 16:51:46 aanriot Exp $
+--- resize/Makefile.in.orig	Fri Mar  8 07:05:02 2002
++++ resize/Makefile.in	Sun Feb 19 18:15:12 2006
+@@ -26,7 +26,7 @@ SRCS= $(srcdir)/extent.c \
+ 	$(srcdir)/sim_progress.c
+ 
+ LIBS= $(LIBEXT2FS) $(LIBCOM_ERR)  
+-DEPLIBS= $(LIBEXT2FS) $(LIBCOM_ERR)
++DEPLIBS= $(DEPLIBEXT2FS) $(DEPLIBCOM_ERR)
+ 
+ STATIC_LIBS= $(STATIC_LIBEXT2FS) $(STATIC_LIBCOM_ERR) 
+ STATIC_DEPLIBS= $(STATIC_LIBEXT2FS) $(STATIC_LIBCOM_ERR) 
+@@ -56,7 +56,6 @@ installdirs:
+ install: $(PROGS) $(MANPAGES) installdirs
+ 	for i in $(PROGS); do \
+ 		$(INSTALL_PROGRAM) $$i $(DESTDIR)$(root_sbindir)/$$i; \
+-		$(STRIP) $(DESTDIR)$(root_sbindir)/$$i; \
+ 	done
+ 	for i in $(MANPAGES); do \
+ 		$(RM) -f $(DESTDIR)$(man8dir)/$$i.gz; \

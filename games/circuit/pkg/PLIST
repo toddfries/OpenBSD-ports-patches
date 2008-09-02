@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.4 2007/01/16 10:11:53 bernd Exp $
+@conflict xscreensaver-*
+bin/circuit
+@man man/man6/circuit.6

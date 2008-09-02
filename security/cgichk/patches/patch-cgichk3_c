@@ -1,0 +1,75 @@
+$OpenBSD: patch-cgichk3_c,v 1.2 2004/01/04 20:50:04 espie Exp $
+--- cgichk3.c.orig	2000-01-03 18:50:02.000000000 +0100
++++ cgichk3.c	2004-01-04 21:47:43.000000000 +0100
+@@ -119,20 +119,11 @@ struct cgidownload url[1000];
+ FILE *cgidata;
+ FILE *fp_log;
+ 
+-sserver = argv[1];  /* Server to scan */
+-config = argv[2];   /* Cgicheker config file */
++config = CGICHK_CONF;   /* Cgicheker config file */ 
+ 
+ if(argc==1) { usage(&argv[0]); }
+ 
+-if(argc<3) 
+- {
+- if(strstr(argv[1],"-V")) { banner(); }
+- else { usage(&argv[0]); }
+- }
+-
+-if(argc>3) 
+- {
+-  while ((i = getopt(argc, argv, "p:l:o:c:g")) != -1)
++ while ((i = getopt(argc, argv, "p:l:o:c:gf:V")) != -1)
+    {
+     switch(i)
+      {
+@@ -146,11 +137,18 @@ if(argc>3) 
+        { gettxtmode = 1; break; }
+       case 'c':
+        { httpdport = atoi(optarg); break; }
++      case 'f':
++       { config = optarg; break; }
++      case 'V':
++       { banner(); } 
+       default :
+        { usage(&argv[0]); break; }
+      }
+    }
+- }
++
++if (argc - optind != 1) usage(&argv[0]);
++
++sserver = argv[optind];  /* Server to scan */ 
+ 
+ if(proxymode==1)
+   {
+@@ -420,14 +418,15 @@ close(sock);
+ int usage(char *argv[])
+ {
+  printf("-= CGI Checker Version 3.5 =-");
+- printf("\n\nusage : %s target config-file",argv[0]);
++ printf("\n\nusage : %s <options> target",argv[0]);
+  printf("\n-p <proxy>   : for stealth scanning behind proxy");
+  printf("\n-o <port>    : to change proxy port (default = 8080)");
+  printf("\n-c <port>    : to change httpd port (default = 80)");
+  printf("\n-l <logfile> : for logging mode");
+  printf("\n-g           : to get info on found cgi's");
+  printf("\n-V           : print version,info and etc");
+- printf("\n\nEg : %s target config-file -p some.proxy.com -g -o 3124 -l logfile\n\n",argv[0]);
++ printf("\n-f <config>  : for alternate config file");
++ printf("\n\nEg : %s -p some.proxy.com -g -o 3124 -l logfile target\n\n",argv[0]);
+  exit(0);
+ }
+ 
+@@ -436,8 +435,8 @@ int banner()
+  printf("CGI Checker Version 3.6 by [CKS & fdisk]\n");
+  printf("Drop any bugs,changes,comments to cksss@singnet.com.sg or fdisk@netplan.gr\n\n");
+  printf("Proxy support tested on Squid,WinRoute,Netscape,WinGate,Network Appliance proxies\n\n");
+- printf("Greetings to: ech0 security, boun, hury, NtWak0, datawar, Ken William and all 
+-              the hardworking people in PacketStorm\n");
++ printf("Greetings to: ech0 security, boun, hury, NtWak0, datawar, Ken William and all \n"
++"              the hardworking people in PacketStorm\n");
+  printf("Thanks to   : Dug Song for the subterfuge attack against IDS feature\n");
+  printf("            : su1d_sh3ll for the modifications he did in the previous version\n");
+  printf("            : dethwork for more CGI updates\n");

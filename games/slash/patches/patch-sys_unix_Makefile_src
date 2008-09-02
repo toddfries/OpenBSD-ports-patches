@@ -1,0 +1,60 @@
+$OpenBSD: patch-sys_unix_Makefile_src,v 1.2 2008/01/26 19:07:40 espie Exp $
+--- sys/unix/Makefile.src.orig	Tue Dec 10 21:20:09 1996
++++ sys/unix/Makefile.src	Sun Dec 30 13:56:29 2007
+@@ -1,6 +1,7 @@
+ #	NetHack Makefile.
+ #	SCCS Id: @(#)Makefile.src	3.2	96/10/26
+ 
++include ${NETHACKCONFIG}
+ # newer makes predefine $(MAKE) to 'make' and do smarter processing of
+ # recursive make calls if $(MAKE) is used
+ # these makes allow $(MAKE) to be overridden by the environment if someone
+@@ -124,10 +125,8 @@ SYSOBJ = ioctl.o unixmain.o unixtty.o unixunix.o
+ # flags for debugging:
+ # CFLAGS = -g -I../include
+ 
+-CFLAGS = -O -I../include
+-LFLAGS = 
++CFLAGS += -DHACKDIR=\"${NHDIR}\" -DHAVE_SYS_PARAM_H -I../include 
+ 
+-
+ # Set the WINSRC, WINOBJ, and WINLIB lines to correspond to your desired
+ # combination of windowing systems.  Also set windowing systems in config.h.
+ #
+@@ -146,9 +145,6 @@ WINX11OBJ = Window.o dialogs.o winX.o winmap.o winmenu
+ 	winmisc.o winstat.o wintext.o winval.o tile.o
+ #
+ # 
+-WINSRC = $(WINTTYSRC)
+-WINOBJ = $(WINTTYOBJ)
+-
+ # on some systems the termcap library is in -ltermcap or -lcurses
+ # on 386 Xenix, the -ltermlib tputs() seems not to work; use -lcurses instead
+ # Sysatt uses shared library in lieu of this option
+@@ -167,14 +163,12 @@ WINTTYLIB = -ltermlib
+ #
+ # libraries for X11
+ # If USE_XPM is defined in config.h, you will also need -lXpm here.
+-WINX11LIB = -lXaw -lXmu -lXext -lXt -lX11
++WINX11LIB = -lXaw -lXmu -lXext -lXt -lX11 -lXpm
+ # WINX11LIB = -lXaw -lXmu -lXt -lX11
+ # WINX11LIB = -lXaw -lXmu -lXext -lXt -lXpm -lX11 -lm
+ # WINX11LIB = -lXaw -lXmu -lXpm -lXext -lXt -lX11 -lSM -lICE -lm # BSD/OS 2.0
+ #
+ #
+-WINLIB = $(WINTTYLIB)
+-
+ # any other strange libraries your system needs (for Sysunix only -- the more
+ # specialized targets should already be right)
+ #
+@@ -199,8 +193,8 @@ WINLIB = $(WINTTYLIB)
+ #
+ LIBS =
+ 
+-# make NetHack
+-GAME     = nethack
++# make slash
++GAME     = slash
+ 
+ # if you defined RANDOM in unixconf.h/tosconf.h since your system did not come
+ # with a reasonable random number generator

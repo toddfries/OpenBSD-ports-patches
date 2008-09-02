@@ -1,0 +1,15 @@
+$OpenBSD: patch-src_pool_Makefile_in,v 1.2 2005/12/26 19:15:22 sturm Exp $
+--- src/pool/Makefile.in.orig	Wed Mar 30 02:51:58 2005
++++ src/pool/Makefile.in	Mon Dec 26 13:16:21 2005
+@@ -488,10 +488,7 @@ uninstall-am: uninstall-binPROGRAMS unin
+ 
+ 
+ install-data-local:
+-	$(mkinstalldirs) $(ETC)
+-	if test ! -f $(ETC)/pool.conf; then \
+-		$(INSTALL_DATA) $(srcdir)/pool.conf $(ETC)/pool.conf; \
+-	fi
++
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

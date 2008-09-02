@@ -1,0 +1,11 @@
+$OpenBSD: patch-dbus-1_pc_in,v 1.3 2007/11/01 11:04:28 espie Exp $
+--- dbus-1.pc.in.orig	Mon Dec 11 20:20:51 2006
++++ dbus-1.pc.in	Thu Nov  1 11:49:45 2007
+@@ -9,6 +9,6 @@ session_bus_services_dir=@EXPANDED_DATADIR@/dbus-1/ser
+ Name: dbus
+ Description: Free desktop message bus
+ Version: @VERSION@
+-Libs: -L${libdir} -ldbus-1 @DBUS_CLIENT_LIBS@ 
++Libs: -L${libdir} -ldbus-1 -pthread @DBUS_CLIENT_LIBS@ 
+ Cflags: -I${includedir}/dbus-1.0 -I${libdir}/dbus-1.0/include
+ 

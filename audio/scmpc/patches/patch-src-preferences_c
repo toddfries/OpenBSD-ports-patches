@@ -1,0 +1,15 @@
+--- src/preferences.c.orig	Sat Dec  2 21:59:17 2006
++++ src/preferences.c	Tue Jan  1 21:49:51 2008
+@@ -39,10 +39,10 @@
+ #include "scmpc.h"
+ #include "preferences.h"
+ 
+-#define DEFAULT_CONFIG_FILE SYSCONFDIR "/scmpc.conf"
++#define DEFAULT_CONFIG_FILE SYSCONFDIR "/scmpc/scmpc.conf"
+ #define DEFAULT_PID_FILE "/var/run/scmpc.pid"
+ #define DEFAULT_LOG_FILE "/var/log/scmpc.log"
+-#define DEFAULT_CACHE_FILE "/var/lib/scmpc/scmpc.cache"
++#define DEFAULT_CACHE_FILE "/var/scmpc/scmpc.cache"
+ 
+ extern struct preferences prefs;
+ 

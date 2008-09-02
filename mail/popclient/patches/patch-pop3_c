@@ -1,0 +1,32 @@
+$OpenBSD: patch-pop3_c,v 1.2 2004/08/07 18:18:20 naddy Exp $
+--- pop3.c.orig	Tue Sep 12 01:48:48 1995
++++ pop3.c	Sat Aug  7 18:33:26 2004
+@@ -67,6 +67,7 @@
+ 
+ #include  <sys/time.h>
+ #include  <ctype.h>
++#include  <netdb.h>
+ #include  <errno.h>
+ 
+ #include  "socket.h"
+@@ -122,7 +123,10 @@ struct optrec *options;
+     
+   /* open the socket and get the greeting */
+   if ((socket = Socket(servername,POP3_PORT)) < 0) {
+-    perror("doPOP3: socket");
++    if (socket == -2)
++	herror("doPOP3: socket");
++    else
++    	perror("doPOP3: socket");
+     return(PS_SOCKET);
+   }
+ 
+@@ -609,7 +613,7 @@ int topipe;
+   lines = 0;
+   sizeticker = MSGBUFSIZE;
+   while (1) {
+-    if (SockGets(socket,buf,sizeof(buf)) < 0)
++    if (SockGets(socket,buf,sizeof(buf)-1) < 0)
+       return(PS_SOCKET);
+     bufp = buf;
+     if (*bufp == '.') {

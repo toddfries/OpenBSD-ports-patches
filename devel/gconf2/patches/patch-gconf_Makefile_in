@@ -1,0 +1,12 @@
+$OpenBSD: patch-gconf_Makefile_in,v 1.12 2008/07/25 13:42:57 ajacoutot Exp $
+--- gconf/Makefile.in.orig	Mon Mar 10 15:54:18 2008
++++ gconf/Makefile.in	Tue Apr 29 20:06:19 2008
+@@ -303,7 +303,7 @@ INCLUDES = \
+ 	-DGCONF_LOCALE_DIR=\""$(datadir)/locale"\"			\
+         -DGCONF_SRCDIR=\""$(absolute_top_srcdir)"\"			\
+ 	-DGCONF_CONFDIR=\""$(sysgconfdir)/$(MAJOR_VERSION)"\"		\
+-	-DGCONF_ETCDIR=\""$(sysgconfdir)"\"				\
++	-DGCONF_ETCDIR=\""/var/db/gconf"\"					\
+ 	-DGCONF_BINDIR=\""$(bindir)"\"					\
+ 	-DGCONF_SERVERDIR=\""$(libexecdir)"\"           \
+ 	-DGCONF_BUILDDIR=\""$(top_builddir)"\"				\

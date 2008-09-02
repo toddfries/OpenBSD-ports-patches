@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.5 2008/06/02 19:38:09 okan Exp $
+--- configure.orig	Sun May 18 17:13:16 2008
++++ configure	Sun May 18 17:13:35 2008
+@@ -1979,7 +1979,7 @@ fi
+ 
+ if test "x$enable_maintainermode" = "xno"; then
+ if test "x$enable_release" = "xyes"; then
+-    FLAGS_ALL="-O3 -fomit-frame-pointer -Wall -fsigned-char"
++    FLAGS_ALL="${CFLAGS} -fomit-frame-pointer -Wall -fsigned-char"
+ else
+     FLAGS_ALL="-ggdb -g3 -O0 -Wall -fsigned-char"
+ fi

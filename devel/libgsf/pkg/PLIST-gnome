@@ -1,0 +1,16 @@
+@comment $OpenBSD: PLIST-gnome,v 1.4 2008/06/03 16:34:43 jasper Exp $
+%%SHARED%%
+bin/gsf-office-thumbnailer
+include/libgsf-1/gsf-gnome/
+include/libgsf-1/gsf-gnome/gsf-input-bonobo.h
+include/libgsf-1/gsf-gnome/gsf-input-gnomevfs.h
+include/libgsf-1/gsf-gnome/gsf-output-bonobo.h
+include/libgsf-1/gsf-gnome/gsf-output-gnomevfs.h
+include/libgsf-1/gsf-gnome/gsf-shared-bonobo-stream.h
+lib/libgsf-gnome-1.a
+lib/libgsf-gnome-1.la
+lib/pkgconfig/libgsf-gnome-1.pc
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/libgsf/*.schemas > /dev/null
+share/schemas/libgsf/
+share/schemas/libgsf/gsf-office-thumbnailer.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/libgsf/*.schemas > /dev/null

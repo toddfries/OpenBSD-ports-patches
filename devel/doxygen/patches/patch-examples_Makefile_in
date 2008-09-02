@@ -1,0 +1,11 @@
+$OpenBSD: patch-examples_Makefile_in,v 1.3 2008/01/06 10:02:59 eric Exp $
+--- examples/Makefile.in.orig	Mon Jul 25 10:28:13 2005
++++ examples/Makefile.in	Wed Dec 19 20:34:17 2007
+@@ -106,7 +106,5 @@ docstring/html/index.html: docstring.py docstring.cfg
+ 	$(DOXYGEN)/bin/doxygen docstring.cfg
+ 
+ diagrams/html/index.html: diagrams_a.h diagrams_b.h diagrams_c.h diagrams_d.h diagrams_e.h diagrams.cfg
+-ifneq ($(HAVE_DOT),)
+ 	$(DOXYGEN)/bin/doxygen diagrams.cfg
+-endif
+ 

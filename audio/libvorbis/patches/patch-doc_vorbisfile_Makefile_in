@@ -1,0 +1,12 @@
+$OpenBSD: patch-doc_vorbisfile_Makefile_in,v 1.6 2007/07/30 15:29:36 naddy Exp $
+--- doc/vorbisfile/Makefile.in.orig	Sun Jul 29 17:15:44 2007
++++ doc/vorbisfile/Makefile.in	Sun Jul 29 17:15:57 2007
+@@ -150,7 +150,7 @@ build_vendor = @build_vendor@
+ builddir = @builddir@
+ datadir = @datadir@
+ datarootdir = @datarootdir@
+-docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)/vorbisfile
++docdir = $(datadir)/doc/$(PACKAGE)/vorbisfile
+ dvidir = @dvidir@
+ exec_prefix = @exec_prefix@
+ host = @host@

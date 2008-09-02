@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.6 2005/01/30 15:38:15 naddy Exp $
+@newgroup _tacacs:511
+@newuser _tacacs:511:_tacacs:daemon:TACACS+ user:/nonexistent:/sbin/nologin
+@man man/man1/tac_plus.1
+sbin/generate_passwd
+sbin/tac_plus
+share/doc/tacacs+/
+share/doc/tacacs+/users_guide

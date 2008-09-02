@@ -1,0 +1,36 @@
+$OpenBSD: patch-src_cups-pdf_c,v 1.2 2008/04/29 12:10:15 bernd Exp $
+--- src/cups-pdf.c.orig	Sun Mar 23 22:47:57 2008
++++ src/cups-pdf.c	Tue Apr 29 11:52:33 2008
+@@ -161,11 +161,11 @@ static void log_event(short type, char message[], char
+     timestring[strlen(timestring)-1]='\0';
+ 
+     if (type == CPERROR) 
+-      sprintf(ctype, "ERROR");
++      snprintf(ctype, sizeof(ctype), "ERROR");
+     else if (type == CPSTATUS)
+-      sprintf(ctype, "STATUS");
++      snprintf(ctype, sizeof(ctype), "STATUS");
+     else
+-      sprintf(ctype, "DEBUG");
++      snprintf(ctype, sizeof(ctype), "DEBUG");
+     if (detail != NULL)  {
+       while (detail[strlen(detail)-1] == '\n') 
+         detail[strlen(detail)-1]='\0';
+@@ -593,7 +593,7 @@ static int preparespoolfile(FILE *fpsrc, char *spoolfi
+   }
+   else {
+     if (conf.label) {
+-      strcpy(buffer, title);
++      strlcpy(buffer, title, sizeof(buffer));
+       snprintf(title, BUFSIZE, "job_%i-%s", job, buffer);
+     }
+     log_event(CPDEBUG, "title successfully retrieved", title);
+@@ -807,7 +807,7 @@ int main(int argc, char *argv[]) {
+     log_event(CPDEBUG, "file mode set for user output", outfile);
+     
+     if (strlen(conf.postprocessing)) {
+-      size=strlen(conf.postprocessing)+strlen(outfile)+strlen(passwd->pw_name)+strlen(argv[2])+3;
++      size=strlen(conf.postprocessing)+strlen(outfile)+strlen(passwd->pw_name)+strlen(argv[2])+4;
+       ppcall=calloc(size, sizeof(char));
+       if (ppcall == NULL) 
+         log_event(CPERROR, "failed to allocate memory for postprocessing (non fatal)", NULL);

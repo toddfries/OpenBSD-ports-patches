@@ -1,0 +1,12 @@
+$OpenBSD: patch-ROX-Filer_src_config_h_in,v 1.2 2008/05/21 16:23:20 jasper Exp $
+--- ROX-Filer/src/config.h.in.orig	Sat May 17 16:40:24 2008
++++ ROX-Filer/src/config.h.in	Tue May 20 23:20:24 2008
+@@ -59,7 +59,7 @@
+ 
+ /* printf format string to print file sizes */
+ #ifdef LARGE_FILE_SUPPORT
+-# define SIZE_FMT G_GINT64_MODIFIER "d"
++# define SIZE_FMT "lld"
+ #else
+ # define SIZE_FMT G_GINT32_MODIFIER "d"
+ #endif

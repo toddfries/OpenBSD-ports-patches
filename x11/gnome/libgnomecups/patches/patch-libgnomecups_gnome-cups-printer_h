@@ -1,0 +1,11 @@
+$OpenBSD: patch-libgnomecups_gnome-cups-printer_h,v 1.2 2008/02/03 21:02:19 jasper Exp $
+--- libgnomecups/gnome-cups-printer.h.orig	Tue Jan 29 23:50:53 2008
++++ libgnomecups/gnome-cups-printer.h	Tue Jan 29 23:51:09 2008
+@@ -188,6 +188,7 @@ void                    gnome_cups_ppd_file_release   
+ /* Private */
+ void _gnome_cups_printer_init (void);
+ gchar *_gnome_cups_printer_get_host (GnomeCupsPrinter *printer);
++gchar *_gnome_cups_printer_get_ppd_host (GnomeCupsPrinter *printer);
+ 
+ G_END_DECLS
+ 	

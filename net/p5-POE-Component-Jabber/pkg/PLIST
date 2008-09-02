@@ -1,0 +1,20 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/03/18 08:33:45 jasper Exp $
+${P5SITE}/POE/Component/Jabber/
+${P5SITE}/POE/Component/Jabber.pm
+${P5SITE}/POE/Component/Jabber/Error.pm
+${P5SITE}/POE/Component/Jabber/J14.pm
+${P5SITE}/POE/Component/Jabber/J2.pm
+${P5SITE}/POE/Component/Jabber/Legacy.pm
+${P5SITE}/POE/Component/Jabber/Protocol.pm
+${P5SITE}/POE/Component/Jabber/ProtocolFactory.pm
+${P5SITE}/POE/Component/Jabber/Status.pm
+${P5SITE}/POE/Component/Jabber/XMPP.pm
+@man man/man3p/POE::Component::Jabber.3p
+@man man/man3p/POE::Component::Jabber::Error.3p
+@man man/man3p/POE::Component::Jabber::J14.3p
+@man man/man3p/POE::Component::Jabber::J2.3p
+@man man/man3p/POE::Component::Jabber::Legacy.3p
+@man man/man3p/POE::Component::Jabber::Protocol.3p
+@man man/man3p/POE::Component::Jabber::ProtocolFactory.3p
+@man man/man3p/POE::Component::Jabber::Status.3p
+@man man/man3p/POE::Component::Jabber::XMPP.3p

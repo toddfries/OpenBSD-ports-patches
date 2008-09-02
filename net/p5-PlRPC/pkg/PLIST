@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:17:44 espie Exp $
+${P5SITE}/Bundle/
+${P5SITE}/Bundle/PlRPC.pm
+${P5SITE}/RPC/
+${P5SITE}/RPC/PlClient/
+${P5SITE}/RPC/PlClient.pm
+${P5SITE}/RPC/PlClient/Comm.pm
+${P5SITE}/RPC/PlServer/
+${P5SITE}/RPC/PlServer.pm
+${P5SITE}/RPC/PlServer/Comm.pm
+${P5SITE}/RPC/PlServer/Test.pm
+@man man/man3p/Bundle::PlRPC.3p
+@man man/man3p/RPC::PlClient.3p
+@man man/man3p/RPC::PlServer.3p

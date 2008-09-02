@@ -1,0 +1,37 @@
+$OpenBSD: patch-src_filehandling_functions_c,v 1.2 2007/11/19 18:31:03 mgrimm Exp $
+--- src/filehandling_functions.c.orig	Sun Jul  8 17:06:45 2007
++++ src/filehandling_functions.c	Sun Jul  8 17:09:39 2007
+@@ -139,6 +139,7 @@ dirpage_lookup(char **type, char ***message, long *lin
+ 	char name[256];
+ 	char file[256];
+ 	int i;
++	char *nameend, *filestart, *fileend, *dot;
+ 	
+ 	id = opendirfile(0);
+ 	if (!id)
+@@ -146,8 +147,6 @@ dirpage_lookup(char **type, char ***message, long *lin
+ 	
+ 	read_item(id, type, message, lines);
+ 
+-	char *nameend, *filestart, *fileend, *dot;
+-	
+ 	/* search for node-links in every line */
+ 	for (i = 1; i < Lines; i++)
+ 	{
+@@ -160,6 +159,7 @@ dirpage_lookup(char **type, char ***message, long *lin
+ 				&& (strncasecmp(filename, Message[i] + 2, filenamelen) == 0)
+ 		   )
+ 		{
++			char *tmp;
+ 
+ 			/* skip this hit if it is not a perfect match and 
+ 			 * we have already found a previous partial match */
+@@ -170,7 +170,7 @@ dirpage_lookup(char **type, char ***message, long *lin
+ 			}
+ 
+ 			/* find the name of the node link */
+-			char *tmp = name;
++			tmp = name;
+ 			strncpy(file, filestart + 1, fileend - filestart - 1);
+ 			file[fileend - filestart - 1] = 0;
+ 			strncpy(name, fileend + 1, dot - fileend - 1);

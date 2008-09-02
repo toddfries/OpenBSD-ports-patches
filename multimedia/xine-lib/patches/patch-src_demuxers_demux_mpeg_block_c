@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_demuxers_demux_mpeg_block_c,v 1.2 2008/01/15 00:36:46 jakemsr Exp $
+--- src/demuxers/demux_mpeg_block.c.orig	Tue Jan  1 08:30:08 2008
++++ src/demuxers/demux_mpeg_block.c	Wed Jan  9 01:50:21 2008
+@@ -647,7 +647,7 @@ static int32_t parse_pes_for_pts(demux_mpeg_block_t *t
+ 	      _("demux_mpeg_block: warning: PES header indicates that this stream "
+ 		"may be encrypted (encryption mode %d)\n"), (p[6] & 0x30) >> 4);
+       _x_message (this->stream, XINE_MSG_ENCRYPTED_SOURCE,
+-		  "Media stream scrambled/encrypted", NULL);
++		  "Media stream scrambled/encrypted", (char *)NULL);
+       this->status = DEMUX_FINISHED;
+       buf->free_buffer(buf);
+       return -1;

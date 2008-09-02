@@ -1,0 +1,36 @@
+$OpenBSD: patch-apps_Makefile_in,v 1.4 2007/09/26 20:03:42 rui Exp $
+--- apps/Makefile.in.orig	Thu Jul  5 00:26:56 2007
++++ apps/Makefile.in	Sat Sep 15 23:12:28 2007
+@@ -36,7 +36,7 @@ INSTALLBINPROGS	= snmpget$(EXEEXT) 			\
+ 
+ INSTALLSBINPROGS = snmptrapd$(EXEEXT)
+ 
+-INSTALLLIBS     = libnetsnmptrapd.$(LIB_EXTENSION)$(LIB_VERSION)
++INSTALLLIBS     = libnetsnmptrapd.$(LIB_EXTENSION)$(LIBnetsnmptrapd_VERSION)
+ 
+ SUBDIRS		= snmpnetstat
+ 
+@@ -45,10 +45,10 @@ SUBDIRS		= snmpnetstat
+ #
+ 
+ # USELIBS/USEAGENTLIBS are for dependencies
+-USELIBS		= ../snmplib/libnetsnmp.$(LIB_EXTENSION)$(LIB_VERSION) 
+-HELPERLIB       = ../agent/helpers/libnetsnmphelpers.$(LIB_EXTENSION)$(LIB_VERSION)
+-AGENTLIB        = ../agent/libnetsnmpagent.$(LIB_EXTENSION)$(LIB_VERSION)
+-MIBLIB          = ../agent/libnetsnmpmibs.$(LIB_EXTENSION)$(LIB_VERSION)
++USELIBS		= ../snmplib/libnetsnmp.$(LIB_EXTENSION)$(LIBnetsnmp_VERSION) 
++HELPERLIB       = ../agent/helpers/libnetsnmphelpers.$(LIB_EXTENSION)$(LIBnetsnmphelpers_VERSION)
++AGENTLIB        = ../agent/libnetsnmpagent.$(LIB_EXTENSION)$(LIBnetsnmpagent_VERSION)
++MIBLIB          = ../agent/libnetsnmpmibs.$(LIB_EXTENSION)$(LIBnetsnmpmibs_VERSION)
+ USEAGENTLIBS	= $(MIBLIB) $(AGENTLIB) $(HELPERLIB) $(USELIBS)
+ 
+ #
+@@ -142,7 +142,7 @@ encode_keychange$(EXEEXT):    encode_keychange.$(OSUFF
+ snmpdf$(EXEEXT):    snmpdf.$(OSUFFIX) $(USELIBS)
+ 	$(LINK) ${CFLAGS} -o $@ snmpdf.$(OSUFFIX) $(LOCAL_LIBS) ${LDFLAGS} ${LIBS} 
+ 
+-libnetsnmptrapd.$(LIB_EXTENSION)$(LIB_VERSION): $(LLIBTRAPD_OBJS)
++libnetsnmptrapd.$(LIB_EXTENSION)$(LIBnetsnmptrapd_VERSION): $(LLIBTRAPD_OBJS)
+ 	$(LIB_LD_CMD) $@ ${LLIBTRAPD_OBJS} $(MIBLIB) $(USELIBS) $(PERLLDOPTS_FOR_LIBS) $(LIB_LD_LIBS)
+ 	$(RANLIB) $@
+ 

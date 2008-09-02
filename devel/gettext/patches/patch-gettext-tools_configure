@@ -1,0 +1,13 @@
+$OpenBSD: patch-gettext-tools_configure,v 1.2 2008/06/13 04:56:34 naddy Exp $
+--- gettext-tools/configure.orig	Wed Nov  7 00:37:40 2007
++++ gettext-tools/configure	Mon Jun  2 22:58:10 2008
+@@ -24651,7 +24651,9 @@ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ extern void xyzzy ();
++#ifndef __vax__
+ #pragma weak xyzzy
++#endif
+ int
+ main ()
+ {

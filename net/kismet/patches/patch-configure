@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.2 2008/06/27 22:10:14 kili Exp $
+--- configure.orig	Mon May 12 22:14:14 2008
++++ configure	Sun Jun  1 13:24:55 2008
+@@ -9877,7 +9877,7 @@ sharedatadir=`(
+     test "$exec_prefix" = NONE && exec_prefix=${prefix}
+     eval echo "$sharedatadir"
+ )`
+-sharedatadir=${sharedatadir}
++eval sharedatadir=${sharedatadir}
+ 
+ 
+ ac_config_files="$ac_config_files Makefile extra/buzzme/Makefile extra/Makefile conf/kismet.conf conf/kismet_ui.conf"

@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.2 2007/04/30 17:30:39 bernd Exp $
+--- configure.orig	Mon Mar  5 01:29:42 2007
++++ configure	Thu Apr 12 12:58:39 2007
+@@ -2395,7 +2395,7 @@ then
+   fi
+   if uname | egrep -i 'BSD' > /dev/null 2>&1
+   then
+-    MYCFLAGS="-Wall -fPIC -fsigned-char -O1"
++    MYCFLAGS="-Wall -fPIC -fsigned-char"
+   fi
+   if gcc --version | egrep -i '^2\.(8|9)' > /dev/null 2>&1
+   then

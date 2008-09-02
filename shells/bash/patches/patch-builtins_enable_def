@@ -1,0 +1,20 @@
+$OpenBSD: patch-builtins_enable_def,v 1.1 2004/07/30 17:02:49 naddy Exp $
+--- builtins/enable.def.orig	Sat Dec 20 00:07:07 2003
++++ builtins/enable.def	Fri Jul 30 15:10:33 2004
+@@ -316,9 +316,16 @@ dyn_load_builtin (list, flags, filename)
+       name = list->word->word;
+ 
+       size = strlen (name);
++#ifdef __ELF__
+       struct_name = (char *)xmalloc (size + 8);
+       strcpy (struct_name, name);
+       strcpy (struct_name + size, "_struct");
++#else
++      struct_name = (char *)xmalloc (size + 9);
++      *struct_name = '_';
++      strcpy (struct_name + 1, name);
++      strcpy (struct_name + size + 1, "_struct");
++#endif
+ 
+       b = (struct builtin *)dlsym (handle, struct_name);
+       if (b == 0)

@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.6 2004/09/15 18:44:06 espie Exp $
+${P5SITE}/XML/
+${P5SITE}/XML/Writer.pm
+@man man/man3p/XML::Writer.3p

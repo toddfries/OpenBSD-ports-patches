@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/11/28 05:19:49 msf Exp $
+bin/adnsheloex
+bin/adnshost
+bin/adnslogres
+bin/adnsresfilter
+include/adns.h
+lib/libadns.a
+%%SHARED%%

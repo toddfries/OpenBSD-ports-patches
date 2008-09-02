@@ -1,0 +1,20 @@
+# $OpenBSD: Makefile,v 1.4 2008/02/04 17:55:18 jasper Exp $
+
+COMMENT=		audio files for Gnome
+
+GNOME_PROJECT=		gnome-audio
+GNOME_VERSION=		2.0.0
+PKGNAME=		${DISTNAME}p0
+
+MODULES=		x11/gnome
+
+# LGPL
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM= Yes
+PERMIT_DISTFILES_FTP=	Yes
+
+NO_BUILD=		Yes
+NO_REGRESS=		Yes
+
+.include <bsd.port.mk>

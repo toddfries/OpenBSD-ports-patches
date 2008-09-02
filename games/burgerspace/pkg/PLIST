@@ -1,0 +1,25 @@
+@comment $OpenBSD: PLIST,v 1.4 2007/10/16 16:41:55 ajacoutot Exp $
+bin/burgerspace
+@man man/man6/burgerspace.6
+share/applications/
+share/applications/burgerspace.desktop
+share/pixmaps/
+share/pixmaps/burgerspace.png
+share/sounds/
+share/sounds/burgerspace/
+share/sounds/burgerspace/chef-gets-treat.wav
+share/sounds/burgerspace/chef-shoots-blanks.wav
+share/sounds/burgerspace/chef-throws-pepper.wav
+share/sounds/burgerspace/enemy-catches-chef.wav
+share/sounds/burgerspace/enemy-paralyzed.wav
+share/sounds/burgerspace/enemy-smashed.wav
+share/sounds/burgerspace/ingredient-bounces.wav
+share/sounds/burgerspace/ingredient-falls.wav
+share/sounds/burgerspace/ingredient-in-plate.wav
+share/sounds/burgerspace/ingredient-lowered.wav
+share/sounds/burgerspace/level-finished.wav
+share/sounds/burgerspace/new-game-starts.wav
+share/sounds/burgerspace/treat-appears.wav
+share/sounds/burgerspace/treat-disappears.wav
+@exec %D/bin/update-desktop-database
+@unexec %D/bin/update-desktop-database

@@ -1,0 +1,20 @@
+$OpenBSD: patch-doc_epic.1,v 1.7 2007/05/27 20:47:56 naddy Exp $
+--- doc/epic.1.orig	Sun Dec  7 15:04:22 2003
++++ doc/epic.1	Sun May 27 14:13:28 2007
+@@ -159,7 +159,6 @@ Any item can be omitted by leaving the field blank, an
+ .Ss "The Screen:"
+ The screen is split into two parts, separated by an inverse-video status line (if supported).
+ The upper (larger) part of the screen displays responses from the
+-.Xr ircd 8
+ server.
+ The lower part of the screen (a single line) accepts keyboard input.
+ .sp
+@@ -281,8 +280,6 @@ Overrides the default home page in
+ .Pa /etc/password
+ .It Ev TERM     
+ The type of terminal emulation to use
+-.Sh "SEE ALSO"
+-.Xr ircd 8
+ .Sh BUGS
+ Any non-trivial piece of software has bugs.  
+ ircII/EPIC is no exception.

@@ -1,0 +1,18 @@
+$OpenBSD: patch-ex_c,v 1.1 2002/03/21 09:59:48 form Exp $
+--- ex.c.orig	Sun Jul 13 01:54:34 1997
++++ ex.c	Thu Mar 21 15:23:53 2002
+@@ -59,11 +59,11 @@
+ #define UMFILE ".menu"
+ #define INITFILE ".decoini"
+ #define ULDINITFILE "/usr/lib/deco/initfile"
+-#define ULLDINITFILE "/usr/local/lib/deco/initfile"
++#define ULLDINITFILE PREFIX "/share/deco/initfile"
+ #define ULDUMFILE "/usr/lib/deco/menu"
+-#define ULLDUMFILE "/usr/local/lib/deco/menu"
++#define ULLDUMFILE PREFIX "/share/deco/menu"
+ #define ULDEXFILE "/usr/lib/deco/profile"
+-#define ULLDEXFILE "/usr/local/lib/deco/profile"
++#define ULLDEXFILE PREFIX "/share/deco/profile"
+ 
+ struct ex {
+ 	char *pat;

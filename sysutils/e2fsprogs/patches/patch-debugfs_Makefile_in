@@ -1,0 +1,20 @@
+$OpenBSD: patch-debugfs_Makefile_in,v 1.2 2006/02/20 16:51:46 aanriot Exp $
+--- debugfs/Makefile.in.orig	Tue Mar  5 09:31:15 2002
++++ debugfs/Makefile.in	Sun Feb 19 18:15:03 2006
+@@ -25,7 +25,7 @@ SRCS= debug_cmds.c $(srcdir)/debugfs.c $
+ 	$(srcdir)/htree.c
+ 
+ LIBS= $(LIBEXT2FS) $(LIBE2P) $(LIBSS) $(LIBCOM_ERR)  $(LIBUUID)
+-DEPLIBS= $(LIBEXT2FS) $(LIBE2P) $(LIBSS) $(LIBCOM_ERR)  $(DEPLIBUUID)
++DEPLIBS= $(DEPLIBEXT2FS) $(DEPLIBE2P) $(DEPLIBSS) $(DEPLIBCOM_ERR)  $(DEPLIBUUID)
+ 
+ .c.o:
+ 	$(CC) -c $(ALL_CFLAGS) $< -o $@
+@@ -48,7 +48,6 @@ installdirs:
+ install: $(PROGS) $(MANPAGES) installdirs
+ 	for i in $(PROGS); do \
+ 		$(INSTALL_PROGRAM) $$i $(DESTDIR)$(root_sbindir)/$$i; \
+-		$(STRIP) $(DESTDIR)$(root_sbindir)/$$i; \
+ 	done
+ 	for i in $(MANPAGES); do \
+ 		$(RM) -f $(DESTDIR)$(man8dir)/$$i.gz; \

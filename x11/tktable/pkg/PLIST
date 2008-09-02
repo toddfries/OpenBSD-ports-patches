@@ -1,0 +1,21 @@
+@comment $OpenBSD: PLIST,v 1.7 2004/11/24 02:35:28 kevlo Exp $
+lib/Tktable2.9/
+lib/Tktable2.9/README.txt
+lib/Tktable2.9/html/
+lib/Tktable2.9/html/tkTable.html
+lib/Tktable2.9/license.txt
+lib/Tktable2.9/pkgIndex.tcl
+lib/Tktable2.9/tkTable.tcl
+share/examples/Tktable/
+share/examples/Tktable/basic.tcl
+share/examples/Tktable/buttons.tcl
+share/examples/Tktable/command.tcl
+share/examples/Tktable/debug.tcl
+share/examples/Tktable/dynarows.tcl
+share/examples/Tktable/loadtable.tcl
+share/examples/Tktable/maxsize.tcl
+share/examples/Tktable/spreadsheet.tcl
+share/examples/Tktable/tcllogo.gif
+share/examples/Tktable/tktable.py
+share/examples/Tktable/valid.tcl
+%%SHARED%%

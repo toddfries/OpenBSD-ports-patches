@@ -1,0 +1,12 @@
+$OpenBSD: PPC-patch-glib_Makefile_in,v 1.2 2008/04/09 13:10:17 jasper Exp $
+--- glib/Makefile.in.orig	Thu Mar 27 23:03:22 2008
++++ glib/Makefile.in	Thu Mar 27 23:03:45 2008
+@@ -186,7 +186,7 @@ CATALOGS = @CATALOGS@
+ CATOBJEXT = @CATOBJEXT@
+ CC = @CC@
+ CCDEPMODE = @CCDEPMODE@
+-CFLAGS = @CFLAGS@
++CFLAGS = @CFLAGS@ -O0
+ CPP = @CPP@
+ CPPFLAGS = @CPPFLAGS@
+ CXX = @CXX@

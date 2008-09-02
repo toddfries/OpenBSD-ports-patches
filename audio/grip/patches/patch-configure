@@ -1,0 +1,39 @@
+$OpenBSD: patch-configure,v 1.5 2008/05/13 14:20:25 naddy Exp $
+--- configure.orig	Mon Apr 26 19:19:32 2004
++++ configure	Tue May 13 16:15:31 2008
+@@ -4140,7 +4140,7 @@ done
+ 
+ 
+ 
+-for ac_header in linux/soundcard.h machine/soundcard.h sys/soundcard.h sys/audioio.h sys/audio.io.h sun/audioio.h
++for ac_header in soundcard.h linux/soundcard.h machine/soundcard.h sys/soundcard.h sys/audioio.h sys/audio.io.h sun/audioio.h
+ do
+ as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ if eval "test \"\${$as_ac_Header+set}\" = set"; then
+@@ -9124,7 +9124,7 @@ echo "$as_me: error: curl libs are missing" >&2;}
+ fi
+ 
+ 
+-GETTEXT_PACKAGE=grip-2.2
++GETTEXT_PACKAGE=grip
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -10653,7 +10653,7 @@ sed 's/^/| /' conftest.$ac_ext >&5
+ fi
+ rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+ if test "$ac_cv_search_ID3Tag_Link" = no; then
+-  for ac_lib in "id3 -lz -lstdc++"; do
++  for ac_lib in "id3 -lm -lz -lstdc++"; do
+     LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+     cat >conftest.$ac_ext <<_ACEOF
+ #line $LINENO "configure"
+@@ -10770,7 +10770,7 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  . conftest.id3
++  . $srcdir/conftest.id3
+    echo "${ID3LIB_MAJOR}.${ID3LIB_MINOR}.${ID3LIB_PATCH}"
+ else
+   echo "$as_me: program exited with status $ac_status" >&5

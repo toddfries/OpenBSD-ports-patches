@@ -1,0 +1,38 @@
+$OpenBSD: patch-zenmap_setup_py,v 1.4 2008/07/09 14:46:19 wcmaier Exp $
+--- zenmap/setup.py.orig	Fri Jun  6 00:55:01 2008
++++ zenmap/setup.py	Tue Jul  8 10:13:21 2008
+@@ -120,12 +120,11 @@ def path_strip_prefix(path, prefix):
+ 
+ class my_install(install):
+     def run(self):
++        self.fix_paths()
+         install.run(self)
+ 
+         self.set_perms()
+         self.set_modules_path()
+-        self.fix_paths()
+-        self.create_uninstaller()
+         self.write_installed_files()
+ 
+     def get_installed_files(self):
+@@ -278,17 +277,10 @@ for dir in dirs:
+                              "MISC_DIR": os.path.join(self.prefix, misc_dir),
+                              "PIXMAPS_DIR": os.path.join(self.prefix, pixmaps_dir)}
+ 
+-        # Find and read the Paths.py file.
+-        pcontent = ""
+         paths_file = os.path.join("zenmapCore", "Paths.py")
+-        installed_files = self.get_outputs()
+-        for f in installed_files:
+-            if re.findall("(%s)" % re.escape(paths_file), f):
+-                paths_file = f
+-                pf = open(paths_file)
+-                pcontent = pf.read()
+-                pf.close()
+-                break
++        pf = open(paths_file)
++        pcontent = pf.read()
++        pf.close()
+ 
+         # Replace the path definitions.
+         for path, replacement in interesting_paths.items():

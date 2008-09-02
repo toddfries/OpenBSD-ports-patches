@@ -1,0 +1,79 @@
+$OpenBSD: patch-sarg_conf,v 1.2 2007/05/16 15:59:23 aanriot Exp $
+--- sarg.conf.orig	Tue Jan  2 17:11:26 2007
++++ sarg.conf	Wed Apr  4 08:42:21 2007
+@@ -33,7 +33,7 @@
+ #       Where is the access.log file
+ #       sarg -l file
+ #
+-#access_log /usr/local/squid/var/logs/access.log
++#access_log /var/squid/logs/access.log
+ 
+ # TAG: graphs yes|no
+ #	Use graphics where is possible.
+@@ -140,7 +140,7 @@
+ #       The reports will be saved in that directory
+ #       sarg -o dir
+ #
+-#output_dir /var/www/html/squid-reports
++#output_dir /var/www/htdocs/sarg
+ 
+ # TAG:  output_email
+ #       Email address to send the reports. If you use this tag, no html reports will be generated.
+@@ -270,7 +270,7 @@
+ # TAG: exclude_codes file
+ #      Ignore records with these codes. Eg.: NONE/400
+ #
+-#exclude_codes /usr/local/sarg/exclude_codes
++#exclude_codes %%SYSCONFDIR%%/sarg/exclude_codes
+ 
+ # TAG: replace_index string
+ #      Replace "index.html" in the main index file with this string
+@@ -497,10 +497,10 @@
+ #
+ #parsed_output_log none
+ 
+-# TAG: parsed_output_log_compress /bin/gzip|/usr/bin/bzip2|nocompress
++# TAG: parsed_output_log_compress /bin/bin/gzip|/usr/local/bin/bzip2|nocompress
+ #      sarg logs compress util
+ #
+-#parsed_output_log_compress /bin/gzip
++#parsed_output_log_compress /usr/bin/gzip
+ 
+ # TAG: displayed_values bytes|abbreviation
+ #      how the values will be displayed in reports.
+@@ -533,7 +533,7 @@
+ #     Sarg will create sarg-php directory with some PHP modules:
+ #     - sarg-squidguard-block.php - add urls from user reports to squidGuard DB
+ #
+-#www_document_root /var/www/html
++#www_document_root /var/www/htdocs
+ 
+ # TAG: block_it module_url
+ #     This tag allow you to pass urls from user reports to a cgi or php module,
+@@ -541,7 +541,7 @@
+ #
+ #     Eg.: block_it /sarg-php/sarg-block-it.php
+ #     sarg-block-it is a php that will append a url to a flat file.
+-#     You must change /var/www/html/sarg-php/sarg-block-it to point to your file
++#     You must change /var/www/htdocs/sarg-php/sarg-block-it to point to your file
+ #     in $filename variable, and chown to a httpd owner.
+ #
+ #     sarg will pass http://module_url?url=url
+@@ -562,7 +562,7 @@
+ #	.data2		table text class, align:right, border colors
+ #	.link  		link class
+ #
+-#     There is a sample in /usr/local/sarg/etc/css.tpl
++#     There is a sample in %%SYSCONFDIR%%/sarg/css.tpl
+ #
+ #external_css_file none
+ 
+@@ -576,7 +576,7 @@
+ #                                          %u - user report
+ #
+ # user_authentication no
+-# AuthUserFile /usr/local/sarg/passwd
++# AuthUserFile %%SYSCONFDIR%%/sarg/passwd
+ # AuthName "SARG, Restricted Access"
+ # AuthType Basic
+ # Require user admin %u

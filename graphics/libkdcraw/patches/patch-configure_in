@@ -1,0 +1,21 @@
+$OpenBSD: patch-configure_in,v 1.2 2008/01/12 14:52:28 espie Exp $
+--- configure.in.orig	Sun Dec 23 23:33:09 2007
++++ configure.in	Sat Jan  5 12:52:50 2008
+@@ -117,7 +117,7 @@ then
+     saved_cflags="$CFLAGS"
+     saved_ldflags="$LDFLAGS"
+     saved_libs=$LIBS
+-    LIBS="$LIBS -llcms"
++    LIBS="$LIBS -llcms -lm"
+     CFLAGS="$CFLAGS $all_includes"
+     LDFLAGS="$LDFLAGS $all_libraries"
+ 
+@@ -130,7 +130,7 @@ choke!
+ ], [
+ cmsOpenProfileFromFile("foo", "r");
+ ],
+-        [LCMS_LIBS='-llcms'; have_lcms='yes'])
++        [LCMS_LIBS='-llcms -lm'; have_lcms='yes'])
+     LIBS=$saved_libs
+     CFLAGS=$saved_cflags
+     LDFLAGS=$saved_ldflags

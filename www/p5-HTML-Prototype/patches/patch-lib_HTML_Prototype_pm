@@ -1,0 +1,17 @@
+$OpenBSD: patch-lib_HTML_Prototype_pm,v 1.2 2006/10/08 21:54:15 espie Exp $
+--- lib/HTML/Prototype.pm.orig	Fri Jul 14 01:57:40 2006
++++ lib/HTML/Prototype.pm	Fri Oct  6 23:29:09 2006
+@@ -646,11 +646,11 @@ sub javascript_tag {
+       ( type => 'text/javascript', %$html_options, entities => '' );
+ 
+     # my $tag = HTML::Element->new( 'script', %html_options );
+-    # $tag->push_content("\n<!--\n$content\n//-->\n");
++    # $tag->push_content("\n//<[CDATA[\n$content\n//]]\n");
+     # return $tag->as_HTML('<>&');
+ 
+     my $tag_content =
+-      $self->content_tag( 'script', "\n<!--\n$content\n//-->\n",
++      $self->content_tag( 'script', "\n//<[CDATA[\n$content\n//]]>\n",
+         \%html_options );
+     return $tag_content;
+ }

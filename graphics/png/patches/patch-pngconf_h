@@ -1,0 +1,15 @@
+$OpenBSD: patch-pngconf_h,v 1.7 2007/10/06 19:33:28 naddy Exp $
+--- pngconf.h.orig	Sat Sep  8 05:22:56 2007
++++ pngconf.h	Wed Oct  3 17:20:54 2007
+@@ -37,6 +37,11 @@
+ #endif
+ #endif
+ 
++/* libpng compile time options */
++#ifndef PNG_NO_MMX_CODE
++#  define PNG_NO_MMX_CODE
++#endif
++
+ /*
+  * Added at libpng-1.2.8
+  *  

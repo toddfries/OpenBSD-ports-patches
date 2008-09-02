@@ -1,0 +1,28 @@
+$OpenBSD: patch-rw_libpnmrw_c,v 1.4 2005/05/24 19:49:28 naddy Exp $
+--- rw/libpnmrw.c.orig	Mon May 23 22:58:49 2005
++++ rw/libpnmrw.c	Mon May 23 23:01:23 2005
+@@ -132,6 +132,7 @@ pm_freearray(char **its, int rows)
+ static void
+ pm_perror(char *reason)
+ {
++#if !defined(__OpenBSD__) && !defined(__FreeBSD__) && !defined(__NetBSD__)
+ #if defined(BSD4_4)
+     __const extern char *__const sys_errlist[];
+ #else
+@@ -147,6 +148,7 @@ pm_perror(char *reason)
+ #endif
+ #endif
+ #endif
++#endif
+     char *e;
+ 
+ #ifdef MISSING_STRERROR
+@@ -287,7 +289,7 @@ pbm_readmagicnumber(FILE * file)
+ static int
+ pbm_getint(FILE * file)
+ {
+-    register char ich;
++    register int ich;
+     register int i;
+ 
+     do {

@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/08/07 18:58:17 kurt Exp $
+lib/ocaml/
+lib/ocaml/site-lib/sqlite3/
+lib/ocaml/site-lib/sqlite3/META
+lib/ocaml/site-lib/sqlite3/sqlite3.cma
+lib/ocaml/site-lib/sqlite3/sqlite3.cmi
+lib/ocaml/site-lib/sqlite3/sqlite3.mli
+%%native%%

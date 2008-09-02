@@ -1,0 +1,28 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/08/11 20:55:50 naddy Exp $
+bin/gcmp
+bin/gdiff
+bin/gdiff3
+bin/gsdiff
+@info info/diff.info
+@man man/man1/gcmp.1
+@man man/man1/gdiff.1
+@man man/man1/gdiff3.1
+@man man/man1/gsdiff.1
+share/locale/cs/LC_MESSAGES/diffutils.mo
+share/locale/da/LC_MESSAGES/diffutils.mo
+share/locale/de/LC_MESSAGES/diffutils.mo
+share/locale/en_GB/
+share/locale/en_GB/LC_MESSAGES/
+share/locale/en_GB/LC_MESSAGES/diffutils.mo
+share/locale/eo/LC_MESSAGES/diffutils.mo
+share/locale/es/LC_MESSAGES/diffutils.mo
+share/locale/fr/LC_MESSAGES/diffutils.mo
+share/locale/gl/LC_MESSAGES/diffutils.mo
+share/locale/he/LC_MESSAGES/diffutils.mo
+share/locale/id/LC_MESSAGES/diffutils.mo
+share/locale/ja/LC_MESSAGES/diffutils.mo
+share/locale/pl/LC_MESSAGES/diffutils.mo
+share/locale/ru/LC_MESSAGES/diffutils.mo
+share/locale/sv/LC_MESSAGES/diffutils.mo
+share/locale/tr/LC_MESSAGES/diffutils.mo
+share/locale/zh_TW/LC_MESSAGES/diffutils.mo

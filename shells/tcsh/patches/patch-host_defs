@@ -1,0 +1,42 @@
+$OpenBSD: patch-host_defs,v 1.4 2007/05/27 18:04:47 naddy Exp $
+--- host.defs.orig	Thu Mar  2 11:46:44 2006
++++ host.defs	Sat May 26 15:55:32 2007
+@@ -508,6 +508,38 @@ machtype: defined(vax)					: "vax"
+ machtype: defined(alpha)				: "alpha"
+ enddef	:
+ 
++newdef : defined(__OpenBSD__)
++comment        : OpenBSD
++vendor : defined(__alpha__)                            : "digital"
++vendor : defined(__amd64__)                            : "amd"
++vendor : defined(__arm__)                              : "arm"
++vendor : defined(__hppa__) || defined(__hppa64__)      : "hp"
++vendor : defined(M_intel)                              : "intel"
++vendor : defined(__m68k__)                             : "motorola"
++vendor : defined(__m88k__)                             : "motorola"
++vendor : defined(__mips__) && defined(__sgi__)         : "sgi"
++vendor : defined(__powerpc__)                          : "motorola"
++vendor : defined(__sh__)                               : "io-data"
++vendor : defined(__sparc__) || defined(__sparc64__)    : "sun"
++vendor : defined(__vax__)                              : "digital"
++hosttype:                                              : "OpenBSD"
++ostype :                                               : "OpenBSD"
++machtype: defined(__alpha__)                           : "alpha"
++machtype: defined(__amd64__)                           : "amd64"
++machtype: defined(__arm__)                             : "arm"
++machtype: defined(__hppa__)                            : "hppa"
++machtype: defined(__hppa64__)                          : "hppa64"
++machtype: defined(M_i386)                              : "i386"
++machtype: defined(__m68k__)                            : "m68k"
++machtype: defined(__m88k__)                            : "m88k"
++machtype: defined(__mips__)                            : "mips"
++machtype: defined(__sh__)                              : "sh"
++machtype: defined(__sparc64__)                         : "sparc64"
++machtype: defined(__sparc__)                           : "sparc"
++machtype: defined(__powerpc__)                         : "powerpc"
++machtype: defined(__vax__)                             : "vax"
++enddef :
++
+ 
+ newdef	: defined(__FreeBSD__) 
+ comment	: FreeBSD

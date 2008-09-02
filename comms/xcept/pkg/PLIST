@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/11/13 01:48:10 alek Exp $
+@newgroup _xcept:522
+@newuser _xcept:522:_xcept:daemon:xcept account:/nonexistent:/bin/sh
+bin/xcept
+lib/xcept/
+lib/xcept/Bundesbahn.xcept
+lib/xcept/DeutscheBank-Kontoauszug.xcept
+lib/xcept/Sparkasse.xcept
+lib/xcept/ZDF.pl
+lib/xcept/ZDF.xcept
+lib/xcept/ascii.xcept
+lib/xcept/client-mode
+lib/xcept/on-off.xcept
+lib/xcept/popup.xcept
+lib/xcept/xcept.pl
+libexec/ceptd
+@man man/man1/xcept.1
+@man man/man8/ceptd.8
+share/cept/
+share/cept/cept.init.sample
+@sample ${SYSCONFDIR}/cept.init
+share/cept/cept.users.sample
+@sample ${SYSCONFDIR}/cept.users

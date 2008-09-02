@@ -1,0 +1,95 @@
+@comment $OpenBSD: PLIST,v 1.9 2004/10/31 17:22:40 alek Exp $
+@newuser _gnats:501:daemon::GNATS database owner:${PREFIX}/share/gnats:/sbin/nologin
+bin/edit-pr
+bin/getclose
+bin/install-sid
+bin/nedit-pr
+bin/nquery-pr
+bin/query-pr
+bin/send-pr
+bin/sub-type
+@info info/gnats.info
+@info info/send-pr.info
+@info info/standards.info
+lib/gnatsweb
+libdata/perl5/site_perl/gnats.pm
+libexec/gnats/
+libexec/gnats/at-pr
+libexec/gnats/check-db
+libexec/gnats/delete-pr
+libexec/gnats/file-pr
+@mode 4555
+@owner _gnats
+libexec/gnats/gen-index
+@mode
+@owner
+libexec/gnats/gnats-edit-pr
+libexec/gnats/gnatsd
+libexec/gnats/mail-query
+libexec/gnats/mkcat
+libexec/gnats/mkdist
+libexec/gnats/npr-addr
+libexec/gnats/npr-edit
+libexec/gnats/pr-addr
+libexec/gnats/pr-age
+@mode 4555
+@owner _gnats
+libexec/gnats/pr-edit
+@mode
+@owner
+libexec/gnats/pr-mail
+@mode 4555
+@owner _gnats
+libexec/gnats/queue-pr
+@mode
+@owner
+libexec/gnats/rmcat
+@man man/man1/edit-pr.1
+@man man/man1/query-pr.1
+@man man/man1/send-pr.1
+@man man/man7/gnats.7
+@man man/man8/file-pr.8
+@man man/man8/gen-index.8
+@man man/man8/mkcat.8
+@man man/man8/mkdist.8
+@man man/man8/queue-pr.8
+@man man/man8/rmcat.8
+share/doc/gnats/
+share/doc/gnats/README.OpenBSD
+share/examples/gnats/
+share/examples/gnats/gnats-db.conf
+@sample ${SYSCONFDIR}/gnats-db.conf
+@owner _gnats
+share/gnats/
+share/gnats/cygnus
+share/gnats/dist/
+share/gnats/dist/COPYING
+share/gnats/dist/INSTALL
+share/gnats/dist/MANIFEST
+share/gnats/dist/README
+share/gnats/dist/categ.texi
+share/gnats/dist/fields.texi
+share/gnats/dist/install-sid.sh
+share/gnats/dist/s-usage.texi
+share/gnats/dist/send-pr-el.in
+share/gnats/dist/send-pr.1
+share/gnats/dist/send-pr.sh
+share/gnats/dist/send-pr.texi
+share/gnats/dist/states.texi
+share/gnats/dist/texinfo.tex
+share/gnats/dist/version.texi
+share/gnats/gnats-db/
+share/gnats/gnats-db/gnats-adm/
+share/gnats/gnats-db/gnats-adm/addresses
+share/gnats/gnats-db/gnats-adm/categories
+share/gnats/gnats-db/gnats-adm/classes
+share/gnats/gnats-db/gnats-adm/config
+share/gnats/gnats-db/gnats-adm/gnatsd.access
+share/gnats/gnats-db/gnats-adm/gnatsd.conf
+share/gnats/gnats-db/gnats-adm/locks/
+share/gnats/gnats-db/gnats-adm/responsible
+share/gnats/gnats-db/gnats-adm/states
+share/gnats/gnats-db/gnats-adm/submitters
+share/gnats/gnats-db/gnats-queue/
+share/gnats/gnats-db/pending/
+@extraunexec crontab -u _gnats -r > /dev/null 2>&1

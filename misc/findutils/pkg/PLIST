@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.5 2005/04/02 21:40:49 pvalchev Exp $
+bin/gfind
+bin/glocate
+bin/gupdatedb
+bin/gxargs
+@info info/find.info
+libexec/gbigram
+libexec/gcode
+libexec/gfrcode
+@man man/man1/gfind.1
+@man man/man1/glocate.1
+@man man/man1/gupdatedb.1
+@man man/man1/gxargs.1
+@man man/man5/glocatedb.5
+var/

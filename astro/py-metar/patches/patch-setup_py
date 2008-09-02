@@ -1,0 +1,13 @@
+$OpenBSD: patch-setup_py,v 1.2 2007/12/18 20:54:33 ajacoutot Exp $
+--- setup.py.orig	Thu Oct 18 13:22:15 2007
++++ setup.py	Tue Dec 18 09:40:34 2007
+@@ -26,6 +26,7 @@ setup(name = "pymetar", version = pymetar.__version__,
+       packages= [ "" ],
+       py_modules=["pymetar"],
+       scripts = [ "bin/weather.py" ], 
+-      data_files = [("share/doc/pymetar-%s/"%pymetar.__version__,
+-       ['README', 'COPYING', 'THANKS', 'TODO', 'bin/example.py', 'librarydoc.txt'])]
++      data_files = [("share/doc/py-metar",
++       ['README', 'COPYING', 'THANKS', 'TODO', 'librarydoc.txt']),
++       ("share/examples/py-metar", ['bin/example.py'])]
+       )

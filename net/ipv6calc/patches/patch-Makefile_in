@@ -1,0 +1,12 @@
+$OpenBSD: patch-Makefile_in,v 1.2 2007/06/30 21:08:20 rui Exp $
+--- Makefile.in.orig	Wed Feb 14 19:53:59 2007
++++ Makefile.in	Mon Jun 25 20:00:23 2007
+@@ -15,7 +15,7 @@ ifeq (@ENABLE_BUNDLED_GETOPT@, 1)
+   GETOPT_DIR  = getopt
+ endif
+ 
+-CFLAGS = $(COPTS) -I$(GETOPT_DIR)
++CFLAGS = -I.
+ 
+ CC	= gcc
+ 

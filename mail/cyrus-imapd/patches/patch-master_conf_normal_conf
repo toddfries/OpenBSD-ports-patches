@@ -1,0 +1,33 @@
+$OpenBSD: patch-master_conf_normal_conf,v 1.3 2008/04/23 13:33:22 ajacoutot Exp $
+--- master/conf/normal.conf.orig	Thu Mar 30 18:01:39 2006
++++ master/conf/normal.conf	Mon Apr 21 16:29:36 2008
+@@ -5,17 +5,17 @@ START {
+   recover	cmd="ctl_cyrusdb -r"
+ 
+   # this is only necessary if using idled for IMAP IDLE
+-#  idled		cmd="idled"
++  idled		cmd="idled"
+ }
+ 
+ # UNIX sockets start with a slash and are put into /var/imap/socket
+ SERVICES {
+   # add or remove based on preferences
+   imap		cmd="imapd" listen="imap" prefork=0
+-  imaps		cmd="imapd -s" listen="imaps" prefork=0
++#  imaps		cmd="imapd -s" listen="imaps" prefork=0
+   pop3		cmd="pop3d" listen="pop3" prefork=0
+-  pop3s		cmd="pop3d -s" listen="pop3s" prefork=0
+-  sieve		cmd="timsieved" listen="sieve" prefork=0
++#  pop3s		cmd="pop3d -s" listen="pop3s" prefork=0
++#  sieve		cmd="timsieved" listen="sieve" prefork=0
+ 
+   # these are only necessary if receiving/exporting usenet via NNTP
+ #  nntp		cmd="nntpd" listen="nntp" prefork=0
+@@ -39,4 +39,7 @@ EVENTS {
+ 
+   # this is only necessary if caching TLS sessions
+   tlsprune	cmd="tls_prune" at=0400
++
++  # create SQUAT indexes for all mailboxes
++#  squatter	cmd="squatter -s -r -i user" at=0540
+ }

@@ -1,0 +1,12 @@
+$OpenBSD: patch-main_c,v 1.6 2007/10/27 15:01:53 espie Exp $
+--- main.c.orig	Mon Mar 26 05:44:50 2001
++++ main.c	Sat Oct 27 16:57:49 2007
+@@ -376,7 +376,7 @@ static void callback(long inpos, int function){
+   int graph=30;
+   char buffer[256];
+   static long c_sector=0,v_sector=0;
+-  static char dispcache[30]="                              ";
++  static char dispcache[31]="                              ";
+   static int last=0;
+   static long lasttime=0;
+   long sector,osector=0;

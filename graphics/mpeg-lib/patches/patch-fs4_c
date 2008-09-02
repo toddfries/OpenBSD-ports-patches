@@ -1,0 +1,13 @@
+$OpenBSD: patch-fs4_c,v 1.1 2004/06/22 03:07:17 brad Exp $
+--- fs4.c.orig	1999-07-23 21:59:24.000000000 -0600
++++ fs4.c	2004-06-21 20:01:38.000000000 -0600
+@@ -21,7 +21,9 @@
+ /* This file contains C code to do YCrCb -> colormap space. */
+ 
+ #include <config.h>
++#ifdef HAVE_MALLOC_H
+ #include <malloc.h>
++#endif
+ #include <memory.h>
+ #include "fs4.h"
+ #include "video.h"

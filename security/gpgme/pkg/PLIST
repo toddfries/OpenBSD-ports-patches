@@ -1,0 +1,16 @@
+@comment $OpenBSD: PLIST,v 1.6 2007/12/16 22:20:52 simon Exp $
+bin/gpgme-config
+include/gpgme.h
+@info info/gpgme.info
+lib/libgpgme-pthread.a
+lib/libgpgme-pthread.la
+lib/libgpgme.a
+lib/libgpgme.la
+share/aclocal/gpgme.m4
+%%SHARED%%
+@comment share/common-lisp/
+@comment share/common-lisp/source/
+@comment share/common-lisp/source/gpgme/
+@comment share/common-lisp/source/gpgme/gpgme-package.lisp
+@comment share/common-lisp/source/gpgme/gpgme.asd
+@comment share/common-lisp/source/gpgme/gpgme.lisp

@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:23:11 espie Exp $
+bin/sam
+bin/samsave
+bin/samterm
+@man man/man1/sam.1
+share/doc/sam/
+share/doc/sam/README
+share/doc/sam/Sam.ad
+share/doc/sam/sam.ps
+share/doc/sam/sam.tut.ms
+share/doc/sam/se.ps

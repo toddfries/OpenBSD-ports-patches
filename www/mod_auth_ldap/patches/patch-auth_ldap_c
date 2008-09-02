@@ -1,0 +1,19 @@
+$OpenBSD: patch-auth_ldap_c,v 1.2 2007/02/11 10:31:20 bernd Exp $
+
+Fixes a security bug that could allow attacker to execute arbitrary
+commands as the apache user.
+
+This is fixed in auth_ldap-1.6.1 but that release is broken. So we just
+took the security fix.
+
+--- auth_ldap.c.orig	Thu Jan 18 14:25:28 2007
++++ auth_ldap.c	Thu Jan 18 14:31:45 2007
+@@ -87,7 +87,7 @@ void auth_ldap_log_reason(request_rec *r
+ #if APACHE_RELEASE < 1030000
+   log_reason(buf, r->uri, r);
+ #else
+-  ap_log_rerror(APLOG_MARK, APLOG_ERR|APLOG_NOERRNO, r, buf);
++  ap_log_rerror(APLOG_MARK, APLOG_ERR|APLOG_NOERRNO, r, "%s", buf);
+ #endif
+ }
+ 

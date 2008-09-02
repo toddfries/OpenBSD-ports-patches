@@ -1,0 +1,17 @@
+$OpenBSD: patch-Doc_Makefile_in,v 1.4 2007/12/04 19:26:56 okan Exp $
+--- Doc/Makefile.in.orig	Sun Dec 17 11:02:02 2006
++++ Doc/Makefile.in	Mon Nov 26 14:35:17 2007
+@@ -267,11 +267,11 @@ Zsh/manmodmenu.yo: $(MODDOCSRC)
+ # ========== DEPENDENCIES FOR INSTALLING ==========
+ 
+ # install just installs the manual pages
+-install: install.man
++install: install.man install.info
+ .PHONY: install
+ 
+ # uninstall just unistalls the manual pages
+-uninstall: uninstall.man
++uninstall: uninstall.man uninstall.info
+ .PHONY: uninstall
+ 
+ # install man pages, creating install directory if necessary

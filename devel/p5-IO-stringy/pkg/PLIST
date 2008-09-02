@@ -1,0 +1,18 @@
+@comment $OpenBSD: PLIST,v 1.8 2005/12/03 07:32:37 steven Exp $
+${P5SITE}/IO/
+${P5SITE}/IO/AtomicFile.pm
+${P5SITE}/IO/InnerFile.pm
+${P5SITE}/IO/Lines.pm
+${P5SITE}/IO/Scalar.pm
+${P5SITE}/IO/ScalarArray.pm
+${P5SITE}/IO/Stringy.pm
+${P5SITE}/IO/Wrap.pm
+${P5SITE}/IO/WrapTie.pm
+@man man/man3p/IO::AtomicFile.3p
+@man man/man3p/IO::InnerFile.3p
+@man man/man3p/IO::Lines.3p
+@man man/man3p/IO::Scalar.3p
+@man man/man3p/IO::ScalarArray.3p
+@man man/man3p/IO::Stringy.3p
+@man man/man3p/IO::Wrap.3p
+@man man/man3p/IO::WrapTie.3p

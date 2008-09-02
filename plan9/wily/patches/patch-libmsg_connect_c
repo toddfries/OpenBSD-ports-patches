@@ -1,0 +1,33 @@
+$OpenBSD: patch-libmsg_connect_c,v 1.1 2003/05/24 19:13:08 pvalchev Exp $
+--- libmsg/connect.c.orig	Sun Apr 12 13:37:42 1998
++++ libmsg/connect.c	Sat May 24 13:12:29 2003
+@@ -109,11 +109,13 @@ client_connect(void)
+ 
+ 	/* bind it to a unix-domain at a temporary address */
+ 	addr.sun_family = AF_UNIX;
+-	tmpnam(addr.sun_path);
++	sprintf(addr.sun_path, "%s/xx.XXXXXXXX", P_tmpdir);
++	close(mkstemp(addr.sun_path));
+ 	path = strdup(addr.sun_path);
+ 	len = strlen(addr.sun_path);
+ 
+ 	if (bind(s, (struct sockaddr *) &addr, sizeof addr) < 0){
++		unlink(path);
+ 		perror("bind");
+ 		return -1;
+ 	}
+@@ -122,10 +124,14 @@ client_connect(void)
+ 
+ 	fd = wilyfifotalk();		/* fifo to wily */
+ 	if(fd<0)
++	{
++		unlink(path);
+ 		return -1;
++	}
+ 	nwritten = write(fd, addr.sun_path, len);
+ 	close(fd);
+ 	if(nwritten !=len){
++		unlink(path);
+ 		perror("write to wily");
+ 		return -1;
+ 	}

@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:46:10 espie Exp $
+bin/spider
+lib/X11/spider/
+lib/X11/spider/doc.controls
+lib/X11/spider/doc.examples
+lib/X11/spider/doc.intro
+lib/X11/spider/doc.misc
+lib/X11/spider/doc.rules
+lib/X11/spider/doc.summary
+@man man/cat1/spider.0

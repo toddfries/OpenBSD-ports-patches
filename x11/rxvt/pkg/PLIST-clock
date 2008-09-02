@@ -1,0 +1,3 @@
+@comment $OpenBSD: PLIST-clock,v 1.2 2004/09/15 19:26:31 espie Exp $
+bin/rclock
+@man man/man1/rclock.1

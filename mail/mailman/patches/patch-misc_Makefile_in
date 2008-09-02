@@ -1,0 +1,24 @@
+$OpenBSD: patch-misc_Makefile_in,v 1.5 2008/07/09 19:30:24 wcmaier Exp $
+--- misc/Makefile.in.orig	Wed Jul 26 00:11:13 2006
++++ misc/Makefile.in	Wed Jul  9 13:13:49 2008
+@@ -74,6 +74,10 @@ ICONS=		$(srcdir)/*.jpg $(srcdir)/*.png
+ # Rules
+ 
+ all:
++	for p in $(PACKAGES); \
++	do \
++	    gunzip -c $(srcdir)/$$p.tar.gz | tar xf -; \
++	done
+ 
+ install: install-other install-packages
+ 
+@@ -93,8 +97,7 @@ install-other:
+ install-packages:
+ 	for p in $(PACKAGES); \
+ 	do \
+-	    gunzip -c $(srcdir)/$$p.tar.gz | (cd $(PKGDIR) ; tar xf -); \
+-	    (cd $(PKGDIR)/$$p ; umask 02 ; PYTHONPATH=$(PYTHONLIBDIR) $(PYTHON) $(SETUPCMD)); \
++	    (cd $$p ; umask 02 ; PYTHONPATH=$(PYTHONLIBDIR) $(PYTHON) $(SETUPCMD)); \
+ 	done
+ 
+ finish:

@@ -1,0 +1,12 @@
+$OpenBSD: patch-gnome-pty-helper_gnome-pty-helper_c,v 1.2 2007/04/24 22:02:19 martynas Exp $
+--- gnome-pty-helper/gnome-pty-helper.c.orig	Fri Mar 23 16:14:44 2007
++++ gnome-pty-helper/gnome-pty-helper.c	Fri Mar 23 16:15:42 2007
+@@ -101,7 +101,7 @@ static int CONTROLLEN;
+ static int
+ init_msg_pass (void)
+ {
+-	CONTROLLEN = (CMSG_DATA (cmptr) - (unsigned char *)cmptr) + sizeof(int);
++	CONTROLLEN = (CMSG_DATA (cmptr) - (unsigned char *)cmptr) + sizeof(long);
+ 	cmptr = malloc (CONTROLLEN);
+ 
+ 	if (cmptr)

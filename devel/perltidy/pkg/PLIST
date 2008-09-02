@@ -1,0 +1,25 @@
+@comment $OpenBSD: PLIST,v 1.8 2007/04/29 09:29:31 jasper Exp $
+bin/perltidy
+${P5SITE}/Perl/
+${P5SITE}/Perl/Tidy.pm
+@man man/man1/perltidy.1
+@man man/man3p/Perl::Tidy.3p
+share/doc/perltidy/
+share/doc/perltidy/stylekey.pod
+share/doc/perltidy/testfile.pl
+share/doc/perltidy/tutorial.pod
+share/examples/perltidy/
+share/examples/perltidy/README
+share/examples/perltidy/bbtidy.pl
+share/examples/perltidy/break_long_quotes.pl
+share/examples/perltidy/ex_mp.pl
+share/examples/perltidy/find_naughty.pl
+share/examples/perltidy/lextest
+share/examples/perltidy/perlcomment.pl
+share/examples/perltidy/perllinetype.pl
+share/examples/perltidy/perlmask.pl
+share/examples/perltidy/perltidyrc_dump.pl
+share/examples/perltidy/perlxmltok.pl
+@comment share/examples/perltidy/pt.bat
+share/examples/perltidy/testfa.t
+share/examples/perltidy/testff.t

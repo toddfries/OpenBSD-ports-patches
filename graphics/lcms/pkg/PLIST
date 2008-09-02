@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST,v 1.5 2008/06/10 00:42:40 okan Exp $
+@bin bin/icc2ps
+@bin bin/icclink
+@bin bin/icctrans
+@bin bin/jpegicc
+@bin bin/tiffdiff
+@bin bin/tifficc
+@bin bin/wtpt
+include/icc34.h
+include/lcms.h
+lib/liblcms.a
+lib/liblcms.la
+lib/pkgconfig/
+lib/pkgconfig/lcms.pc
+@man man/man1/icc2ps.1
+@man man/man1/icclink.1
+@man man/man1/jpegicc.1
+@man man/man1/tifficc.1
+@man man/man1/wtpt.1
+share/doc/lcms/
+share/doc/lcms/LCMSAPI.TXT
+share/doc/lcms/TUTORIAL.TXT
+%%SHARED%%

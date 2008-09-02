@@ -1,0 +1,12 @@
+$OpenBSD: patch-modules_demux_ogg_c,v 1.6 2008/03/02 02:27:04 jakemsr Exp $
+--- modules/demux/ogg.c.orig	Sun Feb 24 14:01:53 2008
++++ modules/demux/ogg.c	Thu Feb 28 11:18:09 2008
+@@ -1374,7 +1374,7 @@ static void Ogg_ReadAnnodexHeader( vlc_object_t *p_thi
+             uint8_t *p = memchr( &p_oggpacket->packet[42], '\r',
+                                  p_oggpacket->bytes - 1 );
+             if( p && p[0] == '\r' && p[1] == '\n' )
+-                sscanf( (char*)(&p_oggpacket->packet[42]), "%1024s\r\n",
++                sscanf( (char*)(&p_oggpacket->packet[42]), "%1023s\r\n",
+                         content_type_string );
+         }
+ 

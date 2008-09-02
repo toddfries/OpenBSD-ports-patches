@@ -1,0 +1,16 @@
+$OpenBSD: patch-Imakefile,v 1.1 2007/10/26 20:44:07 jasper Exp $
+--- Imakefile.orig	Tue Jun  7 02:28:45 1994
++++ Imakefile	Fri Oct 26 22:41:13 2007
+@@ -8,12 +8,7 @@ LOCAL_LIBRARIES = XawClientLibs
+            OBJS = xcolors.o
+   SYS_LIBRARIES = -lm
+ 
+-#if BuildServer
+         DEFINES = -DRGB_TXT=\"$(RGBDBFILE).txt\"
+-#else
+-	/* rgb.txt will not be installed, so find it in build tree */
+-	DEFINES = -DRGB_TXT=\"$(RGBSRC)/rgb.txt\"
+-#endif
+ 
+ ComplexProgramTarget(xcolors)
+ InstallAppDefaults(Xcolors)

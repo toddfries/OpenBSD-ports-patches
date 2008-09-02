@@ -1,0 +1,30 @@
+$OpenBSD: patch-configure,v 1.4 2007/08/26 18:34:05 jasper Exp $
+--- configure.orig	Fri Feb 10 12:49:08 2006
++++ configure	Tue Aug 14 14:35:23 2007
+@@ -21837,7 +21837,7 @@ if test "x$with_aspell_prefix" != "x"; then
+ else
+    LDFLAGS="-L`aspell config prefix`/lib "$LDFLAGS
+    ASPELL_INC="-I`aspell config prefix`/include"
+-   ASPELL_LIBS="-L`aspell config prefix`/lib -laspell"
++   ASPELL_LIBS="-L`aspell config prefix`/lib -laspell -lstdc++ -lm"
+    ASPELL_DICT="`aspell config dict-dir`"
+ fi
+ 
+@@ -21847,7 +21847,7 @@ if test "${ac_cv_lib_aspell_new_aspell_config+set}" = 
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-laspell  $LIBS"
++LIBS="-laspell -lstdc++ -lm $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -21910,7 +21910,7 @@ if test $ac_cv_lib_aspell_new_aspell_config = yes; the
+ #define HAVE_LIBASPELL 1
+ _ACEOF
+ 
+-  LIBS="-laspell $LIBS"
++  LIBS="-laspell -lstdc++ -lm $LIBS"
+ 
+ else
+   { { echo "$as_me:$LINENO: error: gnome-spell cannot be built without aspell library" >&5

@@ -1,0 +1,16 @@
+$OpenBSD: patch-setup_py,v 1.4 2008/04/20 07:37:00 ajacoutot Exp $
+--- setup.py.orig	Sat Apr 19 10:42:39 2008
++++ setup.py	Sat Apr 19 10:43:53 2008
+@@ -70,10 +70,9 @@ setup(name='Sonata',
+         extra_link_args=capture("pkg-config --libs gtk+-2.0 pygtk-2.0").split()
+          ),],
+         scripts = ['sonata/sonata'],
+-        data_files=[('share/sonata', ['README', 'CHANGELOG', 'TODO', 'TRANSLATORS']),
+-                    ('share/applications', ['sonata.desktop']),
++        data_files=[('share/applications', ['sonata.desktop']),
+                     ('share/pixmaps', glob.glob('sonata/pixmaps/*')),
+-                    ('share/man/man1', ['sonata.1']),
++                    ('man/man1', ['sonata.1']),
+                     ('share/locale/de/LC_MESSAGES', ['mo/de/sonata.mo']),
+                     ('share/locale/pl/LC_MESSAGES', ['mo/pl/sonata.mo']),
+                     ('share/locale/ru/LC_MESSAGES', ['mo/ru/sonata.mo']),

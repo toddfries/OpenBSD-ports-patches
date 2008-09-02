@@ -1,0 +1,11 @@
+--- tests/docs/Makefile.in.orig	Tue May 13 17:52:14 2008
++++ tests/docs/Makefile.in	Wed May 21 19:38:54 2008
+@@ -446,7 +446,7 @@ distdir: $(DISTFILES)
+ 	  fi; \
+ 	done
+ check-am: all-am
+-check: check-am
++tests check: check-am
+ all-am: Makefile
+ installdirs:
+ install: install-am

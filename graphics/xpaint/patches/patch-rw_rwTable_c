@@ -1,0 +1,19 @@
+$OpenBSD: patch-rw_rwTable_c,v 1.5 2005/10/31 23:24:19 naddy Exp $
+--- rw/rwTable.c.orig	Wed Aug 17 15:00:25 2005
++++ rw/rwTable.c	Tue Nov  1 00:03:27 2005
+@@ -251,6 +251,7 @@ RWtableGetWriterList()
+ char *
+ RWGetMsg()
+ {
++#if !defined(__OpenBSD__) && !defined(__FreeBSD__) && !defined(_NetBSD__)
+ #if defined(BSD4_4)
+     __const extern char *__const sys_errlist[];
+ #else
+@@ -260,6 +261,7 @@ RWGetMsg()
+ #  define sys_errlist _sys_errlist
+ #else
+     extern char *sys_errlist[];
++#endif
+ #endif
+ #endif
+ #endif

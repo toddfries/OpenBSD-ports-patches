@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.9 2006/11/29 20:21:46 jasper Exp $
+bin/cddb
+${P5SITE}/CDDB_cache.pm
+${P5SITE}/CDDB_get.pm
+${P5SITE}/auto/
+${P5SITE}/auto/CDDB_cache/
+${P5SITE}/auto/CDDB_cache/autosplit.ix
+${P5SITE}/auto/CDDB_get/
+${P5SITE}/auto/CDDB_get/autosplit.ix
+@comment ${P5SITE}/cddb.pl
+@man man/man3p/CDDB_get.3p

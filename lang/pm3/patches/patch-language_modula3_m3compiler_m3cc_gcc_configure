@@ -1,0 +1,19 @@
+$OpenBSD: patch-language_modula3_m3compiler_m3cc_gcc_configure,v 1.2 2003/05/11 22:42:32 naddy Exp $
+--- language/modula3/m3compiler/m3cc/gcc/configure.orig	Mon Jan 29 00:56:13 2001
++++ language/modula3/m3compiler/m3cc/gcc/configure	Wed May  7 23:19:10 2003
+@@ -1040,6 +1040,15 @@ for machine in $canon_build $canon_host 
+ 		fixincludes=Makefile.in
+ 		xmake_file=i386/x-freebsd
+ 		;;
++	i[3456]86-*-openbsd*)
++		tm_file="i386/i386.h i386/att.h svr4.h i386/openbsdelf.h i386/perform.h"
++		xm_file=i386/xm-openbsd.h
++		# On OpenBSD, the headers are already ok.
++		fixincludes=Makefile.in
++		xmake_file=none
++		tmake_file=t-libc-ok
++		#use_collect2=yes
++		;;
+ 	i[3456]86-*-netbsdelf*)
+ 		tm_file=i386/netbsd-elf.h
+ 		xm_file=i386/xm-netbsd.h

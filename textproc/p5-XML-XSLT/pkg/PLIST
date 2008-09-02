@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:44:06 espie Exp $
+bin/xslt-parser
+${P5SITE}/XML/XSLT.pm
+@man man/man1/xslt-parser.1
+@man man/man3p/XML::XSLT.3p

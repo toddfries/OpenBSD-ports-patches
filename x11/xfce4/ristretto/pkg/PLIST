@@ -1,0 +1,54 @@
+@comment $OpenBSD: PLIST,v 1.6 2008/06/14 16:24:00 landry Exp $
+bin/ristretto
+share/applications/ristretto.desktop
+share/icons/
+share/icons/hicolor/
+share/icons/hicolor/16x16/
+share/icons/hicolor/16x16/apps/
+share/icons/hicolor/16x16/apps/ristretto.png
+share/icons/hicolor/22x22/
+share/icons/hicolor/22x22/apps/
+share/icons/hicolor/22x22/apps/ristretto.png
+share/icons/hicolor/24x24/
+share/icons/hicolor/24x24/apps/
+share/icons/hicolor/24x24/apps/ristretto.png
+share/icons/hicolor/32x32/
+share/icons/hicolor/32x32/apps/
+share/icons/hicolor/32x32/apps/ristretto.png
+share/icons/hicolor/36x36/
+share/icons/hicolor/36x36/apps/
+share/icons/hicolor/36x36/apps/ristretto.png
+share/icons/hicolor/48x48/
+share/icons/hicolor/48x48/apps/
+share/icons/hicolor/48x48/apps/ristretto.png
+share/icons/hicolor/scalable/
+share/icons/hicolor/scalable/apps/
+share/icons/hicolor/scalable/apps/ristretto.svg
+share/locale/bg/LC_MESSAGES/ristretto.mo
+share/locale/cs/LC_MESSAGES/ristretto.mo
+share/locale/de/LC_MESSAGES/ristretto.mo
+share/locale/el/LC_MESSAGES/ristretto.mo
+share/locale/en_GB/LC_MESSAGES/ristretto.mo
+share/locale/fi/LC_MESSAGES/ristretto.mo
+share/locale/fr/LC_MESSAGES/ristretto.mo
+share/locale/hu/LC_MESSAGES/ristretto.mo
+share/locale/it/LC_MESSAGES/ristretto.mo
+share/locale/lv/LC_MESSAGES/ristretto.mo
+share/locale/nb_NO/
+share/locale/nb_NO/LC_MESSAGES/
+share/locale/nb_NO/LC_MESSAGES/ristretto.mo
+share/locale/nl/LC_MESSAGES/ristretto.mo
+share/locale/pt_BR/LC_MESSAGES/ristretto.mo
+share/locale/pt_PT/
+share/locale/pt_PT/LC_MESSAGES/
+share/locale/pt_PT/LC_MESSAGES/ristretto.mo
+share/locale/ru/LC_MESSAGES/ristretto.mo
+share/locale/tr/LC_MESSAGES/ristretto.mo
+share/locale/ur/
+share/locale/ur/LC_MESSAGES/
+share/locale/ur/LC_MESSAGES/ristretto.mo
+share/locale/zh_CN/LC_MESSAGES/ristretto.mo
+@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/update-desktop-database
+@unexec %D/bin/update-desktop-database

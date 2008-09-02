@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:32:14 espie Exp $
+bin/mpage
+@man man/man1/mpage.1
+share/mpage/
+share/mpage/CP850.PC
+share/mpage/ISO+STD+OTH
+share/mpage/ISO-8859.1
+share/mpage/ISO-8859.15
+share/mpage/ISO-Latin.1
+share/mpage/ISO-Latin.2

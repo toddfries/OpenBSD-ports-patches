@@ -1,0 +1,25 @@
+$OpenBSD: patch-lib_ps2epsi,v 1.6 2007/11/19 20:06:56 kili Exp $
+--- lib/ps2epsi.orig	Thu Jul  5 21:04:29 2007
++++ lib/ps2epsi	Mon Sep  3 15:27:31 2007
+@@ -11,20 +11,7 @@ fi
+ GS_EXECUTABLE="$gs"
+ 
+ # try to create a temporary file securely
+-if test -z "$TMPDIR"; then
+-	TMPDIR=/tmp
+-fi
+-if which mktemp >/dev/null 2>/dev/null; then
+-	tmpfile="`mktemp $TMPDIR/ps2epsi.XXXXXX`"
+-else
+-	tmpdir=$TMPDIR/ps2epsi.$$
+-	(umask 077 && mkdir "$tmpdir")
+-	if test ! -d "$tmpdir"; then
+-		echo "failed: could not create temporary file"
+-		exit 1
+-	fi
+-	tmpfile="$tmpdir"/ps2epsi$$
+-fi
++tmpfile=`mktemp -t ps2epsiXXXXXXXXXX` || exit 1
+ trap "rm -rf \"$tmpfile\"" 0 1 2 3 7 13 15
+ 
+ export outfile

@@ -1,0 +1,60 @@
+$OpenBSD: patch-scripts_mysql_install_db_sh,v 1.9 2008/01/18 20:31:17 merdely Exp $
+--- scripts/mysql_install_db.sh.orig	Thu Nov 15 09:06:33 2007
++++ scripts/mysql_install_db.sh	Thu Dec  6 18:15:43 2007
+@@ -25,7 +25,8 @@ srcdir=""
+ args=""
+ defaults=""
+ mysqld_opt=""
+-user=""
++user=_mysql
++group=_mysql
+ 
+ force=0
+ in_rpm=0
+@@ -102,6 +103,8 @@ parse_arguments()
+         # as 'user' (crucial e.g. if log-bin=/some_other_path/
+         # where a chown of datadir won't help)
+ 	 user=`parse_arg "$arg"` ;;
++      --group=*)
++	 group=`parse_arg "$arg"` ;;
+       --skip-name-resolve) ip_only=1 ;;
+       --verbose) verbose=1 ;; # Obsolete
+       --rpm) in_rpm=1 ;;
+@@ -320,7 +323,7 @@ do
+   fi
+   if test -w / -a ! -z "$user"
+   then
+-    chown $user $dir
++    chown -f $user:$group $dir
+   fi
+ done
+ 
+@@ -354,11 +357,6 @@ then
+     echo
+   fi
+ 
+-  s_echo
+-  s_echo "To start mysqld at boot time you have to copy"
+-  s_echo "support-files/mysql.server to the right place for your system"
+-  s_echo
+-
+   if test "$windows" -eq 0
+   then
+     # A root password should of course also be set on Windows!
+@@ -381,16 +379,6 @@ then
+     echo
+     echo "See the manual for more instructions."
+     echo
+-
+-    if test "$in_rpm" -eq 0
+-    then
+-      echo "You can start the MySQL daemon with:"
+-      echo "cd @prefix@ ; $bindir/mysqld_safe &"
+-      echo
+-      echo "You can test the MySQL daemon with mysql-test-run.pl"
+-      echo "cd mysql-test ; perl mysql-test-run.pl"
+-      echo
+-    fi
+     echo "Please report any problems with the @scriptdir@/mysqlbug script!"
+     echo
+     echo "The latest information about MySQL is available on the web at"

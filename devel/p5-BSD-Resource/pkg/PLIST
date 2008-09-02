@@ -1,0 +1,37 @@
+@comment $OpenBSD: PLIST,v 1.9 2004/09/14 23:43:57 espie Exp $
+${P5ARCH}/
+${P5ARCH}/BSD/
+${P5ARCH}/BSD/Resource.pm
+${P5ARCH}/auto/
+${P5ARCH}/auto/BSD/
+${P5ARCH}/auto/BSD/Resource/
+${P5ARCH}/auto/BSD/Resource/Resource.bs
+${P5ARCH}/auto/BSD/Resource/Resource.so
+${P5ARCH}/auto/BSD/Resource/_g.al
+${P5ARCH}/auto/BSD/Resource/autosplit.ix
+${P5ARCH}/auto/BSD/Resource/get_rlimits.al
+${P5ARCH}/auto/BSD/Resource/getpriority.al
+${P5ARCH}/auto/BSD/Resource/getrlimit.al
+${P5ARCH}/auto/BSD/Resource/getrusage.al
+${P5ARCH}/auto/BSD/Resource/hard.al
+${P5ARCH}/auto/BSD/Resource/idrss.al
+${P5ARCH}/auto/BSD/Resource/inblock.al
+${P5ARCH}/auto/BSD/Resource/isrss.al
+${P5ARCH}/auto/BSD/Resource/ixrss.al
+${P5ARCH}/auto/BSD/Resource/majflt.al
+${P5ARCH}/auto/BSD/Resource/maxrss.al
+${P5ARCH}/auto/BSD/Resource/minflt.al
+${P5ARCH}/auto/BSD/Resource/msgrcv.al
+${P5ARCH}/auto/BSD/Resource/msgsnd.al
+${P5ARCH}/auto/BSD/Resource/nivcsw.al
+${P5ARCH}/auto/BSD/Resource/nsignals.al
+${P5ARCH}/auto/BSD/Resource/nswap.al
+${P5ARCH}/auto/BSD/Resource/nvcsw.al
+${P5ARCH}/auto/BSD/Resource/oublock.al
+${P5ARCH}/auto/BSD/Resource/setpriority.al
+${P5ARCH}/auto/BSD/Resource/setrlimit.al
+${P5ARCH}/auto/BSD/Resource/soft.al
+${P5ARCH}/auto/BSD/Resource/stime.al
+${P5ARCH}/auto/BSD/Resource/times.al
+${P5ARCH}/auto/BSD/Resource/utime.al
+@man man/man3p/BSD::Resource.3p

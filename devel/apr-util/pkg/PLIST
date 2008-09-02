@@ -1,0 +1,37 @@
+@comment $OpenBSD: PLIST,v 1.4 2007/03/25 09:59:35 steven Exp $
+%%SHARED%%
+bin/apu-1${MT}-config
+include/apr-1${MT}/
+include/apr-1${MT}/apr_anylock.h
+include/apr-1${MT}/apr_base64.h
+include/apr-1${MT}/apr_buckets.h
+include/apr-1${MT}/apr_date.h
+include/apr-1${MT}/apr_dbd.h
+include/apr-1${MT}/apr_dbm.h
+include/apr-1${MT}/apr_hooks.h
+include/apr-1${MT}/apr_ldap.h
+include/apr-1${MT}/apr_ldap_init.h
+include/apr-1${MT}/apr_ldap_option.h
+include/apr-1${MT}/apr_ldap_url.h
+include/apr-1${MT}/apr_md4.h
+include/apr-1${MT}/apr_md5.h
+include/apr-1${MT}/apr_optional.h
+include/apr-1${MT}/apr_optional_hooks.h
+include/apr-1${MT}/apr_queue.h
+include/apr-1${MT}/apr_reslist.h
+include/apr-1${MT}/apr_rmm.h
+include/apr-1${MT}/apr_sdbm.h
+include/apr-1${MT}/apr_sha1.h
+include/apr-1${MT}/apr_strmatch.h
+include/apr-1${MT}/apr_uri.h
+include/apr-1${MT}/apr_uuid.h
+include/apr-1${MT}/apr_xlate.h
+include/apr-1${MT}/apr_xml.h
+include/apr-1${MT}/apu.h
+include/apr-1${MT}/apu_version.h
+include/apr-1${MT}/apu_want.h
+@comment lib/aprutil.exp
+lib/libaprutil-1${MT}.a
+lib/libaprutil-1${MT}.la
+lib/pkgconfig/
+lib/pkgconfig/apr-util-1${MT}.pc

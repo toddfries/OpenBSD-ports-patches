@@ -1,0 +1,27 @@
+$OpenBSD: patch-glib_gmacros_h,v 1.8 2008/04/09 13:10:17 jasper Exp $
+--- glib/gmacros.h.orig	Mon Feb 11 18:14:22 2008
++++ glib/gmacros.h	Fri Feb 22 11:40:05 2008
+@@ -34,6 +34,7 @@
+ /* We include stddef.h to get the system's definition of NULL
+  */
+ #include <stddef.h>
++#include <sys/param.h>
+ 
+ /* Here we provide G_GNUC_EXTENSION as an alias for __extension__,
+  * where this is valid. This allows for warningless compilation of
+@@ -171,11 +172,13 @@
+ #define	TRUE	(!FALSE)
+ #endif
+ 
+-#undef	MAX
++#ifndef MAX
+ #define MAX(a, b)  (((a) > (b)) ? (a) : (b))
++#endif
+ 
+-#undef	MIN
++#ifndef MIN
+ #define MIN(a, b)  (((a) < (b)) ? (a) : (b))
++#endif
+ 
+ #undef	ABS
+ #define ABS(a)	   (((a) < 0) ? -(a) : (a))

@@ -1,0 +1,25 @@
+@comment $OpenBSD: PLIST-client,v 1.6 2007/10/25 07:34:29 ajacoutot Exp $
+@mode 2755
+@group kmem
+bin/gkrellm
+@mode
+@group
+include/gkrellm2/
+include/gkrellm2/gkrellm-public-proto.h
+include/gkrellm2/gkrellm.h
+lib/pkgconfig/gkrellm.pc
+@man man/man1/gkrellm.1
+share/locale/bg/LC_MESSAGES/gkrellm.mo
+share/locale/cs/LC_MESSAGES/gkrellm.mo
+share/locale/da/LC_MESSAGES/gkrellm.mo
+share/locale/de/LC_MESSAGES/gkrellm.mo
+share/locale/es/LC_MESSAGES/gkrellm.mo
+share/locale/fr/LC_MESSAGES/gkrellm.mo
+share/locale/it/LC_MESSAGES/gkrellm.mo
+share/locale/ja/LC_MESSAGES/gkrellm.mo
+share/locale/nl/LC_MESSAGES/gkrellm.mo
+share/locale/pl/LC_MESSAGES/gkrellm.mo
+share/locale/pt_BR/LC_MESSAGES/gkrellm.mo
+share/locale/ru/LC_MESSAGES/gkrellm.mo
+share/locale/sl/LC_MESSAGES/gkrellm.mo
+share/locale/sv/LC_MESSAGES/gkrellm.mo

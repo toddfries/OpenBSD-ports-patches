@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.3 2003/10/29 22:12:43 sturm Exp $
+bin/otclsh
+bin/owish
+include/otcl.h
+lib/libotcl.a
+%%SHARED%%

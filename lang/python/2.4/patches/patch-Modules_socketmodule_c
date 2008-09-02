@@ -1,0 +1,41 @@
+$OpenBSD: patch-Modules_socketmodule_c,v 1.4 2006/11/01 20:38:37 alek Exp $
+--- Modules/socketmodule.c.orig	Tue Oct 10 18:20:41 2006
++++ Modules/socketmodule.c	Sat Oct 21 15:06:39 2006
+@@ -72,9 +72,6 @@ Local naming conventions:
+ 
+ #include "Python.h"
+ 
+-#undef MAX
+-#define MAX(x, y) ((x) < (y) ? (y) : (x))
+-
+ /* Socket object documentation */
+ PyDoc_STRVAR(sock_doc,
+ "socket([family[, type[, proto]]]) -> socket object\n\
+@@ -1807,10 +1804,15 @@ internal_connect(PySocketSockObject *s, 
+ 
+ 	if (s->sock_timeout > 0.0) {
+ 		if (res < 0 && errno == EINPROGRESS && IS_SELECTABLE(s)) {
++			socklen_t res_size = sizeof res;
++			int save_errno;
++
+ 			timeout = internal_select(s, 1);
+-			res = connect(s->sock_fd, addr, addrlen);
+-			if (res < 0 && errno == EISCONN)
+-				res = 0;
++			save_errno = errno;
++			(void)getsockopt(s->sock_fd, SOL_SOCKET, SO_ERROR,
++			    &res, &res_size);
++			errno = save_errno;
++			res = res ? -1 : 0;
+ 		}
+ 	}
+ 
+@@ -3307,7 +3309,7 @@ socket_inet_aton(PyObject *self, PyObjec
+ 
+ #if !defined(HAVE_INET_ATON) || defined(USE_INET_ATON_WEAKLINK)
+ 	/* Have to use inet_addr() instead */
+-	unsigned long packed_addr;
++	int packed_addr;
+ #endif
+ 	char *ip_addr;
+ 

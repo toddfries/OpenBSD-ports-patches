@@ -1,0 +1,21 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:17:43 espie Exp $
+${P5SITE}/Net/
+${P5SITE}/Net/ParseWhois/
+${P5SITE}/Net/ParseWhois.pm
+${P5SITE}/Net/ParseWhois/Domain/
+${P5SITE}/Net/ParseWhois/Domain.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/
+${P5SITE}/Net/ParseWhois/Domain/Registrar.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/BulkRegister.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/CoreNic.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/DomainBank.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/DomainDiscover.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/Dotster.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/Easyspace.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/INameWW.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/Netsol.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/OpenSRS.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/Register.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/Registrars.pm
+${P5SITE}/Net/ParseWhois/Domain/Registrar/Unknown.pm
+@man man/man3p/Net::ParseWhois.3p

@@ -1,0 +1,23 @@
+$OpenBSD: patch-configure_in,v 1.5 2007/11/10 14:06:45 jasper Exp $
+--- configure.in.orig	Sat Sep 29 02:46:08 2007
++++ configure.in	Fri Oct 19 13:22:02 2007
+@@ -261,7 +261,18 @@ AC_HEADER_STDC
+ AC_CHECK_HEADERS(fcntl.h unistd.h sys/endian.h endian.h machine/endian.h sys/machine.h sys/isa_defs.h sys/poll.h)
+ AC_CHECK_HEADERS(stddef.h wchar.h wcstr.h wctype.h machine/types.h)
+ AC_CHECK_HEADERS(netinet/in.h netinet/tcp.h sys/un.h)
+-AC_CHECK_HEADERS(arpa/nameser.h resolv.h)
++AC_CHECK_HEADERS(arpa/nameser.h)
++AC_CHECK_HEADERS(resolv.h, [], [], [
++#if HAVE_SYS_TYPES_H
++#include <sys/types.h>
++#endif
++#if HAVE_NETINET_IN_H
++#include <netinet/in.h>
++#endif
++#if HAVE_ARPA_NAMESER_H
++#include <arpa/nameser.h>
++#endif
++])
+ dnl AC_CHECK_HEADERS(linux/irda.h)
+ 
+ dnl Checks for library functions.

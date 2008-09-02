@@ -1,0 +1,11 @@
+$OpenBSD: patch-amsn,v 1.2 2008/02/02 21:17:50 steven Exp $
+--- amsn.orig	Sat Feb  2 22:12:58 2008
++++ amsn	Sat Feb  2 22:13:16 2008
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ # \
+-exec wish $0 $@
++exec __LOCALBASE__/bin/wish8.4 $0 $@
+ 
+ ###
+ ###

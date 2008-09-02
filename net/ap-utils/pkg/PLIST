@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST,v 1.3 2004/09/15 18:17:38 espie Exp $
+bin/ap-config
+bin/ap-mrtg
+@man man/man8/ap-config.8
+@man man/man8/ap-mrtg.8
+@man man/man8/ap-trapd.8
+sbin/ap-trapd
+share/examples/systrace/
+share/examples/systrace/bin_ap_config
+share/locale/fr/LC_MESSAGES/ap-utils.mo
+share/locale/pl/LC_MESSAGES/ap-utils.mo
+share/locale/uk/LC_MESSAGES/ap-utils.mo

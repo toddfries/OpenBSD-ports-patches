@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_stream_c,v 1.4 2007/12/06 17:03:56 ajacoutot Exp $
+--- src/stream.c.orig	Thu Dec  6 17:31:21 2007
++++ src/stream.c	Thu Dec  6 17:31:33 2007
+@@ -289,7 +289,7 @@ int stream_readline(int* buf, int len, long int timeou
+   if (machine.script_on)
+     {
+       int pos = 0;
+-      char rc;
++      int rc;
+       static const int nl[] = { '\n', 0 };
+ 
+       display_update();

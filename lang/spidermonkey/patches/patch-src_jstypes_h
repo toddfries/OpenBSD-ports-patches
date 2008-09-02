@@ -1,0 +1,15 @@
+$OpenBSD: patch-src_jstypes_h,v 1.2 2007/04/10 13:03:09 martynas Exp $
+--- src/jstypes.h.orig	Sun Sep 18 07:35:05 2005
++++ src/jstypes.h	Mon Apr  9 21:42:19 2007
+@@ -387,8 +387,9 @@ typedef JSUint8 JSPackedBool;
+ /*
+ ** A JSWord is an integer that is the same size as a void*
+ */
+-typedef long JSWord;
+-typedef unsigned long JSUword;
++#include <inttypes.h>
++typedef intptr_t JSWord;
++typedef uintptr_t JSUword;
+ 
+ #include "jsotypes.h"
+ 

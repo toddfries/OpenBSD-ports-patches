@@ -1,0 +1,21 @@
+$OpenBSD: patch-src_Benchmark_cpp,v 1.2 2007/12/08 11:08:38 ajacoutot Exp $
+--- src/Benchmark.cpp.orig	Sat Nov 24 12:40:02 2007
++++ src/Benchmark.cpp	Sat Nov 24 12:46:10 2007
+@@ -531,7 +531,7 @@ void BenchmarkDialog::OnRun( wxCommandEvent &event )
+       delete tmp;
+ 
+    delete t;
+-
++ 
+    delete[]small1;
+    delete[]small2;
+    delete[]block;
+@@ -539,7 +539,7 @@ void BenchmarkDialog::OnRun( wxCommandEvent &event )
+    delete fact;
+    d->Deref();
+ 
+-   Sequence::SetMaxDiskBlockSize(oldBlockSize);
++   Sequence::SetMaxDiskBlockSize(1048576);
+    HoldPrint(false);
+ 
+    gPrefs->Write(wxT("/GUI/EditClipCanMove"), editClipCanMove);

@@ -1,0 +1,14 @@
+--- Makefile.in.orig	Thu Jun 30 13:08:14 2005
++++ Makefile.in	Fri Jul 22 20:20:25 2005
+@@ -25,9 +25,9 @@ exec_prefix = @exec_prefix@
+ 
+ bindir      = $(prefix)/bin
+ datadir     = $(prefix)/share
+-mandir      = $(datadir)/man
++mandir      = $(prefix)/man
+ 
+-BINDIR_INSTALL = $(prefix)/bin
++BINDIR_INSTALL = $(prefix)/sbin
+ MANDIR_INSTALL = $(mandir)/man8
+ 
+ INSTALL = ./install-sh

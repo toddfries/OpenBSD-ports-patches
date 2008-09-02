@@ -1,0 +1,56 @@
+# $OpenBSD: Makefile.inc,v 1.39 2008/01/04 17:48:38 espie Exp $
+DIST_SUBDIR?=	kde
+HOMEPAGE?=	http://www.kde.org
+.if defined(VERSION) && ${VERSION} == "3.1.95"
+MASTER_SITES?=	${MASTER_SITE_KDE:S@$@unstable/${VERSION}/src/@}
+.elif defined(VERSION) && ${VERSION} == "3.2.0"
+MASTER_SITES?=	${MASTER_SITE_KDE:S@$@stable/3.2/src/@}
+.elif defined(VERSION) && ${VERSION} == "3.3.0"
+MASTER_SITES?=	${MASTER_SITE_KDE:S@$@stable/3.3/src/@}
+.elif defined(VERSION) && ${VERSION} == "3.4.0"
+MASTER_SITES?=	${MASTER_SITE_KDE:S@$@stable/3.4/src/@}
+.elif defined(VERSION) && ${VERSION} == "3.5.0"
+MASTER_SITES?=	${MASTER_SITE_KDE:S@$@stable/3.5/src/@}
+.else
+MASTER_SITES?=	${MASTER_SITE_KDE:S@$@stable/${VERSION}/src/@}
+.endif
+EXTRACT_SUFX?=	.tar.bz2
+MASTER_SITES0=	${MASTER_SITE_KDE:=security_patches/}
+
+# Parts of kde want shared libraries to work, as some symbols are
+# duplicated over the place.
+NOT_FOR_ARCHS?=	${NO_SHARED_ARCHS}
+SHARED_ONLY=Yes
+MODKDE_VERSION?=	3.1
+MODULES?=	x11/kde
+
+MODGNU_CONFIG_GUESS_DIRS?=	${MODKDE_CONFIG_GUESS_DIRS}
+
+CONFIGURE_STYLE?=	autoconf
+.if defined(MODKDE_VERSION)
+.  if (${MODKDE_VERSION} == "3.2.3" || ${MODKDE_VERSION} == "3.3.0" || ${MODKDE_VERSION} == "3.4" || ${MODKDE_VERSION} == "3.5" || ${MODKDE_VERSION} == "3.5.2" || ${MODKDE_VERSION} == "3.5.3")
+AUTOCONF_VERSION?=	2.59
+.  endif
+.  if (${MODKDE_VERSION} == "3.5.7")
+AUTOCONF_VERSION?=	2.60
+.  endif
+.  if (${MODKDE_VERSION} == "3.5.8")
+AUTOCONF_VERSION?=	2.61
+.  endif
+.endif
+AUTOCONF_VERSION?=	2.57
+CONFIGURE_ARGS+=	${MODKDE_CONFIGURE_ARGS}
+USE_GMAKE?=		Yes
+
+PORTHOME?=${WRKDIR}
+
+CONFIGURE_ENV+=		${MODKDE_CONFIGURE_ENV}
+MAKE_ENV=		${CONFIGURE_ENV}
+
+MAKE_FLAGS+=		${MODKDE_MAKE_FLAGS}
+FAKE_FLAGS?=		TAR=tar 
+# GPL
+PERMIT_DISTFILES_CDROM?=	Yes
+PERMIT_DISTFILES_FTP?=		Yes
+PERMIT_PACKAGE_CDROM?=		Yes
+PERMIT_PACKAGE_FTP?=		Yes

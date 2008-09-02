@@ -1,0 +1,17 @@
+$OpenBSD: patch-Makefile_in,v 1.3 2007/10/27 15:24:30 kili Exp $
+--- Makefile.in.orig	Thu Jul 19 16:27:58 2007
++++ Makefile.in	Sat Oct 27 11:22:54 2007
+@@ -952,10 +952,10 @@ info: info-recursive
+ info-am:
+ 
+ install-data-am: install-applicationsDATA install-dist_pixmapsDATA \
+-	install-dist_pkgdataDATA install-dist_pkgdocDATA \
+-	install-dist_pkglocalstateDATA install-man
++	install-dist_pkgdataDATA \
++	install-man
+ 	@$(NORMAL_INSTALL)
+-	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
++	$(MAKE) $(AM_MAKEFLAGS)
+ 
+ install-dvi: install-dvi-recursive
+ 

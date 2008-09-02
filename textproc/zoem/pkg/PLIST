@@ -1,0 +1,80 @@
+@comment $OpenBSD: PLIST,v 1.4 2006/04/04 17:50:02 bernd Exp $
+bin/zoem
+@man man/man1/zoem.1
+@man man/man7/pud-base.7
+@man man/man7/pud-faq.7
+@man man/man7/pud-man.7
+@man man/man7/pud-ref.7
+@man man/man7/pud.7
+share/doc/zoem/
+share/doc/zoem/doc/
+share/doc/zoem/doc/zoem.azm
+share/doc/zoem/doc/zoem.html
+share/doc/zoem/doc/zoem.ps
+share/doc/zoem/doc/zum.azm
+share/doc/zoem/doc/zum.html
+share/doc/zoem/examples/
+share/doc/zoem/examples/pud-base.azm
+share/doc/zoem/examples/pud-faq.azm
+share/doc/zoem/examples/pud-man.azm
+share/doc/zoem/examples/pud-ref.azm
+share/doc/zoem/examples/pud.azm
+share/doc/zoem/mac/
+share/doc/zoem/mac/buzzz.1
+share/doc/zoem/mac/buzzz.azm
+share/doc/zoem/mac/buzzz.html
+share/doc/zoem/mac/buzzz.ps
+share/doc/zoem/mac/buzzz.txt
+share/doc/zoem/mac/index.html
+share/doc/zoem/mac/pud-base.html
+share/doc/zoem/mac/pud-base.ps
+share/doc/zoem/mac/pud-base.txt
+share/doc/zoem/mac/pud-faq.html
+share/doc/zoem/mac/pud-faq.ps
+share/doc/zoem/mac/pud-faq.txt
+share/doc/zoem/mac/pud-man.html
+share/doc/zoem/mac/pud-man.ps
+share/doc/zoem/mac/pud-man.txt
+share/doc/zoem/mac/pud-ref.html
+share/doc/zoem/mac/pud-ref.ps
+share/doc/zoem/mac/pud-ref.txt
+share/doc/zoem/mac/pud.html
+share/doc/zoem/mac/pud.ps
+share/doc/zoem/mac/pud.txt
+share/examples/zoem/
+share/examples/zoem/README
+share/examples/zoem/catch.azm
+share/examples/zoem/catch.ozm
+share/examples/zoem/fib.azm
+share/examples/zoem/loop.azm
+share/examples/zoem/loop.ozm
+share/examples/zoem/meta.azm
+share/examples/zoem/meta.ozm
+share/examples/zoem/nest.azm
+share/examples/zoem/nest.ozm
+share/examples/zoem/power-of-2.azm
+share/examples/zoem/power-of-2.ozm
+share/examples/zoem/reverse.azm
+share/examples/zoem/reverse.ozm
+share/examples/zoem/scope.azm
+share/examples/zoem/scope.ozm
+share/examples/zoem/special.azm
+share/examples/zoem/special.ozm
+share/examples/zoem/stress.azm
+share/examples/zoem/stress.reg
+share/examples/zoem/stress2.azm
+share/examples/zoem/stress2.reg
+share/examples/zoem/tr.azm
+share/examples/zoem/tr.ozm
+share/examples/zoem/txt-table.azm
+share/examples/zoem/txt-table.ozm
+share/examples/zoem/xml.azm
+share/examples/zoem/xml.ozm
+share/zoem/
+share/zoem/mac/
+share/zoem/mac/base.zmm
+share/zoem/mac/ctr.zmm
+share/zoem/mac/doc.zmm
+share/zoem/mac/faq.zmm
+share/zoem/mac/man.zmm
+share/zoem/mac/ref.zmm

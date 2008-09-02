@@ -1,0 +1,2 @@
+@comment $OpenBSD: PLIST-chroot,v 1.2 2008/07/20 22:26:00 okan Exp $
+@bin bin/femail

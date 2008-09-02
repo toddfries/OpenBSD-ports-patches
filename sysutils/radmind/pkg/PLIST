@@ -1,0 +1,32 @@
+@comment $OpenBSD: PLIST,v 1.4 2007/09/04 20:52:13 jasper Exp $
+bin/fsdiff
+bin/ktcheck
+bin/lapply
+bin/lcksum
+bin/lcreate
+bin/lfdiff
+bin/lmerge
+bin/lsort
+bin/ra.sh
+bin/repo
+bin/twhich
+@man man/man1/fsdiff.1
+@man man/man1/ktcheck.1
+@man man/man1/lapply.1
+@man man/man1/lcksum.1
+@man man/man1/lcreate.1
+@man man/man1/lfdiff.1
+@man man/man1/lmerge.1
+@man man/man1/lsort.1
+@man man/man1/rash.1
+@man man/man1/repo.1
+@man man/man1/twhich.1
+@man man/man5/applefile.5
+@man man/man8/radmind.8
+sbin/radmind
+@sample /var/radmind/
+@sample /var/radmind/cert/
+@sample /var/radmind/client/
+@sample /var/radmind/postapply/
+@sample /var/radmind/preapply/
+@extraunexec rm -fr /var/radmind

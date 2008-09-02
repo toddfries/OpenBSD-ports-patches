@@ -1,0 +1,14 @@
+$OpenBSD: patch-emulate_net-pcap_cc,v 1.2 2007/10/24 15:01:09 steven Exp $
+--- emulate/net-pcap.cc.orig	Wed Sep  7 08:35:45 2005
++++ emulate/net-pcap.cc	Sat Oct 13 22:22:22 2007
+@@ -341,7 +341,9 @@ PcapNetwork::phandler_callback(u_char* userdata, const
+ 	int s = inst->skiphdr();	// go to IP header
+ 	memcpy(p->accessdata(), pkt + s, ph->caplen - s);
+ 
+-	ps->callback(ps->clientdata, p, ph->ts);
++	{ struct timeval tv; tv.tv_sec = ph->ts.tv_sec;
++	tv.tv_usec = ph->ts.tv_usec;
++	ps->callback(ps->clientdata, p, tv);}
+ }
+ 
+ int

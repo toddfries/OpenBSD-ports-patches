@@ -1,0 +1,44 @@
+@comment $OpenBSD: PLIST-ko,v 1.10 2004/09/15 00:53:48 espie Exp $
+bin/katod
+bin/katof
+bin/kdtoa
+bin/kserver
+@mode u+s
+@owner root
+bin/kuum
+@mode
+@owner
+bin/kwddel
+bin/kwdreg
+bin/kwnnkill
+bin/kwnnstat
+bin/kwnntouch
+include/kwnn/
+include/kwnn/commonhd.h
+include/kwnn/cplib.h
+include/kwnn/jllib.h
+include/kwnn/jslib.h
+include/kwnn/msg.h
+include/kwnn/rk_spclval.h
+include/kwnn/wnnerror.h
+lib/libkwnn.a
+lib/wnn/ko_KR/hinsi.data
+lib/wnn/ko_KR/kserverrc
+lib/wnn/ko_KR/libwnn.msg
+lib/wnn/ko_KR/rk/
+lib/wnn/ko_KR/rk/1B_TOUPPER
+lib/wnn/ko_KR/rk/2A_CTRL
+lib/wnn/ko_KR/rk/2C_HANGUL.KEY
+lib/wnn/ko_KR/rk/2C_HANGUL.ROM
+lib/wnn/ko_KR/rk/2C_KSC
+lib/wnn/ko_KR/rk/3B_JEONKAK
+lib/wnn/ko_KR/rk/mode
+lib/wnn/ko_KR/rk/mode.key
+lib/wnn/ko_KR/rk/mode.rom
+lib/wnn/ko_KR/uum.msg
+lib/wnn/ko_KR/uumkey
+lib/wnn/ko_KR/uumrc
+lib/wnn/ko_KR/wnnenvrc
+lib/wnn/ko_KR/wnnenvrc_R
+lib/wnn/ko_KR/wnnstat.msg
+@exec ${WNNBASE}/lib/wnn/install-script

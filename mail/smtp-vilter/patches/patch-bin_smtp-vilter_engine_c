@@ -1,0 +1,12 @@
+$OpenBSD: patch-bin_smtp-vilter_engine_c,v 1.4 2008/07/02 13:34:46 mbalmer Exp $
+--- bin/smtp-vilter/engine.c.orig	Sun Jan 21 14:09:38 2007
++++ bin/smtp-vilter/engine.c	Wed Jul  2 15:31:43 2008
+@@ -1764,6 +1764,8 @@ e_main(uid_t uid, gid_t gid, int pipe_m2e[2])
+ 	syslog(LOG_INFO, "dropped privileges, running as %d:%d", uid, gid);
+ 
+ 	/* Initialize sendmail milter */
++	bzero(&desc, sizeof(desc));
++
+ 	desc.xxfi_name = "smtp-vilter";
+ 	desc.xxfi_version = SMFI_VERSION;
+ 	desc.xxfi_flags = SMFIF_ADDHDRS | SMFIF_CHGHDRS;

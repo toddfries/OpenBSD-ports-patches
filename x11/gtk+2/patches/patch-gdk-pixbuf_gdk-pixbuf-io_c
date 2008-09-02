@@ -1,0 +1,12 @@
+$OpenBSD: patch-gdk-pixbuf_gdk-pixbuf-io_c,v 1.7 2007/04/23 16:29:05 jasper Exp $
+--- gdk-pixbuf/gdk-pixbuf-io.c.orig	Mon Mar 12 14:57:01 2007
++++ gdk-pixbuf/gdk-pixbuf-io.c	Fri Apr 20 19:19:51 2007
+@@ -277,7 +277,7 @@ gdk_pixbuf_get_module_file (void)
+   gchar *result = g_strdup (g_getenv ("GDK_PIXBUF_MODULE_FILE"));
+ 
+   if (!result)
+-	  result = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gdk-pixbuf.loaders", NULL);
++	  result = g_build_filename ("/var/db", "gtk-2.0", "gdk-pixbuf.loaders", NULL);
+ 
+   return result;
+ }

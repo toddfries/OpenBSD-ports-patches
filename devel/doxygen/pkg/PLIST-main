@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2006/11/26 17:43:44 espie Exp $
+@pkgpath devel/doxygen,gui
+@pkgpath devel/doxygen
+bin/doxygen
+bin/doxytag
+@man man/man1/doxygen.1
+@man man/man1/doxytag.1

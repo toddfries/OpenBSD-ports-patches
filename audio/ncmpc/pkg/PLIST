@@ -1,0 +1,20 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/09/19 19:15:13 jasper Exp $
+bin/ncmpc
+@man man/man1/ncmpc.1
+share/doc/ncmpc/
+share/doc/ncmpc/AUTHORS
+share/doc/ncmpc/NEWS
+share/doc/ncmpc/README
+share/examples/ncmpc/
+share/examples/ncmpc/config.sample
+share/examples/ncmpc/keys.sample
+share/examples/ncmpc/ncmpc.lirc
+share/locale/da/LC_MESSAGES/ncmpc.mo
+share/locale/de/LC_MESSAGES/ncmpc.mo
+share/locale/es/LC_MESSAGES/ncmpc.mo
+share/locale/fr/LC_MESSAGES/ncmpc.mo
+share/locale/gl/LC_MESSAGES/ncmpc.mo
+share/locale/no/LC_MESSAGES/ncmpc.mo
+share/locale/ru/LC_MESSAGES/ncmpc.mo
+share/locale/sv/LC_MESSAGES/ncmpc.mo
+@comment share/ncmpc/

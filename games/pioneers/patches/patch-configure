@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.2 2008/04/28 09:17:07 ajacoutot Exp $
+--- configure.orig	Sun Apr 27 22:52:55 2008
++++ configure	Mon Apr 28 10:33:46 2008
+@@ -24140,7 +24140,7 @@ if test $pioneers_is_mingw_port = yes; then
+ 	pioneers_localedir=locale
+ else
+ 	pioneers_datadir=$datadir
+-	pioneers_themedir=$datadir/games/pioneers/themes
++	pioneers_themedir=$datadir/pioneers/themes
+ 	pioneers_themedir_embed=$pioneers_themedir
+ 	pioneers_localedir=$datadir/locale
+ fi

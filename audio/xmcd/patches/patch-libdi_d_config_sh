@@ -1,0 +1,199 @@
+$OpenBSD: patch-libdi_d_config_sh,v 1.2 2001/01/18 16:41:27 naddy Exp $
+--- libdi_d/config.sh.orig	Sat Feb  5 08:26:23 2000
++++ libdi_d/config.sh	Wed Nov  8 02:35:46 2000
+@@ -37,13 +37,14 @@ XMCDLIB=/usr/lib/X11/xmcd
+ CDDBDIR=/usr/lib/X11/xmcd/cddb
+ DISCOGDIR=/usr/lib/X11/xmcd/discog
+ 
+-ERRFILE=/tmp/xmcd.err
+-TMPFILE=/tmp/.xmcdcfg.$$
+-TMPSITES=/tmp/.sites.$$
++ERRFILE=`mktemp /tmp/xmcd.XXXXXXXXXX`
++TMPFILE=`mktemp /tmp/xmcd.XXXXXXXXXX`
++TMPSITES=`mktemp /tmp/xmcd.XXXXXXXXXX`
+ 
+-CFGDIR=$XMCDLIB/config
++CFGDIR=@SYSCONFDIR@/xmcd
+ SCRDIR=$XMCDLIB/scripts
+ SITES=$CFGDIR/sites
++TBLDIR=$XMCDLIB/tbl
+ OWNER=bin
+ GROUP=bin
+ CDIRPERM=777
+@@ -491,40 +492,8 @@ ask_nonscsi_config()
+ 		return 1
+ 	fi
+ 
+-	#
+-	# Select the ioctl method
+-	#
+-	$ECHO "\n  Please select a Device Interface Method:\n"
+-	$ECHO "  1.\tSunOS/Solaris/Linux/QNX ioctl method"
+-	$ECHO "  2.\tFreeBSD/NetBSD/OpenBSD ioctl method"
+-	$ECHO "  3.\tIBM AIX IDE ioctl method"
+-	$ECHO "  4.\tBSDI BSD/OS ATAPI"
+-	$ECHO "  5.\tSCO Open Server ATAPI BTLD"
+-	$ECHO "  6.\tCompaq Tru64 UNIX / Digital UNIX ATAPI"
+-	$ECHO "  7.\tHP-UX ATAPI"
+-	$ECHO "  q.\tquit (abort configuration)"
+-
+-	while :
+-	do
+-		if get_str "\n  Enter choice:"
+-		then
+-			case "$ANS" in
+-			[1-7])
+-				break
+-				;;
+-			q)
+-				return 1
+-				;;
+-			*)
+-				$ECHO "  Please answer 1 to 7."
+-				;;
+-			esac
+-		else
+-			$ECHO "  Please answer 1 to 7."
+-		fi
+-	done
+-
+-	IOCMETHOD="$ANS"
++	# *BSD
++	IOCMETHOD=2
+ 
+ 	if [ -z "$NUMDISCS" ]
+ 	then
+@@ -765,18 +734,18 @@ config_drive()
+ 	eval `\
+ 	(
+ 		$ECHO "ENTRIES=\""
+-		cd $CFGDIR/.tbl
++		cd $TBLDIR
+ 		for i in *
+ 		do
+ 			if [ -f $i ]
+ 			then
+-				if fgrep tblver=4 $CFGDIR/.tbl/$i \
++				if fgrep tblver=4 $TBLDIR/$i \
+ 			   		>/dev/null 2>&1
+ 				then
+ 					$ECHO "$i \c"
+ 				else
+ 					log_err -p \
+-					"$CFGDIR/.tbl/$i version mismatch"
++					"$TBLDIR/$i version mismatch"
+ 				fi
+ 			fi
+ 		done
+@@ -789,7 +758,7 @@ config_drive()
+ 	then
+ 		for i in $ENTRIES
+ 		do
+-			brand=`fgrep tblalias= $CFGDIR/.tbl/$i 2>/dev/null | \
++			brand=`fgrep tblalias= $TBLDIR/$i 2>/dev/null | \
+ 				sed 's/^.*tblalias=//'`
+ 			if [ -z "$brand" ]
+ 			then
+@@ -842,7 +811,7 @@ config_drive()
+ 				do
+ 					if [ $k = $ANS ]
+ 					then
+-						model_sel $i $CFGDIR/.tbl/$i
++						model_sel $i $TBLDIR/$i
+ 						return $?
+ 					fi
+ 					k=`expr $k + 1`
+@@ -1542,16 +1511,10 @@ browser_config()
+ 	WORD=A
+ 	for j in $BROWSERS
+ 	do
+-		for i in	/usr/bin/X11 \
+-				/usr/X/bin \
+-				/usr/X11/bin \
++		for i in	$BINDIR \
+ 				/usr/X11R6/bin \
+-				/usr/X11R5/bin \
+-				/usr/X386/bin \
+-				/usr/openwin/bin \
+-				/usr/local/bin/X11 \
+ 				/usr/local/bin \
+-				/usr/lbin
++				/usr/bin
+ 		do
+ 		    if [ -x $i/$j ]
+ 		    then
+@@ -1840,9 +1803,9 @@ then
+ 	do_exit 2
+ fi
+ 
+-if [ ! -d $CFGDIR/.tbl ]
++if [ ! -d $TBLDIR ]
+ then
+-	log_err -p "The directory $CFGDIR/.tbl is missing"
++	log_err -p "The directory $TBLDIR is missing"
+ 	do_exit 2
+ fi
+ 
+@@ -1953,14 +1916,7 @@ elif [ "$OS_SYS" = OpenBSD ]
+ then
+ 	# OpenBSD
+ 	DEVPREF=/dev/rcd
+-	case "$OS_MACH" in
+-	*86)
+-		DEVSUFF=d
+-		;;
+-	*)
+-		DEVSUFF=c
+-		;;
+-	esac
++	DEVSUFF=c
+ 	FIRST=0
+ 	MAILCMD="Mail -s '%S' %A <%F >/dev/null 2>&1"
+ elif [ "$OS_SYS" = OSF1 ]
+@@ -2207,33 +2163,6 @@ do
+ 	if [ $DRVNO -eq 0 ]
+ 	then
+ 		#
+-		# Configure app-defaults/XMcd file
+-		#
+-		chmod 644 $XMCDLIB/app-defaults/XMcd 2>/dev/null
+-		if [ -w $XMCDLIB/app-defaults/XMcd ]
+-		then
+-			$AWK '
+-			/^XMcd\.libdir:/ {
+-				printf("XMcd.libdir:\t\t\t%s\n", xmcdlib)
+-				next
+-			}
+-			/^XMcd\.cddbMailCmd:/ {
+-				printf("XMcd.cddbMailCmd:\t\t%s\n", mailcmd)
+-				next
+-			}
+-			{
+-				print $0
+-			}' xmcdlib="$XMCDLIB" mailcmd="$MAILCMD" \
+-				$XMCDLIB/app-defaults/XMcd > /tmp/xmcd.$$
+-
+-			cp /tmp/xmcd.$$ $XMCDLIB/app-defaults/XMcd
+-			rm -f /tmp/xmcd.$$
+-		else
+-			log_err -p "Cannot configure $XMCDLIB/app-defaults/XMcd"
+-			EXITSTAT=1
+-		fi
+-
+-		#
+ 		# Configure common.cfg file
+ 		#
+ 		chmod 644 $CFGDIR/common.cfg 2>/dev/null
+@@ -2278,10 +2207,9 @@ do
+ 				proxyserver="$PROXYSERVER" \
+ 				browserrmt="$BROWSER_RMT" \
+ 				browserdir="$BROWSER_DIR" \
+-				$CFGDIR/common.cfg > /tmp/xmcd.$$
++				$CFGDIR/common.cfg > $TMPFILE
+ 
+-			cp /tmp/xmcd.$$ $CFGDIR/common.cfg
+-			rm -f /tmp/xmcd.$$
++			cp $TMPFILE $CFGDIR/common.cfg
+ 			(cd $CFGDIR ;\
+ 			 rm -f common.cfg-${OS_NODE} ;\
+ 			 do_link common.cfg common.cfg-${OS_NODE})

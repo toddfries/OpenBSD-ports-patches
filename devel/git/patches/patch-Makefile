@@ -1,0 +1,81 @@
+--- Makefile.orig	Thu Jun 19 00:49:49 2008
++++ Makefile	Thu Jun 19 08:59:54 2008
+@@ -164,15 +164,15 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo
+ 
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
+ 
+-CFLAGS = -g -O2 -Wall
++CFLAGS ?= -g -O2 -Wall
+ LDFLAGS =
+ ALL_CFLAGS = $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+-prefix = $(HOME)
++#prefix = $(HOME)
+ bindir = $(prefix)/bin
+-mandir = $(prefix)/share/man
++mandir = $(prefix)/man
+ infodir = $(prefix)/share/info
+ gitexecdir = $(bindir)
+ sharedir = $(prefix)/share
+@@ -184,7 +184,7 @@ else
+ sysconfdir = $(prefix)/etc
+ endif
+ lib = lib
+-ETC_GITCONFIG = $(sysconfdir)/gitconfig
++ETC_GITCONFIG = $(SYSCONFDIR)/gitconfig
+ # DESTDIR=
+ 
+ # default configuration for gitweb
+@@ -207,15 +207,15 @@ GITWEB_SITE_FOOTER =
+ 
+ export prefix bindir gitexecdir sharedir template_dir htmldir sysconfdir
+ 
+-CC = gcc
++CC ?= gcc
+ AR = ar
+ RM = rm -f
+ TAR = tar
+ FIND = find
+ INSTALL = install
+ RPMBUILD = rpmbuild
+-TCL_PATH = tclsh
+-TCLTK_PATH = wish
++TCL_PATH ?= tclsh
++TCLTK_PATH ?= wish
+ 
+ export TCL_PATH TCLTK_PATH
+ 
+@@ -662,11 +662,10 @@ ifeq ($(uname_S),FreeBSD)
+ 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+ endif
+ ifeq ($(uname_S),OpenBSD)
+-	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+-	BASIC_CFLAGS += -I/usr/local/include
+-	BASIC_LDFLAGS += -L/usr/local/lib
++	BASIC_CFLAGS += -I${X11BASE}/include -I${LOCALBASE}/include
++	BASIC_LDFLAGS += -L${X11BASE}/lib -L${LOCALBASE}/lib
+ endif
+ ifeq ($(uname_S),NetBSD)
+ 	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
+@@ -774,7 +773,7 @@ endif
+ EXTLIBS += -lz
+ 
+ ifndef NO_OPENSSL
+-	OPENSSL_LIBSSL = -lssl
++	OPENSSL_LIBSSL = -lssl -lcrypto
+ 	ifdef OPENSSLDIR
+ 		BASIC_CFLAGS += -I$(OPENSSLDIR)/include
+ 		OPENSSL_LINK = -L$(OPENSSLDIR)/$(lib) $(CC_LD_DYNPATH)$(OPENSSLDIR)/$(lib)
+@@ -1239,7 +1238,7 @@ all:: $(TEST_PROGRAMS)
+ 
+ export NO_SVN_TESTS
+ 
+-test: all
++test:
+ 	$(MAKE) -C t/ all
+ 
+ test-date$X: date.o ctype.o

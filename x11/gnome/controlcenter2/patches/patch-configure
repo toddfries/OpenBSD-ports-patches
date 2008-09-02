@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.8 2008/01/23 21:47:46 jasper Exp $
+--- configure.orig	Tue Jan  8 14:28:14 2008
++++ configure	Wed Jan 23 12:31:25 2008
+@@ -25028,7 +25028,7 @@ if test `eval echo '${'$as_ac_Header'}'` = yes; then
+   cat >>confdefs.h <<_ACEOF
+ #define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
+ _ACEOF
+- XF86MISC_LIBS="-lXxf86misc"
++ XF86MISC_LIBS="-lXxf86misc -lXext"
+ fi
+ 
+ done

@@ -1,0 +1,31 @@
+$OpenBSD: patch-configure,v 1.4 2003/03/06 20:51:39 brad Exp $
+--- configure.orig	Fri Feb 14 01:11:16 2003
++++ configure	Thu Mar  6 21:11:34 2003
+@@ -544,14 +544,11 @@ fi
+ 
+ 
+ 
+-LDFLAGS=""
+ LIBS=""
+ EXTRA_LIBS=""
+-INCLUDES=""
+ GDBM_INCLUDE=""
+ GDBM_LIB=""
+ FNV_DEP=""
+-SUBDIRS="src/pcre"
+ 
+ 
+ ac_aux_dir=
+@@ -2014,11 +2011,9 @@ if eval "test \"`echo '$ac_cv_lib_'$ac_l
+   GDBM_LIB="-lgdbm"
+ else
+   echo "$ac_t""no" 1>&6
+-fi
+-
+     
+   LDFLAGS="$old_LDFLAGS"
+-
++fi
+ 
+     if test "$THIS_PREFIX" != "" && test "$THIS_PREFIX" != "/usr"; then
+       THIS_LFLAGS="$THIS_PREFIX/lib"

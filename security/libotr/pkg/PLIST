@@ -1,0 +1,35 @@
+@comment $OpenBSD: PLIST,v 1.5 2008/07/18 13:21:22 dhill Exp $
+%%SHARED%%
+@bin bin/otr_mackey
+@bin bin/otr_modify
+@bin bin/otr_parse
+@bin bin/otr_readforge
+@bin bin/otr_remac
+@bin bin/otr_sesskeys
+include/libotr/
+include/libotr/auth.h
+include/libotr/b64.h
+include/libotr/context.h
+include/libotr/dh.h
+include/libotr/mem.h
+include/libotr/message.h
+include/libotr/privkey-t.h
+include/libotr/privkey.h
+include/libotr/proto.h
+include/libotr/serial.h
+include/libotr/sm.h
+include/libotr/tlv.h
+include/libotr/userstate.h
+include/libotr/version.h
+lib/libotr.a
+lib/libotr.la
+lib/pkgconfig/
+lib/pkgconfig/libotr.pc
+@man man/man1/otr_mackey.1
+@man man/man1/otr_modify.1
+@man man/man1/otr_parse.1
+@man man/man1/otr_readforge.1
+@man man/man1/otr_remac.1
+@man man/man1/otr_sesskeys.1
+@man man/man1/otr_toolkit.1
+share/aclocal/libotr.m4

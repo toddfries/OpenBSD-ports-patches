@@ -1,0 +1,17 @@
+$OpenBSD: patch-cgi_cgi_h,v 1.2 2006/05/15 17:08:43 fkr Exp $
+--- cgi/cgi.h.orig	Thu Dec  1 04:57:32 2005
++++ cgi/cgi.h	Mon May  8 16:54:19 2006
+@@ -267,11 +267,11 @@ FILE *cgi_filehandle (CGI *cgi, const ch
+  *              removed from future versions in favor of some sort of
+  *              user error mechanism.
+  * Input: cgi - a pointer to a CGI struct
+- *        err - a NEOERR (see util/neo_err.h for details)
++ *        nerr - a NEOERR (see util/neo_err.h for details)
+  * Output: None
+  * Return: None
+  */
+-void cgi_neo_error (CGI *cgi, NEOERR *err);
++void cgi_neo_error (CGI *cgi, NEOERR *nerr);
+ 
+ /*
+  * Function: cgi_error - display an error string to the user

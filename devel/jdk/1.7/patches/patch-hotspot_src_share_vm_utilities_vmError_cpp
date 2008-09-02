@@ -1,0 +1,38 @@
+$OpenBSD: patch-hotspot_src_share_vm_utilities_vmError_cpp,v 1.3 2008/03/19 18:05:43 kurt Exp $
+--- hotspot/src/share/vm/utilities/vmError.cpp.orig	Tue Oct 30 05:00:54 2007
++++ hotspot/src/share/vm/utilities/vmError.cpp	Wed Nov  7 13:12:15 2007
+@@ -31,7 +31,7 @@ const char *env_list[] = {
+   "JAVA_HOME", "JRE_HOME", "JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "CLASSPATH",
+   "JAVA_COMPILER", "PATH", "USERNAME",
+ 
+-  // Env variables that are defined on Solaris/Linux
++  // Env variables that are defined on Solaris/Linux/BSD
+   "LD_LIBRARY_PATH", "LD_PRELOAD", "SHELL", "DISPLAY",
+   "HOSTTYPE", "OSTYPE", "ARCH", "MACHTYPE",
+ 
+@@ -165,9 +165,16 @@ static char* next_OnError_command(char* buf, int bufle
+ 
+ static void print_bug_submit_message(outputStream *out, Thread *thread) {
+   if (out == NULL) return;
++#ifdef __FreeBSD__
++  out->print_raw_cr("#");
++  out->print_raw_cr("# If you would like to submit a bug report, please write");
++  out->print_raw_cr("# a letter to freebsd-java@FreeBSD.org mailing list");
++  out->print_raw_cr("#");
++#else
+   out->print_raw_cr("# If you would like to submit a bug report, please visit:");
+   out->print_raw   ("#   ");
+   out->print_raw_cr(Arguments::java_vendor_url_bug());
++#endif
+   // If the crash is in native code, encourage user to submit a bug to the
+   // provider of that code.
+   if (thread && thread->is_Java_thread()) {
+@@ -790,7 +797,7 @@ void VMError::report_and_die() {
+     const char* ptr = OnError;
+     while ((cmd = next_OnError_command(buffer, sizeof(buffer), &ptr)) != NULL){
+       out.print_raw   ("#   Executing ");
+-#if defined(LINUX)
++#if defined(LINUX) || defined(_ALLBSD_SOURCE)
+       out.print_raw   ("/bin/sh -c ");
+ #elif defined(SOLARIS)
+       out.print_raw   ("/usr/bin/sh -c ");

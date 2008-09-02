@@ -1,0 +1,12 @@
+$OpenBSD: patch-fitsio2_h,v 1.2 2008/01/23 15:57:26 naddy Exp $
+--- fitsio2.h.orig	Tue Jan  3 23:05:19 2006
++++ fitsio2.h	Tue Jan 22 22:05:04 2008
+@@ -28,6 +28,8 @@
+ #define MINDIRECT 8640   /* minimum size for direct reads and writes */
+                          /* MINDIRECT must have a value >= 8640 */
+ 
++#undef  MACHINE          /* OpenBSD <machine/param.h> */
++
+ /*   it is useful to identify certain specific types of machines   */
+ #define NATIVE             0 /* machine that uses non-byteswapped IEEE formats */
+ #define OTHERTYPE          1  /* any other type of machine */

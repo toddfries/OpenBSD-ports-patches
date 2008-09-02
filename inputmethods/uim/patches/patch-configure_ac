@@ -1,0 +1,40 @@
+$OpenBSD: patch-configure_ac,v 1.4 2008/06/07 09:58:40 bernd Exp $
+--- configure.ac.orig	Wed Mar 14 18:26:47 2007
++++ configure.ac	Sat Jun  7 11:37:24 2008
+@@ -794,15 +794,10 @@ if test x$use_qt = xyes ; then
+     fi
+     UIC=$HOST_UIC
+ 
+-    # GUESS plugins dir for immodule installation
+-    AC_MSG_CHECKING(for qt-immodule plugins dir)
+-    if test ! -d "$QTDIR/plugins"; then
+-      AC_MSG_RESULT(no)
+-    else
+-      QT_PLUGINSDIR=$QTDIR/plugins
+-      AC_MSG_RESULT($QT_PLUGINSDIR)
+-      AC_SUBST(QT_PLUGINSDIR)
+-    fi
++    # set plugins dir for immodule installation
++    QT_PLUGINSDIR=$QTPLUGINSDIR
++    AC_MSG_RESULT($QT_PLUGINSDIR)
++    AC_SUBST(QT_PLUGINSDIR)
+ 
+     # Process for compiler & linker flags
+     QT_CXXFLAGS="-I${QTINCDIR} -DQT_GENUINE_STR -DQT_NO_STL"
+@@ -814,13 +809,10 @@ if test x$use_qt = xyes ; then
+     LDFLAGS="$LDFLAGS $QT_LDFLAGS"
+     AC_LANG_SAVE
+     AC_LANG_CPLUSPLUS
+-    AC_CHECK_LIB(qt, main, QT_LIB=-lqt,
+-        AC_CHECK_LIB(qt-mt, main, QT_LIB=-lqt-mt,
+-            AC_MSG_ERROR([Cannot find QT libraries.])))
++    AC_CHECK_LIB(qt-mt, main, QT_LIB='-pthread -lqt-mt',
++	AC_MSG_ERROR([Cannot find QT libraries.]), -pthread)
+ 
+-    if test "$QT_LIB" = "-lqt-mt"; then
+-      QT_CXXFLAGS="$QT_CXXFLAGS -DQT_THREAD_SUPPORT"
+-    fi
++    QT_CXXFLAGS="$QT_CXXFLAGS -DQT_THREAD_SUPPORT"
+ 
+     LDFLAGS=$_SAVE_LDFLAGS
+     QT_LIBS="$X_LIBS $QT_LDFLAGS $QT_LIB -lXext -lX11"

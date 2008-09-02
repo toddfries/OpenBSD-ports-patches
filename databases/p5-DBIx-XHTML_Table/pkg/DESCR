@@ -1,0 +1,4 @@
+DBIx::XHTML_Table is a DBI extension that creates an XHTML table from a
+database query result set. It was created to fill the gap between fetching
+rows from a database and transforming them into a web browser renderable
+table.

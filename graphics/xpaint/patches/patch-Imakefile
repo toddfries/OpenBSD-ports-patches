@@ -1,0 +1,25 @@
+$OpenBSD: patch-Imakefile,v 1.2 2005/10/31 23:24:19 naddy Exp $
+--- Imakefile.orig	Fri Jun  3 14:26:03 2005
++++ Imakefile	Tue Nov  1 00:16:20 2005
+@@ -102,7 +102,7 @@ SGI_LIB = -limage
+ #endif
+ 
+ DEPLIBS = always xpaint.man XPaint.ad
+-LOCAL_LIBRARIES = -Lrw -lrw $(XPM_LIB) $(TIFF_LIB) $(SGI_LIB) $(JPEG_LIB) $(PNG_LIB) -ldl -rdynamic
++LOCAL_LIBRARIES = -Lrw -lrw $(XPM_LIB) $(TIFF_LIB) $(SGI_LIB) $(JPEG_LIB) $(PNG_LIB)
+ 
+ SUBDIRS = rw
+ 
+@@ -136,8 +136,10 @@ install::
+ 	chmod -R a+r $(DESTDIR)$(SHAREDIR)/
+ 
+ xaw::
+-	-$(RM) $(XAWDEPENDS)
+-	./configure xaw ; make		
++	-$(RM) $(XAWDEPENDS) ; ln -sf ${X11BASE}/include/X11/Xaw xaw_incdir
++	echo "XAWLIB_DEFINES = -DXAWPLAIN" > Local.xawdefs
++	echo "SYS_LIBRARIES = XawClientLibs -lm" >> Local.xawdefs
++	xmkmf ; (cd rw ; xmkmf) ; make
+ 	@echo ""
+ 	@echo "'xpaint' compiled with Xaw widgets (old and ugly)"
+ 	@echo "You should rather use Xaw3d, neXtaw or Xaw95 !!"	

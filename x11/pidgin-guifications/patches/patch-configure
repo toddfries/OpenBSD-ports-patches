@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.2 2008/07/07 00:30:31 brad Exp $
+--- configure.orig	Sun Dec 16 21:24:32 2007
++++ configure	Tue Jun  3 04:43:27 2008
+@@ -21889,7 +21889,7 @@ fi
+ 
+ 
+ if test "x$GCC" = "xyes"; then
+-	CFLAGS="$CFLAGS -Wall -g3"
++	CFLAGS="$CFLAGS -Wall"
+ fi
+ 
+ 

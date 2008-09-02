@@ -1,0 +1,37 @@
+--- Makefile.orig	Sat May 22 09:21:47 2004
++++ Makefile	Sat Feb  5 17:25:47 2005
+@@ -3,9 +3,6 @@
+ # User Options
+ #######################################################################
+ 
+-# Directory where qiv will be installed under.
+-PREFIX = /usr/local
+-
+ # Font to use for statusbar in fullscreen mode
+ STATUSBAR_FONT = "fixed"
+ 
+@@ -57,11 +54,6 @@ SS_RANDOMIZE = -r
+ # Do not edit below here!
+ ######################################################################
+ 
+-CC        = gcc
+-CFLAGS    = -O2 -Wall -fomit-frame-pointer -finline-functions \
+-	    -fcaller-saves -ffast-math -fno-strength-reduce \
+-	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
+-
+ INCLUDES  = `imlib-config --cflags-gdk`
+ LIBS      = `imlib-config --libs-gdk`
+ 
+@@ -126,12 +118,6 @@ install: $(PROGRAM)
+ 	@echo "Installing QIV..."
+ 	install -s -m 0755 $(PROGRAM) $(PREFIX)/bin
+ 	install -m 0644 $(PROGRAM).1 $(PREFIX)/man/man1
+-	$(COMPRESS_PROG) $(PREFIX)/man/man1/$(PROGRAM).1
+-	@if ./qiv -f ./intro.jpg ; \
+-	then echo "-- Test Passed --" ; \
+-	else echo "-- Test Failed --" ; \
+-	fi
+-	@echo -ne "\nDont forget to look into the \"qiv-command\" file and install it!\n-> cp qiv-command.example /usr/local/bin/qiv-command\n\n" 
+ 
+ install-xscreensaver: install
+ 	@echo "#!/bin/sh" > $(SS_PROG)

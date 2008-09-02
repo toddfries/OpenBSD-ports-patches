@@ -1,0 +1,18 @@
+# $OpenBSD: Makefile,v 1.10 2007/09/15 20:59:41 merdely Exp $
+
+COMMENT=	simple document format
+
+MODULES=	cpan
+DISTNAME=	sdf-2.001
+PKGNAME=	p5-${DISTNAME}p0
+CATEGORIES=	textproc
+
+MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Pod/}
+
+# BSD
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+
+.include <bsd.port.mk>

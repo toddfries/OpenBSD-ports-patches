@@ -1,0 +1,43 @@
+@comment $OpenBSD: PLIST-main,v 1.3 2008/06/08 10:55:25 simon Exp $
+@pkgpath mail/perdition
+@newgroup _perdition:573
+@newuser _perdition:573:573:daemon:Perdition proxy:/var/empty:/sbin/nologin
+%%SHARED%%
+bin/makebdb
+include/jain.h
+lib/libjain.a
+lib/libjain.la
+lib/libperditiondb_bdb.a
+lib/libperditiondb_bdb.la
+lib/libperditiondb_daemon.a
+lib/libperditiondb_daemon.la
+lib/libperditiondb_daemon_base.a
+lib/libperditiondb_daemon_base.la
+lib/libperditiondb_nis.a
+lib/libperditiondb_nis.la
+lib/libperditiondb_posix_regex.a
+lib/libperditiondb_posix_regex.la
+@man man/man1/makebdb.1
+@man man/man5/perditiondb.5
+@man man/man8/perdition.8
+@man man/man8/perdition.imap4.8
+@man man/man8/perdition.imap4s.8
+@man man/man8/perdition.imaps.8
+@man man/man8/perdition.pop3.8
+@man man/man8/perdition.pop3s.8
+sbin/perdition
+sbin/perdition.imap4
+sbin/perdition.imap4s
+sbin/perdition.imaps
+sbin/perdition.pop3
+sbin/perdition.pop3s
+share/examples/perdition/
+@sample ${SYSCONFDIR}/perdition/
+share/examples/perdition/Makefile
+share/examples/perdition/Makefile.popmap
+share/examples/perdition/perdition.conf
+@sample ${SYSCONFDIR}/perdition/perdition.conf
+share/examples/perdition/popmap
+@sample ${SYSCONFDIR}/perdition/popmap
+share/examples/perdition/popmap.re
+@sample ${SYSCONFDIR}/perdition/popmap.re

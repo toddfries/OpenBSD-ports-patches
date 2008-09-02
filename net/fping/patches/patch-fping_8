@@ -1,0 +1,27 @@
+$OpenBSD: patch-fping_8,v 1.2 2006/10/12 08:22:37 jakob Exp $
+--- fping.8.orig	Mon Jun 19 21:55:08 2006
++++ fping.8	Mon Jun 19 21:55:32 2006
+@@ -152,12 +152,12 @@ Sure the open2 usage is not needed in th
+ example none the less. 
+ .nf
+ 
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ require 'open2.pl';
+ 
+ $MAILTO = "root";
+ 
+-$pid = &open2("OUTPUT","INPUT","/usr/local/bin/fping -u");
++$pid = &open2("OUTPUT","INPUT","/usr/local/sbin/fping -u");
+ 
+ @check=("slapshot","foo","foobar");
+ 
+@@ -178,7 +178,7 @@ Another good example is when you want to
+ that are currently reachable.
+ .nf
+ 
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ 
+ $hosts_to_backup = `cat /etc/hosts.backup | fping -a`;
+ 

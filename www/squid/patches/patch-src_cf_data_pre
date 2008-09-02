@@ -1,0 +1,21 @@
+$OpenBSD: patch-src_cf_data_pre,v 1.28 2008/07/16 21:18:28 brad Exp $
+--- src/cf.data.pre.orig	Tue Jun 24 18:54:18 2008
++++ src/cf.data.pre	Sun Jun 29 03:10:15 2008
+@@ -3753,7 +3753,7 @@ DOC_END
+ 
+ NAME: cache_effective_user
+ TYPE: string
+-DEFAULT: nobody
++DEFAULT: _squid
+ LOC: Config.effectiveUser
+ DOC_START
+ 	If you start Squid as root, it will change its effective/real
+@@ -3767,7 +3767,7 @@ DOC_END
+ 
+ NAME: cache_effective_group
+ TYPE: string
+-DEFAULT: none
++DEFAULT: _squid
+ LOC: Config.effectiveGroup
+ DOC_START
+ 	If you want Squid to run with a specific GID regardless of

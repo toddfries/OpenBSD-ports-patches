@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 19:26:35 espie Exp $
+bin/xtermset
+@man man/man1/xtermset.1
+@man man/man5/terms.5
+share/aclocal/
+share/xtermset/
+share/xtermset/terms

@@ -1,0 +1,11 @@
+$OpenBSD: patch-src_windiv_c,v 1.2 2007/05/23 16:40:56 ckuethe Exp $
+--- src/windiv.c.orig	Thu May 17 12:50:11 2007
++++ src/windiv.c	Thu May 17 12:50:13 2007
+@@ -19,6 +19,7 @@
+ #include "rcsid.h"
+ RCSID("$Id: patch-src_windiv_c,v 1.2 2007/05/23 16:40:56 ckuethe Exp $")
+ 
++#include <sys/types.h>
+ #include <dirent.h>
+ #include <sys/stat.h>
+ #include "port.h"

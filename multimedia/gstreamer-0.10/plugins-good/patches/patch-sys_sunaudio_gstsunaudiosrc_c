@@ -1,0 +1,45 @@
+$OpenBSD: patch-sys_sunaudio_gstsunaudiosrc_c,v 1.4 2008/06/21 21:03:56 deanna Exp $
+--- sys/sunaudio/gstsunaudiosrc.c.orig	Wed Apr  2 18:37:29 2008
++++ sys/sunaudio/gstsunaudiosrc.c	Wed Jun 11 16:51:49 2008
+@@ -46,8 +46,6 @@
+ #include <fcntl.h>
+ #include <string.h>
+ #include <unistd.h>
+-#include <stropts.h>
+-#include <sys/mixer.h>
+ 
+ #include "gstsunaudiosrc.h"
+ 
+@@ -270,12 +268,14 @@ gst_sunaudiosrc_open (GstAudioSrc * asrc)
+       sunaudiosrc->info.monitor_gain);
+   GST_DEBUG_OBJECT (sunaudiosrc, "output_muted %d",
+       sunaudiosrc->info.output_muted);
++#ifndef __OpenBSD__
+   GST_DEBUG_OBJECT (sunaudiosrc, "hw_features %08x",
+       sunaudiosrc->info.hw_features);
+   GST_DEBUG_OBJECT (sunaudiosrc, "sw_features %08x",
+       sunaudiosrc->info.sw_features);
+   GST_DEBUG_OBJECT (sunaudiosrc, "sw_features_enabled %08x",
+       sunaudiosrc->info.sw_features_enabled);
++#endif
+ 
+   if (!sunaudiosrc->mixer) {
+     const char *audiodev;
+@@ -363,7 +363,7 @@ gst_sunaudiosrc_prepare (GstAudioSrc * asrc, GstRingBu
+   }
+ 
+ 
+-  ioctl (sunaudiosrc->fd, I_FLUSH, FLUSHR);
++  ioctl (sunaudiosrc->fd, AUDIO_FLUSH);
+ 
+   return TRUE;
+ }
+@@ -417,7 +417,7 @@ gst_sunaudiosrc_reset (GstAudioSrc * asrc)
+   }
+ 
+   /* Flush the audio */
+-  ret = ioctl (sunaudiosrc->fd, I_FLUSH, FLUSHR);
++  ret = ioctl (sunaudiosrc->fd, AUDIO_FLUSH);
+   if (ret == -1) {
+     GST_ELEMENT_ERROR (sunaudiosrc, RESOURCE, SETTINGS, (NULL), ("%s",
+             strerror (errno)));

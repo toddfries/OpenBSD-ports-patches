@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.6 2004/10/12 15:02:12 danh Exp $
+@man man/man5/dot-spop3d.5
+@man man/man5/spop3d.conf.5
+@man man/man8/spop3d.8
+sbin/spop3d
+%%apop%%
+@sample /var/spool/spop3d/
+@sample /var/spool/spop3d/bulletins/
+@extra ${SYSCONFDIR}/spop3d.conf
+@extraunexec rm -rf /var/spool/spop3d/

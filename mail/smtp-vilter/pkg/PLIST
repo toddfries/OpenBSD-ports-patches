@@ -1,0 +1,31 @@
+@comment $OpenBSD: PLIST,v 1.8 2006/11/12 12:09:14 mbalmer Exp $
+@newgroup _vilter:538
+@newuser _vilter:538:538:daemon:smtp-vilter:/nonexistent:/sbin/nologin
+lib/smtp-vilter/
+lib/smtp-vilter/vilter-attachment.so
+lib/smtp-vilter/vilter-clamd.so
+lib/smtp-vilter/vilter-icap.so
+lib/smtp-vilter/vilter-regex.so
+lib/smtp-vilter/vilter-spamd.so
+@man man/cat5/smtp-vilter.conf.0
+@man man/cat8/smtp-vilter.0
+sbin/smtp-vilter
+share/examples/smtp-vilter/
+@sample ${SYSCONFDIR}/smtp-vilter/
+@comment share/examples/smtp-vilter/Makefile
+share/examples/smtp-vilter/attachment-notification
+@sample ${SYSCONFDIR}/smtp-vilter/attachment-notification
+share/examples/smtp-vilter/attachment.conf
+@sample ${SYSCONFDIR}/smtp-vilter/attachment.conf
+share/examples/smtp-vilter/clamd.conf
+@sample ${SYSCONFDIR}/smtp-vilter/clamd.conf
+share/examples/smtp-vilter/icap.conf
+share/examples/smtp-vilter/recipient-notification
+@sample ${SYSCONFDIR}/smtp-vilter/recipient-notification
+share/examples/smtp-vilter/regex.conf
+@sample ${SYSCONFDIR}/smtp-vilter/regex.conf
+share/examples/smtp-vilter/smtp-vilter.conf
+@sample ${SYSCONFDIR}/smtp-vilter/smtp-vilter.conf
+share/examples/smtp-vilter/spamd.conf
+@sample ${SYSCONFDIR}/smtp-vilter/spamd.conf
+@extraunexec rm -fr /var/smtp-vilter/*

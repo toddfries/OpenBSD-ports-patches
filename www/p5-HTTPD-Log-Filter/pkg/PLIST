@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:49:52 espie Exp $
+bin/exclude_robots
+${P5SITE}/HTTPD/
+${P5SITE}/HTTPD/Log/
+${P5SITE}/HTTPD/Log/Filter.pm
+@man man/man1/exclude_robots.1
+@man man/man3p/HTTPD::Log::Filter.3p

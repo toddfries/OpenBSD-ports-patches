@@ -1,0 +1,63 @@
+$OpenBSD: patch-include_config_h,v 1.1 2000/04/16 21:19:07 espie Exp $
+--- include/config.h.orig	Fri Apr 14 15:10:44 2000
++++ include/config.h	Fri Apr 14 15:14:40 2000
+@@ -258,7 +258,7 @@
+  * would allow:
+  *  xpmtoppm <x11tiles.xpm | pnmscale 1.25 | ppmquant 90 >x11tiles_big.xpm
+  */
+-/* # define USE_XPM		/* Disable if you do not have the XPM library */
++# define USE_XPM		/* Disable if you do not have the XPM library */
+ # ifdef USE_XPM
+ #  define GRAPHIC_TOMBSTONE	/* Use graphical tombstone (rip.xpm) */
+ # endif
+@@ -271,6 +271,7 @@
+  *		LOGFILE and NEWS refer to files in the playground.
+  */
+ 
++#define WIZARD "games"
+ #ifndef WIZARD		/* allow for compile-time or Makefile changes */
+ # ifndef KR1ED
+ #  define WIZARD  "wizard" /* the person allowed to use the -D option */
+@@ -298,12 +299,14 @@
+ 
+ #ifdef UNIX
+ /* path and file name extension for compression program */
+-# define COMPRESS "/usr/ucb/compress"	     /* Lempel-Ziv compression */
+-# define COMPRESS_EXTENSION ".Z"	     /* compress's extension */
++/* # define COMPRESS "/usr/ucb/compress"	     /* Lempel-Ziv compression */
++/* # define COMPRESS_EXTENSION ".Z"	     /* compress's extension */
+ 
+ /* An example of one alternative you might want to use: */
+ /* # define COMPRESS "/usr/local/bin/gzip"   /* FSF gzip compression */
+ /* # define COMPRESS_EXTENSION ".gz"	     /* normal gzip extension */
++#define COMPRESS "/usr/bin/gzip"
++#define COMPRESS_EXTENSION ".gz"
+ #endif
+ #ifndef COMPRESS
+ # define INTERNAL_COMP	/* control use of NetHack's compression routines */
+@@ -431,7 +434,7 @@ typedef unsigned char	uchar;
+  * functions that have been macroized.
+  */
+ 
+-/*#define VISION_TABLES	/* use vision tables generated at compile time */
++#define VISION_TABLES	/* use vision tables generated at compile time */
+ #ifndef VISION_TABLES
+ # ifndef NO_MACRO_CPATH
+ #  define MACRO_CPATH	/* use clear_path macros instead of functions */
+@@ -453,14 +456,14 @@ typedef unsigned char	uchar;
+ /* dungeon levels */
+ #define WALLIFIED_MAZE	/* Fancy mazes - Jean-Christophe Collet */
+ #define REINCARNATION	/* Special Rogue-like levels */
+-/* #define BLACKMARKET	/* Massimo Campostrini (campo@sunthpi3.difi.unipi.it) */
++#define BLACKMARKET	/* Massimo Campostrini (campo@sunthpi3.difi.unipi.it) */
+ /* monsters & objects */
+ #define KOPS		/* Keystone Kops by Scott R. Turner */
+ #define SEDUCE		/* Succubi/incubi seduction, by KAA, suggested by IM */
+ #define TOURIST		/* Tourist players with cameras and Hawaiian shirts */
+ #define INVISIBLE_OBJECTS /* Objects may be invisible */
+ /* difficulty */
+-/* #define ELBERETH	/* Engraving the E-word repels monsters */
++#define ELBERETH	/* Engraving the E-word repels monsters */
+ #define NOARTIFACTWISH	/* No wishing for special artifacts -- swhite@cs.mun.ca */
+ /* I/O */
+ #define REDO		/* support for redoing last command - DGK */

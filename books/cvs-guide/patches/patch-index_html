@@ -1,0 +1,49 @@
+$OpenBSD: patch-index_html,v 1.2 2004/10/20 19:55:39 avsm Exp $
+--- index.html.orig	Wed May 26 22:40:45 2004
++++ index.html	Thu Sep 23 10:17:05 2004
+@@ -5,9 +5,11 @@
+ <center>
+ <table border="0">
+ <tr>
++<!--
+   <td><a href="OSDevWithCVS_3E.pdf"><img
+        src="images/OSDevWithCVS_3E-cover.gif"/
+        alt="Image of book's cover."></a></td>
++-->
+   <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+   <td align="center" valign="center">
+       <h1><br><font color="#003090">
+@@ -23,6 +25,7 @@
+ is available under the <a href="http://www.gnu.org/copyleft/gpl.html"
+ >GNU General Public License</a>:</p>
+ 
++<!--
+ <ul>
+ <table border="0">
+   <tr><td><a href="OSDevWithCVS_3E.pdf"
+@@ -32,6 +35,7 @@ is available under the <a href="http://w
+   </tr>
+ </table>
+ </ul>
++-->
+ 
+ <p>Thanks to Jan Wolff for transforming the original PDFs from <a
+ href="http://www.paraglyphpress.com">Paraglyph Press</a> into this
+@@ -126,7 +130,7 @@ able to offer it in several formats besi
+ <p>
+ <li> On-line <a href="cvsbook.html">HTML</a>.
+ </p>
+-
++<!--
+ <p>
+ <li> Downloadable <a href="cvsbook.html.gz">HTML</a> (single .gz file)
+ <li> Downloadable <a href="cvsbook.html.zip">HTML</a> (single .zip file)
+@@ -159,7 +163,7 @@ able to offer it in several formats besi
+ <li> <a href="cvsbook-1.21-all.zip">Everything</a> (.zip)
+      (Same as above, but in Zip format.) </li>
+ </p>
+-
++-->
+ </ul>
+ 
+ <p>

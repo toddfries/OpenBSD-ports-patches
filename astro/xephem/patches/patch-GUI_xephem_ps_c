@@ -1,0 +1,29 @@
+--- GUI/xephem/ps.c.orig	Wed Oct  6 13:50:22 1999
++++ GUI/xephem/ps.c	Thu Jul 11 22:59:22 2002
+@@ -1693,16 +1693,24 @@ XtPointer call;
+ 	if (wantp) {
+ 	    /* print */
+ 	    char name[1024];
++	    int fd;
+ 
+-	    (void) tmpnam (name);
++	    strcpy(name, "/tmp/xeXXXXXXXX");
++
++	    /*(void) tmpnam (name);*/
++	    fd = mkstemp(name);  
+ 
+ 	    /* VMS tmpnam() doesn't always include the required '.' */
+ 	    if (!strchr (name, '.'))
+ 		(void) strcat (name, ".ps");
+ 
+ 	    xpsc.prfile = XtNewString (name);
+-	    if (XPSOpen (xpsc.prfile) == 0)
++	    if (XPSOpen (xpsc.prfile) == 0) {
++		close(fd);
+ 		call_go();
++	    }
++	    else
++		close(fd);
+ 
+ 	} else {
+ 	    /* save to file -- ask whether to clobber if it already exits */

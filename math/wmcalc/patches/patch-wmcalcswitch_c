@@ -1,0 +1,52 @@
+$OpenBSD: patch-wmcalcswitch_c,v 1.2 2001/01/19 18:50:14 naddy Exp $
+--- wmcalcswitch.c.orig	Fri Nov 10 02:05:00 2000
++++ wmcalcswitch.c	Fri Jan 19 18:33:44 2001
+@@ -388,8 +388,8 @@ ButtonArea getboundaries(char ch) {
+ int write_config(void) {
+   extern int Verbose;
+   extern double MemArray[];
+-  extern char configfile[];
+-  extern char tempfile[];
++  extern char configfile[]; 
++  extern char tempfile[CONFIGFILEMAX];
+   extern char *CfgVarList[];
+   FILE *fp, *fptmp;
+   char *line = NULL;
+@@ -406,8 +406,8 @@ int write_config(void) {
+   /* Open Temporary File */
+   if ((fptmp = fopen(tempfile, "w")) == NULL) {  // Can't open file in /tmp
+     fprintf(stderr, "%s: Temporary File Open Failed\n", tempfile);
+-    strcpy(tempfile, getenv("HOME"));
+-    strcat(tempfile, "wmcalc.tmp");
++    strlcpy(tempfile, getenv("HOME"), sizeof(tempfile));
++    strlcat(tempfile, "wmcalc.tmp", sizeof(tempfile));
+     if ((fptmp = fopen(tempfile, "w")) == NULL) {  // Can't open file in HOME
+       fprintf(stderr, "%s: Temporary File Open Failed\n", tempfile);
+       return(ERR_TMP_FILE_FAILED);
+@@ -439,7 +439,7 @@ int write_config(void) {
+ 
+   /* Copy temp file over original */
+   /* Note:  If changing command, make sure to adjust size of string above!! */
+-  sprintf(movefilecmd, "mv -f %s %s\n", tempfile, configfile); 
++  snprintf(movefilecmd, sizeof(movefilecmd), "mv -f %s %s\n", tempfile, configfile); 
+   err_code = system(movefilecmd);
+   
+   if(Verbose) printf("New config file written.\n");
+@@ -468,7 +468,7 @@ int read_config(void) {
+   extern char *CfgVarList[];
+   extern char ImagChar;
+   extern char configfile[];
+-  extern char SysCalcCmd[];
++  extern char SysCalcCmd[CALC_CMD_SIZE];
+   FILE *fp;
+   int i = 0;
+   int err_code = OKAY;
+@@ -561,7 +561,7 @@ int read_config(void) {
+ 
+ 	  case CALC_LABEL:
+ 	    /* Set external calculator start command */
+-	    strcpy(SysCalcCmd, cfg_var_ptr);
++	    strlcpy(SysCalcCmd, cfg_var_ptr, sizeof(SysCalcCmd));
+ 	    if (Verbose)
+ 	      printf("Assign Calc Command: %s\n", cfg_var_ptr);
+ 	    break;

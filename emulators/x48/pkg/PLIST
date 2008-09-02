@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:42:04 espie Exp $
+bin/checkrom
+bin/dump2rom
+bin/mkcard
+bin/x48
+lib/X11/app-defaults/X48
+share/x48/
+share/x48/CARDS.doc
+share/x48/README-x48
+share/x48/ROMDump.doc

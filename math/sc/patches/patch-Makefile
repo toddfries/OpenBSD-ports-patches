@@ -1,0 +1,50 @@
+$OpenBSD: patch-Makefile,v 1.4 2006/05/28 21:21:51 weingart Exp $
+--- Makefile.orig	Fri Sep 13 21:39:56 2002
++++ Makefile	Fri May  5 10:57:43 2006
+@@ -20,19 +20,19 @@ NAME=SC
+ # packaging this with an O/S, for example, you'll probably want to change
+ # this to /usr.  Otherwise, /usr/local is probably more appropriate, unless
+ # you're replacing the vendor-supplied version.
+-prefix=/usr
++LOCALBASE=${LOCALBASE}
+ 
+ # This is where the install step puts it.
+-EXDIR=${prefix}/bin
++EXDIR=${PREFIX}/bin
+ 
+ # This is where the man page goes.
+-MANDIR=${prefix}/man/man1
++MANDIR=${PREFIX}/man/man1
+ MANEXT=1
+ MANMODE=644
+ 
+ # This is where the library file (tutorial) goes.
+ #LIBDIR=/usr/local/share/$(name) # reno
+-LIBDIR=${prefix}/lib/$(name)
++LIBDIR=${PREFIX}/share/$(name)
+ LIBRARY=-DLIBDIR=\"${LIBDIR}\"
+ 
+ # Set SIMPLE for lex.c if you don't want arrow keys or lex.c blows up
+@@ -331,13 +331,19 @@ LN=ln
+ 
+ #########################################
+ # Use this for Linux
+-CC=gcc
++#CC=gcc
+ # Only use -Wall for testing, since it produces warnings that are of no
+ # real effect on the reliability of the program, but may concern some
+ # people who don't understand them.
+ #CFLAGS=-DSYSV3 -O2 -Wall -pipe
+-CFLAGS=-DSYSV3 -O2 -pipe
+-LIB=-lm -lncurses
++#CFLAGS=-DSYSV3 -O2 -pipe
++#LIB=-lm -lncurses
++
++#########################################
++# Use this for OpenBSD
++CC?=cc
++LIB=-lm -lcurses -ltermcap
++YACC=yacc
+ 
+ # All of the source files
+ SRC=Makefile abbrev.c cmds.c color.c crypt.c eres.sed frame.c format.c gram.y \

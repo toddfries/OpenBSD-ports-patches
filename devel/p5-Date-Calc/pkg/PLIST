@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST,v 1.10 2004/12/01 05:38:49 kevlo Exp $
+${P5ARCH}/Date/
+${P5ARCH}/Date/Calc/
+${P5ARCH}/Date/Calc.pm
+${P5ARCH}/Date/Calc.pod
+${P5ARCH}/Date/Calc/Object.pm
+${P5ARCH}/Date/Calc/Object.pod
+${P5ARCH}/Date/Calendar/
+${P5ARCH}/Date/Calendar.pm
+${P5ARCH}/Date/Calendar.pod
+${P5ARCH}/Date/Calendar/Profiles.pm
+${P5ARCH}/Date/Calendar/Profiles.pod
+${P5ARCH}/Date/Calendar/Year.pm
+${P5ARCH}/Date/Calendar/Year.pod
+${P5ARCH}/auto/Date/
+${P5ARCH}/auto/Date/Calc/
+${P5ARCH}/auto/Date/Calc/Calc.bs
+${P5ARCH}/auto/Date/Calc/Calc.so
+@man man/man3p/Date::Calc.3p
+@man man/man3p/Date::Calc::Object.3p
+@man man/man3p/Date::Calendar.3p
+@man man/man3p/Date::Calendar::Profiles.3p
+@man man/man3p/Date::Calendar::Year.3p

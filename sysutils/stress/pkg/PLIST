@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:39:34 espie Exp $
+bin/stress
+@info info/stress.info
+@man man/man1/stress.1

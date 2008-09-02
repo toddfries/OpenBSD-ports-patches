@@ -1,0 +1,545 @@
+@comment $OpenBSD: PLIST,v 1.25 2005/10/12 05:42:31 fgsch Exp $
+@conflict chipmunk-*
+bin/analog
+share/analog/
+share/analog/anlgform.html
+share/analog/anlgform.pl
+@mode 111
+@group bin
+@sample /var/www/cgi-bin/anlgform.pl
+@mode
+@group
+share/analog/images/
+@group bin
+@sample /var/www/htdocs/analog-images/
+@group
+share/analog/images/analogo.gif
+@group bin
+@sample /var/www/htdocs/analog-images/analogo.gif
+@group
+share/analog/images/analogo.png
+share/analog/images/bara1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bara1.gif
+@group
+share/analog/images/bara1.png
+share/analog/images/bara16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bara16.gif
+@group
+share/analog/images/bara16.png
+share/analog/images/bara2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bara2.gif
+@group
+share/analog/images/bara2.png
+share/analog/images/bara32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bara32.gif
+@group
+share/analog/images/bara32.png
+share/analog/images/bara4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bara4.gif
+@group
+share/analog/images/bara4.png
+share/analog/images/bara8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bara8.gif
+@group
+share/analog/images/bara8.png
+share/analog/images/barb1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barb1.gif
+@group
+share/analog/images/barb1.png
+share/analog/images/barb16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barb16.gif
+@group
+share/analog/images/barb16.png
+share/analog/images/barb2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barb2.gif
+@group
+share/analog/images/barb2.png
+share/analog/images/barb32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barb32.gif
+@group
+share/analog/images/barb32.png
+share/analog/images/barb4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barb4.gif
+@group
+share/analog/images/barb4.png
+share/analog/images/barb8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barb8.gif
+@group
+share/analog/images/barb8.png
+share/analog/images/barc1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barc1.gif
+@group
+share/analog/images/barc1.png
+share/analog/images/barc16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barc16.gif
+@group
+share/analog/images/barc16.png
+share/analog/images/barc2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barc2.gif
+@group
+share/analog/images/barc2.png
+share/analog/images/barc32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barc32.gif
+@group
+share/analog/images/barc32.png
+share/analog/images/barc4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barc4.gif
+@group
+share/analog/images/barc4.png
+share/analog/images/barc8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barc8.gif
+@group
+share/analog/images/barc8.png
+share/analog/images/bard1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bard1.gif
+@group
+share/analog/images/bard1.png
+share/analog/images/bard16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bard16.gif
+@group
+share/analog/images/bard16.png
+share/analog/images/bard2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bard2.gif
+@group
+share/analog/images/bard2.png
+share/analog/images/bard32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bard32.gif
+@group
+share/analog/images/bard32.png
+share/analog/images/bard4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bard4.gif
+@group
+share/analog/images/bard4.png
+share/analog/images/bard8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bard8.gif
+@group
+share/analog/images/bard8.png
+share/analog/images/bare1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bare1.gif
+@group
+share/analog/images/bare1.png
+share/analog/images/bare16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bare16.gif
+@group
+share/analog/images/bare16.png
+share/analog/images/bare2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bare2.gif
+@group
+share/analog/images/bare2.png
+share/analog/images/bare32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bare32.gif
+@group
+share/analog/images/bare32.png
+share/analog/images/bare4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bare4.gif
+@group
+share/analog/images/bare4.png
+share/analog/images/bare8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/bare8.gif
+@group
+share/analog/images/bare8.png
+share/analog/images/barf1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barf1.gif
+@group
+share/analog/images/barf1.png
+share/analog/images/barf16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barf16.gif
+@group
+share/analog/images/barf16.png
+share/analog/images/barf2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barf2.gif
+@group
+share/analog/images/barf2.png
+share/analog/images/barf32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barf32.gif
+@group
+share/analog/images/barf32.png
+share/analog/images/barf4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barf4.gif
+@group
+share/analog/images/barf4.png
+share/analog/images/barf8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barf8.gif
+@group
+share/analog/images/barf8.png
+share/analog/images/barg1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barg1.gif
+@group
+share/analog/images/barg1.png
+share/analog/images/barg16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barg16.gif
+@group
+share/analog/images/barg16.png
+share/analog/images/barg2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barg2.gif
+@group
+share/analog/images/barg2.png
+share/analog/images/barg32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barg32.gif
+@group
+share/analog/images/barg32.png
+share/analog/images/barg4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barg4.gif
+@group
+share/analog/images/barg4.png
+share/analog/images/barg8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barg8.gif
+@group
+share/analog/images/barg8.png
+share/analog/images/barh1.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barh1.gif
+@group
+share/analog/images/barh1.png
+share/analog/images/barh16.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barh16.gif
+@group
+share/analog/images/barh16.png
+share/analog/images/barh2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barh2.gif
+@group
+share/analog/images/barh2.png
+share/analog/images/barh32.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barh32.gif
+@group
+share/analog/images/barh32.png
+share/analog/images/barh4.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barh4.gif
+@group
+share/analog/images/barh4.png
+share/analog/images/barh8.gif
+@group bin
+@sample /var/www/htdocs/analog-images/barh8.gif
+@group
+share/analog/images/barh8.png
+share/analog/images/bari1.gif
+share/analog/images/bari1.png
+share/analog/images/bari16.gif
+share/analog/images/bari16.png
+share/analog/images/bari2.gif
+share/analog/images/bari2.png
+share/analog/images/bari32.gif
+share/analog/images/bari32.png
+share/analog/images/bari4.gif
+share/analog/images/bari4.png
+share/analog/images/bari8.gif
+share/analog/images/bari8.png
+share/analog/images/barj1.gif
+share/analog/images/barj1.png
+share/analog/images/barj16.gif
+share/analog/images/barj16.png
+share/analog/images/barj2.gif
+share/analog/images/barj2.png
+share/analog/images/barj32.gif
+share/analog/images/barj32.png
+share/analog/images/barj4.gif
+share/analog/images/barj4.png
+share/analog/images/barj8.gif
+share/analog/images/barj8.png
+share/analog/images/html2.gif
+@group bin
+@sample /var/www/htdocs/analog-images/html2.gif
+@group
+share/analog/images/html2.png
+share/analog/images/sq0.png
+share/analog/images/sq1.png
+share/analog/images/sq2.png
+share/analog/images/sq3.png
+share/analog/images/sq4.png
+share/analog/images/sq5.png
+share/analog/images/sq6.png
+share/analog/images/sq7.png
+share/analog/images/sq8.png
+share/analog/images/sq9.png
+share/analog/images/sqg.png
+share/analog/lang/
+share/analog/lang/README.txt
+share/analog/lang/am.lng
+share/analog/lang/amdom.tab
+share/analog/lang/ba.lng
+share/analog/lang/baq.lng
+share/analog/lang/bg.lng
+share/analog/lang/bgdesc.txt
+share/analog/lang/bgdom.tab
+share/analog/lang/bgm.lng
+share/analog/lang/bgmdesc.txt
+share/analog/lang/bgmdom.tab
+share/analog/lang/br.lng
+share/analog/lang/bra.lng
+share/analog/lang/bradesc.txt
+share/analog/lang/bradom.tab
+share/analog/lang/brdesc.txt
+share/analog/lang/brdom.tab
+share/analog/lang/cat.lng
+share/analog/lang/cata.lng
+share/analog/lang/catadom.tab
+share/analog/lang/catdom.tab
+share/analog/lang/cn.lng
+share/analog/lang/cndesc.txt
+share/analog/lang/cndom.tab
+share/analog/lang/cz.lng
+share/analog/lang/cz1.lng
+share/analog/lang/cz1a.lng
+share/analog/lang/cza.lng
+share/analog/lang/de.lng
+share/analog/lang/dea.lng
+share/analog/lang/deadom.tab
+share/analog/lang/dedom.tab
+share/analog/lang/deform.html
+share/analog/lang/dk.lng
+share/analog/lang/dka.lng
+share/analog/lang/es.lng
+share/analog/lang/esa.lng
+share/analog/lang/esadesc.txt
+share/analog/lang/esadom.tab
+share/analog/lang/esdesc.txt
+share/analog/lang/esdom.tab
+share/analog/lang/esform.html
+share/analog/lang/fi.lng
+share/analog/lang/fia.lng
+share/analog/lang/fiadom.tab
+share/analog/lang/fidom.tab
+share/analog/lang/fr.lng
+share/analog/lang/fra.lng
+share/analog/lang/fradesc.txt
+share/analog/lang/fradom.tab
+share/analog/lang/frdesc.txt
+share/analog/lang/frdom.tab
+share/analog/lang/frform.html
+share/analog/lang/gr.lng
+share/analog/lang/gra.lng
+share/analog/lang/hr.lng
+share/analog/lang/hu.cfg
+share/analog/lang/hu.lng
+share/analog/lang/hudom.tab
+share/analog/lang/id.lng
+share/analog/lang/ida.lng
+share/analog/lang/is.lng
+share/analog/lang/isa.lng
+share/analog/lang/it.lng
+share/analog/lang/ita.lng
+share/analog/lang/itadesc.txt
+share/analog/lang/itadom.tab
+share/analog/lang/itdesc.txt
+share/analog/lang/itdom.tab
+share/analog/lang/itform.html
+share/analog/lang/jpe.cfg
+share/analog/lang/jpe.lng
+share/analog/lang/jpedesc.txt
+share/analog/lang/jpedom.tab
+share/analog/lang/jpeform.html
+share/analog/lang/jpj.cfg
+share/analog/lang/jpj.lng
+share/analog/lang/jpjdesc.txt
+share/analog/lang/jpjdom.tab
+share/analog/lang/jpjform.html
+share/analog/lang/jps.cfg
+share/analog/lang/jps.lng
+share/analog/lang/jpsdesc.txt
+share/analog/lang/jpsdom.tab
+share/analog/lang/jpsform.html
+share/analog/lang/jpu.cfg
+share/analog/lang/jpu.lng
+share/analog/lang/jpudesc.txt
+share/analog/lang/jpudom.tab
+share/analog/lang/jpuform.html
+share/analog/lang/kr.lng
+share/analog/lang/lt.lng
+share/analog/lang/lv.lng
+share/analog/lang/nl.lng
+share/analog/lang/nla.lng
+share/analog/lang/nladesc.txt
+share/analog/lang/nladom.tab
+share/analog/lang/nldesc.txt
+share/analog/lang/nldom.tab
+share/analog/lang/no.lng
+share/analog/lang/no2.lng
+share/analog/lang/no2a.lng
+share/analog/lang/noa.lng
+share/analog/lang/pl.lng
+share/analog/lang/pla.lng
+share/analog/lang/pladom.tab
+share/analog/lang/pldom.tab
+share/analog/lang/pt.lng
+share/analog/lang/pta.lng
+share/analog/lang/ptadesc.txt
+share/analog/lang/ptadom.tab
+share/analog/lang/ptdesc.txt
+share/analog/lang/ptdom.tab
+share/analog/lang/ro.lng
+share/analog/lang/rodom.tab
+share/analog/lang/ru.lng
+share/analog/lang/ru1.lng
+share/analog/lang/ru1desc.txt
+share/analog/lang/ru1dom.tab
+share/analog/lang/rudesc.txt
+share/analog/lang/rudom.tab
+share/analog/lang/ruform.html
+share/analog/lang/se.lng
+share/analog/lang/se2.lng
+share/analog/lang/se2a.lng
+share/analog/lang/se2adesc.txt
+share/analog/lang/se2adom.tab
+share/analog/lang/se2desc.txt
+share/analog/lang/se2dom.tab
+share/analog/lang/sea.lng
+share/analog/lang/seadom.tab
+share/analog/lang/sedom.tab
+share/analog/lang/si.lng
+share/analog/lang/si1.lng
+share/analog/lang/sk.lng
+share/analog/lang/sk1.lng
+share/analog/lang/sk1a.lng
+share/analog/lang/sk1adesc.txt
+share/analog/lang/sk1adom.tab
+share/analog/lang/sk1desc.txt
+share/analog/lang/sk1dom.tab
+share/analog/lang/ska.lng
+share/analog/lang/skadesc.txt
+share/analog/lang/skadom.tab
+share/analog/lang/skdesc.txt
+share/analog/lang/skdom.tab
+share/analog/lang/tr.lng
+share/analog/lang/tw.lng
+share/analog/lang/twdesc.txt
+share/analog/lang/twdom.tab
+share/analog/lang/ua.lng
+share/analog/lang/uadesc.txt
+share/analog/lang/uk.lng
+share/analog/lang/uk12.lng
+share/analog/lang/uka.lng
+share/analog/lang/ukdesc.txt
+share/analog/lang/ukdom.tab
+share/analog/lang/us.lng
+share/analog/lang/us24.lng
+share/analog/lang/usa.lng
+share/analog/lang/usdesc.txt
+share/analog/lang/usdom.tab
+share/analog/lang/usform.html
+share/analog/lang/yu.lng
+share/analog/lang/yua.lng
+share/analog/lang/yudom.tab
+share/doc/analog/
+share/doc/analog/LicBSD.txt
+share/doc/analog/Licbzip2.txt
+share/doc/analog/Licence.txt
+share/doc/analog/Licgd.txt
+share/doc/analog/Licpcre.txt
+share/doc/analog/Licpng.txt
+share/doc/analog/Licunzip.txt
+share/doc/analog/Liczlib.txt
+share/doc/analog/Readme.html
+share/doc/analog/acknow.html
+share/doc/analog/alias.html
+share/doc/analog/analogo.gif
+share/doc/analog/anlgdocs.css
+share/doc/analog/args.html
+share/doc/analog/bara8.gif
+share/doc/analog/barb1.gif
+share/doc/analog/barb32.gif
+share/doc/analog/barb8.gif
+share/doc/analog/barc8.gif
+share/doc/analog/bard8.gif
+share/doc/analog/bare8.gif
+share/doc/analog/barf8.gif
+share/doc/analog/barg8.gif
+share/doc/analog/barh8.gif
+share/doc/analog/bari8.gif
+share/doc/analog/barj8.gif
+share/doc/analog/basiccmd.html
+share/doc/analog/cache.html
+share/doc/analog/compout.html
+share/doc/analog/custom.html
+share/doc/analog/debug.html
+share/doc/analog/defns.html
+share/doc/analog/dns.html
+share/doc/analog/domfile.html
+share/doc/analog/errors.html
+share/doc/analog/faq.html
+share/doc/analog/favicon.ico
+share/doc/analog/form.html
+share/doc/analog/helpers.html
+share/doc/analog/hierreps.html
+share/doc/analog/include.html
+share/doc/analog/indx.html
+share/doc/analog/logfile.html
+share/doc/analog/logfmt.html
+share/doc/analog/lowmem.html
+share/doc/analog/mailing.html
+share/doc/analog/map.html
+share/doc/analog/meaning.html
+share/doc/analog/othreps.html
+share/doc/analog/output.html
+share/doc/analog/quickref.html
+share/doc/analog/reports.html
+share/doc/analog/start.html
+share/doc/analog/startmac.html
+share/doc/analog/startpc.html
+share/doc/analog/startux.html
+share/doc/analog/syntax.html
+share/doc/analog/timereps.html
+share/doc/analog/update.html
+share/doc/analog/wasnew1.html
+share/doc/analog/wasnew2.html
+share/doc/analog/wasnew3.html
+share/doc/analog/wasnew4.html
+share/doc/analog/wasnew5.html
+share/doc/analog/webworks.html
+share/doc/analog/whatsnew.html
+share/examples/analog/
+share/examples/analog/big.cfg
+@sample ${SYSCONFDIR}/analog.cfg
+share/examples/analog/bigbyrep.cfg
+share/examples/analog/misclogs.cfg
+share/examples/analog/robotinc.cfg
+share/examples/analog/searchen.cfg
+share/examples/analog/statslab.cfg
+share/examples/analog/typealias.cfg
+share/examples/analog/virtdoms.cfg
+share/examples/analog/xferlog.cfg

@@ -1,0 +1,13 @@
+$OpenBSD: patch-makefile,v 1.1 2006/04/07 07:40:18 pvalchev Exp $
+--- makefile.orig	Tue Jul 16 09:52:08 1991
++++ makefile	Fri Apr  7 01:38:55 2006
+@@ -68,7 +68,8 @@ help :
+ 
+ # install alpha zoo as "tzoo"
+ install:
+-	mv zoo $(DESTDIR)/tzoo
++	$(BSD_INSTALL_PROGRAM) $(TARGETS) $(PREFIX)/bin
++	$(BSD_INSTALL_MAN) zoo.1 fiz.1 $(PREFIX)/man/man1
+ 
+ # install beta zoo as "bzoo"
+ inst_beta:

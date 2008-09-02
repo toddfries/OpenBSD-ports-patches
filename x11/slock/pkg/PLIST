@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.2 2008/01/26 18:48:19 matthieu Exp $
+@mode g+s
+@group auth
+bin/slock

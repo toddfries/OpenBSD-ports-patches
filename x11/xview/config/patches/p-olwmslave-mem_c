@@ -1,0 +1,12 @@
+--- clients/olwmslave/mem.c.orig	1993-06-29 07:12:12.000000000 +0200
++++ clients/olwmslave/mem.c	2003-12-30 01:31:16.000000000 +0100
+@@ -16,7 +16,8 @@ static	char	sccsid[] = "@(#) mem.c 26.1 
+  *
+  */
+ 
+-#include <malloc.h>
++#include <sys/param.h>
++#include <stdlib.h>
+ #include <memory.h>
+ #include <stdio.h>
+ #include <sys/types.h>

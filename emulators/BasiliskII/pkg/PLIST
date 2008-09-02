@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 00:42:04 espie Exp $
+bin/BasiliskII
+@man man/man1/BasiliskII.1
+share/BasiliskII/
+share/BasiliskII/fbdevices
+share/BasiliskII/keycodes
+share/doc/BasiliskII/
+share/doc/BasiliskII/README

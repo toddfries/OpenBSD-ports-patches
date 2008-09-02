@@ -1,0 +1,17 @@
+$OpenBSD: patch-src_sounds_Makefile_in,v 1.2 2007/10/15 05:08:20 jasper Exp $
+--- src/sounds/Makefile.in.orig	Mon Aug 13 20:36:55 2007
++++ src/sounds/Makefile.in	Sun Oct 14 23:17:22 2007
+@@ -340,13 +340,6 @@ uninstall-soundDATA:
+ 	done
+ install-soundlistDATA: $(soundlist_DATA)
+ 	@$(NORMAL_INSTALL)
+-	test -z "$(soundlistdir)" || $(mkdir_p) "$(DESTDIR)$(soundlistdir)"
+-	@list='$(soundlist_DATA)'; for p in $$list; do \
+-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+-	  f=$(am__strip_dir) \
+-	  echo " $(soundlistDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(soundlistdir)/$$f'"; \
+-	  $(soundlistDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(soundlistdir)/$$f"; \
+-	done
+ 
+ uninstall-soundlistDATA:
+ 	@$(NORMAL_UNINSTALL)

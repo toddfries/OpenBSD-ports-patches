@@ -1,0 +1,10 @@
+--- lib/libxview/textsw/ei_text.c.orig	1993-06-29 07:17:37.000000000 +0200
++++ lib/libxview/textsw/ei_text.c	2003-12-30 01:31:13.000000000 +0100
+@@ -121,6 +121,7 @@ static void	ei_plain_text_set_dummy_char
+ #endif
+ static struct ei_span_result ei_plain_text_span_of_group();
+ static struct ei_process_result ei_plain_text_expand();
++static paint_batch();
+ 
+ struct ei_ops   ei_plain_text_ops = {
+     ei_plain_text_destroy,

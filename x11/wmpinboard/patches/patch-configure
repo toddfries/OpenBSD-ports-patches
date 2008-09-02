@@ -1,0 +1,13 @@
+$OpenBSD: patch-configure,v 1.2 2002/12/25 11:16:27 wilfried Exp $
+--- configure.orig	Thu Apr 13 15:37:26 2000
++++ configure	Wed Dec 25 12:04:12 2002
+@@ -1034,9 +1034,6 @@ ac_compile='${CC-cc} -c $CFLAGS $CPPFLAG
+ ac_link='${CC-cc} -o conftest${ac_exeext} $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS 1>&5'
+ cross_compiling=$ac_cv_prog_cc_cross
+ 
+-
+-CFLAGS="$CFLAGS -D_BSD_SOURCE -D_POSIX_SOURCE=199506L"
+-
+ if test x$GCC = xyes; then
+   CFLAGS="$CFLAGS -Wall -ansi -pedantic"
+ fi

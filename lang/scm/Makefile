@@ -1,0 +1,116 @@
+# $OpenBSD: Makefile,v 1.23 2008/01/04 17:48:36 espie Exp $
+# losely based on the FreeBSD port
+
+.if ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "vax" || \
+    ${MACHINE_ARCH} == "powerpc" || ${MACHINE_ARCH} == "sparc" || \
+    ${MACHINE_ARCH} == "sparc64"
+BROKEN=		segfaults in longjump return while testing continuations
+.endif
+
+COMMENT=	scheme r5 interpreter
+
+CATEGORIES=	lang
+
+V=5e1
+DISTNAME=	scm$V
+PKGNAME=	scm-$V
+EXTRACT_SUFX=	.zip
+
+HOMEPAGE=	http://swissnet.ai.mit.edu/~jaffer/SCM.html
+
+MASTER_SITES=	ftp://ftp.swiss.ai.mit.edu/pub/scm/
+
+MAINTAINER=	Marc Espie <espie@openbsd.org>
+
+WRKDIST=	${WRKDIR}/scm
+
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+WANTLIB=		c curses termcap m readline
+
+FLAVORS=no_x11
+
+FLAVOR?=
+SCM_DATA=	COPYING Idiffer.scm Iedline.scm Init5e1.scm Link.scm \
+		Macexp.scm Macro.scm Transcen.scm Tscript.scm \
+		build build.scm compile.scm hobbit.scm mkimpcat.scm \
+		r4rstest.scm scmhob.scm \
+		disarm.scm split.scm
+
+SCM_INFO=	scm.info hobbit.info
+SCM_INCLUDES=	scmflags.h scmfig.h patchlvl.h scmhob.h
+.if !{FLAVOR:L:Mno_x11}
+SCM_DATA+=	keysymdef.scm x11.scm xatoms.scm xevent.scm
+SCM_INFO+=	Xlibscm.info
+.endif
+
+FEATURES=arrays bignums cautious edit-line curses posix socket unix \
+dynamic-linking i/o-extensions inexact regex
+
+.if ${FLAVOR:L:Mno_x11}
+.else
+FEATURES+=x
+OPTIONS+=--compiler-options=-I${X11BASE}/include --compiler-options=-O2
+OPTIONS+=--linker-options=-L${X11BASE}/lib
+SCM_DATA+=	x11.scm xevent.scm
+WANTLIB+=	X11
+USE_X11=	Yes
+.endif
+
+BUILD_DEPENDS=::devel/slib
+RUN_DEPENDS=::devel/slib
+
+FEATURE_LIST=
+.for f in ${FEATURES}
+FEATURE_LIST+=-F $f
+.endfor
+
+pre-build:
+	@echo "srcdir=${WRKSRC}" >${WRKSRC}/srcdir.mk
+
+post-build:
+	cd ${WRKSRC} && ${MAKE_ENV} PATH=${WRKSRC}:${PORTPATH} /bin/sh ./build \
+	    ${FEATURE_LIST} \
+	    ${OPTIONS} \
+	    -h system \
+	    -o scm \
+	    -s "${PREFIX}/share/scm/"
+	cd ${WRKSRC} && ${MAKE_ENV} PATH=${WRKSRC}:${PORTPATH} /bin/sh ./build \
+	    ${FEATURE_LIST} -F sicp \
+	    ${OPTIONS} \
+	    -h system \
+	    -o scm-sicp \
+	    -s "${PREFIX}/share/scm/"
+
+ALL_TARGET=	scmlit
+
+#CFLAGS+=	-Dunix
+MAKE_FLAGS=	CFLAGS='${CFLAGS}' LD='${CC}'
+MAKE_ENV=	SCHEME_LIBRARY_PATH=${LOCALBASE}/share/slib/
+
+do-install:
+	${INSTALL_PROGRAM} ${WRKBUILD}/scm	${PREFIX}/bin
+	${INSTALL_PROGRAM} ${WRKBUILD}/scmlit	${PREFIX}/bin
+	${INSTALL_PROGRAM} ${WRKBUILD}/scm-sicp	${PREFIX}/bin
+	${INSTALL_MAN} ${WRKBUILD}/scm.1	${PREFIX}/man/man1
+	${INSTALL_DATA_DIR} ${PREFIX}/share/scm
+	${INSTALL_DATA_DIR} ${PREFIX}/include/scm
+	sed -e 's,@PREFIX@,${TRUEPREFIX},' \
+	    <${FILESDIR}/require.scm.in \
+	    >${PREFIX}/share/scm/require.scm
+.for file in ${SCM_INCLUDES}
+	${INSTALL_DATA} ${WRKBUILD}/${file} ${PREFIX}/include/scm
+.endfor
+.for file in ${SCM_DATA}
+	${INSTALL_DATA} ${WRKSRC}/${file} ${PREFIX}/share/scm
+.endfor
+.for file in ${SCM_INFO}
+	${INSTALL_DATA} ${WRKSRC}/${file} ${PREFIX}/info
+.endfor
+
+FAKE_FLAGS=exec_prefix=${WRKINST}${TRUEPREFIX}/
+REGRESS_TARGET=	check
+
+.include <bsd.port.mk>

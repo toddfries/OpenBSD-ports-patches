@@ -1,0 +1,4 @@
+HTML::FromText converts plain text to HTML. There are a handful
+of options that shape the conversion. There is a utility function,
+text2html, that's exported by default. This function is simply a
+short-cut to the Object Oriented interface.

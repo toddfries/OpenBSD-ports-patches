@@ -1,0 +1,11 @@
+# $OpenBSD: intltool.port.mk,v 1.2 2008/01/04 18:38:52 espie Exp $
+
+BUILD_DEPENDS+=	::textproc/intltool
+
+MODINTLTOOL_OVERRIDE=INTLTOOL_EXTRACT=${LOCALBASE}/bin/intltool-extract \
+		INTLTOOL_MERGE=${LOCALBASE}/bin/intltool-merge \
+		INTLTOOL_UPDATE=${LOCALBASE}/bin/intltool-update
+
+CONFIGURE_ENV+=	${MODINTLTOOL_OVERRIDE}
+MAKE_ENV+=	${MODINTLTOOL_OVERRIDE}
+MAKE_FLAGS+=	${MODINTLTOOL_OVERRIDE}

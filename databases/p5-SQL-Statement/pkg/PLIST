@@ -1,0 +1,17 @@
+@comment $OpenBSD: PLIST,v 1.6 2004/09/14 23:31:46 espie Exp $
+${P5SITE}/SQL/
+${P5SITE}/SQL/Dialects/
+${P5SITE}/SQL/Dialects/ANSI.pm
+${P5SITE}/SQL/Dialects/AnyData.pm
+${P5SITE}/SQL/Dialects/CSV.pm
+${P5SITE}/SQL/Eval.pm
+${P5SITE}/SQL/Parser.pm
+${P5SITE}/SQL/Statement/
+${P5SITE}/SQL/Statement.pm
+${P5SITE}/SQL/Statement/GetInfo.pm
+@man man/man3p/SQL::Dialects::ANSI.3p
+@man man/man3p/SQL::Dialects::AnyData.3p
+@man man/man3p/SQL::Dialects::CSV.3p
+@man man/man3p/SQL::Eval.3p
+@man man/man3p/SQL::Parser.3p
+@man man/man3p/SQL::Statement.3p

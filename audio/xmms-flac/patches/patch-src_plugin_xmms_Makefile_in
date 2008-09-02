@@ -1,0 +1,23 @@
+$OpenBSD: patch-src_plugin_xmms_Makefile_in,v 1.4 2007/09/24 17:23:55 naddy Exp $
+--- src/plugin_xmms/Makefile.in.orig	Sun Sep 16 22:05:18 2007
++++ src/plugin_xmms/Makefile.in	Mon Sep 24 17:08:57 2007
+@@ -264,8 +264,7 @@ libxmms_flac_la_LIBADD = \
+ 	$(top_builddir)/src/share/replaygain_analysis/libreplaygain_analysis.la \
+ 	$(top_builddir)/src/share/replaygain_synthesis/libreplaygain_synthesis.la \
+ 	$(top_builddir)/src/share/utf8/libutf8.la \
+-	$(top_builddir)/src/libFLAC/libFLAC.la \
+-	-L$(top_builddir)/src/libFLAC/.libs \
++	-lFLAC \
+ 	@OGG_LIBS@ \
+ 	@XMMS_LIBS@ \
+ 	@LIBICONV@
+@@ -283,8 +282,7 @@ libxmms_flac_la_DEPENDENCIES = \
+ 	$(top_builddir)/src/share/grabbag/libgrabbag.la \
+ 	$(top_builddir)/src/share/replaygain_analysis/libreplaygain_analysis.la \
+ 	$(top_builddir)/src/share/replaygain_synthesis/libreplaygain_synthesis.la \
+-	$(top_builddir)/src/share/utf8/libutf8.la \
+-	$(top_builddir)/src/libFLAC/libFLAC.la
++	$(top_builddir)/src/share/utf8/libutf8.la
+ am__objects_1 = charset.lo configure.lo fileinfo.lo http.lo plugin.lo \
+ 	tag.lo
+ am_libxmms_flac_la_OBJECTS = $(am__objects_1)

@@ -1,0 +1,45 @@
+@comment $OpenBSD: PLIST,v 1.4 2005/06/09 01:19:36 kevlo Exp $
+bin/algotutor
+bin/gen_at_graph
+${P5SITE}/algotutor/
+${P5SITE}/algotutor/BST.pm
+${P5SITE}/algotutor/Board.pm
+${P5SITE}/algotutor/Collection.pm
+${P5SITE}/algotutor/Configurable.pm
+${P5SITE}/algotutor/DCEdge.pm
+${P5SITE}/algotutor/Edge.pm
+${P5SITE}/algotutor/Graph.pm
+${P5SITE}/algotutor/Heap.pm
+${P5SITE}/algotutor/PQueue.pm
+${P5SITE}/algotutor/RBTree.pm
+${P5SITE}/algotutor/RecCanvas.pm
+${P5SITE}/algotutor/RecDialog.pm
+${P5SITE}/algotutor/TreeNode.pm
+${P5SITE}/algotutor/Vector.pm
+${P5SITE}/algotutor/Vertex.pm
+${P5SITE}/algotutor/basic.pl
+${P5SITE}/algotutor/cgeom/
+${P5SITE}/algotutor/cgeom/dom
+${P5SITE}/algotutor/cgeom/graham
+${P5SITE}/algotutor/cgeom/utils
+${P5SITE}/algotutor/dp/
+${P5SITE}/algotutor/dp/flwa
+${P5SITE}/algotutor/dp/lcs
+${P5SITE}/algotutor/dp/matrixchain
+${P5SITE}/algotutor/graph/
+${P5SITE}/algotutor/graph/flwa
+${P5SITE}/algotutor/graph/pfs
+${P5SITE}/algotutor/utilalgo
+@man man/man1/algotutor.1
+@man man/man1/gen_at_graph.1
+share/algotutor/
+share/algotutor/data/
+share/algotutor/data/countries.gr
+share/algotutor/data/lv.gr
+share/algotutor/data/pts1.gr
+share/algotutor/data/randgrid.gr
+share/algotutor/data/simple.gr
+share/algotutor/data/trc.gr
+share/algotutor/data/tt.gr
+share/examples/algotutor/
+share/examples/algotutor/algotutor

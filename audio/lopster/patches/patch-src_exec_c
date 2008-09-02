@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_exec_c,v 1.2 2003/04/05 22:19:35 margarida Exp $
+--- src/exec.c.orig	Tue Mar  4 14:08:56 2003
++++ src/exec.c	Wed Mar  5 16:41:48 2003
+@@ -405,7 +405,7 @@ static int exec_fire_up(exec_t* exec) {
+     for (i = 3; i < 1024; i++)
+       close(i);
+ 
+-    execl("/bin/sh", "sh", "-c", exec->command, 0);
++    execl("/bin/sh", "sh", "-c", exec->command, (void *)NULL);
+     _exit(-1);
+   default:
+     // parent

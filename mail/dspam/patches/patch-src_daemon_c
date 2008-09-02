@@ -1,0 +1,48 @@
+$OpenBSD: patch-src_daemon_c,v 1.4 2007/12/21 14:42:23 todd Exp $
+--- src/daemon.c.orig	Tue Jun 13 16:43:12 2006
++++ src/daemon.c	Sun Apr 29 17:57:52 2007
+@@ -549,7 +549,7 @@ void *process_connection(void *ptr) {
+ 
+     while(ATX->users->items == 0 || invalid) {
+       free(cmdline);
+-      cmdline = daemon_getline(TTX, 300);
++      cmdline = daemon_getline(TTX, 900);
+  
+       while(cmdline && 
+             (!strncasecmp(cmdline, "RCPT TO:", 8) ||
+@@ -596,7 +596,7 @@ void *process_connection(void *ptr) {
+ 
+ GETCMD:
+         free(cmdline);
+-        cmdline = daemon_getline(TTX, 300);
++        cmdline = daemon_getline(TTX, 900);
+       }
+ 
+       if (cmdline == NULL)
+@@ -875,7 +875,7 @@ buffer * read_sock(THREAD_CTX *TTX, AGENT_CTX *ATX) {
+     body = 1;
+   }
+ 
+-  while ((buf = daemon_getline(TTX, 300))!=NULL) {
++  while ((buf = daemon_getline(TTX, 900))!=NULL) {
+     chomp(buf);
+ 
+     if (!strcmp(buf, ".")) {
+@@ -958,7 +958,7 @@ char *daemon_expect(THREAD_CTX *TTX, const char *comma
+   char buf[128];
+   char *cmd;
+ 
+-  cmd = daemon_getline(TTX, 300); 
++  cmd = daemon_getline(TTX, 900); 
+   if (cmd == NULL)
+     return NULL;
+ 
+@@ -981,7 +981,7 @@ char *daemon_expect(THREAD_CTX *TTX, const char *comma
+     if (send_socket(TTX, buf)<=0)
+       return NULL;
+     free(cmd);
+-    cmd = daemon_getline(TTX, 300);
++    cmd = daemon_getline(TTX, 900);
+     if (cmd == NULL)
+       return NULL;
+   } 

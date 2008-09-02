@@ -1,0 +1,21 @@
+--- src/normalize-mp3.in.orig	Mon Sep 12 09:31:15 2005
++++ src/normalize-mp3.in	Sat Jul  7 22:44:02 2007
+@@ -26,12 +26,12 @@
+ # %b becomes bitrate of re-encoded file, as specified by the -b option
+ # Example: $OGGENCODE="oggenc -Q -b %b -o %m %w"
+ 
+-$MP3DECODE  = "@MP3DECODE@";
+-$MP3ENCODE  = "@MP3ENCODE@";
+-$OGGDECODE  = "@OGGDECODE@";
+-$OGGENCODE  = "@OGGENCODE@";
+-$FLACDECODE = "@FLACDECODE@";
+-$FLACENCODE = "@FLACENCODE@";
++$MP3DECODE = "mpg321 -q -w %w %m";
++$MP3ENCODE = "lame --quiet -h -b %b %w %m";
++$OGGDECODE = "ogg123 -q -d wav -f %w %m";
++$OGGENCODE = "oggenc -Q -b %b -o %m %w";
++$FLACDECODE = "flac -d -o %w";
++$FLACENCODE = "flac -o %m %w";
+ 
+ # The %w etc. substitutions should *not* be used in the following, as
+ # this script knows about their options already.

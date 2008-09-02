@@ -1,0 +1,20 @@
+$OpenBSD: patch-suballoc_cpp,v 1.4 2007/09/25 19:40:57 rui Exp $
+--- suballoc.cpp.orig	Mon Sep 10 12:49:28 2007
++++ suballoc.cpp	Mon Sep 24 17:14:20 2007
+@@ -31,10 +31,16 @@ inline void* SubAllocator::RemoveNode(int indx) 
+   return RetVal;
+ }
+ 
++#define PAD		__alignof__(void *)
++#define ROUND(v)	((v) & (PAD - 1) ? ((v) + PAD) & ~(PAD - 1) : (v))
+ 
+ inline uint SubAllocator::U2B(int NU) 
+ { 
++#ifndef __STRICT_ALIGNMENT
+   return /*8*NU+4*NU*/UNIT_SIZE*NU;
++#else
++  return (ROUND(UNIT_SIZE * NU));
++#endif /* !__STRICT_ALIGNMENT */
+ }
+ 
+ 

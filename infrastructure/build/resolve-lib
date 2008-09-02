@@ -1,0 +1,188 @@
+#! /usr/bin/perl
+# $OpenBSD: resolve-lib,v 1.17 2006/11/20 12:13:43 espie Exp $
+#
+# Copyright (c) 2001, 2005 Marc Espie <espie@openbsd.org>
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Neither the name of OpenBSD nor the names of its contributors
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY ITS AUTHOR AND THE OpenBSD project ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+
+use strict;
+use warnings;
+
+my $LOCALBASE = $ENV{'LOCALBASE'};
+my $X11BASE = $ENV{'X11BASE'};
+my $error = 0;
+
+sub parse_spec_path
+{
+    	my $req = shift;
+	my $spec = $req->{spec};
+	if ($spec =~ m|^/.*/|) {
+		$req->{specdir}=$&;
+		$req->{prefix} = '';
+		$req->{libname} = $';
+	} elsif ($spec =~ m|^.*/|) {
+		$req->{specdir} = "$LOCALBASE/$&";
+		$req->{prefix} =$&;
+		$req->{libname} = $';
+	} else {
+		$req->{libname} = $spec;
+		$req->{prefix} = '';
+	}
+}
+
+sub parse_spec_versions
+{
+    	my $spec = shift;
+	my $noshared = shift;
+
+	my $req = {noshared => $noshared, strict => 0, sharedonly => 0 };
+	$spec =~ s/\.$//;
+	if ($spec =~ m/\.a$/) {
+		$spec = $`;
+		$req->{noshared} = 1;
+	} else {
+		if ($spec =~ m/\.(\>?)\=(\d+)\.(\d+)$/) {
+			$req->{major} = $2;
+			$req->{minor} = $3;
+			$spec = $`;
+			$req->{strict} = $1 eq '';
+		} elsif ($spec =~ m/\.(\>?)\=(\d+)$/) {
+			$req->{major} = $2;
+			$req->{minor} = 0;
+			$req->{strict} = $1 eq '';
+			$spec = $`;
+		} else {
+			$req->{major} = 0;
+			$req->{minor} = 0;
+		}
+		if ($spec =~ m/\.so$/) {
+			$spec = $`;
+			$req->{sharedonly} = 1;
+		}
+	}
+	$req->{spec} = $spec;
+	return $req;
+}
+
+sub parse_spec
+{
+	my ($spec, $noshared) = @_;
+	my $req = parse_spec_versions($spec);
+	parse_spec_path($req);
+	return $req;
+}
+
+sub solve_spec
+{
+	my $spec = shift;
+	my $noshared = shift;
+	my $req = parse_spec($spec, $noshared);
+
+	my $found_shared;
+	my $found_goodshared;
+	my $bestmajor=-1; my $bestminor=-1;
+	my $found_unshared;
+	my $libname = $req->{libname};
+
+	for my $file (@_) {
+		next unless $file =~ m|(.*/)|;
+		if (defined $req->{specdir}) {
+			next unless $1 eq $req->{specdir};
+		} else {
+			next unless $1 eq '/usr/lib/' or 
+			    $1 eq "$LOCALBASE/lib/" or
+			    $1 eq "$X11BASE/lib/";
+		}
+		local $_=$';
+		if (!$req->{noshared} && 
+		    m/^lib\Q$libname\E\.so\.(\d+)\.(\d+)$/) {
+			$found_shared = $file;
+			my $major = $1;
+			my $minor = $2;
+			if ($req->{strict}) {
+				if ($major > $req->{major}) {
+					print STDERR "Error: found library has too high a version $major: $spec\n";
+					$error = 1;
+					last;
+				}
+				if ($major < $req->{major}) {
+					next;
+				}
+				if ($minor < $req->{minor}) {
+					next;
+				}
+				$found_goodshared = 1;
+				$bestmajor = $major;
+				if ($minor >= $bestminor) {
+					$bestminor = $minor;
+				}
+			} else {
+				if ($major < $req->{major} || 
+				    ($major == $req->{major} && $minor < $req->{minor})) {
+					next;
+				}
+				$found_goodshared = 1;
+				if ($major > $bestmajor || ($major == $bestmajor &&
+				    $minor > $bestminor)) {
+					$bestmajor = $major;
+					$bestminor = $minor;
+				}
+			}
+		} elsif (!$req->{sharedonly} && m/^lib\Q$libname\E\.a$/) {
+			$found_unshared = 1;
+		}
+	}
+	if ($found_goodshared) {
+		print $req->{prefix},"$libname.$bestmajor.$bestminor\n";
+	} elsif (defined $found_shared) {
+		print STDERR "Error: bad shared lib version $found_shared ($spec)\n";
+		$error = 1;
+	} elsif ($found_unshared) {
+		print $req->{prefix},"$libname.a\n";
+	} else {
+		print STDERR "Missing library for $spec\n";
+		$error = 1;
+	}
+}
+
+
+my $noshared; 
+# Grab arguments
+if (@ARGV > 0 && $ARGV[0] eq '-noshared') {
+	$noshared = 1;
+	shift;
+}
+
+local $_;
+my @available;
+while(<STDIN>) {
+	chomp;
+	push(@available, split(/\s+/, $_));
+}
+my $done = {};
+for my $spec (@ARGV) {
+	next if $done->{$spec};
+	$done->{$spec} = 1;
+	solve_spec($spec, $noshared, @available);
+}
+
+exit($error);

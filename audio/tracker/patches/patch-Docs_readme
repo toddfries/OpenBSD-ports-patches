@@ -1,0 +1,23 @@
+$OpenBSD: patch-Docs_readme,v 1.3 2007/12/27 16:34:19 espie Exp $
+--- Docs/readme.orig	Thu Apr 11 19:21:05 1996
++++ Docs/readme	Thu Dec 27 16:51:26 2007
+@@ -5,6 +5,12 @@ See the accompanying TeXinfo documentation for more de
+ From version 4.29 on, commercial use of tracker is forbidden without
+ negotiating an agreement with me first.
+ 
++In particular, I'd appreciate if commercial Linux distributions would
++contact me first before distributing tracker... I'd love some free CD-Roms.
++
++The OpenBSD project is explicitly allowed to distribute tracker on its
++CD-Roms.
++
+ For personal use purposes: I've spent quite some time supporting this 
+ program now.  If you use it much, and feel like it, you can send me
+ some money, or software you've written for the amiga, I won't 
+@@ -37,5 +43,5 @@ This said, my postal address is:
+ I can deal with french francs, or US checks. Anything else you'll
+ have to try.
+ 
+-	Marc Espie
++	Marc Espie, Marc.Espie@openbsd.org
+ 

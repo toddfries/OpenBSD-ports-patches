@@ -1,0 +1,46 @@
+@comment $OpenBSD: PLIST,v 1.11 2005/06/28 19:31:57 aanriot Exp $
+bin/ddd
+@info info/ddd-themes.info
+@info info/ddd.info
+@man man/man1/ddd.1
+share/ddd/
+share/ddd/COPYING
+share/ddd/NEWS
+share/ddd/ddd/
+share/ddd/ddd/Ddd
+share/ddd/themes/
+share/ddd/themes/green.vsl
+share/ddd/themes/red.vsl
+share/ddd/themes/rednil.vsl
+share/ddd/themes/smalltitles.vsl
+share/ddd/themes/smallvalues.vsl
+share/ddd/themes/suppress.vsl
+share/ddd/themes/tinyvalues.vsl
+share/ddd/vsllib/
+share/ddd/vsllib/arcs.vsl
+share/ddd/vsllib/builtin.vsl
+share/ddd/vsllib/colors.vsl
+share/ddd/vsllib/ctree.vsl
+share/ddd/vsllib/ddd.vsl
+share/ddd/vsllib/flow.vsl
+share/ddd/vsllib/flowplus.vsl
+share/ddd/vsllib/fonts.vsl
+share/ddd/vsllib/linebreak.vsl
+share/ddd/vsllib/list.vsl
+share/ddd/vsllib/slopes.vsl
+share/ddd/vsllib/std.vsl
+share/ddd/vsllib/struct.vsl
+share/ddd/vsllib/symbols.vsl
+share/ddd/vsllib/tab.vsl
+share/ddd/vsllib/tree.vsl
+share/ddd/vsllib/verbose.vsl
+share/ddd/vsllib/vsl.vsl
+share/ddd/vsllib/vsldef.vsl
+share/ddd/vsllib/vsllib.vsl
+share/doc/ddd/
+share/doc/ddd/ddd-paper.ps.gz
+share/doc/ddd/ddd-themes.pdf
+share/doc/ddd/ddd-themes.ps.gz
+share/doc/ddd/ddd.html
+share/doc/ddd/ddd.pdf
+share/doc/ddd/ddd.ps.gz

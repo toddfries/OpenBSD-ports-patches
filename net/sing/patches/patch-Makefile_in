@@ -1,0 +1,40 @@
+$OpenBSD: patch-Makefile_in,v 1.3 2005/05/24 00:05:14 mjc Exp $
+--- Makefile.in.orig	Wed Apr 18 07:11:06 2001
++++ Makefile.in	Tue May 22 14:12:19 2001
+@@ -76,7 +76,7 @@ getopt_SOURCES = @getopt_SOURCES@
+ libnetdir = @libnetdir@
+ libpcapdir = @libpcapdir@
+ 
+-INCLUDES = -I$(includedir) -I$(libpcapdir) -I$(libnetdir)/include
++INCLUDES = -I$(includedir)/libnet-1.0
+ 
+ LIBS = @LIBS@ -lpcap -lnet
+ 
+@@ -94,7 +94,7 @@ CONFIG_CLEAN_FILES = 
+ PROGRAMS =  $(bin_PROGRAMS)
+ 
+ 
+-DEFS = @DEFS@ `$(libnetdir)/libnet-config --defines` -I. -I$(srcdir) -I.
++DEFS = @DEFS@ `libnet-config-1.0 --defines` -I. -I$(srcdir) -I.
+ sing_OBJECTS =  sing.o device.o ip_options.o parser.o vers_date.o help.o @getopt_OBJECTS@
+ sing_LDADD = $(LDADD)
+ sing_DEPENDENCIES = 
+@@ -111,7 +111,7 @@ NROFF = nroff
+ SOURCES = $(sing_SOURCES)
+ OBJECTS = $(sing_OBJECTS)
+ 
+-all: libpcap libnet all-redirect
++all: all-redirect
+ .SUFFIXES:
+ .SUFFIXES: .S .c .o .s
+ 
+@@ -226,8 +226,7 @@ uninstall-man:
+ 
+ 
+ help.o: help.c config.h
+-sing.o: sing.c config.h libpcap-0.4/pcap.h libpcap-0.4/net/bpf.h \
+-	sing.h ipcompat.h misc.h packet.h dev_struct.h
++sing.o: sing.c config.h sing.h ipcompat.h misc.h packet.h dev_struct.h
+ ip_options.o: ip_options.c config.h ip_options.h ipcompat.h packet.h \
+ 	misc.h
+ device.o: device.c config.h device.h misc.h packet.h dev_struct.h

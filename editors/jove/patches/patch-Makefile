@@ -1,0 +1,151 @@
+$OpenBSD: patch-Makefile,v 1.2 2006/04/09 11:10:09 alek Exp $
+--- Makefile.orig	Tue Mar 19 06:44:33 1996
++++ Makefile	Mon Mar 13 08:51:30 2006
+@@ -27,16 +27,16 @@
+ # LIBDIR and SHAREDIR.  All others must already exist.
+ 
+ SHELL = /bin/sh
+-TMPDIR = /usr/tmp
++TMPDIR = /var/tmp
+ RECDIR = /usr/preserve
+ 
+-JOVEHOME = /usr/local
+-SHAREDIR = $(JOVEHOME)/lib/jove
+-LIBDIR = $(JOVEHOME)/lib/jove
++JOVEHOME = ${PREFIX}
++SHAREDIR = $(JOVEHOME)/share/jove
++LIBDIR = $(JOVEHOME)/libexec/jove
+ BINDIR = $(JOVEHOME)/bin
+ MANDIR = $(JOVEHOME)/man/man$(MANEXT)
+ MANEXT = 1
+-DFLTSHELL = /bin/csh
++DFLTSHELL = /bin/sh
+ 
+ # The install commands of BSD and System V differ in unpleasant ways:
+ # -c: copy (BSD); -c dir: destination directory (SysV)
+@@ -50,12 +50,12 @@ DFLTSHELL = /bin/csh
+ INSTALLFLAGS = # -g bin -o root
+ 
+ # to install executable files
+-XINSTALL=cp
+-#XINSTALL=/usr/ucb/install $(INSTALLFLAGS) -c -m 755 # -s
++#XINSTALL=cp
++XINSTALL=${BSD_INSTALL_PROGRAM}
+ 
+ # to install text files
+-TINSTALL=cp
+-#TINSTALL=/usr/ucb/install $(INSTALLFLAGS) -c -m 644
++#TINSTALL=cp
++TINSTALL=${BSD_INSTALL_DATA}
+ 
+ # These should all just be right if the above ones are.
+ # You will confuse JOVE if you move anything from LIBDIR or SHAREDIR.
+@@ -79,7 +79,7 @@ JOVETOOLM = $(MANDIR)/jovetool.$(MANEXT)
+ # compiler, adding -Xa -v will increase compiler checking.
+ # On DEC OSF/1, -std1 -O
+ 
+-OPTFLAGS = -O
++#OPTFLAGS = -O
+ 
+ # For making dependencies under BSD systems
+ DEPENDFLAG = -M
+@@ -115,7 +115,7 @@ LIBS = -ltermcap
+ #	PDP-11 without separate I&D: -n
+ 
+ 
+-LDFLAGS =
++#LDFLAGS =
+ 
+ # define a symbol for your OS if it hasn't got one.  See sysdep.h.
+ # Jove has very few defaults, you will almost certainly need to define
+@@ -163,13 +163,13 @@ LDFLAGS =
+ #
+ # You can just say 'make SYSDEFS=-Dwhatever' on these systems.
+ 
+-SYSDEFS =
++SYSDEFS = -DBSDPOSIX
+ 
+ # for SCO Xenix, set
+ #	MEMFLAGS = -Mle
+ #	CFLAGS = -LARGE -O -F 3000 -K -Mle  (say -Mle2 for an 80286)
+ 
+-CFLAGS = $(OPTFLAGS) $(SYSDEFS)
++CFLAGS += $(SYSDEFS)
+ 
+ # For SYSVR4 (/usr/ucb/cc will NOT work because of setjmp.h):
+ # CC = /usr/bin/cc
+@@ -213,7 +213,7 @@ NROFF = nroff
+ TROFF = troff -Tpost
+ TROFFPOST = | /usr/lib/lp/postscript/dpost - >troff.out.ps
+ 
+-MANUALS = $(JOVEM) $(TEACHJOVEM) $(XJOVEM) $(JOVETOOLM)
++MANUALS = $(JOVEM) $(TEACHJOVEM) # $(XJOVEM) $(JOVETOOLM)
+ 
+ C_SRC = commands.c commands.tab abbrev.c argcount.c ask.c buf.c c.c case.c jctype.c \
+ 	delete.c disp.c extend.c fp.c fmt.c insert.c io.c iproc.c \
+@@ -329,8 +329,12 @@ install: $(LIBDIR) $(SHAREDIR) \
+ 	 $(TEACH-JOVE) $(CMDS.DOC) $(TERMSDIR)docs \
+ 	 $(PORTSRVINST) $(RECOVER) $(JOVE) $(TEACHJOVE) $(MANUALS)
+ 	$(TINSTALL) doc/jove.rc $(JOVERC)
+-	@echo See the README about changes to /etc/rc or /etc/rc.local
+-	@echo so that the system recovers jove files on reboot after a crash
++	$(TINSTALL) README $(SHAREDIR)
++	@echo ""
++	@echo "*** See $(SHAREDIR)/README about changes to /etc/rc or"
++	@echo "*** /etc/rc.local so that the system recovers jove files"
++	@echo "*** on reboot after a system crash"
++	@echo ""
+ 
+ $(LIBDIR)::
+ 	test -d $(LIBDIR) || mkdir $(LIBDIR)
+@@ -373,11 +377,10 @@ $(TEACHJOVE): teachjove
+ 
+ $(JOVEM): doc/jove.nr
+ 	@sed -e 's;<TMPDIR>;$(TMPDIR);' \
+-	     -e 's;<LIBDIR>;$(LIBDIR);' \
+-	     -e 's;<SHAREDIR>;$(SHAREDIR);' \
+-	     -e 's;<SHELL>;$(DFLTSHELL);' doc/jove.nr > /tmp/jove.nr
+-	$(TINSTALL) /tmp/jove.nr $(JOVEM)
+-	rm /tmp/jove.nr
++	     -e 's;<LIBDIR>;${LOCALBASE}/libexec/jove;' \
++	     -e 's;<SHAREDIR>;${LOCALBASE}/share/jove;' \
++	     -e 's;<SHELL>;$(DFLTSHELL);' doc/jove.nr > jove.$(MANEXT)
++	$(TINSTALL) jove.$(MANEXT) $(JOVEM)
+ 
+ # doc/jove.doc is the formatted manpage (only needed by DOS)
+ # Building it should be like building $(JOVEM) except that we
+@@ -389,20 +392,18 @@ doc/jove.doc: doc/jove.nr
+ 
+ $(TEACHJOVEM): doc/teachjove.nr
+ 	@sed -e 's;<TMPDIR>;$(TMPDIR);' \
+-	     -e 's;<LIBDIR>;$(LIBDIR);' \
+-	     -e 's;<SHAREDIR>;$(SHAREDIR);' \
+-	     -e 's;<SHELL>;$(DFLTSHELL);' doc/teachjove.nr > /tmp/teachjove.nr
+-	$(TINSTALL) /tmp/teachjove.nr $(TEACHJOVEM)
+-	rm /tmp/teachjove.nr
++	     -e 's;<LIBDIR>;${LOCALBASE}/libexec/jove;' \
++	     -e 's;<SHAREDIR>;${LOCALBASE}/share/jove;' \
++	     -e 's;<SHELL>;$(DFLTSHELL);' doc/teachjove.nr > teachjove.$(MANEXT)
++	$(TINSTALL) teachjove.$(MANEXT) $(TEACHJOVEM)
+ 
+ $(XJOVEM): doc/xjove.nr
+ 	$(TINSTALL) doc/xjove.nr $(XJOVEM)
+ 
+ $(JOVETOOLM): doc/jovetool.nr
+ 	@sed -e 's;<MANDIR>;$(MANDIR);' \
+-	     -e 's;<MANEXT>;$(MANEXT);' doc/jovetool.nr > /tmp/jovetool.nr
+-	$(TINSTALL) /tmp/jovetool.nr $(JOVETOOLM)
+-	rm /tmp/jovetool.nr
++	     -e 's;<MANEXT>;$(MANEXT);' doc/jovetool.nr > jovetool.$(MANEXT)
++	$(TINSTALL) jovetool.$(MANEXT) $(JOVETOOLM)
+ 
+ echo:
+ 	@echo $(C-FILES) $(HEADERS)
+@@ -500,6 +501,7 @@ clean:
+ 	rm -f a.out core *.o keys.c jjove portsrv recover setmaps \
+ 		teachjove paths.h \#* *~ make.log *.map jjove.ico \
+ 		doc/cmds.doc doc/jove.man doc/jove.doc doc/troff.out.ps \
++		jove.$(MANEXT) teachjove.$(MANEXT) jovetool.$(MANEXT) \
+ 		jjove.pure_* tags ID .filelist
+ 
+ cleanall: clean

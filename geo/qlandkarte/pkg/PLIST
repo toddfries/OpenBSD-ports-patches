@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.4 2008/05/28 00:29:36 pvalchev Exp $
+%%SHARED%%
+bin/qlandkarte
+lib/qlandkarte/
+share/applications/
+share/applications/qlandkarte.desktop
+share/man/
+share/man/qlandkarte.1
+share/menu/
+share/menu/qlandkarte.menu

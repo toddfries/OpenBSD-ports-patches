@@ -1,0 +1,28 @@
+--- Makefile.in.orig	Tue Apr  8 16:55:03 2008
++++ Makefile.in	Sat Apr 26 10:51:02 2008
+@@ -584,7 +584,7 @@ testModule_DEPENDENCIES = $(DEPS)
+ testModule_LDADD = $(LDADDS)
+ noinst_LTLIBRARIES = testdso.la
+ testdso_la_SOURCES = testdso.c
+-testdso_la_LDFLAGS = -module -rpath $(libdir)
++testdso_la_LDFLAGS = -module -avoid-version -rpath $(libdir)
+ testapi_SOURCES = testapi.c
+ testapi_LDFLAGS = 
+ testapi_DEPENDENCIES = $(DEPS)
+@@ -613,7 +613,7 @@ pkgconfig_DATA = libxml-2.0.pc
+ # Install the tests program sources as examples 
+ #
+ BASE_DIR = $(datadir)/doc
+-DOC_MODULE = libxml2-$(VERSION)
++DOC_MODULE = libxml2
+ EXAMPLES_DIR = $(BASE_DIR)/$(DOC_MODULE)/examples
+ all: config.h
+ 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+@@ -1990,6 +1990,7 @@ SVGtests : xmllint$(EXEEXT)
+ 	      grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+ 	  else \
+ 	      echo Testing $$name ; \
++	      echo "     $(CHECKER) $(top_builddir)/xmllint$(EXEEXT) --noout --relaxng $$i $$j" ; \
+ 	      $(CHECKER) $(top_builddir)/xmllint $$i > result.$$name ; \
+ 	      grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+ 	      diff $(srcdir)/result/SVG/$$name result.$$name ; \

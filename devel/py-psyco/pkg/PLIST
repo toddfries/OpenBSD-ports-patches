@@ -1,0 +1,18 @@
+@comment $OpenBSD: PLIST,v 1.4 2008/05/06 17:36:47 martynas Exp $
+%%SHARED%%
+lib/python${MODPY_VERSION}/site-packages/psyco/
+lib/python${MODPY_VERSION}/site-packages/psyco-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/psyco/__init__.py
+lib/python${MODPY_VERSION}/site-packages/psyco/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/psyco/classes.py
+lib/python${MODPY_VERSION}/site-packages/psyco/classes.pyc
+lib/python${MODPY_VERSION}/site-packages/psyco/core.py
+lib/python${MODPY_VERSION}/site-packages/psyco/core.pyc
+lib/python${MODPY_VERSION}/site-packages/psyco/kdictproxy.py
+lib/python${MODPY_VERSION}/site-packages/psyco/kdictproxy.pyc
+lib/python${MODPY_VERSION}/site-packages/psyco/logger.py
+lib/python${MODPY_VERSION}/site-packages/psyco/logger.pyc
+lib/python${MODPY_VERSION}/site-packages/psyco/profiler.py
+lib/python${MODPY_VERSION}/site-packages/psyco/profiler.pyc
+lib/python${MODPY_VERSION}/site-packages/psyco/support.py
+lib/python${MODPY_VERSION}/site-packages/psyco/support.pyc

@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:17:40 espie Exp $
+@mode 4555
+bin/icmpinfo
+@mode
+@man man/man1/icmpinfo.1
+share/doc/icmpinfo/
+share/doc/icmpinfo/README

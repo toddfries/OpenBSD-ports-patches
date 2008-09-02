@@ -1,0 +1,12 @@
+PWM is a lightweight window manager for X11 with emphasis on usability.
+It was the first window manager to implement "tabbed frames". This
+feature helps keeping windows, especially the numerous xterms,
+organized.
+
+PWM has a clean and simple look inspired by BeOS and Motif. It does have
+workspaces, menus and Window Maker dockapp support as well as good
+keyboard support and almost all the functionality is configurable.
+
+It does not have all the features (such as pixmapped themes, icons,
+iconified windows or titlebar buttons) that one might expect from a
+typical window manager and may not be the easiest one to get into.

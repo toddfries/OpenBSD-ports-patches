@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:36:01 espie Exp $
+${P5SITE}/Digest/
+${P5SITE}/Digest/HMAC.pm
+${P5SITE}/Digest/HMAC_MD5.pm
+${P5SITE}/Digest/HMAC_SHA1.pm
+@man man/man3p/Digest::HMAC.3p
+@man man/man3p/Digest::HMAC_MD5.3p
+@man man/man3p/Digest::HMAC_SHA1.3p

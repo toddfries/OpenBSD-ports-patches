@@ -1,0 +1,40 @@
+@comment $OpenBSD: PLIST,v 1.4 2008/05/02 11:55:42 fgsch Exp $
+bin/epdfview
+share/applications/epdfview.desktop
+share/epdfview/
+share/epdfview/pixmaps/
+share/epdfview/pixmaps/icon_epdfview-24.png
+share/epdfview/pixmaps/icon_epdfview-32.png
+share/epdfview/pixmaps/icon_epdfview-48.png
+share/epdfview/pixmaps/stock_find_next_24.png
+share/epdfview/pixmaps/stock_find_previous_24.png
+share/epdfview/pixmaps/stock_rotate-270.png
+share/epdfview/pixmaps/stock_rotate-90.png
+share/epdfview/pixmaps/stock_zoom-page-width.png
+share/epdfview/ui/
+share/epdfview/ui/epdfview-ui-print.xml
+share/epdfview/ui/epdfview-ui.xml
+share/icons/
+share/icons/hicolor/
+share/icons/hicolor/24x24/
+share/icons/hicolor/24x24/apps/
+share/icons/hicolor/24x24/apps/epdfview.png
+share/icons/hicolor/32x32/
+share/icons/hicolor/32x32/apps/
+share/icons/hicolor/32x32/apps/epdfview.png
+share/icons/hicolor/48x48/
+share/icons/hicolor/48x48/apps/
+share/icons/hicolor/48x48/apps/epdfview.png
+share/locale/ca/LC_MESSAGES/epdfview.mo
+share/locale/de/LC_MESSAGES/epdfview.mo
+share/locale/el/LC_MESSAGES/epdfview.mo
+share/locale/es/LC_MESSAGES/epdfview.mo
+share/locale/fr/LC_MESSAGES/epdfview.mo
+share/locale/pl/LC_MESSAGES/epdfview.mo
+share/locale/ru/LC_MESSAGES/epdfview.mo
+share/locale/vi/LC_MESSAGES/epdfview.mo
+share/locale/zh_TW/LC_MESSAGES/epdfview.mo
+@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/update-desktop-database
+@unexec %D/bin/update-desktop-database

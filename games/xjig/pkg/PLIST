@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:46:12 espie Exp $
+bin/xjig
+@man man/man1/xjig.1
+share/xjig/
+share/xjig/tina.gif

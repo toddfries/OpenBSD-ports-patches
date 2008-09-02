@@ -1,0 +1,50 @@
+$OpenBSD: patch-configure,v 1.2 2008/07/09 02:13:01 jakemsr Exp $
+--- configure.orig	Fri Nov  2 03:02:31 2007
++++ configure	Sun Jun 22 00:56:53 2008
+@@ -29531,7 +29531,10 @@ rm -f core conftest.err conftest.$ac_objext conftest_i
+   fi
+ 
+     if test "x$LIBPTHREAD" = "xPTHREAD" ; then
+-    LIBPTHREAD=""
++    case $host_os in
++      openbsd*) LIBPTHREAD="-pthread" ;;
++      *) LIBPTHREAD="" ;;
++    esac
+   fi
+ 
+ 
+@@ -36499,8 +36502,8 @@ ac_link='rm -rf SunWS_cache; ${CXX-g++} -o conftest${a
+ 
+ 	cat >conftest.$ac_ext <<_ACEOF
+ extern "C" {
+-		#include <ffmpeg/avformat.h>
+-		#include <ffmpeg/avcodec.h>
++		#include <libavformat/avformat.h>
++		#include <libavcodec/avcodec.h>
+ 		}
+ 
+ 		int main() {
+@@ -36537,11 +36540,11 @@ fi
+ 
+ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+ 	OLD_LIBS=$LIBS
+-	LIBS="-lavformat -lavcodec $LIBS"
++	LIBS="$(pkg-config --libs libavcodec libavformat) $LIBS"
+ 	cat >conftest.$ac_ext <<_ACEOF
+ extern "C" {
+-		#include <ffmpeg/avformat.h>
+-		#include <ffmpeg/avcodec.h>
++		#include <libavformat/avformat.h>
++		#include <libavcodec/avcodec.h>
+ 		}
+ 
+ 		int main() {
+@@ -36784,7 +36787,7 @@ if test "${ac_cv_lib_FLAC_FLAC__stream_decoder_process
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lFLAC $all_libraries $LIBS"
++LIBS="-lFLAC -logg -lm $all_libraries $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF

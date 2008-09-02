@@ -1,0 +1,18 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 00:46:12 espie Exp $
+bin/xteddy
+bin/xteddy_test
+bin/xtoys
+@man man/man6/xteddy.6
+share/xteddy/
+share/xteddy/teddy.png
+share/xteddy/xalex.png
+share/xteddy/xbobo.png
+share/xteddy/xbrummi.png
+share/xteddy/xduck.png
+share/xteddy/xklitze.png
+share/xteddy/xnamu.png
+share/xteddy/xorca.png
+share/xteddy/xpenguin.png
+share/xteddy/xruessel.png
+share/xteddy/xteddy.png
+share/xteddy/xtuxxy.png

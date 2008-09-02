@@ -1,0 +1,69 @@
+@comment $OpenBSD: PLIST-main,v 1.5 2007/08/08 21:33:51 robert Exp $
+@pkgpath databases/mysql
+bin/mysql
+bin/mysql_client_test
+bin/mysql_config
+bin/mysql_tzinfo_to_sql
+bin/mysqladmin
+bin/mysqlbinlog
+bin/mysqlcheck
+bin/mysqldump
+bin/mysqldumpslow
+bin/mysqlimport
+bin/mysqlshow
+bin/mysqltest
+bin/mysqltestmanager-pwgen
+bin/mysqltestmanagerc
+include/mysql/
+include/mysql/decimal.h
+include/mysql/errmsg.h
+include/mysql/keycache.h
+include/mysql/m_ctype.h
+include/mysql/m_string.h
+include/mysql/my_alloc.h
+include/mysql/my_attribute.h
+include/mysql/my_config.h
+include/mysql/my_dbug.h
+include/mysql/my_dir.h
+include/mysql/my_getopt.h
+include/mysql/my_global.h
+include/mysql/my_list.h
+include/mysql/my_net.h
+include/mysql/my_no_pthread.h
+include/mysql/my_pthread.h
+include/mysql/my_sys.h
+include/mysql/my_xml.h
+include/mysql/mysql.h
+include/mysql/mysql_com.h
+include/mysql/mysql_embed.h
+include/mysql/mysql_time.h
+include/mysql/mysql_version.h
+include/mysql/mysqld_ername.h
+include/mysql/mysqld_error.h
+include/mysql/raid.h
+include/mysql/sql_common.h
+include/mysql/sql_state.h
+include/mysql/sslopt-case.h
+include/mysql/sslopt-longopts.h
+include/mysql/sslopt-vars.h
+include/mysql/typelib.h
+@info info/mysql.info
+lib/mysql/
+lib/mysql/libmysqlclient.a
+lib/mysql/libmysqlclient.la
+lib/mysql/libmysqlclient_r.a
+lib/mysql/libmysqlclient_r.la
+%%SHARED%%
+@man man/man1/mysql.1
+@man man/man1/mysql_config.1
+@man man/man1/mysql_tzinfo_to_sql.1
+@man man/man1/mysqladmin.1
+@man man/man1/mysqlbinlog.1
+@man man/man1/mysqlcheck.1
+@man man/man1/mysqldump.1
+@man man/man1/mysqlimport.1
+@man man/man1/mysqlman.1
+@man man/man1/mysqlmanager-pwgen.1
+@man man/man1/mysqlmanagerc.1
+@man man/man1/mysqlshow.1
+@man man/man1/mysqltest.1

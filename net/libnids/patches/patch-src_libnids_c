@@ -1,0 +1,65 @@
+$OpenBSD: patch-src_libnids_c,v 1.5 2008/07/15 16:11:02 brad Exp $
+--- src/libnids.c.orig	Thu Feb 21 05:47:12 2008
++++ src/libnids.c	Wed Jul  9 23:20:06 2008
+@@ -31,6 +31,12 @@
+ #include <glib.h>
+ #endif
+ 
++#ifdef DLT_PFLOG
++#include <sys/socket.h>
++#include <net/if.h>
++#include <net/if_pflog.h>
++#endif
++
+ #ifdef __linux__
+ extern int set_all_promisc();
+ #endif
+@@ -618,22 +624,46 @@ int nids_init()
+     case DLT_NULL:
+         nids_linkoffset = 4;
+         break;
+-#endif        
++#endif
++#ifdef DLT_LOOP
++    case DLT_LOOP:
++        nids_linkoffset = 4;
++        break;
++#endif
+     case DLT_EN10MB:
+ 	nids_linkoffset = 14;
+ 	break;
+     case DLT_PPP:
+ 	nids_linkoffset = 4;
+ 	break;
++#ifdef DLT_PPP_ETHER
++    case DLT_PPP_ETHER:
++	nids_linkoffset = 8;
++	break;
++#endif
+ 	/* Token Ring Support by vacuum@technotronic.com, thanks dugsong! */
+     case DLT_IEEE802:
+ 	nids_linkoffset = 22;
+ 	break;
+-
+     case DLT_RAW:
+     case DLT_SLIP:
+ 	nids_linkoffset = 0;
+ 	break;
++#ifdef DLT_OLD_PFLOG
++    case DLT_OLD_PFLOG:
++	nids_linkoffset = 28;
++	break;
++#endif
++#ifdef DLT_PFLOG
++    case DLT_PFLOG:
++	nids_linkoffset = PFLOG_HDRLEN;
++	break;
++#endif
++#ifdef DLT_PFSYNC
++    case DLT_PFSYNC:
++	nids_linkoffset = 4;
++	break;
++#endif
+ #define DLT_LINUX_SLL   113
+     case DLT_LINUX_SLL:
+ 	nids_linkoffset = 16;

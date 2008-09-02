@@ -1,0 +1,26 @@
+$OpenBSD: patch-wmcalc_c,v 1.2 2001/01/19 18:50:14 naddy Exp $
+--- wmcalc.c.orig	Thu Jan 18 07:18:25 2001
++++ wmcalc.c	Fri Jan 19 18:35:23 2001
+@@ -38,7 +38,7 @@
+  ****************************************************************/
+ 
+ #include "wmcalc_x.h"
+-#include <XKBlib.h>
++#include <X11/XKBlib.h>
+ #include <stdio.h>
+ #include <math.h>
+ #include <stdlib.h>
+@@ -107,10 +107,10 @@ int main( int argc, char **argv ) {
+   int bufsize = 20;
+   int chcnt = 0;
+   
+-  strcpy(configfile, getenv("HOME"));  // Added to wmbutton by Casey Harkin, 3/6/99
+-  strcat(configfile, CONFFILENAME);    // Fixed Bug - didn't look in home directory
++  strlcpy(configfile, getenv("HOME"), sizeof(configfile));  // Added to wmbutton by Casey Harkin, 3/6/99
++  strlcat(configfile, CONFFILENAME, sizeof(configfile));    // Fixed Bug - didn't look in home directory
+                                        // but startup directory
+-  strcat(tempfile, CONFTEMPFILE);      // Setup name for temp file
++  strlcat(tempfile, CONFTEMPFILE, sizeof(tempfile));      // Setup name for temp file
+ 
+   /* Clear the Calculator Display */
+   for(i=0; i<11; i++) DispString[i] = ' ';

@@ -1,0 +1,12 @@
+$OpenBSD: patch-makefile,v 1.6 2007/09/18 15:46:36 steven Exp $
+--- makefile.orig	Tue Sep  4 13:22:42 2007
++++ makefile	Tue Sep 18 17:42:50 2007
+@@ -3,7 +3,7 @@
+ 
+ VERSION		= `cat VERSION`
+ CFLAGS		+= -Wuninitialized -Wshadow -Wformat -Wparentheses -Wcast-align # gcc specific flags
+-CFLAGS		+= -O -DUNIX -DVERSION=\"$(VERSION)\" # general cc flags
++CFLAGS		+= -DUNIX -DVERSION=\"$(VERSION)\" # general cc flags
+ LDFLAGS		+= # The default linker flags.
+ LIBS		+= -lm # The default libraries to link.
+ 

@@ -1,0 +1,22 @@
+$OpenBSD: patch-libgnome-desktop_gnome-desktop-item_c,v 1.9 2007/11/10 15:13:23 jasper Exp $
+--- libgnome-desktop/gnome-desktop-item.c.orig	Mon Oct 15 21:49:05 2007
++++ libgnome-desktop/gnome-desktop-item.c	Thu Oct 25 00:28:10 2007
+@@ -2514,13 +2514,13 @@ init_kde_dirs (void)
+ #define ADD_DIRS(color,size) \
+ 	dirname = g_build_filename (kde_icondir, #color,	\
+ 				    #size "x" #size , NULL);	\
+-	color ## _kde_ ## size = add_dirs (NULL, dirname);	\
++	hicolor_kde_ ## size = add_dirs (NULL, dirname);	\
+ 	g_free (dirname);
+ 
+-	ADD_DIRS (hicolor, 48);
+-	ADD_DIRS (hicolor, 32);
+-	ADD_DIRS (hicolor, 22);
+-	ADD_DIRS (hicolor, 16);
++	ADD_DIRS (default.kde, 48);
++	ADD_DIRS (default.kde, 32);
++	ADD_DIRS (default.kde, 22);
++	ADD_DIRS (default.kde, 16);
+ 
+ /* XXX: maybe we don't care about locolor
+ 	ADD_DIRS (locolor, 48);

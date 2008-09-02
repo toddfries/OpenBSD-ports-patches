@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.8 2004/08/03 11:30:01 espie Exp $
+bin/gmail-files
+bin/gmailshar
+bin/gremsync
+bin/gshar
+bin/gunshar
+@info info/remsync.info
+@info info/sharutils.info
+@man man/man1/gshar.1
+@man man/man1/gunshar.1

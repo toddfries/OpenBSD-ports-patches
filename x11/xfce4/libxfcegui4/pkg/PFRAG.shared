@@ -1,0 +1,2 @@
+@comment $OpenBSD: PFRAG.shared,v 1.5 2007/05/08 08:28:39 steven Exp $
+@lib lib/libxfcegui4.so.${LIBxfcegui4_VERSION}

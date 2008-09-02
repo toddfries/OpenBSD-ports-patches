@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.4 2008/06/11 01:45:11 ajacoutot Exp $
+@bin bin/mgdiff
+lib/X11/app-defaults/Mgdiff
+lib/X11/mgdiff/
+lib/X11/mgdiff/mgdiff.xbm
+lib/X11/mgdiff/mgdiff.xpm
+@man man/cat1/mgdiff.0
+@man man/man1/mgdiff.1

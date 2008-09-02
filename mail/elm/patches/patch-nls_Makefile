@@ -1,0 +1,21 @@
+$OpenBSD: patch-nls_Makefile,v 1.1 2007/10/26 21:50:35 ajacoutot Exp $
+--- nls/Makefile.orig	Tue Nov  9 20:42:42 1999
++++ nls/Makefile	Fri Oct 26 23:46:55 2007
+@@ -3,7 +3,7 @@
+ #
+ LANGFILE=LANGS
+ CATNAME=elm2.4me+.cat
+-GENCAT=	nls/gencat
++GENCAT=	/usr/bin/gencat
+ 
+ HDIR=	../hdrs
+ SDIR=	C/C/C
+@@ -46,7 +46,7 @@ install:
+ 	./Install $(LANGFILE) $(GENCAT) $(CATNAME)
+ 
+ $(HFILES): $(MFILES)
+-	gencat/gencat $(MSGCAT) "$(SDIR)/`basename $@ .h`".m -h $@
++	$(GENCAT) $(MSGCAT) "$(SDIR)/`basename $@ .h`".m -h $@
+ 
+ clean: FRC
+ 	/bin/rm -f $(MSGCAT)

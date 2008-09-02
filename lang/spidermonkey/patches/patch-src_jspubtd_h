@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_jspubtd_h,v 1.2 2007/04/10 13:03:09 martynas Exp $
+--- src/jspubtd.h.orig	Thu Nov 30 02:34:45 2006
++++ src/jspubtd.h	Mon Apr  9 21:26:10 2007
+@@ -567,7 +567,7 @@ typedef const JSErrorFormatString *
+ typedef JSBool
+ (* JS_DLL_CALLBACK JSArgumentFormatter)(JSContext *cx, const char *format,
+                                         JSBool fromJS, jsval **vpp,
+-                                        va_list *app);
++                                        va_list app);
+ #endif
+ 
+ typedef JSBool

@@ -1,0 +1,18 @@
+@comment $OpenBSD: PFRAG.shared,v 1.2 2007/12/06 19:47:08 bernd Exp $
+lib/evas/modules/engines/buffer/module.so
+lib/evas/modules/engines/software_generic/module.so
+lib/evas/modules/engines/software_x11/module.so
+lib/evas/modules/engines/xrender_x11/module.so
+lib/evas/modules/loaders/edb/module.so
+lib/evas/modules/loaders/eet/module.so
+lib/evas/modules/loaders/gif/module.so
+lib/evas/modules/loaders/jpeg/module.so
+lib/evas/modules/loaders/png/module.so
+lib/evas/modules/loaders/tiff/module.so
+lib/evas/modules/loaders/xpm/module.so
+lib/evas/modules/savers/edb/module.so
+lib/evas/modules/savers/eet/module.so
+lib/evas/modules/savers/jpeg/module.so
+lib/evas/modules/savers/png/module.so
+lib/evas/modules/savers/tiff/module.so
+@lib lib/libevas.so.${LIBevas_VERSION}

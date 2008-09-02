@@ -1,0 +1,12 @@
+$OpenBSD: patch-Makefile_in,v 1.5 2008/05/14 21:06:15 jakob Exp $
+--- Makefile.in.orig	Thu Nov  1 18:45:14 2007
++++ Makefile.in	Mon Mar 31 23:59:45 2008
+@@ -186,7 +186,7 @@ sharedstatedir = @sharedstatedir@
+ ssldir = @ssldir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-SUBDIRS = src doc tools
++SUBDIRS = src doc
+ EXTRA_DIST = PORTS BUGS COPYRIGHT.GPL CREDITS INSTALL.W32 INSTALL.WCE INSTALL.FIPS
+ doc_DATA = INSTALL README COPYING AUTHORS ChangeLog \
+ 	INSTALL.W32 INSTALL.WCE INSTALL.FIPS \

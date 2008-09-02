@@ -1,0 +1,9 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:44:01 espie Exp $
+include/gtkspell-2.0/
+include/gtkspell-2.0/gtkspell/
+include/gtkspell-2.0/gtkspell/gtkspell.h
+lib/libgtkspell.a
+lib/libgtkspell.la
+lib/pkgconfig/
+lib/pkgconfig/gtkspell-2.0.pc
+%%SHARED%%

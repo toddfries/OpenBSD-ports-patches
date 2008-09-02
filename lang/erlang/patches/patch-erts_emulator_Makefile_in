@@ -1,0 +1,37 @@
+$OpenBSD: patch-erts_emulator_Makefile_in,v 1.7 2008/02/14 22:44:36 sthen Exp $
+--- erts/emulator/Makefile.in.orig	Tue Feb  5 14:37:00 2008
++++ erts/emulator/Makefile.in	Thu Feb  7 16:21:40 2008
+@@ -147,7 +147,7 @@ darwinCFLAGS=-DDARWIN
+ noopsysCFLAGS=
+ OPSYSCFLAGS=$($(OPSYS)CFLAGS)
+ ARCH=@ARCH@
+-ultrasparcCFLAGS=-Wa,-xarch=v8plusa
++ultrasparcCFLAGS=
+ ARCHCFLAGS=$($(ARCH)CFLAGS)
+ 
+ ifdef HIPE_ENABLED
+@@ -196,12 +196,12 @@ endif
+ 
+ ifeq ($(CC), gcc)
+ ifeq ($(NO_INLINE_FUNCTIONS),true)
+-GEN_OPT_FLGS = -O3 -fno-inline-functions
++GEN_OPT_FLGS = -O2 -fno-inline-functions
+ else
+ ifeq ($(OMIT_OMIT_FP),yes)
+-GEN_OPT_FLGS = -O3
++GEN_OPT_FLGS = -O2
+ else
+-GEN_OPT_FLGS = -O3 -fomit-frame-pointer
++GEN_OPT_FLGS = -O2 -fomit-frame-pointer
+ endif
+ endif
+ UNROLL_FLG = -funroll-loops
+@@ -827,7 +827,7 @@ $(OBJDIR)/%.o: hipe/%.S
+ 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+ 
+ $(OBJDIR)/%.o: hipe/%.c
+-	$(CC) $(subst O2,O3, $(CFLAGS)) $(INCLUDES) -c $< -o $@
++	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+ 
+ $(BINDIR)/hipe_mkliterals$(TF_MARKER):	$(OBJDIR)/hipe_mkliterals.o
+ 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $<

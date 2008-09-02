@@ -1,0 +1,7 @@
+@comment $OpenBSD: PFRAG.shared-main,v 1.1 2006/11/25 20:51:02 steven Exp $
+@lib lib/libauthpipe.so.${LIBauthpipe_VERSION}
+@lib lib/libauthpwd.so.${LIBauthpwd_VERSION}
+@lib lib/libcourierauth.so.${LIBcourierauth_VERSION}
+@lib lib/libcourierauthcommon.so.${LIBcourierauthcommon_VERSION}
+@lib lib/libcourierauthsasl.so.${LIBcourierauthsasl_VERSION}
+@lib lib/libcourierauthsaslclient.so.${LIBcourierauthsaslclient_VERSION}

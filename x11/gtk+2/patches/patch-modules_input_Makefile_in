@@ -1,0 +1,24 @@
+$OpenBSD: patch-modules_input_Makefile_in,v 1.17 2008/07/08 08:40:11 brad Exp $
+--- modules/input/Makefile.in.orig	Tue Jun  3 17:20:36 2008
++++ modules/input/Makefile.in	Mon Jun 23 23:34:01 2008
+@@ -975,19 +975,13 @@ install-data-hook:
+ 	  $(mkinstalldirs) $(DESTDIR)$(sysconfdir)/gtk-2.0 ; \
+ 	  echo "$(top_builddir)/gtk/gtk-query-immodules-2.0 > $(DESTDIR)$(sysconfdir)/gtk-2.0/gtk.immodules" ; \
+ 	  $(top_builddir)/gtk/gtk-query-immodules-2.0 > $(DESTDIR)$(sysconfdir)/gtk-2.0/gtk.immodules ; \
+-	else \
+-	  echo "***" ; \
+-	  echo "*** Warning: gtk.immodules not built" ; \
+-	  echo "***" ; \
+-	  echo "*** Generate this file manually on host" ; \
+-	  echo "*** system using gtk-query-immodules-2.0" ; \
+-	  echo "***" ; \
+         fi
+ 
+ uninstall-local:
+ 	rm -f $(DESTDIR)$(sysconfdir)/gtk-2.0/gtk.immodules
+ 
+ gtk.immodules: Makefile.am $(module_LTLIBRARIES)
++	LD_LIBRARY_PATH=$(top_builddir)/gdk-pixbuf/.libs/:$(top_builddir)/gdk/.libs/:$(top_builddir)/gtk/.libs/ \
+ 	$(top_builddir)/gtk/gtk-query-immodules-2.0 $(module_LTLIBRARIES) > gtk.immodules
+ 
+ @CROSS_COMPILING_FALSE@all-local: gtk.immodules

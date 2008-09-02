@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST-main,v 1.2 2006/12/23 09:32:03 jolan Exp $
+@pkgpath games/uqm
+bin/uqm
+share/doc/uqm/
+share/doc/uqm/manual.txt

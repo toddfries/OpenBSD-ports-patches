@@ -1,0 +1,27 @@
+$OpenBSD: patch-akode_plugins_ffmpeg_decoder_ffmpeg_decoder_cpp,v 1.3 2008/07/09 02:07:36 jakemsr Exp $
+--- akode/plugins/ffmpeg_decoder/ffmpeg_decoder.cpp.orig	Thu Aug 10 11:37:20 2006
++++ akode/plugins/ffmpeg_decoder/ffmpeg_decoder.cpp	Sat Jun 21 10:00:47 2008
+@@ -26,9 +26,11 @@
+ #include "decoder.h"
+ 
+ #include <assert.h>
+-#include <ffmpeg/avcodec.h>
+-#include <ffmpeg/avformat.h>
+-#include <ffmpeg/avio.h>
++extern "C" {
++#include <libavcodec/avcodec.h>
++#include <libavformat/avformat.h>
++#include <libavformat/avio.h>
++}
+ 
+ #include "ffmpeg_decoder.h"
+ #include <iostream>
+@@ -349,7 +351,7 @@ retry:
+             assert(false);
+     }
+     if (length == 0) return readFrame(frame);
+-    std::cout << "akode: FFMPEG: Frame length: " << length << "\n";
++    // std::cout << "akode: FFMPEG: Frame length: " << length << "\n";
+ 
+     if( d->packetSize <= 0 )
+         av_free_packet( &d->packet );

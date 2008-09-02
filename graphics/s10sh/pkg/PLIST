@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 00:50:11 espie Exp $
+bin/s10sh
+share/doc/s10sh/
+share/doc/s10sh/Protocol
+share/doc/s10sh/README

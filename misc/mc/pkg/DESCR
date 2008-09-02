@@ -1,0 +1,14 @@
+Midnight Commander is a file manager for UNIX-like operating systems.
+It bears a certain resemblance to John Socha's Norton Commander for DOS.
+
+Some of the features are:
+
+* Built-in Virtual File System: manipulate remote file systems through
+  the ftp or ssh protocol or Midnight Commander's own mcfs protocol.
+  Browse the content of the tar, compressed tar, rpm, zip, cpio, lha and
+  rar archives.
+
+* All of the Midnight Commander operations work with the virtual file
+  system, enabling you to do complex tasks.
+
+* Mouse support under X11's xterms. 

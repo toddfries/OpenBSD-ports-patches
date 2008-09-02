@@ -1,0 +1,47 @@
+$OpenBSD: patch-configure_in,v 1.2 2005/12/30 23:25:56 steven Exp $
+--- configure.in.orig	Wed Mar 27 16:59:52 2002
++++ configure.in	Sat Dec 31 00:06:10 2005
+@@ -198,21 +198,7 @@ AC_CHECK_LIB(jpeg, jpeg_read_scanlines,
+  need_jpeg="yes"
+ ])
+ 
+-AC_CHECK_LIB(tiff, TIFFGetField,
+-[
+-  out_lib="$out_lib -ltiff"
+-  echo "TLIB=-ltiff" >> make.conf
+-  echo "TIFFDEFINE=-DLOAD_TIF" >>make.conf
+-  echo "TIFFINC=" >> make.conf
+-  tiff="TIFF"
+-],
+-[
+-  echo "TLIB=" >> make.conf
+-  echo "TIFFDEFINE=" >>make.conf
+-  echo "TIFFINC=" >> make.conf
+-])
+ 
+-
+ AC_CHECK_LIB(z, inflate,
+ [
+  echo "ZINC=" >>make.conf
+@@ -225,6 +211,21 @@ AC_CHECK_LIB(z, inflate,
+  echo "ZLIB=`pwd`/zlib/libz.a" >>make.conf
+  echo "ZDEP=../zlib/libz.a" >>make.conf
+ ])
++
++
++AC_CHECK_LIB(tiff, TIFFGetField,
++[
++  out_lib="$out_lib -ltiff -ljpeg"
++  echo "TLIB=-ltiff -ljpeg" >> make.conf
++  echo "TIFFDEFINE=-DLOAD_TIF" >>make.conf
++  echo "TIFFINC=" >> make.conf
++  tiff="TIFF"
++],
++[
++  echo "TLIB=" >> make.conf
++  echo "TIFFDEFINE=" >>make.conf
++  echo "TIFFINC=" >> make.conf
++], -ljpeg -lz)
+ 
+ 
+ AC_CHECK_LIB(png, png_get_valid,

@@ -1,0 +1,2 @@
+hanterm-xf is a X hangul terminal based on XFree86 xterm code and
+it has its own hangul automata, so doesn't need any hangul input methods.

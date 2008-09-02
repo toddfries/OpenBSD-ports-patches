@@ -1,0 +1,23 @@
+$OpenBSD: patch-crawl_c,v 1.4 2004/04/07 22:51:03 brad Exp $
+--- crawl.c.orig	Sun May 18 03:26:41 2003
++++ crawl.c	Fri Apr  2 12:30:08 2004
+@@ -167,8 +167,8 @@
+ 		return (-1);
+ 
+ 	if (uri->length != -1 && uri->bdlen != uri->length) {
+-		snprintf(tmp, sizeof(tmp), " (%4.1f%%/%d)",
+-		    (float)uri->bdlen/uri->length*100, uri->length);
++		snprintf(tmp, sizeof(tmp), " (%4.1f%%/%ld)",
++		    (float)uri->bdlen/uri->length*100, (long)uri->length);
+ 		p = tmp;
+ 	}
+ 	fprintf(stdout, "%s %s%s\n",
+@@ -384,7 +384,7 @@
+ 		dup2(fromext[1], fileno(stdout));
+ 		close(fromext[0]);
+ 
+-		if (execlp(program, program, NULL) == -1)
++		if (execlp(program, program, (void *)NULL) == -1)
+ 			err(1, "execlp");
+ 		exit(0);
+ 	}

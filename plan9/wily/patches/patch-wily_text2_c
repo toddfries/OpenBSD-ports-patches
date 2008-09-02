@@ -1,0 +1,18 @@
+$OpenBSD: patch-wily_text2_c,v 1.1 2003/05/24 19:13:08 pvalchev Exp $
+--- wily/text2.c.orig	Sat Apr 11 13:21:28 1998
++++ wily/text2.c	Sat May 24 13:12:29 2003
+@@ -136,11 +136,12 @@ text_write(Text *t, char *fname) {
+ int
+ text_fd(Text *t, Range sel)
+ {
+-	char	*file = tmpnam(0);
++	char	file[40];
+ 	int	fd;
+ 	int	input;
+ 
+-	if ((fd = open(file, O_WRONLY|O_CREAT, 0600)) < 0) {
++	sprintf(file, "ff.XXXXXXXX");
++	if ((fd = mkstemp(file)) < 0) {
+ 		perror("open temp file");
+ 		(void) unlink(file);
+ 		return(-1);

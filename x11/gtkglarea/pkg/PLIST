@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST,v 1.7 2005/12/30 00:35:14 naddy Exp $
+include/gtkgl/
+include/gtkgl/gdkgl.h
+include/gtkgl/gtkglarea.h
+lib/libgtkgl.a
+lib/libgtkgl.la
+share/aclocal/gtkgl.m4
+share/doc/gtkglarea/
+share/doc/gtkglarea/HOWTO.txt
+share/doc/gtkglarea/gdkgl.txt
+share/doc/gtkglarea/gtkglarea.txt
+%%SHARED%%

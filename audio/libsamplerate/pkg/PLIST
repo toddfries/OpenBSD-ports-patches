@@ -1,0 +1,24 @@
+@comment $OpenBSD: PLIST,v 1.3 2008/07/03 08:30:01 ajacoutot Exp $
+%%SHARED%%
+@bin bin/sndfile-resample
+include/samplerate.h
+lib/libsamplerate.a
+lib/libsamplerate.la
+lib/pkgconfig/
+lib/pkgconfig/samplerate.pc
+share/doc/libsamplerate/
+share/doc/libsamplerate/SRC.css
+share/doc/libsamplerate/SRC.png
+share/doc/libsamplerate/api.html
+share/doc/libsamplerate/api_callback.html
+share/doc/libsamplerate/api_full.html
+share/doc/libsamplerate/api_misc.html
+share/doc/libsamplerate/api_simple.html
+share/doc/libsamplerate/download.html
+share/doc/libsamplerate/faq.html
+share/doc/libsamplerate/history.html
+share/doc/libsamplerate/index.html
+share/doc/libsamplerate/license.html
+share/doc/libsamplerate/lists.html
+share/doc/libsamplerate/quality.html
+share/doc/libsamplerate/win32.html

@@ -1,0 +1,21 @@
+$OpenBSD: patch-Makefile_PL,v 1.2 2004/02/29 01:03:32 avsm Exp $
+--- Makefile.PL.orig	2003-02-21 14:17:32.000000000 +0000
++++ Makefile.PL	2004-02-29 00:45:03.000000000 +0000
+@@ -185,7 +185,7 @@ unless ($js_libpath) {
+     }
+ }
+ 
+-our $libs = ' ';
++our $libs = $ENV{'LDFLAGS'}. ' ';
+ 
+ if ($js_found || $js_libpath) {
+     $libs = "-l$js_libname $libs" if $js_libname;
+@@ -193,7 +193,7 @@ if ($js_found || $js_libpath) {
+ }
+ 
+ #sablot and expat libraries
+-$libs = "-lsablot -lexpat $libs";
++$libs = "-lsablot -liconv -lexpat $libs";
+ unless ($^O eq 'MSWin32') {
+     $libs = "$libs -lm";
+ }

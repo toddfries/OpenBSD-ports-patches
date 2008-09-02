@@ -1,0 +1,30 @@
+$OpenBSD: patch-utils_newmail_c,v 1.1 2007/10/26 21:50:35 ajacoutot Exp $
+--- utils/newmail.c.orig	Tue Nov  9 20:42:42 1999
++++ utils/newmail.c	Fri Oct 26 23:46:56 2007
+@@ -144,7 +144,7 @@ int  parent_pid;		/* See if sucide should be attempt  
+ extern int errno;
+ 
+ 
+-#if defined(BSD_TYPE) && !defined(__convex__) && !defined(__FreeBSD__) && !defined(__NetBSD__)
++#if defined(BSD_TYPE) && !defined(__convex__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__)
+         time_t utime_buffer[2];         /* utime command */
+ 
+ #else
+@@ -329,7 +329,7 @@ char *argv[];
+ 	      /* try to set the file access times back, ignore
+ 		 failures */
+ 
+-#if defined(BSD_TYPE) && !defined(__convex__) && !defined(__FreeBSD__) && !defined(__NetBSD__)
++#if defined(BSD_TYPE) && !defined(__convex__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__)
+ 	      utime(cur_folder->foldername, utime_buffer);
+ #else
+               utime(cur_folder->foldername, &utime_buffer);
+@@ -697,7 +697,7 @@ char *name;
+ 	
+ 	/* retain the access times for later use */
+ 
+-#if defined(BSD_TYPE) && !defined(__convex__) && !defined(__FreeBSD__) && !defined(__NetBSD__)
++#if defined(BSD_TYPE) && !defined(__convex__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__)
+         utime_buffer[0]     = buffer.st_atime;
+         utime_buffer[1]     = buffer.st_mtime;
+ #else

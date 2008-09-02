@@ -1,0 +1,32 @@
+--- usb.c.orig	Tue Mar 13 15:46:18 2001
++++ usb.c	Sun Sep 19 23:03:00 2004
+@@ -84,11 +84,29 @@
+ 						printf("Canon S20 found\n");
+ 					return USB_INIT_S20;
+ 					break;
++				case PRODUCT_ID_S40:
++					*camera_dev = dev;
++					if (opt_debug)
++						printf("Canon S40 found\n");
++					return USB_INIT_S40;
++					break;
++				case PRODUCT_ID_A70:
++					*camera_dev = dev;
++					if (opt_debug)
++						printf("Canon A70 found\n");
++					return USB_INIT_A70;
++					break;
+ 				case PRODUCT_ID_S100_EU:
+ 				case PRODUCT_ID_S100_US:
+ 					*camera_dev = dev;
+ 					if (opt_debug)
+ 						printf("Canon S100 found\n");
++					return USB_INIT_S100;
++					break;
++				case PRODUCT_ID_S200:
++					*camera_dev = dev;
++					if (opt_debug)
++						printf("Canon S200 found\n");
+ 					return USB_INIT_S100;
+ 					break;
+ 				case PRODUCT_ID_G1:

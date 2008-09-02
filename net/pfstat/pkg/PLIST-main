@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2006/11/24 21:46:18 steven Exp $
+@pkgpath net/pfstat
+bin/pfstat
+@man man/man8/pfstat.8
+share/examples/pfstat/
+share/examples/pfstat/pfstat.conf
+@sample ${SYSCONFDIR}/pfstat.conf

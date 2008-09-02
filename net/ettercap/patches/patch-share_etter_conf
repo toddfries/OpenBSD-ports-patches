@@ -1,0 +1,23 @@
+$OpenBSD: patch-share_etter_conf,v 1.2 2008/07/16 20:15:48 brad Exp $
+--- share/etter.conf.orig	Tue Oct 12 11:28:38 2004
++++ share/etter.conf	Wed Jul 16 15:49:45 2008
+@@ -14,8 +14,8 @@
+ ############################################################################
+ 
+ [privs]
+-ec_uid = 65534                # nobody is the default
+-ec_gid = 65534                # nobody is the default
++ec_uid = 32767                # nobody is the default
++ec_gid = 32767                # nobody is the default
+ 
+ [mitm]
+ arp_storm_delay = 10          # milliseconds
+@@ -67,7 +67,7 @@ ftp = 21                   # tcp    21
+ ssh = 22                   # tcp    22
+ telnet = 23                # tcp    23
+ smtp = 25                  # tcp    25
+-dns = 53                   # udp    53
++#dns = 53                   # udp    53
+ dhcp = 67                  # udp    68
+ http = 80                  # tcp    80
+ ospf = 89                  # ip     89  (IPPROTO 0x59)

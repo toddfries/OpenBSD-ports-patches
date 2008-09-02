@@ -1,0 +1,12 @@
+$OpenBSD: patch-cadubi,v 1.3 2004/02/27 05:31:46 jcs Exp $
+--- cadubi.orig	Thu Feb 26 23:27:56 2004
++++ cadubi	Thu Feb 26 23:28:27 2004
+@@ -18,7 +18,7 @@
+ # (sorry guys, i wrote this years before i had the remotest clue as to
+ #  what the hell i was doing)
+ use FindBin qw($Bin);
+-$HELPFILE = "$Bin/help.txt";
++$HELPFILE = "$Bin/../share/doc/cadubi/help.txt";
+ 
+ # other stuff
+ $DEBUG = 0;

@@ -1,0 +1,117 @@
+$OpenBSD: user.list,v 1.92 2008/07/27 21:30:05 sthen Exp $
+
+This file lists all users and groups that are created by ports or that
+users are encouraged to create after installing a port (these are marked
+'noauto'). All ports' users/groups have to start with an underscore and
+have to use a fixed uid/gid. If a user/group pair is created, they share
+the same uid/gid. If a user is member of a system group, leave the group
+entry empty. If only a group is created, leave the user entry empty.
+
+id  user		group		port options
+----------------------------------------------------
+500 _opennap		_opennap	audio/opennap
+501 _gnats				databases/gnats
+502 _mysql		_mysql		databases/mysql,-server
+503 _postgresql		_postgresql	databases/postgresql,-server
+504 _mailman		_mailman	mail/mailman
+506 _spamdaemon		_spamdaemon	mail/p5-Mail-SpamAssassin
+507 _postfix		_postfix	mail/postfix/{snapshot,stable}
+508			_postdrop	mail/postfix/{snapshot,stable}
+509 _bitlbee		_bitlbee	net/bitlbee
+510 _pdnsd		_pdnsd		net/pdnsd
+511 _tacacs		_tacacs		net/tacacs+
+512 _silcd		_silcd		net/silc-server
+513 _vsftpd		_vsftpd		net/vsftpd
+514 _scanlogd		_scanlogd	security/scanlogd
+515 _squid		_squid		www/squid
+516 _privoxy		_privoxy	www/privoxyy
+517 _wnn				japanese/Wnn
+518 _dovecot		_dovecot	mail/dovecot
+519 _news				news/leafnode
+520 _majordomo		_majordomo	mail/majordomo
+521 _exim		_exim		mail/exim
+522 _xcept		_xcept		comms/xcept
+523 _ffproxy		_ffproxy	www/ffproxy
+524			_mail		mail/openwebmail
+525 _quagga		_quagga		net/quagga
+526 _tomcat		_tomcat		www/jakarta-tomcat
+527 _milter-regex	_milter-regex	mail/milter-regex
+528 _stunnel		_stunnel	security/stunnel
+529 _ups				sysutils/nut
+530 _vscan		_vscan		mail/amavisd-new
+531 _cnupm		_cnupm		net/cnupm
+532 _milter-spamd	_milter-spamd	mail/milter-spamd
+533 _jabberd		_jabberd	net/jabberd
+534 _zope		_zope		www/zope
+535 _symon		_symon		sysutils/symon
+536 _nostromo		_nostromo	www/nostromo
+537 _maradns		_maradns	net/maradns
+538 _vilter		_vilter		mail/smtp-vilter
+539 _clamav		_clamav		security/clamav
+540 _dspam		_dspam		mail/dspam
+541 _cups		_cups		print/cups
+542 _flowd		_flowd		net/flowd
+543 _cyrus		_cyrus		mail/cyrus-imapd
+544 _openldap		_openldap	databases/openldap
+545 _asterisk		_asterisk	telephony/asterisk
+546 _honeyd		_honeyd		net/honeyd
+547 _kismet		_kismet		net/kismet
+548 _polipo		_polipo		www/polipo
+549 _netplan		_netplan	misc/plan
+550 _nagios		_nagios		net/nagios
+551 _gpsd				misc/gpsd
+552 _xavante		_xavante	www/xavante
+553 _saned		_saned		graphics/sane-backends
+554 _avenger				mail/avenger
+555			_akpop3d	mail/akpop3d
+556 _nrpe		_nrpe		net/nagios/nrpe
+557 _snort		_snort		net/snort
+558 _ipfreely		_ipfreely	net/ipfreely
+559 _freeradius		_freeradius	net/freeradius
+560 _mpd		_mpd		audio/mpd
+561 _rbldns		_rbldns		net/rbldnsd
+562 _smokeping		_smokeping	net/smokeping
+563 _postgrey		_postgrey	mail/postgrey
+564 _prelude		_prelude	security/prelude
+565 _pfflowd		_pfflowd	net/pfflowd
+566 _tor		_tor		net/tor
+567 _dk-milter		_dk-milter	mail/dk-milter
+568 _milter-greylist			mail/milter-greylist
+569 _dkim-milter	_dkim-milter	mail/dkim-milter
+570 _mdefang		_mdefang	mail/mimedefang
+571 _courier		_courier	mail/maildrop
+572 _dbus		_dbus		x11/dbus
+573 _perdition		_perdition	mail/perdition
+574 _siproxd		_siproxd	telephony/siproxd
+575 _netflow		_netflow	net/flow-tools
+576 _apache2		_apache2	www/apache-httpd
+577 _openvpn		_openvpn	net/openvpn
+578 _mrtg		_mrtg		net/mrtg
+579 _hiawatha		_hiawatha	www/hiawatha
+580 _puppet		_puppet		sysutils/ruby-puppet
+581 _gonzui		_gonzui		textproc/gonzui
+582 _tabled		_tabled		sysutils/tabled
+583			_kdesud		x11/kde/base3
+584 _nepenthes		_nepenthes	net/nepenthes
+585 _lighttpd		_lighttpd	www/lighttpd
+586 _gnugk		_gnugk		net/gnugk
+587 _darkstat		_darkstat	net/darkstat
+588 _dansguardian	_dansguardian	www/dansguardian
+589 _sdpd		_sdpd		net/bluetooth-tools
+590 _smsd		_smsd		comms/smstools
+591 _bacula		_bacula		sysutils/bacula
+592 _imapproxy		_imapproxy	mail/imapproxy
+593 _nginx		_nginx		www/nginx
+594 _ejabberd		_ejabberd	net/ejabberd
+595 _poppassd		_poppassd	sysutils/openpoppassd
+596 _heartbeat		_heartbeat	sysutils/heartbeat
+597			_kqemu		emulators/kqemu
+598 _iodine		_iodine		net/iodine
+599 _bacula-sd				sysutils/bacula
+600 _ntlmaps		_ntlmaps	www/ntlmaps
+601 _unbound		_unbound	net/unbound
+602 _havp		_havp		www/havp
+603 _argus		_argus		net/argus
+604 _haproxy		_haproxy	net/haproxy
+605 _hudson		_hudson		devel/hudson
+606 _ladvd		_ladvd		net/ladvd

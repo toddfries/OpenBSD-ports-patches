@@ -1,0 +1,31 @@
+$OpenBSD: patch-libpurple_plugins_ssl_Makefile_am,v 1.2 2007/10/01 22:03:29 merdely Exp $
+--- libpurple/plugins/ssl/Makefile.am.orig	Sat Sep 29 12:39:06 2007
++++ libpurple/plugins/ssl/Makefile.am	Sat Sep 29 20:53:53 2007
+@@ -4,6 +4,7 @@ EXTRA_DIST = \
+ plugindir = $(libdir)/purple-$(PURPLE_MAJOR_VERSION)
+ 
+ ssl_la_LDFLAGS        = -module -avoid-version
++ssl_openssl_la_LDFLAGS = -module -avoid-version
+ ssl_gnutls_la_LDFLAGS = -module -avoid-version
+ ssl_nss_la_LDFLAGS    = -module -avoid-version
+ 
+@@ -15,10 +16,12 @@ plugin_LTLIBRARIES = \
+ 	ssl-nss.la
+ 
+ ssl_la_SOURCES        = ssl.c
++ssl_openssl_la_SOURCES = ssl-openssl.c
+ ssl_gnutls_la_SOURCES = ssl-gnutls.c
+ ssl_nss_la_SOURCES    = ssl-nss.c
+ 
+ ssl_la_LIBADD        = $(GLIB_LIBS)
++ssl_openssl_la_LIBADD = $(GLIB_LIBS) $(OPENSSL_LIBS)
+ ssl_gnutls_la_LIBADD = $(GLIB_LIBS) $(GNUTLS_LIBS)
+ ssl_nss_la_LIBADD    = $(GLIB_LIBS) $(NSS_LIBS)
+ 
+@@ -33,5 +36,6 @@ AM_CPPFLAGS = \
+ 	$(GLIB_CFLAGS) \
+ 	$(PLUGIN_CFLAGS)
+ 
++ssl_openssl_la_CFLAGS = $(AM_CPPFLAGS) $(OPENSSL_CFLAGS)
+ ssl_gnutls_la_CFLAGS = $(AM_CPPFLAGS) $(GNUTLS_CFLAGS)
+ ssl_nss_la_CFLAGS = $(AM_CPPFLAGS) $(NSS_CFLAGS)

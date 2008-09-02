@@ -1,0 +1,38 @@
+$OpenBSD: patch-configure,v 1.6 2007/08/28 18:45:34 jasper Exp $
+--- configure.orig	Wed Aug  1 11:00:47 2007
++++ configure	Tue Aug 28 20:26:32 2007
+@@ -903,14 +903,14 @@ localstatedir='${prefix}/var'
+ includedir='${prefix}/include'
+ oldincludedir='/usr/include'
+ docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
+-infodir='${datarootdir}/info'
++infodir='${prefix}/info'
+ htmldir='${docdir}'
+ dvidir='${docdir}'
+ pdfdir='${docdir}'
+ psdir='${docdir}'
+ libdir='${exec_prefix}/lib'
+ localedir='${datarootdir}/locale'
+-mandir='${datarootdir}/man'
++mandir='${prefix}/man'
+ 
+ ac_prev=
+ ac_dashdash=
+@@ -20470,7 +20470,7 @@ REPLACE_FTELLO!$REPLACE_FTELLO$ac_delim
+ REPLACE_FTELL!$REPLACE_FTELL$ac_delim
+ REPLACE_FFLUSH!$REPLACE_FFLUSH$ac_delim
+ GETOPT_H!$GETOPT_H$ac_delim
+-LIBINTL!$LIBINTL$ac_delim
++LIBINTL!$LTLIBINTL$ac_delim
+ LTLIBINTL!$LTLIBINTL$ac_delim
+ GNULIB_CHOWN!$GNULIB_CHOWN$ac_delim
+ GNULIB_DUP2!$GNULIB_DUP2$ac_delim
+@@ -20586,7 +20586,7 @@ XGETTEXT!$XGETTEXT$ac_delim
+ XGETTEXT_015!$XGETTEXT_015$ac_delim
+ MSGMERGE!$MSGMERGE$ac_delim
+ INTL_MACOSX_LIBS!$INTL_MACOSX_LIBS$ac_delim
+-LIBICONV!$LIBICONV$ac_delim
++LIBICONV!$LTLIBICONV$ac_delim
+ LTLIBICONV!$LTLIBICONV$ac_delim
+ INTLLIBS!$INTLLIBS$ac_delim
+ POSUB!$POSUB$ac_delim

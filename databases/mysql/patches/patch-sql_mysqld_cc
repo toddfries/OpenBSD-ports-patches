@@ -1,0 +1,12 @@
+$OpenBSD: patch-sql_mysqld_cc,v 1.10 2007/08/08 21:33:51 robert Exp $
+--- sql/mysqld.cc.orig	Wed Jul  4 09:06:03 2007
++++ sql/mysqld.cc	Sat Jul 14 16:19:38 2007
+@@ -3543,7 +3543,7 @@ int main(int argc, char **argv)
+   init_ssl();
+ 
+ #ifdef HAVE_LIBWRAP
+-  libwrapName= my_progname+dirname_length(my_progname);
++  libwrapName= (char *) my_progname+dirname_length(my_progname);
+   openlog(libwrapName, LOG_PID, LOG_AUTH);
+ #endif
+ 

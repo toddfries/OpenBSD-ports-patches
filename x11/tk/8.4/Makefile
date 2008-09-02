@@ -1,0 +1,54 @@
+# $OpenBSD: Makefile,v 1.15 2008/05/02 13:17:16 sthen Exp $
+
+COMMENT=	graphical toolkit for Tcl
+
+VERSION=	8.4.7
+
+DISTNAME=	tk${VERSION}-src
+PKGNAME=	tk-${VERSION}p2
+SHARED_LIBS=	tk84 1.0
+CATEGORIES=	x11 x11/tk
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tcl/}
+
+HOMEPAGE=	http://www.tcl.tk/
+
+# BSD 
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+WANTLIB=		X11 c m
+
+LIB_DEPENDS=    tcl84:tcl-8.4.*:lang/tcl/8.4
+
+MAKE_FLAGS=	CFLAGS="${CFLAGS}"
+FAKE_FLAGS=	INSTALL="install -c" INSTALL_ROOT="${WRKINST}" \
+		BASE_INCLUDE_DIR='$$(prefix)/include/tk$$(VERSION)' \
+		INCLUDE_INSTALL_DIR='$$(INSTALL_ROOT)$$(BASE_INCLUDE_DIR)' \
+		GENERIC_INCLUDE_INSTALL_DIR='$$(BASE_INCLUDE_DIR)/generic' \
+		UNIX_INCLUDE_INSTALL_DIR='$$(BASE_INCLUDE_DIR)/unix' \
+		MAN_INSTALL_DIR='$${INSTALL_ROOT}$$(TK_LIBRARY)/man'
+
+SEPARATE_BUILD=	simple
+USE_X11=	Yes
+AUTOCONF_VERSION=2.13
+CONFIGURE_STYLE=autoconf no-autoheader
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--with-tcl="${LOCALBASE}/lib/tcl8.4"
+CONFIGURE_ENV=  PORTSDIR="${PORTSDIR}" \
+		LIBtk84_VERSION="${LIBtk84_VERSION}"
+
+WRKDIST=	${WRKDIR}/tk${VERSION}/unix
+
+REGRESS_TARGET=test
+REGRESS_DEPENDS=::lang/tcl/8.4:regress
+REGRESS_FLAGS=TCL_BIN_DIR=`cd ${PORTSDIR}/lang/tcl/8.4 && ${MAKE} show=WRKBUILD`
+# This regression test wants an X11 display
+REGRESS_FLAGS+=DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+REGRESS_IS_INTERACTIVE=Yes
+
+post-install:
+	@strip ${PREFIX}/bin/wish8.4
+	ln -s libtkstub84.a ${PREFIX}/lib/libtkstub84_pic.a
+
+.include <bsd.port.mk>

@@ -1,0 +1,13 @@
+@comment $OpenBSD: PLIST-kodict,v 1.7 2004/09/15 00:53:48 espie Exp $
+dict/
+dict/Wnn/
+dict/Wnn/ko_KR/
+dict/Wnn/ko_KR/sys/
+@comment no checksum
+dict/Wnn/ko_KR/sys/full.fzk
+@comment no checksum
+dict/Wnn/ko_KR/sys/hword.dic
+@comment no checksum
+dict/Wnn/ko_KR/sys/single.dic
+@exec ${WNNBASE}/lib/wnn/install-script
+@unexec echo "usr info may exist: finish removing %D/ko_KR manually"

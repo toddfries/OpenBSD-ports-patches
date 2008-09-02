@@ -1,0 +1,51 @@
+$OpenBSD: patch-mshell_c,v 1.1 2002/12/23 07:42:00 pvalchev Exp $
+--- mshell.c.orig	Sun Dec 22 23:47:32 2002
++++ mshell.c	Sun Dec 22 23:47:32 2002
+@@ -1,6 +1,8 @@
+ #include "mshell.h"
+ #include <setjmp.h>
+-char * index ();
++
++#include <stdlib.h>
++#include <string.h>
+ 
+ 
+ extern char     G_homevar      [];
+@@ -26,8 +28,7 @@ char *m;
+ 	     exec_string   [DESCLEN],
+ 	     *args         [MAXARGS],
+ 	     *menu_array   [LINES],
+-	     tmpword       [WORDLEN],
+-	     *malloc();
++	     tmpword       [WORDLEN];
+ 
+ 	int  i, 
+ 	     idx,
+@@ -35,8 +36,7 @@ char *m;
+ 	     firsttime = TRUE,
+ 	     dontdisplay = FALSE,
+ 	     unix_flag,
+-	     menu_flag,
+-	     exit();
++	     menu_flag;
+ 
+ 	static jmp_buf topenv;
+ 	static int topenvset;
+@@ -49,7 +49,7 @@ char *m;
+ 	signal (SIGPIPE, SIG_IGN);	/* ignore dead pipes */
+ 	log("enter", m);
+ 
+-	while TRUE {
++	while (TRUE) {
+ 
+ 		if (!topenvset) {
+ 			topenvset = TRUE;
+@@ -142,7 +142,7 @@ char *m;
+ 
+ 			if ( strcmp (action_string, NULLSTR) == 0 ) {
+ 				invalid_option = TRUE;
+-				printf ("\tNo such help option name as: %s\!\!\n", opt2);
++				printf ("\tNo such help option name as: %s!!\n", opt2);
+ 			}
+ 			else {
+ 				tmpword[0] = EOS;

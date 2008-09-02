@@ -1,0 +1,53 @@
+# $OpenBSD: Makefile,v 1.6 2008/06/03 23:37:35 okan Exp $
+
+COMMENT=	greylist milter
+
+DISTNAME=	milter-greylist-4.0
+PKGNAME=	${DISTNAME}p0
+CATEGORIES=	mail
+HOMEPAGE=	http://hcpnet.free.fr/milter-greylist/
+
+MASTER_SITES=	ftp://ftp.espci.fr/pub/milter-greylist/
+EXTRACT_SUFX=	.tgz
+
+MAINTAINER=	Jakob Schlyter <jakob@openbsd.org>
+
+# BSD license
+PERMIT_PACKAGE_CDROM=		Yes
+PERMIT_PACKAGE_FTP=		Yes
+PERMIT_DISTFILES_CDROM=		Yes
+PERMIT_DISTFILES_FTP=		Yes
+
+WANTLIB=	c pthread milter
+
+LIB_DEPENDS=	spf2::mail/libspf2
+
+BUILD_DEPENDS=	::devel/bison
+
+USERNAME=	_milter-greylist:_milter-greylist
+GREYLISTDIR=	/var/db/milter-greylist
+EXAMPLESDIR=	share/examples/milter-greylist
+
+SUBST_VARS=	GREYLISTDIR
+
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS+=	--with-user=${USERNAME} \
+			--with-dumpfile=${GREYLISTDIR}/greylist.db \
+			--with-libspf2=${LOCALBASE}
+
+NO_REGRESS=	Yes
+
+pre-configure:
+	@perl -pi -e 's,!!USERNAME!!,${USERNAME},; \
+		s,!!GREYLISTDIR!!,${GREYLISTDIR},' ${WRKSRC}/greylist.conf
+	@perl -pi -e 's,!!GREYLISTDIR!!,${GREYLISTDIR},' \
+		${WRKSRC}/greylist.conf.5 ${WRKSRC}/milter-greylist.8
+
+do-install:
+	${INSTALL_PROGRAM} ${WRKSRC}/milter-greylist ${PREFIX}/libexec
+	${INSTALL_MAN} ${WRKSRC}/milter-greylist.8 ${PREFIX}/man/man8
+	${INSTALL_MAN} ${WRKSRC}/greylist.conf.5 ${PREFIX}/man/man5
+	${INSTALL_DATA_DIR} ${PREFIX}/${EXAMPLESDIR}
+	${INSTALL_DATA} ${WRKSRC}/greylist.conf ${PREFIX}/${EXAMPLESDIR}
+
+.include <bsd.port.mk>

@@ -1,0 +1,16 @@
+To start with prelude-pflogger, you have to create a starting profile,
+e.g. "prelude-pflogger" by running on the manager side:
+
+# prelude-adduser registration-server prelude-manager \
+	--uid=564 --gid=564
+
+and on the sensor side:
+
+# prelude-adduser register prelude-pflogger "idmef:w" \
+	<manager address> --uid 564 --gid 564
+
+To start prelude-pflogger at boot-time, you could use:
+
+if [ -x ${LOCALBASE}/bin/prelude-pflogger ]; then
+	echo -n ' prelude-pflogger'; ${LOCALBASE}/bin/prelude-pflogger -d
+fi

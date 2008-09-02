@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.2 2005/12/07 21:04:37 wilfried Exp $
+${P5SITE}/Net/DAV/
+${P5SITE}/Net/DAV/Server.pm
+@man man/man3p/Net::DAV::Server.3p

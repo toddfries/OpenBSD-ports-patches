@@ -1,0 +1,12 @@
+$OpenBSD: patch-docs_Makefile_in,v 1.2 2007/09/26 20:14:37 rui Exp $
+--- docs/Makefile.in.orig	Tue Jun  5 02:17:38 2007
++++ docs/Makefile.in	Fri Jul 27 14:11:37 2007
+@@ -163,7 +163,7 @@ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ 
+ # The name of the module, e.g. 'glib'.
+-DOC_MODULE = pcapnav
++DOC_MODULE = 
+ 
+ # The top-level SGML file. Change it if you want.
+ DOC_MAIN_SGML_FILE = $(DOC_MODULE)-manual.sgml

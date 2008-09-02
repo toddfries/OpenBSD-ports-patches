@@ -1,0 +1,22 @@
+@comment $OpenBSD: PLIST,v 1.18 2008/07/16 20:31:33 brad Exp $
+@bin bin/bochs
+@bin bin/bxcommit
+@bin bin/bximage
+@man man/man1/bochs-dlx.1
+@man man/man1/bochs.1
+@man man/man1/bxcommit.1
+@man man/man1/bximage.1
+@man man/man5/bochsrc.5
+share/bochs/
+share/bochs/BIOS-bochs-latest
+share/bochs/VGABIOS-elpin-2.40
+share/bochs/VGABIOS-elpin-LICENSE
+share/bochs/VGABIOS-lgpl-README
+share/bochs/VGABIOS-lgpl-latest
+share/bochs/VGABIOS-lgpl-latest-cirrus
+share/bochs/VGABIOS-lgpl-latest-cirrus-debug
+share/bochs/bochsrc
+share/doc/bochs/
+share/doc/bochs/Linux.html
+share/doc/bochs/cosimulation.html
+share/doc/bochs/index.html

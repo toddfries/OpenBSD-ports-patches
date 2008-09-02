@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.3 2008/04/22 12:16:30 fgsch Exp $
+lib/python${MODPY_VERSION}/site-packages/BeautifulSoup-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/BeautifulSoup.py
+lib/python${MODPY_VERSION}/site-packages/BeautifulSoup.pyc
+lib/python${MODPY_VERSION}/site-packages/BeautifulSoupTests.py
+lib/python${MODPY_VERSION}/site-packages/BeautifulSoupTests.pyc

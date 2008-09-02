@@ -1,0 +1,36 @@
+$OpenBSD: patch-etc_cfg_ioncore_lua,v 1.6 2007/03/28 19:33:04 pedro Exp $
+--- etc/cfg_ioncore.lua.orig	Sun Dec 24 08:45:26 2006
++++ etc/cfg_ioncore.lua	Sun Dec 24 08:48:23 2006
+@@ -63,8 +63,8 @@ defbindings("WScreen", {
+     kpress(META.."F9", "ioncore.create_ws(_)"),
+     
+     bdoc("Display the main menu."),
+-    kpress(ALTMETA.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
+-    --kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
++    --kpress(ALTMETA.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
++    kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
+     mpress("Button3", "mod_menu.pmenu(_, _sub, 'mainmenu')"),
+     
+     bdoc("Display the window list menu."),
+@@ -139,10 +139,10 @@ defbindings("WMPlex.toplevel", {
+     kpress(META.."T", "WRegion.set_tagged(_sub, 'toggle')", "_sub:non-nil"),
+ 
+     bdoc("Query for manual page to be displayed."),
+-    kpress(ALTMETA.."F1", "mod_query.query_man(_, ':man')"),
++    kpress(ALTMETA.."F1", "mod_query.query_man(_, '::man')"),
+ 
+     bdoc("Show the Ion manual page."),
+-    kpress(META.."F1", "ioncore.exec_on(_, ':man ion3')"),
++    kpress(META.."F1", "ioncore.exec_on(_, '::man ion3')"),
+ 
+     bdoc("Run a terminal emulator."),
+     kpress(ALTMETA.."F2", "ioncore.exec_on(_, XTERM or 'xterm')"),
+@@ -158,7 +158,7 @@ defbindings("WMPlex.toplevel", {
+ 
+     bdoc("Query for file to edit."),
+     kpress(ALTMETA.."F5", 
+-           "mod_query.query_editfile(_, 'run-mailcap --action=edit')"),
++           "mod_query.query_editfile(_, ':vi')"),
+ 
+     bdoc("Query for file to view."),
+     kpress(ALTMETA.."F6", 

@@ -1,0 +1,30 @@
+@comment $OpenBSD: PLIST,v 1.8 2007/12/03 18:54:58 fgsch Exp $
+bin/eboard
+bin/eboard-addtheme
+bin/eboard-config
+@man man/man1/eboard-addtheme.1
+@man man/man1/eboard-config.1
+@man man/man6/eboard.6
+share/doc/eboard/
+share/doc/eboard/Crafty.txt
+share/doc/eboard/FICS-Timeseal.txt
+share/doc/eboard/GNUChess4.txt
+share/doc/eboard/GNUChess5.txt
+share/doc/eboard/Scripts.txt
+share/doc/eboard/Sjeng.txt
+share/doc/eboard/Themes.txt
+share/eboard/
+share/eboard/NAG.en.txt
+share/eboard/classic.png
+share/eboard/eboard.cs.dict
+share/eboard/eboard.de.dict
+share/eboard/eboard.es.dict
+share/eboard/eboard.fr.dict
+share/eboard/eboard.hu.dict
+share/eboard/eboard.it.dict
+share/eboard/eboard.ja.dict
+share/eboard/eboard.pl.dict
+share/eboard/eboard.pt_BR.dict
+share/eboard/eboard_themes.conf
+share/eboard/ghouls.png
+share/eboard/plastic.png

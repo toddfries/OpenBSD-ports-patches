@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.3 2008/04/03 10:23:01 jasper Exp $
+--- configure.orig	Sun Mar  2 15:13:28 2008
++++ configure	Wed Mar 26 11:20:27 2008
+@@ -5733,7 +5733,7 @@ if test "x$debug" = "xyes"
+ then
+ 	CXXFLAGS="$CXXFLAGS -O0 -DDEBUG -ggdb3 -W -Wall -ansi"
+ else
+-	CXXFLAGS="-O2 -W -Wall -ansi $CXXFLAGS"
++	CXXFLAGS="-W -Wall -ansi $CXXFLAGS"
+ fi
+ 
+ if test "x$profile" = "xyes"

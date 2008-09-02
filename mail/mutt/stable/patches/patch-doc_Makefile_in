@@ -1,0 +1,23 @@
+$OpenBSD: patch-doc_Makefile_in,v 1.3 2007/06/15 19:01:07 kili Exp $
+--- doc/Makefile.in.orig	Wed May 23 03:17:52 2007
++++ doc/Makefile.in	Mon May 28 19:10:48 2007
+@@ -60,7 +60,7 @@ srcdir_DOCFILES = PGP-Notes.txt applying-patches.txt	\
+ topsrcdir_DOCFILES = COPYRIGHT GPL INSTALL ChangeLog	\
+ 	README NEWS TODO README.SECURITY README.SSL 
+ 
+-all: muttrc.man try-html try-txt
++all: muttrc.man
+ 
+ try-html: ../makedoc
+ 	test -f manual.html || $(MAKE) manual.html || cp $(srcdir)/manual*.html ./
+@@ -155,8 +155,8 @@ update-doc:  ../makedoc stamp-doc-sgml stamp-doc-man m
+ 
+ muttrc.man stamp-doc-man: ../makedoc $(top_srcdir)/init.h muttrc.man.head muttrc.man.tail
+ 	$(MAKEDOC_CPP) $(top_srcdir)/init.h | ../makedoc -m | 	    \
+-		cat $(srcdir)/muttrc.man.head - $(srcdir)/muttrc.man.tail\
+-		> muttrc.man
++		cat $(srcdir)/muttrc.man.head - $(srcdir)/muttrc.man.tail | \
++		/usr/bin/tbl > muttrc.man
+ 	touch stamp-doc-man
+ 
+ manual.sgml stamp-doc-sgml: ../makedoc $(top_srcdir)/init.h manual.sgml.head manual.sgml.tail $(top_srcdir)/VERSION

@@ -1,0 +1,21 @@
+$OpenBSD: patch-include_system_h,v 1.2 2005/09/11 12:26:02 espie Exp $
+--- include/system.h.orig	Sat Jul  2 09:24:44 2005
++++ include/system.h	Sun Sep 11 13:34:07 2005
+@@ -525,6 +525,9 @@ E struct tm *FDECL(localtime, (const tim
+ # endif
+ # endif
+ 
++#if defined(BSD)
++/* no declaration needed; it's in time.h */
++#else
+ # if defined(ULTRIX) || (defined(BSD) && defined(POSIX_TYPES)) || defined(SYSV) || defined(MICRO) || defined(VMS) || defined(MAC) || (defined(HPUX) && defined(_POSIX_SOURCE))
+ #  ifndef       __WATCOMC__
+ E time_t FDECL(time, (time_t *));
+@@ -532,6 +535,7 @@ E time_t FDECL(time, (time_t *));
+ # else
+ E long FDECL(time, (time_t *));
+ # endif /* ULTRIX */
++#endif
+ 
+ #ifdef VMS
+ 	/* used in makedefs.c, but missing from gcc-vms's <time.h> */

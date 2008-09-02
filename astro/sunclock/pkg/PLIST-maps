@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST-maps,v 1.2 2007/04/01 16:04:06 naddy Exp $
+share/sunclock/earthmaps/altitude.jpg
+share/sunclock/earthmaps/bathymetry.jpg
+share/sunclock/earthmaps/biomap.jpg
+share/sunclock/earthmaps/biomap_big.jpg
+share/sunclock/earthmaps/caida.jpg
+share/sunclock/earthmaps/crustal.png
+share/sunclock/earthmaps/depthmap.jpg
+share/sunclock/earthmaps/e43_color1_sh_16k.jpg
+share/sunclock/earthmaps/earthlights.jpg
+share/sunclock/earthmaps/elevation.jpg
+share/sunclock/earthmaps/huge.jpg
+share/sunclock/earthmaps/photo1.jpg
+share/sunclock/earthmaps/photo2.jpg
+share/sunclock/earthmaps/photo_big1.jpg
+share/sunclock/earthmaps/photo_big2.jpg
+share/sunclock/earthmaps/population.jpg
+share/sunclock/earthmaps/rainmap.jpg
+share/sunclock/earthmaps/temperature.jpg
+share/sunclock/earthmaps/topography.png
+share/sunclock/earthmaps/topography1.jpg
+share/sunclock/earthmaps/topography2.jpg
+share/sunclock/earthmaps/topography3.jpg

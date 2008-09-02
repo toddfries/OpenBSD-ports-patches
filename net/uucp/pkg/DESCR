@@ -1,0 +1,6 @@
+This is the standard UUCP package of the Free Software Foundation.
+
+The package currently supports the 'f', 'g' (in all window and packet
+sizes), 'G', 't' and 'e' protocols, as well a Zmodem protocol, the FX
+UUCICO 'y' protocol, and two new bidirectional protocols.  It can make
+TCP connections.

@@ -1,0 +1,24 @@
+$OpenBSD: patch-arcdos_c,v 1.2 2005/10/13 18:05:20 naddy Exp $
+--- arcdos.c.orig	Fri Oct 31 03:32:19 2003
++++ arcdos.c	Tue Oct 11 23:25:33 2005
+@@ -175,14 +175,20 @@ setstamp(f, date, time)		/* set a file's
+ 	struct tm	tm;
+ 	struct timeval  tvp[2];
+ 	int	utimes();
++#if !defined(__FreeSBD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+ 	long	tmclock();
++#endif
+ 	tm.tm_sec = (time & 31) * 2;
+ 	tm.tm_min = (time >> 5) & 63;
+ 	tm.tm_hour = (time >> 11);
+ 	tm.tm_mday = date & 31;
+ 	tm.tm_mon = ((date >> 5) & 15) - 1;
+ 	tm.tm_year = (date >> 9) + 80;
++#if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+ 	tvp[0].tv_sec = tmclock(&tm);
++#else
++	tvp[0].tv_sec = timelocal(&tm);
++#endif
+ 	tvp[1].tv_sec = tvp[0].tv_sec;
+ 	tvp[0].tv_usec = tvp[1].tv_usec = 0;
+ 	utimes(f, tvp);

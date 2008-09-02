@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/08/06 14:37:29 espie Exp $
+bin/xcdplayer
+lib/X11/app-defaults/XCdplayer
+@man man/cat1/xcdplayer.0

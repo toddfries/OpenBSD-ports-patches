@@ -1,0 +1,9 @@
+@comment $OpenBSD: PFRAG.shared-examples,v 1.5 2007/08/29 12:30:58 espie Exp $
+lib/qt4/examples/tools/echoplugin/plugin/libechoplugin.so
+lib/qt4/examples/tools/plugandpaint/plugins/libpnp_extrafilters.so
+lib/qt4/examples/tools/styleplugin/styles/libsimplestyleplugin.so
+lib/qt4/plugins/designer/libarthurplugin.so
+lib/qt4/plugins/designer/libcontainerextension.so
+lib/qt4/plugins/designer/libcustomwidgetplugin.so
+lib/qt4/plugins/designer/libtaskmenuextension.so
+lib/qt4/plugins/designer/libworldtimeclockplugin.so

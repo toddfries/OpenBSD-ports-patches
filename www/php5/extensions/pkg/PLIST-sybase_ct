@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST-sybase_ct,v 1.5 2007/11/05 10:11:10 robert Exp $
+@conflict php4-sybase_ct-*
+@pkgpath www/php5/extensions,-sybase,hardened
+conf/php5.sample/sybase_ct.ini
+lib/php/modules/sybase_ct.so

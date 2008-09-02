@@ -1,0 +1,27 @@
+# $OpenBSD: Makefile,v 1.7 2008/06/26 08:49:37 ajacoutot Exp $
+
+COMMENT=		flexible communications framework, specifications
+
+DISTNAME=		telepathy-spec-0.17.1
+PKGNAME=		${DISTNAME}p1
+CATEGORIES=		books
+
+MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-spec/}
+
+BUILD_DEPENDS=		::lang/python/2.5 \
+			::textproc/libxslt
+
+USE_GMAKE=		Yes
+
+NO_REGRESS=		Yes
+
+post-patch:
+	perl -pi -e 's,!!MODPY_BIN!!,${LOCALBASE}/bin/python2.5,g' ${WRKSRC}/Makefile
+	perl -pi -e 's,!!MODPY_BIN!!,${LOCALBASE}/bin/python2.5,g' ${WRKSRC}/tools/*.py
+
+do-install:
+	${INSTALL_DATA_DIR} ${PREFIX}/share/gtk-doc/html/telepathy-spec/
+	${INSTALL_DATA} ${WRKSRC}/doc/{spec.html,telepathy-spec.devhelp2} \
+		${PREFIX}/share/gtk-doc/html/telepathy-spec/
+
+.include <bsd.port.mk>

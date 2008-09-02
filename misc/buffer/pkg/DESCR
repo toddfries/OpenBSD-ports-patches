@@ -1,0 +1,18 @@
+Buffer reads from standard input reblocking to the given blocksize
+and writes each block to standard output.
+
+Internally, buffer is a pair of processes communicating via a large
+circular queue held in shared memory. This means you *must* have a
+kernel with
+
+  options SYSVSHM
+
+compiled in. The reader process only has to block when the queue
+is full and the writer process when the queue is empty. Buffer is
+designed to try and keep the writer side continuously busy so that
+it can stream when writing to tape drives. When used to write tapes
+with an intervening network, buffer can result in a considerable
+increase in throughput.
+
+- Christian "naddy" Weisgerber
+  <naddy@unix-ag.uni-kl.de>

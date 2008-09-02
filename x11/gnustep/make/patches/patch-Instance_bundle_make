@@ -1,0 +1,12 @@
+$OpenBSD: patch-Instance_bundle_make,v 1.3 2008/05/05 09:31:30 ajacoutot Exp $
+--- Instance/bundle.make.orig	Mon May  5 11:05:42 2008
++++ Instance/bundle.make	Mon May  5 11:06:10 2008
+@@ -82,6 +82,8 @@ endif
+ 
+ ifeq ($(BUILD_DLL),yes)
+   BUNDLE_OBJ_EXT = $(DLL_LIBEXT)
++else
++BUNDLE_OBJ_EXT = $(SHARED_LIBEXT)
+ endif
+ 
+ endif # OBJ_FILES_TO_LINK

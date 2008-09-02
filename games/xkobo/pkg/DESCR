@@ -1,0 +1,14 @@
+       Xkobo  is  a  single player action game. The play is quite
+       simple. Your object is to destroy all the fortresses.  You
+       can control your ship by pressing the cursor keys (or mov-
+       ing the mouse cursor), and  shoot beams  by  pressing  the
+       SHIFT  key  (or  the  left  mouse button). The game can be
+       paused by pressing 's' (or the right mouse button).
+
+       On recent machines, consider the kobodeluxe port instead: sdl
+       support yields better gameplay on non 8 bits or large displays,
+       at the expense of an sdl dependency.
+
+Available flavor:
+harder
+	makes the game slightly harder by not giving you bonus lives

@@ -1,0 +1,20 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/14 23:43:57 espie Exp $
+bin/datum_strip
+${P5SITE}/Carp/
+${P5SITE}/Carp/Datum/
+${P5SITE}/Carp/Datum.pm
+${P5SITE}/Carp/Datum/Assert.pm
+${P5SITE}/Carp/Datum/Cfg.pm
+${P5SITE}/Carp/Datum/Flags.pm
+${P5SITE}/Carp/Datum/MakeMaker.pm
+${P5SITE}/Carp/Datum/Makefile
+${P5SITE}/Carp/Datum/Parser.pm
+${P5SITE}/Carp/Datum/Parser.y
+${P5SITE}/Carp/Datum/Strip.pm
+@man man/man1/datum_strip.1
+@man man/man3p/Carp::Datum.3p
+@man man/man3p/Carp::Datum::Assert.3p
+@man man/man3p/Carp::Datum::Cfg.3p
+@man man/man3p/Carp::Datum::Flags.3p
+@man man/man3p/Carp::Datum::MakeMaker.3p
+@man man/man3p/Carp::Datum::Strip.3p

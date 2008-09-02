@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST-main,v 1.2 2008/01/28 13:21:20 jakob Exp $
+@conflict isc-dhcp-*
+@pkgpath net/isc-dhcp
+@extra /var/db/dhcpd.leases
+@man man/cat5/dhcp-eval.0
+@man man/cat5/dhcp-options.0
+@man man/cat5/dhcpd.conf.0
+@man man/cat5/dhcpd.leases.0
+@man man/cat8/dhcpd.0
+@man man/cat8/dhcrelay.0
+sbin/dhcpd
+sbin/dhcrelay
+share/examples/isc-dhcp/
+share/examples/isc-dhcp/dhcpd.conf

@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:17:43 espie Exp $
+${P5ARCH}/
+${P5ARCH}/Net/
+${P5ARCH}/Net/RawIP/
+${P5ARCH}/Net/RawIP.pm
+${P5ARCH}/Net/RawIP/libpcap.pod
+${P5ARCH}/auto/
+${P5ARCH}/auto/Net/
+${P5ARCH}/auto/Net/RawIP/
+${P5ARCH}/auto/Net/RawIP/RawIP.bs
+${P5ARCH}/auto/Net/RawIP/RawIP.so
+${P5ARCH}/auto/Net/RawIP/autosplit.ix
+@man man/man3p/Net::RawIP.3p
+@man man/man3p/Net::RawIP::libpcap.3p

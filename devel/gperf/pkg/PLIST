@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/08/09 13:28:31 espie Exp $
+bin/gperf
+@info info/gperf.info
+@man man/man1/gperf.1
+share/doc/gperf/
+share/doc/gperf/gperf.html

@@ -1,0 +1,13 @@
+--- Makefile.in.orig	Thu Feb 28 20:59:47 2002
++++ Makefile.in	Fri Mar 15 13:14:18 2002
+@@ -58,8 +58,8 @@
+ 	        ${CC} ${LDFLAGS} -o ${PROG} ${OBJS} ${LDADD}
+ 
+ install: $(PROG)
+-	$(INSTALL) -c -s -m 0555 -o bin -g bin $(PROG) $(INSTALLDIR)
+-	$(INSTALL) -c -m 0444 -o root -g wheel $(MAN) $(INSTALLMAN)/man8
++	$(INSTALL) -c -s -m 0555 -o bin -g bin $(PROG) $(DESTDIR)$(INSTALLDIR)
++	$(INSTALL) -c -m 0444 -o root -g wheel $(MAN) $(DESTDIR)$(INSTALLMAN)/man8
+ 
+ lint:
+ 	lint ${SRCS}

@@ -1,0 +1,16 @@
+$OpenBSD: patch-ufraw-batch_c,v 1.3 2008/06/07 05:31:41 phessler Exp $
+--- ufraw-batch.c.orig	Sun Nov 11 02:04:01 2007
++++ ufraw-batch.c	Sat Dec 29 12:15:06 2007
+@@ -62,9 +62,9 @@ int main (int argc, char **argv)
+     if (strlen(cmd.inputFilename)>0) {
+ 	status = conf_load(&conf, cmd.inputFilename);
+ 	if (status==UFRAW_SUCCESS) {
+-	    strcpy(conf.inputFilename, "");
+-	    strcpy(conf.outputFilename, "");
+-	    strcpy(conf.outputPath, "");
++	    strlcpy(conf.inputFilename, "",sizeof(conf.inputFilename));
++	    strlcpy(conf.outputFilename, "",sizeof(conf.outputFilename));
++	    strlcpy(conf.outputPath, "",sizeof(conf.outputPath));
+ 	} else {
+ 	    ufraw_message(UFRAW_REPORT, NULL);
+ 	    conf.version = 0;

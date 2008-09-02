@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:46:09 espie Exp $
+bin/gnuchess
+bin/gnuchessx
+share/doc/gnuchess/
+share/doc/gnuchess/README
+share/gnuchess/
+share/gnuchess/book.dat

@@ -1,0 +1,34 @@
+$OpenBSD: patch-Setup_py,v 1.2 2005/10/24 05:05:45 fgsch Exp $
+--- Setup.py.orig	Fri Mar 11 01:29:59 2005
++++ Setup.py	Thu Oct 20 00:21:04 2005
+@@ -40,26 +40,21 @@ def remove(itm, lst):
+ # Unixoid OS's I will just look for the usual suspects.
+ 
+ libdirs = dirtest([
+-    "/usr/local/lib", "/sw/lib", "/usr/lib",
+-    "/usr/lib/X11", "/usr/X11R6/lib",
+-    "/opt/gnome/lib",
++    "/usr/lib", "%%LOCALBASE%%/lib",
+ ])
+ 
+ # include_dirs are also non-portable; same trick here.
+ 
+ incdirs = dirtest([
+-    "/usr/local/include", "/sw/include", "/usr/include",
+-    "/usr/include/X11", "/usr/X11R6/include",
+-    "/opt/gnome/include",
++    "/usr/include", "%%LOCALBASE%%/include",
++    "%%LIBPNG%%",
+ ])
+ 
+ # Try to identify our libraries
+ 
+ want_libs = [
+     "gd",
+-    "jpeg", "png", "gif", "z",
+-    "X11", "Xpm",
+-    "ttf", "freetype",
++    "jpeg", "png", "z",
+ ]
+ 
+ libs = filetest(libdirs, want_libs)

@@ -1,0 +1,12 @@
+$OpenBSD: patch-Makefile_in,v 1.3 2007/05/08 16:10:48 steven Exp $
+--- Makefile.in.orig	Mon Apr  9 17:56:45 2007
++++ Makefile.in	Tue May  8 20:03:20 2007
+@@ -327,7 +327,7 @@ SUBDIRS = \
+ 	modules \
+ 	pixmaps
+ 
+-confdir = $(sysconfdir)/xdg/xfce4/desktop
++confdir = $(prefix)/share/examples/xfdesktop
+ conf_DATA = \
+ 	menu.xml	\
+ 	menu.xml.be	\

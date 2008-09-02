@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST,v 1.3 2004/12/30 00:17:52 espie Exp $
+@conflict chipmunk-*
+bin/wol
+bin/wol-bootptab
+bin/wol-dhcpdconf
+@info info/wol.info
+@man man/man1/wol.1
+share/locale/de/LC_MESSAGES/wol.mo
+share/locale/es/LC_MESSAGES/wol.mo
+share/locale/fr/LC_MESSAGES/wol.mo
+share/locale/it/LC_MESSAGES/wol.mo
+share/locale/sv/LC_MESSAGES/wol.mo

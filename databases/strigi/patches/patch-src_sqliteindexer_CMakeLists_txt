@@ -1,0 +1,10 @@
+$OpenBSD: patch-src_sqliteindexer_CMakeLists_txt,v 1.2 2008/01/21 13:36:14 espie Exp $
+--- src/sqliteindexer/CMakeLists.txt.orig	Fri Oct 26 14:25:39 2007
++++ src/sqliteindexer/CMakeLists.txt	Mon Jan  7 16:35:31 2008
+@@ -22,5 +22,5 @@ add_library(sqlite MODULE
+ 	sqliteindexwriter.cpp
+ )
+ set_target_properties(sqlite PROPERTIES PREFIX ${prefix})
+-target_link_libraries(sqlite ${SQLITE_LIBRARIES})
++target_link_libraries(sqlite ${SQLITE_LIBRARIES} pthread)
+ install(TARGETS sqlite LIBRARY DESTINATION ${LIB_DESTINATION}/strigi)

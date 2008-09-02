@@ -1,0 +1,10 @@
+@comment $OpenBSD: PFRAG.shared,v 1.6 2005/05/23 20:29:45 marius Exp $
+libexec/rep/${GNU_ARCH}/sawfish/client.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/gradient.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/sawfish/wm/util/flippers.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/sawfish/wm/util/gradient.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/sawfish/wm/util/play-sample.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/sawfish/wm/util/selection.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/sawfish/wm/util/x.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/selection.so
+libexec/sawfish/${VERSION}/${GNU_ARCH}/x.so

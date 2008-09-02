@@ -1,0 +1,12 @@
+# $OpenBSD: Makefile.bsd,v 1.2 2002/11/30 01:21:28 margarida Exp $
+
+PROG =	http_ping
+SRCS =	http_ping.c
+
+CPPFLAGS+=	-DUSE_SSL
+LDADD +=	-lssl -lcrypto
+
+BINDIR =	${PREFIX}/bin
+MANDIR =	${PREFIX}/man/cat
+
+.include <bsd.prog.mk>

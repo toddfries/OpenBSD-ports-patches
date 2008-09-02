@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_3D_FontManager_cxx,v 1.2 2006/09/22 03:42:57 pvalchev Exp $
+--- src/3D/FontManager.cxx.orig	Tue Jan  3 19:50:35 2006
++++ src/3D/FontManager.cxx	Sun Aug  6 08:00:32 2006
+@@ -271,6 +271,8 @@ void FontManager::drawString(float x, fl
+   }
+ 
+ 
++  OpenGLGState::resetState(); /* full reset needed for bitmap renderer? */
++
+   /*
+    * Colorize text based on ANSI codes embedded in it
+    * Break the text every time an ANSI code

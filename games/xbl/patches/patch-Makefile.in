@@ -1,0 +1,135 @@
+$OpenBSD: patch-Makefile.in,v 1.4 2007/12/06 15:45:23 ajacoutot Exp $
+--- Makefile.in.orig	Sun Jan 28 19:22:32 2007
++++ Makefile.in	Thu Dec  6 16:41:56 2007
+@@ -11,11 +11,10 @@
+ 
+ # If xbl must NOT run with SGID bit (for protect scores files) then
+ # comment next line
+-USE_SETGID=-DUSE_SETGID
++#USE_SETGID=-DUSE_SETGID
+ 
+ # group owner of games file.
+-GROUP_GID=5
+-@GROUP_GID@
++GROUP_GID=13
+ 
+ ###########################################################################
+ # You don't need to read below if you have xmkmf or imake
+@@ -30,27 +29,23 @@ IMAKE_OPTIONS=-DTOP=/ -DUseInstalled
+ # Directory who contain X Resource Database
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-RESOURCEDIR=/usr/lib/X11/app-defaults
+-@XAPPLOADDIR@
++RESOURCEDIR=$(PREFIX)/lib/X11/app-defaults
+ 
+ # Directory where install binary
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-BINDIR=/usr/local/bin
+-@BINDIR@
++BINDIR=$(PREFIX)/bin
+ 
+ # Directory who contain score
+ # Put your HOME if you have a private use of the game
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-SCOREDIR=/usr/local/lib/xbl
+-@SCOREDIR@
++SCOREDIR=$(PREFIX)/lib/xbl
+ 
+ # Directory where put man pages.
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-MANPATH=/usr/local/man
+-@MANPATH@
++MANPATH=$(PREFIX)/man
+ 
+ ###########################################################################
+ # Some values defined in imakefiles
+@@ -83,9 +78,9 @@ LINTFLAGS=-Zf1000 -Zn4096 -Zt10000
+ 
+ # For linking (configure script will modify this line)
+ # xmkmf et imake informations are take into account.
+-LIBS = @LIBS@ -lm
++LIBS = @LIBS@ -lm -lcompat
+ 
+-all:demo
++all:bl
+ 
+ XBLVERSION=1.1.5
+ XBL=xbl-$(XBLVERSION)
+@@ -94,7 +89,7 @@ CFLAGS = -DSCOREDIR=\"$(SCOREDIR)\" \
+ 	 -DRESOURCEDIR=\"$(RESOURCEDIR)\" \
+ 	 -DXBLVERSION=\"$(XBLVERSION)\" \
+ 	 -DGROUP_GID=$(GROUP_GID) \
+-	  $(USE_SETGID) @DEFS@ @CFLA@ -g
++	  $(USE_SETGID) @DEFS@ @CFLA@ $(OPTCFLAGS)
+ # For link edit options
+ LDOPTIONS=$(CFLAGS)
+ LDOPTIONS=@LDOPTIONS@
+@@ -124,29 +119,24 @@ install:bl
+ 	@echo "Executable go in $(BINDIR)"
+ 	@echo "Scores     go in $(SCOREDIR)"
+ 	@echo "Defaults   go in $(RESOURCEDIR)/Xbl"
+-	@echo "Man pages  go in $(MANPATH)/mann or man1"
++	@echo "Man pages  go in $(MANPATH)/man1"
+ 	@-if [ "" != "$(USE_SETGID)" ] ; then \
+ 		echo "You use GID=$(GROUP_GID) protection" ; \
+ 		fi
+-	@echo "Type <Return> to continue installation"
+-	@echo "Type NO       to stop installation"
+-	@read LINE && test "" = "$$LINE"
++#	@echo "Type <Return> to continue installation"
++#	@echo "Type NO       to stop installation"
++#	@read LINE && test "" = "$$LINE"
+ 	#
+ 	# Remove old score file
+ 	#
+ 	@-if [ -d "$(SCOREDIR)" ] ; \
+ 		then \
+-		echo "The scoring method and speeds of Xbl had change" ; \
+-		echo "If your version is older than 0.2e, destroy score." ; \
+-		echo "Type <Return> to destroy old score files" ; \
+-		echo "Type NO       to hold old score files" ; \
+-		read LINE && test "" = "$$LINE" && rm $(SCOREDIR)/[1-9]* ; \
+-		exit 0 ; \
++		rm $(SCOREDIR)/[1-9]* ; \
+ 		fi
+ 	#
+ 	# Install executable
+ 	#
+-	$(CP) bl $(BINDIR)/xbl	
++	$(BSD_INSTALL_PROGRAM) bl $(BINDIR)/xbl	
+ 	-if [ "" = "$(USE_SETGID)" ] ; then \
+ 	     chmod 755  $(BINDIR)/xbl ;\
+ 	   else \
+@@ -163,7 +153,6 @@ install:bl
+ 	$(CP) COPYING  $(SCOREDIR) ;		chmod 444 $(SCOREDIR)/COPYING
+ 	-if [ "" = "$(USE_SETGID)" ] ; then \
+ 	     chmod 777 $(SCOREDIR) ;\
+-	     chmod 666 $(SCOREDIR)/[1-9]* ;\
+ 	   else \
+ 	     chmod 775 $(SCOREDIR) ;\
+ 	     chmod 664 $(SCOREDIR)/[1-9]* ;\
+@@ -173,17 +162,11 @@ install:bl
+ 	#
+ 	# Install manual pages
+ 	#
+-	-if [ -d $(MANPATH)/mann ] ; \
+-		then \
+-		$(CP) xbl.man $(MANPATH)/mann/xbl.n ;\
+-		chmod 444 $(MANPATH)/mann/xbl.n ; \
+-	   else \
+-		$(CP) xbl.man $(MANPATH)/man1/xbl.1 ;\
+-		chmod 444 $(MANPATH)/man1/xbl.1 ; \
+-		fi
++	$(CP) xbl.man $(MANPATH)/man1/xbl.1 ;\
++	chmod 444 $(MANPATH)/man1/xbl.1 ; \
+ 	cp *.gif *.html $(SCOREDIR)
+ 	#
+-	-ls -lsa $(SCOREDIR) $(BINDIR)/xbl $(MANPATH)/man[1n]/xbl.[1n]
++	-ls -lsa $(SCOREDIR) $(BINDIR)/xbl $(MANPATH)/man1/xbl.1
+ 	@echo "Type xbl to play"
+ 
+ bl:$(OBJ)

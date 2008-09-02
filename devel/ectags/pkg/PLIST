@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/08/08 17:55:29 espie Exp $
+bin/ectags
+@man man/man1/ectags.1
+share/doc/ectags/
+share/doc/ectags/EXTENDING.html
+share/doc/ectags/FAQ
+share/doc/ectags/NEWS
+share/doc/ectags/README

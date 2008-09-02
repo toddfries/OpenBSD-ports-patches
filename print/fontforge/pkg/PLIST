@@ -1,0 +1,31 @@
+@comment $OpenBSD: PLIST,v 1.4 2007/09/23 18:45:45 kili Exp $
+bin/fontforge
+bin/fontimage
+bin/fontlint
+bin/sfddiff
+lib/libgdraw.a
+lib/libgdraw.la
+@lib lib/libgdraw.so.${LIBgdraw_VERSION}
+lib/libgunicode.a
+lib/libgunicode.la
+@lib lib/libgunicode.so.${LIBgunicode_VERSION}
+lib/pkgconfig/fontforge.pc
+@man man/man1/fontforge.1
+@man man/man1/fontimage.1
+@man man/man1/fontlint.1
+@man man/man1/sfddiff.1
+share/fontforge/
+share/locale/de/LC_MESSAGES/FontForge.mo
+share/locale/el/LC_MESSAGES/FontForge.mo
+share/locale/en_GB/
+share/locale/en_GB/LC_MESSAGES/
+share/locale/en_GB/LC_MESSAGES/FontForge.mo
+share/locale/es/LC_MESSAGES/FontForge.mo
+share/locale/fr/LC_MESSAGES/FontForge.mo
+share/locale/it/LC_MESSAGES/FontForge.mo
+share/locale/ja/LC_MESSAGES/FontForge.mo
+share/locale/pl/LC_MESSAGES/FontForge.mo
+share/locale/ru/LC_MESSAGES/FontForge.mo
+share/locale/vi/LC_MESSAGES/FontForge.mo
+share/locale/zh_CN/LC_MESSAGES/FontForge.mo
+share/locale/zh_TW/LC_MESSAGES/FontForge.mo

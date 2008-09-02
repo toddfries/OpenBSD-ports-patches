@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:39:32 espie Exp $
+bin/autossh
+@man man/man1/autossh.1
+share/doc/autossh/
+share/doc/autossh/README
+share/examples/autossh/
+share/examples/autossh/autossh.host
+share/examples/autossh/rscreen

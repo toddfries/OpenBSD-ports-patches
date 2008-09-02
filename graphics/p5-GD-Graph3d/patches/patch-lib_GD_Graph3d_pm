@@ -1,0 +1,17 @@
+$OpenBSD: patch-lib_GD_Graph3d_pm,v 1.2 2002/09/21 11:56:31 avsm Exp $
+--- lib/GD/Graph3d.pm.orig	Fri Dec  7 06:44:54 2001
++++ lib/GD/Graph3d.pm	Wed Sep 18 09:56:45 2002
+@@ -24,12 +24,12 @@ GD::Graph3D - Create 3D Graphs with GD a
+ 	   ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+ 	   [ 1203,  3500,  3973,  2859,  3012,  3423,  1230]
+ 	);
+-	my $graph = new GD::Graph::moduleName( 400, 300 );
+ 	$graph->set( 
+ 		x_label           => 'Day of the week',
+ 		y_label           => 'Number of hits',
+ 		title             => 'Daily Summary of Web Site',
+ 	);
++	my $graph = new GD::Graph::moduleName( 400, 300 );
+ 	my $gd = $graph->plot( \@data );
+ 
+ Where I<moduleName> is one of C<bars3d>, C<lines3d> or C<pie3d>. 

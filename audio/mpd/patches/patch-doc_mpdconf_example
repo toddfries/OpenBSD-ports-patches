@@ -1,0 +1,78 @@
+$OpenBSD: patch-doc_mpdconf_example,v 1.5 2008/07/15 08:40:49 bernd Exp $
+--- doc/mpdconf.example.orig	Mon Jun 16 04:48:07 2008
++++ doc/mpdconf.example	Wed Jul  9 12:26:44 2008
+@@ -2,11 +2,11 @@
+ # See the mpd.conf man page for a more detailed description of each parameter.
+ 
+ ######################## REQUIRED PATHS ########################
+-music_directory                 "~/music"
+-playlist_directory              "~/.mpd/playlists"
+-db_file                         "~/.mpd/mpd.db"
+-log_file                        "~/.mpd/mpd.log"
+-error_file                      "~/.mpd/mpd.error"
++music_directory                 "/please-configure-your-music_directory"
++playlist_directory              "/var/spool/mpd/playlists"
++db_file                         "/var/spool/mpd/mpd.db"
++log_file                        "/var/log/mpd/mpd.log"
++error_file                      "/var/log/mpd/mpd.error"
+ ################################################################
+ 
+ 
+@@ -15,13 +15,13 @@ error_file                      "~/.mpd/mpd.error"
+ # If you wish to use mpd --kill to stop MPD, then you must
+ # specify a file here in which to store MPD's process ID.
+ #
+-#pid_file                        "~/.mpd/mpd.pid"
++pid_file                        "/var/spool/mpd/mpd.pid"
+ #
+ # If specified, MPD will save its current state (playlist,
+ # current song, playing/paused, etc.) at exit.  This will be
+ # used to restore the session the next time it is run.
+ #
+-#state_file                      "~/.mpd/mpdstate"
++state_file                      "/var/spool/mpd/mpdstate"
+ #
+ ################################################################
+ 
+@@ -33,11 +33,11 @@ error_file                      "~/.mpd/mpd.error"
+ # started by.  If left unspecified, MPD will not drop root
+ # privileges at all (not recommended).
+ #
+-#user                            "nobody"
++user                            "_mpd"
+ #
+ # The address and port to listen on.
+ #
+-#bind_to_address                 "any"
++bind_to_address                 "localhost"
+ #port                            "6600"
+ #
+ # Controls the amount of information that is logged.  Can be
+@@ -108,6 +108,12 @@ error_file                      "~/.mpd/mpd.error"
+ #        format                  "44100:16:2" # optional
+ #}
+ #
++
++audio_output {
++	type			"ao"
++	name			"Libao Audio Device"
++}
++
+ # An example of a shout output (for streaming to Icecast):
+ #
+ #audio_output {
+@@ -157,12 +163,12 @@ error_file                      "~/.mpd/mpd.error"
+ #
+ #mixer_type                      "oss"
+ #mixer_device                    "/dev/mixer"
+-#mixer_control                   "PCM"
++#mixer_control                   "vol"
+ #
+ # If you want MPD to adjust the volume of audio sent to the
+ # audio outputs, you can tell it to use the software mixer:
+ #
+-#mixer_type                      "software"
++mixer_type                      "software"
+ #
+ ################################################################
+ 

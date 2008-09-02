@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.9 2004/08/10 08:36:46 espie Exp $
+bin/libIDL-config-2
+include/libIDL-2.0/
+include/libIDL-2.0/libIDL/
+include/libIDL-2.0/libIDL/IDL.h
+@info info/libIDL2.info
+lib/libIDL-2.a
+lib/libIDL-2.la
+lib/pkgconfig/
+lib/pkgconfig/libIDL-2.0.pc
+%%SHARED%%

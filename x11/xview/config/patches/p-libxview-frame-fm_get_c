@@ -1,0 +1,10 @@
+--- lib/libxview/frame/fm_get.c.orig	1993-06-29 07:16:10.000000000 +0200
++++ lib/libxview/frame/fm_get.c	2003-12-30 01:31:12.000000000 +0100
+@@ -10,6 +10,7 @@ static char     sccsid[] = "@(#)fm_get.c
+  *	file for terms of the license.
+  */
+ 
++#include <ctype.h>
+ #include <xview_private/fm_impl.h>
+ #include <xview_private/draw_impl.h>
+ #include <xview/server.h>

@@ -1,0 +1,18 @@
+$OpenBSD: patch-src_tag_cpp,v 1.2 2007/05/20 13:02:16 bernd Exp $
+--- src/tag.cpp.orig	Sun Mar  2 01:23:00 2003
++++ src/tag.cpp	Tue May  8 13:08:06 2007
+@@ -851,12 +851,14 @@ ID3_Frame* ID3_Tag::Find(ID3_FrameID id, ID3_FieldID f
+   return _impl->Find(id, fld, str);
+ }
+ 
++#if !(defined(__GNUC__) && __GNUC__ >= 3)
+ /// Finds frame with given frame id, fld id, and unicode data
+ ID3_Frame* ID3_Tag::Find(ID3_FrameID id, ID3_FieldID fld, const unicode_t* data) const
+ {
+   WString str = toWString(data, ucslen(data));
+   return _impl->Find(id, fld, str);
+ }
++#endif
+ 
+ /** Returns the number of frames present in the tag object.
+  **

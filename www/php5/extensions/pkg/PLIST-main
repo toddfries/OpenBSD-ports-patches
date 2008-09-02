@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST-main,v 1.2 2007/11/05 10:11:10 robert Exp $
+@pkgpath www/php5/extensions
+conf/php5.sample/
+lib/
+lib/php/
+lib/php/modules/

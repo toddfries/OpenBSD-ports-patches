@@ -1,0 +1,43 @@
+@comment $OpenBSD: PFRAG.shared-main,v 1.2 2007/05/22 09:09:32 espie Exp $
+@lib lib/libQt3Support.so.${LIBQt3Support_VERSION}
+@lib lib/libQtAssistantClient.so.${LIBQtAssistantClient_VERSION}
+@lib lib/libQtCore.so.${LIBQtCore_VERSION}
+@lib lib/libQtDBus.so.${LIBQtDBus_VERSION}
+@lib lib/libQtDesigner.so.${LIBQtDesigner_VERSION}
+@lib lib/libQtDesignerComponents.so.${LIBQtDesignerComponents_VERSION}
+@lib lib/libQtGui.so.${LIBQtGui_VERSION}
+@lib lib/libQtNetwork.so.${LIBQtNetwork_VERSION}
+@lib lib/libQtOpenGL.so.${LIBQtOpenGL_VERSION}
+@lib lib/libQtScript.so.${LIBQtScript_VERSION}
+@lib lib/libQtSql.so.${LIBQtSql_VERSION}
+@lib lib/libQtSvg.so.${LIBQtSvg_VERSION}
+@lib lib/libQtTest.so.${LIBQtTest_VERSION}
+@lib lib/libQtXml.so.${LIBQtXml_VERSION}
+@lib lib/qt4/libQt3Support.so.${LIBQt3Support_VERSION}
+@lib lib/qt4/libQtAssistantClient.so.${LIBQtAssistantClient_VERSION}
+@lib lib/qt4/libQtCore.so.${LIBQtCore_VERSION}
+@lib lib/qt4/libQtDBus.so.${LIBQtDBus_VERSION}
+@lib lib/qt4/libQtDesigner.so.${LIBQtDesigner_VERSION}
+@lib lib/qt4/libQtDesignerComponents.so.${LIBQtDesignerComponents_VERSION}
+@lib lib/qt4/libQtGui.so.${LIBQtGui_VERSION}
+@lib lib/qt4/libQtNetwork.so.${LIBQtNetwork_VERSION}
+@lib lib/qt4/libQtOpenGL.so.${LIBQtOpenGL_VERSION}
+@lib lib/qt4/libQtScript.so.${LIBQtScript_VERSION}
+@lib lib/qt4/libQtSql.so.${LIBQtSql_VERSION}
+@lib lib/qt4/libQtSvg.so.${LIBQtSvg_VERSION}
+@lib lib/qt4/libQtTest.so.${LIBQtTest_VERSION}
+@lib lib/qt4/libQtXml.so.${LIBQtXml_VERSION}
+lib/qt4/plugins/accessible/libqtaccessiblecompatwidgets.so
+lib/qt4/plugins/accessible/libqtaccessiblewidgets.so
+lib/qt4/plugins/codecs/libqcncodecs.so
+lib/qt4/plugins/codecs/libqjpcodecs.so
+lib/qt4/plugins/codecs/libqkrcodecs.so
+lib/qt4/plugins/codecs/libqtwcodecs.so
+lib/qt4/plugins/designer/libqt3supportwidgets.so
+lib/qt4/plugins/iconengines/libqsvg.so
+lib/qt4/plugins/imageformats/libqgif.so
+lib/qt4/plugins/imageformats/libqjpeg.so
+lib/qt4/plugins/imageformats/libqmng.so
+lib/qt4/plugins/imageformats/libqsvg.so
+lib/qt4/plugins/imageformats/libqtiff.so
+lib/qt4/plugins/inputmethods/libqimsw-multi.so

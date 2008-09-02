@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/08/06 14:37:27 espie Exp $
+bin/mpg123
+@man man/man1/mpg123.1
+share/mpg123/
+share/mpg123/COPYING

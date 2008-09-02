@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.8 2004/09/14 23:31:45 espie Exp $
+${P5SITE}/AsciiDB/
+${P5SITE}/AsciiDB/TagFile.pm
+${P5SITE}/AsciiDB/TagRecord.pm
+@man man/man3p/AsciiDB::TagFile.3p

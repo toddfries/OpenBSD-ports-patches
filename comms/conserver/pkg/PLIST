@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.7 2008/06/21 11:29:25 sthen Exp $
+@bin bin/console
+@man man/man1/console.1
+@man man/man5/conserver.cf.5
+@man man/man5/conserver.passwd.5
+@man man/man8/conserver.8
+@bin sbin/conserver
+@bin sbin/conserver-convert
+share/examples/conserver/
+share/examples/conserver/README.OpenBSD
+share/examples/conserver/conserver.cf
+@sample ${SYSCONFDIR}/conserver.cf
+share/examples/conserver/conserver.passwd
+@sample ${SYSCONFDIR}/conserver.passwd
+@extraunexec rm -rf /var/consoles

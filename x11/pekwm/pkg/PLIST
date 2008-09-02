@@ -1,0 +1,27 @@
+@comment $OpenBSD: PLIST,v 1.4 2007/06/11 08:56:43 ajacoutot Exp $
+bin/pekwm
+@man man/man1/pekwm.1
+share/examples/pekwm/
+@sample ${SYSCONFDIR}/pekwm/
+share/examples/pekwm/autoproperties
+@sample ${SYSCONFDIR}/pekwm/autoproperties
+share/examples/pekwm/config
+@sample ${SYSCONFDIR}/pekwm/config
+share/examples/pekwm/keys
+@sample ${SYSCONFDIR}/pekwm/keys
+share/examples/pekwm/menu
+@sample ${SYSCONFDIR}/pekwm/menu
+share/examples/pekwm/mouse
+@sample ${SYSCONFDIR}/pekwm/mouse
+share/examples/pekwm/start
+@sample ${SYSCONFDIR}/pekwm/start
+share/examples/pekwm/vars
+@sample ${SYSCONFDIR}/pekwm/vars
+share/pekwm/
+share/pekwm/scripts/
+share/pekwm/scripts/pekwm_themeset.pl
+share/pekwm/scripts/pekwm_themeset.sh
+share/pekwm/scripts/pekwm_ws_menu.pl
+share/pekwm/themes/
+share/pekwm/themes/default/
+share/pekwm/themes/default/theme

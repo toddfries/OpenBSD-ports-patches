@@ -1,0 +1,36 @@
+$OpenBSD: patch-src_Makefile_ref,v 1.2 2007/04/10 13:03:09 martynas Exp $
+--- src/Makefile.ref.orig	Mon Aug 21 21:58:45 2006
++++ src/Makefile.ref	Mon Apr  9 21:26:10 2007
+@@ -55,8 +55,6 @@ include config.mk
+ 
+ ifdef USE_MSVC
+ OTHER_LIBS += fdlibm/$(OBJDIR)/fdlibm.lib
+-else
+-OTHER_LIBS += -Lfdlibm/$(OBJDIR) -lfdm
+ endif
+ 
+ ifdef JS_THREADSAFE
+@@ -248,12 +246,8 @@ JS_CFILES =		\
+ 	prmjtime.c	\
+ 	$(NULL)
+ 
+-PREDIRS	+= fdlibm
+-
+ ifdef USE_MSVC
+ FDLIBM_LIBRARY = fdlibm/$(OBJDIR)/fdlibm.lib
+-else
+-FDLIBM_LIBRARY = fdlibm/$(OBJDIR)/libfdm.a
+ endif
+ JSMATH_PRELINK	= $(OBJDIR)/jsmathtemp.o
+ # Flag for incremental linking
+@@ -307,8 +301,8 @@ ifdef USE_MSVC
+ $(PROGRAM): $(PROG_OBJS) $(LIBRARY) $(FDLIBM_LIBRARY)
+ 	link.exe -out:"$@" $(EXE_LINK_FLAGS) $^
+ else
+-$(PROGRAM): $(PROG_OBJS) $(LIBRARY) $(FDLIBM_LIBRARY)
+-	$(CC) -o $@ $(CFLAGS) $(PROG_OBJS) $(LIBRARY) $(LDFLAGS) $(OTHER_LIBS) \
++$(PROGRAM): $(PROG_OBJS) $(SHARED_LIBRARY) $(FDLIBM_LIBRARY)
++	$(CC) -o $@ $(CFLAGS) $(PROG_OBJS) -L$(OBJDIR) -ljs $(LDFLAGS) $(OTHER_LIBS) \
+ 	    $(PROG_LIBS)
+ endif
+ 

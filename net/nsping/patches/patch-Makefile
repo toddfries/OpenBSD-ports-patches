@@ -1,0 +1,18 @@
+$OpenBSD: patch-Makefile,v 1.1 2002/02/24 00:28:45 pvalchev Exp $
+--- Makefile.orig	Mon Nov 24 02:56:28 1997
++++ Makefile	Sat Feb 23 17:23:03 2002
+@@ -1,4 +1,4 @@
+-CFLAGS=	-g 
++#CFLAGS=	-g 
+ #Solaris
+ #CFLAGS= -g -Dsys5
+ LDFLAGS=
+@@ -10,6 +10,8 @@ TARGET= nsping
+ OBJS= nsping.o dns-lib.o dns-rr.o
+ SRCS= nsping.c dns-lib.c dns-rr.c
+ HEADERS= nsping.h dns-lib.h dns-rr.h 
++
++all: ${TARGET}
+ 
+ ${TARGET} : ${OBJS}
+ 	${CC} ${CFLAGS} -o ${TARGET} ${OBJS} ${LDFLAGS} ${LIBS}

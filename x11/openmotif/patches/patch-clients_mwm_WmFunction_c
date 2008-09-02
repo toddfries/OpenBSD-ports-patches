@@ -1,0 +1,30 @@
+$OpenBSD: patch-clients_mwm_WmFunction_c,v 1.2 2007/07/18 21:41:05 mbalmer Exp $
+--- clients/mwm/WmFunction.c.orig	Sat Jun 30 10:04:45 2007
++++ clients/mwm/WmFunction.c	Sat Jun 30 10:05:44 2007
+@@ -1126,12 +1126,12 @@ Boolean F_Exec (String args, ClientData *pCD, XEvent *
+ 		directory, then we must call execlp and not execl
+ 		*/
+ 		shellname = shell;
+-		execlp (shell, shellname, "-c", args, 0);
++		execlp (shell, shellname, "-c", args, (void *)NULL);
+ 	    }
+ 	    else
+ 	    {
+ 		shellname++;
+-		execl (shell, shellname, "-c", args, 0);
++		execl (shell, shellname, "-c", args, (void *)NULL);
+ 	    }
+ 	}
+ 
+@@ -1140,9 +1140,9 @@ Boolean F_Exec (String args, ClientData *pCD, XEvent *
+ 	 * Try /bin/sh .
+ 	 */
+ #ifdef SVR4
+-        execl ("/usr/bin/sh", "sh", "-c", args, 0);
++        execl ("/usr/bin/sh", "sh", "-c", args, (void *)NULL);
+ #else
+-        execl ("/bin/sh", "sh", "-c", args, 0);
++        execl ("/bin/sh", "sh", "-c", args, (void *)NULL);
+ #endif
+ 
+ 

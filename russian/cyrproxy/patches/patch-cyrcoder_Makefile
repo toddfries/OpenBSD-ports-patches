@@ -1,0 +1,22 @@
+$OpenBSD: patch-cyrcoder_Makefile,v 1.2 2004/01/04 23:37:27 espie Exp $
+--- cyrcoder/Makefile.orig	1996-07-18 22:28:29.000000000 +0200
++++ cyrcoder/Makefile	2004-01-05 00:22:38.000000000 +0100
+@@ -1,7 +1,8 @@
+ # $Id: patch-cyrcoder_Makefile,v 1.2 2004/01/04 23:37:27 espie Exp $
+ 
+ TDIR=../tables
+-UTILDIR?=/usr/local/bin
++UTILDIR?=${PREFIX}/bin
++CGIPATH=${PREFIX}/www/cgi-bin
+ BINLIST=cyrtrans transtree transfiles
+ CHOWN?=/usr/sbin/chown
+ CHMOD?=chmod
+@@ -9,7 +10,7 @@ BINMODE?=755
+ BINOWNER=root.wheel
+ TESTBIN=cytest
+ 
+-CC=gcc -O
++#CC=gcc -O
+ ENCLIST?=alt iso koi8 win
+ 
+ #### DO NOT CHANGE BELOW THIS LINE ###########

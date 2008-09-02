@@ -1,0 +1,13 @@
+$OpenBSD: patch-RULES_rules_cnf,v 1.2 2008/06/19 17:43:10 naddy Exp $
+--- RULES/rules.cnf.orig	Tue Jun 10 18:41:40 2008
++++ RULES/rules.cnf	Tue Jun 10 18:42:38 2008
+@@ -31,8 +31,7 @@ $(OINCSDIR):
+ #
+ # Hack until the <mach>-<os>-*cc.rul files are updated
+ #
+-_HCC_COM=	$(OARCH:%-gcc=gcc)
+-HCC_COM=	$(_HCC_COM:%-cc=cc)
++HCC_COM=	$(C_ARCH)
+ 
+ _CC_COM=	$(_UNIQ)$(CC_COM)
+ __CC_COM=	$(_CC_COM:$(_UNIQ)=$(HCC_COM))

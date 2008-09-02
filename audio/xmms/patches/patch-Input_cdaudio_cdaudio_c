@@ -1,0 +1,14 @@
+$OpenBSD: patch-Input_cdaudio_cdaudio_c,v 1.4 2007/12/08 21:54:57 ajacoutot Exp $
+--- Input/cdaudio/cdaudio.c.orig	Fri Nov 23 16:18:35 2007
++++ Input/cdaudio/cdaudio.c	Fri Nov 23 16:20:02 2007
+@@ -819,6 +819,10 @@ static int get_current_frame(void)
+ {
+ 	struct ioc_read_subchannel subchnl;
+ 	struct cd_sub_channel_info subinfo;
++
++	bzero (&subchnl, sizeof (subchnl));
++	bzero (&subinfo, sizeof (subinfo));
++
+ 	subchnl.address_format = CD_MSF_FORMAT;
+ 	subchnl.data_format = CD_CURRENT_POSITION;
+ 	subchnl.track = 0;

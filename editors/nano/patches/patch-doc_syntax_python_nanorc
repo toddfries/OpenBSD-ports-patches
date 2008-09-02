@@ -1,0 +1,12 @@
+$OpenBSD: patch-doc_syntax_python_nanorc,v 1.2 2007/01/31 20:30:04 naddy Exp $
+--- doc/syntax/python.nanorc.orig	Wed Jan 31 21:27:45 2007
++++ doc/syntax/python.nanorc	Wed Jan 31 21:28:20 2007
+@@ -2,7 +2,7 @@
+ ##
+ syntax "python" "\.py$"
+ icolor brightblue "def [0-9A-Z_]+"
+-color brightcyan "\<(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|map|not|or|pass|print|raise|return|try|while)\>"
++color brightcyan "[[:<:]](and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|map|not|or|pass|print|raise|return|try|while)[[:>:]]"
+ color brightgreen "['][^']*[^\\][']" "[']{3}.*[^\\][']{3}"
+ color brightgreen "["][^"]*[^\\]["]" "["]{3}.*[^\\]["]{3}"
+ color brightgreen start=""""[^"]" end=""""" start="'''[^']" end="'''"

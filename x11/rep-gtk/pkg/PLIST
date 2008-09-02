@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.6 2006/01/20 13:12:03 steven Exp $
+%%SHARED%%
+libexec/rep/${GNU_ARCH}/gui/
+libexec/rep/${GNU_ARCH}/gui/gtk-2/
+libexec/rep/${GNU_ARCH}/gui/gtk-2/gtk.a
+libexec/rep/${GNU_ARCH}/gui/gtk-2/gtk.la
+libexec/rep/${GNU_ARCH}/gui/gtk-2/types.a
+libexec/rep/${GNU_ARCH}/gui/gtk-2/types.la

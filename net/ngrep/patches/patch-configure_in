@@ -1,0 +1,21 @@
+--- configure.in.orig	Thu Jun 30 13:22:15 2005
++++ configure.in	Fri Jul 22 20:01:45 2005
+@@ -196,18 +196,6 @@ unsigned short bar = foo.source;
+ *bsd*)
+ 	AC_SUBST(OS, BSD)
+ 
+-	if test "$USE_PCAP_RESTART" = "0"; then 
+-
+-        AC_MSG_WARN(
+-Your OS ($target_os) may have an old libpcap installation.
+-If the resulting ngrep binary segfaults when a BPF filter is specified 
+-without an ngrep match string then you should reconfigure ngrep with 
+-the option ``--disable-pcap-restart''.
+-)
+-	sleep 3
+-
+-	fi
+-
+         ;;
+ 
+ *solaris*)

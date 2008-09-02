@@ -1,0 +1,57 @@
+$OpenBSD: patch-src_chm_lib_c,v 1.5 2007/01/31 21:42:03 jasper Exp $
+--- src/chm_lib.c.orig	Thu Jan 25 04:12:58 2007
++++ src/chm_lib.c	Mon Jan 29 18:29:00 2007
+@@ -153,7 +153,8 @@ typedef unsigned __int64        UInt64;
+ /* Sparc        */
+ /* MIPS         */
+ /* PPC          */
+-#elif __i386__ || __sun || __sgi || __ppc__
++/* other non-64 bit */
++#elif !__LP64__
+ typedef unsigned char           UChar;
+ typedef short                   Int16;
+ typedef unsigned short          UInt16;
+@@ -163,8 +164,8 @@ typedef long long               Int64;
+ typedef unsigned long long      UInt64;
+ 
+ /* x86-64 */
+-/* Note that these may be appropriate for other 64-bit machines. */
+-#elif __x86_64__ || __ia64__
++/* other 64-bit machines. */
++#else
+ typedef unsigned char           UChar;
+ typedef short                   Int16;
+ typedef unsigned short          UInt16;
+@@ -172,11 +173,6 @@ typedef int                     Int32;
+ typedef unsigned int            UInt32;
+ typedef long                    Int64;
+ typedef unsigned long           UInt64;
+-
+-#else
+-
+-/* yielding an error is preferable to yielding incorrect behavior */
+-#error "Please define the sized types for your platform in chm_lib.c"
+ #endif
+ 
+ /* GCC */
+@@ -726,7 +722,7 @@ static Int64 _chm_fetch_bytes(struct chm
+ #ifdef CHM_USE_IO64
+     readLen = pread64(h->fd, buf, (long)len, os);
+ #else
+-    readLen = pread(h->fd, buf, (long)len, (unsigned int)os);
++    readLen = pread(h->fd, buf, (size_t)len, (off_t)os);
+ #endif
+ #else
+ #ifdef CHM_USE_IO64
+@@ -736,9 +732,9 @@ static Int64 _chm_fetch_bytes(struct chm
+     lseek64(h->fd, oldOs, SEEK_SET);
+ #else
+     oldOs = lseek(h->fd, 0, SEEK_CUR);
+-    lseek(h->fd, (long)os, SEEK_SET);
++    lseek(h->fd, (off_t)os, SEEK_SET);
+     readLen = read(h->fd, buf, len);
+-    lseek(h->fd, (long)oldOs, SEEK_SET);
++    lseek(h->fd, (off_t)oldOs, SEEK_SET);
+ #endif
+ #endif
+ #endif

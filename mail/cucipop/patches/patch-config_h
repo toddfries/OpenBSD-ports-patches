@@ -1,0 +1,23 @@
+$OpenBSD: patch-config_h,v 1.1 2001/02/19 15:00:55 danh Exp $
+--- config.h.orig	Tue May 12 17:09:14 1998
++++ config.h	Tue Jan 30 12:43:56 2001
+@@ -1,9 +1,9 @@
+ /*$Id: patch-config_h,v 1.1 2001/02/19 15:00:55 danh Exp $*/
+ 
+-#define USEdot_lock	/**/
++/*#define USEdot_lock	/**/
+ /*#define USEfcntl_lock /**/	    /* to test which combinations make sense */
+ /*#define USElockf	/**/	      /* run the lockingtest program part of */
+-/*#define USEflock	/**/		/* the procmail installation process */
++#define USEflock	/**/		/* the procmail installation process */
+ 
+ /*#define SHADOW_PASSWD /**/		  /* shadow password library support */
+ 
+@@ -84,6 +84,6 @@ typedef unsigned long uidl_t;			    /* f
+ #define MAXBULLETINS	64
+ #define MAXSTATEAGE	8388608				       /* > 3 months */
+ #define MEMORY_CACHE	(64*1024)
+-#define CUCIPOP_LIB	"/var/lib/cucipop"
++#define CUCIPOP_LIB	"/var/spool/cucipop"
+ #define STATE_DB	"state.db"
+ #define BULLETINS_PATH	CUCIPOP_LIB"/bulletins"

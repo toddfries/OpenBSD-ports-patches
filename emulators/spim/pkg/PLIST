@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.4 2005/10/13 09:06:55 kevlo Exp $
+bin/spim
+bin/xspim
+@man man/man1/spim.1
+@man man/man1/xspim.1
+share/spim/
+share/spim/exceptions.s

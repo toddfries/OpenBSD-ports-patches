@@ -1,0 +1,241 @@
+# $OpenBSD: network.conf.template,v 1.122 2008/07/29 11:25:45 espie Exp $
+
+#
+# NEVER EDIT THIS FILE DIRECTLY!!!! 
+# ALWAYS COPY IT TO ../db/network.conf FIRST.
+#
+
+# List of OpenBSD sites
+MASTER_SITE_OPENBSD ?= \
+	ftp://ftp.openbsd.org/pub/OpenBSD/distfiles/ \
+	ftp://ftp.usa.openbsd.org/pub/OpenBSD/distfiles/
+
+# Default OpenBSD backup site
+_MASTER_SITE_OPENBSD ?=	${MASTER_SITE_OPENBSD:=${DIST_SUBDIR}/}
+
+# Default FreeBSD backup site
+_MASTER_SITE_FREEBSD?=	\
+	ftp://ftp.freebsd.org/pub/FreeBSD/distfiles/${DIST_SUBDIR}/
+
+# Default NetBSD backup site
+_MASTER_SITE_NETBSD?=	\
+	ftp://ftp.netbsd.org/pub/NetBSD/packages/distfiles/${DIST_SUBDIR}/
+
+# Uncomment to retrieve from the OpenBSD sites only
+# MASTER_SITE_OPENBSD=	Yes
+# Uncomment to retrieve from the FreeBSD sites only
+# MASTER_SITE_FREEBSD=	Yes
+# Uncomment to retrieve from the NetBSD sites only
+# MASTER_SITE_NETBSD=	Yes
+
+.if defined(MASTER_SITE_OPENBSD)
+MASTER_SITE_BACKUP=	${_MASTER_SITE_OPENBSD}
+.elif defined(MASTER_SITE_FREEBSD)
+MASTER_SITE_BACKUP=	${_MASTER_SITE_FREEBSD}
+.elif defined(MASTER_SITE_NETBSD)
+MASTER_SITE_BACKUP=	${_MASTER_SITE_NETBSD}
+.endif
+
+# default backup master site
+MASTER_SITE_BACKUP?=	\
+	${_MASTER_SITE_OPENBSD} \
+	${_MASTER_SITE_FREEBSD}
+
+# Uncomment to retrieve from the MASTER_SITE_BACKUP first
+# MASTER_SITE_OVERRIDE=	${MASTER_SITE_BACKUP}
+
+# Uncomment to make symlinks off a CD-Rom instead of copies
+# FETCH_SYMLINK_DISTFILES=Yes
+
+# Popular master sites, most useful sites come first.
+MASTER_SITE_GNU+=	\
+	ftp://ftp.gnu.org/gnu/ \
+	ftp://ftp.funet.fi/pub/gnu/prep/ \
+	ftp://mirrors.usc.edu/pub/gnu/ \
+	ftp://ftp.cs.tu-berlin.de/pub/gnu/ \
+	ftp://aeneas.mit.edu/pub/gnu/ \
+	ftp://mirrors.dotsrc.org/gnu/ \
+	ftp://ftp.ibiblio.org/pub/mirrors/gnu/ftp/gnu/ \
+	ftp://ftp.kddilabs.jp/GNU/ \
+	ftp://ftp.informatik.hu-berlin.de/pub/gnu/ \
+	ftp://ftp.cs.univ-paris8.fr/mirrors/ftp.gnu.org/gnu/ \
+	ftp://ftp.ist.utl.pt/pub/GNU/gnu/gnu/ \
+	ftp://ftp.digitaltrust.it/pub/gnu/ \
+	ftp://mirror.cict.fr/gnu/ \
+	ftp://ftp.wayne.edu/pub/gnu/ \
+	ftp://ftp.chg.ru/pub/gnu/ \
+	ftp://ftp.sunet.se/pub/gnu/
+
+MASTER_SITE_XCONTRIB+=	\
+	ftp://ftp.gwdg.de/pub/x11/x.org/contrib/ \
+	ftp://ftp.x.org/contrib/ \
+	ftp://ftp.sunet.se/pub/X11/ftp.x.org/contrib/ \
+	ftp://ftp.kddilabs.jp/X11/ftp.x.org/contrib/ \
+	ftp://ftp.uvsq.fr/pub/X11/x.org/contrib/ \
+	ftp://ftp.chg.ru/pub/X11/x.org/contrib/ \
+	ftp://sunsite.sut.ac.jp/pub/archives/X11/contrib/
+
+MASTER_SITE_R5CONTRIB+=	\
+	${MASTER_SITE_XCONTRIB:=../R5contrib/}
+
+MASTER_SITE_SUNSITE+=	\
+	ftp://metalab.unc.edu/pub/Linux/ \
+	http://www.ibiblio.org/pub/Linux/ \
+	ftp://ftp.tuwien.ac.at/pub/linux/ibiblio/ \
+	ftp://sunsite.cnlab-switch.ch/mirror/linux/sunsite/ \
+	ftp://ftp.cs.tu-berlin.de/pub/linux/Mirrors/sunsite.unc.edu/ \
+	ftp://ftp.fu-berlin.de/unix/linux/mirrors/sunsite.unc.edu/ \
+	ftp://ftp.uni-bremen.de/pub/mirrors/sunsite/ \
+	ftp://ftp.rz.uni-karlsruhe.de/pub/sunsite/ \
+	ftp://ftp.uni-stuttgart.de/pub/mirror/sunsite.unc.edu/pub/Linux/ \
+	ftp://ftp.uniovi.es/pub/linux/ \
+	ftp://ftp.lip6.fr/pub/linux/sunsite/ \
+	ftp://ftp.uvsq.fr/pub/linux/sunsite/ \
+	ftp://ftp.nvg.ntnu.no/pub/mirrors/metalab.unc.edu/ \
+	ftp://ftp.icm.edu.pl/vol/rzm1/linux-sunsite/ \
+	ftp://ftp.man.poznan.pl/pub/linux/sunsite/ \
+	ftp://ftp.cse.cuhk.edu.hk/pub/Linux/ \
+	ftp://ftp.kobe-u.ac.jp/pub/Linux/metalab.unc.edu/ \
+	ftp://ftp.kddilabs.jp/Linux/metalab.unc.edu/ \
+	ftp://ftp.funet.fi/pub/Linux/mirrors/metalab/ \
+	ftp://ftp.nluug.nl/vol/4/metalab/ \
+	ftp://ftp.chg.ru/pub/Linux/sunsite/
+
+MASTER_SITE_SOURCEFORGE+=	\
+	http://easynews.dl.sourceforge.net/sourceforge/ \
+	http://puzzle.dl.sourceforge.net/sourceforge/ \
+	http://optusnet.dl.sourceforge.net/sourceforge/ \
+	http://heanet.dl.sourceforge.net/sourceforge/ \
+	http://jaist.dl.sourceforge.net/sourceforge/ \
+	http://nchc.dl.sourceforge.net/sourceforge/ \
+	http://switch.dl.sourceforge.net/sourceforge/ \
+	http://kent.dl.sourceforge.net/sourceforge/ \
+	http://internap.dl.sourceforge.net/sourceforge/ \
+	http://mesh.dl.sourceforge.net/sourceforge/ \
+	http://ovh.dl.sourceforge.net/sourceforge/ \
+	http://surfnet.dl.sourceforge.net/sourceforge/ \
+	http://ufpr.dl.sourceforge.net/sourceforge/
+
+MASTER_SITE_SOURCEFORGE_JP+=	\
+	http://osdn.dl.sourceforge.jp/ \
+	http://downloads.sourceforge.jp/ \
+	http://prdownloads.sourceforge.jp/
+
+MASTER_SITE_GNOME+=	\
+	ftp://ftp.no.gnome.org/pub/GNOME/ \
+	ftp://ftp.dit.upm.es/linux/gnome/ \
+	http://ftp.acc.umu.se/pub/GNOME/ \
+	ftp://ftp.belnet.be/mirror/ftp.gnome.org/ \
+	ftp://ftp.unina.it/pub/linux/GNOME/ \
+	ftp://ftp.cse.buffalo.edu/pub/Gnome/ \
+	ftp://ftp.no.gnome.org/pub/GNOME/ \
+	http://fr2.rpmfind.net/linux/gnome.org/ \
+	http://planetmirror.com/pub/gnome/ \
+	http://mirror.aarnet.edu.au/pub/GNOME/ \
+	ftp://ftp.nara.wide.ad.jp/pub/X11/GNOME/ \
+	ftp://ftp.gnome.org/pub/GNOME/
+	
+MASTER_SITE_PERL_CPAN+=	\
+	ftp://ftp.funet.fi/pub/languages/perl/CPAN/modules/by-module/ \
+	ftp://ftp.mirror.anlx.net/CPAN/modules/by-module/ \
+	ftp://ftp.cpan.org/pub/CPAN/modules/by-module/ \
+	ftp://ftp.dnsbalance.ring.gr.jp/pub/lang/perl/CPAN/modules/by-module/ \
+	http://www.dnsbalance.ring.gr.jp/archives/lang/perl/CPAN/modules/by-module/ \
+	ftp://ftp.kddilabs.jp/lang/perl/CPAN/modules/by-module/ \
+	ftp://ftp.sunet.se/pub/lang/perl/CPAN/modules/by-module/ \
+	ftp://mirror.hiwaay.net/CPAN/modules/by-module/ \
+	ftp://csociety-ftp.ecn.purdue.edu/pub/CPAN/modules/by-module/ \
+	ftp://ftp.auckland.ac.nz/pub/perl/CPAN/modules/by-module/ \
+	ftp://ftp.isu.net.sa/pub/CPAN/modules/by-module/ \
+	ftp://ftp.ucr.ac.cr/pub/Unix/CPAN/modules/by-module/ \
+	ftp://mirror.datapipe.net/pub/CPAN/modules/by-module/ \
+	ftp://cpan.mirrors.tds.net/pub/CPAN/modules/by-module/ \
+	ftp://ftp.epix.net/pub/languages/perl/modules/by-module/ \
+	ftp://cpan.pop-mg.com.br/pub/CPAN/modules/by-module/ \
+	ftp://ftp.flirble.org/pub/CPAN/modules/by-module/ \
+	ftp://ftp.chg.ru/pub/lang/perl/CPAN/modules/by-module/ \
+	http://www.cpan.dk/modules/by-module/ \
+	ftp://mirrors.dotsrc.org/cpan/modules/by-module/
+
+MASTER_SITE_TEX_CTAN+=	\
+	ftp://ftp.funet.fi/pub/TeX/CTAN/ \
+	ftp://ctan.unsw.edu.au/tex-archive/ \
+	ftp://ftp.cise.ufl.edu/pub/mirrors/tex-archive/ \
+	ftp://ftp.tex.ac.uk/tex-archive/ \
+	ftp://ftp.kddilabs.jp/CTAN/ \
+	ftp://mirrors.dotsrc.org/ctan/ \
+	ftp://ctan.tug.org/tex-archive/ \
+	ftp://ftp.chg.ru/pub/TeX/CTAN/ \
+	ftp://ftp.dante.de/tex-archive/ \
+	ftp://ftp.uvsq.fr/pub/TeX/CTAN/ \
+ 	ftp://ftp.sunet.se/pub/text-processing/TeX/
+
+MASTER_SITE_KDE+=	\
+	ftp://ftp.kde.org/pub/kde/ \
+	ftp://ftp.oregonstate.edu/pub/kde/ \
+	ftp://ftp.tuniv.szczecin.pl/pub/kde/ \
+	ftp://ftp.kddilabs.jp/X11/kde/ \
+	ftp://ftp.uvsq.fr/pub/X11/kde/ \
+ 	ftp://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/ \
+ 	ftp://ftp.sunet.se/pub/X11/kde/ \
+ 	ftp://ftp.fu-berlin.de/pub/unix/X11/gui/kde/ \
+	ftp://ftp.chg.ru/pub/X11/kde/
+
+MASTER_SITE_AFTERSTEP+=	\
+	ftp://ftp.afterstep.org/ \
+	ftp://ftp.kddilabs.jp/X11/AfterStep/ \
+	ftp://ftp.chg.ru/pub/X11/windowmanagers/afterstep/ \
+	ftp://ftp.dti.ad.jp/pub/X/AfterStep/
+
+MASTER_SITE_WINDOWMAKER+=	\
+	ftp://ftp.windowmaker.info/pub/
+
+MASTER_SITE_FREEBSD_LOCAL+=	\
+	ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
+	ftp://ftp.se.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
+	ftp://ftp.jp.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
+	ftp://ftp.uk.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
+	ftp://ftp.ru.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/
+
+MASTER_SITE_PACKETSTORM+=	\
+	http://packetstorm.linuxsecurity.com/ \
+	http://packetstorm.orion-hosting.co.uk/ \
+	http://packetstormsecurity.nl/ \
+	http://packetstorm.setnine.com/ \
+	http://packetstorm.wowhacker.com/ \
+	http://packetstorm.offensive-security.com/ \
+	http://packetstorm.blackroute.net/ \
+	http://packetstorm.austin2600.net/ \
+	http://packetstorm.iamthebrain.com/ \
+	http://packetstorm.foofus.com/ \
+	http://packetstorm.syrex.com/ \
+	http://packetstorm.ussrback.com/ \
+	http://packetstorm.unixteacher.org/ \
+	http://packetstormsecurity.org/ \
+	http://packetstorm.codar.com.br/ \
+	http://packetstorm.rlz.cl/
+
+MASTER_SITE_HORDE+=		\
+	ftp://ftp.horde.org/pub/ \
+	ftp://ftp.at.horde.org/mirror/horde/ \
+	ftp://ftp.es.horde.org/pub/ \
+	ftp://ftp.nl.horde.org/mirror/horde-ftp/pub/ \
+	ftp://ftp.de.horde.org/horde.org/
+
+MASTER_SITE_APACHE+= \
+	http://www.reverse.net/pub/apache/ \
+	http://www.mirrorservice.org/sites/ftp.apache.org/ \
+	http://www.meisei-u.ac.jp/mirror/apache/dist/ \
+	http://apache.belnet.be/ \
+	ftp://ftp.uni-erlangen.de/pub/mirrors/apache/ \
+	ftp://ftp.planetmirror.com/pub/apache/dist/ \
+	http://apache.sunsite.ualberta.ca/ \
+	http://www.apache.org/dist/
+
+MASTER_SITE_BERLIOS+=	\
+	http://download.berlios.de/ \
+	http://download2.berlios.de/ \
+
+MASTER_SITE_RUBYFORGE+= \
+	http://files.rubyforge.mmmultiworks.com/ \
+	http://files.rubyforge.vm.bytemark.co.uk/

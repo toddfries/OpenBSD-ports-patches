@@ -1,0 +1,47 @@
+$OpenBSD: patch-scsilib_RULES_i386-openbsd-cc_rul,v 1.2 2005/05/31 19:40:24 millert Exp $
+--- scsilib/RULES/i386-openbsd-cc.rul.orig	Tue Oct 15 14:43:40 2002
++++ scsilib/RULES/i386-openbsd-cc.rul	Sun May 29 14:12:44 2005
+@@ -24,13 +24,13 @@ include $(SRCROOT)/$(RULESDIR)/rules.prg
+ ###########################################################################
+ 
+ CPPFLAGS=	$(CPPOPTS) $(CPPOPTX)
+-CFLAGS=		$(COPTS) $(CWARNOPTS) $(COPTOPT) $(GCCOPTOPT) $(COPTX)
++CFLAGS+=	$(COPTS) $(CWARNOPTS) $(COPTOPT) $(GCCOPTOPT) $(COPTX)
+ 
+ CPPOPTS=	-I. -I$(ARCHDIR) -I$(OINCSDIR) $(INCDIRS:%=-I%) $(OSDEFS)
+ COPTS=
+ CWOPTS=		-Wall -Wtraditional \
+ 		-Wshadow -Wmissing-prototypes -Wstrict-prototypes
+-COPTOPT=	-O
++COPTOPT=
+ KDEFINES=	-DKERNEL -D_KERNEL
+ COPTDYN=	-fpic
+ COPTGPROF=	-pg
+@@ -47,7 +47,7 @@ LIB_KVM=	
+ 
+ LIBS_PATH=	-L$(OLIBSDIR)
+ 
+-LDFLAGS=	$(LDOPTS) $(LDOPTX)
++LDFLAGS+=	$(LDOPTS) $(LDOPTX)
+ LDLIBS=		$(LIBS) $(LIBX)
+ 
+ #LDOPTS=		$(LIBS_PATH) $(LDPATH) $(RUNPATH)
+@@ -57,14 +57,14 @@ LNDYNLIB=	@$(SYMLINK) $(TARGET) $(PTARGE
+ 
+ FLOAT_OPTIONS=	
+ 
+-CC=		@echo "	==> COMPILING \"$@\""; gcc
+-LDCC=		@echo "	==> LINKING \"$@\""; gcc
+-DYNLD=		@echo "	==> LINKING dynamic library \"$@\""; gcc
++CC=		@echo "	==> COMPILING \"$@\""; $(CCOM)
++LDCC=		@echo "	==> LINKING \"$@\""; $(CCOM)
++DYNLD=		@echo "	==> LINKING dynamic library \"$@\""; $(CCOM)
+ RANLIB=		@echo "	==> RANDOMIZING ARCHIVE \"$@\""; ranlib
+ ARFLAGS=	cr
+ LORDER=		lorder
+ TSORT=		tsort
+ 
+ RMDEP=		:
+-MKDEP=		@echo "	==> MAKING DEPENDENCIES \"$@\""; $(RMDEP); gcc -M
++MKDEP=		@echo "	==> MAKING DEPENDENCIES \"$@\""; $(RMDEP); $(CCOM) -M
+ MKDEP_OUT=

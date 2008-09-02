@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST,v 1.3 2004/09/26 18:00:06 sturm Exp $
+bin/aguri
+bin/agurify
+bin/density
+bin/makeimages
+bin/makeplot
+@comment lib/aguri/
+@comment lib/aguri/agurify.pl
+@comment lib/aguri/density.pl
+@comment lib/aguri/makeimages.pl
+@comment lib/aguri/makeplot.pl
+@man man/man1/aguri.1
+share/doc/aguri/
+share/doc/aguri/README

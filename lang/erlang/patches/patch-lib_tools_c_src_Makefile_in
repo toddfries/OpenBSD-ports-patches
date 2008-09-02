@@ -1,0 +1,12 @@
+$OpenBSD: patch-lib_tools_c_src_Makefile_in,v 1.4 2007/12/19 22:51:29 sthen Exp $
+--- lib/tools/c_src/Makefile.in.orig	Mon Nov 26 20:03:50 2007
++++ lib/tools/c_src/Makefile.in	Thu Dec  6 09:46:12 2007
+@@ -108,7 +108,7 @@ EMEM_INCLUDES =	-I$(ERL_TOP)/erts/include \
+ EMEM_HEADERS = erl_memory_trace_block_table.h
+ EMEM_SRCS = erl_memory.c erl_memory_trace_block_table.c
+ 
+-EMEM_CFLAGS = $(THR_DEFS) $(subst O2,O3, $(CFLAGS)) $(EMEM_INCLUDES)
++EMEM_CFLAGS = $(THR_DEFS) $(CFLAGS) $(EMEM_INCLUDES)
+ EMEM_LDFLAGS = $(LDFLAGS)
+ 
+ ifeq ($(USING_VC), yes)

@@ -1,0 +1,13 @@
+$OpenBSD: patch-gettext-runtime_configure,v 1.2 2008/06/13 04:56:34 naddy Exp $
+--- gettext-runtime/configure.orig	Wed Nov  7 00:33:39 2007
++++ gettext-runtime/configure	Mon Jun  2 22:58:10 2008
+@@ -23491,7 +23491,9 @@ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ extern void xyzzy ();
++#ifndef __vax__
+ #pragma weak xyzzy
++#endif
+ int
+ main ()
+ {

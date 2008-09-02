@@ -1,0 +1,29 @@
+$OpenBSD: patch-abcde,v 1.5 2004/04/13 21:07:48 brad Exp $
+--- abcde.orig	Fri Apr  9 20:12:15 2004
++++ abcde	Sun Apr 11 16:58:13 2004
+@@ -1574,7 +1574,7 @@
+ VAPLAYLISTDATAPREFIX=''
+ DOSPLAYLIST=n
+ COMMENT=''
+-ID3TAGV=2
++ID3TAGV=1
+ ENCNICE=10
+ READNICE=10
+ DISTMP3NICE=10
+@@ -1683,7 +1683,7 @@
+ 	# We should have disktool in OSX, but let's be sure...
+ 	NEEDDISKTOOL=y
+ elif [ X$(uname) = "XOpenBSD" ] ; then
+-	HTTPGET=wget
++	HTTPGET=ftp
+ 	MD5SUM=md5
+ else
+ 	HTTPGET=wget
+@@ -1719,6 +1719,7 @@
+ 		wget) HTTPGETOPTS="-q -O -";;
+ 		curl) HTTPGETOPTS="-f -s";;
+ 		fetch)HTTPGETOPTS="-q -o -";;
++		ftp)  HTTPGETOPTS="-V -o -";;
+ 		*) echo "abcde warning: HTTPGET in non-standard and HTTPGETOPTS are not defined." >&2 ;;
+ 	esac
+ fi

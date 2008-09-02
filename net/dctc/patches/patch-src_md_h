@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_md_h,v 1.2 2007/12/11 11:04:58 jakemsr Exp $
+--- src/md.h.orig	Sat Oct 13 00:17:33 2001
++++ src/md.h	Tue Dec 11 00:04:51 2007
+@@ -22,7 +22,7 @@ void md5_process_block (const void *buffer, unsigned c
+ /****************************************************/
+ /* convert the given md5sum into a printable string */
+ /****************************************************/
+-void md5tostr(const unsigned char md5sum[MD5SUMLEN],char str[3*MD5SUMLEN+1]);
++void md5tostr(const unsigned char md5sum[MD5SUMLEN],char str[3*MD5SUMLEN+1], size_t len);
+ 
+ /****************************************/
+ /* convert the given string into md5sum */

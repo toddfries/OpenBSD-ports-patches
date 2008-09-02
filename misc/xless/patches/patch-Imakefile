@@ -1,0 +1,22 @@
+$OpenBSD: patch-Imakefile,v 1.1 2002/07/26 19:38:47 naddy Exp $
+--- Imakefile.orig	Fri Jun  3 01:22:14 1994
++++ Imakefile	Fri Jul 26 21:35:26 2002
+@@ -5,7 +5,8 @@
+  *	-DPRINTCMD=\"/usr/ucb/lpr\"	- path to send file to printer
+  *	-DTILDE_EXPANSION		- perform ~ expansion on filenames
+  */
+-        DEFINES = -DHELPFILE=\"${LIBDIR}/xless.help\" -DTILDE_EXPANSION
++        DEFINES = -DHELPFILE=\"${LIBDIR}/xless.help\" -DTILDE_EXPANSION \
++		-DDEFEDITOR=\"/usr/bin/vi\" -DPRINTCMD=\"/usr/bin/lpr\"
+ 
+ 
+            SRCS = help.c init.c popup.c util.c callbacks.c window.c main.c \
+@@ -27,7 +28,7 @@ LOCAL_LIBRARIES = -Lregexp -lregexp XawC
+ MakeSubdirs($(SUBDIRS))
+ ComplexProgramTarget(xless)
+ 
+-InstallNonExec(xless.help, $(LIBDIR))
++InstallNonExec(xless.help,$(LIBDIR))
+ InstallAppDefaults(XLess)
+ 
+ #if ProjectX >= 5

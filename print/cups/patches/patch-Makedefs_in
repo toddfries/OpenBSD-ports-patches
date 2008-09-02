@@ -1,0 +1,31 @@
+$OpenBSD: patch-Makedefs_in,v 1.2 2006/10/01 10:43:38 mbalmer Exp $
+--- Makedefs.in.orig	Wed Sep 20 10:46:49 2006
++++ Makedefs.in	Wed Sep 20 10:50:10 2006
+@@ -49,13 +49,13 @@ STRIP		=	@STRIP@
+ # Installation programs...
+ #
+ 
+-INSTALL_BIN	=	$(LIBTOOL) $(INSTALL) -m 755
++INSTALL_BIN	=	$(LIBTOOL) $(INSTALL) -m $(BINMODE)
+ INSTALL_CONFIG	=	$(INSTALL) -m @CUPS_CONFIG_FILE_PERM@
+-INSTALL_DATA	=	$(INSTALL) -m 644
++INSTALL_DATA	=	$(INSTALL) -m $(SHAREMODE)
+ INSTALL_DIR	=	$(INSTALL) -d
+-INSTALL_LIB	=	$(LIBTOOL) $(INSTALL) -m 755
+-INSTALL_MAN	=	$(INSTALL) -m 644
+-INSTALL_SCRIPT	=	$(INSTALL) -m 755
++INSTALL_LIB	=	$(LIBTOOL) $(INSTALL) -m $(BINMODE)
++INSTALL_MAN	=	$(INSTALL) -m $(SHAREMODE)
++INSTALL_SCRIPT	=	$(INSTALL) -m $(BINMODE)
+ 
+ #
+ # Default user, group, and system groups for the scheduler...
+@@ -238,7 +238,7 @@ DBUSDIR		=	@DBUSDIR@
+ # Rules...
+ #
+ 
+-.SILENT:
++#.SILENT:
+ .SUFFIXES:	.1 .1.gz .1m .1m.gz .5 .5.gz .7 .7.gz .8 .8.gz .a .c .cxx .h .man .o .32.o .64.o .gz
+ 
+ .c.o:

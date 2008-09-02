@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/02/01 20:51:17 steven Exp $
+bin/spfd
+bin/spfquery
+${P5SITE}/Mail/
+${P5SITE}/Mail/SPF/
+${P5SITE}/Mail/SPF/Query.pm
+@man man/man1/spfd.1
+@man man/man1/spfquery.1
+@man man/man3p/Mail::SPF::Query.3p
+share/examples/p5-Mail-SPF-Query/
+share/examples/p5-Mail-SPF-Query/README
+share/examples/p5-Mail-SPF-Query/exim-acl
+share/examples/p5-Mail-SPF-Query/postfix-policyd-spf
+share/examples/p5-Mail-SPF-Query/sendmail-milter
+share/examples/p5-Mail-SPF-Query/sendmail-milter-INSTALL.txt

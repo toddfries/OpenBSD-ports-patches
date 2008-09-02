@@ -1,0 +1,22 @@
+$OpenBSD: patch-configure,v 1.5 2008/02/13 11:12:50 ajacoutot Exp $
+--- configure.orig	Tue Feb 12 19:39:19 2008
++++ configure	Wed Feb 13 08:45:01 2008
+@@ -25090,9 +25090,6 @@ fi
+ 
+ 
+ XLIBADD=
+-if test "x$x_libraries" != "x"; then
+-  XLIBADD=" -L$x_libraries "
+-fi
+ 
+ # Check whether --enable-xf86vidmode was given.
+ if test "${enable_xf86vidmode+set}" = set; then
+@@ -27444,7 +27441,7 @@ if test  "x$PYTHON_LIBS" = "x" ; then
+ 
+    python_libdir=`$PYTHON -c "import distutils.sysconfig ; print distutils.sysconfig.get_config_var(\"LIBDIR\")"`
+ 
+-   PYTHON_LIBS="-L${python_libdir} ${python_link}"
++   PYTHON_LIBS="-L${python_libdir} ${python_link} -lutil"
+ fi
+ 
+ 

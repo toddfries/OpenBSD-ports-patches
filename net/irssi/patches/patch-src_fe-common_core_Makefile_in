@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_fe-common_core_Makefile_in,v 1.2 2007/05/16 19:29:11 martynas Exp $
+--- src/fe-common/core/Makefile.in.orig	Wed Apr 25 21:14:34 2007
++++ src/fe-common/core/Makefile.in	Sun May 13 01:41:02 2007
+@@ -256,7 +256,7 @@ INCLUDES = \
+ 	-I$(top_srcdir)/src -I$(top_srcdir)/src/core/ \
+ 	$(GLIB_CFLAGS) \
+ 	-DHELPDIR=\""$(datadir)/irssi/help"\" \
+-	-DTHEMESDIR=\""$(datadir)/irssi/themes"\"
++	-DTHEMESDIR=\""$(sysconfdir)/irssi/themes"\"
+ 
+ libfe_common_core_a_SOURCES = \
+ 	autorun.c \

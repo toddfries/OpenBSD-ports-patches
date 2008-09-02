@@ -1,0 +1,12 @@
+$OpenBSD: patch-libclamav_Makefile_am,v 1.7 2008/07/08 22:38:12 sthen Exp $
+--- libclamav/Makefile.am.orig	Mon May  5 07:37:53 2008
++++ libclamav/Makefile.am	Thu Jun 12 17:30:58 2008
+@@ -26,7 +26,7 @@ else
+ libclamav_la_LIBADD = lzma/liblzma.la @LIBCLAMAV_LIBS@ @THREAD_LIBS@
+ endif
+ 
+-libclamav_la_LDFLAGS = @TH_SAFE@ -version-info @LIBCLAMAV_VERSION@ -no-undefined
++libclamav_la_LDFLAGS = @TH_SAFE@ $(LIBclamav_LTVERSION) -no-undefined
+ 
+ if VERSIONSCRIPT
+ libclamav_la_LDFLAGS += -Wl,@VERSIONSCRIPTFLAG@,@top_srcdir@/libclamav/libclamav.map

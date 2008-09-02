@@ -1,0 +1,42 @@
+# $OpenBSD: Makefile,v 1.8 2008/01/04 18:38:52 espie Exp $
+
+SHARED_ONLY=	Yes
+
+COMMENT=	set of modules to use Gtk+2 libraries from Perl
+
+MODULES=	cpan
+DISTNAME=	Gtk2-1.161
+CATEGORIES=	x11
+
+MAINTAINER=	Mathieu Sauve-Frankel <msf@openbsd.org>
+
+# GPL
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xi \
+		Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig \
+		freetype glib-2.0 glitz gmodule-2.0 gobject-2.0 m pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 png z
+
+MODULES+=	devel/gettext
+
+USE_X11=	Yes
+
+LIB_DEPENDS=	gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0::x11/gtk+2
+BUILD_DEPENDS=	::devel/p5-ExtUtils-Depends \
+		::devel/p5-ExtUtils-PkgConfig \
+		${RUN_DEPENDS}
+
+RUN_DEPENDS=	:p5-Glib2->=1.161:devel/p5-Glib2 \
+		:p5-Cairo->=1.00:graphics/p5-Cairo
+		
+# The regression tests require a running instance of X.
+# You will also need to set the XAUTHORITY environment variable to point 
+# to the appropriate .Xauthority file. 
+
+REGRESS_IS_INTERACTIVE= Yes
+REGRESS_FLAGS=DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+
+.include <bsd.port.mk>

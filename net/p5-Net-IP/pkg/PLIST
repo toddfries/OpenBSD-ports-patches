@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:17:43 espie Exp $
+bin/ipcount
+bin/iptab
+${P5SITE}/Net/
+${P5SITE}/Net/IP.pm
+@man man/man3p/Net::IP.3p

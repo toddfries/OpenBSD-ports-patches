@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_main_gram_y,v 1.4 2007/10/07 17:54:54 mbalmer Exp $
+--- src/main/gram.y.orig	Wed Sep  5 00:13:27 2007
++++ src/main/gram.y	Sun Oct  7 09:58:19 2007
+@@ -173,7 +173,7 @@ static size_t ucstomb(char *s, const wchar_t wc, mbsta
+ 
+ static int mbcs_get_next(int c, wchar_t *wc)
+ {
+-    int i, res, clen = 1; char s[9];
++    int i, res, clen = 1; signed char s[9];
+     mbstate_t mb_st;
+ 
+     s[0] = c;

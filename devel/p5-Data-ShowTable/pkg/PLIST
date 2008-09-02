@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/14 23:43:58 espie Exp $
+bin/showtable
+${P5SITE}/Data/
+${P5SITE}/Data/ShowTable.pm
+@man man/man1/showtable.1
+@man man/man3p/Data::ShowTable.3p

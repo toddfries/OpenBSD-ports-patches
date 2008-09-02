@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:36:00 espie Exp $
+@man man/man1/logsurfer.1
+@man man/man4/logsurfer.conf.4
+sbin/logsurfer

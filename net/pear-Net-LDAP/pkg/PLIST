@@ -1,0 +1,26 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/03/22 22:48:04 robert Exp $
+@group daemon
+lib/
+lib/php/
+@group
+pear/doc/
+@group daemon
+pear/doc/Net_LDAP/
+pear/doc/Net_LDAP/LICENSE
+pear/doc/Net_LDAP/doc/
+pear/doc/Net_LDAP/doc/README.txt
+pear/doc/Net_LDAP/doc/RootDSE.txt
+pear/doc/Net_LDAP/doc/STATUS
+pear/doc/Net_LDAP/doc/Schema.txt
+pear/doc/Net_LDAP/doc/utf8.txt
+pear/doc/Net_LDAP/tests/
+pear/doc/Net_LDAP/tests/tests.php
+pear/lib/.registry/net_ldap.reg
+pear/lib/Net/
+pear/lib/Net/LDAP/
+pear/lib/Net/LDAP.php
+pear/lib/Net/LDAP/Entry.php
+pear/lib/Net/LDAP/RootDSE.php
+pear/lib/Net/LDAP/Schema.php
+pear/lib/Net/LDAP/Search.php
+pear/lib/Net/LDAP/Util.php

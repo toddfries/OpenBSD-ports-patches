@@ -1,0 +1,7 @@
+ack is a tool like grep, aimed at programmers with large trees of
+heterogeneous source code. It is written purely in Perl, and takes
+advantage of the power of Perl's regular expressions.
+Features :
+- ignores backup files and VCS directories
+- colorized output
+- permits to restrict search on a filetype

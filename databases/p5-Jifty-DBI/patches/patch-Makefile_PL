@@ -1,0 +1,33 @@
+$OpenBSD: patch-Makefile_PL,v 1.2 2007/04/16 19:30:58 espie Exp $
+--- Makefile.PL.orig	Sun Mar 18 20:48:53 2007
++++ Makefile.PL	Mon Apr 16 20:41:53 2007
+@@ -3,6 +3,7 @@ requires( perl => '5.8.3');
+ name ('Jifty-DBI');
+ license ('perl');
+ version_from('lib/Jifty/DBI.pm');
++=pod
+ requires('Cache::Simple::TimedExpiry' => '0.21');
+ requires('Class::Accessor::Fast' => 0);
+ requires('Class::Data::Inheritable');
+@@ -22,9 +23,13 @@ requires('UNIVERSAL::require');
+ requires('Scalar::Defer' => 0.10);
+ requires('version');
+ #requires('Class::Trigger');
++=cut
+ build_requires('Test::More' => 0.52);
++=pod
+ build_requires('DBD::SQLite');
++=cut
+ no_index directory => 'ex';
++=pod
+ features( 
+     'Memcached support' => [
+         -default => 1,
+@@ -35,6 +40,7 @@ features( 
+         (can_cc() ? requires('YAML::Syck') : requires('YAML')),
+     ],
+ );
++=cut
+ auto_install();
+ &WriteAll;
+ 

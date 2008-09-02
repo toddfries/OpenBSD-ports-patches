@@ -1,0 +1,22 @@
+$OpenBSD: patch-finch_plugins_Makefile_in,v 1.9 2008/07/04 07:35:40 bernd Exp $
+--- finch/plugins/Makefile.in.orig	Wed Jul  2 02:46:54 2008
++++ finch/plugins/Makefile.in	Wed Jul  2 10:00:26 2008
+@@ -81,7 +81,8 @@ gnthistory_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLF
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+ 	$(gnthistory_la_LDFLAGS) $(LDFLAGS) -o $@
+ @PLUGINS_TRUE@am_gnthistory_la_rpath = -rpath $(plugindir)
+-@PLUGINS_TRUE@gntlastlog_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
++@PLUGINS_TRUE@gntlastlog_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
++@PLUGINS_TRUE@ $(top_builddir)/finch/libgnt/libgnt.la
+ am__gntlastlog_la_SOURCES_DIST = lastlog.c
+ @PLUGINS_TRUE@am_gntlastlog_la_OBJECTS = lastlog.lo
+ gntlastlog_la_OBJECTS = $(am_gntlastlog_la_OBJECTS)
+@@ -395,7 +396,7 @@ grouping_la_LDFLAGS = -module -avoid-version
+ @PLUGINS_TRUE@gntclipboard_la_LIBADD = $(GLIB_LIBS) $(X11_LIBS)
+ @PLUGINS_TRUE@gntgf_la_LIBADD = $(GLIB_LIBS) $(X11_LIBS) $(top_builddir)/finch/libgnt/libgnt.la
+ @PLUGINS_TRUE@gnthistory_la_LIBADD = $(GLIB_LIBS)
+-@PLUGINS_TRUE@gntlastlog_la_LIBADD = $(GLIB_LIBS)
++@PLUGINS_TRUE@gntlastlog_la_LIBADD = $(GLIB_LIBS) $(top_builddir)/finch/libgnt/libgnt.la
+ @PLUGINS_TRUE@grouping_la_LIBADD = $(GLIB_LIBS) $(top_builddir)/finch/libgnt/libgnt.la
+ EXTRA_DIST = pietray.py
+ AM_CPPFLAGS = \

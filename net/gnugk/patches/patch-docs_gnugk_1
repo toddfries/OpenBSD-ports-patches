@@ -1,0 +1,12 @@
+$OpenBSD: patch-docs_gnugk_1,v 1.2 2008/03/15 17:40:06 ajacoutot Exp $
+--- docs/gnugk.1.orig	Wed Dec 20 10:39:43 2006
++++ docs/gnugk.1	Fri Apr 27 15:55:05 2007
+@@ -79,7 +79,7 @@ Write trace log to the specified file.
+ Set trace verbosity. The more -t you add, the more verbose to output. For example, use -ttttt to set the trace level to 5. 
+ .El
+ .Sh FILES
+-.Pa /etc/gatekeeper.ini
++.Pa !!SYSCONFDIR!!/gatekeeper.ini
+ .Sh AUTHORS
+ The current project coordinator is 
+ .Em Jan Willamowius 

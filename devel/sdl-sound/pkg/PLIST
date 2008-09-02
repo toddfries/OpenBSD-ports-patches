@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/14 23:44:01 espie Exp $
+bin/playsound
+include/SDL/
+include/SDL/SDL_sound.h
+lib/libSDL_sound.a
+lib/libSDL_sound.la
+%%SHARED%%

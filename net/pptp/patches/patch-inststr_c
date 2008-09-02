@@ -1,0 +1,12 @@
+$OpenBSD: patch-inststr_c,v 1.2 2007/10/23 22:13:38 naddy Exp $
+--- inststr.c.orig	Mon Feb 13 04:07:42 2006
++++ inststr.c	Tue Sep 18 07:24:08 2007
+@@ -20,7 +20,7 @@ inststr(int argc, char **argv, char **environ, char *s
+ 
+         for (ptr = argv[0]; *ptr; *(ptr++) = '\0');
+ 
+-        strcpy(argv[0], src);
++        strlcpy(argv[0], src, sizeof(argv[0]));
+     } else
+     {
+         /* Stolen from the source to perl 4.036 (assigning to $0) */

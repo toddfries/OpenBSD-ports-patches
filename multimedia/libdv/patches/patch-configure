@@ -1,0 +1,53 @@
+$OpenBSD: patch-configure,v 1.4 2005/12/28 13:43:07 jakemsr Exp $
+--- configure.orig	Mon Nov 29 19:23:44 2004
++++ configure	Fri Feb 11 01:22:37 2005
+@@ -20320,13 +20331,13 @@ fi
+ 
+ 
+ 
+-echo "$as_me:$LINENO: checking for pthread_create in -lpthread" >&5
+-echo $ECHO_N "checking for pthread_create in -lpthread... $ECHO_C" >&6
++echo "$as_me:$LINENO: checking for pthread_create in -pthread" >&5
++echo $ECHO_N "checking for pthread_create in -pthread... $ECHO_C" >&6
+ if test "${ac_cv_lib_pthread_pthread_create+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lpthread  $LIBS"
++LIBS="-pthread  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -20385,17 +20396,17 @@ fi
+ echo "$as_me:$LINENO: result: $ac_cv_lib_pthread_pthread_create" >&5
+ echo "${ECHO_T}$ac_cv_lib_pthread_pthread_create" >&6
+ if test $ac_cv_lib_pthread_pthread_create = yes; then
+-   PTHREAD_LIBS="-lpthread"
++   PTHREAD_LIBS="-pthread"
+ fi
+ 
+ 
+-OS_ARCH=`uname -s | sed -e 's|/|_|g'`
++#OS_ARCH=`uname -s | sed -e 's|/|_|g'`
+ # FreeBSD and OpenBSD have neither -lpthread nor integrated pthreads in libc.
+ # Instead -pthread is used to the compiler/linker to get pthreads working right.
+-if test x$OS_ARCH = xFreeBSD -o x$OS_ARCH = xOpenBSD; then
+-   CFLAGS="$CFLAGS -pthread"
+-   CXXFLAGS="$CXXFLAGS -pthread"
+-fi
++#if test x$OS_ARCH = xFreeBSD -o x$OS_ARCH = xOpenBSD; then
++#   CFLAGS="$CFLAGS -pthread"
++#   CXXFLAGS="$CXXFLAGS -pthread"
++#fi
+ 
+ 
+ 
+@@ -20972,7 +20983,7 @@ fi
+ 
+ 
+ for ac_header in fcntl.h sys/time.h unistd.h linux/videodev.h sys/soundcard.h \
+-endian.h machine/endian.h inttypes.h
++inttypes.h
+ do
+ as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ if eval "test \"\${$as_ac_Header+set}\" = set"; then

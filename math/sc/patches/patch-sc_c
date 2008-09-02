@@ -1,0 +1,21 @@
+$OpenBSD: patch-sc_c,v 1.2 2006/05/28 21:21:51 weingart Exp $
+--- sc.c.orig	Thu May  4 10:10:28 2006
++++ sc.c	Thu May  4 10:10:40 2006
+@@ -274,7 +274,7 @@ main (int argc, char  **argv)
+     else
+ 	progname = argv[0];
+ 
+-    while ((c = getopt(argc, argv, "axmoncrCReP:W:vq")) != EOF) {
++    while ((c = getopt(argc, argv, "axmoncrCReP:W:vq")) != -1) {
+     	switch (c) {
+ 	    case 'a':
+ 		    skipautorun = 1;
+@@ -425,7 +425,7 @@ main (int argc, char  **argv)
+ #endif
+ 	optind = 1;
+ 	stopdisp();
+-	while ((o = getopt(argc, argv, "axmoncrCReP:W:vq")) != EOF) {
++	while ((o = getopt(argc, argv, "axmoncrCReP:W:vq")) != -1) {
+ 	    switch (o) {
+ 		case 'v':
+ 		    Vopt = 1;

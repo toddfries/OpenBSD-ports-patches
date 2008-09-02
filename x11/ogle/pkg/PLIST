@@ -1,0 +1,36 @@
+@comment $OpenBSD: PLIST,v 1.13 2004/08/05 16:23:35 espie Exp $
+bin/ifo_dump
+bin/ogle
+include/ogle/
+include/ogle/dvd.h
+include/ogle/dvdbookmarks.h
+include/ogle/dvdcontrol.h
+include/ogle/dvdevents.h
+include/ogle/msgevents.h
+lib/ogle/
+lib/ogle/libdvdcontrol.a
+lib/ogle/libdvdcontrol.la
+lib/ogle/libmsgevents.a
+lib/ogle/libmsgevents.la
+lib/ogle/ogle_ac3_p
+lib/ogle/ogle_audio
+lib/ogle/ogle_audio_debug
+lib/ogle/ogle_cli
+lib/ogle/ogle_cli_debug
+lib/ogle/ogle_ctrl
+lib/ogle/ogle_ctrl_debug
+lib/ogle/ogle_gui_debug
+lib/ogle/ogle_mpeg_ps
+lib/ogle/ogle_mpeg_ps_debug
+lib/ogle/ogle_mpeg_vs
+lib/ogle/ogle_mpeg_vs_debug
+lib/ogle/ogle_nav
+lib/ogle/ogle_nav_debug
+lib/ogle/ogle_vout
+lib/ogle/ogle_vout_debug
+@man man/man1/ogle.1
+@man man/man5/oglerc.tbl
+share/ogle/
+share/ogle/ogle_conf.dtd
+share/ogle/oglerc
+%%SHARED%%

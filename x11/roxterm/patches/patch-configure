@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.3 2008/07/09 18:59:42 okan Exp $
+--- configure.orig	Fri May 23 00:36:11 2008
++++ configure	Tue May 27 07:07:29 2008
+@@ -29357,7 +29357,7 @@ dbus_version=`pkg-config --modversion dbus-1`
+ { echo "$as_me:$LINENO: result: $dbus_version" >&5
+ echo "${ECHO_T}$dbus_version" >&6; }
+ dbus_old_args=0
+-test "$dbus_version" \< "0.30" && dbus_old_args=1
++/bin/test "$dbus_version" \< "0.30" && dbus_old_args=1
+ 
+ cat >>confdefs.h <<_ACEOF
+ #define ROXTERM_DBUS_OLD_ARGS_SEMANTICS $dbus_old_args

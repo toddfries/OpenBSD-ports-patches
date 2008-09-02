@@ -1,0 +1,17 @@
+@comment $OpenBSD: PLIST,v 1.10 2004/09/14 23:44:00 espie Exp $
+${P5ARCH}/
+${P5ARCH}/Term/
+${P5ARCH}/Term/ReadLine/
+${P5ARCH}/Term/ReadLine/Gnu/
+${P5ARCH}/Term/ReadLine/Gnu.pm
+${P5ARCH}/Term/ReadLine/Gnu/XS.pm
+${P5ARCH}/Term/ReadLine/Gnu/euc_jp.pm
+${P5ARCH}/auto/
+${P5ARCH}/auto/Term/
+${P5ARCH}/auto/Term/ReadLine/
+${P5ARCH}/auto/Term/ReadLine/Gnu/
+${P5ARCH}/auto/Term/ReadLine/Gnu/Gnu.bs
+${P5ARCH}/auto/Term/ReadLine/Gnu/Gnu.so
+${P5ARCH}/auto/Term/ReadLine/Gnu/XS/
+${P5ARCH}/auto/Term/ReadLine/Gnu/XS/autosplit.ix
+@man man/man3p/Term::ReadLine::Gnu.3p

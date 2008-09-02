@@ -1,0 +1,3 @@
+@comment $OpenBSD: PFRAG.shared,v 1.4 2005/05/23 20:28:50 marius Exp $
+libexec/rep/${GNU_ARCH}/gui/gtk-2/gtk.so
+libexec/rep/${GNU_ARCH}/gui/gtk-2/types.so

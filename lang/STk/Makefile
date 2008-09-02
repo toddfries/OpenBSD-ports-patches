@@ -1,0 +1,32 @@
+# $OpenBSD: Makefile,v 1.25 2008/07/04 16:46:10 naddy Exp $
+
+COMMENT=	Scheme interpreter with Tk interface
+
+STK_VERSION=	4.0.1
+STK_ARCH=	$(OPSYS)-$(OPSYS_VER)-$(MACHINE)
+DISTNAME=	STk-${STK_VERSION}
+PKGNAME=	${DISTNAME}p5
+CATEGORIES=	lang
+
+MASTER_SITES=	ftp://kaolin.unice.fr/pub/STk/
+
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+WANTLIB=	c SM X11 m ICE
+
+USE_X11=	Yes
+
+CONFIGURE_STYLE=gnu
+
+DESTDIRNAME=	root
+
+NO_REGRESS=	Yes
+SUBST_VARS=	STK_VERSION STK_ARCH
+
+.include <bsd.port.mk>
+
+.if defined(NO_SHARED_LIBS) && ${NO_SHARED_LIBS:L} == "yes"
+CONFIGURE_ARGS+=	--disable-dynload
+.endif

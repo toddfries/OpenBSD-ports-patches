@@ -1,0 +1,72 @@
+$OpenBSD: patch-fax,v 1.2 2008/06/08 21:41:13 jasper Exp $
+--- fax.orig	Wed Mar 24 09:07:28 1999
++++ fax	Wed Jan 30 15:38:17 2008
+@@ -28,16 +28,17 @@ EFIX=efix
+ # /dev/modem is a link to /dev/cua1, then getty, uucp, kermit,
+ # pppd, dip, etc. must *all* use either /dev/modem or /dev/cua1.
+ 
+-DEV=cua1
++DEV=cua01
+ 
+ # Your fax number in international format, 20 characters maximum.
+ # Use only digits, spaces, and the "+" character.
+ 
+-FROM="+1 800 555 5555"
++#FROM="+1 800 555 5555"
++FROM=""
+ 
+ # Your name as it should appear on the page header.
+ 
+-NAME="Put Your Name Here"
++NAME=""
+ 
+ # The preferred page size for creating and printing faxes.
+ # Allowed values are "letter", "legal", and "a4".
+@@ -81,7 +82,8 @@ DIALSUFFIX=""
+ # conventions. Protect with single quotes for delayed evaluation.
+ # Add a leading '#' to the file name to use binary format.
+ 
+-LOCK='-x /var/lock/LCK..$DEV' 			# modern systems
++LOCK="-x /var/spool/lock/LCK..$DEV"		# OpenBSD cu et al
++# LOCK='-x /var/lock/LCK..$DEV' 		# modern systems
+ # LOCK='-x /usr/spool/uucp/LCK..$DEV'		# older systems
+ # LOCK='-x /var/lock/LCK..$DEV -x /var/spool/uucp/LCK..$DEV' # both
+ # LOCK='-x #/usr/spool/uucp/LCK..$DEV'		# binary format
+@@ -101,6 +103,7 @@ LOCK='-x /var/lock/LCK..$DEV' 			# modern systems
+ # The remaining options probably won't need to be changed.
+ # ****************************************************************
+ 
++
+ # Configuration files that are sourced if they exist.  Comment
+ # out if you don't need to use config files. Warning: any type of
+ # shell command in these files will be executed.
+@@ -404,8 +407,12 @@ NOLOG='[145]'
+ # --- End of user configuration section ---
+ # ****************************************************************
+ 
+-# --- source configuration files
++# ****************************************************************
++# --- source configuration files, which contain
++# --- settings in the same format.
++# ****************************************************************
+ 
++
+ for f in $CONFIGFILES
+ do
+ 	if [ -r $f ]
+@@ -413,6 +420,15 @@ do
+ 		eval "`cat $f`"
+ 	fi
+ done
++# --- Now that config files have been run, test what user did
++case "$NAME" in
++	"")	echo "You have not configured $0 to set NAME=\"your name\"."
++		exit 1;;
++esac
++case "$FROM" in
++	"")	echo "You have not configured $0 to set FROM=\"your faxnum\"."
++		exit 1;;
++esac
+ 
+ # --- set any variables given on command line
+ 

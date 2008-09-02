@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 17:54:17 espie Exp $
+bin/xless
+lib/X11/app-defaults/XLess
+lib/X11/app-defaults/XLess-color
+lib/X11/xless.help
+@man man/cat1/xless.0

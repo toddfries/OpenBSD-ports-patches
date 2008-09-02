@@ -1,0 +1,16 @@
+Apache::MP3
+
+This module takes a hierarchy of directories containing MP3 or Ogg
+Vorbis files and presents it as a browsable song library for streaming
+over the web. It requires the Apache web server, the mod_perl
+embedded Perl interpreter, the MP3::Info and Ogg::Vorbis modules.
+
+Files are displayed in a list that shows the title, artist, duration
+and bitrate. Subdirectories are displayed with "CD" icons. The user
+can download a file to disk by clicking on its title or stream it to
+a decoder by clicking on the "play" link. Users can also stream the
+entire contents of a directory or select a subset of songs to play.
+
+A DEMO is available at http://www.modperl.com/Songs. In this demo,
+stream time is limited to 30 seconds in order to avoid copyright
+infringement.

@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 09:09:42 espie Exp $
+bin/hypermail
+@man man/man1/hypermail.1
+@man man/man5/hmrc.5
+share/doc/hypermail/
+share/doc/hypermail/archive_search.html
+share/doc/hypermail/attachments.txt
+share/doc/hypermail/customizing.html
+share/doc/hypermail/hmrc.html
+share/doc/hypermail/hr.yellow.png
+share/doc/hypermail/hypermail-faq.html
+share/doc/hypermail/hypermail.html
+share/doc/hypermail/hypermail.png
+share/doc/hypermail/stars.png

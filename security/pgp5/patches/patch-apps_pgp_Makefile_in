@@ -1,0 +1,29 @@
+$OpenBSD: patch-apps_pgp_Makefile_in,v 1.1 2002/04/23 06:38:48 fgsch Exp $
+--- apps/pgp/Makefile.in.orig	Sat Feb  7 16:54:56 1998
++++ apps/pgp/Makefile.in	Tue Apr 23 03:06:28 2002
+@@ -6,7 +6,7 @@
+ # $Id: patch-apps_pgp_Makefile_in,v 1.1 2002/04/23 06:38:48 fgsch Exp $
+ #
+ 
+-PROG = pgp
++PROG = pgp5
+ INSTALLPROGS = $(PROG)
+ 
+ COMMON=../common
+@@ -21,11 +21,11 @@ all:: $(PROG)
+ 
+ install:: $(PROG)
+ 	(						\
+-	    $(INSTALL) -m 755 pgp $(DESTDIR)$(bindir);	\
++	    $(INSTALL) -m 755 pgp5 $(DESTDIR)$(bindir);	\
+ 	    cd $(DESTDIR)$(bindir);			\
+ 	    $(RM) pgpe pgps pgpv pgp_old;		\
+-	    $(LN_S) pgp pgpe;				\
+-	    $(LN_S) pgp pgps;				\
+-	    $(LN_S) pgp pgpv;				\
+-	    $(LN_S) pgp pgp_old				\
++	    $(LN_S) pgp5 pgpe;				\
++	    $(LN_S) pgp5 pgps;				\
++	    $(LN_S) pgp5 pgpv;				\
++	    $(LN_S) pgp5 pgp_old			\
+ 	)

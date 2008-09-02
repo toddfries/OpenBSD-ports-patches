@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST,v 1.5 2007/05/26 22:06:19 rui Exp $
+bin/tcptraceroute
+@man man/man1/tcptraceroute.1
+share/doc/tcptraceroute/
+@comment share/doc/tcptraceroute/AUTHORS
+@comment share/doc/tcptraceroute/COPYING
+@comment share/doc/tcptraceroute/ChangeLog
+@comment share/doc/tcptraceroute/NEWS
+@comment share/doc/tcptraceroute/README
+share/doc/tcptraceroute/examples.txt
+share/doc/tcptraceroute/tcptraceroute.1.html
+share/doc/tcptraceroute/tcptraceroute.lsm

@@ -1,0 +1,12 @@
+$OpenBSD: patch-libgnomecups_gnome-cups-request_c,v 1.2 2008/02/03 21:02:19 jasper Exp $
+--- libgnomecups/gnome-cups-request.c.orig	Tue Jan 29 23:51:24 2008
++++ libgnomecups/gnome-cups-request.c	Tue Jan 29 23:51:59 2008
+@@ -349,7 +349,7 @@ request_thread_main (GnomeCupsRequest *request,
+ 		if (request->response == NULL)
+ 			status = IPP_INTERNAL_ERROR;
+ 
+-		if (status > IPP_OK_CONFLICT) {
++		if (status > IPP_OK_CONFLICT && status != IPP_NOT_FOUND) {
+ 			g_warning ("IPP request failed with status %d", status);
+ 			if (request->error != NULL)
+ 				*(request->error) = g_error_new (GNOME_CUPS_ERROR, 

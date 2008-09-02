@@ -1,0 +1,41 @@
+--- portable.c.orig	Tue Jul 16 17:55:11 1991
++++ portable.c	Tue Jul 18 22:49:22 2006
+@@ -345,6 +345,7 @@ ZOOFILE zoo_file;
+ {
+    int status;
+    BYTE bytes[MAXDIRSIZE];    /* big enough to hold variable part too */
++   char *p;
+ 
+    /* To simplify things, we read the maximum possible size of the
+    directory entry including the variable size and discard what is not
+@@ -364,6 +365,30 @@ ZOOFILE zoo_file;
+       show_dir(direntry);
+    }
+ #endif
++   /* take off '../'   */
++   while ((p = strstr( direntry->dirname, "../" )) != NULL) {
++      while (*(p+3) != '\0') {
++        *p = *(p + 3);
++        p++;
++      }
++      *p = *(p+3); /* move last null */
++      //printf("zoo: skipped \"../\" path component in '%s'\n", direntry->dirname);
++   }
++   /* take off  '/'  */
++   if ( direntry->dirname[0] == '/' ) {
++      p = direntry->dirname;
++      while (*p != '\0') {
++        *p = *(p + 1);
++        p++;
++      }
++      *p = *(p+1); /* move last null */
++      //printf("zoo: skipped \"/\" path component in '%s'\n", direntry->dirname);
++   }
++   /* take off '..'   */
++   if(!strcmp(direntry->dirname, ".."))
++      direntry->dirname[0] = '\0';
++   /* direntry->dirlen = strlen(direntry->dirname); */
++
+    return (0);
+ }
+ 

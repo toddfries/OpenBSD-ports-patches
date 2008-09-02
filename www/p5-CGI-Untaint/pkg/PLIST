@@ -1,0 +1,13 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:49:51 espie Exp $
+${P5SITE}/CGI/
+${P5SITE}/CGI/Untaint/
+${P5SITE}/CGI/Untaint.pm
+${P5SITE}/CGI/Untaint/hex.pm
+${P5SITE}/CGI/Untaint/integer.pm
+${P5SITE}/CGI/Untaint/object.pm
+${P5SITE}/CGI/Untaint/printable.pm
+@man man/man3p/CGI::Untaint.3p
+@man man/man3p/CGI::Untaint::hex.3p
+@man man/man3p/CGI::Untaint::integer.3p
+@man man/man3p/CGI::Untaint::object.3p
+@man man/man3p/CGI::Untaint::printable.3p

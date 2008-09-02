@@ -1,0 +1,12 @@
+$OpenBSD: patch-nls_LANGS,v 1.1 2007/10/26 21:50:35 ajacoutot Exp $
+--- nls/LANGS.orig	Tue Nov  9 20:42:42 1999
++++ nls/LANGS	Fri Oct 26 23:46:55 2007
+@@ -1,5 +1,5 @@
+ # LANGS file
+ 
+-C/C/C			/usr/local/nls/msg/C
+-english/us/ascii	/usr/local/nls/msg/english
+-french/canada/8859	/usr/local/nls/msg/french
++C/C/C			/usr/local/share/nls/C
++# english/us/ascii	/usr/local/share/nls/en_US.ISO_8859-1
++# french/canada/8859	/usr/local/share/nls/fr_FR.ISO_8859-1

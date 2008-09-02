@@ -1,0 +1,24 @@
+$OpenBSD: patch-lib-src_Makefile_in_in,v 1.1 2007/09/18 18:56:03 aanriot Exp $
+--- lib-src/Makefile.in.in.orig	Tue Aug 20 13:34:16 2002
++++ lib-src/Makefile.in.in	Mon Feb 17 21:55:55 2003
+@@ -255,10 +255,18 @@ ${archlibdir}: all
+ install: ${archlibdir}
+ 	@echo; echo "Installing utilities for users to run."
+ 	for file in ${PUBLIC_INSTALLABLE_EXES} ; do \
+-	  (cd .. && $(INSTALL_PROGRAM) lib-src/$${file} ${bindir}/$${file}) ; \
++	  if [ $${file} = etags -o $${file} = ctags -o $${file} = b2m ]; then \
++	    (cd .. && $(INSTALL_PROGRAM) lib-src/$${file} ${bindir}/xemacs-$${file}) ; \
++	  else \
++	    (cd .. && $(INSTALL_PROGRAM) lib-src/$${file} ${bindir}/$${file}) ; \
++	  fi \
+ 	done
+ 	for file in ${PUBLIC_INSTALLABLE_SCRIPTS} ; do \
+-	  (cd .. && $(INSTALL_PROGRAM) ${srcdir}/$${file} ${bindir}/$${file}) ; \
++	  if [ $${file} = rcs-checkin ]; then \
++	    (cd .. && $(INSTALL_PROGRAM) ${srcdir}/$${file} ${bindir}/xemacs-$${file}) ; \
++	  else \
++	    (cd .. && $(INSTALL_PROGRAM) ${srcdir}/$${file} ${bindir}/$${file}) ; \
++	  fi \
+ 	done
+ 
+ uninstall:

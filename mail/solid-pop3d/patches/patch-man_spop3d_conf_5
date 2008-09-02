@@ -1,0 +1,21 @@
+$OpenBSD: patch-man_spop3d_conf_5,v 1.2 2000/08/15 20:36:58 danh Exp $
+--- man/spop3d.conf.5.orig	Sun Apr 30 16:56:18 2000
++++ man/spop3d.conf.5	Thu Aug 10 03:45:11 2000
+@@ -107,7 +107,7 @@ Users can authenticate themselves with A
+ .B MailDropName string
+ Specify path to maildrop. The format is the same as for \fB-n\fP option in
+ \fBspop3d\fP (8). Default value is
+-.I /var/spool/mail/%s
++.I /var/mail/%s
+ .TP
+ .B MailDropType string
+ Specify type of maildrop. The allowed values are \fImailbox\fP and
+@@ -204,7 +204,7 @@ exist. Option is disabled by default.
+ 	DoMapping 	true
+ 	UnreadExpire	never
+ 	APOPServerName	jakis.tam.host.w.pl
+-	MailDropName	"/var/spool/mail/%s" /* It is a comment */
++	MailDropName	"/var/mail/%s" /* It is a comment */
+ 	MailDropType	mailbox
+ 	AutoLogoutTime	5s
+ 	UserOverride	yes

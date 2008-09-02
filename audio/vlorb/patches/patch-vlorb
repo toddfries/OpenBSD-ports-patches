@@ -1,0 +1,9 @@
+$OpenBSD: patch-vlorb,v 1.4 2003/08/03 01:07:40 naddy Exp $
+--- vlorb.orig	Mon Jul 28 00:20:32 2003
++++ vlorb	Mon Jul 28 00:20:41 2003
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env perl
++#!/usr/bin/perl
+ #
+ # vlorb, an audio CD to audio file encoder.
+ # Copyright (c) 2002, Jochem Kossen <j.kossen@home.nl>

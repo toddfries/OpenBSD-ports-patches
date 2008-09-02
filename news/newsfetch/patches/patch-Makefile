@@ -1,0 +1,28 @@
+$OpenBSD: patch-Makefile,v 1.1 2002/07/23 17:58:56 pvalchev Exp $
+--- Makefile.orig	Mon Apr 13 03:09:54 1998
++++ Makefile	Tue Jul 23 11:26:52 2002
+@@ -1,14 +1,12 @@
+-CC = gcc
+-CFLAGS = 
+-
+ #Uncomment this if you do not want status meter
+ #CFLAGS = -DNO_STATUS_METER
+ 
+ objs = newsfetch.o nntp.o net.o opt.o util.o getopt.o
+  
++all: newsfetch
++
+ newsfetch: $(objs)
+ 	$(CC) -o newsfetch $(objs)
+-	strip newsfetch
+ 
+ .c.o:
+ 	$(CC) -c $(CFLAGS) $< 
+@@ -17,5 +15,5 @@ clean:
+ 	rm -f *.o newsfetch
+ 
+ install:
+-	cp newsfetch /usr/local/bin
+-	cp newsfetch.1 /usr/man/man1
++	$(INSTALL_PROGRAM) newsfetch $(PREFIX)/bin
++	$(INSTALL_MAN) newsfetch.1 $(PREFIX)/man/man1

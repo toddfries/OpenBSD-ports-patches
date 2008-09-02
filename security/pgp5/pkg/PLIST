@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST,v 1.6 2004/09/18 13:06:43 espie Exp $
+@option no-default-conflict
+@conflict pgp->=5,<6
+bin/pgp5
+bin/pgp_old
+bin/pgpe
+bin/pgpk
+bin/pgps
+bin/pgpv
+lib/libbn.a
+lib/libpgp.a
+lib/libpgptty.a
+lib/libsimple.a
+lib/pgp5/
+lib/pgp5/language50.txt
+@man man/man1/pgp5.1
+@man man/man1/pgpe.1
+@man man/man1/pgpk.1
+@man man/man1/pgps.1
+@man man/man1/pgpv.1
+@man man/man5/pgp.cfg.5
+@man man/man7/pgp-integration.7
+@man man/man7/pgp-intro.7

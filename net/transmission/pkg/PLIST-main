@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST-main,v 1.8 2008/04/22 16:50:43 naddy Exp $
+@pkgpath net/transmission
+bin/benc2php
+bin/transmission-daemon
+bin/transmission-proxy
+bin/transmission-remote
+bin/transmissioncli
+@man man/man1/transmission-daemon.1
+@man man/man1/transmission-proxy.1
+@man man/man1/transmission-remote.1
+@man man/man1/transmissioncli.1
+@comment share/applications/

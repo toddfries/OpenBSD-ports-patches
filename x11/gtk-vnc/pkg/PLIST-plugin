@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST-plugin,v 1.2 2008/07/13 17:16:25 jasper Exp $
+lib/mozilla-plugins/
+lib/mozilla-plugins/gtk-vnc-plugin.so
+share/examples/gtk-vnc/
+share/examples/gtk-vnc/README.plugin

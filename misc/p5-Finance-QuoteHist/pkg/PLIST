@@ -1,0 +1,13 @@
+@comment $OpenBSD: PLIST,v 1.4 2006/12/27 12:35:13 simon Exp $
+${P5SITE}/Finance/
+${P5SITE}/Finance/QuoteHist/
+${P5SITE}/Finance/QuoteHist.pm
+${P5SITE}/Finance/QuoteHist/Generic.pm
+${P5SITE}/Finance/QuoteHist/SiliconInvestor.pm
+${P5SITE}/Finance/QuoteHist/WallStreetCity.pm
+${P5SITE}/Finance/QuoteHist/Yahoo.pm
+@man man/man3p/Finance::QuoteHist.3p
+@man man/man3p/Finance::QuoteHist::Generic.3p
+@man man/man3p/Finance::QuoteHist::SiliconInvestor.3p
+@man man/man3p/Finance::QuoteHist::WallStreetCity.3p
+@man man/man3p/Finance::QuoteHist::Yahoo.3p

@@ -1,0 +1,21 @@
+$OpenBSD: patch-amavisd,v 1.4 2007/11/27 13:53:19 okan Exp $
+--- amavisd.orig	Wed Jun 27 12:43:00 2007
++++ amavisd	Sat Nov 24 10:18:12 2007
+@@ -153,7 +153,7 @@ sub fetch_modules($$@) {
+ 
+ BEGIN {
+   fetch_modules('REQUIRED BASIC MODULES', 1, qw(
+-    Exporter POSIX Fcntl Socket Errno Carp Time::HiRes
++    Exporter POSIX Fcntl Socket Errno Carp Carp::Heavy Time::HiRes
+     IO::Handle IO::File IO::Socket IO::Socket::UNIX IO::Socket::INET
+     IO::Wrap IO::Stringy Digest::MD5 Unix::Syslog File::Basename
+     Compress::Zlib MIME::Base64 MIME::QuotedPrint MIME::Words
+@@ -17909,7 +17909,7 @@ sub initializeSpamAssassin {
+     local_tests_only  => $sa_local_tests_only,
+     home_dir_for_helpers => $helpers_home,
+     stop_at_threshold => 0,
+-#   LOCAL_STATE_DIR   => '/var/lib',
++    LOCAL_STATE_DIR   => '/var/db/spamassassin',
+ #   PREFIX            => '/usr/local',
+ #   DEF_RULES_DIR     => '/usr/local/share/spamassassin',
+ #   LOCAL_RULES_DIR   => '/usr/local/etc/mail/spamassassin',

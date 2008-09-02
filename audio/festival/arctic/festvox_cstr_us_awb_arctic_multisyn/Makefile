@@ -1,0 +1,30 @@
+# $OpenBSD: Makefile,v 1.4 2007/09/15 22:27:38 simon Exp $
+
+COMMENT=	Scottish English male speaker (AWB, cstr
+DISTNAME=	festvox_cstr_us_awb_arctic_multisyn-1.0
+PKGNAME=	${DISTNAME}p0
+DIST_SUBDIR=	festival
+
+PERMIT_PACKAGE_FTP=Removed for space constraints
+
+RUN_DEPENDS=	${ARCTIC_US_DEPS}
+
+do-install:
+	${INSTALL_DATA_DIR} ${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/festvox
+	${INSTALL_DATA_DIR} ${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/coef
+	${INSTALL_DATA_DIR} ${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/lpc
+	${INSTALL_DATA_DIR} ${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/utt
+	${INSTALL_DATA} ${ARC_WRK}-multisyn/english/cstr_us_awb_arctic_multisyn/festvox/* \
+		${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/festvox
+	${INSTALL_DATA} ${ARC_WRK}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/utts.* \
+		${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb
+	${INSTALL_DATA} ${ARC_WRK}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/coef/* \
+		${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/coef
+	${INSTALL_DATA} ${ARC_WRK}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/lpc/*.res \
+		${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/lpc
+	${INSTALL_DATA} ${ARC_WRK}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/lpc/*.lpc \
+		${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/lpc
+	${INSTALL_DATA} ${ARC_WRK}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/utt/* \
+		${ARC_PRE}-multisyn/english/cstr_us_awb_arctic_multisyn/awb/utt
+
+.include <bsd.port.mk>

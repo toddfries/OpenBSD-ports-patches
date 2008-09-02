@@ -1,0 +1,34 @@
+$OpenBSD: patch-src_jsopcode_c,v 1.2 2007/04/10 13:03:09 martynas Exp $
+--- src/jsopcode.c.orig	Thu Nov 30 02:34:45 2006
++++ src/jsopcode.c	Mon Apr  9 21:26:10 2007
+@@ -183,7 +183,7 @@ js_Disassemble1(JSContext *cx, JSScript *script, jsbyt
+       case JOF_JUMP:
+       case JOF_JUMPX:
+         off = GetJumpOffset(pc, pc);
+-        fprintf(fp, " %u (%d)", loc + off, off);
++        fprintf(fp, " %tu (%td)", loc + off, off);
+         break;
+ 
+       case JOF_CONST:
+@@ -214,10 +214,10 @@ js_Disassemble1(JSContext *cx, JSScript *script, jsbyt
+         pc2 += JUMP_OFFSET_LEN;
+         high = GET_JUMP_OFFSET(pc2);
+         pc2 += JUMP_OFFSET_LEN;
+-        fprintf(fp, " defaultOffset %d low %d high %d", off, low, high);
++        fprintf(fp, " defaultOffset %td low %d high %d", off, low, high);
+         for (i = low; i <= high; i++) {
+             off = GetJumpOffset(pc, pc2);
+-            fprintf(fp, "\n\t%d: %d", i, off);
++            fprintf(fp, "\n\t%d: %td", i, off);
+             pc2 += jmplen;
+         }
+         len = 1 + pc2 - pc;
+@@ -237,7 +237,7 @@ js_Disassemble1(JSContext *cx, JSScript *script, jsbyt
+         pc2 += jmplen;
+         npairs = GET_ATOM_INDEX(pc2);
+         pc2 += ATOM_INDEX_LEN;
+-        fprintf(fp, " offset %d npairs %u", off, (uintN) npairs);
++        fprintf(fp, " offset %td npairs %u", off, (uintN) npairs);
+         while (npairs) {
+             atom = GET_ATOM(cx, script, pc2);
+             pc2 += ATOM_INDEX_LEN;

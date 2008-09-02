@@ -1,0 +1,21 @@
+$OpenBSD: patch-config_configure_in,v 1.8 2007/09/17 20:51:22 rui Exp $
+--- config/configure.in.orig	Sun Sep  9 16:15:08 2007
++++ config/configure.in	Fri Sep 14 17:47:27 2007
+@@ -850,7 +850,7 @@ if test "$GD" != "no"; then
+       PNG_LDFLAGS=`$PNGLIBCONFIG --ldflags`
+       LDFLAGS="$LDFLAGS $PNG_LDFLAGS"
+     fi
+-    AC_CHECK_LIB(png, png_create_read_struct , [LIBPNG=yes])
++    AC_CHECK_LIB(png, png_create_read_struct , [LIBPNG=yes],, -lz -lm)
+ # restore variables
+     LIBS=$SAVE_LIBS_PNG
+     CFLAGS=$SAVE_CFLAGS_PNG
+@@ -878,7 +878,7 @@ if test "$GD" != "no"; then
+         GD=yes
+ 	GD_PNG=yes
+         AC_MSG_RESULT(yes)
+-	AC_CHECK_LIB(png, png_access_version_number,[AC_DEFINE(HAVE_PNGVERSION, 1,)])
++	AC_CHECK_LIB(png, png_access_version_number,[AC_DEFINE(HAVE_PNGVERSION, 1,)],, -lz -lm)
+         AC_DEFINE(HAVE_GD_PNG, 1, [Define to 1 if you have png support in libgd.])
+       else
+         AC_MSG_RESULT(no)

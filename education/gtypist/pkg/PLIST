@@ -1,0 +1,41 @@
+@comment $OpenBSD: PLIST,v 1.9 2008/05/28 16:09:06 naddy Exp $
+bin/gtypist
+bin/typefortune
+@info info/gtypist.info
+@man man/man1/gtypist.1
+@man man/man1/typefortune.1
+share/emacs/site-lisp/gtypist-mode.el
+share/gtypist/
+share/gtypist/cs.typ
+share/gtypist/d.typ
+share/gtypist/demo.typ
+share/gtypist/esp.typ
+share/gtypist/gtypist.typ
+share/gtypist/ktde.typ
+share/gtypist/ktdk.typ
+share/gtypist/ktdk2.typ
+share/gtypist/ktdvorak.typ
+share/gtypist/kten.typ
+share/gtypist/ktfr.typ
+share/gtypist/ktfr2.typ
+share/gtypist/ktno.typ
+share/gtypist/ktnumber.typ
+share/gtypist/m.typ
+share/gtypist/n.typ
+share/gtypist/q.typ
+share/gtypist/r.typ
+share/gtypist/ru.typ
+share/gtypist/s.typ
+share/gtypist/t.typ
+share/gtypist/ttde.typ
+share/gtypist/u.typ
+share/gtypist/v.typ
+share/locale/cs/LC_MESSAGES/gtypist.mo
+share/locale/de/LC_MESSAGES/gtypist.mo
+share/locale/es/LC_MESSAGES/gtypist.mo
+share/locale/fi/LC_MESSAGES/gtypist.mo
+share/locale/fr/LC_MESSAGES/gtypist.mo
+share/locale/nl/LC_MESSAGES/gtypist.mo
+share/locale/ru/LC_MESSAGES/gtypist.mo
+share/locale/zh_CN/LC_MESSAGES/gtypist.mo
+share/locale/zh_TW/LC_MESSAGES/gtypist.mo

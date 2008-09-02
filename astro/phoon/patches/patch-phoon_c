@@ -1,0 +1,33 @@
+$OpenBSD: patch-phoon_c,v 1.4 2007/12/18 09:43:37 ajacoutot Exp $
+--- phoon.c.orig	Fri May 20 21:10:24 2005
++++ phoon.c	Tue Dec 18 09:38:15 2007
+@@ -354,7 +354,7 @@ putmoon( time_t t, int numlines, char* atfiller )
+     struct tm* tmP;
+     double jd, pctphase, angphase, cphase, aom, cdist, cangdia, csund, csuang;
+     double phases[2], which[2];
+-    long clocknow;
++    time_t clocknow;
+     int atflrlen, atflridx, numcols, lin, col, midlin;
+     double mcap, yrad, xrad, y, xright, xleft;
+     int colright, colleft;
+@@ -538,15 +538,15 @@ main( int argc, char** argv )
+     else if ( argc - argn == 1 || argc - argn == 2 || argc - argn == 3 )
+ 	{
+ 	/* One, two, or three args - use them. */
+-	strcpy( buf, argv[argn] );
++	strlcpy( buf, argv[argn], sizeof(buf) );
+ 	if ( argc - argn > 1 )
+ 	    {
+-	    strcat( buf, " " );
+-	    strcat( buf, argv[argn + 1] );
++	    strlcat( buf, " ", sizeof(buf) );
++	    strlcat( buf, argv[argn + 1], sizeof(buf) );
+ 	    if ( argc - argn > 2 )
+ 		{
+-		strcat( buf, " " );
+-		strcat( buf, argv[argn + 2] );
++		strlcat( buf, " ", sizeof(buf) );
++		strlcat( buf, argv[argn + 2], sizeof(buf) );
+ 		}
+ 	    }
+ 	t = date_parse( buf );

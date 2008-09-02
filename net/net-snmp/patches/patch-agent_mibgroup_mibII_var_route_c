@@ -1,0 +1,30 @@
+$OpenBSD: patch-agent_mibgroup_mibII_var_route_c,v 1.5 2007/09/26 20:03:42 rui Exp $
+--- agent/mibgroup/mibII/var_route.c.orig	Mon Nov  6 23:43:27 2006
++++ agent/mibgroup/mibII/var_route.c	Sat Sep 15 23:12:28 2007
+@@ -1710,22 +1710,21 @@ TAILQ_HEAD(, snmprt)
+             continue;
+         switch (bit) {
+         case RTA_DST:
+-#define satosin(sa) ((struct sockaddr_in *)(sa))
+-            rt->dest = satosin(sa)->sin_addr;
++            rt->dest = ((struct sockaddr_in *)sa)->sin_addr;
+             gotdest = 1;
+             break;
+         case RTA_GATEWAY:
+             if (sa->sa_family == AF_INET)
+-                rt->gateway = satosin(sa)->sin_addr;
++                rt->gateway = ((struct sockaddr_in *)sa)->sin_addr;
+             break;
+         case RTA_NETMASK:
+             if (sa->sa_len >= offsetof(struct sockaddr_in, sin_addr))
+-                                rt->netmask = satosin(sa)->sin_addr;
++                                rt->netmask = ((struct sockaddr_in *)sa)->sin_addr;
+             gotmask = 1;
+             break;
+         case RTA_IFA:
+             if (sa->sa_family == AF_INET)
+-                rt->ifa = satosin(sa)->sin_addr;
++                rt->ifa = ((struct sockaddr_in *)sa)->sin_addr;
+             break;
+         }
+         /*

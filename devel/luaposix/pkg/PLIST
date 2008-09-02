@@ -1,0 +1,2 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/10/11 21:03:24 pedro Exp $
+lib/lua/5.1/posix.so

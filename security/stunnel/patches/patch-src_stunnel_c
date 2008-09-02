@@ -1,0 +1,15 @@
+--- src/stunnel.c.orig	Wed May 21 13:33:33 2008
++++ src/stunnel.c	Mon Jun  2 16:50:52 2008
+@@ -169,11 +169,11 @@ static void daemon_loop(void) {
+ #if !defined (USE_WIN32) && !defined (__vms) && !defined(USE_OS2)
+     if(!(options.option.foreground))
+         daemonize();
++    create_pid();
+     drop_privileges();
+ #ifdef USE_LIBWRAP
+     libwrap_init(LIBWRAP_CLIENTS); /* spawn LIBWRAP_CLIENTS processes */
+ #endif /* USE_LIBWRAP */
+-    create_pid();
+ #endif /* !defined USE_WIN32 && !defined (__vms) */
+     /* create exec+connect services */
+     for(opt=local_options.next; opt; opt=opt->next) {

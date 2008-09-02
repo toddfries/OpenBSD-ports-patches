@@ -1,0 +1,12 @@
+$OpenBSD: patch-scheduler_cups-driverd_c,v 1.2 2007/05/07 13:58:07 ajacoutot Exp $
+--- scheduler/cups-driverd.c.orig	Tue Apr 18 17:16:00 2006
++++ scheduler/cups-driverd.c	Mon May  7 15:47:41 2007
+@@ -267,7 +267,7 @@ cat_ppd(const char *name)		/* I - PPD name */
+     * Yes, let it cat the PPD file...
+     */
+ 
+-    if (execl(line, scheme, "cat", name, (char *)NULL))
++    if (execl(line, scheme, "cat", name, (char *)0))
+     {
+      /*
+       * Unable to execute driver...

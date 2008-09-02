@@ -1,0 +1,16 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:46:12 espie Exp $
+bin/xmred
+bin/xmris
+bin/xmsit
+lib/X11/app-defaults/Xmris
+lib/X11/app-defaults/xmris/
+lib/X11/app-defaults/xmris/alphabet.gdn
+lib/X11/app-defaults/xmris/digits.gdn
+lib/X11/app-defaults/xmris/puzzle.gdn
+lib/X11/app-defaults/xmris/xmred.gdn
+lib/X11/xmris/
+@man man/cat6/xmred.0
+@man man/cat6/xmris.0
+@man man/cat6/xmsit.0
+@mode 775
+lib/xmris/

@@ -1,0 +1,27 @@
+$OpenBSD: patch-Mailman_Defaults_py_in,v 1.9 2008/07/09 19:30:23 wcmaier Exp $
+--- Mailman/Defaults.py.in.orig	Fri Aug  4 07:20:33 2006
++++ Mailman/Defaults.py.in	Wed Jul  9 13:13:49 2008
+@@ -427,7 +427,22 @@ SMTPPORT = 0                                      # de
+ 
+ # Command for direct command pipe delivery to sendmail compatible program,
+ # when DELIVERY_MODULE is 'Sendmail'.
+-SENDMAIL_CMD = '/usr/lib/sendmail'
++SENDMAIL_CMD = '/usr/sbin/sendmail'
++
++# Specify the type of passwords to use, when Mailman generates the passwords
++# itself, as would be the case for membership requests where the user did not
++# fill in a password, or during list creation, when auto-generation of admin
++# passwords was selected.
++#
++# Set this value to Yes for classic Mailman user-friendly(er) passwords.
++# These generate semi-pronounceable passwords which are easier to remember.
++# Set this value to No to use more cryptographically secure, but harder to
++# remember, passwords -- if your operating system and Python version support
++# the necessary feature (specifically that /dev/urandom be available).
++USER_FRIENDLY_PASSWORDS = Yes
++
++# This value specifies the default lengths of member passwords
++MEMBER_PASSWORD_LENGTH = 8
+ 
+ # Set these variables if you need to authenticate to your NNTP server for
+ # Usenet posting or reading.  If no authentication is necessary, specify None

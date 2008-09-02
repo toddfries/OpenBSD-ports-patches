@@ -1,0 +1,30 @@
+$OpenBSD: patch-modules_Makefile_in,v 1.14 2008/04/09 13:13:40 jasper Exp $
+--- modules/Makefile.in.orig	Mon Mar 10 16:22:36 2008
++++ modules/Makefile.in	Wed Mar 12 23:31:16 2008
+@@ -554,21 +554,11 @@ uninstall-am: uninstall-local
+ @CROSS_COMPILING_FALSE@all-local: pango.modules
+ 
+ install-data-local: $(top_builddir)/pango/pango-querymodules$(EXEEXT)
+-	@if $(RUN_QUERY_MODULES_TEST) && test -z "$(DESTDIR)" ; then 	\
+-	  echo $(mkinstalldirs) $(DESTDIR)$(sysconfdir)/pango \&\& 	\
+-	  $(top_builddir)/pango/pango-querymodules$(EXEEXT) 		\
+-		\> $(DESTDIR)$(sysconfdir)/pango/pango.modules ;	\
+-	  $(mkinstalldirs) $(DESTDIR)$(sysconfdir)/pango && 		\
+-	  $(top_builddir)/pango/pango-querymodules$(EXEEXT) 		\
+-		> $(DESTDIR)$(sysconfdir)/pango/pango.modules ;		\
+-	else								\
+-	  echo "***" ; 							\
+-	  echo "*** Warning: $(sysconfdir)/pango/pango.modules" ; 	\
+-	  echo "*** not created" ; 					\
+-	  echo "*** Generate this file on the target system" ; 		\
+-	  echo "*** using pango-querymodules" ; 			\
+-	  echo "***" ; 							\
+-	fi
++	$(mkinstalldirs) $(DESTDIR)$(sysconfdir)/pango &&	\
++	  LD_LIBRARY_PATH=$(top_builddir)/pango/.libs		\
++	  $(top_builddir)/pango/pango-querymodules		\
++	  `find $(DESTDIR)$(moduledir) -name '*.so'` | sed 's,$(DESTDIR),,' \
++	  > $(DESTDIR)$(sysconfdir)/pango/pango.modules
+ 
+ uninstall-local:
+ 	$(RM) $(DESTDIR)$(sysconfdir)/pango/pango.modules

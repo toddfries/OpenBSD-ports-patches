@@ -1,0 +1,35 @@
+@comment $OpenBSD: PLIST,v 1.7 2007/11/04 16:27:53 merdely Exp $
+${P5SITE}/Net/
+${P5SITE}/Net/Server/
+${P5SITE}/Net/Server.pm
+${P5SITE}/Net/Server.pod
+${P5SITE}/Net/Server/Daemonize.pm
+${P5SITE}/Net/Server/Fork.pm
+${P5SITE}/Net/Server/INET.pm
+${P5SITE}/Net/Server/MultiType.pm
+${P5SITE}/Net/Server/Multiplex.pm
+${P5SITE}/Net/Server/PreFork.pm
+${P5SITE}/Net/Server/PreForkSimple.pm
+${P5SITE}/Net/Server/Proto/
+${P5SITE}/Net/Server/Proto.pm
+${P5SITE}/Net/Server/Proto/SSL.pm
+${P5SITE}/Net/Server/Proto/TCP.pm
+${P5SITE}/Net/Server/Proto/UDP.pm
+${P5SITE}/Net/Server/Proto/UNIX.pm
+${P5SITE}/Net/Server/SIG.pm
+${P5SITE}/Net/Server/Single.pm
+@man man/man3p/Net::Server.3p
+@man man/man3p/Net::Server::Daemonize.3p
+@man man/man3p/Net::Server::Fork.3p
+@man man/man3p/Net::Server::INET.3p
+@man man/man3p/Net::Server::MultiType.3p
+@man man/man3p/Net::Server::Multiplex.3p
+@man man/man3p/Net::Server::PreFork.3p
+@man man/man3p/Net::Server::PreForkSimple.3p
+@man man/man3p/Net::Server::Proto.3p
+@man man/man3p/Net::Server::Proto::SSL.3p
+@man man/man3p/Net::Server::Proto::TCP.3p
+@man man/man3p/Net::Server::Proto::UDP.3p
+@man man/man3p/Net::Server::Proto::UNIX.3p
+@man man/man3p/Net::Server::SIG.3p
+@man man/man3p/Net::Server::Single.3p

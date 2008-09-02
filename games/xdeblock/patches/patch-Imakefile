@@ -1,0 +1,23 @@
+$OpenBSD: patch-Imakefile,v 1.1 2002/02/20 22:50:51 pvalchev Exp $
+--- Imakefile.orig	Fri Nov 15 21:06:36 1996
++++ Imakefile	Wed Feb 20 15:44:17 2002
+@@ -10,7 +10,7 @@ XCOMM ==================================
+ XCOMM    Set xdeblock working directory.
+ XCOMM =====================================================================
+ 
+-    XDEBLO_DIR = .
++    XDEBLO_DIR = /usr/local/lib/X11/xdeblock
+ 
+ XCOMM =====================================================================
+ XCOMM    Set xpm.
+@@ -20,8 +20,8 @@ XCOMM    ex. 
+ XCOMM         abc% find /usr -name xpm.h -print
+ XCOMM =====================================================================
+  
+-    XPM_INC 			= -I/usr/include/X11
+-    XPMLIB_DIR 			= -L/usr/lib
++    XPM_INC 			= -I/usr/X11R6/include/X11
++    XPMLIB_DIR 			= -L/usr/X11R6/lib
+ 
+ XCOMM =====================================================================
+ 

@@ -1,0 +1,28 @@
+--- config/XView.lib.orig	1993-06-29 07:13:20.000000000 +0200
++++ config/XView.lib	2003-12-30 02:07:36.000000000 +0100
+@@ -1,12 +1,12 @@
+-/**/##########################################################################
+-/**/# @(#)XView.lib	1.3 07 Jan 1992 SMI
+-/**/# XView.lib for XView release 3.0.  Common commands for all library builds.
++XCOMM #########################################################################
++XCOMM  @(#)XView.lib	1.3 07 Jan 1992 SMI
++XCOMM  XView.lib for XView release 3.0.  Common commands for all library builds.
+ 
+ #ifdef BandAidCompiler
+ #include BandAidCompiler
+ #endif
+ install::
+-	$(MKDIRHIER) $(LIBRARY_DEST)
++	$(MKDIRHIER) $(DESTDIR)$(LIBRARY_DEST)
+ 
+ #if DebugLibXView
+ InstallLibraryNoBuild(${LIBTARGET}_d,$(LIBRARY_DEST))
+@@ -29,7 +29,7 @@ InstallSharedLibraryDataNoBuild(${LIBTAR
+ InstallSharedLibraryNoBuild(${LIBTARGET},${SOREV},$(LIBRARY_DEST))
+ #endif
+ 
+-InstallLibraryNoBuild(${LIBTARGET}, $(LIBRARY_DEST))
++InstallLibraryNoBuild(${LIBTARGET},$(LIBRARY_DEST))
+ SubdirLintLibraryBuild(${LIBTARGET},lint)
+ InstallLintLibrary(${LIBTARGET},$(LINT_LIBRARY_DEST))
+ 

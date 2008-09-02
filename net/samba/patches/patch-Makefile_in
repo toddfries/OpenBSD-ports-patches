@@ -1,0 +1,78 @@
+$OpenBSD: patch-Makefile_in,v 1.11 2008/07/11 11:40:33 brad Exp $
+--- Makefile.in.orig	Wed May 28 08:41:11 2008
++++ Makefile.in	Fri Jul  4 00:36:10 2008
+@@ -109,11 +109,13 @@ LOCKDIR = @lockdir@
+ # the directory where pid files go
+ PIDDIR = @piddir@
+ 
+-LIBSMBCLIENT=bin/libsmbclient.a @LIBSMBCLIENT_SHARED@
++LIBSMBCLIENT=bin/libsmbclient.a \
++	@LIBSMBCLIENT_SHARED@.$(LIBsmbclient_VERSION)
+ LIBSMBCLIENT_MAJOR=0
+ LIBSMBCLIENT_MINOR=1
+ 
+-LIBMSRPC=bin/libmsrpc.a @LIBMSRPC_SHARED@
++LIBMSRPC=bin/libmsrpc.a \
++	@LIBMSRPC_SHARED@.$(LIBmsrpc_VERSION)
+ LIBMSRPC_MAJOR=0
+ LIBMSRPC_MINOR=1
+ 
+@@ -125,12 +127,12 @@ LIBADDNS=bin/libaddns.a @LIBADDNS_SHARED@
+ LIBADDNS_MAJOR=0
+ LIBADDNS_MINOR=1
+ 
+-FLAGS1 = $(CFLAGS) @FLAGS1@ @SAMBA_CPPFLAGS@ $(CPPFLAGS)
++FLAGS1 = @SAMBA_CPPFLAGS@ $(CFLAGS) @FLAGS1@
+ FLAGS2 =
+ FLAGS3 =
+ FLAGS4 =
+ FLAGS5 = $(FLAGS1) $(FLAGS2) $(FLAGS3) $(FLAGS4)
+-FLAGS  = $(ISA) $(FLAGS5) -I$(srcdir)/lib -D_SAMBA_BUILD_=3
++FLAGS  = $(ISA) $(FLAGS5) -I$(srcdir)/lib -D_SAMBA_BUILD_=3 $(CPPFLAGS)
+ 
+ PASSWD_FLAGS = -DSMB_PASSWD_FILE=\"$(SMB_PASSWD_FILE)\" -DPRIVATE_DIR=\"$(PRIVATE_DIR)\"
+ PATH_FLAGS1 = -DCONFIGFILE=\"$(CONFIGFILE)\"  -DSBINDIR=\"$(SBINDIR)\"
+@@ -1152,11 +1154,10 @@ bin/libaddns.a: proto_exists $(LIBADDNS_OBJ)
+ 	@echo Linking libaddns non-shared library $@
+ 	@-$(AR) -rc $@ $(LIBADDNS_OBJ)
+ 
+-bin/libsmbclient.@SHLIBEXT@: proto_exists $(LIBSMBCLIENT_OBJ)
++bin/libsmbclient.@SHLIBEXT@.$(LIBsmbclient_VERSION): proto_exists $(LIBSMBCLIENT_OBJ)
+ 	@echo Linking libsmbclient shared library $@
+ 	@$(SHLD) $(LDSHFLAGS) -o $@ $(LIBSMBCLIENT_OBJ) $(LIBS) \
+-		$(KRB5LIBS) $(LDAP_LIBS) $(NSCD_LIBS) \
+-		@SONAMEFLAG@`basename $@`.$(LIBSMBCLIENT_MAJOR)
++		$(KRB5LIBS) $(LDAP_LIBS) $(NSCD_LIBS)
+ 
+ bin/libsmbclient.a: proto_exists $(LIBSMBCLIENT_OBJ)
+ 	@echo Linking libsmbclient non-shared library $@
+@@ -1172,10 +1173,9 @@ bin/libsmbsharemodes.a: proto_exists $(LIBSMBSHAREMODE
+ 	@echo Linking libsmbsharemodes non-shared library $@
+ 	@-$(AR) -rc $@ $(LIBSMBSHAREMODES_OBJ)
+ 
+-bin/libmsrpc.@SHLIBEXT@: proto_exists $(CAC_OBJ)
++bin/libmsrpc.@SHLIBEXT@.$(LIBmsrpc_VERSION): proto_exists $(CAC_OBJ)
+ 	@echo Linking libmsrpc shared library $@
+-	@$(SHLD) $(LDSHFLAGS) -o $@ $(CAC_OBJ) $(LIBS) \
+-	@SONAMEFLAG@`basename $@`.$(LIBMSRPC_MAJOR)
++	@$(SHLD) $(LDSHFLAGS) -o $@ $(CAC_OBJ) $(LIBS)
+ 
+ bin/libmsrpc.a: proto_exists $(CAC_OBJ)
+ 	@echo Linking libmsrpc non-shared library $@
+@@ -1623,14 +1623,14 @@ installswat: installdirs installmsg
+ 
+ installclientlib: installdirs libsmbclient
+ 	@$(SHELL) $(srcdir)/script/installdirs.sh $(INSTALLPERMS) $(DESTDIR) $(LIBDIR)
+-	-$(INSTALLLIBCMD_SH) bin/libsmbclient.@SHLIBEXT@ $(DESTDIR)$(LIBDIR)
++	-$(INSTALLLIBCMD_SH) bin/libsmbclient.@SHLIBEXT@.$(LIBsmbclient_VERSION) $(DESTDIR)$(LIBDIR)
+ 	-$(INSTALLLIBCMD_A) bin/libsmbclient.a $(DESTDIR)$(LIBDIR)
+ 	@$(SHELL) $(srcdir)/script/installdirs.sh $(INSTALLPERMS) $(DESTDIR) ${prefix}/include
+ 	-$(INSTALLCMD) $(srcdir)/include/libsmbclient.h $(DESTDIR)${prefix}/include
+ 
+ installlibmsrpc: installdirs libmsrpc
+ 	@$(SHELL) $(srcdir)/script/installdirs.sh $(INSTALLPERMS) $(DESTDIR) $(LIBDIR)
+-	-$(INSTALLLIBCMD_SH) bin/libmsrpc.@SHLIBEXT@ $(DESTDIR)$(LIBDIR)
++	-$(INSTALLLIBCMD_SH) bin/libmsrpc.@SHLIBEXT@.$(LIBmsrpc_VERSION) $(DESTDIR)$(LIBDIR)
+ 	-$(INSTALLLIBCMD_A) bin/libmsrpc.a $(DESTDIR)$(LIBDIR)
+ 	@$(SHELL) $(srcdir)/script/installdirs.sh $(INSTALLPERMS) $(DESTDIR) ${prefix}/include
+ 	-$(INSTALLCMD) $(srcdir)/include/libmsrpc.h $(DESTDIR)${prefix}/include

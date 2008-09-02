@@ -1,0 +1,35 @@
+$OpenBSD: patch-ddd_Makefile_in,v 1.5 2005/06/28 19:31:57 aanriot Exp $
+--- ddd/Makefile.in.orig	Sat Jun 11 21:14:20 2005
++++ ddd/Makefile.in	Sat Jun 11 21:15:42 2005
+@@ -484,8 +484,8 @@ SUFFIXES = .C .c .Y .L .txt .xbm .xbmxx 
+ 
+ 
+ # Shared data installation
+-dddrootdir = $(pkgdatadir)-$(VERSION)
+-dddappdir = $(pkgdatadir)-$(VERSION)/$(ddd)
++dddrootdir = $(pkgdatadir)
++dddappdir = $(pkgdatadir)/$(ddd)
+ 
+ # -----------------------------------------------------------------------------
+ # DDD Sources.
+@@ -2595,18 +2595,8 @@ configinfo.C: USERINFO.txt $(srcdir)/con
+ 	$(SHELL) $(srcdir)/config-info $(srcdir)/USERINFO.txt USERINFO.txt > $@~ && \
+ 	$(MV) $@~ $@
+ 
+-# If `~/.ddd_userinfo' exists, use this file as personal identification.
+-USERINFO.txt: userinfo$(EXEEXT)
+-	-(cat $$HOME/.ddd_userinfo 2> /dev/null || \
+-	./userinfo || echo '(unknown)') > $@~ && $(MV) $@~ $@
+-	@$(ECHO) ""
+-	@$(ECHO) "Please check your name and e-mail address:"
+-	@$(ECHO) ""
+-	@$(CAT) $@
+-	@$(ECHO) ""
+-	@$(ECHO) "This information will be compiled into $(DDD)."
+-	@$(ECHO) "If it is not correct, please edit $@ and re-compile."
+-	@$(ECHO) ""
++USERINFO.txt:
++	echo ${MAINTAINER} >$@
+ 
+ # EPS code stuff.
+ $(srcdir)/header.str: $(srcdir)/header.ps

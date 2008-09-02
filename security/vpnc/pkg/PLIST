@@ -1,0 +1,20 @@
+@comment $OpenBSD: PLIST,v 1.6 2008/04/04 21:41:27 okan Exp $
+@man man/man8/vpnc.8
+sbin/vpnc
+share/doc/vpnc/
+share/doc/vpnc/README
+share/examples/vpnc/
+@sample ${SYSCONFDIR}/vpnc/
+share/examples/vpnc/split.sh
+@mode 0755
+@sample ${SYSCONFDIR}/vpnc/split.sh
+@mode
+share/examples/vpnc/vpnc-script
+@mode 0755
+@sample ${SYSCONFDIR}/vpnc/vpnc-script
+@mode
+share/examples/vpnc/vpnc.conf
+@mode 0600
+@sample ${SYSCONFDIR}/vpnc/default.conf
+@mode
+share/examples/vpnc/vpnc.sh

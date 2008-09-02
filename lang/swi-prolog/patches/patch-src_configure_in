@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_configure_in,v 1.2 2007/01/27 17:35:46 espie Exp $
+--- src/configure.in.orig	Wed Jan 24 10:30:36 2007
++++ src/configure.in	Sat Jan 27 18:35:39 2007
+@@ -350,7 +350,7 @@ AC_TRY_LINK([
+ 	    [ static pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
+ 	      pthread_mutex_lock(&m);
+ 	      pthread_mutex_unlock(&m);
+-#if !(defined(_REENTRANT) || defined(_THREAD_SAFE))
++#if !(defined(_REENTRANT) || defined(_THREAD_SAFE) || defined(_POSIX_THREADS))
+   this should not be compiled
+ #endif
+ 	    ],

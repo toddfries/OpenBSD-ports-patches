@@ -1,0 +1,12 @@
+$OpenBSD: patch-fishmon_c,v 1.2 2002/12/25 11:03:19 wilfried Exp $
+--- fishmon.c.orig	Sat May 26 22:53:09 2001
++++ fishmon.c	Wed Dec 25 11:58:52 2002
+@@ -562,7 +562,7 @@ static void prepare_backbuffer(int solid
+     curr_time = time(NULL);
+     data = localtime(&curr_time);
+ 
+-    sprintf(buffer, "%s %02d-%s", weekday[data->tm_wday],
++    snprintf(buffer, sizeof(buffer), "%s %02d-%s", weekday[data->tm_wday],
+ 	    data->tm_mday, month[data->tm_mon]);
+ 
+     draw_string(2, 47, buffer);

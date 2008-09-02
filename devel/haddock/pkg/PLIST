@@ -1,0 +1,27 @@
+@comment $OpenBSD: PLIST,v 1.5 2007/07/21 17:25:43 kili Exp $
+bin/haddock
+share/doc/haddock/
+share/doc/haddock/ch01s03.html
+share/doc/haddock/ch03s02.html
+share/doc/haddock/ch03s03.html
+share/doc/haddock/ch03s04.html
+share/doc/haddock/ch03s05.html
+share/doc/haddock/ch03s09.html
+share/doc/haddock/deriving.html
+share/doc/haddock/fptools.css
+share/doc/haddock/hyperlinking.html
+share/doc/haddock/index.html
+share/doc/haddock/introduction.html
+share/doc/haddock/invoking.html
+share/doc/haddock/ix01.html
+share/doc/haddock/license.html
+share/doc/haddock/markup.html
+share/doc/haddock/module-attributes.html
+share/haddock-${V}/
+share/haddock-${V}/html/
+share/haddock-${V}/html/haddock-DEBUG.css
+share/haddock-${V}/html/haddock.css
+share/haddock-${V}/html/haddock.js
+share/haddock-${V}/html/haskell_icon.gif
+share/haddock-${V}/html/minus.gif
+share/haddock-${V}/html/plus.gif

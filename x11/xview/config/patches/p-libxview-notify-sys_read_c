@@ -1,0 +1,14 @@
+--- lib/libxview/notify/sys_read.c.orig	1993-06-29 07:18:01.000000000 +0200
++++ lib/libxview/notify/sys_read.c	2003-12-30 01:31:13.000000000 +0100
+@@ -15,7 +15,11 @@ static char     sccsid[] = "@(#)sys_read
+  */
+ 
+ #ifndef SVR4
++#ifndef __OpenBSD__
+ #include <syscall.h>
++#else
++#include <sys/syscall.h>
++#endif
+ #else SVR4
+ #include <sys/syscall.h>
+ #endif SVR4

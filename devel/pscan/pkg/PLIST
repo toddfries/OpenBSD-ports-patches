@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/11/06 06:30:32 bernd Exp $
+@conflict emboss-*
+bin/find_formats.sh
+bin/pscan
+share/examples/pscan/
+share/examples/pscan/test.c

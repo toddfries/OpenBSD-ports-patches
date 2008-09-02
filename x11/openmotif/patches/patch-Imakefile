@@ -1,0 +1,11 @@
+--- Imakefile.orig	Sat Jun 30 09:54:52 2007
++++ Imakefile	Sat Jun 30 09:55:15 2007
+@@ -90,7 +90,7 @@ XCOMM 
+ #ifdef UseInstalled
+ TESTS_IMAKE = $(IMAKE) -DUseInstalled
+ #else
+-TESTS_IMAKE = ../$(IMAKE)
++TESTS_IMAKE = $(IMAKE)
+ #endif
+ DIRS_TO_CREATE = $(USRLIBDIR) $(BINDIR) $(INCDIR) $(USRINCDIR) $(LIBDIR) $(XAPPLOADDIR)
+ CDE_DIRS_TO_CREATE = $(USRLIBDIR) $(BINDIR) $(PROJECTROOT)/share/include

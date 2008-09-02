@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_nsca_c,v 1.2 2007/09/05 20:28:44 sturm Exp $
+--- src/nsca.c.orig	Tue Jul  3 21:57:28 2007
++++ src/nsca.c	Sat Sep  1 08:29:23 2007
+@@ -26,7 +26,7 @@ static int server_port=DEFAULT_SERVER_PORT;
+ static char server_address[16]="0.0.0.0";
+ static int socket_timeout=DEFAULT_SOCKET_TIMEOUT;
+ 
+-static char config_file[MAX_INPUT_BUFFER]="nsca.cfg";
++static char config_file[MAX_INPUT_BUFFER]="%%SYSCONFDIR%%/nsca.cfg";
+ static char alternate_dump_file[MAX_INPUT_BUFFER]="/dev/null";
+ static char command_file[MAX_INPUT_BUFFER]="";
+ static char password[MAX_INPUT_BUFFER]="";

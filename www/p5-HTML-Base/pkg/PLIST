@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:49:51 espie Exp $
+${P5ARCH}/
+${P5ARCH}/HTML/
+${P5ARCH}/HTML/Base.pm
+@man man/man3p/HTML::Base.3p

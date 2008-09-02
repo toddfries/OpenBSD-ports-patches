@@ -1,0 +1,2 @@
+This package is part of the base plugins for gstreamer-${VERSION}.
+* pango     Pango-based text rendering and overlay

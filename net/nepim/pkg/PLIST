@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/06/18 10:22:29 jasper Exp $
+bin/nepim
+share/doc/nepim/
+share/doc/nepim/README

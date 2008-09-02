@@ -1,0 +1,17 @@
+$OpenBSD: patch-Makefile_in,v 1.2 2007/07/18 17:29:46 naddy Exp $
+--- Makefile.in.orig	Tue May 29 14:01:04 2007
++++ Makefile.in	Thu Jul 12 22:57:28 2007
+@@ -213,11 +213,11 @@ install-core: $(TARGETS)
+ 	-$(MKDIR) $(DESTDIR)$(CGIBIN_DIR)
+ 	-$(MKDIR) $(DESTDIR)$(HELP_DIR)
+ 	-$(MKDIR) $(DESTDIR)$(mandir)/man1
+-	-$(MKDIR) $(DESTDIR)$(mandir)/ja/man1
++	-$(MKDIR) $(DESTDIR)$(mandir)/ja_JP.EUC/man1
+ 	$(INSTALL_PROGRAM) $(TARGET) $(DESTDIR)$(bindir)/$(TARGET)
+ 	$(INSTALL_DATA) $(HELP_FILE) $(DESTDIR)$(HELP_DIR)/$(HELP_TARGET)
+ 	$(INSTALL_DATA) $(MAN1) $(DESTDIR)$(mandir)/man1/$(MAN1_TARGET)
+-	$(INSTALL_DATA) $(MAN1_JA) $(DESTDIR)$(mandir)/ja/man1/$(MAN1_TARGET)
++	$(INSTALL_DATA) $(MAN1_JA) $(DESTDIR)$(mandir)/ja_JP.EUC/man1/$(MAN1_TARGET)
+ 	targets="$(AUXBIN_TARGETS)"; for file in $$targets; \
+ 	do \
+ 		case $$file in \

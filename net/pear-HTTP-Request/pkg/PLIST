@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST,v 1.3 2007/03/22 22:48:04 robert Exp $
+pear/doc/
+@group daemon
+pear/doc/HTTP_Request/
+pear/doc/HTTP_Request/docs/
+pear/doc/HTTP_Request/docs/download-progress.php
+pear/doc/HTTP_Request/docs/example.php
+pear/lib/.registry/http_request.reg
+pear/lib/HTTP/
+pear/lib/HTTP/Request/
+pear/lib/HTTP/Request.php
+pear/lib/HTTP/Request/Listener.php

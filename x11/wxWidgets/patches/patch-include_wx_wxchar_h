@@ -1,0 +1,12 @@
+$OpenBSD: patch-include_wx_wxchar_h,v 1.3 2008/01/22 20:31:11 steven Exp $
+--- include/wx/wxchar.h.orig	Wed Nov 21 13:41:54 2007
++++ include/wx/wxchar.h	Sun Jan  6 01:03:17 2008
+@@ -451,6 +451,8 @@
+         #endif
+     #endif
+ 
++    #define wxNEED_WX_MBSTOWCS
++
+     #ifdef wxNEED_WX_MBSTOWCS
+         /* even though they are defined and "implemented", they are bad and just
+            stubs so we need our own - we need these even in ANSI builds!! */

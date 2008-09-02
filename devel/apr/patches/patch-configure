@@ -1,0 +1,60 @@
+$OpenBSD: patch-configure,v 1.8 2007/10/30 16:47:50 steven Exp $
+--- configure.orig	Tue Sep  4 03:42:02 2007
++++ configure	Tue Oct 30 17:41:25 2007
+@@ -4326,6 +4326,11 @@ if test "x$apr_preload_done" != "xyes" ; then
+         ;;
+     *-openbsd*)
+ 
++  if test -z "$apr_lock_method"; then
++    test "x$silent" != "xyes" && echo "  setting apr_lock_method to \"USE_FLOCK_SERIALIZE\""
++    apr_lock_method="USE_FLOCK_SERIALIZE"
++  fi
++
+   if test "x$CPPFLAGS" = "x"; then
+     test "x$silent" != "xyes" && echo "  setting CPPFLAGS to \"-D_POSIX_THREADS\""
+     CPPFLAGS="-D_POSIX_THREADS"
+@@ -23954,7 +23959,7 @@ fi
+ LIBTOOL_DEPS="$ac_aux_dir/ltmain.sh"
+ 
+ # Always use our own libtool.
+-LIBTOOL='$(SHELL) $(apr_builddir)/libtool'
++#LIBTOOL='$(SHELL) $(apr_builddir)/libtool'
+ 
+ # Prevent multiple expansion
+ 
+@@ -26156,7 +26161,7 @@ if test "${apr_cv_pthreads_lib+set}" = set; then
+ else
+ 
+   apr_ptc_libs=$LIBS
+-  for lib in -lpthread -lpthreads -lc_r; do
++  for lib in -pthread -lpthread -lpthreads -lc_r; do
+     LIBS="$apr_ptc_libs $lib"
+ 
+ if test "$cross_compiling" = yes; then
+@@ -26714,7 +26719,7 @@ if test "${apr_cv_pthreads_lib+set}" = set; then
+ else
+ 
+   apr_ptc_libs=$LIBS
+-  for lib in -lpthread -lpthreads -lc_r; do
++  for lib in -pthread -lpthread -lpthreads -lc_r; do
+     LIBS="$apr_ptc_libs $lib"
+ 
+ if test "$cross_compiling" = yes; then
+@@ -39676,7 +39681,7 @@ for ac_spec in func:semget func:semctl define:SEM_UNDO
+ done
+ if test ".$ac_rc" = .yes; then
+     :
+-    hassysvser="1"
++    hassysvser="0"
+ else
+     :
+     hassysvser="0"
+@@ -43711,7 +43716,7 @@ esac
+ 
+ 
+ 
+-                                                            ac_config_files="$ac_config_files Makefile include/apr.h build/apr_rules.mk build/pkg/pkginfo apr-$APR_MAJOR_VERSION-config:apr-config.in apr.pc"
++                                                            ac_config_files="$ac_config_files Makefile include/apr.h build/apr_rules.mk build/pkg/pkginfo apr-$APR_MAJOR_VERSION-config:apr-config.in apr.pc apr-mt.pc"
+ 
+ 
+ if test -d $srcdir/test; then

@@ -1,0 +1,26 @@
+--- cs/csparse.c.orig	Fri Feb  3 03:17:41 2006
++++ cs/csparse.c	Mon May  8 16:54:19 2006
+@@ -1706,6 +1706,7 @@ static NEOERR *eval_expr_string(CSPARSE 
+ {
+   char *s1, *s2;
+   int out;
++  size_t need;
+ 
+   result->op_type = CS_TYPE_NUM;
+   s1 = arg_eval (parse, arg1);
+@@ -1780,11 +1781,12 @@ static NEOERR *eval_expr_string(CSPARSE 
+       case CS_OP_ADD:
+ 	result->op_type = CS_TYPE_STRING;
+ 	result->alloc = 1;
+-	result->s = (char *) calloc ((strlen(s1) + strlen(s2) + 1), sizeof(char));
++	need = strlen(s1) + strlen(s2) + 1;
++	result->s = (char *) calloc (need, sizeof(char));
+ 	if (result->s == NULL)
+ 	  return nerr_raise (NERR_NOMEM, "Unable to allocate memory to concatenate strings in expression: %s + %s", s1, s2);
+-	strcpy(result->s, s1);
+-	strcat(result->s, s2);
++	strlcpy(result->s, s1, need);
++	strlcat(result->s, s2, need);
+ 	break;
+       default:
+ 	ne_warn ("Unsupported op %s in eval_expr_string", expand_token_type(op, 1));

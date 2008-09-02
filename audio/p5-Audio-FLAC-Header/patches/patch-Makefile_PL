@@ -1,0 +1,14 @@
+$OpenBSD: patch-Makefile_PL,v 1.4 2007/09/18 18:26:52 naddy Exp $
+--- Makefile.PL.orig	Sat Jan  6 00:48:45 2007
++++ Makefile.PL	Tue Sep 18 17:13:30 2007
+@@ -10,7 +10,9 @@ all_from('Header.pm');
+ if ($^O =~ /win32/i) {
+ 	cc_lib_links('FLAC_static');
+ } else {
+-	cc_lib_links('FLAC');
++	cc_inc_paths($ENV{'INCPATH'});
++	cc_lib_paths($ENV{'LIBPATH'});
++	cc_lib_links('FLAC', 'ogg');
+ 	cc_optimize_flags('-Wall');
+ }
+ 

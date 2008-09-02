@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST-web,v 1.1 2007/11/11 01:37:54 jakemsr Exp $
+@comment lib/mozilla/
+lib/mozilla-plugins/
+lib/mozilla-plugins/libvlcplugin.so
+@comment lib/mozilla/plugins/
+@comment lib/mozilla/plugins/libvlcplugin.so

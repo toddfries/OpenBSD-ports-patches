@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 17:54:17 espie Exp $
+bin/xtar
+lib/X11/app-defaults/XTar
+lib/X11/xtar/
+lib/X11/xtar/xtar.doc
+@man man/cat1/xtar.0

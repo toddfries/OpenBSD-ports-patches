@@ -1,0 +1,5 @@
+@comment $OpenBSD: PFRAG.shared-main,v 1.1 2007/01/07 19:13:49 espie Exp $
+@lib lib/libe2p.so.${LIBe2p_VERSION}
+@lib lib/libext2fs.so.${LIBext2fs_VERSION}
+@lib lib/libext2fs_com_err.so.${LIBext2fs_com_err_VERSION}
+@lib lib/libss.so.${LIBss_VERSION}

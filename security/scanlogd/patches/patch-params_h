@@ -1,0 +1,12 @@
+$OpenBSD: patch-params_h,v 1.2 2007/05/26 01:12:02 aanriot Exp $
+--- params.h.orig	Sun Mar  5 11:13:56 2006
++++ params.h	Fri May 25 19:32:26 2007
+@@ -13,7 +13,7 @@
+  * used for any other purpose (that is, don't use "nobody" here).  You can
+  * #undef this to let scanlogd run as root, but this is not recommended.
+  */
+-#define SCANLOGD_USER			"scanlogd"
++#define SCANLOGD_USER			"_scanlogd"
+ 
+ /*
+  * An empty directory to chroot to.  The directory and its parent directories

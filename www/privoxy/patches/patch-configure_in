@@ -1,0 +1,28 @@
+$OpenBSD: patch-configure_in,v 1.3 2008/04/04 02:21:29 merdely Exp $
+--- configure.in.orig	Wed Apr  2 15:32:21 2008
++++ configure.in	Wed Apr  2 15:33:45 2008
+@@ -806,24 +806,6 @@ fi
+ AC_SUBST(WDUMP)
+ AC_SUBST(DB2HTML)
+ 
+-dnl If we use rpm, we need to check where %_topdir is
+-AC_CHECK_PROGS(RPMBIN,rpm,false)
+-if test $RPMBIN != false; then
+-		RPM_BASE=`rpm --eval "%{_topdir}"`
+-		if test "$RPM_BASE" = ""; then
+-			RPM_BASE=/usr/src/redhat
+-		fi
+-fi
+-AC_SUBST(RPM_BASE)
+-
+-dnl Check for jade, so we can build the documentation
+-AC_CHECK_PROGS(JADEBIN,jade openjade,false)
+-AC_SUBST(JADEBIN)
+-
+-dnl Check for man2html for docs.
+-AC_CHECK_PROGS(MAN2HTML,man2html,false)
+-AC_SUBST(MAN2HTML)
+-
+ dnl Set doc status flag for conditional content inclusions
+ DOC_STATUS=p-not-stable
+ if  test $CODE_STATUS = stable; then

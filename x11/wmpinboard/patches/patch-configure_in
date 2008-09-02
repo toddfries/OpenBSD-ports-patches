@@ -1,0 +1,13 @@
+$OpenBSD: patch-configure_in,v 1.2 2002/12/25 11:16:27 wilfried Exp $
+--- configure.in.orig	Thu Apr 13 14:40:33 2000
++++ configure.in	Wed Dec 25 12:03:38 2002
+@@ -10,9 +10,6 @@ CFLAGS=`echo "x $CFLAGS"|sed 's/^x //; s
+ AC_ISC_POSIX
+ AC_LANG_C
+ 
+-dnl use POSIX and BSD stuff where available
+-CFLAGS="$CFLAGS -D_BSD_SOURCE -D_POSIX_SOURCE=199506L"
+-
+ dnl additional compile flags when using gcc
+ if test x$GCC = xyes; then
+   CFLAGS="$CFLAGS -Wall -ansi -pedantic"

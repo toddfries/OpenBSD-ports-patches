@@ -1,0 +1,15 @@
+--- Makefile.orig	Wed Sep 16 15:56:29 1998
++++ Makefile	Tue Sep 29 18:40:22 1998
+@@ -1,7 +1,7 @@
+-all:	idiff
++CFLAGS += -g
++
++PROG = idiff
+ 
+-idiff:	idiff.c
+-	$(CC) idiff.c -o idiff
++all:	idiff
+ 
+-clean:
+-	rm -f *.o a.out
++.include <bsd.prog.mk>

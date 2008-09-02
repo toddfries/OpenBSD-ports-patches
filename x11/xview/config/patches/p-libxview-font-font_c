@@ -1,0 +1,13 @@
+--- lib/libxview/font/font.c.orig	1993-06-29 07:15:01.000000000 +0200
++++ lib/libxview/font/font.c	2003-12-30 01:31:12.000000000 +0100
+@@ -67,6 +67,10 @@ Xv_private char *xv_font_regular_cmdline
+ Xv_private char *xv_font_scale_cmdline();
+ Xv_private char *xv_font_scale();
+ 
++static int font_setup_defaults();
++static int font_construct_name();
++static int font_init_create_attrs();
++
+ /*
+  * delimiters
+  */

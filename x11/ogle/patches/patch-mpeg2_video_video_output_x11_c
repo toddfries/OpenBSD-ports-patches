@@ -1,0 +1,34 @@
+$OpenBSD: patch-mpeg2_video_video_output_x11_c,v 1.8 2003/11/13 18:46:47 espie Exp $
+--- mpeg2_video/video_output_x11.c.orig	2003-11-04 13:02:10.000000000 +0100
++++ mpeg2_video/video_output_x11.c	2003-11-06 07:34:50.000000000 +0100
+@@ -1377,6 +1377,12 @@ void check_x_events(yuv_image_t *current
+ 	    break;
+ 	  }
+ 	}
++	if (keysym == XK_Z) {
++	  subtitle_pos[subtitle_index]++;
++	}
++	if (keysym == XK_X) {
++		subtitle_pos[subtitle_index]--;
++	}
+       }
+       break;
+     case KeyRelease:
+@@ -2067,6 +2073,8 @@ static void draw_win_x11(window_info *dw
+ 	      window.video_area.height);
+     XSync(mydisplay, False);
+   }
++  if (window.win_state == WINDOW_STATE_FULLSCREEN)
++  	XForceScreenSaver(mydisplay, ScreenSaverReset);
+ }
+ 
+ 
+@@ -2154,6 +2162,8 @@ static void draw_win_xv(window_info *dwi
+        It waits for an XShmCompletionEvent */
+     XIfEvent(mydisplay, &ev, predicate, NULL);
+   }
++  if (window.win_state == WINDOW_STATE_FULLSCREEN)
++  	XForceScreenSaver(mydisplay, ScreenSaverReset);
+ #endif /* HAVE_XV */
+ }
+ 

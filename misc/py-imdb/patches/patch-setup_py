@@ -1,0 +1,13 @@
+$OpenBSD: patch-setup_py,v 1.4 2005/03/25 09:22:41 xsa Exp $
+--- setup.py.orig	Thu Mar 24 17:14:44 2005
++++ setup.py	Fri Mar 25 10:10:41 2005
+@@ -19,7 +19,8 @@ from distutils.core import setup, Extens
+ # interface to the web database is always available.
+ DO_LOCAL = 1
+ # Install some very simple example scripts.
+-DO_SCRIPTS = 1
++#DO_SCRIPTS = 1
++DO_SCRIPTS = 0
+ 
+ 
+ # --- NOTHING TO CONFIGURE BELOW.

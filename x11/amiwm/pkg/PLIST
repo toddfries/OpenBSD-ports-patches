@@ -1,0 +1,16 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 19:26:27 espie Exp $
+bin/amiwm
+bin/executecmd
+bin/ppmtoinfo
+bin/requestchoice
+@man man/man1/amiwm.1
+share/amiwm/
+share/amiwm/Xinitrc
+share/amiwm/Xsession
+share/amiwm/Xsession2
+share/amiwm/amiwm-init
+share/amiwm/def_tool.info
+share/amiwm/magicwb.map
+share/amiwm/schwartz.map
+share/amiwm/system.amiwmrc
+share/amiwm/system.map

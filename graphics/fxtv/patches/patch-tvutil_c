@@ -1,0 +1,21 @@
+$OpenBSD: patch-tvutil_c,v 1.4 2003/03/01 03:28:41 pvalchev Exp $
+--- tvutil.c.orig	Sun Oct 22 20:43:46 2000
++++ tvutil.c	Fri Feb 28 19:55:00 2003
+@@ -114,7 +114,7 @@ void CleanupChildFileDesc()
+ #elif defined(__NetBSD__)
+     int    mib[2] = { CTL_KERN, OPEN_MAX };
+ #elif defined(__OpenBSD__)
+-    int    mib[2] = { CTL_KERN, OPEN_MAX };
++    int    mib[2] = { CTL_KERN, KERN_MAXFILES };
+ #endif
+     int    i;
+     size_t len;
+@@ -399,7 +399,7 @@ void TVUTILPipeSetup( char            *s
+ 
+         CleanupChildFileDesc();
+         if ( shell_cmd != NULL ) 
+-            execl( "/bin/sh", "sh", "-c", shell_cmd, NULL );
++            execl( "/bin/sh", "sh", "-c", shell_cmd, (void *)NULL );
+         else 
+             execvp( shell_cmd2[0], shell_cmd2 );
+         perror( "PipeSetup: exec failed" );

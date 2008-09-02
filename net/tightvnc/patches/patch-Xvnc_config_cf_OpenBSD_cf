@@ -1,0 +1,47 @@
+$OpenBSD: patch-Xvnc_config_cf_OpenBSD_cf,v 1.3 2005/05/27 23:17:06 millert Exp $
+--- Xvnc/config/cf/OpenBSD.cf.orig	Sun Jun 11 06:00:51 2000
++++ Xvnc/config/cf/OpenBSD.cf	Fri May 27 15:48:16 2005
+@@ -67,7 +67,7 @@ XCOMM operating system:  OSName (OSMajor
+ #if defined(UseInstalled) && (!defined(XF86LinkKit) || !XF86LinkKit)
+ #define DefaultCCOptions 	/**/
+ #else
+-#define DefaultCCOptions 	-ansi -Dasm=__asm
++#define DefaultCCOptions 	-Dasm=__asm
+ #endif
+ 
+ #define GccGasOption 		-DGCCUSESGAS
+@@ -105,6 +105,25 @@ XCOMM operating system:  OSName (OSMajor
+ # endif
+ #endif
+ 
++#if defined(SparcArchitecture)
++# define ServerOSDefines       -DDDXOSINIT
++# if defined(Sparc64Architecture)
++#  define ServerExtraDefines   GccGasOption -D_XSERVER64
++# else
++#  define ServerExtraDefines   GccGasOption
++# endif
++# define PexDynamicModule      NO
++# define XieDynamicModule      NO
++#endif
++
++#if defined(macppcArchitecture)
++# define ServerOSDefines       -DDDXOSINIT
++# define ServerExtraDefines    GccGasOption -D__macppc__
++# define PexDynamicModule      NO
++# define XieDynamicModule      NO
++# define XkbServerDefines      -DXKB_ALWAYS_USES_SOFT_REPEAT
++#endif
++
+ #define StandardDefines	-DCSRG_BASED
+ #define XawI18nDefines	-DUSE_XWCHAR_STRING -DUSE_XMBTOWC
+ 
+@@ -227,7 +246,7 @@ install.man:: 								@@\
+ 
+ # define XF86Contrib
+ # include <xf86.rules>
+-# define BuildServer		NO
++# define BuildServer		YES
+ # define XnestServer		NO
+ # define XVirtualFramebufferServer	NO
+ 

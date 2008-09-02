@@ -1,0 +1,21 @@
+$OpenBSD: patch-unix_unix_c,v 1.2 2006/07/30 17:33:40 naddy Exp $
+--- unix/unix.c.orig	Tue May 30 00:35:00 2006
++++ unix/unix.c	Sun Jul 30 19:09:14 2006
+@@ -338,7 +338,7 @@ ulg filetime(f, a, n, t)
+   struct stat s;        /* results of stat() */
+   /* converted to pointer from using FNMAX - 11/8/04 EG */
+   char *name;
+-  int len = strlen(f);
++  size_t len = strlen(f);
+ 
+   if (f == label) {
+     if (a != NULL)
+@@ -438,7 +438,7 @@ int set_extra_field(z, z_utim)
+ {
+   struct stat s;
+   char *name;
+-  int len = strlen(z->name);
++  size_t len = strlen(z->name);
+ 
+   /* For the full sized UT local field including the UID/GID fields, we
+    * have to stat the file again. */

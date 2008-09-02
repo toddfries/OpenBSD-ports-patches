@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:01:07 espie Exp $
+include/scintilla/
+include/scintilla/Accessor.h
+include/scintilla/KeyWords.h
+include/scintilla/Platform.h
+include/scintilla/PropSet.h
+include/scintilla/SString.h
+include/scintilla/SciLexer.h
+include/scintilla/Scintilla.h
+include/scintilla/ScintillaWidget.h
+include/scintilla/WindowAccessor.h
+lib/libscintilla.a
+lib/libscintilla_lexers.a
+%%SHARED%%

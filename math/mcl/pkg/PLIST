@@ -1,0 +1,121 @@
+@comment $OpenBSD: PLIST,v 1.7 2006/04/05 08:58:44 bernd Exp $
+bin/clmclose
+bin/clmdist
+bin/clmformat
+bin/clmimac
+bin/clminfo
+bin/clmmate
+bin/clmmeet
+bin/clmorder
+bin/clmresidue
+bin/mcl
+bin/mclpipeline
+bin/mcx
+bin/mcxarray
+bin/mcxassemble
+bin/mcxconvert
+bin/mcxdump
+bin/mcxload
+bin/mcxmap
+bin/mcxsubs
+@man man/man1/clmclose.1
+@man man/man1/clmdist.1
+@man man/man1/clmformat.1
+@man man/man1/clmimac.1
+@man man/man1/clminfo.1
+@man man/man1/clmmate.1
+@man man/man1/clmmeet.1
+@man man/man1/clmorder.1
+@man man/man1/clmresidue.1
+@man man/man1/mcl.1
+@man man/man1/mclpipeline.1
+@man man/man1/mcx.1
+@man man/man1/mcxarray.1
+@man man/man1/mcxassemble.1
+@man man/man1/mcxconvert.1
+@man man/man1/mcxdump.1
+@man man/man1/mcxload.1
+@man man/man1/mcxmap.1
+@man man/man1/mcxsubs.1
+@man man/man5/mcxio.5
+@man man/man7/mclfamily.7
+@man man/man7/mclfaq.7
+@man man/man7/mclindex.7
+share/doc/mcl/
+share/doc/mcl/clmclose.html
+share/doc/mcl/clmclose.ps
+share/doc/mcl/clmdist.html
+share/doc/mcl/clmdist.ps
+share/doc/mcl/clmformat.html
+share/doc/mcl/clmformat.ps
+share/doc/mcl/clmimac.html
+share/doc/mcl/clmimac.ps
+share/doc/mcl/clminfo.html
+share/doc/mcl/clminfo.ps
+share/doc/mcl/clmmate.html
+share/doc/mcl/clmmate.ps
+share/doc/mcl/clmmeet.html
+share/doc/mcl/clmmeet.ps
+share/doc/mcl/clmorder.html
+share/doc/mcl/clmorder.ps
+share/doc/mcl/clmresidue.html
+share/doc/mcl/clmresidue.ps
+share/doc/mcl/index.html
+share/doc/mcl/mcl.html
+share/doc/mcl/mcl.ps
+share/doc/mcl/mcl.txt
+share/doc/mcl/mclfamily.html
+share/doc/mcl/mclfamily.ps
+share/doc/mcl/mclfaq.html
+share/doc/mcl/mclfaq.ps
+share/doc/mcl/mclfaq.txt
+share/doc/mcl/mclindex.ps
+share/doc/mcl/mclmcl.txt
+share/doc/mcl/mclpipeline.html
+share/doc/mcl/mclpipeline.ps
+share/doc/mcl/mcx.html
+share/doc/mcl/mcx.ps
+share/doc/mcl/mcxarray.html
+share/doc/mcl/mcxarray.ps
+share/doc/mcl/mcxassemble.html
+share/doc/mcl/mcxassemble.ps
+share/doc/mcl/mcxconvert.html
+share/doc/mcl/mcxconvert.ps
+share/doc/mcl/mcxdump.html
+share/doc/mcl/mcxdump.ps
+share/doc/mcl/mcxio.html
+share/doc/mcl/mcxio.ps
+share/doc/mcl/mcxload.html
+share/doc/mcl/mcxload.ps
+share/doc/mcl/mcxmap.html
+share/doc/mcl/mcxmap.ps
+share/doc/mcl/mcxsubs.html
+share/doc/mcl/mcxsubs.ps
+share/doc/mcl/minimcl
+share/examples/mcl/
+share/examples/mcl/data.abc.hdr
+share/examples/mcl/data.abc.map
+share/examples/mcl/data.abc.raw
+share/examples/mcl/data.hdr
+share/examples/mcl/data.raw
+share/examples/mcl/data.tab
+share/examples/mcl/falkner.mci
+share/examples/mcl/falkner.ps
+share/examples/mcl/fznyy.mci
+share/examples/mcl/fznyy.tab
+share/examples/mcl/lattice.mci
+share/examples/mcl/matula.mci
+share/examples/mcl/proteins.mci
+share/examples/mcl/seven.mci
+share/examples/mcl/small.map
+share/examples/mcl/small.mci
+share/examples/mcl/small.png
+share/examples/mcl/small.ps
+share/examples/mcl/small.tab
+share/examples/mcl/small64.mci
+share/examples/mcl/tiny-min.mci
+share/examples/mcl/tiny-nil.mci
+share/examples/mcl/tiny-nilnine.mci
+share/examples/mcl/tiny-ninenil.mci
+share/examples/mcl/tiny-one.mci
+share/examples/mcl/tiny-zero.mci

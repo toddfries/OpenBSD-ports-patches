@@ -1,0 +1,32 @@
+$OpenBSD: patch-Makefile_PL,v 1.2 2003/02/16 20:21:12 margarida Exp $
+--- Makefile.PL.orig	Sat Jan  4 04:44:21 2003
++++ Makefile.PL	Sun Feb 16 19:40:24 2003
+@@ -21,8 +21,8 @@ foreach (@ARGV) {
+ }
+ my $opt_prefix  = defined($vars{'PREFIX'}) ?
+ 			"-prefix $vars{'PREFIX'}" : "";
+-my $opt_binpath = defined($vars{'INSTALLSCRIPT'}) ?
+-			"-prefix $vars{'INSTALLSCRIPT'}" : "";
++my $opt_binpath = defined($vars{'INSTALLBIN'}) ?
++			"-binpath $vars{'INSTALLBIN'}" : "";
+ my $opt_libpath = defined($vars{'LIB'}) ?
+ 			"-libpath $vars{'LIB'}" :
+ 		  defined($vars{'INSTALLSITELIB'}) ?
+@@ -30,7 +30,7 @@ my $opt_libpath = defined($vars{'LIB'}) 
+ 		  defined($vars{'INSTALLPRIVLIB'}) ?
+ 			"-libpath $vars{'INSTALLPRIVLIB'}" : "";
+ my $opt_manpath = defined($vars{'INSTALLMAN1DIR'}) ?
+-			"-prefix $vars{'INSTALLMAN1DIR'}" : "";
++			"-manpath $vars{'INSTALLMAN1DIR'}" : "";
+    $opt_manpath =~ s/man1$//;
+ 
+ my $instme_args = "$opt_prefix $opt_binpath $opt_libpath $opt_manpath";
+@@ -64,7 +64,7 @@ default: _FORCE
+ 	\$(CHMOD) -R a+r,a+X .
+ 
+ install: _FORCE
+-	\$(PERL) \$(INSTALLPRG) -batch $instme_args
++	\$(PERL) \$(INSTALLPRG) -batch $instme_args -docpath $vars{'PREFIX'}/share/doc/mhonarc
+ 
+ install-ask: _FORCE
+ 	\$(PERL) \$(INSTALLPRG) $instme_args

@@ -1,0 +1,29 @@
+$OpenBSD: patch-mpeg2_video_spu_mixer_c,v 1.4 2003/11/13 18:46:47 espie Exp $
+--- mpeg2_video/spu_mixer.c.orig	2003-10-20 22:28:27.000000000 +0200
++++ mpeg2_video/spu_mixer.c	2003-11-06 07:34:50.000000000 +0100
+@@ -45,6 +45,8 @@
+ 
+ 
+ 
++int subtitle_pos[150];
++int subtitle_index = 0;
+ 
+ #ifdef DEBUG
+ #define GETBYTES(a,b) getbytes(a,b)
+@@ -966,6 +968,7 @@ static void decode_display_data(spu_hand
+   y = 0;
+ 
+   DPRINTF(5, "vlc decoding\n");
++  subtitle_index = spu_info->y_start / 64;
+   while((fieldoffset[1] < spu_info->DCSQT_offset) && (y < spu_info->height)) {
+     unsigned int vlc;
+     unsigned int length;
+@@ -1031,7 +1034,7 @@ static void decode_display_data(spu_hand
+ #define MIN(x,y) (((x) < (y)) ? (x) : (y))
+ #endif
+     {
+-      const unsigned int line_y = (y + spu_info->y_start) * line_stride;
++      const unsigned int line_y = (y + spu_info->y_start+subtitle_pos[subtitle_index]) * line_stride;
+       // (width * bpp) == line_stride (for rgb or yuv)
+       
+       // bpp == 1

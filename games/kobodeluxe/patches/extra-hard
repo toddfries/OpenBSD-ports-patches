@@ -1,0 +1,10 @@
+--- manage.cpp.orig	Wed Dec  5 11:38:05 2007
++++ manage.cpp	Wed Dec  5 11:38:42 2007
+@@ -584,7 +584,6 @@ void _manage::add_score(int sc)
+ 		if(score >= bonus_next)
+ 		{
+ 			bonus_next += game.bonus_every;
+-			ships++;
+ 			ships_changed = 1;
+ 			flush_ships_count = 50;
+ 			sound.ui_oneup();

@@ -1,0 +1,28 @@
+$OpenBSD: patch-Makefile_in_in,v 1.1 2007/09/18 18:56:03 aanriot Exp $
+--- Makefile.in.in.orig	Mon Jan 31 03:54:47 2005
++++ Makefile.in.in	Mon Oct 10 21:36:19 2005
+@@ -429,7 +429,7 @@ install-arch-dep: mkdir
+ 	     do (cd $${subdir} && $(RM) -r RCS CVS SCCS \#* *~) ; done ; \
+ 	else true; fi
+ #ifdef PDUMP
+-	${INSTALL_DATA} src/${PROGNAME}.dmp ${bindir}/${PROGNAME}-${version}-`src/${PROGNAME} -sd`.dmp
++	${INSTALL_DATA} src/${PROGNAME}-${version}.dmp ${bindir}/${PROGNAME}-${version}.dmp
+ #endif
+ #ifdef WIN32_NATIVE
+ 	${INSTALL_PROGRAM} src/${PROGNAME} ${bindir}/${PROGNAME}
+@@ -494,9 +494,14 @@ install-arch-indep: mkdir info
+ 	  done ; \
+ 	fi
+ 	cd ${srcdir}/etc && \
+-	  for page in xemacs etags ctags gnuserv gnuclient gnuattach gnudoit; do \
++	  for page in xemacs gnuserv gnuclient gnuattach gnudoit; do \
+ 	    ${INSTALL_DATA} ${srcdir}/etc/$${page}.1 ${mandir}/$${page}${manext} ; \
+ 	    chmod 0644 ${mandir}/$${page}${manext} ; \
++	  done
++	cd ${srcdir}/etc && \
++	  for page in etags ctags; do \
++	    ${INSTALL_DATA} ${srcdir}/etc/$${page}.1 ${mandir}/xemacs-$${page}${manext} ; \
++	   chmod 0644 ${mandir}/xemacs-$${page}${manext} ; \
+ 	  done
+ 	@echo "If you would like to save approximately 2M of disk space, do"
+ 	@echo "make gzip-el"

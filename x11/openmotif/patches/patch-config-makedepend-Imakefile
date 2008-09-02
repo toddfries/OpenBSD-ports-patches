@@ -1,0 +1,9 @@
+--- config/makedepend/Imakefile.orig	Sat Jan  5 16:20:56 2002
++++ config/makedepend/Imakefile	Sat Jun 30 10:25:11 2007
+@@ -89,4 +89,6 @@ all::
+ 	$(CP) ProgramTargetName(makedepend) /
+ #endif
+ 
++#if defined(XFree86Version) && XFree86Version < 4000
+ InstallLinkKitNamedProg(makedepend,makedepend,$(LINKKITDIR)/config/makedepend)
++#endif

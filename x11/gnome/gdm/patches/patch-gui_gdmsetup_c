@@ -1,0 +1,12 @@
+$OpenBSD: patch-gui_gdmsetup_c,v 1.4 2007/11/27 20:26:13 jasper Exp $
+--- gui/gdmsetup.c.orig	Mon Oct 15 23:42:40 2007
++++ gui/gdmsetup.c	Sat Oct 27 17:09:35 2007
+@@ -5468,7 +5468,7 @@ install_theme_file (gchar *filename, GtkListStore *sto
+ 		/* HACK! */
+ 		argv[0] = chown;
+ 		argv[1] = "-R";
+-		argv[2] = "root:root";
++		argv[2] = "root:wheel";
+ 		argv[3] = quoted;
+ 		argv[4] = NULL;
+ 		simple_spawn_sync (argv);

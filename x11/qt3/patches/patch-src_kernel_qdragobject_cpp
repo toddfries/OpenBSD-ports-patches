@@ -1,0 +1,20 @@
+$OpenBSD: patch-src_kernel_qdragobject_cpp,v 1.3 2007/03/31 22:49:46 espie Exp $
+--- src/kernel/qdragobject.cpp.orig	Thu Oct 19 16:25:12 2006
++++ src/kernel/qdragobject.cpp	Sat Mar 31 14:51:24 2007
+@@ -893,6 +893,16 @@ bool QTextDrag::decode( const QMimeSource* e, QString&
+ {
+     if(!e)
+ 	return FALSE;
++        
++    // when subtype is not specified, try text/plain first, otherwise this may read
++    // things like text/x-moz-url even though better targets are available
++    if( subtype.isNull()) {
++        QCString subtmp = "plain";
++        if( decode( e, str, subtmp )) {
++            subtype = subtmp;
++            return true;
++        }
++    }
+ 
+     if ( e->cacheType == QMimeSource::Text ) {
+ 	str = *e->cache.txt.str;

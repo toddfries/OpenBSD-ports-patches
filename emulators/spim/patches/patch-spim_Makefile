@@ -1,0 +1,43 @@
+$OpenBSD: patch-spim_Makefile,v 1.2 2006/11/09 07:01:47 kevlo Exp $
+--- spim/Makefile.orig	Tue Aug 29 02:23:19 2006
++++ spim/Makefile	Thu Nov  9 12:08:01 2006
+@@ -45,6 +45,8 @@
+ CPU_DIR = ../CPU
+ VPATH = src:$(CPU_DIR)
+ 
++PREFIX = /usr/local
++
+ # Path of directory that contains SPIM tests:
+ TEST_DIR = ../Tests
+ 
+@@ -57,10 +59,10 @@ DOC_DIR = ../Documentation
+ BIN_DIR = /usr/local/bin
+ 
+ # Full path for the directory that will hold the exception handler:
+-EXCEPTION_DIR = /usr/local/lib
++EXCEPTION_DIR = $(PREFIX)/share/spim
+ 
+ # Full path for the directory that will hold the man files:
+-MAN_DIR = /usr/man/mann
++MAN_DIR = $(PREFIX)/man/man1
+ 
+ 
+ # If you have flex, use it instead of lex.  If you use flex, define this
+@@ -97,7 +99,7 @@ CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g 
+ YFLAGS = -d --file-prefix=y
+ YCFLAGS =
+ LDFLAGS = -lm
+-CSH = bash
++CSH = sh
+ 
+ # lex.yy.c is usually compiled with -O to speed it up.
+ 
+@@ -174,8 +176,6 @@ clean:
+ 	rm -f spim spim.exe *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
+ 
+ install: spim
+-	install -c -s  spim $(BIN_DIR)
+-	install -c -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)
+ 
+ install-man:
+ 	install -c -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)

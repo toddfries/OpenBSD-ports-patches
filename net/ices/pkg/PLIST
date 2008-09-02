@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.6 2005/06/18 18:08:49 alek Exp $
+@option no-default-conflict
+@conflict ices-0.*
+bin/ices
+@man man/man1/ices.1
+share/doc/ices/
+share/doc/ices/icesmanual.html
+share/examples/ices/
+share/examples/ices/ices.conf.dist
+@mode 660
+@sample ${SYSCONFDIR}/ices.conf
+@mode
+share/ices/
+share/ices/ices.pm.dist
+share/ices/ices.py.dist

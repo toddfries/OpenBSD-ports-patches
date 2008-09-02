@@ -1,0 +1,12 @@
+$OpenBSD: patch-libgphoto2_port_Makefile_in,v 1.2 2008/06/18 11:43:39 ajacoutot Exp $
+--- libgphoto2_port/Makefile.in.orig	Mon Mar 24 14:14:13 2008
++++ libgphoto2_port/Makefile.in	Sat Jun 14 18:43:46 2008
+@@ -760,7 +760,7 @@ info: info-recursive
+ 
+ info-am:
+ 
+-install-data-am: install-data-local install-docDATA \
++install-data-am: install-data-local \
+ 	install-nobase_includeHEADERS install-pkgconfigDATA
+ 
+ install-dvi: install-dvi-recursive

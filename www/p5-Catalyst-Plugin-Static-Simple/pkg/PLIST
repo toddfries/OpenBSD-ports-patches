@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/12/27 12:56:07 simon Exp $
+${P5SITE}/Catalyst/Plugin/
+${P5SITE}/Catalyst/Plugin/Static/
+${P5SITE}/Catalyst/Plugin/Static/Simple.pm
+@man man/man3p/Catalyst::Plugin::Static::Simple.3p

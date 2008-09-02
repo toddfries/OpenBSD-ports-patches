@@ -1,0 +1,14 @@
+--- lib/libxview/notify/sys_select.c.orig	1993-06-29 07:18:11.000000000 +0200
++++ lib/libxview/notify/sys_select.c	2003-12-30 01:31:13.000000000 +0100
+@@ -15,7 +15,11 @@ static char     sccsid[] = "@(#)sys_sele
+  */
+ 
+ #ifndef SVR4
++#ifndef __OpenBSD__
+ #include <syscall.h>
++#else
++#include <sys/syscall.h>
++#endif
+ #else SVR4
+ #include <values.h>
+ #include <sys/time.h>

@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:17:46 espie Exp $
+sbin/sslsniffer
+share/doc/sslsniffer/
+share/doc/sslsniffer/README

@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 19:26:28 espie Exp $
+include/FL/
+include/FL/Flv_CStyle.H
+include/FL/Flv_Data_Source.H
+include/FL/Flv_List.H
+include/FL/Flv_Style.H
+include/FL/Flv_Table.H
+include/FL/Flve_Check_Button.H
+include/FL/Flve_Combo.H
+include/FL/Flve_Input.H
+lib/libflvw.a

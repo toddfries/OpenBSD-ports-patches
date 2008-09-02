@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:17:47 espie Exp $
+bin/trafshow
+@man man/man1/trafshow.1
+share/examples/trafshow/
+share/examples/trafshow/trafshow.conf.sample
+@sample ${SYSCONFDIR}/trafshow.conf

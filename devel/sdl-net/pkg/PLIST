@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.5 2008/06/18 11:18:44 ajacoutot Exp $
+%%SHARED%%
+include/SDL/
+include/SDL/SDL_net.h
+lib/libSDL_net.a
+lib/libSDL_net.la

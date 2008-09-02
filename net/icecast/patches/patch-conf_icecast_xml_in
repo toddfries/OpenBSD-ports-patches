@@ -1,0 +1,12 @@
+$OpenBSD: patch-conf_icecast_xml_in,v 1.4 2005/10/21 15:59:54 naddy Exp $
+--- conf/icecast.xml.in.orig	Thu Sep  8 16:03:51 2005
++++ conf/icecast.xml.in	Sat Sep 24 15:23:12 2005
+@@ -139,7 +139,7 @@
+         <logdir>@localstatedir@/log/@PACKAGE@</logdir>
+         <webroot>@pkgdatadir@/web</webroot>
+         <adminroot>@pkgdatadir@/admin</adminroot>
+-        <!-- <pidfile>@pkgdatadir@/icecast.pid</pidfile> -->
++        <!-- <pidfile>@localstatedir@/run/icecast.pid</pidfile> -->
+ 
+         <!-- Aliases: treat requests for 'source' path as being for 'dest' path
+              May be made specific to a port or bound address using the "port"

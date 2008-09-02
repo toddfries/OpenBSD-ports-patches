@@ -1,0 +1,10 @@
+$OpenBSD: patch-libslab-directory-tile_c,v 1.2 2008/01/23 21:47:46 jasper Exp $
+--- libslab/directory-tile.c.orig	Tue Jan  8 14:19:47 2008
++++ libslab/directory-tile.c	Wed Jan 23 12:31:25 2008
+@@ -644,5 +644,5 @@ static void
+ disown_spawned_child (gpointer user_data)
+ {
+ 	setsid  ();
+-	setpgid (0, 0);
++	setpgrp (0,0);
+ }

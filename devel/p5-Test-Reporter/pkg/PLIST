@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/10/09 22:20:13 simon Exp $
+bin/cpantest
+${P5SITE}/Test/
+${P5SITE}/Test/Reporter.pm
+@man man/man1/cpantest.1
+@man man/man3p/Test::Reporter.3p

@@ -1,0 +1,39 @@
+$OpenBSD: patch-conf_nginx_conf,v 1.2 2008/05/07 23:08:24 merdely Exp $
+--- conf/nginx.conf.orig	Thu Feb 28 13:44:16 2008
++++ conf/nginx.conf	Wed May  7 11:22:35 2008
+@@ -41,7 +41,7 @@ http {
+         #access_log  logs/host.access.log  main;
+ 
+         location / {
+-            root   html;
++            root   !!NGINX_DIR!!/html;
+             index  index.html index.htm;
+         }
+ 
+@@ -51,7 +51,7 @@ http {
+         #
+         error_page   500 502 503 504  /50x.html;
+         location = /50x.html {
+-            root   html;
++            root   !!NGINX_DIR!!/html;
+         }
+ 
+         # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+@@ -87,7 +87,7 @@ http {
+     #    server_name  somename  alias  another.alias;
+ 
+     #    location / {
+-    #        root   html;
++    #        root   !!NGINX_DIR!!/html;
+     #        index  index.html index.htm;
+     #    }
+     #}
+@@ -110,7 +110,7 @@ http {
+     #    ssl_prefer_server_ciphers   on;
+ 
+     #    location / {
+-    #        root   html;
++    #        root   !!NGINX_DIR!!/html;
+     #        index  index.html index.htm;
+     #    }
+     #}

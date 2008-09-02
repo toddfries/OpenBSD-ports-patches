@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:17:43 espie Exp $
+bin/ipv4calc
+${P5SITE}/Net/
+${P5SITE}/Net/IPv4Addr.pm
+${P5SITE}/auto/
+${P5SITE}/auto/Net/
+${P5SITE}/auto/Net/IPv4Addr/
+${P5SITE}/auto/Net/IPv4Addr/autosplit.ix
+@man man/man1/ipv4calc.1
+@man man/man3p/Net::IPv4Addr.3p

@@ -1,0 +1,17 @@
+$OpenBSD: patch-src_utils_cpp,v 1.2 2007/05/20 13:02:16 bernd Exp $
+--- src/utils.cpp.orig	Sun Mar  2 01:23:00 2003
++++ src/utils.cpp	Tue May  8 13:08:06 2007
+@@ -380,6 +380,7 @@ String dami::toString(uint32 val)
+   return text;
+ }
+ 
++#if !(defined(__GNUC__) && __GNUC__ >= 3)
+ WString dami::toWString(const unicode_t buf[], size_t len)
+ {
+   WString str;
+@@ -391,4 +392,5 @@ WString dami::toWString(const unicode_t buf[], size_t 
+   }
+   return str;
+ }
++#endif
+ 

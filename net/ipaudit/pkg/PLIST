@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:17:41 espie Exp $
+bin/ipaudit
+bin/ipstrings
+bin/total
+@man man/man1/ipaudit.1
+@man man/man1/ipstrings.1
+@man man/man1/total.1
+share/doc/ipaudit/
+share/doc/ipaudit/README
+share/examples/ipaudit/
+share/examples/ipaudit/ipaudit.conf.sample

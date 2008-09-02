@@ -1,0 +1,12 @@
+$OpenBSD: patch-python_Makefile_in,v 1.9 2008/05/06 18:53:01 steven Exp $
+--- python/Makefile.in.orig	Tue Apr  8 16:55:02 2008
++++ python/Makefile.in	Sat Apr 26 11:53:47 2008
+@@ -737,7 +737,7 @@ info: info-recursive
+ 
+ info-am:
+ 
+-install-data-am: install-dist_docsDATA install-dist_pythonDATA \
++install-data-am: install-dist_pythonDATA \
+ 	install-pythonDATA install-pythonLTLIBRARIES
+ 
+ install-dvi: install-dvi-recursive

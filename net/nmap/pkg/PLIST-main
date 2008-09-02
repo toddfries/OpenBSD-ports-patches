@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST-main,v 1.2 2008/06/17 21:18:03 steven Exp $
+@pkgpath net/nmap
+@pkgpath net/nmap,no_x11
+@bin bin/nmap
+@man man/man1/nmap.1
+share/nmap/
+share/nmap/nmap-mac-prefixes
+share/nmap/nmap-os-db
+share/nmap/nmap-protocols
+share/nmap/nmap-rpc
+share/nmap/nmap-service-probes
+share/nmap/nmap-services
+share/nmap/nmap.dtd
+share/nmap/nmap.xsl
+%%SHARED%%

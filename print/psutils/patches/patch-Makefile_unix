@@ -1,0 +1,35 @@
+$OpenBSD: patch-Makefile_unix,v 1.1 2007/10/26 21:49:00 jasper Exp $
+--- Makefile.unix.orig	Tue Mar 11 23:52:59 1997
++++ Makefile.unix	Fri Oct 26 23:44:40 2007
+@@ -222,27 +222,27 @@ install.bin: $(BIN)
+ 	-mkdir $(BINDIR)
+ 	@for i in $(BIN); do \
+ 		echo Installing $$i; \
+-		$(INSTALL) $$i $(BINDIR); \
++		$(BSD_INSTALL_PROGRAM) $$i $(BINDIR); \
+ 	done
+ 
+ install.script: $(PERLSCRIPTS) $(SHELLSCRIPTS)
+ 	-mkdir $(SCRIPTDIR)
+ 	@for i in $(PERLSCRIPTS) $(SHELLSCRIPTS); do \
+ 		echo Installing $$i; \
+-		$(INSTALL) $$i $(SCRIPTDIR); \
++		$(BSD_INSTALL_SCRIPT) $$i $(SCRIPTDIR); \
+ 	done
+ 
+ install.include: $(INCLUDES)
+ 	-mkdir $(INCLUDEDIR)
+ 	@for i in $(INCLUDES); do \
+ 		echo Installing $$i; \
+-		$(INSTALLMAN) $$i $(INCLUDEDIR); \
++		$(BSD_INSTALL_DATA) $$i $(INCLUDEDIR); \
+ 	done
+ 
+ install.man: $(MANPAGES)
+ 	-mkdir $(MANDIR)
+ 	@for i in $(MANPAGES); do \
+ 		echo Installing manual page for $$i; \
+-		$(INSTALLMAN) $$i $(MANDIR)/$$i; \
++		$(BSD_INSTALL_MAN) $$i $(MANDIR)/$$i; \
+ 	done
+ 

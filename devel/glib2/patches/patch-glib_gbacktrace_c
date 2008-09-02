@@ -1,0 +1,12 @@
+$OpenBSD: patch-glib_gbacktrace_c,v 1.5 2007/10/24 22:29:03 jasper Exp $
+--- glib/gbacktrace.c.orig	Sun Sep 16 18:28:33 2007
++++ glib/gbacktrace.c	Tue Oct  2 20:47:04 2007
+@@ -167,7 +167,7 @@ g_on_error_stack_trace (const gchar *prg_name)
+   if (!prg_name)
+     return;
+ 
+-  _g_sprintf (buf, "%u", (guint) getpid ());
++  _g_snprintf (buf, sizeof(buf), "%u", (guint) getpid ());
+ 
+   args[1] = (gchar*) prg_name;
+   args[2] = buf;

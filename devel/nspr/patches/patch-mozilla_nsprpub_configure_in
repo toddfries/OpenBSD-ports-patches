@@ -1,0 +1,24 @@
+$OpenBSD: patch-mozilla_nsprpub_configure_in,v 1.7 2008/07/25 00:42:34 martynas Exp $
+--- mozilla/nsprpub/configure.in.orig	Tue Apr 29 02:21:11 2008
++++ mozilla/nsprpub/configure.in	Fri Jun 13 21:58:15 2008
+@@ -1802,9 +1802,11 @@ mips-sony-newsos*)
+     AC_DEFINE(OPENBSD)
+     AC_DEFINE(HAVE_BSD_FLOCK)
+     AC_DEFINE(HAVE_SOCKLEN_T)
++    AC_DEFINE(_PR_HAVE_GETPROTO_R)
++    AC_DEFINE(_PR_HAVE_GETPROTO_R_INT)
+     CFLAGS="$CFLAGS -ansi -Wall"
+     CXXFLAGS="$CXXFLAGS -ansi -Wall"
+-    DLL_SUFFIX=so.1.0
++    DLL_SUFFIX="so.${SO_VERSION}"
+     DSO_CFLAGS=-fPIC
+     MDCPUCFG_H=_openbsd.cfg
+     PR_MD_CSRCS=openbsd.c
+@@ -2857,6 +2859,7 @@ config/autoconf.mk
+ config/nsprincl.mk
+ config/nsprincl.sh
+ config/nspr-config
++config/nspr.pc
+ lib/Makefile 
+ lib/ds/Makefile 
+ lib/libc/Makefile 

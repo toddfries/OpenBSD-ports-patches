@@ -1,0 +1,26 @@
+$OpenBSD: patch-configure,v 1.2 2006/02/17 14:07:44 todd Exp $
+--- configure.orig	Wed Oct 19 15:26:29 2005
++++ configure	Fri Feb 17 06:17:32 2006
+@@ -9710,12 +9710,11 @@ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ #include <libintl.h>
+ extern int _nl_msg_cat_cntr;
+-extern int *_nl_domain_bindings;
+ int
+ main ()
+ {
+ bindtextdomain ("", "");
+-return (int) gettext ("") + _nl_msg_cat_cntr + *_nl_domain_bindings
++return (int) gettext ("") + _nl_msg_cat_cntr + *_nl_expand_alias (0)
+   ;
+   return 0;
+ }
+@@ -23177,7 +23176,7 @@ echo $ECHO_N "checking for gtkhtml >= 1.
+ 
+     fi
+ 
+-    if test "x$GTKHTML_LIBS" != x; then
++    if test "x$GTKHTML_LIBS" != "xNO"; then
+ 	echo "$as_me:$LINENO: result: yes" >&5
+ echo "${ECHO_T}yes" >&6
+ 	# check for gtkhtml and enable it via HAVE_LIBGTKHTML if found

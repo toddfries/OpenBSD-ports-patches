@@ -1,0 +1,3 @@
+@comment $OpenBSD: PLIST-rar,v 1.2 2007/05/08 17:59:15 naddy Exp $
+lib/p7zip/Codecs/Rar29.so
+share/doc/p7zip/unRarLicense.txt

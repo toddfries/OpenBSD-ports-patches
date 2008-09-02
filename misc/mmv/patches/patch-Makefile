@@ -1,0 +1,18 @@
+$OpenBSD: patch-Makefile,v 1.1 2002/12/23 19:11:48 pvalchev Exp $
+--- Makefile.orig	Mon Dec 23 14:09:24 2002
++++ Makefile	Mon Dec 23 14:09:24 2002
+@@ -3,8 +3,11 @@ all:	mmv mmv.1
+ mmv:	mmv.c
+ 	$(CC) -o mmv $(CFLAGS) mmv.c
+ install:	all
+-	@echo "Install mmv according to local convention,"
+-	@echo "then make links named mcp, mad, and mln to mmv."
+-	@echo "Under System V, edit mmv.1 to uncomment the .nr O 1 line."
++	${BSD_INSTALL_PROGRAM} mmv ${PREFIX}/bin ; \
++        ln -fs mmv ${PREFIX}/bin/mad ; \
++        ln -fs mmv ${PREFIX}/bin/mcp ; \
++        ln -fs mmv ${PREFIX}/bin/mln ; \
++        ${BSD_INSTALL_MAN} mmv.1 ${PREFIX}/man/man1
++
+ clean:
+ 	rm -f core a.out mmv mmv.o

@@ -1,0 +1,17 @@
+@comment $OpenBSD: PLIST,v 1.3 2006/10/09 09:32:26 espie Exp $
+@mode g+s
+@group utmp
+bin/hanterm
+@mode
+@group
+lib/X11/app-defaults/Hanterm
+lib/X11/app-defaults/Hanterm-color
+@man man/man1/hanterm.1
+share/hangul_keyboard/
+share/hangul_keyboard/2bul.kbd
+share/hangul_keyboard/3bul_390.kbd
+share/hangul_keyboard/3bul_final.kbd
+share/hangul_keyboard/dvorak.map
+share/hangul_keyboard/dvorak_2bul.kbd
+share/hangul_keyboard/dvorak_3bul_390.kbd
+share/hangul_keyboard/dvorak_3bul_final.kbd

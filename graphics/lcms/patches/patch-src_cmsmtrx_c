@@ -1,0 +1,16 @@
+$OpenBSD: patch-src_cmsmtrx_c,v 1.5 2008/06/10 00:42:40 okan Exp $
+--- src/cmsmtrx.c.orig	Fri Jul 27 06:00:02 2007
++++ src/cmsmtrx.c	Sun Jun  1 03:22:48 2008
+@@ -799,9 +799,9 @@ void MAT3fromFix(LPMAT3 r, LPWMAT3 v)
+ 
+ void VEC3scaleAndCut(LPWVEC3 r, LPVEC3 v, double d)
+ {
+-        r -> n[VX] = (int) floor(v -> n[VX] * d + .5);
+-        r -> n[VY] = (int) floor(v -> n[VY] * d + .5);
+-        r -> n[VZ] = (int) floor(v -> n[VZ] * d + .5);
++        r -> n[VX] = (icInt32Number) floor(v -> n[VX] * d + .5);
++        r -> n[VY] = (icInt32Number) floor(v -> n[VY] * d + .5);
++        r -> n[VZ] = (icInt32Number) floor(v -> n[VZ] * d + .5);
+ }
+ 
+ void MAT3scaleAndCut(LPWMAT3 r, LPMAT3 v, double d)

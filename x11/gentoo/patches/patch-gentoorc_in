@@ -1,0 +1,25 @@
+$OpenBSD: patch-gentoorc_in,v 1.2 2007/01/30 16:12:36 simon Exp $
+--- gentoorc.in.orig	Wed Aug 23 22:54:02 2006
++++ gentoorc.in	Sun Nov 26 20:46:27 2006
+@@ -1046,7 +1046,7 @@
+    <unselect>FALSE</unselect>
+   </GetSize>
+   <Information>
+-   <use_file>TRUE</use_file>
++   <use_file>FALSE</use_file>
+    <recurse_dirs>TRUE</recurse_dirs>
+    <df_access>"%Y-%m-%d %H:%M.%S"</df_access>
+    <df_modify>"%Y-%m-%d %H:%M.%S"</df_modify>
+@@ -2739,9 +2739,9 @@
+   </HideInfo>
+  </Paths>
+  <Mounting>
+-  <mode>"always"</mode>
+-  <cmd_mount>"/bin/mount"</cmd_mount>
+-  <cmd_umount>"/bin/umount"</cmd_umount>
++  <mode>"never"</mode>
++  <cmd_mount>"/sbin/mount"</cmd_mount>
++  <cmd_umount>"/sbin/umount"</cmd_umount>
+   <check_nlink>TRUE</check_nlink>
+   <show_stderr>TRUE</show_stderr>
+   <umount_exit>TRUE</umount_exit>

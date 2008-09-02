@@ -1,0 +1,17 @@
+@comment $OpenBSD: PLIST-data,v 1.3 2004/07/24 12:43:16 espie Exp $
+lib/wnn/
+lib/wnn/cvt_key_empty
+lib/wnn/cvt_key_tbl
+lib/wnn/cvt_key_tbl.ST
+lib/wnn/cvt_key_tbl.gm
+lib/wnn/cvt_key_tbl.kt
+lib/wnn/cvt_key_tbl.mv
+lib/wnn/cvt_key_tbl.vt
+lib/wnn/install-script
+@comment those dirs are in the common data part because of xwnmo
+lib/wnn/ja_JP/
+lib/wnn/ko_KR/
+lib/wnn/lt_LN/
+lib/wnn/serverdefs
+lib/wnn/zh_CN/
+lib/wnn/zh_TW/

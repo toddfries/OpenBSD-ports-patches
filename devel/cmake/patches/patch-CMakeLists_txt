@@ -1,0 +1,19 @@
+$OpenBSD: patch-CMakeLists_txt,v 1.2 2006/12/18 16:04:31 espie Exp $
+--- CMakeLists.txt.orig	Mon Dec  4 17:03:52 2006
++++ CMakeLists.txt	Sun Dec 17 11:11:52 2006
+@@ -60,6 +60,15 @@ IF(CMAKE_SYSTEM MATCHES "OSF1-V.*")
+   ENDIF(NOT CMAKE_COMPILER_IS_GNUCXX)
+ ENDIF(CMAKE_SYSTEM MATCHES "OSF1-V.*")
+ 
++IF($ENV{LOCALBASE})
++SET(OPENBSD_LOCALBASE $ENV{LOCALBASE})
++ELSE($ENV{LOCALBASE})
++SET(OPENBSD_LOCALBASE /usr/local)
++ENDIF($ENV{LOCALBASE})
++
++# to find expat and curl
++LINK_DIRECTORIES("${OPENBSD_LOCALBASE}/lib")
++
+ #-----------------------------------------------------------------------------
+ # Create the kwsys library for CMake.
+ SET(KWSYS_NAMESPACE cmsys)

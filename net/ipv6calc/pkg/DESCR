@@ -1,0 +1,5 @@
+ipv6calc is a small but powerful utility written in the C programming
+language to manipulate (not only) IPv6 addresses. ipv6calc allows the
+users to convert a given IPv6 address to the compressed format or to
+the format used by Linux' /proc/net/if_inet6. ipv6calc is also the
+replacement of the old ip6_int Perl program.

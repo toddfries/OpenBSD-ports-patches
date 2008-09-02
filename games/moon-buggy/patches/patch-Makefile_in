@@ -1,0 +1,28 @@
+--- Makefile.in.orig	Mon Dec 27 17:15:56 2004
++++ Makefile.in	Thu Oct  4 23:05:27 2007
+@@ -210,7 +210,7 @@
+ moon_buggy_LDADD = @CURSES_LIBS@
+ info_TEXINFOS = moon-buggy.texi
+ man_MANS = moon-buggy.6
+-scoredir = $(sharedstatedir)/moon-buggy
++scoredir = $(sharedstatedir)/games
+ BUILT_SOURCES = copying.h buggy.h
+ @short_getopt_TRUE@mbsep = \\\\\"
+ all: $(BUILT_SOURCES) config.h
+@@ -840,7 +840,7 @@
+ 	@$(POST_INSTALL)
+ 	if test "x@GAMEGROUP@" != "x"; then \
+ 	  chgrp "@GAMEGROUP@" "$(DESTDIR)$(bindir)/moon-buggy" \
+-	    && chmod 2111 "$(DESTDIR)$(bindir)/moon-buggy" ; \
++	    && chmod g+s "$(DESTDIR)$(bindir)/moon-buggy" ; \
+ 	fi
+ 	@$(NORMAL_INSTALL)
+ 
+@@ -857,7 +857,6 @@
+ 		 || chmod 664 "$(DESTDIR)$(scoredir)/mbscore" ; } \
+ 	    && chmod 575 "$(DESTDIR)$(scoredir)" ; \
+ 	fi
+-	$(DESTDIR)$(bindir)/moon-buggy -c
+ 
+ uninstall-local:
+ 	rm -f $(DESTDIR)$(scoredir)/mbscore

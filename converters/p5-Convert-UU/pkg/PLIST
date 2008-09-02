@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.12 2004/09/14 23:25:50 espie Exp $
+bin/puudecode
+bin/puuencode
+${P5SITE}/Convert/
+${P5SITE}/Convert/UU.pm
+@man man/man1/puudecode.1
+@man man/man1/puuencode.1
+@man man/man3p/Convert::UU.3p

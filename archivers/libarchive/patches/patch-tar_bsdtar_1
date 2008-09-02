@@ -1,0 +1,33 @@
+$OpenBSD: patch-tar_bsdtar_1,v 1.3 2008/07/05 20:38:09 naddy Exp $
+--- tar/bsdtar.1.orig	Thu May 29 07:27:45 2008
++++ tar/bsdtar.1	Sat Jul  5 21:21:17 2008
+@@ -28,7 +28,7 @@
+ .Dt BSDTAR 1
+ .Os
+ .Sh NAME
+-.Nm tar
++.Nm bsdtar
+ .Nd manipulate tape archives
+ .Sh SYNOPSIS
+ .Nm
+@@ -179,9 +179,9 @@ The filename can be
+ for standard input or standard output.
+ If not specified, the default tape device will be used.
+ (On
+-.Fx ,
++.Ox ,
+ the default tape device is
+-.Pa /dev/sa0 . )
++.Pa /dev/rst0 . )
+ .It Fl H
+ (c and r mode only)
+ Symbolic links named on the command line will be followed; the
+@@ -479,7 +479,7 @@ for more information.
+ .El
+ .Sh FILES
+ .Bl -tag -width ".Ev BLOCKSIZE"
+-.It Pa /dev/sa0
++.It Pa /dev/rst0
+ The default tape device, if not overridden by the
+ .Ev TAPE
+ environment variable or the

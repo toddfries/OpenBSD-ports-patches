@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.7 2005/02/28 13:30:07 mbalmer Exp $
+bin/gq
+share/gnome/
+share/gnome/apps/
+share/gnome/apps/Internet/
+share/gnome/apps/Internet/gq.desktop
+share/pixmaps/
+share/pixmaps/gq/
+share/pixmaps/gq/bomb.xpm
+share/pixmaps/gq/hide.xpm
+share/pixmaps/gq/line.xpm
+share/pixmaps/gq/logo.xpm
+share/pixmaps/gq/new.xpm
+share/pixmaps/gq/textarea.xpm
+share/pixmaps/gq/warning.xpm

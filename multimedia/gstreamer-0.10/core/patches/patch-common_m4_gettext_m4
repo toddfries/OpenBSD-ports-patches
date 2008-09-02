@@ -1,0 +1,17 @@
+$OpenBSD: patch-common_m4_gettext_m4,v 1.2 2007/03/17 21:35:31 espie Exp $
+--- common/m4/gettext.m4.orig	Thu Nov 30 23:25:12 2006
++++ common/m4/gettext.m4	Sat Mar 17 11:59:13 2007
+@@ -315,8 +315,12 @@ return (int) gettext ("")]ifelse([$2], [need-ngettext]
+   ])
+ 
+   dnl For backward compatibility. Some Makefiles may be using this.
+-  INTLLIBS="$LIBINTL"
++  INTLLIBS="$LTLIBINTL"
+   AC_SUBST(INTLLIBS)
++
++  dnl Let's cheat
++  LIBICONV="$LTLIBICONV"
++  LIBINTL="$LTLIBINTL"
+ 
+   dnl Make all documented variables known to autoconf.
+   AC_SUBST(LIBINTL)

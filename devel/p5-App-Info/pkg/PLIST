@@ -1,0 +1,39 @@
+@comment $OpenBSD: PLIST,v 1.7 2006/07/17 12:13:21 steven Exp $
+${P5SITE}/App/
+${P5SITE}/App/Info/
+${P5SITE}/App/Info.pm
+${P5SITE}/App/Info/HTTPD/
+${P5SITE}/App/Info/HTTPD.pm
+${P5SITE}/App/Info/HTTPD/Apache.pm
+${P5SITE}/App/Info/Handler/
+${P5SITE}/App/Info/Handler.pm
+${P5SITE}/App/Info/Handler/Carp.pm
+${P5SITE}/App/Info/Handler/Print.pm
+${P5SITE}/App/Info/Handler/Prompt.pm
+${P5SITE}/App/Info/Lib/
+${P5SITE}/App/Info/Lib.pm
+${P5SITE}/App/Info/Lib/Expat.pm
+${P5SITE}/App/Info/Lib/Iconv.pm
+${P5SITE}/App/Info/Lib/OSSPUUID.pm
+${P5SITE}/App/Info/RDBMS/
+${P5SITE}/App/Info/RDBMS.pm
+${P5SITE}/App/Info/RDBMS/PostgreSQL.pm
+${P5SITE}/App/Info/RDBMS/SQLite.pm
+${P5SITE}/App/Info/Request.pm
+${P5SITE}/App/Info/Util.pm
+@man man/man3p/App::Info.3p
+@man man/man3p/App::Info::HTTPD.3p
+@man man/man3p/App::Info::HTTPD::Apache.3p
+@man man/man3p/App::Info::Handler.3p
+@man man/man3p/App::Info::Handler::Carp.3p
+@man man/man3p/App::Info::Handler::Print.3p
+@man man/man3p/App::Info::Handler::Prompt.3p
+@man man/man3p/App::Info::Lib.3p
+@man man/man3p/App::Info::Lib::Expat.3p
+@man man/man3p/App::Info::Lib::Iconv.3p
+@man man/man3p/App::Info::Lib::OSSPUUID.3p
+@man man/man3p/App::Info::RDBMS.3p
+@man man/man3p/App::Info::RDBMS::PostgreSQL.3p
+@man man/man3p/App::Info::RDBMS::SQLite.3p
+@man man/man3p/App::Info::Request.3p
+@man man/man3p/App::Info::Util.3p

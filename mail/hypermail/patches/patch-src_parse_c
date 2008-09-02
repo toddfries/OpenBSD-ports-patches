@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_parse_c,v 1.4 2005/04/03 11:05:07 espie Exp $
+--- src/parse.c.orig	Tue Jul  1 16:20:48 2003
++++ src/parse.c	Sun Apr  3 12:58:45 2005
+@@ -57,7 +57,7 @@
+ #include "../lcc/lcc_extras.h"
+ #endif
+ 
+-extern char *mktemp(char *);
++/* extern char *mktemp(char *); */
+ 
+ typedef enum {
+     ENCODE_NORMAL,

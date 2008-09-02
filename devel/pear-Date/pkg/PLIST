@@ -1,0 +1,36 @@
+@comment $OpenBSD: PLIST,v 1.8 2007/03/22 22:48:03 robert Exp $
+@group daemon
+lib/
+lib/php/
+@group
+pear/doc/
+@group daemon
+pear/doc/Date/
+pear/doc/Date/LICENSE
+pear/doc/Date/TODO
+pear/lib/.registry/date.reg
+pear/lib/Date/
+pear/lib/Date.php
+pear/lib/Date/Calc.php
+pear/lib/Date/Human.php
+pear/lib/Date/Span.php
+pear/lib/Date/TimeZone.php
+pear/tests/Date/
+pear/tests/Date/tests/
+pear/tests/Date/tests/bug674.php
+pear/tests/Date/tests/bug727_1.php
+pear/tests/Date/tests/bug727_2.php
+pear/tests/Date/tests/bug727_3.php
+pear/tests/Date/tests/bug727_4.php
+pear/tests/Date/tests/bug967.php
+pear/tests/Date/tests/calc.php
+pear/tests/Date/tests/test_calc.php
+pear/tests/Date/tests/test_date_methods_span.php
+pear/tests/Date/tests/testunit.php
+pear/tests/Date/tests/testunit_date.php
+pear/tests/Date/tests/testunit_date_span.php
+pear/tests/Date/tests/weeksinmonth_4_monday.txt
+pear/tests/Date/tests/weeksinmonth_4_sunday.txt
+pear/tests/Date/tests/weeksinmonth_rdm_monday.txt
+pear/tests/Date/tests/weeksinmonth_rdm_sunday.txt
+pear/tests/Date/tests/wknotest.txt

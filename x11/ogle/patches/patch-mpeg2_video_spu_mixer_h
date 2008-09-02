@@ -1,0 +1,13 @@
+$OpenBSD: patch-mpeg2_video_spu_mixer_h,v 1.2 2003/11/13 18:46:47 espie Exp $
+--- mpeg2_video/spu_mixer.h.orig	2003-10-20 18:34:33.000000000 +0200
++++ mpeg2_video/spu_mixer.h	2003-11-06 07:34:50.000000000 +0100
+@@ -25,6 +25,9 @@ void mix_subpicture_init(int pixel_strid
+ void mix_subpicture_rgb(char *data, int width, int height);
+ int mix_subpicture_yuv(yuv_image_t *img, yuv_image_t *reserv);
+ 
++extern int subtitle_pos[150];
++extern int subtitle_index;
++
+ int init_spu(void);
+ 
+ void flush_subpicture(int scr_nr);

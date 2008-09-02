@@ -1,0 +1,62 @@
+@comment $OpenBSD: PLIST-main,v 1.2 2007/06/22 07:34:45 mbalmer Exp $
+@pkgpath ${BASE_PKGPATH}
+@conflict imap-uw-*
+@conflict courier-utils-*
+@newgroup _courier:571
+@newuser _courier:571:571:daemon:Courier Mail Server:/var/empty:/sbin/nologin
+bin/couriertls
+bin/deliverquota
+bin/imapd
+bin/maildiracl
+bin/maildirkw
+bin/maildirmake
+libexec/couriertcpd
+libexec/imapd-ssl.rc
+libexec/imapd.rc
+libexec/makedatprog
+@man man/man1/couriertcpd.1
+@man man/man1/maildiracl.1
+@man man/man1/maildirkw.1
+@man man/man1/maildirmake.1
+@man man/man8/deliverquota.8
+@man man/man8/imapd.8
+@man man/man8/mkimapdcert.8
+sbin/imaplogin
+sbin/mkimapdcert
+sbin/sharedindexinstall
+sbin/sharedindexsplit
+share/doc/courier/
+share/doc/courier/AUTHORS
+share/doc/courier/ChangeLog
+share/doc/courier/INSTALL
+share/doc/courier/NEWS
+share/doc/courier/README
+share/doc/courier/README.couriertls
+share/doc/courier/README.imap.txt
+share/doc/courier/README.imapkeywords.html
+share/doc/courier/README.maildirfilter.html
+share/doc/courier/README.maildirquota.txt
+share/doc/courier/README.proxy
+share/doc/courier/README.sharedfolders.txt
+share/doc/courier/README.unicode.txt
+share/examples/courier/
+@sample ${SYSCONFDIR}/
+@mode 600
+share/examples/courier/imapd-ssl.dist
+@sample ${SYSCONFDIR}/imapd-ssl
+share/examples/courier/imapd.cnf
+@sample ${SYSCONFDIR}/imapd.cnf
+share/examples/courier/imapd.dist
+@sample ${SYSCONFDIR}/imapd
+share/examples/courier/quotawarnmsg.example
+@mode 644
+@owner _courier
+@group _courier
+@sample ${SYSCONFDIR}/quotawarnmsg
+@mode 755
+@sample ${SYSCONFDIR}/shared/
+@sample ${SYSCONFDIR}/shared.tmp/
+@mode 750
+@sample ${COURIERSTATE}/
+@extraunexec rm -rf ${SYSCONFDIR}/
+@extraunexec rm -rf ${COURIERSTATE}

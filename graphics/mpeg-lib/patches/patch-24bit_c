@@ -1,0 +1,18 @@
+$OpenBSD: patch-24bit_c,v 1.1 2004/06/22 03:07:17 brad Exp $
+--- 24bit.c.orig	1999-07-23 21:59:25.000000000 -0600
++++ 24bit.c	2004-06-21 20:01:38.000000000 -0600
+@@ -26,11 +26,13 @@
+  */
+ 
+ #include <config.h>
++#ifdef HAVE_MALLOC_H
++#include <malloc.h>
++#endif
+ #include "video.h"
+ #include "dither.h"
+ #include "proto.h"
+ #include <time.h>
+-#include <malloc.h>
+ #include "my_dmalloc.h"
+ 
+ /*

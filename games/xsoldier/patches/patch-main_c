@@ -1,0 +1,11 @@
+$OpenBSD: patch-main_c,v 1.4 2005/10/21 20:07:05 naddy Exp $
+--- main.c.orig	Sun May  5 13:10:33 2002
++++ main.c	Wed Oct 19 21:26:04 2005
+@@ -33,7 +33,6 @@
+ /* DeleteAllStar */
+ #include "star.h"
+ #include "score.h"
+-#include "wait.h"
+ #include "graphic.h"
+ #include "input.h"
+ 

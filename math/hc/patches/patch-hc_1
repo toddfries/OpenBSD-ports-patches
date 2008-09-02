@@ -1,0 +1,22 @@
+$OpenBSD: patch-hc_1,v 1.2 2005/03/16 20:26:51 robert Exp $
+--- hc.1.orig	Thu Sep 14 04:41:14 2000
++++ hc.1	Wed Mar 16 21:21:59 2005
+@@ -5,7 +5,7 @@
+ .Os
+ .Sh NAME
+ .Nm hc
+-.Nd multiradix integer desk calculator
++.Nd multi-radix integer desk calculator
+ .Sh SYNOPSIS
+ .Nm hc
+ .Oo
+@@ -69,9 +69,5 @@ not yet incorporated) for their contribu
+ 
+ None at this time. Binary input has been implemented but not added.
+ 
+-.Sh FILES 
+-.Bl -tag -width Pa -compact
+-.It Pa /usr/bin/hc
+-.El
+ .Sh SEE ALSO
+ bc(1); Kernighan & Pike

@@ -1,0 +1,23 @@
+$OpenBSD: patch-arpreqtest_c,v 1.2 2005/04/03 19:32:29 naddy Exp $
+--- arpreqtest.c.orig	Tue Apr 18 04:04:24 2000
++++ arpreqtest.c	Sun Apr  3 21:21:24 2005
+@@ -20,7 +20,7 @@ int arp_request(HDEV fd, char *ether_add
+   unsigned long sourceIP, destIP;
+   struct result *resPtr;
+ #if defined(_OpenBSD_)
+-  char *defaultdevice = "ep1";
++  static char *defaultdevice = NULL;
+ #else if defined(SOLARIS)
+   char *defaultdevice = "le0";
+ #endif
+@@ -33,7 +33,9 @@ int arp_request(HDEV fd, char *ether_add
+   pid_t our_id;
+   caddr_t area;
+ 
+-
++  if (!defaultdevice) {
++    defaultdevice = strdup(pcap_lookupdev(NULL));
++  }
+ #ifdef SOLARIS
+   mfd = open("/dev/zero", O_RDWR);
+   if (mfd < 0){

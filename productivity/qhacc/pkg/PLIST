@@ -1,0 +1,9 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 18:32:53 espie Exp $
+bin/qhacc
+share/doc/qhacc/
+share/doc/qhacc/FILE_FORMAT
+share/doc/qhacc/formats.html
+share/doc/qhacc/index.html
+share/doc/qhacc/intro.html
+share/doc/qhacc/primer.html
+share/doc/qhacc/using.html

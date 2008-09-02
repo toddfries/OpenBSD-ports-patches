@@ -1,0 +1,64 @@
+$OpenBSD: README.OpenBSD,v 1.9 2008/06/08 09:37:00 jasper Exp $
+The OpenBSD/GNOME desktop
+
+* Introduction
+The gnome-session package will install a minimal working GNOME desktop.
+It provides you with the basic interface (including themes), a control
+panel, a terminal, a text editor and a lot more other utilities.
+
+This file will briefly explain to you how to make this experience more
+pleasant.
+
+* A note about accessibility
+If you want to make the GNOME applications "accessible" (e.g. nautilus),
+you'll need to install the libgail-gnome package which adds ATK
+interfaces for libbonoboui and libgnomeui widgets.
+
+* Installing more packages
+If your needs aren't satisfied yet, there are many other packages
+you can install. The most important ones will be mentioned by category:
+
+ - Communication
+   * ekiga - SIP and H.323 conferencing application
+   * empathy - Telepathy based messenger
+   * epiphany - lightweight and simple web browser
+   * evolution - integrated email and PIM software
+   * gossip - Jabber client
+
+ - Accessibility
+   * dasher - predictive text input system
+   * gnome-mag - screen magnifier
+   * gnome-speech - speech module
+   * gnopernicus - screen reader and magnifier
+   * gok - on-screen keyboard
+   * libgail-gnome - ATK interface to other applications (see above)
+   * orca - assistive technology for visually impaired
+
+ - Development
+   * devhelp - API documentation browser
+   * gedit-plugins - plugins for Gedit
+   * gnome-devel-docs - developer documentation
+   * zenity - easy-to-script dialogs
+
+ - Utilities
+   * eog - image viewer and categorizer
+   * evince - document viewer for multiple document formats
+   * file-roller - archive manager
+   * gcalctool - desktop calculator
+   * gnome-scan - scanning application
+   * gnomebaker - CD/DVD burning application
+   * gucharmap - Unicode character map
+   * keyring-manager - Keyring password management
+   * pessulus - lockdown editor for desktop
+   * planner - project management
+   * seahorse - encryption keys manager
+   * totem - multimedia player
+
+* Startup and more documentation
+One can log in using the login manager, GDM. Or by using the 'startx' command.
+In order to use the latter, add a line like the following to your .xinitrc
+or .xsession script: 'exec !!PREFIX!!/bin/gnome-session' .
+
+For more information on using OpenBSD packages please refer to:
+http://www.OpenBSD.org/faq/faq15.html . For more general information on
+using GNOME, please see: http://live.gnome.org/ .

@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.10 2008/02/13 17:48:56 jasper Exp $
+--- configure.orig	Tue Feb 12 20:43:00 2008
++++ configure	Tue Feb 12 21:26:24 2008
+@@ -24903,7 +24903,7 @@ echo "$as_me: error: Could not find flex" >&2;}
+    { (exit 1); exit 1; }; }
+ fi
+ 
+-LIBGNOMEPRINT_CFLAGS="$GP_CFLAGS $FREETYPE_CFLAGS"
++LIBGNOMEPRINT_CFLAGS="$FREETYPE_CFLAGS $GP_CFLAGS"
+ LIBGNOMEPRINT_LIBS="$GP_LIBS $FREETYPE_LIBS $Z_LIBS"
+ 
+ 

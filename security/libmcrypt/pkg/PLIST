@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.6 2004/09/15 18:36:00 espie Exp $
+bin/libmcrypt-config
+include/mcrypt.h
+lib/libmcrypt/
+lib/libmcrypt.a
+lib/libmcrypt.la
+@man man/man3/mcrypt.3
+share/aclocal/
+share/aclocal/libmcrypt.m4
+%%SHARED%%

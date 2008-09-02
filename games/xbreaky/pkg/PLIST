@@ -1,0 +1,19 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 00:46:11 espie Exp $
+bin/xbreaky
+bin/xbreaky.snd
+@man man/man6/xbreaky.6
+share/pixmaps/
+share/pixmaps/xbreaky.xpm
+share/xbreaky/
+share/xbreaky/catch.raw
+share/xbreaky/fire.raw
+share/xbreaky/level0.dat
+share/xbreaky/level1.dat
+share/xbreaky/level2.dat
+share/xbreaky/level3.dat
+share/xbreaky/level4.dat
+share/xbreaky/level5.dat
+share/xbreaky/level6.dat
+share/xbreaky/level7.dat
+share/xbreaky/level8.dat
+share/xbreaky/level9.dat

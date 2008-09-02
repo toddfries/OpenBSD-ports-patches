@@ -1,0 +1,35 @@
+@comment $OpenBSD: PLIST,v 1.4 2008/05/16 08:32:03 bernd Exp $
+bin/xchm
+share/applications/xchm.desktop
+share/locale/be/LC_MESSAGES/xchm.mo
+share/locale/bg/LC_MESSAGES/xchm.mo
+share/locale/cs/LC_MESSAGES/xchm.mo
+share/locale/de/LC_MESSAGES/xchm.mo
+share/locale/es/LC_MESSAGES/xchm.mo
+share/locale/fr/LC_MESSAGES/xchm.mo
+share/locale/hu/LC_MESSAGES/xchm.mo
+share/locale/it/LC_MESSAGES/xchm.mo
+share/locale/lv/LC_MESSAGES/xchm.mo
+share/locale/pl/LC_MESSAGES/xchm.mo
+share/locale/pt_BR/LC_MESSAGES/xchm.mo
+share/locale/pt_PT/
+share/locale/pt_PT/LC_MESSAGES/
+share/locale/pt_PT/LC_MESSAGES/xchm.mo
+share/locale/ro/LC_MESSAGES/xchm.mo
+share/locale/ru/LC_MESSAGES/xchm.mo
+share/locale/sk/LC_MESSAGES/xchm.mo
+share/locale/sv/LC_MESSAGES/xchm.mo
+share/locale/uk/LC_MESSAGES/xchm.mo
+share/locale/zh_CN/LC_MESSAGES/xchm.mo
+share/locale/zh_TW/LC_MESSAGES/xchm.mo
+share/pixmaps/
+share/pixmaps/xchm-128.xpm
+share/pixmaps/xchm-16.xpm
+share/pixmaps/xchm-32.xpm
+share/pixmaps/xchm-48.xpm
+share/pixmaps/xchmdoc-128.xpm
+share/pixmaps/xchmdoc-16.xpm
+share/pixmaps/xchmdoc-32.xpm
+share/pixmaps/xchmdoc-48.xpm
+@exec %D/bin/update-desktop-database
+@unexec %D/bin/update-desktop-database

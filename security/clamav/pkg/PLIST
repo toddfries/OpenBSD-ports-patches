@@ -1,0 +1,51 @@
+@comment $OpenBSD: PLIST,v 1.11 2008/07/08 22:38:12 sthen Exp $
+@newgroup _clamav:539
+@newuser _clamav:539:539:daemon:Clam AntiVirus:/nonexistent:/sbin/nologin
+bin/clamav-config
+@bin bin/clamconf
+@bin bin/clamdscan
+@bin bin/clamscan
+@bin bin/freshclam
+@bin bin/sigtool
+include/clamav.h
+lib/libclamav.a
+lib/libclamav.la
+lib/libclamunrar.a
+lib/libclamunrar.la
+lib/libclamunrar_iface.a
+lib/libclamunrar_iface.la
+lib/pkgconfig/
+lib/pkgconfig/libclamav.pc
+@man man/man1/clamconf.1
+@man man/man1/clamdscan.1
+@man man/man1/clamscan.1
+@man man/man1/freshclam.1
+@man man/man1/sigtool.1
+@man man/man5/clamd.conf.5
+@man man/man5/freshclam.conf.5
+@man man/man8/clamav-milter.8
+@man man/man8/clamd.8
+@bin sbin/clamav-milter
+@bin sbin/clamd
+share/doc/clamav/
+share/doc/clamav/clamav-mirror-howto.pdf
+share/doc/clamav/clamdoc.pdf
+share/doc/clamav/signatures.pdf
+share/examples/clamav/
+share/examples/clamav/clamd.conf
+@sample ${SYSCONFDIR}/clamd.conf
+share/examples/clamav/ex1.c
+share/examples/clamav/freshclam.conf
+@sample ${SYSCONFDIR}/freshclam.conf
+%%SHARED%%
+@owner _clamav
+@group _clamav
+@sample /var/db/clamav/
+@sample /var/spool/clamav/
+@sample /var/clamav/
+@mode 0700
+@sample /var/clamav/quarantine/
+@sample /var/clamav/tmp/
+@extraunexec rm -fr /var/db/clamav/*
+@extraunexec rm -fr /var/spool/clamav/*
+@extraunexec rm -fr /var/clamav/*

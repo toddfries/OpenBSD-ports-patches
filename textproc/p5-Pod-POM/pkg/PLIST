@@ -1,0 +1,19 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:44:04 espie Exp $
+bin/podlint
+bin/pom2
+${P5SITE}/Pod/
+${P5SITE}/Pod/POM/
+${P5SITE}/Pod/POM.pm
+${P5SITE}/Pod/POM/Constants.pm
+${P5SITE}/Pod/POM/Node.pm
+${P5SITE}/Pod/POM/Nodes.pm
+${P5SITE}/Pod/POM/Test.pm
+${P5SITE}/Pod/POM/View/
+${P5SITE}/Pod/POM/View.pm
+${P5SITE}/Pod/POM/View/HTML.pm
+${P5SITE}/Pod/POM/View/Pod.pm
+${P5SITE}/Pod/POM/View/Text.pm
+@man man/man1/podlint.1
+@man man/man1/pom2.1
+@man man/man3p/Pod::POM.3p
+@man man/man3p/Pod::POM::Node.3p

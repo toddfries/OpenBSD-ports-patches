@@ -1,0 +1,20 @@
+$OpenBSD: patch-ifaddrlist_c,v 1.1 2005/05/24 00:00:11 mjc Exp $
+--- ifaddrlist.c.orig	Fri Oct 16 10:50:49 1998
++++ ifaddrlist.c	Mon May 23 09:50:51 2005
+@@ -46,7 +46,6 @@ struct mbuf;
+ struct rtentry;
+ #endif
+ 
+-#include <net/if.h>
+ #include <netinet/in.h>
+ 
+ #include <ctype.h>
+@@ -223,7 +222,7 @@ set_up_interface(char *device, struct so
+ 	{
+             fprintf(stdout,
+                 "Multiple interfaces found, using %s @ %s.\n",
+-                host_lookup(sin->sin_addr.s_addr, fp->use_name),
++                libnet_host_lookup(sin->sin_addr.s_addr, fp->use_name),
+                 address_list->device);
+         }
+         device = strdup(address_list->device);

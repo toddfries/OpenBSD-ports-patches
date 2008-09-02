@@ -1,0 +1,14 @@
+$OpenBSD: patch-include_my_global_h,v 1.6 2007/04/09 22:43:06 ckuethe Exp $
+--- include/my_global.h.orig	Mon Mar  5 20:21:41 2007
++++ include/my_global.h	Sat Mar 31 19:00:41 2007
+@@ -56,6 +56,10 @@
+ #define USE_PRAGMA_INTERFACE
+ #endif
+ 
++#if defined(__OpenBSD__)
++#define HAVE_ERRNO_AS_DEFINE
++#endif /* __OpenBSD__ */
++
+ #if defined(i386) && !defined(__i386__)
+ #define __i386__
+ #endif

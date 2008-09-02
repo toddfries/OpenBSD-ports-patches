@@ -1,0 +1,10 @@
+--- src/imapcommon.c.orig	Tue Oct  3 14:27:00 2006
++++ src/imapcommon.c	Wed Jan 24 22:35:30 2007
+@@ -138,6 +138,7 @@
+ #include <limits.h>
+ 
+ #include <openssl/evp.h>
++#include <openssl/md5.h>
+ #include <openssl/err.h>
+ 
+ #include <pthread.h>

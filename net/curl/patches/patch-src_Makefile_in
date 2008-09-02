@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_Makefile_in,v 1.2 2008/06/24 18:37:25 naddy Exp $
+--- src/Makefile.in.orig	Sat Jun 14 18:39:05 2008
++++ src/Makefile.in	Sat Jun 14 18:39:17 2008
+@@ -70,7 +70,7 @@ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $
+ 	$(AM_CFLAGS) $(CFLAGS)
+ CCLD = $(CC)
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
++	$(AM_LDFLAGS) -L../lib/.libs $(LDFLAGS) -o $@
+ SOURCES = $(curl_SOURCES)
+ DIST_SOURCES = $(curl_SOURCES)
+ ETAGS = etags

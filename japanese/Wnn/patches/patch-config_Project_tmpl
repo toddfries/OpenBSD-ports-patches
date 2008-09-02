@@ -1,0 +1,182 @@
+--- config/Project.tmpl.orig	1994-08-29 10:40:17.000000000 +0200
++++ config/Project.tmpl	2004-01-02 20:21:26.000000000 +0100
+@@ -14,6 +14,20 @@ XCOMM $XConsortium: Project.tmpl,v 1.242
+  *                                                                          *
+  ***************************************************************************/
+ 
++#define JNeqnCmd		jneqn -Tnippon
++#define JNroffCmd		jnroff -Tnippon
++#define JEqnCmd			jeqn -Tnippon -Tps
++#define JTroffCmd		jgroff -Tnippon -Tps
++#define JColCmd			cat 
++#define JTblCmd			jtbl -Tnippon
++
++           JTROFF = JTroffCmd
++           JNROFF = JNroffCmd
++             JTBL = JTblCmd
++             JEQN = JEqnCmd
++            JNEQN = JNeqnCmd
++             JCOL = JColCmd
++
+ #define ProjectX		6	/* do *not* change this line */
+ 
+ /* The following project-specific rules are defined at the end of this file:
+@@ -70,9 +84,9 @@ XCOMM $XConsortium: Project.tmpl,v 1.242
+ #ifndef BuildXKB
+ #define BuildXKB		NO
+ #endif
+-#ifndef BuildXKBlib
++XCOMM needed for correct link
++#undef  BuildXKBlib
+ #define BuildXKBlib		NO	/* not yet a standard part of Xlib */
+-#endif
+ #ifndef BuildFresco
+ #if HasCplusplus && !HasGcc2ForCplusplus
+ #define BuildFresco		YES
+@@ -1081,17 +1095,12 @@ clean::									@@\
+ 	$(RM) index.troff index.pageno file.idx.nPS file.idx.PS
+ #endif
+ 
+-/* */#
+-/* */# OMRON INPUT MATHOD MAKE ENV
+-/* */#
++XCOMM 
++XCOMM  OMRON INPUT MATHOD MAKE ENV
++XCOMM 
+ 
+-#if defined(uniosu) || (defined(SVR4) && !defined(DGUX)) || defined(hpux)
+ #define termLibrary -lcurses
+ #define cvtfileDir ./sysV
+-#else
+-#define termLibrary -ltermcap
+-#define cvtfileDir ./bsd
+-#endif
+ 
+ #define	WnnSpecialObjectRule(obj, depends, direct, define)	@@\
+ obj : depends							@@\
+@@ -1100,7 +1109,7 @@ obj : depends							@@\
+ #ifdef WnnMakeDirectories
+ #undef WnnMakeDirectories
+ #endif
+-#define WnnMakeDirectories(step,dir)					@@\
++#define WnnMakeDirectories(step,dirs)					@@\
+ step::									@@\
+ 	@case '${MFLAGS}' in *[i]*) set +e;; esac;			@@\
+ 	DirFailPrefix@for i in dirs; do if [ -d $(DESTDIR)$$i ]; then \	@@\
+@@ -1134,6 +1143,10 @@ install:: list								@@\
+ 		$(WNNTOUCH) $(DESTDIR)dest/$$i); fi \			@@\
+ 	done
+ 
++/* configurable without a separate set of patches */
++
++#include "config.h"
++
+ #ifndef BuildWnn
+ #define BuildWnn	YES
+ #endif
+@@ -1230,14 +1243,14 @@ install:: list								@@\
+  * as YES. Default is that dictionary isn't installed if it exist already.
+  */
+ 
+-       WNNOWNER = wnn
++       WNNOWNER = $(WNNOWNER_INDIRECT)
+ #ifdef UseInstalled
+           IMTOP = $(TOP)
+ #else
+           IMTOP = $(CONTRIBSRC)/programs/Xsi
+ #endif
+-      WNNWNNDIR = /usr/local/lib/wnn
+-      WNNBINDIR = /usr/local/bin
++      WNNWNNDIR = $(WNNBASEDIR)/lib/wnn
++      WNNBINDIR = $(WNNBASEDIR)/bin
+       WNNINCDIR = $(INCROOT)
+       WNNLIBDIR = $(USRLIBDIR)
+     WNNTERM_LIB = termLibrary
+@@ -1248,9 +1261,9 @@ install:: list								@@\
+          WNNTOP = $(IMTOP)/Wnn
+        JWNNLANG = ja_JP
+      JWNNWNNDIR = $(WNNWNNDIR)/$(JWNNLANG)
+-     JWNNBINDIR = $(WNNBINDIR)/Wnn4
++     JWNNBINDIR = $(WNNBINDIR)
+      JWNNINCDIR = $(WNNINCDIR)/wnn
+-     JWNNDICDIR = $(JWNNWNNDIR)/dic
++     JWNNDICDIR = $(WNNDICDIR)/$(JWNNLANG)
+   JWNNPUBDICDIR = $(JWNNDICDIR)/pubdic
+ JWNNWNNCONSDICDIR = $(JWNNDICDIR)/wnncons
+   JWNNFZKSRCDIR = $(JWNNDICDIR)/src
+@@ -1278,8 +1291,8 @@ WNNWNNCONSDICSRC = $(WNNWNNCONSSRC)/dic
+        CWNNLANG = zh_CN
+      CWNNWNNDIR = $(WNNWNNDIR)/$(CWNNLANG)
+      CWNNINCDIR = $(WNNINCDIR)/cwnn
+-     CWNNBINDIR = $(WNNBINDIR)/cWnn4
+-     CWNNDICDIR = $(CWNNWNNDIR)/dic
++     CWNNBINDIR = $(WNNBINDIR)
++     CWNNDICDIR = $(WNNDICDIR)/$(CWNNLANG)
+   CWNNSYSDICDIR = $(CWNNDICDIR)/sys
+       CWNNCDSRC = $(CWNNTOP)/cd
+     CWNNCDICSRC = $(CWNNTOP)/cdic
+@@ -1301,8 +1314,8 @@ WNNWNNCONSDICSRC = $(WNNWNNCONSSRC)/dic
+        KWNNLANG = ko_KR
+      KWNNWNNDIR = $(WNNWNNDIR)/$(KWNNLANG)
+      KWNNINCDIR = $(WNNINCDIR)/kwnn
+-     KWNNBINDIR = $(WNNBINDIR)/kWnn4
+-     KWNNDICDIR = $(KWNNWNNDIR)/dic
++     KWNNBINDIR = $(WNNBINDIR)
++     KWNNDICDIR = $(WNNDICDIR)/$(KWNNLANG)
+   KWNNSYSDICDIR = $(KWNNDICDIR)/sys
+       KWNNKDSRC = $(KWNNTOP)/kd
+     KWNNKDICSRC = $(KWNNTOP)/kdic
+@@ -1322,7 +1335,7 @@ WNNWNNCONSDICSRC = $(WNNWNNCONSSRC)/dic
+ 
+        TWNNLANG = zh_TW
+      TWNNWNNDIR = $(WNNWNNDIR)/$(TWNNLANG)
+-     TWNNDICDIR = $(TWNNWNNDIR)/dic
++     TWNNDICDIR = $(WNNDICDIR)/$(TWNNLANG)
+   TWNNSYSDICDIR = $(TWNNDICDIR)/sys
+       TWNNTDSRC = $(CWNNTOP)/td
+     TWNNTDICSRC = $(CWNNTOP)/tdic
+@@ -1363,3 +1376,44 @@ XWNMOROMKANMSRC = $(XWNMOTOP)/romkan_m
+ #else
+       IMAKE_CMD = $(IMAKE) -I$(IMIRULESRC) -I$(IRULESRC) $(IMAKE_DEFINES)
+ #endif
++
++/* InstallJManPageLong: specific rules for japanese language manpages */
++#define InstallJManPageLong(file,destdir,dest)                          @@\
++all:: file.0								@@\
++									@@\
++file.0:: file.man							@@\
++	@if [ -f file.man ]; \						@@\
++	then \								@@\
++	tmp=`mktemp /tmp/man.XXXXXXXX` || exit 2 ; \			@@\
++	cat file.man | $(JNEQN) | $(JTBL) | $(JNROFF) $(MANMACROS) |  $(JCOL) > $$tmp; \	@@\
++	cp $$tmp file.0; \						@@\
++	$(RM) $$tmp; \							@@\
++	fi 								@@\
++									@@\
++install.man::                                                           @@\
++	MakeDir($(DESTDIR)destdir)					@@\
++	-@if [ -f file.0 ]; \						@@\
++	then \								@@\
++	$(INSTALL) -c $(INSTMANFLAGS) file.0 $(DESTDIR)destdir/dest.0; \@@\
++	fi								@@\
++									@@\
++clean::									@@\
++	RemoveFile(file.0)
++
++/*
++ * InstallJManPage - generate rules to install the indicated manual page.
++ */
++#ifndef InstallJManPage
++#define	InstallJManPage(file,destdir)					@@\
++InstallJManPageLong(file,destdir,file)
++#endif /* InstallJManPage */
++
++
++/*
++ * XXX override default rules, since Wnn only has japanese manpages.
++ */
++#undef InstallManPage
++#define InstallManPage	InstallJManPage
++#undef InstallManPageLong
++#define InstallManPageLong InstallJManPageLong
++          MANPATH := $(MANPATH)/ja_JP.EUC

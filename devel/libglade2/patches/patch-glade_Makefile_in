@@ -1,0 +1,12 @@
+$OpenBSD: patch-glade_Makefile_in,v 1.3 2007/10/24 22:38:53 jasper Exp $
+--- glade/Makefile.in.orig	Mon Jul 30 16:27:43 2007
++++ glade/Makefile.in	Fri Oct 12 07:21:33 2007
+@@ -255,7 +255,7 @@ libglade_2_0_la_SOURCES = \
+   glade-private.h
+ 
+ libglade_2_0_la_LIBADD = $(LIBGLADE_LIBS)
+-libglade_2_0_la_LDFLAGS = -version-info $(LTVERSION) $(export_symbols) -no-undefined
++libglade_2_0_la_LDFLAGS = $(LIBglade-2.0_LTVERSION) $(export_symbols) -no-undefined
+ EXTRA_DIST = $(gladeinclude_HEADERS) \
+ 	glade.def
+ 

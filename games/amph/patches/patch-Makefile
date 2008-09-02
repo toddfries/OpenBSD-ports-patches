@@ -1,0 +1,63 @@
+$OpenBSD: patch-Makefile,v 1.6 2003/01/21 21:59:51 pvalchev Exp $
+--- Makefile.orig	Mon Mar 25 12:11:27 2002
++++ Makefile	Tue Jan 21 14:50:05 2003
+@@ -3,14 +3,13 @@
+ #===============
+ 
+ # Install Paths
+-PREFIX := /usr/local
+-INSTALL_DIR := ${PREFIX}/games/amph
++INSTALL_DIR := ${PREFIX}/share/amph
+ 
+ # Libraries
+ USE_LIB_XPM := TRUE
+ 
+ SDL_CONFIG := sdl-config
+-SDL_HEADERS := $(shell $(SDL_CONFIG) --cflags)
++SDL_HEADERS := $(shell $(SDL_CONFIG) --cflags) -I${LOCALBASE}/include -I${X11BASE}/include
+ SDL_LIBS := $(shell $(SDL_CONFIG) --libs)
+ 
+ #=======================================================
+@@ -26,19 +25,19 @@ SEARCHDIRS := -I${MYCODEDIR} ${SDL_HEADE
+ 
+ # makemake variables
+ 
+-LINKER       := g++
++LINKER       := ${CXX}
+ DEPENDFLAGS  := -g  ${SEARCHDIRS}
+ TOUCHHEADERS := ${MYCODEDIR}/*.h
+ 
+ # C
+ 
+-CC     := gcc
+-CFLAGS  = ${DEPENDFLAGS}
++CC     ?= gcc
++CFLAGS  += ${DEPENDFLAGS}
+ 
+ # C++
+ 
+-CXX      := g++
+-CXXFLAGS  = ${DEPENDFLAGS} -O9 -funroll-loops -fomit-frame-pointer -ffast-math -Wcast-align
++CXX      ?= g++
++CXXFLAGS  += ${DEPENDFLAGS} -funroll-loops -fomit-frame-pointer -ffast-math -Wcast-align
+ 
+ %.o : %.cpp
+ 	${CXX} ${CPPFLAGS} -c $< ${CXXFLAGS} -o $@
+@@ -47,7 +46,7 @@ CXXFLAGS  = ${DEPENDFLAGS} -O9 -funroll-
+ 	${CXX} ${CPPFLAGS} -c $< ${CXXFLAGS}
+ 
+ # C preprocessor (C, C++, FORTRAN)
+-CPPFLAGS = -DINSTALL_DIR="\"${INSTALL_DIR}\""
++CPPFLAGS += -DINSTALL_DIR="\"${INSTALL_DIR}\""
+ 
+ ifeq ($(USE_LIB_XPM), TRUE)
+     CPPFLAGS := $(CPPFLAGS) -D_USE_LIB_XPM 
+@@ -194,7 +193,7 @@ jdepend:
+ 
+ ./src/Surface.o: ./src/AmpHead.hpp ./src/Clut.hpp ./src/ConstVal.hpp ./src/Graphfil.hpp ./src/Shape.hpp ./src/ShapeLd.hpp ./src/Surface.hpp ./src/System.hpp /usr/include/limits.h /usr/include/math.h /usr/include/stdio.h /usr/include/stdlib.h
+ 
+-./src/System.o: ./src/AmpHead.hpp ./src/Graphfil.hpp ./src/System.hpp /usr/include/X11/xpm.h /usr/include/fcntl.h /usr/include/limits.h /usr/include/math.h /usr/include/stdio.h /usr/include/stdlib.h /usr/include/string.h /usr/include/sys/stat.h /usr/include/sys/time.h /usr/include/sys/types.h /usr/include/unistd.h
++./src/System.o: ./src/AmpHead.hpp ./src/Graphfil.hpp ./src/System.hpp /usr/X11R6/include/X11/xpm.h /usr/include/fcntl.h /usr/include/limits.h /usr/include/math.h /usr/include/stdio.h /usr/include/stdlib.h /usr/include/string.h /usr/include/sys/stat.h /usr/include/sys/time.h /usr/include/sys/types.h /usr/include/unistd.h
+ 
+ ./src/Thing.o: ./src/AmpHead.hpp ./src/Appl.hpp ./src/Bullet.hpp ./src/ConstVal.hpp ./src/Element.hpp ./src/File.hpp ./src/Graphfil.hpp ./src/Level.hpp ./src/ObjInfo.hpp ./src/Object.hpp ./src/Pltform.hpp ./src/Shape.hpp ./src/ShapeLd.hpp ./src/Surface.hpp ./src/System.hpp ./src/Thing.hpp /usr/include/limits.h /usr/include/math.h /usr/include/stdio.h /usr/include/stdlib.h
+ 

@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.2 2007/12/16 18:27:50 laurent Exp $
+%%SHARED%%
+bin/embryo_cc
+include/Embryo.h
+lib/libembryo.a
+lib/libembryo.la
+lib/pkgconfig/
+lib/pkgconfig/embryo.pc
+share/embryo/
+share/embryo/include/
+share/embryo/include/default.inc

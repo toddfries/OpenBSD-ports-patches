@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.2 2005/06/13 07:52:37 alek Exp $
+libexec/kpoppassd
+share/doc/kpoppassd/
+share/doc/kpoppassd/README

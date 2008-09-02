@@ -1,0 +1,13 @@
+# $OpenBSD: Makefile.pear,v 1.2 2007/03/20 11:12:22 robert Exp $
+# Default Makefile to install a PHP PEAR module
+
+default:
+
+install:
+	cp ${WRKDIR}/package.xml ${.CURDIR}
+	mkdir -p ${PREFIX}/lib/php
+	${LOCALBASE}/bin/pear install -R ${WRKINST} -n ${.CURDIR}/package.xml
+
+# These directories and files are not needed 
+	@cd ${WRKINST}/var/www/pear && rm -rf cache lib/.channels lib/.channels/__uri.reg \
+			lib/.depdb*  lib/.registry/.channel*

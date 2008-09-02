@@ -1,0 +1,12 @@
+--- lib/libxview/textsw/txt_filter.c.orig	1993-06-29 07:17:39.000000000 +0200
++++ lib/libxview/textsw/txt_filter.c	2003-12-30 01:31:14.000000000 +0100
+@@ -55,6 +55,9 @@ static char     sccsid[] = "@(#)txt_filt
+ #define	REPLY_OKAY	 0
+ #define	REPLY_SEND	 1
+ 
++static int	talk_to_filter();
++static int	start_filter();
++
+ /* performance: global cache of getdtablesize() */
+ extern int      dtablesize_cache;
+ 

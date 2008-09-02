@@ -1,0 +1,68 @@
+$OpenBSD: patch-interface_utils_h,v 1.4 2007/10/27 15:01:53 espie Exp $
+--- interface/utils.h.orig	Thu Apr 20 00:41:04 2000
++++ interface/utils.h	Sat Oct 27 16:57:49 2007
+@@ -1,4 +1,16 @@
++#ifdef __linux__
+ #include <endian.h>
++#endif
++#ifdef __NetBSD__
++#include <sys/param.h>
++#if __NetBSD_Version__ >= 104010000
++#include <sys/endian.h>
++#else
++#include <machine/endian.h>
++#include <machine/bswap.h>
++#endif
++#include <err.h>	/* XXX */
++#endif
+ #include <stdio.h>
+ #include <errno.h>
+ #include <string.h>
+@@ -13,6 +25,7 @@ static inline int bigendianp(void){
+   return(1);
+ }
+ 
++#if !defined(__OpenBSD__)
+ static inline int32_t swap32(int32_t x){
+   return((((u_int32_t)x & 0x000000ffU) << 24) | 
+ 	 (((u_int32_t)x & 0x0000ff00U) <<  8) | 
+@@ -24,6 +37,7 @@ static inline int16_t swap16(int16_t x){
+   return((((u_int16_t)x & 0x00ffU) <<  8) | 
+ 	 (((u_int16_t)x & 0xff00U) >>  8));
+ }
++#endif /* !defined(__OpenBSD__) */
+ 
+ #if BYTE_ORDER == LITTLE_ENDIAN
+ 
+@@ -112,6 +126,7 @@ static void cderror(cdrom_drive *d,const char *s){
+       break;
+     case CDDA_MESSAGE_FORGETIT:
+     default:
++      break;
+     }
+   }
+ }
+@@ -127,6 +142,7 @@ static void cdmessage(cdrom_drive *d,const char *s){
+       break;
+     case CDDA_MESSAGE_FORGETIT:
+     default:
++      break;
+     }
+   }
+ }
+@@ -169,6 +185,7 @@ static void idperror(int messagedest,char **messages,c
+       break;
+     case CDDA_MESSAGE_FORGETIT:
+     default:
++      break;
+     }
+   }
+   if(malloced)free(buffer);
+@@ -205,6 +222,7 @@ static void idmessage(int messagedest,char **messages,
+       break;
+     case CDDA_MESSAGE_FORGETIT:
+     default:
++      break;
+     }
+   }
+   if(malloced)free(buffer);

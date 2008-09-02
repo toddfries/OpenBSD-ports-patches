@@ -1,0 +1,19 @@
+$OpenBSD: patch-src_osdep_unix_Makefile.gss,v 1.7 2007/10/30 10:12:41 ajacoutot Exp $
+
+--- src/osdep/unix/Makefile.gss.orig	Thu Oct 25 00:11:46 2007
++++ src/osdep/unix/Makefile.gss	Thu Oct 25 00:12:46 2007
+@@ -29,11 +29,12 @@
+ GSSDIR=/usr/local
+ GSSINCLUDE=$(GSSDIR)/include
+ GSSLIB=$(GSSDIR)/lib
+-GSSCFLAGS= -I$(GSSINCLUDE) -DGSS_C_NT_HOSTBASED_SERVICE=gss_nt_service_name -DKRB5_DEPRECATED=1
++GSSCFLAGS= -I$(GSSINCLUDE) -DHEIMDAL
++GSSLDFLAGS= -L$(GSSLIB) -lkafs -lgssapi -lkrb5 -lasn1 -lcom_err -ldes -lcrypto
+ GSSOLDLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lcrypto -lcom_err
+ GSSNEWLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err
+ 
+ gss:	# GSSAPI Kerberos V flags
+ 	echo $(GSSCFLAGS) >> OSCFLAGS
+-	sh -c '(test -f $(GSSLIB)/libk5crypto.a) && echo $(GSSNEWLDFLAGS) || echo $(GSSOLDLDFLAGS)' >> LDFLAGS
++	echo $(GSSLDFLAGS) >> LDFLAGS
+ 	echo "#include \"kerb_mit.c\"" >> auths.c

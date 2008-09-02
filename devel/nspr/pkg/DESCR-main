@@ -1,0 +1,11 @@
+NSPR provides platform independence for non-GUI operating system
+facilities.
+These facilities include threads, thread synchronization, normal file
+and network I/O, interval timing and calendar time, basic memory
+management (malloc and free) and shared library linking.
+A good portion of the library's purpose, and perhaps the primary purpose
+in the Gromit environment, is to provide the underpinnings of the Java
+VM, more or less mapping the sys layer that Sun defines for the porting
+of the Java VM to various platforms.  NSPR does go beyond that
+requirement in some areas and since it is also the platform independent
+layer for most of the servers produced by Netscape

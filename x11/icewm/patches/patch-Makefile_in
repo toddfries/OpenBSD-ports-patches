@@ -1,0 +1,18 @@
+$OpenBSD: patch-Makefile_in,v 1.10 2008/04/09 10:15:36 ajacoutot Exp $
+--- Makefile.in.orig	Sat Jan  5 08:34:24 2008
++++ Makefile.in	Wed Apr  9 11:54:25 2008
+@@ -121,12 +121,9 @@ install-base: base
+ 
+ install-docs: docs
+ 	@echo ------------------------------------------
+-	@rm -fr "$(DESTDIR)$(DOCDIR)/icewm-$(VERSION)"
+-	@$(INSTALLDIR) "$(DESTDIR)$(DOCDIR)/icewm-$(VERSION)"
++	@$(INSTALLDIR) "$(DESTDIR)$(DOCDIR)/icewm"
+ 	@echo "Installing documentation in $(DESTDIR)$(DOCDIR)"
+-	@$(INSTALLLIB) $(DOCFILES) "$(DESTDIR)$(DOCDIR)/icewm-$(VERSION)"
+-	@$(INSTALLLIB) "$(top_srcdir)/doc/"*.sgml "$(DESTDIR)$(DOCDIR)/icewm-$(VERSION)"
+-	@$(INSTALLLIB) "$(top_srcdir)/doc/"*.html "$(DESTDIR)$(DOCDIR)/icewm-$(VERSION)"
++	$(BSD_INSTALL_DATA) "$(top_srcdir)/doc/"*.html "$(DESTDIR)$(DOCDIR)/icewm"
+ 	@echo ------------------------------------------
+ 
+ install-nls: nls

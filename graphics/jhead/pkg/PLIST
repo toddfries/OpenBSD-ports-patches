@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 00:50:09 espie Exp $
+bin/jhead
+@man man/man1/jhead.1
+share/doc/jhead/
+share/doc/jhead/usage.html

@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.4 2008/06/09 18:58:48 simon Exp $
+${P5SITE}/JSON/
+${P5SITE}/JSON.pm
+${P5SITE}/JSON/PP/
+${P5SITE}/JSON/PP.pm
+${P5SITE}/JSON/PP/Boolean.pm
+${P5SITE}/JSON/PP5005.pm
+${P5SITE}/JSON/PP56.pm
+${P5SITE}/JSON/PP58.pm
+@man man/man3p/JSON.3p
+@man man/man3p/JSON::PP.3p
+@man man/man3p/JSON::PP5005.3p
+@man man/man3p/JSON::PP56.3p
+@man man/man3p/JSON::PP58.3p
+@man man/man3p/JSON::PP::Boolean.3p

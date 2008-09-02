@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.6 2004/09/15 00:50:09 espie Exp $
+bin/jbgtopbm
+bin/pbmtojbg
+include/jbig.h
+lib/libjbig.a
+@man man/man1/jbgtopbm.1
+@man man/man1/pbmtojbg.1
+share/doc/jbig/
+share/doc/jbig/jbig.doc
+%%SHARED%%

@@ -1,0 +1,34 @@
+# $OpenBSD: Makefile,v 1.7 2007/11/24 12:52:51 steven Exp $
+
+COMMENT=	graphical front-end to the diff program
+
+V=		4.1.4
+DISTNAME=	tkdiff-${V}-unix
+PKGNAME=	tkdiff-${V}
+CATEGORIES=	devel sysutils
+
+HOMEPAGE=	http://tkdiff.sourceforge.net/
+
+MAINTAINER=	Vlad Glagolev <stealth@sourcemage.org> 
+
+# GPL
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tkdiff/}
+
+RUN_DEPENDS=	:tk-8.4.*:x11/tk/8.4
+
+NO_BUILD=	Yes
+NO_REGRESS=	Yes
+USE_X11=	Yes
+
+do-configure:
+	@perl -pi -e 's,!!LOCALBASE!!,${LOCALBASE},' ${WRKSRC}/tkdiff
+
+do-install:
+	${INSTALL_SCRIPT} ${WRKSRC}/tkdiff ${PREFIX}/bin
+
+.include <bsd.port.mk>

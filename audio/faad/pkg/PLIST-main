@@ -1,0 +1,18 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2006/11/25 17:04:32 espie Exp $
+@conflict playfair-*
+@pkgpath audio/faad
+@pkgpath audio/faad,no_xmms
+bin/faad
+include/faad.h
+include/faadconfig.h
+include/mp4.h
+include/mp4ff.h
+include/mpeg4ip.h
+include/systems.h
+lib/libfaad.a
+lib/libfaad.la
+lib/libmp4ff.a
+lib/libmp4ff.la
+lib/libmp4v2.a
+lib/libmp4v2.la
+%%SHARED%%

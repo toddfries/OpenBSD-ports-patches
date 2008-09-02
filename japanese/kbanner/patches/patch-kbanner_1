@@ -1,0 +1,10 @@
+--- kbanner.1.orig	Fri Oct 15 06:18:55 1993
++++ kbanner.1	Thu Feb 22 22:56:38 2001
+@@ -44,6 +44,6 @@ Shifted-JIS is often misjudged as EUC.
+ Only ISO-2022-JP is available for MIME.
+ .SH "SEE ALSO"
+ .PP
+-banner(1), or banner(6).
++banner(1).
+ .SH AUTHOR
+ Koichi Yasuoka

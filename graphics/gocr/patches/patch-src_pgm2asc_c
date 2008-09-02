@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_pgm2asc_c,v 1.2 2007/03/17 22:03:30 espie Exp $
+--- src/pgm2asc.c.orig	Wed Feb  7 23:34:41 2007
++++ src/pgm2asc.c	Mon Mar 12 19:20:30 2007
+@@ -1721,7 +1721,7 @@ int glue_broken_chars( pix *pp ){
+   	  }
+         } end_for_each(&(JOB->res.boxlist));
+ 	box4=box5; // next nearest box within the same line
+-      	if (box4) {
++      	if (box2 && box4) {
+ #if 0    /* set this to 1 for debugging of melting bugs */
+           if (JOB->cfg.verbose & 7) {
+             fprintf(stderr,"\n# next two boxes are candidates for melting ");

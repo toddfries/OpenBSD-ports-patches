@@ -1,0 +1,45 @@
+$OpenBSD: patch-doc_Makefile_in,v 1.2 2005/07/25 07:12:58 aanriot Exp $
+--- doc/Makefile.in.orig	Sun Jul  3 09:02:16 2005
++++ doc/Makefile.in	Sun Jul  3 09:03:50 2005
+@@ -51,7 +51,7 @@ RM = rm -f
+ TEXI2POD     = texi2pod.pl
+ POD2MAN      = @POD2MAN@
+ MAN          = wget.$(manext)
+-WGETRC       = $(sysconfdir)/wgetrc
++WGETRCDIR    = $(prefix)/share/examples/wget
+ SAMPLERCTEXI = sample.wgetrc.munged_for_texi_inclusion
+ 
+ #
+@@ -66,6 +66,7 @@ $(SAMPLERCTEXI): $(srcdir)/sample.wgetrc
+ 	sed s/@/@@/g $? > $@
+ 
+ wget.info: $(srcdir)/wget.texi $(SAMPLERCTEXI) $(srcdir)/version.texi
++	@rm -f wget.info*
+ 	$(MAKEINFO) -I$(srcdir) $(srcdir)/wget.texi
+ 
+ $(TEXI2POD): $(srcdir)/$(TEXI2POD).in
+@@ -131,22 +132,8 @@ install.man: $(MAN)
+ 
+ # install sample.wgetrc
+ install.wgetrc: $(srcdir)/sample.wgetrc
+-	$(top_srcdir)/mkinstalldirs $(DESTDIR)$(sysconfdir)
+-	@if test -f $(DESTDIR)$(WGETRC); then \
+-	  if cmp -s $(srcdir)/sample.wgetrc $(DESTDIR)$(WGETRC); then echo ""; \
+-	     else \
+-	     echo ' $(INSTALL_DATA) $(srcdir)/sample.wgetrc $(DESTDIR)$(WGETRC).new'; \
+-	     $(INSTALL_DATA) $(srcdir)/sample.wgetrc $(DESTDIR)$(WGETRC).new; \
+-	     echo; \
+-	     echo "WARNING: Differing \`$(DESTDIR)$(WGETRC)'"; \
+-	     echo "         exists and has been spared.  You might want to"; \
+-	     echo "         consider merging in the new lines from"; \
+-	     echo "         \`$(DESTDIR)$(WGETRC).new'."; \
+-	     echo; \
+-	  fi; \
+-	else \
+-	  $(INSTALL_DATA) $(srcdir)/sample.wgetrc $(DESTDIR)$(WGETRC); \
+-	fi
++	$(top_srcdir)/mkinstalldirs $(DESTDIR)$(WGETRCDIR)
++	$(INSTALL_DATA) $(srcdir)/sample.wgetrc $(DESTDIR)$(WGETRCDIR)
+ 
+ # uninstall info pages
+ uninstall.info:

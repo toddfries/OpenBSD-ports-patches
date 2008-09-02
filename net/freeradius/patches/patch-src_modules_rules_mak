@@ -1,0 +1,24 @@
+$OpenBSD: patch-src_modules_rules_mak,v 1.4 2008/01/21 22:21:24 rui Exp $
+--- src/modules/rules.mak.orig	Thu Jan 10 10:12:01 2008
++++ src/modules/rules.mak	Mon Jan 21 16:21:32 2008
+@@ -113,9 +113,9 @@ build-module: $(TARGET).la $(RLM_UTILS)
+ 	@cp $< $(top_builddir)/src/modules/lib
+ 
+ $(TARGET).la: $(LT_OBJS)
+-	$(LIBTOOL) --mode=link $(CC) -release $(RADIUSD_VERSION) \
++	$(LIBTOOL) --mode=link $(CC) -avoid-version \
+ 	-module $(LINK_MODE) $(LDFLAGS) $(RLM_LDFLAGS) -o $@     \
+-	-rpath $(libdir) $^ $(LIBRADIUS) $(RLM_LIBS) $(LIBS)
++	-rpath $(libdir)/freeradius $^ $(LIBRADIUS) $(RLM_LIBS) $(LIBS)
+ 
+ #######################################################################
+ #
+@@ -162,7 +162,5 @@ install:
+ 	@[ "x$(RLM_INSTALL)" = "x" ] || $(MAKE) $(MFLAGS) $(RLM_INSTALL)
+ 	if [ "x$(TARGET)" != "x" ]; then \
+ 	    $(LIBTOOL) --mode=install $(INSTALL) -c \
+-		$(TARGET).la $(R)$(libdir)/$(TARGET).la || exit $$?; \
+-	    rm -f $(R)$(libdir)/$(TARGET)-$(RADIUSD_VERSION).la; \
+-	    ln -s $(TARGET).la $(R)$(libdir)/$(TARGET)-$(RADIUSD_VERSION).la || exit $$?; \
++		$(TARGET).la $(R)$(libdir)/freeradius/$(TARGET).la || exit $$?; \
+ 	fi

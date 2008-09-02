@@ -1,0 +1,11 @@
+YSM is a portable open source console ICQ client written in the C
+language, under the GPL license.  These are the list of available
+features the last release of ysm provides:
+
+* Plaintext and AES encrypted ICQ messages sending/receiving.
+* Plaintext and AES encrypted File transfers.
+* Downloading and Uploading of serverside contact lists.
+* Fingerprinting of remote ICQ clients.
+* Sending/Receiving of URLs and contacts.
+* Ignore, Visible and Invisible lists management.
+* and more features..  alert, forwarding, seen, afk, etc..

@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 09:11:59 espie Exp $
+include/fftw.h
+include/rfftw.h
+@info info/fftw.info
+lib/libfftw.a
+lib/libfftw.la
+lib/librfftw.a
+lib/librfftw.la
+share/doc/fftw/
+share/doc/fftw/fftw.ps
+%%SHARED%%

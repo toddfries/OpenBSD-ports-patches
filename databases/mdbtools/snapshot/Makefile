@@ -1,0 +1,64 @@
+# $OpenBSD: Makefile,v 1.13 2008/06/02 14:34:41 sthen Exp $
+
+COMMENT-main=	read microsoft Access MDB
+COMMENT-gmdb=	graphical interface to MDB tools
+DATE=		20070603
+DISTNAME=	mdbtools-${DATE}
+PKGNAME-main=	mdbtools-${DATE}p0
+PKGNAME-gmdb=	gmdb-${DATE}p1
+HOMEPAGE=	http://mdbtools.sourceforge.net/
+
+CATEGORIES=	databases converters
+MASTER_SITES=	ftp://quatramaran.ens.fr/pub/espie/
+
+#MASTER_SITES=${MASTER_SITE_SOURCEFORGE:=mdbtools/}
+MULTI_PACKAGES=	-main -gmdb
+
+SHARED_LIBS +=	mdb                  1.0      # .1.0
+SHARED_LIBS +=	mdbsql               1.0      # .1.0
+
+# LGPL
+PERMIT_DISTFILES_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_PACKAGE_CDROM=	Yes
+
+USE_X11=	Yes
+USE_LIBTOOL=	Yes
+CONFIGURE_STYLE=	gnu
+
+WRKDIST=	${WRKDIR}/mdbtools
+BUILD_DEPENDS=	::devel/bison \
+		::lang/gawk
+
+LIB_DEPENDS=	glib-2.0::devel/glib2
+WANTLIB=	c pcre
+
+MODULES=	devel/gettext
+
+
+LIB_DEPENDS-gmdb=${LIB_DEPENDS} \
+		gnomeui-2::x11/gnome/libgnomeui \
+		mdb,mdbsql::databases/mdbtools/snapshot
+RUN_DEPENDS-gmdb=${RUN_DEPENDS} \
+		:yelp-*:x11/gnome/yelp
+
+WANTLIB-gmdb=	${WANTLIB} \
+		audiofile bonobo-activation popt ORBit-2 pthread \
+		bonoboui-2  atk-1.0 gobject-2.0 m jpeg \
+		SM esd fontconfig ssl z cairo glitz png \
+		gthread-2.0 art_lgpl_2 X11 glade-2.0 \
+		gconf-2 ICE Xrender gmodule-2.0 \
+		pango-1.0 pangoft2-1.0 \
+		gnomecanvas-2 gdk-x11-2.0 xml2 gnome-2 \
+		gnome-keyring freetype crypto gtk-x11-2.0 \
+		pangocairo-1.0 gdk_pixbuf-2.0 bonobo-2 \
+		gnomevfs-2 ORBitCosNaming-2 Xau Xdmcp expat \
+		Xcursor Xext Xfixes Xi Xinerama Xrandr dbus-1 dbus-glib-1 \
+		util Xcomposite Xdamage gailutil pixman-1
+
+
+WANTLIB-main=	${WANTLIB} readline termcap
+
+.include <bsd.port.mk>
+

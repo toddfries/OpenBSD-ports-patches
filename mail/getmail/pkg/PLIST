@@ -1,0 +1,54 @@
+@comment $OpenBSD: PLIST,v 1.11 2008/03/17 19:44:51 sturm Exp $
+bin/getmail
+bin/getmail_fetch
+bin/getmail_maildir
+bin/getmail_mbox
+lib/python${MODPY_VERSION}/site-packages/getmail-${V}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/getmailcore/
+lib/python${MODPY_VERSION}/site-packages/getmailcore/__init__.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/_pop3ssl.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/_pop3ssl.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/_retrieverbases.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/_retrieverbases.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/baseclasses.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/baseclasses.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/constants.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/constants.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/destinations.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/destinations.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/exceptions.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/exceptions.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/filters.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/filters.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/logging.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/logging.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/message.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/message.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/retrievers.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/retrievers.pyc
+lib/python${MODPY_VERSION}/site-packages/getmailcore/utilities.py
+lib/python${MODPY_VERSION}/site-packages/getmailcore/utilities.pyc
+@man man/man1/getmail.1
+@man man/man1/getmail_fetch.1
+@man man/man1/getmail_maildir.1
+@man man/man1/getmail_mbox.1
+share/doc/getmail/
+share/doc/getmail/BUGS
+share/doc/getmail/CHANGELOG
+share/doc/getmail/COPYING
+share/doc/getmail/README
+share/doc/getmail/THANKS
+share/doc/getmail/TODO
+share/doc/getmail/configuration.html
+share/doc/getmail/configuration.txt
+share/doc/getmail/documentation.html
+share/doc/getmail/documentation.txt
+share/doc/getmail/faq.html
+share/doc/getmail/faq.txt
+share/doc/getmail/getmaildocs.css
+share/doc/getmail/getmailrc-examples
+share/doc/getmail/troubleshooting.html
+share/doc/getmail/troubleshooting.txt
+share/examples/getmail/
+share/examples/getmail/getmailrc-examples

@@ -1,0 +1,40 @@
+$OpenBSD: patch-configure,v 1.2 2007/05/26 23:13:25 aanriot Exp $
+--- configure.orig	Wed Jul 18 07:05:38 2001
++++ configure	Sat May 26 16:01:41 2007
+@@ -982,7 +982,6 @@ fi
+ 
+ ac_test_CFLAGS="${CFLAGS+set}"
+ ac_save_CFLAGS="$CFLAGS"
+-CFLAGS=
+ echo $ac_n "checking whether ${CC-cc} accepts -g""... $ac_c" 1>&6
+ echo "configure:988: checking whether ${CC-cc} accepts -g" >&5
+ if eval "test \"`echo '$''{'ac_cv_prog_cc_g'+set}'`\" = set"; then
+@@ -1154,10 +1158,6 @@ EOF
+ 
+ fi
+ 
+-if test $ac_cv_prog_gcc = yes; then
+-  CCOPTS='-O3 -Wall'
+-  CFLAGS="$CCOPTS"
+-fi
+ 
+ # Extract the first word of "md5sum", so it can be a program name with args.
+ set dummy md5sum; ac_word=$2
+@@ -2022,14 +2023,14 @@ if test "${with_libnet+set}" = set; then
+                 echo $ac_n "checking Using libnet in""... $ac_c" 1>&6
+ echo "configure:2024: checking Using libnet in" >&5
+                 echo "$ac_t""$withval" 1>&6
+-                LIBNET_INCLUDES="-I${withval}/include"
+-                LIBNET_LDFLAGS="-L${withval}/lib"
++                LIBNET_INCLUDES="-I${withval}/include/libnet-1.0"
++                LIBNET_LDFLAGS="-L${withval}/lib/libnet-1.0"
+             fi
+ fi
+ 
+ 
+ OCFLAGS="$CFLAGS"
+-CFLAGS="$CFLAGS $LIBPCAP_INCLUDES $LIBPCAP_LDFLAGS"
++CFLAGS="$CFLAGS $LIBPCAP_INCLUDES $LIBPCAP_LDFLAGS `libnet-config-1.0 --defines`"
+ echo $ac_n "checking for main in -lpcap""... $ac_c" 1>&6
+ echo "configure:2035: checking for main in -lpcap" >&5
+ ac_lib_var=`echo pcap'_'main | sed 'y%./+-%__p_%'`

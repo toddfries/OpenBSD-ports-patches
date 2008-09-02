@@ -1,0 +1,19 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 00:46:12 espie Exp $
+bin/scavenger
+@man man/cat1/scavenger.0
+share/doc/scavenger/
+share/doc/scavenger/DOC
+share/scavenger/
+share/scavenger/badguy.lbm
+share/scavenger/brownblue.lbm
+share/scavenger/death.raw
+share/scavenger/dig.raw
+share/scavenger/fall.raw
+share/scavenger/levels.scl
+share/scavenger/microman.lbm
+share/scavenger/pop.raw
+share/scavenger/redbrick.lbm
+share/scavenger/reddevil.lbm
+share/scavenger/regularguy.lbm
+share/scavenger/spiralthing.lbm
+share/scavenger/victory.raw

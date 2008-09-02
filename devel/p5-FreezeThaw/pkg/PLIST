@@ -1,0 +1,3 @@
+@comment $OpenBSD: PLIST,v 1.8 2004/09/14 23:43:59 espie Exp $
+${P5SITE}/FreezeThaw.pm
+@man man/man3p/FreezeThaw.3p

@@ -1,0 +1,32 @@
+$OpenBSD: patch-gtkpool_sound_cpp,v 1.4 2007/10/29 06:47:20 jakemsr Exp $
+--- gtkpool/sound.cpp.orig	Sun Jul 28 14:57:41 2002
++++ gtkpool/sound.cpp	Sun Oct 28 19:09:11 2007
+@@ -20,13 +20,17 @@
+ #include <sys/stat.h>
+ #include <fcntl.h>
+ #include <unistd.h>
+-#include <sys/soundcard.h>
+ #include <sys/ioctl.h>
++#ifdef __OpenBSD__
++#include <soundcard.h>
++#else
++#include <sys/soundcard.h>
++#endif
+ #include <stdio.h>
+ #include <errno.h>
+ #include "sound.h"
+ 
+-SoundError::SoundError(char *desc, int c, int r = 0, int g = 0){
++SoundError::SoundError(char *desc, int c, int r, int g){
+ 	description = strdup(desc);
+ 	code = c;
+ 	requested = r;
+@@ -80,7 +84,7 @@ int load_sound(char *file, char *buffer, int *count)
+ 
+ void open_sound_device(char *name)
+ {
+-	if ((audio_fd = open("/dev/dsp", O_WRONLY, 0)) == -1) {
++	if ((audio_fd = open("/dev/audio", O_WRONLY, 0)) == -1) {
+ 		g_message("Could Not open Audio Device");
+ 	}
+ }

@@ -1,0 +1,30 @@
+$OpenBSD: patch-README,v 1.2 2006/08/01 12:32:36 alek Exp $
+--- README.orig	Fri Jul 14 18:26:30 2006
++++ README	Fri Jul 14 18:29:17 2006
+@@ -75,13 +75,13 @@ COMPATIBILITY NOTICES (Please read)
+ ------------------------------------------------------------------------------
+ 
+ Once you have installed rsnapshot, you will need to configure it.
+-The default configuration file is /etc/rsnapshot.conf, although the exact path
++The default configuration file is !!SYSCONFDIR!!/rsnapshot.conf, although the exact path
+ may be different depending on how the program was installed. If this
+-file does not exist, copy /etc/rsnapshot.conf.default over to
+-/etc/rsnapshot.conf and edit it to suit your tastes. See the man page for
++file does not exist, copy !!SAMPLES_DIR!!/rsnapshot.conf.default over to
++!!SYSCONFDIR!!/rsnapshot.conf and edit it to suit your tastes. See the man page for
+ the full list of configuration options.
+ 
+-When /etc/rsnapshot.conf contains your chosen settings, do a quick sanity
++When !!SYSCONFDIR!!/rsnapshot.conf contains your chosen settings, do a quick sanity
+ check to make sure everything is ready to go:
+ 
+     rsnapshot configtest
+@@ -102,7 +102,7 @@ In the previous example, there will be s
+ taken each day (at 0,4,8,12,16, and 20 hours). There will also
+ be daily snapshots taken every night at 11:50PM. The number of
+ snapshots that are saved depends on the "interval" settings in
+-/etc/rsnapshot.conf.
++!!SYSCONFDIR!!/rsnapshot.conf.
+ 
+ For example:
+     

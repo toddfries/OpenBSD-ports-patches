@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST-main,v 1.2 2007/09/20 09:14:19 sthen Exp $
+bin/pacpl
+@man man/man1/pacpl.1
+share/doc/pacpl/
+share/doc/pacpl/FAQ
+share/doc/pacpl/README
+share/examples/pacpl/
+@sample ${SYSCONFDIR}/pacpl/
+@group wheel
+share/examples/pacpl/pacpl.conf
+@sample ${SYSCONFDIR}/pacpl/pacpl.conf

@@ -1,0 +1,25 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:46:11 espie Exp $
+bin/xbattle
+@man man/cat1/xbattle.0
+share/doc/xbattle/
+share/doc/xbattle/README
+share/doc/xbattle/tutorial1
+share/doc/xbattle/tutorial2
+share/xbattle/
+share/xbattle/xbas/
+share/xbattle/xbas/simple.xba
+share/xbattle/xbos/
+share/xbattle/xbos/atlas.xbo
+share/xbattle/xbos/default.xbo
+share/xbattle/xbos/demo.xbo
+share/xbattle/xbos/desert.xbo
+share/xbattle/xbos/io.xbo
+share/xbattle/xbos/skirmish.xbo
+share/xbattle/xbos/space.xbo
+share/xbattle/xbos/tribal.xbo
+share/xbattle/xbos/tropical.xbo
+share/xbattle/xbos/tropical2.xbo
+share/xbattle/xbos/tundra.xbo
+share/xbattle/xbts/
+share/xbattle/xbts/castle.xbt
+share/xbattle/xbts/natural.xbt

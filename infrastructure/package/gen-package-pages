@@ -1,0 +1,294 @@
+#!/usr/bin/perl -w
+
+# $OpenBSD: gen-package-pages,v 1.16 2008/05/01 00:54:54 pvalchev Exp $
+
+# Copyright (c) 2004 Michael Coulter
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#	notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#	notice, this list of conditions and the following disclaimer in the
+#	documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE OPENBSD PROJECT AND CONTRIBUTORS
+# ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OPENBSD
+# PROJECT OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Requires:
+# all packages under some $pkgpath, in <arch>/*.tgz
+# Outputs result in html/*
+
+use strict;
+
+use OpenBSD::PackageInfo;
+use OpenBSD::PackageName;
+use OpenBSD::PackageLocator;
+use OpenBSD::PackingList;
+
+use subs qw(dprint gen_arch_page gen_pkg_page gen_pkg_listing_page getfile
+    htmlfile gen_index_page arch_body arch_foot arch_head index_head 
+    index_foot pkg_list pkg_long);
+
+our $osrev = "4.3";
+our $debug = 0;
+our $html;
+
+my @arches = qw(alpha amd64 arm hppa i386 m68k m88k mips64 powerpc sh sparc sparc64 vax);
+my $pkgpath = "/home/ftp/pub/OpenBSD/$osrev/packages";
+my $htmlbase = "html";
+
+mkdir($htmlbase);
+foreach (@arches) {
+	mkdir "$htmlbase/$_";
+}
+
+gen_index_page(@arches);
+
+foreach (@arches) { gen_arch_page($_); }
+
+sub dprint 
+{
+	if($debug) { print @_; }
+}
+
+sub getdesc
+{
+	my $fname = shift;
+	local $_;
+
+	open(my $f, '<', $fname) or die "No such file $fname\n";
+	$_ = <$f>;
+	my $result = join('', <$f>);
+	close($f);
+	return $result;
+}
+
+sub getline
+{
+	my $fname = shift;
+
+	open(my $f, '<', $fname) or die "No such file $fname\n";
+	my $line = <$f>;
+	chomp($line);
+	close($f);
+	return $line;
+}
+
+sub htmlfile
+{
+	my $fname = "$htmlbase/".shift;
+
+	open(my $f, '>', $fname) or die "Cannot write to $fname\n";
+	return $f;
+}
+
+sub gen_arch_page 
+{
+	my $arch = shift;
+	print "generating page for $arch\n";
+	my $archfile = htmlfile("$arch.html");
+
+	print $archfile arch_head($arch);
+
+	opendir(my $pkgs, "$pkgpath/$arch") || die "cannot get package listing for $arch: $!\n";
+	foreach my $file (sort(readdir($pkgs))) {
+		next if ($file =~ /^\./);
+		next if ($file =~ /^index.txt$/);
+		next if ($file =~ /^pkglocatedb$/);
+
+		dprint "generating package for $arch/$file\n";
+		my $package = OpenBSD::PackageLocator->find("$pkgpath/$arch/$file");
+		if(! $package) { die "package error: $pkgpath/$arch/$file $!\n"; }
+		my $dir = $package->info();
+		$package->close();
+
+		print $archfile arch_body($arch,$file,getline($dir.DESC));
+		gen_pkg_page($arch,$file,$dir);
+
+		$package->wipe_info();
+	}
+	closedir($pkgs);
+
+	print $archfile arch_foot();
+
+	close($archfile);
+
+}
+
+sub gen_pkg_page 
+{
+	my ($arch,$pkg, $dir) = @_;
+	my $long = htmlfile("$arch/$pkg-long.html");
+
+	my $pkg_info = getdesc($dir.DESC);
+
+	$pkg_info =~ s/\&/\&amp\;/g;
+	$pkg_info =~ s/\</\&lt\;/g;
+	$pkg_info =~ s/\>/\&gt\;/g;
+
+	print $long pkg_long($arch,$pkg,$pkg_info);
+	close($long);
+	gen_pkg_listing_page($arch,$pkg,$dir);
+}
+
+sub gen_pkg_listing_page 
+{
+	my ($arch,$pkg,$dir) = @_;
+	my $cont = htmlfile("$arch/$pkg-contents.html");
+
+	my $pkg_info;
+	my $plist = OpenBSD::PackingList->fromfile($dir.CONTENTS, \&OpenBSD::PackingList::FilesOnly);
+
+	die "Bad packing list: $!\n" unless defined $plist;
+
+	for my $item (@{$plist->{items}}) {
+		next unless $item->IsFile();
+		$pkg_info .= $item->fullname() . "\n";
+	}
+
+	if (!$pkg_info) {
+		$pkg_info = "empty packing list";
+	} 
+
+	print $cont pkg_list($arch,$pkg,$pkg_info);
+	close($cont);
+}
+
+sub gen_index_page 
+{
+	my @arches = @_;
+
+	my $index = htmlfile("index.html");
+
+	print $index index_head();
+
+	foreach (@arches) {
+		print $index "<a href=\"$_.html\">$_</a>\n";
+	}
+
+	print $index index_foot();
+
+	close($index);
+
+}
+
+exit(0);
+
+sub arch_body 
+{
+	my($arch,$file,$comment) = @_;
+
+	return <<"EOF";
+<tr>
+<td><b><a href=$arch/$file-long.html>$file</a></b></td>
+<td>&nbsp&nbsp&nbsp<i>$comment</i></td>
+<td>[ <a href=ftp://ftp.openbsd.org/pub/OpenBSD/$osrev/packages/$arch/$file>FTP Site1</a> ]</td>
+<td>[ <a href=ftp://ftp.usa.openbsd.org/pub/OpenBSD/$osrev/packages/$arch/$file>FTP Site 2</a> ]</td>
+</tr>
+EOF
+}
+
+sub arch_foot 
+{
+    return <<"EOF";
+</table><hr></body></html>
+EOF
+}
+
+sub arch_head 
+{
+	my $arch = shift;
+
+	return <<"EOF";
+<html>
+<body BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#23238E">
+<title>OpenBSD Packages ($osrev/$arch)</title>
+<img src=http://www.openbsd.org/images/smalltitle.gif><br><br>
+<font color=#e00000><h2>Packages</h2></font>
+The following table is a listing of the packages currently available for OpenBSD
+<font color=#e00000><b>$osrev</b></font>
+on the <font color=#e00000><b>$arch</b></font> platform. Make sure you've got
+the right version and platform -- chaos will ensue if you are in the wrong
+area.
+
+<br><br><hr>
+
+<table>
+
+EOF
+}
+
+sub index_head 
+{
+
+	return <<"EOF";
+<html><title>OpenBSD Packages - Architecture
+Selection for OpenBSD $osrev</title>
+<body BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#23238E">
+<img src=http://www.openbsd.org/images/smalltitle.gif><br><br>
+<h2><font color="#e00000">Packages - Architecture Selection for OpenBSD $osrev</font></h2>
+Please select the architecture for which you wish to download a package.<br><br><center><h2>
+EOF
+}
+
+sub index_foot 
+{
+	return <<"EOF";
+<br><br><hr></table></body></html>
+EOF
+}
+
+sub pkg_list 
+{
+	my ($arch,$pkg,$pkg_info) = @_;
+
+	return <<"EOF";
+<html><title>OpenBSD Package Details - $pkg</title>
+<body BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#23238E">
+<img src=http://www.openbsd.org/images/smalltitle.gif><br><br>
+<h2><font color=#e0000>Package Information for $pkg ($arch)</font></h2>
+
+    [ <a href=ftp://ftp.openbsd.org/pub/OpenBSD/$osrev/packages/$arch/$pkg>FTP 1</a> ]
+
+    [ <a href=ftp://ftp.usa.openbsd.org/pub/OpenBSD/$osrev/packages/$arch/$pkg>FTP 2</a> ] 
+
+    [ <a href=$pkg-contents.html>Package Contents</a> ]
+
+<br><br><hr><br><pre>
+$pkg_info
+</pre><hr></body></html>
+EOF
+}
+
+sub pkg_long 
+{
+	my ($arch,$pkg,$pkg_info) = @_;
+
+	return <<"EOF";
+<html><title>OpenBSD Package Details - $pkg</title>
+<body BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#23238E">
+<img src=http://www.openbsd.org/images/smalltitle.gif><br><br>
+<h2><font color=#e0000>Package Information for $pkg ($arch)</font></h2>
+
+    [ <a href=ftp://ftp.openbsd.org/pub/OpenBSD/$osrev/packages/$arch/$pkg>FTP 1</a> ]
+
+    [ <a href=ftp://ftp.usa.openbsd.org/pub/OpenBSD/$osrev/packages/$arch/$pkg>FTP 2</a> ] 
+
+    [ <a href=$pkg-contents.html>Package Contents</a> ]
+
+<br><br><hr><br><pre>
+$pkg_info
+</pre><hr></body></html>
+EOF
+}

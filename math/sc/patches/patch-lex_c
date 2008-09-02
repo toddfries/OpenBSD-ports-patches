@@ -1,0 +1,12 @@
+$OpenBSD: patch-lex_c,v 1.4 2006/05/28 21:21:51 weingart Exp $
+--- lex.c.orig	Thu May  4 09:52:42 2006
++++ lex.c	Thu May  4 09:52:54 2006
+@@ -642,7 +642,7 @@ nmgetch() 
+ 
+ #endif
+ 
+-#if defined(SYSV2) || defined(SYSV3) || defined(MSDOS)
++#if defined(SYSV2) || defined(SYSV3) || defined(MSDOS) || defined(NCURSES_VERSION)
+ 
+ void
+ initkbd()

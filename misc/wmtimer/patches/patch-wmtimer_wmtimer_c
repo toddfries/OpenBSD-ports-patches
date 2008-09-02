@@ -1,0 +1,30 @@
+$OpenBSD: patch-wmtimer_wmtimer_c,v 1.3 2003/12/19 12:22:41 wilfried Exp $
+--- wmtimer/wmtimer.c.orig	2003-09-27 03:35:28.000000000 +0200
++++ wmtimer/wmtimer.c	2003-12-19 13:09:39.000000000 +0100
+@@ -84,7 +84,7 @@ configState configSt;
+ int main(int argc, char *argv[])
+ {
+   int prevSec = 0;
+-  long now;
++  time_t now;
+   struct tm *thisTime;
+   int wminet_mask_width = 64;
+   int wminet_mask_height = 64;
+@@ -234,7 +234,7 @@ void parseArgs(int argc, char *argv[])
+     action.bell = 1;
+     break;
+ 	case 'e':
+-	  strcpy(command, argv[argIndex+1]);
++	  strlcpy(command, argv[argIndex+1], sizeof(command));
+ 	  action.command = 1;
+ 	  break;
+ 	case 't':
+@@ -594,7 +594,7 @@ void callback(GtkWidget * widget, gpoint
+   else if ((char *) data == "ok")
+   {
+     if (tmpAction.command)
+-      strcpy(command, gtk_entry_get_text(GTK_ENTRY (entry)));
++      strlcpy(command, gtk_entry_get_text(GTK_ENTRY (entry)), sizeof(command));
+ 
+     hour = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON (spinner1));
+     min = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON (spinner2));

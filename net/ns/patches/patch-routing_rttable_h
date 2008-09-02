@@ -1,0 +1,12 @@
+$OpenBSD: patch-routing_rttable_h,v 1.2 2007/10/24 15:01:09 steven Exp $
+--- routing/rttable.h.orig	Tue Aug  2 21:48:52 2005
++++ routing/rttable.h	Sat Oct 13 22:22:22 2007
+@@ -44,7 +44,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ #include "config.h"
+ #include "scheduler.h"
+-#include "lib/bsd-list.h"
++#include <sys/queue.h>
+ 
+ #define CURRENT_TIME    Scheduler::instance().clock()
+ #define INFINITY2        0xff

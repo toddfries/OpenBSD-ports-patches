@@ -1,0 +1,29 @@
+$OpenBSD: patch-config_mk,v 1.3 2008/03/15 12:52:50 mcbride Exp $
+--- config.mk.orig	Fri Nov 16 06:59:15 2007
++++ config.mk	Tue Feb 19 03:56:08 2008
+@@ -1,10 +1,10 @@
+ # Customize below to fit your system
+ 
+ # paths
+-PREFIX = /usr/local
++#PREFIX = /usr/local
+ BIN = ${PREFIX}/bin
+-MAN = ${PREFIX}/share/man
+-ETC = ${PREFIX}/etc
++MAN = ${PREFIX}/man
++ETC = ${PREFIX}/share/examples/
+ LIBDIR = ${PREFIX}/lib
+ INCLUDE = ${PREFIX}/include
+ 
+@@ -31,9 +31,8 @@ P9PATHS = ${PLAN9}:"'$${HOME}/plan9'":/usr/local/plan9
+ 
+ INCX11 = -I/usr/X11R6/include
+ LIBX11 = -L/usr/X11R6/lib -lX11
+-LIBICONV = # Leave blank if your libc includes iconv (glibc does)
+-LIBIXP = ${ROOT}/libixp/libixp.a
+-LIBIXP = ${LIBDIR}/libixp.a
++LIBICONV = /usr/local/lib/libiconv.a
++LIBIXP = /usr/local/lib/libixp.a
+ 
+ # Solaris
+ #CFLAGS = -fast ${INCS} -DVERSION=\"${VERSION}\"

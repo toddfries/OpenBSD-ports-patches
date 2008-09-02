@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.3 2007/05/08 16:56:10 jasper Exp $
+bin/WordGenerator
+share/doc/wordgenerator/
+share/doc/wordgenerator/README_CONFIGURATION
+share/examples/wordgenerator/
+share/examples/wordgenerator/SampleConfiguration

@@ -1,0 +1,15 @@
+$OpenBSD: patch-libcharset_lib_localcharset_c,v 1.2 2008/05/28 20:03:13 naddy Exp $
+--- libcharset/lib/localcharset.c.orig	Wed Oct 18 13:55:49 2006
++++ libcharset/lib/localcharset.c	Wed May 21 17:55:51 2008
+@@ -194,8 +194,9 @@ get_charset_aliases (void)
+ 		    free (old_res_ptr);
+ 		  break;
+ 		}
+-	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
+-	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
++	      strlcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1,
++		l1 + 1 + l2 + 1 + 1);
++	      strlcpy (res_ptr + res_size - (l2 + 1), buf2, l2 + 1 + 1);
+ 	    }
+ 	  fclose (fp);
+ 	  if (res_size == 0)

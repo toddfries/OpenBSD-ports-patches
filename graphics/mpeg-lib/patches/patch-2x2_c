@@ -1,0 +1,13 @@
+$OpenBSD: patch-2x2_c,v 1.1 2004/06/22 03:07:17 brad Exp $
+--- 2x2.c.orig	1999-07-23 22:06:22.000000000 -0600
++++ 2x2.c	2004-06-21 20:01:38.000000000 -0600
+@@ -21,7 +21,9 @@
+ 
+ #include <config.h>
+ #include <stdlib.h>
++#ifdef HAVE_MALLOC_H
+ #include <malloc.h>
++#endif
+ #include "video.h"
+ #include "dither.h"
+ #include "proto.h"

@@ -1,0 +1,12 @@
+$OpenBSD: patch-xmcd_d_Imakefile,v 1.2 2001/01/18 16:41:28 naddy Exp $
+--- xmcd_d/Imakefile.orig	Sat Feb  5 08:26:29 2000
++++ xmcd_d/Imakefile	Mon Nov  6 13:00:49 2000
+@@ -43,7 +43,7 @@
+  * #include "Motif.tmpl"
+  * #include "Motif.rules"
+  */
+-LOCAL_LIBRARIES= XmClientLibs
++LOCAL_LIBRARIES= $(MOTIFLIB) XawClientLibs
+ 
+ #if defined(FreeBSDArchitecture)
+ .if exists(/usr/include/camlib.h)

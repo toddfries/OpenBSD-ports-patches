@@ -1,0 +1,12 @@
+After installing this package, you must add
+
+xcept		20005/tcp #XCEPT
+
+to /etc/services, then put the line
+
+xcept	stream	tcp	nowait	_xcept	${PREFIX}/libexec/ceptd ceptd
+
+in /etc/inetd.conf on your server host, and restart inetd.
+
+Note that running this software as root as advised in the
+distribution can present a serious security risk to your system.

@@ -1,0 +1,26 @@
+@comment $OpenBSD: PLIST,v 1.4 2006/05/07 21:24:37 steven Exp $
+${P5SITE}/Authen/
+${P5SITE}/Authen/SASL/
+${P5SITE}/Authen/SASL.pm
+${P5SITE}/Authen/SASL.pod
+${P5SITE}/Authen/SASL/CRAM_MD5.pm
+${P5SITE}/Authen/SASL/EXTERNAL.pm
+${P5SITE}/Authen/SASL/Perl/
+${P5SITE}/Authen/SASL/Perl.pm
+${P5SITE}/Authen/SASL/Perl.pod
+${P5SITE}/Authen/SASL/Perl/ANONYMOUS.pm
+${P5SITE}/Authen/SASL/Perl/CRAM_MD5.pm
+${P5SITE}/Authen/SASL/Perl/DIGEST_MD5.pm
+${P5SITE}/Authen/SASL/Perl/EXTERNAL.pm
+${P5SITE}/Authen/SASL/Perl/GSSAPI.pm
+${P5SITE}/Authen/SASL/Perl/LOGIN.pm
+${P5SITE}/Authen/SASL/Perl/PLAIN.pm
+@man man/man3p/Authen::SASL.3p
+@man man/man3p/Authen::SASL::Perl.3p
+@man man/man3p/Authen::SASL::Perl::ANONYMOUS.3p
+@man man/man3p/Authen::SASL::Perl::CRAM_MD5.3p
+@man man/man3p/Authen::SASL::Perl::DIGEST_MD5.3p
+@man man/man3p/Authen::SASL::Perl::EXTERNAL.3p
+@man man/man3p/Authen::SASL::Perl::GSSAPI.3p
+@man man/man3p/Authen::SASL::Perl::LOGIN.3p
+@man man/man3p/Authen::SASL::Perl::PLAIN.3p

@@ -1,0 +1,53 @@
+$OpenBSD: patch-src_unix-dll_mak,v 1.6 2008/04/01 20:37:01 kili Exp $
+--- src/unix-dll.mak.orig	Tue Nov 27 23:58:40 2007
++++ src/unix-dll.mak	Sat Mar 22 22:28:22 2008
+@@ -47,9 +47,9 @@ GS_SONAME_BASE=lib$(GS)
+ # GNU/Linux
+ GS_SOEXT=so
+ GS_SONAME=$(GS_SONAME_BASE).$(GS_SOEXT)
+-GS_SONAME_MAJOR=$(GS_SONAME).$(GS_VERSION_MAJOR)
+-GS_SONAME_MAJOR_MINOR=$(GS_SONAME).$(GS_VERSION_MAJOR).$(GS_VERSION_MINOR)
+-LDFLAGS_SO=-shared -Wl,-soname=$(GS_SONAME_MAJOR)
++GS_SONAME_MAJOR=$(GS_SONAME).$(basename $(LIBgs_VERSION))
++GS_SONAME_MAJOR_MINOR=$(GS_SONAME).$(LIBgs_VERSION)
++LDFLAGS_SO=-shared
+ 
+ # MacOS X
+ #GS_SOEXT=dylib
+@@ -78,11 +78,12 @@ $(GS_SO_MAJOR): $(GS_SO_MAJOR_MINOR)
+ 
+ # Build the small Ghostscript loaders, with Gtk+ and without
+ 
+-$(GSSOC_XE): $(GS_SO) $(GLSRC)$(SOC_LOADER)
+-	$(GLCC) -g -o $(GSSOC_XE) $(GLSRC)dxmainc.c -L$(BINDIR) -l$(GS)
++$(GSSOC_XE): $(GS_SO) $(GLSRC)dxmainc.c
++	$(GLCC) -g -o $(GSSOC_XE) $(GLSRC)dxmainc.c -L$(BINDIR) -l$(GS) \
++	$(SOC_LIBS)
+ 
+-$(GSSOX_XE): $(GS_SO) $(GLSRC)$(SOC_LOADER)
+-	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOX_XE) $(GLSRC)$(SOC_LOADER) \
++$(GSSOX_XE): $(GS_SO) $(GLSRC)dxmain.c
++	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOX_XE) $(GLSRC)dxmain.c \
+ 	-L$(BINDIR) -l$(GS) $(SOC_LIBS)
+ 
+ # ------------------------- Recursive make targets ------------------------- #
+@@ -100,7 +101,7 @@ SODEFS=LDFLAGS='$(LDFLAGS) $(LDFLAGS_SO)'\
+ 
+ # Normal shared object
+ so: SODIRS
+-	$(MAKE) $(SODEFS) CFLAGS='$(CFLAGS_STANDARD) $(CFLAGS_SO) $(GCFLAGS) $(XCFLAGS)' prefix=$(prefix) $(GSSOC) $(GSSOX)
++	$(MAKE) $(SODEFS) CFLAGS='$(CFLAGS_STANDARD) $(GCFLAGS) $(XCFLAGS)' prefix=$(prefix) $(GSSOC) $(GSSOX)
+ 
+ # Debug shared object
+ # Note that this is in the same directory as the normal shared
+@@ -119,10 +120,6 @@ install-so: so
+ 	$(INSTALL_PROGRAM) $(GSSOC) $(DESTDIR)$(bindir)/$(GSSOC_XENAME)
+ 	$(INSTALL_PROGRAM) $(GSSOX) $(DESTDIR)$(bindir)/$(GSSOX_XENAME)
+ 	$(INSTALL_PROGRAM) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR_MINOR)
+-	$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME)
+-	ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME)
+-	$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
+-	ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
+ 	$(INSTALL_DATA) $(PSSRC)iapi.h $(DESTDIR)$(gsincludedir)/iapi.h
+ 	$(INSTALL_DATA) $(PSSRC)ierrors.h $(DESTDIR)$(gsincludedir)/ierrors.h
+ 	$(INSTALL_DATA) $(PSSRC)gdevdsp.h $(DESTDIR)$(gsincludedir)/gdevdsp.h

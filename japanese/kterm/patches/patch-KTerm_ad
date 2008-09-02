@@ -1,0 +1,32 @@
+$OpenBSD: patch-KTerm_ad,v 1.2 2002/11/20 07:56:08 pvalchev Exp $
+--- KTerm.ad.orig	Wed Nov 20 00:27:50 2002
++++ KTerm.ad	Wed Nov 20 00:27:51 2002
+@@ -75,7 +75,8 @@ KTerm.JoinSession:False
+ *fontMenu*font4*Label:	Medium
+ *VT100*fontList4:	-*-fixed-medium-r-normal--18-*,\
+ 			-*-gothic-medium-r-normal--18-*,\
+-			-*-mincho-medium-r-normal--18-*
++			-*-mincho-medium-r-normal--18-*,\
++			-*-courier-medium-r-normal--18-*
+ *fontMenu*font5*Label:	Large
+ *VT100*fontList5:	-*-fixed-medium-r-normal--24-*,\
+ 			-*-gothic-medium-r-normal--24-*,\
+@@ -83,7 +84,8 @@ KTerm.JoinSession:False
+ *fontMenu*font6*Label:	Huge
+ *VT100*fontList6:	-*-fixed-medium-r-normal--26-*,\
+ 			-*-gothic-medium-r-normal--26-*,\
+-			-*-mincho-medium-r-normal--26-*
++			-*-mincho-medium-r-normal--26-*,\
++			-*-lucidatypewriter-medium-r-normal-sans-26-*
+ *fontMenu*fontescape*Label:	Escape Sequence
+ *fontMenu*fontsel*Label:		Selection
+ !fontescape and fontsel overridden by application
+@@ -96,7 +98,7 @@ KTerm.JoinSession:False
+ !*VT100*romanKanaBoldFont3:	-*-*-bold-r-normal--16-*-jisx0201.1976-0
+ !*VT100*kanjiBoldFont3:		-*-*-bold-r-normal--16-*-jisx0208.1983-0
+ 
+-!*VT100*kanjiMode:		jis
++*VT100*kanjiMode:		euc
+ !*VT100*lineSpace:		0
+ 
+ !*VT100*textColor0:		Black

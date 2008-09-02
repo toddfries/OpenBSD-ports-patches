@@ -1,0 +1,12 @@
+$OpenBSD: patch-xdmchoose_conf,v 1.2 2003/05/12 20:11:28 naddy Exp $
+--- xdmchoose.conf.orig	Mon May 12 12:17:11 2003
++++ xdmchoose.conf	Mon May 12 12:19:52 2003
+@@ -32,7 +32,7 @@ unknown.highlight	"#f0f0ff"
+ unknown.shadow		"#808090"
+ unknown.tentry		"gray90"
+ 
+-panel.background	"xdmchoose-blur.xpm"
++panel.background	"%%PREFIX%%/share/xdmchoose/xdmchoose-blur.xpm"
+ 
+ title.foreground	"#000090"
+ title.text		"X Window System"

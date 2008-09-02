@@ -1,0 +1,16 @@
+$OpenBSD: patch-drgeo_adaptDialog_cc,v 1.2 2004/08/02 07:13:06 kevlo Exp $
+--- drgeo_adaptDialog.cc.orig	Sun Jun  6 17:30:06 2004
++++ drgeo_adaptDialog.cc	Mon Aug  2 14:36:10 2004
+@@ -34,7 +34,11 @@
+ #include "drgenius_mdi.h"
+ 
+ #ifndef G_PLATFORM_WIN32
+-   #include <crypt.h>
++   #if defined(__OpenBSD__)
++      #include <unistd.h>
++   #else
++      #include <crypt.h>
++   #endif
+ #endif 
+ 
+ extern drgeniusMDI *mdi;

@@ -1,0 +1,6 @@
+cURL is a tool for getting files from FTP, HTTP, HTTPS, Gopher and
+DICT servers, with URL syntax support.
+
+cURL supports HTTP POST, HTTP PUT, FTP uploading, HTTP form based
+upload, proxies, user+password authentication and a busload of other
+useful tricks.

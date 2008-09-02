@@ -1,0 +1,23 @@
+$OpenBSD: patch-src_Makefile_in_in,v 1.1 2007/09/18 18:56:03 aanriot Exp $
+--- src/Makefile.in.in.orig	Wed Jan 15 13:18:00 2003
++++ src/Makefile.in.in	Mon Feb 24 10:39:21 2003
+@@ -28,8 +28,10 @@ PROGNAME=@PROGNAME@
+ #define NOT_C_CODE
+ #include "config.h"
+ 
++version=@version@
++
+ #ifdef PDUMP
+-DUMP_TARGET = ${PROGNAME}.dmp
++DUMP_TARGET = ${PROGNAME}-${version}.dmp
+ EXE_TARGET  = ${PROGNAME}
+ DUMP_ID     = dump-id.o
+ #else
+@@ -64,7 +66,6 @@ etcdir = ../etc/
+ prefix=@prefix@
+ srcdir=@srcdir@
+ blddir=@blddir@
+-version=@version@
+ CC=@XEMACS_CC@
+ CPP=@CPP@
+ CFLAGS=@CFLAGS@

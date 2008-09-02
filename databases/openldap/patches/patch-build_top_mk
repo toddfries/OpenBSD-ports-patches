@@ -1,0 +1,12 @@
+$OpenBSD: patch-build_top_mk,v 1.5 2008/01/14 21:01:11 mbalmer Exp $
+--- build/top.mk.orig	Wed Jan  3 00:42:47 2007
++++ build/top.mk	Mon Jan 14 11:55:23 2008
+@@ -121,7 +121,7 @@ LTLINK_MOD = $(LIBTOOL) $(LTONLY_MOD) --mode=link \
+ 	$(CC) $(LT_CFLAGS) $(LDFLAGS) $(LTFLAGS_MOD)
+ 
+ LTINSTALL = $(LIBTOOL) --mode=install $(INSTALL) 
+-LTFINISH = $(LIBTOOL) --mode=finish
++LTFINISH = true 
+ 
+ # Misc UNIX commands used in build environment
+ AR = @AR@

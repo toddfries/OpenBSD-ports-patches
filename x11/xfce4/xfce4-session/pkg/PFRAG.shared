@@ -1,0 +1,7 @@
+@comment $OpenBSD: PFRAG.shared,v 1.3 2007/05/08 14:14:03 steven Exp $
+@lib lib/libxfsm-4.2.so.${LIBxfsm-4.2_VERSION}
+lib/xfce4/mcs-plugins/session_settings.so
+lib/xfce4/mcs-plugins/splash_settings.so
+lib/xfce4/splash/engines/libbalou.so
+lib/xfce4/splash/engines/libmice.so
+lib/xfce4/splash/engines/libsimple.so

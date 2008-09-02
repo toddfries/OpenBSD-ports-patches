@@ -1,0 +1,18 @@
+$OpenBSD: patch-Imakefile,v 1.1 2005/10/05 09:51:47 bernd Exp $
+--- Imakefile.orig	Sun Nov 14 11:19:13 2004
++++ Imakefile	Fri Sep 30 12:07:27 2005
+@@ -1,13 +1,6 @@
+ # Imakefile for viewfax
+ 
+-#if 0
+-define these if the defaults are unsuitable
+-BINDIR = /usr/local/bin		/* where you want the binary installed */
+-MANDIR = /usr/local/man/man1	/* where you want the man file installed */
+-HELPDIR = /usr/local/lib	/* where you want the help file installed */
+-#endif
+-
+-HELPDIR = ${USRLIBDIR}/X11
++HELPDIR = ${USRLIBDIR}/X11/viewfax
+ DEFINES = -DHELPFILE=\"$(HELPDIR)/viewfax.tif\"
+ /* add -DREAL_ROOT to the line above if you are running KDE2.1 */
+ 

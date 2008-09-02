@@ -1,0 +1,21 @@
+$OpenBSD: patch-paint_h,v 1.2 2003/10/29 22:14:43 sturm Exp $
+--- paint.h.orig	2003-08-20 03:39:48.000000000 -0400
++++ paint.h	2003-08-20 03:43:30.000000000 -0400
+@@ -67,7 +67,7 @@ class Paint { 
+ 	int lookupXor(const char *color, int linewidth);
+ 	inline int thick() { return (thick_); }
+ 	inline int thin() { return (thin_); }
+-	inline int Xor() { return (xor_); }  // ansi says "xor" is a keyword
++	inline int Xor() { return (eor_); }  // ansi says "xor" is a keyword
+  private:
+ 	void adjust();
+ 
+@@ -78,7 +78,7 @@ class Paint { 
+ 	rgb *rgb_;
+ 	int thick_;
+ 	int thin_;
+-	int xor_;
++	int eor_;
+ 	int background_;
+ };
+ 

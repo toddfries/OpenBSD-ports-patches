@@ -1,0 +1,12 @@
+$OpenBSD: patch-common_mobilenode_h,v 1.2 2007/10/24 15:01:09 steven Exp $
+--- common/mobilenode.h.orig	Tue Feb 21 16:20:18 2006
++++ common/mobilenode.h	Sat Oct 13 22:22:21 2007
+@@ -55,7 +55,7 @@ class MobileNode;
+ 
+ #include "object.h"
+ #include "trace.h"
+-#include "lib/bsd-list.h"
++#include <sys/queue.h>
+ #include "phy.h"
+ #include "topography.h"
+ #include "arp.h"

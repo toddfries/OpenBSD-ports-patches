@@ -1,0 +1,12 @@
+$OpenBSD: patch-doc_Makefile_in,v 1.2 2007/11/18 12:55:58 jasper Exp $
+--- doc/Makefile.in.orig	Wed Nov 14 17:01:18 2007
++++ doc/Makefile.in	Wed Nov 14 17:02:03 2007
+@@ -414,7 +414,7 @@ uninstall-man: uninstall-man1
+ 	uninstall-man1
+ 
+ 
+-all: Makefile Eterm.1.html
++all: Makefile
+ 
+ Eterm.1: $(top_srcdir)/doc/Eterm.1.in
+ 	$(SED) -e 's%@''VERSION''@%$(VERSION)%g' -e 's%@''DATE''@%$(DATE)%g' -e 's%@THEMEDIR@%$(pkgdatadir)/themes%g' $(top_srcdir)/doc/$@.in > $@

@@ -1,0 +1,17 @@
+$OpenBSD: patch-noip2_c,v 1.5 2007/10/23 08:27:14 wilfried Exp $
+--- noip2.c.orig	Mon Aug 27 23:54:19 2007
++++ noip2.c	Tue Oct 23 09:49:14 2007
+@@ -218,11 +218,8 @@
+ #define NODNSGROUP		"@@NO_GROUP@@"
+ #define HOST			1
+ #define GROUP			2
+-#ifndef PREFIX
+-  #define PREFIX		"/usr/local"
+-#endif
+-#define CONFIG_FILEPATH		PREFIX"/etc"
+-#define CONFIG_FILENAME		PREFIX"/etc/no-ip2.conf"
++#define CONFIG_FILEPATH		"_SYSCONFDIR_"
++#define CONFIG_FILENAME		"_SYSCONFDIR_/no-ip2.conf"
+ #define CONFSTRLEN		1024
+ #define MAX_DEVLEN		16
+ #define MAX_INSTANCE		4

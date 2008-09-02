@@ -1,0 +1,12 @@
+$OpenBSD: patch-cipher_Makefile_in,v 1.7 2008/01/30 20:18:10 bernd Exp $
+--- cipher/Makefile.in.orig	Mon Jan 28 20:51:29 2008
++++ cipher/Makefile.in	Mon Jan 28 20:51:39 2008
+@@ -295,7 +295,7 @@ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CPPFLAGS = -I.. -I$(top_srcdir)/include -I$(top_srcdir)/intl \
++AM_CPPFLAGS = -I.. -I$(top_srcdir)/include \
+ 	$(am__append_1)
+ noinst_LIBRARIES = libcipher.a
+ libcipher_a_SOURCES = cipher.c pubkey.c md.c dynload.c bithelp.h des.c \

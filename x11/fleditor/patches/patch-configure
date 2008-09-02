@@ -1,0 +1,211 @@
+$OpenBSD: patch-configure,v 1.6 2005/12/25 20:23:18 naddy Exp $
+--- configure.orig	Mon Apr 22 18:23:58 2002
++++ configure	Fri Aug  9 15:52:32 2002
+@@ -20,7 +20,7 @@ ac_help="$ac_help
+ ac_help="$ac_help
+   --with-fltk=DIR         fltk root (for lib and include) [default=/usr/local]"
+ ac_help="$ac_help
+-  --with-fltk2            build for FLTK version 2 [default=no]"
++  --with-fltk2            build for \"FLTK 2 Pure\" [default=no]"
+ 
+ # Initialize some variables set by options.
+ # The variables have the same names as the options, with
+@@ -531,6 +531,7 @@ else
+ fi
+ 
+ 
++
+ # Extract the first word of "gcc", so it can be a program name with args.
+ set dummy gcc; ac_word=$2
+ echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+@@ -997,7 +998,7 @@ else
+ fi
+ 
+ 
+-LDFLAGS="$CXXFLAGS"
++#LDFLAGS="$CXXFLAGS"
+ 
+ 
+ echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
+@@ -1347,33 +1348,12 @@ if test "${enable_shared+set}" = set; th
+   enableval="$enable_shared"
+   
+ if eval "test x$enable_shared = xyes"; then
+-  PICFLAG=1
++  CFLAGS="$CFLAGS -fPIC"
++  CXXFLAGS="$CXXFLAGS -fPIC"
+   ac_fltk_dso="-lfltk"
+   DSOLIBNAME="libfleditor"
+-  case $uname in
+-      SunOS* | UNIX_S*)
+-	  DSOEXT=".so.1"
+-	  DSOCOMMAND="\$(CXX) -Wl,-h,\$@ \$(LDLIBS) -G $DEBUGFLAG -o"
+-	  ;;
+-      HP-UX*)
+-	  DSOEXT=".s1.1"
+-	  DSOCOMMAND="ld -b -z +h \$@ $DEBUGFLAG -o"
+-	  ;;
+-      OSF1*)
+-	  DSOEXT=".so.1"
+-          DSOCOMMAND="\$(CXX) -Wl,-soname,\$@ \$(LDLIBS) -shared $DEBUGFLAG -o"
+-cd 	  ;;
+-      IRIX*)
+-	  DSOEXT=".so.1"
+-          DSOCOMMAND="\$(CXX) -soname \$@ \$(LDLIBS) -shared $DEBUGFLAG -o"
+-	  ;;
+-      *)
+-          echo "Warning: shared libraries may not be supported.  Trying -shared"
+-	  echo "         option with compiler."
+-	  DSOEXT=".so.1"
+-          DSOCOMMAND="\$(CXX) -Wl,-soname,\$@ -shared $DEBUGFLAG -o"
+-	  ;;
+-  esac
++  DSOEXT=".so.\$(LIBfleditor_VERSION)"
++  DSOCOMMAND="\$(CXX) -Wl,-soname,\$@ \$(LDLIBS) -fPIC -shared $DEBUGFLAG -o"
+ fi
+ else
+   
+@@ -1398,36 +1378,35 @@ else
+ fi
+ 
+ 
++ac_fltk2="-DFL_MAJOR_VERSION=1"
+ # Check whether --with-fltk2 or --without-fltk2 was given.
+ if test "${with_fltk2+set}" = set; then
+   withval="$with_fltk2"
+-     if eval "test  x$withval = xyes"; then 
+-        ac_fltk2="-DFLTK2=1 "; 
+-     fi 
++     if test x$withval = xyes; then ac_fltk2="-DFL_MAJOR_VERSION=2"; fi 
+ fi
+ 
+ 
+-echo $ac_n "checking for numericsort in -lfltk""... $ac_c" 1>&6
+-echo "configure:1411: checking for numericsort in -lfltk" >&5
+-ac_lib_var=`echo fltk'_'numericsort | sed 'y%./+-%__p_%'`
++echo $ac_n "checking for fl_numericsort in -lfltk""... $ac_c" 1>&6
++echo "configure:1391: checking for fl_numericsort in -lfltk" >&5
++ac_lib_var=`echo fltk'_'fl_numericsort | sed 'y%./+-%__p_%'`
+ if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+   echo $ac_n "(cached) $ac_c" 1>&6
+ else
+   ac_save_LIBS="$LIBS"
+ LIBS="-lfltk  $LIBS"
+ cat > conftest.$ac_ext <<EOF
+-#line 1419 "configure"
++#line 1399 "configure"
+ #include "confdefs.h"
+ /* Override any gcc2 internal prototype to avoid an error.  */
+ /* We use char because int might match the return type of a gcc2
+     builtin and then its argument prototype would still apply.  */
+-char numericsort();
++char fl_numericsort();
+ 
+ int main() {
+-numericsort()
++fl_numericsort()
+ ; return 0; }
+ EOF
+-if { (eval echo configure:1430: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
++if { (eval echo configure:1410: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+   rm -rf conftest*
+   eval "ac_cv_lib_$ac_lib_var=yes"
+ else
+@@ -1452,97 +1431,6 @@ EOF
+ 
+ else
+   echo "$ac_t""no" 1>&6
+-fi
+-
+-
+-GLLIB=
+-echo $ac_n "checking for glXMakeCurrent in -lGL""... $ac_c" 1>&6
+-echo "configure:1460: checking for glXMakeCurrent in -lGL" >&5
+-ac_lib_var=`echo GL'_'glXMakeCurrent | sed 'y%./+-%__p_%'`
+-if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+-  echo $ac_n "(cached) $ac_c" 1>&6
+-else
+-  ac_save_LIBS="$LIBS"
+-LIBS="-lGL \
+-    -lX11 -lXext $X_EXTRA_LIBS -lm $LIBS"
+-cat > conftest.$ac_ext <<EOF
+-#line 1469 "configure"
+-#include "confdefs.h"
+-/* Override any gcc2 internal prototype to avoid an error.  */
+-/* We use char because int might match the return type of a gcc2
+-    builtin and then its argument prototype would still apply.  */
+-char glXMakeCurrent();
+-
+-int main() {
+-glXMakeCurrent()
+-; return 0; }
+-EOF
+-if { (eval echo configure:1480: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+-  rm -rf conftest*
+-  eval "ac_cv_lib_$ac_lib_var=yes"
+-else
+-  echo "configure: failed program was:" >&5
+-  cat conftest.$ac_ext >&5
+-  rm -rf conftest*
+-  eval "ac_cv_lib_$ac_lib_var=no"
+-fi
+-rm -f conftest*
+-LIBS="$ac_save_LIBS"
+-
+-fi
+-if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
+-  echo "$ac_t""yes" 1>&6
+-  cat >> confdefs.h <<\EOF
+-#define HAVE_GL 1
+-EOF
+- GLLIB=" -lGL"
+-else
+-  echo "$ac_t""no" 1>&6
+-\
+-    echo $ac_n "checking for glXMakeCurrent in -lMesaGL""... $ac_c" 1>&6
+-echo "configure:1503: checking for glXMakeCurrent in -lMesaGL" >&5
+-ac_lib_var=`echo MesaGL'_'glXMakeCurrent | sed 'y%./+-%__p_%'`
+-if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+-  echo $ac_n "(cached) $ac_c" 1>&6
+-else
+-  ac_save_LIBS="$LIBS"
+-LIBS="-lMesaGL \
+-	-lX11 -lXext $X_EXTRA_LIBS -lm $LIBS"
+-cat > conftest.$ac_ext <<EOF
+-#line 1512 "configure"
+-#include "confdefs.h"
+-/* Override any gcc2 internal prototype to avoid an error.  */
+-/* We use char because int might match the return type of a gcc2
+-    builtin and then its argument prototype would still apply.  */
+-char glXMakeCurrent();
+-
+-int main() {
+-glXMakeCurrent()
+-; return 0; }
+-EOF
+-if { (eval echo configure:1523: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+-  rm -rf conftest*
+-  eval "ac_cv_lib_$ac_lib_var=yes"
+-else
+-  echo "configure: failed program was:" >&5
+-  cat conftest.$ac_ext >&5
+-  rm -rf conftest*
+-  eval "ac_cv_lib_$ac_lib_var=no"
+-fi
+-rm -f conftest*
+-LIBS="$ac_save_LIBS"
+-
+-fi
+-if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
+-  echo "$ac_t""yes" 1>&6
+-  cat >> confdefs.h <<\EOF
+-#define HAVE_GL 1
+-EOF
+- GLLIB=" -lMesaGLU -lMesaGL"
+-else
+-  echo "$ac_t""no" 1>&6
+-fi
+-
+ fi
+ 
+ 

@@ -1,0 +1,69 @@
+$OpenBSD: patch-configure,v 1.9 2007/12/08 11:08:38 ajacoutot Exp $
+--- configure.orig	Sat Nov 24 12:20:58 2007
++++ configure	Sat Nov 24 12:26:30 2007
+@@ -5541,7 +5541,7 @@ if test "${ac_cv_lib_FLAC_FLAC__stream_decoder_new+set
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lFLAC -lFLAC++ -lFLAC $LIBS"
++LIBS="-lFLAC -lFLAC++ -lFLAC -logg $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -5738,7 +5738,7 @@ fi
+ 
+    if test "x$lib_found" = "xyes" && test "x$header_found" = "xyes" ; then
+       LIBFLAC_SYSTEM_AVAILABLE="yes"
+-      LIBFLAC_SYSTEM_LIBS="-lFLAC++ -lFLAC"
++      LIBFLAC_SYSTEM_LIBS="-lFLAC++ -lFLAC -logg"
+       LIBFLAC_SYSTEM_CPPSYMBOLS="USE_LIBFLAC"
+       { echo "$as_me:$LINENO: FLAC libraries are available as system libraries" >&5
+ echo "$as_me: FLAC libraries are available as system libraries" >&6;}
+@@ -7025,6 +7025,7 @@ cat >>confdefs.h <<\_ACEOF
+ #define USE_PORTAUDIO_V19 1
+ _ACEOF
+ 
++if [ x"no" = x"yes" ] ; then
+ 
+    BUILDLIBS="$BUILDLIBS portaudio-v19/lib/libportaudio.a"
+    EXTRAOBJS="$EXTRAOBJS ../lib-src/portaudio-v19/lib/libportaudio.a"
+@@ -7419,6 +7420,8 @@ done
+          ;;
+    esac
+ 
++fi
++
+ else
+       CXXFLAGS="-I\$(top_srcdir)/lib-src/portaudio/pa_common $CXXFLAGS"
+ 
+@@ -7456,7 +7459,7 @@ _ACEOF
+ 
+       subdirs="$subdirs lib-src/portmixer"
+ 
+-      ac_configure_args="$ac_configure_args --with-pa-include=../portaudio-v19/include"
++      # ac_configure_args="$ac_configure_args --with-pa-include=../portaudio-v19/include"
+    else
+ 
+       CXXFLAGS="-I\$(top_srcdir)/lib-src/portmixer/px_common $CXXFLAGS"
+@@ -9165,7 +9168,7 @@ echo "$as_me: WARNING: no configuration information is
+       { echo "$as_me:$LINENO: running $SHELL $ac_sub_configure $ac_sub_configure_args --cache-file=$ac_sub_cache_file --srcdir=$ac_srcdir" >&5
+ echo "$as_me: running $SHELL $ac_sub_configure $ac_sub_configure_args --cache-file=$ac_sub_cache_file --srcdir=$ac_srcdir" >&6;}
+       # The eval makes quoting arguments work.
+-      eval "\$SHELL \"\$ac_sub_configure\" $ac_sub_configure_args \
++      eval "\$SHELL \"\$ac_sub_configure\" $ac_sub_configure_args CFLAGS='"$CFLAGS"' CXXFLAGS='"$CXXFLAGS"' LDFLAGS='"$LDFLAGS"' \
+ 	   --cache-file=\"\$ac_sub_cache_file\" --srcdir=\"\$ac_srcdir\"" ||
+ 	{ { echo "$as_me:$LINENO: error: $ac_sub_configure failed for $ac_dir" >&5
+ echo "$as_me: error: $ac_sub_configure failed for $ac_dir" >&2;}
+@@ -9179,9 +9182,10 @@ fi
+ 
+ pa_libs=
+ if [ "$use_portaudio" = "v19" ] ; then
+-   pa_libs=`grep 'Libs:' lib-src/portaudio-v19/portaudio-2.0.pc | sed -e 's/Libs://;s/-L${libdir}//;s/-lportaudio//'`
++   # pa_libs=`grep 'Libs:' lib-src/portaudio-v19/portaudio-2.0.pc | sed -e 's/Libs://;s/-L${libdir}//;s/-lportaudio//'`
++   pa_libs="`pkg-config --libs portaudio-2.0`"
+ fi
+-sed -i -e "s/@PA_LIBS@/$pa_libs/" src/Makefile
++perl -pi -e "s#\@PA_LIBS\@#$pa_libs#" src/Makefile
+ 
+ echo ""
+ echo "Finished configure:"

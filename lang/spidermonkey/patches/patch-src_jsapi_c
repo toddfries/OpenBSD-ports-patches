@@ -1,0 +1,32 @@
+$OpenBSD: patch-src_jsapi_c,v 1.2 2007/04/10 13:03:09 martynas Exp $
+--- src/jsapi.c.orig	Thu Nov 30 02:34:45 2006
++++ src/jsapi.c	Mon Apr  9 21:26:10 2007
+@@ -130,7 +130,7 @@ JS_GetEmptyStringValue(JSContext *cx)
+ 
+ static JSBool
+ TryArgumentFormatter(JSContext *cx, const char **formatp, JSBool fromJS,
+-                     jsval **vpp, va_list *app)
++                     jsval **vpp, va_list app)
+ {
+     const char *format;
+     JSArgumentFormatMap *map;
+@@ -259,8 +259,7 @@ JS_ConvertArgumentsVA(JSContext *cx, uintN argc, jsval
+             break;
+           default:
+             format--;
+-            if (!TryArgumentFormatter(cx, &format, JS_TRUE, &sp,
+-                                      JS_ADDRESSOF_VA_LIST(ap))) {
++            if (!TryArgumentFormatter(cx, &format, JS_TRUE, &sp, ap)) {
+                 return JS_FALSE;
+             }
+             /* NB: the formatter already updated sp, so we continue here. */
+@@ -362,8 +361,7 @@ JS_PushArgumentsVA(JSContext *cx, void **markp, const 
+             break;
+           default:
+             format--;
+-            if (!TryArgumentFormatter(cx, &format, JS_FALSE, &sp,
+-                                      JS_ADDRESSOF_VA_LIST(ap))) {
++            if (!TryArgumentFormatter(cx, &format, JS_FALSE, &sp, ap)) {
+                 goto bad;
+             }
+             /* NB: the formatter already updated sp, so we continue here. */

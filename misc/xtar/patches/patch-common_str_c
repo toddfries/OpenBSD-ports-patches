@@ -1,0 +1,11 @@
+$OpenBSD: patch-common_str_c,v 1.1 2007/10/26 22:00:31 ajacoutot Exp $
+--- common/str.c.orig	Tue May  9 10:06:46 1995
++++ common/str.c	Fri Oct 26 23:58:56 2007
+@@ -283,7 +283,6 @@ char *str_word(char **string)
+ char *str_error(int errnum)
+ {
+         extern int sys_nerr;
+-        extern char *sys_errlist[];
+         static char ebuf[40];           /* 64-bit number + slop */
+ 
+         if ((unsigned int)errnum < sys_nerr)

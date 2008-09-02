@@ -1,0 +1,63 @@
+# $OpenBSD: Makefile,v 1.26 2008/06/24 20:34:07 bernd Exp $
+
+SHARED_ONLY=		Yes
+
+COMMENT=		lightweight GNOME text editor
+
+GNOME_PROJECT=		gedit
+GNOME_VERSION=		2.22.3
+CATEGORIES=		editors
+
+HOMEPAGE=		http://www.gnome.org/projects/gedit/
+
+# GPLv2
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcursor Xcomposite \
+		Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender \
+		art_lgpl_2 atk-1.0 audiofile bonobo-2 bonobo-activation \
+		bonoboui-2 c cairo crypto dbus-1 dbus-glib-1 esd expat \
+		fontconfig freetype gailutil gconf-2 gdk-x11-2.0 \
+		gdk_pixbuf-2.0 glade-2.0 glib-2.0 glitz gmodule-2.0 \
+		gnome-2 gnome-keyring gnomecanvas-2 \
+		gnomevfs-2 gobject-2.0 gthread-2.0 gtk-x11-2.0 jpeg m \
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png popt \
+		pthread ssl stdc++ util xml2 z
+
+MODULES=	devel/gettext \
+		lang/python \
+		x11/gnome
+
+BUILD_DEPENDS=		:iso-codes-*:devel/iso-codes \
+			:scrollkeeper-*:textproc/scrollkeeper \
+			:gnome-doc-utils-*:x11/gnome/doc-utils \
+			::x11/py-gtksourceview
+LIB_DEPENDS=		enchant::textproc/enchant \
+			gnomeui-2::x11/gnome/libgnomeui \
+			gtksourceview-2.0::x11/gtksourceview \
+			${MODPY_LIB_DEPENDS}
+RUN_DEPENDS=		:scrollkeeper-*:textproc/scrollkeeper \
+			:gnome-doc-utils-*:x11/gnome/doc-utils \
+			::x11/py-gtksourceview \
+			::x11/gnome/py-gnome
+
+MODGNOME_HELP_FILES=	Yes
+USE_X11=		Yes
+DESKTOP_FILES=		Yes
+LIBTOOL_FLAGS=		--tag=disable-static
+
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gedit \
+			--disable-schemas-install \
+			--enable-python \
+			--disable-attr
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib -lm -lstdc++ -lintl -liconv" \
+			PYTHON="${MODPY_BIN}"
+
+post-patch:
+	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
+
+.include <bsd.port.mk>

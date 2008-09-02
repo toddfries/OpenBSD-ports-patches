@@ -1,0 +1,33 @@
+# $OpenBSD: Makefile,v 1.8 2007/09/16 03:24:28 merdely Exp $
+
+COMMENT=	DVD read/navigation library
+DISTNAME=	libdvdnav-20051102
+PKGNAME=	${DISTNAME}p2
+CATEGORIES=	multimedia
+
+SHARED_LIBS=		dvdnav	5.0
+MODGNU_SHARED_LIBS=	dvdnav	'-export-symbols-regex "(^dvdnav.*|^nav.*|^ifo.*|^DVD.*)"'
+
+MASTER_SITES=	http://mirrors.protection.cx/~jolan/
+
+HOMEPAGE=	http://dvd.sourceforge.net/
+
+# GPL
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+
+AUTOMAKE_VERSION=1.9
+AUTOCONF_VERSION=2.59
+USE_LIBTOOL=	Yes
+
+BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} ${MODGNU_AUTOMAKE_DEPENDS}
+
+CONFIGURE_STYLE=gnu
+
+post-patch:
+	cd ${WRKSRC} && env AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} ./autogen.sh
+
+.include <bsd.port.mk>

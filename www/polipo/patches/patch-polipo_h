@@ -1,0 +1,13 @@
+$OpenBSD: patch-polipo_h,v 1.2 2008/02/03 15:06:48 kili Exp $
+--- polipo.h.orig	Tue Mar  6 20:29:05 2007
++++ polipo.h	Sun May 27 07:45:45 2007
+@@ -62,6 +62,9 @@ THE SOFTWARE.
+ #define MAP_ANONYMOUS MAP_ANON
+ #endif
+ 
++#include <pwd.h>
++#define POLIPO_USER	"_polipo"
++
+ #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+ /* nothing */
+ #elif defined(__GNUC__)

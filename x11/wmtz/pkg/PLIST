@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/09/15 19:26:32 espie Exp $
+bin/wmtz
+@man man/man1/wmtz.1
+share/examples/wmtz/
+share/examples/wmtz/sample.wmtzrc

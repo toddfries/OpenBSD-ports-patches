@@ -1,0 +1,55 @@
+$OpenBSD: patch-src_main_Rdynload_c,v 1.4 2007/10/07 17:54:54 mbalmer Exp $
+--- src/main/Rdynload.c.orig	Wed Sep  5 00:13:27 2007
++++ src/main/Rdynload.c	Sun Oct  7 09:58:19 2007
+@@ -533,7 +533,8 @@ static DllInfo* AddDLL(char *path, int asLocal, int no
+ 
+     DeleteDLL(path);
+     if(CountDLL == MAX_NUM_DLLS) {
+-	strcpy(DLLerror, _("Maximal number of DLLs reached..."));
++	strlcpy(DLLerror, _("Maximal number of DLLs reached..."),
++	    sizeof(DLLerror));
+ 	return NULL;
+     }
+ 
+@@ -586,11 +587,12 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const 
+ 
+     dpath = (char *) malloc(strlen(path)+1);
+     if(dpath == NULL) {
+-	strcpy(DLLerror, _("could not allocate space for 'path'"));
++	strlcpy(DLLerror, _("could not allocate space for 'path'"),
++	    sizeof(DLLerror));
+ 	R_osDynSymbol->closeLibrary(handle);
+ 	return 0;
+     }
+-    strcpy(dpath, path);
++    strlcpy(dpath, path, strlen(path) + 1);
+ 
+     if(R_osDynSymbol->fixPath)
+ 	R_osDynSymbol->fixPath(dpath);
+@@ -598,7 +600,7 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const 
+     /* keep only basename from path */
+     p = Rf_strrchr(dpath, FILESEP[0]);
+     if(!p) p = dpath; else p++;
+-    if(strlen(p) < PATH_MAX) strcpy(DLLname, p);
++    if(strlen(p) < PATH_MAX) strlcpy(DLLname, p, sizeof(DLLname));
+     else error(_("DLLname '%s' is too long"), p);
+ 
+     /* remove SHLIB_EXT if present */
+@@ -620,14 +622,15 @@ addDLL(char *dpath, char *DLLname, HINSTANCE handle)
+     int ans = CountDLL;
+     char *name = (char *) malloc(strlen(DLLname)+1);
+     if(name == NULL) {
+-	strcpy(DLLerror, _("could not allocate space for 'name'"));
++	strlcpy(DLLerror, _("could not allocate space for 'name'"),
++	    sizeof(DLLname));
+ 	if(handle)
+ 	   R_osDynSymbol->closeLibrary(handle);
+ 	free(dpath);
+ 	return 0;
+     }
+ 
+-    strcpy(name, DLLname);
++    strlcpy(name, DLLname, strlen(DLLname) + 1);
+     LoadedDLL[CountDLL].path = dpath;
+     LoadedDLL[CountDLL].name = name;
+     LoadedDLL[CountDLL].handle = handle;

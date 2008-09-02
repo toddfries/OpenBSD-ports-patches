@@ -1,0 +1,18 @@
+@comment $OpenBSD: PLIST,v 1.3 2004/09/14 23:44:01 espie Exp $
+lib/python${MODPY_VERSION}/site-packages/__init__.py
+lib/python${MODPY_VERSION}/site-packages/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/errors.py
+lib/python${MODPY_VERSION}/site-packages/errors.pyc
+lib/python${MODPY_VERSION}/site-packages/optik/
+lib/python${MODPY_VERSION}/site-packages/optik/__init__.py
+lib/python${MODPY_VERSION}/site-packages/optik/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/optik/errors.py
+lib/python${MODPY_VERSION}/site-packages/optik/errors.pyc
+lib/python${MODPY_VERSION}/site-packages/optik/option.py
+lib/python${MODPY_VERSION}/site-packages/optik/option.pyc
+lib/python${MODPY_VERSION}/site-packages/optik/option_parser.py
+lib/python${MODPY_VERSION}/site-packages/optik/option_parser.pyc
+lib/python${MODPY_VERSION}/site-packages/option.py
+lib/python${MODPY_VERSION}/site-packages/option.pyc
+lib/python${MODPY_VERSION}/site-packages/option_parser.py
+lib/python${MODPY_VERSION}/site-packages/option_parser.pyc

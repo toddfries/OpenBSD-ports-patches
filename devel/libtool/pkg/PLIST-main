@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2006/11/21 11:31:39 espie Exp $
+@pkgpath devel/libtool
+bin/libtool
+bin/libtoolize
+@info info/libtool.info
+share/aclocal/libtool.m4
+share/libtool/config.guess
+share/libtool/config.sub
+share/libtool/install-sh
+share/libtool/ltmain.sh

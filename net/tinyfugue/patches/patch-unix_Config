@@ -1,0 +1,30 @@
+$OpenBSD: patch-unix_Config,v 1.1 2000/09/20 22:42:12 avsm Exp $
+--- unix/Config.orig	Sat Mar  6 17:43:28 1999
++++ unix/Config	Wed Sep 20 12:05:16 2000
+@@ -33,9 +33,12 @@
+ #   even if an old version is currently in use.  You can remove
+ #   the old version manually later when it is no longer in use.
+ 
+-# TF="/usr/local/bin/tf-${TFVER}"
+-# LIBDIR="/usr/local/lib/tf-${TFVER}-lib"
+-# SYMLINK="/usr/local/bin/tf"
++if [ -z "${PREFIX}" ]; then 
++  PREFIX="/usr/local" 
++fi
++TF="${PREFIX}/bin/tf-${TFVER}"
++LIBDIR="${PREFIX}/share/tinyfugue"
++SYMLINK="${PREFIX}/bin/tf"
+ 
+ 
+ ### Manual Page.
+@@ -44,8 +47,8 @@
+ # uses nroff format; set MANTYPE=cat if your man uses pre-formatted
+ # vt100 "catman" pages.  Default is "cat".
+ 
+-# MANTYPE="nroff"
+-# MANPAGE="/usr/local/man/man1/tf.1"
++MANTYPE="nroff"
++MANPAGE="${PREFIX}/man/man1/tf.1"
+ 
+ 
+ ### Flags.

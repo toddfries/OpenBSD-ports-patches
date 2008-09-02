@@ -1,0 +1,6 @@
+@comment $OpenBSD: PLIST,v 1.10 2004/09/22 22:43:42 espie Exp $
+bin/ytalk
+@man man/man1/ytalk.1
+share/examples/ytalk/
+share/examples/ytalk/ytalkrc-sample
+@sample ${SYSCONFDIR}/ytalkrc

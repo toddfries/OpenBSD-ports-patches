@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.5 2004/09/15 09:09:44 espie Exp $
+@mode 0500
+libexec/poppassd
+@mode
+@man man/man8/poppassd.8

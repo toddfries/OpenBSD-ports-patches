@@ -1,0 +1,12 @@
+$OpenBSD: patch-Makefile_PL,v 1.2 2006/11/29 20:21:46 jasper Exp $
+--- Makefile.PL.orig	Tue Nov 28 21:14:32 2006
++++ Makefile.PL	Tue Nov 28 21:15:32 2006
+@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
+ WriteMakefile(
+   'NAME'	   => 'CDDB_get',
+   'VERSION_FROM' => 'CDDB_get.pm', # finds $VERSION
+-  'EXE_FILES'    => ['cddb.pl'],
++  'EXE_FILES'    => ['cddb'],
+   'ABSTRACT'	   => "This module/script gets the CDDB info for an audio cd.",
+   'AUTHOR'       => "Armin Obersteiner <armin at xos dot net>",
+ #  'PREREQ_PM'    => {

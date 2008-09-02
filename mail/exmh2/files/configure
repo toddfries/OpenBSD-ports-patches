@@ -1,0 +1,94 @@
+#! /usr/bin/perl
+
+use DirHandle;
+use FileHandle;
+
+#
+# We used to try and work out the default mail domain, but this made
+# it difficult to build a package. Well configured MTAs should
+# fully qualify all addresses anyway.
+#
+my $domain = "";
+
+my $prefix = exists $ENV{"PREFIX"} ? $ENV{"PREFIX"} : "/usr/local";
+my $localbase = exists $ENV{"LOCALBASE"} ? $ENV{"LOCALBASE"} : "/usr/local";
+my $config = "
+# Saved state from exmh.install
+# Mon Mar 14 10:59:18 MST 2005
+set wish $localbase/bin/wish8.4
+set exmh(version) {version 2.7.2 01/07/2005}
+set exmh(name) exmh
+set exmh(maintainer) welch\@acm.org
+set mh_path $localbase/bin
+set exmh(slocal) $localbase/libexec/slocal
+set mime(dir) $localbase/bin
+set mailcap_default /etc/mailcap
+set mimetypes_default $prefix/share/exmh/mime.types
+set exmh(expect) $localbase/bin/expect
+set exmh(expectk) $localbase/bin/expectk
+set faces(dir) $localbase/faces/faces
+set faces(set,user) {local users usenix misc}
+set faces(set,unknown) {domains unknown}
+set faces(set,news) news
+set faces(defaultDomain) {$domain}
+set faces(suffix) {xpm gif xbm}
+set pgp(pgp,path) $localbase/bin
+set pgp(pgp5,path) $localbase/bin
+set pgp(gpg,path) $localbase/bin
+set pgp(pgp6,path) $localbase/bin
+set glimpse(path) $localbase/bin
+set sound(cmd) /usr/bin/aucat
+set exmh(library) $prefix/share/exmh
+set install(dir,bin) $prefix/bin
+set install(dir,man) $prefix/man/man1
+set install(dir,lib) $prefix/share/exmh
+";
+
+exists $ENV{"WRKSRC"} or die ("WRKSRC: missing from environment\n");
+exists $ENV{"WRKBUILD"} or die ("WRKBUILD: missing from environment\n");
+
+my $srcdir = $ENV{"WRKSRC"};
+my $dstdir = $ENV{"WRKBUILD"};
+my $dir = new DirHandle ($srcdir) or die ("$srcdir: $!\n");
+while (my $name = $dir->read ()){
+	$name =~ m/^([^.].*)\.MASTER$/ or next;
+	$src = "$srcdir/$name";
+	$dst = "$dstdir/$1";
+
+	my $in = new FileHandle ($src, "r") or die ("$src: $!\n");
+	my $out = new FileHandle ($dst, "w") or die ("$dst: $!\n");
+
+	if (my $line = $in->getline ()){
+		$line =~ s|^#!expect|#!$localbase/bin/expect|;
+		$line =~ s|^#!tclsh|#!$localbase/bin/tclsh8.4|;
+		$line =~ s|^#!wish|#!$localbase/bin/wish8.4|;
+		$out->print ($line) or die ("$dst: $!\n");
+
+		while ($line = $in->getline ()){
+			if ($line =~ m/^#CONFIGURATION$/){
+				$out->print ($line) or die ("$dst: $!\n");
+				$out->print ($config) or die ("$dst: $!\n");
+				while ($line = $in->getline ()){
+					if ($line =~ m/^#END CONFIGURATION$/){
+						$out->print ($line) or die (
+							"$dst: $!\n");
+						last;
+					}
+				}
+				$in->eof () and die ("$src: "
+					. "missing 'END CONFIGURATION'\n");
+			}
+			else {
+				$out->print ($line) or die ("$dst: $!\n");
+			}
+		}
+	}
+	$in->eof () or die ("$src: $!\n");
+
+	$in->close () or die ("$src: $!\n");
+	$out->close () or die ("$dst: $!\n");
+}
+$dir->close () or die ("$srcdir: $!\n");
+
+exit (0);
+

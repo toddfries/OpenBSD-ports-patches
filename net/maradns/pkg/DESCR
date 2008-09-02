@@ -1,0 +1,5 @@
+MaraDNS is a package that implements the Domain Name Service (DNS), an
+essential internet service. MaraDNS is intended to be an easy-to-use DNS
+server for environments where a DNS server must be secure, and where the
+server must use the absolute minimum number of resources possible (such
+as on older PCs and embedded wi-fi routers).

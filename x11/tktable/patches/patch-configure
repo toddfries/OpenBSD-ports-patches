@@ -1,0 +1,25 @@
+$OpenBSD: patch-configure,v 1.2 2008/01/28 15:19:17 merdely Exp $
+--- configure.orig	Thu Jul 22 12:43:15 2004
++++ configure	Wed Jan 23 09:55:43 2008
+@@ -7337,7 +7337,6 @@ fi
+     ECHO_VERSION='`echo ${PACKAGE_VERSION}`'
+     TCL_LIB_VERSIONS_OK=ok
+     CFLAGS_DEBUG=-g
+-    CFLAGS_OPTIMIZE=-O
+     if test "$GCC" = "yes" ; then
+ 	CFLAGS_WARNING="-Wall -Wno-implicit-int"
+     else
+@@ -8600,11 +8599,11 @@ if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+   $EGREP "yes" >/dev/null 2>&1; then
+   echo "$as_me:$LINENO: result: yes" >&5
+ echo "${ECHO_T}yes" >&6
+-		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so.1.0'
++		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so.${LIBTktable29_VERSION}'
+ else
+   echo "$as_me:$LINENO: result: no" >&5
+ echo "${ECHO_T}no" >&6
+-		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so.1.0'
++		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so.${LIBTktable29_VERSION}'
+ 
+ fi
+ rm -f conftest*

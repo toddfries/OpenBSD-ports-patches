@@ -1,0 +1,15 @@
+$OpenBSD: patch-doc_make_texi,v 1.2 2008/06/12 21:04:16 brad Exp $
+--- doc/make.texi.orig	Sat Apr  1 01:36:40 2006
++++ doc/make.texi	Wed May 28 19:29:23 2008
+@@ -50,9 +50,9 @@ Software Foundation raise funds for GNU development.''
+ @c ISPELL CHECK: done, 2000-06-25 --Martin Buchholz
+ 
+ 
+-@dircategory GNU Packages
++@dircategory Programming & development tools
+ @direntry
+-* Make: (make).            Remake files automatically.
++* GNU Make: (make).             The GNU make utility.
+ @end direntry
+ 
+ @iftex

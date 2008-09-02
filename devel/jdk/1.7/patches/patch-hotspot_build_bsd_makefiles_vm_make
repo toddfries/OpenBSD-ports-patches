@@ -1,0 +1,32 @@
+$OpenBSD: patch-hotspot_build_bsd_makefiles_vm_make,v 1.4 2008/03/19 18:05:43 kurt Exp $
+--- hotspot/build/bsd/makefiles/vm.make.orig	Wed Nov  7 12:41:30 2007
++++ hotspot/build/bsd/makefiles/vm.make	Wed Nov  7 12:41:35 2007
+@@ -84,6 +84,10 @@ CPPFLAGS =           \
+   ${JRE_VERSION}     \
+   ${VM_DISTRO}
+ 
++ifdef DEFAULT_LIBPATH
++CPPFLAGS += -DDEFAULT_LIBPATH="\"$(DEFAULT_LIBPATH)\""
++endif
++
+ # CFLAGS_WARN holds compiler options to suppress/enable warnings.
+ CFLAGS += $(CFLAGS_WARN/BYFILE)
+ 
+@@ -93,7 +97,7 @@ CFLAGS += $(CFLAGS/NOEX)
+ # Extra flags from gnumake's invocation or environment
+ CFLAGS += $(EXTRA_CFLAGS)
+ 
+-LIBS += -lm -ldl -lpthread
++LIBS += -lm -pthread
+ 
+ # By default, link the *.o into the library, not the executable.
+ LINK_INTO$(LINK_INTO) = LIBJVM
+@@ -122,7 +126,7 @@ mapfile_reorder : mapfile $(REORDERFILE)
+ 	rm -f $@
+ 	cat $^ > $@
+ 
+-STATIC_CXX = true
++STATIC_CXX = false
+ 
+ ifeq ($(LINK_INTO),AOUT)
+   LIBJVM.o                 =

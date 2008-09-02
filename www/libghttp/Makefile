@@ -1,0 +1,26 @@
+# $OpenBSD: Makefile,v 1.18 2007/09/15 20:38:21 merdely Exp $
+
+COMMENT=	GNOME http client library
+
+DISTNAME=	libghttp-1.0.9
+PKGNAME=	${DISTNAME}p1
+CATEGORIES=	www
+SHARED_LIBS=	ghttp	1.0
+MODGNU_SHARED_LIBS=ghttp ''
+
+MASTER_SITES=	$(MASTER_SITE_GNOME:=sources/libghttp/1.0/)
+
+# GPL
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+
+USE_LIBTOOL=	Yes
+
+SEPARATE_BUILD=	concurrent
+CONFIGURE_STYLE= gnu
+CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
+CONFIGURE_ARGS+= --enable-static
+
+.include <bsd.port.mk>

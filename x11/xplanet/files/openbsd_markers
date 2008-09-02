@@ -1,0 +1,7 @@
+# $OpenBSD: openbsd_markers,v 1.2 2006/12/01 16:50:38 espie Exp $
+
+[earth]
+"Earth"
+shade=100
+marker_color=white
+marker_file=%%LOCALBASE%%/share/markers/OpenBSD

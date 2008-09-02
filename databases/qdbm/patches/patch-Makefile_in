@@ -1,0 +1,99 @@
+$OpenBSD: patch-Makefile_in,v 1.10 2007/12/19 21:27:48 bernd Exp $
+--- Makefile.in.orig	Wed Mar  7 03:41:10 2007
++++ Makefile.in	Wed Dec 19 21:39:40 2007
+@@ -24,7 +24,7 @@ LIBREV = @LIBREV@
+ # Targets
+ MYHEADS = depot.h curia.h relic.h hovel.h cabin.h villa.h vista.h odeum.h
+ MYLIBOBJS = depot.o curia.o relic.o hovel.o cabin.o villa.o vista.o odeum.o myconf.o
+-MYLIBS = libqdbm.a libqdbm.so.$(LIBVER).$(LIBREV).0 libqdbm.so.$(LIBVER) libqdbm.so
++MYLIBS = libqdbm.a libqdbm.so.$(LIBVER).$(LIBREV)
+ MYBINS = dpmgr dptest dptsv crmgr crtest crtsv rlmgr rltest hvmgr hvtest \
+   cbtest cbcodec vlmgr vltest vltsv odmgr odtest odidx qmttest
+ MYMAN1S = dpmgr.1 dptest.1 dptsv.1 crmgr.1 crtest.1 crtsv.1 rlmgr.1 rltest.1 hvmgr.1 hvtest.1 \
+@@ -45,26 +45,26 @@ MYLIBDIR = @libdir@
+ MYBINDIR = @bindir@
+ MYMAN1DIR = @mandir@/man1
+ MYMAN3DIR = @mandir@/man3
+-MYDATADIR = @datadir@/$(PACKAGE)
++MYDATADIR = @datadir@/doc/$(PACKAGE)
+ MYPCDIR = @libdir@/pkgconfig
+ DESTDIR =
+ 
+ # Building binaries
+-CC = @CC@
+-CPPFLAGS = @CPPFLAGS@ -I$(srcdir) -I$(MYHEADDIR) \
+-  -I$(HOME)/include -I/usr/local/include @MYDEFS@ \
++#CC = @CC@
++CPPFLAGS += @CPPFLAGS@ -I$(srcdir) \
++  -I/usr/local/include @MYDEFS@ \
+   -D_XOPEN_SOURCE_EXTENDED=1 -D_GNU_SOURCE=1 -D__EXTENSIONS__=1 -D_HPUX_SOURCE=1 \
+   -D_POSIX_MAPPED_FILES=1 -D_POSIX_SYNCHRONIZED_IO=1 \
+   -DPIC=1 -D_THREAD_SAFE=1 -D_REENTRANT=1 -DNDEBUG
+-CFLAGS = -Wall -pedantic -fPIC -fsigned-char -O3 -fomit-frame-pointer -fforce-addr @MYOPTS@
++CFLAGS += -Wall -pedantic -fPIC -fsigned-char -fomit-frame-pointer -fforce-addr @MYOPTS@
+ LD = @LD@
+ LIBS = -lqdbm @LIBS@
+-LIBLDFLAGS = @LDFLAGS@ -L. -L$(MYLIBDIR) -L$(HOME)/lib -L/usr/local/lib @LIBS@
+-LDFLAGS = @LDFLAGS@ -L. -L$(MYLIBDIR) -L$(HOME)/lib -L/usr/local/lib $(LIBS)
+-LDENV = LD_RUN_PATH=/lib:/usr/lib:$(MYLIBDIR):$(HOME)/lib:/usr/local/lib
++LIBLDFLAGS = @LDFLAGS@ -L. -L/usr/local/lib @LIBS@
++LDFLAGS = @LDFLAGS@ -L. -L/usr/local/lib $(LIBS)
++LDENV = LD_RUN_PATH=/lib:/usr/lib:/usr/local/lib
+ AR = @AR@
+-ARFLAGS = rcsv
+-RUNENV = LD_LIBRARY_PATH=.:/lib:/usr/lib:$(MYLIBDIR):$(HOME)/lib:/usr/local/lib
++ARFLAGS = rcv
++RUNENV = LD_LIBRARY_PATH=.:/lib:/usr/lib:/usr/local/lib
+ 
+ 
+ 
+@@ -160,20 +160,20 @@ version :
+ 
+ 
+ install :
+-	mkdir -p $(DESTDIR)$(MYHEADDIR)
+-	cd $(srcdir) && cp -Rf $(MYHEADS) $(DESTDIR)$(MYHEADDIR)
+-	mkdir -p $(DESTDIR)$(MYLIBDIR)
+-	cp -Rf $(MYLIBS) $(DESTDIR)$(MYLIBDIR)
+-	mkdir -p $(DESTDIR)$(MYBINDIR)
+-	cp -Rf $(MYBINS) $(DESTDIR)$(MYBINDIR)
+-	mkdir -p $(DESTDIR)$(MYMAN1DIR)
+-	cd $(srcdir)/man && cp -Rf $(MYMAN1S) $(DESTDIR)$(MYMAN1DIR)
+-	mkdir -p $(DESTDIR)$(MYMAN3DIR)
+-	cd $(srcdir)/man && cp -Rf $(MYMAN3S) $(DESTDIR)$(MYMAN3DIR)
+-	mkdir -p $(DESTDIR)$(MYDATADIR)
+-	cd $(srcdir) && cp -Rf $(MYDOCS) $(DESTDIR)$(MYDATADIR)
+-	mkdir -p $(DESTDIR)$(MYPCDIR)
+-	cd $(srcdir) && cp -Rf $(MYPCS) $(DESTDIR)$(MYPCDIR)
++	${BSD_INSTALL_DATA_DIR} $(DESTDIR)$(MYHEADDIR)
++	cd $(srcdir) && ${BSD_INSTALL_DATA} $(MYHEADS) $(DESTDIR)$(MYHEADDIR)
++	${BSD_INSTALL_DATA_DIR} $(DESTDIR)$(MYLIBDIR)
++	${BSD_INSTALL_DATA} $(MYLIBS) $(DESTDIR)$(MYLIBDIR)
++	${BSD_INSTALL_PROGRAM_DIR} $(DESTDIR)$(MYBINDIR)
++	${BSD_INSTALL_PROGRAM} $(MYBINS) $(DESTDIR)$(MYBINDIR)
++	${BSD_INSTALL_MAN_DIR} $(DESTDIR)$(MYMAN1DIR)
++	cd $(srcdir)/man && ${BSD_INSTALL_MAN} $(MYMAN1S) $(DESTDIR)$(MYMAN1DIR)
++	${BSD_INSTALL_MAN_DIR} $(DESTDIR)$(MYMAN3DIR)
++	cd $(srcdir)/man && ${BSD_INSTALL_MAN} $(MYMAN3S) $(DESTDIR)$(MYMAN3DIR)
++	${BSD_INSTALL_DATA_DIR} $(DESTDIR)$(MYDATADIR)
++	cd $(srcdir) && ${BSD_INSTALL_DATA} $(MYDOCS) $(DESTDIR)$(MYDATADIR)
++	${BSD_INSTALL_DATA_DIR} $(DESTDIR)$(MYPCDIR)
++	cd $(srcdir) && ${BSD_INSTALL_DATA} $(MYPCS) $(DESTDIR)$(MYPCDIR)
+ 	@printf '\n'
+ 	@printf '#================================================================\n'
+ 	@printf '# Thanks for using QDBM.\n'
+@@ -483,12 +483,12 @@ libqdbm.a : $(MYLIBOBJS)
+ 	$(AR) $(ARFLAGS) $@ $(MYLIBOBJS)
+ 
+ 
+-libqdbm.so.$(LIBVER).$(LIBREV).0 : $(MYLIBOBJS)
++libqdbm.so.$(LIBVER).$(LIBREV) : $(MYLIBOBJS)
+ 	if uname -a | egrep -i 'SunOS' > /dev/null ; \
+ 	  then \
+ 	    $(CC) -shared -Wl,-G,-h,libqdbm.so.$(LIBVER) -o $@ $(MYLIBOBJS) $(LIBLDFLAGS) ; \
+ 	  else \
+-	    $(CC) -shared -Wl,-soname,libqdbm.so.$(LIBVER) -o $@ $(MYLIBOBJS) $(LIBLDFLAGS) ; \
++	    $(CC) -shared -Wl,-soname,libqdbm.so.$(LIBVER).$(LIBREV) -o $@ $(MYLIBOBJS) $(LIBLDFLAGS) ; \
+ 	  fi
+ 
+ 

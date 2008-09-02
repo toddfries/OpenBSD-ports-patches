@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:36:03 espie Exp $
+bin/stel
+@man man/man1/stel.1
+@man man/man8/steld.8
+sbin/steld

@@ -1,0 +1,29 @@
+$OpenBSD: patch-util_wmaker_inst_in,v 1.4 2001/10/24 13:54:38 wilfried Exp $
+--- util/wmaker.inst.in.orig	Wed Sep  5 13:55:18 2001
++++ util/wmaker.inst.in	Wed Oct 24 11:20:19 2001
+@@ -22,6 +22,7 @@ fi
+ # directory where system wide configuration is stored
+ GLOBALDIR="#pkgdatadir#"
+ GLOBALDEFDIR="#sysconfdir#"
++WPREFSDIR="#wpref#"
+ 
+ USERDIR=$HOME
+ 
+@@ -81,14 +82,17 @@ copy() {
+             	    source=$GLOBALDIR/plmenu
+         	fi
+ 		sed -e "s:#wmdatadir#:$GLOBALDIR:g" \
++		    -e "s:#wprefsdir#:$WPREFSDIR:g" \
+ 			$source > $GSDIR/Defaults/WMRootMenu
+ 	else
+ 		if test "x$GNUSTEP_USER_ROOT" = "x"; then
+ 			sed -e "s:#wmdatadir#:$GLOBALDIR:g" \
++				-e "s:#wprefsdir#:$WPREFSDIR:g" \
+ 					$source > $target
+ 		else
+ 			sed -e "s|\$HOME/GNUstep|$GSDIR|g" \
+ 				-e "s:#wmdatadir#:$GLOBALDIR:g" \
++				-e "s:#wprefsdir#:$WPREFSDIR:g" \
+ 					$source > $target
+ 		fi
+ 	fi

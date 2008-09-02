@@ -1,0 +1,25 @@
+$OpenBSD: patch-lib_MailScanner_Message_pm,v 1.4 2008/07/24 03:25:03 brad Exp $
+--- lib/MailScanner/Message.pm.orig	Tue Jun 17 15:47:39 2008
++++ lib/MailScanner/Message.pm	Sat Jun 21 20:44:53 2008
+@@ -671,12 +671,19 @@ sub IsSpam {
+   # rblspamheader is useful start to spamreport if RBLsaysspam.
+ 
+   # Do the Custom Spam Checker
+-  my($gsscore, $gsreport);
++  my($gsscore, $gsreport, @gsheaders);
+   #print STDERR "In Message.pm about to look at gsscanner\n";
+   if ($usegsscanner) {
+     #print STDERR "In Message.pm about to run gsscanner\n";
+-    ($gsscore, $gsreport) = MailScanner::GenericSpam::Checks($this);
++    ($gsscore, $gsreport, @gsheaders) = MailScanner::GenericSpam::Checks($this);
+     #print STDERR "In Message.pm we got $gsscore, $gsreport\n";
++    foreach my $line (@gsheaders) {
++      my ($header,$val)=split(/:/,$line);
++      #print STDERR "In Message.pm we got gsheader $line <${header}|${val}>\n";
++      $global::MS->{mta}->AddHeader($this,
++                                    "$header:",
++                                    $val);
++    }
+     $this->{gshits} = $gsscore;
+     $this->{gsreport} = $gsreport;
+     $this->{sascore} += $gsscore; # Add the score

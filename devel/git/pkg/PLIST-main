@@ -1,0 +1,685 @@
+@comment $OpenBSD: PLIST-main,v 1.18 2008/07/21 07:48:54 bernd Exp $
+@pkgpath devel/git
+@bin bin/git
+@bin bin/git-add
+bin/git-add--interactive
+bin/git-am
+@bin bin/git-annotate
+@bin bin/git-apply
+bin/git-archimport
+@bin bin/git-archive
+bin/git-bisect
+@bin bin/git-blame
+@bin bin/git-branch
+@bin bin/git-bundle
+@bin bin/git-cat-file
+@bin bin/git-check-attr
+@bin bin/git-check-ref-format
+@bin bin/git-checkout
+@bin bin/git-checkout-index
+@bin bin/git-cherry
+@bin bin/git-cherry-pick
+@bin bin/git-clean
+@bin bin/git-clone
+@bin bin/git-commit
+@bin bin/git-commit-tree
+@bin bin/git-config
+@bin bin/git-count-objects
+bin/git-cvsexportcommit
+bin/git-cvsimport
+bin/git-cvsserver
+@bin bin/git-daemon
+@bin bin/git-describe
+@bin bin/git-diff
+@bin bin/git-diff-files
+@bin bin/git-diff-index
+@bin bin/git-diff-tree
+@bin bin/git-fast-export
+@bin bin/git-fast-import
+@bin bin/git-fetch
+@bin bin/git-fetch--tool
+@bin bin/git-fetch-pack
+bin/git-filter-branch
+@bin bin/git-fmt-merge-msg
+@bin bin/git-for-each-ref
+@bin bin/git-format-patch
+@bin bin/git-fsck
+@bin bin/git-fsck-objects
+@bin bin/git-gc
+@bin bin/git-get-tar-commit-id
+@bin bin/git-grep
+@bin bin/git-hash-object
+@bin bin/git-http-fetch
+@bin bin/git-http-push
+@bin bin/git-imap-send
+@bin bin/git-index-pack
+@bin bin/git-init
+@bin bin/git-init-db
+bin/git-instaweb
+@bin bin/git-log
+bin/git-lost-found
+@bin bin/git-ls-files
+@bin bin/git-ls-remote
+@bin bin/git-ls-tree
+@bin bin/git-mailinfo
+@bin bin/git-mailsplit
+bin/git-merge
+@bin bin/git-merge-base
+@bin bin/git-merge-file
+@bin bin/git-merge-index
+bin/git-merge-octopus
+bin/git-merge-one-file
+@bin bin/git-merge-ours
+@bin bin/git-merge-recursive
+bin/git-merge-resolve
+bin/git-merge-stupid
+@bin bin/git-merge-subtree
+@bin bin/git-merge-tree
+bin/git-mergetool
+@bin bin/git-mktag
+@bin bin/git-mktree
+@bin bin/git-mv
+@bin bin/git-name-rev
+@bin bin/git-pack-objects
+@bin bin/git-pack-redundant
+@bin bin/git-pack-refs
+bin/git-parse-remote
+@bin bin/git-patch-id
+@bin bin/git-peek-remote
+@bin bin/git-prune
+@bin bin/git-prune-packed
+bin/git-pull
+@bin bin/git-push
+bin/git-quiltimport
+@bin bin/git-read-tree
+bin/git-rebase
+bin/git-rebase--interactive
+@bin bin/git-receive-pack
+@bin bin/git-reflog
+bin/git-relink
+@bin bin/git-remote
+bin/git-repack
+@bin bin/git-repo-config
+bin/git-request-pull
+@bin bin/git-rerere
+@bin bin/git-reset
+@bin bin/git-rev-list
+@bin bin/git-rev-parse
+@bin bin/git-revert
+@bin bin/git-rm
+bin/git-send-email
+@bin bin/git-send-pack
+bin/git-sh-setup
+@bin bin/git-shell
+@bin bin/git-shortlog
+@bin bin/git-show
+@bin bin/git-show-branch
+@bin bin/git-show-index
+@bin bin/git-show-ref
+bin/git-stash
+@bin bin/git-status
+@bin bin/git-stripspace
+bin/git-submodule
+@bin bin/git-symbolic-ref
+@bin bin/git-tag
+@bin bin/git-tar-tree
+@bin bin/git-unpack-file
+@bin bin/git-unpack-objects
+@bin bin/git-update-index
+@bin bin/git-update-ref
+@bin bin/git-update-server-info
+@bin bin/git-upload-archive
+@bin bin/git-upload-pack
+@bin bin/git-var
+@bin bin/git-verify-pack
+@bin bin/git-verify-tag
+bin/git-web--browse
+@bin bin/git-whatchanged
+@bin bin/git-write-tree
+lib/libgit.a
+libdata/perl5/site_perl/Git.pm
+libdata/perl5/site_perl/${MACHINE_ARCH}-openbsd/
+@man man/man1/git-add.1
+@man man/man1/git-am.1
+@man man/man1/git-annotate.1
+@man man/man1/git-apply.1
+@man man/man1/git-archimport.1
+@man man/man1/git-archive.1
+@man man/man1/git-bisect.1
+@man man/man1/git-blame.1
+@man man/man1/git-branch.1
+@man man/man1/git-bundle.1
+@man man/man1/git-cat-file.1
+@man man/man1/git-check-attr.1
+@man man/man1/git-check-ref-format.1
+@man man/man1/git-checkout-index.1
+@man man/man1/git-checkout.1
+@man man/man1/git-cherry-pick.1
+@man man/man1/git-cherry.1
+@man man/man1/git-clean.1
+@man man/man1/git-clone.1
+@man man/man1/git-commit-tree.1
+@man man/man1/git-commit.1
+@man man/man1/git-config.1
+@man man/man1/git-count-objects.1
+@man man/man1/git-cvsexportcommit.1
+@man man/man1/git-cvsimport.1
+@man man/man1/git-cvsserver.1
+@man man/man1/git-daemon.1
+@man man/man1/git-describe.1
+@man man/man1/git-diff-files.1
+@man man/man1/git-diff-index.1
+@man man/man1/git-diff-tree.1
+@man man/man1/git-diff.1
+@man man/man1/git-fast-export.1
+@man man/man1/git-fast-import.1
+@man man/man1/git-fetch-pack.1
+@man man/man1/git-fetch.1
+@man man/man1/git-filter-branch.1
+@man man/man1/git-fmt-merge-msg.1
+@man man/man1/git-for-each-ref.1
+@man man/man1/git-format-patch.1
+@man man/man1/git-fsck-objects.1
+@man man/man1/git-fsck.1
+@man man/man1/git-gc.1
+@man man/man1/git-get-tar-commit-id.1
+@man man/man1/git-grep.1
+@man man/man1/git-hash-object.1
+@man man/man1/git-help.1
+@man man/man1/git-http-fetch.1
+@man man/man1/git-http-push.1
+@man man/man1/git-imap-send.1
+@man man/man1/git-index-pack.1
+@man man/man1/git-init-db.1
+@man man/man1/git-init.1
+@man man/man1/git-instaweb.1
+@man man/man1/git-log.1
+@man man/man1/git-lost-found.1
+@man man/man1/git-ls-files.1
+@man man/man1/git-ls-remote.1
+@man man/man1/git-ls-tree.1
+@man man/man1/git-mailinfo.1
+@man man/man1/git-mailsplit.1
+@man man/man1/git-merge-base.1
+@man man/man1/git-merge-file.1
+@man man/man1/git-merge-index.1
+@man man/man1/git-merge-one-file.1
+@man man/man1/git-merge-tree.1
+@man man/man1/git-merge.1
+@man man/man1/git-mergetool.1
+@man man/man1/git-mktag.1
+@man man/man1/git-mktree.1
+@man man/man1/git-mv.1
+@man man/man1/git-name-rev.1
+@man man/man1/git-pack-objects.1
+@man man/man1/git-pack-redundant.1
+@man man/man1/git-pack-refs.1
+@man man/man1/git-parse-remote.1
+@man man/man1/git-patch-id.1
+@man man/man1/git-peek-remote.1
+@man man/man1/git-prune-packed.1
+@man man/man1/git-prune.1
+@man man/man1/git-pull.1
+@man man/man1/git-push.1
+@man man/man1/git-quiltimport.1
+@man man/man1/git-read-tree.1
+@man man/man1/git-rebase.1
+@man man/man1/git-receive-pack.1
+@man man/man1/git-reflog.1
+@man man/man1/git-relink.1
+@man man/man1/git-remote.1
+@man man/man1/git-repack.1
+@man man/man1/git-repo-config.1
+@man man/man1/git-request-pull.1
+@man man/man1/git-rerere.1
+@man man/man1/git-reset.1
+@man man/man1/git-rev-list.1
+@man man/man1/git-rev-parse.1
+@man man/man1/git-revert.1
+@man man/man1/git-rm.1
+@man man/man1/git-send-email.1
+@man man/man1/git-send-pack.1
+@man man/man1/git-sh-setup.1
+@man man/man1/git-shell.1
+@man man/man1/git-shortlog.1
+@man man/man1/git-show-branch.1
+@man man/man1/git-show-index.1
+@man man/man1/git-show-ref.1
+@man man/man1/git-show.1
+@man man/man1/git-stash.1
+@man man/man1/git-status.1
+@man man/man1/git-stripspace.1
+@man man/man1/git-submodule.1
+@man man/man1/git-symbolic-ref.1
+@man man/man1/git-tag.1
+@man man/man1/git-tar-tree.1
+@man man/man1/git-unpack-file.1
+@man man/man1/git-unpack-objects.1
+@man man/man1/git-update-index.1
+@man man/man1/git-update-ref.1
+@man man/man1/git-update-server-info.1
+@man man/man1/git-upload-archive.1
+@man man/man1/git-upload-pack.1
+@man man/man1/git-var.1
+@man man/man1/git-verify-pack.1
+@man man/man1/git-verify-tag.1
+@man man/man1/git-web--browse.1
+@man man/man1/git-whatchanged.1
+@man man/man1/git-write-tree.1
+@man man/man1/git.1
+@man man/man3p/Git.3p
+@man man/man5/gitattributes.5
+@man man/man5/githooks.5
+@man man/man5/gitignore.5
+@man man/man5/gitmodules.5
+@man man/man5/gitrepository-layout.5
+@man man/man7/gitcli.7
+@man man/man7/gitcore-tutorial.7
+@man man/man7/gitcvs-migration.7
+@man man/man7/gitdiffcore.7
+@man man/man7/gitglossary.7
+@man man/man7/gittutorial-2.7
+@man man/man7/gittutorial.7
+share/doc/git/
+share/doc/git/RelNotes-1.5.0.1.txt
+share/doc/git/RelNotes-1.5.0.2.txt
+share/doc/git/RelNotes-1.5.0.3.txt
+share/doc/git/RelNotes-1.5.0.4.txt
+share/doc/git/RelNotes-1.5.0.5.txt
+share/doc/git/RelNotes-1.5.0.6.txt
+share/doc/git/RelNotes-1.5.0.7.txt
+share/doc/git/RelNotes-1.5.0.txt
+share/doc/git/RelNotes-1.5.1.1.txt
+share/doc/git/RelNotes-1.5.1.2.txt
+share/doc/git/RelNotes-1.5.1.3.txt
+share/doc/git/RelNotes-1.5.1.4.txt
+share/doc/git/RelNotes-1.5.1.5.txt
+share/doc/git/RelNotes-1.5.1.6.txt
+share/doc/git/RelNotes-1.5.1.txt
+share/doc/git/RelNotes-1.5.2.1.txt
+share/doc/git/RelNotes-1.5.2.2.txt
+share/doc/git/RelNotes-1.5.2.3.txt
+share/doc/git/RelNotes-1.5.2.4.txt
+share/doc/git/RelNotes-1.5.2.5.txt
+share/doc/git/RelNotes-1.5.2.txt
+share/doc/git/RelNotes-1.5.3.1.txt
+share/doc/git/RelNotes-1.5.3.2.txt
+share/doc/git/RelNotes-1.5.3.3.txt
+share/doc/git/RelNotes-1.5.3.4.txt
+share/doc/git/RelNotes-1.5.3.5.txt
+share/doc/git/RelNotes-1.5.3.6.txt
+share/doc/git/RelNotes-1.5.3.7.txt
+share/doc/git/RelNotes-1.5.3.8.txt
+share/doc/git/RelNotes-1.5.3.txt
+share/doc/git/RelNotes-1.5.4.1.txt
+share/doc/git/RelNotes-1.5.4.2.txt
+share/doc/git/RelNotes-1.5.4.3.txt
+share/doc/git/RelNotes-1.5.4.4.txt
+share/doc/git/RelNotes-1.5.4.5.txt
+share/doc/git/RelNotes-1.5.4.6.txt
+share/doc/git/RelNotes-1.5.4.txt
+share/doc/git/RelNotes-1.5.5.1.txt
+share/doc/git/RelNotes-1.5.5.2.txt
+share/doc/git/RelNotes-1.5.5.3.txt
+share/doc/git/RelNotes-1.5.5.4.txt
+share/doc/git/RelNotes-1.5.5.5.txt
+share/doc/git/RelNotes-1.5.5.txt
+share/doc/git/RelNotes-1.5.6.1.txt
+share/doc/git/RelNotes-1.5.6.2.txt
+share/doc/git/RelNotes-1.5.6.3.txt
+share/doc/git/RelNotes-1.5.6.4.txt
+share/doc/git/RelNotes-1.5.6.txt
+share/doc/git/blame-options.txt
+share/doc/git/cmds-ancillaryinterrogators.txt
+share/doc/git/cmds-ancillarymanipulators.txt
+share/doc/git/cmds-foreignscminterface.txt
+share/doc/git/cmds-mainporcelain.txt
+share/doc/git/cmds-plumbinginterrogators.txt
+share/doc/git/cmds-plumbingmanipulators.txt
+share/doc/git/cmds-purehelpers.txt
+share/doc/git/cmds-synchelpers.txt
+share/doc/git/cmds-synchingrepositories.txt
+share/doc/git/config.txt
+share/doc/git/diff-format.txt
+share/doc/git/diff-generate-patch.txt
+share/doc/git/diff-options.txt
+share/doc/git/everyday.html
+share/doc/git/everyday.txt
+share/doc/git/fetch-options.txt
+share/doc/git/git-add.html
+share/doc/git/git-add.txt
+share/doc/git/git-am.html
+share/doc/git/git-am.txt
+share/doc/git/git-annotate.html
+share/doc/git/git-annotate.txt
+share/doc/git/git-apply.html
+share/doc/git/git-apply.txt
+share/doc/git/git-archimport.html
+share/doc/git/git-archimport.txt
+share/doc/git/git-archive.html
+share/doc/git/git-archive.txt
+share/doc/git/git-bisect.html
+share/doc/git/git-bisect.txt
+share/doc/git/git-blame.html
+share/doc/git/git-blame.txt
+share/doc/git/git-branch.html
+share/doc/git/git-branch.txt
+share/doc/git/git-bundle.html
+share/doc/git/git-bundle.txt
+share/doc/git/git-cat-file.html
+share/doc/git/git-cat-file.txt
+share/doc/git/git-check-attr.html
+share/doc/git/git-check-attr.txt
+share/doc/git/git-check-ref-format.html
+share/doc/git/git-check-ref-format.txt
+share/doc/git/git-checkout-index.html
+share/doc/git/git-checkout-index.txt
+share/doc/git/git-checkout.html
+share/doc/git/git-checkout.txt
+share/doc/git/git-cherry-pick.html
+share/doc/git/git-cherry-pick.txt
+share/doc/git/git-cherry.html
+share/doc/git/git-cherry.txt
+share/doc/git/git-clean.html
+share/doc/git/git-clean.txt
+share/doc/git/git-clone.html
+share/doc/git/git-clone.txt
+share/doc/git/git-commit-tree.html
+share/doc/git/git-commit-tree.txt
+share/doc/git/git-commit.html
+share/doc/git/git-commit.txt
+share/doc/git/git-config.html
+share/doc/git/git-config.txt
+share/doc/git/git-count-objects.html
+share/doc/git/git-count-objects.txt
+share/doc/git/git-cvsexportcommit.html
+share/doc/git/git-cvsexportcommit.txt
+share/doc/git/git-cvsimport.html
+share/doc/git/git-cvsimport.txt
+share/doc/git/git-cvsserver.html
+share/doc/git/git-cvsserver.txt
+share/doc/git/git-daemon.html
+share/doc/git/git-daemon.txt
+share/doc/git/git-describe.html
+share/doc/git/git-describe.txt
+share/doc/git/git-diff-files.html
+share/doc/git/git-diff-files.txt
+share/doc/git/git-diff-index.html
+share/doc/git/git-diff-index.txt
+share/doc/git/git-diff-tree.html
+share/doc/git/git-diff-tree.txt
+share/doc/git/git-diff.html
+share/doc/git/git-diff.txt
+share/doc/git/git-fast-export.html
+share/doc/git/git-fast-export.txt
+share/doc/git/git-fast-import.html
+share/doc/git/git-fast-import.txt
+share/doc/git/git-fetch-pack.html
+share/doc/git/git-fetch-pack.txt
+share/doc/git/git-fetch.html
+share/doc/git/git-fetch.txt
+share/doc/git/git-filter-branch.html
+share/doc/git/git-filter-branch.txt
+share/doc/git/git-fmt-merge-msg.html
+share/doc/git/git-fmt-merge-msg.txt
+share/doc/git/git-for-each-ref.html
+share/doc/git/git-for-each-ref.txt
+share/doc/git/git-format-patch.html
+share/doc/git/git-format-patch.txt
+share/doc/git/git-fsck-objects.html
+share/doc/git/git-fsck-objects.txt
+share/doc/git/git-fsck.html
+share/doc/git/git-fsck.txt
+share/doc/git/git-gc.html
+share/doc/git/git-gc.txt
+share/doc/git/git-get-tar-commit-id.html
+share/doc/git/git-get-tar-commit-id.txt
+share/doc/git/git-grep.html
+share/doc/git/git-grep.txt
+share/doc/git/git-hash-object.html
+share/doc/git/git-hash-object.txt
+share/doc/git/git-help.html
+share/doc/git/git-help.txt
+share/doc/git/git-http-fetch.html
+share/doc/git/git-http-fetch.txt
+share/doc/git/git-http-push.html
+share/doc/git/git-http-push.txt
+share/doc/git/git-imap-send.html
+share/doc/git/git-imap-send.txt
+share/doc/git/git-index-pack.html
+share/doc/git/git-index-pack.txt
+share/doc/git/git-init-db.html
+share/doc/git/git-init-db.txt
+share/doc/git/git-init.html
+share/doc/git/git-init.txt
+share/doc/git/git-instaweb.html
+share/doc/git/git-instaweb.txt
+share/doc/git/git-log.html
+share/doc/git/git-log.txt
+share/doc/git/git-lost-found.html
+share/doc/git/git-lost-found.txt
+share/doc/git/git-ls-files.html
+share/doc/git/git-ls-files.txt
+share/doc/git/git-ls-remote.html
+share/doc/git/git-ls-remote.txt
+share/doc/git/git-ls-tree.html
+share/doc/git/git-ls-tree.txt
+share/doc/git/git-mailinfo.html
+share/doc/git/git-mailinfo.txt
+share/doc/git/git-mailsplit.html
+share/doc/git/git-mailsplit.txt
+share/doc/git/git-merge-base.html
+share/doc/git/git-merge-base.txt
+share/doc/git/git-merge-file.html
+share/doc/git/git-merge-file.txt
+share/doc/git/git-merge-index.html
+share/doc/git/git-merge-index.txt
+share/doc/git/git-merge-one-file.html
+share/doc/git/git-merge-one-file.txt
+share/doc/git/git-merge-tree.html
+share/doc/git/git-merge-tree.txt
+share/doc/git/git-merge.html
+share/doc/git/git-merge.txt
+share/doc/git/git-mergetool.html
+share/doc/git/git-mergetool.txt
+share/doc/git/git-mktag.html
+share/doc/git/git-mktag.txt
+share/doc/git/git-mktree.html
+share/doc/git/git-mktree.txt
+share/doc/git/git-mv.html
+share/doc/git/git-mv.txt
+share/doc/git/git-name-rev.html
+share/doc/git/git-name-rev.txt
+share/doc/git/git-pack-objects.html
+share/doc/git/git-pack-objects.txt
+share/doc/git/git-pack-redundant.html
+share/doc/git/git-pack-redundant.txt
+share/doc/git/git-pack-refs.html
+share/doc/git/git-pack-refs.txt
+share/doc/git/git-parse-remote.html
+share/doc/git/git-parse-remote.txt
+share/doc/git/git-patch-id.html
+share/doc/git/git-patch-id.txt
+share/doc/git/git-peek-remote.html
+share/doc/git/git-peek-remote.txt
+share/doc/git/git-prune-packed.html
+share/doc/git/git-prune-packed.txt
+share/doc/git/git-prune.html
+share/doc/git/git-prune.txt
+share/doc/git/git-pull.html
+share/doc/git/git-pull.txt
+share/doc/git/git-push.html
+share/doc/git/git-push.txt
+share/doc/git/git-quiltimport.html
+share/doc/git/git-quiltimport.txt
+share/doc/git/git-read-tree.html
+share/doc/git/git-read-tree.txt
+share/doc/git/git-rebase.html
+share/doc/git/git-rebase.txt
+share/doc/git/git-receive-pack.html
+share/doc/git/git-receive-pack.txt
+share/doc/git/git-reflog.html
+share/doc/git/git-reflog.txt
+share/doc/git/git-relink.html
+share/doc/git/git-relink.txt
+share/doc/git/git-remote.html
+share/doc/git/git-remote.txt
+share/doc/git/git-repack.html
+share/doc/git/git-repack.txt
+share/doc/git/git-repo-config.html
+share/doc/git/git-repo-config.txt
+share/doc/git/git-request-pull.html
+share/doc/git/git-request-pull.txt
+share/doc/git/git-rerere.html
+share/doc/git/git-rerere.txt
+share/doc/git/git-reset.html
+share/doc/git/git-reset.txt
+share/doc/git/git-rev-list.html
+share/doc/git/git-rev-list.txt
+share/doc/git/git-rev-parse.html
+share/doc/git/git-rev-parse.txt
+share/doc/git/git-revert.html
+share/doc/git/git-revert.txt
+share/doc/git/git-rm.html
+share/doc/git/git-rm.txt
+share/doc/git/git-send-email.html
+share/doc/git/git-send-email.txt
+share/doc/git/git-send-pack.html
+share/doc/git/git-send-pack.txt
+share/doc/git/git-sh-setup.html
+share/doc/git/git-sh-setup.txt
+share/doc/git/git-shell.html
+share/doc/git/git-shell.txt
+share/doc/git/git-shortlog.html
+share/doc/git/git-shortlog.txt
+share/doc/git/git-show-branch.html
+share/doc/git/git-show-branch.txt
+share/doc/git/git-show-index.html
+share/doc/git/git-show-index.txt
+share/doc/git/git-show-ref.html
+share/doc/git/git-show-ref.txt
+share/doc/git/git-show.html
+share/doc/git/git-show.txt
+share/doc/git/git-stash.html
+share/doc/git/git-stash.txt
+share/doc/git/git-status.html
+share/doc/git/git-status.txt
+share/doc/git/git-stripspace.html
+share/doc/git/git-stripspace.txt
+share/doc/git/git-submodule.html
+share/doc/git/git-submodule.txt
+share/doc/git/git-svn.html
+share/doc/git/git-svn.txt
+share/doc/git/git-symbolic-ref.html
+share/doc/git/git-symbolic-ref.txt
+share/doc/git/git-tag.html
+share/doc/git/git-tag.txt
+share/doc/git/git-tar-tree.html
+share/doc/git/git-tar-tree.txt
+share/doc/git/git-tools.html
+share/doc/git/git-tools.txt
+share/doc/git/git-unpack-file.html
+share/doc/git/git-unpack-file.txt
+share/doc/git/git-unpack-objects.html
+share/doc/git/git-unpack-objects.txt
+share/doc/git/git-update-index.html
+share/doc/git/git-update-index.txt
+share/doc/git/git-update-ref.html
+share/doc/git/git-update-ref.txt
+share/doc/git/git-update-server-info.html
+share/doc/git/git-update-server-info.txt
+share/doc/git/git-upload-archive.html
+share/doc/git/git-upload-archive.txt
+share/doc/git/git-upload-pack.html
+share/doc/git/git-upload-pack.txt
+share/doc/git/git-var.html
+share/doc/git/git-var.txt
+share/doc/git/git-verify-pack.html
+share/doc/git/git-verify-pack.txt
+share/doc/git/git-verify-tag.html
+share/doc/git/git-verify-tag.txt
+share/doc/git/git-web--browse.html
+share/doc/git/git-web--browse.txt
+share/doc/git/git-whatchanged.html
+share/doc/git/git-whatchanged.txt
+share/doc/git/git-write-tree.html
+share/doc/git/git-write-tree.txt
+share/doc/git/git.html
+share/doc/git/git.txt
+share/doc/git/gitattributes.html
+share/doc/git/gitattributes.txt
+share/doc/git/gitcli.html
+share/doc/git/gitcli.txt
+share/doc/git/gitcore-tutorial.html
+share/doc/git/gitcore-tutorial.txt
+share/doc/git/gitcvs-migration.html
+share/doc/git/gitcvs-migration.txt
+share/doc/git/gitdiffcore.html
+share/doc/git/gitdiffcore.txt
+share/doc/git/gitglossary.html
+share/doc/git/gitglossary.txt
+share/doc/git/githooks.html
+share/doc/git/githooks.txt
+share/doc/git/gitignore.html
+share/doc/git/gitignore.txt
+share/doc/git/gitmodules.html
+share/doc/git/gitmodules.txt
+share/doc/git/gitrepository-layout.html
+share/doc/git/gitrepository-layout.txt
+share/doc/git/gittutorial-2.html
+share/doc/git/gittutorial-2.txt
+share/doc/git/gittutorial.html
+share/doc/git/gittutorial.txt
+share/doc/git/glossary-content.txt
+share/doc/git/howto/
+share/doc/git/howto-index.html
+share/doc/git/howto-index.txt
+share/doc/git/howto/maintain-git.txt
+share/doc/git/howto/rebase-and-edit.txt
+share/doc/git/howto/rebase-from-internal-branch.txt
+share/doc/git/howto/rebuild-from-update-hook.txt
+share/doc/git/howto/recover-corrupted-blob-object.txt
+share/doc/git/howto/revert-branch-rebase.html
+share/doc/git/howto/revert-branch-rebase.txt
+share/doc/git/howto/separating-topic-branches.txt
+share/doc/git/howto/setup-git-server-over-http.txt
+share/doc/git/howto/update-hook-example.txt
+share/doc/git/howto/use-git-daemon.txt
+share/doc/git/howto/using-merge-subtree.html
+share/doc/git/howto/using-merge-subtree.txt
+share/doc/git/i18n.txt
+share/doc/git/index.html
+share/doc/git/merge-config.txt
+share/doc/git/merge-options.txt
+share/doc/git/merge-strategies.txt
+share/doc/git/pretty-formats.txt
+share/doc/git/pretty-options.txt
+share/doc/git/pull-fetch-param.txt
+share/doc/git/rev-list-options.txt
+share/doc/git/urls-remotes.txt
+share/doc/git/urls.txt
+share/doc/git/user-manual.html
+share/doc/git/user-manual.txt
+share/emacs/
+share/emacs/site-lisp/
+share/emacs/site-lisp/git-blame.el
+share/emacs/site-lisp/git.el
+share/emacs/site-lisp/vc-git.el
+share/git-core/
+share/git-core/templates/
+share/git-core/templates/branches/
+share/git-core/templates/description
+share/git-core/templates/hooks/
+share/git-core/templates/hooks/applypatch-msg
+share/git-core/templates/hooks/commit-msg
+share/git-core/templates/hooks/post-commit
+share/git-core/templates/hooks/post-receive
+share/git-core/templates/hooks/post-receive-email
+share/git-core/templates/hooks/post-update
+share/git-core/templates/hooks/pre-applypatch
+share/git-core/templates/hooks/pre-commit
+share/git-core/templates/hooks/pre-rebase
+share/git-core/templates/hooks/prepare-commit-msg
+share/git-core/templates/hooks/update
+share/git-core/templates/info/
+share/git-core/templates/info/exclude

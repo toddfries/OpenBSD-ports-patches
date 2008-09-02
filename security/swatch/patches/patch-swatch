@@ -1,0 +1,12 @@
+$OpenBSD: patch-swatch,v 1.5 2007/03/25 13:01:35 steven Exp $
+--- swatch.orig	Fri Jul 21 22:55:00 2006
++++ swatch	Sun Mar 25 14:59:31 2007
+@@ -148,7 +148,7 @@ sub parse_command_line {
+ sub dprint {
+     my $msg_lev = shift;
+     my $msg = shift;
+-    print STDERR "DEBUG($msg_lev): $msg\n" if ($msg_lev & $opt_debug_level);
++    print STDERR "DEBUG($msg_lev): $msg\n" if ($msg_lev && $opt_debug_level);
+ }
+ 
+  

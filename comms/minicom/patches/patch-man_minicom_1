@@ -1,0 +1,13 @@
+$OpenBSD: patch-man_minicom_1,v 1.2 2007/05/23 16:40:56 ckuethe Exp $
+--- man/minicom.1.orig	Thu May 17 12:29:24 2007
++++ man/minicom.1	Thu May 17 12:31:10 2007
+@@ -812,7 +812,8 @@ $HOME/minicom.log
+ /usr/share/locale/*/LC_MESSAGES/minicom.mo
+ .fi
+ .SH SEE ALSO
+-.BR runscript (1)
++\fIascii-xfr\fP(1),
++\fIrunscript\fP(1)
+ .SH BUGS
+ Please report any bugs to
+ .IR minicom-devel@lists.alioth.debian.org .

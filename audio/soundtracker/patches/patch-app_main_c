@@ -1,0 +1,65 @@
+$OpenBSD: patch-app_main_c,v 1.2 2002/05/30 09:08:28 wcobb Exp $
+--- app/main.c.orig	Sun Feb 17 11:02:22 2002
++++ app/main.c	Tue May 21 21:10:04 2002
+@@ -47,18 +47,6 @@
+ XM *xm = NULL;
+ int pipea[2], pipeb[2];
+ 
+-static void
+-sigsegv_handler (int parameter)
+-{
+-    signal(SIGSEGV, SIG_DFL);
+-
+-    if(xm != NULL) {
+-	int retval = XM_Save(xm, "crash-save.xm", FALSE);
+-	printf("*** SIGSEGV caught.\n*** Saved current XM to 'crash-save.xm' in current directory.\n    (status %d)\n", retval);
+-	exit(1);
+-    }
+-}
+-
+ int
+ main (int argc,
+       char *argv[])
+@@ -80,6 +68,9 @@ main (int argc,
+ #ifdef DRIVER_SGI
+ 	driver_out_irix,
+ #endif
++#ifdef DRIVER_SUN
++	driver_out_sun, driver_in_sun,
++#endif
+ #ifndef NO_AUDIOFILE
+ //	driver_out_file,
+ #endif
+@@ -92,7 +83,9 @@ main (int argc,
+ 	mixer_kbfloat,
+ 	mixer_integer32;
+ 
++#ifndef __OpenBSD__
+     g_thread_init(NULL);
++#endif
+ 
+     if(pipe(pipea) || pipe(pipeb)) {
+ 	fprintf(stderr, "Cränk. Can't pipe().\n");
+@@ -178,6 +171,13 @@ main (int argc,
+ 					   &driver_out_irix);
+ #endif
+ 
++#ifdef DRIVER_SUN
++    drivers[DRIVER_OUTPUT] = g_list_append(drivers[DRIVER_OUTPUT],
++					   &driver_out_sun);
++    drivers[DRIVER_INPUT] = g_list_append(drivers[DRIVER_INPUT],
++					  &driver_in_sun);
++#endif
++
+ #ifdef _WIN32
+     drivers[DRIVER_OUTPUT] = g_list_append(drivers[DRIVER_OUTPUT],
+ 					   &driver_out_dsound);
+@@ -215,8 +215,6 @@ main (int argc,
+ 	midi_load_config();
+ 	midi_init();
+ #endif
+-
+-	signal(SIGSEGV, sigsegv_handler);
+ 
+ 	gtk_main();
+ 

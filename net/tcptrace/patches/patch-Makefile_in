@@ -1,0 +1,64 @@
+$OpenBSD: patch-Makefile_in,v 1.2 2002/10/17 18:21:29 naddy Exp $
+--- Makefile.in.orig	Fri Jun 21 06:47:03 2002
++++ Makefile.in	Wed Oct 16 21:39:46 2002
+@@ -12,7 +12,7 @@ DEFINES += -DGUNZIP="\"gunzip\""
+ # 2) Otherwise, if your system supports standard Unix "uncompress",
+ #    then uncomment the following line to support on-the-fly
+ #    decompression of ".Z" files...
+-#DEFINES += -DUNCOMPRESS="\"uncompress\""
++DEFINES += -DUNCOMPRESS="\"uncompress\""
+ # 3) Also, we assume most systems have the "bunzip2" utility installed,
+ #    if yours doesn't, you'll want to comment out the next line.
+ DEFINES += -DBUNZIP2="\"bunzip2\""
+@@ -32,8 +32,8 @@ DEFINES += -DBUNZIP2="\"bunzip2\""
+ # 
+ ################################################################## 
+ PCAP_LDLIBS = @V_PCAP_LDLIBS@
+-PCAP_INCS    = -I/usr/local/include -I. -I../pcap -I/usr/include/pcap
+-PCAP_LDFLAGS = -L/usr/local/lib -Llib -Lpcap -L../pcap -L./cygwin-libs
++PCAP_INCS    =
++PCAP_LDFLAGS =
+ 
+ 
+ 
+@@ -138,7 +138,7 @@ INCLS = -I. @V_INCLS@ ${PCAP_INCS}
+ # Probably want full optimization
+ # FreeBSD needs	-Ae
+ # HP needs	-Ae
+-CFLAGS = $(CCOPT) $(DEFINES) @DEFS@ @V_DEFINES@ $(INCLS)
++CFLAGS += $(DEFINES) @DEFS@ @V_DEFINES@ $(INCLS)
+ 
+ # Standard LIBS
+ LDLIBS = @LIBS@ ${PCAP_LDLIBS}
+@@ -198,26 +198,13 @@ LEX_VAL=@LEX@
+ 
+ filt_parser.c: filt_parser.y filter.h
+ #	bison -vd -p filtyy filt_parser.y -o filt_parser.c
+-	if test "${YACC_VAL}" = "bison -y" ; then \
+-		@YACC@ -vd -p filtyy -o filt_parser.c filt_parser.y ;\
+-		cp filt_parser.c flex_bison ;\
+-		cp filt_parser.h flex_bison ;\
+-	else \
+-		echo "Could not find BISON on this system";\
+-		echo "Copying the BISON output files generated at our place" ;\
+-		cp flex_bison/filt_parser.c . ;\
+-		cp flex_bison/filt_parser.h . ;\
+-	fi
++	@YACC@ -vd -p filtyy -o filt_parser.c filt_parser.y ;\
++	cp filt_parser.c flex_bison ;\
++	cp filt_parser.h flex_bison ;\
+ 
+ filt_scanner.c: filt_scanner.l filter.h filt_parser.h
+-	if test ${LEX_VAL} = "flex" ; then \
+-		@LEX@ -t -Pfiltyy filt_scanner.l > filt_scanner.c ;\
+-		cp filt_scanner.c flex_bison ;\
+-	else \
+-		echo "Could not find FLEX on this system" ;\
+-		echo "Copying the FLEX output files generated at our place" ;\
+-		cp flex_bison/filt_scanner.c . ;\
+-	fi
++	@LEX@ -t -Pfiltyy filt_scanner.l > filt_scanner.c ;\
++	cp filt_scanner.c flex_bison ;\
+ 
+ # filt_parser.h created as a side effect of running yacc...
+ filt_parser.h: filt_parser.c

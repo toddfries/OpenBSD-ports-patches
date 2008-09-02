@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:17:40 espie Exp $
+bin/htc
+bin/hts
+@man man/man1/htc.1
+@man man/man1/hts.1

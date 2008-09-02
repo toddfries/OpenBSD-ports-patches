@@ -1,0 +1,9 @@
+$OpenBSD: patch-examples_mhasiteinit_pl,v 1.2 2005/10/31 14:01:34 naddy Exp $
+--- examples/mhasiteinit.pl.orig	Thu Jun  2 04:12:30 2005
++++ examples/mhasiteinit.pl	Thu Oct 20 16:59:21 2005
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ ##---------------------------------------------------------------------------##
+ ##  File:
+ ##      $Id: patch-examples_mhasiteinit_pl,v 1.2 2005/10/31 14:01:34 naddy Exp $

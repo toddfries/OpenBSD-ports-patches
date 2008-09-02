@@ -1,0 +1,13 @@
+@comment $OpenBSD: PLIST-main,v 1.3 2008/06/12 21:47:20 ajacoutot Exp $
+@conflict pine-*
+@pkgpath mail/pine
+@bin bin/alpine
+@bin bin/rpdump
+@bin bin/rpload
+@man man/man1/alpine.1
+@man man/man1/rpdump.1
+@man man/man1/rpload.1
+share/doc/alpine/
+share/doc/alpine/mailcap.unx
+share/doc/alpine/mime.types
+share/doc/alpine/tech-notes.txt

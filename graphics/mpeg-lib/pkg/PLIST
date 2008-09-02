@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.7 2000/09/24 02:13:09 brad Exp $
+include/mpeg.h
+lib/libmpeg.a
+%%SHARED%%

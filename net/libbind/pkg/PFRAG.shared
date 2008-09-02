@@ -1,0 +1,2 @@
+@comment $OpenBSD: PFRAG.shared,v 1.4 2006/01/03 17:16:18 steven Exp $
+@lib lib/libbind.so.${LIBbind_VERSION}

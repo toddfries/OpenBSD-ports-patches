@@ -1,0 +1,63 @@
+--- Makefile.orig	Wed May 29 19:42:08 2002
++++ Makefile	Thu Jan 30 20:37:12 2003
+@@ -5,7 +5,7 @@
+ 
+ ZBD_VERSION = 2.4.1
+ 
+-OS = 
++#OS = 
+ 
+ ###
+ ### Locations of tools, libraries and installation directories.
+@@ -45,19 +45,19 @@ OPTIM = -O3
+ # BFINC = /usr/include/openssl
+ # BFLIB = -lcrypto
+ 
+-BFINC = -I../blowfish-0.9.5a
+-BFLIB = ../blowfish-0.9.5a/libblowfish.a
++BFINC = -I/usr/include/openssl
++BFLIB = /usr/lib/libcrypto.a
+ 
+ # Location of zlib include and library
+ 
+-ZINC = -I../zlib-1.1.4
+-ZLIB = ../zlib-1.1.4/libz.a
++ZINC = -I/usr/include
++ZLIB = /usr/lib/libz.a
+ 
+ # Location of bzlib include and library
+ # Set these empty if you don't want bzib2 support
+ 
+-BZINC = -I../bzip2-1.0.1
+-BZLIB = ../bzip2-1.0.1/libbz2.a
++BZINC = -I${PREFIX}/include
++BZLIB = ${PREFIX}/lib/libbz2.a
+ 
+ #
+ # Tools needed for Perl "POD"-format documentation conversion.
+@@ -175,11 +175,12 @@ SERVICEOBJ = $(SERVICEOBJ_$(OS))
+ #### You REALLY shouldn't have to modify anything beyond here ...
+ ####
+ 
+-CFLAGS = $(OPTIM) $(DEFINES) -I. $(GMPINC) $(BFINC) $(ZINC) $(BZINC)
++ZCFLAGS = $(DEFINES) -I. $(GMPINC) $(BFINC) $(ZINC) $(BZINC)
+ 
+ LIBS = $(GMPLIB) $(BFLIB) $(ZLIB) $(BZLIB) $(OSLIBS)
+ 
+ OBJS = zebedee.o sha_func.o huge.o $(GETOPTOBJ) $(SERVICEOBJ)
++SRCS = $(OBJS:S/.o$/.c/g)
+ 
+ ZBDFILES = server.zbd vncviewer.zbd vncserver.zbd server.key server.id \
+ 	client1.key client2.key clients.id
+@@ -195,7 +196,10 @@ precheck :
+ 	@ if test -z "$(OS)"; then echo "Use '$(MAKE) OS=xxx' where xxx is win32, linux, solaris, freebsd, tru64, irix, hpux, macosx or bsdi"; exit 1; fi
+ 
+ zebedee$(EXE) : $(OBJS)
+-	$(CC) $(CFLAGS) -o zebedee$(EXE) $(OBJS) $(LIBS)
++	$(CC) $(CFLAGS) $(ZCFLAGS) -o zebedee$(EXE) $(OBJS) $(LIBS)
++
++$(OBJS) : $(SRCS)
++	$(CC) $(CFLAGS) $(ZCFLAGS) -c -o $@ $<
+ 
+ huge.o : huge.h
+ 

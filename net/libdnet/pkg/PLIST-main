@@ -1,0 +1,27 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2006/11/22 08:29:56 espie Exp $
+@pkgpath net/libdnet
+@pkgpath net/libdnet,no_python
+%%SHARED%%
+bin/dnet-config
+include/dnet/
+include/dnet.h
+include/dnet/addr.h
+include/dnet/arp.h
+include/dnet/blob.h
+include/dnet/eth.h
+include/dnet/fw.h
+include/dnet/icmp.h
+include/dnet/intf.h
+include/dnet/ip.h
+include/dnet/ip6.h
+include/dnet/os.h
+include/dnet/rand.h
+include/dnet/route.h
+include/dnet/tcp.h
+include/dnet/tun.h
+include/dnet/udp.h
+lib/libdnet.a
+lib/libdnet.la
+@man man/man3/dnet.3
+@man man/man8/dnet.8
+sbin/dnet

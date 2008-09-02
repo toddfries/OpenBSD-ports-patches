@@ -1,0 +1,11 @@
+--- clients/olwm/slave.c.orig	1993-06-29 07:11:57.000000000 +0200
++++ clients/olwm/slave.c	2003-12-30 01:31:15.000000000 +0100
+@@ -22,6 +22,8 @@
+ #include <signal.h>
+ #include <stdio.h>
+ 
++#include <sys/param.h>
++
+ #include "cmdstream.h"
+ #include "error.h"
+ 

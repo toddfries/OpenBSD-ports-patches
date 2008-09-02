@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/08/06 14:37:29 espie Exp $
+bin/xmix
+lib/X11/app-defaults/XMix
+@man man/cat1/xmix.0

@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 18:21:21 espie Exp $
+bin/aub
+@man man/man1/aub.1
+share/doc/aub/
+share/doc/aub/BUG_FIXES

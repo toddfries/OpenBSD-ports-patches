@@ -1,0 +1,12 @@
+$OpenBSD: patch-po_Makefile_in_in,v 1.2 2001/03/07 22:59:16 brad Exp $
+--- po/Makefile.in.in.orig	Wed Mar  7 10:46:52 2001
++++ po/Makefile.in.in	Wed Mar  7 10:47:36 2001
+@@ -71,7 +71,7 @@
+ 	$(MSGFMT) -o $@ $<
+ 
+ .po.gmo:
+-	file=$(srcdir)/`echo $* | sed 's,.*/,,'`.gmo \
++	file=`echo $* | sed 's,.*/,,'`.gmo \
+ 	  && rm -f $$file && $(GMSGFMT) -o $$file $<
+ 
+ .po.cat:

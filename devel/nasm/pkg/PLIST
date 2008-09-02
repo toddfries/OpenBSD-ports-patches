@@ -1,0 +1,38 @@
+@comment $OpenBSD: PLIST,v 1.11 2008/06/26 01:25:33 okan Exp $
+@bin bin/ldrdf
+@bin bin/nasm
+@bin bin/ndisasm
+@bin bin/rdf2bin
+bin/rdf2com
+@bin bin/rdf2ihx
+@bin bin/rdfdump
+@bin bin/rdflib
+@bin bin/rdx
+@info info/nasm.info
+@man man/man1/ldrdf.1
+@man man/man1/nasm.1
+@man man/man1/ndisasm.1
+@man man/man1/rdf2bin.1
+@man man/man1/rdf2com.1
+@man man/man1/rdfdump.1
+@man man/man1/rdflib.1
+@man man/man1/rdx.1
+share/doc/nasm/
+share/doc/nasm/html/
+share/doc/nasm/html/nasmdo10.html
+share/doc/nasm/html/nasmdo11.html
+share/doc/nasm/html/nasmdoc0.html
+share/doc/nasm/html/nasmdoc1.html
+share/doc/nasm/html/nasmdoc2.html
+share/doc/nasm/html/nasmdoc3.html
+share/doc/nasm/html/nasmdoc4.html
+share/doc/nasm/html/nasmdoc5.html
+share/doc/nasm/html/nasmdoc6.html
+share/doc/nasm/html/nasmdoc7.html
+share/doc/nasm/html/nasmdoc8.html
+share/doc/nasm/html/nasmdoc9.html
+share/doc/nasm/html/nasmdoca.html
+share/doc/nasm/html/nasmdocb.html
+share/doc/nasm/html/nasmdoci.html
+share/doc/nasm/internal.doc
+share/doc/nasm/nasmdoc.txt

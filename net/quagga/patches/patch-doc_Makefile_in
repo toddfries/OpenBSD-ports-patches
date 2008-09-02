@@ -1,0 +1,29 @@
+$OpenBSD: patch-doc_Makefile_in,v 1.3 2007/09/12 20:31:18 rui Exp $
+--- doc/Makefile.in.orig	Tue Sep 11 16:59:47 2007
++++ doc/Makefile.in	Tue Sep 11 17:02:43 2007
+@@ -129,6 +129,7 @@ LIBS = @LIBS@
+ LIBTOOL = @LIBTOOL@
+ LIB_IPV6 = @LIB_IPV6@
+ LIB_REGEX = @LIB_REGEX@
++MAKEINFOFLAGS = --no-split -I $(srcdir)
+ LN_S = @LN_S@
+ LTLIBOBJS = @LTLIBOBJS@
+ MAKEINFO = @MAKEINFO@
+@@ -342,7 +343,7 @@ clean-libtool:
+ 
+ .texi.dvi:
+ 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
+-	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
++	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS)' \
+ 	$(TEXI2DVI) $<
+ 
+ .texi.pdf:
+@@ -698,7 +699,7 @@ install-info-am: $(INFO_DEPS)
+ 	  case $$file in \
+ 	    $(srcdir)/*) file=`echo "$$file" | sed "s|^$$srcdirstrip/||"`;; \
+ 	  esac; \
+-	  if test -f $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -f $$file; then d=.; else d=$(builddir); fi; \
+ 	  file_i=`echo "$$file" | sed 's|\.info$$||;s|$$|.i|'`; \
+ 	  for ifile in $$d/$$file $$d/$$file-[0-9] $$d/$$file-[0-9][0-9] \
+                        $$d/$$file_i[0-9] $$d/$$file_i[0-9][0-9] ; do \

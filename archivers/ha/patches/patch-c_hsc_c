@@ -1,0 +1,29 @@
+$OpenBSD: patch-c_hsc_c,v 1.1 2002/12/23 07:29:30 pvalchev Exp $
+--- c/hsc.c.orig	Wed Jan 11 23:51:16 1995
++++ c/hsc.c	Mon Dec 23 00:26:56 2002
+@@ -19,7 +19,6 @@
+ 	HA HSC method
+ ***********************************************************************/
+ 
+-#include <malloc.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include "ha.h"
+@@ -486,7 +485,7 @@ static  S16B decode_first(U16B cp) {
+     register U16B c;
+     register U16B tv;
+     register U16B i;
+-    register S16B sum,tot,esc,cf;
++    register S16B sum,tot,esc,cf = 0;
+     register unsigned char sv;
+ 
+     esc=adj_escape_prob(fe[cp],cp);
+@@ -546,7 +545,7 @@ static  S16B decode_rest(U16B cp) {
+     register U16B c;
+     register U16B tv;
+     register U16B i;
+-    register S16B sum,tot,esc,cf;
++    register S16B sum,tot,esc,cf = 0;
+     
+     esc=tot=0;
+     for (i=cp;i!=NIL;i=nb[i]) {

@@ -1,0 +1,12 @@
+$OpenBSD: patch-Makefile_PL,v 1.8 2007/05/06 13:28:30 mbalmer Exp $
+--- Makefile.PL.orig	Tue May  1 14:54:33 2007
++++ Makefile.PL	Sat May  5 14:48:06 2007
+@@ -900,7 +900,7 @@ sub MY::install {
+ 
+   foreach (@code) {
+     # Add our install targets as a dependency to all top-level install targets
+-    s/^(install(?:_[a-z]+)?\s*::?\s*.*)$/$1 conf__install data__install/;
++    s/^(install(?:_[a-z]+)?\s*::?\s*.*)$/$1 data__install/;
+ 
+     # Now do the DESTDIR hack, if necessary.
+     next if !$mm_needs_destdir;

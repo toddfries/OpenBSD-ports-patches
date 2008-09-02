@@ -1,0 +1,3 @@
+@comment $OpenBSD: PFRAG.shared,v 1.3 2004/09/15 09:09:45 espie Exp $
+lib/tkrat/blt_busy.so.1.0
+lib/tkrat/ratatosk.so.2.1

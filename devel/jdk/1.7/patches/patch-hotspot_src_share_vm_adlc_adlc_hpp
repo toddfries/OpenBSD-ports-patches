@@ -1,0 +1,15 @@
+$OpenBSD: patch-hotspot_src_share_vm_adlc_adlc_hpp,v 1.2 2008/03/19 18:05:43 kurt Exp $
+--- hotspot/src/share/vm/adlc/adlc.hpp.orig	Tue Oct 30 05:00:38 2007
++++ hotspot/src/share/vm/adlc/adlc.hpp	Wed Nov  7 12:41:35 2007
+@@ -73,9 +73,9 @@ typedef unsigned int uintptr_t;
+ #endif
+ #endif // _WIN32
+ 
+-#ifdef LINUX
++#if defined(LINUX) || defined(_ALLBSD_SOURCE)
+   #include <inttypes.h>
+-#endif // LINUX
++#endif // LINUX || _ALLBSD_SOURCE
+ 
+ // Macros
+ #define uint32 unsigned int

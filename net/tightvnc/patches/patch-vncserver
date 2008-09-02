@@ -1,0 +1,71 @@
+$OpenBSD: patch-vncserver,v 1.3 2003/11/18 22:02:09 sturm Exp $
+--- vncserver.orig	2002-11-14 17:56:48.000000000 +0100
++++ vncserver	2003-11-18 22:38:51.000000000 +0100
+@@ -75,13 +75,23 @@ unless ($xauthorityFile) {
+     }
+ }
+ 
++$defaultFontPath
++    = (
++       "/usr/X11R6/lib/X11/fonts/Type1/,".
++       "/usr/X11R6/lib/X11/fonts/Speedo/,".
++       "/usr/X11R6/lib/X11/fonts/cyrillic/,".
++       "/usr/X11R6/lib/X11/fonts/misc/,".
++       "/usr/X11R6/lib/X11/fonts/75dpi/,".
++       "/usr/X11R6/lib/X11/fonts/100dpi/"
++       );
++
+ chop($host = `uname -n`);
+ 
+ 
+ # Check command line options
+ 
+ &ParseOptions("-geometry",1,"-depth",1,"-pixelformat",1,"-name",1,"-kill",1,
+-	      "-help",0,"-h",0,"--help",0);
++	      "-help",0,"-h",0,"--help",0,"-fp",1);
+ 
+ &Usage() if ($opt{'-help'} || $opt{'-h'} || $opt{'--help'});
+ 
+@@ -104,6 +114,25 @@ if ($opt{'-pixelformat'}) {
+ 
+ &CheckGeometryAndDepth();
+ 
++# bmah: Construct font path.  Starting from a list of possible font directories
++# bmah: make up the set of those that have fonts.dir files we can read.
++# bmah: Probably there are way better methods of doing this.
++
++if (!$opt{'-fp'}) {
++    $opt{'-fp'} = $defaultFontPath;
++}
++
++@fontPathElements = split(/,/, "$opt{'-fp'}");
++
++$fontPath = '';
++
++foreach $i (0.."$#fontPathElements") {
++    if (-r "$fontPathElements[$i]/fonts.dir") {
++      $fontPath .= "$fontPathElements[$i],";
++    }
++}
++chop $fontPath;
++
+ if ($opt{'-name'}) {
+     $desktopName = $opt{'-name'};
+ }
+@@ -235,6 +264,7 @@ if (-e "/tmp/.X11-unix/X$displayNumber")
+     $ENV{DISPLAY}= "$host:$displayNumber";
+ }
+ $ENV{VNCDESKTOP}= $desktopName;
++$ENV{XAUTHORITY}= $xauthorityFile;
+ 
+ system("$xstartup >> " . &quotedString($desktopLog) . " 2>&1 &");
+ 
+@@ -246,6 +276,8 @@ exit;
+ # CheckGeometryAndDepth simply makes sure that the geometry and depth values
+ # are sensible.
+ #
++# bmah: Bring in the fontpath we computed earlier.
++$cmd .= " -fp $fontPath";
+ 
+ sub CheckGeometryAndDepth
+ {

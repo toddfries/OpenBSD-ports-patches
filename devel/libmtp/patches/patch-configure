@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.4 2007/12/30 19:57:35 jasper Exp $
+--- configure.orig	Thu Nov 22 21:18:02 2007
++++ configure	Sun Dec 30 20:33:47 2007
+@@ -19877,7 +19877,7 @@ if test $ac_cv_lib_usb_usb_control_msg = yes; then
+ #define HAVE_LIBUSB 1
+ _ACEOF
+ 
+-  LIBS="-lusb $LIBS"
++  LIBS="-lusb -liconv $LIBS"
+ 
+ else
+   { { echo "$as_me:$LINENO: error: I can't find the libusb libraries on your system. You

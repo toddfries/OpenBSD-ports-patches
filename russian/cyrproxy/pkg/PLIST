@@ -1,0 +1,28 @@
+@comment $OpenBSD: PLIST,v 1.6 2006/08/16 17:40:59 steven Exp $
+bin/cyrtrans
+bin/discover
+libexec/cyrproxy
+libexec/tcpspy
+share/cyrproxy/
+share/cyrproxy/alt-iso
+share/cyrproxy/alt-koi8
+share/cyrproxy/alt-win
+share/cyrproxy/cyrproxy.conf.sample
+@sample ${SYSCONFDIR}/cyrproxy.conf
+share/cyrproxy/cyrwww
+@sample /var/www/cgi-bin/cyrwww
+share/cyrproxy/iso-alt
+share/cyrproxy/iso-koi8
+share/cyrproxy/iso-win
+share/cyrproxy/koi8-alt
+share/cyrproxy/koi8-iso
+share/cyrproxy/koi8-mac
+share/cyrproxy/koi8-win
+share/cyrproxy/mac-koi8
+share/cyrproxy/win-alt
+share/cyrproxy/win-iso
+share/cyrproxy/win-koi8
+share/doc/cyrproxy/
+share/doc/cyrproxy/History
+share/doc/cyrproxy/README
+share/doc/cyrproxy/README.http

@@ -1,0 +1,4 @@
+@comment $OpenBSD: PLIST-motif,v 1.2 2006/10/27 23:47:23 ckuethe Exp $
+bin/xgps
+bin/xgpsspeed
+@man man/man1/xgpsspeed.1

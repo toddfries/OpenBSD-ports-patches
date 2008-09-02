@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/11/11 14:39:10 robert Exp $
+%%SHARED%%
+bin/wpd2html
+bin/wpd2raw
+bin/wpd2text
+include/libwpd/
+include/libwpd/GSFStream.h
+include/libwpd/WPDocument.h
+include/libwpd/WPXHLListenerImpl.h
+include/libwpd/WPXProperty.h
+include/libwpd/WPXPropertyList.h
+include/libwpd/WPXPropertyListVector.h
+include/libwpd/WPXStream.h
+include/libwpd/WPXString.h
+include/libwpd/libwpd.h
+include/libwpd/libwpd_types.h
+lib/libwpd-stream.a
+lib/libwpd-stream.la
+lib/libwpd.a
+lib/libwpd.la
+lib/pkgconfig/
+lib/pkgconfig/libwpd-stream.pc
+lib/pkgconfig/libwpd.pc

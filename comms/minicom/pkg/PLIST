@@ -1,0 +1,95 @@
+@comment $OpenBSD: PLIST,v 1.17 2007/05/23 16:40:56 ckuethe Exp $
+bin/ascii-xfr
+@mode 555
+bin/minicom
+@mode
+bin/runscript
+bin/xminicom
+@man man/man1/ascii-xfr.1
+@man man/man1/minicom.1
+@man man/man1/runscript.1
+@man man/man1/xminicom.1
+share/doc/minicom/
+share/doc/minicom/AUTHORS
+share/doc/minicom/Announce-1.78
+share/doc/minicom/Announce-1.82
+share/doc/minicom/Announce-1.82.1
+share/doc/minicom/Announce-1.83
+share/doc/minicom/COMPATABILITY.lrzsz
+share/doc/minicom/COPYING
+share/doc/minicom/ChangeLog
+share/doc/minicom/ChangeLog.old
+share/doc/minicom/HistSearch
+share/doc/minicom/Locales
+share/doc/minicom/Macros
+share/doc/minicom/QuickStart.modemu
+share/doc/minicom/README.lrzsz
+share/doc/minicom/TODO.lrzsz
+share/doc/minicom/Todo
+share/doc/minicom/Todo.175
+share/doc/minicom/Todo.Irix.dif
+share/doc/minicom/Todo.emacskey.dif
+share/doc/minicom/Todo.fsel
+share/doc/minicom/copyright.modemu
+share/doc/minicom/fselector.txt
+share/doc/minicom/japanese
+share/doc/minicom/minicom.FAQ
+share/doc/minicom/minicom.users
+@comment share/doc/minicom/minicom.users.orig
+share/doc/minicom/minirc.dfl
+share/doc/minicom/modemu.README
+share/doc/minicom/pl-translation.txt
+share/doc/minicom/portugues-brasil
+share/doc/minicom/suomeksi
+share/examples/minicom/
+share/examples/minicom/extras/
+share/examples/minicom/extras/htsalogin
+share/examples/minicom/extras/linux/
+share/examples/minicom/extras/linux/INSTALL
+share/examples/minicom/extras/linux/README-FIRST
+share/examples/minicom/extras/linux/mtelnet
+share/examples/minicom/extras/saralogin
+share/examples/minicom/extras/scriptdemo
+share/examples/minicom/extras/tables/
+share/examples/minicom/extras/tables/mc.iso
+share/examples/minicom/extras/tables/mc.noconv
+share/examples/minicom/extras/tables/mc.pc8
+share/examples/minicom/extras/tables/mc.sf7
+share/examples/minicom/extras/termcap/
+share/examples/minicom/extras/termcap/README
+share/examples/minicom/extras/termcap/termcap.long
+share/examples/minicom/extras/termcap/termcap.short
+share/examples/minicom/extras/terminfo/
+share/examples/minicom/extras/terminfo/README
+share/examples/minicom/extras/terminfo/minicom
+share/examples/minicom/extras/unixlogin
+share/examples/minicom/minicom.users.sample
+@mode 0750
+@owner uucp
+@group dialer
+@sample ${SYSCONFDIR}/minicom/
+@mode 0644
+@owner
+@group
+@sample ${SYSCONFDIR}/minicom/minicom.users
+@mode
+share/locale/cs/LC_MESSAGES/minicom.mo
+share/locale/da/LC_MESSAGES/minicom.mo
+share/locale/de/LC_MESSAGES/minicom.mo
+share/locale/es/LC_MESSAGES/minicom.mo
+share/locale/fi/LC_MESSAGES/minicom.mo
+share/locale/fr/LC_MESSAGES/minicom.mo
+share/locale/hu/LC_MESSAGES/minicom.mo
+share/locale/ja/LC_MESSAGES/minicom.mo
+share/locale/no/LC_MESSAGES/minicom.mo
+share/locale/pl/LC_MESSAGES/minicom.mo
+share/locale/pt_BR/LC_MESSAGES/minicom.mo
+share/locale/ro/LC_MESSAGES/minicom.mo
+share/locale/ru/LC_MESSAGES/minicom.mo
+share/locale/rw/
+share/locale/rw/LC_MESSAGES/
+share/locale/rw/LC_MESSAGES/minicom.mo
+share/locale/sv/LC_MESSAGES/minicom.mo
+share/locale/vi/LC_MESSAGES/minicom.mo
+share/locale/zh_TW/LC_MESSAGES/minicom.mo
+@extraunexec rm -rf ${SYSCONFDIR}/minicom/*

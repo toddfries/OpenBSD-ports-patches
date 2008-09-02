@@ -1,0 +1,12 @@
+$OpenBSD: patch-tests_server_Makefile_in,v 1.2 2008/06/24 18:37:25 naddy Exp $
+--- tests/server/Makefile.in.orig	Sat Jun 14 18:40:00 2008
++++ tests/server/Makefile.in	Sat Jun 14 18:40:10 2008
+@@ -101,7 +101,7 @@ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $
+ 	$(AM_CFLAGS) $(CFLAGS)
+ CCLD = $(CC)
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
++	$(AM_LDFLAGS) -L../../lib/.libs $(LDFLAGS) -o $@
+ SOURCES = $(getpart_SOURCES) $(resolve_SOURCES) $(sockfilt_SOURCES) \
+ 	$(sws_SOURCES) $(tftpd_SOURCES)
+ DIST_SOURCES = $(getpart_SOURCES) $(resolve_SOURCES) \

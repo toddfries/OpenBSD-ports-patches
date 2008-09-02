@@ -1,0 +1,9 @@
+$OpenBSD: patch-timidity_cfg,v 1.2 2006/01/30 10:13:11 jsg Exp $
+--- timidity.cfg.orig	Wed Jan 11 23:23:03 2006
++++ timidity.cfg	Wed Jan 11 23:22:56 2006
+@@ -0,0 +1,5 @@
++#
++#  Instrument configuration for timidity
++#  see timidity.cfg(5) for further details
++#
++

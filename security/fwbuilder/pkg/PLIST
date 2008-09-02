@@ -1,0 +1,61 @@
+@comment $OpenBSD: PLIST,v 1.3 2007/01/29 11:56:13 espie Exp $
+bin/fwb_ipf
+bin/fwb_ipfw
+bin/fwb_ipt
+bin/fwb_pf
+bin/fwbedit
+bin/fwblookup
+bin/fwbuilder
+@man man/man1/fwb_ipf.1
+@man man/man1/fwb_ipfw.1
+@man man/man1/fwb_ipt.1
+@man man/man1/fwb_pf.1
+@man man/man1/fwbedit.1
+@man man/man1/fwblookup.1
+@man man/man1/fwbuilder.1
+share/doc/fwbuilder/
+share/doc/fwbuilder/AUTHORS
+share/doc/fwbuilder/COPYING
+share/doc/fwbuilder/ChangeLog
+share/doc/fwbuilder/Credits
+share/doc/fwbuilder/FWBuilder-Routing-LICENSE.txt
+share/doc/fwbuilder/PatchAcceptancePolicy.txt
+share/doc/fwbuilder/README.floppyfw
+share/doc/fwbuilder/README.ipf
+share/doc/fwbuilder/README.ipfw
+share/doc/fwbuilder/README.ipt
+share/doc/fwbuilder/README.pf
+share/doc/fwbuilder/README.routing
+share/doc/fwbuilder/ReleaseNotes_2.1.7.html
+share/doc/fwbuilder/ReleaseNotes_2.1.7.txt
+share/doc/fwbuilder/ReleaseNotes_2.1.8.html
+share/doc/fwbuilder/ReleaseNotes_2.1.8.txt
+${SHARE}/
+${SHARE}/locale/
+${SHARE}/locale/fwbuilder_de.qm
+${SHARE}/locale/fwbuilder_es.qm
+${SHARE}/locale/fwbuilder_fr.qm
+${SHARE}/locale/fwbuilder_ja.qm
+${SHARE}/locale/fwbuilder_ru.qm
+${SHARE}/locale/fwbuilder_sv.qm
+${SHARE}/objects_init.xml
+${SHARE}/os/
+${SHARE}/os/freebsd.xml
+${SHARE}/os/fwsm_os.xml
+${SHARE}/os/linksys.xml
+${SHARE}/os/linux24.xml
+${SHARE}/os/macosx.xml
+${SHARE}/os/openbsd.xml
+${SHARE}/os/pix_os.xml
+${SHARE}/os/solaris.xml
+${SHARE}/os/unknown_os.xml
+${SHARE}/platform/
+${SHARE}/platform/fwsm.xml
+${SHARE}/platform/ipf.xml
+${SHARE}/platform/ipfw.xml
+${SHARE}/platform/iptables.xml
+${SHARE}/platform/pf.xml
+${SHARE}/platform/pix.xml
+${SHARE}/platform/unknown.xml
+${SHARE}/resources.xml
+${SHARE}/templates.xml

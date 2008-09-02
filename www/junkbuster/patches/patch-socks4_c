@@ -1,0 +1,30 @@
+$OpenBSD: patch-socks4_c,v 1.2 2001/06/09 02:36:48 angelos Exp $
+--- socks4.c.orig	Fri Oct 30 22:58:47 1998
++++ socks4.c	Fri Jun  8 22:19:00 2001
+@@ -88,7 +88,7 @@ socks4_connect(struct gateway *gw, struc
+ 
+ 	/* build a socks request for connection to the web server */
+ 
+-	strcpy((char *)&(c->userid), socks_userid);
++	strlcpy((char *)&(c->userid), socks_userid, sizeof(cbuf));
+ 
+ 	csiz = sizeof(*c) + sizeof(socks_userid) - 1;
+ 
+@@ -103,7 +103,7 @@ socks4_connect(struct gateway *gw, struc
+ 			errno = EINVAL;
+ 			return(-1);
+ 		}
+-		strcpy(((char *)cbuf) + csiz, http->host);
++		strlcpy(((char *)cbuf) + csiz, http->host, sizeof(cbuf));
+ 		csiz = n;
+ 		break;
+ 	}
+@@ -162,7 +162,7 @@ socks4_connect(struct gateway *gw, struc
+ 	default:
+ 		errstr = (char *) cbuf;
+ 		errno = ENOENT;
+-		sprintf(errstr,
++		snprintf(errstr, sizeof(cbuf),
+ 			"SOCKS request rejected for reason code %d\n", s->cd);
+ 	}
+ 

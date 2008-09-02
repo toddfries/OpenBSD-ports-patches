@@ -1,0 +1,10 @@
+@comment $OpenBSD: PLIST,v 1.2 2004/08/06 14:37:27 espie Exp $
+bin/libmikmod-config
+include/mikmod.h
+@info info/mikmod.info
+lib/libmikmod.a
+lib/libmikmod.la
+@man man/man1/libmikmod-config.1
+share/aclocal/
+share/aclocal/libmikmod.m4
+%%SHARED%%

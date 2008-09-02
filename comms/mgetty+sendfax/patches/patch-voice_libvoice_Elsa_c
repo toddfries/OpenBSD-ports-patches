@@ -1,0 +1,16 @@
+$OpenBSD: patch-voice_libvoice_Elsa_c,v 1.2 2007/06/15 11:30:38 ajacoutot Exp $
+--- voice/libvoice/Elsa.c.orig	Thu Sep 28 23:15:48 2006
++++ voice/libvoice/Elsa.c	Fri Jun 15 11:26:20 2007
+@@ -49,10 +49,10 @@ static int Elsa_init (void)
+      if (voice_command(buffer, "OK") != VMA_USER_1)
+           lprintf(L_WARN, "can't set BDR=16");
+ 
+-     sprintf(buffer, "AT#VTD=3F,3F,3F");
++     sprintf(buffer, "AT#VTD=2F,3F,3F");
+ 
+      if (voice_command(buffer, "OK") != VMA_USER_1)
+-          lprintf(L_WARN, "can't set VTD=3F");
++          lprintf(L_WARN, "can't set DTMF tone reporting");
+ 
+      sprintf(buffer, "AT#VSS=%1u", (int)cvd.rec_silence_threshold.d.i * 3 / 100);
+ 

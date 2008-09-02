@@ -1,0 +1,30 @@
+@comment $OpenBSD: PLIST,v 1.5 2008/07/09 18:59:42 okan Exp $
+@bin bin/roxterm
+@bin bin/roxterm-config
+share/applications/roxterm.desktop
+share/doc/roxterm/
+share/doc/roxterm/imgs/
+share/doc/roxterm/imgs/project-support.jpg
+share/doc/roxterm/imgs/roxterm_logo.png
+share/doc/roxterm/imgs/sflogo.png
+share/doc/roxterm/index.html
+share/icons/
+share/icons/hicolor/
+share/icons/hicolor/scalable/
+share/icons/hicolor/scalable/apps/
+share/icons/hicolor/scalable/apps/roxterm.svg
+share/locale/en/LC_MESSAGES/roxterm.mo
+share/locale/en_GB/
+share/locale/en_GB/LC_MESSAGES/
+share/locale/en_GB/LC_MESSAGES/roxterm.mo
+share/roxterm/
+share/roxterm/Config/
+share/roxterm/Config/Colours/
+share/roxterm/Config/Colours/GTK
+share/roxterm/Config/Shortcuts/
+share/roxterm/Config/Shortcuts/Default
+share/roxterm/roxterm-config.glade
+@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/update-desktop-database
+@unexec %D/bin/update-desktop-database

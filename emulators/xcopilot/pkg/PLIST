@@ -1,0 +1,3 @@
+@comment $OpenBSD: PLIST,v 1.4 2004/09/15 00:42:05 espie Exp $
+bin/xcopilot
+@man man/man1/xcopilot.1

@@ -1,0 +1,12 @@
+$OpenBSD: patch-psc_c,v 1.2 2006/05/28 21:21:51 weingart Exp $
+--- psc.c.orig	Thu May  4 10:08:27 2006
++++ psc.c	Thu May  4 10:08:34 2006
+@@ -73,7 +73,7 @@ main(int argc, char **argv)
+     register char *p;
+ 
+     progname = argv[0];
+-    while ((c = getopt(argc, argv, "rfLks:R:C:n:d:SPv")) != EOF) {
++    while ((c = getopt(argc, argv, "rfLks:R:C:n:d:SPv")) != -1) {
+ 	switch (c) {
+ 	case 'r':
+ 	    colfirst = TRUE;

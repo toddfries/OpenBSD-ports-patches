@@ -1,0 +1,46 @@
+@comment $OpenBSD: PLIST,v 1.5 2008/07/09 02:07:36 jakemsr Exp $
+%%SHARED%%
+bin/akode-config
+@bin bin/akodeplay
+include/akode/
+include/akode/akode_export.h
+include/akode/akodelib.h
+include/akode/audiobuffer.h
+include/akode/audioconfiguration.h
+include/akode/audioframe.h
+include/akode/auto_sink.h
+include/akode/buffered_decoder.h
+include/akode/bytebuffer.h
+include/akode/converter.h
+include/akode/crossfader.h
+include/akode/decoder.h
+include/akode/encoder.h
+include/akode/fast_resampler.h
+include/akode/file.h
+include/akode/framedecoder.h
+include/akode/localfile.h
+include/akode/magic.h
+include/akode/mmapfile.h
+include/akode/player.h
+include/akode/pluginhandler.h
+include/akode/resampler.h
+include/akode/sink.h
+include/akode/void_sink.h
+include/akode/volumefilter.h
+include/akode/wav_decoder.h
+lib/libakode.a
+lib/libakode.la
+@comment lib/libakode_ffmpeg_decoder.a
+@comment lib/libakode_ffmpeg_decoder.la
+@comment lib/libakode_jack_sink.a
+@comment lib/libakode_jack_sink.la
+@comment lib/libakode_mpc_decoder.a
+@comment lib/libakode_mpc_decoder.la
+@comment lib/libakode_mpeg_decoder.a
+@comment lib/libakode_mpeg_decoder.la
+@comment lib/libakode_oss_sink.a
+@comment lib/libakode_oss_sink.la
+@comment lib/libakode_sun_sink.a
+@comment lib/libakode_sun_sink.la
+@comment lib/libakode_xiph_decoder.a
+@comment lib/libakode_xiph_decoder.la

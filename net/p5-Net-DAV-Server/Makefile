@@ -1,0 +1,25 @@
+# $OpenBSD: Makefile,v 1.5 2007/09/15 22:36:56 merdely Exp $
+
+COMMENT=	perl module to provide a DAV server
+
+MODULES=	cpan
+DISTNAME=	Net-DAV-Server-1.29
+CATEGORIES=	net
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
+
+# same as perl
+PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM=	Yes
+PERMIT_PACKAGE_FTP=	Yes
+
+BUILD_DEPENDS=	${RUN_DEPENDS}
+RUN_DEPENDS=	:p5-Class-Accessor-*:devel/p5-Class-Accessor \
+		:p5-File-Slurp-*:devel/p5-File-Slurp \
+		:p5-File-Find-Rule-Filesys-Virtual-*:devel/p5-File-Find-Rule-Filesys-Virtual \
+		:p5-XML-LibXML-*:textproc/p5-XML-LibXML \
+		:p5-libwww-*:www/p5-libwww
+REGRESS_DEPENDS=:p5-Test-Pod-*:devel/p5-Test-Pod
+
+.include <bsd.port.mk>

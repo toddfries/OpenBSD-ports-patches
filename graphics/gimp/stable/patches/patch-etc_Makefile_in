@@ -1,0 +1,12 @@
+$OpenBSD: patch-etc_Makefile_in,v 1.7 2008/06/15 17:08:01 okan Exp $
+--- etc/Makefile.in.orig	Fri May 23 05:45:15 2008
++++ etc/Makefile.in	Fri Jun 13 22:05:04 2008
+@@ -406,7 +406,7 @@ gimpdatadir = @gimpdatadir@
+ gimpdir = @gimpdir@
+ gimplocaledir = @gimplocaledir@
+ gimpplugindir = @gimpplugindir@
+-gimpsysconfdir = @gimpsysconfdir@
++gimpsysconfdir = ${datadir}/examples/gimp/@GIMP_SYSCONF_VERSION@
+ host = @host@
+ host_alias = @host_alias@
+ host_cpu = @host_cpu@

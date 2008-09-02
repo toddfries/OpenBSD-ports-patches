@@ -1,0 +1,24 @@
+@comment $OpenBSD: PLIST,v 1.2 2006/10/28 17:52:18 steven Exp $
+%%SHARED%%
+include/itcl${VERSION}/
+include/itcl${VERSION}/itcl.h
+include/itcl${VERSION}/itclDecls.h
+include/itcl${VERSION}/itclInt.h
+include/itcl${VERSION}/itclIntDecls.h
+lib/itcl${VERSION}/
+lib/itcl${VERSION}/itcl.tcl
+lib/itcl${VERSION}/itclConfig.sh
+lib/itcl${VERSION}/pkgIndex.tcl
+lib/libitclstub33.a
+@man man/mann/body.n
+@man man/mann/class.n
+@man man/mann/code.n
+@man man/mann/configbody.n
+@man man/mann/delete.n
+@man man/mann/ensemble.n
+@man man/mann/find.n
+@man man/mann/is.n
+@man man/mann/itcl.n
+@man man/mann/itclvars.n
+@man man/mann/local.n
+@man man/mann/scope.n

@@ -1,0 +1,9 @@
+$OpenBSD: patch-README,v 1.2 2002/04/17 21:38:11 naddy Exp $
+--- README.orig	Wed Sep  9 16:45:16 1992
++++ README	Wed Apr 17 23:20:31 2002
+@@ -166,4 +166,4 @@ Please send any comments, suggestions, b
+     1000 Berlin 10
+     Germany
+ 
+-    <nickel@cs.tu-berlin.de>
++Juergen Nickelsen <jn@berlin.snafu.de>

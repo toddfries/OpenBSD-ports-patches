@@ -1,0 +1,2 @@
+@comment $OpenBSD: PFRAG.shared,v 1.2 2008/03/18 19:08:07 ajacoutot Exp $
+@lib lib/gtk-2.0/modules/libgail-gnome.so

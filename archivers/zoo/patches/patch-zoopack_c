@@ -1,0 +1,27 @@
+$OpenBSD: patch-zoopack_c,v 1.1 2006/04/07 07:40:18 pvalchev Exp $
+--- zoopack.c.orig	Fri Apr 30 21:59:21 1993
++++ zoopack.c	Fri Apr  7 01:38:55 2006
+@@ -78,6 +78,9 @@ int latest_time = 0;                    
+ int curr_dir = 0;									/* create backup in curr dir */
+ static char partial_msg[] =
+    "Partially packed archive left in %s.\n";
++#if defined(__OpenBSD__)
++int tempfd;
++#endif
+ 
+ #ifdef FATTR
+ unsigned long zoofattr;							/* zoo archive protection */
+@@ -171,8 +174,11 @@ if (!curr_dir) {
+ } else {
+    strcpy (temp_file, xes);
+ }
+-mktemp (temp_file);                    /* ... and make unique */
+-new_file = zoocreate (temp_file);
++tempfd = mkstemp (temp_file);                    /* ... and make unique */
++if (tempfd == -1)
++   prterror ('f', "Could not create temporary file %s.\n", temp_file);
++new_file = fdopen(tempfd, "w+");
++/*new_file = zoocreate (temp_file); */
+ if (new_file == NOFILE)
+    prterror ('f', "Could not create temporary file %s.\n", temp_file);
+ 

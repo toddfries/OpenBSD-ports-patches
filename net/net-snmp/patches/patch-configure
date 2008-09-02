@@ -1,0 +1,71 @@
+$OpenBSD: patch-configure,v 1.8 2007/09/26 20:03:42 rui Exp $
+--- configure.orig	Fri Jul 27 18:04:19 2007
++++ configure	Sat Sep 15 23:12:29 2007
+@@ -21267,34 +21267,6 @@ fi
+ echo "$as_me:$LINENO: result: $EXTRACPPFLAGS" >&5
+ echo "${ECHO_T}$EXTRACPPFLAGS" >&6
+ 
+-# Prefixes must begin with "/" or [A-Z] followed by colon.
+-
+-if test "x$prefix" = "xNONE"; then
+-  prefix=/usr/local
+-fi
+-
+-fch=`echo $prefix | sed 's/\(.\).*/\1/'`
+-if test "x$fch" != "x/" ; then
+-   sch=`echo $prefix | sed 's/.\(.\).*/\1/'`
+-   if test "x$sch" != "x:" ; then
+-      prefix=`pwd`/$prefix
+-      echo "adjusting prefix to $prefix"
+-   fi
+-fi
+-
+-if test "x$exec_prefix" = "xNONE"; then
+-  exec_prefix=$prefix
+-fi
+-
+-fch=`echo $exec_prefix | sed 's/\(.\).*/\1/'`
+-if test "x$fch" != "x/" ; then
+-   sch=`echo $exec_prefix | sed 's/.\(.\).*/\1/'`
+-   if test "x$sch" != "x:" ; then
+-      exec_prefix=`pwd`/$exec_prefix
+-      echo "adjusting exec_prefix to $exec_prefix"
+-   fi
+-fi
+-
+ # Set SNMPLIBPATH & SNMPSHAREPATH
+ 
+ SNMPLIBPATH=""
+@@ -27953,6 +27925,7 @@ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ $ac_includes_default
++#include <sys/types.h>
+ #include <tcpd.h>
+ _ACEOF
+ rm -f conftest.$ac_objext
+@@ -27997,6 +27970,7 @@ _ACEOF
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
++#include <sys/types.h>
+ #include <tcpd.h>
+ _ACEOF
+ if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
+@@ -33548,7 +33522,7 @@ done
+ 
+ 
+ 
+-for ac_header in malloc.h net/if_dl.h sys/sysctl.h stdlib.h net/if_types.h sys/queue.h osreldate.h machine/types.h sys/user.h sys/proc.h sys/mbuf.h sys/mount.h sys/dkstat.h sys/conf.h
++for ac_header in sys/param.h net/if_dl.h sys/sysctl.h stdlib.h net/if_types.h sys/queue.h osreldate.h machine/types.h sys/socketvar.h sys/user.h sys/proc.h sys/mbuf.h sys/mount.h sys/dkstat.h sys/conf.h
+ do
+ as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ echo "$as_me:$LINENO: checking for $ac_header" >&5
+@@ -37024,7 +36998,6 @@ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ 
+-#include <machine/types.h>
+ #include <sys/disklabel.h>
+ 
+ _ACEOF

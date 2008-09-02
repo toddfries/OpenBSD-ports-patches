@@ -1,0 +1,15 @@
+$OpenBSD: patch-doc_wget_texi,v 1.2 2005/07/25 07:12:58 aanriot Exp $
+--- doc/wget.texi.orig	Sun Jul  3 09:34:36 2005
++++ doc/wget.texi	Sun Jul  3 09:34:54 2005
+@@ -11,6 +11,11 @@
+ @setchapternewpage on
+ @c %**end of header
+ 
++@dircategory Networking tools
++@direntry
++* Wget: (wget.info).            A utility for network download.
++@end direntry
++
+ @iftex
+ @c Remove this if you don't use A4 paper.
+ @afourpaper

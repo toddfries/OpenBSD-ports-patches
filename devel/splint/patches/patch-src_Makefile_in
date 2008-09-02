@@ -1,0 +1,11 @@
+$OpenBSD: patch-src_Makefile_in,v 1.2 2007/08/25 08:03:43 espie Exp $
+--- src/Makefile.in.orig	Fri Jul 13 23:42:42 2007
++++ src/Makefile.in	Tue Aug 14 20:01:44 2007
+@@ -1159,7 +1159,6 @@ up: 
+ 	$(MAKE) clean
+ 
+ .c.o:
+-	@echo "Compiling "$<"..."; \
+ 	source='$<' object='$@' libtool=no \
+ 	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
+ 	$(CCDEPMODE) $(depcomp) \

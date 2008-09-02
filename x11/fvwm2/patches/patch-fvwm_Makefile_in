@@ -1,0 +1,15 @@
+$OpenBSD: patch-fvwm_Makefile_in,v 1.5 2008/06/10 05:39:38 pvalchev Exp $
+--- fvwm/Makefile.in.orig	Sat Dec  9 05:11:00 2006
++++ fvwm/Makefile.in	Mon Jun  9 23:00:18 2008
+@@ -565,9 +565,9 @@ info: info-am
+ 
+ info-am:
+ 
+-install-data-am: install-configDATA install-data-local install-man
++install-data-am: install-configDATA install-man
+ 
+-install-exec-am: install-binPROGRAMS install-exec-local
++install-exec-am: install-binPROGRAMS
+ 
+ install-info: install-info-am
+ 

@@ -1,0 +1,19 @@
+@comment $OpenBSD: PLIST,v 1.3 2004/09/14 23:43:58 espie Exp $
+${P5ARCH}/
+${P5ARCH}/Date/
+${P5ARCH}/Date/Simple/
+${P5ARCH}/Date/Simple.pm
+${P5ARCH}/Date/Simple/D8.pm
+${P5ARCH}/Date/Simple/Fmt.pm
+${P5ARCH}/Date/Simple/ISO.pm
+${P5ARCH}/Date/Simple/NoXS.pm
+${P5ARCH}/auto/
+${P5ARCH}/auto/Date/
+${P5ARCH}/auto/Date/Simple/
+${P5ARCH}/auto/Date/Simple/Simple.bs
+${P5ARCH}/auto/Date/Simple/Simple.so
+@man man/man3p/Date::Simple.3p
+@man man/man3p/Date::Simple::D8.3p
+@man man/man3p/Date::Simple::Fmt.3p
+@man man/man3p/Date::Simple::ISO.3p
+@man man/man3p/Date::Simple::NoXS.3p

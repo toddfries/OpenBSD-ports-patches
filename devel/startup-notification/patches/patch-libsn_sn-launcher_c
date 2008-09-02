@@ -1,0 +1,21 @@
+$OpenBSD: patch-libsn_sn-launcher_c,v 1.3 2007/04/24 12:48:25 jasper Exp $
+--- libsn/sn-launcher.c.orig	Sat Mar 17 21:16:29 2007
++++ libsn/sn-launcher.c	Mon Apr 23 22:58:14 2007
+@@ -220,7 +220,7 @@ sn_launcher_context_initiate (SnLauncherContext *conte
+   ++i;  
+ 
+   names[i] = "SCREEN";
+-  sprintf (screenbuf, "%d", context->screen);
++  snprintf (screenbuf, sizeof(screenbuf), "%d", context->screen);
+   values[i] = screenbuf;
+   ++i;
+   
+@@ -241,7 +241,7 @@ sn_launcher_context_initiate (SnLauncherContext *conte
+   if (context->workspace >= 0)
+     {
+       names[i] = "DESKTOP";
+-      sprintf (workspacebuf, "%d", context->workspace);
++      snprintf (workspacebuf, sizeof(workspacebuf), "%d", context->workspace);
+       values[i] = workspacebuf;
+       ++i;
+     }

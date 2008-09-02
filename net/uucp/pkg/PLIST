@@ -1,0 +1,55 @@
+@comment $OpenBSD: PLIST,v 1.5 2005/11/01 14:43:45 naddy Exp $
+bin/cu
+@owner uucp
+@mode 4555
+bin/uucp
+@owner
+@mode
+bin/uulog
+@owner uucp
+@mode 4555
+bin/uuname
+@owner
+@mode
+bin/uupick
+bin/uusched
+@owner uucp
+@mode 4555
+bin/uustat
+@owner
+@mode
+bin/uuto
+@owner uucp
+@mode 4555
+bin/uux
+@owner
+@mode
+@info info/uucp.info
+libexec/uucp/
+libexec/uucp/uuchk
+@owner uucp
+@mode 4555
+libexec/uucp/uucico
+@owner
+@mode
+libexec/uucp/uuconv
+@owner uucp
+@mode 4555
+libexec/uucp/uuxqt
+@owner
+@mode
+@man man/man1/cu.1
+@man man/man1/uucp.1
+@man man/man1/uustat.1
+@man man/man1/uux.1
+@man man/man8/uucico.8
+@man man/man8/uuxqt.8
+share/examples/uucp/
+share/examples/uucp/call
+share/examples/uucp/config
+share/examples/uucp/dial
+share/examples/uucp/dialcode
+share/examples/uucp/passwd
+share/examples/uucp/port
+share/examples/uucp/sys1
+share/examples/uucp/sys2

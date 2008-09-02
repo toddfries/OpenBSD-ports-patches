@@ -1,0 +1,12 @@
+$OpenBSD: patch-src_grip_c,v 1.5 2008/05/13 14:20:25 naddy Exp $
+--- src/grip.c.orig	Thu Apr 15 20:23:54 2004
++++ src/grip.c	Tue May 13 16:15:31 2008
+@@ -732,7 +732,7 @@ static void DoLoadConfig(GripInfo *ginfo)
+ 
+   *ginfo->version='\0';
+ 
+-  strcpy(ginfo->cd_device,"/dev/cdrom");
++  strcpy(ginfo->cd_device,"/dev/cd0c");
+   *ginfo->force_scsi='\0';
+ 
+   ginfo->local_mode=FALSE;

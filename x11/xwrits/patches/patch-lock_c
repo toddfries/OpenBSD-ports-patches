@@ -1,0 +1,21 @@
+$OpenBSD: patch-lock_c,v 1.2 2002/05/10 11:16:03 naddy Exp $
+--- lock.c.orig	Wed May  8 18:55:02 2002
++++ lock.c	Wed May  8 19:00:23 2002
+@@ -103,7 +103,7 @@ draw_message(const char *message)
+ 
+   if (!redraw) {
+     if (message)
+-      strcpy(cur_message, message);
++      strlcpy(cur_message, message, sizeof(cur_message));
+     else
+       cur_message[0] = 0;
+   }
+@@ -138,7 +138,7 @@ check_password(XKeyEvent *xkey)
+     draw_message("Incorrect password! Try again");
+   else {
+     char message[MAX_MESSAGE_SIZE];
+-    strcpy(message, "Enter password to unlock screen");
++    strlcpy(message, "Enter password to unlock screen", sizeof(message));
+     if (password_pos > 0) {
+       int i, pos = strlen(message);
+       message[pos++] = ':';
