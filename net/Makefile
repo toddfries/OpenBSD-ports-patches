@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.535 2008/07/27 21:32:28 sthen Exp $
+# $OpenBSD: Makefile,v 1.540 2008/09/01 23:52:56 jcs Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -69,6 +69,7 @@
      SUBDIR += ejabberd
      SUBDIR += ekg
      SUBDIR += emesene
+     SUBDIR += enet
      SUBDIR += epic4
      SUBDIR += etherape
      SUBDIR += ettercap
@@ -98,6 +99,7 @@
      SUBDIR += honeyd
      SUBDIR += howl
      SUBDIR += hping
+     SUBDIR += hs-HTTP
      SUBDIR += httptunnel
      SUBDIR += icb
      SUBDIR += icbirc
@@ -234,6 +236,7 @@
      SUBDIR += p5-Net-Domain-TLD
      SUBDIR += p5-Net-FTP-AutoReconnect
      SUBDIR += p5-Net-FTP-Recursive
+     SUBDIR += p5-Net-FTPSSL
      SUBDIR += p5-Net-FTPServer
      SUBDIR += p5-Net-Google
      SUBDIR += p5-Net-GPSD
@@ -359,6 +362,7 @@
      SUBDIR += ruby-net-ssh-gateway
      SUBDIR += ruby-pcap
      SUBDIR += ruby-rrdtool
+     SUBDIR += ruby-snmp
      SUBDIR += ruby-xmpp4r
      SUBDIR += samba
      SUBDIR += samba,cups
@@ -447,8 +451,6 @@
      SUBDIR += yt
      SUBDIR += ytalk
      SUBDIR += ytalk,no_x11
-     SUBDIR += zebra
-     SUBDIR += zebra,snmp
      SUBDIR += zenirc
 
 .include <bsd.port.subdir.mk>

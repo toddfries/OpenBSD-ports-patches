@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.609 2008/07/25 00:07:17 ian Exp $
+# $OpenBSD: Makefile,v 1.617 2008/09/01 09:57:40 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -26,6 +26,7 @@
      SUBDIR += autogen
      SUBDIR += automake
      SUBDIR += avr
+     SUBDIR += avrdude
      SUBDIR += beediff
      SUBDIR += bison
      SUBDIR += blame
@@ -51,6 +52,7 @@
      SUBDIR += cppunit
      SUBDIR += cscope
      SUBDIR += ctm
+     SUBDIR += cunit
      SUBDIR += cutils
      SUBDIR += cvs20hg
      SUBDIR += cvs2cl
@@ -86,8 +88,6 @@
      SUBDIR += giggle
      SUBDIR += gindent
      SUBDIR += git
-     SUBDIR += glade
-     SUBDIR += glade,gnome
      SUBDIR += glib
      SUBDIR += glib2
      SUBDIR += glib2mm
@@ -100,6 +100,7 @@
      SUBDIR += gputils
      SUBDIR += grcs
      SUBDIR += gsl
+     SUBDIR += guichan
      SUBDIR += guilib
      SUBDIR += haddock
      SUBDIR += happy
@@ -265,6 +266,7 @@
      SUBDIR += p5-Class-MakeMethods
      SUBDIR += p5-Class-Meta
      SUBDIR += p5-Class-Meta-Express
+     SUBDIR += p5-Class-Method-Modifiers
      SUBDIR += p5-Class-MethodMaker
      SUBDIR += p5-Class-MethodMapper
      SUBDIR += p5-Class-ReturnValue
@@ -286,6 +288,7 @@
      SUBDIR += p5-Curses
      SUBDIR += p5-Curses-UI
      SUBDIR += p5-Curses-Widgets
+     SUBDIR += p5-Data-Alias
      SUBDIR += p5-Data-Buffer
      SUBDIR += p5-Data-Dump
      SUBDIR += p5-Data-Dumper-Simple
@@ -425,6 +428,7 @@
      SUBDIR += p5-Module-ScanDeps
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Moose
+     SUBDIR += p5-Mouse
      SUBDIR += p5-Net-Server
      SUBDIR += p5-Number-Compare
      SUBDIR += p5-Number-Compare-Date
@@ -435,6 +439,7 @@
      SUBDIR += p5-PAR-Dist
      SUBDIR += p5-POE
      SUBDIR += p5-POE-Component-IKC
+     SUBDIR += p5-POE-Component-Pluggable
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
@@ -443,6 +448,7 @@
      SUBDIR += p5-Params-CallbackRequest
      SUBDIR += p5-Params-Util
      SUBDIR += p5-Params-Validate
+     SUBDIR += p5-Paranoid
      SUBDIR += p5-Parse-PlainConfig
      SUBDIR += p5-Parse-RecDescent
      SUBDIR += p5-Path-Class
@@ -565,9 +571,11 @@
      SUBDIR += p5-Want
      SUBDIR += p5-YAML
      SUBDIR += p5-YAML-Syck
+     SUBDIR += p5-accessors
      SUBDIR += p5-capitalization
      SUBDIR += p5-enum
      SUBDIR += p5-libintl
+     SUBDIR += p5-namespace-clean
      SUBDIR += p5-parent
      SUBDIR += p5-prefork
      SUBDIR += p5-version

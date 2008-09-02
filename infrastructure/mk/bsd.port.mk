@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.951 2008/07/29 17:54:52 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.954 2008/08/20 10:33:50 simon Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -79,7 +79,7 @@ FORCE_UPDATE ?= No
 # All variables relevant to the port's description
 _ALL_VARIABLES ?= HOMEPAGE DISTNAME BUILD_DEPENDS RUN_DEPENDS \
 	REGRESS_DEPENDS USE_GMAKE MODULES FLAVORS \
-	NO_BUILD NO_REGRESS SHARED_ONLY ONLY_FOR_ARCHS IS_INTERACTIVE \
+	NO_BUILD NO_REGRESS SHARED_ONLY ONLY_FOR_ARCHS NOT_FOR_ARCHS IS_INTERACTIVE \
 	BROKEN MULTI_PACKAGES PSEUDO_FLAVORS \
 	REGRESS_IS_INTERACTIVE DISTFILES DIST_SUBDIR \
 	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP \
@@ -193,7 +193,7 @@ _clean += work
 .if ${CLEANDEPENDS_${PKGPATH}:L} == "yes"
 _clean += depends
 .endif
-.if ${_clean:L:Mwork}
+.if ${_clean:L:Mwork} || ${_clean:L:Mbuild}
 _clean += fake
 .endif
 .if ${_clean:L:Mforce}
@@ -201,7 +201,7 @@ _clean += -f
 .endif
 # check that clean is clean
 _okay_words = depends work fake -f flavors dist install sub packages package \
-	readmes bulk force plist
+	readmes bulk force plist build
 .for _w in ${_clean:L}
 .  if !${_okay_words:M${_w}}
 ERRORS += "Fatal: unknown clean command: ${_w}"
@@ -620,6 +620,7 @@ REGRESS_FLAGS ?=
 ALL_REGRESS_FLAGS = ${MAKE_FLAGS} ${REGRESS_FLAGS}
 REGRESS_LOGFILE ?= ${WRKDIR}/regress.log
 REGRESS_LOG ?= | tee ${REGRESS_LOGFILE}
+REGRESS_STATUS_IGNORE ?=
 
 _PACKAGE_COOKIE_DEPS=${_FAKE_COOKIE}
 
@@ -2199,11 +2200,15 @@ ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 	@cd ${.CURDIR} && exec ${MAKE} pre-regress
 .  endif
 .  if target(do-regress)
-	@cd ${.CURDIR} && exec ${MAKE} do-regress ${REGRESS_LOG}
+	@${REGRESS_STATUS_IGNORE}cd ${.CURDIR} && exec 3>&1 && exit `exec 4>&1 1>&3; \
+		(exec; set +e; ${MAKE} do-regress; \
+		echo $$? >&4) 2>&1 ${REGRESS_LOG}`
 .  else
 # What REGRESS normally does:
-	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
-		${MAKE_PROGRAM} ${ALL_REGRESS_FLAGS} -f ${MAKE_FILE} ${REGRESS_TARGET} ${REGRESS_LOG}
+	@${REGRESS_STATUS_IGNORE}cd ${WRKBUILD} && exec 3>&1 && exit `exec 4>&1 1>&3; \
+		(exec; set +e; ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
+		${ALL_REGRESS_FLAGS} -f ${MAKE_FILE} ${REGRESS_TARGET}; \
+		echo $$? >&4) 2>&1 ${REGRESS_LOG}`
 # End of REGRESS
 .  endif
 .  if target(post-regress)
@@ -2386,7 +2391,7 @@ _internal-clean:
 .if ${_clean:L:Mfake}
 	@if cd ${WRKINST} 2>/dev/null; then ${SUDO} rm -rf ${WRKINST}; fi
 .endif
-.if ${_clean:L:Mwork}
+.if ${_clean:L:Mwork} || (${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} == "no")
 .  if ${_clean:L:Mflavors}
 	@for i in ${.CURDIR}/w-*; do \
 		if [ -L $$i ]; then ${SUDO} rm -rf `readlink $$i`; fi; \
@@ -2396,6 +2401,8 @@ _internal-clean:
 	@if [ -L ${WRKDIR} ]; then rm -rf `readlink ${WRKDIR}`; fi
 	@rm -rf ${WRKDIR}
 .  endif
+.elif ${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} != "no"
+	@rm -rf ${WRKBUILD} ${_CONFIGURE_COOKIE} ${_BUILD_COOKIE}
 .endif
 .if ${_clean:L:Mdist}
 	@${ECHO_MSG} "===>  Dist cleaning for ${FULLPKGNAME${SUBPACKAGE}}"

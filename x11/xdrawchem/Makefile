@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2008/01/03 09:15:47 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2008/09/01 08:52:31 brad Exp $
 
 COMMENT=	two-dimensional molecule drawing program
 
 DISTNAME=	xdrawchem-1.9.9
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	x11 biology
 
 HOMEPAGE=	http://xdrawchem.sourceforge.net/
@@ -21,17 +22,17 @@ WANTLIB=	c m pthread stdc++ z
 
 MODULES=	x11/qt3
 
-LIB_DEPENDS=	openbabel.>=3::misc/openbabel
+LIB_DEPENDS=	openbabel.>=4:openbabel->=2.2.0:misc/openbabel
 
 VMEM_WARNING=	Yes
 
 USE_X11=	Yes
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
+
+MAKE_FLAGS=	LDFLAGS+="-lqt-mt -pthread -L${X11BASE}/lib"
+
 CONFIGURE_STYLE=gnu
-
-MAKE_FLAGS+=	LDFLAGS+="-lqt-mt -pthread -L${X11BASE}/lib"
-
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-qtincdir=${MODQT_INCDIR} \
 		--with-qtlibdir=${MODQT_LIBDIR}

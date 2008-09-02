@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.217 2008/07/23 08:28:18 sthen Exp $
+# $OpenBSD: Makefile,v 1.219 2008/09/01 11:17:54 espie Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -17,6 +17,7 @@
      SUBDIR += cadubi
      SUBDIR += cairo
      SUBDIR += cairomm
+     SUBDIR += cal3d
      SUBDIR += camlimages
      SUBDIR += cfdg
      SUBDIR += colorexplorer
@@ -99,6 +100,7 @@
      SUBDIR += libkexif
      SUBDIR += libkexiv2
      SUBDIR += libkipi
+     SUBDIR += liblqr
      SUBDIR += libmng
      SUBDIR += libmpeg2
      SUBDIR += libungif

@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.2 2008/06/13 17:07:46 robert Exp $
+# $OpenBSD: Makefile,v 1.4 2008/08/27 19:42:10 jasper Exp $
 
 COMMENT=		V4L compatible video application
 
 DISTNAME=		luvcview-20070512
+PKGNAME=		${DISTNAME}p2
 CATEGORIES=		graphics x11
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -15,10 +16,12 @@ HOMEPAGE=	http://mxhaard.free.fr/
 MASTER_SITES=	${HOMEPAGE}/spca50x/Investigation/uvc/
 
 LIB_DEPENDS=	SDL:sdl-1.2.4p1,>=1.2.5:devel/sdl
-WANTLIB=	X11 c pthread
+WANTLIB=	c pthread
 
-MAKE_FLAGS=	CFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include"
+MAKE_FLAGS=	CC="${CC}" \
+		CFLAGS+="-I${X11BASE}/include -I${LOCALBASE}/include"
 
+USE_X11=	Yes
 NO_REGRESS=	Yes
 
 do-install:

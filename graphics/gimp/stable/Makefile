@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.35 2008/07/12 13:28:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.37 2008/08/31 15:02:43 steven Exp $
 
 COMMENT=	GNU Image Manipulation Program
 
-DISTNAME=	gimp-2.4.6
-PKGNAME=	${DISTNAME}p1
-SHARED_LIBS=	gimp-2.0	246.00	\
-		gimpbase-2.0	246.00	\
-		gimpcolor-2.0	246.00	\
-		gimpconfig-2.0	246.00	\
-		gimpmath-2.0	246.00	\
-		gimpmodule-2.0	246.00	\
-		gimpthumb-2.0	246.00	\
-		gimpui-2.0	246.00	\
-		gimpwidgets-2.0	246.00
+DISTNAME=	gimp-2.4.7
+SHARED_LIBS=	gimp-2.0	247.0	\
+		gimpbase-2.0	247.0	\
+		gimpcolor-2.0	247.0	\
+		gimpconfig-2.0	247.0	\
+		gimpmath-2.0	247.0	\
+		gimpmodule-2.0	247.0	\
+		gimpthumb-2.0	247.0	\
+		gimpui-2.0	247.0	\
+		gimpwidgets-2.0	247.0
 
 CATEGORIES=	graphics
 DIR=		gimp/v2.4
@@ -56,23 +55,12 @@ MODULES=	devel/gettext \
 USE_X11=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
-
 AUTOCONF_VERSION= 2.61
-
 CONFIGURE_STYLE= autoconf
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ARGS+=--without-gtkhtml2 --without-librsvg --without-print \
 		--without-gnomevfs --without-libcurl --disable-python
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
-
-FLAVORS=	altivec
-FLAVOR?=
-
-.if ${FLAVOR:L} == "altivec"
-ONLY_FOR_ARCHS= powerpc   
-.else
-CONFIGURE_ARGS+= --disable-altivec
-.endif
 
 .include <bsd.port.mk>

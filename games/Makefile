@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.171 2008/07/09 16:58:57 phessler Exp $
+# $OpenBSD: Makefile,v 1.174 2008/08/25 20:52:47 kili Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -17,9 +17,7 @@
      SUBDIR += barrage
      SUBDIR += bass
      SUBDIR += belooted
-     SUBDIR += blobwars
      SUBDIR += bomberclone
-     SUBDIR += bombermaze
      SUBDIR += boswars
      SUBDIR += burgerspace
      SUBDIR += bzflag
@@ -129,6 +127,7 @@
      SUBDIR += toppler
      SUBDIR += tornado
      SUBDIR += tetrinetx
+     SUBDIR += tmw
      SUBDIR += tutris
      SUBDIR += tuxpaint
      SUBDIR += tuxpaint-config

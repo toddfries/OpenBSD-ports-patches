@@ -1,29 +1,41 @@
-# $OpenBSD: Makefile,v 1.9 2007/12/11 11:04:57 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.12 2008/08/31 16:29:50 jasper Exp $
 
 COMMENT=		Direct Connect clone
 
-DISTNAME=		dctc-0.68.0
+DISTNAME=		dctc-0.85.9
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		net
 HOMEPAGE=		http://ac2i.homelinux.com/dctc/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c pthread
 
 MASTER_SITES=		${HOMEPAGE}
 
-LIB_DEPENDS=    	glib.>=1.2,gthread.>=1.2::devel/glib
+MODULES=		devel/gettext
 
+WANTLIB=		c gpg-error m pcre pthread z
+
+LIB_DEPENDS=		db:db-4.*:databases/db/v4 \
+			glib-2.0,gthread-2.0::devel/glib2 \
+			gcrypt::security/libgcrypt \
+			xml2::textproc/libxml
+
+USE_LIBTOOL=		Yes
 SEPARATE_BUILD=		concurrent
-AUTOCONF_VERSION=	2.13
+AUTOCONF_VERSION=	2.57
 CONFIGURE_STYLE= 	autoconf
-CONFIGURE_ENV=		CPPFLAGS="-DMSG_NOSIGNAL=0"
+CONFIGURE_ENV=		CPPFLAGS="-DMSG_NOSIGNAL=0 \
+			-I${LOCALBASE}/include \
+			-I${LOCALBASE}/include/db4" \
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 post-extract:
 	echo "#undef HAVE_LIBPTHREAD" > ${WRKSRC}/acconfig.h
+	rm -fr ${WRKSRC}/Documentation/Documentation/CVS/
 
 post-install:
 	@${INSTALL_DATA_DIR} ${PREFIX}/share/doc/dctc; \

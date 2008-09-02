@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.342 2008/07/16 16:17:00 merdely Exp $
+# $OpenBSD: Makefile,v 1.346 2008/08/27 07:40:07 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -73,7 +73,6 @@
      SUBDIR += gentoo
      SUBDIR += gmrun
      SUBDIR += gnome
-     SUBDIR += gnomemm
      SUBDIR += gnustep
      SUBDIR += gob2
      SUBDIR += goggles
@@ -147,7 +146,6 @@
      SUBDIR += osd_clock
      SUBDIR += p5-Gnome2-Canvas
      SUBDIR += p5-Gtk
-     SUBDIR += p5-Gtk,gnome
      SUBDIR += p5-Gtk,gtkglarea
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
@@ -156,12 +154,12 @@
      SUBDIR += p5-Tk-ProgressBar-Mac
      SUBDIR += p5-Tk-Splash
      SUBDIR += p5-Tk-Stderr
-     SUBDIR += paragui
      SUBDIR += pbrowser
      SUBDIR += pcmanfm
      SUBDIR += peksystray
      SUBDIR += pekwm
      SUBDIR += pidgin-guifications
+     SUBDIR += pidgin-libnotify
      SUBDIR += piewm
      SUBDIR += pwm
      SUBDIR += py-Gtk

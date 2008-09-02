@@ -1,0 +1,77 @@
+SQLite database of every port in the system. This can be queried through
+e.g., sqlitebrowser, or any kind of programming interface.
+
+This is more suitable for human consumption, use sqlite-compact for
+more structured information.
+
+Database Schema:
+- Ports(FULLPKGPATH, ...)
+holds all the information retrieved through various variables, e.g.,:
+    AUTOCONF_VERSION 
+    AUTOMAKE_VERSION 
+    BROKEN 
+    *DEPENDS 
+    CATEGORIES
+    COMMENT 
+    CONFIGURE_STYLE 
+    DESCR 
+    DISTFILES 
+    DISTNAME 
+    DIST_SUBDIR 
+    FLAVORS 
+    HOMEPAGE 
+    IS_INTERACTIVE 
+    MAINTAINER
+    MASTER_SITES*
+    MODULES 
+    MULTI_PACKAGES 
+    NO_*
+    NOT_FOR_ARCHS
+    ONLY_FOR_ARCHS 
+    PERMIT_*
+    PKGNAME 
+    PKG_ARCH 
+    PSEUDO_FLAVORS 
+    REGRESS_IS_INTERACTIVE 
+    SEPARATE_BUILD 
+    SHARED_LIBS 
+    SHARED_ONLY 
+    SUBPACKAGE 
+    SUPDISTFILES 
+    USE_*
+    WANTLIB 
+This information is mostly unchanged, except for replacing Yes/No variables
+with 1/0. Variables not present in a given port are left undefined.
+
+The FULLPKGPATH is complete, including flavors markers. For each port with
+MULTI_PACKAGES setting, another entry is written with the correct SUBPACKAGE.  
+
+- Paths (FULLPKGPATH, PKGPATH)
+PKGPATH is the stripped down version or FULLPKGPATH, without flavors 
+or subpackage markers.
+
+- Flavors(FULLPKGPATH, VALUE)
+- Categories(FULLPKGPATH, VALUE)
+- Multi(FULLPKGPATH, VALUE)
+- Modules(FULLPKGPATH, VALUE)
+- Configure(FULLPKGPATH, VALUE)
+- ConfigureArgs(FULLPKGPATH, VALUE)
+- NotForArch(FULLPKGPATH, VALUE)
+- OnlyForArch(FULLPKGPATH, VALUE)
+All of these variable values are actually lists. These lists are taken apart
+and result in many entries in these secondary tables (or none if the list
+is completely empty)
+
+- Depends(FULLPKGPATH, FULLDEPENDS, DEPENDSPATH, TYPE)
+All depends are stored in a single table, including the type:
+R -> run
+L -> lib
+B -> build
+Regress -> regress
+with FULLDEPENDS the full text of the dependency, and DEPENDSPATH the PKGPATH
+we depend upon.
+- Wantlib(FULLPKGPATH, VALUE)
+All the libraries the FULLPKGPATH depends upon, with and without version number,
+coming from either the WANTLIB variable or various LIB_DEPENDS.
+
+- Shared_Libs(FULLPKGPATH, LIBNAME, VERSION)

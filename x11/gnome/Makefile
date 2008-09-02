@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2008/06/08 09:32:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.69 2008/08/27 07:41:59 jasper Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -38,6 +38,7 @@
      SUBDIR += libbonobo
      SUBDIR += libbonoboui
      SUBDIR += libgail-gnome
+     SUBDIR += libgda
      SUBDIR += libgnome
      SUBDIR += libgnomemm
      SUBDIR += libgnomecanvas
@@ -51,7 +52,6 @@
      SUBDIR += libgtkhtml
      SUBDIR += librsvg
      SUBDIR += librsvg,no_gnome
-     SUBDIR += libs
      SUBDIR += libxklavier
      SUBDIR += mag
      SUBDIR += media
@@ -59,7 +59,6 @@
      SUBDIR += metacity
      SUBDIR += mime-data
      SUBDIR += nautilus
-     SUBDIR += oaf
      SUBDIR += orca
      SUBDIR += panel
      SUBDIR += pessulus

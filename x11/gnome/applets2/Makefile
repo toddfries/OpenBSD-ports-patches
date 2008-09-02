@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2008/07/23 09:50:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.47 2008/08/21 07:30:16 ajacoutot Exp $
 
 COMMENT-main=		applets for use with the GNOME panel
 COMMENT-battstat=	GNOME applet for monitoring battery level
@@ -6,9 +6,9 @@ COMMENT-battstat=	GNOME applet for monitoring battery level
 GNOME_PROJECT=		gnome-applets
 GNOME_VERSION=		2.20.0
 
-PKGNAME-main=		gnome-applets2-${VERSION}p4
+PKGNAME-main=		gnome-applets2-${VERSION}p5
 PKGNAME-battstat=	gnome-applets2-battstat-${VERSION}p5
-SHARED_LIBS +=	gweather             0.0      # .0.0
+SHARED_LIBS +=	gweather             1.0      # .0.0
 CATEGORIES=		x11
 
 # LGPL
@@ -54,7 +54,7 @@ FLAVOR?=
 # not all powerpc support apm(4), hence the use of ${MACHINE} and macppc
 .if ${MACHINE_ARCH} != "amd64" && ${MACHINE_ARCH} != "arm" \
  && ${MACHINE_ARCH} != "i386" && ${MACHINE} != "macppc" \
- && ${MACHINE_ARCH} != "sparc"
+ && ${MACHINE_ARCH} != "sparc" && ${MACHINE_ARCH} != "sparc64"
 FLAVOR+=		no_battstat
 .endif
 
