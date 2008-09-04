@@ -29,6 +29,7 @@ SHARED_LIBS=	estdc++		8.0 \
 MAINTAINER=	Marc Espie <espie@openbsd.org>
 
 PSEUDO_FLAVORS=c++ fortran objc java ada
+FLAVORS=	threads
 .if ${MACHINE_ARCH} == "i386"
 FLAVOR?=c++ fortran objc ada
 .else
@@ -80,8 +81,8 @@ MULTI_PACKAGES+=-objc
 .endif
 .if ${FLAVOR:L:Mjava}
 LANGS:=${LANGS},java
-#MULTI_PACKAGES+=-java
-CONFIGURE_ARGS+=--enable-java-gc=system-boehm
+MULTI_PACKAGES+=-java
+CONFIGURE_ARGS+=--enable-java-gc=system-boehm --enable-libgcj --enable-libjava
 .endif
 .if ${FLAVOR:L:Mada}
 LANGS:=${LANGS},ada
@@ -143,7 +144,9 @@ CONFIGURE_ARGS+=--enable-sjlj-exceptions
 
 
 # if you wish to try your luck
-#CONFIGURE_ARGS+= --enable-threads=posix
+.if ${FLAVOR:L:Mthreads}
+CONFIGURE_ARGS+= --enable-threads=posix
+.endif
 
 CONFIGURE_ARGS += --with-gnu-as 
 CONFIGURE_ARGS += --with-gnu-ld 

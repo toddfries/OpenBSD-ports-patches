@@ -31,6 +31,8 @@
      SUBDIR += cyrus-sasl2,db4
      SUBDIR += cyrus-sasl2,ldap
      SUBDIR += cyrus-sasl2,mysql
+     SUBDIR += cyrus-sasl2,pgsql
+     SUBDIR += cyrus-sasl2,sqlite
      SUBDIR += dante
      SUBDIR += despoof
      SUBDIR += dsniff

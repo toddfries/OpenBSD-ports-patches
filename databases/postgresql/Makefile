@@ -69,14 +69,6 @@ CONFIGURE_ARGS+=--with-krb5
 INCLUDES+=	/usr/include/kerberosV
 .endif
 
-# There is no spinlock support for hppa yet. Until we have access to
-# a system to get this working, disable them for now. There is
-# (apparently) a serious performance hit doing this.
-
-.if ${MACHINE_ARCH} == "hppa"
-CONFIGURE_ARGS+=--disable-spinlocks
-.endif
-
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config
 
 INSTALL_TARGET=	install
@@ -109,7 +101,7 @@ MAKE_ENV=	LIBpq_MAJOR=${LIBpq_VERSION:R} \
 		
 
 # Regression tests must be done manually and not as root. Successful
-# runs have been achieved on the i386 using the following:
+# runs have been achieved on i386 and sparc64 using the following:
 #
 #	$ ulimit -p 128
 #	$ ulimit -n 1024

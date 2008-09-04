@@ -4,6 +4,8 @@ COMMENT =		K Desktop Environment, base runtime
 DISTNAME =		kdebase-runtime-${VERSION}
 PKGNAME =		${DISTNAME}
 
+BUILD_DEPENDS += ::x11/kde4/pimlibs
+
 LIB_DEPENDS +=	kdecore.>=8,kaudiodevicelist,kde3support,kdesu,kdeui,kdnssd,kfile,khtml,kio,kjs,kmediaplayer,knewstuff2,knotifyconfig,kparts,kpty,ktexteditor,kutils,phonon,solid::x11/kde4/libs \
 	    xine::multimedia/xine-lib
 

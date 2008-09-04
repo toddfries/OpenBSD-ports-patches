@@ -49,7 +49,7 @@ WANTLIB-doc=
 
 MULTI_PACKAGES=	-main -client -doc
 
-FLAVORS=	db gpg
+FLAVORS=	db gpg honor
 FLAVOR?=
 
 CONFIGURE_STYLE=		gnu
@@ -64,6 +64,10 @@ CONFIGURE_ARGS=	--disable-shared \
 		--with-configdir=${SYSCONFDIR}/amanda \
 		--with-user=operator \
 		--with-group=operator
+
+.if ${FLAVOR:L:Mhonor}
+CONFIGURE_ARGS+= --with-dump-honor-nodump
+.endif
 
 # Use this flavor to speed things up if you have large AMANDA
 # databases.

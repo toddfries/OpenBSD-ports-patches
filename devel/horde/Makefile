@@ -32,6 +32,8 @@ RUN_DEPENDS+=	:php5-core-*:www/php5/core \
 		:php5-mbstring-*:www/php5/extensions,-mbstring \
 		:php5-gd-*:www/php5/extensions,-gd \
 		:pear-Log-*:devel/pear-Log \
+		::mail/pear-Mail-Mime \
+		::mail/pear-Mail \
 		:pear-Services-Weather-*:net/pear-Services-Weather \
 		:pear-DB-*:databases/pear-DB \
 		:pear-Mail-Mime-*:mail/pear-Mail-Mime

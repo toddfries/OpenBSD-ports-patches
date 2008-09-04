@@ -1,7 +1,7 @@
 $OpenBSD: patch-wmnet_c,v 1.3 2003/04/06 00:43:21 naddy Exp $
---- wmnet.c.orig	Fri May  5 07:01:14 2000
-+++ wmnet.c	Sat Mar 22 10:35:16 2003
-@@ -49,33 +49,50 @@
+--- wmnet.c.orig	Thu May  4 20:01:14 2000
++++ wmnet.c	Wed Nov  8 08:36:26 2006
+@@ -49,34 +49,51 @@
   *  5/4/2000   --  Support added for OpenBSD
   */ 
  
@@ -33,7 +33,7 @@ $OpenBSD: patch-wmnet_c,v 1.3 2003/04/06 00:43:21 naddy Exp $
 +#include <sys/socket.h>
 +#include <sys/time.h>
 +#include <sys/wait.h>
-+
+ 
 +#include <net/if.h>
 +
 +#include <X11/extensions/shape.h>
@@ -50,7 +50,7 @@ $OpenBSD: patch-wmnet_c,v 1.3 2003/04/06 00:43:21 naddy Exp $
 +#include <stdlib.h>
 +#include <string.h>
 +#include <unistd.h>
- 
++
  #include "XPM/arrow.xbm"
  #include "wmnet.h"
  
@@ -62,7 +62,7 @@ $OpenBSD: patch-wmnet_c,v 1.3 2003/04/06 00:43:21 naddy Exp $
 +static int screen, specified_state = -1;
 +static GC graphics_context;
 +static unsigned long tx_pixel[3], rx_pixel[3], labelfg_pixel, labelbg_pixel,  black_pixel, white_pixel, darkgrey_pixel, grey_pixel;
-+
+ 
 +static char *click_command = NULL, *label = NULL;
 +static struct timeval timenow, timelast;
 +static unsigned int delayTime = 25000, displayDelay = 55000, maxRate = 6000;
@@ -72,9 +72,10 @@ $OpenBSD: patch-wmnet_c,v 1.3 2003/04/06 00:43:21 naddy Exp $
 +parser_func stat_gather;
 +
 +static struct if_data_t id;
- 
++
  /* Called on exit() from atexit() */
  void exit_func(void) {
+ 	XCloseDisplay(dpy);
 @@ -90,8 +107,6 @@ void got_signal(int x) {
  	} else exit(7);
  }
@@ -222,17 +223,17 @@ $OpenBSD: patch-wmnet_c,v 1.3 2003/04/06 00:43:21 naddy Exp $
  					}
  					close(fds);
  				}
-@@ -313,8 +324,7 @@ void setup_wmnet(int argc, char **argv) 
+@@ -313,31 +324,24 @@ void setup_wmnet(int argc, char **argv) 
  	/* Relinquish suid privileges if there */
  	seteuid(getuid());
  
 -	stat_gather = setup_driver(parser);
--
 +	stat_gather = (parser_func)setup_driver(parser, &id);
  
+-
  	if (txcolorString == NULL) txcolorString = "white";
  	if (rxcolorString == NULL) rxcolorString = "red";
-@@ -322,22 +332,16 @@ void setup_wmnet(int argc, char **argv) 
+ 	if (labelfgcolorString == NULL) labelfgcolorString = "white";
  	if (labelbgcolorString == NULL) labelbgcolorString = "black";
  
  	/* Change dir to /, security precaution, and common courtesy */

@@ -3,6 +3,7 @@
 COMMENT=		program for indexing & searching email
 
 DISTNAME=		mairix-0.21
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		mail
 HOMEPAGE=		http://www.rpcurnow.force9.co.uk/mairix/
 

@@ -136,6 +136,7 @@ MASTER_SITE_GNOME+=	\
 	ftp://ftp.gnome.org/pub/GNOME/
 	
 MASTER_SITE_PERL_CPAN+=	\
+	ftp://ftp.cpan.org/pub/CPAN/modules/by-module/ \
 	ftp://ftp.funet.fi/pub/languages/perl/CPAN/modules/by-module/ \
 	ftp://ftp.mirror.anlx.net/CPAN/modules/by-module/ \
 	ftp://ftp.cpan.org/pub/CPAN/modules/by-module/ \

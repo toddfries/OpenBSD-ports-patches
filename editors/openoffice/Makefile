@@ -1,6 +1,6 @@
 # $OpenBSD: Makefile,v 1.78 2008/06/27 13:11:11 kurt Exp $
 
-ONLY_FOR_ARCHS= amd64 i386
+ONLY_FOR_ARCHS= amd64 i386 macppc
 
 COMMENT-main=	multi-platform productivity suite
 COMMENT-kde=	optional integration of OpenOffice to the KDE environment

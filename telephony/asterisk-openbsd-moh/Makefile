@@ -15,6 +15,8 @@ HOMEPAGE =		http://www.openbsd.org/lyrics.html
 
 MAINTAINER=		Ian Darwin <ian@openbsd.org>
 
+PKG_ARCH=	*
+
 # Copyright held by Theo; ok for non-commercial-redistribution
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes

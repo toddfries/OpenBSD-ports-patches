@@ -107,6 +107,8 @@ lib/samba/valid.dat
 @man man/man8/vfs_shadow_copy.8
 @man man/man8/vfs_xattr_tdb.8
 @man man/man8/winbindd.8
+share/doc/samba/
+share/doc/samba/README.OpenBSD
 share/examples/samba/
 @sample ${SYSCONFDIR}/samba/
 share/examples/samba/VFS/config.guess

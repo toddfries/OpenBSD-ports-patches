@@ -1,6 +1,13 @@
 $OpenBSD: patch-Imakefile,v 1.1 2003/04/06 00:43:21 naddy Exp $
---- Imakefile.orig	Sat Mar 22 10:10:58 2003
-+++ Imakefile	Sat Mar 22 10:11:20 2003
+--- Imakefile.orig	Thu May  4 19:34:29 2000
++++ Imakefile	Wed Nov  8 08:38:32 2006
+@@ -1,5 +1,5 @@
+ DEPLIBS = $(DEPXLIB) 
+-CC = gcc -Wall
++#CC = gcc -Wall
+ 
+ #ifdef LinuxArchitecture
+ STD_DEFINES = -Dlinux
 @@ -17,7 +17,7 @@ INSTPGMFLAGS = -s -g kmem -m 2755 
  
  LINTLIBS = $(LINTXLIB)

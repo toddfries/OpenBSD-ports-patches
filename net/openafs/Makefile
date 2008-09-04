@@ -1,6 +1,6 @@
 # $OpenBSD: Makefile,v 1.19 2008/07/28 23:09:43 todd Exp $
 
-ONLY_FOR_ARCHS=		i386
+#ONLY_FOR_ARCHS=		i386
 
 COMMENT=		OpenAFS distributed filesystem
 
