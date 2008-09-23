@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.30 2008/07/03 08:07:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.32 2008/09/22 18:46:36 sthen Exp $
 
 COMMENT-main=	extendable SNMP implementation
 COMMENT-perl=	SNMP modules for Perl
 
-V=		5.4.1.1
+V=		5.4.2
 DISTNAME=	net-snmp-${V}
-PKGNAME-main=	${DISTNAME}p1
+PKGNAME-main=	${DISTNAME}p0
 PKGNAME-perl=	p5-SNMP-${V}p0
-SHARED_LIBS=	netsnmp		7.0	\
-		netsnmpagent	7.0	\
-		netsnmphelpers	7.0	\
-		netsnmpmibs	7.0	\
-		netsnmptrapd	7.0
+SHARED_LIBS=	netsnmp		8.0	\
+		netsnmpagent	8.0	\
+		netsnmphelpers	8.0	\
+		netsnmpmibs	8.0	\
+		netsnmptrapd	8.0
 CATEGORIES=	net perl5
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=net-snmp/}
 
@@ -41,8 +41,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} --with-libwrap --with-perl-modules \
 	--with-sys-contact="nobody@nowhere.invalid" \
 	--with-sys-location="somewhere" \
 	--with-logfile="/var/log/snmpd" \
-	--without-kmem-usage \
-	--with-out-mib-modules=host/hr_swrun \
 	--with-persistent-directory="/var/net-snmp"
 REGRESS_TARGET=	test
 

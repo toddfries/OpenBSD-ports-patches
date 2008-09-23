@@ -1,5 +1,5 @@
 #!/usr/local/bin/lua
--- $OpenBSD: yt.lua,v 1.12 2008/06/02 17:43:10 martynas Exp $
+-- $OpenBSD: yt.lua,v 1.14 2008/09/14 12:28:11 jsg Exp $
 -- Fetch videos from YouTube.com and convert them to MPEG.
 -- Written by Pedro Martelletto in August 2006. Public domain.
 -- Example: lua yt.lua http://www.youtube.com/watch?v=c5uoo1Kl_uA
@@ -18,6 +18,9 @@ convert = "ffmpeg -y -i <flv> -b 1000k -f mp4 -vcodec mpeg4 -acodec libfaac -ab 
 -- Set this to the base location where to fetch YouTube videos from.
 base_url = "http://www.youtube.com/get_video"
 
+-- Convert embedded links to the correct form
+url = string.gsub(url, "/v/", "/watch?v=")
+
 -- Fetch the page holding the embedded video.
 print(string.format("Getting %s ...", url))
 body = assert(http.request(url))
@@ -25,6 +28,13 @@ body = assert(http.request(url))
 -- Look for the video title.
 pattern = "<title>(.-)</title>"
 title = assert(string.match(body, pattern))
+
+-- Fetch high quality if available
+if (string.match(body, "yt.VideoQualityConstants.HIGH") ~= nil) then
+	fmt = "&fmt=6"
+else
+	fmt = ""
+end
 
 -- Build a name for the files the video will be stored in.
 file = string.gsub(title, "[^%w-]", "_")
@@ -45,7 +55,7 @@ if video_id then
 	pattern = "/watch_fullscreen%?.*&t=(.-)&"
 	t = assert(string.match(body, pattern))
 	url = string.format("%q", base_url .. "?video_id=" .. video_id
-		.. "&t=" .. t)
+		.. "&t=" .. t .. fmt)
 else
 	-- We assume it's Google Video URL.
 	pattern = "'/googleplayer.swf%?videoUrl(.-)'"

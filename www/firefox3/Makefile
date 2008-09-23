@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2008/08/23 22:27:46 martynas Exp $
+# $OpenBSD: Makefile,v 1.9 2008/09/18 13:37:41 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc sparc64
@@ -7,7 +7,7 @@ COMMENT=	redesign of Mozilla's browser component
 
 VER=		3.0.1
 DISTNAME=	mozilla
-PKGNAME=	firefox3-${VER}p5
+PKGNAME=	firefox3-${VER}p6
 SO_VERSION=	20.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
@@ -62,7 +62,6 @@ USE_X11=	Yes
 USE_GMAKE=	Yes
 # Regression tests are too hard to adapt to run here
 NO_REGRESS=	Yes
-SUBST_VARS=	LOCALBASE
 
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/build/autoconf
 

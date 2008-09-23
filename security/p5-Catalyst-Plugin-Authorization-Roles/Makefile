@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2007/09/15 23:29:59 merdely Exp $
+# $OpenBSD: Makefile,v 1.7 2008/09/20 16:58:32 sturm Exp $
 
 COMMENT= 	role based authorization for Catalyst
 
-DISTNAME=	Catalyst-Plugin-Authorization-Roles-0.05
-PKGNAME=	p5-${DISTNAME}p1
+DISTNAME=	Catalyst-Plugin-Authorization-Roles-0.07
 CATEGORIES=	security
 
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>
@@ -16,11 +15,11 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	cpan
 
+BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	::devel/p5-Set-Object \
 		::devel/p5-Universal-isa \
 		::security/p5-Catalyst-Plugin-Authentication
-REGRESS_DEPENDS=::devel/p5-Test-Exception \
-		::devel/p5-Test-MockObject
+REGRESS_DEPENDS=::devel/p5-Test-Exception
 
 MAKE_ENV=	TEST_POD=Yes
 

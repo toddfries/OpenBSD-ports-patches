@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST-main,v 1.7 2008/07/11 11:40:33 brad Exp $
+@comment $OpenBSD: PLIST-main,v 1.8 2008/09/12 07:49:11 brad Exp $
+@conflict samba-docs-<=3.0.31p1
 @pkgpath ${BASE_PKGPATH}
 @bin bin/eventlogadm
 bin/findsmb
@@ -111,8 +112,6 @@ share/doc/samba/
 share/doc/samba/README.OpenBSD
 share/examples/samba/
 @sample ${SYSCONFDIR}/samba/
-share/examples/samba/VFS/config.guess
-share/examples/samba/VFS/config.sub
 share/examples/samba/smb.conf.default
 @sample ${SYSCONFDIR}/samba/smb.conf
 share/swat/
