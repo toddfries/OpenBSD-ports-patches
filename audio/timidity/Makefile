@@ -27,11 +27,10 @@ CONFIGURE_ENV+=	CFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS= --enable-audio=sun \
 		--enable-vt100 \
-		--enable-ncurses \
 		--enable-server \
 		--with-default-path=${SYSCONFDIR}
 
-FLAVORS=	gtk2 xaw
+FLAVORS=	gtk2 slang xaw
 FLAVOR?=
 
 .if ${FLAVOR:L:Mgtk2}
@@ -53,6 +52,17 @@ WANTLIB+=	ICE SM X11 Xaw Xext Xmu Xt
 
 .if ! ${FLAVOR:L:Mgtk2} && ! ${FLAVOR:L:Mxaw}
 CONFIGURE_ARGS+=--without-x
+.endif
+
+.if ${FLAVOR:L:Mslang}
+CONFIGURE_ARGS+=--enable-slang \
+		--disable-ncurses
+LIB_DEPENDS+=	::devel/libslang
+WANTLIB+=	termlib
+.else
+CONFIGURE_ARGS+=--disable-slang \
+		--enable-ncurses
+WANTLIB+=	ncurses
 .endif
 
 USE_GMAKE=	Yes
