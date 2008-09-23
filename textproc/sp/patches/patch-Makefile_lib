@@ -1,0 +1,23 @@
+$OpenBSD$
+--- Makefile.lib.orig	Thu Sep 18 17:00:54 2008
++++ Makefile.lib	Thu Sep 18 16:44:26 2008
+@@ -3,12 +3,18 @@ ALL_CXXFLAGS=$(CXXFLAGS) -I$(srcdir) -I$(srcdir)/../in
+   $(DEFINES) $(PIC_FLAG)
+ ALL_CFLAGS=$(CFLAGS) $(DEBUG) $(OPTIMIZE) $(INCLUDE) $(DEFINES) $(PIC_FLAG)
+ 
+-all: lib$(LIB).a
++all: lib$(LIB).a lib$(LIB).so.0.0
+ pure: all
+ 
+ lib$(LIB).a: $(OBJS) $(COBJS)
+ 	$(AR) r $@ $?
+ 	$(RANLIB) $@
++
++lib$(LIB).so.0.0: $(SOBJS)
++	@rm -f lib${LIB}.so.0.0
++	${CC} -shared ${PICFLAG} \
++		-o lib${LIB}.so.0.0 \
++		`${LORDER} ${SOBJS}|tsort -q` ${LDADD}
+ 
+ install:
+ install-man:

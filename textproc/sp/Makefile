@@ -6,6 +6,7 @@ DISTNAME=	sp-1.3.4
 PKGNAME=	${DISTNAME}p2
 CATEGORIES=	textproc
 HOMEPAGE=	http://www.jclark.com/sp/
+SHARED_LIBS=	sp 0.0
 
 MAINTAINER=	Gerardo Santana Gomez Garrido <gerardo.santana@gmail.com>
 
@@ -34,6 +35,8 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/doc/*.htm ${PREFIX}/share/doc/sp
 	${INSTALL} -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
 		${WRKBUILD}/lib/libsp.a ${PREFIX}/lib
+	${INSTALL} -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
+		${WRKBUILD}/lib/libsp.so.0.0 ${PREFIX}/lib
 	${INSTALL_DATA_DIR} ${PREFIX}/include/sp
 	${INSTALL_DATA} ${WRKSRC}/include/* ${PREFIX}/include/sp
 	${INSTALL_DATA} ${WRKSRC}/generic/* ${PREFIX}/include/sp

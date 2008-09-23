@@ -1,9 +1,10 @@
 @comment $OpenBSD: PLIST,v 1.5 2004/09/15 18:44:08 espie Exp $
-bin/nsgmls
-bin/sgmlnorm
-bin/spam
-bin/spent
-bin/sx
+%%SHARED%%
+@bin bin/nsgmls
+@bin bin/sgmlnorm
+@bin bin/spam
+@bin bin/spent
+@bin bin/sx
 include/sp/
 include/sp/Allocator.h
 include/sp/ArcEngine.h

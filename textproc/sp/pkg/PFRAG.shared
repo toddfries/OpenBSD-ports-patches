@@ -1,0 +1,2 @@
+@comment $OpenBSD$
+@lib lib/libsp.so.${LIBsp_VERSION}
