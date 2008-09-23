@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.33 2008/06/15 06:39:34 sthen Exp $
+# $OpenBSD: Makefile,v 1.35 2008/09/18 23:16:13 sthen Exp $
 
 COMMENT=	real-time, concurrent and distributed functional language
 
 V=		R12B-3
 DISTNAME=	otp_src_${V}
-PKGNAME=	erlang-12b.3
+PKGNAME=	erlang-12b.3p1
 CATEGORIES=	lang
-
-MAINTAINER=	Jon Olsson <jon@abc.se>
 
 # Erlang Public License
 PERMIT_PACKAGE_CDROM=	Yes
@@ -15,6 +13,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	c crypto m ncurses pthread ssl util
+
+MAINTAINER=	Alex Popov <alex@seidlitz.ca>
 
 MASTER_SITES=	http://www.erlang.org/download/
 

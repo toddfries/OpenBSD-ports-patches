@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.38 2008/07/25 20:25:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.41 2008/09/15 22:06:11 jakemsr Exp $
 
 COMMENT=	audio/video converter and streamer with bktr(4) support
 
 V=			20080620
 DISTNAME=		ffmpeg-svn-${V}
-PKGNAME=		ffmpeg-${V}p1
+PKGNAME=		ffmpeg-${V}p4
 SHARED_LIBS=		avutil		6.0 \
 			avcodec		13.0 \
 			avformat	12.0 \
@@ -28,8 +28,8 @@ MASTER_SITES=		http://jakemsr.trancell.org/distfiles/
 
 BUILD_DEPENDS=		::textproc/texi2html
 LIB_DEPENDS=		SDL.>=4::devel/sdl \
-			faac::audio/faac \
-			faad.>=1::audio/faad \
+			faac.>=1::audio/faac \
+			faad.>=2::audio/faad \
 			mp3lame.>=0.1::audio/lame \
 			vorbis.>=4.0,vorbisenc.>=2.0::audio/libvorbis \
 			a52::audio/liba52 \
@@ -79,7 +79,12 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-x11grab \
 			--extra-libs="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
 			--extra-cflags="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			--disable-decoder=cavs
+			--disable-decoder=cavs \
+			--disable-altivec \
+			--disable-armv6 \
+			--disable-armvfp \
+			--disable-iwmmxt \
+			--disable-neon
 
 CONFIGURE_ENV+=		LIBavutil_EXTRALIBS="${LIBavutil_EXTRALIBS}" \
 			LIBavcodec_EXTRALIBS="${LIBavcodec_EXTRALIBS}" \

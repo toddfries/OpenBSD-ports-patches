@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.74 2008/07/15 16:19:15 brad Exp $
+# $OpenBSD: Makefile,v 1.77 2008/09/15 22:14:23 jakemsr Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,13 +6,13 @@ COMMENT-main=	videolan client; multimedia player
 
 V=		0.8.6i
 DISTNAME=	vlc-${V}
-PKGNAME-main=	${DISTNAME}
+PKGNAME-main=	${DISTNAME}p2
 CATEGORIES=	x11
 MASTER_SITES=	http://download.videolan.org/pub/videolan/vlc/${V}/
 
 HOMEPAGE=	http://www.videolan.org/vlc/
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	patents
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -30,6 +30,7 @@ LIB_DEPENDS-main=${LIB_DEPENDS} \
 		mad.>=2.1::audio/libmad \
 		mpeg2::graphics/libmpeg2 \
 		avcodec.>=9.0,avformat.>=9.0,postproc.>=9.0,avutil.>=3.0::graphics/ffmpeg \
+		faad.>=2::audio/faad \
 		fribidi::devel/fribidi \
 		a52::audio/liba52 \
 		theora.>=1::multimedia/libtheora \
@@ -47,7 +48,7 @@ RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 
 WANTLIB-main=	ICE SM X11 Xext Xinerama Xv Xxf86vm c freetype m ncurses \
 		pthread stdc++ usbhid z Xau Xdmcp Xrandr Xrender \
-		SDL jpeg tiff bz2 faad ogg vorbis vorbisenc faac mp3lame
+		SDL jpeg tiff bz2 ogg vorbis vorbisenc faac mp3lame
 
 CONFIGURE_STYLE=autoconf
 AUTOCONF_VERSION=2.61

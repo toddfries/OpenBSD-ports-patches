@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.346 2008/08/27 07:40:07 jasper Exp $
+# $OpenBSD: Makefile,v 1.349 2008/09/17 15:40:31 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -50,7 +50,6 @@
      SUBDIR += eterm
      SUBDIR += eterm,kanji
      SUBDIR += evilwm
-     SUBDIR += explorer
      SUBDIR += extace
      SUBDIR += farsiweb-ttf
      SUBDIR += fbpanel
@@ -174,7 +173,6 @@
      SUBDIR += qinx
      SUBDIR += qlwm
      SUBDIR += qrfcview
-     SUBDIR += qt
      SUBDIR += qt2
      SUBDIR += qt2-designer
      SUBDIR += qt3
@@ -212,6 +210,7 @@
      SUBDIR += terminus-font
      SUBDIR += thewidgetfactory
      SUBDIR += tilda
+     SUBDIR += tint
      SUBDIR += tk
      SUBDIR += tktable
      SUBDIR += transset-df
