@@ -1,0 +1,30 @@
+$OpenBSD$
+--- Hellanzb/NZBLeecher/Protocol.py.orig	Mon Mar 26 23:20:43 2007
++++ Hellanzb/NZBLeecher/Protocol.py	Mon Sep 15 02:09:00 2008
+@@ -596,7 +596,7 @@ class NZBLeecher(NNTPClient, TimeoutMixin):
+         code = extractCode(err)
+         if code is not None:
+             code, msg = code
+-            if code in (423, 430):
++            if code in (423, 480, 430):
+                 try:
+                     Hellanzb.queue.requeueMissing(self.factory, self.currentSegment)
+                     debug(str(self) + ' ' + self.currentSegment.nzbFile.showFilename + \
+@@ -604,7 +604,16 @@ class NZBLeecher(NNTPClient, TimeoutMixin):
+                           ' Article is missing! Attempting to requeue on a different pool!')
+                     Hellanzb.scroller.removeClient(self.currentSegment, self.factory.color)
+                     self.resetCurrentSegment(removeEncFile = True)
+-                    reactor.callLater(0, self.fetchNextNZBSegment)
++		    # 430 is no such article, 480 is no auth ..
++		    if code in (480):
++                	self.deactivate()
++			return
++		    # somehow punish for getting a 430, use this less, etc; how?
++		    if code in (430):
++                        reactor.callLater(2, self.fetchNextNZBSegment)
++		    	return
++
++                    reactor.callLater(1, self.fetchNextNZBSegment)
+                     return
+                 
+                 except PoolsExhausted:
