@@ -576,6 +576,7 @@ PATCH_DIST_ARGS += -C
 TAR ?= /bin/tar
 UNZIP ?= unzip
 BZIP2 ?= bzip2
+LZMA  ?= lzma
 
 
 MAKE_ENV += EXTRA_SYS_MK_INCLUDES="<bsd.own.mk>"
@@ -1010,8 +1011,13 @@ _USE_ZIP ?= Yes
 	(defined(PATCHFILES) && !empty(_PATCHFILES:M*.bz2))
 _USE_BZIP2 ?= Yes
 .endif
+.if !empty(EXTRACT_ONLY:M*.tar.lzma) || \
+	(defined(PATCHFILES) && !empty(_PATCHFILES:M*.lzma))
+_USE_LZMA ?= Yes
+.endif
 _USE_ZIP ?= No
 _USE_BZIP2 ?= No
+_USE_LZMA ?= No
 
 EXTRACT_CASES ?=
 
@@ -1019,14 +1025,23 @@ _PERL_FIX_SHAR ?= perl -ne 'print if $$s || ($$s = m:^\#(\!\s*/bin/sh\s*| This i
 
 # XXX note that we DON'T set EXTRACT_SUFX.
 .if ${_USE_ZIP:L} != "no"
-BUILD_DEPENDS += :unzip-*:archivers/unzip
-EXTRACT_CASES += *.zip) \
+ZIP_BUILD_DEPENDS ?= :unzip-*:archivers/unzip
+BUILD_DEPENDS += ${ZIP_BUILD_DEPENDS}
+ZIP_EXTRACT_CASES ?= *.zip) \
 	${UNZIP} -oq ${FULLDISTDIR}/$$archive -d ${WRKDIR};;
+EXTRACT_CASES += ${ZIP_EXTRACT_CASES}
 .endif
 .if ${_USE_BZIP2:L} != "no"
-BUILD_DEPENDS += :bzip2-*:archivers/bzip2
-EXTRACT_CASES += *.tar.bz2|*.tbz2) \
+BZIP2_BUILD_DEPENDS ?= :bzip2-*:archivers/bzip2
+BUILD_DEPENDS += ${BZIP2_BUILD_DEPENDS}
+BZIP2_EXTRACT_CASES ?= *.tar.bz2|*.tbz2) \
 	${BZIP2} -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
+EXTRACT_CASES += ${BZIP2_EXTRACT_CASES}
+.endif
+.if ${_USE_LZMA:L} != "no"
+BUILD_DEPENDS += :lzma-*:archivers/lzma
+EXTRACT_CASES += *.tar.lzma) \
+	${LZMA} -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
 .endif
 EXTRACT_CASES += *.tar) \
 	${TAR} xf ${FULLDISTDIR}/$$archive;;
@@ -1431,7 +1446,7 @@ ${_PACKAGE_COOKIE${_S}}:
 .  if ${FETCH_PACKAGES:L} == "yes" && !defined(_TRIED_FETCHING_${_PACKAGE_COOKIE${_S}})
 	@f=${_CACHE_REPO}/${_PKGFILE${_S}}; \
 	cd ${.CURDIR} && ${MAKE} $$f && \
-		{ ln $$f $@ 2>/dev/null || cp -p $$f $@ ; } || \
+		{ ln -s $$f $@ 2>/dev/null || cp -p $$f $@ ; } || \
 		cd ${.CURDIR} && ${MAKE} _TRIED_FETCHING_${_PACKAGE_COOKIE${_S}}=Yes _internal-package-only
 .  else
 	@cd ${.CURDIR} && exec ${MAKE} ${_PACKAGE_COOKIE_DEPS}
@@ -2378,7 +2393,7 @@ ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
 	@echo "Link to $@"
 	@mkdir -p ${@D}
 	@rm -f $@
-	@ln $? $@ 2>/dev/null || \
+	@ln -s $? $@ 2>/dev/null || \
 	  cp -p $? $@
 .endfor
 
