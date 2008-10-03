@@ -4,7 +4,7 @@ COMMENT=	audio/video converter and streamer with bktr(4) support
 
 V=			20080620
 DISTNAME=		ffmpeg-svn-${V}
-PKGNAME=		ffmpeg-${V}p4
+PKGNAME=		ffmpeg-${V}p5
 SHARED_LIBS=		avutil		6.0 \
 			avcodec		13.0 \
 			avformat	12.0 \
