@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2008/08/21 07:30:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2008/10/01 20:14:09 landry Exp $
 
 # we use "macppc" and not "powerpc" on purpose here ; i.e. apm(4) needed
 ONLY_FOR_ARCHS= amd64 arm i386 macppc sparc sparc64
 
 COMMENT=	light-weight system monitor
 
-DISTNAME=	conky-1.4.9
+DISTNAME=	conky-1.6.1
 PKGNAME=	${DISTNAME}p0
 
 CATEGORIES=	sysutils
@@ -40,9 +40,8 @@ CONFIGURE_ARGS+=--enable-mpd \
 		--disable-portmon
 
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/conky
-	${INSTALL_DATA} ${WRKSRC}/doc/conkyrc.sample \
-		${PREFIX}/share/examples/conky
+	#fix garbage in manpage
+	@perl -pi -e 's,\\\*\(T.,,g' ${PREFIX}/man/man1/conky.1
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/conky
 	${INSTALL_DATA} ${WRKSRC}/doc/*.html ${PREFIX}/share/doc/conky
 	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/conky

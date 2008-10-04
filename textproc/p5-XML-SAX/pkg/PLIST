@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.7 2004/09/15 18:44:06 espie Exp $
+@comment $OpenBSD: PLIST,v 1.9 2008/10/01 16:04:27 simon Exp $
 ${P5SITE}/XML/SAX/
 ${P5SITE}/XML/SAX.pm
 ${P5SITE}/XML/SAX/Base.pm

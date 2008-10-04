@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/09/01 11:15:29 espie Exp $
+# $OpenBSD: Makefile,v 1.3 2008/09/28 13:40:51 ajacoutot Exp $
 
 COMMENT = 			seam-carving smart rescale gimp plugin
 CATEGORIES =			graphics
@@ -15,6 +15,8 @@ PERMIT_PACKAGE_FTP = 		Yes
 PERMIT_PACKAGE_CDROM =		Yes
 PERMIT_DISTFILES_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
+
+MODULES =			textproc/intltool
 
 CONFIGURE_STYLE =		gnu
 

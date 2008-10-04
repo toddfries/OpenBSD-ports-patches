@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.622 2008/09/17 13:27:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.630 2008/10/02 21:06:14 naddy Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -305,6 +305,7 @@
      SUBDIR += p5-Data-OptList
      SUBDIR += p5-Data-Random
      SUBDIR += p5-Data-ShowTable
+     SUBDIR += p5-Data-Stag
      SUBDIR += p5-Data-Structure-Util
      SUBDIR += p5-Data-Types
      SUBDIR += p5-Data-UUID
@@ -409,6 +410,7 @@
      SUBDIR += p5-IPC-ShareLite
      SUBDIR += p5-IPC-Shareable
      SUBDIR += p5-Inline
+     SUBDIR += p5-Internals
      SUBDIR += p5-Lchown
      SUBDIR += p5-List-Cycle
      SUBDIR += p5-List-MoreUtils
@@ -428,11 +430,8 @@
      SUBDIR += p5-MLDBM
      SUBDIR += p5-MLDBM-Sync
      SUBDIR += p5-MRO-Compat
-     SUBDIR += p5-Module-Build
-     SUBDIR += p5-Module-CoreList
      SUBDIR += p5-Module-Find
      SUBDIR += p5-Module-Install
-     SUBDIR += p5-Module-Load
      SUBDIR += p5-Module-Loaded
      SUBDIR += p5-Module-Pluggable
      SUBDIR += p5-Module-Pluggable-Fast
@@ -551,6 +550,7 @@
      SUBDIR += p5-Test-Taint
      SUBDIR += p5-Test-Tester
      SUBDIR += p5-Test-Unit
+     SUBDIR += p5-Test-URI
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
      SUBDIR += p5-Test-Warn
@@ -587,6 +587,7 @@
      SUBDIR += p5-Universal-require
      SUBDIR += p5-VCP-autrijus
      SUBDIR += p5-Want
+     SUBDIR += p5-WeakRef
      SUBDIR += p5-YAML
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-accessors
@@ -596,7 +597,6 @@
      SUBDIR += p5-namespace-clean
      SUBDIR += p5-parent
      SUBDIR += p5-prefork
-     SUBDIR += p5-version
      SUBDIR += pango
      SUBDIR += pccts
      SUBDIR += pcre
@@ -677,10 +677,12 @@
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activesupport
+     SUBDIR += ruby-assistance
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
+     SUBDIR += ruby-diff-lcs
      SUBDIR += ruby-fastthread
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin
@@ -745,6 +747,7 @@
      SUBDIR += vim-taglist
      SUBDIR += vtcl
      SUBDIR += vte
+     SUBDIR += waf
      SUBDIR += xmake
      SUBDIR += xulrunner
      SUBDIR += yasm

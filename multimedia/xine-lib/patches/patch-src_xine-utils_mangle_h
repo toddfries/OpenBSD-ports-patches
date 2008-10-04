@@ -1,4 +1,4 @@
-$OpenBSD$
+$OpenBSD: patch-src_xine-utils_mangle_h,v 1.1 2008/09/25 20:43:09 brad Exp $
 --- src/xine-utils/mangle.h.orig	Tue Sep 23 19:07:38 2008
 +++ src/xine-utils/mangle.h	Tue Sep 23 19:12:32 2008
 @@ -29,6 +29,10 @@
