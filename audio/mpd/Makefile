@@ -29,7 +29,7 @@ LIB_DEPENDS=		audiofile::devel/libaudiofile \
 			mikmod::audio/libmikmod \
 			mpcdec::audio/libmpcdec
 
-FLAVORS=		tremor
+FLAVORS=		tremor no_jack
 FLAVOR?=
 
 CONFIGURE_STYLE=	gnu
@@ -38,7 +38,6 @@ CONFIGURE_ARGS+=        --enable-ao \
                         --disable-oss \
                         --disable-pulse \
                         --disable-sun \
-			--disable-jack \
 			--enable-mod \
 			--bindir=${PREFIX}/sbin \
 			--with-zeroconf=no
@@ -57,6 +56,13 @@ WANTLIB+=		theora
 LIB_DEPENDS+=		vorbis,vorbisfile,vorbisenc::audio/libvorbis \
 			speex::audio/speex \
 			shout::net/libshout
+.endif
+
+.if ${FLAVOR:L:Mno_jack}
+CONFIGURE_ARGS+=--disable-jack
+.else
+LIB_DEPENDS+=	jack::audio/jack
+CONFIGURE_ARGS+=--enable-jack
 .endif
 
 USE_LIBTOOL=		Yes
