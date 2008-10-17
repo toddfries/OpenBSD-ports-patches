@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.632 2008/10/09 15:18:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.636 2008/10/17 06:56:08 robert Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -48,8 +48,8 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
-     SUBDIR += cook
      SUBDIR += commoncpp
+     SUBDIR += cook
      SUBDIR += cpphs
      SUBDIR += cppunit
      SUBDIR += cscope
@@ -195,6 +195,7 @@
      SUBDIR += mico
      SUBDIR += mk
      SUBDIR += mm
+     SUBDIR += mono-addins
      SUBDIR += monotone
      SUBDIR += mowgli
      SUBDIR += mpfr
@@ -449,6 +450,7 @@
      SUBDIR += p5-Object-Declare
      SUBDIR += p5-Object-Realize
      SUBDIR += p5-Object-Signature
+     SUBDIR += p5-PAR
      SUBDIR += p5-PAR-Dist
      SUBDIR += p5-POE
      SUBDIR += p5-POE-Component-IKC
@@ -552,8 +554,8 @@
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-Taint
      SUBDIR += p5-Test-Tester
-     SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-URI
+     SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
      SUBDIR += p5-Test-Warn
@@ -693,7 +695,6 @@
      SUBDIR += ruby-gettext
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
-     SUBDIR += ruby-rubyinline
      SUBDIR += ruby-mocha
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
@@ -704,6 +705,7 @@
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-rubyforge
+     SUBDIR += ruby-rubyinline
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
