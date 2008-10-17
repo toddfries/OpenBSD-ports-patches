@@ -474,6 +474,8 @@ sub parse_dependency_file()
 sub parse_hosts_file()
 {
 	my $sysctl = "/sbin/sysctl -n hw.ncpu";
+	my $psysctl = "/sbin/sysctl -n hw.physmem";
+	my $physmem;
 
 	open(my $fh, "<", $HOSTS_FILE) or die "Could not open $HOSTS_FILE: $!\n";
 
@@ -485,9 +487,11 @@ sub parse_hosts_file()
 		if (/^localhost/) {
 			$ncpu = `$sysctl`;
 			$local = 1;
+			$physmem = `$psysctl`;
 		} else {
 			$ncpu = `@SSH $host $sysctl`;
-			$local = 0
+			$local = 0;
+			$physmem = `@SSH $host $psysctl`;
 		}
 
 		if (not defined $ncpu or $ncpu eq "") {
@@ -496,7 +500,28 @@ sub parse_hosts_file()
 		} elsif ($ncpu > 1 and defined $opt_c) {
 			$ncpu = 1;
 			warn "*** only using one node on $host due to '-c'\n";
+		} else {
+			# be smart, be sure we have $threshold mb per process 
+			my $threshold = 300;
+			my $mphys = $physmem / 1024 / 1024;
+			my $loop = 1;
+			while ($loop) {
+				if (($mphys / ($ncpu + 1)) > $threshold) {
+					$ncpu ++;
+					next;
+				}
+				$loop = 0;
+			}
+			$loop = 1;
+			while ($loop && $ncpu > 1) {
+				if (($mphys / $ncpu) < $threshold) {
+					$ncpu --;
+					next;
+				}
+				$loop = 0;
+			}
 		}
+		printf STDERR "==> using %d concurrent builds for host %s\n",$ncpu,$host;
 
 		$HOSTS->{$host}{nodes} = ();
 
