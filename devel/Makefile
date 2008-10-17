@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.630 2008/10/02 21:06:14 naddy Exp $
+# $OpenBSD: Makefile,v 1.632 2008/10/09 15:18:46 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -172,6 +172,7 @@
      SUBDIR += libusb
      SUBDIR += libuta
      SUBDIR += libutf
+     SUBDIR += libvmime
      SUBDIR += libwnck
      SUBDIR += libzvt
      SUBDIR += lincvs
@@ -331,6 +332,7 @@
      SUBDIR += p5-Devel-Cover
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-FastProf
+     SUBDIR += p5-Devel-GlobalDestruction
      SUBDIR += p5-Devel-Leak
      SUBDIR += p5-Devel-SawAmpersand
      SUBDIR += p5-Devel-Size
@@ -500,6 +502,7 @@
      SUBDIR += p5-String-Format
      SUBDIR += p5-String-Scanf
      SUBDIR += p5-Sub-Exporter
+     SUBDIR += p5-Sub-Identify
      SUBDIR += p5-Sub-Install
      SUBDIR += p5-Sub-Name
      SUBDIR += p5-Sub-Override

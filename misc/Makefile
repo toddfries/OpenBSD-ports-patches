@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.112 2008/07/09 11:22:02 landry Exp $
+# $OpenBSD: Makefile,v 1.114 2008/10/09 22:16:07 jasper Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -63,6 +63,8 @@
      SUBDIR += p5-Lingua-Romana-Perligata
      SUBDIR += p5-Spreadsheet-ParseExcel
      SUBDIR += p5-Spreadsheet-WriteExcel
+     SUBDIR += p5-Term-Animation
+     SUBDIR += p5-User-Identity
      SUBDIR += pdmenu
      SUBDIR += pfm
      SUBDIR += plan
