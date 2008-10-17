@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2008/08/21 19:43:27 naddy Exp $
+# $OpenBSD: Makefile,v 1.14 2008/10/13 19:44:37 brad Exp $
 
 COMMENT-main=		GPS waypoint, track, and route conversion tool
 COMMENT-gui=		Tk front-end to gpsbabel
@@ -19,7 +19,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		${HOMEPAGE}
+#MASTER_SITES=		${HOMEPAGE}
+MASTER_SITES=		http://comstyle.com/source/ \
+			ftp://quatramaran.ens.fr/pub/espie/
 
 AUTOCONF_VERSION=	2.61
 CONFIGURE_STYLE=	autoconf
@@ -49,11 +51,6 @@ LIB_DEPENDS-gui=
 PKG_ARCH-gui=	*
 RUN_DEPENDS-gui=	::geo/gpsbabel \
 			:tk-8.4.*:x11/tk/8.4
-
-do-fetch:
-	@test -f ${FULLDISTDIR}/${DISTNAME}.tar.gz || \
-	${FETCH_CMD} -o ${FULLDISTDIR}/${DISTNAME}.tar.gz \
-	    ${HOMEPAGE}/plan9.php?dl=gpsbabel-1.3.5.tar.gz
 
 post-build:
 	gmake -C ${WRKSRC} doc
