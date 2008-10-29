@@ -4,7 +4,6 @@ share/doc/samba/
 share/doc/samba/NT4-Locking.reg
 share/doc/samba/NT4_PlainPassword.reg
 share/doc/samba/README
-share/doc/samba/THANKS
 share/doc/samba/Win-2Kx-XPP-DeleteCachedProfiles.reg
 share/doc/samba/Win-2Kx-XPP-ForceLocalProfile.reg
 share/doc/samba/Win-NT-DeleteRoamingProfile.reg
