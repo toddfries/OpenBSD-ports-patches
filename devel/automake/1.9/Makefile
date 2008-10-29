@@ -22,7 +22,7 @@ BUILD_DEPENDS=		::devel/metaauto
 RUN_DEPENDS=		${MODGNU_AUTOCONF_DEPENDS}
 
 SUFFIX=			-${VERSION}
-CONFIGURE_STYLE=	gnu
+CONFIGURE_STYLE=	gnu autoconf
 CONFIGURE_ARGS=		--infodir=${PREFIX}/info
 MAKE_FLAGS+=		pkgvdatadir=${PREFIX}/share/automake${SUFFIX} \
 			APIVERSION=${VERSION}
