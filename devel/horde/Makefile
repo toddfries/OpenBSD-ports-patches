@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.30 2008/05/15 12:01:41 deanna Exp $ 
+# $OpenBSD: Makefile,v 1.32 2008/10/25 17:22:45 mbalmer Exp $ 
 
 COMMENT=	modular framework for web-based applications
 
-DISTNAME=	horde-3.1.7
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	horde-3.1.9
 CATEGORIES=	devel www
 HOMEPAGE=	http://www.horde.org/
 
@@ -15,7 +14,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${MASTER_SITE_HORDE:=horde/tarballs/}
+MASTER_SITES=	${MASTER_SITE_HORDE:=horde/}
 
 NO_BUILD=	Yes
 NO_REGRESS=	Yes

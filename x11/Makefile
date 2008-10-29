@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.353 2008/10/16 18:03:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.355 2008/10/24 01:55:46 kevlo Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -55,6 +55,7 @@
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
+     SUBDIR += fltk2
      SUBDIR += fluxbox
      SUBDIR += fluxter
      SUBDIR += flvw
@@ -251,6 +252,8 @@
      SUBDIR += wmtz
      SUBDIR += wmweather
      SUBDIR += wmx
+     SUBDIR += wqy-bitmapfont
+     SUBDIR += wqy-zenhei-ttf
      SUBDIR += wterm
      SUBDIR += wxSVG
      SUBDIR += wxWidgets
