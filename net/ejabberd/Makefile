@@ -73,6 +73,7 @@ post-install:
 		find . -name '*.html' -exec ${INSTALL_DATA} {} ${PREFIX}/share/doc/ejabberd/{} \; && \
 		find . -name '*.png' -exec ${INSTALL_DATA} {} ${PREFIX}/share/doc/ejabberd/{} \;
 	${SUBST_CMD} -c ${FILESDIR}/README.OpenBSD ${PREFIX}/share/doc/ejabberd/README.OpenBSD
+	chown root.bin ${PREFIX}/share/doc/ejabberd/README.OpenBSD
 	${SUBST_CMD} ${PREFIX}/sbin/ejabberdctl
 
 .include <bsd.port.mk>
