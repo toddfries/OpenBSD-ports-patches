@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.175 2008/09/22 12:44:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.178 2008/10/29 16:54:48 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -16,6 +16,7 @@
      SUBDIR += atomix
      SUBDIR += barrage
      SUBDIR += bass
+     SUBDIR += batrachians
      SUBDIR += belooted
      SUBDIR += bomberclone
      SUBDIR += boswars
@@ -68,6 +69,7 @@
      SUBDIR += kbilliards
      SUBDIR += kobodeluxe
      SUBDIR += kobodeluxe,harder
+     SUBDIR += komi
      SUBDIR += kslide
      SUBDIR += late
      SUBDIR += lbreakout2
@@ -92,6 +94,7 @@
      SUBDIR += newvox
      SUBDIR += oilwar
      SUBDIR += omega
+     SUBDIR += openarena
      SUBDIR += openttd
      SUBDIR += pathological
      SUBDIR += pioneers

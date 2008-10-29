@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2008/09/27 09:23:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2008/10/27 20:24:27 naddy Exp $
 
 COMMENT=	web-based conference management software
 
 V=		1.9.9
 DISTNAME=	myreview_${V:S/./_/g}
-PKGNAME=	myreview-${V}p0
+PKGNAME=	myreview-${V}p1
 CATEGORIES=	www
 
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} myreview_v1.pdf:0
@@ -37,7 +37,7 @@ do-install:
 	@find ${PREFIX} -type d -name ".svn" | xargs rm -R
 	@find ${PREFIX} -type f -name "*~" -exec rm {} \;
 	@find ${PREFIX} -type f -name "*.bak" -exec rm {} \;
-	@${INSTALL_DATA} ${FULLDISTDIR}/myreview.pdf ${INSTDIR}
+	@${INSTALL_DATA} ${FULLDISTDIR}/myreview_v1.pdf ${INSTDIR}
 	@chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 
 .include <bsd.port.mk>

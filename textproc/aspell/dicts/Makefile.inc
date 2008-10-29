@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile.inc,v 1.6 2007/05/28 16:30:23 kili Exp $
+# $OpenBSD: Makefile.inc,v 1.10 2008/10/28 16:57:57 jasper Exp $
 
-PKGNAME?=	${DISTNAME:C/-([0-9])$/_\1/}p0
+# Check individual packages for overrides when bumping this!
+PKGNAME?=	${DISTNAME:C/-([0-9])$/_\1/}p1
 
 DIST_SUBDIR?=	aspell
 
@@ -8,7 +9,7 @@ EXTRACT_SUFX?=	.tar.bz2
 
 HOMEPAGE?=	http://aspell.sourceforge.net/
 
-# GPL
+# GPLv2 - LGPLv2 - FDL - CC ShareAlike
 PERMIT_DISTFILES_CDROM?=Yes
 PERMIT_DISTFILES_FTP?=	Yes
 PERMIT_PACKAGE_CDROM?=	Yes

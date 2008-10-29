@@ -1,18 +1,18 @@
-# $OpenBSD: Makefile,v 1.8 2008/10/03 10:13:48 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2008/10/27 21:39:27 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	graph based image processing framework
 COMMENT-plugins=gegl plugins
 
-V=		0.0.18
+V=		0.0.20
 DISTNAME=	gegl-${V}
 CATEGORIES=	graphics devel
 
-PKGNAME-main=	gegl-${V}
-PKGNAME-plugins=gegl-plugins-${V}
+PKGNAME-main=	gegl-${V}p0
+PKGNAME-plugins=gegl-plugins-${V}p0
 
-SHARED_LIBS=	gegl-0.0	1.0 # .18.0
+SHARED_LIBS=	gegl-0.0	1.1 # .20.0
 
 EXTRACT_SUFX=	.tar.bz2
 
