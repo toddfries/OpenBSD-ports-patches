@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.43 2007/09/16 02:53:14 merdely Exp $
+# $OpenBSD: Makefile,v 1.45 2008/10/28 13:19:28 steven Exp $
 
 COMMENT-main=	simplified wrapper and interface generator
 
 SUBST_VARS=	VERSION
-VERSION=	1.3.24
+VERSION=	1.3.36
 
 DISTNAME=	swig-${VERSION}
-PKGNAME-main=	${DISTNAME}p4
+PKGNAME-main=	${DISTNAME}p0
 MULTI_PACKAGES=	-main
 CATEGORIES=	devel
 MASTER_SITES=   ${MASTER_SITE_SOURCEFORGE:=swig/}
@@ -21,18 +21,17 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m stdc++
 
-MODULES=	lang/python
+MODULES=	lang/python lang/tcl
 RUN_DEPENDS-main=
-BUILD_DEPENDS=	::lang/tcl/8.4 \
+BUILD_DEPENDS=	${MODTCL_BUILD_DEPENDS} \
 		::lang/ruby \
 		::lang/guile
 
-WRKDIST=	${WRKDIR}/SWIG-${VERSION}
 
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= gnu 
-CONFIGURE_ARGS+= --with-tclincl=${LOCALBASE}/include/tcl8.4 \
-		 --with-tcllib==${LOCALBASE}/lib/tcl8.4 \
+CONFIGURE_ARGS+= --with-tclincl=${MODTCL_INCDIR} \
+		 --with-tcllib==${MODTCL_LIBDIR} \
 		 --with-guilelib=${LOCALBASE}/lib \
 		 --with-python=${MODPY_BIN} \
 		 --without-php4 \

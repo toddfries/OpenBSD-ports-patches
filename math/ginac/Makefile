@@ -1,16 +1,14 @@
-# $Id: Makefile,v 1.2 2008/06/19 09:09:42 steven Exp $
+# $Id: Makefile,v 1.4 2008/10/29 16:26:14 pirofti Exp $
 
 COMMENT=	GiNaC is Not a Computer Algebra System (CAS)
 
-DISTNAME=	ginac-1.4.1
-PKGNAME=	${DISTNAME}p0
-SHARED_LIBS=	ginac		0.0 \
-		ginac-1.4	0.0
+DISTNAME=	ginac-1.4.3
+SHARED_LIBS +=	ginac	1.0	# 0.3
 CATEGORIES=	math
 
 HOMEPAGE=	http://www.ginac.de/
 
-MAINTAINER=	Paul Irofti <bulibuta@sdf.lonestar.org>
+MAINTAINER=	Paul Irofti <pirofti@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

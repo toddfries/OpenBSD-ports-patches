@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.636 2008/10/17 06:56:08 robert Exp $
+# $OpenBSD: Makefile,v 1.645 2008/10/28 18:38:28 pirofti Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -141,6 +141,7 @@
      SUBDIR += libdvdplay
      SUBDIR += libdvdread
      SUBDIR += libelf
+     SUBDIR += libexecinfo
      SUBDIR += libfmt
      SUBDIR += libglade
      SUBDIR += libglade2
@@ -169,11 +170,13 @@
      SUBDIR += libstdc++-man
      SUBDIR += libtool
      SUBDIR += libunicode
+     SUBDIR += libunique
      SUBDIR += libusb
      SUBDIR += libuta
      SUBDIR += libutf
      SUBDIR += libvmime
      SUBDIR += libwnck
+     SUBDIR += libyaml
      SUBDIR += libzvt
      SUBDIR += lincvs
      SUBDIR += lpeg
@@ -517,7 +520,8 @@
      SUBDIR += p5-Term-Prompt
      SUBDIR += p5-Term-ReadKey
      SUBDIR += p5-Term-ReadLine-Gnu
-     SUBDIR += p5-Term-ReadLine-Zoid 
+     SUBDIR += p5-Term-ReadLine-Perl
+     SUBDIR += p5-Term-ReadLine-Zoid
      SUBDIR += p5-Term-ReadPassword
      SUBDIR += p5-Term-Screen
      SUBDIR += p5-Term-ScreenColor
@@ -684,6 +688,7 @@
      SUBDIR += ruby-activesupport
      SUBDIR += ruby-assistance
      SUBDIR += ruby-color-tools
+     SUBDIR += ruby-columnize
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
@@ -695,20 +700,26 @@
      SUBDIR += ruby-gettext
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
+     SUBDIR += ruby-linecache
      SUBDIR += ruby-mocha
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
+     SUBDIR += ruby-linecache
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
+     SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-rubyforge
      SUBDIR += ruby-rubyinline
+     SUBDIR += ruby-sexp
+     SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
+     SUBDIR += ruby-zentest
      SUBDIR += scons
      SUBDIR += sdcc
      SUBDIR += sdl
@@ -729,7 +740,6 @@
      SUBDIR += slib-guile
      SUBDIR += smarty
      SUBDIR += smpeg
-     SUBDIR += snit
      SUBDIR += spe
      SUBDIR += splint
      SUBDIR += startup-notification
@@ -739,6 +749,7 @@
      SUBDIR += t1lib
      SUBDIR += tclcl
      SUBDIR += tcllib
+     SUBDIR += tig
      SUBDIR += tkcvs
      SUBDIR += tkdiff
      SUBDIR += tla

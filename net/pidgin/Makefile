@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.29 2008/09/24 07:13:43 sturm Exp $
+# $OpenBSD: Makefile,v 1.32 2008/10/23 02:55:43 brad Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	multi-protocol instant messaging client
 
-DISTNAME=	pidgin-2.5.1
+DISTNAME=	pidgin-2.5.2
 CATEGORIES=	net
 
 SHARED_LIBS+=	jabber		0.0
 SHARED_LIBS+=	oscar		0.0
-SHARED_LIBS+=	purple		4.1
-SHARED_LIBS+=	purple-client	4.1
-SHARED_LIBS+=	gnt		4.1
+SHARED_LIBS+=	purple		4.2
+SHARED_LIBS+=	purple-client	4.2
+SHARED_LIBS+=	gnt		4.2
 
 HOMEPAGE=	http://pidgin.im/
 
@@ -35,10 +35,10 @@ MODULES=	devel/gettext textproc/intltool
 
 BUILD_DEPENDS=	:gconf2-*:devel/gconf2 \
 		:dbus-python-*:x11/dbus-python
-RUN_DEPENDS+=	:dbus-python-*:x11/dbus-python \
+RUN_DEPENDS+=	:gconf2-*:devel/gconf2 \
+		:dbus-python-*:x11/dbus-python \
 		:py-gtk2-*:x11/py-gtk2 \
-		:desktop-file-utils-*:devel/desktop-file-utils \
-		:gconf2-*:devel/gconf2
+		:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS+=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		startup-notification-1::devel/startup-notification \
 		silc.>=7,silcclient.>=5::devel/silc-toolkit \
