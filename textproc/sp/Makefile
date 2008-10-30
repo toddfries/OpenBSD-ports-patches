@@ -3,7 +3,7 @@
 COMMENT=	OO toolkit for SGML parsing and entity management
 
 DISTNAME=	sp-1.3.4
-PKGNAME=	${DISTNAME}p2
+PKGNAME=	${DISTNAME}p3
 CATEGORIES=	textproc
 HOMEPAGE=	http://www.jclark.com/sp/
 SHARED_LIBS=	sp 0.0

@@ -6,7 +6,7 @@ $OpenBSD$
  ALL_CFLAGS=$(CFLAGS) $(DEBUG) $(OPTIMIZE) $(INCLUDE) $(DEFINES) $(PIC_FLAG)
  
 -all: lib$(LIB).a
-+all: lib$(LIB).a lib$(LIB).so.0.0
++all: lib$(LIB).a lib$(LIB).so.${LIBsp_VERSION}
  pure: all
  
  lib$(LIB).a: $(OBJS) $(COBJS)
@@ -14,7 +14,7 @@ $OpenBSD$
  	$(RANLIB) $@
 +
 +lib$(LIB).so.0.0: $(SOBJS)
-+	@rm -f lib${LIB}.so.0.0
++	@rm -f lib${LIB}.so.${LIBsp_VERSION}
 +	${CC} -shared ${PICFLAG} \
 +		-o lib${LIB}.so.0.0 \
 +		`${LORDER} ${SOBJS}|tsort -q` ${LDADD}
