@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $OpenBSD: libtool,v 1.39 2008/10/29 16:16:49 bernd Exp $
+# $OpenBSD: libtool,v 1.44 2008/10/30 15:03:07 steven Exp $
 
 # Copyright (c) 2007-2008 Steven Mestdagh <steven@openbsd.org>
 #
@@ -87,6 +87,7 @@ my %file_cache;		# which files have been parsed
 my $res_level = 0;	# resolve level
 my $parse_level = 0;	# parse recursion level
 my $performed = 0;	# number of commands executed via system()
+my $seen_pthread = 0;
 
 # build static/shared objects?
 my $static = 1;
@@ -334,7 +335,7 @@ if ($mode eq 'compile') {
 			'version_info=s{1}'	=> \$opts{'version-info'},
 			'version-number=s{1}'	=> \$opts{'version-info'},
 		);
-	# XXX options ignored: dlopen, dlpreopen, export-dynamic,
+	# XXX options ignored: dlopen, dlpreopen,
 	# 	export-symbols, export-symbols-regex, no-fast-install,
 	# 	no-install, no-undefined, precious-files-regex,
 	# 	shrext, thread-safe, prefer-pic, prefer-non-pic
@@ -392,6 +393,9 @@ if ($mode eq 'compile') {
 	if ($linkmode == PROGRAM) {
 		# XXX give higher priority to dirs of not installed libs
 		# XXX no static linking yet here
+		if ($opts{'export-dynamic'}) {
+			push(@ARGV, "-Wl,-E");
+		}
 		my $objlist = \@objs;
 		if (@objs == 0) {
 		        if (@sobjs > 0) {
@@ -516,11 +520,8 @@ sub help
 {
 	print <<EOF
 Usage: $0 [options]
---config - print configuration
 --debug	- turn on debugging output
 --dry-run - don't do anything, only show what would be done
---features - show basic configuration information
---finish - same as `--mode=finish'
 --help - this message
 --mode=MODE - use operation mode MODE
 --quiet - do not print informational messages
@@ -561,23 +562,6 @@ sub perform
 		}
 	}
 	$performed++;
-}
-
-# XXX incomplete
-sub config
-{
-	print "objdir=$ltdir\n";
-	print "...\n";
-	exit 0;
-}
-
-sub features
-{
-	chomp (my $osver = `uname -r`);	# XXX avoid calling uname
-	print "host: $gnu_arch-unknown-openbsd$osver\n";
-	print (($noshared) ? "dis" : "en", "able shared libraries\n");
-	print ((!$static)  ? "dis" : "en", "able static libraries\n");
-	exit 0;
 }
 
 # convert 4:5:8 into a list of numbers
@@ -810,7 +794,6 @@ sub parse_linkargs
 	debug 1, "parse_linkargs pass: ", ($la == 1) ? 1 : 2, ", level: $parse_level\n";
 	debug 1, "  argstring: $argstring\n";
 
-	my $seen_pthread = 0;
 	foreach my $a (@args) {
 		debug 1, "  processing $a\n";
 		if ($a eq '-lc') {	
@@ -818,12 +801,12 @@ sub parse_linkargs
 			$a = '';   
 		} elsif ($a eq '-pthread' && !$seen_pthread) {	
 			# XXX special treatment since it's not a -l flag
-			unshift @deplibs, $a;
+			push @deplibs, $a;
 			$seen_pthread = 1;
 		} elsif ($a && $a =~ m/^-L(.*)/) {
 			if (!exists $dirs{$1}) {
 				$dirs{$1} = 1;
-				unshift @deplibs, $a;
+				push @deplibs, $a;
 			}
 			$a = '';
 		} elsif ($a && $a =~ m/^-R(.*)/) {
@@ -838,7 +821,7 @@ sub parse_linkargs
 				if ($la) {
 					my $lafile = find_la($key);
 					if ($lafile) {
-						unshift @deplibs, $lafile;
+						push @deplibs, $lafile;
 						$a = $lafile;
 						next;
 					} else {
@@ -856,7 +839,7 @@ sub parse_linkargs
 							$k =~ s/^lib//;
 							$lstring .= "-l$k ";
 						}
-						unshift @deplibs, $a;
+						push @deplibs, $a;
 					}
 				}
 			}
@@ -892,7 +875,7 @@ sub parse_linkargs
 				$d .= "/$ltdir";
 			}
 			if ($libdir ne '' && $la) {
-				unshift @deplibs, $fulla;
+				push @deplibs, $fulla;
 			}
 			# the following should happen only in pass 2
 			next if ($la);
@@ -1058,13 +1041,11 @@ sub linkcmds
 	# static linking
 	if (!$shared) {
 		my @libfiles = values %libs;
-		if ($D) {
-			my @dirval = keys %dirs;
-			my @libval = keys %libs;
-			print "dirs:  @dirval\n";
-			print "libs:  @libval\n";
-			print "libfiles: @libfiles\n";
-		}
+		my @dirval = keys %dirs;
+		my @libval = keys %libs;
+		debug 1, "dirs:  @dirval\n";
+		debug 1, "libs:  @libval\n";
+		debug 1, "libfiles: @libfiles\n";
 		if ($lmode == LIBRARY) {
 			$cmd = "ar cru $dst";
 			$cmd .= " @$objs" if (@$objs);
@@ -1102,13 +1083,11 @@ sub linkcmds
 	}
 
 	my @libfiles = values %libs;
-	if ($D) {
-		my @dirval = keys %dirs;
-		my @libval = keys %libs;
-		print "dirs:  @dirval\n";
-		print "libs:  @libval\n";
-		print "libfiles: @libfiles\n";
-	}
+	my @dirval = keys %dirs;
+	my @libval = keys %libs;
+	debug 1, "dirs:  @dirval\n";
+	debug 1, "libs:  @libval\n";
+	debug 1, "libfiles: @libfiles\n";
 
 	create_symlinks($ltdir, \@libfiles);
 	map { $_ = "$ltdir/". basename $_ } @libfiles;
