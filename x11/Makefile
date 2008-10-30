@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.349 2008/09/17 15:40:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.355 2008/10/24 01:55:46 kevlo Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -55,10 +55,12 @@
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
+     SUBDIR += fltk2
      SUBDIR += fluxbox
      SUBDIR += fluxter
      SUBDIR += flvw
      SUBDIR += flwm
+     SUBDIR += freefont-ttf
      SUBDIR += freefonts
      SUBDIR += fsv
      SUBDIR += fvwm2
@@ -115,10 +117,12 @@
      SUBDIR += lesstif
      SUBDIR += libdnd
      SUBDIR += liberation-fonts
+     SUBDIR += libgdiplus
      SUBDIR += libsexy
      SUBDIR += lupe
      SUBDIR += matchbox
      SUBDIR += mlterm
+     SUBDIR += mono-gtk2
      SUBDIR += mouseclock
      SUBDIR += mowitz
      SUBDIR += mplayer
@@ -248,6 +252,8 @@
      SUBDIR += wmtz
      SUBDIR += wmweather
      SUBDIR += wmx
+     SUBDIR += wqy-bitmapfont
+     SUBDIR += wqy-zenhei-ttf
      SUBDIR += wterm
      SUBDIR += wxSVG
      SUBDIR += wxWidgets
@@ -268,7 +274,6 @@
      SUBDIR += xco
      SUBDIR += xcoloredit
      SUBDIR += xcolors
-     SUBDIR += xcompmgr
      SUBDIR += xcursor-themes
      SUBDIR += xcursorgen
      SUBDIR += xdaliclock

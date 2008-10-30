@@ -1,0 +1,52 @@
+$OpenBSD: patch-ld_Makefile_am,v 1.1 2008/10/01 04:46:20 ckuethe Exp $
+--- ld/Makefile.am.orig	Mon Aug  6 13:00:17 2007
++++ ld/Makefile.am	Sat Sep 27 20:20:28 2008
+@@ -138,6 +138,13 @@ ALL_EMULATIONS = \
+ 	eavr4.o \
+ 	eavr5.o \
+ 	eavr6.o \
++	eavrxmega1.o \
++	eavrxmega2.o \
++	eavrxmega3.o \
++	eavrxmega4.o \
++	eavrxmega5.o \
++	eavrxmega6.o \
++	eavrxmega7.o \
+ 	ecoff_i860.o \
+ 	ecoff_sparc.o \
+ 	eelf32_spu.o \
+@@ -622,6 +629,34 @@ eavr6.c: $(srcdir)/emulparams/avr6.sh $(srcdir)/emulte
+   $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
+   ${GEN_DEPENDS}
+ 	${GENSCRIPTS} avr6 "$(tdir_avr2)"
++eavrxmega1.c: $(srcdir)/emulparams/avrxmega1.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega1 "$(tdir_avr2)"
++eavrxmega2.c: $(srcdir)/emulparams/avrxmega2.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega2 "$(tdir_avr2)"
++eavrxmega3.c: $(srcdir)/emulparams/avrxmega3.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega3 "$(tdir_avr2)"
++eavrxmega4.c: $(srcdir)/emulparams/avrxmega4.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega4 "$(tdir_avr2)"
++eavrxmega5.c: $(srcdir)/emulparams/avrxmega5.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega5 "$(tdir_avr2)"
++eavrxmega6.c: $(srcdir)/emulparams/avrxmega6.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega6 "$(tdir_avr2)"
++eavrxmega7.c: $(srcdir)/emulparams/avrxmega7.sh \
++  $(srcdir)/emultempl/avrelf.em $(ELF_DEPS) $(srcdir)/scripttempl/avr.sc \
++  ${GEN_DEPENDS}
++	${GENSCRIPTS} avrxmega7 "$(tdir_avr2)"
+ ecoff_i860.c: $(srcdir)/emulparams/coff_i860.sh \
+   $(srcdir)/emultempl/generic.em $(srcdir)/scripttempl/i860coff.sc ${GEN_DEPENDS}
+ 	${GENSCRIPTS} coff_i860 "$(tdir_coff_i860)"

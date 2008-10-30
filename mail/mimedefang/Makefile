@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.8 2008/02/05 20:46:21 okan Exp $
+# $OpenBSD: Makefile,v 1.10 2008/10/29 14:36:12 okan Exp $
 
 COMMENT=	mailfilter to identify and mark spam
 
-DISTNAME=	mimedefang-2.64
+DISTNAME=	mimedefang-2.65
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	mail
 
 HOMEPAGE=	http://www.mimedefang.org/
+MASTER_SITES=	${HOMEPAGE}static/
 
 MAINTAINER=	Okan Demirmen <okan@openbsd.org>
 
@@ -16,8 +18,6 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c m perl pthread util milter
-
-MASTER_SITES=	${HOMEPAGE}static/
 
 RUN_DEPENDS=	:p5-MIME-tools-*:mail/p5-MIME-tools \
 		:p5-Digest-SHA1-*:security/p5-Digest-SHA1 \
@@ -31,8 +31,7 @@ CONFIGURE_ARGS=	--with-user=_mdefang \
 NO_REGRESS=	Yes
 
 post-build:
-	@sed -e 's,%LOCALBASE%,${LOCALBASE},g' < ${FILESDIR}/rc.mimedefang \
-		> ${WRKSRC}/rc.mimedefang
+	${SUBST_CMD} -c ${FILESDIR}/rc.mimedefang ${WRKSRC}/rc.mimedefang
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mimedefang

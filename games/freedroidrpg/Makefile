@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2008/06/12 22:10:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2008/10/21 17:07:45 ajacoutot Exp $
 
 COMMENT=	isometric RPG game
 
-DISTNAME=	freedroidrpg-0.10.3
+DISTNAME=	freedroidrpg-0.11
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	games x11
 
 EXTRACT_SUFX=	.tar.bz2
@@ -19,20 +20,24 @@ PERMIT_PACKAGE_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=freedroid/}
 
-WANTLIB=	GL SDL X11 Xext Xi c glib gmodule jpeg m ogg png \
-		pthread vorbis z
+WANTLIB=	GL SDL X11 c jpeg m ogg png pthread vorbis z
 
 MODULES=	devel/gettext
 USE_X11=	Yes
 
-LIB_DEPENDS=	gdk.>=3,gtk.>=3::x11/gtk+ \
-		SDL_image.>=2::devel/sdl-image \
+LIB_DEPENDS=	SDL_image.>=2::devel/sdl-image \
 		SDL_mixer.>=3::devel/sdl-mixer \
-		SDL_net.>=1::devel/sdl-net
+		execinfo::devel/libexecinfo
 
 .if ${MACHINE_ARCH} == "sparc64"
 BROKEN=		SIGBUS on startup under sparc64
 .endif
+
+# needed to avoid a SIGSEGV
+# (int i corruption in enemy.c line 2056:
+# should be "0" or "1" instead of a nonsense negative value)
+MODULES+=	gcc4
+MODGCC4_ARCHES=	*
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
@@ -41,8 +46,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 		am_cv_prog_tar_ustar=plaintar
 CONFIGURE_ARGS=	--with-x \
 		--enable-opengl \
-		--enable-editors \
-		--disable-backtrace
+		--enable-editors
 
 post-install:
 	@chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/freedroidrpg

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.14 2008/06/19 09:09:42 steven Exp $
+# $OpenBSD: Makefile,v 1.16 2008/10/27 11:34:00 pirofti Exp $
 
 COMMENT=		SMTP plugin for MUAs
 
-DISTNAME=		msmtp-1.4.13
-PKGNAME=		${DISTNAME}p1
+DISTNAME=		msmtp-1.4.16
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		mail
 
 HOMEPAGE=		http://msmtp.sourceforge.net/
 
-MAINTAINER=		Paul Irofti <bulibuta@sdf.lonestar.org>
+MAINTAINER=		Paul Irofti <pirofti@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -39,7 +39,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/doc/msmtp.html ${PREFIX}/share/doc/msmtp
 	${INSTALL_DATA} ${WRKSRC}/scripts/msmtpqueue/{README,ChangeLog} \
 			${PREFIX}/share/msmtp/msmtpqueue
-	${INSTALL_SCRIPT} ${WRKSRC}/scripts/set_sendmail.sh \
+	${INSTALL_SCRIPT} ${WRKSRC}/scripts/set_sendmail/set_sendmail.sh \
 		${PREFIX}/share/examples/msmtp
 	${INSTALL_SCRIPT} ${WRKSRC}/scripts/msmtpqueue/*.sh \
 		${PREFIX}/share/examples/msmtp

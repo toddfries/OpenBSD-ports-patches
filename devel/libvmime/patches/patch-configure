@@ -1,0 +1,60 @@
+$OpenBSD: patch-configure,v 1.2 2008/10/27 22:03:40 ajacoutot Exp $
+--- configure.orig	Sun Oct 19 14:36:19 2008
++++ configure	Mon Oct 27 22:55:58 2008
+@@ -3486,13 +3486,13 @@ if test "$ac_test_CFLAGS" = set; then
+   CFLAGS=$ac_save_CFLAGS
+ elif test $ac_cv_prog_cc_g = yes; then
+   if test "$GCC" = yes; then
+-    CFLAGS="-g -O2"
++    CFLAGS="-g"
+   else
+     CFLAGS="-g"
+   fi
+ else
+   if test "$GCC" = yes; then
+-    CFLAGS="-O2"
++    CFLAGS=""
+   else
+     CFLAGS=
+   fi
+@@ -4135,13 +4135,13 @@ if test "$ac_test_CXXFLAGS" = set; then
+   CXXFLAGS=$ac_save_CXXFLAGS
+ elif test $ac_cv_prog_cxx_g = yes; then
+   if test "$GXX" = yes; then
+-    CXXFLAGS="-g -O2"
++    CXXFLAGS="-g"
+   else
+     CXXFLAGS="-g"
+   fi
+ else
+   if test "$GXX" = yes; then
+-    CXXFLAGS="-O2"
++    CXXFLAGS=""
+   else
+     CXXFLAGS=
+   fi
+@@ -7156,13 +7156,13 @@ if test "$ac_test_FFLAGS" = set; then
+   FFLAGS=$ac_save_FFLAGS
+ elif test $ac_cv_prog_f77_g = yes; then
+   if test "x$ac_cv_f77_compiler_gnu" = xyes; then
+-    FFLAGS="-g -O2"
++    FFLAGS="-g"
+   else
+     FFLAGS="-g"
+   fi
+ else
+   if test "x$ac_cv_f77_compiler_gnu" = xyes; then
+-    FFLAGS="-O2"
++    FFLAGS=""
+   else
+     FFLAGS=
+   fi
+@@ -32278,7 +32278,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$
+ else
+ 	# -O2
+ 	OLD_CXXFLAGS="$CXXFLAGS"
+-	CXXFLAGS="$CXXFLAGS -O2"
++	CXXFLAGS="$CXXFLAGS"
+ 	{ echo "$as_me:$LINENO: checking whether cc accepts -O2" >&5
+ echo $ECHO_N "checking whether cc accepts -O2... $ECHO_C" >&6; }
+ 	cat >conftest.$ac_ext <<_ACEOF

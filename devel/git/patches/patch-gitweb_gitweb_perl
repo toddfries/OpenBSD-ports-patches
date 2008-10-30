@@ -1,24 +1,24 @@
-$OpenBSD: patch-gitweb_gitweb_perl,v 1.4 2008/06/24 20:28:01 bernd Exp $
+$OpenBSD: patch-gitweb_gitweb_perl,v 1.6 2008/10/24 09:17:34 bernd Exp $
 
 This prevents the following error: '-T and -B not implemented on filehandles'
 
---- gitweb/gitweb.perl.orig	Thu Jun 19 00:49:49 2008
-+++ gitweb/gitweb.perl	Thu Jun 19 11:13:49 2008
-@@ -4361,7 +4361,7 @@ sub git_blob_plain {
+--- gitweb/gitweb.perl.orig	Wed Oct 22 06:19:18 2008
++++ gitweb/gitweb.perl	Wed Oct 22 08:12:23 2008
+@@ -4298,7 +4298,7 @@ sub git_blob_plain {
  		$expires = "+1d";
  	}
  
 -	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
 +	open my $fd, "-|:raw:perlio", git_cmd(), "cat-file", "blob", $hash
- 		or die_error(undef, "Open git-cat-file blob '$hash' failed");
+ 		or die_error(500, "Open git-cat-file blob '$hash' failed");
  
  	# content-type (can include charset)
-@@ -4404,7 +4404,7 @@ sub git_blob {
+@@ -4341,7 +4341,7 @@ sub git_blob {
  	}
  
  	my ($have_blame) = gitweb_check_feature('blame');
 -	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
 +	open my $fd, "-|:raw:perlio", git_cmd(), "cat-file", "blob", $hash
- 		or die_error(undef, "Couldn't cat $file_name, $hash");
+ 		or die_error(500, "Couldn't cat $file_name, $hash");
  	my $mimetype = blob_mimetype($fd, $file_name);
  	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {

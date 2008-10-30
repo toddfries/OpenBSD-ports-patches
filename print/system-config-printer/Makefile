@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2008/09/17 12:00:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2008/10/27 13:29:13 ajacoutot Exp $
 
 COMMENT=		printer (CUPS) administration tool
 
-DISTNAME=		system-config-printer-1.0.7
+DISTNAME=		system-config-printer-1.0.9
 CATEGORIES=		print sysutils
 
 HOMEPAGE=		http://cyberelk.net/tim/software/system-config-printer/
@@ -19,13 +19,13 @@ EXTRACT_SUFX=		.tar.bz2
 MODULES=		lang/python \
 			textproc/intltool
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
+BUILD_DEPENDS=		${RUN_DEPENDS} \
+			::textproc/xmlto
 RUN_DEPENDS=		::devel/desktop-file-utils \
 			::devel/gettext \
 			::devel/py-notify \
 			::print/py-cups \
 			::textproc/py-xml \
-			::textproc/xmlto \
 			::x11/dbus-python \
 			::x11/gnome/py-gnome
 

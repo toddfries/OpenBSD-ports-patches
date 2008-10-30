@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2008/06/17 22:54:19 bernd Exp $
+@comment $OpenBSD: PLIST,v 1.4 2008/10/25 10:39:48 bernd Exp $
 lib/ruby/gems/${MODRUBY_REV}/cache/${DISTNAME}.gem
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/
@@ -366,6 +366,7 @@ lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/base_test.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/connection_test.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/fixtures/
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/fixtures/beast.rb
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/fixtures/customer.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/fixtures/person.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/fixtures/street_address.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/format_test.rb

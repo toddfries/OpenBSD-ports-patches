@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.6 2004/12/14 01:40:26 kevlo Exp $
+@comment $OpenBSD: PLIST,v 1.8 2008/10/01 16:01:51 simon Exp $
 ${P5ARCH}/
 ${P5ARCH}/XML/
 ${P5ARCH}/XML/Parser/

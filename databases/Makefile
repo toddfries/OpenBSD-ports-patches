@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.146 2008/09/17 14:28:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.151 2008/10/26 19:33:31 mbalmer Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
@@ -23,6 +23,7 @@
      SUBDIR += mysql
      SUBDIR += mysql-administrator
      SUBDIR += mysql-query-browser
+     SUBDIR += mysql-zrm
      SUBDIR += mysql2pgsql
      SUBDIR += mysqlcc
      SUBDIR += mytop
@@ -95,6 +96,9 @@
      SUBDIR += p5-pgsql
      SUBDIR += p5-sybperl
      SUBDIR += pear-DB
+     SUBDIR += pear-MDB2
+     SUBDIR += pear-MDB2-mysql
+     SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3
      SUBDIR += pgfouine
@@ -127,6 +131,7 @@
      SUBDIR += ruby-bdb
      SUBDIR += ruby-ldap
      SUBDIR += ruby-mysql
+     SUBDIR += ruby-pg
      SUBDIR += ruby-postgres
      SUBDIR += ruby-sqlite3
      SUBDIR += sharedance

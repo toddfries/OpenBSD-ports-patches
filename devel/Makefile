@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.622 2008/09/17 13:27:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.645 2008/10/28 18:38:28 pirofti Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -48,8 +48,8 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
-     SUBDIR += cook
      SUBDIR += commoncpp
+     SUBDIR += cook
      SUBDIR += cpphs
      SUBDIR += cppunit
      SUBDIR += cscope
@@ -141,6 +141,7 @@
      SUBDIR += libdvdplay
      SUBDIR += libdvdread
      SUBDIR += libelf
+     SUBDIR += libexecinfo
      SUBDIR += libfmt
      SUBDIR += libglade
      SUBDIR += libglade2
@@ -169,10 +170,13 @@
      SUBDIR += libstdc++-man
      SUBDIR += libtool
      SUBDIR += libunicode
+     SUBDIR += libunique
      SUBDIR += libusb
      SUBDIR += libuta
      SUBDIR += libutf
+     SUBDIR += libvmime
      SUBDIR += libwnck
+     SUBDIR += libyaml
      SUBDIR += libzvt
      SUBDIR += lincvs
      SUBDIR += lpeg
@@ -194,6 +198,7 @@
      SUBDIR += mico
      SUBDIR += mk
      SUBDIR += mm
+     SUBDIR += mono-addins
      SUBDIR += monotone
      SUBDIR += mowgli
      SUBDIR += mpfr
@@ -305,6 +310,7 @@
      SUBDIR += p5-Data-OptList
      SUBDIR += p5-Data-Random
      SUBDIR += p5-Data-ShowTable
+     SUBDIR += p5-Data-Stag
      SUBDIR += p5-Data-Structure-Util
      SUBDIR += p5-Data-Types
      SUBDIR += p5-Data-UUID
@@ -330,6 +336,7 @@
      SUBDIR += p5-Devel-Cover
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-FastProf
+     SUBDIR += p5-Devel-GlobalDestruction
      SUBDIR += p5-Devel-Leak
      SUBDIR += p5-Devel-SawAmpersand
      SUBDIR += p5-Devel-Size
@@ -409,6 +416,7 @@
      SUBDIR += p5-IPC-ShareLite
      SUBDIR += p5-IPC-Shareable
      SUBDIR += p5-Inline
+     SUBDIR += p5-Internals
      SUBDIR += p5-Lchown
      SUBDIR += p5-List-Cycle
      SUBDIR += p5-List-MoreUtils
@@ -428,11 +436,8 @@
      SUBDIR += p5-MLDBM
      SUBDIR += p5-MLDBM-Sync
      SUBDIR += p5-MRO-Compat
-     SUBDIR += p5-Module-Build
-     SUBDIR += p5-Module-CoreList
      SUBDIR += p5-Module-Find
      SUBDIR += p5-Module-Install
-     SUBDIR += p5-Module-Load
      SUBDIR += p5-Module-Loaded
      SUBDIR += p5-Module-Pluggable
      SUBDIR += p5-Module-Pluggable-Fast
@@ -448,6 +453,7 @@
      SUBDIR += p5-Object-Declare
      SUBDIR += p5-Object-Realize
      SUBDIR += p5-Object-Signature
+     SUBDIR += p5-PAR
      SUBDIR += p5-PAR-Dist
      SUBDIR += p5-POE
      SUBDIR += p5-POE-Component-IKC
@@ -501,6 +507,7 @@
      SUBDIR += p5-String-Format
      SUBDIR += p5-String-Scanf
      SUBDIR += p5-Sub-Exporter
+     SUBDIR += p5-Sub-Identify
      SUBDIR += p5-Sub-Install
      SUBDIR += p5-Sub-Name
      SUBDIR += p5-Sub-Override
@@ -513,7 +520,8 @@
      SUBDIR += p5-Term-Prompt
      SUBDIR += p5-Term-ReadKey
      SUBDIR += p5-Term-ReadLine-Gnu
-     SUBDIR += p5-Term-ReadLine-Zoid 
+     SUBDIR += p5-Term-ReadLine-Perl
+     SUBDIR += p5-Term-ReadLine-Zoid
      SUBDIR += p5-Term-ReadPassword
      SUBDIR += p5-Term-Screen
      SUBDIR += p5-Term-ScreenColor
@@ -550,6 +558,7 @@
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-Taint
      SUBDIR += p5-Test-Tester
+     SUBDIR += p5-Test-URI
      SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
@@ -587,6 +596,7 @@
      SUBDIR += p5-Universal-require
      SUBDIR += p5-VCP-autrijus
      SUBDIR += p5-Want
+     SUBDIR += p5-WeakRef
      SUBDIR += p5-YAML
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-accessors
@@ -596,7 +606,6 @@
      SUBDIR += p5-namespace-clean
      SUBDIR += p5-parent
      SUBDIR += p5-prefork
-     SUBDIR += p5-version
      SUBDIR += pango
      SUBDIR += pccts
      SUBDIR += pcre
@@ -677,10 +686,13 @@
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activesupport
+     SUBDIR += ruby-assistance
      SUBDIR += ruby-color-tools
+     SUBDIR += ruby-columnize
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
+     SUBDIR += ruby-diff-lcs
      SUBDIR += ruby-fastthread
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin
@@ -688,20 +700,26 @@
      SUBDIR += ruby-gettext
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
-     SUBDIR += ruby-rubyinline
+     SUBDIR += ruby-linecache
      SUBDIR += ruby-mocha
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
+     SUBDIR += ruby-linecache
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
+     SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-rubyforge
+     SUBDIR += ruby-rubyinline
+     SUBDIR += ruby-sexp
+     SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
+     SUBDIR += ruby-zentest
      SUBDIR += scons
      SUBDIR += sdcc
      SUBDIR += sdl
@@ -722,7 +740,6 @@
      SUBDIR += slib-guile
      SUBDIR += smarty
      SUBDIR += smpeg
-     SUBDIR += snit
      SUBDIR += spe
      SUBDIR += splint
      SUBDIR += startup-notification
@@ -732,6 +749,7 @@
      SUBDIR += t1lib
      SUBDIR += tclcl
      SUBDIR += tcllib
+     SUBDIR += tig
      SUBDIR += tkcvs
      SUBDIR += tkdiff
      SUBDIR += tla
@@ -745,6 +763,7 @@
      SUBDIR += vim-taglist
      SUBDIR += vtcl
      SUBDIR += vte
+     SUBDIR += waf
      SUBDIR += xmake
      SUBDIR += xulrunner
      SUBDIR += yasm

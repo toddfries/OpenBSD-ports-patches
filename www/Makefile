@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.355 2008/09/17 10:11:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.358 2008/10/26 19:33:49 pirofti Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += amaya          # requires Motif (lesstif works)
@@ -168,6 +168,7 @@
      SUBDIR += p5-Catalyst-Runtime
      SUBDIR += p5-Catalyst-View-Mason
      SUBDIR += p5-Config-ApacheFormat
+     SUBDIR += p5-Data-URIEncode
      SUBDIR += p5-FCGI-ProcManager
      SUBDIR += p5-Feed-Find
      SUBDIR += p5-HTML-Base
@@ -287,6 +288,7 @@
      SUBDIR += py-webpy
      SUBDIR += pyblosxom
      SUBDIR += raggle
+     SUBDIR += ratproxy
      SUBDIR += rawdog
      SUBDIR += reportmagic
      SUBDIR += rt
@@ -346,6 +348,7 @@
      SUBDIR += xcache
      SUBDIR += xmhtml
      SUBDIR += xoops
+     SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework
      SUBDIR += zope
