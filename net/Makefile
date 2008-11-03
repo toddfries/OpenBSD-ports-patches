@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.541 2008/09/18 23:04:36 sthen Exp $
+# $OpenBSD: Makefile,v 1.543 2008/10/07 10:02:33 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -16,6 +16,7 @@
      SUBDIR += archie
      SUBDIR += argus
      SUBDIR += argus-clients
+     SUBDIR += arp-scan
      SUBDIR += arpcatch
      SUBDIR += arpd
      SUBDIR += arping
@@ -377,6 +378,7 @@
      SUBDIR += sharity-light
      SUBDIR += silc-client
      SUBDIR += silc-server
+     SUBDIR += silc-server,operops
      SUBDIR += sing
      SUBDIR += sipsak
      SUBDIR += sirc

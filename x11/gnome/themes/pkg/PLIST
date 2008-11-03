@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.19 2008/07/13 17:03:07 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.22 2008/10/08 13:00:00 ajacoutot Exp $
 @conflict gtk2-clearlooks-engine-*
 share/icons/Crux/
 share/icons/Crux/16x16/
@@ -2739,3 +2739,12 @@ share/themes/Simple/gtk-2.0/gtkrc
 @unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/LowContrastLargePrint 2> /dev/null || true
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/Mist 2> /dev/null || true
 @unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/Mist 2> /dev/null || true
+@unexec-delete rm -f %D/share/icons/Crux/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/HighContrast-SVG/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/HighContrastInverse/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/HighContrastLargePrint/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/HighContrastLargePrintInverse/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/LargePrint/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/LowContrast/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/LowContrastLargePrint/icon-theme.cache
+@unexec-delete rm -f %D/share/icons/Mist/icon-theme.cache

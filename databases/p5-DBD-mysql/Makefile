@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2007/09/16 11:37:29 simon Exp $
+# $OpenBSD: Makefile,v 1.19 2008/10/28 08:30:31 pea Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=		MySQL drivers for the Perl DBI
 
-DISTNAME=		DBD-mysql-4.005
-PKGNAME=		p5-${DISTNAME}
+DISTNAME=		DBD-mysql-4.010
 CATEGORIES=		databases
 MODULES=		cpan
 

@@ -1,0 +1,12 @@
+$OpenBSD: patch-tools_qdbus_qdbuscpp2xml_qdbuscpp2xml_cpp,v 1.1 2008/10/21 22:20:00 espie Exp $
+--- tools/qdbus/qdbuscpp2xml/qdbuscpp2xml.cpp.orig	Sat Sep 27 10:58:49 2008
++++ tools/qdbus/qdbuscpp2xml/qdbuscpp2xml.cpp	Mon Oct 20 14:57:36 2008
+@@ -392,7 +392,7 @@ int main(int argc, char **argv)
+         else {
+             // run moc on this file
+             QProcess proc;
+-            proc.start(QLibraryInfo::location(QLibraryInfo::BinariesPath) + QLatin1String("/moc"), QStringList() << QFile::decodeName(argv[i]), QIODevice::ReadOnly | QIODevice::Text);
++            proc.start(QLibraryInfo::location(QLibraryInfo::BinariesPath) + QLatin1String("/moc4"), QStringList() << QFile::decodeName(argv[i]), QIODevice::ReadOnly | QIODevice::Text);
+ 
+             if (!proc.waitForStarted()) {
+                 fprintf(stderr, PROGRAMNAME ": could not execute moc! Aborting.\n");

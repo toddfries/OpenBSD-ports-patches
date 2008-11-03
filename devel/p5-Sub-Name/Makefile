@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.3 2007/09/16 02:53:08 merdely Exp $
+# $OpenBSD: Makefile,v 1.5 2008/10/07 09:00:38 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	(re)name a sub
 
 MODULES=	cpan
-DISTNAME=	Sub-Name-0.02
+DISTNAME=	Sub-Name-0.04
 CATEGORIES=	devel
 
 MAINTAINER=	Mathieu Sauve-Frankel <msf@openbsd.org> 
 
-# Artistic
+# perl
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

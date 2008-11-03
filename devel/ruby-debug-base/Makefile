@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.3 2008/06/19 09:09:42 steven Exp $
+# $OpenBSD: Makefile,v 1.5 2008/10/27 19:16:10 pirofti Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	faster implementation of the standard debug.rb - base
 
-DISTNAME=	ruby-debug-base-0.10.0
-PKGNAME=	${DISTNAME}p1
+DISTNAME=	ruby-debug-base-0.10.2
 CATEGORIES=	devel
 
-MAINTAINER=	Paul Irofti <bulibuta@sdf.lonestar.org>
+MAINTAINER=	Paul Irofti <pirofti@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
@@ -18,7 +17,10 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_RUBYFORGE:=ruby-debug/}
 
-LIB_DEPENDS=	ruby.>=1::lang/ruby
+BUILD_DEPENDS=	${RUN_DEPENDS}
+RUN_DEPENDS=	::devel/ruby-linecache
+
+LIB_DEPENDS=	${MODRUBY_LIB_DEPENDS}
 WANTLIB+=	c m
 MODULES=	lang/ruby
 

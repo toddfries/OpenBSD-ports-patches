@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.12 2007/09/15 20:38:24 merdely Exp $
+# $OpenBSD: Makefile,v 1.14 2008/10/28 14:09:16 jasper Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	perl interface to the Gnome GHTTP library
+COMMENT=	perl interface to the GNOME GHTTP library
 
 MODULES=	cpan
 DISTNAME=	HTTP-GHTTP-1.07
+PKGNAME=	p5-${DISTNAME}p1
 CATEGORIES=	www
 
 # GPL

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/07/19 12:12:53 bluhm Exp $
+# $OpenBSD: Makefile,v 1.3 2008/10/03 23:47:24 bluhm Exp $
 
 COMMENT =		module signature file manipulation
 
 DISTNAME =		Module-Signature-0.55
+PKGNAME =		p5-${DISTNAME}p1
 
 CATEGORIES =		security
 
@@ -16,7 +17,7 @@ PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		cpan
 BUILD_DEPENDS =		${RUN_DEPENDS}
-RUN_DEPENDS =		::security/gnupg ::security/p5-Digest-SHA
+RUN_DEPENDS =		::security/gnupg
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/p5-Module-Signature

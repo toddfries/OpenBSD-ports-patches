@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2008/08/29 11:52:20 espie Exp $
+# $OpenBSD: Makefile,v 1.17 2008/10/22 12:38:32 landry Exp $
 
 COMMENT=	GNUstep base library
 
 DISTNAME=	gnustep-base-1.16.1
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p2
 SHARED_LIBS=	gnustep-base 2.0	# .1.16.1
 CATEGORIES=	devel
 
@@ -12,13 +12,9 @@ SUBST_VARS=	LIBDIR
 
 HOMEPAGE=	http://www.gnustep.org/
 
-WANTLIB=	c crypto gcrypt gpg-error m objc pthread ssl xml2 z
+WANTLIB=	c crypto gcrypt gpg-error iberty m objc pthread ssl xml2 z
 
-.if ${MACHINE_ARCH} != "amd64"
-WANTLIB+=	iberty
-.endif
-
-MASTER_SITES=	ftp://ftp.gnustep.org/pub/gnustep/core/
+MASTER_SITES=	${MASTER_SITE_GNUSTEP:=core/}
 
 MODULES=	x11/gnustep \
 		devel/gettext

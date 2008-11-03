@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2006/02/01 20:51:17 steven Exp $
+@comment $OpenBSD: PLIST,v 1.4 2008/10/27 20:17:40 jasper Exp $
 bin/spfd
 bin/spfquery
 ${P5SITE}/Mail/

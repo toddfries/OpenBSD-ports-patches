@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.18 2007/09/15 20:38:24 merdely Exp $
+# $OpenBSD: Makefile,v 1.20 2008/10/06 00:04:45 sthen Exp $
+
+BROKEN=		Incompatible with Perl 5.10.0
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +8,7 @@ COMMENT=	embperl allows you to embed perl in your HTML documents
 
 MODULES=	cpan
 DISTNAME=	HTML-Embperl-1.3.3
+PKGNAME=	p5-${DISTNAME}p0
 CATEGORIES=	www
 
 # GPL

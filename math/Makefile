@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.76 2008/09/08 18:55:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.79 2008/10/16 00:19:30 sthen Exp $
 #
 
      SUBDIR += R
@@ -46,6 +46,7 @@
      SUBDIR += netcdf
      SUBDIR += ntl
      SUBDIR += octave
+     SUBDIR += p5-AI-FANN
      SUBDIR += p5-AI-NeuralNet-BackProp
      SUBDIR += p5-AI-NeuralNet-Mesh
      SUBDIR += p5-AI-Perceptron
@@ -55,13 +56,17 @@
      SUBDIR += p5-Math-Bezier
      SUBDIR += p5-Math-BigInt-GMP
      SUBDIR += p5-Math-Calc-Units
+     SUBDIR += p5-Math-Derivative
      SUBDIR += p5-Math-FFT
      SUBDIR += p5-Math-Fibonacci
      SUBDIR += p5-Math-Fibonacci-Phi
      SUBDIR += p5-Math-GMP
      SUBDIR += p5-Math-Pari
      SUBDIR += p5-Math-Round
+     SUBDIR += p5-Math-Spline
+     SUBDIR += p5-Math-VecStat
      SUBDIR += p5-Set-IntSpan
+     SUBDIR += p5-Statistics-Descriptive
      SUBDIR += pari
      SUBDIR += plplot
      SUBDIR += py-Numeric
