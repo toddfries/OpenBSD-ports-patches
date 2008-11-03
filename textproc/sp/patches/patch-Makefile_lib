@@ -1,6 +1,6 @@
 $OpenBSD$
---- Makefile.lib.orig	Thu Sep 18 17:00:54 2008
-+++ Makefile.lib	Thu Sep 18 16:44:26 2008
+--- Makefile.lib.orig	Tue Mar  5 10:07:35 1996
++++ Makefile.lib	Fri Oct 31 19:08:31 2008
 @@ -3,12 +3,18 @@ ALL_CXXFLAGS=$(CXXFLAGS) -I$(srcdir) -I$(srcdir)/../in
    $(DEFINES) $(PIC_FLAG)
  ALL_CFLAGS=$(CFLAGS) $(DEBUG) $(OPTIMIZE) $(INCLUDE) $(DEFINES) $(PIC_FLAG)
@@ -13,10 +13,10 @@ $OpenBSD$
  	$(AR) r $@ $?
  	$(RANLIB) $@
 +
-+lib$(LIB).so.0.0: $(SOBJS)
++lib$(LIB).so.${LIBsp_VERSION}: $(SOBJS)
 +	@rm -f lib${LIB}.so.${LIBsp_VERSION}
 +	${CC} -shared ${PICFLAG} \
-+		-o lib${LIB}.so.0.0 \
++		-o lib${LIB}.so.${LIBsp_VERSION} \
 +		`${LORDER} ${SOBJS}|tsort -q` ${LDADD}
  
  install:
