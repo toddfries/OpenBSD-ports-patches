@@ -653,22 +653,25 @@ PKGFILE = ${_PKG_REPO}${_PKGFILE${SUBPACKAGE}}
 
 .for _S in ${MULTI_PACKAGES}
 _PKGFILE${_S} = ${FULLPKGNAME${_S}}${PKG_SUFX}
-.  if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
+.  if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
+.   if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
 _PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${NO_ARCH}/${_PKGFILE${_S}}
+_PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
 _PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
+_PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/ftp/${_PKGFILE${_S}}
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
-.  else
-_PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
+.   else
+_PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/ftp/${_PKGFILE${_S}}
+_PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}}
+_PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
+.   endif
 .  endif
 _PACKAGE_COOKIES${_S} += ${_PACKAGE_COOKIE${_S}}
-.  if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
-_PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/ftp/${_PKGFILE${_S}}
-_PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${MACHINE_ARCH}/all/${_PKGFILE${_S}}
-.  endif
 .  if ${PERMIT_PACKAGE_CDROM${_S}:L} == "yes"
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cdrom/${_PKGFILE${_S}}
 _PACKAGE_LINKS += ${MACHINE_ARCH}/cdrom/${_PKGFILE${_S}} ${MACHINE_ARCH}/all/${_PKGFILE${_S}}
 .  endif
+. endif
 _PACKAGE_COOKIES += ${_PACKAGE_COOKIES${_S}}
 _PACKAGE_COOKIE += ${_PACKAGE_COOKIE${_S}}
 PKGFILE${_S} = ${_PKG_REPO}${_PKGFILE${_S}}
@@ -2390,11 +2393,12 @@ ${_F}:
 
 .for _l _o in ${_PACKAGE_LINKS}
 ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
-	@echo "Link to $@"
 	@mkdir -p ${@D}
 	@rm -f $@
-	@ln -s $? $@ 2>/dev/null || \
-	  cp -p $? $@
+	@n=$?;n=$${n%/*};n=$${##*/};f=$?;f=$${f##*/}; \
+		echo "Link ../$$n/$$f to $@"; \
+		ln -s ../$$n/$$f $@ 2>/dev/null || \
+	  	cp -p $? $@
 .endfor
 
 # Cleaning up
