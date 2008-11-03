@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.205 2008/10/02 21:06:14 naddy Exp $
+# $OpenBSD: Makefile,v 1.208 2008/10/30 19:35:29 sthen Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -49,6 +49,7 @@
      SUBDIR += hs-crypto
      SUBDIR += hydra
      SUBDIR += integrit
+     SUBDIR += ipguard
      SUBDIR += isic
      SUBDIR += its4
      SUBDIR += john
@@ -140,6 +141,7 @@
      SUBDIR += passwdqc
      SUBDIR += pcsc-lite
      SUBDIR += pear-Auth
+     SUBDIR += pear-Auth-HTTP
      SUBDIR += pear-Auth-SASL
      SUBDIR += pgp
      SUBDIR += pgp5
@@ -165,6 +167,7 @@
      SUBDIR += rdp
      SUBDIR += ruby-ezcrypto
      SUBDIR += ruby-openid
+     SUBDIR += ruby-yadis
      SUBDIR += scanlogd
      SUBDIR += scanssh
      SUBDIR += sentinel

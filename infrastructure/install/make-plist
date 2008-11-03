@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# $OpenBSD: make-plist,v 1.136 2008/10/30 16:35:31 espie Exp $
+# $OpenBSD: make-plist,v 1.139 2008/10/30 22:34:06 espie Exp $
 # Copyright (c) 2004-2008 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
@@ -15,9 +15,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 # TODO
-# - multi-packages with inter-dependencies incorrectly strip dirs
-# (need to strip dirs in a smarter way ???)
-# - sample dir/ gets added at the wrong location.
+# - multi-packages with inter-dependencies still are not 100% correct with
+# respect to common directories.
 
 use strict;
 use warnings;
@@ -70,9 +69,9 @@ sub reverse
 	my ($self, $_) = @_;
 	for my $k (@{$self->{r}}) {
 		if ($k =~ m/^\^(.*)$/) {
-			$k = $1;
-			my $v = $self->{h}->{$k};
-			s/^\Q$v\E/\$\{\Q$k\E\}/g;
+			my $k2 = $1;
+			my $v = $self->{h}->{$k2};
+			s/^\Q$v\E/\$\{\Q$k2\E\}/g;
 		} else {
 			my $v = $self->{h}->{$k};
 			s/\Q$v\E/\$\{\Q$k\E\}/g;
@@ -713,7 +712,7 @@ sub create_object
 	} elsif ($type eq "library") {
 		return OpenBSD::PackingElement::Lib->new($short);
 	} elsif ($type eq "binary") {
-		if ($item->isa("OpenBSD::PackingElement::Shell")) {
+		if (defined $item && $item->isa("OpenBSD::PackingElement::Shell")) {
 			return OpenBSD::PackingElement::Shell->new($short);
 		} else {
 			return OpenBSD::PackingElement::Binary->new($short);
@@ -987,14 +986,18 @@ sub scan_for_files
 
 parse_args();
 
+print "Scanning destdir\n";
 my $files = FS::get_files($destdir);
 
+print "Getting old lists\n";
 my @l = grab_all_lists();
 
+print "1st pass identifying files\n";
 for my $i (sort keys %$files) {
 	scan_for_files($files->{$i}, $haystack);
 }
 
+print "Attaching annotations\n";
 for my $plist (@l) {
 	my $orig = $plist->{original};
 	if (defined $orig) {
@@ -1011,6 +1014,7 @@ for my $plist (@l) {
 	}
 }
 
+print "Sorting out destdir files\n";
 for my $i (sort keys %$files) {
 	handle_file($files->{$i}, $haystack, \@l, $shared_only);
 }

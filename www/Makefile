@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.358 2008/10/26 19:33:49 pirofti Exp $
+# $OpenBSD: Makefile,v 1.366 2008/11/01 19:27:24 mbalmer Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += amaya          # requires Motif (lesstif works)
@@ -256,6 +256,7 @@
      SUBDIR += pear-HTML-Page2
      SUBDIR += pear-HTML-QuickForm
      SUBDIR += pear-HTML-Select
+     SUBDIR += pear-HTML-Template-IT
      SUBDIR += pecl-APC
      SUBDIR += pecl-memcache
      SUBDIR += php5
@@ -266,6 +267,9 @@
      SUBDIR += phppgadmin
      SUBDIR += plans
      SUBDIR += plone
+     SUBDIR += plone-formgen
+     SUBDIR += plone-ldap
+     SUBDIR += plone-massloader
      SUBDIR += pmwiki
      SUBDIR += polipo
      SUBDIR += privoxy
@@ -359,11 +363,15 @@
      SUBDIR += zope-formulator
      SUBDIR += zope-fortune
      SUBDIR += zope-fscounter
+     SUBDIR += zope-genericsetup
      SUBDIR += zope-groupuserfolder
      SUBDIR += zope-jtracker
+     SUBDIR += zope-ldapmultiplugins
      SUBDIR += zope-ldapuserfolder
      SUBDIR += zope-logger
      SUBDIR += zope-placelesstranslationservice
+     SUBDIR += zope-pluggableauthservice
+     SUBDIR += zope-pluginregistry
      SUBDIR += zope-rdfsummary
      SUBDIR += zope-xmlmethods
      SUBDIR += zope-zippy
