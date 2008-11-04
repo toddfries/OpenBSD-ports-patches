@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.18 2008/10/28 16:51:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2008/11/01 19:19:29 ajacoutot Exp $
 
 COMMENT=	spell checker designed to eventually replace Ispell
 
 DISTNAME=	aspell-0.60.6
+PKGNAME=	${DISTNAME}p2
 SHARED_LIBS +=  aspell               17.0     # .16.4
 SHARED_LIBS +=  pspell               17.0     # .16.4
 DIST_SUBDIR=	aspell
@@ -48,8 +49,8 @@ post-build:
 post-install:
 	cd ${WRKDIR}/${DIST_EN} && \
 		${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-			dictdir=${PREFIX}/lib/aspell \
-			datadir=${PREFIX}/share/aspell \
+			dictdir=${PREFIX}/share/aspell \
+			datadir=${PREFIX}/lib/aspell \
 			${INSTALL_TARGET}
 
 .include <bsd.port.mk>

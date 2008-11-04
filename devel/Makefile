@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.645 2008/10/28 18:38:28 pirofti Exp $
+# $OpenBSD: Makefile,v 1.648 2008/11/02 23:49:15 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
-     SUBDIR += ORBit
      SUBDIR += ORBit2
      SUBDIR += acpica
      SUBDIR += ald
@@ -764,6 +763,8 @@
      SUBDIR += vtcl
      SUBDIR += vte
      SUBDIR += waf
+     SUBDIR += xdg-user-dirs
+     SUBDIR += xdg-utils
      SUBDIR += xmake
      SUBDIR += xulrunner
      SUBDIR += yasm
