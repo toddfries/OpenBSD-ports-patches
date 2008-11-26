@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.366 2008/11/01 19:27:24 mbalmer Exp $
+# $OpenBSD: Makefile,v 1.369 2008/11/24 09:46:34 pirofti Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += amaya          # requires Motif (lesstif works)
@@ -30,7 +30,6 @@
      SUBDIR += fcgi
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
-     SUBDIR += firefox3
      SUBDIR += galeon
      SUBDIR += gnash
      SUBDIR += gtkhtml3
@@ -224,6 +223,7 @@
      SUBDIR += p5-MasonX-Interp-WithCallbacks
      SUBDIR += p5-Maypole
      SUBDIR += p5-Maypole-Authentication-UserSessionCookie
+     SUBDIR += p5-Mojo
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
@@ -303,6 +303,7 @@
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-rack
      SUBDIR += ruby-rails
+     SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
      SUBDIR += sarg
      SUBDIR += seamonkey

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.648 2008/11/02 23:49:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.656 2008/11/21 15:03:43 bluhm Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -84,11 +84,11 @@
      SUBDIR += geany
      SUBDIR += geotiff
      SUBDIR += gettext
-     SUBDIR += getxml
      SUBDIR += giblib
      SUBDIR += giggle
      SUBDIR += gindent
      SUBDIR += git
+     SUBDIR += glade3
      SUBDIR += glib
      SUBDIR += glib2
      SUBDIR += glib2mm
@@ -142,12 +142,10 @@
      SUBDIR += libelf
      SUBDIR += libexecinfo
      SUBDIR += libfmt
-     SUBDIR += libglade
      SUBDIR += libglade2
      SUBDIR += libglademm
      SUBDIR += libgsf
      SUBDIR += libgtop2
-     SUBDIR += libicq2000
      SUBDIR += libidn
      SUBDIR += libio
      SUBDIR += libixp
@@ -176,7 +174,6 @@
      SUBDIR += libvmime
      SUBDIR += libwnck
      SUBDIR += libyaml
-     SUBDIR += libzvt
      SUBDIR += lincvs
      SUBDIR += lpeg
      SUBDIR += luaalarm
@@ -337,6 +334,7 @@
      SUBDIR += p5-Devel-FastProf
      SUBDIR += p5-Devel-GlobalDestruction
      SUBDIR += p5-Devel-Leak
+     SUBDIR += p5-Devel-NYTProf
      SUBDIR += p5-Devel-SawAmpersand
      SUBDIR += p5-Devel-Size
      SUBDIR += p5-Devel-SmallProf
@@ -427,6 +425,7 @@
      SUBDIR += p5-Locale-PGettext
      SUBDIR += p5-Locale-US
      SUBDIR += p5-Locale-gettext
+     SUBDIR += p5-LockFile-Simple
      SUBDIR += p5-Log-Agent
      SUBDIR += p5-Log-Dispatch
      SUBDIR += p5-Log-Dispatch-FileRotate
@@ -472,6 +471,7 @@
      SUBDIR += p5-Perl-Critic
      SUBDIR += p5-Perl6-Junction
      SUBDIR += p5-PerlIO-eol
+     SUBDIR += p5-PerlIO-via-Bzip2
      SUBDIR += p5-PerlIO-via-dynamic
      SUBDIR += p5-PerlIO-via-symlink
      SUBDIR += p5-Pod-Coverage
@@ -484,6 +484,7 @@
      SUBDIR += p5-Regexp-Copy
      SUBDIR += p5-Regexp-Shellish
      SUBDIR += p5-Return-Value
+     SUBDIR += p5-SVN-Dump
      SUBDIR += p5-SVN-Mirror
      SUBDIR += p5-SVN-Notify
      SUBDIR += p5-SVN-Simple
@@ -582,6 +583,7 @@
      SUBDIR += p5-Time-Period
      SUBDIR += p5-Time-Piece
      SUBDIR += p5-Time-Piece-MySQL
+     SUBDIR += p5-Time-Progress
      SUBDIR += p5-Time-TimeDate
      SUBDIR += p5-Time-modules
      SUBDIR += p5-Tree-DAG_Node
@@ -617,6 +619,7 @@
      SUBDIR += perltidy
      SUBDIR += physfs
      SUBDIR += pkgconfig
+     SUBDIR += plib
      SUBDIR += pmk
      SUBDIR += poedit
      SUBDIR += popt

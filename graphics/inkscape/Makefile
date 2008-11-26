@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2008/10/03 11:17:17 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2008/11/20 18:24:20 okan Exp $
 
 COMMENT=	SVG vector drawing application
 
 DISTNAME=	inkscape-0.46
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p5
 CATEGORIES=	graphics
 
 MAINTAINER=	Benoit Chesneau <benoitc@metavers.net>
@@ -18,12 +18,12 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
-		Xft Xi Xinerama Xrandr Xrender Xt atk-1.0 bz2 c cairo \
+WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
+		Xft Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		cairomm-1.0 expat fontconfig freetype glib-2.0 glibmm-2.4 \
-		glitz gmodule-2.0 gobject-2.0 gthread-2.0 jasper jbig jpeg m \
+		glitz gmodule-2.0 gobject-2.0 gthread-2.0 m \
 		pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 pthread \
-		sigc-2.0 stdc++ tiff wmflite xml2 z
+		sigc-2.0 stdc++ xml2 z
 
 MODULES=	devel/gettext \
 		textproc/intltool
@@ -32,7 +32,7 @@ BUILD_DEPENDS=	::devel/boost
 
 LIB_DEPENDS=	gc.>=3::devel/boehm-gc \
 		popt::devel/popt \
-		Magick,Magick++,Wand::graphics/ImageMagick \
+		MagickCore,Magick++,MagickWand::graphics/ImageMagick \
 		lcms::graphics/lcms \
 		png::graphics/png \
 		xslt::textproc/libxslt \
@@ -57,7 +57,8 @@ CONFIGURE_ARGS=		--with-popt --mandir=${PREFIX}/man \
 			--without-gnome-vfs --enable-lcms
 
 CPPFLAGS=		-I${LOCALBASE}/include -I${X11BASE}/include \
-			-I${LOCALBASE}/include/libpng
+			-I${LOCALBASE}/include/libpng \
+			-I${LOCALBASE}/include/ImageMagick
 
 CONFIGURE_ENV=		CPPFLAGS="${CPPFLAGS}" \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \

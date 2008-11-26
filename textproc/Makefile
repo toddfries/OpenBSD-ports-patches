@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.244 2008/10/26 23:16:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.247 2008/11/18 12:44:58 okan Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -19,6 +19,7 @@
      SUBDIR += docbook-xsl
      SUBDIR += enchant
      SUBDIR += eruby
+     SUBDIR += exempi
      SUBDIR += gdiff
      SUBDIR += glimpse
      SUBDIR += gnome-spell
@@ -49,7 +50,6 @@
      SUBDIR += libwpd
      SUBDIR += libxml
      SUBDIR += libxml++
-     SUBDIR += libxml1
      SUBDIR += libxslt
      SUBDIR += linuxdoc
      SUBDIR += lq-sp
@@ -147,6 +147,7 @@
      SUBDIR += p5-Text-Tags
      SUBDIR += p5-Text-Template
      SUBDIR += p5-Text-Textile
+     SUBDIR += p5-Text-Thread
      SUBDIR += p5-Text-Tmpl
      SUBDIR += p5-Text-Unidecode
      SUBDIR += p5-Text-WikiFormat

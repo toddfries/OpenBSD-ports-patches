@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.7 2008/10/24 14:59:54 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2008/11/23 22:59:08 jasper Exp $
 
 COMMENT=	GTK C code documentation system
 
-GNOME_VERSION=	1.10
+GNOME_VERSION=	1.11
 GNOME_PROJECT=	gtk-doc
 CATEGORIES=    	textproc devel
 
@@ -14,9 +14,6 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-# XXX: To be fixed
-MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gtk-doc/${GNOME_VERSION}/}
-
 MODULES=		x11/gnome
 
 CONFIGURE_STYLE=	gnu
@@ -24,7 +21,8 @@ CONFIGURE_ARGS=		--with-xml-catalog=${WRKDIR}/catalog.xml
 
 PKG_ARCH=		*
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
+BUILD_DEPENDS=		::x11/gnome/doc-utils \
+			${RUN_DEPENDS}
 RUN_DEPENDS=		::textproc/openjade \
 			::textproc/docbook \
 			::textproc/docbook-xsl \

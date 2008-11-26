@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/09/22 13:50:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2008/11/18 13:55:08 landry Exp $
 
 COMMENT=	PhotoBooth inspired application
 
 GNOME_PROJECT=	cheese
-GNOME_VERSION=	2.22.3
+GNOME_VERSION=	2.24.1
+PKGNAME=	${DISTNAME}p0
 
 CATEGORIES=	multimedia
 
@@ -17,7 +18,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender Xxf86vm art_lgpl_2 asn1 atk-1.0 audiofile \
+		Xrender art_lgpl_2 asn1 atk-1.0 audiofile \
 		bonobo-2 bonobo-activation bonoboui-2 bz2 c cairo \
 		com_err croco-0.6 crypto db dbus-1 dbus-glib-1 esd \
 		expat fontconfig freetype gailutil gconf-2 gdk-x11-2.0 \
@@ -33,7 +34,7 @@ MODULES=	devel/gettext \
 
 BUILD_DEPENDS=	::x11/gnome/doc-utils
 LIB_DEPENDS=	camel-1.2.>=11,ebook-1.2,edataserver-1.2,smime3,softokn3::databases/evolution-data-server \
-		rsvg-2.>=20:librsvg-*-!no_gnome:x11/gnome/librsvg \
+		rsvg-2.>=20::x11/gnome/librsvg \
 		gstinterfaces-0.10,gstreamer-0.10::multimedia/gstreamer-0.10/plugins-base \
 		gnomeui-2::x11/gnome/libgnomeui
 RUN_DEPENDS=	:scrollkeeper-*:textproc/scrollkeeper \

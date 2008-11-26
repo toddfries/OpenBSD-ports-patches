@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.179 2008/10/30 17:00:18 weerd Exp $
+# $OpenBSD: Makefile,v 1.182 2008/11/17 18:23:50 jasper Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -54,6 +54,7 @@
      SUBDIR += frotz
      SUBDIR += gcompris
      SUBDIR += gemdropx
+     SUBDIR += ggz
      SUBDIR += glsfcave
      SUBDIR += glutton
      SUBDIR += gnuchess
@@ -94,6 +95,7 @@
      SUBDIR += newvox
      SUBDIR += oilwar
      SUBDIR += omega
+     SUBDIR += openarena
      SUBDIR += openttd
      SUBDIR += pathological
      SUBDIR += pioneers
@@ -131,6 +133,7 @@
      SUBDIR += tetrinetx
      SUBDIR += tmw
      SUBDIR += tutris
+     SUBDIR += tuxkart
      SUBDIR += tuxpaint
      SUBDIR += tuxpaint-config
      SUBDIR += tuxpaint-stamps

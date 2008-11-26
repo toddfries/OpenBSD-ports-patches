@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.543 2008/10/07 10:02:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.546 2008/11/18 12:49:24 okan Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
      SUBDIR += BitTorrent
      SUBDIR += GeoIP
      SUBDIR += adns
+     SUBDIR += aget
      SUBDIR += aggregate
      SUBDIR += aguri
      SUBDIR += aiccu
@@ -107,7 +108,6 @@
      SUBDIR += icecast
      SUBDIR += ices
      SUBDIR += ices2
-     SUBDIR += ickle
      SUBDIR += icmpinfo
      SUBDIR += ifstat
      SUBDIR += iftop
@@ -374,6 +374,7 @@
      SUBDIR += scapy
      SUBDIR += scapy6
      SUBDIR += scli
+     SUBDIR += sendxmpp
      SUBDIR += ser
      SUBDIR += sharity-light
      SUBDIR += silc-client
