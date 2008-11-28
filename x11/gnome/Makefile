@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.78 2008/11/23 11:14:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.80 2008/11/25 08:24:53 jasper Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -32,6 +32,8 @@
      SUBDIR += gok
      SUBDIR += gossip
      SUBDIR += gucharmap
+     SUBDIR += gvfs
+     SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += keyring
      SUBDIR += keyring-manager

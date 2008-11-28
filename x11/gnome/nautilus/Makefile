@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.31 2008/11/22 11:02:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2008/11/27 10:27:22 ajacoutot Exp $
 
 COMMENT=		GNOME shell and file manager
 
+# XXX PLIST regen is needed for at least x11/gnome/totem and
+# x11/gnome/file-roller when the nautilus extensions directory changes
+# e.g. ${LOCALBASE}/lib/nautilus/extensions-2.0
+
 GNOME_PROJECT=		nautilus
-GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p0
+GNOME_VERSION=		2.24.2
 SHARED_LIBS +=	nautilus-extension   2.0      # .2.0
 CATEGORIES=		x11
 
@@ -33,7 +36,7 @@ MODULES=		devel/gettext \
 BUILD_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info
 RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
 			:gnome-icon-theme-*:x11/gnome/icon-theme \
-			::x11/gnome/gvfs
+			:gvfs->=1.0.3:x11/gnome/gvfs
 LIB_DEPENDS=		exif::graphics/libexif \
 			gnome-desktop-2::x11/gnome/desktop \
 			eel-2.>=20.0::x11/gnome/eel \
