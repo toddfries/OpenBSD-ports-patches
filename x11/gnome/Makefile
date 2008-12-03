@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.80 2008/11/25 08:24:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.82 2008/12/01 20:26:51 jasper Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -47,6 +47,7 @@
      SUBDIR += libgnomecanvas
      SUBDIR += libgnomecanvasmm
      SUBDIR += libgnomecups
+     SUBDIR += libgnomedb
      SUBDIR += libgnomekbd
      SUBDIR += libgnomeui
      SUBDIR += libgnomeuimm
@@ -71,6 +72,7 @@
      SUBDIR += py-gnome-desktop
      SUBDIR += py-gnome-extras
      SUBDIR += scan
+     SUBDIR += screensaver
      SUBDIR += seahorse
      SUBDIR += session
      SUBDIR += settings-daemon

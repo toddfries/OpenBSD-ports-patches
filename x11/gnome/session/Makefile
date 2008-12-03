@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.52 2008/11/26 09:11:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2008/12/02 09:04:25 ajacoutot Exp $
 
 COMMENT=		GNOME session
 
 GNOME_PROJECT=		gnome-session
 GNOME_VERSION=		2.24.2
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		x11
 
 # GPLv2/LGPLv2/GFDLv1.1
@@ -33,8 +34,7 @@ LIB_DEPENDS=	execinfo::devel/libexecinfo \
 
 # Here we hang all the additional ports that will make up a satisfying
 # GNOME user experience :)
-RUN_DEPENDS+=		::textproc/gnome-spell \
-			::x11/gnome/alacarte \
+RUN_DEPENDS+=		::x11/gnome/alacarte \
 			::x11/gnome/applets2 \
 			::x11/gnome/backgrounds \
 			::x11/gnome/controlcenter2 \
@@ -49,8 +49,9 @@ RUN_DEPENDS+=		::textproc/gnome-spell \
 			::x11/gnome/themes-extras \
 			::x11/gnome/utils \
 			::x11/gnome/yelp \
-			::x11/xscreensaver,no_gle \
-			::x11/tango-icon-theme 
+			:gnome-screensaver-*|xscreensaver->=5.07p3:x11/gnome/screensaver \
+			::x11/tango-icon-theme  \
+			:notification-daemon-*|notification-daemon-xfce-*:sysutils/notification-daemon
 #			::x11/gnome/bug-buddy
 
 USE_X11=		Yes
