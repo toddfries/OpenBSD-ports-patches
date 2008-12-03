@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2008/10/27 22:03:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2008/11/06 19:12:24 sturm Exp $
 
 COMMENT=	C++ class library for working with Internet mail
 
 DISTNAME=	libvmime-0.9.0
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	devel mail
 
 SHARED_LIBS+=	vmime	1.0	# .0.0

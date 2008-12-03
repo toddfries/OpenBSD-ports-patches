@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.30 2008/05/19 09:57:43 fgsch Exp $
+# $OpenBSD: Makefile,v 1.32 2008/11/22 15:08:11 jasper Exp $
 
 COMMENT=		library for layout and rendering of text
 
-DISTNAME=		pango-1.20.0
+DISTNAME=		pango-1.22.2
 PKGNAME=		${DISTNAME}p0
-SHARED_LIBS += pango-1.0	   1600.0    # .2000.0
-SHARED_LIBS += pangox-1.0	   1600.0    # .2000.0
-SHARED_LIBS += pangoft2-1.0	   1600.0    # .2000.0
-SHARED_LIBS += pangoxft-1.0	   1600.0    # .2000.0
-SHARED_LIBS += pangocairo-1.0	   1600.0    # .2000.0
+SHARED_LIBS += pango-1.0	   1800.0    # .2202.0
+SHARED_LIBS += pangox-1.0	   1800.0    # .2202.0
+SHARED_LIBS += pangoft2-1.0	   1800.0    # .2202.0
+SHARED_LIBS += pangoxft-1.0	   1800.0    # .2202.0
+SHARED_LIBS += pangocairo-1.0	   1800.0    # .2202.0
 CATEGORIES=		devel x11
 
 HOMEPAGE=		http://www.gtk.org/
@@ -21,13 +21,13 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	X11 Xau Xdmcp Xft Xrender c expat fontconfig freetype \
 		glitz m pcre pixman-1 png z
 
-MASTER_SITES=		${MASTER_SITE_GNOME:=sources/pango/1.20/}
+MASTER_SITES=		${MASTER_SITE_GNOME:=sources/pango/1.22/}
 EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext
 
-LIB_DEPENDS=		glib-2.0.>=1600.0,gmodule-2.0.>=1600.0,gobject-2.0.>=1600.0::devel/glib2 \
-			cairo.>=3::graphics/cairo
+LIB_DEPENDS=		glib-2.0.>=1800.0,gmodule-2.0.>=1800.0,gobject-2.0.>=1800.0::devel/glib2 \
+			cairo.>=9::graphics/cairo
 
 USE_X11=		Yes
 USE_GMAKE=		Yes
@@ -45,8 +45,3 @@ do-regress:
 	cd ${WRKSRC}/tests && ${MAKE} check
 
 .include <bsd.port.mk>
-
-# Work around a fontconfig linking issue on static arches
-.if defined(NO_SHARED_LIBS) && ${NO_SHARED_LIBS:L} == "yes"
-PATCH_LIST=		patch-* sup-no_shared-*
-.endif

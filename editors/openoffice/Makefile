@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.78 2008/06/27 13:11:11 kurt Exp $
+# $OpenBSD: Makefile,v 1.81 2008/11/21 18:35:03 jolan Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -6,13 +6,13 @@ COMMENT-main=	multi-platform productivity suite
 COMMENT-kde=	optional integration of OpenOffice to the KDE environment
 COMMENT-java=	optional integration of OpenOffice java features
 
-VERSION=	2.4.1
+VERSION=	2.4.2
 DISTNAME=	OOo_${VERSION}
-WRKDIST=	${WRKDIR}/OOH680_m17
+WRKDIST=	${WRKDIR}/OOH680_m18
 PKGNAME=	openoffice-${VERSION}
 PKGNAME-main=	openoffice-${VERSION}p0
-PKGNAME-kde=	openoffice-kde-${VERSION}p0
-PKGNAME-java=	openoffice-java-${VERSION}p1
+PKGNAME-kde=	openoffice-kde-${VERSION}
+PKGNAME-java=	openoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 
 SHARED_LIBS=	stlport_gcc	4.5
@@ -27,8 +27,7 @@ MASTER_SITES=	http://ftp.linux.cz/pub/localization/OpenOffice.org/devel/build/So
 		ftp://ftp.tu-chemnitz.de/pub/openoffice/stable/${VERSION}/ \
 		ftp://ftp.nluug.nl/pub/office/openoffice/stable/${VERSION}/ \
 		http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSION}/ \
-		ftp://openoffice.mirror.cygnal.ca/openoffice/stable/${VERSION}/ \
-		http://mirrors.protection.cx/~jolan/
+		ftp://openoffice.mirror.cygnal.ca/openoffice/stable/${VERSION}/
 MASTER_SITES0=	http://www.bsd.hu/~robert/ooo/ \
 		http://humppa.hu/ooo/
 

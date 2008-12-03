@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.358 2008/10/26 19:33:49 pirofti Exp $
+# $OpenBSD: Makefile,v 1.369 2008/11/24 09:46:34 pirofti Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += amaya          # requires Motif (lesstif works)
@@ -30,7 +30,6 @@
      SUBDIR += fcgi
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
-     SUBDIR += firefox3
      SUBDIR += galeon
      SUBDIR += gnash
      SUBDIR += gtkhtml3
@@ -224,6 +223,7 @@
      SUBDIR += p5-MasonX-Interp-WithCallbacks
      SUBDIR += p5-Maypole
      SUBDIR += p5-Maypole-Authentication-UserSessionCookie
+     SUBDIR += p5-Mojo
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
@@ -256,6 +256,7 @@
      SUBDIR += pear-HTML-Page2
      SUBDIR += pear-HTML-QuickForm
      SUBDIR += pear-HTML-Select
+     SUBDIR += pear-HTML-Template-IT
      SUBDIR += pecl-APC
      SUBDIR += pecl-memcache
      SUBDIR += php5
@@ -266,6 +267,9 @@
      SUBDIR += phppgadmin
      SUBDIR += plans
      SUBDIR += plone
+     SUBDIR += plone-formgen
+     SUBDIR += plone-ldap
+     SUBDIR += plone-massloader
      SUBDIR += pmwiki
      SUBDIR += polipo
      SUBDIR += privoxy
@@ -299,6 +303,7 @@
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-rack
      SUBDIR += ruby-rails
+     SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
      SUBDIR += sarg
      SUBDIR += seamonkey
@@ -359,11 +364,15 @@
      SUBDIR += zope-formulator
      SUBDIR += zope-fortune
      SUBDIR += zope-fscounter
+     SUBDIR += zope-genericsetup
      SUBDIR += zope-groupuserfolder
      SUBDIR += zope-jtracker
+     SUBDIR += zope-ldapmultiplugins
      SUBDIR += zope-ldapuserfolder
      SUBDIR += zope-logger
      SUBDIR += zope-placelesstranslationservice
+     SUBDIR += zope-pluggableauthservice
+     SUBDIR += zope-pluginregistry
      SUBDIR += zope-rdfsummary
      SUBDIR += zope-xmlmethods
      SUBDIR += zope-zippy

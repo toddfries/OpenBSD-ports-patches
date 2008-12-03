@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.8 2008/10/27 00:07:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2008/11/18 12:50:27 jasper Exp $
 
 COMMENT=		flexible communications framework, specifications
 
-DISTNAME=		telepathy-spec-0.17.13
+DISTNAME=		telepathy-spec-0.17.14
 CATEGORIES=		books
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-spec/}
@@ -17,6 +17,8 @@ NO_REGRESS=		Yes
 
 PKG_ARCH=		*
 
+# XXX we should use MODPY_BIN from the lang/python MODULE but
+# we do not want to build/run_depends on python
 pre-configure:
 	perl -pi -e 's,!!MODPY_BIN!!,${LOCALBASE}/bin/python2.5,g' ${WRKSRC}/Makefile
 	perl -pi -e 's,!!MODPY_BIN!!,${LOCALBASE}/bin/python2.5,g' ${WRKSRC}/tools/*.py

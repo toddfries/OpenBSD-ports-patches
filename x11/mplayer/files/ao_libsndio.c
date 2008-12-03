@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2008 Alexandre Ratchov <alex@caoua.org>
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
 #include <sys/types.h>
 #include <poll.h>
 #include <errno.h>
@@ -50,6 +66,8 @@ static void movecb(void *addr, int delta)
  */
 static int init(int rate, int channels, int format, int flags)
 {
+	int bpf;
+
 	hdl = sio_open(NULL, SIO_PLAY, 0);
 	if (hdl == NULL) {
 		mp_msg(MSGT_AO, MSGL_ERR, "ao2: can't open libsndio\n");
@@ -111,17 +129,36 @@ static int init(int rate, int channels, int format, int flags)
 		mp_msg(MSGT_AO, MSGL_ERR, "ao2: couldn't set format\n");
 		return 0;
 	}
+
+	bpf = par.bps * par.pchan;
 	ao_data.samplerate = par.rate;
 	ao_data.channels = par.pchan;
 	ao_data.format = format;
-	ao_data.bps = par.bps * par.pchan * par.rate;
-	ao_data.buffersize = par.bufsz * par.bps * par.pchan;
-	ao_data.outburst = par.round * par.bps * par.pchan;
+	ao_data.bps = bpf * par.rate;
+	ao_data.buffersize = par.bufsz * bpf;
+	ao_data.outburst = par.round * bpf;
 	sio_onmove(hdl, movecb, NULL);
 	realpos = playpos = 0;
 	if (!sio_start(hdl)) {
 		mp_msg(MSGT_AO, MSGL_ERR, "ao2: init: couldn't start\n");
 	}
+
+	/* avoid resampling for close rates */
+	if ((ao_data.samplerate >= rate * 0.97) &&
+	    (ao_data.samplerate <= rate * 1.03)) {
+		ao_data.samplerate = rate;
+	}
+
+	if (ao_data.samplerate != rate) {
+		/* apparently mplayer rounds a little when resampling.
+		 * anyway, it doesn't write quite a full buffer on the first
+		 * write, which means libsndio never actually starts up
+		 * because it's trying to fill the buffer.  this is
+		 * enough for everything I have come across.
+		 */
+		sio_write(hdl, silence, 8 * bpf);
+	}
+
 	return 1;
 }
 
@@ -203,8 +240,7 @@ static void audio_pause(void)
  */
 static void audio_resume(void)
 {
-	struct pollfd pfd;
-	int n, count, todo, revents;
+	int n, count, todo;
 
 	todo = par.bufsz * par.pchan * par.bps;
 
