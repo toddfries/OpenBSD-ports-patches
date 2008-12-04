@@ -665,13 +665,15 @@ _PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/ftp/${_PKGFILE${_S}
 _PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}}
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
 .   endif
+.  else
+_PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
+_PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
 .  endif
-_PACKAGE_COOKIES${_S} += ${_PACKAGE_COOKIE${_S}}
 .  if ${PERMIT_PACKAGE_CDROM${_S}:L} == "yes"
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cdrom/${_PKGFILE${_S}}
 _PACKAGE_LINKS += ${MACHINE_ARCH}/cdrom/${_PKGFILE${_S}} ${MACHINE_ARCH}/all/${_PKGFILE${_S}}
 .  endif
-. endif
+_PACKAGE_COOKIES${_S} += ${_PACKAGE_COOKIE${_S}}
 _PACKAGE_COOKIES += ${_PACKAGE_COOKIES${_S}}
 _PACKAGE_COOKIE += ${_PACKAGE_COOKIE${_S}}
 PKGFILE${_S} = ${_PKG_REPO}${_PKGFILE${_S}}
@@ -2398,7 +2400,7 @@ ${_F}:
 ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
 	@mkdir -p ${@D}
 	@rm -f $@
-	@n=$?;n=$${n%/*};n=$${##*/};f=$?;f=$${f##*/}; \
+	@n=$?;n=$${n%/*};n=$${n##*/};f=$?;f=$${f##*/}; \
 		echo "Link ../$$n/$$f to $@"; \
 		ln -s ../$$n/$$f $@ 2>/dev/null || \
 	  	cp -p $? $@
