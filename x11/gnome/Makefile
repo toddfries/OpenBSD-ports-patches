@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.72 2008/10/20 06:47:49 sturm Exp $
+# $OpenBSD: Makefile,v 1.80 2008/11/25 08:24:53 jasper Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -21,7 +21,7 @@
      SUBDIR += empathy
      SUBDIR += eog
      SUBDIR += file-roller
-     SUBDIR += gail
+     SUBDIR += games
      SUBDIR += gcalctool
      SUBDIR += gdl
      SUBDIR += gdm
@@ -32,6 +32,8 @@
      SUBDIR += gok
      SUBDIR += gossip
      SUBDIR += gucharmap
+     SUBDIR += gvfs
+     SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += keyring
      SUBDIR += keyring-manager
@@ -52,7 +54,7 @@
      SUBDIR += libgnomeprintui
      SUBDIR += libgtkhtml
      SUBDIR += librsvg
-     SUBDIR += librsvg,no_gnome
+     SUBDIR += libgweather
      SUBDIR += libxklavier
      SUBDIR += mag
      SUBDIR += media
@@ -71,6 +73,7 @@
      SUBDIR += scan
      SUBDIR += seahorse
      SUBDIR += session
+     SUBDIR += settings-daemon
      SUBDIR += speech
      SUBDIR += ssh-askpass
      SUBDIR += terminal

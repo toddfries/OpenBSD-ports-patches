@@ -1,9 +1,14 @@
-@comment $OpenBSD: PLIST,v 1.17 2008/09/29 09:27:32 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.20 2008/11/26 09:11:30 ajacoutot Exp $
 @bin bin/gnome-session
 @bin bin/gnome-session-properties
-@bin bin/gnome-session-remove
 @bin bin/gnome-session-save
 bin/gnome-wm
+lib/gnome-session/
+lib/gnome-session/helpers/
+@bin lib/gnome-session/helpers/at-spi-registryd-wrapper
+@bin lib/gnome-session/helpers/gnome-keyring-daemon-wrapper
+@bin lib/gnome-session/helpers/gnome-session-splash
+@bin lib/gnome-session/helpers/gnome-settings-daemon-helper
 @man man/man1/gnome-session-save.1
 @man man/man1/gnome-session.1
 @man man/man1/gnome-wm.1
@@ -12,7 +17,16 @@ bin/gnome-wm
 share/applications/session-properties.desktop
 share/doc/gnome-session/
 share/doc/gnome-session/README.OpenBSD
-share/gnome/default.session
+share/doc/gnome-session/dbus/
+share/doc/gnome-session/dbus/gnome-session.html
+share/gnome-session/
+share/gnome-session/gsm-inhibit-dialog.glade
+share/gnome-session/session-properties.glade
+share/gnome/autostart/
+share/gnome/autostart/at-spi-registryd-wrapper.desktop
+share/gnome/autostart/gnome-keyring-daemon-wrapper.desktop
+share/gnome/autostart/gnome-session-splash.desktop
+share/gnome/autostart/gnome-settings-daemon-helper.desktop
 share/icons/hicolor/16x16/apps/session-properties.png
 share/icons/hicolor/22x22/apps/session-properties.png
 share/icons/hicolor/24x24/apps/session-properties.png
@@ -21,6 +35,7 @@ share/icons/hicolor/scalable/apps/session-properties.svg
 share/locale/af/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/am/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/ar/LC_MESSAGES/gnome-session-2.0.mo
+share/locale/ast/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/az/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/be/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/be@latin/LC_MESSAGES/gnome-session-2.0.mo
@@ -44,6 +59,7 @@ share/locale/eu/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/fa/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/fi/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/fr/LC_MESSAGES/gnome-session-2.0.mo
+share/locale/fur/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/ga/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/gl/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/gu/LC_MESSAGES/gnome-session-2.0.mo
@@ -88,7 +104,7 @@ share/locale/sk/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/sl/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/sq/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/sr/LC_MESSAGES/gnome-session-2.0.mo
-share/locale/sr@Latn/LC_MESSAGES/gnome-session-2.0.mo
+share/locale/sr@latin/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/sv/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/ta/LC_MESSAGES/gnome-session-2.0.mo
 share/locale/te/LC_MESSAGES/gnome-session-2.0.mo

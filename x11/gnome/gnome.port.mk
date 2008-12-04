@@ -1,4 +1,4 @@
-# $OpenBSD: gnome.port.mk,v 1.18 2008/06/02 14:10:07 ajacoutot Exp $
+# $OpenBSD: gnome.port.mk,v 1.20 2008/11/23 22:56:37 jasper Exp $
 #
 # Module for GNOME related ports
 #
@@ -28,13 +28,7 @@ MODGNOME_RUN_DEPENDS+=	:yelp-*:x11/gnome/yelp
 RUN_DEPENDS+=		${MODGNOME_RUN_DEPENDS}
 .endif
 
-MASTER_SITES?=		${MASTER_SITE_GNOME:=sources/${GNOME_PROJECT}/${GNOME_VERSION:R}/}
+MASTER_SITES?=		${MASTER_SITE_GNOME:=sources/${GNOME_PROJECT}/${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/}
 EXTRACT_SUFX?=		.tar.bz2
 
 USE_GMAKE?=		Yes
-
-#ifdef notyet
-#CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/${PROJECT}/
-#			--disable-schemas-install \
-#			--disable-scrollkeeper
-#endif

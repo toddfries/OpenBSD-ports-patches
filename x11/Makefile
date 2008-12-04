@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.357 2008/11/03 14:18:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.360 2008/11/07 19:03:41 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -85,7 +85,6 @@
      SUBDIR += gtk+extra
      SUBDIR += gtk-chtheme
      SUBDIR += gtk-engines2
-     SUBDIR += gtk-theme-switch
      SUBDIR += gtk-thinice-engine
      SUBDIR += gtk-vnc
      SUBDIR += gtk2-clearlooks-engine
@@ -94,7 +93,6 @@
      SUBDIR += gtk2mm
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
-     SUBDIR += gtkmm
      SUBDIR += gtksourceview
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
@@ -148,8 +146,6 @@
      SUBDIR += oroborus
      SUBDIR += osd_clock
      SUBDIR += p5-Gnome2-Canvas
-     SUBDIR += p5-Gtk
-     SUBDIR += p5-Gtk,gtkglarea
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
      SUBDIR += p5-Gtk2-GladeXML
@@ -165,7 +161,6 @@
      SUBDIR += pidgin-libnotify
      SUBDIR += piewm
      SUBDIR += pwm
-     SUBDIR += py-Gtk
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
      SUBDIR += py-gtksourceview

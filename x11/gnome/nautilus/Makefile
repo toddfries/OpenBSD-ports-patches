@@ -1,16 +1,19 @@
-# $OpenBSD: Makefile,v 1.29 2008/06/28 14:50:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2008/11/27 10:27:22 ajacoutot Exp $
 
 COMMENT=		GNOME shell and file manager
 
+# XXX PLIST regen is needed for at least x11/gnome/totem and
+# x11/gnome/file-roller when the nautilus extensions directory changes
+# e.g. ${LOCALBASE}/lib/nautilus/extensions-2.0
+
 GNOME_PROJECT=		nautilus
-GNOME_VERSION=		2.20.0
+GNOME_VERSION=		2.24.2
 SHARED_LIBS +=	nautilus-extension   2.0      # .2.0
 CATEGORIES=		x11
-PKGNAME=		${DISTNAME}p1
 
 HOMEPAGE=		http://www.gnome.org/projects/nautilus/
 
-# GPLv2 - LGPLv2 - FPL
+# GPLv2 - LGPLv2 - GFPLv1.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -20,20 +23,20 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
 		Xrender art_lgpl_2 atk-1.0 audiofile bonobo-2 bonobo-activation \
 		bonoboui-2 bz2 c cairo croco-0.6 crypto dbus-1 dbus-glib-1 \
-		esd expat fam fontconfig freetype gailutil gconf-2 \
-		gdk-x11-2.0 gdk_pixbuf-2.0 glade-2.0 glib-2.0 glitz \
-		gmodule-2.0 gnome-2 gnome-keyring gnome-menu gnomecanvas-2 \
-		gnomeui-2 gnomevfs-2 gobject-2.0 gsf-1 gthread-2.0 \
-		gtk-x11-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pcre png popt pthread rpcsvc ssl startup-notification-1 \
-		stdc++ util xml2 z
+		esd expat fontconfig freetype gailutil gconf-2 gdk-x11-2.0 \
+		gdk_pixbuf-2.0 gio-2.0 glade-2.0 glib-2.0 glitz gmodule-2.0 \
+		gnome-2 gnome-keyring gnomecanvas-2 gnomeui-2 gnomevfs-2 \
+		gobject-2.0 gsf-1 gthread-2.0 gtk-x11-2.0 m pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png popt \
+		pthread ssl startup-notification-1 util xml2 z
 
 MODULES=		devel/gettext \
 			x11/gnome
 
 BUILD_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info
 RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
-			:gnome-icon-theme-*:x11/gnome/icon-theme
+			:gnome-icon-theme-*:x11/gnome/icon-theme \
+			:gvfs->=1.0.3:x11/gnome/gvfs
 LIB_DEPENDS=		exif::graphics/libexif \
 			gnome-desktop-2::x11/gnome/desktop \
 			eel-2.>=20.0::x11/gnome/eel \
@@ -46,9 +49,8 @@ CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 			--disable-tracker \
 			--disable-beagle \
 			--disable-schemas-install \
-			--disable-update-mimedb \
-			--enable-empty-view
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			--disable-update-mimedb
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${WRKBUILD}/libnautilus/.libs \
 				-L${WRKBUILD}/libnautilus-adapter/.libs \
 				-L${WRKBUILD}/libnautilus-private/.libs \

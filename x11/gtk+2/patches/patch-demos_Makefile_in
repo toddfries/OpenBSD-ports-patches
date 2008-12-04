@@ -1,8 +1,8 @@
-$OpenBSD: patch-demos_Makefile_in,v 1.15 2008/07/08 08:40:11 brad Exp $
---- demos/Makefile.in.orig	Tue Jun  3 17:20:31 2008
-+++ demos/Makefile.in	Mon Jun 23 23:34:01 2008
-@@ -835,6 +835,7 @@ uninstall-info: uninstall-info-recursive
- 
+$OpenBSD: patch-demos_Makefile_in,v 1.17 2008/11/25 13:14:08 jasper Exp $
+--- demos/Makefile.in.orig	Mon Nov 24 07:41:38 2008
++++ demos/Makefile.in	Tue Nov 25 11:50:20 2008
+@@ -968,6 +968,7 @@ test-report perf-report full-report:	${TEST_PROGS}
+ check-local: test
  
  test-inline-pixbufs.h: $(pixbuf_csource_deps) apple-red.png gnome-foot.png
 +	LD_LIBRARY_PATH=$(top_builddir)/gdk-pixbuf/.libs \

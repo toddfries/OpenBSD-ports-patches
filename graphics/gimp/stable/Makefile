@@ -1,20 +1,22 @@
-# $OpenBSD: Makefile,v 1.39 2008/10/21 19:53:17 kili Exp $
+# $OpenBSD: Makefile,v 1.41 2008/11/19 14:08:27 ajacoutot Exp $
 
 COMMENT=	GNU Image Manipulation Program
 
-DISTNAME=	gimp-2.6.0
+DISTNAME=	gimp-2.6.2
 PKGNAME=	${DISTNAME}p0
-SHARED_LIBS=	gimp-2.0	260.0	\
-		gimpbase-2.0	260.0	\
-		gimpcolor-2.0	260.0	\
-		gimpconfig-2.0	260.0	\
-		gimpmath-2.0	260.0	\
-		gimpmodule-2.0	260.0	\
-		gimpthumb-2.0	260.0	\
-		gimpui-2.0	260.0	\
-		gimpwidgets-2.0	260.0
+SHARED_LIBS=	gimp-2.0	262.0	\
+		gimpbase-2.0	262.0	\
+		gimpcolor-2.0	262.0	\
+		gimpconfig-2.0	262.0	\
+		gimpmath-2.0	262.0	\
+		gimpmodule-2.0	262.0	\
+		gimpthumb-2.0	262.0	\
+		gimpui-2.0	262.0	\
+		gimpwidgets-2.0	262.0
 
 CATEGORIES=	graphics
+MAINTAINER=	Giovanni Bechis <g.bechis@snb.it>
+	
 DIR=		gimp/v2.6
 MASTER_SITES=	ftp://ftp.gimp.org/pub/${DIR}/ \
 		ftp://ftp.sunet.se/pub/gnu/${DIR}/ \
@@ -24,7 +26,7 @@ HOMEPAGE=	http://www.gimp.org/
 
 EXTRACT_SUFX=	.tar.bz2
 
-RUN_DEPENDS=    :wget-*:net/wget
+BUILD_DEPENDS=	::textproc/libxslt
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		aa.>=1.3::graphics/aalib \
 		dbus-glib-1::x11/dbus-glib \
@@ -33,9 +35,11 @@ LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		tiff.>=35::graphics/tiff \
 		wmf.>=6,wmflite.>=6::graphics/libwmf \
 		poppler.>=3,poppler-glib.>=3::print/poppler \
-		gegl-0.0::graphics/gegl
+		gegl-0.0::graphics/gegl \
+		:py-gtk2-*:x11/py-gtk2 \
+		gnomevfs-2.>=2000::x11/gnome/vfs2
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -49,7 +53,7 @@ WANTLIB=	ICE SM X11 Xext Xmu Xpm Xrender Xt atk-1.0 c \
 		pthread ncurses xml2 z cairo dbus-1 glitz \
 		Xau Xcursor Xdmcp Xfixes Xi Xinerama Xrandr \
 		expat Xcomposite Xdamage gthread-2.0 pcre \
-		ORBit-2 bz2 croco-0.6 crypto gconf-2 gio-2.0 gnomevfs-2 \
+		ORBit-2 bz2 croco-0.6 crypto gconf-2 gio-2.0 \
 		gsf-1 rsvg-2 ssl util babl-0.0
 
 MODULES=	devel/gettext \
@@ -61,9 +65,9 @@ USE_LIBTOOL=	Yes
 AUTOCONF_VERSION= 2.61
 CONFIGURE_STYLE= autoconf
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
-CONFIGURE_ARGS+=--without-gtkhtml2 --without-print \
-		--without-gnomevfs --without-libcurl --without-webkit \
-		--disable-python --enable-gimp-remote
+CONFIGURE_ARGS+=--without-gtkhtml2 --without-gvfs \
+		--without-libcurl --without-webkit \
+		--enable-gimp-remote
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 

@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.15 2007/11/14 09:43:40 steven Exp $
+# $OpenBSD: Makefile,v 1.17 2008/11/23 00:28:53 ajacoutot Exp $
 
 COMMENT=	personal accounts manager
 
 VERSION=	0.7.5
 DISTNAME=	gacc_${VERSION}.orig
-PKGNAME=	gacc-${VERSION}p1
+PKGNAME=	gacc-${VERSION}p2
 CATEGORIES=	misc productivity
 
 HOMEPAGE=	http://tnemeth.free.fr/projets/gAcc-en.html
 
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
+# GPLv2
 PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
