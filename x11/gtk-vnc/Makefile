@@ -1,19 +1,19 @@
-# $OpenBSD: Makefile,v 1.4 2008/07/13 17:16:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2008/11/21 19:31:54 jasper Exp $
 
 COMMENT-main=		VNC viewer widget for GTK
 COMMENT-plugin=		gtk-vnc browser plugin
 
 V=			0.3.6
 DISTNAME=		gtk-vnc-${V}
-PKGNAME-main=		${DISTNAME}p1
-PKGNAME-plugin=		gtk-vnc-plugin-${V}p0
+PKGNAME-main=		${DISTNAME}p2
+PKGNAME-plugin=		gtk-vnc-plugin-${V}p1
 
 SHARED_LIBS +=	gtk-vnc-1.0          0.0      # .0.1
 CATEGORIES=		x11 net
 
 HOMEPAGE=		http://gtk-vnc.sourceforge.net/
 
-# LGPL
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
@@ -40,7 +40,8 @@ BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		::x11/py-gtk2
 LIB_DEPENDS=		gnutls.>=13::security/gnutls \
 			gdkglext-x11-1.0,gtkglext-x11-1.0::x11/gtkglext
-LIB_DEPENDS-plugin=	gtk-vnc-1.0::${BASE_PKGPATH}
+LIB_DEPENDS-plugin=	${LIB_DEPENDS} \
+			gtk-vnc-1.0::${BASE_PKGPATH}
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes

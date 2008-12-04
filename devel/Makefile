@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.630 2008/10/02 21:06:14 naddy Exp $
+# $OpenBSD: Makefile,v 1.656 2008/11/21 15:03:43 bluhm Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
-     SUBDIR += ORBit
      SUBDIR += ORBit2
      SUBDIR += acpica
      SUBDIR += ald
@@ -48,8 +47,8 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
-     SUBDIR += cook
      SUBDIR += commoncpp
+     SUBDIR += cook
      SUBDIR += cpphs
      SUBDIR += cppunit
      SUBDIR += cscope
@@ -85,11 +84,11 @@
      SUBDIR += geany
      SUBDIR += geotiff
      SUBDIR += gettext
-     SUBDIR += getxml
      SUBDIR += giblib
      SUBDIR += giggle
      SUBDIR += gindent
      SUBDIR += git
+     SUBDIR += glade3
      SUBDIR += glib
      SUBDIR += glib2
      SUBDIR += glib2mm
@@ -141,13 +140,12 @@
      SUBDIR += libdvdplay
      SUBDIR += libdvdread
      SUBDIR += libelf
+     SUBDIR += libexecinfo
      SUBDIR += libfmt
-     SUBDIR += libglade
      SUBDIR += libglade2
      SUBDIR += libglademm
      SUBDIR += libgsf
      SUBDIR += libgtop2
-     SUBDIR += libicq2000
      SUBDIR += libidn
      SUBDIR += libio
      SUBDIR += libixp
@@ -169,11 +167,13 @@
      SUBDIR += libstdc++-man
      SUBDIR += libtool
      SUBDIR += libunicode
+     SUBDIR += libunique
      SUBDIR += libusb
      SUBDIR += libuta
      SUBDIR += libutf
+     SUBDIR += libvmime
      SUBDIR += libwnck
-     SUBDIR += libzvt
+     SUBDIR += libyaml
      SUBDIR += lincvs
      SUBDIR += lpeg
      SUBDIR += luaalarm
@@ -194,6 +194,7 @@
      SUBDIR += mico
      SUBDIR += mk
      SUBDIR += mm
+     SUBDIR += mono-addins
      SUBDIR += monotone
      SUBDIR += mowgli
      SUBDIR += mpfr
@@ -331,7 +332,9 @@
      SUBDIR += p5-Devel-Cover
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-FastProf
+     SUBDIR += p5-Devel-GlobalDestruction
      SUBDIR += p5-Devel-Leak
+     SUBDIR += p5-Devel-NYTProf
      SUBDIR += p5-Devel-SawAmpersand
      SUBDIR += p5-Devel-Size
      SUBDIR += p5-Devel-SmallProf
@@ -422,6 +425,7 @@
      SUBDIR += p5-Locale-PGettext
      SUBDIR += p5-Locale-US
      SUBDIR += p5-Locale-gettext
+     SUBDIR += p5-LockFile-Simple
      SUBDIR += p5-Log-Agent
      SUBDIR += p5-Log-Dispatch
      SUBDIR += p5-Log-Dispatch-FileRotate
@@ -447,6 +451,7 @@
      SUBDIR += p5-Object-Declare
      SUBDIR += p5-Object-Realize
      SUBDIR += p5-Object-Signature
+     SUBDIR += p5-PAR
      SUBDIR += p5-PAR-Dist
      SUBDIR += p5-POE
      SUBDIR += p5-POE-Component-IKC
@@ -466,6 +471,7 @@
      SUBDIR += p5-Perl-Critic
      SUBDIR += p5-Perl6-Junction
      SUBDIR += p5-PerlIO-eol
+     SUBDIR += p5-PerlIO-via-Bzip2
      SUBDIR += p5-PerlIO-via-dynamic
      SUBDIR += p5-PerlIO-via-symlink
      SUBDIR += p5-Pod-Coverage
@@ -478,6 +484,7 @@
      SUBDIR += p5-Regexp-Copy
      SUBDIR += p5-Regexp-Shellish
      SUBDIR += p5-Return-Value
+     SUBDIR += p5-SVN-Dump
      SUBDIR += p5-SVN-Mirror
      SUBDIR += p5-SVN-Notify
      SUBDIR += p5-SVN-Simple
@@ -500,6 +507,7 @@
      SUBDIR += p5-String-Format
      SUBDIR += p5-String-Scanf
      SUBDIR += p5-Sub-Exporter
+     SUBDIR += p5-Sub-Identify
      SUBDIR += p5-Sub-Install
      SUBDIR += p5-Sub-Name
      SUBDIR += p5-Sub-Override
@@ -512,7 +520,8 @@
      SUBDIR += p5-Term-Prompt
      SUBDIR += p5-Term-ReadKey
      SUBDIR += p5-Term-ReadLine-Gnu
-     SUBDIR += p5-Term-ReadLine-Zoid 
+     SUBDIR += p5-Term-ReadLine-Perl
+     SUBDIR += p5-Term-ReadLine-Zoid
      SUBDIR += p5-Term-ReadPassword
      SUBDIR += p5-Term-Screen
      SUBDIR += p5-Term-ScreenColor
@@ -549,8 +558,8 @@
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-Taint
      SUBDIR += p5-Test-Tester
-     SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-URI
+     SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
      SUBDIR += p5-Test-Warn
@@ -574,6 +583,7 @@
      SUBDIR += p5-Time-Period
      SUBDIR += p5-Time-Piece
      SUBDIR += p5-Time-Piece-MySQL
+     SUBDIR += p5-Time-Progress
      SUBDIR += p5-Time-TimeDate
      SUBDIR += p5-Time-modules
      SUBDIR += p5-Tree-DAG_Node
@@ -609,6 +619,7 @@
      SUBDIR += perltidy
      SUBDIR += physfs
      SUBDIR += pkgconfig
+     SUBDIR += plib
      SUBDIR += pmk
      SUBDIR += poedit
      SUBDIR += popt
@@ -679,6 +690,7 @@
      SUBDIR += ruby-activesupport
      SUBDIR += ruby-assistance
      SUBDIR += ruby-color-tools
+     SUBDIR += ruby-columnize
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
@@ -690,20 +702,26 @@
      SUBDIR += ruby-gettext
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
-     SUBDIR += ruby-rubyinline
+     SUBDIR += ruby-linecache
      SUBDIR += ruby-mocha
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
+     SUBDIR += ruby-linecache
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
+     SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-rubyforge
+     SUBDIR += ruby-rubyinline
+     SUBDIR += ruby-sexp
+     SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
+     SUBDIR += ruby-zentest
      SUBDIR += scons
      SUBDIR += sdcc
      SUBDIR += sdl
@@ -724,7 +742,6 @@
      SUBDIR += slib-guile
      SUBDIR += smarty
      SUBDIR += smpeg
-     SUBDIR += snit
      SUBDIR += spe
      SUBDIR += splint
      SUBDIR += startup-notification
@@ -734,6 +751,7 @@
      SUBDIR += t1lib
      SUBDIR += tclcl
      SUBDIR += tcllib
+     SUBDIR += tig
      SUBDIR += tkcvs
      SUBDIR += tkdiff
      SUBDIR += tla
@@ -748,6 +766,8 @@
      SUBDIR += vtcl
      SUBDIR += vte
      SUBDIR += waf
+     SUBDIR += xdg-user-dirs
+     SUBDIR += xdg-utils
      SUBDIR += xmake
      SUBDIR += xulrunner
      SUBDIR += yasm

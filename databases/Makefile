@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.147 2008/09/28 16:04:47 bernd Exp $
+# $OpenBSD: Makefile,v 1.152 2008/10/30 00:03:42 pirofti Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
@@ -23,6 +23,7 @@
      SUBDIR += mysql
      SUBDIR += mysql-administrator
      SUBDIR += mysql-query-browser
+     SUBDIR += mysql-zrm
      SUBDIR += mysql2pgsql
      SUBDIR += mysqlcc
      SUBDIR += mytop
@@ -95,6 +96,9 @@
      SUBDIR += p5-pgsql
      SUBDIR += p5-sybperl
      SUBDIR += pear-DB
+     SUBDIR += pear-MDB2
+     SUBDIR += pear-MDB2-mysql
+     SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3
      SUBDIR += pgfouine
@@ -102,6 +106,7 @@
      SUBDIR += pgtcl
      SUBDIR += pgworksheet
      SUBDIR += postgresql
+     SUBDIR += postgresql-odbc
      SUBDIR += postgresql-jdbc
      SUBDIR += postgresql_autodoc
      SUBDIR += py-axiom

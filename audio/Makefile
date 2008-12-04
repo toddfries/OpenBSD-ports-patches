@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.204 2008/09/26 12:03:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.208 2008/11/10 18:48:46 naddy Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR += abcde
@@ -21,6 +21,7 @@
      SUBDIR += disc-cover
      SUBDIR += easytag
      SUBDIR += esound
+     SUBDIR += espeak
      SUBDIR += faac
      SUBDIR += faad
      SUBDIR += festival
@@ -94,9 +95,9 @@
      SUBDIR += mpc
      SUBDIR += mpd
      SUBDIR += mpd,tremor
+     SUBDIR += mpdBrowser
      SUBDIR += mpegaudio
      SUBDIR += mpg123
-     SUBDIR += mpg123,esd
      SUBDIR += mpg321
      SUBDIR += mppenc
      SUBDIR += mt-daapd
@@ -161,6 +162,7 @@
      SUBDIR += sox
      SUBDIR += sox,mp3,vorbis
      SUBDIR += speex
+     SUBDIR += squeezecenter
      SUBDIR += streamripper
      SUBDIR += taglib
      SUBDIR += tagtool

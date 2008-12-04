@@ -1,24 +1,24 @@
-# $OpenBSD: Makefile,v 1.20 2008/07/09 14:45:11 naddy Exp $
+# $OpenBSD: Makefile,v 1.22 2008/11/19 18:27:16 kili Exp $
 
 COMMENT-main=	PDF rendering library
 COMMENT-qt=	qt interface to PDF rendering library
 COMMENT-qt4=	qt4 interface to PDF rendering library
 
-V=		0.6.2
+V=		0.10.0
 DISTNAME=	poppler-$V
 CATEGORIES=	print
-PKGNAME-main=	poppler-$Vp4
+PKGNAME-main=	poppler-$Vp0
 FULLPKGNAME-qt=	poppler-qt-$Vp0
-FULLPKGNAME-qt4=poppler-qt4-$Vp1
+FULLPKGNAME-qt4=poppler-qt4-$Vp0
 
-SHARED_LIBS +=	poppler              3.0      # .2.0
-SHARED_LIBS +=	poppler-glib         3.0      # .2.0
-SHARED_LIBS +=	poppler-qt           3.0      # .2.0
-SHARED_LIBS +=	poppler-qt4          2.0      # .2.0
+SHARED_LIBS +=	poppler              4.0      # .2.0
+SHARED_LIBS +=	poppler-glib         4.0      # .2.0
+SHARED_LIBS +=	poppler-qt           4.0      # .2.0
+SHARED_LIBS +=	poppler-qt4          3.0      # .2.0
 
 HOMEPAGE=	http://poppler.freedesktop.org/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
@@ -71,9 +71,9 @@ LIB_DEPENDS-main=${MODGETTEXT_LIB_DEPENDS} \
 LIB_DEPENDS-qt=	${MODQT3_LIB_DEPENDS} poppler::print/poppler
 LIB_DEPENDS-qt4=QtCore,QtGui,QtXml::x11/qt4 poppler::print/poppler
 
-WANTLIB-main=	${WANTLIB} Xcursor Xext Xfixes Xi Xinerama Xrandr \
+WANTLIB-main=	${WANTLIB} Xcursor Xext Xfixes Xi Xinerama Xrandr gio-2.0 \
 		glib-2.0 gmodule-2.0 gobject-2.0 pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 \
+		pangoft2-1.0 pixman-1 \
 		X11 Xau Xcomposite Xdamage Xdmcp Xrender cairo glitz pcre png
 WANTLIB-qt=	${WANTLIB} iconv xml2
 WANTLIB-qt4=	${WANTLIB} iconv xml2
@@ -87,7 +87,8 @@ CONFIGURE_ARGS= --enable-xpdf-headers \
 
 CONFIGURE_ENV+=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include ${QT4INC}" \
 		CFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		MOCQT4=${MODQT4_MOC}
 
 USE_LIBTOOL=	Yes
 USE_X11=	Yes

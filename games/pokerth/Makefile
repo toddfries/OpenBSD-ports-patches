@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2008/05/30 19:43:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2008/11/07 12:20:14 ajacoutot Exp $
 
 COMMENT=	Qt4 poker game with online capabilities
 
 V=		0.6.2
 DISTNAME=	PokerTH-${V}-src
-PKGNAME=	pokerth-${V}p1
+PKGNAME=	pokerth-${V}p2
 CATEGORIES=	games x11
 
 HOMEPAGE=	http://www.pokerth.net/
@@ -21,7 +21,7 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pokerth/}
 
 EXTRACT_SUFX=	.tar.bz2
 
-WANTLIB=	ICE SDL SM X11 Xcursor Xext Xfixes Xi Xinerama Xrandr \
+WANTLIB=	ICE SDL SM X11 Xext Xi Xinerama Xrandr \
 		Xrender c crypto fontconfig freetype glib-2.0 \
 		gthread-2.0 m png pthread stdc++ z QtGui ssl
 

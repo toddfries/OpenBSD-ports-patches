@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.32 2008/09/22 18:46:36 sthen Exp $
+# $OpenBSD: Makefile,v 1.36 2008/11/07 13:56:56 bernd Exp $
 
 COMMENT-main=	extendable SNMP implementation
 COMMENT-perl=	SNMP modules for Perl
 
-V=		5.4.2
+V=		5.4.2.1
 DISTNAME=	net-snmp-${V}
-PKGNAME-main=	${DISTNAME}p0
-PKGNAME-perl=	p5-SNMP-${V}p0
+PKGNAME-main=	${DISTNAME}
+PKGNAME-perl=	p5-SNMP-${V}
 SHARED_LIBS=	netsnmp		8.0	\
-		netsnmpagent	8.0	\
+		netsnmpagent	8.1	\
 		netsnmphelpers	8.0	\
 		netsnmpmibs	8.0	\
 		netsnmptrapd	8.0
@@ -34,7 +34,10 @@ NET_SNMP_MIB_LIST= host disman/event-mib smux mibII/mta_sendmail
 
 USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} --with-libwrap --with-perl-modules \
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+	--enable-ipv6 \
+	--with-libwrap \
+	--with-perl-modules \
 	--with-copy-persistent-files="no" \
 	--with-mib-modules="${NET_SNMP_MIB_LIST}" \
 	--with-default-snmp-version="3" \
@@ -42,6 +45,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} --with-libwrap --with-perl-modules \
 	--with-sys-location="somewhere" \
 	--with-logfile="/var/log/snmpd" \
 	--with-persistent-directory="/var/net-snmp"
+
 REGRESS_TARGET=	test
 
 post-install:

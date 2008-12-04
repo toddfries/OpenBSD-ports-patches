@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.239 2008/09/06 11:39:45 simon Exp $
+# $OpenBSD: Makefile,v 1.247 2008/11/18 12:44:58 okan Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -19,6 +19,7 @@
      SUBDIR += docbook-xsl
      SUBDIR += enchant
      SUBDIR += eruby
+     SUBDIR += exempi
      SUBDIR += gdiff
      SUBDIR += glimpse
      SUBDIR += gnome-spell
@@ -49,7 +50,6 @@
      SUBDIR += libwpd
      SUBDIR += libxml
      SUBDIR += libxml++
-     SUBDIR += libxml1
      SUBDIR += libxslt
      SUBDIR += linuxdoc
      SUBDIR += lq-sp
@@ -72,6 +72,7 @@
      SUBDIR += p5-Catalyst-View-TT-FunctionGenerator
      SUBDIR += p5-Catalyst-View-XSLT
      SUBDIR += p5-Email-Find
+     SUBDIR += p5-Encode-Detect
      SUBDIR += p5-Font-AFM
      SUBDIR += p5-Font-TTF
      SUBDIR += p5-HTML-Summary
@@ -103,6 +104,7 @@
      SUBDIR += p5-Pod-Simple
      SUBDIR += p5-Pod-Spell
      SUBDIR += p5-Pod-Tests
+     SUBDIR += p5-RSS-Parser-Lite
      SUBDIR += p5-Regexp-Common
      SUBDIR += p5-Regexp-DefaultFlags
      SUBDIR += p5-SWISH-API
@@ -145,6 +147,7 @@
      SUBDIR += p5-Text-Tags
      SUBDIR += p5-Text-Template
      SUBDIR += p5-Text-Textile
+     SUBDIR += p5-Text-Thread
      SUBDIR += p5-Text-Tmpl
      SUBDIR += p5-Text-Unidecode
      SUBDIR += p5-Text-WikiFormat
@@ -212,6 +215,7 @@
      SUBDIR += py-pygments
      SUBDIR += py-rtf
      SUBDIR += py-xml
+     SUBDIR += py-yaml
      SUBDIR += rman
      SUBDIR += ruby-builder
      SUBDIR += ruby-erubis
@@ -245,6 +249,7 @@
      SUBDIR += wdg-sgml-lib
      SUBDIR += wdiff
      SUBDIR += xerces
+     SUBDIR += xerces-c
      SUBDIR += xml2rfc
      SUBDIR += xml2rfc,no_x11
      SUBDIR += xmlcatmgr

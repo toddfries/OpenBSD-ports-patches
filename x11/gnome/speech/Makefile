@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/03/17 19:07:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2008/11/21 18:20:04 jasper Exp $
 
 COMMENT=		GNOME speech module
 
 GNOME_PROJECT=		gnome-speech
-GNOME_VERSION=		0.4.18
-SHARED_LIBS +=  gnomespeech          0.0      # .7.1
+GNOME_VERSION=		0.4.22
+SHARED_LIBS +=  gnomespeech          0.1      # .7.1
 
-# LGPL
+# LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -18,7 +18,8 @@ WANTLIB=	ORBit-2 ORBitCosNaming-2 c glib-2.0 gmodule-2.0 gobject-2.0 \
 MODULES=		devel/gettext \
 			x11/gnome
 
-LIB_DEPENDS=		bonobo-2,bonobo-activation::x11/gnome/libbonobo
+LIB_DEPENDS=		espeak::audio/espeak \
+			bonobo-2,bonobo-activation::x11/gnome/libbonobo
 RUN_DEPENDS=		::audio/festival/core
 
 USE_X11=		Yes
@@ -26,6 +27,7 @@ DESKTOP_FILES=		Yes
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-scrollkeeper \
 			--with-festival \
+			--with-espeak-dir="${LOCALBASE}" \
 			--without-speech-dispatcher
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

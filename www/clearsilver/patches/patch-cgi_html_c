@@ -1,4 +1,4 @@
-$OpenBSD: patch-cgi_html_c,v 1.2 2006/05/15 17:08:43 fkr Exp $
+$OpenBSD: patch-cgi_html_c,v 1.4 2008/11/18 20:00:09 okan Exp $
 --- cgi/html.c.orig	Thu Dec  1 05:03:09 2005
 +++ cgi/html.c	Mon May  8 16:54:19 2006
 @@ -392,7 +392,7 @@ static NEOERR *split_and_convert (const 

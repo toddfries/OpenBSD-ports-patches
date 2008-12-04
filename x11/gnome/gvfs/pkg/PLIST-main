@@ -1,0 +1,152 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2008/11/24 16:15:42 ajacoutot Exp $
+@pkgpath ${BASE_PKGPATH}
+%%SHARED%%
+@bin bin/gvfs-cat
+@bin bin/gvfs-copy
+@bin bin/gvfs-info
+bin/gvfs-less
+@bin bin/gvfs-ls
+@bin bin/gvfs-mkdir
+@bin bin/gvfs-monitor-dir
+@bin bin/gvfs-monitor-file
+@bin bin/gvfs-mount
+@bin bin/gvfs-move
+@bin bin/gvfs-open
+@bin bin/gvfs-rename
+@bin bin/gvfs-rm
+@bin bin/gvfs-save
+@bin bin/gvfs-trash
+@bin bin/gvfs-tree
+include/gvfs-client/
+include/gvfs-client/gvfs/
+include/gvfs-client/gvfs/gvfsurimapper.h
+include/gvfs-client/gvfs/gvfsuriutils.h
+lib/gio/
+lib/gio/modules/
+lib/gio/modules/libgiogconf.a
+lib/gio/modules/libgiogconf.la
+lib/gio/modules/libgioremote-volume-monitor.a
+lib/gio/modules/libgioremote-volume-monitor.la
+lib/gio/modules/libgvfsdbus.a
+lib/gio/modules/libgvfsdbus.la
+lib/libgvfscommon.a
+lib/libgvfscommon.la
+@bin libexec/gvfsd
+@bin libexec/gvfsd-archive
+@bin libexec/gvfsd-burn
+@bin libexec/gvfsd-computer
+@bin libexec/gvfsd-dav
+@bin libexec/gvfsd-ftp
+@bin libexec/gvfsd-http
+@bin libexec/gvfsd-localtest
+@bin libexec/gvfsd-network
+@bin libexec/gvfsd-sftp
+@bin libexec/gvfsd-trash
+share/dbus-1/
+share/dbus-1/services/
+share/dbus-1/services/gvfs-daemon.service
+share/gvfs/
+@sample ${SYSCONFDIR}/profile.d/
+share/gvfs/gvfs-bash-completion.sh
+@sample ${SYSCONFDIR}/profile.d/gvfs-bash-completion.sh
+share/gvfs/mounts/
+share/gvfs/mounts/archive.mount
+share/gvfs/mounts/burn.mount
+share/gvfs/mounts/computer.mount
+share/gvfs/mounts/dav.mount
+share/gvfs/mounts/ftp.mount
+share/gvfs/mounts/http.mount
+share/gvfs/mounts/localtest.mount
+share/gvfs/mounts/network.mount
+share/gvfs/mounts/sftp.mount
+share/gvfs/mounts/trash.mount
+share/gvfs/remote-volume-monitors/
+share/locale/ar/
+share/locale/ar/LC_MESSAGES/
+share/locale/ar/LC_MESSAGES/gvfs.mo
+share/locale/be@latin/
+share/locale/be@latin/LC_MESSAGES/
+share/locale/be@latin/LC_MESSAGES/gvfs.mo
+share/locale/bg/LC_MESSAGES/gvfs.mo
+share/locale/bn_IN/
+share/locale/bn_IN/LC_MESSAGES/
+share/locale/bn_IN/LC_MESSAGES/gvfs.mo
+share/locale/ca/LC_MESSAGES/gvfs.mo
+share/locale/cs/LC_MESSAGES/gvfs.mo
+share/locale/da/LC_MESSAGES/gvfs.mo
+share/locale/de/LC_MESSAGES/gvfs.mo
+share/locale/el/LC_MESSAGES/gvfs.mo
+share/locale/en_GB/
+share/locale/en_GB/LC_MESSAGES/
+share/locale/en_GB/LC_MESSAGES/gvfs.mo
+share/locale/es/LC_MESSAGES/gvfs.mo
+share/locale/et/LC_MESSAGES/gvfs.mo
+share/locale/eu/LC_MESSAGES/gvfs.mo
+share/locale/fi/LC_MESSAGES/gvfs.mo
+share/locale/fr/LC_MESSAGES/gvfs.mo
+share/locale/ga/LC_MESSAGES/gvfs.mo
+share/locale/gl/LC_MESSAGES/gvfs.mo
+share/locale/gu/
+share/locale/gu/LC_MESSAGES/
+share/locale/gu/LC_MESSAGES/gvfs.mo
+share/locale/he/LC_MESSAGES/gvfs.mo
+share/locale/hi/
+share/locale/hi/LC_MESSAGES/
+share/locale/hi/LC_MESSAGES/gvfs.mo
+share/locale/hu/LC_MESSAGES/gvfs.mo
+share/locale/it/LC_MESSAGES/gvfs.mo
+share/locale/ja/LC_MESSAGES/gvfs.mo
+share/locale/kn/
+share/locale/kn/LC_MESSAGES/
+share/locale/kn/LC_MESSAGES/gvfs.mo
+share/locale/ko/LC_MESSAGES/gvfs.mo
+share/locale/ku/
+share/locale/ku/LC_MESSAGES/
+share/locale/ku/LC_MESSAGES/gvfs.mo
+share/locale/lt/
+share/locale/lt/LC_MESSAGES/
+share/locale/lt/LC_MESSAGES/gvfs.mo
+share/locale/mk/
+share/locale/mk/LC_MESSAGES/
+share/locale/mk/LC_MESSAGES/gvfs.mo
+share/locale/ml/
+share/locale/ml/LC_MESSAGES/
+share/locale/ml/LC_MESSAGES/gvfs.mo
+share/locale/mr/
+share/locale/mr/LC_MESSAGES/
+share/locale/mr/LC_MESSAGES/gvfs.mo
+share/locale/nb/LC_MESSAGES/gvfs.mo
+share/locale/nl/LC_MESSAGES/gvfs.mo
+share/locale/nn/LC_MESSAGES/gvfs.mo
+share/locale/pa/
+share/locale/pa/LC_MESSAGES/
+share/locale/pa/LC_MESSAGES/gvfs.mo
+share/locale/pl/LC_MESSAGES/gvfs.mo
+share/locale/pt/LC_MESSAGES/gvfs.mo
+share/locale/pt_BR/LC_MESSAGES/gvfs.mo
+share/locale/ru/LC_MESSAGES/gvfs.mo
+share/locale/sk/LC_MESSAGES/gvfs.mo
+share/locale/sl/LC_MESSAGES/gvfs.mo
+share/locale/sq/
+share/locale/sq/LC_MESSAGES/
+share/locale/sq/LC_MESSAGES/gvfs.mo
+share/locale/sr/LC_MESSAGES/gvfs.mo
+share/locale/sr@latin/
+share/locale/sr@latin/LC_MESSAGES/
+share/locale/sr@latin/LC_MESSAGES/gvfs.mo
+share/locale/sv/LC_MESSAGES/gvfs.mo
+share/locale/ta/
+share/locale/ta/LC_MESSAGES/
+share/locale/ta/LC_MESSAGES/gvfs.mo
+share/locale/te/
+share/locale/te/LC_MESSAGES/
+share/locale/te/LC_MESSAGES/gvfs.mo
+share/locale/th/
+share/locale/th/LC_MESSAGES/
+share/locale/th/LC_MESSAGES/gvfs.mo
+share/locale/tr/LC_MESSAGES/gvfs.mo
+share/locale/uk/LC_MESSAGES/gvfs.mo
+share/locale/vi/LC_MESSAGES/gvfs.mo
+share/locale/zh_CN/LC_MESSAGES/gvfs.mo
+share/locale/zh_HK/LC_MESSAGES/gvfs.mo
+share/locale/zh_TW/LC_MESSAGES/gvfs.mo

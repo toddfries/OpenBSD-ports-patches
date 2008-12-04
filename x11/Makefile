@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.350 2008/10/02 21:06:14 naddy Exp $
+# $OpenBSD: Makefile,v 1.360 2008/11/07 19:03:41 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -45,6 +45,7 @@
      SUBDIR += e16keyedit
      SUBDIR += e17
      SUBDIR += ecoliercourt-fonts
+     SUBDIR += emelfm2
      SUBDIR += emiclock
      SUBDIR += enlightenment
      SUBDIR += eterm
@@ -55,10 +56,12 @@
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
+     SUBDIR += fltk2
      SUBDIR += fluxbox
      SUBDIR += fluxter
      SUBDIR += flvw
      SUBDIR += flwm
+     SUBDIR += freefont-ttf
      SUBDIR += freefonts
      SUBDIR += fsv
      SUBDIR += fvwm2
@@ -81,9 +84,7 @@
      SUBDIR += gtk+2
      SUBDIR += gtk+extra
      SUBDIR += gtk-chtheme
-     SUBDIR += gtk-engines
      SUBDIR += gtk-engines2
-     SUBDIR += gtk-theme-switch
      SUBDIR += gtk-thinice-engine
      SUBDIR += gtk-vnc
      SUBDIR += gtk2-clearlooks-engine
@@ -92,7 +93,6 @@
      SUBDIR += gtk2mm
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
-     SUBDIR += gtkmm
      SUBDIR += gtksourceview
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
@@ -115,10 +115,12 @@
      SUBDIR += lesstif
      SUBDIR += libdnd
      SUBDIR += liberation-fonts
+     SUBDIR += libgdiplus
      SUBDIR += libsexy
      SUBDIR += lupe
      SUBDIR += matchbox
      SUBDIR += mlterm
+     SUBDIR += mono-gtk2
      SUBDIR += mouseclock
      SUBDIR += mowitz
      SUBDIR += mplayer
@@ -144,8 +146,6 @@
      SUBDIR += oroborus
      SUBDIR += osd_clock
      SUBDIR += p5-Gnome2-Canvas
-     SUBDIR += p5-Gtk
-     SUBDIR += p5-Gtk,gtkglarea
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
      SUBDIR += p5-Gtk2-GladeXML
@@ -161,7 +161,6 @@
      SUBDIR += pidgin-libnotify
      SUBDIR += piewm
      SUBDIR += pwm
-     SUBDIR += py-Gtk
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
      SUBDIR += py-gtksourceview
@@ -248,6 +247,8 @@
      SUBDIR += wmtz
      SUBDIR += wmweather
      SUBDIR += wmx
+     SUBDIR += wqy-bitmapfont
+     SUBDIR += wqy-zenhei-ttf
      SUBDIR += wterm
      SUBDIR += wxSVG
      SUBDIR += wxWidgets

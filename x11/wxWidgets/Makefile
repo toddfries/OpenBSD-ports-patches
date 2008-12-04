@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.11 2008/01/22 20:31:11 steven Exp $
+# $OpenBSD: Makefile,v 1.13 2008/11/11 17:19:34 naddy Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	c++ cross-platform GUI toolkit
 
 DISTNAME=	wxWidgets-2.8.7
-PKGNAME=	wxWidgets-gtk2-2.8.7
+PKGNAME=	wxWidgets-gtk2-2.8.7p0
 SHARED_LIBS=	wx_base			1.0	\
 		wx_base_net		1.0	\
 		wx_base_odbc		1.0	\
@@ -55,7 +55,7 @@ WANTLIB=	SM Xau Xcursor Xcomposite Xdamage Xdmcp Xfixes Xi Xrandr X11 \
 		Xext Xinerama Xxf86vm Xrender GL GLU fontconfig freetype \
 		pthread c m stdc++ z expat ossaudio jpeg png tiff glitz \
 		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
-		pango-1.0 pangoft2-1.0 atk-1.0
+		pango-1.0 pangoft2-1.0 pixman-1 atk-1.0
 
 AUTOCONF_VERSION=2.59
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib -pthread" \
@@ -71,6 +71,7 @@ CONFIGURE_ARGS=	--disable-stl \
 		--without-gnomeprint \
 		--without-hildon \
 		--with-opengl \
+		--disable-backtrace \
 		--enable-unicode
 
 .for _l _v in ${SHARED_LIBS}

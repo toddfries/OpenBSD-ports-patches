@@ -1,32 +1,36 @@
-$OpenBSD: patch-configure_in,v 1.5 2008/06/15 17:08:01 okan Exp $
---- configure.in.orig	Fri May 23 05:41:20 2008
-+++ configure.in	Fri Jun 13 22:05:04 2008
-@@ -1103,10 +1103,10 @@ AC_ARG_WITH(libmng,  [  --without-libmng        build 
-   if test "x$with_libmng" != xno && test -z "$LIBMNG" &&
-      test -n "$LIBPNG" && test -n "$LIBJPEG" && test -n "$LIBZ"; then
-     AC_CHECK_LIB(mng, mng_create,
--      [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
--      [have_libmng="no (MNG library not found)"], -lz -lm)
-+      [AC_CHECK_HEADER(libmng.h, mng_ok=yes, $LIBJPEG -lz -lm -llcms)],
-+      [have_libmng="no (MNG library not found)"], $LIBJPEG -lz -lm -llcms)
-     if test "$mng_ok" = yes; then
--      MNG='mng$(EXEEXT)'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
-+      MNG='mng$(EXEEXT)'; LIBMNG="-lmng $LIBJPEG $LIBPNG -llcms"
-     else
-       have_libmng="no (MNG header file not found)"
-     fi
-@@ -1375,11 +1375,11 @@ if test "x$with_lcms" != xno; then
-         have_lcms=yes
-         AC_DEFINE(HAVE_LCMS_LCMS_H, 1,
-           [Define to 1 if the lcms header must be included as lcms/lcms.h]))
--      ])
--  ])
-+      ], ,-lm)
-+  ], ,-lm)
-   if test "x$have_lcms" = xyes; then
-     AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
--    LIBLCMS="-llcms"
-+    LIBLCMS="-lm -llcms"
-     LCMS='lcms$(EXEEXT)'
+$OpenBSD: patch-configure_in,v 1.7 2008/11/16 21:19:23 kili Exp $
+--- configure.in.orig	Thu Oct 30 10:33:25 2008
++++ configure.in	Fri Nov 14 09:03:17 2008
+@@ -1141,10 +1141,10 @@ if test "x$with_libmng" != xno && test -z "$MNG_LIBS" 
+    test -n "$PNG_LIBS" && test -n "$JPEG_LIBS" && test -n "$Z_LIBS"; then
+   AC_CHECK_LIB(mng, mng_create,
+     [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
+-    [have_libmng="no (MNG library not found)"], -lz -lm)
++    [have_libmng="no (MNG library not found)"], -lz -lm -llcms -ljpeg )
+   if test "$mng_ok" = yes; then
+     have_libmng=yes
+-    FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"
++    FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng -llcms $JPEG_LIBS $PNG_LIBS"
    else
-     have_lcms="no (lcms not found or unusable)"
+     have_libmng="no (MNG header file not found)"
+   fi
+@@ -1332,19 +1332,9 @@ if test "x$with_gnomevfs" != xno; then
+ 
+ gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
+ 
+-if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
+-  have_gnomeui=yes
+-  gnome_vfs_modules="$gnome_vfs_modules libgnomeui-2.0"
+-else
+   have_gnomeui="no (libgnomeui-2.0 not found)"
+-fi
+ 
+-if $PKG_CONFIG --atleast-version=gnome_keyring_required_version gnome-keyring-1; then
+-  have_gnome_keyring=yes
+-  gnome_vfs_modules="$gnome_vfs_modules gnome-keyring-1"
+-else
+   have_gnome_keyring="no (gnome-keyring-1 not found)"
+-fi
+ 
+ PKG_CHECK_MODULES(GNOME_VFS, $gnome_vfs_modules,
+   have_gnomevfs=yes,

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.175 2008/09/22 12:44:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.182 2008/11/17 18:23:50 jasper Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -16,6 +16,7 @@
      SUBDIR += atomix
      SUBDIR += barrage
      SUBDIR += bass
+     SUBDIR += batrachians
      SUBDIR += belooted
      SUBDIR += bomberclone
      SUBDIR += boswars
@@ -53,6 +54,7 @@
      SUBDIR += frotz
      SUBDIR += gcompris
      SUBDIR += gemdropx
+     SUBDIR += ggz
      SUBDIR += glsfcave
      SUBDIR += glutton
      SUBDIR += gnuchess
@@ -68,6 +70,7 @@
      SUBDIR += kbilliards
      SUBDIR += kobodeluxe
      SUBDIR += kobodeluxe,harder
+     SUBDIR += komi
      SUBDIR += kslide
      SUBDIR += late
      SUBDIR += lbreakout2
@@ -92,6 +95,7 @@
      SUBDIR += newvox
      SUBDIR += oilwar
      SUBDIR += omega
+     SUBDIR += openarena
      SUBDIR += openttd
      SUBDIR += pathological
      SUBDIR += pioneers
@@ -129,6 +133,7 @@
      SUBDIR += tetrinetx
      SUBDIR += tmw
      SUBDIR += tutris
+     SUBDIR += tuxkart
      SUBDIR += tuxpaint
      SUBDIR += tuxpaint-config
      SUBDIR += tuxpaint-stamps

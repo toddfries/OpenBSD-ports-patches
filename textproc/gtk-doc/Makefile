@@ -1,33 +1,36 @@
-# $OpenBSD: Makefile,v 1.6 2008/05/26 16:29:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2008/11/23 22:59:08 jasper Exp $
 
 COMMENT=	GTK C code documentation system
 
-VERSION=	1.7
-DISTNAME=	gtk-doc-${VERSION}
-PKGNAME=	${DISTNAME}p1
+GNOME_VERSION=	1.11
+GNOME_PROJECT=	gtk-doc
 CATEGORIES=    	textproc devel
 
 HOMEPAGE=	http://www.gtk.org/gtk-doc/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/${VERSION}/
+MODULES=		x11/gnome
 
-PKG_ARCH=	*
-CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--with-xml-catalog=${WRKDIR}/catalog.xml
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--with-xml-catalog=${WRKDIR}/catalog.xml
 
-BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	::textproc/openjade 	\
-		::textproc/docbook 	\
-		::textproc/docbook-xsl 	\
-		::textproc/libxslt	\
-		::textproc/scrollkeeper	\
-		:yelp-*:x11/gnome/yelp
+PKG_ARCH=		*
+
+BUILD_DEPENDS=		::x11/gnome/doc-utils \
+			${RUN_DEPENDS}
+RUN_DEPENDS=		::textproc/openjade \
+			::textproc/docbook \
+			::textproc/docbook-xsl \
+			::textproc/libxslt \
+			::textproc/scrollkeeper	\
+			::x11/gnome/yelp
+
+NO_REGRESS=		Yes
 
 post-extract:
 	cp ${LOCALBASE}/share/xml/docbook/catalog.xml \
@@ -36,5 +39,7 @@ post-extract:
 	xmlcatalog --add nextCatalog \
 		--id ${LOCALBASE}/share/xsl/docbook/catalog.xml \
 		--noout ${WRKDIR}/catalog.xml ${WRKDIR}/catalog.xml
+
+	ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

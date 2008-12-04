@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.16 2008/10/03 11:39:01 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.18 2008/11/24 09:52:47 ajacoutot Exp $
 %%SHARED%%
 @bin bin/dia
 lib/dia/
@@ -1763,40 +1763,6 @@ share/doc/dia/html/pl/ch08s03.html
 share/doc/dia/html/pl/ch09.html
 share/doc/dia/html/pl/ch10.html
 share/doc/dia/html/pl/index.html
-share/gnome/help/dia/
-share/gnome/help/dia/en/
-share/gnome/help/dia/en/authors.xml
-share/gnome/help/dia/en/dia.xml
-share/gnome/help/dia/en/entities.xml
-share/gnome/help/dia/en/graphics/
-share/gnome/help/dia/en/graphics/greendots.png
-share/gnome/help/dia/en/graphics/home_network.png
-share/gnome/help/dia/en/graphics/line_icon.png
-share/gnome/help/dia/en/graphics/line_props.png
-share/gnome/help/dia/en/intro.xml
-share/gnome/help/dia/en/license.xml
-share/gnome/help/dia/en/usage-canvas.xml
-share/gnome/help/dia/en/usage-customization.xml
-share/gnome/help/dia/en/usage-layers.xml
-share/gnome/help/dia/en/usage-loadsave.xml
-share/gnome/help/dia/en/usage-objects-basic.xml
-share/gnome/help/dia/en/usage-objects-selecting.xml
-share/gnome/help/dia/en/usage-objects-special.xml
-share/gnome/help/dia/en/usage-objects.xml
-share/gnome/help/dia/en/usage-quickstart.xml
-share/gnome/help/dia/eu/
-share/gnome/help/dia/eu/dia.xml
-share/gnome/help/dia/eu/graphics/
-share/gnome/help/dia/eu/graphics/greendots.png
-share/gnome/help/dia/eu/graphics/home_network.png
-share/gnome/help/dia/eu/graphics/line_icon.png
-share/gnome/help/dia/eu/graphics/line_props.png
-share/gnome/help/dia/pl/
-share/gnome/help/dia/pl/dia.xml
-share/gnome/help/dia/pl/graphics/
-share/gnome/help/dia/pl/graphics/greendots.png
-share/gnome/help/dia/pl/graphics/home_network.png
-share/gnome/help/dia/pl/graphics/line_props.png
 share/locale/am/LC_MESSAGES/dia.mo
 share/locale/ar/LC_MESSAGES/dia.mo
 share/locale/az/LC_MESSAGES/dia.mo
@@ -1855,6 +1821,7 @@ share/locale/zh_TW/LC_MESSAGES/dia.mo
 share/mime-info/
 share/mime-info/dia.keys
 share/mime-info/dia.mime
+@comment share/omf/
 @comment share/oaf/
 @comment share/omf/dia/
 share/pixmaps/

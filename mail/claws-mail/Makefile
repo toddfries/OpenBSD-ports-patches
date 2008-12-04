@@ -1,18 +1,18 @@
-# $OpenBSD: Makefile,v 1.21 2008/07/02 09:28:09 landry Exp $
+# $OpenBSD: Makefile,v 1.23 2008/10/20 12:22:42 landry Exp $
+
+SHARED_ONLY=		Yes
 
 COMMENT-main=		mail and news client
 COMMENT-docs=		documentation
 COMMENT-bogofilter=	bogofilter plugin
 COMMENT-clamav=		clamav plugin
-COMMENT-dillo=		dillo plugin
 COMMENT-spamassassin=	spamassassin plugin
 
-V=			3.5.0
+V=			3.6.1
 DISTNAME=		claws-mail-${V}
-PKGNAME-main=			${DISTNAME}
+PKGNAME-main=			${DISTNAME}p0
 FULLPKGNAME-docs=		claws-mail-docs-${V}
 FULLPKGNAME-bogofilter=		claws-mail-bogofilter-${V}
-FULLPKGNAME-dillo=		claws-mail-dillo-${V}
 FULLPKGNAME-spamassassin=	claws-mail-spamassassin-${V}
 CATEGORIES=		mail news
 
@@ -20,7 +20,7 @@ HOMEPAGE=		http://www.claws-mail.org/
 
 MAINTAINER=		Ulrich Kahl <ulrich.kahl@cityweb.de>
 
-# GPLv3
+# GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -31,18 +31,15 @@ EXTRACT_SUFX=		.tar.bz2
 
 DIST_SUBDIR=		claws
 
-MULTI_PACKAGES=		-main -docs -bogofilter -dillo -spamassassin
+MULTI_PACKAGES=		-main -docs -bogofilter -spamassassin
 FLAVORS=		jpilot compface ldap debug
 FLAVOR?=
 
 FLAVOR_STRING=		${FLAVOR_EXT:S/-/,/g}
 SUBST_VARS=		FLAVOR_STRING
 
-SHARED_ONLY=		Yes
 RUN_DEPENDS-bogofilter=	::${BUILD_PKGPATH} \
 			::mail/bogofilter 
-RUN_DEPENDS-dillo=	::${BUILD_PKGPATH} \
-			::www/dillo 
 RUN_DEPENDS-spamassassin=::${BUILD_PKGPATH} \
 			::mail/p5-Mail-SpamAssassin 
 
@@ -53,12 +50,12 @@ WANTLIB=		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 			pangoft2-1.0 pcre pixman-1 png ssl z
 
 WANTLIB-main=		${WANTLIB} ICE SM c dbus-1 gthread-2.0 gpg-error \
-			pthread stdc++
+			gcrypt pthread stdc++
 
 WANTLIB-docs=		
 
 LIB_DEPENDS=		gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
-			etpan::mail/libetpan \
+			etpan.>=13::mail/libetpan \
 			sasl2::security/cyrus-sasl2
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
@@ -66,12 +63,14 @@ RUN_DEPENDS-main=	${RUN_DEPENDS} \
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			startup-notification-1::devel/startup-notification \
-			aspell::textproc/aspell/core \
+			enchant::textproc/enchant \
+			gnutls::security/gnutls \
 			gpgme::security/gpgme \
 			dbus-glib-1::x11/dbus-glib
 
 CONFIGURE_ARGS+=	--disable-gnomeprint \
-			--disable-networkmanager-support
+			--disable-networkmanager-support \
+			--disable-dillo-viewer-plugin
 
 LIB_DEPENDS-docs=
 PKG_ARCH-docs=	*
@@ -158,7 +157,6 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/tools/${i} \
 	${PREFIX}/share/claws-mail/tools/${i}
 .endfor
-
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/claws-mail
 	${INSTALL_DATA} ${WRKSRC}/COPYING ${PREFIX}/share/doc/claws-mail
 

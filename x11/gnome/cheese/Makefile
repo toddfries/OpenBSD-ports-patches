@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/09/22 13:50:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2008/11/25 10:33:57 ajacoutot Exp $
 
 COMMENT=	PhotoBooth inspired application
 
 GNOME_PROJECT=	cheese
-GNOME_VERSION=	2.22.3
+GNOME_VERSION=	2.24.2
 
 CATEGORIES=	multimedia
 
@@ -17,23 +17,23 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender Xxf86vm art_lgpl_2 asn1 atk-1.0 audiofile \
+		Xrender art_lgpl_2 asn1 atk-1.0 audiofile \
 		bonobo-2 bonobo-activation bonoboui-2 bz2 c cairo \
-		com_err croco-0.6 crypto db dbus-1 dbus-glib-1 esd \
+		com_err croco-0.6 crypto dbus-1 dbus-glib-1 esd \
 		expat fontconfig freetype gailutil gconf-2 gdk-x11-2.0 \
 		gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 \
 		gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 \
-		gobject-2.0 gsf-1 gssapi gthread-2.0 gtk-x11-2.0 jpeg \
+		gobject-2.0 gsf-1 gssapi gthread-2.0 gtk-x11-2.0 \
 		krb5 m nspr4 nss3 pango-1.0 pangocairo-1.0 \
 		pangoft2-1.0 pcre pixman-1 plc4 plds4 png popt pthread \
-		ssl ssl3 util xml2 z
+		ssl ssl3 util xml2 z soup-2.4 sqlite3
 
 MODULES=	devel/gettext \
 		x11/gnome
 
 BUILD_DEPENDS=	::x11/gnome/doc-utils
 LIB_DEPENDS=	camel-1.2.>=11,ebook-1.2,edataserver-1.2,smime3,softokn3::databases/evolution-data-server \
-		rsvg-2.>=20:librsvg-*-!no_gnome:x11/gnome/librsvg \
+		rsvg-2.>=20::x11/gnome/librsvg \
 		gstinterfaces-0.10,gstreamer-0.10::multimedia/gstreamer-0.10/plugins-base \
 		gnomeui-2::x11/gnome/libgnomeui
 RUN_DEPENDS=	:scrollkeeper-*:textproc/scrollkeeper \

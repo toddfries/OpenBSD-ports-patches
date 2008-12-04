@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2007/09/15 20:59:37 merdely Exp $
+# $OpenBSD: Makefile,v 1.5 2008/10/28 16:54:11 jasper Exp $
 
 COMMENT=	aspell dictionary for Slovak
 CATEGORIES=	textproc
-DISTNAME=	aspell-sk-0.51-1
+DISTNAME=	aspell6-sk-2.00-0
 MASTER_SITES=	${MASTER_SITE_GNU:=aspell/dict/sk/}
 
 .include <bsd.port.mk>

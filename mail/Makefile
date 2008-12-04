@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.220 2008/09/22 17:17:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.222 2008/11/24 09:42:07 pirofti Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
 
@@ -170,12 +170,15 @@
      SUBDIR += prepop
      SUBDIR += procmail
      SUBDIR += py-milter
+     SUBDIR += py-policyd-spf
+     SUBDIR += py-spf
      SUBDIR += pyzor
      SUBDIR += razor-agents
      SUBDIR += relaydb
      SUBDIR += roundcubemail
      SUBDIR += ruby-actionmailer
      SUBDIR += ruby-mailfactory
+     SUBDIR += ruby-mime
      SUBDIR += ruby-mime-types
      SUBDIR += ruby-rmail
      SUBDIR += signify

@@ -1,4 +1,4 @@
-$OpenBSD: README.OpenBSD,v 1.10 2008/10/01 20:34:38 ajacoutot Exp $
+$OpenBSD: README.OpenBSD,v 1.13 2008/11/21 18:18:59 jasper Exp $
 The OpenBSD/GNOME desktop
 
 * Introduction
@@ -20,7 +20,7 @@ you can install. The most important ones will be mentioned by category:
 
  - Communication
    * ekiga - SIP and H.323 conferencing application
-   * empathy - Telepathy based messenger
+   * empathy - Telepathy based messenger for e.g. MSN, Jabber, etc
    * epiphany - lightweight and simple web browser
    * evolution - integrated email and PIM software
    * gossip - Jabber client
@@ -35,10 +35,8 @@ you can install. The most important ones will be mentioned by category:
    * orca - assistive technology for visually impaired
 
  - Development
-   * devhelp - API documentation browser
    * gedit-plugins - plugins for Gedit
    * gnome-devel-docs - developer documentation
-   * zenity - easy-to-script dialogs
 
  - Utilities
    * evince - document viewer for multiple document formats
@@ -51,11 +49,12 @@ you can install. The most important ones will be mentioned by category:
    * planner - project management
    * seahorse - encryption keys manager
    * totem - multimedia player
+   * tomboy - desktop note-taking
 
 * Startup and more documentation
 One can log in using the login manager, GDM. Or by using the 'startx' command.
 In order to use the latter, add a line like the following to your .xinitrc
-or .xsession script: 'exec !!PREFIX!!/bin/gnome-session' .
+or .xsession script: 'exec ${TRUEPREFIX}/bin/gnome-session' .
 
 For more information on using OpenBSD packages please refer to:
 http://www.OpenBSD.org/faq/faq15.html . For more general information on

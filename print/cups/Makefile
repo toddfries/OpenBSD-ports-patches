@@ -1,17 +1,21 @@
-# $OpenBSD: Makefile,v 1.32 2008/09/18 13:37:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.37 2008/11/19 05:28:30 ajacoutot Exp $
 
 COMMENT=		Common Unix Printing System
 
 VERSION=		1.2.7
 DISTNAME=		cups-${VERSION}-source
-PKGNAME=		cups-${VERSION}p9
+PKGNAME=		cups-${VERSION}p14
 CATEGORIES=		print sysutils
-SHARED_LIBS=		cups		3.0 \
-			cupsimage	2.3
+
+SHARED_LIBS+=		cups		3.0
+# XXX ghostscript needs to dlopen() libcupsimage.so.2
+SHARED_LIBS+=		cupsimage	2.3
 
 HOMEPAGE=		http://www.cups.org/
 
-# GPL
+MAITAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
+
+# GPLv2 - LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -28,10 +32,11 @@ MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
 
 EXTRACT_SUFX=		.tar.bz2
 
+RUN_DEPENDS=		:desktop-file-utils-*:devel/desktop-file-utils \
+			::devel/xdg-utils
 LIB_DEPENDS=		png.>=3::graphics/png \
 			jpeg.>=62::graphics/jpeg \
 			tiff.>=35::graphics/tiff
-RUN_DEPENDS=		::print/foomatic-filters
 
 FAKE_FLAGS=		BINMODE=${BINMODE} \
 			SHAREMODE=${SHAREMODE}
@@ -50,6 +55,7 @@ CONFIGURE_ARGS+=	--with-cups-user=_cups \
 			--without-perl \
 			--without-php \
 			--without-python \
+			--disable-dbus \
 			--disable-gnutls
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
@@ -83,6 +89,7 @@ CONFIGURE_ARGS+=	--disable-ldap
 post-configure:
 	cd ${WRKBUILD} && perl -pi -e 's|\$${DESTDIR}||g' init/cups.sh \
 	    config.h cups-config conf/cupsd.conf man/*.man
+	${SUBST_CMD} ${WRKSRC}/Makefile
 
 post-install:
 	@${INSTALL_DATA_DIR} ${PREFIX}/share/examples/cups/init
@@ -95,6 +102,5 @@ post-install:
 	@sed s,y0y0y0,${LOCALBASE}, < ${FILESDIR}/${file} > \
 		${PREFIX}/sbin/${file}
 .endfor
-	@ln -s ${TRUEPREFIX}/bin/foomatic-rip ${PREFIX}/libexec/cups/filter/
 
 .include <bsd.port.mk>

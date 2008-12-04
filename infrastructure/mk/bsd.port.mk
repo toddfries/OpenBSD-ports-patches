@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.956 2008/09/19 13:00:30 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.958 2008/11/18 11:45:41 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -88,7 +88,7 @@ _ALL_VARIABLES ?= HOMEPAGE DISTNAME BUILD_DEPENDS RUN_DEPENDS \
 	SHARED_LIBS USE_MOTIF MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
-	MAINTAINER SUPDISTFILES \
+	MAINTAINER SUPDISTFILES SUBPACKAGE \
 	AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED ?= COMMENT FULLPKGNAME PKGNAME PKG_ARCH \
@@ -866,7 +866,7 @@ PKG_ARGS${_S} += -U ${UNMESSAGE${_S}}
 .  endif
 PKG_ARGS${_S} += -A'${PKG_ARCH${_S}}'
 .  if !defined(_COMMENT${_S})
-ERRORS += "Fatal: Missing comment for ${_S}."
+ERRORS += "Fatal: Missing comment for ${_S:S/^-$/main package/}."
 .  endif
 .endfor
 
@@ -1067,7 +1067,10 @@ _badcat = No
 .  endfor
 
 .  if ${_badcat} == "Yes"
-ERRORS += "Fatal: no category to match pkgpath"
+ERRORS += "Fatal: one category in ${CATEGORIES} should match PKGPATH=${PKGPATH}"
+.    if ${PKGPATH:N*/*}
+ERRORS += "Fatal: bogus PKGPATH=${PKGPATH} (no subdirectory)"
+.    endif
 .  endif
 .endif
 
@@ -2167,7 +2170,7 @@ ${_CONFIGURE_COOKIE}: ${_PATCH_COOKIE}
 ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 .if ${NO_BUILD:L} == "no"
 	@${ECHO_MSG} "===>  Building for ${FULLPKGNAME}${_MASTER}"
-.if ${VMEM_WARNING:L} == "yes"
+.  if ${VMEM_WARNING:L} == "yes"
 	@echo ""; \
 	echo "*** WARNING: you may see an error such as"; \
 	echo "***       virtual memory exhausted"; \
@@ -2179,7 +2182,7 @@ ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 	echo "*** 	csh(1) and tcsh(1): limit datasize <kbytes of memory>"; \
 	echo "***	ksh(1), zsh(1) and bash(1): ulimit -d <kbytes of memory>"; \
 	echo ""
-.endif
+.  endif
 .  if target(pre-build)
 	@cd ${.CURDIR} && exec ${_SYSTRACE_CMD} ${MAKE} pre-build
 .  endif

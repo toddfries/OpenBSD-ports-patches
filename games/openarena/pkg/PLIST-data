@@ -1,0 +1,12 @@
+@comment $OpenBSD: PLIST-data,v 1.2 2008/11/05 21:25:28 weerd Exp $
+share/openarena/
+share/openarena/baseoa/
+share/openarena/baseoa/pak0.pk3
+share/openarena/baseoa/pak1-maps.pk3
+share/openarena/baseoa/pak2-players-mature.pk3
+share/openarena/baseoa/pak2-players.pk3
+share/openarena/baseoa/pak4-textures.pk3
+share/openarena/baseoa/pak5-TA.pk3
+share/openarena/baseoa/pak6-misc.pk3
+share/openarena/missionpack/
+share/openarena/missionpack/mp-pak0.pk3
