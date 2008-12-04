@@ -43,13 +43,14 @@ our @SSH = ("/usr/bin/ssh", "-n");
 #     order to optimize build order by package importance
 # -F <Hosts File>: one host per line
 # -L <Logdir>: use <Logdir> instead of $PORTSDIR/logs/$ARCH
+# -M <Mem>: use <Mem> per cpu for calculating concurrent builds
 # -S <SUBDIRLIST>: use <SUBDIRLIST> instead of all ports
 # -s: build all packages in cwd
 # -T <Dependency File>: use <Dependency File> instead of a temporary one
 # -t <Timeout>: use this timeout instead of the default
 our ($opt_A, $opt_b, $opt_c, $opt_d, $opt_e, $opt_F, $opt_L, $opt_S, $opt_s,
-    $opt_T, $opt_t);
-getopts('A:bcdeF:L:S:sT:t:');
+    $opt_T, $opt_t, $opt_M);
+getopts('A:bcdeF:L:M:S:sT:t:');
 
 our $ARCH;
 if (defined $opt_A) {
@@ -58,6 +59,10 @@ if (defined $opt_A) {
 	chomp($ARCH = `/usr/bin/arch -s`);
 }
 
+our $memfactor = 300;
+if ($opt_M) {
+	$memfactor = $opt_M;
+}
 our $HOSTS_FILE = $opt_F || "$PORTSDIR/infrastructure/db/hosts-$ARCH";
 
 our $LOGGER = "$PORTSDIR/infrastructure/build/portslogger ";
@@ -502,7 +507,7 @@ sub parse_hosts_file()
 			warn "*** only using one node on $host due to '-c'\n";
 		} else {
 			# be smart, be sure we have $threshold mb per process 
-			my $threshold = 300;
+			my $threshold = $memfactor;
 			my $mphys = $physmem / 1024 / 1024;
 			my $loop = 1;
 			while ($loop) {
