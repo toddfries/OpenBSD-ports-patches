@@ -42,7 +42,8 @@ EXAMPLESDIR=	${PREFIX}/share/examples/dspam
 DRIVER=
 DAEMON_SUPPORT=
 
-FLAVORS=	sqlite3 sqlite mysql pgsql hash clamav ldap preferences
+FLAVORS=	sqlite3 sqlite mysql pgsql hash clamav ldap preferences \
+		domainscale largescale
 FLAVOR?=	sqlite3
 
 .if ${FLAVOR:L:Mmysql}
@@ -126,6 +127,24 @@ WANTLIB+=		pthread
 
 .if ${FLAVOR:L:Mpreferences}
 CONFIGURE_ARGS+=	--enable-preferences-extension
+.endif
+
+.if ${FLAVOR:L:Mdomainscale}
+CONFIGURE_ARGS+=	--enable-domain-scale
+. if ${FLAVOR:L:Mlargescale}
+BROKEN=			choose either domainscale or largescale, not both
+. endif
+.else
+CONFIGURE_ARGS+=	--disable-domain-scale
+.endif
+
+.if ${FLAVOR:L:Mlargescale}
+CONFIGURE_ARGS+=	--enable-large-scale
+. if ${FLAVOR:L:Mdomainscale}
+BROKEN=			choose either domainscale or largescale, not both
+. endif
+.else
+CONFIGURE_ARGS+=	--disable-large-scale
 .endif
 
 post-install:
