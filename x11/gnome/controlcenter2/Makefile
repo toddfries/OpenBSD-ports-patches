@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2008/11/23 22:59:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.43 2008/12/17 18:47:57 jasper Exp $
 
 # XXX
 # fix gconftool-2 calls in PLIST (remove 2>&1 ; also in gnome-settings-daemon)
@@ -8,7 +8,7 @@ COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
 GNOME_VERSION=		2.24.0.1
-PKGNAME=		control-center2-${VERSION}p0
+PKGNAME=		control-center2-${VERSION}p2
 SHARED_LIBS +=	gnome-window-settings 2.0      # .1.0
 CATEGORIES=		x11
 
@@ -31,7 +31,7 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		pango-1.0 pangocairo-1.0 pangoft2-1.0 pangoxft-1.0 \
 		pcre pixman-1 plc4 plds4 png popt pthread smime3 softokn3 \
 		soup-2.4 sqlite3 ssl ssl3 startup-notification-1 util \
-		vorbis vorbisfile xkbfile xml2 z
+		vorbis vorbisfile xkbfile xml2 z sndio
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -47,13 +47,14 @@ LIB_DEPENDS=		canberra,canberra-gtk:libcanberra->=0.10p0:audio/libcanberra \
 			metacity-private::x11/gnome/metacity \
 			panel-applet-2::x11/gnome/panel
 BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
-			::textproc/scrollkeeper \
+			::textproc/rarian \
 			::x11/gnome/settings-daemon
 RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
 			::multimedia/gstreamer-0.10/plugins-good,-esd \
 			::multimedia/gstreamer-0.10/plugins-good,-gconf \
-			::textproc/scrollkeeper \
-			::x11/gnome/settings-daemon
+			::textproc/rarian \
+			::x11/gnome/settings-daemon \
+			::audio/sound-theme-freedesktop
 
 USE_X11=		Yes
 MODGNOME_HELP_FILES=	Yes

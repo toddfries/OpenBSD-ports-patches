@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2007/12/21 14:42:23 todd Exp $
+# $OpenBSD: Makefile,v 1.24 2008/12/11 00:46:01 todd Exp $
 
 COMMENT=	anti-spam filter
 
 VERSION=	3.8.0
 DISTNAME=	dspam-${VERSION}
+PKGNAME=	${DISTNAME}p0
 SHARED_LIBS=	dspam	8.0
 CATEGORIES=	mail
 

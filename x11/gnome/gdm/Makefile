@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.35 2008/11/25 18:27:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2008/12/18 19:38:26 ajacoutot Exp $
 
 COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
 GNOME_VERSION=		2.20.8
+PKGNAME=		${DISTNAME}p3
 
 HOMEPAGE=		http://www.gnome.org/projects/gdm/
 
@@ -22,11 +23,10 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pcre pixman-1 png util wrap xml2 z
 
-BUILD_DEPENDS=		:scrollkeeper-*:textproc/scrollkeeper \
-			:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
+BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
 			::x11/gnome/zenity
 RUN_DEPENDS=		:sox-*:audio/sox \
-			:scrollkeeper-*:textproc/scrollkeeper \
+			:rarian-*:textproc/rarian \
 			:gnome-audio-*:x11/gnome/audio \
 			:hicolor-icon-theme-*:x11/hicolor-icon-theme \
 			::x11/gnome/zenity
@@ -47,7 +47,9 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-secureremote=yes \
 			--enable-console-helper=no \
 			--disable-scrollkeeper \
-			--with-console-kit=no
+			--with-console-kit=no \
+			--with-xevie=no \
+			--with-libaudit=no
 			
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
@@ -60,10 +62,8 @@ FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples \
 post-patch:
 	ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gdm; \
-	find ${PREFIX}/share/examples/gdm -type d -exec chmod 555 {} \;
-	find ${PREFIX}/share/examples/gdm ! -type d -exec chmod 444 {} \;
-	chmod 644 ${PREFIX}/share/examples/gdm/custom.conf
+pre-configure:
+	${SUBST_CMD} \
+		${WRKSRC}/config/{Init.in,PostSession.in,PreSession.in,Xsession.in,XKeepsCrashing}
 
 .include <bsd.port.mk>

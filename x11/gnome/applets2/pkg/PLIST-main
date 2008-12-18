@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.8 2008/11/25 08:19:43 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.10 2008/12/17 18:47:57 jasper Exp $
 @conflict libgweather-<2.24.1
 @pkgpath x11/gnome/applets2
 @pkgpath x11/gnome/applets2,no_battstat
@@ -1251,8 +1251,6 @@ share/icons/hicolor/scalable/apps/invest-applet.svg
 share/locale/am/LC_MESSAGES/gnome-applets-2.0.mo
 share/locale/ar/LC_MESSAGES/gnome-applets-2.0.mo
 share/locale/as/LC_MESSAGES/gnome-applets-2.0.mo
-share/locale/ast/
-share/locale/ast/LC_MESSAGES/
 share/locale/ast/LC_MESSAGES/gnome-applets-2.0.mo
 share/locale/az/LC_MESSAGES/gnome-applets-2.0.mo
 share/locale/be/LC_MESSAGES/gnome-applets-2.0.mo
@@ -1656,7 +1654,7 @@ share/xmodmap/xmodmap.us.old
 share/xmodmap/xmodmap.us101A_x86
 share/xmodmap/xmodmap.us_intl
 share/xmodmap/xmodmap.yu
-@exec %D/bin/scrollkeeper-update -q
-@unexec %D/bin/scrollkeeper-update -q
+@exec %D/bin/rarian-sk-update
+@unexec %D/bin/rarian-sk-update
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true

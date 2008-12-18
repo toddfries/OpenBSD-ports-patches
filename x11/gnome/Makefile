@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.82 2008/12/01 20:26:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.86 2008/12/13 17:53:38 ajacoutot Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -6,9 +6,11 @@
      SUBDIR += audio
      SUBDIR += backgrounds
      SUBDIR += baker
+     SUBDIR += bug-buddy
      SUBDIR += build
      SUBDIR += cheese
      SUBDIR += common
+     SUBDIR += conduit
      SUBDIR += controlcenter2
      SUBDIR += dasher
      SUBDIR += deskbar-applet
@@ -63,6 +65,7 @@
      SUBDIR += metacity
      SUBDIR += mime-data
      SUBDIR += mono-gnome
+     SUBDIR += mousetweaks
      SUBDIR += nautilus
      SUBDIR += orca
      SUBDIR += panel
@@ -71,6 +74,7 @@
      SUBDIR += py-gnome
      SUBDIR += py-gnome-desktop
      SUBDIR += py-gnome-extras
+     SUBDIR += py-nautilus
      SUBDIR += scan
      SUBDIR += screensaver
      SUBDIR += seahorse

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2008/11/21 18:03:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2008/12/17 18:47:57 jasper Exp $
 
 COMMENT=		developer documentation for GNOME
 
 GNOME_PROJECT=		gnome-devel-docs
-GNOME_VERSION=		2.24.0
+GNOME_VERSION=		2.24.1
+PKGNAME=		${DISTNAME}p0
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -13,7 +14,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		x11/gnome
 
-RUN_DEPENDS=		:scrollkeeper-*:textproc/scrollkeeper
+RUN_DEPENDS=		::textproc/rarian
 BUILD_DEPENDS=		${RUN_DEPENDS} \
 			:gnome-doc-utils-*:x11/gnome/doc-utils
 

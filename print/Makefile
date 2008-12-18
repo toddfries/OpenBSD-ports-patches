@@ -1,4 +1,4 @@
-#	$OpenBSD: Makefile,v 1.76 2008/10/28 13:01:31 kili Exp $
+#	$OpenBSD: Makefile,v 1.78 2008/12/15 14:07:21 sturm Exp $
 
     SUBDIR += a2ps,a4
     SUBDIR += a2ps,letter
@@ -33,10 +33,10 @@
     SUBDIR += htmldoc
     SUBDIR += htmldoc,no_x11
     SUBDIR += ijs
-    SUBDIR += jadetex
     SUBDIR += l2a
     SUBDIR += latex-mk
     SUBDIR += libpaper
+    SUBDIR += libspectre
     SUBDIR += lilypond
     SUBDIR += lout
     SUBDIR += lss

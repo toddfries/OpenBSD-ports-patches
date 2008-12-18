@@ -1,24 +1,46 @@
-$OpenBSD: patch-config_Xsession_in,v 1.7 2008/11/21 17:43:02 jasper Exp $
---- config/Xsession.in.orig	Tue Nov 18 22:52:07 2008
-+++ config/Xsession.in	Tue Nov 18 22:53:30 2008
-@@ -225,7 +225,10 @@ if [ "x$command" = "xdefault" ] ; then
- 	disptext=`gettextfunc "System has no Xclients file, so starting a failsafe xterm session.  Windows will have focus only if the mouse pointer is above them.  To get out of this mode type 'exit' in the window."`
-       "$zenity" --info --text "$disptext"
-     else
--      echo "$0: Cannot find Xclients"
-+      # Load the OpenBSD default Xsession...
-+      command="/etc/X11/xdm/Xsession"
-+      # hack around running two agents
-+      NO_SSH=yes
-     fi
-     exec xterm -geometry 80x24+0+0
-   fi
-@@ -233,7 +236,7 @@ fi
+$OpenBSD: patch-config_Xsession_in,v 1.9 2008/12/18 19:38:26 ajacoutot Exp $
+--- config/Xsession.in.orig	Wed Sep  3 20:36:08 2008
++++ config/Xsession.in	Thu Dec 18 18:58:16 2008
+@@ -23,6 +23,8 @@
+ # based on:
+ # $XConsortium: Xsession /main/10 1995/12/18 18:21:28 gildea $
  
- # add ssh-agent if found
- sshagent="`gdmwhich ssh-agent`"
++PATH=$PATH:${LOCALBASE}/bin
++
+ command="$@"
+ 
+ # this will go into the .xsession-errors along with all other echo's
+@@ -220,6 +222,9 @@ if [ "x$command" = "xdefault" ] ; then
+     command="/etc/X11/xinit/Xclients"
+   elif [ -x /etc/X11/Xclients ]; then
+     command="/etc/X11/Xclients"
++  elif [ -x "/etc/X11/xdm/Xsession" ]; then
++    # Load the OpenBSD default Xsession...
++    command="/etc/X11/xdm/Xsession"
+   else
+     if [ -n "$zenity" ] ; then
+ 	disptext=`gettextfunc "System has no Xclients file, so starting a failsafe xterm session.  Windows will have focus only if the mouse pointer is above them.  To get out of this mode type 'exit' in the window."`
+@@ -231,12 +236,17 @@ if [ "x$command" = "xdefault" ] ; then
+   fi
+ fi
+ 
+-# add ssh-agent if found
+-sshagent="`gdmwhich ssh-agent`"
 -if [ -n "$sshagent" ] && [ -x "$sshagent" ] && [ -z "$SSH_AUTH_SOCK" ]; then
-+if [ -n "$sshagent" ] && [ -x "$sshagent" ] && [ -z "$SSH_AUTH_SOCK" ] && [ -z "$NO_SSH" ]; then
-     command="$sshagent -- $command"
- elif [ -z "$sshagent" ] ; then
-     echo "$0: ssh-agent not found!"
+-    command="$sshagent -- $command"
+-elif [ -z "$sshagent" ] ; then
+-    echo "$0: ssh-agent not found!"
++# add ssh-agent if found and:
++#  * gnome-session is not used (in which case gnome-keyring handles
++#    ssh-agent functionality)
++#  * OpenBSD default Xsession isn't used (as it already starts ssh-agent)
++if [ "x$command" != "xgnome-session" ] && [ "x$command" != "x/etc/X11/xdm/Xsession" ] ; then
++	sshagent="`gdmwhich ssh-agent`"
++	if [ -n "$sshagent" ] && [ -x "$sshagent" ] && [ -z "$SSH_AUTH_SOCK" ]; then
++	   command="$sshagent -- $command"
++	elif [ -z "$sshagent" ] ; then
++	    echo "$0: ssh-agent not found!"
++	fi
+ fi
+ 
+ echo "$0: Setup done, will execute: $command"
