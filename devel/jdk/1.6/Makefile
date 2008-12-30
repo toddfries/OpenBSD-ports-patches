@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2008/11/18 01:51:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2008/12/22 13:16:56 kurt Exp $
 
 SHARED_ONLY=		Yes
 ONLY_FOR_ARCHS= 	amd64 i386
@@ -7,8 +7,8 @@ COMMENT-main=		Java2(TM) Standard Edition Dev Kit v${V}
 COMMENT-jre=		Java2(TM) Standard Edition Runtime Environment v${V}
 V=			1.6.0.03
 PKGNAME=		jdk-${V}
-PKGNAME-main=		jdk-${V}p4
-PKGNAME-jre=		jre-${V}p4
+PKGNAME-main=		jdk-${V}p5
+PKGNAME-jre=		jre-${V}p5
 
 CATEGORIES=		devel/jdk java
 
@@ -64,7 +64,7 @@ MAKE_ENV=		ALT_MOTIF_DIR="${LOCALBASE}" \
 			CXX="${CXX}" \
 			DEFAULT_LIBPATH="/usr/lib:${X11BASE}/lib:${LOCALBASE}/lib" \
 			USER="${USER}" \
-			HOTSPOT_BUILD_JOBS=${MAKE_JOBS}
+			HOTSPOT_BUILD_JOBS=${HOTSPOT_BUILD_JOBS}
 
 # Error message for distfile.
 FETCH_MANUALLY=		"You must manually fetch the distribution files, place"

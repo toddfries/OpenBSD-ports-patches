@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.52 2008/11/29 11:29:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2008/12/28 18:41:20 ajacoutot Exp $
 
 COMMENT-main=		screen saver and locker for the X Window System
 COMMENT-data=		graphical demos (savers) for screensavers
 COMMENT-gle=		OpenGL Extrusion library support for screensaver-data
 
-V=			5.07
+V=			5.08
 DISTNAME=		xscreensaver-${V}
-PKGNAME-main=		${DISTNAME}p3
+PKGNAME-main=		${DISTNAME}
 PKGNAME-data=		xscreensaver-data-${V}
 PKGNAME-gle=		xscreensaver-gle-${V}
 
@@ -83,7 +83,6 @@ CONFIGURE_ARGS+=	--without-gle
 .endif
 
 post-extract:
-	cp ${FILESDIR}/passwd-bsd_auth.c ${WRKSRC}/driver/
 	cp ${FILESDIR}/migrate-xscreensaver-config.sh ${WRKSRC}/hacks/config
 	cp ${FILESDIR}/xscreensaver-config.xsl ${WRKSRC}/hacks/config
 
