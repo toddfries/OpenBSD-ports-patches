@@ -3,7 +3,7 @@
 COMMENT= 		billiard game
 CATEGORIES=		x11 x11/kde games
 DISTNAME=		kbilliards-0.8.7b
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p2
 
 HOMEPAGE=		http://www.hostnotfound.it/kbilliards.php
 MASTER_SITES=		http://www.hostnotfound.it/kbilliards/
@@ -16,9 +16,9 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 artsflow \
-		artsflow_idl audiofile bz2 c esd fam glib-2.0 \
+		artsflow_idl audiofile bz2 c fam glib-2.0 \
 		gmodule-2.0 gthread-2.0 idn jpeg kmedia2_idl m mad \
-		mcop ogg ossaudio pcre png pthread qt-mt qtmcop rpcsvc \
+		mcop ogg pcre png pthread qt-mt qtmcop rpcsvc sndio \
 		soundserver_idl stdc++ util vorbis vorbisenc \
 		vorbisfile z
 

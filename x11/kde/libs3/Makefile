@@ -5,6 +5,7 @@ COMMENT-cups =		K Desktop Environment, cups support
 CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdelibs-${VERSION}
+PKGNAME =		kdelibs-${VERSION}p0
 MASTER_SITES0 =  	ftp://ftp.kde.org/pub/kde/security_patches/
 
 PKGNAME-main =		${DISTNAME}
@@ -77,9 +78,9 @@ LIB_DEPENDS-main =	\
 
 WANTLIB-main =	${WANTLIB} \
 		Half Iex IlmThread Imath \
-		audiofile esd glib-2.0 \
+		audiofile glib-2.0 \
 		gmodule-2.0 gthread-2.0 mad ogg \
-		ossaudio vorbisenc vorbis vorbisfile \
+		sndio vorbisenc vorbis vorbisfile \
 		xml2 krb5 gssapi crypto asn1
 
 
