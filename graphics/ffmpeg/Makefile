@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2008/09/15 22:06:11 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.42 2008/12/13 02:58:00 jakemsr Exp $
 
 COMMENT=	audio/video converter and streamer with bktr(4) support
 
@@ -15,7 +15,6 @@ SHARED_LIBS=		avutil		6.0 \
 CATEGORIES=		graphics multimedia
 
 HOMEPAGE=		http://ffmpeg.mplayerhq.hu/
-MAINTAINER=		Jacob Meuser <jakemsr@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	patents

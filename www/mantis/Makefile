@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.8 2008/11/16 10:41:37 mbalmer Exp $
+# $OpenBSD: Makefile,v 1.10 2008/12/23 10:51:02 mbalmer Exp $
 
 COMMENT=	web based bug tracking
 
-DISTNAME=	mantis-1.1.4
+V=		1.1.6
+DISTNAME=	mantisbt-${V}
+PKGNAME=	mantis-${V}p1
 CATEGORIES=	www
 HOMEPAGE=	http://www.mantisbt.org/
 

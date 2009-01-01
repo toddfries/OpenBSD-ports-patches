@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.38 2008/08/21 15:51:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.40 2008/12/20 21:35:38 sthen Exp $
 
 COMMENT-main=	server-side HTML-embedded scripting language
 COMMENT-fastcgi=stand-alone FastCGI version of PHP
@@ -52,9 +52,6 @@ pre-fake:
 	${INSTALL_DATA_DIR} ${PREFIX}/${APACHE_MODULE_SUBDIR}
 INSTALL_TARGET= install-headers install-build install-programs
 DESTDIRNAME=	INSTALL_ROOT
-
-post-patch:
-	mv ${WRKDIR}/suhosin-${SUHOSIN_V} ${WRKSRC}/ext/suhosin
 
 pre-configure:
 	@perl -pi -e "s,OPENBSD_PEAR_ROOT,'${CHROOT_DIR}/pear',g" \

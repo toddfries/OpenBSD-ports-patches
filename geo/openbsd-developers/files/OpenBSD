@@ -1,4 +1,4 @@
-# $OpenBSD: OpenBSD,v 1.31 2008/10/28 00:22:03 pirofti Exp $
+# $OpenBSD: OpenBSD,v 1.35 2008/12/25 17:21:55 michele Exp $
 #
 # This is a list of OpenBSD developers and related people.
 #
@@ -30,16 +30,19 @@
 42.26		26.06		"pirofti"	# Paul Irofti
 42.2731		-83.782		"aaron"		# Aaron Campbell
 42.49538	-82.89954	"nick"		# Nick Holland
+43.0277		-86.13		"dhill"		# David Hill
 43.064216	-89.406185	"wcmaier"	# Will Maier
 43.084950	-89.361468	"jolan"		# Jolan Luff
 43.240537 	5.384159	"pea"		# Pierre-Emmanuel Andre
 43.30		5.37		"aanriot"	# Alexandre Anriot
+43.5312		13.2519		"giovanni"	# Giovanni Bechis
 43.61495	1.44094		"matthieu"	# Matthieu Herrb
 43.5826		1.4376		"miod"		# Miod Vallat
 43.633		-79.500		"brad"		# Brad Smith
 43.66		7.18		"pyr"		# Pierre-Yves Ritschard
 43.70		-79.42		"krw"		# Kenneth R. Westerback
 44.01		-79.93		"ian"		# Ian Darwin
+45.43		12.13		"michele"	# Michele Marchetto
 45.4745		-73.6556	"msf"		# Mathieu Sauve-Frankel
 47.29		19.3		"robert"	# Robert Nagy
 47.3154		7.3526		"mglocker"	# Marcus Glocker
@@ -73,6 +76,7 @@
 51.5		5		"jasper"	# Jasper Lievisse Adriaanse
 51.6		-114.1		"deraadt"	# Theo de Raadt
 51.67938	5.1194		"weerd"		# Paul de Weerd
+51.86681	-0.1875		"jacekm"	# Jacek Masiulaniec
 52.2		12.75		"uwe"		# Uwe Stuehler
 52.26		4.63		"camield"	# Camiel Dobbelaar
 52.28083	10.57271	"kili"		# Matthias Kilian

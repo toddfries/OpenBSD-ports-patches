@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.11 2008/06/18 11:44:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2008/12/16 08:48:08 ajacoutot Exp $
 
 COMMENT=	digital camera command-line interface
 CATEGORIES=	graphics
 
 MAINTAINER=	Marc Espie <espie@openbsd.org>
 
-VERSION=	2.4.1
+VERSION=	2.4.3
 DISTNAME=	gphoto2-${VERSION}
-PKGNAME=	gphoto-${VERSION}
+PKGNAME=	gphoto-${VERSION}p0
 
 HOMEPAGE=	http://gphoto.sourceforge.net/
 
@@ -18,6 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
+
 WANTLIB=		c exif m ncurses readline ltdl pthread usb
 
 USE_X11=		Yes

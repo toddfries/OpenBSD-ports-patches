@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.25 2008/06/03 13:56:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2008/12/17 18:38:17 jasper Exp $
+
+IGNORE= 		superseded by rarian
 
 COMMENT=		Scrollkeeper Open Documentation Cataloging System
 
 DISTNAME=		scrollkeeper-0.3.14
-PKGNAME=		${DISTNAME}p5
+PKGNAME=		${DISTNAME}p6
 SHARED_LIBS=		scrollkeeper	1.0
 CATEGORIES=		textproc
 

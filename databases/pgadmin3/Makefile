@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.8 2008/02/13 12:07:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2008/12/12 20:22:21 naddy Exp $
 
 COMMENT=	administration and development platform for PostgreSQL
 
-VERSION=	1.8.2
-DISTNAME=	pgadmin3-${VERSION}
+V=		1.8.4
+DISTNAME=	pgadmin3-$V
 CATEGORIES=	databases devel
 
 HOMEPAGE=	http://www.pgadmin.org/
 
-MAINTAINER=	Alexandre Anriot <aanriot@openbsd.org>
+MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # Artistic license
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,7 +17,10 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	c iconv m pthread stdc++ z
 
-MASTER_SITES=	ftp://ftp.postgresql.org/pub/pgadmin3/release/v${VERSION}/src/
+MASTER_SITES=	ftp://ftp2.uk.postgresql.org/sites/ftp.postgresql.org/pgadmin3/release/v$V/src/ \
+    ftp://ftp5.us.postgresql.org/pub/PostgreSQL/pgadmin3/release/v$V/src/ \
+    ftp://ftp5.es.postgresql.org/mirror/postgresql/pgadmin3/release/v$V/src/ \
+    ftp://ftp.postgresql.org/pub/pgadmin3/release/v$V/src/
 
 LIB_DEPENDS=	wx_base_xml,wx_base_odbc,wx_gtk2_html,wx_gtk2_richtext,wx_gtk2_stc,wx_gtk2_ogl,wx_gtk2_adv,wx_gtk2_aui,wx_gtk2_xrc,wx_base_net,wx_gtk2_dbgrid,wx_gtk2_qa,wx_base,wx_gtk2_core:wxWidgets-gtk2->=2.8.7:x11/wxWidgets \
 		pq.>=4::databases/postgresql \

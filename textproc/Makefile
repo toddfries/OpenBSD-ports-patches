@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.247 2008/11/18 12:44:58 okan Exp $
+# $OpenBSD: Makefile,v 1.250 2008/12/18 13:23:05 jasper Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -214,8 +214,10 @@
      SUBDIR += py-lxml
      SUBDIR += py-pygments
      SUBDIR += py-rtf
+     SUBDIR += py-vobject
      SUBDIR += py-xml
      SUBDIR += py-yaml
+     SUBDIR += rarian
      SUBDIR += rman
      SUBDIR += ruby-builder
      SUBDIR += ruby-erubis
@@ -231,7 +233,6 @@
      SUBDIR += ruby-rubigen
      SUBDIR += rxp
      SUBDIR += sablotron
-     SUBDIR += scrollkeeper
      SUBDIR += sgmlformat
      SUBDIR += sphinx
      SUBDIR += sim

@@ -1,5 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.12 2007/12/15 21:14:22 ajacoutot Exp $
-bin/galeon
+@comment $OpenBSD: PLIST,v 1.14 2008/12/23 11:36:08 jasper Exp $
+@bin bin/galeon
 bin/galeon-config-tool
 lib/bonobo/
 lib/bonobo/servers/
@@ -182,6 +182,7 @@ share/gnome/help/galeon/es/plugins.xml
 share/gnome/help/galeon/es/preface.xml
 share/gnome/help/galeon/es/preferences.xml
 share/locale/am/LC_MESSAGES/galeon-2.0.mo
+share/locale/ar/LC_MESSAGES/galeon-2.0.mo
 share/locale/az/LC_MESSAGES/galeon-2.0.mo
 share/locale/be/LC_MESSAGES/galeon-2.0.mo
 share/locale/bg/LC_MESSAGES/galeon-2.0.mo
@@ -190,6 +191,7 @@ share/locale/ca/LC_MESSAGES/galeon-2.0.mo
 share/locale/cs/LC_MESSAGES/galeon-2.0.mo
 share/locale/da/LC_MESSAGES/galeon-2.0.mo
 share/locale/de/LC_MESSAGES/galeon-2.0.mo
+share/locale/dz/LC_MESSAGES/galeon-2.0.mo
 share/locale/el/LC_MESSAGES/galeon-2.0.mo
 share/locale/en_CA/LC_MESSAGES/galeon-2.0.mo
 share/locale/en_GB/LC_MESSAGES/galeon-2.0.mo
@@ -214,6 +216,7 @@ share/locale/ms/LC_MESSAGES/galeon-2.0.mo
 share/locale/nb/LC_MESSAGES/galeon-2.0.mo
 share/locale/nl/LC_MESSAGES/galeon-2.0.mo
 share/locale/nn/LC_MESSAGES/galeon-2.0.mo
+share/locale/oc/LC_MESSAGES/galeon-2.0.mo
 share/locale/pa/LC_MESSAGES/galeon-2.0.mo
 share/locale/pl/LC_MESSAGES/galeon-2.0.mo
 share/locale/pt/LC_MESSAGES/galeon-2.0.mo
@@ -243,11 +246,11 @@ share/pixmaps/galeon.png
 @unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/galeon/*.schemas > /dev/null
 share/schemas/galeon/
 share/schemas/galeon/galeon.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/galeon/*.schemas > /dev/null
 share/sounds/
 share/sounds/galeon/
 share/sounds/galeon/clicked.wav
-@exec %D/bin/scrollkeeper-update -q
-@unexec %D/bin/scrollkeeper-update -q
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/galeon/*.schemas > /dev/null
+@exec %D/bin/rarian-sk-update
+@unexec %D/bin/rarian-sk-update
 @exec %D/bin/update-desktop-database
 @unexec %D/bin/update-desktop-database

@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.161 2008/11/29 09:57:18 jasper Exp $
+# $OpenBSD: Makefile,v 1.165 2008/12/29 19:52:53 sturm Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
+     SUBDIR += acx-firmware
      SUBDIR += anacron
      SUBDIR += apc-upsd
      SUBDIR += autossh
@@ -11,6 +12,7 @@
      SUBDIR += bchunk
      SUBDIR += bubblemon
      SUBDIR += bubblemon-dockapp
+     SUBDIR += bwi-firmware
      SUBDIR += cdrtools
      SUBDIR += cfengine
      SUBDIR += checkbashisms
@@ -27,8 +29,8 @@
      SUBDIR += dwdiff
      SUBDIR += e2fsprogs
      SUBDIR += eventlog
-     SUBDIR += expiretable
      SUBDIR += fam
+     SUBDIR += faubackup
      SUBDIR += fdupes
      SUBDIR += filelight
      SUBDIR += findlib
@@ -57,6 +59,7 @@
      SUBDIR += logpp
      SUBDIR += lsof
      SUBDIR += mac-robber
+     SUBDIR += malo-firmware
      SUBDIR += memtester
      SUBDIR += mencal
      SUBDIR += modlogan
@@ -85,11 +88,13 @@
      SUBDIR += p5-Unix-Syslog
      SUBDIR += pciutils
      SUBDIR += pftop
+     SUBDIR += pgt-firmware
      SUBDIR += pkg_mgr
      SUBDIR += pscpug
      SUBDIR += pstree
      SUBDIR += radiusreport
      SUBDIR += radmind
+     SUBDIR += rancid
      SUBDIR += rdiff-backup
      SUBDIR += rpl
      SUBDIR += rtty
@@ -125,8 +130,10 @@
      SUBDIR += tpb
      SUBDIR += tphdisk
      SUBDIR += tree
+     SUBDIR += upgt-firmware
      SUBDIR += upsd
      SUBDIR += usbutil
+     SUBDIR += uvideo-firmware
      SUBDIR += wdsetup
      SUBDIR += whowatch
      SUBDIR += wmapm

@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2008/11/20 01:41:34 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2008/12/18 19:37:50 ajacoutot Exp $
 
 COMMENT=	desktop note-taking application written in C\#
 
 GNOME_PROJECT=	tomboy
-GNOME_VERSION=	0.12.1
-PKGNAME=	${DISTNAME}p3
+GNOME_VERSION=	0.12.2
 CATEGORIES=	x11
 
 # LGPLv2.1
@@ -36,10 +35,12 @@ RUN_DEPENDS=	::lang/mono \
 		::sysutils/ndesk-dbus-glib \
 		::x11/gnome/mono-gnome \
 		:shared-mime-info->=0.21:misc/shared-mime-info \
-		:scrollkeeper-*:textproc/scrollkeeper \
+		::textproc/rarian \
 		:gnome-icon-theme->=2.18.0:x11/gnome/icon-theme \
 
-CONFIGURE_ARGS=	--disable-schemas-install \
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--enable-sketching=no \
+		--disable-schemas-install \
 		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/tomboy
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

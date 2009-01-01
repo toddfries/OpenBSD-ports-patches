@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.547 2008/12/01 21:49:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.552 2008/12/30 13:59:10 pirofti Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -30,6 +30,7 @@
      SUBDIR += bitlbee
      SUBDIR += bluetooth-tools
      SUBDIR += bnc
+     SUBDIR += bro
      SUBDIR += btpd
      SUBDIR += bwm-ng
      SUBDIR += cadaver
@@ -81,6 +82,7 @@
      SUBDIR += farsight
      SUBDIR += filezilla
      SUBDIR += firewalk
+     SUBDIR += flickcurl
      SUBDIR += flow-tools
      SUBDIR += flowd
      SUBDIR += fmirror
@@ -207,6 +209,7 @@
      SUBDIR += oidentd
      SUBDIR += oinkmaster
      SUBDIR += olsrd
+     SUBDIR += onioncat
      SUBDIR += opal
      SUBDIR += openafs
      SUBDIR += openh323
@@ -322,6 +325,7 @@
      SUBDIR += poptop
      SUBDIR += pork
      SUBDIR += pptp
+     SUBDIR += powerdns
      SUBDIR += proxy-suite
      SUBDIR += psi
      SUBDIR += pure-ftpd
@@ -377,6 +381,7 @@
      SUBDIR += sendxmpp
      SUBDIR += ser
      SUBDIR += sharity-light
+     SUBDIR += si
      SUBDIR += silc-client
      SUBDIR += silc-server
      SUBDIR += silc-server,operops

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.33 2008/10/30 09:41:07 mbalmer Exp $ 
+# $OpenBSD: Makefile,v 1.36 2008/12/13 08:53:19 mbalmer Exp $ 
 
 COMMENT=	modular framework for web-based applications
 
-DISTNAME=	horde-3.3
+DISTNAME=	horde-3.3.2
 CATEGORIES=	devel www
 HOMEPAGE=	http://www.horde.org/
 
@@ -35,7 +35,8 @@ RUN_DEPENDS+=	:php5-core-*:www/php5/core \
 		::mail/pear-Mail \
 		:pear-Services-Weather-*:net/pear-Services-Weather \
 		:pear-DB-*:databases/pear-DB \
-		:pear-Mail-Mime-*:mail/pear-Mail-Mime
+		:pear-Mail-Mime-*:mail/pear-Mail-Mime \
+		:pear-SOAP-*:www/pear-SOAP
 
 FLAVORS=	mysql ldap
 FLAVOR?=	

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2008/09/01 15:47:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2008/12/26 17:30:23 steven Exp $
 
 COMMENT=	robust and small HTTP server and mail proxy server
 
-DISTNAME=	nginx-0.6.32
+DISTNAME=	nginx-0.6.34
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	www
 
 HOMEPAGE=	http://nginx.net/
@@ -42,15 +43,11 @@ CONFIGURE_ARGS=		--prefix=${SYSCONFDIR}/nginx \
 			--with-mail \
 			--with-mail_ssl_module
 
-# Get rid of '#include <malloc.h>' which caused many warnings
-CONFIGURE_ARGS+=	--with-cc-opt="-DNGX_HAVE_MALLOC_H=0"
-
 NO_REGRESS=		Yes
 ALL_TARGET=
 
 pre-configure:
-	@perl -pi -e 's,!!NGINX_DIR!!,${NGINX_DIR},' \
-		${WRKBUILD}/conf/nginx.conf
+	${SUBST_CMD} ${WRKBUILD}/conf/nginx.conf
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/nginx/

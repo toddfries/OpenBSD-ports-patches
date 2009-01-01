@@ -1,4 +1,4 @@
-$OpenBSD: README.OpenBSD,v 1.13 2008/11/21 18:18:59 jasper Exp $
+$OpenBSD: README.OpenBSD,v 1.17 2008/12/22 23:03:12 jasper Exp $
 The OpenBSD/GNOME desktop
 
 * Introduction
@@ -32,19 +32,22 @@ you can install. The most important ones will be mentioned by category:
    * gnopernicus - screen reader and magnifier
    * gok - on-screen keyboard
    * libgail-gnome - ATK interface to other applications (see above)
+   * mousetweaks - mouse accessibility enhancements
    * orca - assistive technology for visually impaired
 
  - Development
    * gedit-plugins - plugins for Gedit
+   * glade3 - user interface builder
    * gnome-devel-docs - developer documentation
 
  - Utilities
+   * conduit - all-in-one synchronization application
    * evince - document viewer for multiple document formats
    * gcalctool - desktop calculator
    * gnome-scan - scanning application
    * gnomebaker - CD/DVD burning application
    * gucharmap - Unicode character map
-   * keyring-manager - Keyring password management
+   * gnome-keyring-manager - Keyring password management
    * pessulus - lockdown editor for desktop
    * planner - project management
    * seahorse - encryption keys manager

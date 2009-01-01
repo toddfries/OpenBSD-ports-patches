@@ -1,0 +1,8 @@
+libao is a cross-platform audio library that allows programs to output
+audio using a simple API on a wide variety of platforms.  On OpenBSD,
+it currently supports:
+   * null output
+   * raw output
+   * AU files
+   * WAV files
+   * sndio (OpenBSD's native sound system)

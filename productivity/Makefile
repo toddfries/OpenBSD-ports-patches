@@ -1,11 +1,14 @@
-# $OpenBSD: Makefile,v 1.21 2008/07/04 16:23:01 pyr Exp $
+# $OpenBSD: Makefile,v 1.23 2008/12/29 17:02:51 sturm Exp $
 
      SUBDIR += bruce
      SUBDIR += calcurse
      SUBDIR += devtodo
      SUBDIR += fet
+     SUBDIR += gnucash
+     SUBDIR += gnucash-docs
      SUBDIR += grisbi
      SUBDIR += gtimer
+     SUBDIR += homebank
      SUBDIR += ledger
      SUBDIR += osmo
      SUBDIR += qhacc
