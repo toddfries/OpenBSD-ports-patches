@@ -175,6 +175,7 @@ lib/pwlib/
 lib/pwlib/devices/
 lib/pwlib/devices/sound/
 lib/pwlib/devices/sound/esd_pwplugin.so
+lib/pwlib/devices/sound/libsndio_pwplugin.so
 lib/pwlib/devices/sound/oss_pwplugin.so
 lib/pwlib/devices/videoinput/
 lib/pwlib/devices/videoinput/bsdvideo_pwplugin.so
