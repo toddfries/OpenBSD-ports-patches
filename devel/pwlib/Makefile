@@ -6,7 +6,7 @@ COMMENT=	portable Windows library
 
 V=		1_12_0
 DISTNAME=	ptlib-v${V}
-PKGNAME=	pwlib-${V:S/_/./g}p6
+PKGNAME=	pwlib-${V:S/_/./g}p7
 CATEGORIES=	devel
 
 EXTRACT_SUFX=	-src.tar.gz
@@ -25,7 +25,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=h323plus/}
 
-WANTLIB=	crypto expat ossaudio sasl2 ssl
+WANTLIB=	crypto expat ossaudio sndio sasl2 ssl
 
 BUILD_DEPENDS=	::devel/bison
 LIB_DEPENDS=	esd.>=2::audio/esound \
@@ -59,6 +59,10 @@ CONFIGURE_ARGS=	--enable-plugins \
 		--disable-avc \
 		--disable-dc \
 		--disable-odbc
+
+post-patch:
+	@mkdir ${WRKSRC}/plugins/sound_libsndio
+	@cp ${FILESDIR}/{Makefile,sound_libsndio.*} ${WRKSRC}/plugins/sound_libsndio
 
 pre-configure:
 	@perl -pi -e 's,!!PREFIX!!,${PREFIX},g' \
