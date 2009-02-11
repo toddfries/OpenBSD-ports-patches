@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2008/12/17 18:47:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2009/01/30 20:49:41 sturm Exp $
 
 COMMENT=	simple media player for GNOME
 
 GNOME_PROJECT=	totem
 GNOME_VERSION=	2.22.2
-PKGNAME=	${DISTNAME}p5
+PKGNAME=	${DISTNAME}p11
 CATEGORIES=	multimedia
 
 HOMEPAGE=	http://www.gnome.org/projects/totem/
@@ -17,16 +17,16 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender Xtst Xxf86vm art_lgpl_2 asn1 atk-1.0 audiofile \
+		Xrender Xtst Xxf86vm art_lgpl_2 asn1 atk-1.0 \
 		bonobo-2 bonobo-activation bonoboui-2 c cairo \
 		camel-1.2 com_err crypto dbus-1 dbus-glib-1 sqlite3 \
-		edataserver-1.2 esd expat fontconfig freetype gailutil \
-		gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 glib-2.0 glitz \
+		edataserver-1.2 expat fontconfig freetype gailutil \
+		gconf-2 gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 glib-2.0 glitz \
 		gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 \
-		gnomevfs-2 gobject-2.0 gssapi gthread-2.0 gtk-x11-2.0 \
+		gnomevfs-2 gnutls gobject-2.0 gpg-error gssapi gthread-2.0 gtk-x11-2.0 \
 		krb5 m nspr4 nss3 pango-1.0 pangocairo-1.0 \
 		pangoft2-1.0 pcre pixman-1  plc4 plds4 png popt pthread \
-		smime3 softokn3 ssl ssl3 util xml2 z gio-2.0 soup-2.4
+		smime3 softokn3 ssl ssl3 tasn1 util xml2 z gio-2.0 soup-2.4
 
 MODULES=	devel/gettext \
 		lang/python \
@@ -47,6 +47,9 @@ LIB_DEPENDS=	${MODPY_LIB_DEPENDS} \
 		galago::net/libgalago \
 		gnomeui-2::x11/gnome/libgnomeui \
 		nautilus-extension::x11/gnome/nautilus
+
+# gst-inspect-0.10 needs to access ${HOME}
+PORTHOME=	${WRKDIR}
 
 USE_X11=	Yes
 DESKTOP_FILES=	Yes
@@ -86,7 +89,6 @@ FLAVOR?=
 
 .if ${FLAVOR:L:Mxine}
 LIB_DEPENDS+=	xine.>=20::multimedia/xine-lib
-RUN_DEPENDS+=	:xine-lib-esd-*:multimedia/xine-lib,-esd
 CONFIGURE_ARGS+=--enable-xine \
 		--disable-gstreamer
 .else
@@ -94,20 +96,27 @@ WANTLIB+=	gstbase-0.10 gstreamer-0.10
 LIB_DEPENDS+=	gstaudio-0.10,gstinterfaces-0.10,gstpbutils-0.10,gstvideo-0.10::multimedia/gstreamer-0.10/plugins-base
 # while the following are not "required" for totem to run, there's no
 # point in using a media player that can't play most modern media files
+BUILD_DEPENDS+=	:gstreamer-confelements-*:multimedia/gstreamer-0.10/plugins-good,-gconf
 RUN_DEPENDS+=	:gstreamer-vorbis-*:multimedia/gstreamer-0.10/plugins-base,-vorbis \
 		:gstreamer-ogg-*:multimedia/gstreamer-0.10/plugins-base,-ogg \
 		:gstreamer-xvid-*:multimedia/gstreamer-0.10/plugins-bad,-xvid \
 		:gstreamer-jpeg-*:multimedia/gstreamer-0.10/plugins-good,-jpeg \
+		:gstreamer-confelements-*:multimedia/gstreamer-0.10/plugins-good,-gconf \
 		:gstreamer-a52-*:multimedia/gstreamer-0.10/plugins-ugly,-a52 \
 		:gstreamer-mpeg2-*:multimedia/gstreamer-0.10/plugins-ugly,-mpeg2 \
 		:gstreamer-dvdread-*:multimedia/gstreamer-0.10/plugins-ugly,-dvdread \
 		:gstreamer-mad-*:multimedia/gstreamer-0.10/plugins-ugly,-mad \
-		:gstreamer-ffmpeg-*:multimedia/gstreamer-0.10/plugins-ffmpeg
+		:gstreamer-ffmpeg->=0.10.5:multimedia/gstreamer-0.10/plugins-ffmpeg
 CONFIGURE_ARGS+=--enable-gstreamer \
 		--disable-xine
 .endif
 
 post-patch:
 	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
+
+# stop systrace spam by avoiding xsltproc to access net
+pre-configure:
+	perl -pi -e 's,xsltproc,xsltproc --nonet,g' \
+		${WRKSRC}/help/Makefile.in
 
 .include <bsd.port.mk>

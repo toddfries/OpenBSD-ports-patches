@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.39 2008/11/23 20:28:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2009/01/08 09:54:32 ajacoutot Exp $
 
 COMMENT=	format files for printing on PostScript printers
 
 DISTNAME=	a2ps-4.14
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	print
 SHARED_LIBS=	a2ps	2.0
 MODGNU_SHARED_LIBS=a2ps	''
@@ -27,7 +28,8 @@ CONFIGURE_STYLE=	gnu
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC} ${WRKSRC}/auxdir
 
 RUN_DEPENDS=	::print/psutils
-BUILD_DEPENDS=	${RUN_DEPENDS}
+BUILD_DEPENDS=	${RUN_DEPENDS} \
+		::devel/gperf
 
 FLAVORS=	a4 a4dj letter letterdj
 FLAVOR?=	letter

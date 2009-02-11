@@ -1,13 +1,13 @@
-@comment $OpenBSD: PLIST,v 1.2 2007/04/30 17:30:40 bernd Exp $
+@comment $OpenBSD: PLIST,v 1.4 2009/02/04 07:36:39 ajacoutot Exp $
 %%SHARED%%
-bin/estbutler
-bin/estcall
-bin/estcmd
+@bin bin/estbutler
+@bin bin/estcall
+@bin bin/estcmd
 bin/estconfig
-bin/estload
-bin/estmaster
-bin/estmttest
-bin/estwaver
+@bin bin/estload
+@bin bin/estmaster
+@bin bin/estmttest
+@bin bin/estwaver
 bin/estwolefind
 include/estmtdb.h
 include/estnode.h
@@ -15,6 +15,11 @@ include/estraier.h
 lib/libestraier.a
 lib/pkgconfig/
 lib/pkgconfig/hyperestraier.pc
+@bin libexec/estfraud.cgi
+@bin libexec/estproxy.cgi
+@bin libexec/estscout.cgi
+@bin libexec/estseek.cgi
+@bin libexec/estsupt.cgi
 @man man/man1/estcall.1
 @man man/man1/estcmd.1
 @man man/man1/estconfig.1

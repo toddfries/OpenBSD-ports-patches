@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2007/12/30 22:50:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/01/31 09:25:33 jasper Exp $
+
+BROKEN= 		too many issues with setting this up
 
 COMMENT=		flexible communications framework, IRC component
 
 DISTNAME=		telepathy-idle-0.1.2
-PKGNAME= 		${DISTNAME}p1
+PKGNAME= 		${DISTNAME}p4
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-idle}
 
@@ -14,8 +16,7 @@ MODULES=		devel/gettext \
 			lang/python
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		${MODPY_EXPAT_DEPENDS} \
-			::textproc/libxslt
+RUN_DEPENDS=		::textproc/libxslt
 LIB_DEPENDS=		telepathy-glib::net/telepathy/telepathy-glib
 
 USE_GMAKE=		Yes
@@ -26,5 +27,8 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			OPENSSL_LIBS="-L/usr/lib -lssl -lcrypto" \
 			OPENSSL_CFLAGS="-I/usr/include" \
 			PYTHON="${MODPY_BIN}"
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/configure
 
 .include <bsd.port.mk>

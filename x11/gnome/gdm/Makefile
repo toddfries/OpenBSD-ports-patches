@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.43 2009/01/01 12:01:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2009/02/04 18:50:02 ajacoutot Exp $
 
 COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
-GNOME_VERSION=		2.20.8
-PKGNAME=		${DISTNAME}p7
+GNOME_VERSION=		2.20.9
+PKGNAME=		${DISTNAME}p2
 
 HOMEPAGE=		http://www.gnome.org/projects/gdm/
 
@@ -46,9 +46,10 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-secureremote=yes \
 			--enable-console-helper=no \
 			--disable-scrollkeeper \
-			--with-xevie=yes \
 			--with-console-kit=no \
 			--with-libaudit=no
+# XXX X Window System Error ('BadLenght...')
+CONFIGURE_ARGS+=	--with-xevie=no
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

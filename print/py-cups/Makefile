@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2008/09/17 11:57:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2009/01/31 12:36:59 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		CUPS bindings for Python
 
-VERSION=		1.9.42
+VERSION=		1.9.45
 DISTNAME=		pycups-${VERSION}
 PKGNAME=		py-cups-${VERSION}
 CATEGORIES=		print
@@ -23,7 +23,6 @@ EXTRACT_SUFX=		.tar.bz2
 MODULES=		converters/libiconv \
 			lang/python
 
-RUN_DEPENDS=		:python-bz2-*:lang/python/${MODPY_VERSION},-bz2
 LIB_DEPENDS=		cups::print/cups
 
 CFLAGS+=		-I${LOCALBASE}/include -DVERSION=\"${VERSION}\"

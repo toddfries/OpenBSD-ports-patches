@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.6 2008/10/24 07:06:01 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/02/03 09:41:40 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=	amd64 i386
 
 COMMENT=	cross platform, open source .NET developement framework
 
 DISTNAME=	mono-2.0
-PKGNAME=	${DISTNAME}p2
+PKGNAME=	${DISTNAME}p4
 CATEGORIES=	lang devel
+
 SHARED_LIBS=	mono-profiler-aot	0.0 \
 		mono-profiler-cov	0.0 \
 		mono			0.0
@@ -21,7 +22,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 
-WANTLIB=	c glib-2.0 gmodule-2.0 gthread-2.0 intl \
+WANTLIB=	c glib-2.0 gmodule-2.0 gthread-2.0 \
 		m pcre pthread z
 
 MASTER_SITES=	ftp://ftp.novell.com/pub/mono/sources/mono/
@@ -30,12 +31,12 @@ EXTRACT_SUFX=	.tar.bz2
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 
-MODULES=	converters/libiconv lang/mono
+MODULES=	devel/gettext \
+		lang/mono
 BUILD_DEPENDS=	:bison-*:devel/bison \
 		${RUN_DEPENDS}
 RUN_DEPENDS=	::x11/libgdiplus
 LIB_DEPENDS=	gc::devel/boehm-gc
-
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib" \
@@ -50,21 +51,6 @@ REGRESS_TARGET=check
 DLLMAP_FILES=	mcs/class/Managed.Windows.Forms/System.Windows.Forms/MimeIcon.cs \
 		mcs/tools/mono-shlib-cop/mono-shlib-cop.exe.config
 
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mono
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mono/net_1_1
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mono/net_2_0
-
-	${INSTALL_DATA} ${WRKSRC}/data/config \
-		${WRKSRC}/data/browscap.ini \
-		${PREFIX}/share/examples/mono/
-
-	${INSTALL_DATA} ${WRKSRC}/data/net_1_1/DefaultWsdlHelpGenerator.aspx \
-		${WRKSRC}/data/net_1_1/machine.config \
-		${PREFIX}/share/examples/mono/net_1_1/
-
-	${INSTALL_DATA} ${WRKSRC}/data/net_2_0/DefaultWsdlHelpGenerator.aspx \
-		${WRKSRC}/data/net_2_0/machine.config \
-		${PREFIX}/share/examples/mono/net_2_0/
+FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples
 
 .include <bsd.port.mk>

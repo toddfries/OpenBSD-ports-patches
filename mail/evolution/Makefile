@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.53 2008/12/17 18:42:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.59 2009/02/04 15:43:32 ajacoutot Exp $
 
 COMMENT=		integrated email and PIM software for GNOME
 
 # NOTE: when major version changes, increment EVO_VERSION accordingly 
-# under mail/evolution-plugin-rss/Makefile (and bump)
+# in mail/evolution-plugin-rss/Makefile (and bump).
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		2.24.2
-PKGNAME=		${DISTNAME}p2
+GNOME_VERSION=		2.24.4
+PKGNAME=		${DISTNAME}p1
+
 CATEGORIES=    		mail
 
 HOMEPAGE=		http://www.gnome.org/projects/evolution/
@@ -30,15 +31,16 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 asn1 atk-1.0 audiofile bonobo-2 \
+		Xrender art_lgpl_2 asn1 atk-1.0 bonobo-2 \
 		bonobo-activation bonoboui-2 c cairo com_err crypto \
-		db dbus-1 dbus-glib-1 enchant esd expat fontconfig freetype \
-		gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
+		db dbus-1 dbus-glib-1 enchant expat fontconfig freetype \
+		gailutil gconf-2 gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
 		glade-2.0 glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring \
-		gnomecanvas-2 gnomeui-2 gnomevfs-2 gobject-2.0 gssapi \
-		gthread-2.0 gtk-x11-2.0 jpeg krb5 m nspr4 pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4 \
-		png popt pthread sasl2 sqlite3 ssl ssl3 stdc++ util xml2 z
+		gnomecanvas-2 gnomeui-2 gnomevfs-2 gnutls gobject-2.0 \
+		gpg-error gssapi gthread-2.0 gtk-x11-2.0 krb5 m nspr4 \
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
+		plc4 plds4 png popt pthread sasl2 sqlite3 ssl ssl3 stdc++ \
+		tasn1 util xml2 z
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -47,10 +49,10 @@ BUILD_DEPENDS=		::devel/bison \
 			::textproc/rarian \
 			::x11/gnome/doc-utils \
 			::misc/shared-mime-info
-RUN_DEPENDS=		::devel/desktop-file-utils \
-			::textproc/rarian \
-			::x11/hicolor-icon-theme
-LIB_DEPENDS=		camel-1.2,camel-provider-1.2,ebackend-1.2,ebook-1.2,ecal-1.2,edataserver-1.2,edataserverui-1.2,egroupwise-1.2,exchange-storage-1.2,gdata-1.2,gdata-google-1.2::databases/evolution-data-server \
+RUN_DEPENDS=		::textproc/rarian \
+			::x11/hicolor-icon-theme \
+			::x11/gnome/icon-theme
+LIB_DEPENDS=		camel-1.2,camel-provider-1.2,ebackend-1.2,ebook-1.2,ecal-1.2,edataserver-1.2,edataserverui-1.2,egroupwise-1.2,exchange-storage-1.2,gdata-1.2,gdata-google-1.2:evolution-data-server->=2.24.3:databases/evolution-data-server \
 			lber.>=7,ldap.>=7::databases/openldap \
 			notify.>=2::devel/libnotify \
 			soup-2.4::devel/libsoup \
@@ -78,9 +80,8 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -Wl,-rpath,${LOCALBASE}/lib/evolution/${R}/components:${LOCALBASE}/lib/evolution/${R}:${LOCALBASE}/lib -Z"
 
-# XXX
-#R=			${GNOME_VERSION:R}
-R=			2.24
+# Only get the first x.y which is needed in the PLIST.
+R=			${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=		R
 
 post-patch:

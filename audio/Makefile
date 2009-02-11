@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.211 2008/12/30 22:00:55 naddy Exp $
+# $OpenBSD: Makefile,v 1.219 2009/02/02 18:13:00 jasper Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR += abcde
@@ -31,14 +31,13 @@
      SUBDIR += freealut
      SUBDIR += gimmix
      SUBDIR += gmpc
-     SUBDIR += gmpc-autoplaylist
      SUBDIR += gmpc-lastfm
+     SUBDIR += gmpc-libnotify
      SUBDIR += gmpc-lyrics
      SUBDIR += gmpc-magnatune
-     SUBDIR += gmpc-qosd
+     SUBDIR += gmpc-osd
      SUBDIR += gmpc-serverstats
      SUBDIR += gmpc-shout
-     SUBDIR += gmpc-stopbutton
      SUBDIR += gmpccaa
      SUBDIR += gnomad2
      SUBDIR += gogo
@@ -140,6 +139,7 @@
      SUBDIR += py-eyed3
      SUBDIR += py-id3
      SUBDIR += py-mpd
+     SUBDIR += py-mutagen
      SUBDIR += py-ogg
      SUBDIR += py-tagger
      SUBDIR += py-xmms
@@ -161,7 +161,6 @@
      SUBDIR += soundtracker
      SUBDIR += soundtracker,esd
      SUBDIR += sox
-     SUBDIR += sox,mp3,vorbis
      SUBDIR += speex
      SUBDIR += squeezecenter
      SUBDIR += streamripper
@@ -176,10 +175,12 @@
      SUBDIR += tremor
      SUBDIR += tremor-tools
      SUBDIR += vagalume
+     SUBDIR += vamp-plugin-sdk
      SUBDIR += vlorb
      SUBDIR += vorbis-tools
      SUBDIR += vorbisgain
      SUBDIR += waveplay
+     SUBDIR += wavpack
      SUBDIR += wmix
      SUBDIR += wmmixer
      SUBDIR += wmmp
@@ -202,6 +203,7 @@
      SUBDIR += xmms-sid
      SUBDIR += xmms-speex
      SUBDIR += xmms-tremor
+     SUBDIR += xmms-wavpack
      SUBDIR += xmms-xf86audio
      SUBDIR += xmmsctrl
      SUBDIR += xmp

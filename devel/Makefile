@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.658 2008/12/30 16:15:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.675 2009/02/05 22:05:20 simon Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -72,6 +72,7 @@
      SUBDIR += doxygen
      SUBDIR += eclipse
      SUBDIR += ectags
+     SUBDIR += fasm
      SUBDIR += ffcall
      SUBDIR += flatzebra
      SUBDIR += flawfinder
@@ -109,6 +110,7 @@
      SUBDIR += hmake
      SUBDIR += horde
      SUBDIR += hs-newbinary
+     SUBDIR += hscolour
      SUBDIR += hudson
      SUBDIR += id-utils
      SUBDIR += idoc
@@ -121,9 +123,9 @@
      SUBDIR += jam
      SUBDIR += jdk
      SUBDIR += json-c
+     SUBDIR += json-glib
      SUBDIR += kdbg
      SUBDIR += lam
-     SUBDIR += lib765
      SUBDIR += libIDL
      SUBDIR += libJudy
      SUBDIR += libassetml
@@ -136,12 +138,12 @@
      SUBDIR += libconfuse
      SUBDIR += libdaemon
      SUBDIR += libdockapp
-     SUBDIR += libdsk
      SUBDIR += libdvdplay
      SUBDIR += libdvdread
      SUBDIR += libelf
      SUBDIR += libexecinfo
      SUBDIR += libfmt
+     SUBDIR += libftdi
      SUBDIR += libglade2
      SUBDIR += libglademm
      SUBDIR += libgsf
@@ -224,6 +226,7 @@
      SUBDIR += p5-Array-Window
      SUBDIR += p5-B-Deobfuscate
      SUBDIR += p5-B-Graph
+     SUBDIR += p5-B-Hooks-EndOfScope
      SUBDIR += p5-B-Keywords
      SUBDIR += p5-BFD
      SUBDIR += p5-BSD-Resource
@@ -252,6 +255,7 @@
      SUBDIR += p5-Class-Autouse
      SUBDIR += p5-Class-Base
      SUBDIR += p5-Class-C3
+     SUBDIR += p5-Class-C3-Adopt-NEXT
      SUBDIR += p5-Class-C3-Componentised
      SUBDIR += p5-Class-C3-XS
      SUBDIR += p5-Class-Classless
@@ -288,6 +292,7 @@
      SUBDIR += p5-Class-XPath
      SUBDIR += p5-Clone
      SUBDIR += p5-Config-Any
+     SUBDIR += p5-Config-Auto
      SUBDIR += p5-Config-General
      SUBDIR += p5-Config-Grammar
      SUBDIR += p5-Config-IniFiles
@@ -325,6 +330,7 @@
      SUBDIR += p5-DateTime-Format-ISO8601
      SUBDIR += p5-DateTime-Format-Mail
      SUBDIR += p5-DateTime-Format-MySQL
+     SUBDIR += p5-DateTime-Format-Natural
      SUBDIR += p5-DateTime-Format-Pg
      SUBDIR += p5-DateTime-Format-Strptime
      SUBDIR += p5-DateTime-Format-W3CDTF
@@ -390,6 +396,7 @@
      SUBDIR += p5-Fortran-Format
      SUBDIR += p5-FreezeThaw
      SUBDIR += p5-Getargs-Long
+     SUBDIR += p5-Getopt-Euclid
      SUBDIR += p5-Getopt-Simple
      SUBDIR += p5-Glib2
      SUBDIR += p5-Graph
@@ -547,6 +554,7 @@
      SUBDIR += p5-Test-Memory-Cycle
      SUBDIR += p5-Test-MockModule
      SUBDIR += p5-Test-MockObject
+     SUBDIR += p5-Test-MockTime
      SUBDIR += p5-Test-NoTabs
      SUBDIR += p5-Test-NoWarnings
      SUBDIR += p5-Test-Object
@@ -597,11 +605,13 @@
      SUBDIR += p5-Universal-moniker
      SUBDIR += p5-Universal-require
      SUBDIR += p5-VCP-autrijus
+     SUBDIR += p5-Variable-Magic
      SUBDIR += p5-Want
      SUBDIR += p5-WeakRef
      SUBDIR += p5-YAML
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-accessors
+     SUBDIR += p5-boolean
      SUBDIR += p5-capitalization
      SUBDIR += p5-enum
      SUBDIR += p5-libintl
@@ -609,6 +619,7 @@
      SUBDIR += p5-parent
      SUBDIR += p5-prefork
      SUBDIR += pango
+     SUBDIR += pangomm
      SUBDIR += pccts
      SUBDIR += pcre
      SUBDIR += pcre++
@@ -632,16 +643,19 @@
      SUBDIR += py-Checker
      SUBDIR += py-SOAPpy
      SUBDIR += py-asn1
+     SUBDIR += py-babel
      SUBDIR += py-buildbot
      SUBDIR += py-cheetah
      SUBDIR += py-configobj
      SUBDIR += py-ctypes
      SUBDIR += py-dateutil
      SUBDIR += py-decoratortools
+     SUBDIR += py-editdist
      SUBDIR += py-epsilon
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
      SUBDIR += py-gobject
+     SUBDIR += py-html5lib
      SUBDIR += py-kid
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
@@ -696,6 +710,8 @@
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
      SUBDIR += ruby-diff-lcs
+     SUBDIR += ruby-echoe
+     SUBDIR += ruby-extlib
      SUBDIR += ruby-fastthread
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin

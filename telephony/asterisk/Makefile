@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.46 2008/10/28 15:21:49 naddy Exp $
+# $OpenBSD: Makefile,v 1.49 2009/01/24 11:22:26 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-V=			1.4.22
+V=			1.4.22.2
 DISTNAME=		asterisk-$V
-FULLPKGNAME-main=	asterisk-$Vp0
+FULLPKGNAME-main=	asterisk-$V
 
 CATEGORIES=		telephony
 
@@ -13,9 +13,10 @@ HOMEPAGE=		http://www.asterisk.org/
 
 MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 
-# GPLv2 except iaxy.bin (freely redistributable, see LICENSE)
-# "Specific permission is also granted to link Asterisk with OpenSSL
-# and OpenH323 and distribute the resulting binary files."
+# Mostly GPL v2 (only). "Specific permission is also granted to link
+# Asterisk with OpenSSL and OpenH323 and distribute the resulting binary
+# files." iaxy.bin (firmware) is freely redistributable, see LICENSE.
+# core-sounds-en-gsm: GPLv2/CC-BY-SA, http://bugs.digium.com/view.php?id=10144
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
@@ -173,7 +174,7 @@ LIB_DEPENDS-main+=	h323::net/openh323 \
 			pt::devel/pwlib
 CONFIGURE_ARGS+=	--with-pwlib=${LOCALBASE}/lib \
 			--with-h323=${LOCALBASE}/lib
-WANTLIB-main+=		SDL avutil expat lber ldap ldap_r ossaudio sasl2
+WANTLIB-main+=		SDL avutil expat lber ldap ldap_r sasl2
 FULLPKGNAME-main=	asterisk-$Vp0-h323
 
 pre-build:

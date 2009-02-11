@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.165 2008/12/29 19:52:53 sturm Exp $
+# $OpenBSD: Makefile,v 1.169 2009/02/09 14:55:44 form Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
@@ -22,6 +22,7 @@
      SUBDIR += colortail
      SUBDIR += conky
      SUBDIR += contool
+     SUBDIR += d-feet
      SUBDIR += dmassage
      SUBDIR += dmidecode
      SUBDIR += duplicity
@@ -60,6 +61,7 @@
      SUBDIR += lsof
      SUBDIR += mac-robber
      SUBDIR += malo-firmware
+     SUBDIR += memtest86+
      SUBDIR += memtester
      SUBDIR += mencal
      SUBDIR += modlogan
@@ -82,6 +84,7 @@
      SUBDIR += p5-Proc-ProcessTable
      SUBDIR += p5-Proc-Queue
      SUBDIR += p5-Quota
+     SUBDIR += p5-Sys-Syscall
      SUBDIR += p5-UPS-Nut
      SUBDIR += p5-Unix-PID
      SUBDIR += p5-Unix-Statgrab
@@ -103,6 +106,7 @@
      SUBDIR += ruby-mongrel_cluster
      SUBDIR += ruby-puppet
      SUBDIR += ruby-rails-app-installer
+     SUBDIR += ruby-thor
      SUBDIR += ruby-vlad
      SUBDIR += runit
      SUBDIR += safecat

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2008/07/04 19:57:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.12 2009/02/09 20:48:23 naddy Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		Ruby interface to hyperestraier
 
 DISTNAME=		hyperestraier-1.4.13
-PKGNAME=		ruby-hyperestraier-1.0.0p7
+PKGNAME=		ruby-hyperestraier-1.0.0p9
 CATEGORIES=		textproc
 
 HOMEPAGE=		http://hyperestraier.sourceforge.net/

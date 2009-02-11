@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.142 2008/12/28 19:09:13 ratchov Exp $
+# $OpenBSD: Makefile,v 1.145 2009/02/08 20:25:09 naddy Exp $
 
 # May not be hard to add more.
 ONLY_FOR_ARCHS=		amd64 i386 powerpc sparc64 arm
@@ -9,7 +9,7 @@ V=			1.0rc2
 N=			mplayer
 DISTNAME=		MPlayer-${V}
 DIST_SUBDIR=		${N}
-PKGNAME=		${N}-${V}p16
+PKGNAME=		${N}-${V}p19
 CATEGORIES=		x11 multimedia
 EXTRACT_SUFX=		.tar.bz2
 
@@ -62,6 +62,8 @@ SUBST_VARS=	CONFDIR
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= simple
 CONFIGURE_ARGS+=--disable-alsa \
+		--disable-arts \
+		--disable-esd \
 		--disable-ossaudio \
 		--disable-nas \
 		--disable-liblzo \
@@ -105,28 +107,12 @@ CONFIGURE_ARGS+=--disable-ssse3
 CONFIGURE_ARGS+=--disable-altivec
 .endif
 
-FLAVORS=	arts esd sdl ggi debug mad no_x11 aa jack
+FLAVORS=	sdl ggi debug mad no_x11 aa jack
 FLAVOR?=
 
 .if ${MACHINE_ARCH:Marm}
 CONFIGURE_ARGS+=--disable-mp3lib
 FLAVOR+=	mad
-.endif
-
-.if ${FLAVOR:L:Marts}
-CONFIGURE_ARGS+=--enable-arts
-LIB_DEPENDS+=	artsc::x11/kde/arts3
-WANTLIB+=	glib-2.0 gmodule-2.0 gthread-2.0
-.else
-CONFIGURE_ARGS+=--disable-arts
-.endif
-
-.if ${FLAVOR:L:Mesd}
-CONFIGURE_ARGS+=--enable-esd
-LIB_DEPENDS+=	esd::audio/esound
-WANTLIB+=	audiofile
-.else
-CONFIGURE_ARGS+=--disable-esd
 .endif
 
 .if ${FLAVOR:L:Mno_x11}
@@ -148,9 +134,9 @@ USE_X11=	Yes
 LIB_DEPENDS+=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 WANTLIB+=	GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		Xfixes Xi Xinerama Xrandr Xrender Xv Xxf86dga Xxf86vm \
-		atk-1.0 cairo expat fontconfig freetype glib-2.0 glitz \
-		gmodule-2.0 gobject-2.0 pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1
+		atk-1.0 cairo expat fontconfig freetype gio-2.0 \
+		glib-2.0 glitz gmodule-2.0 gobject-2.0 pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pixman-1
 MODULES=	devel/gettext
 .endif
 

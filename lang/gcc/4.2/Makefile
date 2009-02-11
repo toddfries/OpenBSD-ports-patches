@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.23 2008/09/11 19:22:05 martynas Exp $
+# $OpenBSD: Makefile,v 1.27 2009/02/09 20:48:23 naddy Exp $
 
 ONLY_FOR_ARCHS=	alpha i386 m68k sparc sparc64 powerpc vax amd64
 #BROKEN=adjust for types changes
@@ -8,14 +8,14 @@ DATE=20070307
 FULL_VERSION=4.2-${DATE}
 FULL_PKGVERSION=4.2.${DATE}
 
-PKGNAME-main=  gcc-${FULL_PKGVERSION}p8
-PKGNAME-c++ =  g++-${FULL_PKGVERSION}p7
-PKGNAME-estdc= libstdc++-${FULL_PKGVERSION}p4
+PKGNAME-main=  gcc-${FULL_PKGVERSION}p11
+PKGNAME-c++ =  g++-${FULL_PKGVERSION}p9
+PKGNAME-estdc= libstdc++-${FULL_PKGVERSION}p6
 PKGNAME-g77=   g77-${FULL_PKGVERSION}p4
-PKGNAME-f95=   g95-${FULL_PKGVERSION}p7
+PKGNAME-f95=   g95-${FULL_PKGVERSION}p8
 PKGNAME-java=  gcj-${FULL_PKGVERSION}p3
-PKGNAME-objc=  gobjc-${FULL_PKGVERSION}p7
-PKGNAME-ada=   gnat-${FULL_PKGVERSION}p6
+PKGNAME-objc=  gobjc-${FULL_PKGVERSION}p8
+PKGNAME-ada=   gnat-${FULL_PKGVERSION}p7
 SHARED_LIBS=	estdc++		8.0 \
 		gfortran	2.0 \
 		-org-w3c-dom	1.0 \
@@ -55,7 +55,6 @@ REGRESS_DEPENDS=::devel/dejagnu
 
 
 DISTNAME=   	gcc-${FULL_VERSION}
-
 
 
 MASTER_SITES=	${MASTER_SITE_GCC:=snapshots/$(FULL_VERSION)/}
@@ -131,16 +130,12 @@ CONFIGURE_ARGS+= \
 	--with-ld=/usr/bin/ld \
 	--with-gnu-ld \
 	--with-gnu-as \
+	--enable-sjlj-exceptions \
 	--enable-languages=${LANGS}
 
 # This is needed, as internal cpp is no longer compatible with the
 # visible beast
 CONFIGURE_ARGS+=--enable-cpp
-
-.if ${FLAVOR:L:Mjava}
-CONFIGURE_ARGS+=--enable-sjlj-exceptions
-.endif
-
 
 # if you wish to try your luck
 #CONFIGURE_ARGS+= --enable-threads=posix
@@ -174,7 +169,7 @@ PKG_ARGS+=-DPPC=1
 .else
 PKG_ARGS+=-DPPC=0
 .endif
-.if ${MACHINE_ARCH} == "i386"
+.if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64"
 PKG_ARGS+=-DI386=1
 .else
 PKG_ARGS+=-DI386=0
@@ -184,6 +179,7 @@ RUN_DEPENDS=		:gcc-${FULL_PKGVERSION}:${PKGPATH}
 WANTLIB=		c
 
 RUN_DEPENDS-main=
+RUN_DEPENDS-estdc=
 
 RUN_DEPENDS-c++ =	${RUN_DEPENDS} ::${PKGPATH},-estdc
 WANTLIB-estdc=		c m
@@ -194,4 +190,3 @@ LIB_DEPENDS-f95=	gmp:gmp->=4.2:devel/gmp \
 LIB_DEPENDS-java=	gc::devel/boehm-gc
 
 .include <bsd.port.mk>
-

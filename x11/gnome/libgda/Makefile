@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2008/11/29 12:53:51 jasper Exp $
-
-# XXX: use system sqlite3
+# $OpenBSD: Makefile,v 1.7 2009/02/05 09:50:31 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -14,12 +12,12 @@ COMMENT-tds=		FreeTDS backend for libgda
 GNOME_PROJECT=		libgda
 GNOME_VERSION=		3.1.5
 
-PKGNAME-main=		${DISTNAME}p1
-PKGNAME-ldap=		libgda-ldap-${GNOME_VERSION}p1
-PKGNAME-mdb=		libgda-mdb-${GNOME_VERSION}p1
-PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}p1
-PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}p1
-PKGNAME-tds=		libgda-tds-${GNOME_VERSION}
+PKGNAME-main=		${DISTNAME}p4
+PKGNAME-ldap=		libgda-ldap-${GNOME_VERSION}p3
+PKGNAME-mdb=		libgda-mdb-${GNOME_VERSION}p3
+PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}p3
+PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}p3
+PKGNAME-tds=		libgda-tds-${GNOME_VERSION}p1
 
 CATEGORIES=		databases
 
@@ -57,7 +55,8 @@ MULTI_PACKAGES=		-main
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			xslt::textproc/libxslt \
-			db.>=5::databases/db/v4
+			db:db-4.*:databases/db/v4 \
+			sqlite3::databases/sqlite
 
 LIB_DEPENDS=		gcrypt::security/libgcrypt \
 			gnomevfs-2::x11/gnome/vfs2
@@ -71,7 +70,6 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-bdb="${LOCALBASE}" \
 			--without-firebird \
 			--without-ibmdb2 \
-			--without-mSQL \
 			--without-odbc \
 			--without-oracle \
 			--without-sybase \
@@ -88,7 +86,7 @@ CONFIGURE_ARGS+=	--without-tds
 CONFIGURE_ARGS+=	--without-ldap
 .else
 MULTI_PACKAGES+=	-ldap
-WANTLIB-ldap=		${WANTLIB} asn1 com_err db gssapi krb5 sasl2
+WANTLIB-ldap=		${WANTLIB} asn1 com_err db gssapi krb5 sasl2 sqlite3
 LIB_DEPENDS-ldap=	${LIB_DEPENDS} \
 			gda-3.0,gdasql-3.0::x11/gnome/libgda \
 			lber.>=9,ldap::databases/openldap
@@ -99,7 +97,7 @@ CONFIGURE_ARGS+=	--with-ldap="${LOCALBASE}"
 CONFIGURE_ARGS+=	--without-mdb
 .else
 MULTI_PACKAGES+=	-mdb
-WANTLIB-mdb=		${WANTLIB} db
+WANTLIB-mdb=		${WANTLIB} db sqlite3
 LIB_DEPENDS-mdb=	${LIB_DEPENDS} \
 			gda-3.0,gdasql-3.0::x11/gnome/libgda \
 			mdb.>=1::databases/mdbtools/snapshot
@@ -110,7 +108,7 @@ CONFIGURE_ARGS+=	--with-mdb="${LOCALBASE}"
 CONFIGURE_ARGS+=	--without-mysql
 .else
 MULTI_PACKAGES+=	-mysql
-WANTLIB-mysql=		${WANTLIB} db
+WANTLIB-mysql=		${WANTLIB} db sqlite3
 LIB_DEPENDS-mysql=	${LIB_DEPENDS} \
 			gda-3.0,gdasql-3.0::x11/gnome/libgda \
 			mysqlclient::databases/mysql
@@ -121,7 +119,7 @@ CONFIGURE_ARGS+=	--with-mysql="${LOCALBASE}"
 CONFIGURE_ARGS+=	--without-postgresql
 .else
 MULTI_PACKAGES+=	-pgsql
-WANTLIB-pgsql=		${WANTLIB} db
+WANTLIB-pgsql=		${WANTLIB} db sqlite3
 LIB_DEPENDS-pgsql=	${LIB_DEPENDS} \
 			gda-3.0,gdasql-3.0::x11/gnome/libgda \
 			pq::databases/postgresql
@@ -132,7 +130,7 @@ CONFIGURE_ARGS+=	--with-postgres="${LOCALBASE}"
 CONFIGURE_ARGS+=	--without-tds
 .else
 MULTI_PACKAGES+=	-tds
-WANTLIB-tds=		${WANTLIB} db
+WANTLIB-tds=		${WANTLIB} db sqlite3
 LIB_DEPENDS-tds=        ${LIB_DEPENDS} \
                         gda-3.0,gdasql-3.0::x11/gnome/libgda \
                         tds::databases/freetds

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2008/12/31 15:40:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2009/02/02 15:13:08 ajacoutot Exp $
 
 COMMENT=		GNOME settings daemon
 
 GNOME_PROJECT=		gnome-settings-daemon
 GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p2
+PKGNAME=		${DISTNAME}p5
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -14,15 +14,15 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender Xxf86misc art_lgpl_2 atk-1.0 audiofile \
+		Xrender Xxf86misc art_lgpl_2 atk-1.0 \
 		bonobo-2 bonobo-activation bonoboui-2 c cairo crypto \
-		dbus-1 dbus-glib-1 esd expat fontconfig freetype \
+		dbus-1 dbus-glib-1 expat fontconfig freetype \
 		gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
 		glade-2.0 glib-2.0 glitz gmodule-2.0 gnome-2 \
 		gnome-keyring gnomecanvas-2 gnomeui-2 gnomevfs-2 \
 		gobject-2.0 gstbase-0.10 gstreamer-0.10 gthread-2.0 \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pcre pixman-1 png popt pthread sndio ssl \
+		pcre pixman-1 png popt pthread ssl \
 		startup-notification-1 util xkbfile xklavier xml2 z
 
 MODULES=		devel/gettext \
@@ -42,7 +42,7 @@ CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/control-center2 \
 			--disable-schemas-install \
 			--disable-alsa \
-			--enable-esd
+			--disable-esd
 
 # We can't have both OSS and GStreamer support for the media-keys plugin.
 # We choose for GStreamer.
@@ -50,5 +50,8 @@ CONFIGURE_ARGS+=	--enable-gstreamer
 
 post-patch:
 	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/gnome-settings-daemon/gnome-settings-module.c
 
 .include <bsd.port.mk>
