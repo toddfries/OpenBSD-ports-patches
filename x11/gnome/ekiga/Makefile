@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.12 2009/01/30 11:30:42 sturm Exp $
+# $OpenBSD: Makefile,v 1.14 2009/02/11 15:47:50 jasper Exp $
 
 COMMENT=	SIP and H.323 compatible conferencing application
 
 GNOME_PROJECT=	ekiga
 GNOME_VERSION=	2.0.12
-PKGNAME=	${DISTNAME}p10
+PKGNAME=	${DISTNAME}p12
 
 CATEGORIES=	net multimedia
 
 HOMEPAGE=	http://www.ekiga.org/
-
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes

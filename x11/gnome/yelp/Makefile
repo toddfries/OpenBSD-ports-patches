@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.34 2009/01/20 23:13:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2009/02/11 15:47:52 jasper Exp $
 
 COMMENT=		GNOME help browser
 
 GNOME_PROJECT=		yelp
 GNOME_VERSION=		2.24.0
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p2
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes

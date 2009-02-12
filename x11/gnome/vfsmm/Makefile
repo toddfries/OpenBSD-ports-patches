@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2009/01/14 10:42:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/02/11 15:47:52 jasper Exp $
 
 COMMENT=		C++ interface to gnome-vfs
 
 GNOME_PROJECT=		gnome-vfsmm
 GNOME_VERSION=		2.24.0
 SHARED_LIBS=		gnomevfsmm-2.6	1.0	# .1.9
+PKGNAME=		${DISTNAME}p1
 
 HOMEPAGE=		http://www.gtkmm.org/
 
