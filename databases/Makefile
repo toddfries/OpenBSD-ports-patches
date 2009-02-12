@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.152 2008/10/30 00:03:42 pirofti Exp $
+# $OpenBSD: Makefile,v 1.156 2009/02/06 22:03:55 simon Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
@@ -32,6 +32,7 @@
      SUBDIR += openldap
      SUBDIR += p5-AsciiDB-TagFile
      SUBDIR += p5-BerkeleyDB
+     SUBDIR += p5-CGI-Application-Plugin-DBH
      SUBDIR += p5-Catalyst-Controller-Rose
      SUBDIR += p5-Catalyst-Model-CDBI
      SUBDIR += p5-Catalyst-Model-DBI
@@ -130,10 +131,15 @@
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += ruby-activerecord
      SUBDIR += ruby-bdb
+     SUBDIR += ruby-datamapper
+     SUBDIR += ruby-data_objects
+     SUBDIR += ruby-do_sqlite3
+     SUBDIR += ruby-kirbybase
      SUBDIR += ruby-ldap
      SUBDIR += ruby-mysql
      SUBDIR += ruby-pg
      SUBDIR += ruby-postgres
+     SUBDIR += ruby-sequel
      SUBDIR += ruby-sqlite3
      SUBDIR += sharedance
      SUBDIR += skytools

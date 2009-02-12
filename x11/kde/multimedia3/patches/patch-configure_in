@@ -1,4 +1,4 @@
-$OpenBSD: patch-configure_in,v 1.32 2008/04/13 09:48:57 espie Exp $
+$OpenBSD: patch-configure_in,v 1.33 2009/01/29 22:37:21 jakemsr Exp $
 --- configure.in.orig	Wed Feb 13 16:06:50 2008
 +++ configure.in	Sun Apr 13 06:31:48 2008
 @@ -164,22 +164,22 @@ AC_DEFUN([KDE_CHECK_OGGVORBIS],

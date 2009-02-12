@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.552 2008/12/30 13:59:10 pirofti Exp $
+# $OpenBSD: Makefile,v 1.562 2009/02/09 09:42:02 simon Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -88,6 +88,7 @@
      SUBDIR += fmirror
      SUBDIR += fping
      SUBDIR += freeradius
+     SUBDIR += freetalk
      SUBDIR += ftpcopy
      SUBDIR += ftpsesame
      SUBDIR += gajim
@@ -128,6 +129,8 @@
      SUBDIR += ipsvd
      SUBDIR += ipv6calc
      SUBDIR += irc
+     SUBDIR += ircd-hybrid
+     SUBDIR += ircd-ratbox
      SUBDIR += ircII
      SUBDIR += irssi
      SUBDIR += irssi,socks
@@ -219,11 +222,12 @@
      SUBDIR += osrtspproxy
      SUBDIR += p5-Chatbot-Eliza
      SUBDIR += p5-DNS-ZoneParse
+     SUBDIR += p5-Danga-Socket
      SUBDIR += p5-Event-RPC
      SUBDIR += p5-Filesys-Virtual-DAAP
      SUBDIR += p5-Geo-IP
-     SUBDIR += p5-IO-INET6
      SUBDIR += p5-IO-Interface
+     SUBDIR += p5-IO-Socket-INET6
      SUBDIR += p5-IO-Socket-Multicast
      SUBDIR += p5-Net-Amazon
      SUBDIR += p5-Net-BGP
@@ -251,6 +255,7 @@
      SUBDIR += p5-Net-IRC
      SUBDIR += p5-Net-Jabber
      SUBDIR += p5-Net-MySQL
+     SUBDIR += p5-Net-Netmask
      SUBDIR += p5-Net-ParseWhois
      SUBDIR += p5-Net-Patricia
      SUBDIR += p5-Net-Pcap
@@ -261,6 +266,7 @@
      SUBDIR += p5-Net-SFTP
      SUBDIR += p5-Net-SNMP
      SUBDIR += p5-Net-SNPP
+     SUBDIR += p5-Net-SSH-Expect
      SUBDIR += p5-Net-SSH-Perl
      SUBDIR += p5-Net-SSH2
      SUBDIR += p5-Net-Snort-Parser
@@ -316,6 +322,7 @@
      SUBDIR += pfstat
      SUBDIR += pidgin
      SUBDIR += pidgin,gtkspell
+     SUBDIR += pidgin-facebookchat
      SUBDIR += pidgin-icb
      SUBDIR += pidgin-tlen
      SUBDIR += pktstat
@@ -328,6 +335,7 @@
      SUBDIR += powerdns
      SUBDIR += proxy-suite
      SUBDIR += psi
+     SUBDIR += ptpd
      SUBDIR += pure-ftpd
      SUBDIR += pure-ftpd,ldap
      SUBDIR += pure-ftpd,mysql
@@ -443,6 +451,7 @@
      SUBDIR += weex
      SUBDIR += wget
      SUBDIR += wide-dhcp
+     SUBDIR += wide-dhcpv6
      SUBDIR += winexe
      SUBDIR += wmifinfo
      SUBDIR += wmnet

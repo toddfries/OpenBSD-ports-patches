@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.59 2008/08/28 08:52:00 espie Exp $
+# $OpenBSD: Makefile,v 1.60 2009/01/29 22:28:58 jakemsr Exp $
 
 COMMENT = 		K Desktop Environment, multimedia applications
 CATEGORIES =		x11 x11/kde

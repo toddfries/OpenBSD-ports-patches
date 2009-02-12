@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.17 2008/11/05 18:28:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2009/02/02 11:19:21 sthen Exp $
 
 COMMENT=		fixed width fonts especially for long hacking sessions
 
 DISTNAME=		terminus-font-4.28
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		x11
 
 HOMEPAGE=		http://www.is-vn.bg/hamster/
+DISTFILES=		${DISTNAME}.tar.gz
 
 MAINTAINER=		Victor Sahlstedt <salan@legonet.org>
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -21,9 +23,19 @@ CONFIGURE_STYLE=	simple
 NO_REGRESS=		Yes
 USE_X11=		Yes
 
-ALL_TARGET=		pcf
+ALL_TARGET=		n12
 
 FONTDIR=		${PREFIX}/lib/X11/fonts/terminus
+
+FLAVORS=		symquotes
+FLAVOR?=
+
+.if ${FLAVOR:L:Msymquotes}
+DISTFILES+=		${DISTNAME}-gq2.diff.gz
+
+post-patch:
+	${PATCH} -d ${WRKSRC} < ${WRKDIR}/${DISTNAME}-gq2.diff
+.endif
 
 do-install:
 	${GZIP_CMD} ${WRKSRC}/*.pcf

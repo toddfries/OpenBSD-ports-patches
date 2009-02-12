@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2008/12/09 23:34:29 martynas Exp $
+# $OpenBSD: Makefile,v 1.16 2009/01/29 22:28:58 jakemsr Exp $
 
 COMMENT= 		billiard game
 CATEGORIES=		x11 x11/kde games

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.39 2008/11/11 13:56:03 kevlo Exp $
+# $OpenBSD: Makefile,v 1.41 2009/02/03 12:30:57 pirofti Exp $
 
      SUBDIR += arc
      SUBDIR += bzip
      SUBDIR += bzip2
      SUBDIR += cabextract
+     SUBDIR += deco
      SUBDIR += fastjar
      SUBDIR += freeze
      SUBDIR += gcpio
@@ -30,6 +31,7 @@
      SUBDIR += par2cmdline
      SUBDIR += rar
      SUBDIR += ripole
+     SUBDIR += ruby-archive-tar-minitar
      SUBDIR += rzip
      SUBDIR += star
      SUBDIR += star,static

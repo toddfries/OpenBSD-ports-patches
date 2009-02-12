@@ -1,15 +1,18 @@
-# $OpenBSD: Makefile,v 1.19 2008/10/26 19:07:57 sthen Exp $
+# $OpenBSD: Makefile,v 1.22 2009/01/26 12:46:12 sthen Exp $
 
 COMMENT=	toolkit for the development of SILC applications
 
-DISTNAME=	silc-toolkit-1.1.8
+DISTNAME=	silc-toolkit-1.1.9
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	devel
-SHARED_LIBS=	silc		8.0	\
-		silcclient	6.0	\
-
 MASTER_SITES=	http://www.silcnet.org/download/toolkit/sources/
 
+SHARED_LIBS=	silc		9.0	\
+		silcclient	7.0	\
+
 HOMEPAGE=	http://www.silcnet.org/software/developers/toolkit/
+
+MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=   Yes
@@ -22,15 +25,14 @@ BUILD_DEPENDS+= :yasm-*:devel/yasm
 .endif
 
 USE_LIBTOOL=	Yes
-CONFIGURE_STYLE=gnu
+CONFIGURE_STYLE= autoconf
+AUTOCONF_VERSION= 2.61
 .if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "i386"
 CONFIGURE_ENV+= ac_cv_path_NASM=no YASM=${LOCALBASE}/bin/yasm
 .endif
 CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
-		--enable-ipv6 \
 		--docdir=${PREFIX}/share/doc/silc \
-		--includedir=${PREFIX}/include/silc \
-		--without-libtoolfix
+		--includedir=${PREFIX}/include/silc
 
 .if ${MACHINE_ARCH} != "amd64" && ${MACHINE_ARCH} != "i386"
 CONFIGURE_ARGS+=--disable-asm

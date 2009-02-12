@@ -1,17 +1,18 @@
-# $OpenBSD: Makefile,v 1.42 2008/12/12 16:14:57 giovanni Exp $
+# $OpenBSD: Makefile,v 1.45 2009/02/02 18:32:20 giovanni Exp $
 
 COMMENT=	GNU Image Manipulation Program
 
-DISTNAME=	gimp-2.6.3
-SHARED_LIBS=	gimp-2.0	263.0	\
-		gimpbase-2.0	263.0	\
-		gimpcolor-2.0	263.0	\
-		gimpconfig-2.0	263.0	\
-		gimpmath-2.0	263.0	\
-		gimpmodule-2.0	263.0	\
-		gimpthumb-2.0	263.0	\
-		gimpui-2.0	263.0	\
-		gimpwidgets-2.0	263.0
+DISTNAME=	gimp-2.6.4
+PKGNAME=	${DISTNAME}p0
+SHARED_LIBS=	gimp-2.0	264.0	\
+		gimpbase-2.0	264.0	\
+		gimpcolor-2.0	264.0	\
+		gimpconfig-2.0	264.0	\
+		gimpmath-2.0	264.0	\
+		gimpmodule-2.0	264.0	\
+		gimpthumb-2.0	264.0	\
+		gimpui-2.0	264.0	\
+		gimpwidgets-2.0	264.0
 
 CATEGORIES=	graphics
 MAINTAINER=	Giovanni Bechis <giovanni@openbsd.org>
@@ -26,6 +27,7 @@ HOMEPAGE=	http://www.gimp.org/
 EXTRACT_SUFX=	.tar.bz2
 
 BUILD_DEPENDS=	::textproc/libxslt
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		aa.>=1.3::graphics/aalib \
 		dbus-glib-1::x11/dbus-glib \

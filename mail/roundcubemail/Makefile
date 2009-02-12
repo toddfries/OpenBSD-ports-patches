@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2008/09/22 13:53:02 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2009/02/10 10:08:34 sthen Exp $
 
 COMMENT =	imap4 webmail client
 
-DISTNAME =	roundcubemail-0.2-beta
-PKGNAME =	roundcubemail-0.2b
+DISTNAME =	roundcubemail-0.2-stable
+PKGNAME =	roundcubemail-0.2sp2
 CATEGORIES =	mail www
 HOMEPAGE =	http://www.roundcube.net/
 
@@ -31,6 +31,5 @@ do-install:
 	@cp -Rp ${WRKDIST} ${INSTDIR}
 	@chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 	@find ${INSTDIR} -name \*.orig -exec rm -f {} \;
-	@rm -rf ${INSTDIR}/installer
 
 .include <bsd.port.mk>

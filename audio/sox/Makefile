@@ -1,45 +1,84 @@
-# $OpenBSD: Makefile,v 1.37 2008/07/08 15:03:37 naddy Exp $
+# $OpenBSD: Makefile,v 1.40 2009/01/16 16:42:56 ratchov Exp $
 
-COMMENT=	SOund eXchange - universal sound sample translator
+COMMENT=	Sound eXchange, the Swiss Army knife of audio manipulation
 
-DISTNAME=	sox-12.18.2
-PKGNAME=	${DISTNAME}	# also see below
+DISTNAME=	sox-14.2.0
+PKGNAME=	${DISTNAME}p1
+SHARED_LIBS +=  sox                  0.0      # .0.0
+SHARED_LIBS +=  sfx                  0.0      # .0.0
 CATEGORIES=	audio
 HOMEPAGE=	http://sox.sourceforge.net/
 
-MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
-
-# gsm library has bad license
+# GPLv2, but the included gsm library was originally distributed with an
+# incomplete license.
 PERMIT_PACKAGE_CDROM=	no redistribution
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	no redistribution
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c m
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=sox/}
 
-CONFIGURE_STYLE=gnu dest
-CONFIGURE_ARGS=	--disable-oss-dsp
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-MAKE_ENV=	PLAY_SUPPORT=1
+# see CONFIGURE_ARGS below
+LIB_DEPENDS=	vorbis.>=6,vorbisenc.>=2,vorbisfile.>=5::audio/libvorbis \
+		FLAC.>=9::audio/flac \
+		magic.>=1::devel/libmagic \
+		mad.>=2::audio/libmad \
+		id3tag.>=3::audio/libid3tag \
+		mp3lame.>=2::audio/lame \
+		wavpack.>=0::audio/wavpack \
+		png.>=8::graphics/png \
+		samplerate.>=2::audio/libsamplerate
+WANTLIB=	c iconv m ogg sndio z
 
-FLAVORS=	mp3 vorbis
-FLAVOR?=
+AUTOCONF_VERSION=2.62	# 2.63
+AUTOMAKE_VERSION=1.9	# 1.10
+USE_LIBTOOL=	Yes
+CONFIGURE_STYLE=autoconf automake
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--disable-silent-libtool
 
-.if ${FLAVOR:L:Mvorbis}
-LIB_DEPENDS+=	vorbis.>=3,vorbisenc.>=2,vorbisfile.>=4::audio/libvorbis
-WANTLIB+=	ogg
-.else
-CONFIGURE_ARGS+= --disable-ogg-vorbis
-.endif
+# Don't use modules
+CONFIGURE_ARGS+=--without-libltdl
 
-.if ${FLAVOR:L:Mmp3}
-PKGNAME=	${DISTNAME}p0
-LIB_DEPENDS+=	mad.>=2::audio/libmad mp3lame::audio/lame
-.else
-CONFIGURE_ARGS+= --disable-mad --disable-lame
-.endif
+# Sound drivers
+CONFIGURE_ARGS+=--disable-libao \
+		--disable-oss \
+		--enable-sndio \
+		--disable-sun-audio
+
+# Additional file formats
+CONFIGURE_ARGS+=--without-sndfile \
+		--with-ogg \
+		--with-flac \
+		--without-ffmpeg \
+		--with-magic \
+		--with-mad \
+		--with-id3tag \
+		--with-lame \
+		--without-amr-wb \
+		--without-amr-nb \
+		--with-wavpack \
+		--with-png \
+		--with-samplerate \
+		--without-ladspa
+
+CONFIGURE_ENV= \
+	CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
+	LDFLAGS="-L${WRKBUILD}/src/.libs -L${LOCALBASE}/lib"
+
+post-extract:
+	@cp ${FILESDIR}/sndio.c ${WRKSRC}/src
+
+AUTO_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
+
+post-patch:
+	@echo "Running aclocal-${AUTOMAKE_VERSION} in ${WRKSRC}"
+	@cd ${WRKSRC}; ${AUTO_ENV} aclocal -I m4
+
+pre-configure:
+	@echo "Running automake-${AUTOMAKE_VERSION} in ${WRKSRC}"
+	@cd ${WRKSRC}; ${AUTO_ENV} automake --foreign
 
 do-regress:
 	@cd ${WRKSRC}/src && ./tests.sh && ./testall.sh

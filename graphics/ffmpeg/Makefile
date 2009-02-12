@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.42 2008/12/13 02:58:00 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.45 2009/01/29 11:30:27 sthen Exp $
 
 COMMENT=	audio/video converter and streamer with bktr(4) support
 
 V=			20080620
 DISTNAME=		ffmpeg-svn-${V}
-PKGNAME=		ffmpeg-${V}p5
+PKGNAME=		ffmpeg-${V}p7
 SHARED_LIBS=		avutil		6.0 \
 			avcodec		13.0 \
 			avformat	12.0 \
@@ -111,6 +111,10 @@ MAKE_FLAGS=		${VERSION_FLAGS} \
 
 FAKE_FLAGS=		${VERSION_FLAGS} \
 			LDCONFIG=true
+
+.ifdef DEBUG
+CONFIGURE_ARGS+=	--disable-stripping
+.endif
 
 # regression tests incompatible with libswscale
 #REGRESS_TARGET=	codectest

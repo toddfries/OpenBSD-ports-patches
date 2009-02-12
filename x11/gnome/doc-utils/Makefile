@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2008/12/17 18:47:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.19 2009/02/11 15:47:50 jasper Exp $
 
 COMMENT=	collection of documentation utilities for the GNOME project
 
 GNOME_PROJECT=	gnome-doc-utils
-GNOME_VERSION=	0.10.3
-PKGNAME=	${DISTNAME}p7
+GNOME_VERSION=	0.14.2
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	textproc
 
 # (L)GPLv2
@@ -16,11 +16,12 @@ PERMIT_DISTFILES_FTP=	Yes
 MODULES=	lang/python \
 		x11/gnome
 
-BUILD_DEPENDS=	:py-libxml-*:textproc/libxml,-python \
-		:libxslt-*:textproc/libxslt \
-		:docbook-*:textproc/docbook
-RUN_DEPENDS=	:py-libxml-*:textproc/libxml,-python \
-		:libxslt-*:textproc/libxslt \
+BUILD_DEPENDS=	${RUN_DEPENDS} \
+		:docbook-*:textproc/docbook \
+		::sysutils/ggrep
+RUN_DEPENDS=	::devel/gettext \
+		:py-libxml-*:textproc/libxml,-python \
+		:libxslt-*:textproc/libxslt,-python \
 		::textproc/rarian
 
 USE_LIBTOOL=	No

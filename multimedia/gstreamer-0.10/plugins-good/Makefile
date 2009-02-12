@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2008/11/03 23:24:08 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.32 2009/02/05 20:32:08 sthen Exp $
 
 COMMENT-main =		multimedia framework - good plugins
 COMMENT-aalib =		multimedia framework - aalib plugin
@@ -15,28 +15,30 @@ COMMENT-gdk =		multimedia framework - gdk pixbuf plugin
 COMMENT-caca =		multimedia framework - libcaca plugin
 COMMENT-shout =		multimedia framework - shoutcast plugin
 COMMENT-soup =		multimedia framework - libsoup plugin
+COMMENT-wavpack =	multimedia framework - wavpack plugin
 
 V =			0.10.8
 DISTNAME =		gst-plugins-good-$V
-PKGNAME-main =		gstreamer-plugins-good-$Vp5
+PKGNAME-main =		gstreamer-plugins-good-$Vp9
 PKGNAME-aalib =		gstreamer-aalib-$Vp0
 PKGNAME-cairo =		gstreamer-cairo-$Vp1
-PKGNAME-gconf =		gstreamer-confelements-$Vp0
-PKGNAME-esd =		gstreamer-esd-$Vp0
+PKGNAME-gconf =		gstreamer-confelements-$Vp1
+PKGNAME-esd =		gstreamer-esd-$Vp1
 PKGNAME-flac =		gstreamer-flac-$Vp0
 PKGNAME-speex =		gstreamer-speex-$Vp0
 PKGNAME-taglib =	gstreamer-taglib-$Vp0
 PKGNAME-dv =		gstreamer-dv-$Vp0
 PKGNAME-jpeg =		gstreamer-jpeg-$Vp0
 PKGNAME-png =		gstreamer-png-$Vp0
-PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp1
+PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp2
 PKGNAME-caca =		gstreamer-libcaca-$Vp0
 PKGNAME-shout =		gstreamer-shoutcast-$Vp0
-PKGNAME-soup =		gstreamer-libsoup-$Vp0
-
+PKGNAME-soup =		gstreamer-libsoup-$Vp1
+PKGNAME-wavpack =	gstreamer-wavpack-$V
 
 MULTI_PACKAGES =	-main -aalib -cairo -gconf -esd -flac -speex \
-			-taglib -dv -jpeg -png -gdk -caca -shout -soup
+			-taglib -dv -jpeg -png -gdk -caca -shout -soup \
+			-wavpack
 SHARED_LIBS =
 
 MASTER_SITES =		${MASTER_SITE_GST:=gst-plugins-good/}
@@ -50,7 +52,7 @@ WANTLIB =		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
 LIB_DEPENDS =		gstreamer-0.10:gstreamer->=0.10:$P/core
 
 WANTLIB-main =		${WANTLIB} \
-			ICE SM X11 Xdamage Xext Xfixes ossaudio sndio \
+			ICE SM X11 Xdamage Xext Xfixes sndio \
 			gstcontroller-0.10 gstbase-0.10 Xau Xdmcp
 LIB_DEPENDS-main =	${LIB_DEPENDS} \
 			oil-0.3::devel/liboil \
@@ -69,12 +71,12 @@ LIB_DEPENDS-cairo =	${LIB_DEPENDS} \
 			cairo::graphics/cairo
 
 WANTLIB-gconf =		${WANTLIB} \
-			ORBit-2
+			ORBit-2 dbus-1 dbus-glib-1
 LIB_DEPENDS-gconf =	${LIB_DEPENDS} \
 			gconf-2::devel/gconf2
 
 WANTLIB-esd =		${WANTLIB} \
-			audiofile gstbase-0.10
+			audiofile gstbase-0.10 sndio
 
 LIB_DEPENDS-esd=	${LIB_DEPENDS} \
 			esd::audio/esound \
@@ -120,7 +122,7 @@ LIB_DEPENDS-png =	${LIB_DEPENDS} \
 
 WANTLIB-gdk =		${WANTLIB} \
 			X11 Xcomposite Xdamage Xext Xrender atk-1.0 \
-			cairo fontconfig freetype glitz pango-1.0 \
+			cairo fontconfig freetype gio-2.0 glitz pango-1.0 \
 			pangocairo-1.0 pangoft2-1.0 pixman-1 png gstbase-0.10 \
 			Xau Xcursor Xdmcp Xfixes Xi Xinerama Xrandr expat
 
@@ -143,10 +145,17 @@ LIB_DEPENDS-shout =	${LIB_DEPENDS} \
 			shout::net/libshout
 
 WANTLIB-soup =		${WANTLIB} \
-			gio-2.0 gstbase-0.10 gsttag-0.10
+			gcrypt gio-2.0 gnutls gpg-error gstbase-0.10 \
+			tasn1 gsttag-0.10
 
 LIB_DEPENDS-soup =	${LIB_DEPENDS} \
 			soup-2.4::devel/libsoup
+
+WANTLIB-wavpack =	${WANTLIB}
+
+LIB_DEPENDS-wavpack =	${LIB_DEPENDS} \
+			wavpack::audio/wavpack \
+			gstaudio-0.10,gstbase-0.10,gstinterfaces-0.10::$P/plugins-base
 
 BUILD_DEPENDS +=	${MODGNU_AUTOCONF_DEPENDS} \
 			${MODGNU_AUTOMAKE_DEPENDS} 

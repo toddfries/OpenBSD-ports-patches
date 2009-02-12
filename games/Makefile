@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.182 2008/11/17 18:23:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.187 2009/02/11 13:31:41 sthen Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -52,6 +52,7 @@
      SUBDIR += freedroid
      SUBDIR += freedroidrpg
      SUBDIR += frotz
+     SUBDIR += gargoyle
      SUBDIR += gcompris
      SUBDIR += gemdropx
      SUBDIR += ggz
@@ -93,6 +94,7 @@
      SUBDIR += netris
      SUBDIR += neverball
      SUBDIR += newvox
+     SUBDIR += numptyphysics
      SUBDIR += oilwar
      SUBDIR += omega
      SUBDIR += openarena
@@ -115,6 +117,7 @@
      SUBDIR += sdlzombies
      SUBDIR += singularity
      SUBDIR += ski
+     SUBDIR += sl
      SUBDIR += slash
      SUBDIR += slash,no_x11
      SUBDIR += slash-em
@@ -128,6 +131,7 @@
      SUBDIR += sudoku
      SUBDIR += sudoku-solver
      SUBDIR += taxipilot
+     SUBDIR += teeworlds
      SUBDIR += toppler
      SUBDIR += tornado
      SUBDIR += tetrinetx
@@ -190,7 +194,6 @@
      SUBDIR += xscorch
      SUBDIR += xscrabble
      SUBDIR += xskat
-     SUBDIR += xsol
      SUBDIR += xsoldier
      SUBDIR += xteddy
      SUBDIR += xwelltris

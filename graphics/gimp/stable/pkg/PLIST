@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.18 2008/12/12 16:14:57 giovanni Exp $
+@comment $OpenBSD: PLIST,v 1.21 2009/02/02 18:32:20 giovanni Exp $
 @pkgpath ${BASE_PKGPATH},altivec
 %%SHARED%%
 bin/gimp
@@ -492,7 +492,6 @@ lib/pkgconfig/gimpui-2.0.pc
 @man man/man5/gimprc-2.6.5
 @man man/man5/gimprc.5
 share/aclocal/gimp-2.0.m4
-share/applications/
 share/applications/gimp.desktop
 share/examples/gimp/
 share/examples/gimp/2.0/
@@ -2131,6 +2130,9 @@ share/locale/sv/LC_MESSAGES/gimp20-script-fu.mo
 share/locale/sv/LC_MESSAGES/gimp20-std-plug-ins.mo
 share/locale/sv/LC_MESSAGES/gimp20-tips.mo
 share/locale/sv/LC_MESSAGES/gimp20.mo
+share/locale/ta/
+share/locale/ta/LC_MESSAGES/
+share/locale/ta/LC_MESSAGES/gimp20.mo
 share/locale/th/
 share/locale/th/LC_MESSAGES/
 share/locale/th/LC_MESSAGES/gimp20.mo
@@ -2180,3 +2182,5 @@ share/locale/zh_TW/LC_MESSAGES/gimp20-script-fu.mo
 share/locale/zh_TW/LC_MESSAGES/gimp20-std-plug-ins.mo
 share/locale/zh_TW/LC_MESSAGES/gimp20-tips.mo
 share/locale/zh_TW/LC_MESSAGES/gimp20.mo
+@exec %D/bin/update-desktop-database
+@unexec %D/bin/update-desktop-database

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.145 2008/12/28 19:45:17 sthen Exp $
+# $OpenBSD: Makefile,v 1.147 2009/02/02 15:54:19 jasper Exp $
 
 COMMENT-main=	multithreaded SQL database (client)
 COMMENT-server=	multithreaded SQL database (server)
@@ -14,7 +14,7 @@ V=		MySQL-5.0
 SHARED_LIBS +=	mysqlclient_r		19.0
 SHARED_LIBS +=	mysqlclient		19.0
 
-MASTER_SITES=	http://mysql.serenitynet.com/Downloads/$V/
+MASTER_SITES=	${MASTER_SITES_MYSQL:=Downloads/$V/}
 
 HOMEPAGE=	http://www.mysql.com/
 
@@ -91,8 +91,6 @@ WANTLIB-main=		${WANTLIB} ncurses readline
 
 PKG_ARCH-tests=	*
 WANTLIB-tests=
-
-MAKE_FLAGS=	mkdir_p='mkdir -p --'
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/mysql

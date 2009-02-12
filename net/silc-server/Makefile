@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.48 2008/10/26 18:12:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.52 2009/01/23 11:01:06 sthen Exp $
 
 COMMENT=	Secure Internet Live Conferencing (SILC) server
 
-DISTNAME=	silc-server-1.1.14
+DISTNAME=	silc-server-1.1.15
+PKGNAME=	${DISTNAME}p2
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.silcnet.org/
@@ -44,13 +45,11 @@ AUTOCONF_VERSION= 2.61
 .if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "i386"
 CONFIGURE_ENV+=	ac_cv_path_NASM=no YASM=${LOCALBASE}/bin/yasm
 .endif
-CONFIGURE_ARGS+= --enable-ipv6 \
-		 --docdir=${PREFIX}/share/doc/silcd \
+CONFIGURE_ARGS+= --docdir=${PREFIX}/share/doc/silcd \
 		 --with-etcdir=${CONFDIR} \
 		 --with-logsdir=/var/log/silcd \
 		 --with-silcd-config-file=${CONFDIR}/silcd.conf \
 		 --with-silcd-pid-file=/var/run/silcd.pid \
-		 --without-libtoolfix \
 		 --enable-debug
 
 .if ${MACHINE_ARCH} != "amd64" && ${MACHINE_ARCH} != "i386"

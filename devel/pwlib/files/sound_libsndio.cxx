@@ -25,6 +25,17 @@
  * All Rights Reserved.
  *
  * $Log: sound_libsndio.cxx,v $
+ * Revision 1.2  2009/01/19 09:42:21  ajacoutot
+ * - s/LIBSNDIO/SNDIO for consistency
+ * discussed with naddy@
+ *
+ * "sure" jakemsr@
+ *
+ * Revision 1.1  2009/01/17 12:30:08  jakemsr
+ * - add sndio backend
+ * - remove OSS and esd support
+ * ok ajacoutot@ (MAINTAINER)
+ *
  */
 
 #pragma implementation "sound_libsndio.h"
@@ -33,7 +44,7 @@
 
 #include <sys/poll.h>
 
-PCREATE_SOUND_PLUGIN(LIBSNDIO, PSoundChannelLIBSNDIO);
+PCREATE_SOUND_PLUGIN(SNDIO, PSoundChannelLIBSNDIO);
 
 PSoundChannelLIBSNDIO::PSoundChannelLIBSNDIO()
 {
@@ -65,21 +76,23 @@ PSoundChannelLIBSNDIO::~PSoundChannelLIBSNDIO()
 }
 
 
-PStringArray PSoundChannelLIBSNDIO::GetDeviceNames(Directions /*dir*/)
+PStringArray PSoundChannelLIBSNDIO::GetDeviceNames(Directions)
 {
-  PStringList devices;
+  static const char * const devices[] = {
+    "default",
+    "/tmp/aucat.sock",
+    "/dev/audio0",
+    "/dev/audio1",
+    "/dev/audio2"
+  };
 
-  devices.AppendString("libsndio");
-
-  return devices;
+  return PStringArray(PARRAYSIZE(devices), devices);
 }
 
 
 PString PSoundChannelLIBSNDIO::GetDefaultDevice(Directions dir)
 {
-  PStringArray devicenames;
-  devicenames = PSoundChannelLIBSNDIO::GetDeviceNames(dir);
-  return devicenames[0];
+  return "default";
 }
 
 BOOL PSoundChannelLIBSNDIO::Open(const PString & device,
@@ -89,6 +102,7 @@ BOOL PSoundChannelLIBSNDIO::Open(const PString & device,
                                 unsigned bitsPerSample)
 {
   uint mode;
+  char sio_device[32];
 
   Close();
 
@@ -97,7 +111,13 @@ BOOL PSoundChannelLIBSNDIO::Open(const PString & device,
   else
     mode = SIO_PLAY;
 
-  hdl = sio_open(NULL, mode, 0);
+  snprintf(sio_device, 32, "%s", (const char *)device);
+
+  if (strncmp(sio_device, "default", 7) == 0)
+    hdl = sio_open(NULL, mode, 0);
+  else
+    hdl = sio_open(sio_device, mode, 0);
+
   if (hdl == NULL) {
     printf("sio_open failed\n");
     return FALSE;

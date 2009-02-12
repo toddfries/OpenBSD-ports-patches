@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.5 2008/02/04 17:55:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/02/11 15:47:52 jasper Exp $
 
 COMMENT=		C++ interface to gnome-vfs
 
 GNOME_PROJECT=		gnome-vfsmm
-GNOME_VERSION=		2.20.0
-SHARED_LIBS=		gnomevfsmm-2.6	0.0	# .1.9
-PKGNAME=		${DISTNAME}p0
+GNOME_VERSION=		2.24.0
+SHARED_LIBS=		gnomevfsmm-2.6	1.0	# .1.9
+PKGNAME=		${DISTNAME}p1
 
 HOMEPAGE=		http://www.gtkmm.org/
 
-# LGPL
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -32,7 +32,6 @@ CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 			--disable-gtk-doc \
 			--enable-static
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib \
-			-L${X11BASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 
 .include <bsd.port.mk>

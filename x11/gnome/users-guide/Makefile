@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2008/12/17 18:47:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2009/02/11 15:47:51 jasper Exp $
 
 # This port does not run_depends on devhelp on purpose, as it would
 # create a cyclic dependency.
@@ -8,8 +8,8 @@ PKG_ARCH=		*
 COMMENT=		general GNOME User Documentation
 
 GNOME_PROJECT=		gnome-user-docs
-GNOME_VERSION=		2.24.1
-PKGNAME=		gnome2-user-docs-${VERSION}p0
+GNOME_VERSION=		2.24.2
+PKGNAME=		${DISTNAME}p1
 
 # GFDLv1.1
 PERMIT_PACKAGE_CDROM=	Yes

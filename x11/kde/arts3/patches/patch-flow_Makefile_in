@@ -1,4 +1,4 @@
-$OpenBSD$
+$OpenBSD: patch-flow_Makefile_in,v 1.3 2009/01/29 22:34:33 jakemsr Exp $
 --- flow/Makefile.in.orig	Wed Aug 20 09:07:21 2008
 +++ flow/Makefile.in	Sat Dec 27 20:56:52 2008
 @@ -76,11 +76,11 @@ am_libartsflow_la_OBJECTS = synth_play_impl.lo gslsche

@@ -1,5 +1,5 @@
-#!/usr/local/bin/lua
--- $OpenBSD: yt.lua,v 1.15 2008/11/04 04:14:50 jsg Exp $
+#!${LOCALBASE}/bin/lua
+-- $OpenBSD: yt.lua,v 1.19 2009/01/07 00:14:52 martynas Exp $
 -- Fetch videos from YouTube.com and convert them to MPEG.
 -- Written by Pedro Martelletto in August 2006. Public domain.
 -- Example: lua yt.lua http://www.youtube.com/watch?v=c5uoo1Kl_uA
@@ -30,7 +30,9 @@ pattern = "<title>(.-)</title>"
 title = assert(string.match(body, pattern))
 
 -- Fetch high quality if available
-if (string.match(body, "yt.VideoQualityConstants.HIGH") ~= nil) then
+if (string.match(body, "yt.VideoQualityConstants.HIGH") ~= nil) and
+   ((string.match(body,"/watch_fullscreen%?.*fmt_map=[^&]*%%2C6[^%d]")~=nil) or
+    (string.match(body,"/watch_fullscreen%?.*fmt_map=6[^%d]")~=nil)) then
 	fmt = "&fmt=6"
 else
 	fmt = ""
@@ -47,7 +49,7 @@ e_flv = string.format("%q", flv)
 e_mp4 = string.format("%q", mp4)
 
 -- Look for the video ID.
-pattern = "/watch_fullscreen%?.*video_id=(.-)&"
+pattern = "/watch_fullscreen%?.*video_id=([^&\"]*)"
 video_id = string.match(body, pattern)
 
 -- check for error such as "This video is not available in your country."
@@ -60,7 +62,7 @@ end
 
 if video_id then
 	--- Look for the additional video ID.
-	pattern = "/watch_fullscreen%?.*&t=(.-)&"
+	pattern = "/watch_fullscreen%?.*&t=([^&\"]*)"
 	t = assert(string.match(body, pattern))
 	url = string.format("%q", base_url .. "?video_id=" .. video_id
 		.. "&t=" .. t .. fmt)

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.223 2008/12/09 22:14:46 bluhm Exp $
+# $OpenBSD: Makefile,v 1.226 2009/01/30 15:31:34 sthen Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
 
@@ -36,13 +36,14 @@
      SUBDIR += dkim-milter
      SUBDIR += dovecot
      SUBDIR += dovecot,ldap
-     SUBDIR += dovecot,ldap,mysql,postgresql,sqlite
+     SUBDIR += dovecot,ldap,mysql,postgresql,sqlite,bdb
      SUBDIR += dovecot,mysql
      SUBDIR += dovecot,postgresql
      SUBDIR += dovecot,sqlite
      SUBDIR += drac
      SUBDIR += dspam
      SUBDIR += dspam,hash
+     SUBDIR += dspam,hash,domainscale
      SUBDIR += dspam,ldap
      SUBDIR += dspam,mysql
      SUBDIR += dspam,pgsql
@@ -64,6 +65,7 @@
      SUBDIR += exim,postgresql
      SUBDIR += exim,postgresql,no_x11
      SUBDIR += exmh2
+     SUBDIR += extsmail
      SUBDIR += faces
      SUBDIR += fdm
      SUBDIR += femail

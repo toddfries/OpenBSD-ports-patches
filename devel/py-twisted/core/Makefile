@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2008/10/28 09:28:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2009/01/30 16:22:09 eric Exp $
 
 COMMENT=	event-based Python framework (core module)
 
-VERSION=	8.1.0
+VERSION=	8.2.0
 DISTNAME=	TwistedCore-${VERSION}
-PKGNAME=	py-twisted-core-${VERSION}p0
+PKGNAME=	py-twisted-core-${VERSION}
 
 HOMEPAGE=	http://twistedmatrix.com/trac/wiki/TwistedCore
 
@@ -12,7 +12,6 @@ MASTER_SITES=	http://tmrc.mit.edu/mirror/twisted/Core/${VERSION:R}/
 
 RUN_DEPENDS=	:py-zopeinterface-*:devel/py-zopeinterface \
 		:py-openssl-*:security/py-openssl
-REGRESS_DEPENDS=:python-bz2-*:lang/python/${MODPY_VERSION},-bz2
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-twisted-core
@@ -26,11 +25,7 @@ post-install:
 			${PREFIX}/share/doc/py-twisted-core/{} \;
 	mv ${PREFIX}/share/doc/py-twisted-core/examples ${PREFIX}/share/examples/py-twisted-core
 
-
-do-regress: fake
-	env PYTHONPATH=${WRKINST}${MODPY_SITEPKG} \
-		${WRKINST}${LOCALBASE}/bin/trial \
-			--temp-directory=${WRKBUILD} \
-			twisted.test twisted.trial.test twisted.python.test twisted.internet.test
+TRIAL_TARGET=twisted.test twisted.trial.test twisted.python.test twisted.internet.test
+			
 
 .include <bsd.port.mk>

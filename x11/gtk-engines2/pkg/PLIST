@@ -1,7 +1,8 @@
-@comment $OpenBSD: PLIST,v 1.22 2008/11/22 12:23:47 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.24 2009/02/09 18:02:30 ajacoutot Exp $
 @conflict gtk-thinice-engine-*
-@conflict gtk2-clearlooks-engine-*
+@conflict gtk2-clearlooks-engine-<0.6.2p8
 @conflict gnome-themes-<2.10
+@pkgpath x11/gtk-thinice-engine
 lib/gtk-2.0/2.10.0/engines/libclearlooks.a
 lib/gtk-2.0/2.10.0/engines/libclearlooks.la
 lib/gtk-2.0/2.10.0/engines/libclearlooks.so
@@ -92,8 +93,6 @@ share/locale/vi/LC_MESSAGES/gtk-engines.mo
 share/locale/zh_CN/LC_MESSAGES/gtk-engines.mo
 share/locale/zh_HK/LC_MESSAGES/gtk-engines.mo
 share/locale/zh_TW/LC_MESSAGES/gtk-engines.mo
-share/themes/Clearlooks/
-share/themes/Clearlooks/gtk-2.0/
 share/themes/Clearlooks/gtk-2.0/gtkrc
 share/themes/Crux/
 share/themes/Crux/gtk-2.0/

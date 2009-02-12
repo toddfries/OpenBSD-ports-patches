@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2008/09/08 17:17:10 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2009/01/19 09:42:21 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	portable Windows library
 
 V=		1_12_0
 DISTNAME=	ptlib-v${V}
-PKGNAME=	pwlib-${V:S/_/./g}p7
+PKGNAME=	pwlib-${V:S/_/./g}p8
 CATEGORIES=	devel
 
 EXTRACT_SUFX=	-src.tar.gz
@@ -25,11 +25,10 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=h323plus/}
 
-WANTLIB=	crypto expat ossaudio sndio sasl2 ssl
+WANTLIB=	crypto expat sndio sasl2 ssl
 
 BUILD_DEPENDS=	::devel/bison
-LIB_DEPENDS=	esd.>=2::audio/esound \
-		lber.>=9,ldap,ldap_r::databases/openldap \
+LIB_DEPENDS=	lber.>=9,ldap,ldap_r::databases/openldap \
 		SDL.>=8::devel/sdl
 
 WRKDIST=	${WRKDIR}/${DISTNAME:S/-/_/}
@@ -47,13 +46,13 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=  CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	--enable-plugins \
-		--enable-oss \
-		--enable-esd \
 		--enable-v4l2 \
 		--enable-bsdvideo \
 		--enable-openldap \
 		--enable-sasl \
 		--enable-sdl \
+		--disable-oss \
+		--disable-esd \
 		--disable-sunaudio \
 		--disable-alsa \
 		--disable-avc \

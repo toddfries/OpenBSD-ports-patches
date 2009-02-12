@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2008/08/27 12:25:14 espie Exp $
+# $OpenBSD: Makefile,v 1.58 2009/01/29 22:28:58 jakemsr Exp $
 
 COMMENT = 		KDE personal information applications
 COMMENT-kpilot =	KDE interface to sync with Palm Pilot

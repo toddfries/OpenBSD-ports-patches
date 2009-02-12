@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2008/11/24 16:15:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2009/02/11 15:47:50 jasper Exp $
 
 COMMENT-main=		GNOME virtual file system
 COMMENT-smb=		samba module for GVFS
@@ -7,8 +7,8 @@ GNOME_PROJECT=		gvfs
 GNOME_VERSION=		1.0.3
 SHARED_LIBS +=	gvfscommon           1.0      # .0.0
 
-PKGNAME-main=		${DISTNAME}
-PKGNAME-smb=		${GNOME_PROJECT}-smb-${GNOME_VERSION}
+PKGNAME-main=		${DISTNAME}p3
+PKGNAME-smb=		${GNOME_PROJECT}-smb-${GNOME_VERSION}p1
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -27,7 +27,8 @@ WANTLIB=	ORBit-2 c dbus-1 dbus-glib-1 gconf-2 gio-2.0 glib-2.0 \
 
 LIB_DEPENDS=		gnome-keyring::x11/gnome/keyring
 
-WANTLIB-main=		${WANTLIB} bz2 m xml2 z
+WANTLIB-main=		${WANTLIB} bz2 gcrypt gnutls gpg-error lzmadec m \
+			tasn1 xml2 z
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			archive::archivers/libarchive \
 			soup-2.4.>=1::devel/libsoup

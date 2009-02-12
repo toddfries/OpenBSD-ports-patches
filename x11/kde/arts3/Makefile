@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2008/08/26 16:52:28 espie Exp $
+# $OpenBSD: Makefile,v 1.68 2009/01/29 22:28:58 jakemsr Exp $
 
 COMMENT =		K Desktop Environment, aRTs
 CATEGORIES =		x11 x11/kde

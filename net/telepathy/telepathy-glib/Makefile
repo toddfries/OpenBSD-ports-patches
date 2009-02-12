@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2008/12/23 00:05:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2009/01/20 10:43:53 jasper Exp $
 
 COMMENT=		flexible communications framework, glib bindings
 
-DISTNAME=		telepathy-glib-0.7.20
-SHARED_LIBS +=	telepathy-glib       3.1      # .20.0
+DISTNAME=		telepathy-glib-0.7.22
+PKGNAME=		${DISTNAME}p0
+SHARED_LIBS +=	telepathy-glib       3.2      # .20.0
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-glib/}
 
@@ -13,8 +14,7 @@ MODULES=		devel/gettext \
 			lang/python
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		${MODPY_EXPAT_DEPENDS} \
-			::textproc/libxslt
+RUN_DEPENDS=		::textproc/libxslt
 LIB_DEPENDS=		dbus-glib-1::x11/dbus-glib
 
 USE_GMAKE=		Yes

@@ -1,4 +1,4 @@
-$OpenBSD$
+$OpenBSD: patch-mpeglib_lib_util_audio_audioIO_cpp,v 1.1 2009/01/29 22:37:21 jakemsr Exp $
 --- mpeglib/lib/util/audio/audioIO.cpp.orig	Sun Dec 28 13:31:48 2008
 +++ mpeglib/lib/util/audio/audioIO.cpp	Sun Dec 28 13:32:36 2008
 @@ -26,7 +26,11 @@

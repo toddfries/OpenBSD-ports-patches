@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.360 2008/11/07 19:03:41 jasper Exp $
+# $OpenBSD: Makefile,v 1.368 2009/02/07 16:01:38 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -36,6 +36,7 @@
      SUBDIR += dbus-glib
      SUBDIR += dbus-python
      SUBDIR += dclock
+     SUBDIR += dejavu-fonts
      SUBDIR += devilspie
      SUBDIR += dmenu
      SUBDIR += driconf
@@ -85,7 +86,6 @@
      SUBDIR += gtk+extra
      SUBDIR += gtk-chtheme
      SUBDIR += gtk-engines2
-     SUBDIR += gtk-thinice-engine
      SUBDIR += gtk-vnc
      SUBDIR += gtk2-clearlooks-engine
      SUBDIR += gtk2-murrine-engine
@@ -118,13 +118,13 @@
      SUBDIR += libgdiplus
      SUBDIR += libsexy
      SUBDIR += lupe
+     SUBDIR += lxrandr
      SUBDIR += matchbox
      SUBDIR += mlterm
      SUBDIR += mono-gtk2
      SUBDIR += mouseclock
      SUBDIR += mowitz
      SUBDIR += mplayer
-     SUBDIR += mplayer,esd
      SUBDIR += mplayer,no_x11
      SUBDIR += mplayer,sdl
      SUBDIR += mrxvt
@@ -153,6 +153,8 @@
      SUBDIR += p5-Tk-ProgressBar-Mac
      SUBDIR += p5-Tk-Splash
      SUBDIR += p5-Tk-Stderr
+     SUBDIR += p5-X-Osd
+     SUBDIR += p5-X11-Protocol
      SUBDIR += pbrowser
      SUBDIR += pcmanfm
      SUBDIR += peksystray
@@ -195,6 +197,7 @@
      SUBDIR += rxvt
      SUBDIR += sawfish
      SUBDIR += sclock
+     SUBDIR += scrotwm
      SUBDIR += sisctrl
      SUBDIR += skippy
      SUBDIR += sliderule
@@ -211,6 +214,7 @@
      SUBDIR += tilda
      SUBDIR += tint
      SUBDIR += tk
+     SUBDIR += tkcon
      SUBDIR += tktable
      SUBDIR += transset-df
      SUBDIR += trayer

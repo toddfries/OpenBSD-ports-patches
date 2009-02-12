@@ -1,4 +1,4 @@
-$OpenBSD$
+$OpenBSD: patch-mpeglib_lib_util_audio_audioIO_SunOS_cpp,v 1.1 2009/01/29 22:37:21 jakemsr Exp $
 --- mpeglib/lib/util/audio/audioIO_SunOS.cpp.orig	Sun Dec 28 14:56:16 2008
 +++ mpeglib/lib/util/audio/audioIO_SunOS.cpp	Sun Dec 28 14:59:46 2008
 @@ -8,10 +8,11 @@

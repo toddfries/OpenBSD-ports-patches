@@ -1,4 +1,4 @@
-# $OpenBSD: OpenBSD,v 1.35 2008/12/25 17:21:55 michele Exp $
+# $OpenBSD: OpenBSD,v 1.44 2009/02/11 14:09:27 pirofti Exp $
 #
 # This is a list of OpenBSD developers and related people.
 #
@@ -14,6 +14,7 @@
 35.62		139.69		"mcbride"	# Ryan Thomas McBride
 35.67		139.75		"itojun"	# Jun-ichiro Itojun
 36.134		-86.70		"david"		# David Krause
+37.3706		-122.0138	"ckuethe"	# Chris Kuethe
 37.515049	-122.339528	"marc"		# Marco S. Hyman
 37.765205	-122.471109	"phessler"	# Peter Hessler
 38.9693		-77.3863	"jason"		# Jason L. Wright
@@ -27,7 +28,6 @@
 40.721300	-73.858770	"ray"		# Ray Lai
 40.81588	-73.96056	"okan"		# Okan Demirmen
 42.2342		-88.3737	"jcs"		# Joshua Stein
-42.26		26.06		"pirofti"	# Paul Irofti
 42.2731		-83.782		"aaron"		# Aaron Campbell
 42.49538	-82.89954	"nick"		# Nick Holland
 43.0277		-86.13		"dhill"		# David Hill
@@ -35,6 +35,7 @@
 43.084950	-89.361468	"jolan"		# Jolan Luff
 43.240537 	5.384159	"pea"		# Pierre-Emmanuel Andre
 43.30		5.37		"aanriot"	# Alexandre Anriot
+43.355902	-5.849892	"sobrado"	# Igor Sobrado
 43.5312		13.2519		"giovanni"	# Giovanni Bechis
 43.61495	1.44094		"matthieu"	# Matthieu Herrb
 43.5826		1.4376		"miod"		# Miod Vallat
@@ -42,8 +43,10 @@
 43.66		7.18		"pyr"		# Pierre-Yves Ritschard
 43.70		-79.42		"krw"		# Kenneth R. Westerback
 44.01		-79.93		"ian"		# Ian Darwin
+44.4325		26.103889	"pirofti"	# Paul Irofti
 45.43		12.13		"michele"	# Michele Marchetto
 45.4745		-73.6556	"msf"		# Mathieu Sauve-Frankel
+45.69296	3.25642		"landry"	# Landry Breuil
 47.29		19.3		"robert"	# Robert Nagy
 47.3154		7.3526		"mglocker"	# Marcus Glocker
 47.50		7.60		"dhartmei"	# Daniel Hartmeier
@@ -52,20 +55,20 @@
 47.837768	35.211241	"av"		# Alexey Vatchenko
 48.0718		11.9582		"grunk"		# Alexander von Gernler
 48.08		11.31		"sturm"		# Nikolay Sturm
-48.111761	-1.680265	"landry"	# Landry Breuil
 48.1247		11.5975		"mpf"		# Marco Pfatschbacher
 48.1248		11.5972		"mickey"	# Michael Shalayeff
+48.13254	11.76704	"bluhm"		# Alexander Bluhm
 48.137970	11.542279	"markus"	# Markus Friedl
 48.2		16.367		"martin"	# Martin Reindl
 48.35		7.46		"couderc"	# Damien Couderc
-48.520		2.1959		"gilles"	# Gilles Chehade
 48.750		2.317		"saad"		# Saad Kadhi
+48.8571		2.44		"chl"		# Charles Longeau
 48.8640		2.3555		"ajacoutot"	# Antoine Jacoutot
 48.87		2.33		"espie"		# Marc Espie
+48.883		2.2365		"gilles"	# Gilles Chehade
 49.18331	-0.365291	"eric"		# Eric Faurot
 49.22		-123.10		"hugh"		# Hugh Graham
 49.313446	-123.063975	"mjc"		# Michael Coulter
-49.41185	2.81784		"chl"		# Charles Longeau
 49.48		8.42		"naddy"		# Christian Weisgerber
 50.752		-3.276		"sthen"		# Stuart Henderson
 50.858		4.3897		"xsa"		# Xavier Santolaria
@@ -77,6 +80,7 @@
 51.6		-114.1		"deraadt"	# Theo de Raadt
 51.67938	5.1194		"weerd"		# Paul de Weerd
 51.86681	-0.1875		"jacekm"	# Jacek Masiulaniec
+51.897222	-8.47		"stsp"		# Stefan Sperling
 52.2		12.75		"uwe"		# Uwe Stuehler
 52.26		4.63		"camield"	# Camiel Dobbelaar
 52.28083	10.57271	"kili"		# Matthias Kilian
@@ -89,13 +93,13 @@
 53.317		9.817		"bernd"		# Bernd Ahlers
 53.36		10.02		"moritz"	# Moritz Jodeit
 53.5021		-113.484	"weingart"	# Tobias Weingartner
-37.3706		-122.0138	"ckuethe"	# Chris Kuethe
 53.56		-113.51		"beck"		# Bob Beck
 53.562888	9.961555	"henning"	# Henning Brauer
 53.59		10.05		"simon"		# Simon Bertrang
 54.869288       83.08799	"form"		# Oleg Safiullin
 55.16		23.88		"martynas"	# Martynas Venckus
 55.599		-2.4324		"jmc"		# Jason McIntyre
+55.747502	37.985557	"grange"	# Alexander Yurchenko
 55.8589		13.0837		"wilfried"	# Peter Stromberg
 57.698		11.967		"jakob"		# Jakob Schlyter
 57.717		11.967		"niklas"	# Niklas Hallqvist

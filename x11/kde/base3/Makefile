@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2008/08/26 16:52:28 espie Exp $
+# $OpenBSD: Makefile,v 1.87 2009/01/29 22:28:58 jakemsr Exp $
 
 COMMENT-main = 		K Desktop Environment, basic applications
 COMMENT-plugins =	Konqueror nsplugins, essentially native JDK

@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.19 2008/02/04 17:55:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2009/02/11 15:50:30 jasper Exp $
 
 COMMENT=		MIME and Application database for GNOME
 
 GNOME_PROJECT=		gnome-mime-data
 GNOME_VERSION=		2.18.0
 CATEGORIES=		x11
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p2
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

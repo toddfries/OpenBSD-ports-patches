@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.371 2008/12/07 22:05:31 okan Exp $
+# $OpenBSD: Makefile,v 1.386 2009/02/11 09:38:10 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
+     SUBDIR += ajaxterm
      SUBDIR += amaya          # requires Motif (lesstif works)
      SUBDIR += analog
      SUBDIR += ap2-mod_fastcgi
@@ -26,6 +27,7 @@
      SUBDIR += drupal5
      SUBDIR += elinks
      SUBDIR += epiphany
+     SUBDIR += epiphany-extensions
      SUBDIR += ezpublish
      SUBDIR += fcgi
      SUBDIR += ffproxy
@@ -70,6 +72,7 @@
      SUBDIR += mod_auth_kerb
      SUBDIR += mod_auth_ldap
      SUBDIR += mod_auth_mysql
+     SUBDIR += mod_auth_pgsql
      SUBDIR += mod_auth_radius
      SUBDIR += mod_bandwidth
      SUBDIR += mod_dav
@@ -119,6 +122,8 @@
      SUBDIR += p5-CGI-Ajax
      SUBDIR += p5-CGI-Application
      SUBDIR += p5-CGI-Application-Generator
+     SUBDIR += p5-CGI-Application-Plugin-ConfigAuto
+     SUBDIR += p5-CGI-Application-Plugin-ValidateRM
      SUBDIR += p5-CGI-Cookie-Splitter
      SUBDIR += p5-CGI-Deurl
      SUBDIR += p5-CGI-FormBuilder
@@ -133,7 +138,9 @@
      SUBDIR += p5-CSS-Tiny
      SUBDIR += p5-Catalyst-Action-RenderView
      SUBDIR += p5-Catalyst-Component-ACCEPT_CONTEXT
+     SUBDIR += p5-Catalyst-Component-InstancePerContext
      SUBDIR += p5-Catalyst-Controller-FormBuilder
+     SUBDIR += p5-Catalyst-Controller-HTML-FormFu
      SUBDIR += p5-Catalyst-Devel
      SUBDIR += p5-Catalyst-Engine-Apache
      SUBDIR += p5-Catalyst-Engine-HTTP-POE
@@ -177,7 +184,9 @@
      SUBDIR += p5-HTML-Copy
      SUBDIR += p5-HTML-Embperl
      SUBDIR += p5-HTML-FillInForm
+     SUBDIR += p5-HTML-FormFu
      SUBDIR += p5-HTML-Format
+     SUBDIR += p5-HTML-FormatText-WithLinks
      SUBDIR += p5-HTML-FromText
      SUBDIR += p5-HTML-Highlight
      SUBDIR += p5-HTML-Lint
@@ -200,6 +209,7 @@
      SUBDIR += p5-HTML-Template-Expr
      SUBDIR += p5-HTML-Template-JIT
      SUBDIR += p5-HTML-Tidy
+     SUBDIR += p5-HTML-Tiny
      SUBDIR += p5-HTML-TokeParser-Simple
      SUBDIR += p5-HTML-Tree
      SUBDIR += p5-HTML-TreeBuilder-XPath
@@ -213,6 +223,7 @@
      SUBDIR += p5-HTTP-Recorder
      SUBDIR += p5-HTTP-Request-AsCGI
      SUBDIR += p5-HTTP-Request-Params
+     SUBDIR += p5-HTTP-Response-Encoding
      SUBDIR += p5-HTTP-Server-Simple
      SUBDIR += p5-HTTP-Server-Simple-Mason
      SUBDIR += p5-HTTP-Server-Simple-Recorder
@@ -260,12 +271,14 @@
      SUBDIR += pear-SOAP
      SUBDIR += pecl-APC
      SUBDIR += pecl-memcache
+     SUBDIR += pecl-swish
      SUBDIR += php5
      SUBDIR += phpicalendar
      SUBDIR += phpldapadmin
      SUBDIR += phplist
      SUBDIR += phpmyadmin
      SUBDIR += phppgadmin
+     SUBDIR += piwik
      SUBDIR += plans
      SUBDIR += plone
      SUBDIR += plone-formgen
@@ -283,6 +296,7 @@
      SUBDIR += py-formencode
      SUBDIR += py-genshi
      SUBDIR += py-httplib2
+     SUBDIR += py-jinja2
      SUBDIR += py-jonpy
      SUBDIR += py-nevow
      SUBDIR += py-paste
@@ -291,6 +305,8 @@
      SUBDIR += py-quixote
      SUBDIR += py-turbogears
      SUBDIR += py-webpy
+     SUBDIR += py-werkzeug
+     SUBDIR += py-zine
      SUBDIR += pyblosxom
      SUBDIR += raggle
      SUBDIR += ratproxy
@@ -300,11 +316,13 @@
      SUBDIR += rt
      SUBDIR += ruby-activemerchant
      SUBDIR += ruby-activeresource
+     SUBDIR += ruby-addressable
      SUBDIR += ruby-fcgi
      SUBDIR += ruby-merb
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-rack
      SUBDIR += ruby-rails
+     SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
      SUBDIR += sarg

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.250 2008/12/18 13:23:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.256 2009/02/05 22:05:25 simon Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -22,7 +22,6 @@
      SUBDIR += exempi
      SUBDIR += gdiff
      SUBDIR += glimpse
-     SUBDIR += gnome-spell
      SUBDIR += gnuvd
      SUBDIR += gonzui
      SUBDIR += gsed
@@ -105,6 +104,7 @@
      SUBDIR += p5-Pod-Spell
      SUBDIR += p5-Pod-Tests
      SUBDIR += p5-RSS-Parser-Lite
+     SUBDIR += p5-Regexp-Assemble
      SUBDIR += p5-Regexp-Common
      SUBDIR += p5-Regexp-DefaultFlags
      SUBDIR += p5-SWISH-API
@@ -217,7 +217,9 @@
      SUBDIR += py-vobject
      SUBDIR += py-xml
      SUBDIR += py-yaml
+     SUBDIR += raptor
      SUBDIR += rarian
+     SUBDIR += redland
      SUBDIR += rman
      SUBDIR += ruby-builder
      SUBDIR += ruby-erubis
@@ -225,12 +227,15 @@
      SUBDIR += ruby-fastri
      SUBDIR += ruby-haml
      SUBDIR += ruby-hpricot
+     SUBDIR += ruby-htmlentities
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-icalendar
      SUBDIR += ruby-markaby
      SUBDIR += ruby-pdf-writer
+     SUBDIR += ruby-randexp
      SUBDIR += ruby-redcloth
      SUBDIR += ruby-rubigen
+     SUBDIR += ruby-templater
      SUBDIR += rxp
      SUBDIR += sablotron
      SUBDIR += sgmlformat

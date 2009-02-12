@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2008/11/29 11:30:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2009/01/29 22:28:58 jakemsr Exp $
 
 COMMENT = 		K Desktop Environment, additional artwork
 CATEGORIES =		x11 x11/kde

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.56 2008/12/21 14:02:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.58 2009/01/28 09:24:38 jasper Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
 COMMENT-fam=		fam(3) gio module
 
-VERSION=		2.18.3
+VERSION=		2.18.4
 DISTNAME=		glib-${VERSION}
 PKGNAME-main=		glib2-${VERSION}p0
 PKGNAME-docs=		glib2-docs-${VERSION}
@@ -18,7 +18,7 @@ SHARED_LIBS+=	glib-2.0		1800.1 #.1800.3
 SHARED_LIBS+=	gobject-2.0		1800.1
 SHARED_LIBS+=	gmodule-2.0		1800.1
 SHARED_LIBS+=	gthread-2.0		1800.1
-SHARED_LIBS+=	gio-2.0			1800.1
+SHARED_LIBS+=	gio-2.0			1800.2
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes

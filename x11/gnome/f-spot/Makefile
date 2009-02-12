@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2008/12/19 09:58:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2009/02/11 15:47:50 jasper Exp $
+
+BROKEN=			segfault on startup
 
 COMMENT=		personal photo management application for GNOME
 
-GNOME_VERSION=		0.5.0.2
+GNOME_VERSION=		0.5.0.3
 GNOME_PROJECT=		f-spot
 PKGNAME=		${DISTNAME}p3
 SHARED_LIBS +=	fspoteog             0.0      # .0.0
@@ -13,6 +15,7 @@ CATEGORIES=		graphics
 HOMEPAGE=		http://www.f-spot.org/
 
 # GPLv2
+# gio-sharp: LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -25,19 +28,27 @@ MODULES=		devel/gettext \
 USE_X11=		Yes
 
 DESKTOP_FILES=		Yes
+MODGNOME_HELP_FILES=	Yes
 
-WANTLIB=		jpeg m
+WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
+WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
+WANTLIB += Xrender art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation
+WANTLIB += bonoboui-2 cairo crypto dbus-1 dbus-glib-1 expat fontconfig
+WANTLIB += freetype gailutil gc gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring
+WANTLIB += gnomecanvas-2 gnomeui-2 gnomevfs-2 gobject-2.0 gthread-2.0
+WANTLIB += gtk-x11-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png popt ssl util xml2 z
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-
-RUN_DEPENDS=		::lang/mono \
+RUN_DEPENDS=		::graphics/libgphoto2 \
 			::sysutils/ndesk-dbus-glib \
-			::x11/gnome/screensaver \
 			::x11/gnome/doc-utils \
 			::x11/gnome/mono-gnome \
-			::graphics/libgphoto2
+			::x11/gnome/screensaver
 LIB_DEPENDS+=		exif::graphics/libexif \
-			lcms::graphics/lcms
+			lcms::graphics/lcms \
+			mono::lang/mono
 
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/f-spot \
@@ -47,8 +58,15 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=          CPPFLAGS="-I${LOCALBASE}/include" \
                         LDFLAGS="-L${LOCALBASE}/lib"
 
-DLLMAP_FILES=		src/f-spot.exe.config \
-			src/Cms.dll.config \
-			src/FSpot.Utils.dll.config
+DLLMAP_FILES=	Tao/Tao.OpenGl.Glu/Tao.OpenGl.Glu.dll.config \
+		Tao/Tao.OpenGl.ExtensionLoader/Tao.OpenGl.ExtensionLoader.dll.config \
+		Tao/Tao.OpenGl/Tao.OpenGl.dll.config \
+		libgphoto2-sharp/libgphoto2-sharp.dll.config \
+		dbus-sharp-glib/NDesk.DBus.GLib.dll.config \
+		src/FSpot.Utils.dll.config \
+		src/f-spot.exe.config.in \
+		src/Cms.dll.config.in \
+		gio-sharp/gio/gio-sharp.dll.config.in \
+		mono-addins/Mono.Addins/Mono.Addins.dll.config
 
 .include <bsd.port.mk>

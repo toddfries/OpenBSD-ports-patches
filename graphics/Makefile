@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.224 2008/12/04 22:23:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.230 2009/02/05 22:05:22 simon Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -63,7 +63,6 @@
      SUBDIR += gmt
      SUBDIR += gocr
      SUBDIR += goocanvas
-     SUBDIR += gphoto
      SUBDIR += gphoto2
      SUBDIR += gpicview
      SUBDIR += gqview
@@ -121,6 +120,7 @@
      SUBDIR += openexr
      SUBDIR += openjpeg
      SUBDIR += p5-Cairo
+     SUBDIR += p5-Captcha-reCAPTCHA
      SUBDIR += p5-Chart
      SUBDIR += p5-Color-Calc
      SUBDIR += p5-GD
@@ -156,19 +156,23 @@
      SUBDIR += py-dot
      SUBDIR += py-gd
      SUBDIR += py-goocanvas
+     SUBDIR += py-graphics
      SUBDIR += py-matplotlib
      SUBDIR += py-pyx
      SUBDIR += pycha
      SUBDIR += qiv
      SUBDIR += rawstudio
+     SUBDIR += ruby-color
      SUBDIR += ruby-gd2
      SUBDIR += ruby-gdk-imlib
      SUBDIR += ruby-gdk-pixbuf
      SUBDIR += ruby-gruff
+     SUBDIR += ruby-mini_magick
      SUBDIR += ruby-rmagick
      SUBDIR += s10sh
      SUBDIR += sane-backends
      SUBDIR += sane-frontends
+     SUBDIR += scratch
      SUBDIR += scrot
      SUBDIR += smpeg-xmms
      SUBDIR += sng
