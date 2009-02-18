@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.46 2007/11/14 09:43:40 steven Exp $
+# $OpenBSD: Makefile,v 1.48 2009/02/18 08:15:50 giovanni Exp $
 
 COMMENT=	X11-based presentation tool
 
 DISTNAME=	magicpoint-1.09a
 # hack
-PKGNAME=	magicpoint-1.11bp6
+PKGNAME=	magicpoint-1.11bp8
 CATEGORIES=	misc productivity
 MASTER_SITES=	ftp://sh.wide.ad.jp/WIDE/free-ware/mgp/
 
