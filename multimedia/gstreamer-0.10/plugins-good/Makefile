@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2009/02/05 20:32:08 sthen Exp $
+# $OpenBSD: Makefile,v 1.34 2009/03/10 23:19:17 espie Exp $
 
 COMMENT-main =		multimedia framework - good plugins
 COMMENT-aalib =		multimedia framework - aalib plugin
@@ -19,22 +19,22 @@ COMMENT-wavpack =	multimedia framework - wavpack plugin
 
 V =			0.10.8
 DISTNAME =		gst-plugins-good-$V
-PKGNAME-main =		gstreamer-plugins-good-$Vp9
+PKGNAME-main =		gstreamer-plugins-good-$V10
 PKGNAME-aalib =		gstreamer-aalib-$Vp0
 PKGNAME-cairo =		gstreamer-cairo-$Vp1
-PKGNAME-gconf =		gstreamer-confelements-$Vp1
-PKGNAME-esd =		gstreamer-esd-$Vp1
-PKGNAME-flac =		gstreamer-flac-$Vp0
-PKGNAME-speex =		gstreamer-speex-$Vp0
-PKGNAME-taglib =	gstreamer-taglib-$Vp0
-PKGNAME-dv =		gstreamer-dv-$Vp0
-PKGNAME-jpeg =		gstreamer-jpeg-$Vp0
-PKGNAME-png =		gstreamer-png-$Vp0
-PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp2
-PKGNAME-caca =		gstreamer-libcaca-$Vp0
-PKGNAME-shout =		gstreamer-shoutcast-$Vp0
-PKGNAME-soup =		gstreamer-libsoup-$Vp1
-PKGNAME-wavpack =	gstreamer-wavpack-$V
+PKGNAME-gconf =		gstreamer-confelements-$Vp2
+PKGNAME-esd =		gstreamer-esd-$Vp2
+PKGNAME-flac =		gstreamer-flac-$Vp1
+PKGNAME-speex =		gstreamer-speex-$Vp1
+PKGNAME-taglib =	gstreamer-taglib-$Vp1
+PKGNAME-dv =		gstreamer-dv-$Vp1
+PKGNAME-jpeg =		gstreamer-jpeg-$Vp1
+PKGNAME-png =		gstreamer-png-$Vp1
+PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp3
+PKGNAME-caca =		gstreamer-libcaca-$Vp1
+PKGNAME-shout =		gstreamer-shoutcast-$Vp1
+PKGNAME-soup =		gstreamer-libsoup-$Vp2
+PKGNAME-wavpack =	gstreamer-wavpack-$Vp0
 
 MULTI_PACKAGES =	-main -aalib -cairo -gconf -esd -flac -speex \
 			-taglib -dv -jpeg -png -gdk -caca -shout -soup \
@@ -173,6 +173,12 @@ CONFIGURE_ARGS +=	--with-aalib-prefix=${LOCALBASE} \
 			--with-default-audiosrc=libsndiosrc \
 			--with-default-videosink=xvimagesink \
 			--with-default-videosrc=v4l2src
+
+# XXX probably our default thread stack size is too low
+# #0  0x09b37a78 in plugin_info_init (pp=0x85e35000, nbVisuals=-2048700416)
+#    at /usr/obj/ports/gst-plugins-good-0.10.8/gst-plugins-good-0.10.8/gst/goom/plugin_info.c:92
+#        p = Cannot access memory at address 0x88f22290
+CONFIGURE_ARGS +=	--disable-goom
 
 post-extract:
 	cp -R ${FILESDIR} ${WRKSRC}/ext/libsndio

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2009/02/09 20:48:23 naddy Exp $
+# $OpenBSD: Makefile,v 1.68 2009/03/09 17:54:21 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -11,10 +11,10 @@ VERSION=		1.8.6
 PATCHLEVEL=		287
 DISTNAME=		ruby-${VERSION}-p${PATCHLEVEL}
 SHARED_LIBS=		ruby 2.0
-PKGNAME-main=		ruby-${VERSION}.${PATCHLEVEL}p2
+PKGNAME-main=		ruby-${VERSION}.${PATCHLEVEL}p3
 PKGNAME-iconv=		ruby-iconv-${VERSION}.${PATCHLEVEL}p0
 PKGNAME-gdbm=		ruby-gdbm-${VERSION}.${PATCHLEVEL}p0
-PKGNAME-tk=		ruby-tk-${VERSION}.${PATCHLEVEL}p0
+PKGNAME-tk=		ruby-tk-${VERSION}.${PATCHLEVEL}p1
 
 CATEGORIES=		lang
 
@@ -72,7 +72,7 @@ RUN_DEPENDS-gdbm=
 
 .if !${FLAVOR:L:Mno_x11}
 WANTLIB-tk=		X11 c m tcl85
-LIB_DEPENDS-tk=		tk85:tk-8.5.*:x11/tk/8.5 \
+LIB_DEPENDS-tk=		tk85:tk->=8.5,<8.6:x11/tk/8.5 \
 			ruby.>=1::lang/ruby
 RUN_DEPENDS-tk=
 .endif

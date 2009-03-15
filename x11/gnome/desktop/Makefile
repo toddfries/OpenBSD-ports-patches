@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.39 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.42 2009/03/14 11:36:25 ajacoutot Exp $
 
 COMMENT=		components for the GNOME desktop
 
 GNOME_PROJECT=		gnome-desktop
 GNOME_VERSION=		2.24.3
-PKGNAME=		${DISTNAME}p3
+PKGNAME=		${DISTNAME}p6
 
-SHARED_LIBS +=  gnome-desktop-2      5.8      # .5.16
 SHARED_LIBS +=  gnome-desktop-2      6.0      # .9.4
 
 CATEGORIES=		x11
@@ -30,9 +29,9 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils
-RUN_DEPENDS=		::textproc/rarian \
-			::x11/gnome/py-gnome
+BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
+			::textproc/rarian
+RUN_DEPENDS=		::x11/gnome/py-gnome
 LIB_DEPENDS=		gnomeui-2::x11/gnome/libgnomeui \
 			startup-notification-1::devel/startup-notification
 

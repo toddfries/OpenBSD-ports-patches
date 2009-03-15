@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2008/12/17 18:43:13 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2009/03/14 11:36:25 ajacoutot Exp $
 
 COMMENT=	GTK C code documentation system
 
 GNOME_VERSION=	1.11
 GNOME_PROJECT=	gtk-doc
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p2
+
 CATEGORIES=    	textproc devel
 
 HOMEPAGE=	http://www.gtk.org/gtk-doc/
@@ -23,12 +24,12 @@ CONFIGURE_ARGS=		--with-xml-catalog=${WRKDIR}/catalog.xml
 PKG_ARCH=		*
 
 BUILD_DEPENDS=		::x11/gnome/doc-utils \
+			::textproc/rarian \
 			${RUN_DEPENDS}
 RUN_DEPENDS=		::textproc/openjade \
 			::textproc/docbook \
 			::textproc/docbook-xsl \
 			::textproc/libxslt \
-			::textproc/rarian	\
 			::x11/gnome/yelp
 
 NO_REGRESS=		Yes

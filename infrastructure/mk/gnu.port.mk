@@ -1,21 +1,29 @@
 #-*- mode: Fundamental; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-# $OpenBSD: gnu.port.mk,v 1.34 2008/01/18 20:58:15 espie Exp $
+# $OpenBSD: gnu.port.mk,v 1.36 2009/03/14 10:46:56 ajacoutot Exp $
 #	Based on bsd.port.mk, originally by Jordan K. Hubbard.
 #	This file is in the public domain.
 
 MODGNU_AUTOCONF_DEPENDS = ::devel/metaauto \
 	:autoconf-${AUTOCONF_VERSION}:devel/autoconf/${AUTOCONF_VERSION}
 MODGNU_AUTOMAKE_DEPENDS = ::devel/metaauto \
-	:automake-${AUTOMAKE_VERSION}.*:devel/automake/${AUTOMAKE_VERSION}
+	:${_AUTOMAKE_SPEC}:devel/automake/${AUTOMAKE_VERSION}
+
+AUTOMAKE_VERSION ?= 1.4
+.if ${AUTOMAKE_VERSION} == 1.4
+_AUTOMAKE_SPEC = automake->=${AUTOMAKE_VERSION},<1.5
+.elif ${AUTOMAKE_VERSION} == 1.8
+_AUTOMAKE_SPEC = automake->=${AUTOMAKE_VERSION},<1.9
+.elif ${AUTOMAKE_VERSION} == 1.9
+_AUTOMAKE_SPEC = automake->=${AUTOMAKE_VERSION},<1.10
+.endif
 
 .if ${CONFIGURE_STYLE:L:Mautomake}
-AUTOMAKE_VERSION ?= 1.4
 BUILD_DEPENDS += ${MODGNU_AUTOMAKE_DEPENDS}
 MAKE_ENV += AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
-.endif
-.if ${CONFIGURE_STYLE:L:Mautoupdate}
+.  if ${CONFIGURE_STYLE:L:Mautoupdate}
 CONFIGURE_STYLE += autoconf
+.  endif
 .endif
 
 .if ${CONFIGURE_STYLE:L:Mautoconf}

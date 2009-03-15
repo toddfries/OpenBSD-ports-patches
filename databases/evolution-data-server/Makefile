@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.43 2009/02/17 10:56:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2009/03/10 19:08:25 naddy Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		data backends for the Evolution mail/PIM suite
 
 GNOME_PROJECT=		evolution-data-server
-GNOME_VERSION=		2.24.4.1
-PKGNAME=		${DISTNAME}p1
+GNOME_VERSION=		2.24.5
+PKGNAME=		${DISTNAME}p0
 
 CATEGORIES=		databases
 
 SHARED_LIBS +=	edataserver-1.2      10.0     # .11.0
-SHARED_LIBS +=	ebackend-1.2           0.0       # .0.0
+SHARED_LIBS +=	ebackend-1.2         0.0      # .0.0
 SHARED_LIBS +=	egroupwise-1.2       13.1     # .13.1
 SHARED_LIBS +=	exchange-storage-1.2 3.0      # .3.0
 SHARED_LIBS +=	gdata-1.2            0.0      # .1.0
@@ -52,7 +52,7 @@ MODULES=		devel/gettext \
 BUILD_DEPENDS=		:autoconf-${AUTOCONF_VERSION}:devel/autoconf/${AUTOCONF_VERSION} \
 			:bison-*:devel/bison \
 			:libgnomeui-*:x11/gnome/libgnomeui
-LIB_DEPENDS= 		db:db-4.*:databases/db/v4 \
+LIB_DEPENDS= 		db:db->=4,<5:databases/db/v4 \
 			ldap,lber::databases/openldap \
 			glade-2.0::devel/libglade2 \
 			soup-2.4::devel/libsoup \

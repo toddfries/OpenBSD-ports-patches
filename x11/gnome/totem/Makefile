@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.15 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2009/03/14 11:36:25 ajacoutot Exp $
 
 COMMENT=	simple media player for GNOME
 
 GNOME_PROJECT=	totem
 GNOME_VERSION=	2.22.2
-PKGNAME=	${DISTNAME}p13
+PKGNAME=	${DISTNAME}p15
+
 CATEGORIES=	multimedia
 
 HOMEPAGE=	http://www.gnome.org/projects/totem/
@@ -37,7 +38,6 @@ BUILD_DEPENDS=	::x11/py-gtk2 \
 		::devel/iso-codes
 RUN_DEPENDS=	::x11/gnome/settings-daemon \
 		::x11/py-gtk2 \
-		::textproc/rarian \
 		:iso-codes-*:devel/iso-codes \
 		::x11/gromit \
 		::devel/py-gdata \

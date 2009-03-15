@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.43 2008/12/23 11:36:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.45 2009/03/14 11:36:25 ajacoutot Exp $
 
 COMMENT=	GNOME web browser based on gecko
 
 DISTNAME=	galeon-2.0.7
+PKGNAME=	${DISTNAME}p1
+
 CATEGORIES=	www
 
 HOMEPAGE=	http://galeon.sourceforge.net/
@@ -31,10 +33,10 @@ MODULES=	devel/gettext \
 		textproc/intltool
 
 BUILD_DEPENDS=	:xulrunner-devel->=1.8.1:devel/xulrunner,-devel \
+		::textproc/rarian \
 		${RUN_DEPENDS}
 RUN_DEPENDS=	::devel/desktop-file-utils \
 		::devel/iso-codes \
-		::textproc/rarian \
 		::x11/gnome/doc-utils \
 		::x11/gnome/icon-theme \
 		::x11/gnome/themes \

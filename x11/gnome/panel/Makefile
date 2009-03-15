@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.51 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.53 2009/03/14 11:36:25 ajacoutot Exp $
 
 COMMENT=		GNOME panel
 
 GNOME_PROJECT=		gnome-panel
 GNOME_VERSION=		2.24.3
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p6
 
 SHARED_LIBS=	panel-applet-2       2.24      # .2.26
 CATEGORIES=		x11
@@ -37,8 +37,8 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 XRes Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils
-RUN_DEPENDS=		::textproc/rarian
+BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
+			::textproc/rarian
 LIB_DEPENDS= 		camel-1.2,ebook-1.2,ecal-1.2,edataserver-1.2,edataserverui-1.2::databases/evolution-data-server \
 			wnck-1.>=21::devel/libwnck \
 			gnome-desktop-2.>=5::x11/gnome/desktop \

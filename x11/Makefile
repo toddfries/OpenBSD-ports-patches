@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.368 2009/02/07 16:01:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.371 2009/03/13 19:36:29 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -19,7 +19,9 @@
      SUBDIR += aterm,big5
      SUBDIR += aterm,big5,lite
      SUBDIR += aterm,lite
+     SUBDIR += autocutsel
      SUBDIR += awesome
+     SUBDIR += awn
      SUBDIR += bbdate
      SUBDIR += bbkeys
      SUBDIR += bbpager
@@ -94,6 +96,7 @@
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
      SUBDIR += gtksourceview
+     SUBDIR += gtksourceviewmm
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-x11-extras

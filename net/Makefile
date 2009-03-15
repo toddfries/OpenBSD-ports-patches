@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.562 2009/02/09 09:42:02 simon Exp $
+# $OpenBSD: Makefile,v 1.564 2009/03/08 12:56:30 steven Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
      SUBDIR += BitTorrent
      SUBDIR += GeoIP
      SUBDIR += adns
+     SUBDIR += adsuck
      SUBDIR += aget
      SUBDIR += aggregate
      SUBDIR += aguri
@@ -341,6 +342,7 @@
      SUBDIR += pure-ftpd,mysql
      SUBDIR += pure-ftpd,postgresql
      SUBDIR += putty
+     SUBDIR += py-GeoIP
      SUBDIR += py-IP
      SUBDIR += py-adns
      SUBDIR += py-boto
