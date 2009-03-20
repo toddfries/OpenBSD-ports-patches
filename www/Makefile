@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.392 2009/03/16 17:14:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.394 2009/03/19 22:42:33 bernd Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -18,6 +18,7 @@
      SUBDIR += cherokee
      SUBDIR += clearsilver
      SUBDIR += clearsilver,python
+     SUBDIR += cms-ms
      SUBDIR += cronolog
      SUBDIR += cssed
      SUBDIR += dansguardian
@@ -327,6 +328,7 @@
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-rack
      SUBDIR += ruby-rails
+     SUBDIR += ruby-rest-client
      SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
