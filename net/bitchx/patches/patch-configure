@@ -1,7 +1,16 @@
-$OpenBSD: patch-configure,v 1.4 2002/06/30 18:23:31 brad Exp $
---- configure.orig	Mon Jan  8 01:24:22 2001
-+++ configure	Thu Feb 28 18:06:38 2002
-@@ -12004,11 +12004,11 @@ if test -n "$CYGWIN" -o -n "$EMXOS2" -o 
+$OpenBSD: patch-configure,v 1.6 2009/03/24 22:05:07 naddy Exp $
+--- configure.orig	Mon Jan  8 07:24:22 2001
++++ configure	Tue Mar 24 22:44:23 2009
+@@ -11968,7 +11968,7 @@ echo "$as_me:11967: result: $ac_cv_working_tr" >&5
+ echo "${ECHO_T}$ac_cv_working_tr" >&6
+ if test x"$ac_cv_working_tr" = x"yes"; then
+   CFLAGS="`echo "$CFLAGS" | tr ' ' '\n' | sort | uniq | tr '\n' ' '`"
+-  LIBS="`echo "$LIBS" | tr ' ' '\n' | sort | uniq | tr '\n' ' ' | sed -e 's/-rdynamic//g'`"
++  #LIBS="`echo "$LIBS" | tr ' ' '\n' | sort | uniq | tr '\n' ' ' | sed -e 's/-rdynamic//g'`"
+ else
+   LIBS="`echo "$LIBS" | sed -e 's/-rdynamic//g'`"
+ fi
+@@ -12004,11 +12004,11 @@ if test -n "$CYGWIN" -o -n "$EMXOS2" -o -n "$MINGWIN32
    mandir="\$(IRCLIB)"
  else
    INSTALL_IRC="\${bindir}/\$(_VERSION_)\$(EXEEXT)"

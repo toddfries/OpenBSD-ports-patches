@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.680 2009/03/18 09:21:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.684 2009/03/24 19:08:14 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -460,6 +460,7 @@
      SUBDIR += p5-POE
      SUBDIR += p5-POE-Component-IKC
      SUBDIR += p5-POE-Component-Pluggable
+     SUBDIR += p5-POE-Component-PubSub
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
@@ -605,6 +606,7 @@
      SUBDIR += p5-Want
      SUBDIR += p5-WeakRef
      SUBDIR += p5-YAML
+     SUBDIR += p5-YAML-Shell
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-accessors
      SUBDIR += p5-boolean
@@ -646,6 +648,7 @@
      SUBDIR += py-ctypes
      SUBDIR += py-dateutil
      SUBDIR += py-decoratortools
+     SUBDIR += py-dtopt
      SUBDIR += py-editdist
      SUBDIR += py-epsilon
      SUBDIR += py-fpconst
@@ -667,6 +670,7 @@
      SUBDIR += py-protocols
      SUBDIR += py-psyco
      SUBDIR += py-py
+     SUBDIR += py-pyprof2calltree
      SUBDIR += py-pyro
      SUBDIR += py-radix
      SUBDIR += py-rcsparse
