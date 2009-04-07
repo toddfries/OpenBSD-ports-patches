@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.9 2009/03/22 16:17:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/06 17:14:51 ajacoutot Exp $
 
 COMMENT=		user interface builder for the GTK2+ toolkit
 
-GNOME_VERSION =		3.6.0
+GNOME_VERSION =		3.6.1
 GNOME_PROJECT = 	glade3
 
 CATEGORIES =		devel
-SHARED_LIBS +=  gladeui-1            0.1      # .9.1
+SHARED_LIBS +=  gladeui-1            0.1      # .9.3
 
 HOMEPAGE =		http://glade.gnome.org/
-MAINTAINER =		Jason Beaudoin <jasonbeaudoin@gmail.com>
+
+MAINTAINER=		Jason Beaudoin <jasonbeaudoin@gmail.com>
 
 # GPLv2, with exception of png images under:
 # plugins/{gtk+,gnome}/icons  (which are LGPL)
@@ -33,8 +34,6 @@ MODULES=		devel/gettext \
     
 LIB_DEPENDS=            dbus-glib-1::x11/dbus-glib \
 			gnomeui-2::x11/gnome/libgnomeui
-BUILD_DEPENDS=          ::textproc/rarian \
-			::x11/gnome/doc-utils
 RUN_DEPENDS=		::x11/gnome/devhelp
 
 DESKTOP_FILES = 	Yes

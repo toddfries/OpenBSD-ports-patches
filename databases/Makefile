@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.158 2009/03/19 20:18:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.160 2009/04/05 11:01:52 bernd Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
@@ -114,6 +114,7 @@
      SUBDIR += postgresql_autodoc
      SUBDIR += py-axiom
      SUBDIR += py-cdb
+     SUBDIR += py-couchdb
      SUBDIR += py-elixir
      SUBDIR += py-ldap,python2.4
      SUBDIR += py-ldap,python2.5
@@ -133,6 +134,7 @@
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += ruby-activerecord
      SUBDIR += ruby-bdb
+     SUBDIR += ruby-couchrest
      SUBDIR += ruby-datamapper
      SUBDIR += ruby-data_objects
      SUBDIR += ruby-do_sqlite3

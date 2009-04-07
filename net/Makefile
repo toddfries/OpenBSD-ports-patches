@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.564 2009/03/08 12:56:30 steven Exp $
+# $OpenBSD: Makefile,v 1.566 2009/04/04 10:08:18 landry Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -158,6 +158,7 @@
      SUBDIR += libnetdude
      SUBDIR += libnids
      SUBDIR += libpcapnav
+     SUBDIR += libproxy
      SUBDIR += librsync
      SUBDIR += libshout
      SUBDIR += libst
@@ -351,10 +352,12 @@
      SUBDIR += py-dnspython
      SUBDIR += py-flowd
      SUBDIR += py-flowtools
+     SUBDIR += py-impacket
      SUBDIR += py-irclib
      SUBDIR += py-libpcap
      SUBDIR += py-medusa
      SUBDIR += py-msnp
+     SUBDIR += py-pcapy
      SUBDIR += py-pcs
      SUBDIR += py-snmp
      SUBDIR += py-xmpp

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/02 01:15:38 kevlo Exp $
+# $OpenBSD: Makefile,v 1.12 2009/04/05 18:21:38 jasper Exp $
 
 COMMENT=	File Alteration Monitor
 
 DISTNAME=	fam-2.7.0
-PKGNAME=	${DISTNAME}p6
+PKGNAME=	${DISTNAME}p7
 SHARED_LIBS +=	fam	0.0	# .0.0
 CATEGORIES=	sysutils
 
@@ -20,7 +20,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 WANTLIB=	c m rpcsvc stdc++
 
 MASTER_SITES=	ftp://oss.sgi.com/projects/fam/download/stable/ \
-		http://humppa.nl/distfiles/
+		http://nedbsd.eu/distfiles/
 
 USE_LIBTOOL=	Yes
 

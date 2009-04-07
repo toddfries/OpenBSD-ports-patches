@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2009/03/08 20:00:41 landry Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/06 07:40:30 landry Exp $
 
 COMMENT =	open source web browser engine
 
-V = 41121
+V = 41894
 DISTNAME =	WebKit-r${V}
-PKGNAME =	webkit-${V}
+PKGNAME =	webkit-${V}p0
 CATEGORIES =	www
 EXTRACT_SUFX =	.tar.bz2
 
@@ -39,6 +39,8 @@ AUTOMAKE_VERSION =	1.9
 AUTOCONF_VERSION =	2.59
 CONFIGURE_STYLE =	gnu
 
+CONFIGURE_ARGS =	--disable-video
+
 CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -lX11"
 
@@ -55,7 +57,7 @@ LIB_DEPENDS =	gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0::x11/gtk+2,-main \
 		icudata,icui18n,icuuc::textproc/icu4c \
 		sqlite3::databases/sqlite3 \
 		xslt::textproc/libxslt \
-		soup-2.4::devel/libsoup
+		soup-2.4:libsoup->=2.26:devel/libsoup
 
 
 BUILD_DEPENDS =	::devel/bison \

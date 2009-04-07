@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.398 2009/03/30 00:03:17 fgsch Exp $
+# $OpenBSD: Makefile,v 1.401 2009/04/06 16:30:43 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -26,6 +26,7 @@
      SUBDIR += decss
      SUBDIR += dillo
      SUBDIR += drupal5
+     SUBDIR += drupal6
      SUBDIR += elinks
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
@@ -315,6 +316,7 @@
      SUBDIR += py-turbogears
      SUBDIR += py-weberror
      SUBDIR += py-webhelpers
+     SUBDIR += py-webkitgtk
      SUBDIR += py-webob
      SUBDIR += py-webpy
      SUBDIR += py-webtest
@@ -366,6 +368,7 @@
      SUBDIR += trac-ldapplugin
      SUBDIR += transproxy
      SUBDIR += turba
+     SUBDIR += tt-rss
      SUBDIR += twiki
      SUBDIR += twill
      SUBDIR += visitors

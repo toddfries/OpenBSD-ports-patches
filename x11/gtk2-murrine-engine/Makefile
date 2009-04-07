@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.7 2009/03/27 09:56:46 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2009/04/07 12:34:53 ajacoutot Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	beautiful glass-like GTK+ 2.x engine and themes
 
-VERSION =	0.90.2
+VERSION =	0.90.3
 DISTNAME =	murrine-${VERSION}
 PKGNAME =	gtk2-murrine-engine-${VERSION}p0
 CATEGORIES =	x11
 
 HOMEPAGE =	http://cimitan.com/murrine/
 
-MAINTAINER =	Brad Walker <me@bradmwalker.com>
+MAINTAINER =	David Coppa <dcoppa@gmail.com>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes 
@@ -45,7 +45,9 @@ WANTLIB += freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png z
 
-MODULES =	devel/gettext
+MODULES =	devel/gettext \
+		textproc/intltool
+
 LIB_DEPENDS =	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 
 USE_LIBTOOL =	Yes

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.686 2009/03/28 19:05:37 ckuethe Exp $
+# $OpenBSD: Makefile,v 1.689 2009/04/05 01:45:59 martynas Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -640,9 +640,11 @@
      SUBDIR += pwlib
      SUBDIR += py-Checker
      SUBDIR += py-SOAPpy
+     SUBDIR += py-addons
      SUBDIR += py-asn1
      SUBDIR += py-babel
      SUBDIR += py-buildbot
+     SUBDIR += py-bytecodeassembler
      SUBDIR += py-cheetah
      SUBDIR += py-configobj
      SUBDIR += py-ctypes
@@ -652,6 +654,7 @@
      SUBDIR += py-dtopt
      SUBDIR += py-editdist
      SUBDIR += py-epsilon
+     SUBDIR += py-extremes
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
      SUBDIR += py-gobject
@@ -667,7 +670,9 @@
      SUBDIR += py-optik
      SUBDIR += py-orbit
      SUBDIR += py-parsing
+     SUBDIR += py-peak-rules
      SUBDIR += py-pexpect
+     SUBDIR += py-prioritized_methods
      SUBDIR += py-protocols
      SUBDIR += py-psyco
      SUBDIR += py-py
@@ -680,6 +685,7 @@
      SUBDIR += py-silc
      SUBDIR += py-simplejson
      SUBDIR += py-sip
+     SUBDIR += py-symboltype
      SUBDIR += py-tpg
      SUBDIR += py-turbocheetah
      SUBDIR += py-turbojson
@@ -726,7 +732,6 @@
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
-     SUBDIR += ruby-linecache
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov

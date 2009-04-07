@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2009/03/14 11:36:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2009/04/06 16:15:13 stsp Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,13 +11,16 @@ GNOME_VERSION=	2.24.2
 
 CATEGORIES=	graphics print
 
-PKGNAME-main=	${DISTNAME}p5
+PKGNAME-main=	${DISTNAME}p6
 PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
 PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
 
 SHARED_LIBS=	evbackend	0.0 # .0.0
 
 HOMEPAGE=	http://www.gnome.org/projects/evince/
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_FTP=	Yes
@@ -28,9 +31,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	::textproc/rarian \
-		:gnome-doc-utils-*:x11/gnome/doc-utils \
-		::x11/gnome/icon-theme
+BUILD_DEPENDS=	::x11/gnome/icon-theme
 
 MULTI_PACKAGES=	-main -djvu -dvi
 
