@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.566 2009/04/04 10:08:18 landry Exp $
+# $OpenBSD: Makefile,v 1.570 2009/04/21 16:39:23 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -307,6 +307,7 @@
      SUBDIR += packit
      SUBDIR += pavuk
      SUBDIR += pavuk,no_x11
+     SUBDIR += pcapdiff
      SUBDIR += pcapmerge
      SUBDIR += pchar
      SUBDIR += pdnsd
@@ -373,7 +374,9 @@
      SUBDIR += rsnapshot
      SUBDIR += rsync
      SUBDIR += rtg
+     SUBDIR += rtmpdump
      SUBDIR += rtorrent
+     SUBDIR += ruby-eventmachine
      SUBDIR += ruby-net-scp
      SUBDIR += ruby-net-sftp
      SUBDIR += ruby-net-ssh
@@ -399,6 +402,7 @@
      SUBDIR += silc-server
      SUBDIR += silc-server,operops
      SUBDIR += sing
+     SUBDIR += sipcalc
      SUBDIR += sipsak
      SUBDIR += sirc
      SUBDIR += slirp

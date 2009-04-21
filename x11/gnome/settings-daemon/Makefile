@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2009/04/16 08:17:49 ajacoutot Exp $
 
 COMMENT=		GNOME settings daemon
 
@@ -28,6 +28,7 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
+BUILD_DEPENDS=		::textproc/rarian
 LIB_DEPENDS=		notify::devel/libnotify \
 			gnome-desktop-2.>=6::x11/gnome/desktop \
 			gnomekbd::x11/gnome/libgnomekbd \
@@ -47,9 +48,6 @@ CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/control
 # We can't have both OSS and GStreamer support for the media-keys plugin.
 # We choose for GStreamer.
 CONFIGURE_ARGS+=	--enable-gstreamer
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/gnome-settings-daemon/gnome-settings-module.c

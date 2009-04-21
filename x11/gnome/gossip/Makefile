@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2009/03/14 11:36:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2009/04/16 08:24:24 ajacoutot Exp $
 
 COMMENT=		Jabber client for the GNOME desktop
 
@@ -31,8 +31,7 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		::x11/gnome/doc-utils \
-			::textproc/rarian
+BUILD_DEPENDS=		::x11/gnome/doc-utils
 LIB_DEPENDS=		camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-server \
 			idn.>=16::devel/libidn \
 			notify::devel/libnotify \
@@ -60,9 +59,6 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 NO_REGRESS=		Yes
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gossip
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gossip/sound/events

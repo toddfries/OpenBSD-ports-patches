@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.23 2009/04/06 16:15:13 stsp Exp $
+# $OpenBSD: Makefile,v 1.25 2009/04/16 08:11:13 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -12,8 +12,8 @@ GNOME_VERSION=	2.24.2
 CATEGORIES=	graphics print
 
 PKGNAME-main=	${DISTNAME}p6
-PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
-PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
+PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}p0
+PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}p0
 
 SHARED_LIBS=	evbackend	0.0 # .0.0
 
@@ -89,8 +89,5 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>
