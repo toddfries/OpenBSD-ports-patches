@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.15 2009/04/06 10:05:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2009/04/26 17:10:53 jasper Exp $
 
 # XXX the following modules are commented in PLIST
-# iPodModule ===> needs py-gpod which we don't provide
 # N800Module ===> needs HAL which we don't provide
+# Network sync ===> needs avahi
 
 COMMENT=		synchronization application for GNOME
 
 GNOME_PROJECT=		conduit
 GNOME_VERSION=		0.3.15
-PKGNAME=		${DISTNAME}p11
+PKGNAME=		${DISTNAME}p12
 
 HOMEPAGE=		http://www.conduit-project.org/
 
@@ -22,8 +22,8 @@ MODULES=		lang/python \
 			x11/gnome
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-# XXX needs avahi for network sync
-RUN_DEPENDS=		::devel/gettext \
+RUN_DEPENDS=		::audio/libgpod,-python \
+			::devel/gettext \
 			::devel/xdg-utils \
 			::graphics/py-goocanvas \
 			::textproc/py-vobject \
@@ -44,8 +44,7 @@ CONFIGURE_ARGS+=	--disable-nautilus-extension \
 			--disable-eog-plugin
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 pre-configure:
 	find ${WRKDIST} -name \*.py | \

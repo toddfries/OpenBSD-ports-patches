@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.83 2009/03/15 13:23:36 espie Exp $
+# $OpenBSD: Makefile,v 1.85 2009/04/26 11:01:04 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -10,9 +10,9 @@ VERSION=	2.4.2
 DISTNAME=	OOo_${VERSION}
 WRKDIST=	${WRKDIR}/OOH680_m18
 PKGNAME=	openoffice-${VERSION}
-PKGNAME-main=	openoffice-${VERSION}p1
+PKGNAME-main=	openoffice-${VERSION}p2
 PKGNAME-kde=	openoffice-kde-${VERSION}
-PKGNAME-java=	openoffice-java-${VERSION}p1
+PKGNAME-java=	openoffice-java-${VERSION}p2
 CATEGORIES=	editors productivity
 
 SHARED_LIBS=	stlport_gcc	4.5
@@ -125,8 +125,7 @@ AUTOCONF_DIR=		${WRKCONF}
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
-		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}" \
-		PYTHON="${MODPY_BIN}"
+		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}"
 
 CONFIGURE_ARGS=	--disable-gnome-vfs \
 		--disable-mozilla \
