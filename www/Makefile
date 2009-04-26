@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.405 2009/04/21 09:32:58 robert Exp $
+# $OpenBSD: Makefile,v 1.407 2009/04/23 16:02:20 robert Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -199,6 +199,7 @@
      SUBDIR += p5-HTML-PopupTreeSelect
      SUBDIR += p5-HTML-Prototype
      SUBDIR += p5-HTML-ResolveLink
+     SUBDIR += p5-HTML-RewriteAttributes
      SUBDIR += p5-HTML-SBC
      SUBDIR += p5-HTML-Scrubber
      SUBDIR += p5-HTML-SimpleParse
@@ -242,6 +243,7 @@
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
+     SUBDIR += p5-RTx-Tags
      SUBDIR += p5-Rose-HTML-Objects
      SUBDIR += p5-Rose-HTMLx-Form-Field-Autocomplete
      SUBDIR += p5-Rose-URI
