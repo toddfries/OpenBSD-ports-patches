@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2008/02/12 22:11:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2009/04/24 14:43:16 kurt Exp $
 
 COMMENT=		program for indexing & searching email
 

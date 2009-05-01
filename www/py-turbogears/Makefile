@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/08 21:09:01 martynas Exp $
+# $OpenBSD: Makefile,v 1.12 2009/04/22 22:07:11 martynas Exp $
 
 COMMENT=		Python web development megaframework
 
-MODPY_EGG_VERSION=	1.0.7
+MODPY_EGG_VERSION=	1.0.8
 DISTNAME=		TurboGears-${MODPY_EGG_VERSION}
 PKGNAME=		py-turbogears-${MODPY_EGG_VERSION}
 
@@ -19,7 +19,6 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://files.turbogears.org/eggs/
-EXTRACT_SUFX=		.zip
 
 MODULES=		lang/python
 

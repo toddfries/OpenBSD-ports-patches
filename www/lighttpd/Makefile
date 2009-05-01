@@ -1,19 +1,17 @@
-# $OpenBSD: Makefile,v 1.54 2008/10/23 20:29:17 brad Exp $
+# $OpenBSD: Makefile,v 1.57 2009/03/16 17:15:34 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
-DISTNAME=	lighttpd-1.4.20
+DISTNAME=	lighttpd-1.4.22
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	www net
 MASTER_SITES=	${HOMEPAGE}/download/
 
-MAINTAINER=	Brad Smith <brad@comstyle.com>
-
 HOMEPAGE=	http://www.lighttpd.net/
 
-LIB_DEPENDS+=	pcre::devel/pcre \
-		lua.>=5.1::lang/lua
+MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,13 +20,17 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c crypto m ssl z
 
+LIB_DEPENDS+=	pcre::devel/pcre \
+		lua.>=5.1::lang/lua
+RUN_DEPENDS+=	:spawn-fcgi-*:www/spawn-fcgi
+
 USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS+= --with-openssl \
-		 --without-bzip2 \
-		 --libdir="${PREFIX}/lib/lighttpd" \
-		 --with-lua
+CONFIGURE_ARGS+= --libdir="${PREFIX}/lib/lighttpd" \
+		 --with-lua \
+		 --with-openssl \
+		 --without-bzip2
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2009/01/21 15:35:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2009/04/26 11:01:04 ajacoutot Exp $
 
 COMMENT=		Python bindings for goocanvas
 
 GNOME_PROJECT=		pygoocanvas
-GNOME_VERSION=		0.12.0
+GNOME_VERSION=		0.14.0
 PKGNAME=		py-goocanvas-${VERSION}
 
 CATEGORIES=		graphics
@@ -27,10 +27,10 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 BUILD_DEPENDS=		::textproc/libxslt \
 			::x11/py-gtk2
 RUN_DEPENDS=		::x11/py-gtk2
-LIB_DEPENDS=		goocanvas::graphics/goocanvas
+LIB_DEPENDS=		goocanvas::graphics/goocanvas \
+			${MODPY_LIB_DEPENDS}
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--disable-docs
-CONFIGURE_ENV+= 	PYTHON="${MODPY_BIN}"
 
 .include <bsd.port.mk>

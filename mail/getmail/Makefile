@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.60 2008/09/27 08:20:49 sturm Exp $
+# $OpenBSD: Makefile,v 1.62 2009/04/27 07:17:47 sturm Exp $
 
 COMMENT=	IMAP/POP3/SDPS mail retriever
 
-V=		4.8.4
+V=		4.9.0
 DISTNAME=	getmail-$V
 CATEGORIES=	mail
 

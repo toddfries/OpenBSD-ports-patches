@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.256 2009/02/05 22:05:25 simon Exp $
+# $OpenBSD: Makefile,v 1.262 2009/04/14 11:30:29 jasper Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -13,6 +13,7 @@
      SUBDIR += clo++
      SUBDIR += clucene
      SUBDIR += diffstat
+     SUBDIR += discount
      SUBDIR += docbook
      SUBDIR += docbook-dsssl
      SUBDIR += docbook-to-man
@@ -59,6 +60,7 @@
      SUBDIR += mxml
      SUBDIR += ocaml-rss
      SUBDIR += ocaml-xml-light
+     SUBDIR += odt2txt
      SUBDIR += openjade
      SUBDIR += ots
      SUBDIR += p5-Blatte
@@ -98,9 +100,7 @@
      SUBDIR += p5-PPI
      SUBDIR += p5-PPI-HTML
      SUBDIR += p5-PatchReader
-     SUBDIR += p5-Pod-Escapes
      SUBDIR += p5-Pod-POM
-     SUBDIR += p5-Pod-Simple
      SUBDIR += p5-Pod-Spell
      SUBDIR += p5-Pod-Tests
      SUBDIR += p5-RSS-Parser-Lite
@@ -214,6 +214,7 @@
      SUBDIR += py-lxml
      SUBDIR += py-pygments
      SUBDIR += py-rtf
+     SUBDIR += py-sphinx
      SUBDIR += py-vobject
      SUBDIR += py-xml
      SUBDIR += py-yaml
@@ -234,6 +235,7 @@
      SUBDIR += ruby-pdf-writer
      SUBDIR += ruby-randexp
      SUBDIR += ruby-redcloth
+     SUBDIR += ruby-rss
      SUBDIR += ruby-rubigen
      SUBDIR += ruby-templater
      SUBDIR += rxp

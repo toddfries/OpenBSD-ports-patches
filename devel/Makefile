@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.675 2009/02/05 22:05:20 simon Exp $
+# $OpenBSD: Makefile,v 1.691 2009/04/26 19:42:31 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -61,6 +61,7 @@
      SUBDIR += cvslock
      SUBDIR += cvsplot
      SUBDIR += cvsps
+     SUBDIR += cvstrac
      SUBDIR += cvsutils
      SUBDIR += cvsweb
      SUBDIR += cxxtools
@@ -69,6 +70,7 @@
      SUBDIR += dejagnu
      SUBDIR += desktop-file-utils
      SUBDIR += doc++
+     SUBDIR += dotconf
      SUBDIR += doxygen
      SUBDIR += eclipse
      SUBDIR += ectags
@@ -359,9 +361,7 @@
      SUBDIR += p5-Expect-Simple
      SUBDIR += p5-Exporter-Lite
      SUBDIR += p5-Exporter-Tidy
-     SUBDIR += p5-ExtUtils-CBuilder
      SUBDIR += p5-ExtUtils-Depends
-     SUBDIR += p5-ExtUtils-ParseXS
      SUBDIR += p5-ExtUtils-PkgConfig
      SUBDIR += p5-ExtUtils-XSBuilder
      SUBDIR += p5-File-Attributes
@@ -429,7 +429,6 @@
      SUBDIR += p5-Locale-Maketext-Fuzzy
      SUBDIR += p5-Locale-Maketext-Gettext
      SUBDIR += p5-Locale-Maketext-Lexicon
-     SUBDIR += p5-Locale-Maketext-Simple
      SUBDIR += p5-Locale-PGettext
      SUBDIR += p5-Locale-US
      SUBDIR += p5-Locale-gettext
@@ -444,8 +443,6 @@
      SUBDIR += p5-MRO-Compat
      SUBDIR += p5-Module-Find
      SUBDIR += p5-Module-Install
-     SUBDIR += p5-Module-Loaded
-     SUBDIR += p5-Module-Pluggable
      SUBDIR += p5-Module-Pluggable-Fast
      SUBDIR += p5-Module-Refresh
      SUBDIR += p5-Module-ScanDeps
@@ -464,6 +461,7 @@
      SUBDIR += p5-POE
      SUBDIR += p5-POE-Component-IKC
      SUBDIR += p5-POE-Component-Pluggable
+     SUBDIR += p5-POE-Component-PubSub
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
@@ -544,6 +542,7 @@
      SUBDIR += p5-Test-Distribution
      SUBDIR += p5-Test-Exception
      SUBDIR += p5-Test-Expect
+     SUBDIR += p5-Test-File
      SUBDIR += p5-Test-File-Contents
      SUBDIR += p5-Test-Group
      SUBDIR += p5-Test-HTML-Tidy
@@ -590,7 +589,6 @@
      SUBDIR += p5-Time-Duration-Parse
      SUBDIR += p5-Time-Format
      SUBDIR += p5-Time-Period
-     SUBDIR += p5-Time-Piece
      SUBDIR += p5-Time-Piece-MySQL
      SUBDIR += p5-Time-Progress
      SUBDIR += p5-Time-TimeDate
@@ -609,6 +607,7 @@
      SUBDIR += p5-Want
      SUBDIR += p5-WeakRef
      SUBDIR += p5-YAML
+     SUBDIR += p5-YAML-Shell
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-accessors
      SUBDIR += p5-boolean
@@ -642,16 +641,22 @@
      SUBDIR += pwlib
      SUBDIR += py-Checker
      SUBDIR += py-SOAPpy
+     SUBDIR += py-addons
      SUBDIR += py-asn1
      SUBDIR += py-babel
      SUBDIR += py-buildbot
+     SUBDIR += py-bytecodeassembler
      SUBDIR += py-cheetah
      SUBDIR += py-configobj
      SUBDIR += py-ctypes
      SUBDIR += py-dateutil
+     SUBDIR += py-decorator
      SUBDIR += py-decoratortools
+     SUBDIR += py-distutils-extra
+     SUBDIR += py-dtopt
      SUBDIR += py-editdist
      SUBDIR += py-epsilon
+     SUBDIR += py-extremes
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
      SUBDIR += py-gobject
@@ -667,10 +672,14 @@
      SUBDIR += py-optik
      SUBDIR += py-orbit
      SUBDIR += py-parsing
+     SUBDIR += py-peak-rules
      SUBDIR += py-pexpect
+     SUBDIR += py-prioritized_methods
      SUBDIR += py-protocols
      SUBDIR += py-psyco
      SUBDIR += py-py
+     SUBDIR += py-pyprof2calltree
+     SUBDIR += py-pyro
      SUBDIR += py-radix
      SUBDIR += py-rcsparse
      SUBDIR += py-ruledispatch
@@ -678,6 +687,7 @@
      SUBDIR += py-silc
      SUBDIR += py-simplejson
      SUBDIR += py-sip
+     SUBDIR += py-symboltype
      SUBDIR += py-tpg
      SUBDIR += py-turbocheetah
      SUBDIR += py-turbojson
@@ -724,7 +734,6 @@
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
-     SUBDIR += ruby-linecache
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
@@ -766,10 +775,12 @@
      SUBDIR += swig
      SUBDIR += t1lib
      SUBDIR += tclcl
+     SUBDIR += teensyloader
      SUBDIR += tcllib
      SUBDIR += tig
      SUBDIR += tkcvs
      SUBDIR += tkdiff
+     SUBDIR += tklib
      SUBDIR += tla
      SUBDIR += tmake
      SUBDIR += ucpp

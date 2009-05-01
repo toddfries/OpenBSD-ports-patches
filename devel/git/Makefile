@@ -1,21 +1,21 @@
-# $OpenBSD: Makefile,v 1.42 2009/02/09 19:45:19 bernd Exp $
+# $OpenBSD: Makefile,v 1.45 2009/04/05 10:05:35 bernd Exp $
 
 COMMENT-main=		GIT - Tree History Storage Tool
 COMMENT-svn=		GIT - subversion interoperability tools
 COMMENT-x11=		GIT - graphical tools
 
-V=			1.6.1.3
+V=			1.6.2.2
 DISTNAME=		git-${V}
 PKGNAME-main=		${DISTNAME}
 PKGNAME-svn=		git-svn-${V}
 PKGNAME-x11=		git-x11-${V}
 CATEGORIES=		devel
 
-HOMEPAGE=		http://git.or.cz/
+HOMEPAGE=		http://git-scm.com/
 
 MAINTAINER=		Bernd Ahlers <bernd@openbsd.org>
 
-# GPL
+# GPLv2 only
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -32,7 +32,7 @@ MASTER_SITES=		ftp://ftp.kernel.org/pub/software/scm/git/ \
 
 TAR=			${LOCALBASE}/bin/gtar
 
-MODULES=		converters/libiconv
+MODULES=		converters/libiconv x11/tk
 
 BUILD_DEPENDS=		::archivers/gtar \
 			::devel/p5-Error
@@ -54,17 +54,16 @@ RUN_DEPENDS-svn=	::${BASE_PKGPATH} \
 LIB_DEPENDS-svn=
 PKG_ARCH-svn=		*
 
-RUN_DEPENDS-x11=	:${PKGNAME}:${BASE_PKGPATH},-main \
-			:tk-8.5.*:x11/tk/8.5
+RUN_DEPENDS-x11=	::${BASE_PKGPATH},-main \
+			${MODTK_RUN_DEPENDS}
 LIB_DEPENDS-x11=
 PKG_ARCH-x11=		*
 
 MAKE_ENV=		prefix=${PREFIX} CC="${CC}" CFLAGS="${CFLAGS}" V=1 \
 			SYSCONFDIR=${SYSCONFDIR} \
-			TCLTK_PATH=${LOCALBASE}/bin/wish8.5 \
-			TCL_PATH=${LOCALBASE}/bin/tclsh8.5
+			TCLTK_PATH=${MODTK_BIN} \
+			TCL_PATH=${MODTCL_BIN}
 
-USE_X11=		Yes
 USE_GMAKE=		Yes
 
 REGRESS_DEPENDS=	:zip-*:archivers/zip \

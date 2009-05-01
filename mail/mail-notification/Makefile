@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.25 2009/01/21 10:50:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		mail notification for freedesktop.org-compliant system trays
 DISTNAME=		mail-notification-5.4
-PKGNAME=		${DISTNAME}p2
+PKGNAME=		${DISTNAME}p4
+
 CATEGORIES=		mail
 
 EXTRACT_SUFX=		.tar.bz2
@@ -26,14 +27,13 @@ WANTLIB=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pixman-1 png popt pthread ssl xml2 z
 
-MASTER_SITES=	http://savannah.nongnu.org/download/mailnotify/
+MASTER_SITES=	${MASTER_SITE_SAVANNAH:=mailnotify/}
 
 MODULES=	devel/gettext \
 		textproc/intltool
 
 BUILD_DEPENDS=	::textproc/rarian
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
-		::textproc/rarian \
 		:yelp-*:x11/gnome/yelp \
 		:notification-daemon-*|notification-daemon-xfce-*:sysutils/notification-daemon
 LIB_DEPENDS=	gnomeui-2.>=2400::x11/gnome/libgnomeui \
@@ -59,7 +59,6 @@ do-configure:
 		library-owner=${BINOWN} \
 		library-group=${BINGRP} \
 		gconf-schemas-dir="${LOCALBASE}/share/schemas/mail-notification" \
-		scrollkeeper-update="/usr/bin/true" \
 		gconftool-2="/usr/bin/true" \
 		destdir="${WRKINST}"
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2009/01/03 21:27:25 kili Exp $
+# $OpenBSD: Makefile,v 1.9 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=	dbus bindings for Python
 
 DISTNAME=	dbus-python-0.83.0
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	x11
 MASTER_SITES=	${HOMEPAGE}releases/dbus-python/
 
@@ -28,7 +28,6 @@ USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-html-docs
-CONFIGURE_ENV+=	PYTHON=${MODPY_BIN}
 
 NO_REGRESS=	Yes
 

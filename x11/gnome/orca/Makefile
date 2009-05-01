@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.7 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=		assistive technology for people with visual impairments
 
-GNOME_VERSION=		2.24.3
+GNOME_VERSION=		2.24.4
 GNOME_PROJECT=		orca
 PKGNAME=		${DISTNAME}p1
 
@@ -23,7 +23,8 @@ MODULES=		devel/gettext \
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		::x11/gnome/py-gnome \
 			::x11/gnome/mag \
-			::x11/gnome/speech
+			::x11/gnome/speech \
+			::x11/dbus-python
 
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
@@ -31,7 +32,6 @@ DESKTOP_FILES=		Yes
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-liblouis
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON=${MODPY_BIN}
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

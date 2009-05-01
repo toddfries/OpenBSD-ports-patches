@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2009/02/11 15:47:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=		easy GNOME menu editing tool
 
 GNOME_PROJECT=		alacarte
-GNOME_VERSION=		0.11.7
-PKGNAME=		${DISTNAME}p2
+GNOME_VERSION=		0.11.10
 
 CATEGORIES=		x11
 
@@ -27,8 +26,7 @@ RUN_DEPENDS=		::devel/gettext \
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Alacarte/util.py

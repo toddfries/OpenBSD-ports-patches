@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.81 2008/11/21 18:35:03 jolan Exp $
+# $OpenBSD: Makefile,v 1.85 2009/04/26 11:01:04 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386 macppc
 
@@ -10,9 +10,9 @@ VERSION=	2.4.2
 DISTNAME=	OOo_${VERSION}
 WRKDIST=	${WRKDIR}/OOH680_m18
 PKGNAME=	openoffice-${VERSION}
-PKGNAME-main=	openoffice-${VERSION}p0
+PKGNAME-main=	openoffice-${VERSION}p2
 PKGNAME-kde=	openoffice-kde-${VERSION}
-PKGNAME-java=	openoffice-java-${VERSION}
+PKGNAME-java=	openoffice-java-${VERSION}p2
 CATEGORIES=	editors productivity
 
 SHARED_LIBS=	stlport_gcc	4.5
@@ -73,13 +73,13 @@ BUILD_DEPENDS=	:zip-*:archivers/zip \
 		:p5-Archive-Zip-*:archivers/p5-Archive-Zip \
 		::print/cups \
 		::devel/apache-ant \
-		:db-java-4.*:databases/db/v4,-java,java \
+		:db-java->=4,<5:databases/db/v4,-java,java \
 		::devel/boost
 
 MODULES+=	lang/python
 LIB_DEPENDS-main=gdk-x11-2.0.>=400.14,gdk_pixbuf-2.0.>=400.14,gtk-x11-2.0.>=400.14::x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
-		db.>=4:db-4.*:databases/db/v4 \
+		db.>=4:db->=4,<5:databases/db/v4 \
 		xslt.>=3::textproc/libxslt \
 		curl.>=7::net/curl \
 		neon.>=24::net/neon \
@@ -105,7 +105,7 @@ MODJAVA_JRERUN=		Yes
 LIB_DEPENDS-java=
 RUN_DEPENDS-java=	${MODJAVA_RUN_DEPENDS} \
 			::editors/openoffice \
-			:db-java-4.*:databases/db/v4,-java,java
+			:db-java->=4,<5:databases/db/v4,-java,java
 WANTLIB-java=		c m pthread stdc++
 
 
@@ -125,8 +125,7 @@ AUTOCONF_DIR=		${WRKCONF}
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
-		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}" \
-		PYTHON="${MODPY_BIN}"
+		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}"
 
 CONFIGURE_ARGS=	--disable-gnome-vfs \
 		--disable-mozilla \

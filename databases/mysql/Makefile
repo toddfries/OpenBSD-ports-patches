@@ -1,20 +1,20 @@
-# $OpenBSD: Makefile,v 1.147 2009/02/02 15:54:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.151 2009/03/19 22:51:01 martynas Exp $
 
 COMMENT-main=	multithreaded SQL database (client)
 COMMENT-server=	multithreaded SQL database (server)
 COMMENT-tests=	multithreaded SQL database (regression test suite)
 
-VERSION=	5.0.75
+VERSION=	5.0.77
 DISTNAME=	mysql-${VERSION}
-PKGNAME-main=	mysql-client-${VERSION}
-PKGNAME-server=	mysql-server-${VERSION}
+PKGNAME-main=	mysql-client-${VERSION}p1
+PKGNAME-server=	mysql-server-${VERSION}p1
 PKGNAME-tests= 	mysql-tests-${VERSION}
 CATEGORIES=	databases
 V=		MySQL-5.0
+MASTER_SITES=	${MASTER_SITE_MYSQL:=Downloads/$V/}
+
 SHARED_LIBS +=	mysqlclient_r		19.0
 SHARED_LIBS +=	mysqlclient		19.0
-
-MASTER_SITES=	${MASTER_SITES_MYSQL:=Downloads/$V/}
 
 HOMEPAGE=	http://www.mysql.com/
 
@@ -46,7 +46,8 @@ VMEM_WARNING=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.59
+# Should be 2.63
+AUTOCONF_VERSION= 2.61
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --enable-thread-safe-client \
 		 --localstatedir="${DB_DIR}" \
@@ -80,10 +81,10 @@ CONFIGURE_ARGS+= --enable-assembler
 
 MULTI_PACKAGES=		-main -server -tests
 
-RUN_DEPENDS-server=	:mysql-client-5.0.*:databases/mysql \
+RUN_DEPENDS-server=	:mysql-client->=5.0,<5.1:databases/mysql \
 			:p5-DBD-mysql-*:databases/p5-DBD-mysql
 
-LIB_DEPENDS-server=	mysqlclient:mysql-client-5.0.*:databases/mysql
+LIB_DEPENDS-server=	mysqlclient:mysql-client->=5.0,<5.1:databases/mysql
 
 WANTLIB-server=		${WANTLIB} wrap		
 

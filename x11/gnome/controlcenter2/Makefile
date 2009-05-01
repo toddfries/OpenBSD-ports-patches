@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.55 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.62 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
 GNOME_VERSION=		2.24.0.1
-PKGNAME=		${DISTNAME}p10
+PKGNAME=		${DISTNAME}p15
 
 SHARED_LIBS +=	gnome-window-settings 2.0      # .1.0
 CATEGORIES=		x11
@@ -43,12 +43,9 @@ LIB_DEPENDS=		canberra,canberra-gtk:libcanberra->=0.10p0:audio/libcanberra \
 			xklavier::x11/gnome/libxklavier \
 			metacity-private::x11/gnome/metacity \
 			panel-applet-2::x11/gnome/panel
-BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
-			::textproc/rarian \
-			::x11/gnome/settings-daemon
+BUILD_DEPENDS=		::x11/gnome/settings-daemon
 RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
 			::multimedia/gstreamer-0.10/plugins-good,-gconf \
-			::textproc/rarian \
 			::x11/gnome/settings-daemon \
 			::audio/sound-theme-freedesktop \
 			::x11/gnome/terminal
@@ -65,8 +62,5 @@ CONFIGURE_ENV=  	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/controlcenter2
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

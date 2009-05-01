@@ -1,14 +1,23 @@
-$OpenBSD: patch-configure,v 1.10 2008/12/02 15:29:07 naddy Exp $
---- configure.orig	Thu Nov 27 21:20:39 2008
-+++ configure	Thu Nov 27 21:21:19 2008
-@@ -21453,10 +21453,6 @@ else
+$OpenBSD: patch-configure,v 1.12 2009/03/04 20:59:52 naddy Exp $
+--- configure.orig	Sun Mar  1 17:08:56 2009
++++ configure	Sun Mar  1 17:09:48 2009
+@@ -20148,8 +20148,8 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+ if test 0 = "0"; then
+   supported_build=yes
+   if test "x$GCC" = "xyes" ; then
+-    CFLAGS="$CFLAGS -g -O3 -funroll-loops "
+-    CXXFLAGS="$CXXFLAGS -g -O3 -funroll-loops "
++    : CFLAGS="$CFLAGS -g -O3 -funroll-loops "
++    : CXXFLAGS="$CXXFLAGS -g -O3 -funroll-loops "
+   fi
+ 
+ cat >>confdefs.h <<\_ACEOF
+@@ -21544,7 +21544,7 @@ _ACEOF
+ esac
+ 
+ if test "x$GCC" = "xyes" ; then
+-  CFLAGS="$CFLAGS -std=gnu99 -ggdb3 -Wall -Wextra -Wredundant-decls -Wpointer-arith -Wformat-security -W -Wmissing-declarations -Wdeclaration-after-statement -Wcast-align -Winit-self -Wundef -Wnested-externs -Wmissing-format-attribute"
++  : CFLAGS="$CFLAGS -std=gnu99 -ggdb3 -Wall -Wextra -Wredundant-decls -Wpointer-arith -Wformat-security -W -Wmissing-declarations -Wdeclaration-after-statement -Wcast-align -Winit-self -Wundef -Wnested-externs -Wmissing-format-attribute"
  fi
  
- 
--if test "x$GCC" = "xyes" ; then
--    CFLAGS="-g -Wall -Wformat-security -W -Wmissing-prototypes -Wdeclaration-after-statement -O3 -funroll-loops"
--    CXXFLAGS="-g -Wall -Wformat-security -W -O3 -funroll-loops"
--fi
- 
  { $as_echo "$as_me:$LINENO: checking for ANSI C header files" >&5
- $as_echo_n "checking for ANSI C header files... " >&6; }

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2009/02/09 20:36:02 ian Exp $
+# $OpenBSD: Makefile,v 1.14 2009/04/26 11:01:04 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -10,9 +10,9 @@ VERSION=	3.0.1
 DISTNAME=	OOo_${VERSION}
 WRKDIST=	${WRKDIR}/OOO300_m15
 PKGNAME=	openoffice-${VERSION}
-PKGNAME-main=	openoffice-${VERSION}p1
+PKGNAME-main=	openoffice-${VERSION}p4
 PKGNAME-kde=	openoffice-kde-${VERSION}p1
-PKGNAME-java=	openoffice-java-${VERSION}p1
+PKGNAME-java=	openoffice-java-${VERSION}p4
 CATEGORIES=	editors productivity
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
@@ -58,7 +58,7 @@ LANGS=			bg ca de es fa fi fr hu it ja ko \
 
 .for l in ${LANGS:L}
 MULTI_PACKAGES+=	-i18n-$l
-PKGNAME-i18n-$l=	openoffice-i18n-$l-${VERSION}p1
+PKGNAME-i18n-$l=	openoffice-i18n-$l-${VERSION}p2
 COMMENT-i18n-$l=	$l language pack for OpenOffice.Org
 RUN_DEPENDS-i18n-$l=	::editors/openoffice3
 WANTLIB-i18n-$l=
@@ -74,14 +74,14 @@ BUILD_DEPENDS+=	:zip-*:archivers/zip \
 		:p5-Archive-Zip-*:archivers/p5-Archive-Zip \
 		::print/cups \
 		::devel/apache-ant \
-		:db-java-4.*:databases/db/v4,-java,java \
+		:db-java->=4,<5:databases/db/v4,-java,java \
 		::devel/boost
 
 MODULES+=	lang/python
 LIB_DEPENDS-main=gdk-x11-2.0.>=400.14,gdk_pixbuf-2.0.>=400.14,gtk-x11-2.0.>=400.14::x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
-		estdc++.>=7::lang/gcc/4.2,-estdc \
-		db.>=4:db-4.*:databases/db/v4 \
+		estdc++.>=7:libstdc++->=4.2,<4.3:lang/gcc/4.2,-estdc \
+		db.>=4:db->=4,<5:databases/db/v4 \
 		xslt.>=3::textproc/libxslt \
 		curl.>=7::net/curl \
 		neon.>=24::net/neon \
@@ -110,7 +110,7 @@ MODJAVA_JRERUN=		Yes
 LIB_DEPENDS-java=
 RUN_DEPENDS-java=	${MODJAVA_RUN_DEPENDS} \
 			::editors/openoffice3 \
-			:db-java-4.*:databases/db/v4,-java,java
+			:db-java->=4,<5:databases/db/v4,-java,java
 WANTLIB-java=		c m pthread
 
 USE_X11=	Yes
@@ -131,8 +131,7 @@ AUTOCONF_DIR=		${WRKCONF}
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
-		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}" \
-		PYTHON="${MODPY_BIN}"
+		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}"
 
 CONFIGURE_ARGS=	--disable-gnome-vfs \
 		--disable-mozilla \

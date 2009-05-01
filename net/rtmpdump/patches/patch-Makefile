@@ -1,0 +1,29 @@
+$OpenBSD: patch-Makefile,v 1.2 2009/04/29 00:51:23 sthen Exp $
+
+avoid gmake-isms
+
+--- Makefile.orig	Mon Apr 27 13:13:18 2009
++++ Makefile	Tue Apr 28 12:11:56 2009
+@@ -6,16 +6,20 @@ CFLAGS=-Wall
+ CXXFLAGS=-Wall
+ LDFLAGS=-Wall
+ 
++.SUFFIXES: .cpp
++.cpp.o:
++	$(CXX) $(CXXFLAGS) -c $< -o $@
++
+ all: rtmpdump
+ 
+ clean:
+ 	rm -f *.o
+ 
+ streams: bytes.o log.o rtmp.o AMFObject.o rtmppacket.o streams.o parseurl.o dh.o handshake.o
+-	$(CXX) $(LDFLAGS) $^ -o $@_x86 -lpthread -lssl -lcrypto
++	$(CXX) $(LDFLAGS) $> -o $@ -lpthread -lssl -lcrypto
+ 
+ rtmpdump: bytes.o log.o rtmp.o AMFObject.o rtmppacket.o rtmpdump.o parseurl.o dh.o handshake.o
+-	$(CXX) $(LDFLAGS) $^ -o $@_x86 -lssl -lcrypto
++	$(CXX) $(LDFLAGS) $> -o $@ -lssl -lcrypto
+ 
+ bytes.o: bytes.cpp bytes.h Makefile
+ log.o: log.cpp log.h Makefile

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2007/12/10 21:07:51 martynas Exp $
+# $OpenBSD: Makefile,v 1.6 2009/04/05 02:07:40 martynas Exp $
 
 COMMENT=		rule-based dispatching and generic functions
 
 VERSION=		0.5
 REVISION=		2306
 DISTNAME=		RuleDispatch
-PKGNAME=		py-ruledispatch-${VERSION}r${REVISION}p0
+PKGNAME=		py-ruledispatch-${VERSION}r${REVISION}p1
 
 CATEGORIES=		devel
 
@@ -19,7 +19,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		${MASTER_SITE_SUNSITE:=distributions/gentoo/distfiles/}
+MASTER_SITES=		http://mirrors.protection.cx/~martynas/python/
 DISTFILES=		RuleDispatch-${VERSION}a0.dev-r${REVISION}${EXTRACT_SUFX}
 
 MODULES=		lang/python

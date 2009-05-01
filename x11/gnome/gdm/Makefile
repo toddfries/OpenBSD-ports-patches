@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.60 2009/04/27 08:09:27 ajacoutot Exp $
 
 COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
-GNOME_VERSION=		2.20.9
-PKGNAME=		${DISTNAME}p4
+GNOME_VERSION=		2.20.10
+PKGNAME=		${DISTNAME}p2
 
 HOMEPAGE=		http://www.gnome.org/projects/gdm/
 
@@ -20,12 +20,10 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glade-2.0 glib-2.0 \
 		glitz gmodule-2.0 gnomecanvas-2 gobject-2.0 gsf-1 \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pcre pixman-1 png pthread util wrap xml2 z
+		pcre pixman-1 png util wrap xml2 z
 
-BUILD_DEPENDS=		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils \
-			::x11/gnome/zenity
+BUILD_DEPENDS=		::x11/gnome/zenity
 RUN_DEPENDS=		:sox-*:audio/sox \
-			:rarian-*:textproc/rarian \
 			:gnome-audio-*:x11/gnome/audio \
 			:hicolor-icon-theme-*:x11/hicolor-icon-theme \
 			::x11/gnome/zenity
@@ -35,7 +33,6 @@ MODULES=		devel/gettext \
 			x11/gnome
 
 USE_X11=		Yes
-DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
 
 CONFIGURE_STYLE=	gnu old
@@ -48,19 +45,19 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-scrollkeeper \
 			--with-console-kit=no \
 			--with-libaudit=no
-# XXX X Window System Error ('BadLenght...')
+# not enabled in X.org
 CONFIGURE_ARGS+=	--with-xevie=no
 
+# -pthread is needed to resolve some undefined symbols
+# (pthread_mutex_trylock in libgthread for gdmflexiserver, gdmXnest...)
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib -pthread"
 
 # XXX IPv6-only FLAVOR?
 CONFIGURE_ARGS+=	--enable-ipv6=no
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples \
 			dmconfdir=${PREFIX}/share/examples/dm
-post-patch:
-	ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 pre-configure:
 	${SUBST_CMD} \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.230 2009/02/05 22:05:22 simon Exp $
+# $OpenBSD: Makefile,v 1.238 2009/04/20 23:32:11 sthen Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -11,6 +11,7 @@
      SUBDIR += agg
      SUBDIR += animorph
      SUBDIR += aqsis
+     SUBDIR += autopano-sift-c
      SUBDIR += babl
      SUBDIR += barcode
      SUBDIR += blender
@@ -20,6 +21,7 @@
      SUBDIR += cal3d
      SUBDIR += camlimages
      SUBDIR += cfdg
+     SUBDIR += clutter
      SUBDIR += colorexplorer
      SUBDIR += comix
      SUBDIR += compface
@@ -27,6 +29,7 @@
      SUBDIR += dcmtk
      SUBDIR += dcraw
      SUBDIR += dia
+     SUBDIR += dia,gnome
      SUBDIR += digikam
      SUBDIR += digikam-doc
      SUBDIR += djview4
@@ -34,6 +37,7 @@
      SUBDIR += djvulibre,no_x11
      SUBDIR += dumpmpeg
      SUBDIR += dvdrip
+     SUBDIR += enblend-enfuse
      SUBDIR += enjoympeg
      SUBDIR += evince
      SUBDIR += exiv2
@@ -42,6 +46,8 @@
      SUBDIR += ffmpegthumbnailer
      SUBDIR += flash
      SUBDIR += fnlib
+     SUBDIR += freeimage
+     SUBDIR += freeglut
      SUBDIR += fswebcam
      SUBDIR += fxtv
      SUBDIR += fyre
@@ -57,6 +63,7 @@
      SUBDIR += gii
      SUBDIR += gimp
      SUBDIR += gle
+     SUBDIR += glew
      SUBDIR += glitz
      SUBDIR += glpng
      SUBDIR += glut
@@ -69,9 +76,9 @@
      SUBDIR += gracula
      SUBDIR += gthumb
      SUBDIR += gtkam
-     SUBDIR += gtksee
      SUBDIR += gwenview
      SUBDIR += gwenview-i18n
+     SUBDIR += hugin
      SUBDIR += ilmbase
      SUBDIR += imlib
      SUBDIR += imlib2
@@ -103,8 +110,10 @@
      SUBDIR += liblqr
      SUBDIR += libmng
      SUBDIR += libmpeg2
+     SUBDIR += libpano13
      SUBDIR += libungif
      SUBDIR += libwmf
+     SUBDIR += libxmi
      SUBDIR += luagd
      SUBDIR += luvcview
      SUBDIR += makehuman

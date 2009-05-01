@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2008/06/15 00:06:25 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2009/04/26 11:01:04 ajacoutot Exp $
 
 COMMENT=		python bindings for libnotify
 
 V=			0.1.1
 DISTNAME=		notify-python-$V
-PKGNAME=		py-notify-$Vp0
+PKGNAME=		py-notify-$Vp1
 CATEGORIES=		devel
 
 HOMEPAGE=		http://www.galago-project.org/
@@ -37,7 +37,6 @@ LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.65 2009/02/11 15:47:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.69 2009/04/14 21:07:44 merdely Exp $
 
 COMMENT-main=		applets for use with the GNOME panel
 COMMENT-battstat=	GNOME applet for monitoring battery level
@@ -6,8 +6,8 @@ COMMENT-battstat=	GNOME applet for monitoring battery level
 GNOME_PROJECT=		gnome-applets
 GNOME_VERSION=		2.24.3.1
 
-PKGNAME-main=		gnome-applets2-${VERSION}p6
-PKGNAME-battstat=	gnome-applets2-battstat-${VERSION}p3
+PKGNAME-main=		gnome-applets2-${VERSION}p9
+PKGNAME-battstat=	gnome-applets2-battstat-${VERSION}p6
 
 CATEGORIES=		x11
 
@@ -34,8 +34,7 @@ MODULES=		devel/gettext \
 MODGNOME_HELP_FILES=	Yes
 
 BUILD_DEPENDS= 		${RUN_DEPENDS}
-RUN_DEPENDS=		::textproc/rarian \
-			:gnome-icon-theme->=2.15.91:x11/gnome/icon-theme \
+RUN_DEPENDS=		:gnome-icon-theme->=2.15.91:x11/gnome/icon-theme \
 			::x11/gnome/py-gnome-desktop
 MODPY_RUNDEP=		No
 LIB_DEPENDS=		notify::devel/libnotify \

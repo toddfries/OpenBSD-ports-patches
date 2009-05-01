@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/01 04:56:57 ckuethe Exp $
+# $OpenBSD: Makefile,v 1.12 2009/03/23 15:43:44 ckuethe Exp $
 
-COMMENT=	Atmel AVR 8-bit RISC microcontrollers' libc
+COMMENT=	libc for Atmel AVR 8-bit RISC microcontrollers
 
-DISTNAME=	avr-libc-1.6.2
+DISTNAME=	avr-libc-1.6.6
 
 HOMEPAGE=	http://www.nongnu.org/avr-libc/
 
@@ -12,7 +12,7 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-MASTER_SITES=		http://savannah.nongnu.org/download/avr-libc/
+MASTER_SITES=		${MASTER_SITE_SAVANNAH:=avr-libc/}
 
 EXTRACT_SUFX=		.tar.bz2
 

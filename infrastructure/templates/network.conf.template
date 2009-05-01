@@ -1,4 +1,4 @@
-# $OpenBSD: network.conf.template,v 1.128 2009/02/03 22:17:36 jasper Exp $
+# $OpenBSD: network.conf.template,v 1.132 2009/04/02 15:04:19 jcs Exp $
 
 #
 # NEVER EDIT THIS FILE DIRECTLY!!!!
@@ -182,6 +182,27 @@ MASTER_SITE_KDE+=	\
  	ftp://ftp.fu-berlin.de/pub/unix/X11/gui/kde/ \
 	ftp://ftp.chg.ru/pub/X11/kde/
 
+MASTER_SITE_SAVANNAH+=	\
+	http://download.savannah.nongnu.org/releases/ \
+	http://download.savannah.nongnu.org/releases-noredirect/ \
+	http://ftp.cc.uoc.gr/mirrors/nongnu.org/ \
+	http://ftp.twaren.net/Unix/NonGNU/ \
+	http://mirror.csclub.uwaterloo.ca/nongnu/ \
+	http://mirror.dknss.com/nongnu/ \
+	http://mirror.publicns.net/pub/nongnu/ \
+	ftp://mirror.publicns.net/pub/nongnu/ \
+	ftp://mirrors.localhost.net.ar/pub/mirrors/savannah-nongnu/ \
+	http://mirrors.zerg.biz/nongnu/ \
+	http://nongnu.askapache.com/ \
+	http://nongnu.mirror.ironie.org/ \
+	http://piotrkosoft.net/pub/mirrors/savannah.gnu.org/ \
+	ftp://ftp.piotrkosoft.net/pub/mirrors/savannah.gnu.org/ \
+	http://savannah.c3sl.ufpr.br/ \
+	ftp://savannah.c3sl.ufpr.br/savannah-nongnu/ \
+	http://savannah.inetbridge.net/ \
+	http://savannah.releasenotes.org/ \
+	http://www.very-clever.com/download/nongnu/
+
 MASTER_SITE_AFTERSTEP+=	\
 	ftp://ftp.afterstep.org/ \
 	ftp://ftp.kddilabs.jp/X11/AfterStep/ \
@@ -240,7 +261,7 @@ MASTER_SITE_RUBYFORGE+= \
 	http://files.rubyforge.mmmultiworks.com/ \
 	http://files.rubyforge.vm.bytemark.co.uk/
 
-MASTER_SITES_MYSQL+= \
+MASTER_SITE_MYSQL+= \
 	ftp://ftp.easynet.be/mysql/ \
 	ftp://ftp.gwdg.de/pub/misc/mysql/ \
 	ftp://ftp.fh-wolfenbuettel.de/pub/database/mysql/ \
@@ -256,3 +277,9 @@ MASTER_SITES_MYSQL+= \
 	ftp://ftp.linorg.usp.br/mysql/ \
 	ftp://ftp.cbn.net.id/mirror/mysql/ \
 	http://download.softagency.net/MySQL/
+
+MASTER_SITE_PYPI +=	\
+	http://pypi.python.org/packages/source/
+
+MASTER_SITE_GITHUB+= \
+	http://gems.github.com/gems/

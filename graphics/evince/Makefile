@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2009/01/08 20:09:33 sturm Exp $
+# $OpenBSD: Makefile,v 1.25 2009/04/16 08:11:13 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,13 +11,16 @@ GNOME_VERSION=	2.24.2
 
 CATEGORIES=	graphics print
 
-PKGNAME-main=	${DISTNAME}p2
-PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
-PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
+PKGNAME-main=	${DISTNAME}p6
+PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}p0
+PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}p0
 
 SHARED_LIBS=	evbackend	0.0 # .0.0
 
 HOMEPAGE=	http://www.gnome.org/projects/evince/
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_FTP=	Yes
@@ -28,9 +31,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	::textproc/rarian \
-		:gnome-doc-utils-*:x11/gnome/doc-utils \
-		::x11/gnome/icon-theme
+BUILD_DEPENDS=	::x11/gnome/icon-theme
 
 MULTI_PACKAGES=	-main -djvu -dvi
 
@@ -42,14 +43,14 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		pixman-1 png xml2 z
 
 WANTLIB-main=		${WANTLIB} ICE ORBit-2 SM c dbus-1 dbus-glib-1 \
-			gconf-2 glade-2.0 gnome-keyring gs gthread-2.0 \
+			gconf-2 gnome-keyring gs gthread-2.0 \
 			jpeg pthread tiff
 LIB_DEPENDS-main=	poppler.>=3,poppler-glib.>=3::print/poppler \
 			spectre::print/libspectre \
 			gnome-keyring::x11/gnome/keyring \
+			glade-2.0::devel/libglade2 \
 			${MODGETTEXT_LIB_DEPENDS}
-RUN_DEPENDS-main=	::textproc/rarian \
-			:shared-mime-info-*:misc/shared-mime-info \
+RUN_DEPENDS-main=	:shared-mime-info-*:misc/shared-mime-info \
 			:ghostscript-*:print/ghostscript/gnu \
 			::x11/gnome/icon-theme \
 			${MODGNOME_RUN_DEPENDS}
@@ -88,8 +89,5 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

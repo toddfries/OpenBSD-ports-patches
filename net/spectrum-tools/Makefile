@@ -1,15 +1,19 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/06/12 21:33:57 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2009/02/18 16:07:48 sthen Exp $
 
-COMMENT-main =	Graphical tools for the MetaGeek Wi-spy spectrum analyser
-COMMENT-utils =	Tools for the MetaGeek Wi-spy spectrum analyser
+COMMENT-main =	graphical tools for the MetaGeek Wi-spy spectrum analyser
+COMMENT-utils =	tools for the MetaGeek Wi-spy spectrum analyser
 
 V =		20080314
 DISTNAME =	spectools-$V
 PKGNAME =	spectrum-tools-$V
+
+FULLPKGNAME-main =  spectrum-tools-$Vp1
+FULLPKGNAME-utils = spectrum-tools-utils-$Vp0
+
 CATEGORIES =	net
 
-MASTER_SITES =	http://www.kismetwireless.net/code/
-MASTER_SITES =	http://spacehopper.org/mirrors/
+MASTER_SITES =	http://www.kismetwireless.net/code/ \
+		http://spacehopper.org/mirrors/
 
 HOMEPAGE =	http://www.kismetwireless.net/spectools/
 
@@ -23,16 +27,13 @@ PERMIT_DISTFILES_FTP =	Yes
 
 MULTI_PACKAGES =	-main -utils
 
-FULLPKGNAME-main =	spectrum-tools-$V
-FULLPKGNAME-utils =	spectrum-tools-utils-$V
-
 WANTLIB = 	c m pthread usb
 
 WANTLIB-main =	${WANTLIB} \
 		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig \
-		freetype glib-2.0 glitz gmodule-2.0 gobject-2.0 iconv \
-		intl pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
+		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
+		iconv intl pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
 		png z
 
 WANTLIB-utils =	${WANTLIB} ncurses

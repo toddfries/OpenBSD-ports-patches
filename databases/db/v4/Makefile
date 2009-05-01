@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.34 2008/10/28 11:53:33 steven Exp $
+# $OpenBSD: Makefile,v 1.37 2009/04/26 09:38:25 sthen Exp $
 
 COMMENT-java=	Java bindings for Berkeley DB, revision ${REVISION}
 
 REVISION=	4
 VERSION=	${REVISION}.6.21
-PKGNAME=	${DISTNAME}
-PKGNAME-main=	${DISTNAME}
-PKGNAME-java=	db-java-${VERSION}p1
+PKGNAME-main=	${DISTNAME}p0
+PKGNAME-java=	db-java-${VERSION}p4
+PKGNAME-tcl=	db-tcl-${VERSION}p6
 DBLIBDIR=	lib/db4
 SHARED_LIBS +=	db                   5.0      # .0.0
 SHARED_LIBS +=	db_cxx               6.0      # .0.0
@@ -14,6 +14,12 @@ SHARED_LIBS +=	db_java              5.0      # .0.0
 SHARED_LIBS +=	db_tcl               6.0      # .0.0
 
 MASTER_SITES0=	${HOMEPAGE}db/update/${VERSION}/
+# converted DOS line-endings; no other change
+MASTER_SITES2=	http://spacehopper.org/mirrors/
+PATCHFILES=	patch.${VERSION}.1:0 \
+		patch.${VERSION}.2.fixed:2 \
+		patch.${VERSION}.3:0 \
+		patch.${VERSION}.4:0
 
 CONFIGURE_STYLE=gnu
 
@@ -23,8 +29,9 @@ WANTLIB=	c
 PSEUDO_FLAVORS=	java
 FLAVOR?=
 
-RUN_DEPENDS-java=	:db-${REVISION}.*:databases/db/v${REVISION} \
+RUN_DEPENDS-java=	:db->=4,<5:databases/db/v${REVISION} \
 			${MODJAVA_RUN_DEPENDS}
+RUN_DEPENDS-tcl=	:db->=4,<5:databases/db/v${REVISION}
 WANTLIB-java=
 
 .if ${FLAVOR:L:Mjava}

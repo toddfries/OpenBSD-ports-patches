@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2009/02/11 15:47:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2009/04/16 08:11:14 ajacoutot Exp $
 
 COMMENT=		VNC Client for the GNOME Desktop
 
 GNOME_VERSION=		0.5.2
 GNOME_PROJECT=		vinagre
-PKGNAME=		${DISTNAME}p3
+PKGNAME=		${DISTNAME}p5
+
 CATEGORIES=		net
 
 HOMEPAGE=		http://www.gnome.org/projects/vinagre/
@@ -26,9 +27,7 @@ WANTLIB=	ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pcre pixman-1 png pthread tasn1 xml2 z
 
-BUILD_DEPENDS=		::x11/gnome/doc-utils
-RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
-			::textproc/rarian
+RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info
 LIB_DEPENDS=		gnome-keyring::x11/gnome/keyring \
 			gtk-vnc-1.0.>=1::x11/gtk-vnc
 
@@ -41,8 +40,5 @@ CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 			--enable-avahi=no
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

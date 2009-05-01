@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2009/04/16 08:24:24 ajacoutot Exp $
 
 COMMENT=		Jabber client for the GNOME desktop
 
 GNOME_PROJECT=		gossip
 GNOME_VERSION=		0.31
-PKGNAME=		${DISTNAME}p7
+PKGNAME=		${DISTNAME}p9
 CATEGORIES=		net
 
 HOMEPAGE=		http://developer.imendio.com/projects/gossip/
@@ -38,7 +38,6 @@ LIB_DEPENDS=		camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-serv
 			loudmouth-1.>=3::net/loudmouth \
 			panel-applet-2::x11/gnome/panel
 RUN_DEPENDS=		::devel/iso-codes \
-			::textproc/rarian \
 			::x11/gnome/yelp \
 			::x11/hicolor-icon-theme
 
@@ -60,9 +59,6 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 NO_REGRESS=		Yes
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gossip
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gossip/sound/events

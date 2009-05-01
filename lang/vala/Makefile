@@ -1,13 +1,18 @@
-# $OpenBSD: Makefile,v 1.10 2009/01/24 16:50:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2009/04/07 21:45:59 ajacoutot Exp $
 
 COMMENT=		compiler for the GObject type system
 
 GNOME_PROJECT=		vala
-GNOME_VERSION=		0.5.6
-SHARED_LIBS +=	vala                 1.1      # .0.0
+GNOME_VERSION=		0.7.0
+
+SHARED_LIBS +=	vala                 2.0      # .0.0
+
 CATEGORIES=		lang
 
 HOMEPAGE=		http://live.gnome.org/Vala
+
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes

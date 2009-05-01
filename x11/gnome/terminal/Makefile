@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.42 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.46 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=	GNOME terminal
 
 GNOME_PROJECT=	gnome-terminal
 GNOME_VERSION=	2.24.3
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p5
 
 # GPLv2/LGPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -25,9 +25,6 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	${RUN_DEPENDS} \
-		:gnome-doc-utils-*:x11/gnome/doc-utils
-RUN_DEPENDS=	::textproc/rarian
 LIB_DEPENDS=	gnomeui-2::x11/gnome/libgnomeui \
 		startup-notification-1::devel/startup-notification \
 		vte.>=11::devel/vte
@@ -41,8 +38,5 @@ CONFIGURE_ARGS= --with-widget=vte \
 		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gnome-terminal
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

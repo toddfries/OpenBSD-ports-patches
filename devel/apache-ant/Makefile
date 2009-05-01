@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.17 2008/06/24 02:46:21 kurt Exp $
+# $OpenBSD: Makefile,v 1.21 2009/04/26 09:38:25 sthen Exp $
 
 COMMENT=        java replacement for make
 
-DISTNAME=	apache-ant-1.7.0
-PKGNAME=	${DISTNAME}p3
+DISTNAME=	apache-ant-1.7.1
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	devel
 
 HOMEPAGE=	http://ant.apache.org/
@@ -34,7 +34,7 @@ NO_REGRESS=	Yes
 TAR=		${LOCALBASE}/bin/gtar
 
 ANTDOCS=	${PREFIX}/share/doc/java/ant
-TXT=		README WHATSNEW LICENSE NOTICE LICENSE.dom LICENSE.sax LICENSE.xerces
+TXT=		LICENSE NOTICE README WHATSNEW
 
 do-install:
 	@cd ${WRKDIST}/bin; \

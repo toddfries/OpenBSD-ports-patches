@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.12 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		GNOME on-screen keyboard
 
 GNOME_PROJECT=		gok
 GNOME_VERSION=		2.24.0
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p6
 
 HOMEPAGE=		http://live.gnome.org/Gok
 
@@ -28,8 +28,6 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 XRes Xau Xcomposite \
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS+= 	${RUN_DEPENDS}
-RUN_DEPENDS+=		::textproc/rarian
 LIB_DEPENDS=		wnck-1::devel/libwnck \
 			cspi,loginhelper,spi::x11/gnome/at-spi \
 			gnomeui-2::x11/gnome/libgnomeui \
@@ -53,9 +51,6 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 # to the appropriate .Xauthority file. 
 REGRESS_IS_INTERACTIVE= Yes
 REGRESS_FLAGS+= 	DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 post-build:
 	cd ${WRKSRC} && \

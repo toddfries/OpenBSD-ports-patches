@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2009/02/11 15:47:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=		GNOME accessibility interface
 
 GNOME_PROJECT=		at-spi
 GNOME_VERSION=		1.24.1
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p5
 
 SHARED_LIBS +=	spi                  0.0      # .10.11
 SHARED_LIBS +=	loginhelper          0.0      # .0.0
@@ -35,11 +35,11 @@ LIB_DEPENDS=		bonobo-2.>=1,bonobo-activation.>=5::x11/gnome/libbonobo \
 USE_X11=		Yes
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/at-spi
-# XXX X Window System Error ('BadLenght...')
+# not enabled in X.org
 CONFIGURE_ARGS+=	--disable-xevie
+
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON=${MODPY_BIN}
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 # The regression tests require a running instance of X.
 # You will also need to set the XAUTHORITY environment variable to point

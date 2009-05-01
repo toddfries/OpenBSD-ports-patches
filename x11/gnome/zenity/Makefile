@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2009/02/11 15:47:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.30 2009/04/16 08:11:14 ajacoutot Exp $
 
 COMMENT=		dialogs for GNOME
 
 GNOME_PROJECT=		zenity
 GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p3
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,8 +22,6 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		:gnome-doc-utils-*:x11/gnome/doc-utils
 LIB_DEPENDS=		dbus-glib-1.>=3::x11/dbus-glib \
 			gnomecanvas-2::x11/gnome/libgnomecanvas \
 			notify::devel/libnotify
@@ -34,8 +32,5 @@ USE_LIBTOOL=		No
 CONFIGURE_ARGS= 	--enable-libnotify
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

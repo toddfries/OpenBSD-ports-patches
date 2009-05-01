@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2008/10/28 13:39:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.48 2009/04/05 14:11:14 steven Exp $
 
 SHARED_ONLY=		Yes
 ONLY_FOR_ARCHS=		amd64 i386
@@ -11,8 +11,8 @@ COMMENT-browser=	HTML Browser Widget library for swt/eclipse
 ECLIPSE_VER=		3.2.2
 DISTNAME=		eclipse-sourceBuild-srcIncluded-${ECLIPSE_VER}
 PKGNAME=		eclipse-sdk-${ECLIPSE_VER}
-PKGNAME-main=		eclipse-sdk-${ECLIPSE_VER}p7
-PKGNAME-swt=		swt-${ECLIPSE_VER}p0
+PKGNAME-main=		eclipse-sdk-${ECLIPSE_VER}p9
+PKGNAME-swt=		swt-${ECLIPSE_VER}p1
 PKGNAME-gnome=		swt-gnome-${ECLIPSE_VER}p1
 PKGNAME-browser=	swt-browser-${ECLIPSE_VER}p0
 SHARED_LIBS=		swt-atk-gtk-3236	4.0 \
@@ -78,7 +78,7 @@ WANTLIB-main=		X11 Xau Xcursor Xdmcp Xext Xfixes Xi Xinerama \
 			freetype atk-1.0 glib-2.0 gmodule-2.0 \
 			gobject-2.0 glitz png iconv intl \
 			pango-1.0 pangoft2-1.0 pangocairo-1.0 cairo \
-			pixman-1
+			pixman-1 gio-2.0
 
 LIB_DEPENDS-swt=	gtk-x11-2.0::x11/gtk+2
 WANTLIB-swt=		GL GLU Xtst m atk-1.0 cairo gthread-2.0
@@ -127,11 +127,11 @@ SUBST_VARS=		ECLIPSE_ARCH
 
 # Build out openbsd source from linux source
 pre-patch:
-	@exec ${SETENV} WRKSRC=${WRKSRC} ECLIPSE_WS=${ECLIPSE_WS} \
-		${FILESDIR}/prepatch.sh
+	@${SETENV} WRKSRC=${WRKSRC} ECLIPSE_WS=${ECLIPSE_WS} \
+		sh ${FILESDIR}/prepatch.sh
 
 do-build:
-	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
+	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} \
 		./build -os ${ECLIPSE_OS} -ws ${ECLIPSE_WS} -arch ${ECLIPSE_ARCH} -java5home ${JAVA_HOME} -compilelibs
 
 do-install:

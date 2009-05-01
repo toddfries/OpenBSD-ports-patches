@@ -1,38 +1,38 @@
-# $OpenBSD: Makefile,v 1.12 2009/01/15 23:08:08 djm Exp $
+# $OpenBSD: Makefile,v 1.15 2009/04/11 13:50:57 martynas Exp $
 
-COMMENT=		database toolkit for Python
+COMMENT =		database toolkit for Python
 
-MODPY_EGG_VERSION=	0.5.0
-DISTNAME=		SQLAlchemy-${MODPY_EGG_VERSION}
-PKGNAME=		py-sqlalchemy-${MODPY_EGG_VERSION}
+MODPY_EGG_VERSION =	0.5.3
+DISTNAME =		SQLAlchemy-${MODPY_EGG_VERSION}
+PKGNAME =		py-sqlalchemy-${MODPY_EGG_VERSION}
 
-CATEGORIES=		databases
+CATEGORIES =		databases
 
-HOMEPAGE=		http://www.sqlalchemy.org/
+HOMEPAGE =		http://www.sqlalchemy.org/
 
-MAINTAINER=		Will Maier <wcmaier@openbsd.org>
+MAINTAINER =		Will Maier <wcmaier@openbsd.org>
 
 # MIT
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=sqlalchemy/}
+MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=sqlalchemy/}
 
-MODULES=		lang/python
-MODPY_SETUPTOOLS=	Yes
-PKG_ARCH=		*
+MODULES =		lang/python
+MODPY_SETUPTOOLS =	Yes
+PKG_ARCH =		*
 
 # Other DB connectors would work, too.
-REGRESS_DEPENDS=	::databases/py-sqlite2
+REGRESS_DEPENDS =	::databases/py-sqlite2
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-sqlalchemy
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/py-sqlalchemy
-	cd ${WRKSRC}/doc && pax -rw * $ ${PREFIX}/share/doc/py-sqlalchemy
+	cd ${WRKSRC}/doc && pax -rw * ${PREFIX}/share/doc/py-sqlalchemy
 	cd ${WRKSRC}/examples && \
-	    pax -rw * $ ${PREFIX}/share/examples/py-sqlalchemy
+		pax -rw * ${PREFIX}/share/examples/py-sqlalchemy
 
 do-regress:
 	@cd ${WRKSRC} && ${MAKE_ENV} \

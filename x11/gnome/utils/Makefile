@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.35 2009/02/11 15:47:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.40 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		GNOME utility programs
 
 GNOME_PROJECT=		gnome-utils
 GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p6
+PKGNAME=		${DISTNAME}p9
+
 SHARED_LIBS +=  gdict-1.0      6.0      # .6.3
 
 # GPLv3
@@ -24,13 +25,10 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png popt \
 		pthread ssl startup-notification-1 util xml2 z
 
-BUILD_DEPENDS=		:gnome-doc-utils-*:x11/gnome/doc-utils
 LIB_DEPENDS=		gtop-2.0.>=7::devel/libgtop2 \
 			gnomeui-2.>=1800::x11/gnome/libgnomeui \
 			panel-applet-2::x11/gnome/panel
-RUN_DEPENDS=		:fam-*:sysutils/fam \
-			::textproc/rarian \
-			::x11/gnome/gvfs
+RUN_DEPENDS=		::x11/gnome/gvfs
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -48,8 +46,5 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-ipv6=yes
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

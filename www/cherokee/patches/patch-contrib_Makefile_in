@@ -1,0 +1,15 @@
+$OpenBSD: patch-contrib_Makefile_in,v 1.2 2009/04/17 23:17:07 sthen Exp $
+
+remove gratuitous GNUism, allows building with /usr/bin/make
+
+--- contrib/Makefile.in.orig	Thu Apr  9 05:37:05 2009
++++ contrib/Makefile.in	Tue Apr 14 10:50:43 2009
+@@ -375,7 +375,7 @@ uninstall-am:
+ 
+ 
+ cherokee: cherokee.pre
+-	sed -e "s|%sysconfdir%|${sysconfdir}|g; s|%datadir%|${datadir}|g; s|%docdir%|${docdir}|g; s|%prefix%|${prefix}|g; s|%localstatedir%|${localstatedir}|g; s|%libdir%|${libdir}|g; s|%wwwroot%|${WWW_ROOT}|g; s|%version%|${PACKAGE_VERSION}|g; s|%phpcgi%|${PHPCGI}|g" $< > $@
++	sed -e "s|%sysconfdir%|${sysconfdir}|g; s|%datadir%|${datadir}|g; s|%docdir%|${docdir}|g; s|%prefix%|${prefix}|g; s|%localstatedir%|${localstatedir}|g; s|%libdir%|${libdir}|g; s|%wwwroot%|${WWW_ROOT}|g; s|%version%|${PACKAGE_VERSION}|g; s|%phpcgi%|${PHPCGI}|g" cherokee.pre > $@
+ 
+ all-local: cherokee
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.

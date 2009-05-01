@@ -1,19 +1,18 @@
-# $OpenBSD: Makefile,v 1.47 2009/02/09 20:35:50 sthen Exp $
+# $OpenBSD: Makefile,v 1.52 2009/04/04 00:28:56 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	multimedia decoding library
 
-V=		1.1.16.1
+V=		1.1.16.3
 DISTNAME=	xine-lib-${V}
-PKGNAME=	${DISTNAME}p0
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=xine/}
 EXTRACT_SUFX=	.tar.bz2
 
-SHARED_LIBS=	xine	24.0
+SHARED_LIBS=	xine	25.0
 
-HOMEPAGE=	http://xinehq.de/
+HOMEPAGE=	http://www.xine-project.org/
 
 MAINTAINER=	Brad Smith <brad@comstyle.com>
 
@@ -26,7 +25,7 @@ WANTLIB=	X11 Xau Xdmcp Xext Xinerama Xrandr Xrender Xv XvMCW c \
 		expat fontconfig freetype jpeg lcms m pthread sndio \
 		usbhid z
 
-XINEAPI_REV=	1.25
+XINEAPI_REV=	1.26
 SUBST_VARS+=	XINEAPI_REV
 
 MODULES=	devel/gettext
@@ -95,6 +94,8 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		XV_LIBS="-lXv" \
 		EXTRA_X_LIBS="-Wl,-R,${LOCALBASE}/lib -Wl,-R,${X11BASE}/lib" \
 		ac_cv_member_audio_info_t_output_muted=yes
+
+NO_REGRESS=	Yes
 
 post-extract:
 	@cp ${FILESDIR}/audio_sndio_out.c ${WRKSRC}/src/audio_out

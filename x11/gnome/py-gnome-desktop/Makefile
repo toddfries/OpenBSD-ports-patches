@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=		Python bindings for the GNOME desktop
 
 GNOME_PROJECT=		gnome-python-desktop
 GNOME_VERSION=		2.24.1
-PKGNAME=		py-gnome-desktop-${VERSION}p4
+PKGNAME=		py-gnome-desktop-${VERSION}p5
 
 HOMEPAGE=		http://www.pygtk.org/
 
@@ -48,8 +48,7 @@ LIB_DEPENDS=		gtop-2.0::devel/libgtop2 \
 USE_X11=		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--enable-metacity
 

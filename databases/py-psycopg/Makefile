@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2008/01/20 17:45:26 winiger Exp $
+# $OpenBSD: Makefile,v 1.34 2009/04/26 11:01:04 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,9 +9,9 @@ COMMENT-zope=		database adapter for Zope
 VERSION=		1.1.21
 DISTNAME=		psycopg-${VERSION}
 PKGNAME=		py-${DISTNAME}p6
-PKGNAME-main=		py-${DISTNAME}p6
-FULLPKGNAME-examples=	py-psycopg-examples-${VERSION}
-FULLPKGNAME-zope=	py-psycopg-zope-${VERSION}p2
+PKGNAME-main=		py-${DISTNAME}p7
+FULLPKGNAME-examples=	py-psycopg-examples-${VERSION}p0
+FULLPKGNAME-zope=	py-psycopg-zope-${VERSION}p3
 CATEGORIES=		databases
 
 HOMEPAGE=		http://initd.org/projects/psycopg1
@@ -53,7 +53,6 @@ PKG_ARCH-zope=		*
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--with-mxdatetime-includes=${MODPY_SITEPKG}/mx/DateTime/mxDateTime
-CONFIGURE_ENV=	PYTHON=${MODPY_BIN}
 
 NO_REGRESS=	Yes
 

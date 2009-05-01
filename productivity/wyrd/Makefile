@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.9 2008/02/02 00:04:35 martynas Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/03 21:30:50 sturm Exp $
 
 COMMENT=		curses calendar front-end to remind
 
-DISTNAME=		wyrd-1.4.3
-PKGNAME=		${DISTNAME}p0
+DISTNAME=		wyrd-1.4.4
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		productivity
 
-HOMEPAGE=		http://www.eecs.umich.edu/~pelzlpj/wyrd/
+HOMEPAGE=		http://pessimization.com/software/wyrd/
 
 MAINTAINER=		Okan Demirmen <okan@openbsd.org>
 
@@ -31,5 +31,6 @@ NO_REGRESS=		Yes
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/wyrd
 	${INSTALL_DATA} ${WRKSRC}/wyrdrc ${PREFIX}/share/examples/wyrd
+	${INSTALL_DATA} ${WRKSRC}/wyrdrc ${DESTDIR}/${SYSCONFDIR}/wyrdrc
 
 .include <bsd.port.mk>

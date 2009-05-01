@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.4 2008/10/28 13:33:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.6 2009/03/11 21:38:23 sthen Exp $
 COMMENT=		browser for a large lexical database of English
 
 V=			3.0
 DISTNAME=		WordNet-$V
-PKGNAME=		wordnet-$Vp1
+PKGNAME=		wordnet-$Vp3
 
 CATEGORIES=		misc
 
@@ -16,7 +16,9 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB += X11 c m Xext Xss
+
+WANTLIB += X11 Xau Xdmcp Xext Xft Xrender Xss c expat fontconfig
+WANTLIB += freetype m z
 
 MASTER_SITES=		http://wordnet.princeton.edu/3.0/
 

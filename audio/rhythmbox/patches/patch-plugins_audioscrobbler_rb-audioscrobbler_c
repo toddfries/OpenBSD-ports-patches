@@ -1,7 +1,7 @@
-$OpenBSD: patch-plugins_audioscrobbler_rb-audioscrobbler_c,v 1.2 2008/06/09 22:59:42 ajacoutot Exp $
---- plugins/audioscrobbler/rb-audioscrobbler.c.orig	Thu Feb 28 12:16:39 2008
-+++ plugins/audioscrobbler/rb-audioscrobbler.c	Sun Jun  8 19:59:11 2008
-@@ -865,7 +865,7 @@ rb_audioscrobbler_should_handshake (RBAudioscrobbler *
+$OpenBSD: patch-plugins_audioscrobbler_rb-audioscrobbler_c,v 1.4 2009/04/28 10:26:36 ajacoutot Exp $
+--- plugins/audioscrobbler/rb-audioscrobbler.c.orig	Mon Apr 20 09:38:14 2009
++++ plugins/audioscrobbler/rb-audioscrobbler.c	Tue Apr 28 10:19:34 2009
+@@ -808,7 +808,7 @@ rb_audioscrobbler_should_handshake (RBAudioscrobbler *
  	}
  
  	if (time (NULL) < audioscrobbler->priv->handshake_next) {
@@ -10,7 +10,7 @@ $OpenBSD: patch-plugins_audioscrobbler_rb-audioscrobbler_c,v 1.2 2008/06/09 22:5
  			  time (NULL),
  			  audioscrobbler->priv->handshake_next);
  		return FALSE;
-@@ -980,7 +980,7 @@ rb_audioscrobbler_build_authentication_data (RBAudiosc
+@@ -925,7 +925,7 @@ rb_audioscrobbler_build_authentication_data (RBAudiosc
  
  	time(&now);
  	if (now < audioscrobbler->priv->submit_next) {

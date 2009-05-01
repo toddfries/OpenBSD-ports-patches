@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.562 2009/02/09 09:42:02 simon Exp $
+# $OpenBSD: Makefile,v 1.571 2009/04/22 15:07:40 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
      SUBDIR += BitTorrent
      SUBDIR += GeoIP
      SUBDIR += adns
+     SUBDIR += adsuck
      SUBDIR += aget
      SUBDIR += aggregate
      SUBDIR += aguri
@@ -157,6 +158,7 @@
      SUBDIR += libnetdude
      SUBDIR += libnids
      SUBDIR += libpcapnav
+     SUBDIR += libproxy
      SUBDIR += librsync
      SUBDIR += libshout
      SUBDIR += libst
@@ -305,6 +307,7 @@
      SUBDIR += packit
      SUBDIR += pavuk
      SUBDIR += pavuk,no_x11
+     SUBDIR += pcapdiff
      SUBDIR += pcapmerge
      SUBDIR += pchar
      SUBDIR += pdnsd
@@ -341,6 +344,7 @@
      SUBDIR += pure-ftpd,mysql
      SUBDIR += pure-ftpd,postgresql
      SUBDIR += putty
+     SUBDIR += py-GeoIP
      SUBDIR += py-IP
      SUBDIR += py-adns
      SUBDIR += py-boto
@@ -349,10 +353,12 @@
      SUBDIR += py-dnspython
      SUBDIR += py-flowd
      SUBDIR += py-flowtools
+     SUBDIR += py-impacket
      SUBDIR += py-irclib
      SUBDIR += py-libpcap
      SUBDIR += py-medusa
      SUBDIR += py-msnp
+     SUBDIR += py-pcapy
      SUBDIR += py-pcs
      SUBDIR += py-snmp
      SUBDIR += py-xmpp
@@ -368,7 +374,9 @@
      SUBDIR += rsnapshot
      SUBDIR += rsync
      SUBDIR += rtg
+     SUBDIR += rtmpdump
      SUBDIR += rtorrent
+     SUBDIR += ruby-eventmachine
      SUBDIR += ruby-net-scp
      SUBDIR += ruby-net-sftp
      SUBDIR += ruby-net-ssh
@@ -394,6 +402,7 @@
      SUBDIR += silc-server
      SUBDIR += silc-server,operops
      SUBDIR += sing
+     SUBDIR += sipcalc
      SUBDIR += sipsak
      SUBDIR += sirc
      SUBDIR += slirp
@@ -470,6 +479,7 @@
      SUBDIR += yt
      SUBDIR += ytalk
      SUBDIR += ytalk,no_x11
+     SUBDIR += zabbix
      SUBDIR += zenirc
 
 .include <bsd.port.subdir.mk>

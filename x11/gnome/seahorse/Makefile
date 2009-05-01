@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		manage encryption keys
 
 GNOME_PROJECT=		seahorse
 GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p3
+PKGNAME=		${DISTNAME}p6
 SHARED_LIBS +=	cryptui              0.0      # .0.0
 CATEGORIES=		security
 
@@ -25,10 +25,7 @@ WANTLIB=	ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		krb5 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
 		png pthread sasl2 ssl tasn1 xml2 z
 
-BUILD_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
-			::x11/gnome/doc-utils
-RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
-			::textproc/rarian
+BUILD_DEPENDS=		${RUN_DEPENDS}
 LIB_DEPENDS=		lber,ldap::databases/openldap \
 			notify::devel/libnotify \
 			soup-2.4::devel/libsoup \
@@ -52,12 +49,8 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-nautilus \
 			--disable-schemas-install \
 			--disable-scrollkeeper \
-			--disable-update-mime-database \
 			--disable-sharing
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

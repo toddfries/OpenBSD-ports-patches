@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=		collection of games for the GNOME desktop
 
 GNOME_PROJECT=		gnome-games
-GNOME_VERSION=		2.24.3
-PKGNAME=		${DISTNAME}p2
+GNOME_VERSION=		2.24.3.1
+
+CATEGORIES=		games
 
 HOMEPAGE=		http://live.gnome.org/GnomeGames/
 
@@ -29,16 +30,14 @@ MODULES=		devel/gettext \
 			lang/python \
 			x11/gnome
 
-BUILD_DEPENDS=		::x11/gnome/doc-utils \
-			::x11/gnome/py-gnome-desktop \
+BUILD_DEPENDS=		::x11/gnome/py-gnome-desktop \
 			::lang/guile
 LIB_DEPENDS=		ggzcore,ggzmod::games/ggz/ggz-client-libs \
 			guile-ltdl,guile::lang/guile \
 			gnomeui-2::x11/gnome/libgnomeui \
 			rsvg-2.>=18.0::x11/gnome/librsvg
 RUN_DEPENDS=		::x11/gnome/py-gnome-desktop \
-			::multimedia/gstreamer-0.10/plugins-good \
-			::textproc/rarian
+			::multimedia/gstreamer-0.10/plugins-good
 REGRESS_DEPENDS=	::devel/check
 
 USE_X11=		Yes
@@ -60,18 +59,13 @@ CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 			--with-gcrypt \
 			--with-scores-group="games"
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 # The regression tests require a running instance of X.
 # You will also need to set the XAUTHORITY environment variable to point 
 # to the appropriate .Xauthority file. 
 REGRESS_IS_INTERACTIVE= Yes
 REGRESS_FLAGS=		DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
-
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/configure ${WRKSRC}/glchess/src/glchess.in.in \

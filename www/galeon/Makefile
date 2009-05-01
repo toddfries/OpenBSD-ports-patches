@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.43 2008/12/23 11:36:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.47 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=	GNOME web browser based on gecko
 
 DISTNAME=	galeon-2.0.7
+PKGNAME=	${DISTNAME}p2
+
 CATEGORIES=	www
 
 HOMEPAGE=	http://galeon.sourceforge.net/
@@ -15,12 +17,12 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 atk-1.0 audiofile bonobo-2 bonobo-activation \
-		bonoboui-2 c cairo crypto dbus-1 dbus-glib-1 esd expat \
+		Xrender art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation \
+		bonoboui-2 c cairo crypto dbus-1 dbus-glib-1 expat \
 		fontconfig freebl3 freetype gailutil gconf-2 gdk-x11-2.0 \
 		gdk_pixbuf-2.0 gio-2.0 glade-2.0 glib-2.0 glitz gmodule-2.0 \
 		gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 gobject-2.0 \
-		gthread-2.0 gtk-x11-2.0 jpeg m nspr4 nss3 nssckbi pango-1.0 \
+		gthread-2.0 gtk-x11-2.0 m nspr4 nss3 nssckbi pango-1.0 \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4 \
 		png popt pthread smime3 softokn3 ssl ssl3 startup-notification-1 \
 		stdc++ util z
@@ -31,10 +33,10 @@ MODULES=	devel/gettext \
 		textproc/intltool
 
 BUILD_DEPENDS=	:xulrunner-devel->=1.8.1:devel/xulrunner,-devel \
+		::textproc/rarian \
 		${RUN_DEPENDS}
 RUN_DEPENDS=	::devel/desktop-file-utils \
 		::devel/iso-codes \
-		::textproc/rarian \
 		::x11/gnome/doc-utils \
 		::x11/gnome/icon-theme \
 		::x11/gnome/themes \
@@ -51,14 +53,18 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/nss -I${X11BASE}/include -I${LOC
 USE_X11=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
+
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--with-mozilla="xulrunner" \
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--with-mozilla="xulrunner" \
 		--with-gconf-schema-file-dir="${LOCALBASE}/share/schemas/galeon" \
 		--disable-schemas-install \
 		--disable-gtkhtml
 
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/mozilla/mozilla-embed-shell.cpp \
+		${WRKSRC}/doc/C/plugins.xml \
+		${WRKSRC}/doc/es/plugins.xml
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/galeon/

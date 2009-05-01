@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2009/01/31 13:01:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/26 11:01:05 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		mini programs for your desktop
 
 V=			0.36.1
 DISTNAME=		gdesklets-${V}
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p2
 CATEGORIES=		x11
 
 HOMEPAGE=		http://www.gdesklets.de/
@@ -35,11 +35,11 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 LIB_DEPENDS=		gtop-2.0::devel/libgtop2 \
 			rsvg-2::x11/gnome/librsvg
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
+BUILD_DEPENDS=		${RUN_DEPENDS} \
+			::textproc/rarian
 RUN_DEPENDS=		::devel/desktop-file-utils \
 			::misc/shared-mime-info \
-			::x11/gnome/py-gnome \
-			::textproc/rarian
+			::x11/gnome/py-gnome
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
@@ -47,8 +47,7 @@ LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-static
 

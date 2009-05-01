@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2007/09/17 20:51:22 rui Exp $
+# $OpenBSD: Makefile,v 1.24 2009/04/03 21:30:50 sturm Exp $
 
 COMMENT=	e-donkey client
 CATEGORIES=	net
@@ -20,6 +20,7 @@ HOMEPAGE=	http://mldonkey.sourceforge.net/Main_Page
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mldonkey/}
 DISTNAME=	mldonkey-2.9.1
+PKGNAME=	${DISTNAME}p2
 EXTRACT_SUFX=	.tar.bz2
 
 CONFIGURE_ARGS+=--enable-gui=newgui1

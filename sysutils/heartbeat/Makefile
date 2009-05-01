@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2008/09/18 13:37:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2009/04/26 11:01:05 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -9,8 +9,8 @@ COMMENT-snmp=	snmp agent for heartbeat
 VERSION=	2.1.2-15
 DISTNAME=	obs-${VERSION}
 PKGNAME=	heartbeat-${VERSION}
-PKGNAME-main=	heartbeat-${VERSION}
-PKGNAME-gui=	heartbeat-gui-${VERSION}
+PKGNAME-main=	heartbeat-${VERSION}p1
+PKGNAME-gui=	heartbeat-gui-${VERSION}p0
 PKGNAME-snmp=	heartbeat-snmp-${VERSION}
 
 EXTRACT_SUFX=   .tar.bz2
@@ -44,11 +44,11 @@ BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
 		${MODGNU_AUTOMAKE_DEPENDS} \
 		::devel/swig
 
-WANTLIB-main=	${WANTLIB} crypto gcrypt gpg-error idn ncurses ssl
+WANTLIB-main=	${WANTLIB} crypto gcrypt gpg-error idn ncurses ssl tasn1
 LIB_DEPENDS-main=${LIB_DEPENDS} \
 		uuid.>=1:e2fs-uuid-*:sysutils/e2fsprogs,-uuid \
 		gnutls.>=12::security/gnutls \
-		lib/libnet-1.0/net:libnet-1.0.*:net/libnet/1.0 \
+		lib/libnet-1.0/net.=0:libnet->=1.0,<1.1:net/libnet/1.0 \
 		bz2.>=10::archivers/bzip2 \
 		xml2.>=9::textproc/libxml \
 		ltdl.>=4::devel/libtool,-ltdl \
@@ -57,7 +57,7 @@ LIB_DEPENDS-main=${LIB_DEPENDS} \
 RUN_DEPENDS-main=${MODPY_RUN_DEPENDS} \
 		::devel/p5-Time-TimeDate
 
-WANTLIB-gui=	gcrypt gpg-error m util xml2 z
+WANTLIB-gui=	gcrypt gpg-error m tasn1 util xml2 z
 LIB_DEPENDS-gui=${LIB_DEPENDS} \
 		bz2.>=10::archivers/bzip2 \
 		gnutls.>=12::security/gnutls \
@@ -92,8 +92,7 @@ CONFIGURE_ENV=	LIBNETCONFIG=${LOCALBASE}/bin/libnet-config-1.0 \
 		LDFLAGS="-liconv -L${LOCALBASE}/lib/libnet-1.0" \
 		docdir=${PREFIX}/share/doc/heartbeat \
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		PYTHON=${MODPY_BIN}
+		AUTOCONF_VERSION=${AUTOCONF_VERSION}
 CONFIGURE_ARGS=	configure --prefix=${PREFIX} \
 		--sysconfdir=${SYSCONFDIR} \
 		--localstatedir=/var \

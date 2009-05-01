@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=	mouse accessibility enhancements for GNOME
 
 GNOME_PROJECT=	mousetweaks
 GNOME_VERSION=	2.24.3
-PKGNAME=	${DISTNAME}p2
+PKGNAME=	${DISTNAME}p4
 
 HOMEPAGE=	http://live.gnome.org/Mousetweaks/Home
 
@@ -28,8 +28,6 @@ WANTLIB=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage \
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	::textproc/rarian
 LIB_DEPENDS=	panel-applet-2.>=2::x11/gnome/applets2 \
 		spi,cspi::x11/gnome/at-spi
 
@@ -41,8 +39,5 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 
 USE_X11=	Yes
 MODGNOME_HELP_FILES= Yes
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

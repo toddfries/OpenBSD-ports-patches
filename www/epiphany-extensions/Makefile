@@ -1,13 +1,17 @@
-# $OpenBSD: Makefile,v 1.5 2009/01/12 20:14:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2009/04/06 10:09:06 ajacoutot Exp $
 
 COMMENT=		collection of extensions for Epiphany
 
 GNOME_PROJECT=		epiphany-extensions
 GNOME_VERSION=		2.24.3
+PKGNAME=		${DISTNAME}p2
 
 CATEGORIES=		www
 
 HOMEPAGE=		http://projects.gnome.org/epiphany/extensions
+
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,11 +26,8 @@ WANTLIB=	nspr4 pcre plc4 plds4
 
 BUILD_DEPENDS=	:gettext-*:devel/gettext \
 		:xulrunner-devel->=1.8.1:devel/xulrunner,-devel \
-		::textproc/rarian \
-		:epiphany->=2.24.2:www/epiphany \
-		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils
+		:epiphany->=2.24.2:www/epiphany
 RUN_DEPENDS=	:gettext-*:devel/gettext \
-		::textproc/rarian \
 		:epiphany->=2.24.2:www/epiphany
 LIB_DEPENDS=	xulrunner/gtkembedmoz,xulrunner/mozjs,xulrunner/xpcom:xulrunner->=1.8.1:devel/xulrunner
 

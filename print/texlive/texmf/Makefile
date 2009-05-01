@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2008/11/30 18:45:27 steven Exp $
+# $OpenBSD: Makefile,v 1.6 2009/04/23 00:18:18 sthen Exp $
 
 COMMENT-main =		texlive texmf for laTeX/PdfTeX 
 COMMENT-full =		texlive texmf for XeTeX/ConTeXt and extra macros
@@ -8,9 +8,9 @@ DIST_V = 		20080822
 DISTNAME =		texlive-${DIST_V}-texmf
 PKGNAME =		texlive_texmf-${V}
 
-PKGNAME-main = 		texlive_texmf-minimal-${V}p0
-PKGNAME-full = 		texlive_texmf-full-${V}p0
-PKGNAME-docs =	 	texlive_texmf-docs-${V}p0
+PKGNAME-main = 		texlive_texmf-minimal-${V}p1
+PKGNAME-full = 		texlive_texmf-full-${V}p2
+PKGNAME-docs =	 	texlive_texmf-docs-${V}p1
 
 EXTRACT_SUFX = 		.tar.lzma
 NO_BUILD =		Yes
@@ -25,7 +25,6 @@ RUN_DEPENDS-docs = 	:texlive_base-${V}:print/texlive/base
 MULTI_PACKAGES = 	-main -full -docs
 
 # Could do with bsd.port.mk understanding lzma
-# Also annoyingly loads of .orig files confuse update-patches
 do-extract:
 	cd ${WRKDIR} && \
 	lzma -dc ${FULLDISTDIR}/${DISTNAME}${EXTRACT_SUFX} | ${TAR} xf -
@@ -39,5 +38,7 @@ do-install:
 post-install:
 	mv ${PREFIX}/share/texmf/web2c/updmap.cfg \
 		${PREFIX}/share/texmf/web2c/updmap.cfg-dist
+	${INSTALL_DATA} ${FILESDIR}/fmtutil.cnf-full \
+		${PREFIX}/share/texmf/web2c   
 
 .include <bsd.port.mk>

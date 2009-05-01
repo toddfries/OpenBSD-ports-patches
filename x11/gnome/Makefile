@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.89 2009/01/31 22:47:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.96 2009/04/21 21:37:45 jasper Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -23,7 +23,7 @@
      SUBDIR += empathy
      SUBDIR += eog
      SUBDIR += file-roller
-     #SUBDIR += f-spot
+     SUBDIR += f-spot
      SUBDIR += games
      SUBDIR += games-extra-data
      SUBDIR += gcalctool
@@ -31,12 +31,14 @@
      SUBDIR += gdm
      SUBDIR += gedit
      SUBDIR += gedit-plugins
+     SUBDIR += genius
      SUBDIR += ghex
      SUBDIR += gnopernicus
      SUBDIR += gok
      SUBDIR += gossip
      SUBDIR += gucharmap
      SUBDIR += gvfs
+     SUBDIR += gyrus
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += keyring
@@ -70,6 +72,7 @@
      SUBDIR += mono-gnome
      SUBDIR += mousetweaks
      SUBDIR += nautilus
+     SUBDIR += nautilus-sendto
      SUBDIR += orca
      SUBDIR += panel
      SUBDIR += pessulus
@@ -91,10 +94,12 @@
      SUBDIR += tomboy
      SUBDIR += totem
      SUBDIR += totem-pl-parser
+     SUBDIR += tracker
      SUBDIR += users-guide
      SUBDIR += utils
      SUBDIR += vfs2
      SUBDIR += vfsmm
+     SUBDIR += video-arcade
      SUBDIR += vinagre
      SUBDIR += vino
      SUBDIR += yelp

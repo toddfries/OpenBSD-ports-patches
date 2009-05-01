@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2009/04/06 10:05:21 ajacoutot Exp $
 
 # (empathy:10245): Gtk-WARNING **: could not load image: Icon 'im-xmpp' not present in theme
 
@@ -6,7 +6,7 @@ COMMENT= 		telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
 GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p7
+PKGNAME=		${DISTNAME}p9
 
 SHARED_LIBS +=	empathy              1.0      # .16.4
 SHARED_LIBS +=	empathy-gtk          1.0      # .15.6
@@ -38,7 +38,6 @@ MODULES=		devel/gettext \
 			x11/gnome
 
 BUILD_DEPENDS=		::devel/iso-codes \
-			::x11/gnome/doc-utils \
 			::x11/py-gtk2
 LIB_DEPENDS=		camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-server \
 			missioncontrol-client::net/telepathy/telepathy-mission-control \
@@ -47,8 +46,7 @@ LIB_DEPENDS=		camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-serv
 RUN_DEPENDS=		::net/telepathy/telepathy-butterfly \
 			::net/telepathy/telepathy-gabble \
 			::x11/hicolor-icon-theme \
-			::x11/py-gtk2 \
-			::textproc/rarian
+			::x11/py-gtk2
 
 USE_X11=		Yes
 DESKTOP_FILES=		Yes

@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.49 2009/01/24 11:22:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.53 2009/04/05 22:37:35 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-V=			1.4.22.2
+V=			1.4.24.1
 DISTNAME=		asterisk-$V
-FULLPKGNAME-main=	asterisk-$V
+FULLPKGNAME-main=	asterisk-$Vp0
+# N.B. overridden for h323 flavor below.
 
 CATEGORIES=		telephony
 
@@ -26,7 +27,8 @@ MULTI_PACKAGES=		-main
 
 WANTLIB-main=		c crypto m pthread ssl stdc++ termcap z
 
-LIB_DEPENDS-main=	popt::devel/popt
+LIB_DEPENDS-main=	popt::devel/popt \
+			gsm::audio/gsm
 
 MASTER_SITES=		http://downloads.digium.com/pub/telephony/asterisk/releases/
 
@@ -34,15 +36,19 @@ USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
+AUTOCONF_VERSION=	2.61
+AUTOMAKE_VERSION=	1.9
+BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
+			${MODGNU_AUTOMAKE_DEPENDS}
 
-CONFIGURE_ENV+=		CPPFLAGS="${CPPFLAGS} -I${LOCALBASE}/include"
+CONFIGURE_ENV+=		CPPFLAGS="${CPPFLAGS} -I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 CONFIGURE_ARGS+=	--with-asterisk-user=_asterisk \
 			--with-asterisk-group=_asterisk \
 			--localstatedir=/var \
 			--sharedstatedir=${PREFIX}/share/asterisk \
 			--with-asound=no \
-			--with-gsm=internal \
 			--with-isdnnet=no \
 			--with-kde=no \
 			--with-misdn=no \
@@ -172,10 +178,11 @@ CONFIGURE_ARGS+=	--with-gnutls=${LOCALBASE} \
 .if ${FLAVOR:L:Mh323}
 LIB_DEPENDS-main+=	h323::net/openh323 \
 			pt::devel/pwlib
+CPPFLAGS+=		-I${LOCALBASE}/include/openh323
 CONFIGURE_ARGS+=	--with-pwlib=${LOCALBASE}/lib \
 			--with-h323=${LOCALBASE}/lib
 WANTLIB-main+=		SDL avutil expat lber ldap ldap_r sasl2
-FULLPKGNAME-main=	asterisk-$Vp0-h323
+FULLPKGNAME-main=	asterisk-$V-h323
 
 pre-build:
 	cd ${WRKSRC} && ${MAKE_PROGRAM} include/asterisk/buildopts.h
@@ -200,6 +207,17 @@ NO_REGRESS=		Yes
 INSTALL_TARGET=		install samples
 
 EXAMPLEDIR=		${PREFIX}/share/examples/asterisk
+
+post-patch:
+	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} aclocal -I autoconf
+	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} autoconf
+	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} autoheader
+	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} automake \
+	    --add-missing --copy || true
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/asterisk

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		Unicode character map for the GNOME project
 
 GNOME_PROJECT=		gucharmap
 GNOME_VERSION=		2.24.3
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p4
 SHARED_LIBS +=	gucharmap            1.0      # .7.0
 
 HOMEPAGE=		http://live.gnome.org/Gucharmap
@@ -22,9 +22,7 @@ WANTLIB=	ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pcre pixman-1 png pthread z
 
-BUILD_DEPENDS=		:gnome-doc-utils-*:x11/gnome/doc-utils
 LIB_DEPENDS=		gconf-2::devel/gconf2
-RUN_DEPENDS=		::textproc/rarian
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -39,8 +37,5 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-python-bindings
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

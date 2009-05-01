@@ -1,0 +1,16 @@
+To play nice with dhclient, read ${TRUETRUEPREFIX}/share/doc/adsuck/README.dhclient
+To have adsuck start at boot time, put something
+like this in /etc/rc.conf.local:
+
+ adsuck_flags="-c /var/adsuck -f /files/resolv.conf /files/hosts.small"
+
+and like this in /etc/rc.local:
+
+ if [ "$adsuck_flags" != "NO" -a -x ${TRUEPREFIX}/sbin/adsuck ]; then
+	echo -n ' adsuck'; ${TRUEPREFIX}/sbin/adsuck $adsuck_flags
+ fi
+
+Also, be sure to set /etc/resolv.conf to contain only one
+nameserver line:
+
+  nameserver 127.0.0.1

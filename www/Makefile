@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.386 2009/02/11 09:38:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.410 2009/04/28 15:25:01 jolan Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -6,6 +6,7 @@
      SUBDIR += analog
      SUBDIR += ap2-mod_fastcgi
      SUBDIR += ap2-mod_fcgid
+     SUBDIR += ap2-mod_perl
      SUBDIR += apache-httpd
      SUBDIR += august
      SUBDIR += bk2site
@@ -18,13 +19,15 @@
      SUBDIR += cherokee
      SUBDIR += clearsilver
      SUBDIR += clearsilver,python
+     SUBDIR += cms-ms
+     SUBDIR += concrete5
      SUBDIR += cronolog
      SUBDIR += cssed
      SUBDIR += dansguardian
-     SUBDIR += dansguardian,clamav
      SUBDIR += decss
      SUBDIR += dillo
      SUBDIR += drupal5
+     SUBDIR += drupal6
      SUBDIR += elinks
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
@@ -33,6 +36,7 @@
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
      SUBDIR += galeon
+     SUBDIR += gecko-mediaplayer
      SUBDIR += gnash
      SUBDIR += gtkhtml3
      SUBDIR += havp
@@ -195,6 +199,7 @@
      SUBDIR += p5-HTML-PopupTreeSelect
      SUBDIR += p5-HTML-Prototype
      SUBDIR += p5-HTML-ResolveLink
+     SUBDIR += p5-HTML-RewriteAttributes
      SUBDIR += p5-HTML-SBC
      SUBDIR += p5-HTML-Scrubber
      SUBDIR += p5-HTML-SimpleParse
@@ -238,6 +243,7 @@
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
+     SUBDIR += p5-RTx-Tags
      SUBDIR += p5-Rose-HTML-Objects
      SUBDIR += p5-Rose-HTMLx-Form-Field-Autocomplete
      SUBDIR += p5-Rose-URI
@@ -252,6 +258,8 @@
      SUBDIR += p5-WWW-Google-SiteMap
      SUBDIR += p5-WWW-Mechanize
      SUBDIR += p5-WWW-Robot
+     SUBDIR += p5-WWW-Search
+     SUBDIR += p5-WWW-Search-Ebay
      SUBDIR += p5-WWW-Wikipedia
      SUBDIR += p5-Weather-Com
      SUBDIR += p5-WebService-Audioscrobbler
@@ -271,7 +279,11 @@
      SUBDIR += pear-SOAP
      SUBDIR += pecl-APC
      SUBDIR += pecl-memcache
+     SUBDIR += pecl-proctitle
+     SUBDIR += pecl-ssh2
      SUBDIR += pecl-swish
+     SUBDIR += pecl-uploadprogress
+     SUBDIR += php-openid
      SUBDIR += php5
      SUBDIR += phpicalendar
      SUBDIR += phpldapadmin
@@ -286,6 +298,7 @@
      SUBDIR += plone-massloader
      SUBDIR += pmwiki
      SUBDIR += polipo
+     SUBDIR += pound
      SUBDIR += privoxy
      SUBDIR += py-beautifulsoup
      SUBDIR += py-CherryPy
@@ -298,14 +311,24 @@
      SUBDIR += py-httplib2
      SUBDIR += py-jinja2
      SUBDIR += py-jonpy
+     SUBDIR += py-meld3
      SUBDIR += py-nevow
      SUBDIR += py-paste
      SUBDIR += py-paste-deploy
      SUBDIR += py-paste-script
      SUBDIR += py-quixote
+     SUBDIR += py-repoze-profile
+     SUBDIR += py-routes
+     SUBDIR += py-tempita
      SUBDIR += py-turbogears
+     SUBDIR += py-weberror
+     SUBDIR += py-webhelpers
+     SUBDIR += py-webkitgtk
+     SUBDIR += py-webob
      SUBDIR += py-webpy
+     SUBDIR += py-webtest
      SUBDIR += py-werkzeug
+     SUBDIR += py-wsgiproxy
      SUBDIR += py-zine
      SUBDIR += pyblosxom
      SUBDIR += raggle
@@ -318,16 +341,19 @@
      SUBDIR += ruby-activeresource
      SUBDIR += ruby-addressable
      SUBDIR += ruby-fcgi
+     SUBDIR += ruby-httpclient
      SUBDIR += ruby-merb
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-rack
      SUBDIR += ruby-rails
+     SUBDIR += ruby-rest-client
      SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
      SUBDIR += sarg
      SUBDIR += seamonkey
      SUBDIR += snownews
+     SUBDIR += spawn-fcgi
      SUBDIR += squid
      SUBDIR += squid,ldap
      SUBDIR += squid,ldap,snmp
@@ -349,6 +375,7 @@
      SUBDIR += trac-ldapplugin
      SUBDIR += transproxy
      SUBDIR += turba
+     SUBDIR += tt-rss
      SUBDIR += twiki
      SUBDIR += twill
      SUBDIR += visitors

@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/11/10 22:10:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2009/04/10 08:54:32 simon Exp $
 
 # needs joystick.h
 ONLY_FOR_ARCHS =	i386
 
-COMMENT =	suite of portable game librairies
+COMMENT =	suite of portable game libraries
 
 DISTNAME =	plib-1.8.5
+PKGNAME =	${DISTNAME}p0
 CATEGORIES =	devel games
 
 HOMEPAGE =	http://plib.sourceforge.net/

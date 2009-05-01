@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2009/01/21 10:50:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		spreadsheet application for GNOME
 
 GNOME_PROJECT=		gnumeric
 GNOME_VERSION=		1.8.4
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p2
 
 SHARED_LIBS +=	spreadsheet     0.0
 CATEGORIES=    		math
@@ -31,8 +31,6 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		::textproc/rarian
-RUN_DEPENDS=		::textproc/rarian
 LIB_DEPENDS=		art_lgpl_2.>=5.19::graphics/libart \
 			glade-2.0.>=0.8::devel/libglade2 \
 			gnomeui-2.>=1800::x11/gnome/libgnomeui \
@@ -58,8 +56,5 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
 SUBST_VARS=		VERSION
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2009/01/22 19:06:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2009/04/26 11:01:05 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,13 +6,16 @@ COMMENT=	GNOME web browser based on mozilla
 
 GNOME_PROJECT=	epiphany
 GNOME_VERSION=	2.24.3
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p4
 
 M=		${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=	M
 CATEGORIES=	www
 
 HOMEPAGE=	http://www.gnome.org/projects/epiphany/
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,12 +24,10 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 BUILD_DEPENDS=	${RUN_DEPENDS} \
-		:xulrunner-devel->=1.8.1:devel/xulrunner,-devel \
-		:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils
+		:xulrunner-devel->=1.8.1:devel/xulrunner,-devel
 RUN_DEPENDS=	:gnome-icon-theme-*:x11/gnome/icon-theme \
 		:gnome-themes-*:x11/gnome/themes \
 		:iso-codes-*:devel/iso-codes \
-		::textproc/rarian \
 		::x11/gnome/py-gnome
 LIB_DEPENDS=	${MODPY_LIB_DEPENDS} \
 		gnome-desktop-2::x11/gnome/desktop \
@@ -77,7 +78,6 @@ CONFIGURE_ARGS+= --disable-spell-checker
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/nss -I${LOCALBASE}/include -I${LOCALBASE}/xulrunner/include/pipnss/ -I${X11BASE}/include" \
 		LDFLAGS="-Wl,-rpath-link,${LOCALBASE}/lib/ -Wl,-rpath-link,${X11BASE}/lib/ -L${LOCALBASE}/lib -lfreebl3 -lnss3 -lnssckbi -lsmime3 -lsoftokn3 -lssl3 -pthread -lexecinfo -L${LOCALBASE}/xulrunner" \
-		HOME=/tmp \
-		PYTHON="${MODPY_BIN}"
+		HOME=/tmp
 
 .include <bsd.port.mk>

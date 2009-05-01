@@ -1,0 +1,12 @@
+$OpenBSD: patch-provider_client_Makefile_in,v 1.2 2009/04/03 17:30:40 ajacoutot Exp $
+--- provider/client/Makefile.in.orig	Thu Mar 26 14:35:50 2009
++++ provider/client/Makefile.in	Fri Apr  3 19:36:34 2009
+@@ -336,7 +336,7 @@ libzarafaclient_la_LIBADD = $(GSOAP_LIBS) $(SSL_LIBS)	
+ 	${top_builddir}/mapi4linux/src/libmapi.la			\
+ 	-lstdc++ $(UUID_LIBS)
+ 
+-CXXLD = --tag=none gcc
++CXXLD = $(CXX)
+ libzarafaclient_la_SOURCES = ECABLogon.cpp ECABProvider.cpp											\
+ 	ECAttach.cpp ECMAPIContainer.cpp ECMAPIFolder.cpp ECMAPIProp.cpp								\
+ 	ECMAPITable.cpp ECMessage.cpp ECMsgStore.cpp													\

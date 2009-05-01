@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.10 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		screen reader and magnifier for GNOME desktop
 
 GNOME_PROJECT=		gnopernicus
 GNOME_VERSION=		1.1.2
-PKGNAME=		${DISTNAME}p8
+PKGNAME=		${DISTNAME}p10
 
 SHARED_LIBS +=  srutil               0.0      # .2.0
 SHARED_LIBS +=  srconf               0.0      # .2.0
@@ -36,10 +36,8 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
 		png popt pthread spi ssl util xml2 z
 
-BUILD_DEPENDS=		::textproc/rarian \
-			::x11/gnome/libgail-gnome
-RUN_DEPENDS=		::textproc/rarian \
-			::x11/gnome/libgail-gnome
+BUILD_DEPENDS=		${RUN_DEPENDS}
+RUN_DEPENDS=		::x11/gnome/libgail-gnome
 LIB_DEPENDS=		gnome-mag::x11/gnome/mag \
 			gnomespeech::x11/gnome/speech
 
@@ -60,8 +58,5 @@ CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gnopern
 			--enable-magnifier
 
 FAKE_FLAGS=		translationdir=${PREFIX}/share/examples/gnopernicus/translation_tables
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

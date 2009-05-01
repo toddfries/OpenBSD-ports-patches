@@ -1,29 +1,28 @@
-# $OpenBSD: Makefile,v 1.9 2008/05/19 09:57:44 fgsch Exp $
+# $OpenBSD: Makefile,v 1.11 2009/04/04 09:25:25 landry Exp $
 
 COMMENT=	lightweight PDF document viewer
 
-DISTNAME=	epdfview-0.1.6
-PKGNAME=	${DISTNAME}p5
+DISTNAME=	epdfview-0.1.7
 CATEGORIES=	print
 HOMEPAGE=	http://trac.emma-soft.com/epdfview/
 
-MAINTAINER=	Vlad Glagolev <stealth@sourcemage.org>
+MAINTAINER=	Brynet <brynet@gmail.com>
 
 MASTER_SITES=	${HOMEPAGE}chrome/site/releases/
 
 EXTRACT_SUFX=	.tar.bz2
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB=	Xau Xcomposite Xcursor Xdamage Xdmcp Xfixes Xi Xinerama \
-		Xrandr X11 Xext Xrender atk-1.0 c cairo fontconfig freetype \
-                glib-2.0 glitz gmodule-2.0 gobject-2.0 gthread-2.0 \
-                m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png \
-		pthread stdc++ z expat
+WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
+WANTLIB += freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pixman-1 png pthread stdc++ z
 
 MODULES=	devel/gettext
 
@@ -41,10 +40,10 @@ FLAVOR?=
 
 .if ${FLAVOR:L:Mcups}
 WANTLIB+=		crypto ssl
-LIB_DEPENDS+=           cups.>=3:cups->=1.2:print/cups
+LIB_DEPENDS+=	cups.>=3:cups->=1.2:print/cups
 CONFIGURE_ARGS+=	--with-cups
 .else
-CONFIGURE_ARGS+=        --without-cups
+CONFIGURE_ARGS+=	--without-cups
 .endif
 
 ICONDIR = $(PREFIX)/share/icons/hicolor

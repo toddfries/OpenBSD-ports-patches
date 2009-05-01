@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.187 2009/02/11 13:31:41 sthen Exp $
+# $OpenBSD: Makefile,v 1.190 2009/04/03 17:57:38 landry Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -43,7 +43,9 @@
      SUBDIR += dungeon-crawl
      SUBDIR += eboard
      SUBDIR += eboard-extras
+     SUBDIR += einstein
      SUBDIR += enigma
+     SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
      SUBDIR += forcedattack
@@ -100,6 +102,7 @@
      SUBDIR += openarena
      SUBDIR += openttd
      SUBDIR += pathological
+     SUBDIR += pingus
      SUBDIR += pioneers
      SUBDIR += pokerth
      SUBDIR += prboom
@@ -110,6 +113,7 @@
      SUBDIR += quake,ggi
      SUBDIR += quake2
      SUBDIR += ri-li
+     SUBDIR += roadfighter
      SUBDIR += rocksndiamonds
      SUBDIR += scummvm
      SUBDIR += scummvm-tools

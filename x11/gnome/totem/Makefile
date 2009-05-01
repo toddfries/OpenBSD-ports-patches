@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.15 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=	simple media player for GNOME
 
 GNOME_PROJECT=	totem
 GNOME_VERSION=	2.22.2
-PKGNAME=	${DISTNAME}p13
+PKGNAME=	${DISTNAME}p18
+
 CATEGORIES=	multimedia
 
 HOMEPAGE=	http://www.gnome.org/projects/totem/
@@ -33,11 +34,9 @@ MODULES=	devel/gettext \
 		x11/gnome
 
 BUILD_DEPENDS=	::x11/py-gtk2 \
-		::textproc/rarian \
 		::devel/iso-codes
 RUN_DEPENDS=	::x11/gnome/settings-daemon \
 		::x11/py-gtk2 \
-		::textproc/rarian \
 		:iso-codes-*:devel/iso-codes \
 		::x11/gromit \
 		::devel/py-gdata \
@@ -62,7 +61,6 @@ TOTEM_PLUGINS=	"galago gromit media-player-keys ontop properties \
 
 CONFIGURE_ENV= 	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
-		PYTHON=${MODPY_BIN} \
 		CFLAGS="${CFLAGS} -I${LOCALBASE}/include "
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 	        --with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/totem \
@@ -99,7 +97,6 @@ LIB_DEPENDS+=	gstaudio-0.10,gstinterfaces-0.10,gstpbutils-0.10,gstvideo-0.10::mu
 BUILD_DEPENDS+=	:gstreamer-confelements-*:multimedia/gstreamer-0.10/plugins-good,-gconf
 RUN_DEPENDS+=	:gstreamer-vorbis-*:multimedia/gstreamer-0.10/plugins-base,-vorbis \
 		:gstreamer-ogg-*:multimedia/gstreamer-0.10/plugins-base,-ogg \
-		:gstreamer-xvid-*:multimedia/gstreamer-0.10/plugins-bad,-xvid \
 		:gstreamer-jpeg-*:multimedia/gstreamer-0.10/plugins-good,-jpeg \
 		:gstreamer-confelements-*:multimedia/gstreamer-0.10/plugins-good,-gconf \
 		:gstreamer-a52-*:multimedia/gstreamer-0.10/plugins-ugly,-a52 \
@@ -110,9 +107,6 @@ RUN_DEPENDS+=	:gstreamer-vorbis-*:multimedia/gstreamer-0.10/plugins-base,-vorbis
 CONFIGURE_ARGS+=--enable-gstreamer \
 		--disable-xine
 .endif
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 # stop systrace spam by avoiding xsltproc to access net
 pre-configure:

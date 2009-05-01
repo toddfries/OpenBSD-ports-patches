@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.8 2009/01/31 09:25:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2009/04/26 11:01:05 ajacoutot Exp $
 
 BROKEN= 		too many issues with setting this up
 
 COMMENT=		flexible communications framework, IRC component
 
 DISTNAME=		telepathy-idle-0.1.2
-PKGNAME= 		${DISTNAME}p4
+PKGNAME= 		${DISTNAME}p5
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-idle}
 
@@ -25,8 +25,7 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			OPENSSL_LIBS="-L/usr/lib -lssl -lcrypto" \
-			OPENSSL_CFLAGS="-I/usr/include" \
-			PYTHON="${MODPY_BIN}"
+			OPENSSL_CFLAGS="-I/usr/include"
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/configure

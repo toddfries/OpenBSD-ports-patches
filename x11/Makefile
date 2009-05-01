@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.368 2009/02/07 16:01:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.375 2009/04/07 19:02:36 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -19,7 +19,9 @@
      SUBDIR += aterm,big5
      SUBDIR += aterm,big5,lite
      SUBDIR += aterm,lite
+     SUBDIR += autocutsel
      SUBDIR += awesome
+     SUBDIR += awn
      SUBDIR += bbdate
      SUBDIR += bbkeys
      SUBDIR += bbpager
@@ -53,6 +55,7 @@
      SUBDIR += eterm,kanji
      SUBDIR += evilwm
      SUBDIR += extace
+     SUBDIR += farsifonts-ttf
      SUBDIR += farsiweb-ttf
      SUBDIR += fbpanel
      SUBDIR += fleditor
@@ -76,6 +79,7 @@
      SUBDIR += gentoo
      SUBDIR += gmrun
      SUBDIR += gnome
+     SUBDIR += gnome-mplayer
      SUBDIR += gnustep
      SUBDIR += gob2
      SUBDIR += goggles
@@ -94,6 +98,7 @@
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
      SUBDIR += gtksourceview
+     SUBDIR += gtksourceviewmm
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-x11-extras
@@ -221,6 +226,7 @@
      SUBDIR += treewm
      SUBDIR += tvtwm
      SUBDIR += type1inst
+     SUBDIR += un-fonts
      SUBDIR += unclutter
      SUBDIR += vdesk
      SUBDIR += viewfax
@@ -244,6 +250,7 @@
      SUBDIR += wmitime
      SUBDIR += wmmenu
      SUBDIR += wmmenu,gdk_pixbuf
+     SUBDIR += wmname
      SUBDIR += wmpinboard
      SUBDIR += wmtheme
      SUBDIR += wmthemeinstall

@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.22 2008/10/10 14:27:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2009/04/09 17:43:36 jasper Exp $
 
 COMMENT=	fantasy turn-based strategy game
 
-DISTNAME=	wesnoth-1.4.5
+DISTNAME=	wesnoth-1.4.7
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	games x11
 
 HOMEPAGE=	http://www.wesnoth.org/
 
-MAINTAINER=	Vlad Glagolev <stealth@sourcemage.org> 
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=wesnoth/}
 EXTRACT_SUFX=	.tar.bz2
@@ -20,26 +21,37 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	X11 c freetype m pthread stdc++ z
 
-USE_LIBTOOL=	Yes
+MODULES=	devel/gettext
+
 LIB_DEPENDS=	boost_iostreams-mt::devel/boost \
 		SDL::devel/sdl \
 		SDL_image::devel/sdl-image \
 		SDL_net::devel/sdl-net \
 		SDL_mixer::devel/sdl-mixer \
 		fribidi::devel/fribidi
-# png is only required for the tools, which we don't build yet.
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 
-# The detection of kde-config/gnome-config will only lead to some
-# desktop file installation...
+CONFIGURE_STYLE=gnu
 
-MODULES=	devel/gettext
+CONFIGURE_ENV+=	CPPFLAGS=-I${LOCALBASE}/include \
+		LDFLAGS=-L${LOCALBASE}/lib
+
+# XXX: Provide the tools
+CONFIGURE_ARGS+=--enable-server \
+		--enable-campaign-server \
+		--enable-editor \
+		--with-fifodir=/var/run \
+		--enable-desktop-entry \
+		--with-desktop-dir=${PREFIX}/share/applications \
+		--with-icondir=${PREFIX}/share/pixmaps
+
+MAKE_FLAGS=	LIBINTL="-L${LOCALBASE}/lib -lintl -liconv"
 
 USE_X11=	Yes
+USE_LIBTOOL=	Yes
 
 FLAVORS=	lite tinygui
 FLAVOR?=
-
-RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 
 .if ${FLAVOR:L:Mlite}
 CONFIGURE_ARGS+=--enable-lite
@@ -50,20 +62,5 @@ BUILD_DEPENDS+=	::graphics/pngmeta \
 		:ImageMagick-*:graphics/ImageMagick
 CONFIGURE_ARGS+=--enable-tinygui
 .endif
-
-CONFIGURE_STYLE=gnu
-
-CONFIGURE_ENV+=	CPPFLAGS=-I${LOCALBASE}/include \
-		LDFLAGS=-L${LOCALBASE}/lib
-
-CONFIGURE_ARGS+=--enable-server \
-		--enable-campaign-server \
-		--enable-editor \
-		--with-fifodir=/var/run \
-		--enable-desktop-entry \
-		--with-desktop-dir=${PREFIX}/share/applications \
-		--with-icondir=${PREFIX}/share/pixmaps
-
-MAKE_FLAGS=	LIBINTL="-L${LOCALBASE}/lib -lintl -liconv"
 
 .include <bsd.port.mk>

@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.23 2009/01/30 18:38:53 sturm Exp $
+# $OpenBSD: Makefile,v 1.30 2009/04/28 10:26:35 ajacoutot Exp $
 
 COMMENT=		music management application for GNOME
 
 GNOME_PROJECT=		rhythmbox
-GNOME_VERSION=		0.11.5
-PKGNAME=		${DISTNAME}p2
+GNOME_VERSION=		0.12.1
 
 SHARED_LIBS +=  rhythmbox-core       0.0      # .0.0
 CATEGORIES=		audio
 
 HOMEPAGE=		http://www.rhythmbox.org/
+
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -42,44 +44,44 @@ LIB_DEPENDS=		musicbrainz3::audio/libmusicbrainz \
 			gnome-media-profiles::x11/gnome/media \
 			totem-plparser::x11/gnome/totem-pl-parser \
 			sexy::x11/libsexy \
-			camel-1.2.>=10,edataserver-1.2::databases/evolution-data-server
+			camel-1.2.>=10,edataserver-1.2::databases/evolution-data-server \
+			gstcdda-0.10,gsttag-0.10::multimedia/gstreamer-0.10/plugins-base,-cdda
 RUN_DEPENDS=		:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-gnome \
 			:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-ogg \
 			:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-vorbis \
 			:gstreamer-plugins-good->=0.10.8:multimedia/gstreamer-0.10/plugins-good,-flac \
 			:gstreamer-plugins-good->=0.10.8:multimedia/gstreamer-0.10/plugins-good,-gconf \
 			:gstreamer-plugins-ugly->=0.10.7:multimedia/gstreamer-0.10/plugins-ugly,-mad \
-			::x11/gnome/icon-theme \
-			::textproc/rarian
+			::x11/gnome/icon-theme
 REGRESS_DEPENDS=	::devel/check
 
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
-AUTOCONF_VERSION=	2.61
-CONFIGURE_STYLE= 	autoconf
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
+
+CONFIGURE_STYLE= 	gnu
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/rhythmbox/ \
 			--disable-schemas-install \
-			--enable-nautilus-menu \
 			--with-database=tree \
-			--with-metadata-helper \
+			--with-gnome-keyring \
+			--with-x \
 			--disable-scrollkeeper \
 			--disable-python \
 			--disable-daap \
-			--disable-ipod-writing \
-			--without-cd-burning \
 			--without-hal \
 			--without-mdns \
 			--without-mtp \
 			--without-ipod \
+			--without-hal \
+			--without-libbrasero-media \
+			--without-libnautilus-burn \
 			--disable-vala \
 			--disable-browser-plugin \
 			--disable-fm-radio \
-			--disable-lirc \
-			--without-internal-gsequence
+			--disable-lirc
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 
 # The regression tests require a running instance of X.
 # You will also need to set the XAUTHORITY environment variable to point 

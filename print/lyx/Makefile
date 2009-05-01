@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.48 2008/12/03 23:44:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.50 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=	graphical frontend for LaTeX (nearly WYSIWYG)
 
 DISTNAME=	lyx-1.4.3
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p4
 CATEGORIES=	print
 
 HOMEPAGE=	http://www.lyx.org/
@@ -28,7 +28,7 @@ RUN_DEPENDS=	::print/texlive/base \
 
 LIB_DEPENDS=	aspell::textproc/aspell/core
 
-WANTLIB=	ICE SM X11 c m stdc++ z
+WANTLIB += ICE SM X11 Xau Xdmcp c m stdc++ z
 
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
@@ -40,12 +40,12 @@ FLAVOR?=	qt
 .if ${FLAVOR:L} == "qt"
 MODULES+=	x11/qt3
 MODQT_MT=	Yes
-WANTLIB+=	pthread
+WANTLIB += pthread
 CONFIGURE_ARGS=	--with-frontend=qt ${MODQT_CONFIGURE_ARGS}
 CONFIGURE_ENV+=	LIBS=-pthread QTDIR=${MODQT_QTDIR}
 .elif ${FLAVOR:L} == "xforms"
-LIB_DEPENDS+=	forms.1::x11/xforms
-WANTLIB+=	Xpm flimage jpeg
+LIB_DEPENDS+=	forms,flimage::x11/xforms
+WANTLIB += Xpm jpeg
 CONFIGURE_ARGS=	--with-frontend=xforms
 .else
 ERRORS+= "Fatal: Conflicting flavor: ${FLAVOR}"
@@ -58,7 +58,6 @@ CONFIGURE_ARGS+=--with-extra-lib=${LOCALBASE}/lib \
 		--with-extra-inc="${LOCALBASE}/include \
 		${LOCALBASE}/include/X11" \
 		--disable-dependency-tracking
-CONFIGURE_ENV+=	PYTHON=${MODPY_BIN}
 
 # Necessary because of compilation error.  See:
 # http://www.boost.org/libs/graph/doc/trouble_shooting.html

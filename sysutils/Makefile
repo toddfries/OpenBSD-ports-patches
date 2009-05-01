@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.169 2009/02/09 14:55:44 form Exp $
+# $OpenBSD: Makefile,v 1.172 2009/04/03 18:06:53 giovanni Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
@@ -56,6 +56,7 @@
      SUBDIR += libgksuui
      SUBDIR += libretto-config
      SUBDIR += libstatgrab
+     SUBDIR += login_fingerprint
      SUBDIR += login_ldap
      SUBDIR += logpp
      SUBDIR += lsof
@@ -95,6 +96,7 @@
      SUBDIR += pkg_mgr
      SUBDIR += pscpug
      SUBDIR += pstree
+     SUBDIR += pv
      SUBDIR += radiusreport
      SUBDIR += radmind
      SUBDIR += rancid
@@ -130,6 +132,7 @@
      SUBDIR += tabled
      SUBDIR += tcplist
      SUBDIR += tentakel
+     SUBDIR += testdisk
      SUBDIR += tkdvd
      SUBDIR += tpb
      SUBDIR += tphdisk

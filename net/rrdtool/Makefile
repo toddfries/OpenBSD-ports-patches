@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2009/01/26 21:26:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.46 2009/04/26 11:01:04 ajacoutot Exp $
 
 SHARED_ONLY=	Yes 
 
@@ -10,7 +10,7 @@ VERSION=	1.2.30
 DISTNAME=	rrdtool-${VERSION}
 PKGNAME-main=	rrdtool-${VERSION}
 PKGNAME-perl=	p5-RRD-${VERSION}
-PKGNAME-python= py-rrd-${VERSION}
+PKGNAME-python= py-rrd-${VERSION}p0
 
 SHARED_LIBS+=	rrd 3.0
 SHARED_LIBS+=	rrd_th 3.0
@@ -47,8 +47,7 @@ CPPFLAGS+=	-I${LOCALBASE}/include/libart-2.0 \
 		-I${X11BASE}/include/ \
 		-I${X11BASE}/include/freetype2
 LDFLAGS+=	-L${LOCALBASE}/lib -L${X11BASE}/lib
-CONFIGURE_ENV+=	CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS}" \
-		PYTHON=${MODPY_BIN}
+CONFIGURE_ENV+=	CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS}"
 
 WANTLIB-main=		c m z freetype
 LIB_DEPENDS-main=	png::graphics/png \

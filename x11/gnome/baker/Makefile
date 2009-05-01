@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2009/02/11 15:47:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		CD/DVD authoring application for GNOME
 
 GNOME_PROJECT=		gnomebaker
 GNOME_VERSION=		0.6.4
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p7
 CATEGORIES=		sysutils multimedia
 
 HOMEPAGE=		http://gnomebaker.sourceforge.net/
@@ -33,9 +33,7 @@ EXTRACT_SUFX=		.tar.gz
 LIB_DEPENDS=		gstreamer-0.10::multimedia/gstreamer-0.10/core \
 			gnomeui-2::x11/gnome/libgnomeui
 
-BUILD_DEPENDS=		::textproc/rarian
-RUN_DEPENDS=		::textproc/rarian \
-			::misc/cdrdao \
+RUN_DEPENDS=		::misc/cdrdao \
 			::sysutils/cdrtools \
 			::sysutils/dvd+rw-tools
 
@@ -46,8 +44,5 @@ USE_X11=		Yes
 CONFIGURE_ARGS+=	--disable-libnotify
 CONFIGURE_ENV+= 	LDFLAGS="-L${LOCALBASE}/lib" \
 			CPPFLAGS="-I${LOCALBASE}/include"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

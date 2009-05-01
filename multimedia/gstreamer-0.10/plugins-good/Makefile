@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2009/02/05 20:32:08 sthen Exp $
+# $OpenBSD: Makefile,v 1.39 2009/04/11 14:37:21 ajacoutot Exp $
 
 COMMENT-main =		multimedia framework - good plugins
 COMMENT-aalib =		multimedia framework - aalib plugin
@@ -19,22 +19,22 @@ COMMENT-wavpack =	multimedia framework - wavpack plugin
 
 V =			0.10.8
 DISTNAME =		gst-plugins-good-$V
-PKGNAME-main =		gstreamer-plugins-good-$Vp9
-PKGNAME-aalib =		gstreamer-aalib-$Vp0
-PKGNAME-cairo =		gstreamer-cairo-$Vp1
-PKGNAME-gconf =		gstreamer-confelements-$Vp1
-PKGNAME-esd =		gstreamer-esd-$Vp1
-PKGNAME-flac =		gstreamer-flac-$Vp0
-PKGNAME-speex =		gstreamer-speex-$Vp0
-PKGNAME-taglib =	gstreamer-taglib-$Vp0
-PKGNAME-dv =		gstreamer-dv-$Vp0
-PKGNAME-jpeg =		gstreamer-jpeg-$Vp0
-PKGNAME-png =		gstreamer-png-$Vp0
-PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp2
-PKGNAME-caca =		gstreamer-libcaca-$Vp0
-PKGNAME-shout =		gstreamer-shoutcast-$Vp0
-PKGNAME-soup =		gstreamer-libsoup-$Vp1
-PKGNAME-wavpack =	gstreamer-wavpack-$V
+PKGNAME-main =		gstreamer-plugins-good-$Vp11v0
+PKGNAME-aalib =		gstreamer-aalib-$Vp2
+PKGNAME-cairo =		gstreamer-cairo-$Vp3
+PKGNAME-gconf =		gstreamer-confelements-$Vp4
+PKGNAME-esd =		gstreamer-esd-$Vp3
+PKGNAME-flac =		gstreamer-flac-$Vp2
+PKGNAME-speex =		gstreamer-speex-$Vp2
+PKGNAME-taglib =	gstreamer-taglib-$Vp2
+PKGNAME-dv =		gstreamer-dv-$Vp2
+PKGNAME-jpeg =		gstreamer-jpeg-$Vp2
+PKGNAME-png =		gstreamer-png-$Vp2
+PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp4
+PKGNAME-caca =		gstreamer-libcaca-$Vp2
+PKGNAME-shout =		gstreamer-shoutcast-$Vp2
+PKGNAME-soup =		gstreamer-libsoup-$Vp3
+PKGNAME-wavpack =	gstreamer-wavpack-$Vp1
 
 MULTI_PACKAGES =	-main -aalib -cairo -gconf -esd -flac -speex \
 			-taglib -dv -jpeg -png -gdk -caca -shout -soup \
@@ -169,6 +169,7 @@ CONFIGURE_ARGS +=	--with-aalib-prefix=${LOCALBASE} \
 			--disable-schemas-install \
 			--enable-experimental \
 			--enable-gst_v4l2 \
+			--enable-goom \
 			--with-default-audiosink=libsndiosink \
 			--with-default-audiosrc=libsndiosrc \
 			--with-default-videosink=xvimagesink \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2009/02/10 10:11:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2009/03/16 19:46:57 sthen Exp $
 
 COMMENT=	free video editor
 
@@ -30,8 +30,8 @@ WANTLIB += z
 MODULES=	devel/gettext
 
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
-BUILD_DEPENDS=	:autoconf-${AUTOCONF_VERSION}:devel/autoconf/${AUTOCONF_VERSION} \
-		:automake-${AUTOMAKE_VERSION}.*:devel/automake/${AUTOMAKE_VERSION}
+BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
+		${MODGNU_AUTOMAKE_DEPENDS}
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		faac.>=1::audio/faac \
 		faad.>=2::audio/faad \
@@ -54,6 +54,8 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include \
 		-I${LOCALBASE}/include/libpng" \
 		LDFLAGS="-L${LOCALBASE}/lib -logg -lm -lz"
+# XXX TODO:	remove arts, esd, oss
+#		add sndio
 CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
 		--enable-xv \
 		--with-x \

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.43 2008/07/16 02:42:07 brad Exp $
+# $OpenBSD: Makefile,v 1.45 2009/03/16 11:14:56 sthen Exp $
 
 COMMENT=	sniffing tools for penetration testing
 
 DISTNAME=	dsniff-2.3
-PKGNAME=	${DISTNAME}p5
+PKGNAME=	${DISTNAME}p7
 CATEGORIES=	security
 
 MASTER_SITES=	http://monkey.org/~dugsong/dsniff/
@@ -11,8 +11,8 @@ MASTER_SITES=	http://monkey.org/~dugsong/dsniff/
 HOMEPAGE=	http://www.monkey.org/~dugsong/dsniff/
 
 BUILD_DEPENDS=	::net/libnids
-LIB_DEPENDS=	lib/db/db.=3:db-3.*:databases/db/v3 \
-		lib/libnet-1.0/net.=0:libnet-1.0*:net/libnet/1.0
+LIB_DEPENDS=	lib/db/db.=3:db->=3,<4:databases/db/v3 \
+		lib/libnet-1.0/net.=0:libnet->=1.0,<1.1:net/libnet/1.0
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,7 +24,7 @@ WANTLIB=		c crypto des pcap ssl rpcsvc
 AUTOCONF_VERSION=	2.13
 CONFIGURE_STYLE=	autoconf
 CONFIGURE_ARGS=		--with-db="${LOCALBASE}"
-CONFIGURE_ENV=		CFLAGS="${CFLAGS} -I/usr/local/include/db"
+CONFIGURE_ENV=		CFLAGS="${CFLAGS} -I${LOCALBASE}/include/db"
 
 FLAVORS=	no_x11
 FLAVOR?=

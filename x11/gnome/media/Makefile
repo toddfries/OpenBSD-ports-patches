@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.20 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.25 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		GNOME media utilities
 
 GNOME_PROJECT=		gnome-media
 GNOME_VERSION=		2.24.0.1
-PKGNAME=		${DISTNAME}p9
+PKGNAME=		${DISTNAME}p12
 
 SHARED_LIBS +=	gnome-media-profiles 0.0      # .0.0
 CATEGORIES=		x11
@@ -27,8 +27,7 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		::multimedia/gstreamer-0.10/plugins-good,-gconf \
-			::x11/gnome/doc-utils
+BUILD_DEPENDS=		::multimedia/gstreamer-0.10/plugins-good,-gconf
 LIB_DEPENDS=		gconf-2::devel/gconf2 \
 			bonoboui-2::x11/gnome/libbonoboui \
 			gnomevfs-2::x11/gnome/vfs2 \
@@ -36,7 +35,6 @@ LIB_DEPENDS=		gconf-2::devel/gconf2 \
 			gstreamer-0.10,gstbase-0.10::multimedia/gstreamer-0.10/core \
 			gstinterfaces-0.10,gstaudio-0.10::multimedia/gstreamer-0.10/plugins-base \
 			pango-1.0,pangocairo-1.0,pangoft2-1.0::devel/pango
-RUN_DEPENDS=		::textproc/rarian
 
 MODGNOME_HELP_FILES=	Yes
 USE_X11=		Yes
@@ -48,9 +46,6 @@ CONFIGURE_ENV=  	CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			CFLAGS="-I${LOCALBASE}/include ${CFLAGS}" \
 			CDROM_HOST="bsd"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>
 

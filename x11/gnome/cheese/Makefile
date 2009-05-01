@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2009/02/11 15:47:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2009/04/06 10:05:20 ajacoutot Exp $
 
 BROKEN= 	does not work after changes in the UVC layer
 
@@ -6,7 +6,7 @@ COMMENT=	PhotoBooth inspired application
 
 GNOME_PROJECT=	cheese
 GNOME_VERSION=	2.24.3
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p5
 
 CATEGORIES=	multimedia
 
@@ -34,13 +34,11 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	::x11/gnome/doc-utils
 LIB_DEPENDS=	camel-1.2.>=11,ebook-1.2,edataserver-1.2,smime3,softokn3::databases/evolution-data-server \
 		rsvg-2.>=20::x11/gnome/librsvg \
 		gstinterfaces-0.10,gstreamer-0.10::multimedia/gstreamer-0.10/plugins-base \
 		gnomeui-2::x11/gnome/libgnomeui
-RUN_DEPENDS=	::textproc/rarian \
-		:gstreamer-ogg-*:multimedia/gstreamer-0.10/plugins-base,-ogg \
+RUN_DEPENDS=	:gstreamer-ogg-*:multimedia/gstreamer-0.10/plugins-base,-ogg \
 		:gstreamer-theora-*:multimedia/gstreamer-0.10/plugins-base,-theora \
 		:gstreamer-vorbis-*:multimedia/gstreamer-0.10/plugins-base,-vorbis \
 		::multimedia/gstreamer-0.10/plugins-good # gstreamer v4l2 plugin

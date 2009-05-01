@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.29 2009/01/03 21:27:25 kili Exp $
+# $OpenBSD: Makefile,v 1.32 2009/04/26 11:01:04 ajacoutot Exp $
 
 COMMENT=		library for loading GLADE interface files at runtime
 
-GNOME_VERSION=		2.6.2
+GNOME_VERSION=		2.6.4
 GNOME_PROJECT=		libglade
-PKGNAME=		libglade2-${GNOME_VERSION}p2
+PKGNAME=		libglade2-${GNOME_VERSION}
 SHARED_LIBS +=	glade-2.0            1.0      # .0.8
 
 CATEGORIES=		devel
@@ -31,8 +31,7 @@ USE_X11=		Yes
 CONFIGURE_STYLE= 	gnu
 CONFIGURE_ARGS+= 	${CONFIGURE_SHARED}
 CONFIGURE_ENV=          CPPFLAGS="-I${LOCALBASE}/include" \
-                        LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+                        LDFLAGS="-L${LOCALBASE}/lib"
 
 REGRESS_IS_INTERACTIVE= Yes
 REGRESS_FLAGS=DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}

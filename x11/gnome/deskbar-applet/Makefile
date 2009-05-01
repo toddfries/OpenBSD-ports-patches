@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.15 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=		universal search and navigation for GNOME
 
 GNOME_VERSION=		2.24.3
 GNOME_PROJECT=		deskbar-applet
-PKGNAME=		${DISTNAME}p3
+PKGNAME=		${DISTNAME}p5
 
 CATEGORIES=		sysutils
 
@@ -35,13 +35,11 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		startup-notification-1 tasn1 util xml2 z
 
 BUILD_DEPENDS=		::x11/dbus-python \
-			::x11/gnome/doc-utils \
 			::x11/gnome/py-gnome-desktop
 RUN_DEPENDS=		::mail/evolution \
 			::x11/dbus-python \
 			::x11/gnome/py-gnome-desktop \
-			::devel/py-simplejson \
-			::textproc/rarian
+			::devel/py-simplejson
 LIB_DEPENDS=		camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-server
 
 MODGNOME_HELP_FILES=	Yes
@@ -50,13 +48,9 @@ CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/deskbar
 			--disable-schemas-install \
 			--enable-evolution
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/deskbar/deskbar-applet.py
-
-post-patch:
-			@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

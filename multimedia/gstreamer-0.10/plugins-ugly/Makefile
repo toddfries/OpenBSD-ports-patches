@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2008/06/21 21:03:56 deanna Exp $
+# $OpenBSD: Makefile,v 1.10 2009/04/11 14:37:21 ajacoutot Exp $
 
 COMMENT-main =		multimedia framework - plugins ugly
 COMMENT-sidplay =	multimedia framework - sidplay plugin
@@ -10,13 +10,13 @@ COMMENT-dvdread =	multimedia framework - dvdread plugin
 
 V =			0.10.7
 DISTNAME =		gst-plugins-ugly-$V
-PKGNAME-main =		gstreamer-plugins-ugly-$Vp0
-PKGNAME-sidplay =	gstreamer-sidplay-$Vp0
-PKGNAME-a52 =		gstreamer-a52-$Vp0
-PKGNAME-mad =		gstreamer-mad-$Vp0
-PKGNAME-lame =		gstreamer-lame-$Vp0
-PKGNAME-mpeg2 =		gstreamer-mpeg2-$Vp0
-PKGNAME-dvdread =	gstreamer-dvdread-$Vp0
+PKGNAME-main =		gstreamer-plugins-ugly-$Vp1
+PKGNAME-sidplay =	gstreamer-sidplay-$Vp2
+PKGNAME-a52 =		gstreamer-a52-$Vp2
+PKGNAME-mad =		gstreamer-mad-$Vp2
+PKGNAME-lame =		gstreamer-lame-$Vp2
+PKGNAME-mpeg2 =		gstreamer-mpeg2-$Vp2
+PKGNAME-dvdread =	gstreamer-dvdread-$Vp2
 MULTI_PACKAGES =	-main -sidplay -lame -mad -a52 -mpeg2 -dvdread
 
 PERMIT_PACKAGE_CDROM =	Patent issues
@@ -61,8 +61,8 @@ WANTLIB-lame =		${WANTLIB}
 LIB_DEPENDS-lame =	${LIB_DEPENDS} \
 			mp3lame::audio/lame
 
-WANTLIB-mpeg2 =		${WANTLIB} \
-			X11 Xext Xv Xau Xdmcp
+WANTLIB-mpeg2 =		${WANTLIB}
+
 LIB_DEPENDS-mpeg2 =	${LIB_DEPENDS} \
 			mpeg2::graphics/libmpeg2
 

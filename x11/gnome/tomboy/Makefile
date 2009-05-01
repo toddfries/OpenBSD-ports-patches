@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=	desktop note-taking application written in C\#
 
 GNOME_PROJECT=	tomboy
 GNOME_VERSION=	0.12.2
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p5
+
 CATEGORIES=	x11
 
 # LGPLv2.1
@@ -29,14 +30,12 @@ WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
 		png xml2 z gio-2.0
 
-BUILD_DEPENDS=	::x11/gnome/doc-utils \
-		${RUN_DEPENDS}
+BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	::lang/mono \
 		::devel/mono-addins \
 		::sysutils/ndesk-dbus-glib \
 		::x11/gnome/mono-gnome \
 		:shared-mime-info->=0.21:misc/shared-mime-info \
-		::textproc/rarian \
 		:gnome-icon-theme->=2.18.0:x11/gnome/icon-theme \
 
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
@@ -47,8 +46,5 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 DLLMAP_FILES=	Tomboy/Tomboy.exe.config.in
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

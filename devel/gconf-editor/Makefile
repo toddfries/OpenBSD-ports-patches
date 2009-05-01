@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2009/01/29 15:34:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		editor for the GConf configuration system
 
 GNOME_PROJECT=		gconf-editor
 GNOME_VERSION=		2.24.1
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p3
 CATEGORIES=		devel
 
 HOMEPAGE=		http://www.gnome.org/projects/gconf/
@@ -26,9 +26,6 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png popt \
 		pthread ssl util xml2 z
 
-BUILD_DEPENDS=		::textproc/rarian \
-			:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils
-RUN_DEPENDS=		::textproc/rarian
 LIB_DEPENDS=		gnomeui-2::x11/gnome/libgnomeui
 
 MODULES=		devel/gettext \
@@ -44,8 +41,5 @@ CONFIGURE_ARGS= 	${CONFIGURE_SHARED} \
 			--disable-schemas-install
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

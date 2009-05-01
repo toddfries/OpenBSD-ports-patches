@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.35 2009/02/11 15:47:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.39 2009/04/16 08:11:13 ajacoutot Exp $
 
 COMMENT=		Eye of GNOME, image viewing and cataloging program
 
 GNOME_PROJECT=		eog
 GNOME_VERSION=		2.24.3.1
-PKGNAME=		${DISTNAME}p3
+PKGNAME=		${DISTNAME}p5
 
 CATEGORIES=		graphics
 
@@ -28,13 +28,11 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		${RUN_DEPENDS} \
-			:gnome-doc-utils->=0.3.2:x11/gnome/doc-utils
+BUILD_DEPENDS=		${RUN_DEPENDS}
 LIB_DEPENDS=		gnome-desktop-2.>=5::x11/gnome/desktop \
 			exif::graphics/libexif \
 			lcms.>=1::graphics/lcms
 RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
-			::textproc/rarian \
 			:gnome-icon-theme->=2.18.0:x11/gnome/icon-theme
 
 MODGNOME_HELP_FILES=	Yes
@@ -47,8 +45,5 @@ CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/eog \
 			--disable-python \
 			--without-xmp \
 			--with-libexif
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2008/06/25 13:05:56 deanna Exp $
+# $OpenBSD: Makefile,v 1.15 2009/04/11 14:37:21 ajacoutot Exp $
 
 COMMENT-main =		multimedia framework - plugins base
 COMMENT-gnome =		multimedia framework - gnome vfs plugin
@@ -10,13 +10,13 @@ COMMENT-pango =		multimedia framework - pango renderer
 
 V =			0.10.19
 DISTNAME =		gst-plugins-base-$V
-PKGNAME-main =		gstreamer-plugins-base-$Vp0
-PKGNAME-gnome =		gstreamer-gnome-$Vp1
-PKGNAME-cdda =		gstreamer-cdda-$Vp0
-PKGNAME-ogg =		gstreamer-ogg-$Vp0
-PKGNAME-theora =	gstreamer-theora-$Vp0
-PKGNAME-vorbis =	gstreamer-vorbis-$Vp0
-PKGNAME-pango =		gstreamer-pango-$Vp0
+PKGNAME-main =		gstreamer-plugins-base-$Vp1
+PKGNAME-gnome =		gstreamer-gnome-$Vp3
+PKGNAME-cdda =		gstreamer-cdda-$Vp2
+PKGNAME-ogg =		gstreamer-ogg-$Vp2
+PKGNAME-theora =	gstreamer-theora-$Vp2
+PKGNAME-vorbis =	gstreamer-vorbis-$Vp2
+PKGNAME-pango =		gstreamer-pango-$Vp2
 MULTI_PACKAGES =	-main -gnome -cdda -ogg -theora -vorbis -pango
 
 SHARED_LIBS +=	gstinterfaces-0.10   0.2      # .8.0

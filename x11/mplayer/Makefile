@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.145 2009/02/08 20:25:09 naddy Exp $
+# $OpenBSD: Makefile,v 1.149 2009/04/15 09:54:45 kili Exp $
 
 # May not be hard to add more.
 ONLY_FOR_ARCHS=		amd64 i386 powerpc sparc64 arm
@@ -9,7 +9,7 @@ V=			1.0rc2
 N=			mplayer
 DISTNAME=		MPlayer-${V}
 DIST_SUBDIR=		${N}
-PKGNAME=		${N}-${V}p19
+PKGNAME=		${N}-${V}p23
 CATEGORIES=		x11 multimedia
 EXTRACT_SUFX=		.tar.bz2
 
@@ -49,9 +49,10 @@ LIB_DEPENDS=	png::graphics/png \
 		mpcdec::audio/libmpcdec \
 		ogg.>=5::audio/libogg \
 		xvidcore::multimedia/xvidcore \
-		x264::multimedia/x264 \
+		x264.>=3::multimedia/x264 \
 		faad.>=2::audio/faad \
-		mp3lame:lame-*:audio/lame
+		mp3lame:lame-*:audio/lame \
+		dv::multimedia/libdv
 
 BUILD_DEPENDS=	::net/livemedia \
 		:rtunes->=0.7:audio/rtunes
@@ -70,7 +71,7 @@ CONFIGURE_ARGS+=--disable-alsa \
 		--disable-caca \
 		--disable-vidix-internal \
 		--disable-vidix-external \
-		--disable-libdv \
+		--enable-libdv \
 		--disable-smb \
 		--disable-tremor-external \
 		--enable-tremor-internal \
@@ -143,7 +144,7 @@ MODULES=	devel/gettext
 .if ${FLAVOR:L:Msdl}
 CONFIGURE_ARGS+=--enable-sdl \
 		--with-sdl-config=${LOCALBASE}/bin/sdl-config
-LIB_DEPENDS+=	SDL:sdl-1.2.4p1,>=1.2.5:devel/sdl
+LIB_DEPENDS+=	SDL:sdl->=1.2.5:devel/sdl
 .else
 CONFIGURE_ARGS+=--disable-sdl
 .endif

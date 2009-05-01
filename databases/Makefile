@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.156 2009/02/06 22:03:55 simon Exp $
+# $OpenBSD: Makefile,v 1.160 2009/04/05 11:01:52 bernd Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
+     SUBDIR += apache-couchdb
      SUBDIR += db
      SUBDIR += dbh
      SUBDIR += directoryassistant
@@ -97,6 +98,7 @@
      SUBDIR += p5-pgsql
      SUBDIR += p5-sybperl
      SUBDIR += pear-DB
+     SUBDIR += pear-DB_DataObject
      SUBDIR += pear-MDB2
      SUBDIR += pear-MDB2-mysql
      SUBDIR += pg-toolbox
@@ -112,6 +114,7 @@
      SUBDIR += postgresql_autodoc
      SUBDIR += py-axiom
      SUBDIR += py-cdb
+     SUBDIR += py-couchdb
      SUBDIR += py-elixir
      SUBDIR += py-ldap,python2.4
      SUBDIR += py-ldap,python2.5
@@ -131,6 +134,7 @@
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += ruby-activerecord
      SUBDIR += ruby-bdb
+     SUBDIR += ruby-couchrest
      SUBDIR += ruby-datamapper
      SUBDIR += ruby-data_objects
      SUBDIR += ruby-do_sqlite3

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.14 2008/06/08 20:47:10 eric Exp $
+# $OpenBSD: Makefile,v 1.17 2009/04/26 11:01:04 ajacoutot Exp $
 
 COMMENT=	cairo bindings for Python
 
-VERSION=	1.4.12
+VERSION=	1.8.2
 DISTNAME=	pycairo-${VERSION}
 PKGNAME=	py-cairo-${VERSION}p0
 CATEGORIES=	graphics
@@ -27,7 +27,6 @@ USE_LIBTOOL=	Yes
 USE_X11=	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	PYTHON=${MODPY_BIN}
 
 pre-install:
 	perl -pi -e "s,!!MODPY_BIN!!,${MODPY_BIN}," ${WRKSRC}/test/test.test

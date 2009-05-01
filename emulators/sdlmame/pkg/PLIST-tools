@@ -1,0 +1,9 @@
+@comment $OpenBSD: PLIST-tools,v 1.2 2009/03/18 20:23:11 landry Exp $
+@conflict xmame+xmess-*
+@conflict xmame-*
+@conflict xmess-*
+@bin bin/chdman
+@bin bin/jedutil
+@bin bin/ldresample
+@bin bin/ldverify
+@bin bin/romcmp

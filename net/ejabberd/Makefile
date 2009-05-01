@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2008/09/17 13:54:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2009/04/05 23:48:55 sthen Exp $
 
 COMMENT=		jabber server written in Erlang
 
-V=			2.0.1
+V=			2.0.5
 DISTNAME=		ejabberd-$V
-PKGNAME=		${DISTNAME}p0
-DISTFILES=		ejabberd-2.0.1_2.tar.gz
 
 CATEGORIES=		net
 
@@ -25,14 +23,16 @@ MASTER_SITES=		http://www.process-one.net/downloads/ejabberd/$V/
 
 MODULES=		converters/libiconv
 BUILD_DEPENDS=		:erlang->=12b.0:lang/erlang
-RUN_DEPENDS=		${BUILD_DEPENDS}
+RUN_DEPENDS=		:erlang->=12b.0:lang/erlang
 
 MAKE_FLAGS+=		EJABBERDDIR=${PREFIX}/lib/ejabberd \
 			LOGDIR=${EJLOGDIR} \
-			ETCDIR=${SYSCONFDIR}/ejabberd
+			ETCDIR=${SYSCONFDIR}/ejabberd \
+			SPOOLDIR=${EJDBDIR}
 FAKE_FLAGS+=		EJABBERDDIR=${WRKINST}/${PREFIX}/lib/ejabberd \
 			LOGDIR=${WRKINST}${EJLOGDIR} \
-			ETCDIR=${WRKINST}/${PREFIX}/share/examples/ejabberd
+			ETCDIR=${WRKINST}/${PREFIX}/share/examples/ejabberd \
+			SPOOLDIR=${WRKINST}/${EJDBDIR}
 
 USE_GMAKE=		Yes
 CONFIGURE_STYLE=	gnu
@@ -73,8 +73,12 @@ post-install:
 		find . -name '*.html' -exec ${INSTALL_DATA} {} ${PREFIX}/share/doc/ejabberd/{} \; && \
 		find . -name '*.png' -exec ${INSTALL_DATA} {} ${PREFIX}/share/doc/ejabberd/{} \;
 	${SUBST_CMD} -c ${FILESDIR}/README.OpenBSD ${PREFIX}/share/doc/ejabberd/README.OpenBSD
-	chown root.bin ${PREFIX}/share/doc/ejabberd/README.OpenBSD
+	chown root.bin ${PREFIX}/share/doc/ejabberd/*
+	${SUBST_CMD} ${PREFIX}/share/examples/ejabberd/ejabberd.cfg
 	${SUBST_CMD} ${PREFIX}/sbin/ejabberdctl
+	@chown ${SHAREOWN}:${BINGRP} ${PREFIX}/sbin/ejabberdctl
+	@chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/ejabberd
+	@chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/examples/ejabberd
 
 .include <bsd.port.mk>
 

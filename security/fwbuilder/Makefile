@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.11 2008/12/05 21:50:57 steven Exp $
+# $OpenBSD: Makefile,v 1.13 2009/04/13 14:12:02 steven Exp $
 
 COMMENT=	firewall GUI
-DISTNAME=	fwbuilder-3.0.2
+DISTNAME=	fwbuilder-3.0.4
 CATEGORIES=	net security
 
 HOMEPAGE=	http://www.fwbuilder.org/
@@ -41,9 +41,9 @@ LIB_DEPENDS=	fwcompiler.>=11,fwbuilder.>=11::security/libfwbuilder \
 NO_REGRESS=	Yes
 USE_X11=	Yes
 
-WANTLIB=	ICE SM X11 Xcursor Xext Xfixes Xi Xinerama Xrandr Xrender \
-		c crypto fontconfig freetype glib-2.0 gthread-2.0 iconv intl \
-		m netsnmp png pthread ssl stdc++ util xml2 xslt z
+WANTLIB += ICE SM X11 Xext Xi Xinerama Xrandr Xrender c fontconfig
+WANTLIB += freetype glib-2.0 gthread-2.0 iconv intl m netsnmp
+WANTLIB += png pthread stdc++ util xml2 xslt z
 
 post-install:
 	chown ${BINOWN}:${BINGRP} ${PREFIX}/bin/*

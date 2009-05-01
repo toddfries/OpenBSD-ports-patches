@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.19 2008/10/26 10:51:33 landry Exp $
+# $OpenBSD: Makefile,v 1.21 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=	Prelude framework library
 
 DISTNAME=	libprelude-0.9.15.1
-PKGNAME=	prelude-${DISTNAME}p3
+PKGNAME=	prelude-${DISTNAME}p4
 
 MODPY_EGG_VERSION=0.0.0
 
@@ -18,8 +18,6 @@ WANTLIB=	c gcrypt pthread z
 
 LIB_DEPENDS=	gpg-error.>=1::security/libgpg-error \
 		gnutls.>=12::security/gnutls
-
-CONFIGURE_ENV=	PYTHON=${MODPY_BIN}
 
 .if ${MACHINE_ARCH} == "sparc64"
 PATCH_LIST=	patch-* gcc-*

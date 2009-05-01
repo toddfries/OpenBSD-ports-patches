@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2008/11/16 21:49:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2009/04/26 11:01:05 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		python bindings for the GtkSourceView library
 
 GNOME_PROJECT=		pygtksourceview
 GNOME_VERSION=		2.4.0
-PKGNAME=		py-gtksourceview-${GNOME_VERSION}
+PKGNAME=		py-gtksourceview-${GNOME_VERSION}p0
 CATEGORIES=		x11
 
 # LGPLv2
@@ -31,7 +31,6 @@ RUN_DEPENDS=		:py-gobject->=2.15.2:devel/py-gobject \
 			::x11/py-gtk2
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		PYTHON="${MODPY_BIN}"
 
 LIBTOOL_FLAGS=		--tag=disable-static
 

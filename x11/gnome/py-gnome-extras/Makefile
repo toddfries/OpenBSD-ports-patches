@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.10 2009/02/11 15:47:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2009/04/26 11:01:05 ajacoutot Exp $
 
 COMMENT=	additional Python bindings for GNOME
 
 GNOME_PROJECT=	gnome-python-extras
 GNOME_VERSION=	2.19.1
-PKGNAME=	py-gnome-extras-${VERSION}p7
+PKGNAME=	py-gnome-extras-${VERSION}p8
 
 HOMEPAGE=	http://www.pygtk.org/
 
@@ -46,8 +46,7 @@ REGRESS_DEPENDS=	:${PKGNAME}:${BUILD_PKGPATH}
 USE_X11=		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS= 	--with-gtkmozembed=xulrunner
 
 pre-configure:
