@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2009/05/01 02:09:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2009/05/04 23:22:56 sthen Exp $
 
 COMMENT =		download BBC iPlayer and ITV programmes
 
-DISTNAME =		get_iplayer-1.72
+DISTNAME =		get_iplayer-1.77
 
 CATEGORIES =		multimedia
 
