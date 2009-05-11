@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.692 2009/05/03 16:10:38 simon Exp $
+# $OpenBSD: Makefile,v 1.696 2009/05/08 18:01:33 jcs Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -219,6 +219,7 @@
      SUBDIR += p5-Algorithm-MDiff
      SUBDIR += p5-Algorithm-MarkovChain
      SUBDIR += p5-Algorithm-Permute
+     SUBDIR += p5-Any-Moose
      SUBDIR += p5-AnyEvent
      SUBDIR += p5-App-CLI
      SUBDIR += p5-App-Info
@@ -500,6 +501,7 @@
      SUBDIR += p5-Safe-World
      SUBDIR += p5-Scalar-Defer
      SUBDIR += p5-Scope-Guard
+     SUBDIR += p5-Scope-Upper
      SUBDIR += p5-Set-Infinite
      SUBDIR += p5-Set-IntRange
      SUBDIR += p5-Set-Object
@@ -611,6 +613,7 @@
      SUBDIR += p5-YAML
      SUBDIR += p5-YAML-Shell
      SUBDIR += p5-YAML-Syck
+     SUBDIR += p5-YAML-Tiny
      SUBDIR += p5-accessors
      SUBDIR += p5-boolean
      SUBDIR += p5-capitalization
@@ -746,6 +749,7 @@
      SUBDIR += ruby-rubyinline
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
+     SUBDIR += ruby-systemtimer
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
