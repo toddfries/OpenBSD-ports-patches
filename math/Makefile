@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.82 2009/03/31 16:55:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.84 2009/05/13 13:13:35 simon Exp $
 #
 
      SUBDIR += R
