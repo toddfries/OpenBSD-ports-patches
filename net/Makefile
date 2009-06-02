@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.573 2009/05/13 00:08:01 simon Exp $
+# $OpenBSD: Makefile,v 1.575 2009/05/25 20:21:42 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -86,6 +86,7 @@
      SUBDIR += flickcurl
      SUBDIR += flow-tools
      SUBDIR += flowd
+     SUBDIR += flvstreamer
      SUBDIR += fmirror
      SUBDIR += fping
      SUBDIR += freeradius
@@ -366,6 +367,7 @@
      SUBDIR += py-zsi
      SUBDIR += pymsn
      SUBDIR += quagga
+     SUBDIR += queryperf
      SUBDIR += queso
      SUBDIR += quirc
      SUBDIR += radiusd-cistron
