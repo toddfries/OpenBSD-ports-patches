@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.191 2009/06/02 22:08:36 sthen Exp $
+# $OpenBSD: Makefile,v 1.193 2009/06/05 22:32:24 phessler Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -26,6 +26,7 @@
      SUBDIR += cgoban
      SUBDIR += childsplay
      SUBDIR += childsplay-plugins
+     SUBDIR += chocolate-doom
      SUBDIR += circuit
      SUBDIR += clines
      SUBDIR += cmatrix
@@ -38,6 +39,7 @@
      SUBDIR += crossfire-client
      SUBDIR += csmash
      SUBDIR += defendguin
+     SUBDIR += doomdata
      SUBDIR += dopewars
      SUBDIR += dopewars,no_x11
      SUBDIR += dungeon-crawl

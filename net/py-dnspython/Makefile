@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2009/03/16 22:20:02 kili Exp $
+# $OpenBSD: Makefile,v 1.8 2009/06/04 09:53:56 benoit Exp $
 
 COMMENT=		DNS toolkit for Python
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.4 2009/06/03 13:45:14 sthen Exp $
+# $OpenBSD: Makefile,v 1.6 2009/06/04 21:12:07 ajacoutot Exp $
 
 COMMENT =		panorama image stitcher
 
 DISTNAME =		hugin-0.8.0_rc2
-PKGNAME =		${DISTNAME:S/_//}
+PKGNAME =		${DISTNAME:S/_//}p0
 WRKDIST =		${WRKDIR}/${DISTNAME:C/_.*//}
 
 SHARED_LIBS =		celeste 0.0 \
@@ -50,7 +50,6 @@ LIB_DEPENDS =		boost_thread-mt::devel/boost \
 USE_X11=		Yes
 MODULES +=		devel/cmake
 CONFIGURE_STYLE =	cmake
-# doesnt work CONFIGURE_ARGS =	-DLAPACK_FOUND:Strings=NO
 NO_REGRESS =		Yes
 CFLAGS +=		-pthread
 

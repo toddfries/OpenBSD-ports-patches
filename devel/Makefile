@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.703 2009/06/02 21:58:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.705 2009/06/05 22:14:29 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -26,6 +26,7 @@
      SUBDIR += automake
      SUBDIR += avr
      SUBDIR += avrdude
+     SUBDIR += bakery
      SUBDIR += beediff
      SUBDIR += bison
      SUBDIR += blame
@@ -693,6 +694,7 @@
      SUBDIR += py-rcsparse
      SUBDIR += py-ruledispatch
      SUBDIR += py-setuptools
+     SUBDIR += py-serial
      SUBDIR += py-silc
      SUBDIR += py-simplejson
      SUBDIR += py-sip
