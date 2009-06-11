@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.118 2009/05/13 00:14:55 simon Exp $
+# $OpenBSD: Makefile,v 1.122 2009/06/07 09:59:22 sturm Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -12,7 +12,6 @@
      SUBDIR += calentool
      SUBDIR += cbb
      SUBDIR += ccze
-     SUBDIR += cdrchive
      SUBDIR += cdrdao
      SUBDIR += clex
      SUBDIR += contacts
@@ -101,6 +100,7 @@
      SUBDIR += xd
      SUBDIR += xdelta
      SUBDIR += xgas
+     SUBDIR += xkcd-viewer
      SUBDIR += xless
      SUBDIR += xnc
      SUBDIR += xtar

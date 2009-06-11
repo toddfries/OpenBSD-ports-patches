@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.705 2009/06/05 22:14:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.708 2009/06/07 11:24:54 landry Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -179,7 +179,6 @@
      SUBDIR += libvstr
      SUBDIR += libwnck
      SUBDIR += libyaml
-     SUBDIR += lincvs
      SUBDIR += llvm
      SUBDIR += lpeg
      SUBDIR += luaalarm
@@ -352,6 +351,7 @@
      SUBDIR += p5-Devel-SmallProf
      SUBDIR += p5-Devel-StackTrace
      SUBDIR += p5-Devel-Symdump
+     SUBDIR += p5-Devel-Trace
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Directory-Scratch
      SUBDIR += p5-Env-PS1 
@@ -470,6 +470,7 @@
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
+     SUBDIR += p5-Pango
      SUBDIR += p5-Parallel-ForkManager
      SUBDIR += p5-Parallel-Forker
      SUBDIR += p5-Params-CallbackRequest

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/03/05 08:14:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2009/06/10 15:23:54 ajacoutot Exp $
 
 COMMENT-main=	applications integration into Nautilus
 COMMENT-pidgin=	pidgin integration in Nautilus
@@ -6,8 +6,8 @@ COMMENT-pidgin=	pidgin integration in Nautilus
 GNOME_PROJECT=	nautilus-sendto
 GNOME_VERSION=	1.0.1
 
-PKGNAME-main=	${DISTNAME}
-PKGNAME-pidgin=	${GNOME_PROJECT}-pidgin-${GNOME_VERSION}
+PKGNAME-main=	${DISTNAME}p2
+PKGNAME-pidgin=	${GNOME_PROJECT}-pidgin-${GNOME_VERSION}p0
 
 CATEGORIES-main=	misc
 CATEGORIES-pidgin=	net
@@ -27,16 +27,17 @@ WANTLIB += pixman-1 png xml2 z
 
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += ORBit-2 ORBitCosNaming-2 asn1 bonobo-2 bonobo-activation
-WANTLIB-main += c com_err crypto gconf-2 gcrypt glade-2.0 gnome-2 gnomevfs-2
+WANTLIB-main += c com_err crypto gcrypt glade-2.0 gnome-2 gnomevfs-2
 WANTLIB-main += gnutls gpg-error gssapi krb5 nspr4 nss3 plc4 plds4
 WANTLIB-main += popt pthread smime3 softokn3 soup-2.4 sqlite3 ssl ssl3
-WANTLIB-main += tasn1 util
+WANTLIB-main += tasn1 util avahi-client avahi-common avahi-glib
 
 WANTLIB-pidgin += ${WANTLIB}
 WANTLIB-pidgin += ncurses
 
 MODULES=	devel/gettext \
-		x11/gnome
+		x11/gnome \
+		devel/gconf2
 
 MULTI_PACKAGES=	-main -pidgin
 
@@ -45,6 +46,7 @@ BUILD_DEPENDS=	::net/gajim
 RUN_DEPENDS-main=	::archivers/zip \
 			::archivers/bzip2
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
+			${MODGCONF2_LIB_DEPENDS} \
 			camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-server \
 			nautilus-extension.>=2::x11/gnome/nautilus
 
@@ -53,10 +55,11 @@ LIB_DEPENDS-pidgin=	${LIB_DEPENDS} \
 			purple.>=4::net/pidgin
 
 USE_X11=	Yes
+MODGCONF2_SCHEMAS_DIR= nautilus-sendto
+MODGCONF2_LIBDEP= No
+MODGCONF2_RUNDEP= No
 
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/nautilus-sendto \
-		--disable-schemas-install \
 		--with-thunderbird-name=thunderbird \
 		--with-gajim=${LOCALBASE}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

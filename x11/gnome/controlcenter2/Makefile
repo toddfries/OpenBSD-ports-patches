@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.62 2009/04/16 08:11:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.67 2009/06/09 17:24:37 ajacoutot Exp $
 
 COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
 GNOME_VERSION=		2.24.0.1
-PKGNAME=		${DISTNAME}p15
+PKGNAME=		${DISTNAME}p20
 
 SHARED_LIBS +=	gnome-window-settings 2.0      # .1.0
 CATEGORIES=		x11
@@ -20,7 +20,7 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xrender Xss art_lgpl_2 asn1 atk-1.0 bonobo-2 \
 		bonobo-activation bonoboui-2 bz2 c cairo com_err crypto \
 		dbus-1 dbus-glib-1 expat fontconfig freetype gailutil \
-		gconf-2 gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glade-2.0 \
+		gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glade-2.0 \
 		glib-2.0 glitz gmodule-2.0 gnome-2 gnome-desktop-2 \
 		gnome-keyring gnome-menu gnomecanvas-2 gnomeui-2 gnomevfs-2 gnutls \
 		gobject-2.0 gpg-error gsf-1 gssapi gstbase-0.10 gstreamer-0.10 \
@@ -30,8 +30,12 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		soup-2.4 sqlite3 ssl ssl3 startup-notification-1 tasn1 util \
 		vorbis vorbisfile xkbfile xml2 z
 
+# po/ta.po (patch-po_ta_po) is seen as binary
+DIFF_ARGS=		-a
+
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			devel/gconf2
 
 LIB_DEPENDS=		canberra,canberra-gtk:libcanberra->=0.10p0:audio/libcanberra \
 			camel-1.2,ebook-1.2,edataserver-1.2::databases/evolution-data-server \
@@ -53,14 +57,17 @@ RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
 USE_X11=		Yes
 MODGNOME_HELP_FILES=	Yes
 DESKTOP_FILES=		Yes
-CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/control-center2 \
-			--disable-schemas-install \
-			--disable-hal \
+MODGCONF2_SCHEMAS_DIR=	control-center2
+
+CONFIGURE_ARGS+=	--disable-hal \
 			--enable-gstreamer \
 			--enable-aboutme
 CONFIGURE_ENV=  	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/controlcenter2
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/capplets/common/gnome-theme-info.c
 
 .include <bsd.port.mk>

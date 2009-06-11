@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.28 2009/03/14 10:40:52 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.31 2009/06/09 17:21:10 ajacoutot Exp $
 @conflict control-center-1*
 @conflict control-center2-*
 @pkgpath x11/gnome/controlcenter2
@@ -23,6 +23,7 @@ include/gnome-window-settings-2.0/gnome-window-manager.h
 include/gnome-window-settings-2.0/gnome-wm-manager.h
 lib/libgnome-window-settings.a
 lib/libgnome-window-settings.la
+lib/pkgconfig/gnome-default-applications.pc
 lib/pkgconfig/gnome-keybindings.pc
 lib/pkgconfig/gnome-window-settings-2.0.pc
 lib/window-manager-settings/
@@ -291,11 +292,9 @@ share/omf/control-center/control-center-sv.omf
 share/omf/control-center/control-center-uk.omf
 share/omf/control-center/control-center-vi.omf
 share/omf/control-center/control-center-zh_CN.omf
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/control-center2/*.schemas > /dev/null
-share/pkgconfig/
-share/pkgconfig/gnome-default-applications.pc
-share/schemas/control-center2/control-center.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/control-center2/*.schemas > /dev/null
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+${SCHEMAS_INSTDIR}/control-center.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 @exec %D/bin/update-desktop-database
 @unexec %D/bin/update-desktop-database
 @exec %D/bin/update-mime-database %D/share/mime

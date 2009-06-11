@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2009/04/16 08:11:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2009/06/10 20:27:09 kili Exp $
 
 COMMENT=		GNOME media utilities
 
 GNOME_PROJECT=		gnome-media
 GNOME_VERSION=		2.24.0.1
-PKGNAME=		${DISTNAME}p12
+PKGNAME=		${DISTNAME}p15
 
 SHARED_LIBS +=	gnome-media-profiles 0.0      # .0.0
 CATEGORIES=		x11
@@ -17,7 +17,8 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation \
+		Xrender art_lgpl_2 atk-1.0 avahi-client avahi-common \
+		avahi-glib bonobo-2 bonobo-activation \
 		c cairo crypto dbus-1 dbus-glib-1 expat fontconfig \
 		freetype gailutil gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glade-2.0 \
 		glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 \
@@ -25,11 +26,11 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		popt pthread ssl util xml2 z
 
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			devel/gconf2
 
 BUILD_DEPENDS=		::multimedia/gstreamer-0.10/plugins-good,-gconf
-LIB_DEPENDS=		gconf-2::devel/gconf2 \
-			bonoboui-2::x11/gnome/libbonoboui \
+LIB_DEPENDS=		bonoboui-2::x11/gnome/libbonoboui \
 			gnomevfs-2::x11/gnome/vfs2 \
 			gnomeui-2::x11/gnome/libgnomeui \
 			gstreamer-0.10,gstbase-0.10::multimedia/gstreamer-0.10/core \
@@ -39,9 +40,8 @@ LIB_DEPENDS=		gconf-2::devel/gconf2 \
 MODGNOME_HELP_FILES=	Yes
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
-CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gnome-media \
-			--disable-schemas-install \
-			--disable-esound
+MODGCONF2_SCHEMAS_DIR=	gnome-media
+CONFIGURE_ARGS+=	--disable-esound
 CONFIGURE_ENV=  	CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			CFLAGS="-I${LOCALBASE}/include ${CFLAGS}" \

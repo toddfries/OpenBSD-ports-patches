@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.16 2009/06/04 13:52:50 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2009/06/07 12:02:43 sthen Exp $
 
      SUBDIR += app_conference
      SUBDIR += asterisk
+     SUBDIR += asterisk,h323
      SUBDIR += asterisk-native-sounds
      SUBDIR += asterisk-openbsd-moh
      SUBDIR += asterisk-sounds
@@ -11,7 +12,6 @@
      SUBDIR += iaxmodem
      SUBDIR += kamailio
      SUBDIR += libosip2
-     SUBDIR += ohphone
      SUBDIR += p5-Net-SIP
      SUBDIR += p5-asterisk
      SUBDIR += pjsua

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2009/04/16 08:11:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2009/06/11 05:25:13 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,9 +11,9 @@ GNOME_VERSION=	2.24.2
 
 CATEGORIES=	graphics print
 
-PKGNAME-main=	${DISTNAME}p6
-PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}p0
-PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}p0
+PKGNAME-main=	${DISTNAME}p10
+PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}p3
+PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}p3
 
 SHARED_LIBS=	evbackend	0.0 # .0.0
 
@@ -29,7 +29,8 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 
 MODULES=	devel/gettext \
-		x11/gnome
+		x11/gnome \
+		devel/gconf2
 
 BUILD_DEPENDS=	::x11/gnome/icon-theme
 
@@ -43,12 +44,13 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		pixman-1 png xml2 z
 
 WANTLIB-main=		${WANTLIB} ICE ORBit-2 SM c dbus-1 dbus-glib-1 \
-			gconf-2 gnome-keyring gs gthread-2.0 \
+			gnome-keyring gs gthread-2.0 \
 			jpeg pthread tiff
 LIB_DEPENDS-main=	poppler.>=3,poppler-glib.>=3::print/poppler \
 			spectre::print/libspectre \
 			gnome-keyring::x11/gnome/keyring \
 			glade-2.0::devel/libglade2 \
+			${MODGCONF2_LIB_DEPENDS} \
 			${MODGETTEXT_LIB_DEPENDS}
 RUN_DEPENDS-main=	:shared-mime-info-*:misc/shared-mime-info \
 			:ghostscript-*:print/ghostscript/gnu \
@@ -59,17 +61,18 @@ WANTLIB-djvu=		${WANTLIB} jpeg
 LIB_DEPENDS-djvu=	evbackend::${BASE_PKGPATH} \
 			djvulibre::graphics/djvulibre \
 			${MODGETTEXT_LIB_DEPENDS}
-RUN_DEPENDS-djvu=	# empty
+RUN_DEPENDS-djvu=	${MODGCONF2_RUN_DEPENDS}
 
 WANTLIB-dvi=		${WANTLIB} gs spectre
 LIB_DEPENDS-dvi=	evbackend::${BASE_PKGPATH} \
 			kpathsea::print/texlive/base \
 			${MODGETTEXT_LIB_DEPENDS}
-RUN_DEPENDS-dvi=	# empty
+RUN_DEPENDS-dvi=	${MODGCONF2_RUN_DEPENDS}
 
 USE_X11=		Yes
 MODGNOME_HELP_FILES=	Yes
 DESKTOP_FILES=		Yes
+MODGCONF2_SCHEMAS_DIR=	evince
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
@@ -83,8 +86,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-scrollkeeper \
 		--enable-djvu \
 		--enable-dvi \
-		--enable-pixbuf \
-		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/evince/
+		--enable-pixbuf
 
 CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include" \
