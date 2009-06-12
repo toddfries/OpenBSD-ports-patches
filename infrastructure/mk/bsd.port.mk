@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.964 2009/06/09 17:46:58 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.966 2009/06/12 17:26:51 sthen Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -68,10 +68,10 @@ FETCH_PACKAGES ?= No
 CLEANDEPENDS ?= No
 USE_SYSTRACE ?= No
 BULK ?= No
-RECURSIVE_FETCH_LIST ?= Yes
+RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
-WRKOBJDIR ?=
+WRKOBJDIR ?= ${PORTSDIR}/obj
 FAKEOBJDIR ?=
 BULK_TARGETS ?=
 BULK_DO ?=
