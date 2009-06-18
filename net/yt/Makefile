@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.26 2009/06/06 11:58:22 martynas Exp $
+# $OpenBSD: Makefile,v 1.28 2009/06/13 02:01:19 martynas Exp $
 
-COMMENT=	customizable script to fetch youtube videos
+COMMENT=	fetch youtube and google videos
 
-PKGNAME=	yt-9p5
+PKGNAME=	yt-10p0
 CATEGORIES=	net www
 DISTFILES=
+
+MAINTAINER=	Martynas Venckus <martynas@openbsd.org>
 
 # Public domain
 PERMIT_PACKAGE_CDROM=	Yes
@@ -16,7 +18,8 @@ MODULES=		lang/lua
 NO_CHECKSUM=		Yes
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
-RUN_DEPENDS+=		::graphics/ffmpeg \
+RUN_DEPENDS+=		::devel/luastdlib \
+			::graphics/ffmpeg \
 			::net/luasocket
 
 do-install:

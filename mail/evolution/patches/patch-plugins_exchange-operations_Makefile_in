@@ -1,0 +1,14 @@
+$OpenBSD: patch-plugins_exchange-operations_Makefile_in,v 1.2 2009/06/17 19:51:25 ajacoutot Exp $
+
+XXX does not work, we get "Cannot load specified object".
+
+--- plugins/exchange-operations/Makefile.in.orig	Wed Feb 25 14:37:00 2009
++++ plugins/exchange-operations/Makefile.in	Sun Jun 14 23:24:32 2009
+@@ -470,6 +470,7 @@ liborg_gnome_exchange_operations_la_LIBADD = \
+ 	$(top_builddir)/calendar/gui/libevolution-calendar.la 	\
+ 	$(top_builddir)/mail/libevolution-mail.la 		\
+ 	$(top_builddir)/addressbook/gui/component/libevolution-addressbook.la \
++	-Wl,--no-as-needed,$(top_builddir)/addressbook/gui/component/.libs/libevolution-addressbook.so \
+ 	$(CAMEL_EXCHANGE_LIBS)					\
+ 	$(EVOLUTION_MAIL_LIBS)
+ 
