@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2009/06/21 11:41:31 martynas Exp $
+# $OpenBSD: Makefile,v 1.9 2009/06/21 20:46:38 martynas Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc sparc64
@@ -7,8 +7,8 @@ COMMENT=	redesign of Mozilla's browser component
 
 VER=		3.5rc2
 DISTNAME=	mozilla-1.9.1
-PKGNAME=	firefox35-${VER}
-SO_VERSION=	20.0
+PKGNAME=	firefox35-${VER}p1
+SO_VERSION=	21.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 .for _lib in accessibility appcomps auth autoconfig browsercomps \
@@ -19,9 +19,10 @@ SO_VERSION=	20.0
 	pippki places pref rdf remoteservice satchel spellchecker \
 	storagecomps system-pref tkautocomplete toolkitcomps txmgr \
 	uconv ucvmath universalchardet unixproxy webbrwsr widget_gtk2 \
-	windowds xpconnect xpinstall zipwriter gfxpsshar gkgfx \
-	gtkxtbin jsj thebes xpcom xpcom_core xul nullplugin \
-	unixprintplugin
+	windowds xpconnect xpinstall zipwriter freebl3 gfxpsshar \
+	gkgfx gtkxtbin jsj mozjs nspr4 nss3 nssckbi nssdbm3 nssutil3 \
+	plc4 plds4 smime3 softokn3 ssl3 thebes xpcom xpcom_core xul \
+	nullplugin unixprintplugin
 SHARED_LIBS+=	${_lib}	${SO_VERSION}
 .endfor
 
@@ -47,10 +48,8 @@ RUN_DEPENDS=	:esound-*:audio/esound \
 BUILD_DEPENDS=	:libIDL-*:devel/libIDL \
 		:zip->=2.3:archivers/zip
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
-		nspr4.>=20,plc4.>=20,plds4.>=20:nspr->=4.8:devel/nspr \
-		nss3.>=22,smime3.>=22,softokn3.>=22,ssl3.>=22:nss->=3.12.3:security/nss \
-		sqlite3.>=10.0:sqlite3->=3.5:databases/sqlite3
-WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xft Xi \
+		sqlite3.>=13.3:sqlite3->=3.6.13:databases/sqlite3
+WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xi \
 		Xinerama Xrandr Xrender Xt atk-1.0 c cairo expat fontconfig \
 		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
 		gthread-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
@@ -64,14 +63,13 @@ USE_GMAKE=	Yes
 NO_REGRESS=	Yes
 
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/build/autoconf \
-				${WRKSRC}/js/src/build/autoconf
+				${WRKSRC}/js/src/build/autoconf \
+				${WRKSRC}/nsprpub/build/autoconf
 
 AUTOCONF_VERSION= 2.13
 CONFIGURE_STYLE= autoconf no-autoheader
 CONFIGURE_ARGS=	--with-system-jpeg=${LOCALBASE}	\
 		--with-system-zlib=/usr/lib	\
-		--with-system-nspr		\
-		--with-system-nss		\
 		--with-pthreads			\
 		--enable-xft			\
 		--disable-optimize		\
@@ -88,6 +86,7 @@ CONFIGURE_ARGS=	--with-system-jpeg=${LOCALBASE}	\
 		--disable-gnomeui		\
 		--disable-gnomevfs		\
 		--disable-dbus			\
+		--disable-jit			\
 		--enable-xinerama		\
 		--enable-svg			\
 		--enable-svg-renderer=cairo	\
@@ -104,10 +103,12 @@ CONFIGURE_ARGS+=--enable-application=browser
 CONFIGURE_ARGS+=--enable-debug
 .endif
 
-MAKE_ENV=	MOZ_CO_PROJECT=browser \
+MAKE_ENV=	BUILD_OFFICIAL=1 \
 		LD_LIBRARY_PATH="${WRKSRC}/dist/bin" \
-		BUILD_OFFICIAL=1 \
 		MOZILLA_OFFICIAL=1 \
+		MOZ_CO_PROJECT=browser \
+		NSS_ENABLE_ECC=1 \
+		NSS_USE_SYSTEM_SQLITE=1 \
 		SO_VERSION="${SO_VERSION}"
 CONFIGURE_ENV=	${MAKE_ENV} \
 		MOZ_ENABLE_COREXFONTS=1 \
@@ -116,7 +117,7 @@ CONFIGURE_ENV=	${MAKE_ENV} \
 MODPY_RUNDEP=	No
 
 MOB=		${WRKSRC}/dist/bin
-MOZ=		${PREFIX}/mozilla-firefox
+MOZ=		${PREFIX}/firefox35
 
 DATADIRS=	chrome components defaults dictionaries extensions \
 		greprefs icons modules plugins res searchplugins
@@ -126,6 +127,7 @@ post-extract:
 
 pre-configure:
 	cd ${WRKSRC}/js/src && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}
+	cd ${WRKSRC}/nsprpub && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}
 	perl -pi -e 's|_LOCALBASE_|${LOCALBASE}|g; s|_X11BASE_|${X11BASE}|g' \
 		${WRKSRC}/build/unix/mozilla.in \
 		${WRKSRC}/extensions/spellcheck/hunspell/src/mozHunspell.cpp \
@@ -143,18 +145,15 @@ do-install:
 		${MOB}/LICENSE ${MOB}/application.ini ${MOB}/blocklist.xml \
 		${MOB}/platform.ini ${MOZ}
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications
-	${INSTALL_DATA} ${FILESDIR}/firefox.desktop ${PREFIX}/share/applications
-	${INSTALL_MAN} ${FILESDIR}/mozilla-firefox.1 ${PREFIX}/man/man1
+	${INSTALL_DATA} ${FILESDIR}/firefox.desktop \
+		${PREFIX}/share/applications/firefox35.desktop
 	perl -pi -e 's,!!PREFIX!!,${TRUEPREFIX},g; \
 		s,!!LOCALBASE!!,${LOCALBASE},g; s,!!VERSION!!,${VER},g' \
-		${MOZ}/README.OpenBSD ${PREFIX}/man/man1/mozilla-firefox.1 \
-		${PREFIX}/share/applications/firefox.desktop
-	ln -f ${PREFIX}/man/man1/mozilla-firefox.1 ${PREFIX}/man/man1/firefox.1
-	${INSTALL_SCRIPT} ${MOB}/firefox ${PREFIX}/bin
-	ln -f ${PREFIX}/bin/firefox ${PREFIX}/bin/mozilla-firefox
+		${MOZ}/README.OpenBSD \
+		${PREFIX}/share/applications/firefox35.desktop
+	${INSTALL_SCRIPT} ${MOB}/firefox ${PREFIX}/bin/firefox35
 	${INSTALL_SCRIPT} ${MOB}/run-mozilla.sh ${MOZ}
-	${INSTALL_PROGRAM} ${MOB}/firefox-bin ${MOB}/mozilla-xremote-client \
-		${MOB}/regxpcom ${MOZ}
-	ln -f ${MOZ}/firefox-bin ${MOZ}/mozilla-firefox-bin
+	${INSTALL_PROGRAM} ${MOB}/mozilla-xremote-client ${MOB}/regxpcom ${MOZ}
+	${INSTALL_PROGRAM} ${MOB}/firefox-bin ${MOZ}/firefox35-bin
 
 .include <bsd.port.mk>
