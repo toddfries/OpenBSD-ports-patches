@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.11 2009/06/22 00:19:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2009/06/25 15:25:13 sthen Exp $
 
 COMMENT =	Low Level Virtual Machine (LLVM) compiler infrastructure
 
 LLVM_V =	2.6pre20090621
 DISTNAME =	llvm-${LLVM_V}
 EXTRACT_SUFX =	.tar.bz2
-PKGNAME =	${DISTNAME}p0
+PKGNAME =	${DISTNAME}p1
 
 CATEGORIES =	devel
 
@@ -52,7 +52,8 @@ USE_LIBTOOL =		Yes
 
 # also supports cmake, but requires v2.6.1
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	--enable-bindings=no
+CONFIGURE_ARGS =	--enable-bindings=no \
+			--enable-libffi=no
 
 MODGNU_CONFIG_GUESS_DIRS =  ${WRKSRC}/autoconf
 
@@ -62,8 +63,10 @@ pre-configure:
 	@ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
 # XXX googletest doesn't build
+# XXX symlink to workaround problem finding the correct clang binary path
 
 post-install:
+	@ln -s ${TRUEPREFIX}/libexec/clang-cc ${PREFIX}/bin
 	@${INSTALL_DATA_DIR} ${PREFIX}/share/llvm
 	@${INSTALL_DATA_DIR} ${WRKINST}/${MODPY_SITEPKG}
 	@${INSTALL_SCRIPT} ${WRKSRC}/tools/clang/utils/ccc-analyzer \
