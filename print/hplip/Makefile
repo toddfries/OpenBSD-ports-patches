@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2009/03/25 13:39:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/06/23 18:05:17 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,16 +8,16 @@ COMMENT-docs=	html documentation for HPLIP
 
 V=		2.7.12
 DISTNAME=	hplip-${V}
-PKGNAME-main=	${DISTNAME}p2
-PKGNAME-hpijs=	hpijs-${V}p1
-PKGNAME-docs=	hplip-docs-${V}p1
+PKGNAME-main=	${DISTNAME}p4
+PKGNAME-hpijs=	hpijs-${V}p3
+PKGNAME-docs=	hplip-docs-${V}p2
 
 SHARED_LIBS+=	hpmud		0.0	# .0.0
 SHARED_LIBS+=	hpip		0.0	# .0.1
 
 CATEGORIES=	print
 
-HOMEPAGE=	http://hplip.sourceforge.net/
+HOMEPAGE=	http://hplipopensource.com/hplip-web/
 
 # GPLv2 - MIT (backend) - BSD (hpijs)
 PERMIT_PACKAGE_CDROM=	Yes
@@ -31,8 +31,8 @@ MULTI_PACKAGES=	-main -hpijs -docs
 
 MODPY_RUNDEP=	No
 
-WANTLIB=	c crypto exif gphoto2 gphoto2_port jpeg ltdl m pthread \
-		tiff usb z
+WANTLIB += avahi-client avahi-common c crypto dbus-1 exif gphoto2
+WANTLIB += gphoto2_port jpeg ltdl m pthread tiff usb z
 
 LIB_DEPENDS=	sane.>=1::graphics/sane-backends \
 		netsnmp.>=7::net/net-snmp \

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2009/04/08 22:29:24 todd Exp $
+# $OpenBSD: Makefile,v 1.15 2009/06/11 23:33:26 sthen Exp $
 
 COMMENT=	virus/spam scanning framework
 
-V=		4.75
-Vs=		11
+V=		4.77
+Vs=		10
 Vss=		${Vs}-1
 CATEGORIES=	mail
 MASTER_SITES=	http://mailscanner.info/files/4/tar/
@@ -14,7 +14,7 @@ WRKDIST=	${WRKDIR}/MailScanner-${V}.${Vss}
 
 HOMEPAGE=	http://www.mailscanner.info/
 
-MAINTAINER=	Todd T. Fries <todd@openbsd.org>
+MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 RUN_DEPENDS+=	::databases/p5-DBI \
 		::archivers/p5-Archive-Zip \
@@ -78,6 +78,7 @@ install_libexec:
 ETC=	MailScanner.conf country.domains.conf filename.rules.conf
 ETC+=   filetype.rules.conf phishing.bad.sites.conf phishing.safe.sites.conf
 ETC+=	spam.assassin.prefs.conf spam.lists.conf virus.scanners.conf
+ETC+=	archives.filename.rules.conf archives.filetype.rules.conf
 ETC+=	mcp/mcp.spam.assassin.prefs.conf mcp/10_example.cf mcp/v320.pre
 ETC+=	rules/bounce.rules rules/max.message.size.rules rules/spam.whitelist.rules
 

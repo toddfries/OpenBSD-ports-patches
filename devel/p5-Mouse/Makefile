@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2009/01/14 18:17:33 simon Exp $
+# $OpenBSD: Makefile,v 1.4 2009/06/19 10:45:07 simon Exp $
 
 COMMENT =	Moose minus the antlers
 
 MODULES =	cpan
-DISTNAME =	Mouse-0.14
+DISTNAME =	Mouse-0.24
 CATEGORIES =	devel
 
 MAINTAINER =	Simon Bertrang <simon@openbsd.org>
@@ -16,9 +16,8 @@ PERMIT_DISTFILES_FTP =		Yes
 
 CPAN_AUTHOR =	SARTAK
 
-RUN_DEPENDS =	::devel/p5-Sub-Exporter \
-		::devel/p5-MRO-Compat \
-		::devel/p5-Class-Method-Modifiers
+RUN_DEPENDS =	::devel/p5-Class-Method-Modifiers
 BUILD_DEPENDS =	${RUN_DEPENDS}
+REGRESS_DEPENDS = ::devel/p5-Test-Exception
 
 .include <bsd.port.mk>

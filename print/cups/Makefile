@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.45 2009/04/27 08:25:39 bernd Exp $
+# $OpenBSD: Makefile,v 1.53 2009/06/04 21:46:49 ajacoutot Exp $
 
 COMMENT=		Common Unix Printing System
 
 VERSION=		1.3.10
 DISTNAME=		cups-${VERSION}-source
-PKGNAME=		cups-${VERSION}
+PKGNAME=		cups-${VERSION}p7
 CATEGORIES=		print sysutils
 
 SHARED_LIBS+=		cups		4.0
@@ -21,7 +21,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c gcrypt gpg-error jpeg m pthread tasn1 z
+WANTLIB += asn1 c crypto gcrypt gpg-error gssapi jpeg krb5 m
+WANTLIB += pthread z
 
 MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
 			http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
@@ -40,6 +41,8 @@ LIB_DEPENDS=		png.>=3::graphics/png \
 			tiff.>=35::graphics/tiff \
 			dbus-1.>=7::x11/dbus \
 			gnutls.>=14::security/gnutls
+# only build the -main subpackage to prevent cyclic dependency
+LIB_DEPENDS+=		dns_sd::net/avahi,no_gtk,no_qt3,no_qt4
 
 FAKE_FLAGS=		BINMODE=${BINMODE} \
 			SHAREMODE=${SHAREMODE} \
@@ -56,15 +59,25 @@ DIFF_ARGS=		-a
 
 CONFIGURE_STYLE=	gnu dest
 AUTOCONF_VERSION=	2.59
-CONFIGURE_ARGS+=	--with-cups-user=_cups \
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--with-cups-user=_cups \
 			--with-cups-group=_cups \
-			${CONFIGURE_SHARED} \
+			--with-system-groups=wheel \
 			--localstatedir=/var \
 			--without-java \
-			--without-perl \
+			--with-perl="/usr/bin/perl" \
+			--with-optim="${CFLAGS}" \
 			--without-php \
 			--without-python \
+			--enable-image \
 			--enable-dbus \
+			--enable-raw-printing \
+			--enable-gssapi \
+			--enable-dnssd \
+			--disable-pap \
+			--disable-ldap \
+			--disable-slp \
+			--disable-default-shared \
 			--disable-pdftops
 
 # XXX we need to use GnuTLS instead of OpenSSL because of conflicting
@@ -72,7 +85,8 @@ CONFIGURE_ARGS+=	--with-cups-user=_cups \
 CONFIGURE_ARGS+=	--enable-gnutls=yes
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-			  -I${LOCALBASE}/include/libpng" \
+				-I${LOCALBASE}/include/libpng \
+				-I${LOCALBASE}/include/avahi-compat-libdns_sd" \
 			DSOFLAGS="-L${LOCALBASE}/lib" \
 			LDFLAGS="-L${LOCALBASE}/lib -pthread" \
 			LIBcups_VERSION=${LIBcups_VERSION} \
@@ -100,6 +114,9 @@ LIB_DEPENDS+=		ldap,lber::databases/openldap
 .else
 CONFIGURE_ARGS+=	--disable-ldap
 .endif
+
+post-extract:
+	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
 
 post-configure:
 	cd ${WRKBUILD} && perl -pi -e 's|\$${DESTDIR}||g' init/cups.sh \

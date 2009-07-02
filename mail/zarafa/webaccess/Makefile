@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.7 2009/04/28 11:00:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2009/06/09 18:23:03 ajacoutot Exp $
 
 COMMENT=	zarafa webaccess frontend
 
-V=		6.20.5
+V=		6.20.6
 DISTNAME=	zarafa-webaccess-ajax-${V}
 PKGNAME=	zarafa-webaccess-${V}
 CATEGORIES=	mail www productivity
@@ -24,7 +24,6 @@ WRKDIST=	${WRKDIR}
 do-install:
 	${SUBST_CMD} ${WRKDIR}/php-webclient-ajax/config.php.dist
 	find ${WRKDIR} -name \*.orig -or -name \*.bak | xargs rm -f
-	${INSTALL_DATA_DIR} ${PREFIX}/zarafa
 	mv ${WRKDIR}/php-webclient-ajax ${INSTDIR}
 	mv ${INSTDIR}/debug.php \
 		${INSTDIR}/debug.php.disabled

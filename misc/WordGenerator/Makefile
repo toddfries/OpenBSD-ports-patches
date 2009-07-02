@@ -1,29 +1,33 @@
-# $OpenBSD: Makefile,v 1.5 2008/03/30 22:08:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2009/06/08 21:46:58 benoit Exp $
 
-COMMENT=		generates lists of words given certain information
-DISTNAME=		WordGenerator-1.8
-CATEGORIES=		misc education
+COMMENT =		generates lists of words given certain information
 
-HOMEPAGE=		http://billposer.org/Software/WordGenerator.html
+DISTNAME =		WordGenerator-1.9
+PKGNAME =		${DISTNAME}p0
+CATEGORIES =		misc education
 
-# GPL
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
 
-MASTER_SITES=		http://billposer.org/Software/Downloads/
+# GPLv3
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-RUN_DEPENDS=		:tcllib->=1.8:devel/tcllib \
+MASTER_SITES =		http://www.arcane-labs.net/download/OpenBSD/
+
+MODULES =		x11/tk
+
+RUN_DEPENDS =		:tcllib->=1.8:devel/tcllib \
 			::x11/iwidgets
 
-NO_BUILD=		Yes
-NO_REGRESS=		Yes
+NO_BUILD =		Yes
+NO_REGRESS =		Yes
 
-PKG_ARCH=		*
+PKG_ARCH =		*
 
-do-configure:
-	@perl -pi -e 's,!!LOCALBASE!!,${LOCALBASE},' ${WRKSRC}/WordGenerator.tcl
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/WordGenerator.tcl
 
 do-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/WordGenerator.tcl ${PREFIX}/bin/WordGenerator

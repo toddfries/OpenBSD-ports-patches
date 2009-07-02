@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.12 2009/03/22 20:19:32 steven Exp $
+# $OpenBSD: Makefile,v 1.17 2009/06/24 07:38:30 sthen Exp $
 
 COMMENT=	robust and small HTTP server and mail proxy server
 
-DISTNAME=	nginx-0.6.35
+DISTNAME=	nginx-0.7.60
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	www
 
 HOMEPAGE=	http://nginx.net/
 
-MAINTAINER=	Darrin Chandler <dwchandler@stilyagin.com>
+MAINTAINER=	William Yodlowsky <bsd@openbsd.rutgers.edu>
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
@@ -40,13 +41,14 @@ CONFIGURE_ARGS=		--prefix=${SYSCONFDIR}/nginx \
 			--with-http_ssl_module \
 			--with-http_stub_status_module \
 			--with-mail \
-			--with-mail_ssl_module
+			--with-mail_ssl_module \
+			--with-ipv6
 
 NO_REGRESS=		Yes
 ALL_TARGET=
 
 pre-configure:
-	${SUBST_CMD} ${WRKBUILD}/conf/nginx.conf
+	@${SUBST_CMD} ${WRKBUILD}/conf/nginx.conf
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/nginx/

@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.14 2009/03/25 13:39:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2009/05/25 18:14:07 ajacoutot Exp $
 
 COMMENT=	video DVDs and CDs creation tool
 
-DISTNAME=	devede-3.12
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	devede-3.13.1
 CATEGORIES=	multimedia x11
 
 EXTRACT_SUFX=	.tar.bz2
@@ -27,6 +26,7 @@ RUN_DEPENDS=	::x11/py-gtk2 \
 		::graphics/vcdimager \
 		::sysutils/cdrtools \
 		::x11/mplayer \
+		::devel/xdg-utils \
 		:desktop-file-utils-*:devel/desktop-file-utils
 
 .if ${MACHINE_ARCH} == "i386"
@@ -49,5 +49,6 @@ pre-configure:
 do-install:
 	cd ${WRKSRC} && \
 		/bin/sh install.sh prefix=${TRUEPREFIX} libdir=${MODPY_SITEPKG} uninstall=no
+	find ${PREFIX} -name \*.orig -or -name \*~ | xargs rm
 
 .include <bsd.port.mk>

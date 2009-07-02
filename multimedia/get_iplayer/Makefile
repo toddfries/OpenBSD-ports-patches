@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.4 2009/04/29 00:59:07 sthen Exp $
+# $OpenBSD: Makefile,v 1.15 2009/06/24 00:21:25 sthen Exp $
 
 COMMENT =		download BBC iPlayer and ITV programmes
 
-DISTNAME =		get_iplayer-1.70
+DISTNAME =		get_iplayer-2.03
+PKGNAME =		${DISTNAME}p0
 
 CATEGORIES =		multimedia
 
@@ -14,19 +15,27 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		http://linuxcentre.net/get_iplayer/packages/
+MASTER_SITES =		http://linuxcentre.net/get_iplayer/packages/ \
+			http://linuxcentre.net/get_iplayer/packages/archive/
 
 RUN_DEPENDS =		::audio/id3lib \
-			:rtmpdump->=1.5:net/rtmpdump \
+			:flvstreamer->=1.8:net/flvstreamer \
 			::www/p5-HTML-Parser \
-			::www/p5-libwww
-# XXX wants a newer p5-libwww feature; workaround in patches/patch-get_iplayer
+			:p5-libwww->=5.826:www/p5-libwww
 
 NO_BUILD =		Yes
 NO_REGRESS =		Yes
 
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/get_iplayer
+	${SUBST_CMD} -c ${FILESDIR}/options.sample ${WRKSRC}/options.sample
+
 do-install:
+	${INSTALL_DATA_DIR} ${PREFIX}/share/get_iplayer/plugins
+	${INSTALL_DATA} ${WRKSRC}/options.sample ${PREFIX}/share/get_iplayer
 	${INSTALL_SCRIPT} ${WRKSRC}/get_iplayer ${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/plugins/* \
+	    ${PREFIX}/share/get_iplayer/plugins
 	${INSTALL_MAN} ${WRKSRC}/get_iplayer.1 ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

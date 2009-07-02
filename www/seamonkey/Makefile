@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.34 2009/04/11 13:47:37 martynas Exp $
+# $OpenBSD: Makefile,v 1.38 2009/06/24 01:08:05 martynas Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 i386 powerpc sparc sparc64
 
 COMMENT=	integrated mozilla application suite
 
-VER=		1.1.16
+VER=		1.1.17
 DISTNAME=	seamonkey-${VER}.source
-PKGNAME=	seamonkey-${VER}
+PKGNAME=	seamonkey-${VER}p0
 
 SO_VERSION=	10.0
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -45,19 +45,19 @@ MASTER_SITES0=	http://mirrors.protection.cx/~martynas/mozilla/seamonkey/langpack
 
 LANGUAGES=	be-BY 1.1.9 \
 		ca-AD 1.1.15 \
-		cs-CZ 1.1.16 \
-		de-AT 1.1.16 \
+		cs-CZ 1.1.17 \
+		de-AT 1.1.17 \
 		el-GR 1.1.2 \
 		es-ES 1.1.13 \
-		fr-FR 1.1.15 \
+		fr-FR 1.1.16 \
 		he-IL 1.1.2 \
-		hu-HU 1.1.11 \
-		it-IT 1.1.15 \
+		hu-HU 1.1.16 \
+		it-IT 1.1.17 \
 		lt-LT 1.1.12 \
-		nl-NL 1.1.15 \
-		pl-PL 1.1.15 \
-		pt-BR 1.1.16 \
-		ru-RU 1.1.16 \
+		nl-NL 1.1.17 \
+		pl-PL 1.1.17 \
+		pt-BR 1.1.17 \
+		ru-RU 1.1.17 \
 		ur-PK 1.1.9 \
 		sv-SE 1.1.12
 BINLANGS=	be-BY el-GR fr-FR pl-PL pt-BR
@@ -81,8 +81,7 @@ LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		nspr4.>=17,plc4.>=17,plds4.>=17:nspr->=4.6.4p1:devel/nspr \
 		nss3.>=19,smime3.>=19,softokn3.>=19,ssl3.>=19:nss->=3.11.4p1:security/nss
 
-RUN_DEPENDS=	:esound-*:audio/esound \
-		:desktop-file-utils-*:devel/desktop-file-utils
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 WANTLIB=	c glib-2.0 m pthread stdc++ \
 		X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xft Xi Xinerama Xrandr Xrender Xt atk-1.0 \
@@ -146,6 +145,7 @@ DATADIRS=	chrome components defaults dictionaries greprefs \
 		init.d plugins res searchplugins
 
 post-extract:
+	@cp -f ${FILESDIR}/nsSound.cpp ${WRKSRC}/widget/src/gtk2/
 .for i in ${BINLANGS}	# normalize
 	@mv -f ${WRKDIR}/$i/bin/* ${WRKDIR}/$i/
 	@rmdir ${WRKDIR}/$i/bin

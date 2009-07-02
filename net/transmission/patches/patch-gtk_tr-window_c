@@ -1,9 +1,9 @@
-$OpenBSD: patch-gtk_tr-window_c,v 1.6 2009/04/14 14:06:26 naddy Exp $
---- gtk/tr-window.c.orig	Sun Apr 12 21:55:50 2009
-+++ gtk/tr-window.c	Tue Apr 14 00:11:23 2009
-@@ -703,13 +703,13 @@ updateTorrentCount( PrivateData * p )
- 
-         if( torrentCount != visibleCount )
+$OpenBSD: patch-gtk_tr-window_c,v 1.8 2009/06/20 13:07:22 naddy Exp $
+--- gtk/tr-window.c.orig	Wed Jun 17 02:01:45 2009
++++ gtk/tr-window.c	Wed Jun 17 13:35:20 2009
+@@ -1040,13 +1040,13 @@ updateTorrentCount( PrivateData * p )
+             *buf = '\0';
+         else if( torrentCount != visibleCount )
              g_snprintf( buf, sizeof( buf ),
 -                        ngettext( "%1$'d of %2$'d Torrent",
 -                                  "%1$'d of %2$'d Torrents",
@@ -12,10 +12,9 @@ $OpenBSD: patch-gtk_tr-window_c,v 1.6 2009/04/14 14:06:26 naddy Exp $
                                    torrentCount ),
                          visibleCount, torrentCount );
          else
--            g_snprintf( buf, sizeof( buf ), ngettext( "%'d Torrent",
--                                                      "%'d Torrents",
-+            g_snprintf( buf, sizeof( buf ), ngettext( "%d Torrent",
-+                                                      "%d Torrents",
-                                                       torrentCount ),
+             g_snprintf( buf, sizeof( buf ),
+-                        ngettext( "%'d Torrent", "%'d Torrents", torrentCount ),
++                        ngettext( "%d Torrent", "%d Torrents", torrentCount ),
                          torrentCount );
          gtk_label_set_text( GTK_LABEL( p->gutter_lb ), buf );
+     }

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2009/02/06 15:05:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2009/06/11 18:27:02 ajacoutot Exp $
 
 COMMENT=		send small notifications to your desktop
 
 DISTNAME=		notification-daemon-0.4.0
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p4
 CATEGORIES=		sysutils net
 
 HOMEPAGE=		http://www.galago-project.org/
@@ -26,10 +26,10 @@ MASTER_SITES=		${HOMEPAGE}/files/releases/source/notification-daemon/
 EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext \
-			textproc/intltool
+			textproc/intltool \
+			devel/gconf2
 
-LIB_DEPENDS=		gconf-2::devel/gconf2 \
-			notify.>=2::devel/libnotify \
+LIB_DEPENDS=		notify.>=2::devel/libnotify \
 			glade-2.0.>=1::devel/libglade2 \
 			gstreamer-0.10::multimedia/gstreamer-0.10/core \
 			wnck-1::devel/libwnck \
@@ -40,12 +40,11 @@ RUN_DEPENDS=		:desktop-file-utils-*:devel/desktop-file-utils \
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
 USE_X11=		Yes
+MODGCONF2_SCHEMAS_DIR=	notification-daemon
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-dbus-sys="${SYSCONFDIR}/dbus-1/system.d" \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/notification-daemon \
-			--disable-schemas-install \
 			--enable-sound=gstreamer
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

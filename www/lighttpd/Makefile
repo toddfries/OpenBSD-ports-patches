@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.57 2009/03/16 17:15:34 sthen Exp $
+# $OpenBSD: Makefile,v 1.59 2009/06/22 09:28:07 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
-DISTNAME=	lighttpd-1.4.22
+DISTNAME=	lighttpd-1.4.23
 PKGNAME=	${DISTNAME}p0
 CATEGORIES=	www net
 MASTER_SITES=	${HOMEPAGE}/download/
@@ -52,7 +52,7 @@ pre-build:
 	@perl -pi -e "s,/usr/bin/rrdtool,${LOCALBASE}/bin/rrdtool,g" \
 	    ${WRKSRC}/doc/lighttpd.conf
 	@perl -pi -e "s,/etc/lighttpd,${SYSCONFDIR},g" \
-	    ${WRKSRC}/doc/lighttpd.1
+	    ${WRKSRC}/doc/lighttpd.8
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/lighttpd

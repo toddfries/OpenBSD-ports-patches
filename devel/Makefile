@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.691 2009/04/26 19:42:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.714 2009/06/22 19:35:36 landry Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -26,6 +26,7 @@
      SUBDIR += automake
      SUBDIR += avr
      SUBDIR += avrdude
+     SUBDIR += bakery
      SUBDIR += beediff
      SUBDIR += bison
      SUBDIR += blame
@@ -130,7 +131,6 @@
      SUBDIR += lam
      SUBDIR += libIDL
      SUBDIR += libJudy
-     SUBDIR += libassetml
      SUBDIR += libast
      SUBDIR += libaudiofile
      SUBDIR += libavl
@@ -176,9 +176,9 @@
      SUBDIR += libuta
      SUBDIR += libutf
      SUBDIR += libvmime
+     SUBDIR += libvstr
      SUBDIR += libwnck
      SUBDIR += libyaml
-     SUBDIR += lincvs
      SUBDIR += llvm
      SUBDIR += lpeg
      SUBDIR += luaalarm
@@ -213,12 +213,14 @@
      SUBDIR += opencm
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
+     SUBDIR += p5-Algorithm-CurveFit
      SUBDIR += p5-Algorithm-Dependency
      SUBDIR += p5-Algorithm-Diff
      SUBDIR += p5-Algorithm-IncludeExclude
      SUBDIR += p5-Algorithm-MDiff
      SUBDIR += p5-Algorithm-MarkovChain
      SUBDIR += p5-Algorithm-Permute
+     SUBDIR += p5-Any-Moose
      SUBDIR += p5-AnyEvent
      SUBDIR += p5-App-CLI
      SUBDIR += p5-App-Info
@@ -337,7 +339,9 @@
      SUBDIR += p5-DateTime-Format-Strptime
      SUBDIR += p5-DateTime-Format-W3CDTF
      SUBDIR += p5-DateTime-Locale
+     SUBDIR += p5-DateTime-Set
      SUBDIR += p5-DateTime-TimeZone
+     SUBDIR += p5-Devel-ebug
      SUBDIR += p5-Devel-Cover
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-FastProf
@@ -349,6 +353,7 @@
      SUBDIR += p5-Devel-SmallProf
      SUBDIR += p5-Devel-StackTrace
      SUBDIR += p5-Devel-Symdump
+     SUBDIR += p5-Devel-Trace
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Directory-Scratch
      SUBDIR += p5-Env-PS1 
@@ -402,6 +407,7 @@
      SUBDIR += p5-Graph
      SUBDIR += p5-Hash-Merge
      SUBDIR += p5-Hash-NoRef
+     SUBDIR += p5-Hash-Util-FieldHash-Compat
      SUBDIR += p5-Heap
      SUBDIR += p5-Hook-LexWrap
      SUBDIR += p5-I18N-LangTags
@@ -448,6 +454,10 @@
      SUBDIR += p5-Module-ScanDeps
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Moose
+     SUBDIR += p5-MooseX-Clone
+     SUBDIR += p5-MooseX-Emulate-Class-Accessor-Fast
+     SUBDIR += p5-MooseX-MethodAttributes
+     SUBDIR += p5-MooseX-Types
      SUBDIR += p5-Mouse
      SUBDIR += p5-Net-Server
      SUBDIR += p5-Number-Compare
@@ -465,12 +475,14 @@
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
+     SUBDIR += p5-Pango
      SUBDIR += p5-Parallel-ForkManager
      SUBDIR += p5-Parallel-Forker
      SUBDIR += p5-Params-CallbackRequest
      SUBDIR += p5-Params-Util
      SUBDIR += p5-Params-Validate
      SUBDIR += p5-Paranoid
+     SUBDIR += p5-Parse-CPAN-Meta
      SUBDIR += p5-Parse-PlainConfig
      SUBDIR += p5-Parse-RecDescent
      SUBDIR += p5-Path-Class
@@ -481,6 +493,7 @@
      SUBDIR += p5-PerlIO-via-dynamic
      SUBDIR += p5-PerlIO-via-symlink
      SUBDIR += p5-Pod-Coverage
+     SUBDIR += p5-Pod-ToDemo
      SUBDIR += p5-Proc-Background
      SUBDIR += p5-Proc-Daemon
      SUBDIR += p5-Proc-Simple
@@ -490,6 +503,7 @@
      SUBDIR += p5-Regexp-Copy
      SUBDIR += p5-Regexp-Shellish
      SUBDIR += p5-Return-Value
+     SUBDIR += p5-SDL
      SUBDIR += p5-SVN-Dump
      SUBDIR += p5-SVN-Mirror
      SUBDIR += p5-SVN-Notify
@@ -499,6 +513,8 @@
      SUBDIR += p5-Safe-World
      SUBDIR += p5-Scalar-Defer
      SUBDIR += p5-Scope-Guard
+     SUBDIR += p5-Scope-Upper
+     SUBDIR += p5-Set-Infinite
      SUBDIR += p5-Set-IntRange
      SUBDIR += p5-Set-Object
      SUBDIR += p5-Set-Scalar
@@ -558,6 +574,7 @@
      SUBDIR += p5-Test-NoWarnings
      SUBDIR += p5-Test-Object
      SUBDIR += p5-Test-Output
+     SUBDIR += p5-Test-POE-Server-TCP
      SUBDIR += p5-Test-Perl-Critic
      SUBDIR += p5-Test-Pod
      SUBDIR += p5-Test-Pod-Coverage
@@ -571,6 +588,7 @@
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
      SUBDIR += p5-Test-Warn
+     SUBDIR += p5-Test-Weaken
      SUBDIR += p5-Test-YAML-Valid
      SUBDIR += p5-Test-use-ok
      SUBDIR += p5-Text-FixEOL
@@ -609,6 +627,8 @@
      SUBDIR += p5-YAML
      SUBDIR += p5-YAML-Shell
      SUBDIR += p5-YAML-Syck
+     SUBDIR += p5-YAML-Tiny
+     SUBDIR += p5-YAML-XS
      SUBDIR += p5-accessors
      SUBDIR += p5-boolean
      SUBDIR += p5-capitalization
@@ -684,10 +704,12 @@
      SUBDIR += py-rcsparse
      SUBDIR += py-ruledispatch
      SUBDIR += py-setuptools
+     SUBDIR += py-serial
      SUBDIR += py-silc
      SUBDIR += py-simplejson
      SUBDIR += py-sip
      SUBDIR += py-symboltype
+     SUBDIR += py-zopetesting
      SUBDIR += py-tpg
      SUBDIR += py-turbocheetah
      SUBDIR += py-turbojson
@@ -730,11 +752,13 @@
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
      SUBDIR += ruby-linecache
+     SUBDIR += ruby-minitest
      SUBDIR += ruby-mocha
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
      SUBDIR += ruby-parsetree
+     SUBDIR += ruby-rack-test
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
      SUBDIR += ruby-rparsec
@@ -744,6 +768,7 @@
      SUBDIR += ruby-rubyinline
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
+     SUBDIR += ruby-systemtimer
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools

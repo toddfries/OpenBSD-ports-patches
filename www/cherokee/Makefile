@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2009/04/22 00:59:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2009/05/15 06:57:18 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,20 +8,20 @@ COMMENT-ldap =	LDAP module for Cherokee web server
 COMMENT-mysql =	MySQL module for Cherokee web server
 COMMENT-streaming = Streaming module for Cherokee web server
 
-VERSION =	0.99.10
+VERSION =	0.99.15
 DIR =		0.99
 DISTNAME =	cherokee-${VERSION}
 
-PKGNAME-main =	${DISTNAME}p0
+PKGNAME-main =	${DISTNAME}
 PKGNAME-ldap =	cherokee-ldap-${VERSION}
 PKGNAME-mysql =	cherokee-mysql-${VERSION}
 PKGNAME-geoip =	cherokee-geoip-${VERSION}
-PKGNAME-streaming = cherokee-streaming-${VERSION}p0
+PKGNAME-streaming = cherokee-streaming-${VERSION}
 
-SHARED_LIBS +=	cherokee-base        0.0
-SHARED_LIBS +=	cherokee-client      0.0
-SHARED_LIBS +=	cherokee-config      0.0
-SHARED_LIBS +=	cherokee-server      0.0
+SHARED_LIBS =	cherokee-base		0.0 \
+		cherokee-client		0.0 \
+		cherokee-config		0.0 \
+		cherokee-server		0.0
 
 CATEGORIES =	www
 
@@ -66,6 +66,7 @@ RUN_DEPENDS-mysql =	::${BASE_PKGPATH}
 LIB_DEPENDS-streaming =	avutil.>=6,avcodec.>=13,avformat.>=12::graphics/ffmpeg \
 			bz2::archivers/bzip2
 WANTLIB-streaming =	crypto
+RUN_DEPENDS-streaming = ::${BASE_PKGPATH}
 
 FLAVORS =	debug
 FLAVOR ?=
@@ -87,6 +88,7 @@ CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--localstatedir=/var \
 			--enable-tls=openssl \
 			--with-wwwroot=/var/cherokee \
+			--disable-nls \
 			--disable-pam \
 			--with-geoip \
 			--with-ldap \

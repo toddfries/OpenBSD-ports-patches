@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2009/04/06 10:09:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2009/06/11 16:05:36 naddy Exp $
 
 COMMENT=		collection of extensions for Epiphany
 
 GNOME_PROJECT=		epiphany-extensions
 GNOME_VERSION=		2.24.3
-PKGNAME=		${DISTNAME}p2
+PKGNAME=		${DISTNAME}p3
 
 CATEGORIES=		www
 
@@ -42,7 +42,6 @@ FAKE_FLAGS+=	PYTHON="${MODPY_BIN}"
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-static \
-		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/epiphany \
 		--with-gecko=xulrunner \
 		--disable-schemas-install \
 		--disable-scrollkeeper \

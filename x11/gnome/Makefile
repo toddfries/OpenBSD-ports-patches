@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.96 2009/04/21 21:37:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.99 2009/06/21 11:15:28 ajacoutot Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -44,10 +44,12 @@
      SUBDIR += keyring
      SUBDIR += keyring-manager
      SUBDIR += keyring-query
+     SUBDIR += krb5-auth-dialog
      SUBDIR += libbonobo
      SUBDIR += libbonoboui
      SUBDIR += libgail-gnome
      SUBDIR += libgda
+     SUBIDR += libgdamm
      SUBDIR += libgnome
      SUBDIR += libgnomemm
      SUBDIR += libgnomecanvas
@@ -72,6 +74,7 @@
      SUBDIR += mono-gnome
      SUBDIR += mousetweaks
      SUBDIR += nautilus
+     SUBDIR += nautilus-open-terminal
      SUBDIR += nautilus-sendto
      SUBDIR += orca
      SUBDIR += panel

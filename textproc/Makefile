@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.262 2009/04/14 11:30:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.269 2009/06/13 07:50:02 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -10,6 +10,7 @@
      SUBDIR += c2html
      SUBDIR += catdoc
      SUBDIR += catdoc,tk
+     SUBDIR += catfish
      SUBDIR += clo++
      SUBDIR += clucene
      SUBDIR += diffstat
@@ -21,6 +22,7 @@
      SUBDIR += enchant
      SUBDIR += eruby
      SUBDIR += exempi
+     SUBDIR += fcbanner
      SUBDIR += gdiff
      SUBDIR += glimpse
      SUBDIR += gnuvd
@@ -33,6 +35,7 @@
      SUBDIR += hgrep
      SUBDIR += highlight
      SUBDIR += html
+     SUBDIR += hunspell
      SUBDIR += hyperestraier
      SUBDIR += icu4c
      SUBDIR += idiff
@@ -55,8 +58,10 @@
      SUBDIR += lq-sp
      SUBDIR += makefaq
      SUBDIR += markdown
+     SUBDIR += meld
      SUBDIR += mgdiff
      SUBDIR += mozilla-dicts
+     SUBDIR += mupdf
      SUBDIR += mxml
      SUBDIR += ocaml-rss
      SUBDIR += ocaml-xml-light
@@ -91,6 +96,7 @@
      SUBDIR += p5-Lingua-Stem-Snowball-Da
      SUBDIR += p5-Lingua-Stem-Snowball-No
      SUBDIR += p5-Lingua-Stem-Snowball-Se
+     SUBDIR += p5-MojoX-Renderer-TT
      SUBDIR += p5-Number-Format
      SUBDIR += p5-Object-MultiType
      SUBDIR += p5-PDF-API2
@@ -108,6 +114,7 @@
      SUBDIR += p5-Regexp-Common
      SUBDIR += p5-Regexp-DefaultFlags
      SUBDIR += p5-SWISH-API
+     SUBDIR += p5-Search-QueryParser
      SUBDIR += p5-Sort-Versions
      SUBDIR += p5-String-Approx
      SUBDIR += p5-String-Koremutake

@@ -1,23 +1,23 @@
-# $OpenBSD: Makefile,v 1.3 2009/04/29 01:39:15 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2009/05/26 14:13:22 sthen Exp $
 
 COMMENT =		dump RTMP media streams
 
-DISTNAME =		rtmpdump-v1.5
-PKGNAME =		${DISTNAME:S/-v/-/}p0
+DISTNAME =		rtmpdump-v1.6
+PKGNAME =		${DISTNAME:S/-v/-/}
 
 CATEGORIES =		net
 
-HOMEPAGE =		http://sourceforge.net/projects/rtmpdump/
-
 # GPLv2+
-PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_CDROM =	No
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_CDROM =No
 PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m stdc++ crypto ssl
 
-MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=rtmpdump/}
+MASTER_SITES =		http://lkcl.net/rtmp/ \
+			http://downloads.sehe.nl/lkcl.net/rtmp/
+
 WRKDIST =		${WRKDIR}/rtmpdump
 
 MAKE_FLAGS +=		CXX="${CXX}" CXXFLAGS="${CXXFLAGS}"

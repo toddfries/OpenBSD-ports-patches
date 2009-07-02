@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2009/03/08 17:32:47 landry Exp $
+# $OpenBSD: Makefile,v 1.31 2009/06/04 04:19:16 landry Exp $
 
      SUBDIR+= exo
      SUBDIR+= gtk-xfce-engine
@@ -24,9 +24,11 @@
      SUBDIR+= xfce4-icon-theme
      SUBDIR+= xfce4-mailwatch
      SUBDIR+= xfce4-mixer
+     SUBDIR+= xfce4-modemlights
      SUBDIR+= xfce4-mpc
      SUBDIR+= xfce4-netload
      SUBDIR+= xfce4-notes
+     SUBDIR+= xfce4-notifyd
      SUBDIR+= xfce4-panel
      SUBDIR+= xfce4-places
      SUBDIR+= xfce4-session
@@ -42,6 +44,7 @@
      SUBDIR+= xfce4-xkb
      SUBDIR+= xfconf
      SUBDIR+= xfdesktop
+     SUBDIR+= xfmpc
      SUBDIR+= xfprint
      SUBDIR+= xfwm4
      SUBDIR+= xfwm4-themes

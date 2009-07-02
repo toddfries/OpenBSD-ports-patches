@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.17 2009/01/25 14:51:23 sturm Exp $
+# $OpenBSD: Makefile,v 1.19 2009/06/17 21:24:48 sthen Exp $
 
 COMMENT-main=	read microsoft Access MDB
 COMMENT-gmdb=	graphical interface to MDB tools
 DATE=		20070603
 DISTNAME=	mdbtools-${DATE}
-PKGNAME-main=	mdbtools-${DATE}p2
-PKGNAME-gmdb=	gmdb-${DATE}p4
+PKGNAME-main=	mdbtools-${DATE}p3
+PKGNAME-gmdb=	gmdb-${DATE}p5
 HOMEPAGE=	http://mdbtools.sourceforge.net/
 
 CATEGORIES=	databases converters
@@ -53,8 +53,8 @@ WANTLIB-gmdb=	${WANTLIB} \
 		gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 glade-2.0 glitz \
 		gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pixman-1 png popt pthread ssl util xml2 z
-
+		pixman-1 png popt pthread ssl util xml2 z avahi-client \
+		avahi-common avahi-glib
 WANTLIB-main=	${WANTLIB} readline termcap
 
 .include <bsd.port.mk>

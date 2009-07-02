@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.238 2009/04/20 23:32:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.241 2009/06/06 05:19:20 phessler Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -9,6 +9,7 @@
      SUBDIR += aalib
      SUBDIR += aalib,no_x11
      SUBDIR += agg
+     SUBDIR += amide
      SUBDIR += animorph
      SUBDIR += aqsis
      SUBDIR += autopano-sift-c
@@ -49,6 +50,7 @@
      SUBDIR += freeimage
      SUBDIR += freeglut
      SUBDIR += fswebcam
+     SUBDIR += ftgl
      SUBDIR += fxtv
      SUBDIR += fyre
      SUBDIR += gd
@@ -167,6 +169,7 @@
      SUBDIR += py-goocanvas
      SUBDIR += py-graphics
      SUBDIR += py-matplotlib
+     SUBDIR += py-opengl
      SUBDIR += py-pyx
      SUBDIR += pycha
      SUBDIR += qiv

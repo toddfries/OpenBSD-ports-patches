@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.375 2009/04/07 19:02:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.386 2009/06/15 11:20:08 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -56,7 +56,6 @@
      SUBDIR += evilwm
      SUBDIR += extace
      SUBDIR += farsifonts-ttf
-     SUBDIR += farsiweb-ttf
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
@@ -65,6 +64,7 @@
      SUBDIR += fluxter
      SUBDIR += flvw
      SUBDIR += flwm
+     SUBDIR += freefarsi-ttf
      SUBDIR += freefont-ttf
      SUBDIR += freefonts
      SUBDIR += fsv
@@ -102,9 +102,12 @@
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-x11-extras
+     SUBDIR += human-icon-theme
      SUBDIR += icewm
      SUBDIR += icon-naming-utils
      SUBDIR += idesk
+     SUBDIR += inconsolata-font
+     SUBDIR += industrial-icon-theme
      SUBDIR += ion
      SUBDIR += isomaster
      SUBDIR += itk
@@ -113,10 +116,12 @@
      SUBDIR += jwm
      SUBDIR += kde
      SUBDIR += kdirstat
+     SUBDIR += keynav
      SUBDIR += kmplayer
      SUBDIR += kountdown
      SUBDIR += krusader
      SUBDIR += lablgtk
+     SUBDIR += lablgtk2
      SUBDIR += lesstif
      SUBDIR += libdnd
      SUBDIR += liberation-fonts
@@ -177,10 +182,7 @@
      SUBDIR += py-wxPython
      SUBDIR += pypanel
      SUBDIR += qinx
-     SUBDIR += qlwm
      SUBDIR += qrfcview
-     SUBDIR += qt2
-     SUBDIR += qt2-designer
      SUBDIR += qt3
      SUBDIR += qt4
      SUBDIR += quadkonsole
@@ -213,6 +215,7 @@
      SUBDIR += swisswatch
      SUBDIR += tango-icon-theme
      SUBDIR += tango-icon-theme-extras
+     SUBDIR += tangerine-icon-theme
      SUBDIR += tellico
      SUBDIR += terminus-font
      SUBDIR += thewidgetfactory
@@ -284,6 +287,7 @@
      SUBDIR += xcursorgen
      SUBDIR += xdaliclock
      SUBDIR += xdesktopwaves
+     SUBDIR += xdg-user-dirs-gtk
      SUBDIR += xdmchoose
      SUBDIR += xdotool
      SUBDIR += xdrawchem

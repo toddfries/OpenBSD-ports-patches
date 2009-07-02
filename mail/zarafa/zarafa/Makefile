@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2009/04/28 10:59:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2009/06/19 12:47:59 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-php=	MAPI extensions for php5
 
-V=		6.20.5
+V=		6.20.6
 DISTNAME=	zarafa-${V}
 
-PKGNAME-main=	${DISTNAME}
+PKGNAME-main=	${DISTNAME}p1
 PKGNAME-php=	php5-mapi-${V}
 
 CATEGORIES=	mail www productivity
@@ -103,5 +103,7 @@ post-install:
 		> ${WRKINST}/${PREFIX-php}/conf/php5.sample/${MODULE_NAME}.ini
 	mv ${PREFIX}/share/doc/zarafa/zarafa.schema \
 		${PREFIX}/share/examples/zarafa/
+	find ${WRKINST}${PREFIX-php}/include/php/mapi/ -type f \
+		-exec perl -pi -e 's,\?php\?,\?php,' {} \;
 
 .include <bsd.port.mk>

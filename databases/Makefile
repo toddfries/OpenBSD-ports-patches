@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.160 2009/04/05 11:01:52 bernd Exp $
+# $OpenBSD: Makefile,v 1.162 2009/06/22 15:50:47 giovanni Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
@@ -16,6 +16,8 @@
      SUBDIR += jxplorer
      SUBDIR += keximdb
      SUBDIR += lbdb
+     SUBDIR += libdbi
+     SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
      SUBDIR += luasqlite3
      SUBDIR += maatkit
@@ -101,6 +103,8 @@
      SUBDIR += pear-DB_DataObject
      SUBDIR += pear-MDB2
      SUBDIR += pear-MDB2-mysql
+     SUBDIR += pear-MDB2-mysqli
+     SUBDIR += pear-MDB2-sqlite
      SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3

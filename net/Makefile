@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.571 2009/04/22 15:07:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.578 2009/06/26 02:03:23 jolan Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -23,6 +23,7 @@
      SUBDIR += arpd
      SUBDIR += arping
      SUBDIR += arpwatch
+     SUBDIR += avahi
      SUBDIR += axel
      SUBDIR += axyftp
      SUBDIR += balance
@@ -86,6 +87,7 @@
      SUBDIR += flickcurl
      SUBDIR += flow-tools
      SUBDIR += flowd
+     SUBDIR += flvstreamer
      SUBDIR += fmirror
      SUBDIR += fping
      SUBDIR += freeradius
@@ -103,7 +105,6 @@
      SUBDIR += gtk-gnutella
      SUBDIR += haproxy
      SUBDIR += honeyd
-     SUBDIR += howl
      SUBDIR += hping
      SUBDIR += hs-HTTP
      SUBDIR += httptunnel
@@ -217,11 +218,13 @@
      SUBDIR += onioncat
      SUBDIR += opal
      SUBDIR += openafs
+     SUBDIR += openfire
      SUBDIR += openh323
      SUBDIR += openvmps
      SUBDIR += openvpn
      SUBDIR += openvpn_bsdauth
      SUBDIR += osrtspproxy
+     SUBDIR += p5-Bot-BasicBot
      SUBDIR += p5-Chatbot-Eliza
      SUBDIR += p5-DNS-ZoneParse
      SUBDIR += p5-Danga-Socket
@@ -365,6 +368,7 @@
      SUBDIR += py-zsi
      SUBDIR += pymsn
      SUBDIR += quagga
+     SUBDIR += queryperf
      SUBDIR += queso
      SUBDIR += quirc
      SUBDIR += radiusd-cistron
@@ -481,5 +485,6 @@
      SUBDIR += ytalk,no_x11
      SUBDIR += zabbix
      SUBDIR += zenirc
+     SUBDIR += znc
 
 .include <bsd.port.subdir.mk>

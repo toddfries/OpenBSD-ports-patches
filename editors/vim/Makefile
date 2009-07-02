@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.96 2009/01/10 15:50:34 ckuethe Exp $
+# $OpenBSD: Makefile,v 1.99 2009/06/17 01:53:32 sthen Exp $
 
 COMMENT-main=	vi clone, many additional features
 COMMENT-lang=	vi clone, NLS subpackage
 
 DISTNAME=	vim-7.2
-REVISION=	77
+REVISION=	190
 VERSION=	7.2.${REVISION}
 # keep PKGNAME for full version number
 PKGNAME=	vim-${VERSION}
-PKGNAME-main=	vim-${VERSION}
+PKGNAME-main=	vim-${VERSION}p1
 PKGNAME-lang=	vim-lang-${VERSION}
 P=		${DISTNAME:C/[-\.]//g}
 CATEGORIES=	editors
@@ -26,7 +26,7 @@ MAINTAINER=	Chris Kuethe <ckuethe@openbsd.org>
 
 PATCHFILES=	#
 _patches!=	jot -w%03d - 1 ${REVISION} 1 | \
-	egrep -v '001|007|022|036|041|049|071|072|074'
+	egrep -v '001|007|022|036|041|049|071|072|074|088|089|093|101|138|150|172|173|191'
 .for p in ${_patches}
 PATCHFILES+=	7.2.${p}:0
 .endfor
@@ -83,6 +83,7 @@ WANTLIB+=	m
 .if ${FLAVOR:L:Mno_x11} && \
 	!${FLAVOR:L:Mmotif} && !${FLAVOR:L:Mathena} && !${FLAVOR:L:Mgtk2}
 CONFIGURE_ARGS+=--disable-gui --without-x
+WANTLIB+=	m
 .elif ${FLAVOR:L:Mmotif} && \
 	!${FLAVOR:L:Mno_x11} && !${FLAVOR:L:Mathena} && !${FLAVOR:L:Mgtk2}
 CONFIGURE_ARGS+=--enable-gui="motif" --with-x --enable-fontset --enable-xim
@@ -103,7 +104,7 @@ LIB_DEPENDS+=	gdk-x11-2.0.>=0.11,gdk_pixbuf-2.0.>=0.11,gtk-x11-2.0.>=0.11::x11/g
 CONFIGURE_ARGS+=--enable-gui="gtk2" --with-x --enable-fontset --enable-xim --disable-gtk-check --enable-gtk2-check
 USE_X11=	Yes
 WANTLIB+=	ICE SM X11 Xext Xrender Xt fontconfig freetype m z\
-	 	atk-1.0 glib-2.0 gmodule-2.0 gobject-2.0 png expat\
+	 	atk-1.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 png expat\
 		pango-1.0 pangoft2-1.0 pangocairo-1.0 cairo pthread\
 		glitz Xau Xcomposite Xcursor Xdamage Xfixes Xi Xinerama \
 		Xrandr pixman-1

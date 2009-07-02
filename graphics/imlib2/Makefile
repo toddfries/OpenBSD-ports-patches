@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2009/01/13 17:43:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2009/05/02 16:27:15 simon Exp $
 
 COMMENT=	image manipulation library
 
-DISTNAME=	imlib2-1.4.0
-PKGNAME=	${DISTNAME}p1
-SHARED_LIBS=	Imlib2	5.0	# .5.0
+DISTNAME=	imlib2-1.4.2
+SHARED_LIBS=	Imlib2	6.0	# .5.0
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://www.enlightenment.org/p.php?p=about/libs/imlib2&l=en
@@ -30,6 +29,9 @@ USE_LIBTOOL=	Yes
 SEPARATE_BUILD=	concurrent
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
+.if ${MACHINE_ARCH} == "i386"
+CONFIGURE_ARGS+= --disable-mmx
+.endif
 CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include/libpng -I${LOCALBASE}/include" \
 		LDFLAGS="-L${WRKBUILD}/src/lib/.libs -L${X11BASE}/lib -L${LOCALBASE}/lib"
 

@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.961 2009/04/24 08:53:33 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.967 2009/06/17 13:42:49 landry Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -68,10 +68,14 @@ FETCH_PACKAGES ?= No
 CLEANDEPENDS ?= No
 USE_SYSTRACE ?= No
 BULK ?= No
-RECURSIVE_FETCH_LIST ?= Yes
+RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
-WRKOBJDIR ?=
+.if ${USE_SYSTRACE:L} == "yes"
+WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/obj
+.else
+WRKOBJDIR ?= ${PORTSDIR}/obj
+.endif
 FAKEOBJDIR ?=
 BULK_TARGETS ?=
 BULK_DO ?=
@@ -579,7 +583,15 @@ BZIP2 ?= bzip2
 LZMA  ?= lzma
 
 
-MAKE_ENV += EXTRA_SYS_MK_INCLUDES="<bsd.own.mk>"
+# copy selected info from bsd.own.mk
+MAKE_ENV += ELF_TOOLCHAIN=${ELF_TOOLCHAIN} USE_GCC3=${USE_GCC3} \
+	PICFLAG=${PICFLAG} ASPICFLAG=${ASPICFLAG} \
+	BINGRP=bin BINOWN=root BINMODE=555 NONBINMODE=444 DIRMODE=755 \
+	INSTALL_COPY=-c INSTALL_STRIP=${INSTALL_STRIP} \
+	MANGRP=bin MANOWN=root MANMODE=444
+.if defined(NOPIC)
+MAKE_ENV += NOPIC=${NOPIC}
+.endif
 
 
 .if !empty(FAKEOBJDIR_${PKGPATH})
@@ -623,6 +635,11 @@ ALL_REGRESS_FLAGS = ${MAKE_FLAGS} ${REGRESS_FLAGS}
 REGRESS_LOGFILE ?= ${WRKDIR}/regress.log
 REGRESS_LOG ?= | tee ${REGRESS_LOGFILE}
 REGRESS_STATUS_IGNORE ?=
+
+.if defined(REGRESS_IS_INTERACTIVE) && ${REGRESS_IS_INTERACTIVE:L} == "x11"
+REGRESS_FLAGS += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+XAUTHORITY ?= ${HOME}/.Xauthority
+.endif
 
 _PACKAGE_COOKIE_DEPS=${_FAKE_COOKIE}
 
@@ -2223,6 +2240,16 @@ ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 .if ${NO_REGRESS:L} == "no"
 	@${ECHO_MSG} "===>  Regression check for ${FULLPKGNAME}${_MASTER}"
+# When interactive tests need X11
+.  if defined(REGRESS_IS_INTERACTIVE) && ${REGRESS_IS_INTERACTIVE:L} == "x11"
+.    if !defined(DISPLAY) || !exists(${XAUTHORITY})
+	@echo 1>&2 "The regression tests require a running instance of X."
+	@echo 1>&2 "You will also need to set the environment variable DISPLAY"
+	@echo 1>&2 "to point to an active X11 display and XAUTHORITY to point"
+	@echo 1>&2 "to the appropriate .Xauthority file."
+	@exit 1
+.    endif
+.  endif
 .  if target(pre-regress)
 	@cd ${.CURDIR} && exec ${MAKE} pre-regress
 .  endif
@@ -2368,7 +2395,6 @@ ${_F}:
 	test -f ${_F:T} && exit 0; \
 	select='${_EVERYTHING:M*${_F:S@^${FULLDISTDIR}/@@}\:[0-9]}'; \
 	f=${_F:S@^${FULLDISTDIR}/@@}; \
-	${ECHO_MSG} ">> $$f doesn't seem to exist on this system."; \
 	${_CDROM_OVERRIDE}; \
 	${_SITE_SELECTOR}; \
 	for site in $$sites; do \
@@ -2380,7 +2406,6 @@ ${_F}:
 					${ECHO_MSG} ">> Checksum file does not exist"; \
 					exit 0; \
 				elif grep -q "^$$ck\$$" ${CHECKSUM_FILE}; then \
-					${ECHO_MSG} ">> Size matches for ${_F}"; \
 					exit 0; \
 				else \
 					if grep -q "SIZE ($$file)" ${CHECKSUM_FILE}; then \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2009/04/27 12:30:26 kurt Exp $
+# $OpenBSD: Makefile,v 1.36 2009/06/22 17:00:23 naddy Exp $
 
 ONLY_FOR_ARCHS = alpha i386 m68k sparc sparc64 powerpc vax amd64
 #BROKEN=adjust for types changes
@@ -9,19 +9,22 @@ FULL_PKGVERSION = $V
 BOOTSTRAP_GEN = 2
 ADASTRAP = adastrap-i386-$V-${BOOTSTRAP_GEN}.tgz
 
-PKGNAME-main =  gcc-${FULL_PKGVERSION}p0
-PKGNAME-c++ =   g++-${FULL_PKGVERSION}p0
-PKGNAME-estdc = libstdc++-${FULL_PKGVERSION}
-PKGNAME-g77 =   g77-${FULL_PKGVERSION}
-PKGNAME-f95 =   g95-${FULL_PKGVERSION}p0
-PKGNAME-java =  gcj-${FULL_PKGVERSION}
-PKGNAME-objc =  gobjc-${FULL_PKGVERSION}p0
-PKGNAME-ada =   gnat-${FULL_PKGVERSION}
-SHARED_LIBS =	estdc++		9.0 \
+PKGNAME-main =  gcc-${FULL_PKGVERSION}p2
+PKGNAME-c++ =   g++-${FULL_PKGVERSION}p5
+PKGNAME-estdc = libstdc++-${FULL_PKGVERSION}p3
+PKGNAME-g77 =   g77-${FULL_PKGVERSION}p0
+PKGNAME-f95 =   g95-${FULL_PKGVERSION}p2
+PKGNAME-java =  gcj-${FULL_PKGVERSION}p1
+PKGNAME-objc =  gobjc-${FULL_PKGVERSION}p2
+PKGNAME-ada =   gnat-${FULL_PKGVERSION}p1
+SHARED_LIBS =	estdc++		11.0 \
 		gfortran	2.0 \
 		-org-w3c-dom	1.0 \
 		-org-xml-sax	1.0 \
-		gcj		5.0 \
+		gcj		0.0 \
+		ffi		0.0 \
+		gcj-tools	0.0 \
+		gij		0.0 \
 		objc		2.0 \
 		objc_gc		2.0 \
 		ssp		0.0 \
@@ -32,7 +35,10 @@ MAINTAINER =	Marc Espie <espie@openbsd.org>
 PSEUDO_FLAVORS = c++ fortran objc java ada
 FLAVORS=	threads
 .if ${MACHINE_ARCH} == "i386"
-FLAVOR ?= c++ fortran objc ada
+FLAVOR ?= c++ fortran objc ada java
+.endif
+.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "sparc64"
+FLAVOR ?= c++ fortran objc java
 .else
 FLAVOR ?= c++ fortran objc
 .endif
@@ -81,9 +87,10 @@ LANGS := ${LANGS},objc
 MULTI_PACKAGES += -objc
 .endif
 .if ${FLAVOR:L:Mjava}
-LANGS:=${LANGS},java
-MULTI_PACKAGES+=-java
-CONFIGURE_ARGS+=--enable-java-gc=system-boehm --enable-libgcj --enable-libjava
+LANGS := ${LANGS},java
+MULTI_PACKAGES += -java
+BUILD_DEPENDS += :zip->=2.3p0:archivers/zip
+CONFIGURE_ARGS += --enable-libgcj
 .endif
 .if ${FLAVOR:L:Mada}
 LANGS := ${LANGS},ada
@@ -135,6 +142,7 @@ CONFIGURE_ARGS += \
 	--with-gnu-ld \
 	--with-gnu-as \
 	--enable-threads=posix \
+	--enable-wchar_t \
 	--enable-languages=${LANGS}
 
 # This is needed, as internal cpp is no longer compatible with the
@@ -181,14 +189,14 @@ WANTLIB =		c
 
 RUN_DEPENDS-main =
 RUN_DEPENDS-estdc =
+RUN_DEPENDS-java =
 
-RUN_DEPENDS-c++ =	${RUN_DEPENDS} ::${PKGPATH},-estdc
+RUN_DEPENDS-c++ =	${RUN_DEPENDS} :libstdc++->=4.2,<4.3:${PKGPATH},-estdc
 WANTLIB-estdc =		c m
+WANTLIB-java =		c m pthread z
 
 LIB_DEPENDS-f95 =	gmp:gmp->=4.2:devel/gmp \
 			mpfr::devel/mpfr
-
-LIB_DEPENDS-java =	gc::devel/boehm-gc
 
 .include <bsd.port.mk>
 

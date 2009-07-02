@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.410 2009/04/28 15:25:01 jolan Exp $
+# $OpenBSD: Makefile,v 1.416 2009/06/23 17:58:38 martynas Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -35,6 +35,7 @@
      SUBDIR += fcgi
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
+     SUBDIR += firefox35
      SUBDIR += galeon
      SUBDIR += gecko-mediaplayer
      SUBDIR += gnash
@@ -55,6 +56,7 @@
      SUBDIR += libcroco
      SUBDIR += libghttp
      SUBDIR += liferea
+     SUBDIR += lightsquid
      SUBDIR += lighttpd
      SUBDIR += lighttpd,ldap
      SUBDIR += lighttpd,ldap,mysql
@@ -131,6 +133,7 @@
      SUBDIR += p5-CGI-Cookie-Splitter
      SUBDIR += p5-CGI-Deurl
      SUBDIR += p5-CGI-FormBuilder
+     SUBDIR += p5-CGI-Lite
      SUBDIR += p5-CGI-SSI
      SUBDIR += p5-CGI-Session
      SUBDIR += p5-CGI-Simple
@@ -208,6 +211,7 @@
      SUBDIR += p5-HTML-Table
      SUBDIR += p5-HTML-TableContentParser
      SUBDIR += p5-HTML-TableExtract
+     SUBDIR += p5-HTML-TagCloud
      SUBDIR += p5-HTML-TagFilter
      SUBDIR += p5-HTML-Tagset
      SUBDIR += p5-HTML-Template
@@ -240,6 +244,7 @@
      SUBDIR += p5-Maypole
      SUBDIR += p5-Maypole-Authentication-UserSessionCookie
      SUBDIR += p5-Mojo
+     SUBDIR += p5-MojoX-Session
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
@@ -278,6 +283,7 @@
      SUBDIR += pear-HTML-Template-IT
      SUBDIR += pear-SOAP
      SUBDIR += pecl-APC
+     SUBDIR += pecl-geoip
      SUBDIR += pecl-memcache
      SUBDIR += pecl-proctitle
      SUBDIR += pecl-ssh2

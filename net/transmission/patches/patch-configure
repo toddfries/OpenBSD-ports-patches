@@ -1,23 +1,32 @@
-$OpenBSD: patch-configure,v 1.12 2009/03/04 20:59:52 naddy Exp $
---- configure.orig	Sun Mar  1 17:08:56 2009
-+++ configure	Sun Mar  1 17:09:48 2009
-@@ -20148,8 +20148,8 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+$OpenBSD: patch-configure,v 1.14 2009/06/20 13:07:22 naddy Exp $
+--- configure.orig	Wed Jun 17 02:03:56 2009
++++ configure	Wed Jun 17 13:35:19 2009
+@@ -11259,8 +11259,8 @@ CC="$lt_save_CC"
  if test 0 = "0"; then
    supported_build=yes
    if test "x$GCC" = "xyes" ; then
--    CFLAGS="$CFLAGS -g -O3 -funroll-loops "
--    CXXFLAGS="$CXXFLAGS -g -O3 -funroll-loops "
-+    : CFLAGS="$CFLAGS -g -O3 -funroll-loops "
-+    : CXXFLAGS="$CXXFLAGS -g -O3 -funroll-loops "
+-    CFLAGS="$CFLAGS -g -O3 "
+-    CXXFLAGS="$CXXFLAGS -g -O3 "
++    : CFLAGS="$CFLAGS -g -O3 "
++    : CXXFLAGS="$CXXFLAGS -g -O3 "
    fi
  
  cat >>confdefs.h <<\_ACEOF
-@@ -21544,7 +21544,7 @@ _ACEOF
- esac
+@@ -16306,7 +16306,7 @@ esac
  
  if test "x$GCC" = "xyes" ; then
--  CFLAGS="$CFLAGS -std=gnu99 -ggdb3 -Wall -Wextra -Wredundant-decls -Wpointer-arith -Wformat-security -W -Wmissing-declarations -Wdeclaration-after-statement -Wcast-align -Winit-self -Wundef -Wnested-externs -Wmissing-format-attribute"
-+  : CFLAGS="$CFLAGS -std=gnu99 -ggdb3 -Wall -Wextra -Wredundant-decls -Wpointer-arith -Wformat-security -W -Wmissing-declarations -Wdeclaration-after-statement -Wcast-align -Winit-self -Wundef -Wnested-externs -Wmissing-format-attribute"
+ 
+-    CFLAGS="$CFLAGS -std=gnu99 -ggdb3 -Wall -W -Wpointer-arith -Wformat-security -Wcast-align -Wundef -Wcast-align -Wstrict-prototypes -Wmissing-declarations -Wmissing-format-attribute -Wredundant-decls -Wnested-externs -Wunused-parameter -Wwrite-strings"
++    : CFLAGS="$CFLAGS -std=gnu99 -ggdb3 -Wall -W -Wpointer-arith -Wformat-security -Wcast-align -Wundef -Wcast-align -Wstrict-prototypes -Wmissing-declarations -Wmissing-format-attribute -Wredundant-decls -Wnested-externs -Wunused-parameter -Wwrite-strings"
+ 
+         { $as_echo "$as_me:$LINENO: checking gcc version" >&5
+ $as_echo_n "checking gcc version... " >&6; }
+@@ -16318,7 +16318,7 @@ $as_echo_n "checking gcc version... " >&6; }
+     { $as_echo "$as_me:$LINENO: result: $GCC_VERSION" >&5
+ $as_echo "$GCC_VERSION" >&6; }
+     if test $GCC_VERSION_NUM -ge 304; then
+-                CFLAGS="$CFLAGS -Wextra -Wdeclaration-after-statement -Winit-self"
++                : CFLAGS="$CFLAGS -Wextra -Wdeclaration-after-statement -Winit-self"
+     fi
  fi
  
- { $as_echo "$as_me:$LINENO: checking for ANSI C header files" >&5

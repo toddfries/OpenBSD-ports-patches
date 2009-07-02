@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.117 2009/03/04 20:29:54 jasper Exp $
+# $OpenBSD: Makefile,v 1.122 2009/06/07 09:59:22 sturm Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -12,7 +12,6 @@
      SUBDIR += calentool
      SUBDIR += cbb
      SUBDIR += ccze
-     SUBDIR += cdrchive
      SUBDIR += cdrdao
      SUBDIR += clex
      SUBDIR += contacts
@@ -56,6 +55,7 @@
      SUBDIR += p5-Acme-LOLCAT
      SUBDIR += p5-CreditCard
      SUBDIR += p5-File-MMagic
+     SUBDIR += p5-File-MMagic-XS
      SUBDIR += p5-File-Rotate-Backup
      SUBDIR += p5-Finance-IIF
      SUBDIR += p5-Finance-Quote
@@ -100,6 +100,7 @@
      SUBDIR += xd
      SUBDIR += xdelta
      SUBDIR += xgas
+     SUBDIR += xkcd-viewer
      SUBDIR += xless
      SUBDIR += xnc
      SUBDIR += xtar

@@ -1,4 +1,4 @@
-# $OpenBSD: OpenBSD,v 1.46 2009/02/18 12:57:39 eric Exp $
+# $OpenBSD: OpenBSD,v 1.50 2009/06/05 17:37:16 nicm Exp $
 #
 # This is a list of OpenBSD developers and related people.
 #
@@ -30,6 +30,7 @@
 42.2342		-88.3737	"jcs"		# Joshua Stein
 42.2731		-83.782		"aaron"		# Aaron Campbell
 42.49538	-82.89954	"nick"		# Nick Holland
+42.861267	-85.747117	"jim"		# Jim Razmus II
 43.0277		-86.13		"dhill"		# David Hill
 43.064216	-89.406185	"wcmaier"	# Will Maier
 43.084950	-89.361468	"jolan"		# Jolan Luff
@@ -66,6 +67,7 @@
 48.8640		2.3555		"ajacoutot"	# Antoine Jacoutot
 48.87		2.33		"espie"		# Marc Espie
 48.883		2.2365		"gilles"	# Gilles Chehade
+49.033		2.0666		"benoit"	# Benoit Lecocq
 49.0816		-0.2885		"eric"		# Eric Faurot
 49.22		-123.10		"hugh"		# Hugh Graham
 49.313446	-123.063975	"mjc"		# Michael Coulter
@@ -96,6 +98,7 @@
 53.56		-113.51		"beck"		# Bob Beck
 53.562888	9.961555	"henning"	# Henning Brauer
 53.59		10.05		"simon"		# Simon Bertrang
+54.35		-5.56		"nicm"		# Nicholas Marriott
 54.869288       83.08799	"form"		# Oleg Safiullin
 55.16		23.88		"martynas"	# Martynas Venckus
 55.599		-2.4324		"jmc"		# Jason McIntyre
@@ -103,6 +106,7 @@
 55.8589		13.0837		"wilfried"	# Peter Stromberg
 57.698		11.967		"jakob"		# Jakob Schlyter
 57.717		11.967		"niklas"	# Niklas Hallqvist
+57.98668	15.634456	"halex"		# Alexander Hall
 59.33		18.08		"art"		# Artur Grabowski
 59.43		17.81		"maja"		# Mats O Jansson
 59.838977       30.49680	"mikeb"		# Mike Belopuhov

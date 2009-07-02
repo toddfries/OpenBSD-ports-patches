@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.39 2009/04/11 14:37:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.43 2009/06/11 18:26:44 ajacoutot Exp $
 
 COMMENT-main =		multimedia framework - good plugins
 COMMENT-aalib =		multimedia framework - aalib plugin
@@ -19,22 +19,22 @@ COMMENT-wavpack =	multimedia framework - wavpack plugin
 
 V =			0.10.8
 DISTNAME =		gst-plugins-good-$V
-PKGNAME-main =		gstreamer-plugins-good-$Vp11v0
-PKGNAME-aalib =		gstreamer-aalib-$Vp2
-PKGNAME-cairo =		gstreamer-cairo-$Vp3
-PKGNAME-gconf =		gstreamer-confelements-$Vp4
-PKGNAME-esd =		gstreamer-esd-$Vp3
-PKGNAME-flac =		gstreamer-flac-$Vp2
-PKGNAME-speex =		gstreamer-speex-$Vp2
-PKGNAME-taglib =	gstreamer-taglib-$Vp2
-PKGNAME-dv =		gstreamer-dv-$Vp2
-PKGNAME-jpeg =		gstreamer-jpeg-$Vp2
-PKGNAME-png =		gstreamer-png-$Vp2
-PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp4
-PKGNAME-caca =		gstreamer-libcaca-$Vp2
-PKGNAME-shout =		gstreamer-shoutcast-$Vp2
-PKGNAME-soup =		gstreamer-libsoup-$Vp3
-PKGNAME-wavpack =	gstreamer-wavpack-$Vp1
+PKGNAME-main =		gstreamer-plugins-good-$Vp14v0
+PKGNAME-aalib =		gstreamer-aalib-$Vp4
+PKGNAME-cairo =		gstreamer-cairo-$Vp5
+PKGNAME-gconf =		gstreamer-confelements-$Vp8
+PKGNAME-esd =		gstreamer-esd-$Vp5
+PKGNAME-flac =		gstreamer-flac-$Vp4
+PKGNAME-speex =		gstreamer-speex-$Vp4
+PKGNAME-taglib =	gstreamer-taglib-$Vp4
+PKGNAME-dv =		gstreamer-dv-$Vp4
+PKGNAME-jpeg =		gstreamer-jpeg-$Vp4
+PKGNAME-png =		gstreamer-png-$Vp5
+PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp6
+PKGNAME-caca =		gstreamer-libcaca-$Vp4
+PKGNAME-shout =		gstreamer-shoutcast-$Vp4
+PKGNAME-soup =		gstreamer-libsoup-$Vp5
+PKGNAME-wavpack =	gstreamer-wavpack-$Vp3
 
 MULTI_PACKAGES =	-main -aalib -cairo -gconf -esd -flac -speex \
 			-taglib -dv -jpeg -png -gdk -caca -shout -soup \
@@ -44,7 +44,11 @@ SHARED_LIBS =
 MASTER_SITES =		${MASTER_SITE_GST:=gst-plugins-good/}
 
 USE_X11 =		Yes
-MODULES =		devel/gettext
+MODULES =		devel/gettext \
+			devel/gconf2
+
+MODGCONF2_LIBDEP=	No
+MODGCONF2_SCHEMAS_DIR=	gst-plugins
 
 RUN_DEPENDS =		::${BUILD_PKGPATH}
 WANTLIB =		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
@@ -73,7 +77,9 @@ LIB_DEPENDS-cairo =	${LIB_DEPENDS} \
 WANTLIB-gconf =		${WANTLIB} \
 			ORBit-2 dbus-1 dbus-glib-1
 LIB_DEPENDS-gconf =	${LIB_DEPENDS} \
-			gconf-2::devel/gconf2
+			${MODGCONF2_LIB_DEPENDS}
+RUN_DEPENDS-gconf =	${RUN_DEPENDS} \
+			${MODGCONF2_RUN_DEPENDS}
 
 WANTLIB-esd =		${WANTLIB} \
 			audiofile gstbase-0.10 sndio
@@ -165,8 +171,6 @@ CONFIGURE_ARGS +=	--with-aalib-prefix=${LOCALBASE} \
 			--disable-cdio \
 			--disable-dv1394 \
 			--without-check \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gst-plugins \
-			--disable-schemas-install \
 			--enable-experimental \
 			--enable-gst_v4l2 \
 			--enable-goom \

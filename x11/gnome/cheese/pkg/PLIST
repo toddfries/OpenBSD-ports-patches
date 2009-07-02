@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.6 2009/03/14 10:40:52 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.8 2009/06/16 14:41:03 ajacoutot Exp $
 @bin bin/cheese
 libexec/cheese/
 libexec/cheese/cheese-bugreport.sh
@@ -53,8 +53,6 @@ share/cheese/sounds/shutter1.ogg
 share/cheese/sounds/shutter2.ogg
 share/cheese/sounds/shutter3.ogg
 share/cheese/sounds/shutter4.ogg
-share/dbus-1/
-share/dbus-1/services/
 share/dbus-1/services/org.gnome.Cheese.service
 share/gnome/help/cheese/
 share/gnome/help/cheese/C/
@@ -202,10 +200,10 @@ share/omf/cheese/cheese-pt_BR.omf
 share/omf/cheese/cheese-ru.omf
 share/omf/cheese/cheese-sv.omf
 share/omf/cheese/cheese-th.omf
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/cheese/*.schemas > /dev/null
-share/schemas/cheese/
-share/schemas/cheese/cheese.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/cheese/*.schemas > /dev/null
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+${SCHEMAS_INSTDIR}/
+${SCHEMAS_INSTDIR}/cheese.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @exec %D/bin/update-desktop-database

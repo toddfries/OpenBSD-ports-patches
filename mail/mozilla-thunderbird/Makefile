@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.80 2009/03/19 21:59:32 martynas Exp $
+# $OpenBSD: Makefile,v 1.82 2009/06/23 17:05:00 martynas Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc sparc64
 
 COMMENT=	redesign of Mozilla's mail component
 
-VER=		2.0.0.21
+VER=		2.0.0.22
 DISTNAME=	mozilla
 PKGNAME=	mozilla-thunderbird-${VER}
 SO_VERSION=	13.0
@@ -48,8 +48,7 @@ MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/$
 DISTFILES=	thunderbird-${VER}-source.tar.bz2
 
 MODULES=	devel/gettext
-RUN_DEPENDS=	:esound-*:audio/esound \
-		:desktop-file-utils-*:devel/desktop-file-utils
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 BUILD_DEPENDS=	:libIDL-*:devel/libIDL \
 		:zip->=2.3:archivers/zip
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
@@ -107,6 +106,9 @@ MOZ=		${PREFIX}/mozilla-thunderbird
 
 DATADIRS=	chrome components defaults dictionaries extensions \
 		greprefs icons init.d res
+
+post-extract:
+	@cp -f ${FILESDIR}/nsSound.cpp ${WRKSRC}/widget/src/gtk2/
 
 pre-configure:
 	@cd ${WRKSRC}/directory/c-sdk && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.1 2009/03/22 16:00:29 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.4 2009/06/17 19:51:25 ajacoutot Exp $
 @pkgpath mail/evolution
 %%SHARED%%
 @bin bin/evolution
@@ -309,8 +309,8 @@ lib/evolution/${R}/plugins/liborg-gnome-evolution-startup-wizard.a
 lib/evolution/${R}/plugins/liborg-gnome-evolution-startup-wizard.la
 lib/evolution/${R}/plugins/liborg-gnome-evolution-webdav.a
 lib/evolution/${R}/plugins/liborg-gnome-evolution-webdav.la
-lib/evolution/${R}/plugins/liborg-gnome-exchange-operations.a
-lib/evolution/${R}/plugins/liborg-gnome-exchange-operations.la
+@comment lib/evolution/${R}/plugins/liborg-gnome-exchange-operations.a
+@comment lib/evolution/${R}/plugins/liborg-gnome-exchange-operations.la
 lib/evolution/${R}/plugins/liborg-gnome-groupwise-features.a
 lib/evolution/${R}/plugins/liborg-gnome-groupwise-features.la
 lib/evolution/${R}/plugins/liborg-gnome-gw-account-setup.a
@@ -338,10 +338,10 @@ lib/evolution/${R}/plugins/org-gnome-evolution-caldav.eplug
 lib/evolution/${R}/plugins/org-gnome-evolution-google.eplug
 lib/evolution/${R}/plugins/org-gnome-evolution-startup-wizard.eplug
 lib/evolution/${R}/plugins/org-gnome-evolution-webdav.eplug
-lib/evolution/${R}/plugins/org-gnome-exchange-ab-subscription.xml
-lib/evolution/${R}/plugins/org-gnome-exchange-cal-subscription.xml
-lib/evolution/${R}/plugins/org-gnome-exchange-operations.eplug
-lib/evolution/${R}/plugins/org-gnome-exchange-tasks-subscription.xml
+@comment lib/evolution/${R}/plugins/org-gnome-exchange-ab-subscription.xml
+@comment lib/evolution/${R}/plugins/org-gnome-exchange-cal-subscription.xml
+@comment lib/evolution/${R}/plugins/org-gnome-exchange-operations.eplug
+@comment lib/evolution/${R}/plugins/org-gnome-exchange-tasks-subscription.xml
 lib/evolution/${R}/plugins/org-gnome-folder-permissions.xml
 lib/evolution/${R}/plugins/org-gnome-folder-subscription.xml
 lib/evolution/${R}/plugins/org-gnome-groupwise-features.eplug
@@ -457,7 +457,7 @@ share/evolution/${R}/errors/e-system.error
 share/evolution/${R}/errors/filter.error
 share/evolution/${R}/errors/mail-composer.error
 share/evolution/${R}/errors/mail.error
-share/evolution/${R}/errors/org-gnome-exchange-operations.error
+@comment share/evolution/${R}/errors/org-gnome-exchange-operations.error
 share/evolution/${R}/errors/org-gnome-itip-formatter.error
 share/evolution/${R}/errors/org-gnome-mail-retract-errors.xml
 share/evolution/${R}/errors/org-gnome-proxy-errors.xml
@@ -2171,15 +2171,14 @@ share/omf/evolution/evolution-oc.omf
 share/omf/evolution/evolution-ru.omf
 share/omf/evolution/evolution-sv.omf
 @unexec %D/bin/gconftool-2 --direct --config-source=`%D/bin/gconftool-2 --get-default-source` --unset /apps/evolution/eplugin/disabled
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/evolution/*.schemas > /dev/null
-share/schemas/evolution/
-share/schemas/evolution/apps_evolution_addressbook.schemas
-share/schemas/evolution/apps_evolution_calendar.schemas
-share/schemas/evolution/apps_evolution_shell.schemas
-share/schemas/evolution/bogo-junk-plugin.schemas
-share/schemas/evolution/evolution-mail.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/evolution/*.schemas > /dev/null
-@exec %D/bin/gconftool-2 --direct --config-source=`%D/bin/gconftool-2 --get-default-source` --set --type list --list-type=string /apps/evolution/eplugin/disabled '[org.gnome.mail.account.disable]'
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+${SCHEMAS_INSTDIR}/
+${SCHEMAS_INSTDIR}/apps_evolution_addressbook.schemas
+${SCHEMAS_INSTDIR}/apps_evolution_calendar.schemas
+${SCHEMAS_INSTDIR}/apps_evolution_shell.schemas
+${SCHEMAS_INSTDIR}/bogo-junk-plugin.schemas
+${SCHEMAS_INSTDIR}/evolution-mail.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @exec %D/bin/update-desktop-database
