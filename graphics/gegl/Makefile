@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2009/01/03 14:58:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2009/07/19 22:49:12 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -10,7 +10,7 @@ DISTNAME=	gegl-${V}
 CATEGORIES=	graphics devel
 
 PKGNAME-main=	gegl-${V}
-PKGNAME-plugins=gegl-plugins-${V}
+PKGNAME-plugins=gegl-plugins-${V}p1
 
 SHARED_LIBS=	gegl-0.0	2.0 # .22.0
 
@@ -50,11 +50,11 @@ LIB_DEPENDS-main= ${LIB_DEPENDS} \
 
 WANTLIB-plugins=${WANTLIB} Half Iex IlmThread Imath SDL a52 bz2 faac faad \
 		mp3lame ogg sndio stdc++ theora usbhid vorbis vorbisenc \
-		x264
+		x264 oil-0.3 schroedinger-1.0
 RUN_DEPENDS-plugins= ::${BUILD_PKGPATH},-main
 LIB_DEPENDS-plugins= ${LIB_DEPENDS} \
 		IlmImf.>=4::graphics/openexr \
-		avcodec.>=11,avformat,avutil::graphics/ffmpeg
+		avcodec.>=13.1,avformat.>=12,avutil.>=6:ffmpeg->=20080620p10:graphics/ffmpeg
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

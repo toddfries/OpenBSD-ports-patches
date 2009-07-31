@@ -1,4 +1,4 @@
-$OpenBSD: patch-boost_config_stdlib_libstdcpp3_hpp,v 1.2 2008/01/06 00:01:15 deanna Exp $
+$OpenBSD: patch-boost_config_stdlib_libstdcpp3_hpp,v 1.4 2009/07/27 00:34:24 kurt Exp $
 --- boost/config/stdlib/libstdcpp3.hpp.orig	Thu Dec  1 10:00:33 2005
 +++ boost/config/stdlib/libstdcpp3.hpp	Mon Dec 31 02:29:05 2007
 @@ -29,6 +29,15 @@

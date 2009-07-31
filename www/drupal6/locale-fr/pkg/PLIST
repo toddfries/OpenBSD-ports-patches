@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2009/04/03 14:07:58 espie Exp $
+@comment $OpenBSD: PLIST,v 1.3 2009/07/27 12:39:05 espie Exp $
 @owner ${DRUPAL_OWNER}
 @group ${DRUPAL_GROUP}
 ${DRUPAL_ROOT}/CONTRIBUTORS.${LANG}.txt
@@ -58,6 +58,7 @@ ${DRUPAL_ROOT}/modules/system/translations/general.${LANG}.po
 ${DRUPAL_ROOT}/modules/system/translations/includes.${LANG}.po
 ${DRUPAL_ROOT}/modules/system/translations/misc.${LANG}.po
 ${DRUPAL_ROOT}/modules/system/translations/modules-system.${LANG}.po
+@comment ${DRUPAL_ROOT}/modules/system/translations/modules-system.${LANG}.po.orig
 ${DRUPAL_ROOT}/modules/taxonomy/translations/
 ${DRUPAL_ROOT}/modules/taxonomy/translations/modules-taxonomy.${LANG}.po
 ${DRUPAL_ROOT}/modules/throttle/translations/

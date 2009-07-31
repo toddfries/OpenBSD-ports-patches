@@ -1,0 +1,663 @@
+# On branch master
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   INDEX
+#	modified:   archivers/Makefile
+#	modified:   archivers/lzo/Makefile
+#	modified:   astro/celestia/Makefile
+#	modified:   astro/celestia/distinfo
+#	modified:   astro/celestia/patches/patch-configure
+#	modified:   astro/celestia/patches/patch-src_celengine_astro_cpp
+#	deleted:    astro/celestia/patches/patch-src_celengine_render_cpp
+#	modified:   astro/celestia/patches/patch-src_celestia_celestiacore_cpp
+#	modified:   astro/celestia/patches/patch-src_celutil_unixdirectory_cpp
+#	deleted:    astro/celestia/patches/patch-src_celutil_util_h
+#	modified:   astro/celestia/pkg/PLIST
+#	modified:   audio/Makefile
+#	modified:   audio/akode/Makefile
+#	modified:   audio/cmu-sphinx3/Makefile
+#	modified:   audio/herrie/Makefile
+#	modified:   audio/libdca/Makefile
+#	modified:   audio/libdca/pkg/PLIST
+#	modified:   audio/libid3tag/Makefile
+#	modified:   audio/libid3tag/pkg/PLIST
+#	modified:   audio/midish/Makefile
+#	modified:   audio/midish/distinfo
+#	modified:   audio/picard/Makefile
+#	modified:   audio/timidity/Makefile
+#	deleted:    audio/timidity/patches/patch-TiMidity++-2_13_2_configure
+#	modified:   audio/timidity/pkg/PLIST
+#	modified:   audio/vorbis-tools/Makefile
+#	modified:   audio/xmms/Makefile
+#	modified:   audio/xmms2/Makefile
+#	modified:   benchmarks/iozone/Makefile
+#	modified:   benchmarks/iozone/distinfo
+#	deleted:    benchmarks/iozone/patches/patch-iozone_c
+#	deleted:    benchmarks/iozone/patches/patch-libbif_c
+#	deleted:    benchmarks/iozone/patches/patch-makefile
+#	modified:   benchmarks/iozone/pkg/PLIST
+#	modified:   books/Makefile
+#	modified:   chinese/bg5ps/Makefile
+#	modified:   databases/Makefile
+#	modified:   databases/iodbc/Makefile
+#	modified:   databases/iodbc/distinfo
+#	modified:   databases/iodbc/patches/patch-configure
+#	modified:   databases/iodbc/patches/patch-include_sqltypes_h
+#	modified:   databases/iodbc/patches/patch-samples_Makefile_in
+#	modified:   databases/iodbc/pkg/PLIST-admin
+#	modified:   databases/iodbc/pkg/PLIST-main
+#	modified:   databases/maatkit/Makefile
+#	modified:   databases/maatkit/distinfo
+#	modified:   databases/mysql/Makefile
+#	modified:   databases/mysql/distinfo
+#	modified:   databases/mysql/patches/patch-configure_in
+#	modified:   databases/mysql/patches/patch-include_my_global_h
+#	deleted:    databases/mysql/patches/patch-innobase_Makefile_in
+#	modified:   databases/mysql/patches/patch-mysql-test_Makefile_in
+#	deleted:    databases/mysql/patches/patch-mysql-test_mysql-test-run-shell_sh
+#	deleted:    databases/mysql/patches/patch-scripts_Makefile_in
+#	modified:   databases/mysql/patches/patch-scripts_mysql_install_db_sh
+#	modified:   databases/mysql/patches/patch-scripts_mysqld_safe_sh
+#	modified:   databases/mysql/patches/patch-sql_mysqld_cc
+#	modified:   databases/mysql/pkg/DESCR-tests
+#	deleted:    databases/mysql/pkg/PFRAG.shared-main
+#	modified:   databases/mysql/pkg/PLIST-main
+#	modified:   databases/mysql/pkg/PLIST-server
+#	modified:   databases/mysql/pkg/PLIST-tests
+#	modified:   databases/openldap/Makefile
+#	modified:   databases/pgfouine/Makefile
+#	modified:   databases/pgfouine/distinfo
+#	modified:   databases/pgfouine/pkg/PLIST
+#	modified:   databases/postgresql/Makefile
+#	modified:   databases/postgresql/distinfo
+#	deleted:    databases/postgresql/patches/patch-configure
+#	modified:   databases/postgresql/patches/patch-src_Makefile_shlib
+#	modified:   databases/postgresql/patches/patch-src_interfaces_ecpg_compatlib_Makefile
+#	modified:   databases/postgresql/patches/patch-src_interfaces_ecpg_ecpglib_Makefile
+#	modified:   databases/postgresql/patches/patch-src_interfaces_ecpg_pgtypeslib_Makefile
+#	modified:   databases/postgresql/patches/patch-src_interfaces_libpq_Makefile
+#	modified:   databases/postgresql/pkg/PLIST-contrib
+#	modified:   databases/postgresql/pkg/PLIST-docs
+#	modified:   databases/postgresql/pkg/PLIST-main
+#	modified:   databases/postgresql/pkg/PLIST-server
+#	modified:   databases/py-psycopg/Makefile
+#	modified:   databases/py-psycopg/pkg/PLIST-examples
+#	modified:   devel/Makefile
+#	modified:   devel/avrdude/Makefile
+#	modified:   devel/avrdude/distinfo
+#	modified:   devel/avrdude/pkg/PLIST
+#	modified:   devel/boost/Makefile
+#	modified:   devel/boost/patches/patch-boost_config_stdlib_libstdcpp3_hpp
+#	modified:   devel/boost/patches/patch-boost_config_suffix_hpp
+#	modified:   devel/boost/patches/patch-tools_build_v2_tools_python_jam
+#	modified:   devel/eclipse/sdk/Makefile
+#	modified:   devel/git/Makefile
+#	modified:   devel/git/distinfo
+#	modified:   devel/git/patches/patch-Makefile
+#	modified:   devel/git/pkg/PLIST-main
+#	modified:   devel/liboil/Makefile
+#	modified:   devel/liboil/distinfo
+#	deleted:    devel/liboil/patches/patch-configure
+#	deleted:    devel/liboil/patches/patch-liboil_liboilcpu-powerpc_c
+#	modified:   devel/liboil/pkg/PLIST
+#	modified:   devel/nasm/Makefile
+#	modified:   devel/nasm/distinfo
+#	modified:   devel/p5-AnyEvent/Makefile
+#	modified:   devel/p5-AnyEvent/distinfo
+#	modified:   devel/p5-AnyEvent/pkg/PLIST
+#	modified:   devel/py-gdata/Makefile
+#	modified:   devel/py-gdata/distinfo
+#	modified:   devel/py-gdata/pkg/DESCR
+#	modified:   devel/py-gdata/pkg/PLIST
+#	modified:   devel/xulrunner/Makefile
+#	deleted:    devel/xulrunner/distinfo
+#	deleted:    devel/xulrunner/files/xulrunner-embedding.pc
+#	deleted:    devel/xulrunner/patches/patch-config_autoconf_mk_in
+#	deleted:    devel/xulrunner/patches/patch-config_rules_mk
+#	deleted:    devel/xulrunner/patches/patch-configure_in
+#	deleted:    devel/xulrunner/patches/patch-content_xul_templates_src_nsTemplateMatchSet_h
+#	deleted:    devel/xulrunner/patches/patch-extensions_transformiix_source_base_Double_cpp
+#	deleted:    devel/xulrunner/patches/patch-gfx_src_ps_nsFontMetricsPS_cpp
+#	deleted:    devel/xulrunner/patches/patch-gfx_src_psshared_nsCUPSShim_cpp
+#	deleted:    devel/xulrunner/patches/patch-js_Makefile_in
+#	deleted:    devel/xulrunner/patches/patch-js_src_jsnum_h
+#	deleted:    devel/xulrunner/patches/patch-js_src_liveconnect_nsISecureLiveconnect_h
+#	deleted:    devel/xulrunner/patches/patch-js_src_xpconnect_shell_Makefile_in
+#	deleted:    devel/xulrunner/patches/patch-modules_libpref_src_init_all_js
+#	deleted:    devel/xulrunner/patches/patch-security_coreconf_OpenBSD_mk
+#	deleted:    devel/xulrunner/patches/patch-security_manager_ssl_src_Makefile_in
+#	deleted:    devel/xulrunner/patches/patch-security_manager_ssl_src_nsNSSComponent_cpp
+#	deleted:    devel/xulrunner/patches/patch-widget_src_gtk2_nsSound_cpp
+#	deleted:    devel/xulrunner/patches/patch-xpcom_components_nsNativeComponentLoader_cpp
+#	deleted:    devel/xulrunner/patches/patch-xulrunner_app_mozilla_in
+#	deleted:    devel/xulrunner/patches/patch-xulrunner_setup_nsXULAppInstall_js
+#	deleted:    devel/xulrunner/pkg/DESCR-devel
+#	deleted:    devel/xulrunner/pkg/DESCR-main
+#	deleted:    devel/xulrunner/pkg/PFRAG.shared-main
+#	deleted:    devel/xulrunner/pkg/PLIST-devel
+#	deleted:    devel/xulrunner/pkg/PLIST-main
+#	modified:   editors/emacs21/Makefile
+#	modified:   editors/emacs22/Makefile
+#	modified:   editors/ht/Makefile
+#	modified:   editors/vim/Makefile
+#	modified:   editors/vim/distinfo
+#	modified:   emulators/fedora/base/Makefile
+#	modified:   emulators/fedora/base/distinfo
+#	modified:   emulators/fedora/base/files/ld.so.conf
+#	modified:   emulators/fedora/base/pkg/PLIST
+#	modified:   emulators/sdlmame/Makefile
+#	modified:   emulators/sdlmame/distinfo
+#	deleted:    emulators/sdlmame/patches/patch-src_osd_sdl_sdl_mak
+#	deleted:    emulators/sdlmame/patches/patch-src_osd_sdl_sdldir_c
+#	deleted:    emulators/sdlmame/patches/patch-src_osd_sdl_sdlfile_c
+#	deleted:    emulators/sdlmame/patches/patch-src_osd_sdl_sdlmain_c
+#	deleted:    emulators/sdlmame/patches/patch-src_osd_sdl_sdlmisc_c
+#	deleted:    emulators/sdlmame/patches/patch-src_osd_sdl_sdlprefix_h
+#	modified:   emulators/sdlmess/Makefile
+#	modified:   emulators/sdlmess/distinfo
+#	deleted:    emulators/sdlmess/patches/patch-src_osd_sdl_sdl_mak
+#	deleted:    emulators/sdlmess/patches/patch-src_osd_sdl_sdldir_c
+#	deleted:    emulators/sdlmess/patches/patch-src_osd_sdl_sdlfile_c
+#	deleted:    emulators/sdlmess/patches/patch-src_osd_sdl_sdlmain_c
+#	deleted:    emulators/sdlmess/patches/patch-src_osd_sdl_sdlmisc_c
+#	deleted:    emulators/sdlmess/patches/patch-src_osd_sdl_sdlprefix_h
+#	modified:   games/gargoyle/Makefile
+#	modified:   games/gargoyle/pkg/PLIST
+#	modified:   games/sudognu/Makefile
+#	modified:   games/wormux/Makefile
+#	modified:   games/wormux/distinfo
+#	modified:   games/wormux/patches/patch-src_interface_interface_cpp
+#	modified:   games/wormux/pkg/PLIST
+#	modified:   geo/gdal/Makefile
+#	modified:   geo/gdal/distinfo
+#	modified:   geo/gdal/pkg/PLIST-main
+#	modified:   geo/gpsbabel/Makefile
+#	modified:   geo/p5-Geography-Countries/Makefile
+#	modified:   geo/p5-Geography-Countries/distinfo
+#	modified:   graphics/autopano-sift-c/Makefile
+#	modified:   graphics/ffmpeg/Makefile
+#	modified:   graphics/ffmpegthumbnailer/Makefile
+#	modified:   graphics/fyre/Makefile
+#	modified:   graphics/fyre/pkg/PLIST
+#	modified:   graphics/gegl/Makefile
+#	modified:   graphics/gocr/Makefile
+#	modified:   graphics/hugin/Makefile
+#	modified:   graphics/hugin/distinfo
+#	modified:   graphics/openexr/Makefile
+#	modified:   graphics/p5-Image-ExifTool/Makefile
+#	modified:   graphics/p5-Image-ExifTool/distinfo
+#	modified:   graphics/p5-Image-ExifTool/pkg/PLIST
+#	modified:   graphics/py-Imaging/Makefile
+#	modified:   graphics/tiff/Makefile
+#	modified:   infrastructure/mk/bsd.port.mk
+#	modified:   infrastructure/mk/bsd.port.subdir.mk
+#	modified:   infrastructure/mk/pkgpath.mk
+#	modified:   infrastructure/plist/amd64
+#	modified:   infrastructure/plist/i386
+#	modified:   infrastructure/plist/powerpc
+#	modified:   infrastructure/plist/sparc64
+#	modified:   lang/classpath/Makefile
+#	modified:   lang/jamvm/Makefile
+#	modified:   lang/jamvm/distinfo
+#	modified:   lang/jamvm/patches/patch-configure
+#	deleted:    lang/jamvm/patches/patch-lib_java_lang_reflect_Constructor_java
+#	deleted:    lang/jamvm/patches/patch-lib_java_lang_reflect_Field_java
+#	deleted:    lang/jamvm/patches/patch-lib_java_lang_reflect_Method_java
+#	modified:   lang/mono/Makefile
+#	modified:   mail/Makefile
+#	modified:   mail/claws-mail-htmlviewer/Makefile
+#	modified:   mail/claws-mail-htmlviewer/distinfo
+#	modified:   mail/claws-mail-htmlviewer/pkg/PLIST
+#	modified:   mail/claws-mail-notification/Makefile
+#	modified:   mail/claws-mail-notification/distinfo
+#	modified:   mail/claws-mail-notification/pkg/PLIST
+#	modified:   mail/claws-mail-rssyl/Makefile
+#	modified:   mail/claws-mail-rssyl/distinfo
+#	modified:   mail/claws-mail-rssyl/pkg/PLIST
+#	modified:   mail/claws-mail-vcalendar/Makefile
+#	modified:   mail/claws-mail-vcalendar/distinfo
+#	deleted:    mail/claws-mail-vcalendar/patches/patch-libical_libical_Makefile_in
+#	modified:   mail/claws-mail-vcalendar/pkg/PLIST
+#	modified:   mail/claws-mail/Makefile
+#	modified:   mail/claws-mail/distinfo
+#	modified:   mail/claws-mail/pkg/PLIST-main
+#	modified:   mail/dovecot/Makefile
+#	modified:   mail/dovecot/distinfo
+#	modified:   mail/exim/Makefile
+#	modified:   mail/exim/pkg/PFRAG.no-no_x11
+#	modified:   mail/exim/pkg/PLIST
+#	modified:   mail/gmime/Makefile
+#	modified:   mail/gmime/pkg/PLIST
+#	modified:   mail/mail-notification/Makefile
+#	modified:   mail/mutt/snapshot/Makefile
+#	modified:   mail/postfix/Makefile.inc
+#	modified:   mail/postfix/snapshot/Makefile
+#	modified:   mail/postfix/snapshot/distinfo
+#	modified:   mail/postfix/stable/Makefile
+#	modified:   mail/z-push/Makefile
+#	modified:   mail/z-push/distinfo
+#	modified:   mail/z-push/patches/patch-config_php
+#	modified:   mail/z-push/pkg/PLIST
+#	modified:   mail/zarafa/libical/Makefile
+#	modified:   mail/zarafa/libical/distinfo
+#	modified:   mail/zarafa/libical/patches/patch-examples_Makefile_in
+#	modified:   mail/zarafa/libical/patches/patch-src_libical_Makefile_in
+#	deleted:    mail/zarafa/libical/patches/patch-src_libical_icalcomponent_c
+#	deleted:    mail/zarafa/libical/patches/patch-src_libical_icalerror_c
+#	modified:   mail/zarafa/libical/patches/patch-src_libicalss_Makefile_in
+#	deleted:    mail/zarafa/libical/patches/patch-src_libicalss_icalset_c
+#	deleted:    mail/zarafa/libical/patches/patch-src_libicalss_icalspanlist_c
+#	modified:   mail/zarafa/libical/patches/patch-src_libicalvcal_Makefile_in
+#	modified:   mail/zarafa/libical/patches/patch-src_test_Makefile_in
+#	modified:   mail/zarafa/libical/pkg/PLIST
+#	modified:   mail/zarafa/webaccess/Makefile
+#	modified:   mail/zarafa/webaccess/distinfo
+#	deleted:    mail/zarafa/webaccess/patches/patch-php-webclient-ajax_client_core_xmlrequest_js
+#	modified:   mail/zarafa/webaccess/patches/patch-php-webclient-ajax_config_php_dist
+#	modified:   mail/zarafa/webaccess/pkg/PLIST
+#	modified:   mail/zarafa/zarafa/Makefile
+#	modified:   mail/zarafa/zarafa/distinfo
+#	modified:   mail/zarafa/zarafa/files/README.OpenBSD
+#	modified:   mail/zarafa/zarafa/patches/patch-ECtools_ECTestTools_IMAPTest_IMAPtest_cpp
+#	deleted:    mail/zarafa/zarafa/patches/patch-caldav_MAPIFacade_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-common_Makefile_in
+#	modified:   mail/zarafa/zarafa/patches/patch-common_platform_linux_h
+#	modified:   mail/zarafa/zarafa/patches/patch-configure
+#	modified:   mail/zarafa/zarafa/patches/patch-doc_Makefile_in
+#	modified:   mail/zarafa/zarafa/patches/patch-doc_manual_xml
+#	modified:   mail/zarafa/zarafa/patches/patch-gateway_Gateway_cpp
+#	deleted:    mail/zarafa/zarafa/patches/patch-gateway_IMAP_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-installer_linux_Makefile_in
+#	deleted:    mail/zarafa/zarafa/patches/patch-installer_linux_licensed_cfg
+#	modified:   mail/zarafa/zarafa/patches/patch-installer_linux_monitor_cfg
+#	modified:   mail/zarafa/zarafa/patches/patch-installer_linux_server_cfg
+#	modified:   mail/zarafa/zarafa/patches/patch-installer_linux_spooler_cfg
+#	deleted:    mail/zarafa/zarafa/patches/patch-libicalmapi_recurrence_cpp
+#	deleted:    mail/zarafa/zarafa/patches/patch-mapi4linux_src_mapix_cpp
+#	deleted:    mail/zarafa/zarafa/patches/patch-mapi4linux_src_rtf_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-perl_Makefile_in
+#	modified:   mail/zarafa/zarafa/patches/patch-php-ext_Makefile_in
+#	deleted:    mail/zarafa/zarafa/patches/patch-php-ext_main_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-provider_client_ECNotifyMaster_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-provider_client_Makefile_in
+#	modified:   mail/zarafa/zarafa/patches/patch-provider_client_WSTransport_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-provider_libserver_ECAttachmentStorage_cpp
+#	deleted:    mail/zarafa/zarafa/patches/patch-provider_plugins_Makefile_in
+#	modified:   mail/zarafa/zarafa/patches/patch-provider_server_ECServer_cpp
+#	modified:   mail/zarafa/zarafa/patches/patch-provider_server_Makefile_in
+#	modified:   mail/zarafa/zarafa/pkg/PLIST-main
+#	modified:   math/fftw3/Makefile
+#	modified:   math/fftw3/distinfo
+#	modified:   math/mathomatic/Makefile
+#	modified:   math/mathomatic/distinfo
+#	modified:   math/mathomatic/patches/patch-globals_c
+#	modified:   math/mathomatic/patches/patch-makefile
+#	modified:   math/mathomatic/pkg/PLIST
+#	modified:   misc/amanda/Makefile
+#	modified:   misc/cbb/Makefile
+#	modified:   misc/shared-mime-info/Makefile
+#	modified:   misc/shared-mime-info/pkg/PLIST
+#	modified:   multimedia/Makefile
+#	modified:   multimedia/devede/Makefile
+#	modified:   multimedia/devede/distinfo
+#	modified:   multimedia/devede/patches/patch-devede_executor_py
+#	deleted:    multimedia/devede/patches/patch-devede_glade
+#	modified:   multimedia/devede/patches/patch-devede_py
+#	modified:   multimedia/dvdbackup/Makefile
+#	modified:   multimedia/dvdbackup/patches/patch-src_dvdbackup_c
+#	modified:   multimedia/dvdstyler/Makefile
+#	modified:   multimedia/ffmpeg2theora/Makefile
+#	modified:   multimedia/get_iplayer/Makefile
+#	modified:   multimedia/get_iplayer/distinfo
+#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
+#	modified:   multimedia/gstreamer-0.10/plugins-ffmpeg/Makefile
+#	modified:   multimedia/libdvdnav/Makefile
+#	modified:   multimedia/libdvdnav/distinfo
+#	deleted:    multimedia/libdvdnav/patches/patch-autogen_sh
+#	modified:   multimedia/libdvdnav/patches/patch-configure_ac
+#	deleted:    multimedia/libdvdnav/patches/patch-src_dvdread_Makefile_am
+#	deleted:    multimedia/libdvdnav/patches/patch-src_dvdread_dvd_input_c
+#	deleted:    multimedia/libdvdnav/patches/patch-src_dvdread_dvd_reader_c
+#	modified:   multimedia/libdvdnav/pkg/PFRAG.shared
+#	modified:   multimedia/libdvdnav/pkg/PLIST
+#	modified:   multimedia/libquicktime/Makefile
+#	modified:   multimedia/mkvtoolnix/Makefile
+#	modified:   multimedia/transcode/Makefile
+#	modified:   multimedia/xine-lib/Makefile
+#	modified:   multimedia/xine-lib/patches/patch-src_input_input_dvd_c
+#	modified:   multimedia/xvidcore/Makefile
+#	modified:   net/Makefile
+#	modified:   net/flvstreamer/Makefile
+#	modified:   net/flvstreamer/distinfo
+#	modified:   net/irssi-silc/Makefile
+#	modified:   net/irssi-silc/patches/patch-apps_irssi_src_silc_core_silc-nicklist_c
+#	modified:   net/ladvd/Makefile
+#	modified:   net/nepenthes/Makefile
+#	modified:   net/openvpn/Makefile
+#	modified:   net/p5-Net-BGP/Makefile
+#	modified:   net/p5-Net-BGP/distinfo
+#	modified:   net/pidgin-facebookchat/Makefile
+#	modified:   net/pidgin-facebookchat/distinfo
+#	modified:   net/pidgin-facebookchat/patches/patch-Makefile
+#	modified:   net/pidgin/Makefile
+#	modified:   net/transmission/Makefile
+#	modified:   net/transmission/distinfo
+#	modified:   net/transmission/patches/patch-configure
+#	deleted:    net/transmission/patches/patch-daemon_watch_c
+#	modified:   net/transmission/patches/patch-gtk_details_c
+#	modified:   net/transmission/patches/patch-gtk_makemeta-ui_c
+#	deleted:    net/transmission/patches/patch-gtk_tr-icon_c
+#	modified:   net/transmission/patches/patch-gtk_tr-torrent_c
+#	modified:   net/transmission/patches/patch-gtk_tr-window_c
+#	modified:   net/transmission/patches/patch-libtransmission_utils_c
+#	modified:   net/transmission/patches/patch-third-party_libnatpmp_getgateway_c
+#	modified:   net/transmission/pkg/PLIST-gui
+#	modified:   news/pan/Makefile
+#	modified:   print/py-cups/Makefile
+#	modified:   print/py-cups/patches/patch-cupsppd_c
+#	modified:   productivity/Makefile
+#	modified:   productivity/rednotebook/Makefile
+#	modified:   productivity/rednotebook/distinfo
+#	modified:   productivity/rednotebook/pkg/PLIST
+#	modified:   security/gnutls/Makefile
+#	modified:   security/hydra/Makefile
+#	modified:   security/logsurfer/Makefile
+#	modified:   security/xmlsec/Makefile
+#	modified:   security/xmlsec/distinfo
+#	modified:   security/zebedee/Makefile
+#	modified:   sysutils/rancid/Makefile
+#	modified:   sysutils/rancid/distinfo
+#	modified:   sysutils/rancid/patches/patch-bin_Makefile_in
+#	modified:   sysutils/rancid/patches/patch-configure
+#	modified:   sysutils/rancid/pkg/PLIST
+#	modified:   sysutils/sec/Makefile
+#	modified:   sysutils/sec/distinfo
+#	modified:   telephony/asterisk/Makefile
+#	modified:   telephony/asterisk/distinfo
+#	modified:   telephony/asterisk/patches/patch-Makefile
+#	modified:   textproc/Makefile
+#	modified:   textproc/ruby-haml/Makefile
+#	modified:   textproc/ruby-haml/distinfo
+#	modified:   textproc/ruby-haml/pkg/PLIST
+#	modified:   www/Makefile
+#	modified:   www/cherokee/Makefile
+#	modified:   www/cherokee/distinfo
+#	modified:   www/cherokee/patches/patch-cherokee_Makefile_in
+#	modified:   www/cherokee/patches/patch-cherokee_conf_sample_pre
+#	modified:   www/cherokee/patches/patch-configure
+#	modified:   www/cherokee/patches/patch-contrib_Makefile_in
+#	modified:   www/cherokee/pkg/PLIST-main
+#	modified:   www/drupal6/FCKeditor/pkg/PLIST
+#	modified:   www/drupal6/Makefile
+#	modified:   www/drupal6/admin-menu/pkg/PLIST
+#	modified:   www/drupal6/advanced_help/pkg/PLIST
+#	modified:   www/drupal6/advanced_user/Makefile
+#	modified:   www/drupal6/advanced_user/distinfo
+#	modified:   www/drupal6/advanced_user/pkg/PLIST
+#	modified:   www/drupal6/alternate_login/Makefile
+#	modified:   www/drupal6/alternate_login/distinfo
+#	modified:   www/drupal6/alternate_login/pkg/PLIST
+#	modified:   www/drupal6/auto_nodetitle/pkg/PLIST
+#	modified:   www/drupal6/backup_migrate/pkg/PLIST
+#	modified:   www/drupal6/cck/pkg/PLIST
+#	modified:   www/drupal6/content_access/Makefile
+#	modified:   www/drupal6/content_access/pkg/PLIST
+#	modified:   www/drupal6/core/Makefile
+#	modified:   www/drupal6/core/files/drupal.conf
+#	modified:   www/drupal6/core/pkg/MESSAGE
+#	modified:   www/drupal6/core/pkg/PLIST
+#	modified:   www/drupal6/date/Makefile
+#	modified:   www/drupal6/date/distinfo
+#	modified:   www/drupal6/date/pkg/PLIST
+#	modified:   www/drupal6/drupal6.port.mk
+#	modified:   www/drupal6/locale-fr/Makefile
+#	modified:   www/drupal6/locale-fr/pkg/DESCR
+#	modified:   www/drupal6/locale-fr/pkg/PLIST
+#	modified:   www/drupal6/locale-it/Makefile
+#	modified:   www/drupal6/locale-it/pkg/DESCR
+#	modified:   www/drupal6/locale-it/pkg/PLIST
+#	modified:   www/drupal6/locale-ja/Makefile
+#	modified:   www/drupal6/locale-ja/pkg/DESCR
+#	modified:   www/drupal6/locale-ja/pkg/PLIST
+#	modified:   www/drupal6/masquerade/Makefile
+#	modified:   www/drupal6/masquerade/pkg/PLIST
+#	modified:   www/drupal6/meta-tags/pkg/PLIST
+#	modified:   www/drupal6/pathauto/pkg/PLIST
+#	modified:   www/drupal6/poormanscron/pkg/PLIST
+#	modified:   www/drupal6/printer-friendly/Makefile
+#	modified:   www/drupal6/printer-friendly/distinfo
+#	modified:   www/drupal6/printer-friendly/pkg/PLIST
+#	modified:   www/drupal6/scheduler/pkg/PLIST
+#	modified:   www/drupal6/securelogin/pkg/PLIST
+#	modified:   www/drupal6/theme-newsflash/pkg/PLIST
+#	modified:   www/drupal6/themesettingsapi/pkg/PLIST
+#	modified:   www/drupal6/token/pkg/PLIST
+#	modified:   www/drupal6/user_import/Makefile
+#	modified:   www/drupal6/user_import/distinfo
+#	modified:   www/drupal6/user_import/pkg/PLIST
+#	modified:   www/drupal6/user_readonly/pkg/PLIST
+#	modified:   www/drupal6/views/pkg/PLIST
+#	modified:   www/drupal6/webform/pkg/PLIST
+#	modified:   www/epiphany-extensions/Makefile
+#	modified:   www/epiphany/Makefile
+#	modified:   www/firefox-i18n/Makefile
+#	modified:   www/firefox-i18n/distinfo
+#	modified:   www/firefox35/Makefile
+#	modified:   www/firefox35/distinfo
+#	modified:   www/firefox35/patches/patch-js_src_configure_in
+#	modified:   www/firefox35/patches/patch-media_liboggplay_src_liboggplay_std_semaphore_h
+#	deleted:    www/firefox35/patches/patch-widget_src_gtk2_nsSound_cpp
+#	modified:   www/firefox35/patches/patch-widget_src_qt_nsSound_cpp
+#	modified:   www/firefox35/patches/patch-xpcom_base_nsStackWalk_cpp
+#	modified:   www/galeon/Makefile
+#	modified:   www/gecko-mediaplayer/Makefile
+#	modified:   www/hiawatha/Makefile
+#	modified:   www/hiawatha/distinfo
+#	modified:   www/hiawatha/patches/patch-Makefile_in
+#	modified:   www/hiawatha/patches/patch-doc_hiawatha_1_in
+#	modified:   www/hiawatha/patches/patch-etc_hiawatha_cgi-wrapper_conf
+#	modified:   www/hiawatha/patches/patch-etc_hiawatha_httpd_conf_in
+#	modified:   www/hiawatha/patches/patch-etc_hiawatha_php-fcgi_conf
+#	modified:   www/hiawatha/patches/patch-serverconfig_c
+#	modified:   www/hiawatha/pkg/PLIST
+#	modified:   www/kazehakase/Makefile
+#	modified:   www/ktdms/Makefile
+#	modified:   www/ktdms/files/INSTALL
+#	modified:   www/liferea/Makefile
+#	modified:   www/midori/Makefile
+#	modified:   www/midori/distinfo
+#	modified:   www/midori/patches/patch-wscript
+#	modified:   www/midori/pkg/PLIST
+#	modified:   www/mozilla-firefox/Makefile
+#	modified:   www/mozilla-firefox/distinfo
+#	modified:   www/mplayerplug-in/Makefile
+#	modified:   www/php5/Makefile.inc
+#	modified:   www/php5/core/Makefile
+#	modified:   www/php5/extensions/Makefile
+#	modified:   www/phpldapadmin/Makefile
+#	modified:   www/phpldapadmin/pkg/MESSAGE
+#	modified:   www/phpldapadmin/pkg/PLIST
+#	modified:   www/piwik/Makefile
+#	modified:   www/piwik/distinfo
+#	modified:   www/piwik/pkg/PLIST
+#	modified:   www/tomcat/v4/Makefile
+#	modified:   www/tomcat/v4/distinfo
+#	modified:   www/tomcat/v4/pkg/PLIST-examples
+#	modified:   www/tomcat/v5/Makefile
+#	modified:   www/tomcat/v6/Makefile
+#	modified:   www/trac/Makefile
+#	modified:   www/trac/distinfo
+#	modified:   www/vtigercrm/Makefile
+#	modified:   www/vtigercrm/distinfo
+#	modified:   www/vtigercrm/pkg/PLIST
+#	modified:   www/wordpress-mu/Makefile
+#	modified:   www/wordpress/Makefile
+#	modified:   www/wordpress/distinfo
+#	modified:   www/wordpress/pkg/PLIST
+#	modified:   www/zopeedit/Makefile
+#	modified:   x11/Makefile
+#	modified:   x11/dwm/Makefile
+#	modified:   x11/dwm/distinfo
+#	modified:   x11/e16keyedit/Makefile
+#	modified:   x11/gnome/gvfs/Makefile
+#	modified:   x11/gnome/py-gnome-extras/Makefile
+#	modified:   x11/gnome/seahorse-plugins/Makefile
+#	modified:   x11/gnome/settings-daemon/Makefile
+#	modified:   x11/gnome/settings-daemon/patches/patch-plugins_media-keys_gsd-media-keys-manager_c
+#	modified:   x11/gnome/totem/Makefile
+#	modified:   x11/gnome/tracker/Makefile
+#	modified:   x11/gnome/yelp/Makefile
+#	modified:   x11/gob2/Makefile
+#	modified:   x11/gob2/distinfo
+#	modified:   x11/gob2/pkg/PLIST
+#	modified:   x11/gtk+2/Makefile
+#	modified:   x11/gtk+2/distinfo
+#	modified:   x11/gtk-vnc/Makefile
+#	modified:   x11/gtk2mm/Makefile
+#	modified:   x11/gtk2mm/distinfo
+#	modified:   x11/gtk2mm/pkg/PLIST-docs
+#	modified:   x11/kde4/utils/Makefile
+#	modified:   x11/kde4/velop/Makefile
+#	modified:   x11/peksystray/Makefile
+#	modified:   x11/py-qt4/Makefile
+#	modified:   x11/py-qt4/pkg/PLIST-main
+#	modified:   x11/sisctrl/Makefile
+#	modified:   x11/vlc/Makefile
+#	modified:   x11/wxSVG/Makefile
+#	modified:   x11/xfce4/Makefile
+#	modified:   x11/xfce4/exo/Makefile
+#	modified:   x11/xfce4/exo/patches/patch-exo-open_main_c
+#	modified:   x11/xfce4/terminal/Makefile
+#	modified:   x11/xfce4/terminal/distinfo
+#	modified:   x11/xfce4/terminal/pkg/PLIST
+#	modified:   x11/xfce4/xfce4-weather/Makefile
+#	modified:   x11/xfce4/xfce4-weather/distinfo
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	archivers/lzo2/
+#	audio/cmu-sphinx3/patches/patch-src_programs_Makefile_in
+#	audio/exaile/
+#	audio/libdca/patches/patch-libdca_Makefile_in
+#	audio/libdca/patches/patch-src_Makefile_in
+#	audio/libid3tag/files/
+#	audio/libid3tag/patches/patch-configure
+#	audio/picard/patches/patch-picard_const_py
+#	audio/timidity/files/
+#	audio/timidity/patches/patch-TiMidity++-2_13_2_configure_in
+#	audio/timidity/patches/patch-TiMidity++-2_13_2_timidity_Makefile_am
+#	audio/timidity/patches/patch-TiMidity++-2_13_2_timidity_freq_c
+#	audio/timidity/patches/patch-TiMidity++-2_13_2_timidity_output_c
+#	audio/vorbis-tools/patches/patch-ogg123_vorbis_comments_c
+#	benchmarks/iozone/patches/patch-src_current_makefile
+#	books/svnbook/
+#	databases/iodbc/patches/patch-admin_libiodbc_pc_in
+#	databases/mysql/patches/patch-config_ac-macros_ssl_m4
+#	databases/mysql/patches/patch-mysql-test_lib_My_SafeProcess_Makefile_in
+#	databases/mysql/patches/patch-sql-bench_Makefile_in
+#	databases/py-odbc/
+#	databases/xapian-core/
+#	devel/git-cola/
+#	devel/xulrunner/1.8/
+#	devel/xulrunner/1.9/
+#	devel/xulrunner/Makefile.inc
+#	games/wormux/patches/patch-lib_wormux_net_network_cpp
+#	games/wormux/patches/patch-tools_servers_index_server_net_data_cpp
+#	graphics/autopano-sift-c/patches/patch-APSCpp_APSCpp_c
+#	graphics/openexr/patches/patch-IlmImf_ImfAutoArray_h
+#	graphics/openexr/patches/patch-IlmImf_ImfPizCompressor_cpp
+#	graphics/openexr/patches/patch-IlmImf_ImfPreviewImage_cpp
+#	graphics/openexr/patches/patch-IlmImf_ImfPxr24Compressor_cpp
+#	graphics/openexr/patches/patch-IlmImf_ImfRleCompressor_cpp
+#	graphics/openexr/patches/patch-IlmImf_ImfZipCompressor_cpp
+#	graphics/tiff/patches/patch-tools_rgb2ycbcr_c
+#	graphics/tiff/patches/patch-tools_tiff2rgba_c
+#	lang/jamvm/patches/patch-src_interp_engine_interp_h
+#	lang/jamvm/patches/patch-src_interp_inlining_c
+#	lang/jamvm/patches/patch-src_thread_h
+#	lang/mono/patches/patch-mcs_class_System_Security_System_Security_Cryptography_Xml_SignedXml_cs
+#	mail/gmime24/
+#	mail/mailscanner/Makefile.orig
+#	mail/mailscanner/distinfo.orig
+#	mail/mailscanner/patches/patch-bin_MailScanner.orig
+#	mail/mailscanner/patches/patch-bin_processing_messages_alert.orig
+#	mail/mailscanner/patches/patch-etc_MailScanner_conf.orig
+#	mail/mailscanner/patches/patch-lib_MailScanner_ConfigDefs_pl.orig
+#	mail/mailscanner/patches/patch-lib_MailScanner_Message_pm.orig
+#	mail/mailscanner/patches/patch-lib_mcafee-autoupdate.orig
+#	mail/mailscanner/pkg/PLIST.orig
+#	mail/mutt/snapshot/patches/patch-hcache_c
+#	mail/mutt/snapshot/patches/patch-hcache_h
+#	mail/mutt/snapshot/patches/patch-imap_util_c
+#	mail/zarafa/libical/patches/patch-configure
+#	mail/zarafa/libical/patches/patch-examples_access_properties_and_parameters_c
+#	mail/zarafa/zarafa/patches/patch-ECtools_zarafa-cfgchecker_Makefile_in
+#	mail/zarafa/zarafa/patches/patch-ECtools_zarafa-stats_Makefile_in
+#	mail/zarafa/zarafa/patches/patch-common_ECLogger_cpp
+#	mail/zarafa/zarafa/patches/patch-provider_client_ClientUtil_cpp
+#	mail/zarafa/zarafa/patches/patch-provider_libserver_ZarafaCmd_cpp
+#	mail/zarafa/zarafa/patches/patch-spooler_Makefile_in
+#	multimedia/schroedinger/
+#	multimedia/xine-lib/patches/patch-m4_dvdnav_m4
+#	multimedia/xine-lib/patches/patch-src_libspudec_spu_c
+#	multimedia/xine-lib/patches/patch-src_libspudec_spu_h
+#	multimedia/xine-lib/patches/patch-src_libspudec_xine_spu_decoder_c
+#	net/adsuck/Makefile.orig
+#	net/adsuck/distinfo.orig
+#	net/ifmcstat/
+#	net/irssi-silc/patches/patch-apps_irssi_src_silc_core_client_ops_c
+#	net/ladvd/patches/
+#	net/nepenthes/patches/patch-modules_shellcode-generic_sch_generic_wget_cpp
+#	net/openafs/Makefile.orig
+#	net/openafs/files/README.OpenBSD.orig
+#	net/openafs/files/openafs-setup.orig
+#	net/p5-IP-Country/
+#	net/twitux/
+#	productivity/glabels/
+#	productivity/yokadi/
+#	security/xmlsec/patches/
+#	status.log
+#	telephony/asterisk/patches/patch-build_tools_mkpkgconfig
+#	textproc/libtextcat/
+#	up.log
+#	www/cherokee/patches/patch-cherokee_server_c
+#	www/cherokee/patches/patch-cherokee_source_interpreter_c
+#	www/drupal6/core/patches/
+#	www/drupal6/ctools/
+#	www/drupal6/devel/
+#	www/drupal6/dhtml_menu/
+#	www/drupal6/filefield/
+#	www/drupal6/globalredirect/
+#	www/drupal6/imageapi/
+#	www/drupal6/imagecache/
+#	www/drupal6/imagecache_profiles/
+#	www/drupal6/imagefield/
+#	www/drupal6/locale-fr/patches/
+#	www/drupal6/masquerade/patches/
+#	www/drupal6/nodeaccess_userreference/
+#	www/drupal6/panels/
+#	www/drupal6/publishcontent/
+#	www/drush/
+#	www/firefox35/files/nsSound.cpp
+#	www/firefox35/files/sydney_audio_sndio.c
+#	www/firefox35/patches/patch-extensions_pref_system-pref_src_gconf_nsSystemPrefService_cpp
+#	www/firefox35/patches/patch-js_src_jsgc_cpp
+#	www/firefox35/patches/patch-js_src_nanojit_NativeSparc_cpp
+#	www/firefox35/patches/patch-js_src_nanojit_Nativei386_cpp
+#	www/firefox35/patches/patch-js_src_nanojit_avmplus_h
+#	www/firefox35/patches/patch-layout_build_Makefile_in
+#	www/firefox35/patches/patch-media_libsydneyaudio_include_sydney_audio_h
+#	www/firefox35/patches/patch-media_libsydneyaudio_src_Makefile_in
+#	www/firefox35/patches/patch-security_nss_lib_ckfw_builtins_certdata_c
+#	www/firefox35/patches/patch-security_nss_lib_ckfw_builtins_certdata_txt
+#	www/firefox35/patches/patch-security_nss_lib_softoken_fipstokn_c
+#	www/firefox35/patches/patch-widget_src_gtk2_Makefile_in
+#	www/php5/patches/patch-ext_suhosin_suhosin_c
+#	www/xapian-omega/
+#	x11/gtk2mm/patches/
+#	x11/xarchiver/
+#	x11/xfce4/thunar-archive/
+no changes added to commit (use "git add" and/or "git commit -a")

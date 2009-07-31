@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.578 2009/06/26 02:03:23 jolan Exp $
+# $OpenBSD: Makefile,v 1.580 2009/07/29 21:25:21 weerd Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -114,6 +114,7 @@
      SUBDIR += ices
      SUBDIR += ices2
      SUBDIR += icmpinfo
+     SUBDIR += ifmcstat
      SUBDIR += ifstat
      SUBDIR += iftop
      SUBDIR += igmpproxy
@@ -451,6 +452,7 @@
      SUBDIR += transmission
      SUBDIR += trickle
      SUBDIR += ttcp
+     SUBDIR += twitux
      SUBDIR += ucspi-unix
      SUBDIR += udptunnel
      SUBDIR += unison

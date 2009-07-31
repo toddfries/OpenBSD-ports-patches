@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.22 2009/03/11 09:29:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.24 2009/07/19 22:49:12 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		video stream processing tools
 
 DISTNAME=		transcode-1.0.5
-PKGNAME=		${DISTNAME}p2
+PKGNAME=		${DISTNAME}p4
 CATEGORIES=		multimedia
 
 HOMEPAGE=		http://www.transcoding.org/
@@ -18,7 +18,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += ICE SM X11 Xau Xaw Xdmcp Xext Xpm Xrandr Xrender Xt
 WANTLIB += Xv c faac faad freetype m pthread sndio usbhid x264
-WANTLIB += z
+WANTLIB += z oil-0.3 schroedinger-1.0
 
 MASTER_SITES=		http://fromani.exit1.org/
 EXTRACT_SUFX=		.tar.bz2
@@ -37,7 +37,7 @@ PATCH_LIST=		patch-* gcc-*
 
 LIB_DEPENDS=		SDL.>=2::devel/sdl \
 			a52::audio/liba52 \
-			avcodec.>=10,avutil.>=4::graphics/ffmpeg \
+			avcodec.>=13.1,avutil.>=6:ffmpeg->=20080620p10:graphics/ffmpeg \
 			dv.>=4::multimedia/libdv \
 			dvdread.>=3::devel/libdvdread \
 			iconv.>=4::converters/libiconv \

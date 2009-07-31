@@ -1,4 +1,4 @@
-# $OpenBS$
+# $OpenBSD: Makefile,v 1.12 2009/07/30 03:37:31 espie Exp $
 
 SUBDIR += FCKeditor
 SUBDIR += admin-menu
@@ -10,16 +10,27 @@ SUBDIR += backup_migrate
 SUBDIR += cck
 SUBDIR += content_access
 SUBDIR += core
+SUBDIR += ctools
 SUBDIR += date
-#SUBDIR += image
+SUBDIR += devel
+SUBDIR += dhtml_menu
+SUBDIR += filefield
+SUBDIR += globalredirect
+SUBDIR += imageapi
+SUBDIR += imagecache
+SUBDIR += imagecache_profiles
+SUBDIR += imagefield
 SUBDIR += locale-fr
 SUBDIR += locale-it
 SUBDIR += locale-ja
 SUBDIR += masquerade
 SUBDIR += meta-tags
+SUBDIR += nodeaccess_userreference
+SUBDIR += panels
 SUBDIR += pathauto
 SUBDIR += poormanscron
 SUBDIR += printer-friendly
+SUBDIR += publishcontent
 SUBDIR += scheduler
 SUBDIR += securelogin
 SUBDIR += theme-newsflash

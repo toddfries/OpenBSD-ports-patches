@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.416 2009/06/23 17:58:38 martynas Exp $
+# $OpenBSD: Makefile,v 1.418 2009/07/27 16:26:31 espie Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -28,6 +28,7 @@
      SUBDIR += dillo
      SUBDIR += drupal5
      SUBDIR += drupal6
+     SUBDIR += drush
      SUBDIR += elinks
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
@@ -403,6 +404,7 @@
      SUBDIR += www6to4
      SUBDIR += wwwcount
      SUBDIR += wwwoffle
+     SUBDIR += xapian-omega
      SUBDIR += xcache
      SUBDIR += xmhtml
      SUBDIR += xoops

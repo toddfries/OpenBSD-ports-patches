@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2009/07/12 20:25:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2009/07/19 22:49:12 sthen Exp $
 
 COMMENT =		audio player daemon with library management
 
 V =			0.6
 DISTNAME =		xmms2-${V}DrMattDestruction
-PKGNAME =		xmms2-${V}p1
+PKGNAME =		xmms2-${V}p3
 
 SHARED_LIBS +=		xmmsclient++		0.0 # 3.0.0
 SHARED_LIBS +=		xmmsclient++-glib	0.0 # 1.0.0
@@ -31,8 +31,9 @@ MODULES =		lang/python \
 			devel/gettext \
 			perl
 
-WANTLIB += a52 c faac faad m mp3lame ncurses ogg pthread readline
-WANTLIB += theora util vorbis vorbisenc vorbisfile x264 z
+WANTLIB  =		a52 c faac faad m mp3lame ncurses ogg oil-0.3 \
+			pthread readline schroedinger-1.0 theora \
+			util vorbis vorbisenc vorbisfile x264 z
 
 NO_REGRESS =		Yes
 
@@ -41,7 +42,7 @@ BUILD_DEPENDS =		::devel/pyrex \
 
 LIB_DEPENDS =		${MODPY_LIB_DEPENDS} \
 			gio-2.0.>=1800,glib-2.0,gmodule-2.0,gobject-2.0,gthread-2.0::devel/glib2 \
-			avcodec.>=13,avutil.>=6::graphics/ffmpeg \
+			avcodec.>=13.1,avutil.>=6:ffmpeg->=20080620p10:graphics/ffmpeg \
 			ao.>=3::audio/libao \
 			jack.>=0::audio/jack \
 			sqlite3.>=13::databases/sqlite3 \

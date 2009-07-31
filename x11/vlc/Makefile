@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.79 2009/04/14 19:52:08 kili Exp $
+# $OpenBSD: Makefile,v 1.82 2009/07/27 21:44:15 martynas Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=	videolan client; multimedia player
 
 V=		0.8.6i
 DISTNAME=	vlc-${V}
-PKGNAME-main=	${DISTNAME}p4
+PKGNAME-main=	${DISTNAME}p6
 CATEGORIES=	x11
 MASTER_SITES=	http://download.videolan.org/pub/videolan/vlc/${V}/
 
@@ -29,7 +29,7 @@ LIB_DEPENDS-main=${LIB_DEPENDS} \
 		id3tag.>=3.0::audio/libid3tag \
 		mad.>=2.1::audio/libmad \
 		mpeg2::graphics/libmpeg2 \
-		avcodec.>=9.0,avformat.>=9.0,postproc.>=9.0,avutil.>=3.0::graphics/ffmpeg \
+		avcodec.>=13.1,avformat.>=12,avutil.>=6,postproc.>=12:ffmpeg->=20080620p10:graphics/ffmpeg \
 		faad.>=2::audio/faad \
 		fribidi::devel/fribidi \
 		a52::audio/liba52 \
@@ -48,7 +48,8 @@ RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 
 WANTLIB-main=	ICE SM X11 Xext Xinerama Xv Xxf86vm c freetype m ncurses \
 		pthread stdc++ usbhid z Xau Xdmcp Xrandr Xrender \
-		SDL jpeg tiff bz2 ogg vorbis vorbisenc faac mp3lame sndio
+		SDL jpeg tiff bz2 ogg vorbis vorbisenc faac mp3lame sndio \
+		oil-0.3 schroedinger-1.0
 
 CONFIGURE_STYLE=autoconf
 AUTOCONF_VERSION=2.61
@@ -173,7 +174,7 @@ FLAVOR?=
 MULTI_PACKAGES+=-web
 COMMENT-web=	mozilla plugin for embedded media playback
 PKGNAME-web=	vlc-web-${V}p0
-BUILD_DEPENDS+=	:xulrunner-devel-*:devel/xulrunner,-devel
+BUILD_DEPENDS+=	:xulrunner-devel-*:devel/xulrunner/1.8,-devel
 CONFIGURE_ARGS+=--enable-mozilla
 CONFIGURE_ENV+=	MOZILLA_CONFIG="${LOCALBASE}/bin/xulrunner-config" \
 		XPIDL="${LOCALBASE}/xulrunner/xpidl"

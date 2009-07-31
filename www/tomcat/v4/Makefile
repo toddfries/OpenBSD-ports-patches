@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.12 2009/04/26 09:38:25 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2009/07/20 14:24:15 naddy Exp $
 
 COMMENT-main=	Java servlet 2.3 and Java server pages 1.2 server
 COMMENT-admin=	administration web application
 COMMENT-examples=example applications and documentation
 
-V=		4.1.39
+V=		4.1.40
 DISTNAME=	apache-tomcat-${V}-LE-jdk14
-PKGNAME-main=	tomcat-${V}p1
-PKGNAME-admin=	tomcat-admin-${V}
-PKGNAME-examples=tomcat-examples-${V}
+PKGNAME-main=	tomcat-${V}
+PKGNAME-admin=	tomcat-admin-${V}p0
+PKGNAME-examples=tomcat-examples-${V}p0
 CATEGORIES=	www
 
 MASTER_SITES=	${MASTER_SITE_APACHE:=tomcat/tomcat-4/v$V/bin/} \
@@ -27,9 +27,9 @@ BUILD_DEPENDS=	::archivers/gtar
 
 RUN_DEPENDS=	::java/javaPathHelper
 
-RUN_DEPENDS-admin=	:tomcat-4.*:www/tomcat/v4,-main
+RUN_DEPENDS-admin=	:tomcat->=4,<5:www/tomcat/v4,-main
 PREFIX-examples=	${CATALINA_BASE}
-RUN_DEPENDS-examples=	:tomcat-admin-4.*:www/tomcat/v4,-admin
+RUN_DEPENDS-examples=	:tomcat-admin->=4,<5:www/tomcat/v4,-admin
 
 # Apache Software License 2.0
 PERMIT_PACKAGE_CDROM=	Yes
