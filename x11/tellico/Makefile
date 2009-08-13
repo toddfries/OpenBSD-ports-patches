@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2009/03/28 18:12:50 naddy Exp $
+# $OpenBSD: Makefile,v 1.11 2009/08/12 13:29:36 ajacoutot Exp $
 
 COMMENT=	organizer for book/dvd/music collections
 
 DISTNAME=	tellico-1.3.4
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p2
 CATEGORIES=	x11 databases
 
 HOMEPAGE=	http://www.periapsis.org/tellico/
@@ -18,12 +18,13 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB+=	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c
-WANTLIB+=	exslt gcrypt gpg-error iconv idn intl jpeg m pcre pcreposix
+WANTLIB+=	exslt gcrypt gpg-error idn jpeg m pcre pcreposix
 WANTLIB+=	png pthread stdc++ util xml2 xslt z fam rpcsvc
-WANTLIB+=	expat fontconfig freetype
+WANTLIB+=	expat fontconfig freetype pthread-stubs xcb
 
 MODULES=	x11/kde \
-		lang/python
+		lang/python \
+		devel/gettext
 
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes

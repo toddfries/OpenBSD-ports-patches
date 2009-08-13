@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.6 2008/08/23 07:59:42 simon Exp $
+# $OpenBSD: Makefile,v 1.8 2009/08/07 12:07:11 jasper Exp $
 
 COMMENT=	unified interface to MIME encoding and decoding
 
 MODULES=	cpan
-DISTNAME=	Email-MIME-Encodings-1.311
+DISTNAME=	Email-MIME-Encodings-1.313
+PKGNAME=	p5-${DISTNAME}
 CATEGORIES=	mail
 
-MAINTAINER=	Sam Smith <s@msmith.net>
+MAINTAINER=	Stephan A. Rickauer <stephan.rickauer@startek.ch>
 
 # Same as Perl
 PERMIT_PACKAGE_CDROM=	Yes

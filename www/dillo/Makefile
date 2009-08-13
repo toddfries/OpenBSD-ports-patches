@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.29 2008/11/03 11:05:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2009/08/10 18:46:49 jasper Exp $
 
 COMMENT=		fast and light graphical web browser
 
 DISTNAME=		dillo-2.0
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p3
 CATEGORIES=     	www
 
 HOMEPAGE=		http://www.dillo.org/
-
-MAINTAINER=		James Turner <james@bsdgroup.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,7 +15,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	X11 Xext Xft Xi Xinerama Xrender c crypto fontconfig m \
-		pthread ssl stdc++ z
+		pthread pthread-stubs ssl stdc++ xcb z
 
 MODULES=		converters/libiconv
 

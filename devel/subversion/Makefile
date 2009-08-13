@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.59 2009/06/22 17:00:23 naddy Exp $
+# $OpenBSD: Makefile,v 1.61 2009/08/11 08:14:42 msf Exp $
 
 COMMENT-main=		subversion revision control system
 COMMENT-perl=		perl interface to subversion
@@ -7,13 +7,13 @@ COMMENT-ruby=		ruby interface to subversion
 COMMENT-ap2=		apache2 subversion modules
 COMMENT-gnome-keyring=	gnome-keyring support for subversion
 
-VERSION=		1.6.1
+VERSION=		1.6.4
 DISTNAME=		subversion-${VERSION}
 PKGNAME=		${DISTNAME}
 PKGNAME-main=		${DISTNAME}
 PKGNAME-perl=		p5-SVN-${VERSION}
 PKGNAME-python=		py-subversion-${VERSION}
-PKGNAME-ruby=		ruby-subversion-${VERSION}p0
+PKGNAME-ruby=		ruby-subversion-${VERSION}
 PKGNAME-ap2=		ap2-subversion-${VERSION}
 PKGNAME-gnome-keyring=	gnome-keyring-subversion-${VERSION}
 
@@ -37,7 +37,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}/tarballs/
+MASTER_SITES=	${HOMEPAGE}/downloads/
 EXTRACT_SUFX=	.tar.bz2
 
 PSEUDO_FLAVORS=	no_bindings no_ap2 no_gnome-keyring
@@ -116,7 +116,8 @@ LIB_DEPENDS-python+=	${_lib}.>=${SO_VERSION}:${PKGNAME}:devel/subversion,-main
 WANTLIB-ruby=	${WANTLIB} apr-1 aprutil-1 crypto neon sasl2 ssl \
 		asn1 gssapi krb5
 RUN_DEPENDS-ruby=	${MODRUBY_RUN_DEPENDS}
-LIB_DEPENDS-ruby=	ruby.>=2::lang/ruby ${MODGETTEXT_LIB_DEPENDS}
+LIB_DEPENDS-ruby=	${MODRUBY_LIB_DEPENDS} \
+			${MODGETTEXT_LIB_DEPENDS}
 .  for _lib in ${SVN_LIBS}
 LIB_DEPENDS-ruby+=	${_lib}.>=${SO_VERSION}:${PKGNAME}:devel/subversion,-main
 .  endfor

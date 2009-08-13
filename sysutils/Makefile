@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.175 2009/06/18 19:47:07 landry Exp $
+# $OpenBSD: Makefile,v 1.178 2009/08/09 21:50:31 landry Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
      SUBDIR += acx-firmware
      SUBDIR += anacron
      SUBDIR += apc-upsd
+     SUBDIR += apcd
      SUBDIR += autossh
      SUBDIR += bacula,mysql
      SUBDIR += bacula,pgsql
@@ -103,6 +104,7 @@
      SUBDIR += radiusreport
      SUBDIR += radmind
      SUBDIR += rancid
+     SUBDIR += resmon
      SUBDIR += rdiff-backup
      SUBDIR += rpl
      SUBDIR += rtty
@@ -144,6 +146,7 @@
      SUBDIR += upsd
      SUBDIR += usbutil
      SUBDIR += uvideo-firmware
+     SUBDIR += vifm
      SUBDIR += wdsetup
      SUBDIR += whowatch
      SUBDIR += wmapm

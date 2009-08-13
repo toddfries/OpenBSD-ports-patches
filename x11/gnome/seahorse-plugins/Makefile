@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2009/07/27 21:44:15 martynas Exp $
+# $OpenBSD: Makefile,v 1.6 2009/08/12 11:20:34 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	plugins and utilities for encryption in GNOME
 
 GNOME_PROJECT=	seahorse-plugins
 GNOME_VERSION=	2.24.1
+PKGNAME=	${DISTNAME}p1
 
 CATEGORIES=	security
 
@@ -27,9 +28,11 @@ WANTLIB += glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2
 WANTLIB += gnomeui-2 gnomevfs-2 gobject-2.0 gpg-error gpgme gthread-2.0
 WANTLIB += gtk-x11-2.0 m notify nspr4 pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png popt pthread
-WANTLIB += ssl util xml2 z
+WANTLIB += ssl util xml2 z pthread-stubs xcb
 
-BUILD_DEPENDS=	::www/epiphany
+BUILD_DEPENDS=	::devel/xulrunner/1.8,-devel \
+		::www/epiphany \
+		::x11/gnome/gedit
 
 LIB_DEPENDS=	cryptui::x11/gnome/seahorse \
 		gtksourceview-2.0.>=2::x11/gtksourceview \

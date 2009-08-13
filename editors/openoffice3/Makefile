@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.23 2009/07/06 23:33:36 naddy Exp $
+# $OpenBSD: Makefile,v 1.25 2009/08/10 14:07:43 sthen Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -10,8 +10,8 @@ VERSION=	3.1.0
 DISTNAME=	OOo_${VERSION}
 WRKDIST=	${WRKDIR}/OOO310_m11
 PKGNAME=	openoffice-${VERSION}
-PKGNAME-main=	openoffice-${VERSION}p6
-PKGNAME-kde=	openoffice-kde-${VERSION}
+PKGNAME-main=	openoffice-${VERSION}p8
+PKGNAME-kde=	openoffice-kde-${VERSION}p0
 PKGNAME-java=	openoffice-java-${VERSION}p1
 CATEGORIES=	editors productivity
 
@@ -41,7 +41,7 @@ DIST_SUBDIR=	openoffice
 
 # See http://www.openoffice.org/about.html#licenses
 # and http://www.openoffice.org/license.html
-# and http://www.openoffice.org/FAQs/faq-licensing.html 
+# and http://www.openoffice.org/FAQs/faq-licensing.html
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -86,7 +86,9 @@ BUILD_DEPENDS+=	:zip-*:archivers/zip \
 		::print/cups \
 		::devel/boost
 
-MODULES+=	lang/python
+MODULES+=	lang/python \
+		devel/gconf2
+MODGCONF2_LIBDEP=No
 LIB_DEPENDS-main=gdk-x11-2.0.>=400.14,gdk_pixbuf-2.0.>=400.14,gtk-x11-2.0.>=400.14::x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
 		estdc++.>=11:libstdc++->=4.2,<4.3:lang/gcc/4.2,-estdc \
@@ -95,22 +97,25 @@ LIB_DEPENDS-main=gdk-x11-2.0.>=400.14,gdk_pixbuf-2.0.>=400.14,gtk-x11-2.0.>=400.
 		curl.>=7::net/curl \
 		neon.>=24::net/neon \
 		wpd.>=8::textproc/libwpd \
-		icuuc.>=0,icudata.>=0::textproc/icu4c \
+		icuuc.>=0,icudata.>=0,icui18n,icule::textproc/icu4c \
 		::devel/gperf \
 		raptor.>=2::textproc/raptor \
-		rdf.>=0::textproc/redland
-WANTLIB-main=	ICE SM X11 Xau Xcomposite Xdamage Xdmcp Xext Xrender Xcursor \
-		Xfixes Xi Xinerama Xrandr atk-1.0 c cairo crypto expat \
-		fontconfig freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
-		gthread-2.0 iconv intl jpeg m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1 png pthread rasqal ssl util xml2 z icui18n icule 
+		rasqal,rdf.>=0::textproc/redland \
+		${MODGCONF2_LIB_DEPENDS}
+WANTLIB-main=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
+		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
+		crypto dbus-1 expat fontconfig freetype gio-2.0 glib-2.0 \
+		glitz gmodule-2.0 gobject-2.0 gthread-2.0 iconv intl \
+		jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
+		png pthread pthread-stubs ssl util xcb xml2 z
 RUN_DEPENDS-main=	:desktop-file-utils-*:devel/desktop-file-utils
 
 MODULES+=		x11/qt3
 RUN_DEPENDS-kde=	::editors/openoffice3
 LIB_DEPENDS-kde=	${MODQT_LIB_DEPENDS} \
 			kabc,kdecore,kdeui,kio::x11/kde/libs3
-WANTLIB-kde=		X11 Xau Xdmcp Xext Xrandr Xrender estdc++ m
+WANTLIB-kde=		X11 Xau Xdmcp Xext Xrandr Xrender estdc++ m \
+			pthread-stubs xcb
 
 .if !${FLAVOR:L:Mno_java}
 MODULES+=		java
@@ -223,7 +228,7 @@ pre-patch:
 do-build:
 	@cd ${WRKBUILD} && \
 		./bootstrap && \
-		${SETENV} ${MAKE_ENV} ${TCSH} -c 'limit descriptors 256 && source OpenBSDEnv.Set && ${BUILD_CMD}' 
+		${SETENV} ${MAKE_ENV} ${TCSH} -c 'limit descriptors 256 && source OpenBSDEnv.Set && ${BUILD_CMD}'
 
 do-install:
 	@rm -Rf ${WRKDIR}/tmp
