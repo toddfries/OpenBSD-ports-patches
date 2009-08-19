@@ -1,0 +1,15 @@
+$OpenBSD: patch-lib_libjpegtran_Makefile_in,v 1.1 2009/08/15 17:40:05 ajacoutot Exp $
+
+Correct linking, from fix_libfspotjpegtran_linkage.dpatch.
+
+--- lib/libjpegtran/Makefile.in.orig	Sat Aug  8 00:20:44 2009
++++ lib/libjpegtran/Makefile.in	Sat Aug  8 00:21:00 2009
+@@ -51,7 +51,7 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+ am__installdirs = "$(DESTDIR)$(fspotlibdir)"
+ fspotlibLTLIBRARIES_INSTALL = $(INSTALL)
+ LTLIBRARIES = $(fspotlib_LTLIBRARIES)
+-libfspotjpegtran_la_LIBADD =
++libfspotjpegtran_la_LIBADD = $(F_LIBS)
+ am__objects_1 = jpeg-data.lo jpeg-marker.lo jpegtran.lo transupp.lo
+ am_libfspotjpegtran_la_OBJECTS = $(am__objects_1)
+ libfspotjpegtran_la_OBJECTS = $(am_libfspotjpegtran_la_OBJECTS)
