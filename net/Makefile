@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.583 2009/08/17 23:06:06 sthen Exp $
+# $OpenBSD: Makefile,v 1.585 2009/08/21 09:41:36 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -160,6 +160,7 @@
      SUBDIR += libgalago
      SUBDIR += libnet
      SUBDIR += libnetdude
+     SUBDIR += libnice
      SUBDIR += libnids
      SUBDIR += libpcapnav
      SUBDIR += libproxy
@@ -490,6 +491,8 @@
      SUBDIR += ytalk
      SUBDIR += ytalk,no_x11
      SUBDIR += zabbix
+     SUBDIR += zabbix,mysql
+     SUBDIR += zabbix,pgsql
      SUBDIR += zenirc
      SUBDIR += znc
 

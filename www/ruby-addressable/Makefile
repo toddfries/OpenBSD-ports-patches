@@ -1,7 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2009/01/31 12:48:46 bernd Exp $
+# $OpenBSD: Makefile,v 1.4 2009/08/25 21:47:59 bernd Exp $
 
 COMMENT =	replacement for Ruby's URI implementation
 
+# databases/ruby-datamapper/core (0.9.11) needs 2.0.2
+# test before you update!
 DISTNAME = 	addressable-2.0.2
 PKGNAME =	ruby-${DISTNAME}
 CATEGORIES =	www
@@ -22,11 +24,8 @@ CONFIGURE_STYLE =	ruby gem
 
 PKG_ARCH =		*
 
-REGRESS_DEPENDS =	::devel/ruby-rake \
-			::devel/ruby-rspec \
-			::devel/ruby-rcov
+REGRESS_DEPENDS =	::devel/ruby-rcov
 
-do-regress:
-	@cd ${WRKBUILD} && ${LOCALBASE}/bin/rake spec
+MODRUBY_REGRESS =	rake rspec
 
 .include <bsd.port.mk>

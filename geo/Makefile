@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2009/08/02 18:39:44 ian Exp $
+# $OpenBSD: Makefile,v 1.21 2009/08/25 17:15:52 avsm Exp $
 # $FreeBSD: Makefile,v 1.4 1997/06/03 09:14:50 asami Exp $
 
      SUBDIR += gdal
@@ -7,6 +7,7 @@
      SUBDIR += globe
      SUBDIR += gpstk
      SUBDIR += gpsbabel
+     SUBDIR += gpx-viewer
      SUBDIR += jeoip
      SUBDIR += josm
      SUBDIR += libchamplain
@@ -28,6 +29,7 @@
      SUBDIR += p5-Geo-TigerLine
      SUBDIR += p5-Geography-Countries
      SUBDIR += postgis
+     SUBDIR += ruby-findmyiphone
      SUBDIR += qgis
      SUBDIR += qlandkarte
 

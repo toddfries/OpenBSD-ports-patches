@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2009/07/26 22:42:22 robert Exp $
+# $OpenBSD: Makefile,v 1.49 2009/08/21 20:26:08 jolan Exp $
 
 FULLPKGNAME-main=	php5-extensions-${V}
 COMMENT-main=		informational package about PHP5 extensions
@@ -92,7 +92,7 @@ CONFIGURE_ARGS+=	--with-gd=shared ${GRAPHIC_CONFIG} \
 
 . if ${FLAVOR:L:Mno_x11}
 CONFIGURE_ARGS+=	--without-xpm-dir --without-freetype-dir
-FULLPKGNAME-gd=		php5-gd-${V}p1-no_x11
+FULLPKGNAME-gd=		php5-gd-${V}p2-no_x11
 . else
 USE_X11=		yes
 CONFIGURE_ARGS+=	--with-xpm-dir=${X11BASE}
@@ -355,20 +355,8 @@ LIB_DEPENDS-xsl=	xslt.>=3,exslt::textproc/libxslt
 WANTLIB-xsl=		${WANTLIB} iconv xml2 z
 .endif
 
-# zip
-PSEUDO_FLAVORS+=	no_zip
-.if ${FLAVOR:L:Mno_zip}
-CONFIGURE_ARGS+=	--disable-zip
-.else
-MULTI_PACKAGES+=	-zip
-COMMENT-zip=		zip functions for php5
-CONFIGURE_ARGS+=	--enable-zip=shared
-LIB_DEPENDS-zip=
-WANTLIB-zip=		${WANTLIB} z
-.endif
-
 .for i in ${MULTI_PACKAGES}
-FULLPKGNAME${i} ?=	php5${i}-${V}p1
+FULLPKGNAME${i} ?=	php5${i}-${V}p2
 RUN_DEPENDS${i}=	:php5-core-${V}:www/php5/core
 MODULE_NAME${i}=	${i:S/-//g}
 .endfor

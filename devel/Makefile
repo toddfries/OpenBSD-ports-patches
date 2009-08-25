@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.718 2009/08/16 15:46:15 msf Exp $
+# $OpenBSD: Makefile,v 1.722 2009/08/22 11:46:48 sthen Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -59,6 +59,7 @@
      SUBDIR += cutils
      SUBDIR += cvs20hg
      SUBDIR += cvs2cl
+     SUBDIR += cvs2svn
      SUBDIR += cvsgraph
      SUBDIR += cvslock
      SUBDIR += cvsplot
@@ -142,7 +143,6 @@
      SUBDIR += libconfuse
      SUBDIR += libdaemon
      SUBDIR += libdockapp
-     SUBDIR += libdvdplay
      SUBDIR += libdvdread
      SUBDIR += libelf
      SUBDIR += libexecinfo
@@ -635,6 +635,7 @@
      SUBDIR += p5-accessors
      SUBDIR += p5-boolean
      SUBDIR += p5-capitalization
+     SUBDIR += p5-common-sense
      SUBDIR += p5-enum
      SUBDIR += p5-libintl
      SUBDIR += p5-namespace-clean
@@ -741,6 +742,7 @@
      SUBDIR += ruby-assistance
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-columnize
+     SUBDIR += ruby-cucumber
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
@@ -761,6 +763,7 @@
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
      SUBDIR += ruby-parsetree
+     SUBDIR += ruby-polyglot
      SUBDIR += ruby-rack-test
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
@@ -773,6 +776,7 @@
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-systemtimer
+     SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
