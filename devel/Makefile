@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.722 2009/08/22 11:46:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.728 2009/09/04 16:09:23 landry Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -75,6 +75,7 @@
      SUBDIR += doc++
      SUBDIR += dotconf
      SUBDIR += doxygen
+     SUBDIR += dtc
      SUBDIR += eclipse
      SUBDIR += ectags
      SUBDIR += fasm
@@ -145,6 +146,7 @@
      SUBDIR += libdockapp
      SUBDIR += libdvdread
      SUBDIR += libelf
+     SUBDIR += libev
      SUBDIR += libexecinfo
      SUBDIR += libfmt
      SUBDIR += libftdi
@@ -223,6 +225,7 @@
      SUBDIR += p5-Algorithm-MDiff
      SUBDIR += p5-Algorithm-MarkovChain
      SUBDIR += p5-Algorithm-Permute
+     SUBDIR += p5-Alien-wxWidgets
      SUBDIR += p5-Any-Moose
      SUBDIR += p5-AnyEvent
      SUBDIR += p5-App-CLI
@@ -331,6 +334,7 @@
      SUBDIR += p5-Date-Leapyear
      SUBDIR += p5-Date-Simple
      SUBDIR += p5-DateTime
+     SUBDIR += p5-DateTime-Calendar-Mayan
      SUBDIR += p5-DateTime-Cron-Simple
      SUBDIR += p5-DateTime-Format-Builder
      SUBDIR += p5-DateTime-Format-HTTP
@@ -372,6 +376,7 @@
      SUBDIR += p5-ExtUtils-Depends
      SUBDIR += p5-ExtUtils-PkgConfig
      SUBDIR += p5-ExtUtils-XSBuilder
+     SUBDIR += p5-ExtUtils-XSpp
      SUBDIR += p5-File-Attributes
      SUBDIR += p5-File-Attributes-Recursive
      SUBDIR += p5-File-BOM
@@ -475,6 +480,9 @@
      SUBDIR += p5-POE-Component-IKC
      SUBDIR += p5-POE-Component-Pluggable
      SUBDIR += p5-POE-Component-PubSub
+     SUBDIR += p5-POE-Loop-Event
+     SUBDIR += p5-POE-Loop-Tk
+     SUBDIR += p5-POE-Test-Loops
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
