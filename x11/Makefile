@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.392 2009/09/05 08:47:44 landry Exp $
+# $OpenBSD: Makefile,v 1.394 2009/09/10 22:31:57 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += 915resolution
@@ -166,6 +166,7 @@
      SUBDIR += p5-Tk-ProgressBar-Mac
      SUBDIR += p5-Tk-Splash
      SUBDIR += p5-Tk-Stderr
+     SUBDIR += p5-Wx
      SUBDIR += p5-X-Osd
      SUBDIR += p5-X11-Protocol
      SUBDIR += pbrowser
@@ -216,6 +217,7 @@
      SUBDIR += slim
      SUBDIR += slim-themes
      SUBDIR += slock
+     SUBDIR += spranq-ecofont-ttf
      SUBDIR += stalonetray
      SUBDIR += swisswatch
      SUBDIR += tango-icon-theme

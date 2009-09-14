@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.728 2009/09/04 16:09:23 landry Exp $
+# $OpenBSD: Makefile,v 1.730 2009/09/09 19:42:04 jolan Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -48,6 +48,7 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
+     SUBDIR += codeblocks
      SUBDIR += commoncpp
      SUBDIR += cook
      SUBDIR += coxpcall
@@ -186,7 +187,7 @@
      SUBDIR += llvm
      SUBDIR += lpeg
      SUBDIR += luaalarm
-     SUBDIR += luabitlib
+     SUBDIR += luabitop
      SUBDIR += luacopas
      SUBDIR += luaevent
      SUBDIR += luafs

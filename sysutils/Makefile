@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.178 2009/08/09 21:50:31 landry Exp $
+# $OpenBSD: Makefile,v 1.180 2009/09/13 19:48:43 jasper Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
@@ -25,6 +25,7 @@
      SUBDIR += conky,no_x11
      SUBDIR += contool
      SUBDIR += d-feet
+     SUBDIR += dcfldd
      SUBDIR += diskrescue
      SUBDIR += dmassage
      SUBDIR += dmidecode
@@ -80,6 +81,7 @@
      SUBDIR += notification-daemon
      SUBDIR += nut
      SUBDIR += openpoppassd
+     SUBDIR += p5-Capture-Tiny
      SUBDIR += p5-File-Which
      SUBDIR += p5-Filesys-DiskSpace
      SUBDIR += p5-Filesys-Df
