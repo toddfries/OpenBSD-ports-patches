@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2009/08/10 06:34:09 kili Exp $
+# $OpenBSD: Makefile,v 1.9 2009/09/18 16:25:35 jasper Exp $
 
 COMMENT=		X Printing Panel
 
 DISTNAME=		xpp-1.5
-PKGNAME=		${DISTNAME}p3
+PKGNAME=		${DISTNAME}p4
 CATEGORIES=		print sysutils
 
 HOMEPAGE=		http://cups.sourceforge.net/xpp/
-
-MAINTAINER=		Marc Balmer <mbalmer@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes

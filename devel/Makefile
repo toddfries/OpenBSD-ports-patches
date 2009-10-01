@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.730 2009/09/09 19:42:04 jolan Exp $
+# $OpenBSD: Makefile,v 1.738 2009/09/29 09:05:19 kevlo Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -83,6 +83,7 @@
      SUBDIR += ffcall
      SUBDIR += flatzebra
      SUBDIR += flawfinder
+     SUBDIR += fossil
      SUBDIR += fox
      SUBDIR += fribidi
      SUBDIR += gal2
@@ -92,6 +93,7 @@
      SUBDIR += geany
      SUBDIR += geotiff
      SUBDIR += gettext
+     SUBDIR += gflags
      SUBDIR += giblib
      SUBDIR += giggle
      SUBDIR += gindent
@@ -105,6 +107,7 @@
      SUBDIR += gmake
      SUBDIR += gmp
      SUBDIR += goffice
+     SUBDIR += gobject-introspection
      SUBDIR += goopy
      SUBDIR += gperf
      SUBDIR += gputils
@@ -149,8 +152,10 @@
      SUBDIR += libelf
      SUBDIR += libev
      SUBDIR += libexecinfo
+     SUBDIR += libffi
      SUBDIR += libfmt
      SUBDIR += libftdi
+     SUBDIR += libgdata
      SUBDIR += libglade2
      SUBDIR += libglademm
      SUBDIR += libgsf
@@ -217,6 +222,7 @@
      SUBDIR += ode
      SUBDIR += omake
      SUBDIR += opencm
+     SUBDIR += openocd
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
      SUBDIR += p5-Algorithm-CurveFit
@@ -387,6 +393,7 @@
      SUBDIR += p5-File-DesktopEntry
      SUBDIR += p5-File-Find-Rule
      SUBDIR += p5-File-Find-Rule-Filesys-Virtual
+     SUBDIR += p5-File-Find-Rule-Perl
      SUBDIR += p5-File-Finder
      SUBDIR += p5-File-Flat
      SUBDIR += p5-File-HomeDir
@@ -576,6 +583,7 @@
      SUBDIR += p5-Test-HTML-Tidy
      SUBDIR += p5-Test-Inline
      SUBDIR += p5-Test-JSON
+     SUBDIR += p5-Test-LeakTrace
      SUBDIR += p5-Test-LongString
      SUBDIR += p5-Test-Manifest
      SUBDIR += p5-Test-Memory-Cycle
@@ -591,6 +599,7 @@
      SUBDIR += p5-Test-Pod
      SUBDIR += p5-Test-Pod-Coverage
      SUBDIR += p5-Test-Reporter
+     SUBDIR += p5-Test-Script
      SUBDIR += p5-Test-Spelling
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-Taint

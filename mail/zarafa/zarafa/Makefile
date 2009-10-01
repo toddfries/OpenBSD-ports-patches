@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2009/09/11 16:33:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2009/09/27 18:07:40 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-php=	MAPI extensions for php5
@@ -6,7 +6,7 @@ COMMENT-php=	MAPI extensions for php5
 V=		6.30.2
 DISTNAME=	zarafa-${V}
 
-PKGNAME-main=	${DISTNAME}
+PKGNAME-main=	${DISTNAME}p4
 PKGNAME-php=	php5-mapi-${V}
 
 CATEGORIES=	mail www productivity
@@ -88,7 +88,8 @@ pre-configure:
 			perl -pi -e 's/\r\n/\n/;' $$i; done
 	for i in ${SUB_SCRIPTS}; do \
 		${SUBST_CMD} ${WRKSRC}/installer/userscripts/$$i; done
-	${SUBST_CMD} ${WRKSRC}/php-ext/Makefile.in
+	${SUBST_CMD} ${WRKSRC}/php-ext/Makefile.in \
+		${WRKSRC}/spooler/DAgent.cpp
 	perl -pi -e 's,/usr/share/zarafa,${PREFIX}/share/examples/zarafa,g;' \
 		-e 's,/etc/zarafa,${SYSCONFDIR}/zarafa,g;' \
 		-e 's,/usr/bin,${PREFIX}/bin,g;' \
@@ -98,7 +99,13 @@ pre-configure:
 
 post-install:
 	${SUBST_CMD} -c ${FILESDIR}/README.OpenBSD ${PREFIX}/share/doc/zarafa/README.OpenBSD
+	${SUBST_CMD} -c ${FILESDIR}/zarafa.m4 ${PREFIX}/share/examples/zarafa/zarafa.m4
+	${SUBST_CMD} -c ${FILESDIR}/local_zarafa.m4 ${PREFIX}/share/examples/zarafa/local_zarafa.m4
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/zarafa
+	chown -R ${BINOWN}:${BINGRP} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
+		${PREFIX}/share/examples/zarafa/local_zarafa.m4
+	chmod ${SHAREMODE} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
+		${PREFIX}/share/examples/zarafa/local_zarafa.m4
 	${INSTALL_DATA_DIR} ${DESTDIR}/${PREFIX-php}/conf/php5.sample
 	echo "; Enable Zarafa mapi extension module\nextension=mapi.so" \
 		> ${WRKINST}/${PREFIX-php}/conf/php5.sample/${MODULE_NAME}.ini

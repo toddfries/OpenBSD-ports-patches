@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2009/08/15 12:58:19 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2009/09/28 08:45:03 espie Exp $
 
 SUBDIR += FCKeditor
 SUBDIR += admin-menu
@@ -7,6 +7,7 @@ SUBDIR += advanced_user
 SUBDIR += alternate_login
 SUBDIR += auto_nodetitle
 SUBDIR += backup_migrate
+SUBDIR += captcha
 SUBDIR += cck
 SUBDIR += compact_forms
 SUBDIR += content_access
@@ -33,6 +34,7 @@ SUBDIR += poormanscron
 SUBDIR += printer-friendly
 SUBDIR += publishcontent
 SUBDIR += scheduler
+SUBDIR += schema
 SUBDIR += securelogin
 SUBDIR += theme-newsflash
 SUBDIR += themesettingsapi

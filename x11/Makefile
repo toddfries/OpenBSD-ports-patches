@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.394 2009/09/10 22:31:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.397 2009/09/30 00:46:11 sthen Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
-     SUBDIR += 915resolution
      SUBDIR += Xaw3d
      SUBDIR += XawMu
      SUBDIR += Xdialog
@@ -97,6 +96,7 @@
      SUBDIR += gtk2mm
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
+     SUBDIR += gtkhotkey
      SUBDIR += gtksourceview
      SUBDIR += gtksourceviewmm
      SUBDIR += gxmessage
@@ -182,6 +182,7 @@
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
      SUBDIR += py-gtksourceview
+     SUBIDR += py-kiwi
      SUBDIR += py-osd
      SUBDIR += py-qt3
      SUBDIR += py-qt4
@@ -246,6 +247,7 @@
      SUBDIR += wampager
      SUBDIR += windowmaker
      SUBDIR += windowmaker-extra
+     SUBDIR += winwrangler
      SUBDIR += wm2
      SUBDIR += wmbutton
      SUBDIR += wmcalclock

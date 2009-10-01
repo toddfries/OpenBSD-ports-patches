@@ -1,18 +1,21 @@
-# $OpenBSD: Makefile,v 1.46 2009/08/10 06:31:08 kili Exp $
+# $OpenBSD: Makefile,v 1.50 2009/09/29 11:38:27 jasper Exp $
 
 COMMENT-main=		terminal emulation library
 COMMENT-python= 	python bindings for vte
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.20.5
-PKGNAME-main=		${DISTNAME}p0
-PKGNAME-python= 	py-${DISTNAME}p0
+GNOME_VERSION=		0.22.2
+PKGNAME-main=		${DISTNAME}
+PKGNAME-python= 	py-${DISTNAME}
 
 CATEGORIES=		devel
 
 SHARED_LIBS+=	vte	13.0    # .14.0
 
 HOMEPAGE=		http://www.gnome.org/
+
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes

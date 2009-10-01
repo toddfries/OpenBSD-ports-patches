@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2009/08/26 15:30:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2009/09/28 20:40:28 ajacoutot Exp $
 
 BROKEN=			segfault on startup
 
 COMMENT=		personal photo management application for GNOME
 
-GNOME_VERSION=		0.6.1.1
+GNOME_VERSION=		0.6.1.3
 GNOME_PROJECT=		f-spot
 
 SHARED_LIBS +=	fspotjpegtran        0.0      # .0.0
