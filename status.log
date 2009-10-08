@@ -1,11 +1,266 @@
 # On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
 # Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
+#   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   net/adsuck/Makefile
-#	modified:   net/adsuck/distinfo
+#	modified:   INDEX
+#	modified:   astro/py-metar/Makefile
+#	modified:   astro/py-metar/distinfo
+#	modified:   astro/py-metar/patches/patch-setup_py
+#	modified:   audio/Makefile
+#	modified:   audio/audacity/Makefile
+#	modified:   audio/sonata/Makefile
+#	modified:   audio/sonata/distinfo
+#	modified:   audio/wavpack/Makefile
+#	modified:   audio/wavpack/distinfo
+#	modified:   audio/xmms-wavpack/Makefile
+#	modified:   audio/xmms-wavpack/distinfo
+#	modified:   audio/xmms-wavpack/patches/patch-src_libwavpack_cpp
+#	modified:   chinese/rxvt-big5/Makefile
+#	modified:   chinese/xcin25/Makefile
+#	modified:   converters/html2wml/Makefile
+#	modified:   converters/html2wml/distinfo
+#	modified:   databases/mysql-query-browser/Makefile
+#	modified:   databases/p5-DBD-Pg/Makefile
+#	modified:   databases/p5-DBD-Pg/distinfo
+#	modified:   databases/p5-DBI/Makefile
+#	modified:   databases/p5-DBI/distinfo
+#	modified:   databases/postgresql/Makefile
+#	modified:   devel/Makefile
+#	modified:   devel/darcs/Makefile
+#	modified:   devel/glib2/Makefile
+#	modified:   devel/glib2/distinfo
+#	modified:   devel/glib2/patches/patch-configure
+#	modified:   devel/glib2/patches/patch-docs_reference_glib_Makefile_in
+#	modified:   devel/glib2/patches/patch-glib_Makefile_in
+#	modified:   devel/glib2/patches/patch-tests_Makefile_in
+#	modified:   devel/glib2/patches/patch-tests_refcount_Makefile_in
+#	modified:   devel/glib2/pkg/PLIST-docs
+#	modified:   devel/glib2/pkg/PLIST-main
+#	modified:   devel/glib2mm/Makefile
+#	modified:   devel/glib2mm/distinfo
+#	modified:   devel/glib2mm/pkg/PLIST-docs
+#	modified:   devel/glib2mm/pkg/PLIST-main
+#	modified:   devel/jdk/1.7/Makefile
+#	modified:   devel/jdk/1.7/distinfo
+#	modified:   devel/jdk/1.7/patches/patch-corba_make_common_shared_Compiler-gcc_gmk
+#	modified:   devel/jdk/1.7/patches/patch-corba_make_common_shared_Platform_gmk
+#	modified:   devel/jdk/1.7/patches/patch-hotspot_make_bsd_makefiles_jsig_make
+#	modified:   devel/jdk/1.7/patches/patch-hotspot_make_bsd_makefiles_saproc_make
+#	modified:   devel/jdk/1.7/patches/patch-hotspot_make_bsd_makefiles_vm_make
+#	modified:   devel/jdk/1.7/patches/patch-hotspot_src_cpu_x86_vm_interp_masm_x86_32_cpp
+#	modified:   devel/jdk/1.7/patches/patch-hotspot_src_share_vm_utilities_macros_hpp
+#	deleted:    devel/jdk/1.7/patches/patch-jdk_make_com_sun_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_com_sun_java_pack_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_Defs-bsd_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_Defs-linux_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_Defs_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_Release_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_shared_Defs-utils_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_shared_Defs_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_shared_Platform_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_shared_Sanity-Settings_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_common_shared_Sanity_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_java_instrument_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_java_jli_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_java_nio_mapfile-bsd
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_java_redist_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_java_zip_FILES_c_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_java_zip_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_sun_awt_mawt_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_sun_font_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_sun_splashscreen_FILES_c_gmk
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_sun_splashscreen_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_make_tools_freetypecheck_Makefile
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_bin_java_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_classes_java_awt_GraphicsEnvironment_java
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_classes_java_lang_ClassLoader_java
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_classes_sun_tools_jar_Main_java
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_lib_security_java_security-openbsd
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_native_com_sun_java_util_jar_pack_main_cpp
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_native_java_lang_fdlibm_include_fdlibm_h
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_native_java_util_zip_Inflater_c
+#	deleted:    devel/jdk/1.7/patches/patch-jdk_src_share_native_java_util_zip_zlib-1_1_3_zconf_h
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_awt_medialib_mlib_image_h
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_share_transport_socket_socketTransport_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_back_util_md_h
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_classes_sun_nio_fs_BsdFileStore_java
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_classes_sun_nio_fs_BsdFileSystem_java
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_lang_UNIXProcess_md_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_net_Inet4AddressImpl_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_net_Inet6AddressImpl_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_util_TimeZone_md_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_awt_awt_GraphicsEnv_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_awt_awt_InputMethod_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_awt_gtk2_interface_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_ch_SctpChannelImpl_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_ch_SctpNet_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_ch_Sctp_h
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_fs_UnixNativeDispatcher_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_fs_genUnixConstants_c
+#	modified:   devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_xawt_awt_Desktop_c
+#	modified:   devel/jdk/1.7/patches/patch-langtools_make_build_xml
+#	modified:   devel/jdk/1.7/pkg/PLIST-jre
+#	modified:   devel/jdk/1.7/pkg/PLIST-main
+#	modified:   devel/libffi/patches/patch-src_arm_sysv_S
+#	modified:   devel/libsoup/Makefile
+#	modified:   devel/libsoup/distinfo
+#	modified:   devel/libsoup/pkg/PLIST-main
+#	modified:   devel/pangomm/Makefile
+#	modified:   devel/pangomm/distinfo
+#	modified:   devel/pangomm/pkg/PLIST
+#	modified:   devel/py-optik/Makefile
+#	modified:   devel/py-optik/distinfo
+#	modified:   devel/py-optik/pkg/PLIST
+#	modified:   emulators/fedora/Makefile.inc
+#	modified:   emulators/redhat/Makefile.inc
+#	modified:   emulators/simh/Makefile
+#	modified:   graphics/ocrad/Makefile
+#	modified:   graphics/ocrad/distinfo
+#	modified:   graphics/ocrad/pkg/PLIST
+#	modified:   mail/cyrus-imapd/Makefile
+#	modified:   mail/cyrus-imapd/pkg/DESCR-main
+#	modified:   mail/getmail/Makefile
+#	modified:   mail/getmail/distinfo
+#	modified:   mail/imapsync/Makefile
+#	modified:   mail/imapsync/distinfo
+#	modified:   mail/mailscanner/Makefile
+#	modified:   mail/mailscanner/distinfo
+#	modified:   mail/mailscanner/patches/patch-bin_MailScanner
+#	modified:   mail/mailscanner/patches/patch-bin_processing_messages_alert
+#	modified:   mail/mailscanner/patches/patch-bin_update_virus_scanners
+#	modified:   mail/mailscanner/patches/patch-etc_MailScanner_conf
+#	modified:   mail/mailscanner/patches/patch-lib_MailScanner_ConfigDefs_pl
+#	modified:   mail/mailscanner/patches/patch-lib_MailScanner_CustomConfig_pm
+#	modified:   mail/mailscanner/patches/patch-lib_MailScanner_Message_pm
+#	modified:   mail/mailscanner/pkg/PLIST
+#	modified:   mail/pyzor/Makefile
+#	modified:   mail/pyzor/distinfo
+#	deleted:    mail/pyzor/patches/patch-lib_pyzor_client_py
+#	modified:   mail/pyzor/pkg/PLIST
+#	modified:   mail/zarafa/zarafa/Makefile
+#	modified:   mail/zarafa/zarafa/files/README.OpenBSD
+#	modified:   math/gnuplot/Makefile
+#	modified:   math/gnuplot/distinfo
+#	modified:   math/gnuplot/patches/patch-share_Makefile_in
+#	modified:   math/py-gnuplot/Makefile
+#	modified:   net/Makefile
+#	modified:   net/avahi/Makefile
+#	modified:   net/bird/Makefile
+#	modified:   net/bird/distinfo
+#	modified:   net/ircd-ratbox/Makefile
+#	modified:   net/ircd-ratbox/pkg/MESSAGE
+#	modified:   net/ircd-ratbox/pkg/PLIST
+#	modified:   net/libst/Makefile
+#	modified:   net/libst/distinfo
+#	modified:   net/openvpn/Makefile
+#	modified:   net/openvpn/distinfo
+#	deleted:    net/openvpn/patches/patch-ssl_c
+#	modified:   net/prosody/Makefile
+#	modified:   net/prosody/distinfo
+#	modified:   net/zabbix/Makefile
+#	modified:   net/zabbix/files/README.OpenBSD
+#	modified:   productivity/Makefile
+#	modified:   security/libssh2/Makefile
+#	modified:   security/libssh2/distinfo
+#	modified:   security/libssh2/pkg/PLIST
 #	modified:   status.log
+#	modified:   sysutils/bacula/Makefile
+#	modified:   sysutils/bacula/distinfo
+#	modified:   sysutils/bacula/patches/patch-configure
+#	modified:   sysutils/bacula/patches/patch-scripts_mtx-changer_in
+#	modified:   sysutils/bacula/patches/patch-src_console_bconsole_conf_in
+#	modified:   sysutils/bacula/patches/patch-src_dird_bacula-dir_conf_in
+#	deleted:    sysutils/bacula/patches/patch-src_filed_bacula-fd_conf_in
+#	modified:   sysutils/bacula/patches/patch-src_qt-console_bat_conf_in
+#	modified:   sysutils/bacula/patches/patch-src_qt-console_main_cpp
+#	modified:   sysutils/bacula/patches/patch-src_stored_bacula-sd_conf_in
+#	modified:   sysutils/bacula/pkg/DESCR-main
+#	modified:   sysutils/bacula/pkg/PLIST-bat
+#	modified:   sysutils/bacula/pkg/PLIST-main
+#	modified:   sysutils/bacula/pkg/PLIST-server
+#	modified:   textproc/tcpdf/Makefile
+#	modified:   textproc/tcpdf/distinfo
+#	modified:   textproc/tcpdf/pkg/PLIST
 #	modified:   up.log
+#	modified:   www/Makefile
+#	modified:   www/p5-HTML-Parser/Makefile
+#	modified:   www/p5-HTML-Parser/distinfo
+#	modified:   www/privoxy/Makefile
+#	modified:   www/privoxy/distinfo
+#	modified:   www/privoxy/patches/patch-config
+#	deleted:    www/privoxy/patches/patch-errlog_c
+#	modified:   www/privoxy/pkg/PLIST
+#	modified:   x11/Makefile
+#	modified:   x11/gnome/devhelp/Makefile
+#	modified:   x11/gnome/devhelp/patches/patch-src_dh-assistant-view_c
+#	modified:   x11/gnustep/base/Makefile
+#	modified:   x11/gnustep/make/Makefile
+#	modified:   x11/gnustep/make/distinfo
+#	modified:   x11/gnustep/make/patches/patch-Instance_bundle_make
+#	modified:   x11/gnustep/make/patches/patch-Instance_framework_make
+#	modified:   x11/gnustep/make/patches/patch-Instance_library_make
+#	modified:   x11/gnustep/make/patches/patch-target_make
+#	modified:   x11/gtk+2/Makefile
+#	modified:   x11/gtk+2/distinfo
+#	modified:   x11/gtk+2/patches/patch-demos_Makefile_in
+#	modified:   x11/gtk+2/patches/patch-gdk-pixbuf_Makefile_in
+#	modified:   x11/gtk+2/patches/patch-gdk-pixbuf_gdk-pixbuf-io_c
+#	modified:   x11/gtk+2/patches/patch-gtk_Makefile_in
+#	modified:   x11/gtk+2/patches/patch-modules_input_Makefile_in
+#	deleted:    x11/gtk+2/patches/patch-modules_printbackends_lpr_gtkprintbackendlpr_c
+#	modified:   x11/gtk+2/pkg/PLIST-docs
+#	modified:   x11/gtk+2/pkg/PLIST-main
+#	modified:   x11/gtk2mm/Makefile
+#	modified:   x11/gtk2mm/distinfo
+#	modified:   x11/gtk2mm/pkg/PLIST-docs
+#	modified:   x11/gtk2mm/pkg/PLIST-main
+#	modified:   x11/gtksourceview/Makefile
+#	modified:   x11/gtksourceview/distinfo
+#	modified:   x11/gtksourceview/pkg/PLIST
+#	modified:   x11/py-gtksourceview/Makefile
+#	modified:   x11/py-gtksourceview/distinfo
+#	modified:   x11/py-gtksourceview/pkg/PLIST
+#	modified:   x11/wxWidgets/Makefile
+#	modified:   x11/xrestop/Makefile
+#	modified:   x11/xrestop/pkg/PLIST
 #
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	audio/p5-Audio-Scan/
+#	audio/xmms-wavpack/patches/patch-configure
+#	devel/jdk/1.7/patches/patch-jdk_make_com_sun_nio_Makefile
+#	devel/jdk/1.7/patches/patch-jdk_make_com_sun_nio_sctp_Makefile
+#	devel/jdk/1.7/patches/patch-jdk_make_sun_security_ec_Makefile
+#	devel/jdk/1.7/patches/patch-jdk_src_share_classes_sun_awt_OSInfo_java
+#	devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_ecc_impl_h
+#	devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_ecdecode_c
+#	devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_oid_c
+#	devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_secitem_c
+#	devel/p5-Params-Coerce/
+#	devel/p5-SUPER/
+#	devel/p5-aliased/
+#	emulators/simh/patches/patch-sim_console_c
+#	mail/mailscanner/patches/patch-bin_clean_SA_cache
+#	mail/mailscanner/patches/patch-bin_cron_clean_SA_cache_cron
+#	mail/mailscanner/patches/patch-bin_cron_processing_messages_alert_cron
+#	mail/mailscanner/patches/patch-bin_cron_update_spamassassin_cron
+#	mail/mailscanner/patches/patch-bin_update_bad_phishing_emails
+#	net/pmacct/
+#	productivity/rubrica2/
+#	sysutils/bacula/patches/patch-scripts_bat_desktop_in
+#	sysutils/bacula/patches/patch-src_plugins_dir_Makefile_in
+#	sysutils/bacula/patches/patch-src_plugins_fd_Makefile_in
+#	sysutils/bacula/patches/patch-src_plugins_sd_Makefile_in
+#	sysutils/bacula/pkg/PFRAG.shared-main
+#	sysutils/bacula/pkg/PFRAG.shared-server
+#	www/perlbal/
+#	x11/gnome/f-spot/patches/patch-icon-theme-installer
+#	x11/gnome/f-spot/patches/patch-tools_f-spot-import
+#	x11/gtkdatabox/
+#	x11/klavaro/
+#	x11/wxWidgets/patches/patch-src_gtk_gsockgtk_cpp
 no changes added to commit (use "git add" and/or "git commit -a")
