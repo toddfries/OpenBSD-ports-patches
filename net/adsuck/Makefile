@@ -2,7 +2,7 @@
 
 COMMENT=		dns relay for ad blocking
 
-DISTNAME=		adsuck-1.6
+DISTNAME=		adsuck-1.7
 CATEGORIES=		net
 
 HOMEPAGE=		http://www.peereboom.us/adsuck/
