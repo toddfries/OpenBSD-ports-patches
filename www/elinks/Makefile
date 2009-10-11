@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.15 2009/08/26 19:30:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.17 2009/10/11 15:55:50 edd Exp $
 
 COMMENT=		full-featured text WWW browser
 DISTNAME=		elinks-0.11.7
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		www
 MASTER_SITES=		http://elinks.cz/download/
 
 HOMEPAGE=		http://elinks.cz/
 
-MAINTAINER=		Edd Barrett <vext01@gmail.com>
+MAINTAINER=		Edd Barrett <edd@openbsd.org>
 
 # GPL, v2 only
 PERMIT_PACKAGE_CDROM=	Yes
@@ -38,6 +39,7 @@ FLAVORS=		lua no_x11
 FLAVOR?=		
 
 .if ${FLAVOR:L:Mlua}
+BROKEN=			has this ever worked?
 CONFIGURE_ARGS+=	--with-lua
 LIB_DEPENDS+=		lua.>=5.1::lang/lua
 WANTLIB+=		m

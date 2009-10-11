@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.7 2009/09/21 20:30:58 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.9 2009/10/10 14:41:21 jasper Exp $
 @conflict py-gtk2-2.8.6*
 bin/pygobject-codegen-2.0
 include/pygtk-2.0/

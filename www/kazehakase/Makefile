@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2009/08/10 06:34:56 kili Exp $
+# $OpenBSD: Makefile,v 1.14 2009/10/11 20:33:00 landry Exp $
 
 COMMENT-main=	common files for kazehakase
 COMMENT-gecko=	lightweight gecko-based web browser
@@ -10,13 +10,12 @@ SHARED_ONLY=	Yes
 
 VERSION=	0.5.6
 DISTNAME=	kazehakase-${VERSION}
-PKGNAME-main=	kazehakase-common-${VERSION}p1
-PKGNAME-gecko=	${DISTNAME}p3
-PKGNAME-webkit=	kazehakase-webkit-${VERSION}p2
+PKGNAME-main=	kazehakase-common-${VERSION}p3
+PKGNAME-gecko=	${DISTNAME}p5
+PKGNAME-webkit=	kazehakase-webkit-${VERSION}p4
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE_JP:=kazehakase/33533/}
 
 HOMEPAGE=	http://kazehakase.sourceforge.jp/
-MAINTAINER=	Landry Breuil <gaston@gcu.info>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes

@@ -3,305 +3,759 @@
 ? status.log
 ? sync.sh
 ? up.log
-P INDEX
-P astro/py-metar/Makefile
-U astro/py-metar/distinfo
-P astro/py-metar/patches/patch-setup_py
+P archivers/star/patches/patch-RULES_mk-gmake_id
 P audio/Makefile
-P audio/audacity/Makefile
-U audio/p5-Audio-Scan/Makefile
-U audio/p5-Audio-Scan/distinfo
-U audio/p5-Audio-Scan/patches/patch-Makefile_PL
-U audio/p5-Audio-Scan/pkg/DESCR
-U audio/p5-Audio-Scan/pkg/PFRAG.shared
-U audio/p5-Audio-Scan/pkg/PLIST
-P audio/sonata/Makefile
-U audio/sonata/distinfo
-P audio/wavpack/Makefile
-U audio/wavpack/distinfo
-P audio/xmms-wavpack/Makefile
-U audio/xmms-wavpack/distinfo
-U audio/xmms-wavpack/patches/patch-configure
-P audio/xmms-wavpack/patches/patch-src_libwavpack_cpp
-P chinese/rxvt-big5/Makefile
-P chinese/xcin25/Makefile
-P converters/html2wml/Makefile
-U converters/html2wml/distinfo
-P databases/mysql-query-browser/Makefile
-P databases/p5-DBD-Pg/Makefile
-U databases/p5-DBD-Pg/distinfo
-P databases/p5-DBI/Makefile
-U databases/p5-DBI/distinfo
-P databases/postgresql/Makefile
+U audio/cmixer/Makefile
+U audio/cmixer/distinfo
+U audio/cmixer/pkg/DESCR
+U audio/cmixer/pkg/PLIST
+P audio/libcanberra/Makefile
+U audio/libcanberra/distinfo
+P audio/libcanberra/patches/patch-configure_ac
+P audio/libcanberra/patches/patch-src_Makefile_am
+P audio/libcanberra/pkg/PLIST
+P audio/openal/Makefile
+U audio/openal/patches/patch-admin_pkgconfig_openal-config_in
+P audio/openal/patches/patch-admin_pkgconfig_openal_pc_in
+U audio/openal/patches/patch-common_include_AL_alc_h
+P audio/xmms-mad/Makefile
+U audio/xmms-mad/distinfo
+P cad/pcb/Makefile
+P cad/pcb/patches/patch-configure
+P cad/pcb/patches/patch-example_Makefile_in
+P cad/pcb/patches/patch-example_libraries_Makefile_in
+P cad/pcb/pkg/PLIST
+P cad/xcircuit/Makefile
+U cad/xcircuit/distinfo
+P cad/xcircuit/pkg/PLIST
+P comms/p5-Device-Modem/Makefile
+U comms/p5-Device-Modem/distinfo
+P converters/p5-JSON-XS/Makefile
+U converters/p5-JSON-XS/distinfo
+P databases/evolution-data-server/Makefile
+U databases/evolution-data-server/distinfo
+cvs server: databases/evolution-data-server/patches/patch-acinclude_m4 is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-addressbook_backends_file_e-book-backend-file_c is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-addressbook_backends_vcf_e-book-backend-vcf_c is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-calendar_libical_configure is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-calendar_libical_src_libical_icalrecur_c is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-calendar_libical_src_libical_icaltz-util_c is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-camel_camel-db_c is no longer in the repository
+U databases/evolution-data-server/patches/patch-configure_ac
+cvs server: databases/evolution-data-server/patches/patch-configure_in is no longer in the repository
+cvs server: databases/evolution-data-server/patches/patch-docs_reference_camel_Makefile_in is no longer in the repository
+P databases/evolution-data-server/patches/patch-libdb_dist_configure
+cvs server: databases/evolution-data-server/patches/patch-libedataserver_e-url_c is no longer in the repository
+P databases/evolution-data-server/patches/patch-libedataserverui_e-source-selector_c
+U databases/evolution-data-server/patches/patch-m4_evo_pthread_check_m4
+P databases/evolution-data-server/pkg/PLIST
+P databases/freetds/Makefile
+P databases/freetds/distinfo
+P databases/freetds/patches/patch-Makefile_in
+U databases/freetds/patches/patch-configure
+P databases/freetds/patches/patch-odbc_unittests_Makefile_in
+P databases/freetds/patches/patch-src_ctlib_unittests_Makefile_in
+P databases/freetds/patches/patch-src_dblib_unittests_Makefile_in
+P databases/freetds/patches/patch-src_odbc_connectparams_c
+P databases/freetds/patches/patch-src_pool_Makefile_in
+P databases/freetds/patches/patch-src_tds_unittests_Makefile_in
+P databases/freetds/pkg/PLIST
+P databases/lbdb/Makefile
+P databases/lbdb/patches/patch-lbdb_lib_sh_in
+P databases/p5-DBM-Deep/Makefile
+P databases/p5-DBM-Deep/pkg/DESCR
+P databases/py-cdb/Makefile
+cvs server: databases/py-cdb/pkg/PFRAG.shared is no longer in the repository
+P databases/py-cdb/pkg/PLIST
+P databases/py-storm/Makefile
+cvs server: databases/py-storm/pkg/PFRAG.shared is no longer in the repository
+P databases/py-storm/pkg/PLIST
 P devel/Makefile
-P devel/darcs/Makefile
+P devel/atk/Makefile
+U devel/atk/distinfo
+P devel/atk/pkg/PLIST
+P devel/autogen/Makefile
+P devel/autogen/pkg/PLIST
+U devel/ethos/Makefile
+U devel/ethos/distinfo
+U devel/ethos/files/ethos-c-plugin-loader.h
+U devel/ethos/files/ethos-python-plugin-loader.h
+U devel/ethos/patches/patch-configure
+U devel/ethos/patches/patch-plugin-loaders_c_Makefile_in
+U devel/ethos/patches/patch-plugin-loaders_python_Makefile_in
+U devel/ethos/pkg/DESCR
+U devel/ethos/pkg/PFRAG.shared
+U devel/ethos/pkg/PLIST
+P devel/gflags/Makefile
 P devel/glib2/Makefile
-U devel/glib2/distinfo
-P devel/glib2/patches/patch-configure
-P devel/glib2/patches/patch-docs_reference_glib_Makefile_in
-P devel/glib2/patches/patch-glib_Makefile_in
-P devel/glib2/patches/patch-tests_Makefile_in
-P devel/glib2/patches/patch-tests_refcount_Makefile_in
-P devel/glib2/pkg/PLIST-docs
-P devel/glib2/pkg/PLIST-main
-P devel/glib2mm/Makefile
-U devel/glib2mm/distinfo
-P devel/glib2mm/pkg/PLIST-docs
-P devel/glib2mm/pkg/PLIST-main
-P devel/jdk/1.7/Makefile
-P devel/jdk/1.7/distinfo
-P devel/jdk/1.7/patches/patch-corba_make_common_shared_Compiler-gcc_gmk
-P devel/jdk/1.7/patches/patch-corba_make_common_shared_Platform_gmk
-P devel/jdk/1.7/patches/patch-hotspot_make_bsd_makefiles_jsig_make
-P devel/jdk/1.7/patches/patch-hotspot_make_bsd_makefiles_saproc_make
-P devel/jdk/1.7/patches/patch-hotspot_make_bsd_makefiles_vm_make
-P devel/jdk/1.7/patches/patch-hotspot_src_cpu_x86_vm_interp_masm_x86_32_cpp
-P devel/jdk/1.7/patches/patch-hotspot_src_share_vm_utilities_macros_hpp
-cvs server: devel/jdk/1.7/patches/patch-jdk_make_com_sun_Makefile is no longer in the repository
-P devel/jdk/1.7/patches/patch-jdk_make_com_sun_java_pack_Makefile
-U devel/jdk/1.7/patches/patch-jdk_make_com_sun_nio_Makefile
-U devel/jdk/1.7/patches/patch-jdk_make_com_sun_nio_sctp_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_common_Defs-bsd_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_Defs-linux_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_Defs_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_Release_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_shared_Defs-utils_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_shared_Defs_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_shared_Platform_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_shared_Sanity-Settings_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_common_shared_Sanity_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_java_instrument_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_java_jli_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_java_nio_mapfile-bsd
-P devel/jdk/1.7/patches/patch-jdk_make_java_redist_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_java_zip_FILES_c_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_java_zip_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_sun_awt_mawt_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_sun_font_Makefile
-U devel/jdk/1.7/patches/patch-jdk_make_sun_security_ec_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_sun_splashscreen_FILES_c_gmk
-P devel/jdk/1.7/patches/patch-jdk_make_sun_splashscreen_Makefile
-P devel/jdk/1.7/patches/patch-jdk_make_tools_freetypecheck_Makefile
-P devel/jdk/1.7/patches/patch-jdk_src_share_bin_java_c
-P devel/jdk/1.7/patches/patch-jdk_src_share_classes_java_awt_GraphicsEnvironment_java
-P devel/jdk/1.7/patches/patch-jdk_src_share_classes_java_lang_ClassLoader_java
-U devel/jdk/1.7/patches/patch-jdk_src_share_classes_sun_awt_OSInfo_java
-P devel/jdk/1.7/patches/patch-jdk_src_share_classes_sun_tools_jar_Main_java
-P devel/jdk/1.7/patches/patch-jdk_src_share_lib_security_java_security-openbsd
-P devel/jdk/1.7/patches/patch-jdk_src_share_native_com_sun_java_util_jar_pack_main_cpp
-P devel/jdk/1.7/patches/patch-jdk_src_share_native_java_lang_fdlibm_include_fdlibm_h
-P devel/jdk/1.7/patches/patch-jdk_src_share_native_java_util_zip_Inflater_c
-cvs server: devel/jdk/1.7/patches/patch-jdk_src_share_native_java_util_zip_zlib-1_1_3_zconf_h is no longer in the repository
-P devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_awt_medialib_mlib_image_h
-U devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_ecc_impl_h
-U devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_ecdecode_c
-U devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_oid_c
-U devel/jdk/1.7/patches/patch-jdk_src_share_native_sun_security_ec_secitem_c
-P devel/jdk/1.7/patches/patch-jdk_src_share_transport_socket_socketTransport_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_back_util_md_h
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_classes_sun_nio_fs_BsdFileStore_java
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_classes_sun_nio_fs_BsdFileSystem_java
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_lang_UNIXProcess_md_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_net_Inet4AddressImpl_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_net_Inet6AddressImpl_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_java_util_TimeZone_md_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_awt_awt_GraphicsEnv_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_awt_awt_InputMethod_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_awt_gtk2_interface_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_ch_SctpChannelImpl_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_ch_SctpNet_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_ch_Sctp_h
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_fs_UnixNativeDispatcher_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_nio_fs_genUnixConstants_c
-P devel/jdk/1.7/patches/patch-jdk_src_solaris_native_sun_xawt_awt_Desktop_c
-P devel/jdk/1.7/patches/patch-langtools_make_build_xml
-P devel/jdk/1.7/pkg/PLIST-jre
-P devel/jdk/1.7/pkg/PLIST-main
-P devel/libffi/patches/patch-src_arm_sysv_S
-P devel/libsoup/Makefile
-U devel/libsoup/distinfo
-P devel/libsoup/pkg/PLIST-main
-U devel/p5-Params-Coerce/Makefile
-U devel/p5-Params-Coerce/distinfo
-U devel/p5-Params-Coerce/pkg/DESCR
-U devel/p5-Params-Coerce/pkg/PLIST
-U devel/p5-SUPER/Makefile
-U devel/p5-SUPER/distinfo
-U devel/p5-SUPER/pkg/DESCR
-U devel/p5-SUPER/pkg/PLIST
-U devel/p5-aliased/Makefile
-U devel/p5-aliased/distinfo
-U devel/p5-aliased/pkg/DESCR
-U devel/p5-aliased/pkg/PLIST
-P devel/pangomm/Makefile
-U devel/pangomm/distinfo
-P devel/pangomm/pkg/PLIST
-P devel/py-optik/Makefile
-U devel/py-optik/distinfo
-P devel/py-optik/pkg/PLIST
-P emulators/fedora/Makefile.inc
-P emulators/redhat/Makefile.inc
-P emulators/simh/Makefile
-U emulators/simh/patches/patch-sim_console_c
-P graphics/ocrad/Makefile
-U graphics/ocrad/distinfo
-P graphics/ocrad/pkg/PLIST
-P mail/cyrus-imapd/Makefile
-P mail/cyrus-imapd/pkg/DESCR-main
-P mail/getmail/Makefile
-U mail/getmail/distinfo
-P mail/imapsync/Makefile
-U mail/imapsync/distinfo
-P mail/mailscanner/Makefile
-U mail/mailscanner/distinfo
-P mail/mailscanner/patches/patch-bin_MailScanner
-U mail/mailscanner/patches/patch-bin_clean_SA_cache
-U mail/mailscanner/patches/patch-bin_cron_clean_SA_cache_cron
-U mail/mailscanner/patches/patch-bin_cron_processing_messages_alert_cron
-U mail/mailscanner/patches/patch-bin_cron_update_spamassassin_cron
-P mail/mailscanner/patches/patch-bin_processing_messages_alert
-U mail/mailscanner/patches/patch-bin_update_bad_phishing_emails
-P mail/mailscanner/patches/patch-bin_update_virus_scanners
-P mail/mailscanner/patches/patch-etc_MailScanner_conf
-P mail/mailscanner/patches/patch-lib_MailScanner_ConfigDefs_pl
-P mail/mailscanner/patches/patch-lib_MailScanner_CustomConfig_pm
-P mail/mailscanner/patches/patch-lib_MailScanner_Message_pm
-P mail/mailscanner/pkg/PLIST
-P mail/pyzor/Makefile
-U mail/pyzor/distinfo
-cvs server: mail/pyzor/patches/patch-lib_pyzor_client_py is no longer in the repository
-P mail/pyzor/pkg/PLIST
-P mail/zarafa/zarafa/Makefile
-P mail/zarafa/zarafa/files/README.OpenBSD
-P math/gnuplot/Makefile
-U math/gnuplot/distinfo
-P math/gnuplot/patches/patch-share_Makefile_in
-P math/py-gnuplot/Makefile
+P devel/iso-codes/Makefile
+U devel/iso-codes/distinfo
+P devel/json-glib/Makefile
+U devel/json-glib/distinfo
+cvs server: devel/json-glib/patches/patch-json-glib_json-gobject_c is no longer in the repository
+cvs server: devel/json-glib/patches/patch-tests_test-serialize-full_c is no longer in the repository
+P devel/json-glib/pkg/PLIST
+P devel/libexecinfo/Makefile
+P devel/libexecinfo/patches/patch-Makefile
+U devel/libexecinfo/patches/patch-stacktraverse_c
+U devel/libexecinfo/pkg/PFRAG.no_mips64
+P devel/libexecinfo/pkg/PLIST
+P devel/libffi/Makefile
+P devel/libffi/pkg/PLIST
+P devel/libvmime/Makefile
+U devel/libvmime/files/libgnutls-config
+P devel/libwnck/Makefile
+U devel/libwnck/distinfo
+P devel/libwnck/pkg/PLIST
+U devel/openmpi/Makefile
+U devel/openmpi/distinfo
+U devel/openmpi/patches/patch-ompi_mca_btl_tcp_btl_tcp_component_c
+U devel/openmpi/patches/patch-ompi_mca_io_romio_romio_adio_common_ad_fstype_c
+U devel/openmpi/patches/patch-opal_include_opal_config_h_in
+U devel/openmpi/patches/patch-orte_mca_oob_tcp_oob_tcp_c
+U devel/openmpi/pkg/DESCR
+U devel/openmpi/pkg/PFRAG.shared
+U devel/openmpi/pkg/PLIST
+P devel/p5-AnyEvent/Makefile
+U devel/p5-AnyEvent/distinfo
+P devel/p5-AnyEvent/pkg/PLIST
+P devel/p5-Array-Compare/Makefile
+U devel/p5-Array-Compare/distinfo
+U devel/p5-AutoXS-Header/Makefile
+U devel/p5-AutoXS-Header/distinfo
+U devel/p5-AutoXS-Header/pkg/DESCR
+U devel/p5-AutoXS-Header/pkg/PLIST
+P devel/p5-Class-Inspector/Makefile
+U devel/p5-Class-Inspector/distinfo
+P devel/p5-Class-Inspector/pkg/PLIST
+U devel/p5-Class-XSAccessor/Makefile
+U devel/p5-Class-XSAccessor/distinfo
+U devel/p5-Class-XSAccessor/pkg/DESCR
+U devel/p5-Class-XSAccessor/pkg/PLIST
+P devel/p5-Clone/Makefile
+U devel/p5-Clone/distinfo
+P devel/p5-Module-Find/Makefile
+U devel/p5-Module-Find/distinfo
+P devel/p5-Module-Versions-Report/Makefile
+U devel/p5-Module-Versions-Report/distinfo
+P devel/py-gobject/Makefile
+P devel/py-gobject/distinfo
+P devel/py-gobject/pkg/PLIST
+P devel/py-openbsd/Makefile
+cvs server: devel/py-openbsd/pkg/PFRAG.shared is no longer in the repository
+P devel/py-openbsd/pkg/PLIST
+P devel/py-protocols/Makefile
+cvs server: devel/py-protocols/pkg/PFRAG.shared is no longer in the repository
+P devel/py-protocols/pkg/PLIST
+P devel/py-psyco/Makefile
+cvs server: devel/py-psyco/pkg/PFRAG.shared is no longer in the repository
+P devel/py-psyco/pkg/PLIST
+P devel/py-py/Makefile
+cvs server: devel/py-py/pkg/PFRAG.shared is no longer in the repository
+P devel/py-py/pkg/PLIST
+P devel/py-rcsparse/Makefile
+cvs server: devel/py-rcsparse/pkg/PFRAG.shared is no longer in the repository
+U devel/py-rcsparse/pkg/PLIST
+P devel/py-ruledispatch/Makefile
+cvs server: devel/py-ruledispatch/pkg/PFRAG.shared is no longer in the repository
+P devel/py-ruledispatch/pkg/PLIST
+P devel/py-simplejson/Makefile
+cvs server: devel/py-simplejson/pkg/PFRAG.shared is no longer in the repository
+P devel/py-simplejson/pkg/PLIST
+U devel/rsvndump/Makefile
+U devel/rsvndump/distinfo
+U devel/rsvndump/pkg/DESCR
+U devel/rsvndump/pkg/PLIST
+P devel/xdg-user-dirs/Makefile
+U devel/xdg-user-dirs/distinfo
+cvs server: devel/xdg-user-dirs/patches/patch-configure is no longer in the repository
+cvs server: devel/xdg-user-dirs/patches/patch-xdg-user-dir is no longer in the repository
+P devel/xdg-user-dirs/pkg/PLIST
+P editors/abiword/Makefile
+U editors/abiword/distinfo
+cvs server: editors/abiword/patches/patch-abi_src_af_util_xp_ut_iconv_cpp is no longer in the repository
+cvs server: editors/abiword/patches/patch-abi_src_af_util_xp_ut_string_class_cpp is no longer in the repository
+U editors/abiword/patches/patch-configure
+U editors/abiword/patches/patch-goffice-bits_goffice_goffice-config_h
+U editors/abiword/patches/patch-src_af_util_xp_ut_iconv_cpp
+cvs server: editors/abiword/pkg/PFRAG.gnome is no longer in the repository
+P editors/abiword/pkg/PLIST
+P editors/teaqt/Makefile
+U editors/teaqt/distinfo
+P editors/teaqt/patches/patch-spellchecker_cpp
+P editors/teaqt/patches/patch-src_pro
+P editors/texworks/Makefile
+P education/Makefile
+P education/drgeo/Makefile
+P education/drgeo/pkg/PLIST
+U education/verbiste/Makefile
+U education/verbiste/distinfo
+U education/verbiste/patches/patch-Makefile_in
+U education/verbiste/pkg/DESCR
+U education/verbiste/pkg/PFRAG.shared
+U education/verbiste/pkg/PLIST
+P games/Makefile
+U games/egoboo/Makefile
+U games/egoboo/distinfo
+U games/egoboo/patches/patch-game_Makefile_unix
+U games/egoboo/patches/patch-game_egoboo_sh
+U games/egoboo/patches/patch-game_file_linux_c
+U games/egoboo/pkg/DESCR
+U games/egoboo/pkg/PLIST
+U games/jbrickshooter/Makefile
+U games/jbrickshooter/distinfo
+U games/jbrickshooter/pkg/DESCR
+U games/jbrickshooter/pkg/PLIST
+U games/lostpixels/Makefile
+U games/lostpixels/distinfo
+U games/lostpixels/patches/patch-CMakeLists_txt
+U games/lostpixels/patches/patch-playersprite_cpp
+U games/lostpixels/pkg/DESCR
+U games/lostpixels/pkg/PLIST
+P geo/gpx-viewer/Makefile
+U geo/gpx-viewer/patches/patch-configure
+U geo/gpx-viewer/patches/patch-src_gpx-viewer_c
+P geo/libchamplain/Makefile.inc
+P geo/libchamplain/core/Makefile
+U geo/libchamplain/core/distinfo
+P geo/libchamplain/core/pkg/PLIST
+P geo/openbsd-developers/Makefile
+P geo/openbsd-developers/files/OpenBSD
+P graphics/Makefile
+P graphics/clutter/Makefile
+P graphics/clutter/Makefile.inc
+P graphics/clutter/clutter-box2d/Makefile
+U graphics/clutter/clutter-box2d/distinfo
+U graphics/clutter/clutter-box2d/patches/patch-clutter-box2d_Makefile_in
+P graphics/clutter/clutter-box2d/pkg/PLIST
+P graphics/clutter/clutter-gst/Makefile
+U graphics/clutter/clutter-gst/distinfo
+P graphics/clutter/clutter-gst/pkg/PLIST
+P graphics/clutter/clutter-gtk/Makefile
+U graphics/clutter/clutter-gtk/distinfo
+P graphics/clutter/clutter-gtk/pkg/PLIST
+P graphics/clutter/core/Makefile
+U graphics/clutter/core/distinfo
+U graphics/clutter/core/patches/patch-clutter_clutter-scriptable_h
+P graphics/clutter/core/patches/patch-clutter_pc_in
+P graphics/clutter/core/patches/patch-clutter_x11_clutter-x11_pc_in
+P graphics/clutter/core/pkg/PLIST
+U graphics/jbig2dec/Makefile
+U graphics/jbig2dec/distinfo
+U graphics/jbig2dec/patches/patch-test_jbig2dec_py
+U graphics/jbig2dec/pkg/DESCR
+U graphics/jbig2dec/pkg/PLIST
+P graphics/netpbm/Makefile
+U graphics/netpbm/distinfo
+U graphics/netpbm/patches/patch-converter_ppm_ppmtompeg_jpeg_c
+P graphics/netpbm/pkg/PLIST
+P graphics/py-dot/Makefile
+P graphics/py-dot/pkg/PLIST
+P graphics/py-pyx/Makefile
+cvs server: graphics/py-pyx/pkg/PFRAG.shared is no longer in the repository
+P graphics/py-pyx/pkg/PLIST
+P infrastructure/build/libtool
+P infrastructure/db/user.list
+P lang/chicken/Makefile
+U lang/chicken/patches/patch-cscbench_scm
+P lang/chicken/pkg/PLIST
+P lang/gcc/3.3/Makefile
+U lang/gcc/3.3/patches/patch-libffi_Makefile_in
+U lang/gcc/3.3/patches/patch-libffi_include_Makefile_in
+P lang/gcc/3.3/pkg/PFRAG.PIC-java
+P lang/gcc/3.3/pkg/PFRAG.shared-java
+P lang/gcc/3.3/pkg/PLIST-java
+P lang/gcc/4.2/Makefile
+P lang/gcc/4.2/patches/patch-libffi_Makefile_in
+U lang/gcc/4.2/patches/patch-libffi_include_Makefile_in
+P lang/gcc/4.2/pkg/PFRAG.PIC-java
+P lang/gcc/4.2/pkg/PFRAG.shared-java
+P lang/gcc/4.2/pkg/PLIST-java
+P lang/guile/Makefile
+U lang/guile/distinfo
+cvs server: lang/guile/patches/patch-ice-9_slib_scm is no longer in the repository
+P lang/guile/pkg/PFRAG.shared
+P lang/guile/pkg/PLIST
+P lang/librep/Makefile
+U lang/librep/distinfo
+U lang/librep/patches/patch-Makefile_in
+cvs server: lang/librep/patches/patch-configure is no longer in the repository
+U lang/librep/patches/patch-librep_pc_in
+cvs server: lang/librep/patches/patch-rep_m4 is no longer in the repository
+P lang/librep/patches/patch-src_Makefile_in
+cvs server: lang/librep/patches/patch-src_numbers.c is no longer in the repository
+U lang/librep/patches/patch-src_numbers_c
+U lang/librep/patches/patch-src_rep-xgettext_jl
+cvs server: lang/librep/patches/patch-src_repint.h is no longer in the repository
+U lang/librep/patches/patch-src_repint_h
+P lang/librep/pkg/DESCR
+P lang/librep/pkg/PLIST
+P lang/mono/Makefile
+P mail/extsmail/Makefile
+U mail/extsmail/distinfo
+P mail/fetchmail/Makefile
+U mail/fetchmail/distinfo
+P mail/fetchmail/patches/patch-Makefile_in
+P mail/fetchmail/patches/patch-configure
+cvs server: mail/fetchmail/patches/patch-driver_c is no longer in the repository
+P mail/fetchmail/pkg/PLIST
+P mail/gmime24/Makefile
+U mail/gmime24/distinfo
+cvs server: mail/py-milter/pkg/PFRAG.shared is no longer in the repository
+P math/mathomatic/Makefile
+U math/mathomatic/distinfo
+P math/mathomatic/patches/patch-globals_c
+P math/mathomatic/patches/patch-makefile
+P math/mathomatic/pkg/PLIST
+P misc/p5-Spreadsheet-ParseExcel/Makefile
+U misc/p5-Spreadsheet-ParseExcel/distinfo
+P misc/p5-Spreadsheet-ParseExcel/pkg/PLIST
+P misc/py-imdb/Makefile
+cvs server: misc/py-imdb/pkg/PFRAG.shared is no longer in the repository
+P misc/py-imdb/pkg/PLIST
+P misc/shared-mime-info/Makefile
+U misc/shared-mime-info/distinfo
+P misc/shared-mime-info/patches/patch-Makefile_in
+P misc/shared-mime-info/pkg/PLIST
+P multimedia/get_iplayer/Makefile
+U multimedia/get_iplayer/distinfo
+P multimedia/get_iplayer/patches/patch-get_iplayer
 P net/Makefile
 M net/adsuck/Makefile
 M net/adsuck/distinfo
 P net/avahi/Makefile
-P net/bird/Makefile
-U net/bird/distinfo
-P net/ircd-ratbox/Makefile
-P net/ircd-ratbox/pkg/MESSAGE
-P net/ircd-ratbox/pkg/PLIST
-P net/libst/Makefile
-U net/libst/distinfo
+U net/avahi/pkg/DESCR-mono
+U net/avahi/pkg/PLIST-mono
+cvs server: net/farsight/Makefile is no longer in the repository
+cvs server: net/farsight/distinfo is no longer in the repository
+cvs server: net/farsight/patches/patch-configure is no longer in the repository
+cvs server: net/farsight/patches/patch-farsight_helpers_farsight-interfaces_c is no longer in the repository
+cvs server: net/farsight/patches/patch-farsight_transmitters_rawudp_udp-transmitter_c is no longer in the repository
+cvs server: net/farsight/pkg/DESCR is no longer in the repository
+cvs server: net/farsight/pkg/PFRAG.shared is no longer in the repository
+cvs server: net/farsight/pkg/PLIST is no longer in the repository
+P net/flickcurl/Makefile
+U net/flickcurl/distinfo
+P net/flickcurl/files/README.OpenBSD
+P net/flickcurl/pkg/PLIST
+P net/irssi/Makefile
+P net/irssi/patches/patch-docs_irssi_1
+U net/librest/Makefile
+U net/librest/distinfo
+U net/librest/pkg/DESCR
+U net/librest/pkg/PFRAG.shared
+U net/librest/pkg/PLIST
 P net/openvpn/Makefile
 U net/openvpn/distinfo
-cvs server: net/openvpn/patches/patch-ssl_c is no longer in the repository
-U net/pmacct/Makefile
-U net/pmacct/distinfo
-U net/pmacct/patches/patch-configure
-U net/pmacct/patches/patch-src_bgp_bgp_c
-U net/pmacct/patches/patch-src_net_aggr_c
-U net/pmacct/patches/patch-src_nfprobe_plugin_nfprobe_plugin_c
-U net/pmacct/patches/patch-src_sfprobe_plugin_sfprobe_plugin_c
-U net/pmacct/pkg/DESCR
-U net/pmacct/pkg/PFRAG.mysql
-U net/pmacct/pkg/PFRAG.postgresql
-U net/pmacct/pkg/PLIST
-P net/prosody/Makefile
-U net/prosody/distinfo
-P net/zabbix/Makefile
-P net/zabbix/files/README.OpenBSD
-P productivity/Makefile
-U productivity/rubrica2/Makefile
-U productivity/rubrica2/distinfo
-U productivity/rubrica2/patches/patch-configure
-U productivity/rubrica2/patches/patch-interface_MainWindow_glade
-U productivity/rubrica2/patches/patch-plugins_csv_Makefile_in
-U productivity/rubrica2/patches/patch-plugins_gmail_Makefile_in
-U productivity/rubrica2/patches/patch-plugins_rubrica_Makefile_in
-U productivity/rubrica2/patches/patch-plugins_vcard_Makefile_in
-U productivity/rubrica2/patches/patch-rubrica2_schemas_in
-U productivity/rubrica2/patches/patch-src_app_c
-U productivity/rubrica2/patches/patch-test_test_libral_c
-U productivity/rubrica2/pkg/DESCR
-U productivity/rubrica2/pkg/PLIST
-P security/libssh2/Makefile
-U security/libssh2/distinfo
-P security/libssh2/pkg/PLIST
-P sysutils/bacula/Makefile
-U sysutils/bacula/distinfo
-P sysutils/bacula/patches/patch-configure
-U sysutils/bacula/patches/patch-scripts_bat_desktop_in
-P sysutils/bacula/patches/patch-scripts_mtx-changer_in
-P sysutils/bacula/patches/patch-src_console_bconsole_conf_in
-P sysutils/bacula/patches/patch-src_dird_bacula-dir_conf_in
-cvs server: sysutils/bacula/patches/patch-src_filed_bacula-fd_conf_in is no longer in the repository
-U sysutils/bacula/patches/patch-src_plugins_dir_Makefile_in
-U sysutils/bacula/patches/patch-src_plugins_fd_Makefile_in
-U sysutils/bacula/patches/patch-src_plugins_sd_Makefile_in
-P sysutils/bacula/patches/patch-src_qt-console_bat_conf_in
-P sysutils/bacula/patches/patch-src_qt-console_main_cpp
-P sysutils/bacula/patches/patch-src_stored_bacula-sd_conf_in
-P sysutils/bacula/pkg/DESCR-main
-U sysutils/bacula/pkg/PFRAG.shared-main
-U sysutils/bacula/pkg/PFRAG.shared-server
-P sysutils/bacula/pkg/PLIST-bat
-P sysutils/bacula/pkg/PLIST-main
-P sysutils/bacula/pkg/PLIST-server
-P textproc/tcpdf/Makefile
-U textproc/tcpdf/distinfo
-P textproc/tcpdf/pkg/PLIST
+P net/openvpn/patches/patch-configure
+P net/openvpn/patches/patch-route_c
+U net/papyon/Makefile
+U net/papyon/distinfo
+U net/papyon/pkg/DESCR
+U net/papyon/pkg/PLIST
+P net/pidgin-facebookchat/Makefile
+U net/pidgin-facebookchat/distinfo
+P net/pidgin-facebookchat/patches/patch-Makefile
+P net/py-libpcap/Makefile
+cvs server: net/py-libpcap/pkg/PFRAG.shared is no longer in the repository
+P net/py-libpcap/pkg/PLIST
+P net/py-xmpp/Makefile
+cvs server: net/py-xmpp/pkg/PFRAG.shared is no longer in the repository
+P net/py-xmpp/pkg/PLIST
+P net/samba/Makefile
+U net/samba/distinfo
+P net/samba/patches/patch-Makefile_in
+P net/samba/patches/patch-docs_manpages_swat_8
+cvs server: net/samba/patches/patch-smbd_posix_acls_c is no longer in the repository
+P net/samba/pkg/PLIST-main
+P net/ssvnc/Makefile
+P net/telepathy/telepathy-butterfly/Makefile
+U net/telepathy/telepathy-butterfly/distinfo
+P net/telepathy/telepathy-butterfly/pkg/PLIST
+P net/unbound/Makefile
+U net/unbound/distinfo
+P net/unison/Makefile.inc
+P net/unison/stable/Makefile
+U net/unison/stable/distinfo
+P net/unison/stable/pkg/PLIST
+P net/yaz/Makefile
+U net/yaz/distinfo
+P net/yaz/pkg/PLIST
+P print/cups/Makefile
+P print/lilypond/Makefile
+U print/lilypond/distinfo
+U print/lilypond/patches/patch-Documentation_user_macros_itexi
+P print/lilypond/patches/patch-GNUmakefile_in
+P print/lilypond/patches/patch-configure_in
+U print/lilypond/patches/patch-lily_include_open-type-font_hh
+U print/lilypond/patches/patch-lily_include_smobs_hh
+U print/lilypond/patches/patch-lily_music-iterator_cc
+U print/lilypond/patches/patch-lily_pango-font_cc
+U print/lilypond/patches/patch-lily_system-start-text_cc
+U print/lilypond/patches/patch-lily_ttf_cc
+P print/lilypond/pkg/PLIST-docs
+P print/lilypond/pkg/PLIST-main
+P print/py-reportlab/reportlab/Makefile
+cvs server: print/py-reportlab/reportlab/pkg/PFRAG.shared is no longer in the repository
+P print/py-reportlab/reportlab/pkg/PLIST
+P security/crank/Makefile
+U security/crank/patches/patch-configure_in
+P security/crank/patches/patch-src_Makefile_in
+U security/crank/patches/patch-src_crank_i
+P security/crank/pkg/PLIST
+P security/gnutls/Makefile
+U security/gnutls/distinfo
+P security/gnutls/pkg/PLIST
+P security/libgpg-error/Makefile
+U security/libgpg-error/distinfo
+P security/libgpg-error/patches/patch-tests_Makefile_in
+P security/libgpg-error/pkg/PLIST
+P security/libtasn1/Makefile
+U security/libtasn1/distinfo
+P security/libtasn1/pkg/PLIST
+P security/prelude/manager/Makefile
+U security/prelude/manager/files/libgnutls-config
+P security/xmlsec/Makefile
+U sysutils/cdrtools/patches/patch-RULES_mk-gmake_id
+P sysutils/fam/Makefile
+P sysutils/policykit/Makefile
+U sysutils/policykit/pkg/MESSAGE
+P sysutils/policykit/pkg/PLIST
+U sysutils/sdd/patches/patch-RULES_mk-gmake_id
+P textproc/hunspell/Makefile
+P textproc/libical/Makefile
+U textproc/libical/distinfo
+U textproc/libical/patches/patch-configure
+U textproc/libical/patches/patch-src_libical_icaltz-util_c
+P textproc/libical/patches/patch-src_libicalss_Makefile_am
+P textproc/libical/patches/patch-src_libicalss_Makefile_in
+P textproc/libical/pkg/PFRAG.shared
+P textproc/libical/pkg/PLIST
+P textproc/libxml/Makefile
+U textproc/libxml/distinfo
+P textproc/libxml/patches/patch-Makefile.in
+cvs server: textproc/libxml/patches/patch-SAX2_c is no longer in the repository
+cvs server: textproc/libxml/patches/patch-configure is no longer in the repository
+cvs server: textproc/libxml/patches/patch-parser_c is no longer in the repository
+P textproc/libxml/patches/patch-python_Makefile_in
+P textproc/libxml/patches/patch-python_tests_Makefile_in
+cvs server: textproc/libxml/patches/patch-tree_c is no longer in the repository
+P textproc/libxml/patches/patch-xstc_Makefile_in
+P textproc/libxml/pkg/PFRAG.shared-python
+P textproc/libxml/pkg/PLIST-main
+P textproc/libxml++/Makefile
+U textproc/libxml++/distinfo
+P textproc/libxml++/pkg/PLIST
+P textproc/libxslt/Makefile
+U textproc/libxslt/distinfo
+cvs server: textproc/libxslt/patches/patch-doc_Makefile_in is no longer in the repository
+P textproc/libxslt/patches/patch-libxslt_Makefile_in
+P textproc/libxslt/patches/patch-libxslt_extra_c
+P textproc/libxslt/patches/patch-python_Makefile_in
+P textproc/libxslt/patches/patch-tests_docs_Makefile_in
+P textproc/libxslt/pkg/PLIST-main
+P textproc/mupdf/Makefile
+P textproc/txt2tags/Makefile
+U textproc/txt2tags/distinfo
+P textproc/txt2tags/pkg/PLIST
 P www/Makefile
-P www/p5-HTML-Parser/Makefile
-U www/p5-HTML-Parser/distinfo
-U www/perlbal/Makefile
+U www/cntlm/Makefile
+U www/cntlm/distinfo
+U www/cntlm/patches/patch-Makefile
+U www/cntlm/patches/patch-acl_c
+U www/cntlm/patches/patch-ntlm_c
+U www/cntlm/patches/patch-proxy_c
+U www/cntlm/patches/patch-socket_c
+U www/cntlm/patches/patch-utils_h
+U www/cntlm/pkg/DESCR
+U www/cntlm/pkg/PLIST
+P www/drupal6/Makefile
+P www/drupal6/FCKeditor/Makefile
+U www/drupal6/FCKeditor/patches/patch-fckeditor_install
+U www/drupal6/draft/Makefile
+U www/drupal6/draft/distinfo
+U www/drupal6/draft/patches/patch-draft_install
+U www/drupal6/draft/pkg/DESCR
+U www/drupal6/draft/pkg/PLIST
+P www/drupal6/webform/Makefile
+P www/drupal6/webform/patches/patch-webform_module
+P www/drupal6/webform/patches/patch-webform_report_inc
+P www/elinks/Makefile
+P www/fcgi/Makefile
+P www/fcgi/patches/patch-libfcgi_Makefile_in
+P www/kazehakase/Makefile
+U www/kazehakase/patches/patch-src_actions_kz-smart-bookmark-action_c
+U www/kazehakase/patches/patch-src_kz-statusbar_c
+U www/kazehakase/patches/patch-src_widget_kz-entry_c
+U www/kazehakase/patches/patch-src_widget_kz-entry_h
+P www/perlbal/Makefile
 U www/perlbal/distinfo
-U www/perlbal/patches/patch-perlbal
-U www/perlbal/pkg/DESCR
-U www/perlbal/pkg/PLIST
-P www/privoxy/Makefile
-U www/privoxy/distinfo
-P www/privoxy/patches/patch-config
-cvs server: www/privoxy/patches/patch-errlog_c is no longer in the repository
-P www/privoxy/pkg/PLIST
+P www/perlbal/pkg/PLIST
+P www/py-django/Makefile
+U www/py-django/distinfo
+P www/py-django/pkg/MESSAGE
+P www/py-django/pkg/PLIST
+P www/py-quixote/Makefile
+cvs server: www/py-quixote/pkg/PFRAG.shared is no longer in the repository
+P www/py-quixote/pkg/PLIST
+P www/webkit/Makefile
+U www/webkit/distinfo
+P www/webkit/patches/patch-GNUmakefile_in
+cvs server: www/webkit/patches/patch-JavaScriptCore_jit_JITStubs_cpp is no longer in the repository
+cvs server: www/webkit/patches/patch-JavaScriptCore_wtf_Threading_h is no longer in the repository
+P www/webkit/pkg/PLIST
+P www/youtube-dl/Makefile
+U www/youtube-dl/distinfo
 P x11/Makefile
-P x11/gnome/devhelp/Makefile
-P x11/gnome/devhelp/patches/patch-src_dh-assistant-view_c
-U x11/gnome/f-spot/patches/patch-icon-theme-installer
-U x11/gnome/f-spot/patches/patch-tools_f-spot-import
-P x11/gnustep/base/Makefile
-P x11/gnustep/make/Makefile
-U x11/gnustep/make/distinfo
-P x11/gnustep/make/patches/patch-Instance_bundle_make
-P x11/gnustep/make/patches/patch-Instance_framework_make
-P x11/gnustep/make/patches/patch-Instance_library_make
-P x11/gnustep/make/patches/patch-target_make
+P x11/dbus/Makefile
+U x11/dbus/distinfo
+P x11/dbus/patches/patch-bus_Makefile_in
+P x11/dbus/patches/patch-bus_dbus-daemon_1
+U x11/dbus/patches/patch-configure
+cvs server: x11/dbus/patches/patch-configure_in is no longer in the repository
+P x11/dbus/patches/patch-dbus_Makefile_in
+cvs server: x11/dbus/patches/patch-dbus_dbus-sysdeps-unix_c is no longer in the repository
+P x11/dbus/patches/patch-doc_Makefile_in
+P x11/dbus/patches/patch-tools_Makefile_in
+P x11/dbus-glib/Makefile
+U x11/dbus-glib/distinfo
+P x11/dbus-glib/patches/patch-configure
+cvs server: x11/dbus-glib/patches/patch-dbus_dbus-gobject_c is no longer in the repository
+P x11/dbus-glib/pkg/PLIST
+P x11/dwm/Makefile
+U x11/dwm/distinfo
+P x11/gnome/Makefile
+P x11/gnome/gnome.port.mk
+P x11/gnome/backgrounds/Makefile
+U x11/gnome/backgrounds/distinfo
+P x11/gnome/backgrounds/pkg/PLIST
+P x11/gnome/build/Makefile
+P x11/gnome/common/Makefile
+U x11/gnome/common/distinfo
+P x11/gnome/desktop/Makefile
+U x11/gnome/desktop/distinfo
+cvs server: x11/gnome/desktop/patches/patch-libgnome-desktop_gnome-desktop-item_c is no longer in the repository
+P x11/gnome/desktop/pkg/PLIST
+P x11/gnome/doc-utils/Makefile
+U x11/gnome/doc-utils/distinfo
+P x11/gnome/doc-utils/patches/patch-doc_xslt_Makefile_in
+U x11/gnome/doc-utils/patches/patch-tools_Makefile_in
+P x11/gnome/doc-utils/patches/patch-xml2po_xml2po_pc_in
+P x11/gnome/doc-utils/pkg/PLIST
+P x11/gnome/eel/Makefile
+U x11/gnome/eel/distinfo
+cvs server: x11/gnome/eel/patches/patch-eel_eel-debug-drawing_c is no longer in the repository
+P x11/gnome/eel/pkg/PLIST
+P x11/gnome/eog/Makefile
+U x11/gnome/eog/distinfo
+cvs server: x11/gnome/eog/pkg/PFRAG.shared is no longer in the repository
+P x11/gnome/eog/pkg/PLIST
+U x11/gnome/eog-plugins/Makefile
+U x11/gnome/eog-plugins/distinfo
+U x11/gnome/eog-plugins/patches/patch-configure
+U x11/gnome/eog-plugins/pkg/DESCR
+U x11/gnome/eog-plugins/pkg/PLIST
+P x11/gnome/games/Makefile
+P x11/gnome/gcalctool/Makefile
+U x11/gnome/gcalctool/distinfo
+P x11/gnome/gcalctool/pkg/PLIST
+P x11/gnome/gdl/Makefile
+U x11/gnome/gdl/distinfo
+P x11/gnome/gdl/pkg/PLIST
+P x11/gnome/gedit/Makefile
+U x11/gnome/gedit/distinfo
+U x11/gnome/gedit/patches/patch-gedit_gedit-local-document-saver_c
+P x11/gnome/gedit/pkg/PLIST
+P x11/gnome/gedit-plugins/Makefile
+U x11/gnome/gedit-plugins/distinfo
+P x11/gnome/gedit-plugins/patches/patch-configure
+P x11/gnome/gedit-plugins/pkg/PLIST
+P x11/gnome/gucharmap/Makefile
+U x11/gnome/gucharmap/distinfo
+P x11/gnome/gucharmap/pkg/PLIST
+P x11/gnome/gvfs/Makefile
+U x11/gnome/gvfs/distinfo
+P x11/gnome/gvfs/patches/patch-daemon_gvfsbackenddav_c
+U x11/gnome/gvfs/patches/patch-daemon_gvfsftpdircache_c
+U x11/gnome/gvfs/patches/patch-metadata_metatree_c
+P x11/gnome/gvfs/pkg/PFRAG.shared-main
+P x11/gnome/gvfs/pkg/PLIST-main
+P x11/gnome/icon-theme/Makefile
+U x11/gnome/icon-theme/distinfo
+P x11/gnome/icon-theme/patches/patch-Makefile_in
+P x11/gnome/icon-theme/pkg/PLIST
+P x11/gnome/keyring/Makefile
+U x11/gnome/keyring/distinfo
+P x11/gnome/keyring/patches/patch-daemon_ui_Makefile_in
+P x11/gnome/keyring/pkg/PFRAG.shared
+P x11/gnome/keyring/pkg/PLIST
+P x11/gnome/libbonobo/Makefile
+U x11/gnome/libbonobo/distinfo
+P x11/gnome/libbonobo/pkg/PLIST
+P x11/gnome/libbonoboui/Makefile
+U x11/gnome/libbonoboui/distinfo
+P x11/gnome/libbonoboui/pkg/PLIST
+P x11/gnome/libgnome/Makefile
+U x11/gnome/libgnome/distinfo
+P x11/gnome/libgnome/pkg/PLIST
+P x11/gnome/libgnomecanvas/Makefile
+U x11/gnome/libgnomecanvas/distinfo
+P x11/gnome/libgnomecanvas/pkg/PLIST
+P x11/gnome/libgnomecanvasmm/Makefile
+U x11/gnome/libgnomecanvasmm/distinfo
+P x11/gnome/libgnomekbd/Makefile
+U x11/gnome/libgnomekbd/distinfo
+P x11/gnome/libgnomekbd/pkg/PLIST
+P x11/gnome/libgnomemm/Makefile
+U x11/gnome/libgnomemm/distinfo
+P x11/gnome/libgnomeui/Makefile
+U x11/gnome/libgnomeui/distinfo
+P x11/gnome/libgnomeui/pkg/PLIST
+P x11/gnome/libgnomeuimm/Makefile
+U x11/gnome/libgnomeuimm/distinfo
+P x11/gnome/libgweather/Makefile
+U x11/gnome/libgweather/distinfo
+P x11/gnome/libgweather/pkg/PLIST
+P x11/gnome/librsvg/Makefile
+U x11/gnome/librsvg/distinfo
+P x11/gnome/librsvg/patches/patch-librsvg-2_0_pc_in
+P x11/gnome/libxklavier/Makefile
+U x11/gnome/libxklavier/distinfo
+P x11/gnome/libxklavier/pkg/PLIST
+P x11/gnome/menus/Makefile
+U x11/gnome/menus/distinfo
+P x11/gnome/menus/patches/patch-util-Makefile_in
+P x11/gnome/menus/pkg/PLIST
+P x11/gnome/py-gnome/Makefile
+U x11/gnome/py-gnome/distinfo
+P x11/gnome/py-gnome/pkg/PLIST
+P x11/gnome/terminal/Makefile
+U x11/gnome/terminal/distinfo
+P x11/gnome/terminal/pkg/PLIST
+P x11/gnome/themes/Makefile
+U x11/gnome/themes/distinfo
+P x11/gnome/themes/pkg/PLIST
+P x11/gnome/tracker/Makefile
+U x11/gnome/tracker/distinfo
+P x11/gnome/tracker/patches/patch-src_tracker-extract_tracker-extract-mp3_c
+U x11/gnome/tracker/patches/patch-src_tracker-extract_tracker-extract-mp3_c.orig
+U x11/gnome/tracker/patches/patch-src_tracker-indexer_tracker-indexer_c
+U x11/gnome/tracker/patches/patch-src_tracker-indexer_tracker-removable-device_c
+U x11/gnome/tracker/patches/patch-src_trackerd_tracker-status_c
+P x11/gnome/tracker/pkg/PLIST
+P x11/gnome/users-guide/Makefile
+U x11/gnome/users-guide/distinfo
+P x11/gnome/users-guide/pkg/PLIST
+P x11/gnome/vfs2/Makefile
+U x11/gnome/vfs2/distinfo
+P x11/gnome/vfs2/patches/patch-configure
+P x11/gnome/vfs2/patches/patch-modules_file-method_c
+P x11/gnome/vfs2/pkg/PLIST-main
+P x11/gnome/vfsmm/Makefile
+U x11/gnome/vfsmm/distinfo
+P x11/gnome/yelp/Makefile
+U x11/gnome/yelp/distinfo
+P x11/gnome/yelp/patches/patch-src_yelp-transform_c
+P x11/gnome/yelp/pkg/PLIST
+P x11/gnome/zenity/Makefile
+U x11/gnome/zenity/distinfo
+P x11/gnome/zenity/pkg/PLIST
 P x11/gtk+2/Makefile
-U x11/gtk+2/distinfo
-P x11/gtk+2/patches/patch-demos_Makefile_in
-P x11/gtk+2/patches/patch-gdk-pixbuf_Makefile_in
-P x11/gtk+2/patches/patch-gdk-pixbuf_gdk-pixbuf-io_c
-P x11/gtk+2/patches/patch-gtk_Makefile_in
-P x11/gtk+2/patches/patch-modules_input_Makefile_in
-cvs server: x11/gtk+2/patches/patch-modules_printbackends_lpr_gtkprintbackendlpr_c is no longer in the repository
-P x11/gtk+2/pkg/PLIST-docs
-P x11/gtk+2/pkg/PLIST-main
-P x11/gtk2mm/Makefile
-U x11/gtk2mm/distinfo
-P x11/gtk2mm/pkg/PLIST-docs
-P x11/gtk2mm/pkg/PLIST-main
-U x11/gtkdatabox/Makefile
-U x11/gtkdatabox/distinfo
-U x11/gtkdatabox/patches/patch-gtk_Makefile_in
-U x11/gtkdatabox/pkg/DESCR
-U x11/gtkdatabox/pkg/PFRAG.shared
-U x11/gtkdatabox/pkg/PLIST
-P x11/gtksourceview/Makefile
-U x11/gtksourceview/distinfo
-P x11/gtksourceview/pkg/PLIST
-U x11/klavaro/Makefile
-U x11/klavaro/distinfo
-U x11/klavaro/pkg/DESCR
-U x11/klavaro/pkg/PLIST
-P x11/py-gtksourceview/Makefile
-U x11/py-gtksourceview/distinfo
-P x11/py-gtksourceview/pkg/PLIST
-P x11/wxWidgets/Makefile
-U x11/wxWidgets/patches/patch-src_gtk_gsockgtk_cpp
-P x11/xrestop/Makefile
-P x11/xrestop/pkg/PLIST
+cvs server: x11/gtk+extra/Makefile is no longer in the repository
+cvs server: x11/gtk+extra/distinfo is no longer in the repository
+cvs server: x11/gtk+extra/pkg/DESCR is no longer in the repository
+cvs server: x11/gtk+extra/pkg/PFRAG.shared is no longer in the repository
+cvs server: x11/gtk+extra/pkg/PLIST is no longer in the repository
+P x11/hicolor-icon-theme/Makefile
+U x11/hicolor-icon-theme/distinfo
+P x11/jwm/Makefile
+P x11/mplayer/Makefile
+U x11/mplayer/distinfo
+U x11/mplayer/files/README.OpenBSD
+U x11/mplayer/files/ai_sndio.c
+cvs server: x11/mplayer/files/ao_libsndio.c is no longer in the repository
+P x11/mplayer/files/ao_rtunes.c
+U x11/mplayer/files/ao_sndio.c
+P x11/mplayer/patches/patch-DOCS_man_en_mplayer_1
+U x11/mplayer/patches/patch-DOCS_xml_configure
+U x11/mplayer/patches/patch-DOCS_xml_en_cd-dvd_xml
+U x11/mplayer/patches/patch-Makefile
+U x11/mplayer/patches/patch-command_c
+cvs server: x11/mplayer/patches/patch-common_mak is no longer in the repository
+P x11/mplayer/patches/patch-configure
+cvs server: x11/mplayer/patches/patch-dvdread_Makefile is no longer in the repository
+cvs server: x11/mplayer/patches/patch-gui_wm_ws_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libao2_Makefile is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libao2_ao_sun_c is no longer in the repository
+P x11/mplayer/patches/patch-libao2_audio_out_c
+U x11/mplayer/patches/patch-libavcodec_Makefile
+cvs server: x11/mplayer/patches/patch-libavcodec_dsputil_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libavcodec_h264_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libavcodec_libx264_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libavformat_4xm_c is no longer in the repository
+U x11/mplayer/patches/patch-libavutil_x86_cpu_h
+cvs server: x11/mplayer/patches/patch-libdvdcss_Makefile is no longer in the repository
+P x11/mplayer/patches/patch-libmpcodecs_ad_faad_c
+cvs server: x11/mplayer/patches/patch-libmpcodecs_ad_pcm_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libmpdemux_demux_audio_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libmpdemux_demux_mov_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libmpdemux_demux_real_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-libmpdemux_demux_vqf_c is no longer in the repository
+U x11/mplayer/patches/patch-libpostproc_Makefile
+cvs server: x11/mplayer/patches/patch-libpostproc_postprocess_template_c is no longer in the repository
+U x11/mplayer/patches/patch-libswscale_Makefile
+cvs server: x11/mplayer/patches/patch-loader_wrapper_S is no longer in the repository
+cvs server: x11/mplayer/patches/patch-mangle_h is no longer in the repository
+cvs server: x11/mplayer/patches/patch-mencoder_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-mp3lib_layer2_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-mpcommon_mak is no longer in the repository
+cvs server: x11/mplayer/patches/patch-mplayer_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-stream_Makefile is no longer in the repository
+U x11/mplayer/patches/patch-stream_audio_in_c
+U x11/mplayer/patches/patch-stream_audio_in_h
+cvs server: x11/mplayer/patches/patch-stream_stream_cddb_c is no longer in the repository
+P x11/mplayer/patches/patch-stream_tvi_bsdbt848_c
+P x11/mplayer/patches/patch-stream_tvi_v4l2_c
+cvs server: x11/mplayer/patches/patch-stream_url_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-tremor_block_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-tremor_block_h is no longer in the repository
+cvs server: x11/mplayer/patches/patch-tremor_floor0_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-tremor_floor1_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-tremor_res012_c is no longer in the repository
+cvs server: x11/mplayer/patches/patch-tremor_synthesis_c is no longer in the repository
+P x11/mplayer/pkg/DESCR
+U x11/mplayer/pkg/MESSAGE
+cvs server: x11/mplayer/pkg/PFRAG.no-no_x11 is no longer in the repository
+P x11/mplayer/pkg/PLIST
+P x11/py-gtk2/Makefile
+U x11/py-gtk2/distinfo
+P x11/py-gtk2/patches/patch-examples_Makefile_in
+P x11/py-gtk2/pkg/PLIST
+P x11/qt4/Makefile
+U x11/qt4/distinfo
+P x11/qt4/patches/patch-config_tests_unix_nis_nis_cpp
+P x11/qt4/patches/patch-configure
+cvs server: x11/qt4/patches/patch-examples_xmlpatterns_trafficinfo_mainwindow_cpp is no longer in the repository
+P x11/qt4/patches/patch-qmake_generators_unix_unixmake_cpp
+P x11/qt4/patches/patch-src_corelib_global_qglobal_h
+P x11/qt4/pkg/PFRAG.GCC4-examples
+P x11/qt4/pkg/PLIST-examples
+P x11/qt4/pkg/PLIST-html
+P x11/qt4/pkg/PLIST-main
+P x11/rep-gtk/Makefile
+U x11/rep-gtk/distinfo
+cvs server: x11/rep-gtk/patches/patch-gtk-compat_c is no longer in the repository
+cvs server: x11/rep-gtk/patches/patch-rep-gtk_h is no longer in the repository
+P x11/rep-gtk/pkg/PLIST
+P x11/sawfish/Makefile
+U x11/sawfish/distinfo
+P x11/sawfish/patches/patch-lisp_sawfish_ui_widgets_frame-style.jl
+U x11/sawfish/pkg/MESSAGE
+P x11/sawfish/pkg/PLIST
+P x11/tellico/Makefile
+U x11/tellico/distinfo
+P x11/xfce4/exo/Makefile
+U x11/xfce4/exo/distinfo
+P x11/xfce4/terminal/Makefile
+U x11/xfce4/terminal/distinfo
+P x11/xfce4/terminal/pkg/PLIST

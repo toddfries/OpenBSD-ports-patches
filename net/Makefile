@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.594 2009/10/03 18:55:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.597 2009/10/11 10:22:04 landry Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -83,7 +83,6 @@
      SUBDIR += ettercap,no_x11
      SUBDIR += ezstream
      SUBDIR += ez-ipupdate
-     SUBDIR += farsight
      SUBDIR += filezilla
      SUBDIR += firewalk
      SUBDIR += flickcurl
@@ -164,6 +163,7 @@
      SUBDIR += libnids
      SUBDIR += libpcapnav
      SUBDIR += libproxy
+     SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
      SUBDIR += libst
@@ -315,6 +315,7 @@
      SUBDIR += p5-Validate-Net
      SUBDIR += p5-flowd
      SUBDIR += packit
+     SUBDIR += papyon
      SUBDIR += pavuk
      SUBDIR += pavuk,no_x11
      SUBDIR += pcapdiff

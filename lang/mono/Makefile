@@ -1,5 +1,6 @@
-# $OpenBSD: Makefile,v 1.12 2009/09/22 17:55:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2009/10/10 09:44:59 ajacoutot Exp $
 
+# sync with net/avahi,-mono
 ONLY_FOR_ARCHS=	amd64 i386 powerpc # arm
 
 COMMENT=	cross platform, open source .NET developement framework

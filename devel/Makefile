@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.739 2009/10/05 12:57:38 kevlo Exp $
+# $OpenBSD: Makefile,v 1.743 2009/10/11 11:32:00 landry Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -79,6 +79,7 @@
      SUBDIR += dtc
      SUBDIR += eclipse
      SUBDIR += ectags
+     SUBDIR += ethos
      SUBDIR += fasm
      SUBDIR += ffcall
      SUBDIR += flatzebra
@@ -222,6 +223,7 @@
      SUBDIR += ode
      SUBDIR += omake
      SUBDIR += opencm
+     SUBDIR += openmpi
      SUBDIR += openocd
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
@@ -241,6 +243,7 @@
      SUBDIR += p5-AppConfig-Std
      SUBDIR += p5-Array-Compare
      SUBDIR += p5-Array-Window
+     SUBDIR += p5-AutoXS-Header
      SUBDIR += p5-B-Deobfuscate
      SUBDIR += p5-B-Graph
      SUBDIR += p5-B-Hooks-EndOfScope
@@ -307,6 +310,7 @@
      SUBDIR += p5-Class-Virtual
      SUBDIR += p5-Class-WhiteHole
      SUBDIR += p5-Class-XPath
+     SUBDIR += p5-Class-XSAccessor
      SUBDIR += p5-Clone
      SUBDIR += p5-Config-Any
      SUBDIR += p5-Config-Auto
@@ -757,6 +761,7 @@
      SUBDIR += rats
      SUBDIR += re2c
      SUBDIR += remake
+     SUBDIR += rsvndump
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activesupport

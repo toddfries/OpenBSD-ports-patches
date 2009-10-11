@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.55 2009/09/06 12:01:07 jolan Exp $
+# $OpenBSD: Makefile,v 1.57 2009/10/10 12:39:29 ajacoutot Exp $
 
 COMMENT=		Common Unix Printing System
 
 VERSION=		1.3.11
 DISTNAME=		cups-${VERSION}-source
-PKGNAME=		cups-${VERSION}
+PKGNAME=		cups-${VERSION}p0
+
 CATEGORIES=		print sysutils
 
 SHARED_LIBS+=		cups		4.0
@@ -42,7 +43,7 @@ LIB_DEPENDS=		png.>=3::graphics/png \
 			dbus-1.>=7::x11/dbus \
 			gnutls.>=14::security/gnutls
 # only build the -main subpackage to prevent cyclic dependency
-LIB_DEPENDS+=		dns_sd::net/avahi,no_gtk,no_qt3,no_qt4
+LIB_DEPENDS+=		dns_sd::net/avahi,no_gtk,no_mono,no_qt3,no_qt4
 
 FAKE_FLAGS=		BINMODE=${BINMODE} \
 			SHAREMODE=${SHAREMODE} \
