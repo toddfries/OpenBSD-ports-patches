@@ -1,688 +1,827 @@
 # On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
 # Changed but not updated:
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   archivers/star/patches/patch-RULES_mk-gmake_id
+#	modified:   Makefile
+#	modified:   archivers/unshield/Makefile
+#	modified:   archivers/unshield/distinfo
 #	modified:   audio/Makefile
-#	modified:   audio/libcanberra/Makefile
-#	modified:   audio/libcanberra/distinfo
-#	modified:   audio/libcanberra/patches/patch-configure_ac
-#	modified:   audio/libcanberra/patches/patch-src_Makefile_am
-#	modified:   audio/libcanberra/pkg/PLIST
+#	modified:   audio/aumix/Makefile
+#	modified:   audio/aumix/patches/patch-doc_aumix_1
+#	modified:   audio/fluidsynth/Makefile
+#	modified:   audio/fluidsynth/distinfo
+#	deleted:    audio/fluidsynth/files/fluid_libsndio.c
+#	modified:   audio/fluidsynth/patches/patch-configure_ac
+#	modified:   audio/fluidsynth/patches/patch-src_Makefile_am
+#	modified:   audio/fluidsynth/patches/patch-src_fluid_adriver_c
+#	modified:   audio/fluidsynth/patches/patch-src_fluid_jack_c
+#	modified:   audio/fluidsynth/patches/patch-src_fluid_mdriver_c
+#	deleted:    audio/fluidsynth/patches/patch-src_fluid_oss_c
+#	modified:   audio/fluidsynth/patches/patch-src_fluid_synth_c
+#	modified:   audio/fluidsynth/patches/patch-src_fluid_sys_c
+#	modified:   audio/fluidsynth/patches/patch-src_fluidsynth_c
+#	modified:   audio/mp3splt-gtk/Makefile
+#	modified:   audio/mpg123/Makefile
+#	modified:   audio/mpg123/distinfo
 #	modified:   audio/openal/Makefile
-#	modified:   audio/openal/patches/patch-admin_pkgconfig_openal_pc_in
-#	modified:   audio/xmms-mad/Makefile
-#	modified:   audio/xmms-mad/distinfo
-#	modified:   cad/pcb/Makefile
-#	modified:   cad/pcb/patches/patch-configure
-#	modified:   cad/pcb/patches/patch-example_Makefile_in
-#	modified:   cad/pcb/patches/patch-example_libraries_Makefile_in
-#	modified:   cad/pcb/pkg/PLIST
-#	modified:   cad/xcircuit/Makefile
-#	modified:   cad/xcircuit/distinfo
-#	modified:   cad/xcircuit/pkg/PLIST
-#	modified:   comms/p5-Device-Modem/Makefile
-#	modified:   comms/p5-Device-Modem/distinfo
-#	modified:   converters/p5-JSON-XS/Makefile
-#	modified:   converters/p5-JSON-XS/distinfo
-#	modified:   databases/evolution-data-server/Makefile
-#	modified:   databases/evolution-data-server/distinfo
-#	deleted:    databases/evolution-data-server/patches/patch-acinclude_m4
-#	deleted:    databases/evolution-data-server/patches/patch-addressbook_backends_file_e-book-backend-file_c
-#	deleted:    databases/evolution-data-server/patches/patch-addressbook_backends_vcf_e-book-backend-vcf_c
-#	deleted:    databases/evolution-data-server/patches/patch-calendar_libical_configure
-#	deleted:    databases/evolution-data-server/patches/patch-calendar_libical_src_libical_icalrecur_c
-#	deleted:    databases/evolution-data-server/patches/patch-calendar_libical_src_libical_icaltz-util_c
-#	deleted:    databases/evolution-data-server/patches/patch-camel_camel-db_c
-#	deleted:    databases/evolution-data-server/patches/patch-configure_in
-#	deleted:    databases/evolution-data-server/patches/patch-docs_reference_camel_Makefile_in
-#	modified:   databases/evolution-data-server/patches/patch-libdb_dist_configure
-#	deleted:    databases/evolution-data-server/patches/patch-libedataserver_e-url_c
-#	modified:   databases/evolution-data-server/patches/patch-libedataserverui_e-source-selector_c
-#	modified:   databases/evolution-data-server/pkg/PLIST
-#	modified:   databases/freetds/Makefile
-#	modified:   databases/freetds/distinfo
-#	modified:   databases/freetds/patches/patch-Makefile_in
-#	modified:   databases/freetds/patches/patch-odbc_unittests_Makefile_in
-#	modified:   databases/freetds/patches/patch-src_ctlib_unittests_Makefile_in
-#	modified:   databases/freetds/patches/patch-src_dblib_unittests_Makefile_in
-#	modified:   databases/freetds/patches/patch-src_odbc_connectparams_c
-#	modified:   databases/freetds/patches/patch-src_pool_Makefile_in
-#	modified:   databases/freetds/patches/patch-src_tds_unittests_Makefile_in
-#	modified:   databases/freetds/pkg/PLIST
-#	modified:   databases/lbdb/Makefile
-#	modified:   databases/lbdb/patches/patch-lbdb_lib_sh_in
-#	modified:   databases/p5-DBM-Deep/Makefile
-#	modified:   databases/p5-DBM-Deep/pkg/DESCR
-#	modified:   databases/py-cdb/Makefile
-#	deleted:    databases/py-cdb/pkg/PFRAG.shared
-#	modified:   databases/py-cdb/pkg/PLIST
-#	modified:   databases/py-storm/Makefile
-#	deleted:    databases/py-storm/pkg/PFRAG.shared
-#	modified:   databases/py-storm/pkg/PLIST
+#	modified:   audio/openal/patches/patch-common_include_AL_alc_h
+#	modified:   audio/sound-theme-freedesktop/Makefile
+#	modified:   audio/sound-theme-freedesktop/distinfo
+#	deleted:    audio/sound-theme-freedesktop/patches/patch-Makefile_in
+#	modified:   audio/sound-theme-freedesktop/pkg/PLIST
+#	modified:   audio/vagalume/Makefile
+#	modified:   converters/libpst/Makefile
+#	modified:   databases/p5-DBIx-SearchBuilder/Makefile
+#	modified:   databases/p5-DBIx-SearchBuilder/distinfo
+#	modified:   databases/ruby-activerecord/Makefile
+#	modified:   databases/ruby-activerecord/distinfo
+#	modified:   databases/ruby-activerecord/pkg/PLIST
+#	modified:   databases/ruby-data_objects/Makefile
+#	modified:   databases/ruby-data_objects/distinfo
+#	modified:   databases/ruby-data_objects/pkg/PLIST
+#	modified:   databases/ruby-datamapper/Makefile.inc
+#	modified:   databases/ruby-datamapper/aggregates/distinfo
+#	modified:   databases/ruby-datamapper/aggregates/pkg/PLIST
+#	modified:   databases/ruby-datamapper/core/Makefile
+#	modified:   databases/ruby-datamapper/core/distinfo
+#	modified:   databases/ruby-datamapper/core/pkg/PLIST
+#	modified:   databases/ruby-datamapper/migrations/distinfo
+#	modified:   databases/ruby-datamapper/migrations/pkg/PLIST
+#	modified:   databases/ruby-datamapper/serializer/Makefile
+#	modified:   databases/ruby-datamapper/serializer/distinfo
+#	modified:   databases/ruby-datamapper/serializer/pkg/PLIST
+#	modified:   databases/ruby-datamapper/sweatshop/distinfo
+#	modified:   databases/ruby-datamapper/sweatshop/pkg/PLIST
+#	modified:   databases/ruby-datamapper/timestamps/distinfo
+#	modified:   databases/ruby-datamapper/timestamps/pkg/PLIST
+#	modified:   databases/ruby-datamapper/types/Makefile
+#	modified:   databases/ruby-datamapper/types/distinfo
+#	modified:   databases/ruby-datamapper/types/pkg/PLIST
+#	modified:   databases/ruby-datamapper/validations/distinfo
+#	modified:   databases/ruby-datamapper/validations/pkg/PLIST
+#	modified:   databases/ruby-do_sqlite3/Makefile
+#	modified:   databases/ruby-do_sqlite3/distinfo
+#	modified:   databases/ruby-do_sqlite3/pkg/PLIST
 #	modified:   devel/Makefile
-#	modified:   devel/atk/Makefile
-#	modified:   devel/atk/distinfo
-#	modified:   devel/atk/pkg/PLIST
-#	modified:   devel/autogen/Makefile
-#	modified:   devel/autogen/pkg/PLIST
-#	modified:   devel/gflags/Makefile
+#	modified:   devel/cln/Makefile
+#	modified:   devel/cln/distinfo
+#	deleted:    devel/cln/patches/patch-doc_Makefile_in
+#	deleted:    devel/cln/patches/patch-src_Makefile_in
+#	modified:   devel/cln/pkg/PLIST
+#	modified:   devel/ethos/Makefile
+#	modified:   devel/ethos/patches/patch-configure
+#	modified:   devel/gconf-editor/Makefile
+#	modified:   devel/gconf-editor/distinfo
+#	modified:   devel/gconf-editor/pkg/PLIST
 #	modified:   devel/glib2/Makefile
-#	modified:   devel/iso-codes/Makefile
-#	modified:   devel/iso-codes/distinfo
-#	modified:   devel/json-glib/Makefile
-#	modified:   devel/json-glib/distinfo
-#	deleted:    devel/json-glib/patches/patch-json-glib_json-gobject_c
-#	deleted:    devel/json-glib/patches/patch-tests_test-serialize-full_c
-#	modified:   devel/json-glib/pkg/PLIST
-#	modified:   devel/libexecinfo/Makefile
-#	modified:   devel/libexecinfo/patches/patch-Makefile
-#	modified:   devel/libexecinfo/pkg/PLIST
-#	modified:   devel/libffi/Makefile
-#	modified:   devel/libffi/pkg/PLIST
-#	modified:   devel/libvmime/Makefile
-#	modified:   devel/libwnck/Makefile
-#	modified:   devel/libwnck/distinfo
-#	modified:   devel/libwnck/pkg/PLIST
-#	modified:   devel/p5-AnyEvent/Makefile
-#	modified:   devel/p5-AnyEvent/distinfo
-#	modified:   devel/p5-AnyEvent/pkg/PLIST
-#	modified:   devel/p5-Array-Compare/Makefile
-#	modified:   devel/p5-Array-Compare/distinfo
-#	modified:   devel/p5-Class-Inspector/Makefile
-#	modified:   devel/p5-Class-Inspector/distinfo
-#	modified:   devel/p5-Class-Inspector/pkg/PLIST
-#	modified:   devel/p5-Clone/Makefile
-#	modified:   devel/p5-Clone/distinfo
-#	modified:   devel/p5-Module-Find/Makefile
-#	modified:   devel/p5-Module-Find/distinfo
-#	modified:   devel/p5-Module-Versions-Report/Makefile
-#	modified:   devel/p5-Module-Versions-Report/distinfo
+#	modified:   devel/goffice/Makefile
+#	modified:   devel/goffice/pkg/PLIST
+#	modified:   devel/libelf/Makefile
+#	modified:   devel/libelf/distinfo
+#	modified:   devel/libelf/patches/patch-aclocal_m4
+#	modified:   devel/libgsf/Makefile
+#	modified:   devel/libgsf/distinfo
+#	modified:   devel/libgsf/patches/patch-thumbnailer_Makefile_in
+#	modified:   devel/libgsf/pkg/DESCR-gnome
+#	modified:   devel/libgsf/pkg/DESCR-main
+#	modified:   devel/libgsf/pkg/PLIST-main
+#	modified:   devel/libgtop2/Makefile
+#	modified:   devel/libgtop2/pkg/PLIST
+#	modified:   devel/libslang/Makefile
+#	modified:   devel/libslang/distinfo
+#	modified:   devel/libslang/patches/patch-autoconf_aclocal_m4
+#	deleted:    devel/libslang/patches/patch-autoconf_configure_in
+#	modified:   devel/libslang/patches/patch-src_Makefile_in
+#	modified:   devel/libslang/pkg/PFRAG.shared
+#	modified:   devel/libslang/pkg/PLIST
+#	modified:   devel/libunique/Makefile
+#	modified:   devel/libunique/distinfo
+#	modified:   devel/p5-Class-Accessor-Grouped/Makefile
+#	modified:   devel/p5-Class-Accessor-Grouped/distinfo
 #	modified:   devel/py-gobject/Makefile
 #	modified:   devel/py-gobject/pkg/PLIST
-#	modified:   devel/py-openbsd/Makefile
-#	deleted:    devel/py-openbsd/pkg/PFRAG.shared
-#	modified:   devel/py-openbsd/pkg/PLIST
-#	modified:   devel/py-protocols/Makefile
-#	deleted:    devel/py-protocols/pkg/PFRAG.shared
-#	modified:   devel/py-protocols/pkg/PLIST
-#	modified:   devel/py-psyco/Makefile
-#	deleted:    devel/py-psyco/pkg/PFRAG.shared
-#	modified:   devel/py-psyco/pkg/PLIST
-#	modified:   devel/py-py/Makefile
-#	deleted:    devel/py-py/pkg/PFRAG.shared
-#	modified:   devel/py-py/pkg/PLIST
-#	modified:   devel/py-rcsparse/Makefile
-#	deleted:    devel/py-rcsparse/pkg/PFRAG.shared
-#	modified:   devel/py-rcsparse/pkg/PLIST
-#	modified:   devel/py-ruledispatch/Makefile
-#	deleted:    devel/py-ruledispatch/pkg/PFRAG.shared
-#	modified:   devel/py-ruledispatch/pkg/PLIST
-#	modified:   devel/py-simplejson/Makefile
-#	deleted:    devel/py-simplejson/pkg/PFRAG.shared
-#	modified:   devel/py-simplejson/pkg/PLIST
-#	modified:   devel/xdg-user-dirs/Makefile
-#	modified:   devel/xdg-user-dirs/distinfo
-#	deleted:    devel/xdg-user-dirs/patches/patch-configure
-#	deleted:    devel/xdg-user-dirs/patches/patch-xdg-user-dir
-#	modified:   devel/xdg-user-dirs/pkg/PLIST
-#	modified:   editors/abiword/Makefile
-#	modified:   editors/abiword/distinfo
-#	deleted:    editors/abiword/patches/patch-abi_src_af_util_xp_ut_iconv_cpp
-#	deleted:    editors/abiword/patches/patch-abi_src_af_util_xp_ut_string_class_cpp
-#	deleted:    editors/abiword/pkg/PFRAG.gnome
-#	modified:   editors/abiword/pkg/PLIST
-#	modified:   editors/teaqt/Makefile
-#	modified:   editors/teaqt/distinfo
-#	modified:   editors/teaqt/patches/patch-spellchecker_cpp
-#	modified:   editors/teaqt/patches/patch-src_pro
+#	modified:   devel/py-twisted/Makefile
+#	modified:   devel/py-twisted/web2/Makefile
+#	modified:   devel/ruby-actionpack/Makefile
+#	modified:   devel/ruby-actionpack/distinfo
+#	modified:   devel/ruby-actionpack/pkg/PLIST
+#	modified:   devel/ruby-activesupport/Makefile
+#	modified:   devel/ruby-activesupport/distinfo
+#	modified:   devel/ruby-activesupport/pkg/PLIST
+#	modified:   devel/ruby-echoe/Makefile
+#	modified:   devel/ruby-echoe/distinfo
+#	modified:   devel/ruby-echoe/pkg/PLIST
+#	modified:   devel/ruby-extlib/Makefile
+#	modified:   devel/ruby-extlib/distinfo
+#	modified:   devel/ruby-extlib/pkg/PLIST
+#	modified:   devel/ruby-gems/Makefile
+#	modified:   devel/ruby-gems/distinfo
+#	deleted:    devel/ruby-gems/patches/patch-lib_rubygems_commands_install_command_rb
+#	modified:   devel/ruby-gems/patches/patch-lib_rubygems_config_file_rb
+#	modified:   devel/ruby-gems/patches/patch-lib_rubygems_dependency_installer_rb
+#	modified:   devel/ruby-gems/patches/patch-lib_rubygems_install_update_options_rb
+#	modified:   devel/ruby-gems/patches/patch-lib_rubygems_installer_rb
+#	deleted:    devel/ruby-gems/patches/patch-setup_rb
+#	modified:   devel/ruby-gems/pkg/PLIST
+#	modified:   devel/ruby-gettext/Makefile
+#	modified:   devel/ruby-gettext/distinfo
+#	modified:   devel/ruby-gettext/pkg/PLIST
+#	modified:   devel/silc-toolkit/Makefile
+#	modified:   editors/jed/Makefile
+#	modified:   editors/jed/distinfo
+#	deleted:    editors/jed/patches/patch-configure
+#	modified:   editors/jed/patches/patch-lib_jed_rc
+#	deleted:    editors/jed/patches/patch-src_Makefile.in
+#	modified:   editors/jed/pkg/PFRAG.no-no_x11
+#	modified:   editors/jed/pkg/PLIST
+#	modified:   editors/subtitleeditor/Makefile
+#	modified:   editors/subtitleeditor/distinfo
+#	modified:   editors/subtitleeditor/pkg/PLIST
 #	modified:   editors/texworks/Makefile
-#	modified:   education/Makefile
+#	modified:   editors/texworks/distinfo
+#	deleted:    editors/texworks/patches/patch-getDefaultBinPaths_sh
+#	modified:   editors/vim/Makefile
+#	modified:   editors/vim/distinfo
 #	modified:   education/drgeo/Makefile
-#	modified:   education/drgeo/pkg/PLIST
 #	modified:   games/Makefile
-#	modified:   geo/gpx-viewer/Makefile
-#	modified:   geo/libchamplain/Makefile.inc
-#	modified:   geo/libchamplain/core/Makefile
-#	modified:   geo/libchamplain/core/distinfo
-#	modified:   geo/libchamplain/core/pkg/PLIST
-#	modified:   geo/openbsd-developers/Makefile
-#	modified:   geo/openbsd-developers/files/OpenBSD
+#	modified:   games/alephone/Makefile
+#	modified:   games/alephone/alephone/Makefile
+#	modified:   games/alephone/alephone/distinfo
+#	deleted:    games/alephone/alephone/patches/patch-Source_Files_Network_network_messages_cpp
+#	modified:   geo/Makefile
 #	modified:   graphics/Makefile
-#	modified:   graphics/clutter/Makefile
-#	modified:   graphics/clutter/Makefile.inc
-#	modified:   graphics/clutter/clutter-box2d/Makefile
-#	modified:   graphics/clutter/clutter-box2d/distinfo
-#	modified:   graphics/clutter/clutter-box2d/pkg/PLIST
-#	modified:   graphics/clutter/clutter-gst/Makefile
-#	modified:   graphics/clutter/clutter-gst/distinfo
-#	modified:   graphics/clutter/clutter-gst/pkg/PLIST
-#	modified:   graphics/clutter/clutter-gtk/Makefile
-#	modified:   graphics/clutter/clutter-gtk/distinfo
-#	modified:   graphics/clutter/clutter-gtk/pkg/PLIST
-#	modified:   graphics/clutter/core/Makefile
-#	modified:   graphics/clutter/core/distinfo
-#	modified:   graphics/clutter/core/patches/patch-clutter_pc_in
-#	modified:   graphics/clutter/core/patches/patch-clutter_x11_clutter-x11_pc_in
-#	modified:   graphics/clutter/core/pkg/PLIST
-#	modified:   graphics/netpbm/Makefile
-#	modified:   graphics/netpbm/distinfo
-#	modified:   graphics/netpbm/pkg/PLIST
-#	modified:   graphics/py-dot/Makefile
-#	modified:   graphics/py-dot/pkg/PLIST
-#	modified:   graphics/py-pyx/Makefile
-#	deleted:    graphics/py-pyx/pkg/PFRAG.shared
-#	modified:   graphics/py-pyx/pkg/PLIST
+#	modified:   graphics/babl/Makefile
+#	modified:   graphics/babl/distinfo
+#	modified:   graphics/babl/patches/patch-Makefile_in
+#	modified:   graphics/babl/patches/patch-extensions_Makefile_in
+#	modified:   graphics/babl/pkg/PLIST
+#	modified:   graphics/evince/Makefile
+#	modified:   graphics/evince/distinfo
+#	modified:   graphics/evince/patches/patch-shell_ev-window_c
+#	modified:   graphics/evince/pkg/PLIST-main
+#	modified:   graphics/gegl/Makefile
+#	modified:   graphics/gegl/distinfo
+#	modified:   graphics/gegl/pkg/PLIST-main
+#	modified:   graphics/gegl/pkg/PLIST-plugins
+#	modified:   graphics/jpeg/Makefile
+#	modified:   graphics/jpeg/distinfo
+#	deleted:    graphics/jpeg/patches/patch-configure
+#	modified:   graphics/jpeg/patches/patch-jerror_c
+#	deleted:    graphics/jpeg/patches/patch-makefile_cfg
+#	deleted:    graphics/jpeg/patches/patch-wrrle_c
+#	modified:   graphics/jpeg/pkg/DESCR
+#	modified:   graphics/jpeg/pkg/PLIST
+#	modified:   graphics/libexif/Makefile
+#	modified:   graphics/libexif/distinfo
+#	modified:   graphics/libexif/patches/patch-Makefile_in
+#	modified:   graphics/libexif/pkg/PLIST
+#	modified:   graphics/mpeg_encode/patches/patch-combine_c
+#	modified:   graphics/mpeg_encode/patches/patch-jpeg_c
+#	modified:   graphics/png/Makefile
+#	modified:   graphics/png/distinfo
+#	modified:   graphics/png/patches/patch-scripts_libpng_pc_in
+#	modified:   graphics/png/patches/patch-scripts_makefile_openbsd
+#	modified:   graphics/pngcrush/Makefile
+#	modified:   graphics/pngcrush/distinfo
 #	modified:   infrastructure/build/libtool
+#	modified:   infrastructure/build/update-patches
 #	modified:   infrastructure/db/user.list
-#	modified:   lang/chicken/Makefile
-#	modified:   lang/chicken/pkg/PLIST
+#	modified:   infrastructure/mk/bsd.port.mk
+#	modified:   infrastructure/plist/arm
+#	modified:   infrastructure/plist/sh
+#	modified:   inputmethods/uim/Makefile
+#	modified:   lang/gawk/Makefile
+#	modified:   lang/gawk/distinfo
+#	deleted:    lang/gawk/patches/patch-m4_lib-link_m4
+#	modified:   lang/gawk/pkg/PLIST
 #	modified:   lang/gcc/3.3/Makefile
-#	modified:   lang/gcc/3.3/pkg/PFRAG.PIC-java
-#	modified:   lang/gcc/3.3/pkg/PFRAG.shared-java
-#	modified:   lang/gcc/3.3/pkg/PLIST-java
+#	modified:   lang/gcc/3.3/gcc3.port.mk
 #	modified:   lang/gcc/4.2/Makefile
-#	modified:   lang/gcc/4.2/patches/patch-libffi_Makefile_in
-#	modified:   lang/gcc/4.2/pkg/PFRAG.PIC-java
-#	modified:   lang/gcc/4.2/pkg/PFRAG.shared-java
-#	modified:   lang/gcc/4.2/pkg/PLIST-java
-#	modified:   lang/guile/Makefile
-#	modified:   lang/guile/distinfo
-#	deleted:    lang/guile/patches/patch-ice-9_slib_scm
-#	modified:   lang/guile/pkg/PFRAG.shared
-#	modified:   lang/guile/pkg/PLIST
-#	modified:   lang/librep/Makefile
-#	modified:   lang/librep/distinfo
-#	deleted:    lang/librep/patches/patch-configure
-#	deleted:    lang/librep/patches/patch-rep_m4
-#	modified:   lang/librep/patches/patch-src_Makefile_in
-#	deleted:    lang/librep/patches/patch-src_numbers.c
-#	deleted:    lang/librep/patches/patch-src_repint.h
-#	modified:   lang/librep/pkg/DESCR
-#	modified:   lang/librep/pkg/PLIST
-#	modified:   lang/mono/Makefile
-#	modified:   mail/extsmail/Makefile
-#	modified:   mail/extsmail/distinfo
-#	modified:   mail/fetchmail/Makefile
-#	modified:   mail/fetchmail/distinfo
-#	modified:   mail/fetchmail/patches/patch-Makefile_in
-#	modified:   mail/fetchmail/patches/patch-configure
-#	deleted:    mail/fetchmail/patches/patch-driver_c
-#	modified:   mail/fetchmail/pkg/PLIST
-#	modified:   mail/gmime24/Makefile
-#	modified:   mail/gmime24/distinfo
-#	deleted:    mail/py-milter/pkg/PFRAG.shared
-#	modified:   math/mathomatic/Makefile
-#	modified:   math/mathomatic/distinfo
-#	modified:   math/mathomatic/patches/patch-globals_c
-#	modified:   math/mathomatic/patches/patch-makefile
-#	modified:   math/mathomatic/pkg/PLIST
-#	modified:   misc/p5-Spreadsheet-ParseExcel/Makefile
-#	modified:   misc/p5-Spreadsheet-ParseExcel/distinfo
-#	modified:   misc/p5-Spreadsheet-ParseExcel/pkg/PLIST
-#	modified:   misc/py-imdb/Makefile
-#	deleted:    misc/py-imdb/pkg/PFRAG.shared
-#	modified:   misc/py-imdb/pkg/PLIST
-#	modified:   misc/shared-mime-info/Makefile
-#	modified:   misc/shared-mime-info/distinfo
-#	modified:   misc/shared-mime-info/patches/patch-Makefile_in
-#	modified:   misc/shared-mime-info/pkg/PLIST
-#	modified:   multimedia/get_iplayer/Makefile
-#	modified:   multimedia/get_iplayer/distinfo
-#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
+#	modified:   lang/gcc/4.2/gcc4.port.mk
+#	modified:   lang/gcc/4.2/pkg/PFRAG.PIC-f95
+#	modified:   lang/gcc/4.2/pkg/PLIST-f95
+#	modified:   mail/amavisd-new/Makefile
+#	modified:   mail/amavisd-new/distinfo
+#	modified:   mail/amavisd-new/patches/patch-amavisd
+#	modified:   mail/amavisd-new/pkg/PLIST
+#	modified:   mail/evolution-plugin-rss/Makefile
+#	modified:   mail/evolution-plugin-webcal/Makefile
+#	modified:   mail/evolution-plugin-webcal/distinfo
+#	modified:   mail/evolution-plugin-webcal/pkg/PLIST
+#	modified:   mail/evolution/Makefile
+#	modified:   mail/evolution/distinfo
+#	modified:   mail/evolution/patches/patch-configure
+#	modified:   mail/evolution/patches/patch-mail_em-migrate_c
+#	modified:   mail/evolution/patches/patch-mail_em-utils_h
+#	modified:   mail/evolution/patches/patch-mail_message-list_c
+#	modified:   mail/evolution/patches/patch-plugins_bogo-junk-plugin_bf-junk-filter_c
+#	modified:   mail/evolution/patches/patch-plugins_caldav_caldav-source_c
+#	modified:   mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in
+#	modified:   mail/evolution/patches/patch-plugins_sa-junk-plugin_em-junk-filter_c
+#	modified:   mail/evolution/patches/patch-shell_main_c
+#	modified:   mail/evolution/patches/patch-widgets_e-timezone-dialog_e-timezone-dialog_c
+#	deleted:    mail/evolution/patches/patch-widgets_misc_e-calendar-item_c
+#	modified:   mail/evolution/pkg/PFRAG.shared-main
+#	modified:   mail/evolution/pkg/PFRAG.shared-plugins
+#	modified:   mail/evolution/pkg/PLIST-main
+#	modified:   mail/evolution/pkg/PLIST-plugins
+#	modified:   mail/mutt/Makefile
+#	modified:   mail/p5-Email-Sender/Makefile
+#	modified:   mail/p5-Email-Sender/distinfo
+#	modified:   mail/roundcubemail/Makefile
+#	modified:   mail/roundcubemail/distinfo
+#	modified:   mail/roundcubemail/patches/patch-config_main_inc_php_dist
+#	modified:   mail/roundcubemail/pkg/MESSAGE
+#	modified:   mail/roundcubemail/pkg/PLIST
+#	modified:   mail/ruby-actionmailer/Makefile
+#	modified:   mail/ruby-actionmailer/distinfo
+#	modified:   math/ginac/Makefile
+#	modified:   math/ginac/distinfo
+#	modified:   math/plplot/Makefile
+#	deleted:    math/plplot/pkg/DESCR-octave
+#	deleted:    math/plplot/pkg/DESCR-tcl
+#	deleted:    math/plplot/pkg/PLIST-octave
+#	deleted:    math/plplot/pkg/PLIST-tcl
+#	modified:   math/py-numpy/Makefile
+#	modified:   misc/Makefile
+#	modified:   misc/dates/Makefile
+#	modified:   misc/dates/distinfo
+#	modified:   misc/dates/patches/patch-data_Makefile_in
+#	modified:   misc/dates/pkg/PLIST
+#	modified:   misc/dvtm/Makefile
+#	modified:   misc/dvtm/distinfo
+#	modified:   misc/dvtm/patches/patch-config_mk
+#	modified:   misc/most/Makefile
+#	modified:   misc/most/distinfo
+#	deleted:    misc/most/patches/patch-configure
+#	modified:   misc/most/pkg/PLIST
+#	modified:   misc/p5-Acme-LOLCAT/Makefile
+#	modified:   misc/p5-Acme-LOLCAT/distinfo
+#	modified:   misc/pdmenu/Makefile
+#	modified:   misc/pdmenu/distinfo
+#	deleted:    misc/pdmenu/patches/patch-autoconf_makeinfo_in
+#	deleted:    misc/pdmenu/patches/patch-configure_in
+#	modified:   misc/pdmenu/pkg/PLIST
+#	modified:   misc/vttest/Makefile
+#	modified:   misc/vttest/distinfo
+#	modified:   misc/vttest/pkg/PLIST
+#	modified:   multimedia/Makefile
+#	modified:   multimedia/gstreamer-0.10/Makefile
+#	modified:   multimedia/gstreamer-0.10/plugins-bad/Makefile
+#	modified:   multimedia/gstreamer-0.10/plugins-bad/pkg/DESCR-main
+#	modified:   multimedia/gstreamer-0.10/plugins-bad/pkg/PLIST-main
+#	modified:   multimedia/gstreamer-0.10/plugins-good/Makefile
+#	deleted:    multimedia/gstreamer-0.10/plugins-good/pkg/DESCR-gconf
+#	modified:   multimedia/gstreamer-0.10/plugins-good/pkg/DESCR-main
+#	modified:   multimedia/gstreamer-0.10/plugins-good/pkg/PLIST-main
+#	modified:   multimedia/iplayer-dl/Makefile
+#	modified:   multimedia/iplayer-dl/distinfo
 #	modified:   net/Makefile
 #	modified:   net/avahi/Makefile
-#	deleted:    net/farsight/Makefile
-#	deleted:    net/farsight/distinfo
-#	deleted:    net/farsight/patches/patch-configure
-#	deleted:    net/farsight/patches/patch-farsight_helpers_farsight-interfaces_c
-#	deleted:    net/farsight/patches/patch-farsight_transmitters_rawudp_udp-transmitter_c
-#	deleted:    net/farsight/pkg/DESCR
-#	deleted:    net/farsight/pkg/PFRAG.shared
-#	deleted:    net/farsight/pkg/PLIST
-#	modified:   net/flickcurl/Makefile
-#	modified:   net/flickcurl/distinfo
-#	modified:   net/flickcurl/files/README.OpenBSD
-#	modified:   net/flickcurl/pkg/PLIST
-#	modified:   net/irssi/Makefile
-#	modified:   net/irssi/patches/patch-docs_irssi_1
-#	modified:   net/openvpn/Makefile
-#	modified:   net/openvpn/distinfo
-#	modified:   net/openvpn/patches/patch-configure
-#	modified:   net/openvpn/patches/patch-route_c
-#	modified:   net/pidgin-facebookchat/Makefile
-#	modified:   net/pidgin-facebookchat/distinfo
-#	modified:   net/pidgin-facebookchat/patches/patch-Makefile
-#	modified:   net/py-libpcap/Makefile
-#	deleted:    net/py-libpcap/pkg/PFRAG.shared
-#	modified:   net/py-libpcap/pkg/PLIST
-#	modified:   net/py-xmpp/Makefile
-#	deleted:    net/py-xmpp/pkg/PFRAG.shared
-#	modified:   net/py-xmpp/pkg/PLIST
-#	modified:   net/samba/Makefile
-#	modified:   net/samba/distinfo
-#	modified:   net/samba/patches/patch-Makefile_in
-#	modified:   net/samba/patches/patch-docs_manpages_swat_8
-#	deleted:    net/samba/patches/patch-smbd_posix_acls_c
-#	modified:   net/samba/pkg/PLIST-main
-#	modified:   net/ssvnc/Makefile
-#	modified:   net/telepathy/telepathy-butterfly/Makefile
-#	modified:   net/telepathy/telepathy-butterfly/distinfo
-#	modified:   net/telepathy/telepathy-butterfly/pkg/PLIST
-#	modified:   net/unbound/Makefile
-#	modified:   net/unbound/distinfo
-#	modified:   net/unison/Makefile.inc
-#	modified:   net/unison/stable/Makefile
-#	modified:   net/unison/stable/distinfo
-#	modified:   net/unison/stable/pkg/PLIST
-#	modified:   net/yaz/Makefile
-#	modified:   net/yaz/distinfo
-#	modified:   net/yaz/pkg/PLIST
+#	modified:   net/filezilla/Makefile
+#	modified:   net/filezilla/pkg/PLIST
+#	modified:   net/freetalk/Makefile
+#	modified:   net/irssi-silc/Makefile
+#	modified:   net/librsync/Makefile
+#	modified:   net/ruby-net-ssh/Makefile
+#	modified:   net/ruby-net-ssh/distinfo
+#	deleted:    net/ruby-net-ssh/patches/patch-test_common_rb
+#	modified:   net/ruby-net-ssh/pkg/PLIST
+#	modified:   net/silc-client/Makefile
+#	modified:   net/wget/Makefile
+#	modified:   net/wget/distinfo
+#	deleted:    net/wget/patches/patch-configure
+#	modified:   net/wget/patches/patch-doc_Makefile_in
+#	modified:   net/wget/patches/patch-doc_sample_wgetrc
+#	deleted:    net/wget/patches/patch-src_openssl_c
+#	modified:   net/wget/pkg/PLIST
+#	modified:   news/Makefile
+#	deleted:    news/linleech/Makefile
+#	deleted:    news/linleech/distinfo
+#	deleted:    news/linleech/patches/patch-Makefile
+#	deleted:    news/linleech/pkg/DESCR
+#	deleted:    news/linleech/pkg/PLIST
+#	modified:   news/slrn/Makefile
+#	modified:   news/slrn/distinfo
+#	modified:   news/slrn/patches/patch-configure
+#	deleted:    news/slrn/patches/patch-src_Makefile_in
+#	deleted:    news/slrn/patches/patch-src_slrnfeat_h
+#	modified:   news/slrn/pkg/PLIST
 #	modified:   print/cups/Makefile
-#	modified:   print/lilypond/Makefile
-#	modified:   print/lilypond/distinfo
-#	modified:   print/lilypond/patches/patch-GNUmakefile_in
-#	modified:   print/lilypond/patches/patch-configure_in
-#	modified:   print/lilypond/pkg/PLIST-docs
-#	modified:   print/lilypond/pkg/PLIST-main
-#	modified:   print/py-reportlab/reportlab/Makefile
-#	deleted:    print/py-reportlab/reportlab/pkg/PFRAG.shared
-#	modified:   print/py-reportlab/reportlab/pkg/PLIST
-#	modified:   security/crank/Makefile
-#	modified:   security/crank/patches/patch-src_Makefile_in
-#	modified:   security/crank/pkg/PLIST
-#	modified:   security/gnutls/Makefile
-#	modified:   security/gnutls/distinfo
-#	modified:   security/gnutls/pkg/PLIST
-#	modified:   security/libgpg-error/Makefile
-#	modified:   security/libgpg-error/distinfo
-#	modified:   security/libgpg-error/patches/patch-tests_Makefile_in
-#	modified:   security/libgpg-error/pkg/PLIST
-#	modified:   security/libtasn1/Makefile
-#	modified:   security/libtasn1/distinfo
-#	modified:   security/libtasn1/pkg/PLIST
-#	modified:   security/prelude/manager/Makefile
-#	modified:   security/xmlsec/Makefile
+#	modified:   print/foo2zjs/Makefile
+#	modified:   print/poppler-data/Makefile
+#	modified:   print/poppler-data/distinfo
+#	modified:   print/poppler-data/pkg/PLIST
+#	modified:   print/poppler/Makefile
+#	modified:   print/poppler/distinfo
+#	modified:   print/poppler/patches/patch-poppler_XRef_cc
+#	modified:   print/poppler/pkg/PLIST-main
+#	modified:   productivity/gnucash/Makefile
+#	modified:   productivity/gnucash/distinfo
+#	modified:   productivity/gnucash/patches/patch-configure
+#	modified:   productivity/gnucash/pkg/PLIST
+#	modified:   productivity/tasks/Makefile
+#	modified:   productivity/tasks/distinfo
+#	deleted:    productivity/tasks/patches/patch-configure
+#	modified:   productivity/tasks/pkg/PLIST
+#	modified:   security/fwbuilder/Makefile
+#	modified:   security/fwbuilder/distinfo
+#	modified:   security/fwbuilder/patches/patch-qmake_inc_in
+#	deleted:    security/fwbuilder/patches/patch-src_gui_ObjectIconView_cpp
+#	deleted:    security/fwbuilder/patches/patch-src_gui_RuleSetView_cpp
+#	modified:   security/fwbuilder/pkg/PLIST
+#	modified:   security/libfwbuilder/Makefile
+#	modified:   security/libfwbuilder/distinfo
+#	modified:   security/libfwbuilder/patches/patch-qmake_inc_in
+#	modified:   security/ruby-bcrypt/Makefile
+#	modified:   security/ruby-bcrypt/distinfo
+#	modified:   security/ruby-bcrypt/pkg/PLIST
+#	modified:   security/ruby-ezcrypto/Makefile
+#	modified:   security/ruby-ezcrypto/distinfo
+#	modified:   security/ruby-ezcrypto/pkg/PLIST
 #	modified:   status.log
-#	modified:   sysutils/fam/Makefile
+#	modified:   sysutils/Makefile
+#	modified:   sysutils/bubblemon/Makefile
+#	modified:   sysutils/bubblemon/distinfo
+#	modified:   sysutils/bubblemon/patches/patch-configure
+#	modified:   sysutils/bubblemon/patches/patch-src_bubblemon_c
+#	modified:   sysutils/bubblemon/pkg/PLIST
+#	modified:   sysutils/dwdiff/Makefile
+#	modified:   sysutils/dwdiff/distinfo
+#	deleted:    sysutils/libgksu/Makefile
+#	deleted:    sysutils/libgksu/distinfo
+#	deleted:    sysutils/libgksu/patches/patch-gksu-properties_Makefile_in
+#	deleted:    sysutils/libgksu/patches/patch-gksu_schemas_in
+#	deleted:    sysutils/libgksu/patches/patch-libgksu_Makefile_in
+#	deleted:    sysutils/libgksu/patches/patch-libgksu_libgksu_c
+#	deleted:    sysutils/libgksu/patches/patch-libgksu_test-gksu_c
+#	deleted:    sysutils/libgksu/patches/patch-libgksuui_Makefile_in
+#	deleted:    sysutils/libgksu/pkg/DESCR
+#	deleted:    sysutils/libgksu/pkg/PFRAG.shared
+#	deleted:    sysutils/libgksu/pkg/PLIST
+#	deleted:    sysutils/libgksuui/Makefile
+#	deleted:    sysutils/libgksuui/distinfo
+#	deleted:    sysutils/libgksuui/patches/patch-libgksuui_Makefile_in
+#	deleted:    sysutils/libgksuui/pkg/DESCR
+#	deleted:    sysutils/libgksuui/pkg/PFRAG.shared
+#	deleted:    sysutils/libgksuui/pkg/PLIST
+#	modified:   sysutils/notification-daemon/Makefile
 #	modified:   sysutils/policykit/Makefile
+#	modified:   sysutils/policykit/pkg/MESSAGE
 #	modified:   sysutils/policykit/pkg/PLIST
-#	modified:   textproc/hunspell/Makefile
-#	modified:   textproc/libical/Makefile
-#	modified:   textproc/libical/distinfo
-#	modified:   textproc/libical/patches/patch-src_libicalss_Makefile_am
-#	modified:   textproc/libical/patches/patch-src_libicalss_Makefile_in
-#	modified:   textproc/libical/pkg/PFRAG.shared
-#	modified:   textproc/libical/pkg/PLIST
-#	modified:   textproc/libxml++/Makefile
-#	modified:   textproc/libxml++/distinfo
-#	modified:   textproc/libxml++/pkg/PLIST
-#	modified:   textproc/libxml/Makefile
-#	modified:   textproc/libxml/distinfo
-#	modified:   textproc/libxml/patches/patch-Makefile.in
-#	deleted:    textproc/libxml/patches/patch-SAX2_c
-#	deleted:    textproc/libxml/patches/patch-configure
-#	deleted:    textproc/libxml/patches/patch-parser_c
-#	modified:   textproc/libxml/patches/patch-python_Makefile_in
-#	modified:   textproc/libxml/patches/patch-python_tests_Makefile_in
-#	deleted:    textproc/libxml/patches/patch-tree_c
-#	modified:   textproc/libxml/patches/patch-xstc_Makefile_in
-#	modified:   textproc/libxml/pkg/PFRAG.shared-python
-#	modified:   textproc/libxml/pkg/PLIST-main
-#	modified:   textproc/libxslt/Makefile
-#	modified:   textproc/libxslt/distinfo
-#	deleted:    textproc/libxslt/patches/patch-doc_Makefile_in
-#	modified:   textproc/libxslt/patches/patch-libxslt_Makefile_in
-#	modified:   textproc/libxslt/patches/patch-libxslt_extra_c
-#	modified:   textproc/libxslt/patches/patch-python_Makefile_in
-#	modified:   textproc/libxslt/patches/patch-tests_docs_Makefile_in
-#	modified:   textproc/libxslt/pkg/PLIST-main
-#	modified:   textproc/mupdf/Makefile
-#	modified:   textproc/txt2tags/Makefile
-#	modified:   textproc/txt2tags/distinfo
-#	modified:   textproc/txt2tags/pkg/PLIST
+#	modified:   sysutils/rdiff-backup/Makefile
+#	modified:   sysutils/ruby-capistrano/Makefile
+#	modified:   sysutils/ruby-capistrano/distinfo
+#	modified:   sysutils/ruby-capistrano/pkg/PLIST
+#	modified:   telephony/Makefile
+#	modified:   textproc/Makefile
+#	modified:   textproc/enchant/Makefile
+#	modified:   textproc/enchant/distinfo
+#	modified:   textproc/enchant/patches/patch-configure
+#	modified:   textproc/highlight/Makefile
+#	modified:   textproc/highlight/distinfo
+#	modified:   textproc/highlight/patches/patch-makefile
+#	modified:   textproc/highlight/patches/patch-man_highlight_1
+#	modified:   textproc/highlight/patches/patch-src_makefile
+#	modified:   textproc/icu4c/Makefile
+#	modified:   textproc/icu4c/distinfo
+#	modified:   textproc/xpdf/Makefile
+#	modified:   textproc/xpdf/distinfo
 #	modified:   up.log
 #	modified:   www/Makefile
-#	modified:   www/drupal6/FCKeditor/Makefile
-#	modified:   www/drupal6/Makefile
-#	modified:   www/drupal6/webform/Makefile
-#	modified:   www/drupal6/webform/patches/patch-webform_module
-#	modified:   www/drupal6/webform/patches/patch-webform_report_inc
 #	modified:   www/elinks/Makefile
-#	modified:   www/fcgi/Makefile
-#	modified:   www/fcgi/patches/patch-libfcgi_Makefile_in
-#	modified:   www/kazehakase/Makefile
-#	modified:   www/perlbal/Makefile
-#	modified:   www/perlbal/distinfo
-#	modified:   www/perlbal/pkg/PLIST
-#	modified:   www/py-django/Makefile
-#	modified:   www/py-django/distinfo
-#	modified:   www/py-django/pkg/MESSAGE
-#	modified:   www/py-django/pkg/PLIST
-#	modified:   www/py-quixote/Makefile
-#	deleted:    www/py-quixote/pkg/PFRAG.shared
-#	modified:   www/py-quixote/pkg/PLIST
-#	modified:   www/webkit/Makefile
-#	modified:   www/webkit/distinfo
-#	modified:   www/webkit/patches/patch-GNUmakefile_in
-#	deleted:    www/webkit/patches/patch-JavaScriptCore_jit_JITStubs_cpp
-#	deleted:    www/webkit/patches/patch-JavaScriptCore_wtf_Threading_h
-#	modified:   www/webkit/pkg/PLIST
-#	modified:   www/youtube-dl/Makefile
-#	modified:   www/youtube-dl/distinfo
-#	modified:   x11/Makefile
+#	modified:   www/elinks/pkg/DESCR
+#	modified:   www/epiphany-extensions/Makefile
+#	modified:   www/epiphany-extensions/distinfo
+#	modified:   www/epiphany-extensions/pkg/PLIST
+#	modified:   www/epiphany/Makefile
+#	modified:   www/epiphany/distinfo
+#	deleted:    www/epiphany/patches/patch-embed_mozilla_Makefile_in
+#	modified:   www/epiphany/pkg/PLIST
+#	modified:   www/gnash/Makefile
+#	modified:   www/moodle/Makefile
+#	modified:   www/moodle/pkg/PLIST
+#	modified:   www/p5-CGI-Application/Makefile
+#	modified:   www/p5-CGI-Application/distinfo
+#	modified:   www/p5-WWW-Mechanize/Makefile
+#	modified:   www/p5-WWW-Mechanize/distinfo
+#	modified:   www/p5-WWW-Wikipedia/Makefile
+#	modified:   www/p5-WWW-Wikipedia/distinfo
+#	modified:   www/p5-libwww/Makefile
+#	modified:   www/p5-libwww/distinfo
+#	modified:   www/p5-libwww/pkg/PLIST
+#	modified:   www/ruby-activemerchant/Makefile
+#	modified:   www/ruby-activemerchant/distinfo
+#	modified:   www/ruby-activemerchant/pkg/PLIST
+#	modified:   www/ruby-activeresource/Makefile
+#	modified:   www/ruby-activeresource/distinfo
+#	modified:   www/ruby-activeresource/pkg/PLIST
+#	modified:   www/ruby-addressable/Makefile
+#	modified:   www/ruby-addressable/distinfo
+#	modified:   www/ruby-addressable/pkg/PLIST
+#	modified:   www/ruby-merb/Makefile.inc
+#	modified:   www/ruby-merb/action-args/distinfo
+#	modified:   www/ruby-merb/assets/distinfo
+#	modified:   www/ruby-merb/auth-core/distinfo
+#	modified:   www/ruby-merb/auth-more/distinfo
+#	modified:   www/ruby-merb/auth-more/pkg/PLIST
+#	modified:   www/ruby-merb/auth-slice-password/distinfo
+#	modified:   www/ruby-merb/auth/distinfo
+#	modified:   www/ruby-merb/cache/distinfo
+#	modified:   www/ruby-merb/core/distinfo
+#	modified:   www/ruby-merb/core/pkg/PLIST
+#	modified:   www/ruby-merb/datamapper/distinfo
+#	modified:   www/ruby-merb/datamapper/pkg/PLIST
+#	modified:   www/ruby-merb/exceptions/distinfo
+#	modified:   www/ruby-merb/gen/distinfo
+#	modified:   www/ruby-merb/gen/pkg/PLIST
+#	modified:   www/ruby-merb/haml/distinfo
+#	modified:   www/ruby-merb/helpers/distinfo
+#	modified:   www/ruby-merb/helpers/pkg/PLIST
+#	modified:   www/ruby-merb/mailer/distinfo
+#	modified:   www/ruby-merb/merb/distinfo
+#	modified:   www/ruby-merb/more/distinfo
+#	modified:   www/ruby-merb/param-protection/distinfo
+#	modified:   www/ruby-merb/slices/distinfo
+#	modified:   www/ruby-rails/Makefile
+#	modified:   www/ruby-rails/distinfo
+#	modified:   www/ruby-rails/pkg/PLIST
+#	modified:   www/zendframework/Makefile
+#	modified:   www/zendframework/distinfo
+#	modified:   www/zendframework/pkg/PLIST
+#	modified:   x11/bwidget/Makefile
+#	modified:   x11/bwidget/distinfo
+#	modified:   x11/bwidget/pkg/DESCR
+#	modified:   x11/bwidget/pkg/PLIST
 #	modified:   x11/dbus-glib/Makefile
 #	modified:   x11/dbus-glib/distinfo
 #	modified:   x11/dbus-glib/patches/patch-configure
-#	deleted:    x11/dbus-glib/patches/patch-dbus_dbus-gobject_c
 #	modified:   x11/dbus-glib/pkg/PLIST
-#	modified:   x11/dbus/Makefile
-#	modified:   x11/dbus/distinfo
-#	modified:   x11/dbus/patches/patch-bus_Makefile_in
-#	modified:   x11/dbus/patches/patch-bus_dbus-daemon_1
-#	deleted:    x11/dbus/patches/patch-configure_in
-#	modified:   x11/dbus/patches/patch-dbus_Makefile_in
-#	deleted:    x11/dbus/patches/patch-dbus_dbus-sysdeps-unix_c
-#	modified:   x11/dbus/patches/patch-doc_Makefile_in
-#	modified:   x11/dbus/patches/patch-tools_Makefile_in
-#	modified:   x11/dwm/Makefile
-#	modified:   x11/dwm/distinfo
+#	modified:   x11/gdesklets/Makefile
 #	modified:   x11/gnome/Makefile
-#	modified:   x11/gnome/backgrounds/Makefile
-#	modified:   x11/gnome/backgrounds/distinfo
-#	modified:   x11/gnome/backgrounds/pkg/PLIST
-#	modified:   x11/gnome/build/Makefile
-#	modified:   x11/gnome/common/Makefile
-#	modified:   x11/gnome/common/distinfo
-#	modified:   x11/gnome/desktop/Makefile
-#	modified:   x11/gnome/desktop/distinfo
-#	deleted:    x11/gnome/desktop/patches/patch-libgnome-desktop_gnome-desktop-item_c
-#	modified:   x11/gnome/desktop/pkg/PLIST
+#	modified:   x11/gnome/alacarte/Makefile
+#	modified:   x11/gnome/alacarte/distinfo
+#	modified:   x11/gnome/alacarte/pkg/PLIST
+#	modified:   x11/gnome/applets2/Makefile
+#	modified:   x11/gnome/applets2/distinfo
+#	modified:   x11/gnome/applets2/patches/patch-Makefile_in
+#	modified:   x11/gnome/applets2/patches/patch-configure
+#	modified:   x11/gnome/applets2/patches/patch-mixer_load_c
+#	modified:   x11/gnome/applets2/pkg/PLIST-battstat
+#	modified:   x11/gnome/applets2/pkg/PLIST-main
+#	modified:   x11/gnome/at-spi/Makefile
+#	modified:   x11/gnome/at-spi/distinfo
+#	modified:   x11/gnome/at-spi/patches/patch-configure
+#	modified:   x11/gnome/at-spi/patches/patch-docs_reference_idl_Makefile_in
+#	modified:   x11/gnome/at-spi/pkg/PLIST
+#	modified:   x11/gnome/baker/Makefile
+#	modified:   x11/gnome/baker/pkg/PLIST
+#	modified:   x11/gnome/bug-buddy/Makefile
+#	modified:   x11/gnome/bug-buddy/distinfo
+#	modified:   x11/gnome/bug-buddy/pkg/PLIST
+#	modified:   x11/gnome/cheese/Makefile
+#	modified:   x11/gnome/cheese/distinfo
+#	modified:   x11/gnome/cheese/patches/patch-configure
+#	modified:   x11/gnome/cheese/patches/patch-src_cheese-webcam_c
+#	modified:   x11/gnome/cheese/pkg/PLIST
+#	modified:   x11/gnome/controlcenter2/Makefile
+#	modified:   x11/gnome/controlcenter2/distinfo
+#	modified:   x11/gnome/controlcenter2/patches/patch-capplets_about-me_gnome-about-me-password_c
+#	modified:   x11/gnome/controlcenter2/patches/patch-capplets_about-me_gnome-about-me_c
+#	modified:   x11/gnome/controlcenter2/patches/patch-capplets_common_gnome-theme-info_c
+#	deleted:    x11/gnome/controlcenter2/patches/patch-capplets_common_gtkrc-utils_c
+#	deleted:    x11/gnome/controlcenter2/patches/patch-capplets_default-applications_Makefile_in
+#	deleted:    x11/gnome/controlcenter2/patches/patch-capplets_keybindings_Makefile_in
+#	modified:   x11/gnome/controlcenter2/patches/patch-capplets_keyboard_Makefile_in
+#	deleted:    x11/gnome/controlcenter2/patches/patch-capplets_sound_sound-properties-capplet_c
+#	modified:   x11/gnome/controlcenter2/patches/patch-configure
+#	modified:   x11/gnome/controlcenter2/patches/patch-libslab-directory-tile_c
+#	deleted:    x11/gnome/controlcenter2/patches/patch-po_ta_po
+#	deleted:    x11/gnome/controlcenter2/pkg/PFRAG.shared
+#	modified:   x11/gnome/controlcenter2/pkg/PLIST
+#	modified:   x11/gnome/deskbar-applet/Makefile
+#	modified:   x11/gnome/deskbar-applet/distinfo
+#	modified:   x11/gnome/deskbar-applet/patches/patch-deskbar_handlers_Makefile_in
+#	modified:   x11/gnome/deskbar-applet/pkg/PLIST
+#	modified:   x11/gnome/devel-docs/Makefile
+#	modified:   x11/gnome/devel-docs/distinfo
+#	modified:   x11/gnome/devel-docs/pkg/PLIST
+#	modified:   x11/gnome/devhelp/Makefile
+#	modified:   x11/gnome/devhelp/distinfo
+#	deleted:    x11/gnome/devhelp/patches/patch-src_dh-assistant-view_c
+#	deleted:    x11/gnome/devhelp/patches/patch-src_dh-book-tree_c
+#	deleted:    x11/gnome/devhelp/patches/patch-src_dh-link_c
+#	deleted:    x11/gnome/devhelp/patches/patch-src_dh-link_h
+#	modified:   x11/gnome/devhelp/pkg/PLIST
 #	modified:   x11/gnome/doc-utils/Makefile
-#	modified:   x11/gnome/doc-utils/distinfo
-#	modified:   x11/gnome/doc-utils/patches/patch-doc_xslt_Makefile_in
-#	modified:   x11/gnome/doc-utils/patches/patch-xml2po_xml2po_pc_in
-#	modified:   x11/gnome/doc-utils/pkg/PLIST
-#	modified:   x11/gnome/eel/Makefile
-#	modified:   x11/gnome/eel/distinfo
-#	deleted:    x11/gnome/eel/patches/patch-eel_eel-debug-drawing_c
-#	modified:   x11/gnome/eel/pkg/PLIST
-#	modified:   x11/gnome/eog/Makefile
-#	modified:   x11/gnome/eog/distinfo
-#	deleted:    x11/gnome/eog/pkg/PFRAG.shared
-#	modified:   x11/gnome/eog/pkg/PLIST
+#	deleted:    x11/gnome/doc-utils/patches/patch-tools_Makefile_in
+#	modified:   x11/gnome/empathy/Makefile
+#	modified:   x11/gnome/file-roller/Makefile
+#	modified:   x11/gnome/file-roller/distinfo
+#	modified:   x11/gnome/file-roller/patches/patch-src_fr-command-7z_c
+#	modified:   x11/gnome/file-roller/patches/patch-src_fr-command-rpm_c
+#	modified:   x11/gnome/file-roller/pkg/PLIST
+#	modified:   x11/gnome/games-extra-data/Makefile
+#	modified:   x11/gnome/games-extra-data/distinfo
+#	modified:   x11/gnome/games-extra-data/pkg/PLIST
 #	modified:   x11/gnome/games/Makefile
-#	modified:   x11/gnome/gcalctool/Makefile
-#	modified:   x11/gnome/gcalctool/distinfo
-#	modified:   x11/gnome/gcalctool/pkg/PLIST
-#	modified:   x11/gnome/gdl/Makefile
-#	modified:   x11/gnome/gdl/distinfo
-#	modified:   x11/gnome/gdl/pkg/PLIST
-#	modified:   x11/gnome/gedit-plugins/Makefile
-#	modified:   x11/gnome/gedit-plugins/distinfo
-#	modified:   x11/gnome/gedit-plugins/patches/patch-configure
-#	modified:   x11/gnome/gedit-plugins/pkg/PLIST
-#	modified:   x11/gnome/gedit/Makefile
-#	modified:   x11/gnome/gedit/distinfo
-#	modified:   x11/gnome/gedit/pkg/PLIST
-#	modified:   x11/gnome/gnome.port.mk
-#	modified:   x11/gnome/gucharmap/Makefile
-#	modified:   x11/gnome/gucharmap/distinfo
-#	modified:   x11/gnome/gucharmap/pkg/PLIST
+#	modified:   x11/gnome/games/distinfo
+#	modified:   x11/gnome/games/patches/patch-configure
+#	modified:   x11/gnome/games/patches/patch-glchess_src_glchess_in_in
+#	modified:   x11/gnome/games/patches/patch-glchess_src_lib_scene_opengl_png_py
+#	modified:   x11/gnome/games/patches/patch-glines_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gnibbles_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gnobots2_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gnome-sudoku_src_gnome-sudoku_in_in
+#	modified:   x11/gnome/games/patches/patch-gnometris_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gnomine_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gnotravex_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gnotski_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-gtali_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-mahjongg_Makefile_in
+#	modified:   x11/gnome/games/patches/patch-same-gnome_Makefile_in
+#	modified:   x11/gnome/games/pkg/PLIST
+#	modified:   x11/gnome/gdm/Makefile
+#	modified:   x11/gnome/gdm/pkg/DESCR
+#	modified:   x11/gnome/gdm/pkg/PLIST
+#	modified:   x11/gnome/gok/Makefile
+#	modified:   x11/gnome/gok/distinfo
+#	modified:   x11/gnome/gok/pkg/PLIST
 #	modified:   x11/gnome/gvfs/Makefile
-#	modified:   x11/gnome/gvfs/distinfo
-#	modified:   x11/gnome/gvfs/patches/patch-daemon_gvfsbackenddav_c
-#	modified:   x11/gnome/gvfs/pkg/PFRAG.shared-main
 #	modified:   x11/gnome/gvfs/pkg/PLIST-main
+#	modified:   x11/gnome/hamster-applet/Makefile
+#	modified:   x11/gnome/hamster-applet/distinfo
+#	deleted:    x11/gnome/hamster-applet/patches/patch-hamster___init___py
+#	modified:   x11/gnome/hamster-applet/patches/patch-hamster_hamster-applet_py
+#	modified:   x11/gnome/hamster-applet/pkg/PLIST
 #	modified:   x11/gnome/icon-theme/Makefile
-#	modified:   x11/gnome/icon-theme/distinfo
-#	modified:   x11/gnome/icon-theme/patches/patch-Makefile_in
 #	modified:   x11/gnome/icon-theme/pkg/PLIST
-#	modified:   x11/gnome/keyring/Makefile
-#	modified:   x11/gnome/keyring/distinfo
-#	modified:   x11/gnome/keyring/patches/patch-daemon_ui_Makefile_in
-#	modified:   x11/gnome/keyring/pkg/PFRAG.shared
-#	modified:   x11/gnome/keyring/pkg/PLIST
-#	modified:   x11/gnome/libbonobo/Makefile
-#	modified:   x11/gnome/libbonobo/distinfo
-#	modified:   x11/gnome/libbonobo/pkg/PLIST
-#	modified:   x11/gnome/libbonoboui/Makefile
-#	modified:   x11/gnome/libbonoboui/distinfo
-#	modified:   x11/gnome/libbonoboui/pkg/PLIST
+#	deleted:    x11/gnome/keyring-manager/Makefile
+#	deleted:    x11/gnome/keyring-manager/distinfo
+#	deleted:    x11/gnome/keyring-manager/patches/patch-src_gnome-keyring-manager-main-ui_c
+#	deleted:    x11/gnome/keyring-manager/pkg/DESCR
+#	deleted:    x11/gnome/keyring-manager/pkg/PLIST
+#	modified:   x11/gnome/libgail-gnome/Makefile
+#	modified:   x11/gnome/libgda/Makefile
+#	modified:   x11/gnome/libgda/distinfo
+#	modified:   x11/gnome/libgda/patches/patch-configure
+#	deleted:    x11/gnome/libgda/patches/patch-libgda_gda-server-operation_c
+#	modified:   x11/gnome/libgda/pkg/PLIST-ldap
+#	modified:   x11/gnome/libgda/pkg/PLIST-main
+#	modified:   x11/gnome/libgda/pkg/PLIST-mysql
+#	modified:   x11/gnome/libgda/pkg/PLIST-odbc
+#	modified:   x11/gnome/libgda/pkg/PLIST-pgsql
+#	modified:   x11/gnome/libgdamm/Makefile
+#	modified:   x11/gnome/libgdamm/distinfo
+#	deleted:    x11/gnome/libgdamm/pkg/PFRAG.shared
+#	modified:   x11/gnome/libgdamm/pkg/PLIST
 #	modified:   x11/gnome/libgnome/Makefile
-#	modified:   x11/gnome/libgnome/distinfo
-#	modified:   x11/gnome/libgnome/pkg/PLIST
-#	modified:   x11/gnome/libgnomecanvas/Makefile
-#	modified:   x11/gnome/libgnomecanvas/distinfo
-#	modified:   x11/gnome/libgnomecanvas/pkg/PLIST
-#	modified:   x11/gnome/libgnomecanvasmm/Makefile
-#	modified:   x11/gnome/libgnomecanvasmm/distinfo
-#	modified:   x11/gnome/libgnomekbd/Makefile
-#	modified:   x11/gnome/libgnomekbd/distinfo
-#	modified:   x11/gnome/libgnomekbd/pkg/PLIST
-#	modified:   x11/gnome/libgnomemm/Makefile
-#	modified:   x11/gnome/libgnomemm/distinfo
-#	modified:   x11/gnome/libgnomeui/Makefile
-#	modified:   x11/gnome/libgnomeui/distinfo
-#	modified:   x11/gnome/libgnomeui/pkg/PLIST
-#	modified:   x11/gnome/libgnomeuimm/Makefile
-#	modified:   x11/gnome/libgnomeuimm/distinfo
-#	modified:   x11/gnome/libgweather/Makefile
-#	modified:   x11/gnome/libgweather/distinfo
-#	modified:   x11/gnome/libgweather/pkg/PLIST
-#	modified:   x11/gnome/librsvg/Makefile
-#	modified:   x11/gnome/librsvg/distinfo
-#	modified:   x11/gnome/librsvg/patches/patch-librsvg-2_0_pc_in
-#	modified:   x11/gnome/libxklavier/Makefile
-#	modified:   x11/gnome/libxklavier/distinfo
-#	modified:   x11/gnome/libxklavier/pkg/PLIST
+#	deleted:    x11/gnome/libgnomedb/Makefile
+#	deleted:    x11/gnome/libgnomedb/distinfo
+#	deleted:    x11/gnome/libgnomedb/pkg/DESCR
+#	deleted:    x11/gnome/libgnomedb/pkg/PLIST
+#	modified:   x11/gnome/mag/Makefile
+#	modified:   x11/gnome/mag/distinfo
+#	modified:   x11/gnome/mag/patches/patch-docs_reference_Makefile_in
+#	modified:   x11/gnome/mag/pkg/PLIST
+#	modified:   x11/gnome/media/Makefile
+#	modified:   x11/gnome/media/distinfo
+#	modified:   x11/gnome/media/patches/patch-gstreamer-properties_gstreamer-properties_desktop_in_in
+#	modified:   x11/gnome/media/patches/patch-gstreamer-properties_pipeline-constants_c
+#	deleted:    x11/gnome/media/patches/patch-profiles_gnome-audio-profiles-properties_c
+#	modified:   x11/gnome/media/pkg/PLIST
 #	modified:   x11/gnome/menus/Makefile
-#	modified:   x11/gnome/menus/distinfo
-#	modified:   x11/gnome/menus/patches/patch-util-Makefile_in
-#	modified:   x11/gnome/menus/pkg/PLIST
-#	modified:   x11/gnome/py-gnome/Makefile
-#	modified:   x11/gnome/py-gnome/distinfo
-#	modified:   x11/gnome/py-gnome/pkg/PLIST
+#	deleted:    x11/gnome/mergeant/Makefile
+#	deleted:    x11/gnome/mergeant/distinfo
+#	deleted:    x11/gnome/mergeant/patches/patch-src_main_c
+#	deleted:    x11/gnome/mergeant/pkg/DESCR
+#	deleted:    x11/gnome/mergeant/pkg/PLIST
+#	modified:   x11/gnome/metacity/Makefile
+#	modified:   x11/gnome/metacity/distinfo
+#	deleted:    x11/gnome/metacity/patches/patch-src_core_prefs_c
+#	modified:   x11/gnome/metacity/pkg/PLIST
+#	modified:   x11/gnome/mime-data/Makefile
+#	deleted:    x11/gnome/mime-data/patches/patch-Makefile_in
+#	modified:   x11/gnome/mousetweaks/Makefile
+#	modified:   x11/gnome/mousetweaks/distinfo
+#	modified:   x11/gnome/mousetweaks/pkg/PLIST
+#	modified:   x11/gnome/nautilus-open-terminal/Makefile
+#	modified:   x11/gnome/nautilus-open-terminal/distinfo
+#	deleted:    x11/gnome/nautilus-open-terminal/patches/patch-src_nautilus-open-terminal_c
+#	modified:   x11/gnome/nautilus-open-terminal/pkg/PLIST
+#	modified:   x11/gnome/nautilus-sendto/Makefile
+#	modified:   x11/gnome/nautilus-sendto/distinfo
+#	modified:   x11/gnome/nautilus-sendto/pkg/PLIST
+#	modified:   x11/gnome/nautilus/Makefile
+#	modified:   x11/gnome/nautilus/distinfo
+#	modified:   x11/gnome/nautilus/pkg/PLIST
+#	modified:   x11/gnome/orca/Makefile
+#	modified:   x11/gnome/orca/distinfo
+#	modified:   x11/gnome/orca/patches/patch-src_orca_orca_in
+#	modified:   x11/gnome/orca/pkg/PLIST
+#	modified:   x11/gnome/panel/Makefile
+#	modified:   x11/gnome/panel/distinfo
+#	modified:   x11/gnome/panel/patches/patch-applets_clock_Makefile_in
+#	modified:   x11/gnome/panel/patches/patch-applets_clock_calendar-client_c
+#	deleted:    x11/gnome/panel/patches/patch-applets_clock_clock_c
+#	deleted:    x11/gnome/panel/patches/patch-gnome-panel_panel-logout_c
+#	deleted:    x11/gnome/panel/patches/patch-gnome-panel_panel-menu-items_c
+#	modified:   x11/gnome/panel/patches/patch-gnome-panel_panel-util_c
+#	modified:   x11/gnome/panel/pkg/PLIST
+#	modified:   x11/gnome/pessulus/Makefile
+#	modified:   x11/gnome/pessulus/distinfo
+#	modified:   x11/gnome/pessulus/patches/patch-data_Makefile_in
+#	modified:   x11/gnome/pessulus/pkg/PLIST
+#	modified:   x11/gnome/py-gnome-desktop/Makefile
+#	modified:   x11/gnome/py-gnome-desktop/distinfo
+#	deleted:    x11/gnome/py-gnome-desktop/patches/patch-gtop_gtop_c
+#	modified:   x11/gnome/py-gnome-desktop/pkg/PLIST
+#	modified:   x11/gnome/py-gnome-extras/Makefile
+#	modified:   x11/gnome/py-gnome-extras/distinfo
+#	deleted:    x11/gnome/py-gnome-extras/patches/patch-gdl_gdl_override
+#	modified:   x11/gnome/py-gnome-extras/patches/patch-gtkmozembed_Makefile_in
+#	modified:   x11/gnome/py-gnome-extras/pkg/PLIST
+#	modified:   x11/gnome/scan/Makefile
+#	modified:   x11/gnome/screensaver/Makefile
+#	modified:   x11/gnome/screensaver/distinfo
+#	modified:   x11/gnome/screensaver/patches/patch-config_h_in
+#	modified:   x11/gnome/screensaver/patches/patch-configure_ac
+#	modified:   x11/gnome/screensaver/patches/patch-data_gnome-screensaver-preferences_desktop_in
+#	deleted:    x11/gnome/screensaver/patches/patch-data_lock-dialog-default_glade
+#	modified:   x11/gnome/screensaver/patches/patch-src_Makefile_am
+#	modified:   x11/gnome/screensaver/pkg/PLIST
+#	modified:   x11/gnome/seahorse-plugins/Makefile
+#	modified:   x11/gnome/seahorse-plugins/distinfo
+#	modified:   x11/gnome/seahorse-plugins/pkg/PLIST
+#	modified:   x11/gnome/seahorse/Makefile
+#	modified:   x11/gnome/seahorse/distinfo
+#	deleted:    x11/gnome/seahorse/patches/patch-pgp_seahorse-gpgme-io_c
+#	modified:   x11/gnome/seahorse/pkg/PLIST
+#	modified:   x11/gnome/session/Makefile
+#	modified:   x11/gnome/session/distinfo
+#	modified:   x11/gnome/session/files/README.OpenBSD
+#	deleted:    x11/gnome/session/patches/patch-data_Makefile_in
+#	deleted:    x11/gnome/session/patches/patch-data_gnome-session_schemas_in
+#	modified:   x11/gnome/session/pkg/PLIST
+#	modified:   x11/gnome/settings-daemon/Makefile
+#	modified:   x11/gnome/settings-daemon/distinfo
+#	deleted:    x11/gnome/settings-daemon/patches/patch-configure
+#	modified:   x11/gnome/settings-daemon/patches/patch-data_Makefile_in
+#	modified:   x11/gnome/settings-daemon/patches/patch-gnome-settings-daemon_gnome-settings-module_c
+#	modified:   x11/gnome/settings-daemon/patches/patch-plugins_media-keys_gsd-media-keys-manager_c
+#	deleted:    x11/gnome/settings-daemon/patches/patch-plugins_mouse_gsd-mouse-manager_c
+#	modified:   x11/gnome/settings-daemon/patches/patch-plugins_sound_gsd-sound-manager_c
+#	deleted:    x11/gnome/settings-daemon/patches/patch-plugins_typing-break_gsd-typing-break-manager_c
+#	modified:   x11/gnome/settings-daemon/pkg/PFRAG.shared
+#	modified:   x11/gnome/settings-daemon/pkg/PLIST
+#	modified:   x11/gnome/speech/Makefile
 #	modified:   x11/gnome/terminal/Makefile
-#	modified:   x11/gnome/terminal/distinfo
-#	modified:   x11/gnome/terminal/pkg/PLIST
-#	modified:   x11/gnome/themes/Makefile
-#	modified:   x11/gnome/themes/distinfo
-#	modified:   x11/gnome/themes/pkg/PLIST
+#	modified:   x11/gnome/tomboy/Makefile
+#	modified:   x11/gnome/tomboy/distinfo
+#	modified:   x11/gnome/tomboy/pkg/PLIST
+#	modified:   x11/gnome/totem/Makefile
 #	modified:   x11/gnome/tracker/Makefile
-#	modified:   x11/gnome/tracker/distinfo
 #	modified:   x11/gnome/tracker/patches/patch-src_tracker-extract_tracker-extract-mp3_c
+#	modified:   x11/gnome/tracker/patches/patch-src_tracker-indexer_tracker-indexer_c
+#	modified:   x11/gnome/tracker/patches/patch-src_tracker-indexer_tracker-removable-device_c
 #	modified:   x11/gnome/tracker/pkg/PLIST
-#	modified:   x11/gnome/users-guide/Makefile
-#	modified:   x11/gnome/users-guide/distinfo
-#	modified:   x11/gnome/users-guide/pkg/PLIST
-#	modified:   x11/gnome/vfs2/Makefile
-#	modified:   x11/gnome/vfs2/distinfo
-#	modified:   x11/gnome/vfs2/patches/patch-configure
-#	modified:   x11/gnome/vfs2/patches/patch-modules_file-method_c
-#	modified:   x11/gnome/vfs2/pkg/PLIST-main
-#	modified:   x11/gnome/vfsmm/Makefile
-#	modified:   x11/gnome/vfsmm/distinfo
-#	modified:   x11/gnome/yelp/Makefile
-#	modified:   x11/gnome/yelp/distinfo
-#	modified:   x11/gnome/yelp/patches/patch-src_yelp-transform_c
-#	modified:   x11/gnome/yelp/pkg/PLIST
-#	modified:   x11/gnome/zenity/Makefile
-#	modified:   x11/gnome/zenity/distinfo
-#	modified:   x11/gnome/zenity/pkg/PLIST
+#	modified:   x11/gnome/utils/Makefile
+#	modified:   x11/gnome/utils/distinfo
+#	deleted:    x11/gnome/utils/patches/patch-logview_gnome-system-log-descript_db
+#	deleted:    x11/gnome/utils/patches/patch-logview_gnome-system-log-regexp_db
+#	modified:   x11/gnome/utils/pkg/PLIST
+#	modified:   x11/gnome/vinagre/Makefile
+#	modified:   x11/gnome/vinagre/distinfo
+#	modified:   x11/gnome/vinagre/patches/patch-Makefile_in
+#	modified:   x11/gnome/vinagre/pkg/PLIST
+#	modified:   x11/gnome/vino/Makefile
+#	modified:   x11/gnome/vino/distinfo
+#	modified:   x11/gnome/vino/pkg/PLIST
 #	modified:   x11/gtk+2/Makefile
-#	deleted:    x11/gtk+extra/Makefile
-#	deleted:    x11/gtk+extra/distinfo
-#	deleted:    x11/gtk+extra/pkg/DESCR
-#	deleted:    x11/gtk+extra/pkg/PFRAG.shared
-#	deleted:    x11/gtk+extra/pkg/PLIST
-#	modified:   x11/hicolor-icon-theme/Makefile
-#	modified:   x11/hicolor-icon-theme/distinfo
-#	modified:   x11/jwm/Makefile
+#	modified:   x11/kde/graphics3/Makefile
+#	modified:   x11/kde/graphics3/patches/patch-kpdf_xpdf_xpdf_XRef_cc
 #	modified:   x11/mplayer/Makefile
-#	modified:   x11/mplayer/distinfo
-#	deleted:    x11/mplayer/files/ao_libsndio.c
-#	modified:   x11/mplayer/files/ao_rtunes.c
-#	modified:   x11/mplayer/patches/patch-DOCS_man_en_mplayer_1
-#	modified:   x11/mplayer/patches/patch-Makefile
-#	deleted:    x11/mplayer/patches/patch-common_mak
-#	modified:   x11/mplayer/patches/patch-configure
-#	deleted:    x11/mplayer/patches/patch-dvdread_Makefile
-#	deleted:    x11/mplayer/patches/patch-gui_wm_ws_c
-#	deleted:    x11/mplayer/patches/patch-libao2_Makefile
-#	deleted:    x11/mplayer/patches/patch-libao2_ao_sun_c
-#	modified:   x11/mplayer/patches/patch-libao2_audio_out_c
-#	modified:   x11/mplayer/patches/patch-libavcodec_Makefile
-#	deleted:    x11/mplayer/patches/patch-libavcodec_dsputil_c
-#	deleted:    x11/mplayer/patches/patch-libavcodec_h264_c
-#	deleted:    x11/mplayer/patches/patch-libavcodec_libx264_c
-#	deleted:    x11/mplayer/patches/patch-libavformat_4xm_c
-#	modified:   x11/mplayer/patches/patch-libavutil_x86_cpu_h
-#	deleted:    x11/mplayer/patches/patch-libdvdcss_Makefile
-#	modified:   x11/mplayer/patches/patch-libmpcodecs_ad_faad_c
-#	deleted:    x11/mplayer/patches/patch-libmpcodecs_ad_pcm_c
-#	deleted:    x11/mplayer/patches/patch-libmpdemux_demux_audio_c
-#	deleted:    x11/mplayer/patches/patch-libmpdemux_demux_mov_c
-#	deleted:    x11/mplayer/patches/patch-libmpdemux_demux_real_c
-#	deleted:    x11/mplayer/patches/patch-libmpdemux_demux_vqf_c
-#	deleted:    x11/mplayer/patches/patch-libpostproc_postprocess_template_c
-#	deleted:    x11/mplayer/patches/patch-loader_wrapper_S
-#	deleted:    x11/mplayer/patches/patch-mangle_h
-#	deleted:    x11/mplayer/patches/patch-mencoder_c
-#	deleted:    x11/mplayer/patches/patch-mp3lib_layer2_c
-#	deleted:    x11/mplayer/patches/patch-mpcommon_mak
-#	deleted:    x11/mplayer/patches/patch-mplayer_c
-#	deleted:    x11/mplayer/patches/patch-stream_Makefile
-#	deleted:    x11/mplayer/patches/patch-stream_stream_cddb_c
-#	modified:   x11/mplayer/patches/patch-stream_tvi_bsdbt848_c
-#	modified:   x11/mplayer/patches/patch-stream_tvi_v4l2_c
-#	deleted:    x11/mplayer/patches/patch-stream_url_c
-#	deleted:    x11/mplayer/patches/patch-tremor_block_c
-#	deleted:    x11/mplayer/patches/patch-tremor_block_h
-#	deleted:    x11/mplayer/patches/patch-tremor_floor0_c
-#	deleted:    x11/mplayer/patches/patch-tremor_floor1_c
-#	deleted:    x11/mplayer/patches/patch-tremor_res012_c
-#	deleted:    x11/mplayer/patches/patch-tremor_synthesis_c
+#	modified:   x11/mplayer/files/README.OpenBSD
 #	modified:   x11/mplayer/pkg/DESCR
-#	modified:   x11/mplayer/pkg/MESSAGE
-#	deleted:    x11/mplayer/pkg/PFRAG.no-no_x11
-#	modified:   x11/mplayer/pkg/PLIST
-#	modified:   x11/py-gtk2/Makefile
-#	modified:   x11/py-gtk2/distinfo
-#	modified:   x11/py-gtk2/patches/patch-examples_Makefile_in
-#	modified:   x11/py-gtk2/pkg/PLIST
+#	modified:   x11/pinot/Makefile
+#	modified:   x11/pinot/pkg/PLIST
 #	modified:   x11/qt4/Makefile
-#	modified:   x11/qt4/distinfo
-#	modified:   x11/qt4/patches/patch-config_tests_unix_nis_nis_cpp
-#	modified:   x11/qt4/patches/patch-configure
-#	deleted:    x11/qt4/patches/patch-examples_xmlpatterns_trafficinfo_mainwindow_cpp
-#	modified:   x11/qt4/patches/patch-qmake_generators_unix_unixmake_cpp
-#	modified:   x11/qt4/patches/patch-src_corelib_global_qglobal_h
-#	modified:   x11/qt4/pkg/PFRAG.GCC4-examples
-#	modified:   x11/qt4/pkg/PLIST-examples
-#	modified:   x11/qt4/pkg/PLIST-html
 #	modified:   x11/qt4/pkg/PLIST-main
-#	modified:   x11/rep-gtk/Makefile
-#	modified:   x11/rep-gtk/distinfo
-#	deleted:    x11/rep-gtk/patches/patch-gtk-compat_c
-#	deleted:    x11/rep-gtk/patches/patch-rep-gtk_h
-#	modified:   x11/rep-gtk/pkg/PLIST
-#	modified:   x11/sawfish/Makefile
-#	modified:   x11/sawfish/distinfo
-#	modified:   x11/sawfish/patches/patch-lisp_sawfish_ui_widgets_frame-style.jl
-#	modified:   x11/sawfish/pkg/PLIST
-#	modified:   x11/tellico/Makefile
-#	modified:   x11/tellico/distinfo
-#	modified:   x11/xfce4/exo/Makefile
-#	modified:   x11/xfce4/exo/distinfo
-#	modified:   x11/xfce4/terminal/Makefile
-#	modified:   x11/xfce4/terminal/distinfo
-#	modified:   x11/xfce4/terminal/pkg/PLIST
+#	modified:   x11/scrotwm/Makefile
+#	modified:   x11/scrotwm/distinfo
+#	modified:   x11/scrotwm/patches/patch-scrotwm_c
+#	modified:   x11/scrotwm/patches/patch-scrotwm_conf
+#	modified:   x11/scrotwm/pkg/PLIST
+#	modified:   x11/xdg-user-dirs-gtk/Makefile
+#	modified:   x11/xdg-user-dirs-gtk/pkg/PLIST
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	audio/cmixer/
-#	audio/openal/patches/patch-admin_pkgconfig_openal-config_in
-#	audio/openal/patches/patch-common_include_AL_alc_h
-#	databases/evolution-data-server/patches/patch-configure_ac
-#	databases/evolution-data-server/patches/patch-m4_evo_pthread_check_m4
-#	databases/freetds/patches/patch-configure
-#	devel/ethos/
-#	devel/libexecinfo/patches/patch-stacktraverse_c
-#	devel/libexecinfo/pkg/PFRAG.no_mips64
-#	devel/libvmime/files/
-#	devel/openmpi/
-#	devel/p5-AutoXS-Header/
-#	devel/p5-Class-XSAccessor/
-#	devel/rsvndump/
-#	editors/abiword/patches/patch-configure
-#	editors/abiword/patches/patch-goffice-bits_goffice_goffice-config_h
-#	editors/abiword/patches/patch-src_af_util_xp_ut_iconv_cpp
-#	education/verbiste/
-#	games/egoboo/
-#	games/jbrickshooter/
-#	games/lostpixels/
-#	geo/gpx-viewer/patches/patch-configure
-#	geo/gpx-viewer/patches/patch-src_gpx-viewer_c
-#	graphics/clutter/clutter-box2d/patches/
-#	graphics/clutter/core/patches/patch-clutter_clutter-scriptable_h
-#	graphics/jbig2dec/
-#	graphics/netpbm/patches/patch-converter_ppm_ppmtompeg_jpeg_c
-#	lang/chicken/patches/patch-cscbench_scm
-#	lang/gcc/3.3/patches/patch-libffi_Makefile_in
-#	lang/gcc/3.3/patches/patch-libffi_include_Makefile_in
-#	lang/gcc/4.2/patches/patch-libffi_include_Makefile_in
-#	lang/librep/patches/patch-Makefile_in
-#	lang/librep/patches/patch-librep_pc_in
-#	lang/librep/patches/patch-src_numbers_c
-#	lang/librep/patches/patch-src_rep-xgettext_jl
-#	lang/librep/patches/patch-src_repint_h
-#	net/avahi/pkg/DESCR-mono
-#	net/avahi/pkg/PLIST-mono
-#	net/librest/
-#	net/papyon/
-#	print/lilypond/patches/patch-Documentation_user_macros_itexi
-#	print/lilypond/patches/patch-lily_include_open-type-font_hh
-#	print/lilypond/patches/patch-lily_include_smobs_hh
-#	print/lilypond/patches/patch-lily_music-iterator_cc
-#	print/lilypond/patches/patch-lily_pango-font_cc
-#	print/lilypond/patches/patch-lily_system-start-text_cc
-#	print/lilypond/patches/patch-lily_ttf_cc
-#	security/crank/patches/patch-configure_in
-#	security/crank/patches/patch-src_crank_i
-#	security/prelude/manager/files/libgnutls-config
-#	sysutils/cdrtools/patches/patch-RULES_mk-gmake_id
-#	sysutils/policykit/pkg/MESSAGE
-#	sysutils/sdd/patches/patch-RULES_mk-gmake_id
-#	textproc/libical/patches/patch-configure
-#	textproc/libical/patches/patch-src_libical_icaltz-util_c
-#	www/cntlm/
-#	www/drupal6/FCKeditor/patches/
-#	www/drupal6/draft/
-#	www/kazehakase/patches/patch-src_actions_kz-smart-bookmark-action_c
-#	www/kazehakase/patches/patch-src_kz-statusbar_c
-#	www/kazehakase/patches/patch-src_widget_kz-entry_c
-#	www/kazehakase/patches/patch-src_widget_kz-entry_h
-#	x11/dbus/patches/patch-configure
-#	x11/gnome/doc-utils/patches/patch-tools_Makefile_in
-#	x11/gnome/eog-plugins/
-#	x11/gnome/gedit/patches/
-#	x11/gnome/gvfs/patches/patch-daemon_gvfsftpdircache_c
-#	x11/gnome/gvfs/patches/patch-metadata_metatree_c
-#	x11/gnome/tracker/patches/patch-src_tracker-indexer_tracker-indexer_c
-#	x11/gnome/tracker/patches/patch-src_tracker-indexer_tracker-removable-device_c
-#	x11/gnome/tracker/patches/patch-src_trackerd_tracker-status_c
-#	x11/mplayer/files/README.OpenBSD
-#	x11/mplayer/files/ai_sndio.c
-#	x11/mplayer/files/ao_sndio.c
-#	x11/mplayer/patches/patch-DOCS_xml_configure
-#	x11/mplayer/patches/patch-DOCS_xml_en_cd-dvd_xml
-#	x11/mplayer/patches/patch-command_c
-#	x11/mplayer/patches/patch-libpostproc_Makefile
-#	x11/mplayer/patches/patch-libswscale_Makefile
-#	x11/mplayer/patches/patch-stream_audio_in_c
-#	x11/mplayer/patches/patch-stream_audio_in_h
-#	x11/sawfish/pkg/MESSAGE
+#	audio/aumix/patches/patch-src_common_c
+#	audio/dumb/
+#	audio/fluidsynth/files/fluid_sndio.c
+#	audio/mpg123/patches/patch-configure
+#	audio/openal/patches/patch-common_include_AL_al_h
+#	audio/py-tagpy/
+#	audio/sound-theme-freedesktop/patches/patch-Makefile_am
+#	devel/glib2/patches/patch-gio_gunixmounts_c
+#	devel/gtkparasite/
+#	devel/libunique/patches/
+#	devel/ruby-actionpack/patches/
+#	devel/ruby-gems/patches/patch-lib_rubygems_commands_setup_command_rb
+#	devel/ruby-locale/
+#	devel/silc-toolkit/patches/patch-lib_silcclient_client_connect_c
+#	editors/jed/patches/patch-src_Makefile_in
+#	editors/subtitleeditor/patches/
+#	games/alephone/weland/
+#	games/allegro/
+#	games/opensonic/
+#	games/snipe2d/
+#	geo/emerillon/
+#	graphics/allegropng/
+#	graphics/evince/pkg/DESCR-nautilus
+#	graphics/evince/pkg/PLIST-nautilus
+#	graphics/gtkimageview/
+#	graphics/jpeg/patches/patch-wrjpgcom_c
+#	graphics/pigment/
+#	graphics/py-pigment/
+#	inputmethods/uim/patches/patch-helper_Makefile_in
+#	mail/amavisd-new/patches/patch-amavisd-agent
+#	mail/amavisd-new/patches/patch-amavisd-nanny
+#	mail/amavisd-new/patches/patch-amavisd-snmp-subagent
+#	math/py-numpy/patches/patch-numpy_core_include_numpy_npy_cpu_h
+#	math/py-numpy/patches/patch-numpy_core_include_numpy_npy_endian_h
+#	misc/most/patches/patch-src_Makefile_in
+#	misc/pdmenu/patches/patch-configure_ac
+#	misc/uniutils/
+#	multimedia/coherence/
+#	multimedia/gstreamer-0.10/plugins-farsight/
+#	multimedia/libmms/
+#	multimedia/moovida/
+#	net/filezilla/files/
+#	net/freetalk/patches/patch-configure_ac
+#	net/gnaughty/
+#	net/irssi-silc/patches/patch-lib_silcclient_client_connect_c
+#	net/silc-client/patches/patch-lib_silcclient_client_connect_c
+#	print/cups/files/libgnutls-config
+#	print/poppler/patches/patch-poppler_Stream_cc
+#	print/poppler/patches/patch-splash_SplashBitmap_cc
+#	print/poppler/patches/patch-splash_SplashErrorCodes_h
+#	print/poppler/patches/patch-splash_Splash_cc
+#	security/fwbuilder/patches/patch-src_gui_ObjectManipulator_cpp
+#	sysutils/policykit/patches/patch-src_kit_kit-spawn_c
+#	sysutils/policykit/patches/patch-src_kit_kit-string_c
+#	sysutils/policykit/patches/patch-src_polkit_Makefile_in
+#	sysutils/policykit/patches/patch-src_polkit_polkit-sysdeps_c
+#	telephony/astmanproxy/
+#	textproc/py-cssutils/
+#	textproc/ruby-ascii85/
+#	textproc/ruby-pdf-reader/
+#	textproc/ruby-prawn/
+#	www/webkit/patches/patch-JavaScriptCore_wtf_Platform_h
+#	x11/bwidget/patches/
+#	x11/dbus-glib/patches/patch-dbus_dbus-gobject_c
+#	x11/gnome/applets2/patches/patch-mixer_GNOME_MixerApplet_xml
+#	x11/gnome/applets2/patches/patch-mixer_applet_c
+#	x11/gnome/applets2/patches/patch-mixer_dock_c
+#	x11/gnome/at-spi/patches/patch-registryd_Makefile_in
+#	x11/gnome/gdm/patches/patch-gui_gdmsetup_desktop_in_in
+#	x11/gnome/gvfs/files/
+#	x11/gnome/hamster-applet/patches/patch-hamster_db_py
+#	x11/gnome/libgnome/patches/
+#	x11/gnome/metacity/patches/patch-configure
+#	x11/gnome/metacity/patches/patch-src_core_main_c
+#	x11/gnome/py-gnome-extras/patches/patch-configure_ac
+#	x11/gnome/py-gnome-extras/patches/patch-gdl_gdl_defs
+#	x11/gnome/scan/patches/patch-src_flegita-gimp-sink_c
+#	x11/gnome/screensaver/patches/patch-data_lock-dialog-default_ui
+#	x11/gnome/seahorse-plugins/patches/patch-configure
+#	x11/gnome/seahorse-plugins/patches/patch-plugins_epiphany_mozilla_mozilla-helper_h
+#	x11/gnome/seahorse-plugins/patches/patch-plugins_epiphany_seahorse-extension_c
+#	x11/gnome/seahorse/patches/patch-pgp_seahorse-gpgme-data_c
+#	x11/gnome/session/files/gsm-logout-dialog.c
+#	x11/gnome/session/files/gsm-logout-dialog.h
+#	x11/gnome/session/files/gsm-manager.c
+#	x11/gnome/session/files/gsm-manager.h
+#	x11/gnome/session/files/gsm-power-manager.c
+#	x11/gnome/session/files/gsm-power-manager.h
+#	x11/gnome/session/patches/patch-configure
+#	x11/gnome/session/patches/patch-data_gnome-session_schemas_in_in
+#	x11/gnome/session/patches/patch-gnome-session_Makefile_in
+#	x11/gnome/session/patches/patch-gnome-session_gsm-consolekit_c
+#	x11/gnome/tracker/patches/patch-configure
+#	x11/gnome/vino/patches/
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_goo_gmem_cc
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_splash_SplashBitmap_cc
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_splash_SplashErrorCodes_h
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_splash_Splash_cc
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_xpdf_JBIG2Stream_cc
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_xpdf_JBIG2Stream_h
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_xpdf_PSOutputDev_cc
+#	x11/kde/graphics3/patches/patch-kpdf_xpdf_xpdf_Stream_cc
+#	x11/pinot/patches/patch-Makefile_in
 no changes added to commit (use "git add" and/or "git commit -a")

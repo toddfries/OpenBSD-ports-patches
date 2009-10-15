@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.970 2009/07/26 12:14:05 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.972 2009/10/14 13:01:03 steven Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -72,9 +72,9 @@ RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
 .if ${USE_SYSTRACE:L} == "yes"
-WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/obj
+WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/pobj
 .else
-WRKOBJDIR ?= ${PORTSDIR}/obj
+WRKOBJDIR ?= ${PORTSDIR}/pobj
 .endif
 FAKEOBJDIR ?=
 BULK_TARGETS ?=
@@ -320,9 +320,14 @@ MAKE_PROGRAM = ${MAKE}
 
 USE_LIBTOOL ?= No
 _lt_libs =
-.if ${USE_LIBTOOL:L} == "yes"
+.if ${USE_LIBTOOL:L} != "no"
+.  if ${USE_LIBTOOL:L} == "gnu"
 LIBTOOL ?= ${DEPBASE}/bin/libtool
 BUILD_DEPENDS += ::devel/libtool
+.  else
+LIBTOOL ?= ${DEPBASE}/bin/libtool
+BUILD_DEPENDS += ::devel/libtool
+.  endif
 CONFIGURE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_FLAGS += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}

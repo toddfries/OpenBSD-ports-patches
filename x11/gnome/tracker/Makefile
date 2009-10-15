@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2009/10/09 17:40:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2009/10/14 09:26:58 ajacoutot Exp $
 
 COMMENT=	powerful desktop search tool and indexer
 
@@ -6,7 +6,7 @@ COMMENT=	powerful desktop search tool and indexer
 # as tracker-search.
 GNOME_PROJECT=	tracker
 GNOME_VERSION=	0.6.95
-PKGNAME=	tracker-search-${VERSION}
+PKGNAME=	tracker-search-${VERSION}p1
 
 SHARED_LIBS +=	stemmer              0.1      # .695.0
 SHARED_LIBS +=	tracker-common       0.1      # .695.0
@@ -30,7 +30,7 @@ WANTLIB += gthread-2.0 gtk-x11-2.0 idn jpeg krb5 m nspr4 nss3
 WANTLIB += ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += plc4 plds4 png popt pthread pthread-stubs smime3 softokn3
 WANTLIB += soup-2.4 ssl ssl3 startup-notification-1 tasn1 tiff
-WANTLIB += util xcb xcb-atom xcb-aux xcb-event xml2 xslt z
+WANTLIB += util xcb xcb-atom xcb-aux xcb-event xml2 xslt z lcms
 
 HOMEPAGE=	http://tracker-project.org/
 
@@ -40,49 +40,52 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MODULES=		devel/gettext \
-			lang/python \
-			x11/gnome
+MODULES=	devel/gettext \
+		lang/python \
+		x11/gnome
 
-LIB_DEPENDS=		vorbis::audio/libvorbis \
-			qdbm::databases/qdbm \
-			sqlite3::databases/sqlite3 \
-			gsf-1::devel/libgsf \
-			notify::devel/libnotify \
-			exif::graphics/libexif \
-			gmime-2.0:gmime->=2.2,<2.4:mail/gmime \
-			gsttag-0.10::multimedia/gstreamer-0.10/plugins-base \
-			poppler-glib,poppler::print/poppler \
-			raptor::textproc/raptor \
-			gnome-desktop-2::x11/gnome/desktop \
-			totem-plparser.>=1::x11/gnome/totem-pl-parser
-BUILD_DEPENDS=		::devel/xdg-utils \
-			::x11/gnome/deskbar-applet
-RUN_DEPENDS=		::devel/glib2,-fam \
-			::devel/xdg-utils \
-			::textproc/odt2txt
+LIB_DEPENDS=	vorbis::audio/libvorbis \
+		qdbm::databases/qdbm \
+		sqlite3::databases/sqlite3 \
+		gsf-1::devel/libgsf \
+		notify::devel/libnotify \
+		exif::graphics/libexif \
+		gmime-2.0:gmime->=2.2,<2.4:mail/gmime \
+		gsttag-0.10::multimedia/gstreamer-0.10/plugins-base \
+		poppler-glib,poppler::print/poppler \
+		raptor::textproc/raptor \
+		gnome-desktop-2::x11/gnome/desktop \
+		totem-plparser.>=1::x11/gnome/totem-pl-parser
+BUILD_DEPENDS=	::devel/xdg-utils
+RUN_DEPENDS=	::devel/glib2,-fam \
+		::devel/xdg-utils \
+		::textproc/odt2txt
 
-DESKTOP_FILES=		Yes
-MODPY_RUNDEP=		No
+DESKTOP_FILES=	Yes
+MODPY_RUNDEP=	No
 
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--enable-external-qdbm \
-			--enable-video-extractor="gstreamer" \
-			--disable-unac \
-			--disable-xmp \
-			--disable-hal \
-			--enable-libexif \
-			--enable-libgsf \
-			--enable-libjpeg \
-			--enable-libtiff \
-			--enable-libvorbis \
-			--enable-gdkpixbuf \
-			--enable-deskbar-applet \
-			--with-deskbar-applet-handler-dir="${LOCALBASE}/lib/python${MODPY_VERSION}/site-packages/deskbar/handlers/"
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--enable-external-qdbm \
+		--enable-video-extractor="gstreamer" \
+		--disable-unac \
+		--disable-xmp \
+		--disable-hal \
+		--enable-libexif \
+		--enable-libgsf \
+		--enable-libjpeg \
+		--enable-libtiff \
+		--enable-libvorbis \
+		--enable-gdkpixbuf \
+		--enable-deskbar-applet \
+		--with-deskbar_applet_dir=${PREFIX}/libexec/deskbar-applet/modules-2.20-compatible \
+		--with-deskbar-applet-handler-dir="${LOCALBASE}/lib/python${MODPY_VERSION}/site-packages/deskbar/handlers/"
+CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 
-FAKE_FLAGS+=		sysconfdir=${PREFIX}/share/examples/tracker-search/
+# see patch-configure
+CONFIGURE_ENV+=	have_deskbar_applet="module"
+
+FAKE_FLAGS+=	sysconfdir=${PREFIX}/share/examples/tracker-search/
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/data/modules/applications.module

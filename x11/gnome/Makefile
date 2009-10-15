@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.102 2009/10/11 20:38:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.104 2009/10/15 00:20:25 jasper Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -43,7 +43,6 @@
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += keyring
-     SUBDIR += keyring-manager
      SUBDIR += keyring-query
      SUBDIR += krb5-auth-dialog
      SUBDIR += libbonobo
@@ -56,7 +55,6 @@
      SUBDIR += libgnomecanvas
      SUBDIR += libgnomecanvasmm
      SUBDIR += libgnomecups
-     SUBDIR += libgnomedb
      SUBDIR += libgnomekbd
      SUBDIR += libgnomeui
      SUBDIR += libgnomeuimm
@@ -69,7 +67,6 @@
      SUBDIR += mag
      SUBDIR += media
      SUBDIR += menus
-     SUBDIR += mergeant
      SUBDIR += metacity
      SUBDIR += mime-data
      SUBDIR += mono-gnome

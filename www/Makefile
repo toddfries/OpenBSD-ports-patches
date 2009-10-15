@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.428 2009/10/08 19:13:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.430 2009/10/14 18:20:23 espie Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -32,6 +32,7 @@
      SUBDIR += drupal6
      SUBDIR += drush
      SUBDIR += elinks
+     SUBDIR += elinks,js
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
      SUBDIR += ezpublish
@@ -104,8 +105,6 @@
      SUBDIR += mod_text2html
      SUBDIR += moinmoin
      SUBDIR += moodle
-     SUBDIR += moodle,mysql
-     SUBDIR += moodle,pgsql
      SUBDIR += mozilla-firefox
      SUBDIR += mozplugger
      SUBDIR += mplayerplug-in

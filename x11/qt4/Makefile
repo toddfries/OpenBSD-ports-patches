@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.60 2009/10/11 09:43:08 espie Exp $
+# $OpenBSD: Makefile,v 1.63 2009/10/15 14:30:07 espie Exp $
 
 COMMENT-debug =		C++ GUI toolkit, debug
 COMMENT-main =		C++ X11 GUI toolkit
@@ -17,7 +17,7 @@ PKGNAME-examples =	qt4-examples-${PKGVERSION}
 PKGNAME-sqlite2 =	qt4-sqlite2-${PKGVERSION}
 PKGNAME-sqlite =	qt4-sqlite-${PKGVERSION}
 PKGNAME-tds =		qt4-tds-${PKGVERSION}
-PKGNAME-main =		qt4-${PKGVERSION}
+PKGNAME-main =		qt4-${VERSION}p0
 PKGNAME-debug =		qt4-debug-${PKGVERSION}
 FULLPKGNAME-html =	qt4-html-${PKGVERSION}
 FULLPKGPATH-html =	${BASE_PKGPATH},-html
@@ -133,7 +133,8 @@ CONFIGURE_ARGS +=-release
 
 
 .if ${FLAVOR:L:Mno_examples}
-SUBTARGETS = 		sub-moc \
+SUBTARGETS = 		sub-tools-bootstrap \
+			sub-moc \
 			sub-rcc \
 			sub-uic \
 			sub-corelib \
@@ -150,14 +151,15 @@ SUBTARGETS = 		sub-moc \
 			sub-xmlpatterns \
 			sub-phonon \
 			sub-svg \
+			sub-scripttools \
 			sub-plugins \
 			sub-tools \
 			sub-tools-qdoc3
 
 ALL_TARGET =		${SUBTARGETS}
 INSTALL_TARGET =	${SUBTARGETS:S/$/-install_subtargets/} \
-			install_htmldocs install_translations install_qmake \
-			install_mkspecs
+			install_htmldocs install_qchdocs install_docimages \
+			install_qmake install_mkspecs
 .else
 MULTI_PACKAGES +=	-examples
 PROGRAMS +=		qtdemo pixeltool
@@ -269,6 +271,7 @@ post-install:
 	# programs
 	${INSTALL_PROGRAM_DIR} ${QT_BINDIR} 
 	${INSTALL_PROGRAM} ${WRKSRC}/bin/{findtr,syncqt} ${QT_BINDIR}
+	${INSTALL_PROGRAM} ${WRKBUILD}/tools/qdoc3/qdoc3 ${QT_BINDIR}
 .for p in ${PROGRAMS4} 
 	@ln -sf ${TRUEPREFIX}/lib/qt4/bin/$p ${PREFIX}/bin/$p4
 .endfor

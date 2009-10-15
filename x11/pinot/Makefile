@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.4 2009/09/13 16:49:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2009/10/14 11:40:28 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	personal search and metasearch
 
 DISTNAME=	pinot-0.94
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p3
 
 CATEGORIES=	x11 misc
 
 HOMEPAGE=	http://pinot.berlios.de/
-
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -83,9 +81,13 @@ FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/pinot
 
 BASH_SCRIPTS=pinot-enum-index.sh pinot-cd.sh pinot-check-file.sh
 
+# XXX we should use the lang/python MODULE but we do not want to
+# build/run_depends on python -- Makefile.in
+MODPY_VERSION=	2.5
+SUBST_VARS=	MODPY_VERSION
 pre-configure:
 	${SUBST_CMD} \
-		${WRKSRC}/{README,textcat_conf.txt,textcat3_conf.txt,Core/pinot-search.1,Utils/xdgmime/xdgmime.c}
+		${WRKSRC}/{Makefile.in,README,textcat_conf.txt,textcat3_conf.txt,Core/pinot-search.1,Utils/xdgmime/xdgmime.c}
 	for i in ${BASH_SCRIPTS}; \
 		do perl -pi -e 's,/bin/bash/,/bin/sh,g' ${WRKSRC}/scripts/bash/$${i}; done
 

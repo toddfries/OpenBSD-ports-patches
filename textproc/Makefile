@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.278 2009/09/12 20:31:41 jolan Exp $
+# $OpenBSD: Makefile,v 1.282 2009/10/13 20:12:15 landry Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -220,6 +220,7 @@
      SUBDIR += py-ElementTree
      SUBDIR += py-HappyDoc
      SUBDIR += py-cElementTree
+     SUBDIR += py-cssutils
      SUBDIR += py-docutils
      SUBDIR += py-epydoc
      SUBDIR += py-feedparser
@@ -235,6 +236,7 @@
      SUBDIR += rarian
      SUBDIR += redland
      SUBDIR += rman
+     SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
      SUBDIR += ruby-erubis
      SUBDIR += ruby-fastercsv
@@ -246,7 +248,9 @@
      SUBDIR += ruby-icalendar
      SUBDIR += ruby-markaby
      SUBDIR += ruby-nokogiri
+     SUBDIR += ruby-pdf-reader
      SUBDIR += ruby-pdf-writer
+     SUBDIR += ruby-prawn
      SUBDIR += ruby-randexp
      SUBDIR += ruby-redcloth
      SUBDIR += ruby-rss

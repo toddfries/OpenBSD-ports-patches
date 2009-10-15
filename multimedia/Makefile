@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.35 2009/08/16 20:05:44 jolan Exp $
+# $OpenBSD: Makefile,v 1.38 2009/10/15 15:45:27 landry Exp $
 
      SUBDIR += avidemux
+     SUBDIR += coherence
      SUBDIR += devede
      SUBDIR += dvdauthor
      SUBDIR += dvdbackup
@@ -17,6 +18,7 @@
      SUBDIR += libdv
      SUBDIR += libdvdnav
      SUBDIR += libmatroska
+     SUBDIR += libmms
      SUBDIR += libmp4v2
      SUBDIR += libquicktime
      SUBDIR += libtheora
@@ -24,6 +26,7 @@
      SUBDIR += mjpegtools
      SUBDIR += mjpegtools,quicktime
      SUBDIR += mkvtoolnix
+     SUBDIR += moovida
      SUBDIR += mpgtx
      SUBDIR += oggconvert
      SUBDIR += ogmtools

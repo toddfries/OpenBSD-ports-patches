@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.198 2009/10/11 18:54:22 landry Exp $
+# $OpenBSD: Makefile,v 1.200 2009/10/15 14:44:27 phessler Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -7,6 +7,7 @@
      SUBDIR += afternoonstalker
      SUBDIR += agm
      SUBDIR += alephone
+     SUBDIR += allegro
      SUBDIR += amoebax
      SUBDIR += amph
      SUBDIR += an
@@ -107,6 +108,7 @@
      SUBDIR += omega
      SUBDIR += openarena
      SUBDIR += openttd
+     SUBDIR += opensonic
      SUBDIR += pathological
      SUBDIR += pingus
      SUBDIR += pioneers
@@ -133,6 +135,7 @@
      SUBDIR += slash,no_x11
      SUBDIR += slash-em
      SUBDIR += slash-em,no_x11
+     SUBDIR += snipe2d
      SUBDIR += spacehulk
      SUBDIR += spatial
      SUBDIR += speyes
