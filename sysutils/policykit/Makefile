@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2009/10/15 21:51:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2009/10/15 23:48:10 ajacoutot Exp $
+
+BROKEN=		WIP does not work yet
 
 COMMENT=	authorization framework
 
 DISTNAME=	PolicyKit-0.9
-PKGNAME=	${DISTNAME:L}p2
+PKGNAME=	${DISTNAME:L}p5
 
 CATEGORIES=	sysutils security
 
@@ -21,7 +23,7 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB += c dbus-1 expat pcre pthread
+WANTLIB += c dbus-1 expat glib-2.0 gobject-2.0 pcre pthread
 
 MASTER_SITES=	http://hal.freedesktop.org/releases/
 
