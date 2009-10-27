@@ -1,0 +1,16 @@
+$OpenBSD$
+--- pc-bios/optionrom/multiboot.S.orig	Sat Oct 24 04:15:22 2009
++++ pc-bios/optionrom/multiboot.S	Mon Oct 26 20:15:38 2009
+@@ -113,7 +113,11 @@ mmap_loop:
+ 	/* entry size (mmap struct) & max buffer size (int15) */
+ 	movl		$20, %ecx
+ 	/* store entry size */
+-	movl		%ecx, %es:-4(%edi)
++    /* old as(1) doesn't like this insn so emit the bytes instead:
++    movl            %ecx, %es:-4(%edi)
++    */
++    .dc.b           0x26,0x67,0x66,0x89,0x4f,0xfc
++
+ 	/* e820 */
+ 	movl		$0x0000e820, %eax
+ 	/* 'SMAP' magic */

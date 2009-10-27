@@ -5,9 +5,15 @@ ONLY_FOR_ARCHS=		amd64 i386 powerpc
 
 COMMENT=		multi system emulator
 
-DISTNAME=		qemu-0.9.1
+DISTNAME=		qemu-0.11.50
 PKGNAME=		${DISTNAME}p10
 CATEGORIES=		emulators
+
+EXTRACT_SUFX=		.tar.lzma
+LZMA?=                  lzma
+BUILD_DEPENDS+=         :lzma-*:archivers/lzma
+EXTRACT_CASES+=         *.tar.lzma) \
+                        ${LZMA} -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
 
 HOMEPAGE=		http://bellard.org/qemu/
 
