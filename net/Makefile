@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.598 2009/10/13 16:58:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.600 2009/10/27 23:46:32 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -358,8 +358,12 @@
      SUBDIR += ptpd
      SUBDIR += pure-ftpd
      SUBDIR += pure-ftpd,ldap
+     SUBDIR += pure-ftpd,ldap,virtual_chroot
      SUBDIR += pure-ftpd,mysql
+     SUBDIR += pure-ftpd,mysql,virtual_chroot
      SUBDIR += pure-ftpd,postgresql
+     SUBDIR += pure-ftpd,postgresql,virtual_chroot
+     SUBDIR += pure-ftpd,virtual_chroot
      SUBDIR += putty
      SUBDIR += py-GeoIP
      SUBDIR += py-IP
@@ -503,6 +507,7 @@
      SUBDIR += zabbix,mysql
      SUBDIR += zabbix,pgsql
      SUBDIR += zenirc
+     SUBDIR += ziproxy
      SUBDIR += znc
      SUBDIR += zsync
 
