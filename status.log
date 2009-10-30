@@ -1,309 +1,84 @@
 # On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
 # Changed but not updated:
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   audio/audacity/Makefile
-#	modified:   audio/audacity/distinfo
-#	modified:   audio/audacity/patches/patch-configure
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_cmt_cext_h
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_snd_snd_h
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_snd_sndconfig_h
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_snd_sndheader_c
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_snd_sndio_c
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_xlisp_xlisp_h
-#	deleted:    audio/audacity/patches/patch-lib-src_libnyquist_xlisp_xlprin_c
-#	deleted:    audio/audacity/patches/patch-lib-src_portmixer_Makefile_in
-#	deleted:    audio/audacity/patches/patch-lib-src_portmixer_configure
-#	deleted:    audio/audacity/patches/patch-lib-src_portmixer_px_unix_oss_px_unix_oss_c
-#	deleted:    audio/audacity/patches/patch-lib-src_portmixer_src_px_mixer_c
-#	deleted:    audio/audacity/patches/patch-lib-src_portmixer_src_px_unix_oss_c
-#	modified:   audio/audacity/patches/patch-src_Audacity_h
-#	deleted:    audio/audacity/patches/patch-src_AudioIO_cpp
-#	modified:   audio/audacity/patches/patch-src_Benchmark_cpp
-#	modified:   audio/audacity/patches/patch-src_FFmpeg_cpp
-#	deleted:    audio/audacity/patches/patch-src_FFmpeg_h
-#	modified:   audio/audacity/patches/patch-src_Sequence_cpp
-#	deleted:    audio/audacity/patches/patch-src_audacity_desktop
-#	modified:   audio/audacity/patches/patch-src_export_ExportMP3_cpp
-#	deleted:    audio/audacity/patches/patch-src_prefs_FileFormatPrefs_cpp
-#	modified:   audio/audacity/pkg/PLIST
-#	modified:   databases/ruby-couch_potato/Makefile
-#	modified:   databases/ruby-couch_potato/distinfo
-#	modified:   databases/ruby-couch_potato/pkg/PLIST
-#	modified:   devel/Makefile
-#	modified:   devel/gconf2/Makefile
-#	modified:   devel/gconf2/distinfo
-#	deleted:    devel/gconf2/patches/patch-configure
-#	modified:   devel/gconf2/patches/patch-gconf_Makefile_in
-#	modified:   devel/gconf2/patches/patch-gconf_default_path_in
-#	modified:   devel/gconf2/pkg/PLIST
-#	modified:   devel/gconfmm/Makefile
-#	modified:   devel/gconfmm/distinfo
-#	modified:   devel/gconfmm/patches/patch-Makefile_in
-#	modified:   devel/gconfmm/patches/patch-configure
-#	modified:   devel/git/Makefile
-#	modified:   devel/git/distinfo
-#	modified:   devel/git/pkg/PLIST-main
-#	modified:   devel/libslang/Makefile
-#	modified:   devel/libslang/patches/patch-src_Makefile_in
-#	modified:   devel/p5-Catalyst-Manual/Makefile
-#	modified:   devel/p5-Catalyst-Manual/distinfo
-#	modified:   devel/p5-Catalyst-Manual/pkg/PLIST
-#	modified:   devel/p5-Class-Accessor/Makefile
-#	modified:   devel/p5-Class-Accessor/distinfo
-#	modified:   devel/p5-Class-MOP/Makefile
-#	modified:   devel/p5-Class-MOP/distinfo
-#	modified:   devel/p5-Class-MOP/pkg/PLIST
-#	modified:   devel/p5-Event/Makefile
-#	modified:   devel/p5-Event/distinfo
-#	modified:   devel/p5-Moose/Makefile
-#	modified:   devel/p5-Moose/distinfo
-#	modified:   devel/p5-Moose/pkg/PLIST
-#	modified:   devel/p5-MooseX-Emulate-Class-Accessor-Fast/Makefile
-#	modified:   devel/p5-MooseX-Emulate-Class-Accessor-Fast/distinfo
-#	modified:   devel/p5-MooseX-MethodAttributes/Makefile
-#	modified:   devel/p5-MooseX-MethodAttributes/distinfo
-#	modified:   devel/p5-MooseX-MethodAttributes/pkg/PLIST
-#	modified:   devel/p5-MooseX-Types/Makefile
-#	modified:   devel/p5-MooseX-Types/distinfo
-#	modified:   devel/p5-POE-Component-Pluggable/Makefile
-#	modified:   devel/p5-POE-Component-Pluggable/distinfo
-#	modified:   devel/p5-Path-Class/Makefile
-#	modified:   devel/p5-Path-Class/distinfo
-#	modified:   devel/p5-Pod-Coverage/Makefile
-#	modified:   devel/p5-Pod-Coverage/distinfo
-#	modified:   devel/p5-Variable-Magic/Makefile
-#	modified:   devel/p5-Variable-Magic/distinfo
-#	modified:   devel/py-gdata/Makefile
-#	modified:   devel/py-gdata/distinfo
-#	modified:   devel/py-gdata/pkg/DESCR
-#	modified:   devel/py-gdata/pkg/PLIST
-#	modified:   devel/subversion/Makefile
-#	modified:   devel/subversion/distinfo
-#	deleted:    devel/subversion/patches/patch-subversion_bindings_swig_ruby_test_test_client_rb
-#	modified:   devel/subversion/pkg/PLIST-main
-#	modified:   devel/vte/Makefile
-#	modified:   devel/vte/distinfo
-#	modified:   editors/jed/Makefile
-#	modified:   editors/jed/patches/patch-lib_jed_rc
-#	modified:   education/verbiste/Makefile
-#	modified:   emulators/qemu/Makefile
-#	modified:   emulators/qemu/patches/patch-configure
-#	modified:   games/Makefile
-#	modified:   geo/gpx-viewer/Makefile
-#	modified:   geo/gpx-viewer/distinfo
-#	modified:   geo/gpx-viewer/pkg/PLIST
-#	modified:   graphics/autopano-sift-c/Makefile
-#	modified:   graphics/autopano-sift-c/distinfo
-#	deleted:    graphics/autopano-sift-c/patches/patch-APSCpp_APSCpp_c
-#	modified:   graphics/blender/Makefile
-#	modified:   graphics/blender/distinfo
-#	modified:   graphics/blender/patches/patch-SConstruct
-#	modified:   graphics/blender/patches/patch-intern_SoundSystem_intern_SND_WaveCache_cpp
-#	modified:   graphics/blender/patches/patch-intern_ghost_SConscript
-#	modified:   graphics/blender/patches/patch-source_blender_blenkernel_intern_blender_c
-#	modified:   graphics/blender/patches/patch-source_blender_blenkernel_intern_packedFile_c
-#	deleted:    graphics/blender/patches/patch-source_blender_blenkernel_intern_subsurf_ccg_c
-#	modified:   graphics/blender/patches/patch-source_blender_blenlib_intern_storage_c
-#	modified:   graphics/blender/patches/patch-source_blender_blenloader_intern_writefile_c
-#	deleted:    graphics/blender/patches/patch-source_blender_makesdna_intern_SConscript
-#	modified:   graphics/blender/patches/patch-source_blender_render_intern_source_shadbuf_c
-#	deleted:    graphics/blender/patches/patch-source_blender_src_drawmesh_c
-#	deleted:    graphics/blender/patches/patch-source_blender_src_usiblender_c
-#	modified:   graphics/blender/patches/patch-tools_Blender_py
-#	modified:   graphics/blender/pkg/PLIST
-#	modified:   graphics/gpicview/Makefile
-#	modified:   graphics/gpicview/distinfo
-#	modified:   graphics/gpicview/pkg/PLIST
-#	modified:   graphics/pngcrush/Makefile
-#	modified:   graphics/pngcrush/distinfo
-#	modified:   infrastructure/db/user.list
-#	modified:   infrastructure/install/FS.pm
-#	modified:   infrastructure/package/gen-package-pages
-#	modified:   infrastructure/templates/network.conf.template
-#	modified:   lang/python/2.6/Makefile
-#	modified:   lang/python/2.6/pkg/PLIST-bsddb
-#	modified:   lang/python/2.6/pkg/PLIST-gdbm
-#	modified:   lang/python/2.6/pkg/PLIST-idle
-#	modified:   lang/python/2.6/pkg/PLIST-tests
-#	modified:   lang/python/2.6/pkg/PLIST-tkinter
-#	modified:   lang/python/2.6/pkg/PLIST-tools
-#	modified:   mail/courier-authlib/Makefile
-#	modified:   mail/courier-authlib/distinfo
-#	modified:   mail/courier-authlib/patches/patch-authldap_h
-#	modified:   mail/courier-authlib/patches/patch-configure
-#	modified:   mail/courier-authlib/pkg/PLIST-main
-#	modified:   mail/courier-authlib/pkg/PLIST-userdb
-#	modified:   mail/courier-imap/Makefile
-#	modified:   mail/courier-imap/distinfo
-#	modified:   mail/courier-imap/patches/patch-imap_imapd-ssl_dist_in
-#	modified:   mail/courier-imap/patches/patch-imap_imaplogin_c
-#	modified:   mail/courier-imap/patches/patch-imap_mkimapdcert_in
-#	modified:   mail/courier-imap/patches/patch-imap_mkpop3dcert_in
-#	modified:   mail/courier-imap/patches/patch-imap_pop3d-ssl_dist_in
-#	modified:   mail/courier-imap/patches/patch-imap_pop3login_c
-#	modified:   mail/courier-imap/patches/patch-tcpd_libcouriertls_c
-#	modified:   mail/courier-imap/pkg/MESSAGE-main
-#	modified:   mail/courier-imap/pkg/MESSAGE-pop3
-#	modified:   mail/courier-imap/pkg/PLIST-main
-#	modified:   mail/courier-imap/pkg/PLIST-pop3
-#	modified:   mail/maildrop/Makefile
-#	modified:   mail/maildrop/distinfo
-#	modified:   mail/maildrop/patches/patch-maildir_Makefile_am
-#	modified:   mail/maildrop/patches/patch-maildir_Makefile_in
-#	modified:   mail/maildrop/patches/patch-maildrop_Makefile_in
-#	modified:   mail/maildrop/patches/patch-maildrop_configure
-#	modified:   mail/maildrop/patches/patch-maildrop_maildrop_1_in
-#	modified:   mail/maildrop/patches/patch-maildrop_maildropfilter_7_in
-#	modified:   mail/maildrop/pkg/PLIST-main
-#	modified:   mail/maildrop/pkg/PLIST-utils
-#	modified:   mail/p5-MIME-Types/Makefile
-#	modified:   mail/p5-MIME-Types/distinfo
-#	modified:   multimedia/get_iplayer/Makefile
-#	modified:   multimedia/get_iplayer/distinfo
-#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
-#	modified:   net/Makefile
-#	modified:   net/gftp/Makefile
-#	deleted:    net/gftp/patches/patch-lib_fsplib_fsplib_c
-#	modified:   net/libnice/Makefile
-#	modified:   net/nepim/Makefile
-#	deleted:    net/nepim/patches/patch-src_sock_c
-#	modified:   net/p5-POE-Component-IRC/Makefile
-#	modified:   net/p5-POE-Component-IRC/distinfo
-#	modified:   net/pure-ftpd/Makefile
-#	modified:   net/pure-ftpd/distinfo
-#	modified:   net/pure-ftpd/pkg/DESCR
-#	modified:   net/pure-ftpd/pkg/PLIST
-#	modified:   net/tightvnc/Makefile
-#	modified:   net/tightvnc/distinfo
-#	modified:   net/tightvnc/patches/patch-vncserver
-#	modified:   net/transmission/Makefile
-#	modified:   net/transmission/distinfo
-#	modified:   net/transmission/patches/patch-configure
-#	modified:   net/transmission/patches/patch-gtk_details_c
-#	modified:   net/transmission/patches/patch-libtransmission_utils_c
-#	modified:   print/cups/Makefile
-#	modified:   print/libspectre/Makefile
-#	modified:   print/libspectre/distinfo
-#	deleted:    print/libspectre/patches/patch-configure
-#	deleted:    print/libspectre/patches/patch-libspectre_Makefile_in
-#	deleted:    print/libspectre/patches/patch-libspectre_spectre-exporter-pdf_c
-#	modified:   print/lilypond/Makefile
-#	modified:   print/poppler/Makefile
-#	modified:   print/poppler/distinfo
-#	deleted:    print/poppler/patches/patch-poppler_Stream_cc
-#	modified:   print/poppler/patches/patch-poppler_XRef_cc
-#	deleted:    print/poppler/patches/patch-splash_SplashBitmap_cc
-#	deleted:    print/poppler/patches/patch-splash_SplashErrorCodes_h
-#	deleted:    print/poppler/patches/patch-splash_Splash_cc
-#	modified:   print/splix/Makefile
-#	modified:   security/clusterssh/Makefile
-#	modified:   security/clusterssh/distinfo
-#	modified:   security/libfprint/Makefile
-#	modified:   security/libfprint/patches/patch-libfprint_fp_internal_h
-#	modified:   security/prelude/libpreludedb/Makefile
-#	deleted:    security/prelude/libpreludedb/patches/patch-src_preludedb-plugin-sql_c
+#	modified:   audio/exaile/Makefile
+#	modified:   audio/exaile/distinfo
+#	modified:   audio/exaile/patches/patch-Makefile
+#	modified:   audio/exaile/patches/patch-data_exaile_desktop
+#	modified:   audio/exaile/patches/patch-plugins_Makefile
+#	modified:   audio/exaile/pkg/PLIST
+#	modified:   devel/cvsweb/Makefile
+#	modified:   devel/cvsweb/files/README.chroot
+#	modified:   devel/json-glib/Makefile
+#	modified:   devel/json-glib/distinfo
+#	modified:   devel/p5-common-sense/Makefile
+#	modified:   devel/p5-common-sense/distinfo
+#	modified:   emulators/simh/Makefile
+#	modified:   emulators/simh/patches/patch-sim_ether_c
+#	modified:   geo/mapserver/Makefile
+#	modified:   geo/mapserver/distinfo
+#	modified:   geo/mapserver/pkg/MESSAGE-main
+#	modified:   geo/qgis/Makefile
+#	modified:   geo/qgis/distinfo
+#	modified:   geo/qgis/patches/patch-CMakeLists_txt
+#	deleted:    geo/qgis/patches/patch-src_plugins_interpolation_qgsinterpolator_cpp
+#	deleted:    geo/qgis/patches/patch-src_plugins_interpolation_qgstininterpolator_cpp
+#	modified:   geo/qgis/pkg/PFRAG.shared
+#	modified:   geo/qgis/pkg/PLIST
+#	modified:   misc/tkcron/Makefile
+#	deleted:    misc/tkcron/files/Makefile
+#	deleted:    misc/tkcron/patches/patch-tkcron_tcl
+#	modified:   misc/tkcron/pkg/DESCR
+#	modified:   net/mldonkey/stable/Makefile
+#	modified:   net/mldonkey/stable/distinfo
+#	modified:   net/mldonkey/stable/patches/patch-config_Makefile_in
+#	modified:   net/mldonkey/stable/patches/patch-config_configure_in
+#	modified:   net/mldonkey/stable/pkg/PLIST
+#	modified:   security/clamav/Makefile
+#	modified:   security/clamav/distinfo
+#	modified:   security/clamav/patches/patch-clamd_Makefile_in
+#	modified:   security/clamav/patches/patch-database_Makefile_in
+#	modified:   security/clamav/patches/patch-etc_Makefile_in
+#	modified:   security/clamav/patches/patch-libclamav_Makefile_in
+#	modified:   security/clamav/patches/patch-libclamav_ole2_extract_c
 #	modified:   status.log
-#	modified:   sysutils/Makefile
-#	modified:   sysutils/consolekit/Makefile
-#	deleted:    sysutils/consolekit/patches/patch-src_ck-sysdeps_h
-#	modified:   textproc/Makefile
+#	modified:   sysutils/colorls/Makefile
+#	modified:   sysutils/colorls/distinfo
+#	modified:   sysutils/colorls/patches/patch-colorls_1
+#	modified:   sysutils/colorls/patches/patch-ls_c
+#	modified:   sysutils/colorls/patches/patch-print_c
+#	modified:   sysutils/colorls/patches/patch-util_c
 #	modified:   up.log
-#	modified:   www/drupal6/Makefile
-#	modified:   www/lighttpd/Makefile
-#	modified:   www/lighttpd/distinfo
-#	deleted:    www/lighttpd/patches/patch-src_connections_c
-#	deleted:    www/lighttpd/patches/patch-src_http-header-glue_c
-#	deleted:    www/lighttpd/patches/patch-src_mod_status_c
 #	modified:   www/nginx/Makefile
-#	modified:   www/nginx/pkg/MESSAGE
-#	modified:   www/p5-Catalyst-Action-RenderView/Makefile
-#	modified:   www/p5-Catalyst-Action-RenderView/distinfo
-#	modified:   www/p5-Catalyst-Devel/Makefile
-#	modified:   www/p5-Catalyst-Devel/distinfo
-#	modified:   www/p5-Catalyst-Devel/pkg/PLIST
-#	modified:   www/p5-Catalyst-Runtime/Makefile
-#	modified:   www/p5-Catalyst-Runtime/distinfo
-#	modified:   www/p5-Catalyst-Runtime/pkg/PLIST
-#	modified:   www/p5-HTML-Parser/Makefile
-#	modified:   www/p5-HTML-Parser/distinfo
-#	modified:   www/piwik/Makefile
-#	modified:   www/piwik/distinfo
-#	modified:   x11/gnome/baker/Makefile
-#	modified:   x11/gnome/baker/pkg/MESSAGE
-#	modified:   x11/gnome/ekiga/Makefile
-#	deleted:    x11/gnome/ekiga/pkg/MESSAGE
-#	modified:   x11/gnome/gedit/Makefile
-#	deleted:    x11/gnome/gedit/patches/patch-gedit_gedit-local-document-saver_c
-#	modified:   x11/gnome/libbonobo/Makefile
-#	modified:   x11/gnome/seahorse-plugins/Makefile
-#	deleted:    x11/gnome/seahorse-plugins/patches/patch-libseahorse_seahorse-vfs-data_c
-#	modified:   x11/gnome/seahorse/Makefile
-#	deleted:    x11/gnome/seahorse/patches/patch-pgp_seahorse-gpgme-data_c
-#	modified:   x11/gnome/tracker/Makefile
-#	modified:   x11/kde/graphics3/Makefile
-#	modified:   x11/kde/graphics3/patches/patch-kpdf_xpdf_xpdf_XRef_cc
-#	modified:   x11/kde/libs3/Makefile
-#	modified:   x11/kde/libs3/patches/patch-kioslave_file_file_cc
-#	modified:   x11/lablgtk2/Makefile
-#	modified:   x11/lablgtk2/distinfo
-#	modified:   x11/lablgtk2/patches/patch-META
-#	modified:   x11/lablgtk2/pkg/PLIST
-#	modified:   x11/xfce4/thunar-vcs/Makefile
-#	modified:   x11/xfce4/thunar-vcs/distinfo
-#	modified:   x11/xfce4/thunar-vcs/patches/patch-tvp-svn-helper_Makefile_in
-#	deleted:    x11/xfce4/thunar-vcs/patches/patch-tvp-svn-helper_main_c
-#	modified:   x11/xfce4/thunar-vcs/pkg/PFRAG.shared
-#	modified:   x11/xfce4/thunar-vcs/pkg/PLIST
+#	modified:   www/nginx/distinfo
+#	modified:   www/squid/Makefile
+#	modified:   www/squid/distinfo
+#	modified:   www/squid/patches/patch-errors_Makefile_in
+#	modified:   www/squid/patches/patch-helpers_basic_auth_MSNT_Makefile_in
+#	modified:   www/squid/patches/patch-helpers_negotiate_auth_squid_kerb_auth_Makefile_in
+#	modified:   www/squid/patches/patch-icons_Makefile_in
+#	deleted:    www/squid/patches/patch-src_HttpHeaderTools_c
+#	modified:   www/squid/patches/patch-src_Makefile_in
+#	modified:   www/squid/patches/patch-tools_Makefile_in
+#	modified:   www/webkit/Makefile
+#	modified:   x11/gnome/desktop/Makefile
+#	modified:   x11/gnome/utils/Makefile
+#	modified:   x11/winwrangler/Makefile
+#	modified:   x11/winwrangler/distinfo
+#	modified:   x11/winwrangler/patches/patch-Makefile_in
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	audio/audacity/patches/patch-lib-src_libnyquist_Makefile_in
-#	audio/audacity/patches/patch-lib-src_libnyquist_nyquist_nyqstk_include_Stk_h
-#	audio/audacity/patches/patch-lib-src_libnyquist_nyquist_nyqstk_src_FileRead_cpp
-#	audio/audacity/patches/patch-lib-src_libnyquist_nyquist_nyqstk_src_Stk_cpp
-#	audio/audacity/patches/patch-lib-src_libnyquist_nyquist_xlisp_xlisp_h
-#	audio/audacity/patches/patch-src_AudacityApp_cpp
-#	audio/audacity/patches/patch-src_AudioIO_h
-#	audio/audacity/patches/patch-src_NoteTrack_cpp
-#	audio/audacity/patches/patch-src_TrackArtist_cpp
-#	audio/audacity/patches/patch-src_import_ImportMIDI_cpp
-#	devel/flex/
-#	devel/gconf2/patches/patch-defaults_Makefile_in
-#	devel/gconf2/patches/patch-defaults_gconf-defaults_c
-#	devel/gconf2/patches/patch-gconf_gconf-client_c
-#	devel/gconf2/patches/patch-gconf_gconfd_c
-#	devel/gconf2/patches/patch-gconf_gconftool_c
-#	devel/p5-Declare-Constraints-Simple/
-#	devel/p5-Devel-Caller/
-#	devel/p5-File-ChangeNotify/
-#	devel/p5-MooseX-Params-Validate/
-#	devel/p5-MooseX-SemiAffordanceAccessor/
-#	devel/p5-Try-Tiny/
-#	devel/p5-namespace-autoclean/
-#	devel/subversion/patches/patch-subversion_bindings_swig_ruby_test_test_core_rb
-#	games/xcowsay/
-#	graphics/blender/patches/patch-extern_SConscript
-#	graphics/blender/patches/patch-intern_guardedalloc_BLO_sys_types_h
-#	graphics/blender/patches/patch-intern_opennl_superlu_BLO_sys_types_h
-#	graphics/blender/patches/patch-source_blender_blenlib_intern_threads_c
-#	graphics/blender/patches/patch-source_blender_blenloader_BLO_sys_types_h
-#	graphics/blender/patches/patch-tools_btools_py
-#	mail/courier-authlib/patches/patch-Makefile_in
-#	net/tightvnc/patches/patch-Xvnc_programs_Xserver_Imakefile
-#	net/ziproxy/
-#	print/cups/patches/patch-config-scripts_cups-pdf_m4
-#	print/cups/patches/patch-config_h_in
-#	print/cups/patches/patch-filter_pdftops_c
-#	sysutils/p5-Set-Crontab/
-#	textproc/p5-String-RewritePrefix/
-#	www/drupal6/phpmailer/
-#	www/lighttpd/patches/patch-src_mod_magnet_c
-#	www/lighttpd/patches/patch-src_server_c
-#	www/piwik/patches/
-#	x11/gnome/gedit/patches/patch-gedit_gedit-metadata-manager_c
-#	x11/gnome/libbonobo/patches/patch-bonobo-activation_bonobo-activation-mime_c
-#	x11/gnome/tracker/patches/patch-src_trackerd_tracker-monitor_c
+#	audio/exaile/patches/patch-tools_compilepo_sh
+#	geo/mapserver/patches/
+#	geo/qgis/patches/patch-src_analysis_interpolation_qgsinterpolator_cpp
+#	geo/qgis/patches/patch-src_analysis_interpolation_qgstininterpolator_cpp
+#	misc/tkcron/patches/patch-tkcron-2_12_tcl
+#	security/clamav/patches/patch-unit_tests_check_common_sh
+#	x11/gnome/desktop/patches/
 no changes added to commit (use "git add" and/or "git commit -a")
