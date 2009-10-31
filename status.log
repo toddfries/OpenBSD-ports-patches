@@ -1,197 +1,84 @@
 # On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
 # Changed but not updated:
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   databases/mysql-zrm/Makefile
-#	modified:   databases/mysql-zrm/distinfo
-#	modified:   databases/mysql/Makefile
-#	modified:   databases/mysql/distinfo
-#	modified:   databases/mysql/pkg/PLIST-tests
-#	modified:   devel/cln/Makefile
-#	modified:   devel/cln/pkg/PLIST
-#	modified:   devel/libffi/Makefile
-#	modified:   devel/libffi/patches/patch-configure
-#	modified:   devel/libslang/Makefile
-#	modified:   devel/libslang/patches/patch-src_Makefile_in
-#	modified:   devel/libslang/pkg/PFRAG.shared
-#	modified:   devel/p5-File-Find-Rule-Perl/Makefile
-#	modified:   devel/p5-Module-Install/Makefile
-#	modified:   devel/p5-Parse-CPAN-Meta/Makefile
-#	modified:   devel/p5-parent/Makefile
-#	modified:   games/numptyphysics/Makefile
-#	modified:   games/numptyphysics/patches/patch-Config_h
-#	modified:   games/numptyphysics/patches/patch-Http_cpp
-#	modified:   games/numptyphysics/patches/patch-data_numptyphysics_desktop
-#	modified:   games/numptyphysics/patches/patch-happyhttp_cpp
-#	modified:   geo/libchamplain/Makefile.inc
-#	modified:   geo/libchamplain/core/Makefile
-#	modified:   geo/libchamplain/core/distinfo
-#	modified:   graphics/gtkimageview/Makefile
-#	modified:   graphics/ufraw/Makefile
-#	modified:   graphics/ufraw/distinfo
-#	modified:   graphics/ufraw/patches/patch-Makefile_in
-#	modified:   graphics/ufraw/patches/patch-nikon_curve_c
-#	modified:   graphics/ufraw/patches/patch-ufraw_c
-#	modified:   graphics/ufraw/patches/patch-ufraw_developer_c
-#	modified:   graphics/ufraw/pkg/PLIST
-#	modified:   infrastructure/build/outdated-perl-ports
-#	modified:   lang/guile/Makefile
-#	modified:   mail/claws-mail-cachesaver/Makefile
-#	modified:   mail/claws-mail-htmlviewer/Makefile
-#	modified:   mail/claws-mail-htmlviewer/distinfo
-#	modified:   mail/claws-mail-notification/Makefile
-#	modified:   mail/claws-mail-notification/distinfo
-#	modified:   mail/claws-mail-notification/pkg/PLIST
-#	modified:   mail/claws-mail-pdfviewer/Makefile
-#	modified:   mail/claws-mail-rssyl/Makefile
-#	modified:   mail/claws-mail-vcalendar/Makefile
-#	modified:   mail/claws-mail-vcalendar/distinfo
-#	modified:   mail/claws-mail/Makefile
-#	modified:   mail/claws-mail/distinfo
-#	modified:   mail/claws-mail/pkg/PLIST-main
-#	modified:   mail/p5-Mail-SpamAssassin/Makefile
-#	modified:   mail/p5-Mail-SpamAssassin/patches/patch-Makefile_PL
-#	modified:   math/mcsim/Makefile
-#	modified:   math/mcsim/pkg/PLIST
-#	modified:   net/freetalk/Makefile
-#	modified:   net/freetalk/patches/patch-configure_ac
-#	modified:   net/isc-dhcp/Makefile
-#	modified:   net/isc-dhcp/distinfo
-#	modified:   net/isc-dhcp/pkg/PLIST-client
-#	modified:   net/isc-dhcp/pkg/PLIST-main
-#	modified:   net/isc-dhcp/pkg/PLIST-omapi
-#	modified:   net/mcabber/Makefile
-#	modified:   net/mcabber/distinfo
-#	modified:   net/nmap/Makefile
-#	modified:   net/nmap/distinfo
-#	modified:   net/nmap/patches/patch-Makefile_in
-#	modified:   net/nmap/patches/patch-configure
-#	modified:   net/nmap/patches/patch-nsock_include_nsock_h
-#	modified:   net/nmap/patches/patch-nsock_src_nsock_pcap_c
-#	modified:   net/nmap/patches/patch-nsock_src_nsock_pcap_h
-#	modified:   net/nmap/patches/patch-tcpip_cc
-#	modified:   net/nmap/patches/patch-zenmap_install_scripts_unix_su-to-zenmap_sh
-#	modified:   net/nmap/patches/patch-zenmap_setup_py
-#	modified:   net/nmap/pkg/PFRAG.shared-main
-#	modified:   net/nmap/pkg/PLIST-main
-#	modified:   net/nmap/pkg/PLIST-zenmap
-#	modified:   net/vsftpd/Makefile
-#	modified:   net/vsftpd/distinfo
-#	modified:   net/vsftpd/patches/patch-vsftpd_conf
-#	modified:   net/vsftpd/pkg/PLIST
-#	modified:   print/ghostscript/gnu-fonts/Makefile
-#	modified:   print/ghostscript/gnu-fonts/pkg/MESSAGE
-#	modified:   print/ghostscript/gnu-fonts/pkg/PLIST
+#	modified:   audio/exaile/Makefile
+#	modified:   audio/exaile/distinfo
+#	modified:   audio/exaile/patches/patch-Makefile
+#	modified:   audio/exaile/patches/patch-data_exaile_desktop
+#	modified:   audio/exaile/patches/patch-plugins_Makefile
+#	modified:   audio/exaile/pkg/PLIST
+#	modified:   devel/cvsweb/Makefile
+#	modified:   devel/cvsweb/files/README.chroot
+#	modified:   devel/json-glib/Makefile
+#	modified:   devel/json-glib/distinfo
+#	modified:   devel/p5-common-sense/Makefile
+#	modified:   devel/p5-common-sense/distinfo
+#	modified:   emulators/simh/Makefile
+#	modified:   emulators/simh/patches/patch-sim_ether_c
+#	modified:   geo/mapserver/Makefile
+#	modified:   geo/mapserver/distinfo
+#	modified:   geo/mapserver/pkg/MESSAGE-main
+#	modified:   geo/qgis/Makefile
+#	modified:   geo/qgis/distinfo
+#	modified:   geo/qgis/patches/patch-CMakeLists_txt
+#	deleted:    geo/qgis/patches/patch-src_plugins_interpolation_qgsinterpolator_cpp
+#	deleted:    geo/qgis/patches/patch-src_plugins_interpolation_qgstininterpolator_cpp
+#	modified:   geo/qgis/pkg/PFRAG.shared
+#	modified:   geo/qgis/pkg/PLIST
+#	modified:   misc/tkcron/Makefile
+#	deleted:    misc/tkcron/files/Makefile
+#	deleted:    misc/tkcron/patches/patch-tkcron_tcl
+#	modified:   misc/tkcron/pkg/DESCR
+#	modified:   net/mldonkey/stable/Makefile
+#	modified:   net/mldonkey/stable/distinfo
+#	modified:   net/mldonkey/stable/patches/patch-config_Makefile_in
+#	modified:   net/mldonkey/stable/patches/patch-config_configure_in
+#	modified:   net/mldonkey/stable/pkg/PLIST
+#	modified:   security/clamav/Makefile
+#	modified:   security/clamav/distinfo
+#	modified:   security/clamav/patches/patch-clamd_Makefile_in
+#	modified:   security/clamav/patches/patch-database_Makefile_in
+#	modified:   security/clamav/patches/patch-etc_Makefile_in
+#	modified:   security/clamav/patches/patch-libclamav_Makefile_in
+#	modified:   security/clamav/patches/patch-libclamav_ole2_extract_c
 #	modified:   status.log
-#	modified:   sysutils/ktsuss/Makefile
-#	modified:   textproc/p5-Text-Quoted/Makefile
-#	modified:   textproc/p5-Text-Quoted/distinfo
+#	modified:   sysutils/colorls/Makefile
+#	modified:   sysutils/colorls/distinfo
+#	modified:   sysutils/colorls/patches/patch-colorls_1
+#	modified:   sysutils/colorls/patches/patch-ls_c
+#	modified:   sysutils/colorls/patches/patch-print_c
+#	modified:   sysutils/colorls/patches/patch-util_c
 #	modified:   up.log
-#	modified:   www/Makefile
-#	modified:   www/drupal6/FCKeditor/patches/patch-fckeditor_install
-#	modified:   www/drupal6/ctools/Makefile
-#	modified:   www/drupal6/ctools/distinfo
-#	modified:   www/drupal6/ctools/pkg/PLIST
-#	modified:   www/drupal6/filefield/Makefile
-#	modified:   www/drupal6/filefield/distinfo
-#	deleted:    www/drupal6/filefield/patches/patch-filefield_module
-#	deleted:    www/drupal6/filefield/patches/patch-translations_fr_po
-#	modified:   www/drupal6/filefield/pkg/PLIST
-#	modified:   www/drupal6/imagefield/Makefile
-#	modified:   www/drupal6/imagefield/distinfo
-#	deleted:    www/drupal6/imagefield/patches/patch-translations_fr_po
-#	modified:   www/drupal6/imagefield/pkg/PLIST
-#	modified:   www/drupal6/panels/Makefile
-#	modified:   www/drupal6/panels/distinfo
-#	modified:   www/drupal6/panels/pkg/PLIST
-#	modified:   www/drupal6/pathauto/Makefile
-#	modified:   www/drupal6/pathauto/distinfo
-#	modified:   www/drupal6/pathauto/pkg/PLIST
-#	modified:   www/drupal6/scheduler/Makefile
-#	modified:   www/drupal6/scheduler/distinfo
-#	modified:   www/drupal6/scheduler/pkg/PLIST
-#	modified:   www/drupal6/webform/Makefile
-#	modified:   www/drupal6/webform/distinfo
-#	modified:   www/drupal6/webform/patches/patch-webform_module
-#	modified:   www/p5-Catalyst-Devel/Makefile
-#	modified:   www/piwik/Makefile
-#	modified:   www/piwik/distinfo
-#	modified:   www/piwik/pkg/PLIST
-#	modified:   www/timetrex/Makefile
-#	modified:   www/timetrex/distinfo
-#	modified:   www/timetrex/files/README.OpenBSD
-#	modified:   www/timetrex/pkg/PLIST
-#	deleted:    www/trac-adminplugin/Makefile
-#	deleted:    www/trac-adminplugin/distinfo
-#	deleted:    www/trac-adminplugin/pkg/DESCR
-#	deleted:    www/trac-adminplugin/pkg/MESSAGE
-#	deleted:    www/trac-adminplugin/pkg/PLIST
-#	modified:   www/wordpress/Makefile
-#	modified:   www/wordpress/distinfo
-#	modified:   www/wordpress/pkg/PLIST
-#	modified:   x11/gnome/Makefile
-#	modified:   x11/gnome/dasher/Makefile
-#	modified:   x11/gnome/dasher/pkg/PLIST
+#	modified:   www/nginx/Makefile
+#	modified:   www/nginx/distinfo
+#	modified:   www/squid/Makefile
+#	modified:   www/squid/distinfo
+#	modified:   www/squid/patches/patch-errors_Makefile_in
+#	modified:   www/squid/patches/patch-helpers_basic_auth_MSNT_Makefile_in
+#	modified:   www/squid/patches/patch-helpers_negotiate_auth_squid_kerb_auth_Makefile_in
+#	modified:   www/squid/patches/patch-icons_Makefile_in
+#	deleted:    www/squid/patches/patch-src_HttpHeaderTools_c
+#	modified:   www/squid/patches/patch-src_Makefile_in
+#	modified:   www/squid/patches/patch-tools_Makefile_in
+#	modified:   www/webkit/Makefile
 #	modified:   x11/gnome/desktop/Makefile
-#	modified:   x11/gnome/desktop/distinfo
-#	modified:   x11/gnome/desktop/pkg/PLIST
-#	modified:   x11/gnome/eog-plugins/Makefile
-#	modified:   x11/gnome/eog-plugins/distinfo
-#	modified:   x11/gnome/eog/Makefile
-#	modified:   x11/gnome/eog/distinfo
-#	modified:   x11/gnome/file-roller/Makefile
-#	modified:   x11/gnome/file-roller/distinfo
-#	modified:   x11/gnome/genius/Makefile
-#	modified:   x11/gnome/genius/distinfo
-#	modified:   x11/gnome/genius/pkg/PLIST
-#	modified:   x11/gnome/gnome.port.mk
-#	deleted:    x11/gnome/gnopernicus/Makefile
-#	deleted:    x11/gnome/gnopernicus/distinfo
-#	deleted:    x11/gnome/gnopernicus/patches/patch-configure
-#	deleted:    x11/gnome/gnopernicus/patches/patch-srcore_srspc_c
-#	deleted:    x11/gnome/gnopernicus/patches/patch-srlow_libsrlow_SRLow_c
-#	deleted:    x11/gnome/gnopernicus/pkg/DESCR
-#	deleted:    x11/gnome/gnopernicus/pkg/PFRAG.shared
-#	deleted:    x11/gnome/gnopernicus/pkg/PLIST
-#	modified:   x11/gnome/nautilus/Makefile
-#	modified:   x11/gnome/orca/Makefile
-#	modified:   x11/gnome/orca/distinfo
-#	modified:   x11/gnome/orca/pkg/PLIST
-#	modified:   x11/gnome/session/Makefile
-#	modified:   x11/gnome/session/files/README.OpenBSD
 #	modified:   x11/gnome/utils/Makefile
-#	modified:   x11/gnome/utils/distinfo
-#	modified:   x11/gnome/utils/pkg/PLIST
-#	modified:   x11/gtk-vnc/Makefile
-#	modified:   x11/gtk-vnc/distinfo
-#	modified:   x11/gtk-vnc/patches/patch-configure
-#	modified:   x11/gtk-vnc/patches/patch-gnulib_tests_Makefile_in
-#	modified:   x11/gtk-vnc/patches/patch-plugin_Makefile_in
-#	modified:   x11/gtk-vnc/pkg/PLIST-main
-#	modified:   x11/scrotwm/Makefile
-#	modified:   x11/scrotwm/distinfo
-#	modified:   x11/scrotwm/pkg/PLIST
-#	modified:   x11/xfe/Makefile
+#	modified:   x11/winwrangler/Makefile
+#	modified:   x11/winwrangler/distinfo
+#	modified:   x11/winwrangler/patches/patch-Makefile_in
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	devel/cln/patches/
-#	games/numptyphysics/patches/patch-Array_h
-#	games/numptyphysics/patches/patch-Canvas_cpp
-#	games/numptyphysics/patches/patch-Canvas_h
-#	games/numptyphysics/patches/patch-Common_h
-#	games/numptyphysics/patches/patch-Game_cpp
-#	games/numptyphysics/patches/patch-Http_h
-#	games/numptyphysics/patches/patch-Levels_cpp
-#	games/numptyphysics/patches/patch-Levels_h
-#	games/numptyphysics/patches/patch-Overlay_cpp
-#	games/numptyphysics/patches/patch-ZipFile_cpp
-#	net/nmap/patches/patch-ncat_docs_ncat_1
-#	net/nmap/patches/patch-ndiff_setup_py
-#	net/nmap/patches/patch-scan-engine_cc
-#	net/nmap/patches/patch-traceroute_cc
-#	net/nmap/pkg/MESSAGE-main
-#	www/tracnav/
+#	audio/exaile/patches/patch-tools_compilepo_sh
+#	geo/mapserver/patches/
+#	geo/qgis/patches/patch-src_analysis_interpolation_qgsinterpolator_cpp
+#	geo/qgis/patches/patch-src_analysis_interpolation_qgstininterpolator_cpp
+#	misc/tkcron/patches/patch-tkcron-2_12_tcl
+#	security/clamav/patches/patch-unit_tests_check_common_sh
+#	x11/gnome/desktop/patches/
 no changes added to commit (use "git add" and/or "git commit -a")

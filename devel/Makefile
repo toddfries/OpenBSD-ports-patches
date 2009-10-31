@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.745 2009/10/13 21:00:02 pirofti Exp $
+# $OpenBSD: Makefile,v 1.750 2009/10/28 23:16:21 sthen Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -84,6 +84,7 @@
      SUBDIR += ffcall
      SUBDIR += flatzebra
      SUBDIR += flawfinder
+     SUBDIR += flex
      SUBDIR += fossil
      SUBDIR += fox
      SUBDIR += fribidi
@@ -360,7 +361,9 @@
      SUBDIR += p5-DateTime-Locale
      SUBDIR += p5-DateTime-Set
      SUBDIR += p5-DateTime-TimeZone
+     SUBDIR += p5-Declare-Constraints-Simple
      SUBDIR += p5-Devel-ebug
+     SUBDIR += p5-Devel-Caller
      SUBDIR += p5-Devel-Cover
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-FastProf
@@ -375,7 +378,7 @@
      SUBDIR += p5-Devel-Trace
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Directory-Scratch
-     SUBDIR += p5-Env-PS1 
+     SUBDIR += p5-Env-PS1
      SUBDIR += p5-Error
      SUBDIR += p5-Event
      SUBDIR += p5-Event-ExecFlow
@@ -393,6 +396,7 @@
      SUBDIR += p5-File-Attributes-Recursive
      SUBDIR += p5-File-BOM
      SUBDIR += p5-File-BaseDir
+     SUBDIR += p5-File-ChangeNotify
      SUBDIR += p5-File-Copy-Recursive
      SUBDIR += p5-File-CreationTime
      SUBDIR += p5-File-DesktopEntry
@@ -478,6 +482,8 @@
      SUBDIR += p5-MooseX-Clone
      SUBDIR += p5-MooseX-Emulate-Class-Accessor-Fast
      SUBDIR += p5-MooseX-MethodAttributes
+     SUBDIR += p5-MooseX-Params-Validate
+     SUBDIR += p5-MooseX-SemiAffordanceAccessor
      SUBDIR += p5-MooseX-Types
      SUBDIR += p5-Mouse
      SUBDIR += p5-Net-Server
@@ -643,6 +649,7 @@
      SUBDIR += p5-Tree-Simple
      SUBDIR += p5-Tree-Simple-View
      SUBDIR += p5-Tree-Simple-VisitorFactory
+     SUBDIR += p5-Try-Tiny
      SUBDIR += p5-Universal-can
      SUBDIR += p5-Universal-exports
      SUBDIR += p5-Universal-isa
@@ -664,6 +671,7 @@
      SUBDIR += p5-common-sense
      SUBDIR += p5-enum
      SUBDIR += p5-libintl
+     SUBDIR += p5-namespace-autoclean
      SUBDIR += p5-namespace-clean
      SUBDIR += p5-parent
      SUBDIR += p5-prefork
