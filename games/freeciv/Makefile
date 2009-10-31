@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.75 2009/06/17 01:53:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.77 2009/08/15 23:46:40 rui Exp $
 
 COMMENT-main=	Civilization clone for X11; multiplayer; game server
 COMMENT-client=	Freeciv client
@@ -6,13 +6,11 @@ COMMENT-share=	shared data files for Freeciv
 
 VERSION=	2.1.4
 DISTNAME=	freeciv-${VERSION}
-PKGNAME-main=	freeciv-server-${VERSION}p0
-PKGNAME-client=	freeciv-client-${VERSION}p2
-PKGNAME-share=	freeciv-share-${VERSION}p0
+PKGNAME-main=	freeciv-server-${VERSION}p1
+PKGNAME-client=	freeciv-client-${VERSION}p4
+PKGNAME-share=	freeciv-share-${VERSION}p1
 CATEGORIES=	games
 HOMEPAGE=	http://www.freeciv.org/
-
-MAINTAINER=	Rui Reis <rui@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -52,9 +50,10 @@ RUN_DEPENDS-share=
 
 WANTLIB-client=	${WANTLIB} \
 		Xau Xcomposite Xcursor Xdamage Xdmcp Xfixes Xi Xinerama \
-		Xrandr expat X11 Xext Xrender atk-1.0 fontconfig freetype \
-		gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 glitz png pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 cairo pixman-1
+		Xrandr X11 Xext Xrender atk-1.0 cairo expat fontconfig \
+		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png \
+		pthread-stubs xcb
 LIB_DEPENDS-client=${LIB_DEPENDS} \
 	gtk-x11-2.0.>=0.5,gdk-x11-2.0.>=0.5,gdk_pixbuf-2.0.>=0.5::x11/gtk+2
 RUN_DEPENDS-client=	:desktop-file-utils-*:devel/desktop-file-utils \

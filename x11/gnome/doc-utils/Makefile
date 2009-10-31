@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.24 2009/04/26 11:01:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2009/10/15 15:28:23 jasper Exp $
 
 COMMENT=	collection of documentation utilities for the GNOME project
 
 GNOME_PROJECT=	gnome-doc-utils
-GNOME_VERSION=	0.14.2
-PKGNAME=	${DISTNAME}p5
+GNOME_VERSION=	0.18.0
+PKGNAME=	${DISTNAME}p1
 
 CATEGORIES=	textproc
 
@@ -31,7 +31,10 @@ CONFIGURE_ARGS=	--disable-scrollkeeper
 CONFIGURE_ENV=	CPPFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
+FAKE_FLAGS+=	pkgconfigdir="${PREFIX}/lib/pkgconfig/"
+
 post-install:
-	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py ${PREFIX}/share/xml2po
+	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \
+		${PREFIX}/lib/python${MODPY_VERSION}/site-packages/xml2po/
 
 .include <bsd.port.mk>

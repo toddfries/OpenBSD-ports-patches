@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.34 2008/01/04 17:48:38 espie Exp $
+# $OpenBSD: Makefile,v 1.37 2009/09/15 17:37:22 jasper Exp $
 
 COMMENT-main=		Motif toolkit
 COMMENT-demos=		Motif toolkit demos
 
 VERSION=		2.3.0
 DISTNAME=		openmotif-${VERSION}
-PKGNAME-main=		openmotif-${VERSION}p0
-PKGNAME-demos=		openmotif-demos-${VERSION}p1
+PKGNAME-main=		openmotif-${VERSION}p3
+PKGNAME-demos=		openmotif-demos-${VERSION}p4
 
 SHARED_LIBS=		Mrm	4.0	\
 			Uil	4.0	\
@@ -16,8 +16,6 @@ CATEGORIES=		x11
 #MASTER_SITES=		http://ftp.ics.com/openmotif/2.3/${VERSION}/
 MASTER_SITES=		ftp://ftp.openbsd.org/pub/OpenBSD/distfiles/openmotif/
 DIST_SUBDIR=		openmotif
-
-MAINTAINER=		Marc Balmer <mbalmer@openbsd.org>
 
 HOMEPAGE=		http://www.opengroup.org/openmotif/
 
@@ -69,10 +67,12 @@ post-install:
 	@${INSTALL_DATA} ${WRKSRC}/config/cf/Motif.tmpl \
 	    ${PREFIX}/lib/X11/config/Motif.tmpl
 
-LIB_DEPENDS=		iconv.>=1.9::converters/libiconv
-LIB_DEPENDS-demos=	Xm.>=4.0,Mrm.>=4.0::x11/openmotif
+MODULES=		converters/libiconv
+
+LIB_DEPENDS-demos=	Xm.>=4.0,Mrm.>=4.0::x11/openmotif \
+			${MODLIBICONV_LIB_DEPENDS}
 WANTLIB=		ICE SM X11 Xext Xp Xt c Xau Xdmcp Xft Xmu Xrender \
-			expat fontconfig freetype z iconv
+			expat fontconfig freetype z pthread-stubs xcb
 WANTLIB-demos=		${WANTLIB} m
 
 # XXX  Large, complicated, only partially automated test suite available

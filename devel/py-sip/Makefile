@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.6 2009/06/03 18:20:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/09/09 14:11:27 jasper Exp $
+
+# XXX: Don't forget to update x11/py-qt{3,4} when updating this port.
 
 SHARED_ONLY=	Yes
 
 COMMENT=	automatically generate Python bindings for C and C++ libs
 
-DISTNAME=	sip-4.7.9
+DISTNAME=	sip-4.8.2
 PKGNAME=	py-${DISTNAME}
 CATEGORIES=	devel
 
@@ -40,7 +42,6 @@ NO_REGRESS=	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-sip
-	${INSTALL_DATA} ${WRKSRC}/doc/sipref.txt \
-		${PREFIX}/share/doc/py-sip
+	${INSTALL_DATA} ${WRKSRC}/doc/html/_sources/* ${PREFIX}/share/doc/py-sip
 
 .include <bsd.port.mk>

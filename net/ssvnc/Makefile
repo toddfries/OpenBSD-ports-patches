@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2009/06/23 20:57:46 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2009/10/10 12:39:29 ajacoutot Exp $
 
 COMMENT-gui =		enhanced TightVNC client GUI and wrappers
 COMMENT-main =		enhanced TightVNC client
@@ -8,8 +8,8 @@ DISTNAME =		ssvnc-$V.src
 CATEGORIES =		net x11
 
 PKGNAME =		ssvnc-$V
-FULLPKGNAME-gui =	ssvnc-$V
-FULLPKGNAME-main =	ssvnc-viewer-$V
+FULLPKGNAME-gui =	ssvnc-$Vp0
+FULLPKGNAME-main =	ssvnc-viewer-$Vp0
 
 HOMEPAGE =		http://www.karlrunge.com/x11vnc/ssvnc.html
 
@@ -34,12 +34,13 @@ NO_REGRESS =	Yes
 
 MODULES =	x11/tk
 
-WANTLIB-main =		X11 Xext c z ICE SM Xaw Xmu Xp Xpm Xt Xau Xdmcp
+WANTLIB-main =		ICE SM X11 Xau Xaw Xdmcp Xext Xpm Xmu Xp Xt c \
+			pthread-stubs xcb z
 LIB_DEPENDS-main =	jpeg.>=62.::graphics/jpeg
 
 WANTLIB-gui =		c crypto
 RUN_DEPENDS-gui =	::devel/desktop-file-utils \
-			::net/avahi,no_gtk,no_qt3,no_qt4 \
+			::net/avahi,no_gtk,no_mono,no_qt3,no_qt4 \
 			::net/ssvnc,-main \
 			::security/stunnel \
 			${MODTK_RUN_DEPENDS}

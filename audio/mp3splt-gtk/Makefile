@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2009/03/25 19:13:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2009/10/14 12:51:45 ajacoutot Exp $
 
 COMMENT =	graphical mp3/ogg file splitter
 
 DISTNAME =	mp3splt-gtk-0.5.4
-PKGNAME =	${DISTNAME}p0
+PKGNAME =	${DISTNAME}p3
 
 CATEGORIES =	audio
 
@@ -17,7 +17,7 @@ PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender c expat fontconfig freetype
-WANTLIB += glitz m pixman-1 pthread z
+WANTLIB += glitz m pixman-1 pthread pthread-stubs xcb z
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=mp3splt/}
 
@@ -31,13 +31,12 @@ LIB_DEPENDS =	mp3splt::audio/libmp3splt \
 		xml2::textproc/libxml \
 		gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 
-BUILD_DEPENDS =	:gstreamer-ogg-*:multimedia/gstreamer-0.10/plugins-base,-ogg
+BUILD_DEPENDS =	::multimedia/gstreamer-0.10/plugins-base
 
 RUN_DEPENDS =	${BUILD_DEPENDS} \
 		:desktop-file-utils-*:devel/desktop-file-utils \
-		:gstreamer-mad-*:multimedia/gstreamer-0.10/plugins-ugly,-mad \
-		:gstreamer-plugins-good-*:multimedia/gstreamer-0.10/plugins-good,-main \
-		:gstreamer-confelements-*:multimedia/gstreamer-0.10/plugins-good,-gconf
+		::multimedia/gstreamer-0.10/plugins-ugly \
+		::multimedia/gstreamer-0.10/plugins-good
 
 MODULES =	devel/gettext
 

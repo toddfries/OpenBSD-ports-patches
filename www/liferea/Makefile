@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.27 2009/06/11 18:27:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2009/08/10 06:34:56 kili Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		simple GTK desktop news aggregator
 
 DISTNAME=		liferea-1.4.19
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p6
 CATEGORIES=		www x11
 
 HOMEPAGE=		http://liferea.sourceforge.net/
@@ -23,7 +23,8 @@ WANTLIB=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		dbus-1 expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
 		glib-2.0 glitz gmodule-2.0 gobject-2.0 gthread-2.0 \
 		gtk-x11-2.0 m nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pcre pixman-1 plc4 plds4 png pthread xml2 z gio-2.0 tasn1
+		pcre pixman-1 plc4 plds4 png pthread pthread-stubs xcb xml2 z \
+		gio-2.0 tasn1
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=liferea/}
 
@@ -31,8 +32,8 @@ MODULES=		devel/gettext \
 			textproc/intltool \
 			devel/gconf2
 
-BUILD_DEPENDS=		::devel/xulrunner,-devel
-LIB_DEPENDS=		xulrunner/gtkembedmoz,xulrunner/xpcom::devel/xulrunner,-main \
+BUILD_DEPENDS=		::devel/xulrunner/1.8,-devel
+LIB_DEPENDS=		xulrunner/gtkembedmoz,xulrunner/xpcom::devel/xulrunner/1.8,-main \
 			notify.>=2::devel/libnotify \
 			lua.>=5::lang/lua \
 			xslt.>=3.3::textproc/libxslt \

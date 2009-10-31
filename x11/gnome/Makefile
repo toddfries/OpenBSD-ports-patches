@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.99 2009/06/21 11:15:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.105 2009/10/22 16:44:44 ajacoutot Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -22,6 +22,7 @@
      SUBDIR += ekiga
      SUBDIR += empathy
      SUBDIR += eog
+     SUBDIR += eog-plugins
      SUBDIR += file-roller
      SUBDIR += f-spot
      SUBDIR += games
@@ -33,7 +34,6 @@
      SUBDIR += gedit-plugins
      SUBDIR += genius
      SUBDIR += ghex
-     SUBDIR += gnopernicus
      SUBDIR += gok
      SUBDIR += gossip
      SUBDIR += gucharmap
@@ -42,7 +42,6 @@
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += keyring
-     SUBDIR += keyring-manager
      SUBDIR += keyring-query
      SUBDIR += krb5-auth-dialog
      SUBDIR += libbonobo
@@ -55,7 +54,6 @@
      SUBDIR += libgnomecanvas
      SUBDIR += libgnomecanvasmm
      SUBDIR += libgnomecups
-     SUBDIR += libgnomedb
      SUBDIR += libgnomekbd
      SUBDIR += libgnomeui
      SUBDIR += libgnomeuimm
@@ -68,10 +66,10 @@
      SUBDIR += mag
      SUBDIR += media
      SUBDIR += menus
-     SUBDIR += mergeant
      SUBDIR += metacity
      SUBDIR += mime-data
      SUBDIR += mono-gnome
+     SUBDIR += mono-gnome-desktop
      SUBDIR += mousetweaks
      SUBDIR += nautilus
      SUBDIR += nautilus-open-terminal
@@ -87,6 +85,7 @@
      SUBDIR += scan
      SUBDIR += screensaver
      SUBDIR += seahorse
+     SUBDIR += seahorse-plugins
      SUBDIR += session
      SUBDIR += settings-daemon
      SUBDIR += speech

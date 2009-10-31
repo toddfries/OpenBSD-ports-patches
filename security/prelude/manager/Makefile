@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2009/05/19 11:03:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2009/10/11 13:15:56 ajacoutot Exp $
 
 COMMENT=	Prelude manager
 
-DISTNAME=	prelude-manager-0.9.9
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	prelude-manager-0.9.15
+
+MASTER_SITES=	http://www.prelude-ids.com/download/releases/prelude-manager/
 
 WANTLIB=	c gcrypt gnutls gpg-error m prelude preludedb pthread tasn1 z
 MODULES=	devel/gettext
@@ -11,7 +12,11 @@ MODULES=	devel/gettext
 CONFIGURE_STYLE=gnu
 
 LIB_DEPENDS=	xml2.>=9::textproc/libxml \
-		preludedb.>=3.1::security/prelude/libpreludedb
+		preludedb.>=4.9::security/prelude/libpreludedb
+
+# XXX check on update whether this is still necessary
+post-extract:
+	${INSTALL} -m 555 ${FILESDIR}/libgnutls-config ${WRKDIR}/bin
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/prelude-manager/

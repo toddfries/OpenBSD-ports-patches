@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.12 2009/06/19 12:47:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2009/10/21 09:59:54 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-php=	MAPI extensions for php5
 
-V=		6.20.6
+V=		6.30.4
 DISTNAME=	zarafa-${V}
 
-PKGNAME-main=	${DISTNAME}p1
+PKGNAME-main=	${DISTNAME}
 PKGNAME-php=	php5-mapi-${V}
 
 CATEGORIES=	mail www productivity
@@ -30,17 +30,18 @@ BUILD_DEPENDS=	::www/php5/core \
 		::textproc/xmlto \
 		::net/curl
 
-WANTLIB-main=	asn1 c com_err crypto gssapi krb5 m pthread sasl2 ssl \
-		stdc++ z
+WANTLIB-main=	asn1 c com_err crypto gssapi krb5 m ncurses pthread \
+		sasl2 ssl stdc++ z
 LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
+		xml2.>=10::textproc/libxml \
 		mysqlclient.>=19::databases/mysql \
 		lber.>=9,ldap::databases/openldap \
 		uuid.>=13::devel/uuid \
 		execinfo::devel/libexecinfo \
-		vmime-zarafa::mail/zarafa/libvmime \
-		ical-zarafa,icalss-zarafa,icalvcal-zarafa::mail/zarafa/libical
+		vmime-zarafa:zarafa-libvmime->=0.7.1p3:mail/zarafa/libvmime \
+		ical-zarafa.>=1,icalss-zarafa.>=1::mail/zarafa/libical
 
-WANTLIB-php=	execinfo ical-zarafa icalss-zarafa icalvcal-zarafa \
+WANTLIB-php=	execinfo ical-zarafa icalss-zarafa \
 		uuid vmime-zarafa
 LIB_DEPENDS-php= ${MODGETTEXT_LIB_DEPENDS} \
 		common_mapi,common_util,freebusy,icalmapi,inetmapi,mapi::mail/zarafa/zarafa,-main
@@ -70,7 +71,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-oss \
 		--disable-perl \
 		--with-vmime-prefix=${LOCALBASE}/include/zarafa \
-		--with-ical-prefix=${LOCALBASE}/include/zarafa
+		--with-ical-prefix=${LOCALBASE}/include/
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/zarafa/report-ca \
 		USERSCRIPTDIR=${PREFIX}/share/examples/zarafa/userscripts \
@@ -80,6 +81,10 @@ SUB_SCRIPTS=	createcompany.d/00createpublic groups_common.sh \
 		createuser.d/00createstore deleteuser.d/99deletestore \
 		companies_common.sh users_common.sh
 
+CONF_FILES=	dagent.cfg gateway.cfg ical.cfg ldap.active-directory.cfg \
+		ldap.openldap.cfg monitor.cfg server.cfg spooler.cfg \
+		unix.cfg
+
 pre-configure:
 	cd ${WRKSRC}/installer/linux && \
 		for i in *.cfg createuser.dotforward ; do \
@@ -87,7 +92,8 @@ pre-configure:
 			perl -pi -e 's/\r\n/\n/;' $$i; done
 	for i in ${SUB_SCRIPTS}; do \
 		${SUBST_CMD} ${WRKSRC}/installer/userscripts/$$i; done
-	${SUBST_CMD} ${WRKSRC}/php-ext/Makefile.in
+	${SUBST_CMD} ${WRKSRC}/php-ext/Makefile.in \
+		${WRKSRC}/spooler/DAgent.cpp
 	perl -pi -e 's,/usr/share/zarafa,${PREFIX}/share/examples/zarafa,g;' \
 		-e 's,/etc/zarafa,${SYSCONFDIR}/zarafa,g;' \
 		-e 's,/usr/bin,${PREFIX}/bin,g;' \
@@ -96,8 +102,16 @@ pre-configure:
 		${WRKSRC}/doc/manual.xml
 
 post-install:
+	for i in ${CONF_FILES}; do mv ${PREFIX}/share/doc/zarafa/$${i} \
+		${PREFIX}/share/examples/zarafa/; done
 	${SUBST_CMD} -c ${FILESDIR}/README.OpenBSD ${PREFIX}/share/doc/zarafa/README.OpenBSD
+	${SUBST_CMD} -c ${FILESDIR}/zarafa.m4 ${PREFIX}/share/examples/zarafa/zarafa.m4
+	${SUBST_CMD} -c ${FILESDIR}/local_zarafa.m4 ${PREFIX}/share/examples/zarafa/local_zarafa.m4
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/zarafa
+	chown -R ${BINOWN}:${BINGRP} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
+		${PREFIX}/share/examples/zarafa/local_zarafa.m4
+	chmod ${SHAREMODE} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
+		${PREFIX}/share/examples/zarafa/local_zarafa.m4
 	${INSTALL_DATA_DIR} ${DESTDIR}/${PREFIX-php}/conf/php5.sample
 	echo "; Enable Zarafa mapi extension module\nextension=mapi.so" \
 		> ${WRKINST}/${PREFIX-php}/conf/php5.sample/${MODULE_NAME}.ini

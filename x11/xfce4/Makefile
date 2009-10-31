@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2009/06/04 04:19:16 landry Exp $
+# $OpenBSD: Makefile,v 1.35 2009/09/29 20:07:00 landry Exp $
 
      SUBDIR+= exo
      SUBDIR+= gtk-xfce-engine
@@ -11,12 +11,15 @@
      SUBDIR+= ristretto
      SUBDIR+= terminal
      SUBDIR+= thunar
+     SUBDIR+= thunar-archive
      SUBDIR+= thunar-media-tags
      SUBDIR+= thunar-thumbnailers
+     SUBDIR+= thunar-vcs
      SUBDIR+= xfce-utils
      SUBDIR+= xfce4-appfinder
      SUBDIR+= xfce4-battery
      SUBDIR+= xfce4-clipman
+     SUBDIR+= xfce4-dev-tools
      SUBDIR+= xfce4-dict
      SUBDIR+= xfce4-diskperf
      SUBDIR+= xfce4-fsguard
@@ -25,12 +28,14 @@
      SUBDIR+= xfce4-mailwatch
      SUBDIR+= xfce4-mixer
      SUBDIR+= xfce4-modemlights
+     SUBDIR+= xfce4-mount
      SUBDIR+= xfce4-mpc
      SUBDIR+= xfce4-netload
      SUBDIR+= xfce4-notes
      SUBDIR+= xfce4-notifyd
      SUBDIR+= xfce4-panel
      SUBDIR+= xfce4-places
+     SUBDIR+= xfce4-quicklauncher
      SUBDIR+= xfce4-session
      SUBDIR+= xfce4-screenshooter
      SUBDIR+= xfce4-settings

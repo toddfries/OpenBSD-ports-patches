@@ -1,0 +1,12 @@
+$OpenBSD: patch-sql-bench_Makefile_in,v 1.2 2009/09/07 21:35:34 sthen Exp $
+--- sql-bench/Makefile.in.orig	Fri Aug 21 08:17:25 2009
++++ sql-bench/Makefile.in	Mon Sep  7 11:10:26 2009
+@@ -379,7 +379,7 @@ yassl_libs = @yassl_libs@
+ yassl_taocrypt_extra_cxxflags = @yassl_taocrypt_extra_cxxflags@
+ zlib_dir = @zlib_dir@
+ benchdir_root = $(prefix)
+-benchdir = $(benchdir_root)/sql-bench
++benchdir = $(benchdir_root)/share/mysql-bench
+ bench_SCRIPTS = test-ATIS test-connect test-create test-insert \
+ 			test-big-tables test-select test-wisconsin \
+ 			test-alter-table test-transactions \

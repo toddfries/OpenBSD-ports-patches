@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.269 2009/06/13 07:50:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.282 2009/10/13 20:12:15 landry Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -23,6 +23,7 @@
      SUBDIR += eruby
      SUBDIR += exempi
      SUBDIR += fcbanner
+     SUBDIR += filepp
      SUBDIR += gdiff
      SUBDIR += glimpse
      SUBDIR += gnuvd
@@ -50,12 +51,14 @@
      SUBDIR += lgrind
      SUBDIR += libebml
      SUBDIR += libical
+     SUBDIR += libtextcat
      SUBDIR += libwpd
      SUBDIR += libxml
      SUBDIR += libxml++
      SUBDIR += libxslt
      SUBDIR += linuxdoc
      SUBDIR += lq-sp
+     SUBDIR += luaexpat
      SUBDIR += makefaq
      SUBDIR += markdown
      SUBDIR += meld
@@ -63,9 +66,11 @@
      SUBDIR += mozilla-dicts
      SUBDIR += mupdf
      SUBDIR += mxml
+     SUBDIR += namazu
      SUBDIR += ocaml-rss
      SUBDIR += ocaml-xml-light
      SUBDIR += odt2txt
+     SUBDIR += oniguruma
      SUBDIR += openjade
      SUBDIR += ots
      SUBDIR += p5-Blatte
@@ -126,6 +131,7 @@
      SUBDIR += p5-Syntax-Highlight-Perl
      SUBDIR += p5-Template
      SUBDIR += p5-Template-Plugin-Class
+     SUBDIR += p5-Template-Plugin-GD
      SUBDIR += p5-Template-Plugin-Markdown
      SUBDIR += p5-Template-Plugin-Number-Format
      SUBDIR += p5-Template-Provider-Encoding
@@ -214,6 +220,7 @@
      SUBDIR += py-ElementTree
      SUBDIR += py-HappyDoc
      SUBDIR += py-cElementTree
+     SUBDIR += py-cssutils
      SUBDIR += py-docutils
      SUBDIR += py-epydoc
      SUBDIR += py-feedparser
@@ -229,6 +236,7 @@
      SUBDIR += rarian
      SUBDIR += redland
      SUBDIR += rman
+     SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
      SUBDIR += ruby-erubis
      SUBDIR += ruby-fastercsv
@@ -239,12 +247,16 @@
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-icalendar
      SUBDIR += ruby-markaby
+     SUBDIR += ruby-nokogiri
+     SUBDIR += ruby-pdf-reader
      SUBDIR += ruby-pdf-writer
+     SUBDIR += ruby-prawn
      SUBDIR += ruby-randexp
      SUBDIR += ruby-redcloth
      SUBDIR += ruby-rss
      SUBDIR += ruby-rubigen
      SUBDIR += ruby-templater
+     SUBDIR += ruby-treetop
      SUBDIR += rxp
      SUBDIR += sablotron
      SUBDIR += sgmlformat
@@ -254,6 +266,7 @@
      SUBDIR += sp
      SUBDIR += spiff
      SUBDIR += swish-e
+     SUBDIR += tcpdf
      SUBDIR += texi2html
      SUBDIR += textutils
      SUBDIR += tre

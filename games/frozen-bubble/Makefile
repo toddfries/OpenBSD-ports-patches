@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2009/06/18 12:54:28 martynas Exp $
+# $OpenBSD: Makefile,v 1.6 2009/08/20 21:20:13 sthen Exp $
 
 SHARED_ONLY =		Yes
 
@@ -7,7 +7,7 @@ COMMENT-server =	server for the frozen-bubble bubble popping game
 
 VER =			2.2.0
 DISTNAME =		frozen-bubble-${VER}
-PKGNAME-main =		${DISTNAME}p1
+PKGNAME-main =		${DISTNAME}p3
 PKGNAME-server =	frozen-bubble-server-${VER}p1
 CATEGORIES =		games
 
@@ -31,12 +31,12 @@ NO_REGRESS =		Yes
 MODULES =		perl \
 			devel/gettext
 
-BUILD_DEPENDS =		${RUN_DEPENDS-main} \
-			${RUN_DEPENDS-server}
-
-RUN_DEPENDS-main =	::devel/p5-SDL \
+BUILD_DEPENDS =		::devel/p5-SDL \
 			::devel/sdl-pango \
 			::devel/p5-Locale-gettext
+
+RUN_DEPENDS-main =	${BUILD_DEPENDS} \
+			::${BASE_PKGPATH},-server
 
 LIB_DEPENDS-main =	${MODGETTEXT_LIB_DEPENDS} \
 			SDL_Pango::devel/sdl-pango \
@@ -46,7 +46,7 @@ LIB_DEPENDS-main =	${MODGETTEXT_LIB_DEPENDS} \
 LIB_DEPENDS-server =	${MODGETTEXT_LIB_DEPENDS} \
 			glib-2.0::devel/glib2
 
-WANTLIB-main =		SDL X11 m pango-1.0 pthread
+WANTLIB-main =		SDL X11 m pango-1.0 pthread pthread-stubs xcb
 WANTLIB-server =	c
 
 MULTI_PACKAGES =	-main -server

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.59 2009/06/25 01:49:54 jolan Exp $
+# $OpenBSD: Makefile.inc,v 1.61 2009/09/22 21:31:00 ajacoutot Exp $
 
 # IMPORTANT!  If you make any changes to the Python ports, be sure
 # to also update files/CHANGES.OpenBSD for your change.  This is a
@@ -62,7 +62,7 @@ RUN_DEPENDS-idle=	${RUN_DEPENDS} \
 			::lang/python/${VERSION},-tkinter
 LIB_DEPENDS-tkinter=	tcl84:tcl->=8.4,<8.5:lang/tcl/8.4 \
 			tk84:tk->=8.4,<8.5:x11/tk/8.4
-WANTLIB-tkinter=	X11
+WANTLIB-tkinter=	X11 pthread-stubs xcb
 
 FULLPKGNAME-bsddb=	python-bsddb-${VERSION}${PATCHLEVEL}${PKG_PATCHLEVEL}
 FULLPKGNAME-gdbm=	python-gdbm-${VERSION}${PATCHLEVEL}${PKG_PATCHLEVEL}
@@ -77,12 +77,13 @@ PKG_ARGS+=	-Dmm=0
 PKG_ARGS+=	-Dmm=1
 .endif
 
+# XXX fix ctypes on powerpc for python2.6
 # The ctypes module is not supported on all platforms (in particular, ARM)
 .if ${VERSION} == "2.5" || ${VERSION} == "2.6"
 .  if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64" || \
       ${MACHINE_ARCH} == "sparc" || ${MACHINE_ARCH} == "sparc64" || \
       ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "m68k" || \
-      ${MACHINE_ARCH} == "powerpc"
+      ( ${MACHINE_ARCH} == "powerpc" && ${VERSION} != "2.6" )
 PKG_ARGS+=	-Dctypes=1
 .  else
 PKG_ARGS+=	-Dctypes=0

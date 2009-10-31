@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.241 2009/06/06 05:19:20 phessler Exp $
+# $OpenBSD: Makefile,v 1.249 2009/10/17 08:30:18 bernd Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -9,6 +9,7 @@
      SUBDIR += aalib
      SUBDIR += aalib,no_x11
      SUBDIR += agg
+     SUBDIR += allegropng
      SUBDIR += amide
      SUBDIR += animorph
      SUBDIR += aqsis
@@ -33,6 +34,7 @@
      SUBDIR += dia,gnome
      SUBDIR += digikam
      SUBDIR += digikam-doc
+     SUBDIR += discwrapper
      SUBDIR += djview4
      SUBDIR += djvulibre
      SUBDIR += djvulibre,no_x11
@@ -76,8 +78,10 @@
      SUBDIR += gpicview
      SUBDIR += gqview
      SUBDIR += gracula
+     SUBDIR += grap
      SUBDIR += gthumb
      SUBDIR += gtkam
+     SUBDIR += gtkimageview
      SUBDIR += gwenview
      SUBDIR += gwenview-i18n
      SUBDIR += hugin
@@ -88,6 +92,7 @@
      SUBDIR += inkscape
      SUBDIR += iview
      SUBDIR += jasper
+     SUBDIR += jbig2dec
      SUBDIR += jbigkit
      SUBDIR += jhead
      SUBDIR += jpeg
@@ -153,6 +158,8 @@
      SUBDIR += p5-Imager
      SUBDIR += p5-SVG
      SUBDIR += p5-SVG-Graph
+     SUBDIR += pecl-imagick
+     SUBDIR += pigment
      SUBDIR += png
      SUBDIR += png2ico
      SUBDIR += pngcrush
@@ -171,8 +178,10 @@
      SUBDIR += py-matplotlib
      SUBDIR += py-opengl
      SUBDIR += py-pyx
+     SUBDIR += py-pigment
      SUBDIR += pycha
      SUBDIR += qiv
+     SUBDIR += quesoglc
      SUBDIR += rawstudio
      SUBDIR += ruby-color
      SUBDIR += ruby-gd2

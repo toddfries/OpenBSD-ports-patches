@@ -1,0 +1,14 @@
+$OpenBSD: patch-ECtools_zarafa-cfgchecker_Makefile_in,v 1.3 2009/10/21 09:59:54 ajacoutot Exp $
+--- ECtools/zarafa-cfgchecker/Makefile.in.orig	Fri Oct 16 20:39:20 2009
++++ ECtools/zarafa-cfgchecker/Makefile.in	Wed Oct 21 11:32:04 2009
+@@ -258,7 +258,9 @@ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ AM_CPPFLAGS = $(DEBUGFLAGS) -DLINUX -I${top_srcdir}/common
+-zarafa_cfgchecker_LDADD = ${top_builddir}/common/libcommon_util.la $(PROG_LIBS)
++zarafa_cfgchecker_LDADD = ${top_builddir}/mapi4linux/src/libmapi.la \
++			${top_builddir}/common/libcommon_mapi.la \
++			${top_builddir}/common/libcommon_util.la $(PROG_LIBS)
+ zarafa_cfgchecker_SOURCES = \
+ 	zarafa-cfg.cpp \
+ 	ECConfigCheck.cpp ECConfigCheck.h \

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.14 2009/06/07 05:30:09 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.17 2009/09/18 12:11:12 ajacoutot Exp $
 @bin bin/rhythmbox
 @bin bin/rhythmbox-client
 lib/librhythmbox-core.la
@@ -6,12 +6,12 @@ lib/librhythmbox-core.la
 lib/rhythmbox/
 lib/rhythmbox/plugins/
 lib/rhythmbox/plugins/artdisplay/
-lib/rhythmbox/plugins/artdisplay/AmazonCoverArtSearch.py
-lib/rhythmbox/plugins/artdisplay/AmazonCoverArtSearch.pyc
-lib/rhythmbox/plugins/artdisplay/AmazonCoverArtSearch.pyo
 lib/rhythmbox/plugins/artdisplay/CoverArtDatabase.py
 lib/rhythmbox/plugins/artdisplay/CoverArtDatabase.pyc
 lib/rhythmbox/plugins/artdisplay/CoverArtDatabase.pyo
+lib/rhythmbox/plugins/artdisplay/DiscogsCoverArtSearch.py
+lib/rhythmbox/plugins/artdisplay/DiscogsCoverArtSearch.pyc
+lib/rhythmbox/plugins/artdisplay/DiscogsCoverArtSearch.pyo
 lib/rhythmbox/plugins/artdisplay/EmbeddedCoverArtSearch.py
 lib/rhythmbox/plugins/artdisplay/EmbeddedCoverArtSearch.pyc
 lib/rhythmbox/plugins/artdisplay/EmbeddedCoverArtSearch.pyo
@@ -21,6 +21,9 @@ lib/rhythmbox/plugins/artdisplay/LocalCoverArtSearch.pyo
 lib/rhythmbox/plugins/artdisplay/LocalCoverArtSearchGIO.py
 lib/rhythmbox/plugins/artdisplay/LocalCoverArtSearchGIO.pyc
 lib/rhythmbox/plugins/artdisplay/LocalCoverArtSearchGIO.pyo
+lib/rhythmbox/plugins/artdisplay/MusicBrainzCoverArtSearch.py
+lib/rhythmbox/plugins/artdisplay/MusicBrainzCoverArtSearch.pyc
+lib/rhythmbox/plugins/artdisplay/MusicBrainzCoverArtSearch.pyo
 lib/rhythmbox/plugins/artdisplay/PodcastCoverArtSearch.py
 lib/rhythmbox/plugins/artdisplay/PodcastCoverArtSearch.pyc
 lib/rhythmbox/plugins/artdisplay/PodcastCoverArtSearch.pyo
@@ -30,6 +33,7 @@ lib/rhythmbox/plugins/artdisplay/__init__.pyo
 lib/rhythmbox/plugins/artdisplay/artdisplay.rb-plugin
 lib/rhythmbox/plugins/artdisplay/rhythmbox-missing-artwork.svg
 lib/rhythmbox/plugins/audiocd/
+lib/rhythmbox/plugins/audiocd/album-info.ui
 lib/rhythmbox/plugins/audiocd/audiocd-ui.xml
 lib/rhythmbox/plugins/audiocd/audiocd.rb-plugin
 lib/rhythmbox/plugins/audiocd/libaudiocd.la
@@ -153,6 +157,9 @@ lib/rhythmbox/plugins/rb/Loader.pyo
 lib/rhythmbox/plugins/rb/__init__.py
 lib/rhythmbox/plugins/rb/__init__.pyc
 lib/rhythmbox/plugins/rb/__init__.pyo
+lib/rhythmbox/plugins/rb/stringmatch.py
+lib/rhythmbox/plugins/rb/stringmatch.pyc
+lib/rhythmbox/plugins/rb/stringmatch.pyo
 lib/rhythmbox/plugins/status-icon/
 lib/rhythmbox/plugins/status-icon/libstatus-icon.la
 lib/rhythmbox/plugins/status-icon/libstatus-icon.so
@@ -400,7 +407,6 @@ share/gtk-doc/html/rhythmbox/RBPlayerGstTee.html
 share/gtk-doc/html/rhythmbox/RBPlaylistManager.html
 share/gtk-doc/html/rhythmbox/RBPlaylistSource.html
 share/gtk-doc/html/rhythmbox/RBPropertyView.html
-share/gtk-doc/html/rhythmbox/RBProxyConfig.html
 share/gtk-doc/html/rhythmbox/RBQueryCreator.html
 share/gtk-doc/html/rhythmbox/RBRandomPlayOrder.html
 share/gtk-doc/html/rhythmbox/RBRating.html
@@ -464,10 +470,12 @@ share/icons/hicolor/scalable/apps/rhythmbox.svg
 share/locale/af/LC_MESSAGES/rhythmbox.mo
 share/locale/am/LC_MESSAGES/rhythmbox.mo
 share/locale/ar/LC_MESSAGES/rhythmbox.mo
+share/locale/as/LC_MESSAGES/rhythmbox.mo
 share/locale/az/LC_MESSAGES/rhythmbox.mo
 share/locale/be/LC_MESSAGES/rhythmbox.mo
 share/locale/be@latin/LC_MESSAGES/rhythmbox.mo
 share/locale/bg/LC_MESSAGES/rhythmbox.mo
+share/locale/br/LC_MESSAGES/rhythmbox.mo
 share/locale/ca/LC_MESSAGES/rhythmbox.mo
 share/locale/cs/LC_MESSAGES/rhythmbox.mo
 share/locale/cy/LC_MESSAGES/rhythmbox.mo
@@ -506,6 +514,7 @@ share/locale/nb/LC_MESSAGES/rhythmbox.mo
 share/locale/ne/LC_MESSAGES/rhythmbox.mo
 share/locale/nl/LC_MESSAGES/rhythmbox.mo
 share/locale/oc/LC_MESSAGES/rhythmbox.mo
+share/locale/or/LC_MESSAGES/rhythmbox.mo
 share/locale/pa/LC_MESSAGES/rhythmbox.mo
 share/locale/pl/LC_MESSAGES/rhythmbox.mo
 share/locale/ps/LC_MESSAGES/rhythmbox.mo
@@ -518,6 +527,8 @@ share/locale/sk/LC_MESSAGES/rhythmbox.mo
 share/locale/sr/LC_MESSAGES/rhythmbox.mo
 share/locale/sr@latin/LC_MESSAGES/rhythmbox.mo
 share/locale/sv/LC_MESSAGES/rhythmbox.mo
+share/locale/ta/LC_MESSAGES/rhythmbox.mo
+share/locale/te/LC_MESSAGES/rhythmbox.mo
 share/locale/th/LC_MESSAGES/rhythmbox.mo
 share/locale/tr/LC_MESSAGES/rhythmbox.mo
 share/locale/uk/LC_MESSAGES/rhythmbox.mo

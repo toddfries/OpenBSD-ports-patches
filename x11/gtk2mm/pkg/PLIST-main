@@ -1,7 +1,6 @@
-@comment $OpenBSD: PLIST-main,v 1.4 2009/01/11 22:58:37 landry Exp $
+@comment $OpenBSD: PLIST-main,v 1.6 2009/10/04 18:19:57 ajacoutot Exp $
 @pkgpath x11/gtk2mm
 %%SHARED%%
-@bin bin/gtkmm-demo
 include/atkmm-1.6/
 include/atkmm-1.6/atkmm/
 include/atkmm-1.6/atkmm.h
@@ -114,6 +113,7 @@ include/gtkmm-2.4/gtkmm/accellabel.h
 include/gtkmm-2.4/gtkmm/accelmap.h
 include/gtkmm-2.4/gtkmm/action.h
 include/gtkmm-2.4/gtkmm/actiongroup.h
+include/gtkmm-2.4/gtkmm/activatable.h
 include/gtkmm-2.4/gtkmm/adjustment.h
 include/gtkmm-2.4/gtkmm/alignment.h
 include/gtkmm-2.4/gtkmm/arrow.h
@@ -177,6 +177,7 @@ include/gtkmm-2.4/gtkmm/icontheme.h
 include/gtkmm-2.4/gtkmm/iconview.h
 include/gtkmm-2.4/gtkmm/image.h
 include/gtkmm-2.4/gtkmm/imagemenuitem.h
+include/gtkmm-2.4/gtkmm/infobar.h
 include/gtkmm-2.4/gtkmm/inputdialog.h
 include/gtkmm-2.4/gtkmm/invisible.h
 include/gtkmm-2.4/gtkmm/item.h
@@ -197,6 +198,7 @@ include/gtkmm-2.4/gtkmm/misc.h
 include/gtkmm-2.4/gtkmm/notebook.h
 include/gtkmm-2.4/gtkmm/object.h
 include/gtkmm-2.4/gtkmm/optionmenu.h
+include/gtkmm-2.4/gtkmm/orientable.h
 include/gtkmm-2.4/gtkmm/pagesetup.h
 include/gtkmm-2.4/gtkmm/pagesetupunixdialog.h
 include/gtkmm-2.4/gtkmm/paned.h
@@ -215,6 +217,7 @@ include/gtkmm-2.4/gtkmm/private/accelgroup_p.h
 include/gtkmm-2.4/gtkmm/private/accellabel_p.h
 include/gtkmm-2.4/gtkmm/private/action_p.h
 include/gtkmm-2.4/gtkmm/private/actiongroup_p.h
+include/gtkmm-2.4/gtkmm/private/activatable_p.h
 include/gtkmm-2.4/gtkmm/private/adjustment_p.h
 include/gtkmm-2.4/gtkmm/private/alignment_p.h
 include/gtkmm-2.4/gtkmm/private/arrow_p.h
@@ -274,6 +277,7 @@ include/gtkmm-2.4/gtkmm/private/icontheme_p.h
 include/gtkmm-2.4/gtkmm/private/iconview_p.h
 include/gtkmm-2.4/gtkmm/private/image_p.h
 include/gtkmm-2.4/gtkmm/private/imagemenuitem_p.h
+include/gtkmm-2.4/gtkmm/private/infobar_p.h
 include/gtkmm-2.4/gtkmm/private/inputdialog_p.h
 include/gtkmm-2.4/gtkmm/private/invisible_p.h
 include/gtkmm-2.4/gtkmm/private/item_p.h
@@ -292,6 +296,7 @@ include/gtkmm-2.4/gtkmm/private/misc_p.h
 include/gtkmm-2.4/gtkmm/private/notebook_p.h
 include/gtkmm-2.4/gtkmm/private/object_p.h
 include/gtkmm-2.4/gtkmm/private/optionmenu_p.h
+include/gtkmm-2.4/gtkmm/private/orientable_p.h
 include/gtkmm-2.4/gtkmm/private/pagesetup_p.h
 include/gtkmm-2.4/gtkmm/private/pagesetupunixdialog_p.h
 include/gtkmm-2.4/gtkmm/private/paned_p.h
@@ -458,14 +463,6 @@ lib/gdkmm-2.4/include/gdkmmconfig.h
 lib/gtkmm-2.4/
 lib/gtkmm-2.4/include/
 lib/gtkmm-2.4/include/gtkmmconfig.h
-lib/gtkmm-2.4/proc/
-lib/gtkmm-2.4/proc/m4/
-lib/gtkmm-2.4/proc/m4/convert.m4
-lib/gtkmm-2.4/proc/m4/convert_atk.m4
-lib/gtkmm-2.4/proc/m4/convert_gdk.m4
-lib/gtkmm-2.4/proc/m4/convert_gtk.m4
-lib/gtkmm-2.4/proc/m4/convert_gtkmm.m4
-lib/gtkmm-2.4/proc/m4/convert_pango.m4
 lib/libatkmm-1.6.a
 lib/libatkmm-1.6.la
 lib/libgdkmm-2.4.a
@@ -481,6 +478,11 @@ share/gtkmm-2.4/demo/
 share/gtkmm-2.4/demo/alphatest.png
 share/gtkmm-2.4/demo/apple-red.png
 share/gtkmm-2.4/demo/background.jpg
+share/gtkmm-2.4/demo/demo-common.cc
+share/gtkmm-2.4/demo/demo-common.h
+share/gtkmm-2.4/demo/demos.h
+share/gtkmm-2.4/demo/demowindow.cc
+share/gtkmm-2.4/demo/demowindow.h
 share/gtkmm-2.4/demo/example_appwindow.cc
 share/gtkmm-2.4/demo/example_buttonbox.cc
 share/gtkmm-2.4/demo/example_change_display.cc
@@ -510,3 +512,6 @@ share/gtkmm-2.4/demo/gnome-gmush.png
 share/gtkmm-2.4/demo/gnome-gsame.png
 share/gtkmm-2.4/demo/gnu-keys.png
 share/gtkmm-2.4/demo/gtk-logo-rgb.gif
+share/gtkmm-2.4/demo/main.cc
+share/gtkmm-2.4/demo/textwidget.cc
+share/gtkmm-2.4/demo/textwidget.h

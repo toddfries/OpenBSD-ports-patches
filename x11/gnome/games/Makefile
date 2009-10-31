@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2009/06/28 10:54:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.25 2009/10/20 09:18:49 ajacoutot Exp $
 
 COMMENT=		collection of games for the GNOME desktop
 
 GNOME_PROJECT=		gnome-games
-GNOME_VERSION=		2.24.3.1
-PKGNAME=		${DISTNAME}p3
+GNOME_VERSION=		2.28.1
 
 CATEGORIES=		games
 
@@ -16,28 +15,25 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
-		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation \
-		bonoboui-2 bz2 c cairo croco-0.6 crypto dbus-1 dbus-glib-1 \
-		expat fontconfig freetype gailutil gcrypt \
-		gdk-x11-2.0 gdk_pixbuf-2.0 ggz gio-2.0 glib-2.0 glitz \
-		gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 \
-		gobject-2.0 gpg-error gsf-1 gthread-2.0 gtk-x11-2.0 \
-		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
-		png popt pthread ssl stdc++ util xml2 z gstreamer-0.10 \
-		avahi-client avahi-common avahi-glib
+WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage
+WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
+WANTLIB += atk-1.0 bz2 c cairo clutter-glx-1.0 croco-0.6 crypto
+WANTLIB += dbus-1 dbus-glib-1 drm expat fontconfig freetype gcrypt
+WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 ggz gio-2.0 glib-2.0 glitz
+WANTLIB += gmodule-2.0 gmp gobject-2.0 gpg-error gsf-1 gthread-2.0
+WANTLIB += gtk-x11-2.0 json-glib-1.0 ltdl m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
+WANTLIB += ssl stdc++ xcb xml2 z
 
-MODULES=		devel/gettext \
+MODULES=		devel/gconf2 \
+			devel/gettext \
 			lang/python \
-			x11/gnome \
-			devel/gconf2
+			x11/gnome
 
-BUILD_DEPENDS=		::x11/gnome/py-gnome-desktop \
-			::lang/guile
+BUILD_DEPENDS=		::x11/gnome/py-gnome-desktop
 LIB_DEPENDS=		ggzcore,ggzmod::games/ggz/ggz-client-libs \
-			guile-ltdl,guile::lang/guile \
-			gnomeui-2::x11/gnome/libgnomeui \
+			clutter-gtk-0.10::graphics/clutter/clutter-gtk \
+			guile::lang/guile \
 			rsvg-2.>=18.0::x11/gnome/librsvg
 RUN_DEPENDS=		::x11/gnome/py-gnome-desktop \
 			::multimedia/gstreamer-0.10/plugins-good
@@ -59,15 +55,12 @@ CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 			--enable-scalable \
 			--without-ggz-server \
 			--with-gcrypt \
-			--with-scores-group="games"
+			--with-scores-group="games" \
+			--enable-introspection="no"
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-# The regression tests require a running instance of X.
-# You will also need to set the XAUTHORITY environment variable to point 
-# to the appropriate .Xauthority file. 
-REGRESS_IS_INTERACTIVE= Yes
-REGRESS_FLAGS=		DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+REGRESS_IS_INTERACTIVE= x11
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/configure ${WRKSRC}/glchess/src/glchess.in.in \

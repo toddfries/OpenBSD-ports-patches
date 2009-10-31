@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.8 2009/04/14 18:37:31 steven Exp $
+@comment $OpenBSD: PLIST,v 1.10 2009/10/10 10:16:17 steven Exp $
 @bin bin/mathomatic
 @man man/man1/mathomatic.1
 share/applications/mathomatic.desktop
@@ -13,6 +13,7 @@ share/doc/mathomatic/factorial/README.txt
 share/doc/mathomatic/factorial/fact.c
 share/doc/mathomatic/factorial/fact.py
 share/doc/mathomatic/factorial/factorial
+share/doc/mathomatic/factorial/intfact.c
 share/doc/mathomatic/html/
 share/doc/mathomatic/html/am.html
 share/doc/mathomatic/html/doc.css
@@ -25,6 +26,7 @@ share/doc/mathomatic/html/matho-pascal.1.html
 share/doc/mathomatic/html/matho-primes.1.html
 share/doc/mathomatic/html/matho-sumsq.1.html
 share/doc/mathomatic/html/mathomatic.1.html
+share/doc/mathomatic/html/mathomatic16x16.png
 share/doc/mathomatic/html/open_book_nae_02.png
 share/doc/mathomatic/m4/
 share/doc/mathomatic/m4/README.txt
@@ -65,11 +67,12 @@ share/doc/mathomatic/tests/poly.in
 share/doc/mathomatic/tests/pyth3d.in
 share/doc/mathomatic/tests/radius.in
 share/doc/mathomatic/tests/simplify.in
+share/doc/mathomatic/tests/test
 share/doc/mathomatic/tests/test.in
 share/doc/mathomatic/tests/test1.in
 share/doc/mathomatic/tests/test2.in
-share/doc/mathomatic/tests/test3.in
 share/doc/mathomatic/tests/test6.in
+share/doc/mathomatic/tests/torus.in
 share/doc/mathomatic/tests/trig.in
 share/pixmaps/
 share/pixmaps/mathomatic.png

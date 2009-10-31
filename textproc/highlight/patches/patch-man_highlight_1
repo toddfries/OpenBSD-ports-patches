@@ -1,22 +1,22 @@
-$OpenBSD: patch-man_highlight_1,v 1.2 2009/05/20 11:35:30 benoit Exp $
---- man/highlight.1.orig	Sat Mar  7 05:38:01 2009
-+++ man/highlight.1	Wed May 20 10:12:35 2009
-@@ -216,15 +216,15 @@ The converter is not able to recognize mixed code like
+$OpenBSD: patch-man_highlight_1,v 1.4 2009/10/14 15:04:06 giovanni Exp $
+--- man/highlight.1.orig	Wed Sep  2 22:25:25 2009
++++ man/highlight.1	Wed Oct 14 16:03:37 2009
+@@ -209,15 +209,15 @@ Reformatting code will only work with C, C++, C# and J
  The wrapping options might cause faulty highlighting of multi line comments.
  .SH FILES
  The parsing information of the programming languages is stored in
 -.I /usr/share/highlight/langDefs/.
-+.I !!PREFIX!!/share/highlight/langDefs/.
++.I ${PREFIX}/share/highlight/langDefs/.
  You may enhance
  .B highlight's
  parsing capabilities by adding more *.lang - files to this directory.
  You can also define other directories with -D, or add search paths with -E.
  Documentation files are stored in
 -.I /usr/share/doc/highlight/
-+.I !!PREFIX!!/share/doc/highlight/
++.I ${PREFIX}/share/doc/highlight/
  , configuration files in
 -.I /etc/highlight/.
-+.I !!SYSCONFDIR!!/highlight/.
++.I ${SYSCONFDIR}/highlight/.
  
  .SH Examples
  Single file conversion:

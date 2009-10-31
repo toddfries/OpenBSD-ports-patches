@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.162 2009/06/22 15:50:47 giovanni Exp $
+# $OpenBSD: Makefile,v 1.168 2009/09/29 08:34:18 kevlo Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
@@ -20,6 +20,7 @@
      SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
      SUBDIR += luasqlite3
+     SUBDIR += luma
      SUBDIR += maatkit
      SUBDIR += mdbtools/snapshot
      SUBDIR += mnemo
@@ -78,6 +79,7 @@
      SUBDIR += p5-DBIx-Migration
      SUBDIR += p5-DBIx-SearchBuilder
      SUBDIR += p5-DBIx-XHTML_Table
+     SUBDIR += p5-DBM-Deep
      SUBDIR += p5-Data-Page
      SUBDIR += p5-Data-Pageset
      SUBDIR += p5-Data-RandomPerson
@@ -123,6 +125,7 @@
      SUBDIR += py-ldap,python2.4
      SUBDIR += py-ldap,python2.5
      SUBDIR += py-mysql
+     SUBDIR += py-odbc
      SUBDIR += py-pgsql
      SUBDIR += py-psycopg,python2.4
      SUBDIR += py-psycopg,python2.5
@@ -139,6 +142,7 @@
      SUBDIR += ruby-activerecord
      SUBDIR += ruby-bdb
      SUBDIR += ruby-couchrest
+     SUBDIR += ruby-couch_potato
      SUBDIR += ruby-datamapper
      SUBDIR += ruby-data_objects
      SUBDIR += ruby-do_sqlite3
@@ -149,6 +153,7 @@
      SUBDIR += ruby-postgres
      SUBDIR += ruby-sequel
      SUBDIR += ruby-sqlite3
+     SUBDIR += ruby-validatable
      SUBDIR += sharedance
      SUBDIR += skytools
      SUBDIR += sqlite
@@ -158,6 +163,7 @@
      SUBDIR += sqlports
      SUBDIR += sqsh
      SUBDIR += tdb
+     SUBDIR += xapian-core
      SUBDIR += xmysql
      SUBDIR += xmysqladmin
 

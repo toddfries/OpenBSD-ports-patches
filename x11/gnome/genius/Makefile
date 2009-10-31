@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2009/06/28 10:54:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2009/10/22 13:18:23 ajacoutot Exp $
 
 COMMENT=	advanced general purpose calculator
 
 GNOME_PROJECT=	genius
-GNOME_VERSION=	1.0.6
-PKGNAME=	${DISTNAME}p1
+GNOME_VERSION=	1.0.7
 
 HOMEPAGE=	http://www.jirka.org/genius.html
 
@@ -22,7 +21,7 @@ WANTLIB += c cairo crypto dbus-1 dbus-glib-1 expat fontconfig
 WANTLIB += freetype gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 glitz gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB += gtk-x11-2.0 m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png pthread readline
+WANTLIB += pcre pixman-1 png pthread readline pthread-stubs xcb
 WANTLIB += ssl termcap util xml2 z avahi-client avahi-common avahi-glib
 
 MODULES=	devel/gettext \

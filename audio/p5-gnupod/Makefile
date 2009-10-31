@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.4 2009/02/16 15:28:57 sthen Exp $
+# $OpenBSD: Makefile,v 1.6 2009/10/16 12:37:07 martynas Exp $
 
 COMMENT =	collection of perl scripts to manage your iPod
 
-DISTNAME =	gnupod-0.99.7
+DISTNAME =	gnupod-0.99.8
 PKGNAME =	p5-${DISTNAME}
 CATEGORIES =	audio
 
 HOMEPAGE =	http://www.gnu.org/software/gnupod/
 MASTER_SITES =	http://blinkenlights.ch/gnupod-dist/stable/ \
 		${MASTER_SITE_SAVANNAH:=gnupod/}
-
-MAINTAINER =	James Turner <james@bsdgroup.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes

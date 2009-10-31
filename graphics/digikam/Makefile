@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.23 2008/12/11 15:57:16 martynas Exp $
+# $OpenBSD: Makefile,v 1.26 2009/09/27 23:47:22 sthen Exp $
 
 COMMENT =		digital image kde application
 CATEGORIES =		graphics x11 x11/kde
-V =			0.9.4
+V =			0.9.6
 DISTNAME =		digikam-$V
-PKGNAME =		${DISTNAME}p0
 SHARED_LIBS +=		digikam              3.0      # .0.0
 HOMEPAGE =		http://www.digikam.org/
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=digikam/}
@@ -22,9 +21,10 @@ LIB_DEPENDS +=	lib/qt3/qt-mt.>=3.33::x11/qt3 \
 		kdcraw::graphics/libkdcraw \
 		lcms::graphics/lcms
 
-WANTLIB =	util m c ICE Xrender SM pthread z stdc++ \
+WANTLIB =	util m c ICE Xrender SM pthread z stdc++ expat \
 		Xext X11 jpeg png art_lgpl_2 exif intl iconv idn \
-		exiv2 jasper pcre pcreposix Xau Xdmcp fam rpcsvc ltdl
+		exiv2 jasper pcre pcreposix Xau Xdmcp fam rpcsvc ltdl \
+		pthread-stubs xcb
 
 MODULES =	x11/kde
 

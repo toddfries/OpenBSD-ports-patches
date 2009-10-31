@@ -1,17 +1,21 @@
-# $OpenBSD: Makefile,v 1.18 2009/06/04 17:56:14 landry Exp $
+# $OpenBSD: Makefile,v 1.23 2009/10/15 11:28:38 landry Exp $
 # $FreeBSD: Makefile,v 1.4 1997/06/03 09:14:50 asami Exp $
 
+     SUBDIR += emerillon
      SUBDIR += gdal
      SUBDIR += geoclue
      SUBDIR += geos
      SUBDIR += globe
      SUBDIR += gpstk
      SUBDIR += gpsbabel
+     SUBDIR += gpx-viewer
      SUBDIR += jeoip
+     SUBDIR += josm
      SUBDIR += libchamplain
      SUBDIR += mapserver
      SUBDIR += openbsd-developers
      SUBDIR += osm-gps-map
+     SUBDIR += osm2go
      SUBDIR += p5-GPS-PRN
      SUBDIR += p5-Geo-Coder-US
      SUBDIR += p5-Geo-Constants
@@ -27,6 +31,7 @@
      SUBDIR += p5-Geo-TigerLine
      SUBDIR += p5-Geography-Countries
      SUBDIR += postgis
+     SUBDIR += ruby-findmyiphone
      SUBDIR += qgis
      SUBDIR += qlandkarte
 

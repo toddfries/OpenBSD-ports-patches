@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.578 2009/06/26 02:03:23 jolan Exp $
+# $OpenBSD: Makefile,v 1.598 2009/10/13 16:58:32 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -28,6 +28,8 @@
      SUBDIR += axyftp
      SUBDIR += balance
      SUBDIR += bing
+     SUBDIR += bird
+     SUBDIR += bird,v6
      SUBDIR += bitchx
      SUBDIR += bitlbee
      SUBDIR += bluetooth-tools
@@ -81,7 +83,6 @@
      SUBDIR += ettercap,no_x11
      SUBDIR += ezstream
      SUBDIR += ez-ipupdate
-     SUBDIR += farsight
      SUBDIR += filezilla
      SUBDIR += firewalk
      SUBDIR += flickcurl
@@ -98,6 +99,7 @@
      SUBDIR += galago-daemon
      SUBDIR += gftp
      SUBDIR += gmudix
+     SUBIDR += gnaughty
      SUBDIR += gnet
      SUBDIR += gnugk
      SUBDIR += gopher
@@ -114,6 +116,7 @@
      SUBDIR += ices
      SUBDIR += ices2
      SUBDIR += icmpinfo
+     SUBDIR += ifmcstat
      SUBDIR += ifstat
      SUBDIR += iftop
      SUBDIR += igmpproxy
@@ -157,9 +160,11 @@
      SUBDIR += libgalago
      SUBDIR += libnet
      SUBDIR += libnetdude
+     SUBDIR += libnice
      SUBDIR += libnids
      SUBDIR += libpcapnav
      SUBDIR += libproxy
+     SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
      SUBDIR += libst
@@ -192,6 +197,7 @@
      SUBDIR += nepim
      SUBDIR += net-snmp
      SUBDIR += netatalk
+     SUBDIR += netbsd-iscsi-target
      SUBDIR += netdude
      SUBDIR += netfwd
      SUBDIR += netpipes
@@ -287,6 +293,7 @@
      SUBDIR += p5-Net-Whois-Raw
      SUBDIR += p5-Net-XMPP
      SUBDIR += p5-Net-Z3950-Zoom
+     SUBDIR += p5-NetAddr-IP
      SUBDIR += p5-NetPacket
      SUBDIR += p5-Nmap-Parser
      SUBDIR += p5-Nmap-Scanner
@@ -294,6 +301,7 @@
      SUBDIR += p5-POE-Component-Client-HTTP
      SUBDIR += p5-POE-Component-Client-Keepalive
      SUBDIR += p5-POE-Component-IRC
+     SUBDIR += p5-POE-Component-IRC-Plugin-RSS-Headlines
      SUBDIR += p5-POE-Component-Jabber
      SUBDIR += p5-POE-Component-Pcap
      SUBDIR += p5-POE-Component-Server-FTP
@@ -308,6 +316,7 @@
      SUBDIR += p5-Validate-Net
      SUBDIR += p5-flowd
      SUBDIR += packit
+     SUBDIR += papyon
      SUBDIR += pavuk
      SUBDIR += pavuk,no_x11
      SUBDIR += pcapdiff
@@ -316,7 +325,10 @@
      SUBDIR += pdnsd
      SUBDIR += pear-HTTP
      SUBDIR += pear-HTTP-Request
+     SUBDIR += pear-Net-DNS
      SUBDIR += pear-Net-IMAP
+     SUBDIR += pear-Net-IPv4
+     SUBDIR += pear-Net-IPv6
      SUBDIR += pear-Net-LDAP
      SUBDIR += pear-Net-SMTP
      SUBDIR += pear-Net-Socket
@@ -333,12 +345,14 @@
      SUBDIR += pidgin-tlen
      SUBDIR += pktstat
      SUBDIR += plushs
+     SUBDIR += pmacct
      SUBDIR += poink
      SUBDIR += pop3gwd
      SUBDIR += poptop
      SUBDIR += pork
      SUBDIR += pptp
      SUBDIR += powerdns
+     SUBDIR += prosody
      SUBDIR += proxy-suite
      SUBDIR += psi
      SUBDIR += ptpd
@@ -354,6 +368,7 @@
      SUBDIR += py-curl
      SUBDIR += py-dns
      SUBDIR += py-dnspython
+     SUBDIR += py-dpkt
      SUBDIR += py-flowd
      SUBDIR += py-flowtools
      SUBDIR += py-impacket
@@ -396,7 +411,6 @@
      SUBDIR += samba,ads
      SUBDIR += samba,ldap
      SUBDIR += scapy
-     SUBDIR += scapy6
      SUBDIR += scli
      SUBDIR += sendxmpp
      SUBDIR += ser
@@ -451,6 +465,7 @@
      SUBDIR += transmission
      SUBDIR += trickle
      SUBDIR += ttcp
+     SUBDIR += twitux
      SUBDIR += ucspi-unix
      SUBDIR += udptunnel
      SUBDIR += unison
@@ -461,6 +476,7 @@
      SUBDIR += vicq
      SUBDIR += vncsnapshot
      SUBDIR += vsftpd
+     SUBDIR += walker
      SUBDIR += weex
      SUBDIR += wget
      SUBDIR += wide-dhcp
@@ -484,7 +500,10 @@
      SUBDIR += ytalk
      SUBDIR += ytalk,no_x11
      SUBDIR += zabbix
+     SUBDIR += zabbix,mysql
+     SUBDIR += zabbix,pgsql
      SUBDIR += zenirc
      SUBDIR += znc
+     SUBDIR += zsync
 
 .include <bsd.port.subdir.mk>

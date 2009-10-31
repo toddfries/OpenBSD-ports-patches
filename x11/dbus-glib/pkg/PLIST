@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.7 2009/03/23 10:05:36 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.9 2009/10/14 17:59:49 ajacoutot Exp $
 %%SHARED%%
 @bin bin/dbus-binding-tool
 include/dbus-1.0/

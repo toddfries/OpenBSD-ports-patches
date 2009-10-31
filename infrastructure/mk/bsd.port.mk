@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.967 2009/06/17 13:42:49 landry Exp $
+#	$OpenBSD: bsd.port.mk,v 1.972 2009/10/14 13:01:03 steven Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -72,9 +72,9 @@ RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
 .if ${USE_SYSTRACE:L} == "yes"
-WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/obj
+WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/pobj
 .else
-WRKOBJDIR ?= ${PORTSDIR}/obj
+WRKOBJDIR ?= ${PORTSDIR}/pobj
 .endif
 FAKEOBJDIR ?=
 BULK_TARGETS ?=
@@ -320,9 +320,14 @@ MAKE_PROGRAM = ${MAKE}
 
 USE_LIBTOOL ?= No
 _lt_libs =
-.if ${USE_LIBTOOL:L} == "yes"
+.if ${USE_LIBTOOL:L} != "no"
+.  if ${USE_LIBTOOL:L} == "gnu"
 LIBTOOL ?= ${DEPBASE}/bin/libtool
 BUILD_DEPENDS += ::devel/libtool
+.  else
+LIBTOOL ?= ${DEPBASE}/bin/libtool
+BUILD_DEPENDS += ::devel/libtool
+.  endif
 CONFIGURE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_FLAGS += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
@@ -353,7 +358,6 @@ SUBPACKAGE ?= -
 SUBPACKAGE ?= -main
 .endif
 
-_FETCH_MAKEFILE_NAMES =
 FLAVOR ?=
 FLAVORS ?=
 PSEUDO_FLAVORS ?=
@@ -2515,7 +2519,7 @@ _fetch-makefile:
 .  if ${PERMIT_DISTFILES_CDROM:L} == "yes"
 	@echo -n " cdrom"
 .  endif
-	@echo ":: ${_FETCH_MAKEFILE_NAMES}"
+	@echo ": ${_FETCH_MAKEFILE_NAMES}"
 # write generic package dependencies
 	@echo ".PHONY: ${_FETCH_MAKEFILE_NAMES}"
 .  if ${RECURSIVE_FETCH_LIST:L} == "yes"
@@ -3048,6 +3052,7 @@ uninstall deinstall:
 .endif
 
 peek-ftp:
+	@echo "DISTFILES=${DISTFILES}"
 	@mkdir -p ${FULLDISTDIR}; cd ${FULLDISTDIR}; echo "cd ${FULLDISTDIR}"; \
 	for i in ${MASTER_SITES:Mftp*}; do \
 		echo "Connecting to $$i"; ${FETCH_CMD} $$i ; break; \
@@ -3092,7 +3097,8 @@ dump-vars:
 .endif
 
 _all_phony = ${_recursive_depends_targets} ${_recursive_describe_targets} \
-	${_recursive_targets} _build-dir-depends _fetch-makefile _fetch-onefile \
+	${_recursive_targets} ${_dangerous_recursive_targets} \
+	_build-dir-depends _fetch-makefile _fetch-onefile \
 	_internal-all _internal-build _internal-build-depends \
 	_internal-buildlib-depends _internal-buildwantlib-depends \
 	_internal-checksum _internal-clean _internal-configure _internal-depends \
@@ -3110,14 +3116,14 @@ _all_phony = ${_recursive_depends_targets} ${_recursive_describe_targets} \
 	build-depends build-depends-list checkpatch clean clean-depends \
 	delete-package depends distpatch do-build do-configure do-distpatch \
 	do-extract do-fetch do-install do-package do-regress fetch-all \
-	install-all lib-depends lib-depends-list makesum \
-	peek-ftp plist port-lib-depends-check post-build post-configure \
+	install-all lib-depends lib-depends-list \
+	peek-ftp port-lib-depends-check post-build post-configure \
 	post-distpatch post-extract post-fetch post-install post-package \
 	post-patch post-regress pre-build pre-configure pre-extract pre-fake \
 	pre-fetch pre-install pre-package pre-patch pre-regress \
 	print-build-depends print-run-depends readme readmes rebuild \
 	regress-depends repackage run-depends run-depends-list show-required-by \
-	subpackage uninstall update-patches update-plist mirror-maker-fetch \
+	subpackage uninstall mirror-maker-fetch \
 	lock unlock
 
 .if defined(_DEBUG_TARGETS)

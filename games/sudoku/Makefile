@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.4 2007/09/15 18:01:03 simon Exp $
+# $OpenBSD: Makefile,v 1.6 2009/09/25 15:59:15 jasper Exp $
 
 COMMENT=		console based sudoku
 
 DISTNAME=		sudoku-1.0.1
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		games
 
 HOMEPAGE=		http://www.laurasia.com.au/sudoku/
-
-MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # Public Domain
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,7 +15,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c curses
 
-MASTER_SITES=		http://humppa.nl/distfiles/ \
+MASTER_SITES=		http://www.phil.uu.nl/~lievisse/distfiles/ \
 			http://www.laurasia.com.au/downloads/
 EXTRACT_SUFX=		.tgz
 

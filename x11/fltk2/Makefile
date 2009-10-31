@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.2 2008/11/03 11:02:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2009/09/29 07:29:09 benoit Exp $
 
 COMMENT =	fast light toolkit
 
-V=		6483
+V =		6879
 DISTNAME =	fltk-2.0.x-r${V}
-PKGNAME =	fltk2-2.0r${V}
+PKGNAME =	fltk2-2.0.${V}
 CATEGORIES =	x11
 
 HOMEPAGE =	http://www.fltk.org/
-MASTER_SITES =	http://ftp.easysw.com/pub/fltk/snapshots/ \
-		http://ftp2.easysw.com/pub/fltk/snapshots/
 
-MAINTAINER =	James Turner <james@bsdgroup.org>
+MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 
 # FLTK/GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -19,14 +17,17 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-USE_X11 =	Yes
-USE_GMAKE =	Yes
+WANTLIB = 	X11 Xcursor Xext Xft Xi Xinerama Xrender c fontconfig m \
+		pthread stdc++ z
 
-WANTLIB = 	X11 Xext Xft Xi Xinerama Xrender c fontconfig m pthread \
-		stdc++ z
+MASTER_SITES =	http://ftp.easysw.com/pub/fltk/snapshots/ \
+		http://ftp2.easysw.com/pub/fltk/snapshots/
 
 LIB_DEPENDS =	jpeg.>=62::graphics/jpeg \
 		png.>=8::graphics/png
+
+USE_X11 =	Yes
+USE_GMAKE =	Yes
 
 MAKE_FLAGS=	CC=${CC} \
 		CXX=${CXX} \
@@ -57,9 +58,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 # shared libs are disabled until fltk2 stabilises
 CONFIGURE_ARGS=	--disable-shared
 
-# This regression test wants an X11 display
-REGRESS_IS_INTERACTIVE= Yes
-REGRESS_FLAGS=	DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+REGRESS_IS_INTERACTIVE= x11
 
 do-regress:
 	@cd ${WRKSRC}/test && \

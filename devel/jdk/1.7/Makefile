@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2009/06/10 19:01:09 kurt Exp $
+# $OpenBSD: Makefile,v 1.34 2009/10/16 02:22:26 kurt Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	i386 amd64
@@ -6,8 +6,8 @@ ONLY_FOR_ARCHS=	i386 amd64
 COMMENT-main=	Java2(TM) SE Dev Kit v${V} Early Access ${B}
 COMMENT-jre=	Java2(TM) SE Runtime Environment v${V} Early Access ${B}
 V=		1.7.0.00
-B=		b59
-DISTFILES=	openjdk-7-ea-src-${B}-14_may_2009.zip \
+B=		b72
+DISTFILES=	openjdk-7-ea-src-${B}-17_sep_2009.zip \
 		jibx_1_1_5.zip:0
 PKGNAME=	jdk-${V}
 PKGNAME-main=	jdk-${V}${B}p0
@@ -23,8 +23,12 @@ FLAVOR?=
 
 HOMEPAGE=	http://openjdk.java.net/
 
-MASTER_SITES=	http://www.java.net/download/openjdk/jdk7/promoted/${B}/
-MASTER_SITES0=	${MASTER_SITE_SOURCEFORGE:=jibx/}
+MASTER_SITES=	http://www.java.net/download/openjdk/jdk7/promoted/${B}/ \
+		http://openbsd.dead-parrot.de/distfiles/ \
+		http://www.phil.uu.nl/~lievisse/distfiles/
+MASTER_SITES0=	${MASTER_SITE_SOURCEFORGE:=jibx/} \
+		http://openbsd.dead-parrot.de/distfiles/ \
+		http://www.phil.uu.nl/~lievisse/distfiles/
 
 MAINTAINER=	Kurt Miller <kurt@openbsd.org>
 

@@ -1,0 +1,28 @@
+@comment $OpenBSD: PLIST,v 1.3 2009/10/23 10:10:54 espie Exp $
+@owner ${DRUPAL_OWNER}
+@group ${DRUPAL_GROUP}
+${DRUPAL_MODS}imagefield/
+${DRUPAL_MODS}imagefield/LICENSE.txt
+${DRUPAL_MODS}imagefield/README.txt
+${DRUPAL_MODS}imagefield/UPGRADE.txt
+${DRUPAL_MODS}imagefield/imagefield.css
+${DRUPAL_MODS}imagefield/imagefield.info
+${DRUPAL_MODS}imagefield/imagefield.install
+${DRUPAL_MODS}imagefield/imagefield.module
+${DRUPAL_MODS}imagefield/imagefield_file.inc
+${DRUPAL_MODS}imagefield/imagefield_formatter.inc
+${DRUPAL_MODS}imagefield/imagefield_widget.inc
+${DRUPAL_MODS}imagefield/tests/
+${DRUPAL_MODS}imagefield/tests/imagefield.test
+${DRUPAL_MODS}imagefield/translations/
+${DRUPAL_MODS}imagefield/translations/de.po
+${DRUPAL_MODS}imagefield/translations/es.po
+${DRUPAL_MODS}imagefield/translations/fr.po
+@comment ${DRUPAL_MODS}imagefield/translations/fr.po.orig
+${DRUPAL_MODS}imagefield/translations/imagefield.pot
+${DRUPAL_MODS}imagefield/translations/it.po
+${DRUPAL_MODS}imagefield/translations/ja.po
+${DRUPAL_MODS}imagefield/translations/nl.po
+${DRUPAL_MODS}imagefield/translations/sv.po
+${DRUPAL_MODS}imagefield/translations/uk-ua.po
+${DRUPAL_MODS}imagefield/translations/uk.po

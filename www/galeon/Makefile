@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.51 2009/06/22 10:43:58 sthen Exp $
+# $OpenBSD: Makefile,v 1.53 2009/08/10 06:34:56 kili Exp $
 
 COMMENT=	GNOME web browser based on gecko
 
 DISTNAME=	galeon-2.0.7
-PKGNAME=	${DISTNAME}p6
+PKGNAME=	${DISTNAME}p8
 
 CATEGORIES=	www
 
@@ -25,7 +25,8 @@ WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		gthread-2.0 gtk-x11-2.0 m nspr4 nss3 nssckbi pango-1.0 \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4 \
 		png popt pthread smime3 softokn3 ssl ssl3 startup-notification-1 \
-		stdc++ util z avahi-client avahi-common avahi-glib
+		stdc++ util z avahi-client avahi-common avahi-glib \
+		pthread-stubs xcb
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=galeon/}
 
@@ -33,7 +34,7 @@ MODULES=	devel/gettext \
 		textproc/intltool \
 		devel/gconf2
 
-BUILD_DEPENDS=	:xulrunner-devel->=1.8.1:devel/xulrunner,-devel \
+BUILD_DEPENDS=	:xulrunner-devel->=1.8.1:devel/xulrunner/1.8,-devel \
 		::textproc/rarian \
 		${RUN_DEPENDS}
 RUN_DEPENDS=	::devel/desktop-file-utils \
@@ -43,7 +44,7 @@ RUN_DEPENDS=	::devel/desktop-file-utils \
 		::x11/gnome/themes \
 		::x11/gnome/yelp
 
-LIB_DEPENDS=	xulrunner/gtkembedmoz,xulrunner/xpcom,xulrunner/xul:xulrunner->=1.8.1:devel/xulrunner \
+LIB_DEPENDS=	xulrunner/gtkembedmoz,xulrunner/xpcom,xulrunner/xul:xulrunner->=1.8.1:devel/xulrunner/1.8 \
 		xml2::textproc/libxml \
 		gnome-desktop-2::x11/gnome/desktop \
 		gnomeui-2::x11/gnome/libgnomeui

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.97 2009/06/12 20:01:09 kili Exp $
+# $OpenBSD: Makefile,v 1.99 2009/08/27 19:44:38 ajacoutot Exp $
 
 COMMENT-main =		K Desktop Environment, libraries
 COMMENT-cups =		K Desktop Environment, cups support
@@ -8,8 +8,8 @@ DISTNAME =		kdelibs-${VERSION}
 PKGNAME =		kdelibs-${VERSION}p0
 MASTER_SITES0 =  	ftp://ftp.kde.org/pub/kde/security_patches/
 
-PKGNAME-main =		${DISTNAME}p0
-PKGNAME-cups =		kdecups-${VERSION}p0
+PKGNAME-main =		${DISTNAME}p2
+PKGNAME-cups =		kdecups-${VERSION}p2
 MODKDE_VERSION =		3.5.8
 SHARED_LIBS +=	DCOP                 7.0      # .6.0
 SHARED_LIBS +=	kdefx                7.0      # .6.0
@@ -59,12 +59,14 @@ VMEM_WARNING =	Yes
 MULTI_PACKAGES =	-main -cups
 CONFIGURE_ARGS += 	--enable-cups
 
+MODULES =	x11/kde devel/gettext
+
 LIB_DEPENDS =	art_lgpl_2::graphics/libart \
 		idn::devel/libidn \
 		fam::sysutils/fam
-WANTLIB =	asn1 crypto gssapi iconv intl util jpeg krb5 m X11 \
+WANTLIB =	asn1 crypto gssapi util jpeg krb5 m X11 \
 		ICE Xrender c SM pthread stdc++ Xext z png rpcsvc \
-		Xau Xdmcp
+		Xau Xdmcp pthread-stubs xcb
 
 LIB_DEPENDS-main =	\
 	${LIB_DEPENDS} \

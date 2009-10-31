@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2009/05/05 22:21:15 bluhm Exp $
+# $OpenBSD: Makefile,v 1.5 2009/09/14 19:54:26 bluhm Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		powerful feature-rich perl source code profiler
 
-DISTNAME =		Devel-NYTProf-2.09
+DISTNAME =		Devel-NYTProf-2.10
+PKGNAME =		p5-${DISTNAME}p1
 
 CATEGORIES =		devel
 

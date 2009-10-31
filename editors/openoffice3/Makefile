@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2009/07/01 13:05:54 naddy Exp $
+# $OpenBSD: Makefile,v 1.27 2009/09/22 17:53:42 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -6,13 +6,13 @@ COMMENT-main=	multi-platform productivity suite
 COMMENT-kde=	optional integration of OpenOffice to the KDE environment
 COMMENT-java=	optional integration of OpenOffice java features
 
-VERSION=	3.1.0
+VERSION=	3.1.1
 DISTNAME=	OOo_${VERSION}
-WRKDIST=	${WRKDIR}/OOO310_m11
+WRKDIST=	${WRKDIR}/OOO310_m19
 PKGNAME=	openoffice-${VERSION}
-PKGNAME-main=	openoffice-${VERSION}p5
+PKGNAME-main=	openoffice-${VERSION}
 PKGNAME-kde=	openoffice-kde-${VERSION}
-PKGNAME-java=	openoffice-java-${VERSION}p0
+PKGNAME-java=	openoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
@@ -26,8 +26,7 @@ MASTER_SITES=	http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSI
 		ftp://ftp.tu-chemnitz.de/pub/openoffice/stable/${VERSION}/ \
 		ftp://ftp.nluug.nl/pub/office/openoffice/stable/${VERSION}/ \
 		http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSION}/ \
-		ftp://openoffice.mirror.cygnal.ca/openoffice/stable/${VERSION}/ \
-		http://mirrors.protection.cx/~jolan/
+		ftp://openoffice.mirror.cygnal.ca/openoffice/stable/${VERSION}/
 MASTER_SITES0=	http://www.bsd.hu/~robert/ooo/ \
 		http://humppa.hu/ooo/
 
@@ -41,7 +40,7 @@ DIST_SUBDIR=	openoffice
 
 # See http://www.openoffice.org/about.html#licenses
 # and http://www.openoffice.org/license.html
-# and http://www.openoffice.org/FAQs/faq-licensing.html 
+# and http://www.openoffice.org/FAQs/faq-licensing.html
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -86,7 +85,9 @@ BUILD_DEPENDS+=	:zip-*:archivers/zip \
 		::print/cups \
 		::devel/boost
 
-MODULES+=	lang/python
+MODULES+=	lang/python \
+		devel/gconf2
+MODGCONF2_LIBDEP=No
 LIB_DEPENDS-main=gdk-x11-2.0.>=400.14,gdk_pixbuf-2.0.>=400.14,gtk-x11-2.0.>=400.14::x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
 		estdc++.>=11:libstdc++->=4.2,<4.3:lang/gcc/4.2,-estdc \
@@ -95,22 +96,25 @@ LIB_DEPENDS-main=gdk-x11-2.0.>=400.14,gdk_pixbuf-2.0.>=400.14,gtk-x11-2.0.>=400.
 		curl.>=7::net/curl \
 		neon.>=24::net/neon \
 		wpd.>=8::textproc/libwpd \
-		icuuc.>=0,icudata.>=0::textproc/icu4c \
+		icuuc.>=0,icudata.>=0,icui18n,icule::textproc/icu4c \
 		::devel/gperf \
 		raptor.>=2::textproc/raptor \
-		rdf.>=0::textproc/redland
-WANTLIB-main=	ICE SM X11 Xau Xcomposite Xdamage Xdmcp Xext Xrender Xcursor \
-		Xfixes Xi Xinerama Xrandr atk-1.0 c cairo crypto expat \
-		fontconfig freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
-		gthread-2.0 iconv intl jpeg m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1 png pthread rasqal ssl util xml2 z icui18n icule 
+		rasqal,rdf.>=0::textproc/redland \
+		${MODGCONF2_LIB_DEPENDS}
+WANTLIB-main=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
+		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
+		crypto dbus-1 expat fontconfig freetype gio-2.0 glib-2.0 \
+		glitz gmodule-2.0 gobject-2.0 gthread-2.0 iconv intl \
+		jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
+		png pthread pthread-stubs ssl util xcb xml2 z
 RUN_DEPENDS-main=	:desktop-file-utils-*:devel/desktop-file-utils
 
 MODULES+=		x11/qt3
 RUN_DEPENDS-kde=	::editors/openoffice3
 LIB_DEPENDS-kde=	${MODQT_LIB_DEPENDS} \
 			kabc,kdecore,kdeui,kio::x11/kde/libs3
-WANTLIB-kde=		X11 Xau Xdmcp Xext Xrandr Xrender estdc++ m
+WANTLIB-kde=		X11 Xau Xdmcp Xext Xrandr Xrender estdc++ m \
+			pthread-stubs xcb
 
 .if !${FLAVOR:L:Mno_java}
 MODULES+=		java
@@ -223,7 +227,7 @@ pre-patch:
 do-build:
 	@cd ${WRKBUILD} && \
 		./bootstrap && \
-		${SETENV} ${MAKE_ENV} ${TCSH} -c 'limit descriptors 256 && source OpenBSDEnv.Set && ${BUILD_CMD}' 
+		${SETENV} ${MAKE_ENV} ${TCSH} -c 'limit descriptors 256 && source OpenBSDEnv.Set && ${BUILD_CMD}'
 
 do-install:
 	@rm -Rf ${WRKDIR}/tmp

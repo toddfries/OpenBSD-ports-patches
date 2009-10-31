@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.14 2009/05/22 09:05:10 sthen Exp $
+@comment $OpenBSD: PLIST-main,v 1.16 2009/09/04 00:46:35 sthen Exp $
 @conflict asterisk-sounds-<=1.2.1p2
 @conflict app_conference-<=20070710
 @newgroup _asterisk:545
@@ -256,11 +256,14 @@ share/asterisk/keys/freeworlddialup.pub
 share/asterisk/keys/iaxtel.pub
 share/asterisk/moh/
 share/asterisk/moh/.asterisk-moh-freeplay-wav
-share/asterisk/moh/CHANGES-asterisk-moh-freeplay-wav
-share/asterisk/moh/LICENSE-asterisk-moh-freeplay-wav
-share/asterisk/moh/fpm-calm-river.wav
-share/asterisk/moh/fpm-sunshine.wav
-share/asterisk/moh/fpm-world-mix.wav
+share/asterisk/moh/CHANGES-asterisk-moh-opsound-2.01
+share/asterisk/moh/CREDITS-asterisk-moh-opsound-2.01
+share/asterisk/moh/LICENSE-asterisk-moh-opsound-2.01
+share/asterisk/moh/macroform-cold_day.wav
+share/asterisk/moh/macroform-robot_dity.wav
+share/asterisk/moh/macroform-the_simplicity.wav
+share/asterisk/moh/manolo_camp-morning_coffee.wav
+share/asterisk/moh/reno_project-system.wav
 share/asterisk/sounds/
 share/asterisk/sounds/.asterisk-core-sounds-en-gsm-${CORESOUNDS}
 share/asterisk/sounds/CHANGES-asterisk-core-en-${CORESOUNDS}
@@ -719,6 +722,7 @@ share/doc/asterisk/CODING-GUIDELINES
 share/doc/asterisk/COPYING
 share/doc/asterisk/CREDITS
 share/doc/asterisk/ChangeLog
+share/doc/asterisk/IAX2-security.pdf
 share/doc/asterisk/LICENSE
 share/doc/asterisk/PEERING
 share/doc/asterisk/README

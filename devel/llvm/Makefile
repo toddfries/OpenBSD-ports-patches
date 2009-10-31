@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2009/06/29 13:42:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.17 2009/08/16 09:54:28 jsg Exp $
 
 COMMENT =	Low Level Virtual Machine (LLVM) compiler infrastructure
 
-LLVM_V =	2.6pre20090621
+LLVM_V =	2.6pre20090808
 DISTNAME =	llvm-${LLVM_V}
-EXTRACT_SUFX =	.tar.bz2
 PKGNAME =	${DISTNAME}p1
+EXTRACT_SUFX =	.tar.bz2
 
 CATEGORIES =	devel
 
@@ -36,8 +36,13 @@ MODGCC4_ARCHES =*
 
 LIB_DEPENDS =	elf::devel/libelf
 
-BUILD_DEPENDS =	::math/graphviz
-RUN_DEPENDS =	::math/graphviz
+# graphviz can be optionally used to draw graphs, but adds heavy build and
+# run dependencies, and this feature is often not needed. lie to autoconf
+# so we can build consistent packages without pulling in a stack of gnome
+# libraries; people wanting to use this can pkg_add graphviz.
+CONFIGURE_ENV =	ac_cv_path_DOT=${LOCALBASE}/bin/dot \
+		ac_cv_path_DOTTY=${LOCALBASE}/bin/dotty \
+		ac_cv_path_GV="echo gv"
 
 REGRESS_DEPENDS=::devel/dejagnu
 
@@ -54,7 +59,8 @@ USE_LIBTOOL =		Yes
 # also supports cmake, but requires v2.6.1
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--enable-bindings=no \
-			--enable-libffi=no
+			--enable-libffi=no \
+			--enable-optimized
 
 MODGNU_CONFIG_GUESS_DIRS =  ${WRKSRC}/autoconf
 
@@ -64,10 +70,8 @@ pre-configure:
 	@ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
 # XXX googletest doesn't build
-# XXX symlink to workaround problem finding the correct clang binary path
 
 post-install:
-	@ln -s ${TRUEPREFIX}/libexec/clang-cc ${PREFIX}/bin
 	@${INSTALL_DATA_DIR} ${PREFIX}/share/llvm
 	@${INSTALL_DATA_DIR} ${WRKINST}/${MODPY_SITEPKG}
 	@${INSTALL_SCRIPT} ${WRKSRC}/tools/clang/utils/ccc-analyzer \

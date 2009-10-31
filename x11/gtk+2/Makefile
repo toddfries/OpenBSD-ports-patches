@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.78 2009/05/22 13:08:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.90 2009/10/17 16:14:54 ajacoutot Exp $
 
 SHARED_ONLY=			Yes
 
@@ -6,18 +6,20 @@ COMMENT-main=			multi-platform graphical toolkit
 COMMENT-docs=           	gtk+2 documentation
 COMMENT-cups=			gtk+2 CUPS print backend
 
-VERSION=			2.14.7
+VERSION=			2.18.3
 DISTNAME=			gtk+-${VERSION}
-PKGNAME-main=			gtk+2-${VERSION}p0
+
+PKGNAME-main=			gtk+2-${VERSION}
 PKGNAME-docs=			gtk+2-docs-${VERSION}
-PKGNAME-cups=			gtk+2-cups-${VERSION}p1
+PKGNAME-cups=			gtk+2-cups-${VERSION}
+
 CATEGORIES=			x11 devel
 
-SHARED_LIBS+=	gdk_pixbuf-2.0		1400.1 #.1400.5
-SHARED_LIBS+=	gdk-x11-2.0		1400.1 #.1400.5
-SHARED_LIBS+=	gtk-x11-2.0		1400.1 #.1400.5
-SHARED_LIBS+=	gdk_pixbuf_xlib-2.0	1400.1 #.1400.5
-SHARED_LIBS+=	gailutil		22.0   #.18.1
+SHARED_LIBS+=	gdk_pixbuf-2.0		1402.0 # .1800.1
+SHARED_LIBS+=	gdk-x11-2.0		1402.0 # .1800.1
+SHARED_LIBS+=	gtk-x11-2.0		1402.0 # .1800.1
+SHARED_LIBS+=	gdk_pixbuf_xlib-2.0	1402.0 # .1800.1
+SHARED_LIBS+=	gailutil		24.0   # .18.1
 
 HOMEPAGE=			http://www.gtk.org/
 
@@ -27,14 +29,15 @@ PERMIT_PACKAGE_FTP=		Yes
 PERMIT_DISTFILES_CDROM=		Yes
 PERMIT_DISTFILES_FTP=		Yes
 
-MASTER_SITES=			${MASTER_SITE_GNOME:=sources/gtk+/2.14/}
+MASTER_SITES=			${MASTER_SITE_GNOME:=sources/gtk+/${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/}
 EXTRACT_SUFX=			.tar.bz2
 
 MULTI_PACKAGES=         	-main -docs -cups
 
 WANTLIB=		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 			Xfixes Xi Xinerama Xrandr Xrender cairo expat \
-			fontconfig freetype glitz m pcre pixman-1 z
+			fontconfig freetype glitz m pcre pixman-1 z \
+			pthread-stubs xcb
 
 MODULES=		devel/gettext
 
@@ -47,7 +50,6 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			atk-1.0.>=1809.0::devel/atk \
 			tiff.>=35::graphics/tiff \
 			png.>=3::graphics/png \
-			jasper::graphics/jasper \
 			jpeg.>=62::graphics/jpeg
 WANTLIB-main=		${WANTLIB} c pthread
 
@@ -67,23 +69,23 @@ USE_X11=			Yes
 USE_GMAKE=			Yes
 USE_LIBTOOL=			Yes
 CONFIGURE_STYLE=		gnu
-CONFIGURE_ARGS+=		--disable-gtk-doc \
-				--with-xinput=yes
+CONFIGURE_ARGS=			${CONFIGURE_SHARED} \
+				--disable-gtk-doc \
+				--with-xinput=yes \
+				--disable-papi \
+				--disable-silent-rules
 CONFIGURE_ENV=			CPPFLAGS="-I${X11BASE}/include/freetype2/ -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
 				LDFLAGS="-L${LOCALBASE}/lib"
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/gtk+2
 
-# The regression tests require a running instance of X.
-# You will also need to set the XAUTHORITY environment variable to point
-# to the appropriate .Xauthority file.
-REGRESS_IS_INTERACTIVE= Yes
-REGRESS_FLAGS=		DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+REGRESS_IS_INTERACTIVE= x11
 
 # XXX we should use MODPY_BIN from the lang/python MODULE but
 # we do not want to build/run_depends on python
+MODPY_VERSION= 2.5
 pre-configure:
-	perl -pi -e 's,/usr/bin/env python,${LOCALBASE}/bin/python2.5,' \
+	perl -pi -e 's,/usr/bin/env python,${LOCALBASE}/bin/python${MODPY_VERSION},' \
 		${WRKSRC}/gtk/gtk-builder-convert
 
 .include <bsd.port.mk>

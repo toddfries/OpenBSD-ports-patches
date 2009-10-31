@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2009/04/29 20:11:25 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2009/08/11 08:42:09 ajacoutot Exp $
 
 COMMENT=	aewm++ based pretty themable window manager
 
-DISTNAME=	pekwm-0.1.10
+DISTNAME=	pekwm-0.1.11
 CATEGORIES=	x11
+PKGNAME=	${DISTNAME}p0
 
 HOMEPAGE=	http://pekwm.org/
 
@@ -16,7 +17,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xext Xft Xpm Xrandr Xrender Xau Xdmcp \
-		Xinerama expat z c fontconfig freetype m stdc++
+		Xinerama expat z c fontconfig freetype m stdc++ \
+		pthread-stubs xcb
 
 MODULES=	converters/libiconv
 
@@ -36,14 +38,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 CONFIGURE_ARGS=	--enable-xinerama
 
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/pekwm
-	${INSTALL_DATA} ${WRKSRC}/data/autoproperties \
-		${WRKSRC}/data/config \
-		${WRKSRC}/data/keys \
-		${WRKSRC}/data/menu \
-		${WRKSRC}/data/mouse \
-		${WRKSRC}/data/start \
-		${WRKSRC}/data/vars \
-                ${PREFIX}/share/examples/pekwm
+	@mv ${WRKINST}/etc/pekwm ${PREFIX}/share/examples
 
 .include <bsd.port.mk>

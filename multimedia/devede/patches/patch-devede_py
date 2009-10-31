@@ -1,16 +1,30 @@
-$OpenBSD: patch-devede_py,v 1.9 2009/05/25 18:14:07 ajacoutot Exp $
---- devede.py.orig	Mon May 25 14:50:34 2009
-+++ devede.py	Mon May 25 19:58:08 2009
-@@ -35,7 +35,7 @@ import pickle
+$OpenBSD: patch-devede_py,v 1.11 2009/08/07 17:19:14 ajacoutot Exp $
+--- devede.py.orig	Fri Jul 17 00:19:28 2009
++++ devede.py	Fri Aug  7 19:12:40 2009
+@@ -19,6 +19,13 @@
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
++try:
++  import psyco
++  import re
++  psyco.cannotcompile(re.compile)
++  psyco.profile()
++except ImportError:
++  pass
+ 
+ import sys
+ import os
+@@ -35,7 +42,7 @@ import pickle
  import cairo
  
- print "DeVeDe 3.13.1"
+ print "DeVeDe 3.14.0"
 -if sys.platform!="win32":
 +if sys.platform!="win32" and not sys.platform.startswith('openbsd'):
  	try:
  		print "Locale: "+str(os.environ["LANG"])
  	except:
-@@ -44,7 +44,7 @@ if sys.platform!="win32":
+@@ -44,7 +51,7 @@ if sys.platform!="win32":
  # append the directories where we install the devede's own modules
  tipo=-1
  try:
@@ -19,7 +33,7 @@ $OpenBSD: patch-devede_py,v 1.9 2009/05/25 18:14:07 ajacoutot Exp $
  	fichero.close()
  	tipo=0
  	found=True
-@@ -78,13 +78,13 @@ if tipo==0:
+@@ -78,13 +85,13 @@ if tipo==0:
  	#arbol=gtk.Builder("/usr/share/devede/devede.glade",domain="devede")
  	# append the directories where we install the devede's own modules
  

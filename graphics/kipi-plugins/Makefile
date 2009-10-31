@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.17 2009/06/21 17:33:40 naddy Exp $
+# $OpenBSD: Makefile,v 1.19 2009/09/10 16:43:41 sthen Exp $
 
 COMMENT-main =		kde image plugins
 COMMENT-cal =		kde image calendar plugin
 CATEGORIES =		graphics x11 x11/kde
-DISTNAME =		kipi-plugins-0.1.5
-PKGNAME-main =		${DISTNAME}p0
-PKGNAME-cal =		kipi-kcal-plugin-0.1.5p0
+DISTNAME =		kipi-plugins-0.1.6
+PKGNAME-main =		${DISTNAME}
+PKGNAME-cal =		kipi-kcal-plugin-0.1.6
 HOMEPAGE =		http://extragear.kde.org/apps/kipi/
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=kipi/}
 EXTRACT_SUFX =		.tar.bz2
@@ -35,9 +35,10 @@ RUN_DEPENDS =	::graphics/ImageMagick
 MODULES =	x11/kde
 
 WANTLIB =	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 \
-		fam iconv idn intl jpeg m png rpcsvc stdc++ util z
+		fam iconv idn intl jpeg m png pthread-stubs rpcsvc stdc++ \
+		util xcb z
 WANTLIB-main =	${WANTLIB} GL ltdl Xrandr \
-		pcre pcreposix tiff exif \
+		pcre pcreposix tiff exif expat lcms \
 		exslt xslt xml2 gpg-error gcrypt exiv2
 
 WANTLIB-cal =	${WANTLIB} kresources vcard

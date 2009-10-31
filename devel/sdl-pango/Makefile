@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2009/01/16 08:06:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2009/09/06 10:46:25 ajacoutot Exp $
 
 COMMENT=	SDL wrapper around the Pango library
 
 V=		0.1.2
 DISTNAME=	SDL_Pango-${V}
-PKGNAME=	sdl-pango-${V}p4
+PKGNAME=	sdl-pango-${V}p5
 SHARED_LIBS=	SDL_Pango 0.0	# .2.0
 CATEGORIES=	devel x11
 
@@ -22,7 +22,8 @@ MASTER_SITES0=	http://zarb.org/~gc/t/
 PATCHFILES=	SDL_Pango-0.1.2-API-adds.patch:0
 
 WANTLIB=	X11 Xau Xdmcp Xext Xrandr Xrender expat fontconfig freetype \
-		iconv m usbhid z pcre glib-2.0 gmodule-2.0 gobject-2.0 sndio
+		iconv m usbhid z pcre glib-2.0 gmodule-2.0 gobject-2.0 sndio \
+		pthread-stubs xcb
 
 LIB_DEPENDS=	SDL.>=7::devel/sdl \
 		pango-1.0.>=1.3,pangoft2-1.0.>=1.3::devel/pango
@@ -38,9 +39,7 @@ USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 
-# This regression test wants an X11 display
-REGRESS_IS_INTERACTIVE=	Yes
-REGRESS_FLAGS=	DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+REGRESS_IS_INTERACTIVE=	x11
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/sdl-pango

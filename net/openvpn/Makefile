@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2009/06/18 13:02:40 sthen Exp $
+# $OpenBSD: Makefile,v 1.26 2009/10/10 13:35:33 sthen Exp $
 
 COMMENT=	easy-to-use, robust, and highly configurable VPN
 
-VERSION=	2.1_rc15
+VERSION=	2.1_rc20
 DISTNAME=	openvpn-${VERSION}
-PKGNAME=	${DISTNAME:S/_//g}p2
+PKGNAME=	${DISTNAME:S/_//g}p0
 CATEGORIES=	net security
 
 HOMEPAGE=	http://openvpn.net/
@@ -20,7 +20,7 @@ WANTLIB=		c crypto ssl pthread
 
 MASTER_SITES=	${HOMEPAGE}/release/
 
-LIB_DEPENDS=	lzo::archivers/lzo
+LIB_DEPENDS=	lzo2::archivers/lzo2
 
 SEPARATE_BUILD=	concurrent
 

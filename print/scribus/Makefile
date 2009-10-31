@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2009/05/22 14:56:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2009/09/15 17:37:22 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	DTP program
 DISTNAME=	scribus-1.3.4
-PKGNAME=	${DISTNAME}p6
+PKGNAME=	${DISTNAME}p9
 CATEGORIES=	print
 
 # These are actually internal modules, not generic shared libs
@@ -14,8 +14,6 @@ SHARED_LIBS=	scribus12format		0.0 \
 
 HOMEPAGE=	http://www.scribus.net/
 
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
-
 # GPLv2+
 PERMIT_PACKAGE_CDROM?=	Yes
 PERMIT_PACKAGE_FTP?=	Yes
@@ -24,7 +22,7 @@ PERMIT_DISTFILES_FTP?=	Yes
 
 WANTLIB += ICE SM X11 Xau Xdmcp Xext asn1 c crypto expat fontconfig
 WANTLIB += freetype gcrypt gnutls gpg-error gssapi krb5 m pthread
-WANTLIB += stdc++ tasn1 util z
+WANTLIB += pthread-stubs stdc++ tasn1 util xcb z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scribus/}
 
@@ -50,7 +48,8 @@ USE_X11=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 
-CONFIGURE_STYLE=gnu
+CONFIGURE_STYLE=autoconf gnu
+AUTOCONF_VERSION=2.60
 CONFIGURE_ARGS=	${MODQT_CONFIGURE_ARGS} \
 		--with-extra-libs=${LOCALBASE}/lib \
 		--with-extra-includes=${LOCALBASE}/include/libpng:${LOCALBASE}/include

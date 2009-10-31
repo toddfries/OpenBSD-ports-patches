@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2009/06/23 08:30:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2009/10/13 14:36:26 edd Exp $
 
 COMMENT =		easy to use LaTeX and ConTeXt editor
 
-V = 			20090618
-DISTNAME =		texworks-svn-${V}
-PKGNAME = 		texworks-${V}p0
+DISTNAME =		texworks-0.2.3
 CATEGORIES =		editors print
 HOMEPAGE =		http://www.tug.org/texworks/
-MAINTAINER =		Edd Barrett <vext01@gmail.com>
+MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -19,10 +17,7 @@ WANTLIB += ICE SM X11 Xext Xi Xinerama Xrender c expat fontconfig
 WANTLIB += freetype glib-2.0 gobject-2.0 gthread-2.0 m png poppler
 WANTLIB += pthread stdc++ z
 
-# No official release as of yet, hosting my own dist
-MASTER_SITES =		http://students.dec.bmth.ac.uk/ebarrett/distfiles/
-
-WRKDIST = 		${WRKDIR}/texworks-svn
+MASTER_SITES =		http://texworks.googlecode.com/files/
 
 MODULES =		x11/qt4 \
 			devel/gettext

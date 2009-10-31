@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/01/31 18:20:26 bernd Exp $
+# $OpenBSD: Makefile,v 1.3 2009/10/13 20:21:29 pirofti Exp $
 
 COMMENT =	tasks for documentation, extension compiling, testing
 
-DISTNAME =	echoe-3.0.2
+DISTNAME =	echoe-3.2
 PKGNAME =	ruby-${DISTNAME}
 CATEGORIES =	devel
 

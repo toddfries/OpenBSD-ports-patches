@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.99 2009/06/17 01:53:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.103 2009/10/15 15:32:17 ckuethe Exp $
 
 COMMENT-main=	vi clone, many additional features
 COMMENT-lang=	vi clone, NLS subpackage
 
 DISTNAME=	vim-7.2
-REVISION=	190
+REVISION=	267
 VERSION=	7.2.${REVISION}
 # keep PKGNAME for full version number
 PKGNAME=	vim-${VERSION}
-PKGNAME-main=	vim-${VERSION}p1
+PKGNAME-main=	vim-${VERSION}
 PKGNAME-lang=	vim-lang-${VERSION}
 P=		${DISTNAME:C/[-\.]//g}
 CATEGORIES=	editors
@@ -24,9 +24,9 @@ DIST_SUBDIR=	vim72
 HOMEPAGE=	http://www.vim.org/
 MAINTAINER=	Chris Kuethe <ckuethe@openbsd.org>
 
-PATCHFILES=	#
+PATCHFILES=	# 
 _patches!=	jot -w%03d - 1 ${REVISION} 1 | \
-	egrep -v '001|007|022|036|041|049|071|072|074|088|089|093|101|138|150|172|173|191'
+	egrep -v '001|007|022|036|041|049|071|072|074|088|089|093|101|138|150|172|173|191|194|204|205|206|212|216|219|233|236|247|248|250|260'
 .for p in ${_patches}
 PATCHFILES+=	7.2.${p}:0
 .endfor
@@ -53,7 +53,7 @@ FLAVOR?=	gtk2
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${DEPBASE}/include" \
 		LDFLAGS="-L${DEPBASE}/lib"
-CONFIGURE_ARGS+=--with-tlib="curses" --enable-multibyte
+CONFIGURE_ARGS+=--with-tlib="curses" --enable-multibyte --enable-cscope
 
 .if ${FLAVOR:L:Mhuge}
 CONFIGURE_ARGS+=--with-features=huge
@@ -74,9 +74,10 @@ WANTLIB+=	m pthread util
 .endif
 
 .if ${FLAVOR:L:Mruby}
+MODULES+=	lang/ruby
 CONFIGURE_ARGS+=--enable-rubyinterp
-MAKE_ENV+=	RUBY="${DEPBASE}/bin/ruby"
-LIB_DEPENDS+=	ruby::lang/ruby
+MAKE_ENV+=	RUBY="${RUBY}"
+LIB_DEPENDS+=	${MODRUBY_LIB_DEPENDS}
 WANTLIB+=	m
 .endif
 
@@ -90,12 +91,12 @@ CONFIGURE_ARGS+=--enable-gui="motif" --with-x --enable-fontset --enable-xim
 CONFIGURE_ENV+=	MOTIFHOME=${X11BASE}
 USE_MOTIF=	any
 USE_X11=	Yes
-WANTLIB+=	ICE SM X11 Xext Xmu Xpm Xt
+WANTLIB+=	ICE SM X11 Xext Xmu Xpm Xt pthread-stubs xcb
 .elif ${FLAVOR:L:Mathena} && \
 	!${FLAVOR:L:Mno_x11} && !${FLAVOR:L:Mmotif} && !${FLAVOR:L:Mgtk2}
 CONFIGURE_ARGS+=--enable-gui="athena" --with-x --enable-fontset --enable-xim
 USE_X11=	Yes
-WANTLIB+=	ICE SM X11 Xaw Xext Xmu Xpm Xt
+WANTLIB+=	ICE SM X11 Xaw Xext Xmu Xpm Xt pthread-stubs xcb
 .elif ${FLAVOR:L:Mgtk2} && \
 		!${FLAVOR:L:Mmotif} && !${FLAVOR:L:Mno_x11} && !${FLAVOR:L:Mathena}
 MAKE_FLAGS+=	'LDFLAGS=-pthread'
@@ -107,7 +108,7 @@ WANTLIB+=	ICE SM X11 Xext Xrender Xt fontconfig freetype m z\
 	 	atk-1.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 png expat\
 		pango-1.0 pangoft2-1.0 pangocairo-1.0 cairo pthread\
 		glitz Xau Xcomposite Xcursor Xdamage Xfixes Xi Xinerama \
-		Xrandr pixman-1
+		Xrandr pixman-1 pthread-stubs xcb
 .else
 ERRORS=		"Fatal: You must select one GUI interface: no_x11, gtk2, athena or motif"
 .endif

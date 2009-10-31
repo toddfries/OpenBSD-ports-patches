@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2009/05/24 20:03:47 benoit Exp $
+# $OpenBSD: Makefile,v 1.15 2009/08/10 06:31:08 kili Exp $
 
 COMMENT=		file editor/viewer/analyzer for executables
 
 DISTNAME=		ht-2.0.17
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		editors
 
 HOMEPAGE=		http://hte.sourceforge.net/
@@ -25,7 +26,7 @@ USE_GMAKE=		Yes
 FLAVORS=		no_x11
 FLAVOR?=
 
-LIB_DEPENDS=		lzo::archivers/lzo
+LIB_DEPENDS=		lzo2::archivers/lzo2
 
 CONFIGURE_ENV=		CFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
@@ -39,7 +40,7 @@ USE_X11=		Yes
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			X11BASE=${X11BASE}
 CONFIGURE_ARGS+=	--enable-x11-textmode
-WANTLIB+=		X11
+WANTLIB+=		X11 pthread-stubs xcb
 .endif
 
 do-install:

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.61 2009/03/23 09:57:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.63 2009/08/27 19:44:38 ajacoutot Exp $
 
 COMMENT = 		K Desktop Environment, multimedia applications
 CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdemultimedia-${VERSION}
-PKGNAME =		${DISTNAME}p1
+PKGNAME =		${DISTNAME}p3
 MODKDE_VERSION =	3.5.8
 SHARED_LIBS +=	artsbuilder          1.0      # .0.0
 SHARED_LIBS +=	artsmidi_idl         1.0      # .0.0
@@ -35,6 +35,9 @@ SHARED_LIBS +=	arts_splay           1.0      # .0.0
 SHARED_LIBS +=	arts_mpeglib-0.3.0   1.0      # .0.3
 
 FLAVORS =	debug
+
+MODULES =	x11/kde devel/gettext
+
 LIB_DEPENDS = 	DCOP,kdecore.>=6,kdefakes,kdefx,kdesu,kdeui,kio,khtml,kmid,kparts,kmediaplayer,kjs,kutils,kwalletclient,kdeprint::x11/kde/libs3 \
 	artsc,artsflow,artsflow_idl,artskde,kmedia2_idl,mcop,qtmcop,soundserver_idl::x11/kde/arts3 \
 		ogg::audio/libogg \
@@ -61,8 +64,8 @@ CONFIGURE_ENV +=	aktion_has_xanim=yes
 
 WANTLIB =	ICE SM X11 Xau Xdmcp Xext Xrender Xv Xxf86dga Xxf86vm \
 		art_lgpl_2 audiofile c expat fam fontconfig freetype \
-		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 iconv idn intl \
+		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 idn \
 		jpeg m mad ossaudio pcre pcreposix png pthread rpcsvc sndio \
-		stdc++ util xml2 z
+		stdc++ util xml2 z pthread-stubs xcb
 
 .include <bsd.port.mk>

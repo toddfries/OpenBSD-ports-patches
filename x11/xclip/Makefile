@@ -1,25 +1,24 @@
-# $OpenBSD: Makefile,v 1.4 2009/03/07 15:37:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2009/09/13 18:26:53 martynas Exp $
 
 COMMENT=		command line interface to X selections
-DISTNAME=		xclip-0.08
+DISTNAME=		xclip-0.11
 PKGNAME=		${DISTNAME}p0
 CATEGORIES=		x11
-MASTER_SITES=		${HOMEPAGE}
-HOMEPAGE=		http://people.debian.org/~kims/xclip/
+MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=xclip/}
+HOMEPAGE=		http://xclip.sourceforge.net/
 MAINTAINER=		Ilya Voronin <ivoronin@ivoronin.pp.ru>
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB += ICE SM X11 Xau Xdmcp Xext Xmu Xt c
+WANTLIB+=		X11 Xmu c
 
 NO_REGRESS=		yes
 USE_X11=		yes
-CONFIGURE_STYLE=	imake
-
-WRKDIST=	${WRKDIR}/xclip
+USE_GMAKE=		yes
+CONFIGURE_STYLE=	gnu
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.193 2009/06/05 22:32:24 phessler Exp $
+# $OpenBSD: Makefile,v 1.201 2009/10/16 23:12:26 phessler Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -7,6 +7,7 @@
      SUBDIR += afternoonstalker
      SUBDIR += agm
      SUBDIR += alephone
+     SUBDIR += allegro
      SUBDIR += amoebax
      SUBDIR += amph
      SUBDIR += an
@@ -45,6 +46,7 @@
      SUBDIR += dungeon-crawl
      SUBDIR += eboard
      SUBDIR += eboard-extras
+     SUBDIR += egoboo
      SUBDIR += einstein
      SUBDIR += enigma
      SUBDIR += f1spirit
@@ -55,6 +57,7 @@
      SUBDIR += freeciv
      SUBDIR += freedroid
      SUBDIR += freedroidrpg
+     SUBDIR += fretsonfire
      SUBDIR += frotz
      SUBDIR += frozen-bubble
      SUBDIR += gargoyle
@@ -73,6 +76,7 @@
      SUBDIR += heroes
      SUBDIR += icebreaker
      SUBDIR += ivan
+     SUBDIR += jbrickshooter
      SUBDIR += kbilliards
      SUBDIR += kobodeluxe
      SUBDIR += kobodeluxe,harder
@@ -85,6 +89,7 @@
      SUBDIR += lincity
      SUBDIR += lincity-ng
      SUBDIR += londonlaw
+     SUBDIR += lostpixels
      SUBDIR += maelstrom
      SUBDIR += micropolis
      SUBDIR += mirrormagic
@@ -104,6 +109,7 @@
      SUBDIR += omega
      SUBDIR += openarena
      SUBDIR += openttd
+     SUBDIR += opensonic
      SUBDIR += pathological
      SUBDIR += pingus
      SUBDIR += pioneers
@@ -115,6 +121,7 @@
      SUBDIR += quake,
      SUBDIR += quake,ggi
      SUBDIR += quake2
+     SUBDIR += rftg
      SUBDIR += ri-li
      SUBDIR += roadfighter
      SUBDIR += rocksndiamonds
@@ -129,6 +136,7 @@
      SUBDIR += slash,no_x11
      SUBDIR += slash-em
      SUBDIR += slash-em,no_x11
+     SUBDIR += snipe2d
      SUBDIR += spacehulk
      SUBDIR += spatial
      SUBDIR += speyes
@@ -191,6 +199,7 @@
      SUBDIR += xminesweep
      SUBDIR += xmj
      SUBDIR += xmris
+     SUBDIR += xmoto
      SUBDIR += xneko
      SUBDIR += xonix
      SUBDIR += xpat2

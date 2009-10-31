@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.28 2009/03/14 10:48:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2009/10/09 17:37:07 ajacoutot Exp $
 
 COMMENT=		shared mime database for desktops
 
-DISTNAME=		shared-mime-info-0.60
+DISTNAME=		shared-mime-info-0.70
 CATEGORIES=		misc
 
 HOMEPAGE=		http://www.freedesktop.org/wiki/Software/shared-mime-info
@@ -33,5 +33,14 @@ pre-configure:
 	@perl -pi -e 's|/usr/local|${PREFIX}|g' \
 		${WRKSRC}/update-mime-database.c \
 		${WRKSRC}/shared-mime-info-spec.xml
+
+# Hack to get a minimal set of files and directories. We could just
+# configure with `--disable-update-mimedb' but then we don't get
+# the (mostly empty) bookkeeping files.
+post-install:
+	cd ${PREFIX}/share/mime && \
+	mv packages/freedesktop.org.xml{,~} && \
+	${PREFIX}/bin/update-mime-database $$(pwd) && \
+	mv packages/freedesktop.org.xml{~,}
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.416 2009/06/23 17:58:38 martynas Exp $
+# $OpenBSD: Makefile,v 1.432 2009/10/23 17:25:31 sthen Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -10,6 +10,7 @@
      SUBDIR += apache-httpd
      SUBDIR += august
      SUBDIR += bk2site
+     SUBDIR += blogsum
      SUBDIR += bluefish
      SUBDIR += bozohttpd
      SUBDIR += bricolage
@@ -20,6 +21,7 @@
      SUBDIR += clearsilver
      SUBDIR += clearsilver,python
      SUBDIR += cms-ms
+     SUBDIR += cntlm
      SUBDIR += concrete5
      SUBDIR += cronolog
      SUBDIR += cssed
@@ -28,7 +30,9 @@
      SUBDIR += dillo
      SUBDIR += drupal5
      SUBDIR += drupal6
+     SUBDIR += drush
      SUBDIR += elinks
+     SUBDIR += elinks,js
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
      SUBDIR += ezpublish
@@ -101,8 +105,6 @@
      SUBDIR += mod_text2html
      SUBDIR += moinmoin
      SUBDIR += moodle
-     SUBDIR += moodle,mysql
-     SUBDIR += moodle,pgsql
      SUBDIR += mozilla-firefox
      SUBDIR += mozplugger
      SUBDIR += mplayerplug-in
@@ -228,6 +230,7 @@
      SUBDIR += p5-HTTP-BrowserDetect
      SUBDIR += p5-HTTP-GHTTP
      SUBDIR += p5-HTTP-GetImages
+     SUBDIR += p5-HTTP-Lite
      SUBDIR += p5-HTTP-Proxy
      SUBDIR += p5-HTTP-Recorder
      SUBDIR += p5-HTTP-Request-AsCGI
@@ -245,6 +248,7 @@
      SUBDIR += p5-Maypole-Authentication-UserSessionCookie
      SUBDIR += p5-Mojo
      SUBDIR += p5-MojoX-Session
+     SUBDIR += p5-PHP-Serialization
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
@@ -283,12 +287,16 @@
      SUBDIR += pear-HTML-Template-IT
      SUBDIR += pear-SOAP
      SUBDIR += pecl-APC
+     SUBDIR += pecl-chroot
      SUBDIR += pecl-geoip
      SUBDIR += pecl-memcache
+     SUBDIR += pecl-pcntl
+     SUBDIR += pecl-phar
      SUBDIR += pecl-proctitle
      SUBDIR += pecl-ssh2
      SUBDIR += pecl-swish
      SUBDIR += pecl-uploadprogress
+     SUBDIR += perlbal
      SUBDIR += php-openid
      SUBDIR += php5
      SUBDIR += phpicalendar
@@ -349,11 +357,14 @@
      SUBDIR += ruby-fcgi
      SUBDIR += ruby-httpclient
      SUBDIR += ruby-merb
+     SUBDIR += ruby-mechanize
      SUBDIR += ruby-mongrel
+     SUBDIR += ruby-passenger
      SUBDIR += ruby-rack
      SUBDIR += ruby-rails
      SUBDIR += ruby-rest-client
      SUBDIR += ruby-sinatra
+     SUBDIR += ruby-thin
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
      SUBDIR += sarg
@@ -377,8 +388,8 @@
      SUBDIR += tntnet
      SUBDIR += tomcat
      SUBDIR += trac
-     SUBDIR += trac-adminplugin
      SUBDIR += trac-ldapplugin
+     SUBDIR += tracnav
      SUBDIR += transproxy
      SUBDIR += turba
      SUBDIR += tt-rss
@@ -403,6 +414,7 @@
      SUBDIR += www6to4
      SUBDIR += wwwcount
      SUBDIR += wwwoffle
+     SUBDIR += xapian-omega
      SUBDIR += xcache
      SUBDIR += xmhtml
      SUBDIR += xoops

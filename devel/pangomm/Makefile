@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/01/11 22:50:34 landry Exp $
+# $OpenBSD: Makefile,v 1.4 2009/10/04 18:19:22 ajacoutot Exp $
 
 COMMENT =		C++ interface for pango
 
-DISTNAME =		pangomm-2.14.1
+V =			2.26.0
+DISTNAME =		pangomm-${V}
 CATEGORIES =		devel x11
 
-SHARED_LIBS +=		pangomm-1.4	7.0 #.1.30
+SHARED_LIBS +=		pangomm-1.4	9.0 # .1.30
 
 HOMEPAGE =		http://www.gtkmm.org/
 
@@ -15,7 +16,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		${MASTER_SITE_GNOME:=sources/pangomm/2.14/}
+MASTER_SITES =		${MASTER_SITE_GNOME:=sources/pangomm/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
 EXTRACT_SUFX =		.tar.bz2
 
 MODULES =		devel/gettext
@@ -26,13 +27,14 @@ LIB_DEPENDS =		pangoft2-1.0,pangocairo-1.0,pango-1.0::devel/pango \
 
 WANTLIB =		X11 Xau Xdmcp Xrender cairo expat fontconfig freetype \
 			glib-2.0 glitz gmodule-2.0 gobject-2.0 m pcre pixman-1 \
-			sigc-2.0 png z
+			png pthread-stubs sigc-2.0 xcb z
 USE_X11 =		Yes
 USE_GMAKE =		Yes
 USE_LIBTOOL =		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
-CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include"
+CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include" \
+			MAKE=${MAKE_PROGRAM}
 
 .include <bsd.port.mk>

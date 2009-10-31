@@ -1,4 +1,4 @@
-# $OpenBSD: FS.pm,v 1.7 2009/04/09 14:48:45 naddy Exp $
+# $OpenBSD: FS.pm,v 1.9 2009/10/01 19:38:40 matthieu Exp $
 # Copyright (c) 2008 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
@@ -131,7 +131,7 @@ sub is_binary
 	return 0 if -l $filename or ! -x $filename;
 	my $check=`/usr/bin/file \Q$filename\E`;
 	chomp $check;
-	if ($check =~m/\: ELF (32|64)-bit (MSB|LSB) executable\,.+ for OpenBSD\,/) {
+	if ($check =~m/\: (setuid |setgid |)ELF (32|64)-bit (MSB|LSB) executable\,.+ for OpenBSD\,/) {
 	    	return 1;
 	} else {
 		return 0;
@@ -297,7 +297,7 @@ sub get_files
 	my $mtree = {};
 	OpenBSD::Mtree::parse($mtree, '/usr/local', '/etc/mtree/BSD.local.dist');
 	OpenBSD::Mtree::parse($mtree, '/', '/etc/mtree/4.4BSD.dist');
-	OpenBSD::Mtree::parse($mtree, '/usr/X11R6', '/etc/mtree/BSD.x11.dist');
+	OpenBSD::Mtree::parse($mtree, '/', '/etc/mtree/BSD.x11.dist');
 	$mtree->{'/usr/local/lib/X11'} = 1;
 	$mtree->{'/usr/local/include/X11'} = 1;
 	$mtree->{'/usr/local/lib/X11/app-defaults'} = 1;

@@ -1,4 +1,7 @@
-$OpenBSD: README.OpenBSD,v 1.3 2009/04/27 08:43:04 ajacoutot Exp $
+$OpenBSD: README.OpenBSD,v 1.9 2009/10/07 17:05:08 ajacoutot Exp $
+
+*** Upgrading users: refer to zarafa documentation on the web to check
+*** if any particular step is required after upgrading to a new version. 
 
 Post-install/update instructions for Zarafa
 ===========================================
@@ -7,6 +10,10 @@ By default the server is configured to accept SOAP connections on port
 236. If you wish to connect Outlook clients on port 80, please setup
 your web server to proxy HTTP requests with URI=/zarafa to
 http://localhost:236.
+
+It is advised to tune the MySQL installation according to:
+    http://zarafa.com/wiki/index.php/MySQL_tuning
+(especially for max_allowed_packet)
 
 
 Before Starting zarafa-server for the first time
@@ -70,18 +77,19 @@ if [ "`pgrep zarafa`" ]; then
 	pkill zarafa-monitor
 	pkill zarafa-spooler
 	pkill zarafa-server
-	sleep 10
+	sleep 5
 	i=0
-	while [ $i -lt 60 ]
+	while [ $i -lt 15 ]
 		do
-		if [ "`pgrep zarafa-server`" ]; then
-			pkill zarafa-server
-			sleep 10
-			i=`expr $i + 10`
+		if [ "`pgrep zarafa\-`" ]; then
+			pkill zarafa\-
+			sleep 5
+			i=`expr $i + 5`
 		else
-			i=60
+			i=15
 		fi
 	done
+	pkill -9 zarafa\-
 fi
 
 
@@ -91,8 +99,10 @@ Mail delivery agent configuration
 The easiest way to use zarafa-dagent system-wide under a stock OpenBSD
 sendmail installation is to use procmail(1).
 See the following URL for other MTA integration:
-   http://www.zarafa.com/?q=en/faq/61
+    http://www.zarafa.com/?q=en/faq/61
 
+1. Using procmail.
+==================
 First, install the procmail package and configure ${SYSCONFDIR}/procmailrc
 the following way:
  
@@ -102,7 +112,15 @@ EXITCODE=$?
 
 Next, you need to add the following line to your sendmail.mc file then
 restart sendmail(8):
-   FEATURE(`local_procmail')dnl
+    FEATURE(`local_procmail')dnl
+
+2. Configuring sendmail to use the zarafa-dagent directly.
+==========================================================
+To enable the Zarafa dagent for all other deliveries (including
+localhost), add the following lines to your sendmail.mc and restart
+sendmail(8):
+    FEATURE(`local_zarafa')dnl
+    MAILER(`zarafa')dnl
 
 
 The PHP mapi module and OpenBSD Apache

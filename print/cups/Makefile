@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.53 2009/06/04 21:46:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.58 2009/10/12 11:17:17 ajacoutot Exp $
 
 COMMENT=		Common Unix Printing System
 
-VERSION=		1.3.10
+VERSION=		1.3.11
 DISTNAME=		cups-${VERSION}-source
-PKGNAME=		cups-${VERSION}p7
+PKGNAME=		cups-${VERSION}p1
+
 CATEGORIES=		print sysutils
 
 SHARED_LIBS+=		cups		4.0
@@ -21,8 +22,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += asn1 c crypto gcrypt gpg-error gssapi jpeg krb5 m
-WANTLIB += pthread z
+WANTLIB += asn1 c crypto gssapi jpeg krb5 m pthread z
 
 MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
 			http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
@@ -33,8 +33,6 @@ MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
 
 EXTRACT_SUFX=		.tar.bz2
 
-MODULES=		devel/gettext
-
 RUN_DEPENDS=		:desktop-file-utils-*:devel/desktop-file-utils \
 			::devel/xdg-utils
 LIB_DEPENDS=		png.>=3::graphics/png \
@@ -42,7 +40,7 @@ LIB_DEPENDS=		png.>=3::graphics/png \
 			dbus-1.>=7::x11/dbus \
 			gnutls.>=14::security/gnutls
 # only build the -main subpackage to prevent cyclic dependency
-LIB_DEPENDS+=		dns_sd::net/avahi,no_gtk,no_qt3,no_qt4
+LIB_DEPENDS+=		dns_sd::net/avahi,no_gtk,no_mono,no_qt3,no_qt4
 
 FAKE_FLAGS=		BINMODE=${BINMODE} \
 			SHAREMODE=${SHAREMODE} \
@@ -94,8 +92,7 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
 			LIBGNUTLSCONFIG="pkg-config gnutls" \
 			ac_cv_path_CUPS_GHOSTSCRIPT="${LOCALBASE}/bin/gs"
 
-CFLAGS+=		"-I${LOCALBASE}/include" \
-			"-I${LOCALBASE}/include/libpng"
+CFLAGS+=		-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 WRKDIST=		${WRKDIR}/${DISTNAME:S/-source//}
 USE_GMAKE=		Yes
@@ -117,6 +114,8 @@ CONFIGURE_ARGS+=	--disable-ldap
 
 post-extract:
 	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
+	# XXX check on update whether this is still necessary
+	${INSTALL} -m 555 ${FILESDIR}/libgnutls-config ${WRKDIR}/bin
 
 post-configure:
 	cd ${WRKBUILD} && perl -pi -e 's|\$${DESTDIR}||g' init/cups.sh \

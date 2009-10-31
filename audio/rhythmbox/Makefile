@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.38 2009/06/11 18:27:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2009/10/16 00:59:37 jasper Exp $
 
 COMMENT=		music management application for GNOME
 
 GNOME_PROJECT=		rhythmbox
-GNOME_VERSION=		0.12.2
-PKGNAME=		${DISTNAME}p4
+GNOME_VERSION=		0.12.5
+PKGNAME=		${DISTNAME}p1
 
 SHARED_LIBS +=  rhythmbox-core       0.0      # .0.0
+
 CATEGORIES=		audio
 
 HOMEPAGE=		http://www.rhythmbox.org/
@@ -31,8 +32,9 @@ WANTLIB += gnome-keyring gnomecanvas-2 gnomevfs-2 gnutls gobject-2.0
 WANTLIB += gpg-error gssapi gstbase-0.10 gstcontroller-0.10 gstinterfaces-0.10
 WANTLIB += gstpbutils-0.10 gstreamer-0.10 gthread-2.0 gtk-x11-2.0
 WANTLIB += krb5 m neon nspr4 nss3 pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 plc4 plds4 png popt pthread smime3 softokn3
-WANTLIB += soup-2.4 sqlite3 ssl ssl3 tasn1 util xml2 z
+WANTLIB += pcre pixman-1 plc4 plds4 png popt pthread proxy smime3 softokn3
+WANTLIB += soup-2.4 sqlite3 ssl ssl3 tasn1 util xml2
+WANTLIB += pthread-stubs xcb z
 
 MODULES=		devel/gettext \
 			x11/gnome \
@@ -47,15 +49,10 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			gnomeui-2::x11/gnome/libgnomeui \
 			gnome-media-profiles::x11/gnome/media \
 			totem-plparser::x11/gnome/totem-pl-parser \
-			sexy::x11/libsexy \
 			camel-1.2.>=10,edataserver-1.2::databases/evolution-data-server \
-			gstcdda-0.10,gsttag-0.10::multimedia/gstreamer-0.10/plugins-base,-cdda
+			gstcdda-0.10,gsttag-0.10::multimedia/gstreamer-0.10/plugins-base,-cdda \
+			soup-gnome-2.4.>=1::devel/libsoup,-gnome
 RUN_DEPENDS=		:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-gnome \
-			:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-ogg \
-			:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-vorbis \
-			:gstreamer-plugins-good->=0.10.8:multimedia/gstreamer-0.10/plugins-good,-flac \
-			:gstreamer-plugins-good->=0.10.8:multimedia/gstreamer-0.10/plugins-good,-gconf \
-			:gstreamer-plugins-ugly->=0.10.7:multimedia/gstreamer-0.10/plugins-ugly,-mad \
 			::x11/gnome/icon-theme \
 			::multimedia/gstreamer-0.10/py-gstreamer
 REGRESS_DEPENDS=	::devel/check
@@ -67,6 +64,7 @@ MODGCONF2_SCHEMAS_DIR=	rhythmbox
 
 CONFIGURE_STYLE= 	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--disable-silent-rules \
 			--with-database=tree \
 			--with-gnome-keyring \
 			--with-mdns=avahi \
@@ -81,17 +79,16 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--without-libbrasero-media \
 			--without-libnautilus-burn \
 			--disable-vala \
-			--disable-browser-plugin \
 			--disable-fm-radio \
 			--disable-lirc
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 
-# The regression tests require a running instance of X.
-# You will also need to set the XAUTHORITY environment variable to point 
-# to the appropriate .Xauthority file. 
-REGRESS_IS_INTERACTIVE= Yes
-REGRESS_FLAGS=DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+# XXX TODO: plugins subpackage
+CONFIGURE_ARGS+=	--disable-browser-plugin
+CONFIGURE_ENV+=		MOZILLA_PLUGINDIR=${PREFIX}/lib/mozilla-plugins
+
+REGRESS_IS_INTERACTIVE= x11
 
 .include <bsd.port.mk>

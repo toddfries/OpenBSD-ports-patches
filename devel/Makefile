@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.714 2009/06/22 19:35:36 landry Exp $
+# $OpenBSD: Makefile,v 1.745 2009/10/13 21:00:02 pirofti Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -48,8 +48,10 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
+     SUBDIR += codeblocks
      SUBDIR += commoncpp
      SUBDIR += cook
+     SUBDIR += coxpcall
      SUBDIR += cpphs
      SUBDIR += cppunit
      SUBDIR += cscope
@@ -58,6 +60,7 @@
      SUBDIR += cutils
      SUBDIR += cvs20hg
      SUBDIR += cvs2cl
+     SUBDIR += cvs2svn
      SUBDIR += cvsgraph
      SUBDIR += cvslock
      SUBDIR += cvsplot
@@ -73,12 +76,15 @@
      SUBDIR += doc++
      SUBDIR += dotconf
      SUBDIR += doxygen
+     SUBDIR += dtc
      SUBDIR += eclipse
      SUBDIR += ectags
+     SUBDIR += ethos
      SUBDIR += fasm
      SUBDIR += ffcall
      SUBDIR += flatzebra
      SUBDIR += flawfinder
+     SUBDIR += fossil
      SUBDIR += fox
      SUBDIR += fribidi
      SUBDIR += gal2
@@ -88,10 +94,12 @@
      SUBDIR += geany
      SUBDIR += geotiff
      SUBDIR += gettext
+     SUBDIR += gflags
      SUBDIR += giblib
      SUBDIR += giggle
      SUBDIR += gindent
      SUBDIR += git
+     SUBDIR += git-cola
      SUBDIR += glade3
      SUBDIR += glib
      SUBDIR += glib2
@@ -100,11 +108,13 @@
      SUBDIR += gmake
      SUBDIR += gmp
      SUBDIR += goffice
+     SUBDIR += gobject-introspection
      SUBDIR += goopy
      SUBDIR += gperf
      SUBDIR += gputils
      SUBDIR += grcs
      SUBDIR += gsl
+     SUBDIR += gtkparasite
      SUBDIR += guichan
      SUBDIR += guilib
      SUBDIR += haddock
@@ -140,12 +150,14 @@
      SUBDIR += libconfuse
      SUBDIR += libdaemon
      SUBDIR += libdockapp
-     SUBDIR += libdvdplay
      SUBDIR += libdvdread
      SUBDIR += libelf
+     SUBDIR += libev
      SUBDIR += libexecinfo
+     SUBDIR += libffi
      SUBDIR += libfmt
      SUBDIR += libftdi
+     SUBDIR += libgdata
      SUBDIR += libglade2
      SUBDIR += libglademm
      SUBDIR += libgsf
@@ -182,7 +194,7 @@
      SUBDIR += llvm
      SUBDIR += lpeg
      SUBDIR += luaalarm
-     SUBDIR += luabitlib
+     SUBDIR += luabitop
      SUBDIR += luacopas
      SUBDIR += luaevent
      SUBDIR += luafs
@@ -209,8 +221,11 @@
      SUBDIR += netbeans
      SUBDIR += nspr
      SUBDIR += ocaml-calendar
+     SUBDIR += ode
      SUBDIR += omake
      SUBDIR += opencm
+     SUBDIR += openmpi
+     SUBDIR += openocd
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
      SUBDIR += p5-Algorithm-CurveFit
@@ -220,6 +235,7 @@
      SUBDIR += p5-Algorithm-MDiff
      SUBDIR += p5-Algorithm-MarkovChain
      SUBDIR += p5-Algorithm-Permute
+     SUBDIR += p5-Alien-wxWidgets
      SUBDIR += p5-Any-Moose
      SUBDIR += p5-AnyEvent
      SUBDIR += p5-App-CLI
@@ -228,6 +244,7 @@
      SUBDIR += p5-AppConfig-Std
      SUBDIR += p5-Array-Compare
      SUBDIR += p5-Array-Window
+     SUBDIR += p5-AutoXS-Header
      SUBDIR += p5-B-Deobfuscate
      SUBDIR += p5-B-Graph
      SUBDIR += p5-B-Hooks-EndOfScope
@@ -294,6 +311,7 @@
      SUBDIR += p5-Class-Virtual
      SUBDIR += p5-Class-WhiteHole
      SUBDIR += p5-Class-XPath
+     SUBDIR += p5-Class-XSAccessor
      SUBDIR += p5-Clone
      SUBDIR += p5-Config-Any
      SUBDIR += p5-Config-Auto
@@ -328,6 +346,7 @@
      SUBDIR += p5-Date-Leapyear
      SUBDIR += p5-Date-Simple
      SUBDIR += p5-DateTime
+     SUBDIR += p5-DateTime-Calendar-Mayan
      SUBDIR += p5-DateTime-Cron-Simple
      SUBDIR += p5-DateTime-Format-Builder
      SUBDIR += p5-DateTime-Format-HTTP
@@ -369,6 +388,7 @@
      SUBDIR += p5-ExtUtils-Depends
      SUBDIR += p5-ExtUtils-PkgConfig
      SUBDIR += p5-ExtUtils-XSBuilder
+     SUBDIR += p5-ExtUtils-XSpp
      SUBDIR += p5-File-Attributes
      SUBDIR += p5-File-Attributes-Recursive
      SUBDIR += p5-File-BOM
@@ -378,6 +398,7 @@
      SUBDIR += p5-File-DesktopEntry
      SUBDIR += p5-File-Find-Rule
      SUBDIR += p5-File-Find-Rule-Filesys-Virtual
+     SUBDIR += p5-File-Find-Rule-Perl
      SUBDIR += p5-File-Finder
      SUBDIR += p5-File-Flat
      SUBDIR += p5-File-HomeDir
@@ -472,6 +493,9 @@
      SUBDIR += p5-POE-Component-IKC
      SUBDIR += p5-POE-Component-Pluggable
      SUBDIR += p5-POE-Component-PubSub
+     SUBDIR += p5-POE-Loop-Event
+     SUBDIR += p5-POE-Loop-Tk
+     SUBDIR += p5-POE-Test-Loops
      SUBDIR += p5-POE-XS-Queue-Array
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-PadWalker
@@ -479,6 +503,7 @@
      SUBDIR += p5-Parallel-ForkManager
      SUBDIR += p5-Parallel-Forker
      SUBDIR += p5-Params-CallbackRequest
+     SUBDIR += p5-Params-Coerce
      SUBDIR += p5-Params-Util
      SUBDIR += p5-Params-Validate
      SUBDIR += p5-Paranoid
@@ -504,6 +529,7 @@
      SUBDIR += p5-Regexp-Shellish
      SUBDIR += p5-Return-Value
      SUBDIR += p5-SDL
+     SUBDIR += p5-SUPER
      SUBDIR += p5-SVN-Dump
      SUBDIR += p5-SVN-Mirror
      SUBDIR += p5-SVN-Notify
@@ -564,6 +590,7 @@
      SUBDIR += p5-Test-HTML-Tidy
      SUBDIR += p5-Test-Inline
      SUBDIR += p5-Test-JSON
+     SUBDIR += p5-Test-LeakTrace
      SUBDIR += p5-Test-LongString
      SUBDIR += p5-Test-Manifest
      SUBDIR += p5-Test-Memory-Cycle
@@ -579,6 +606,7 @@
      SUBDIR += p5-Test-Pod
      SUBDIR += p5-Test-Pod-Coverage
      SUBDIR += p5-Test-Reporter
+     SUBDIR += p5-Test-Script
      SUBDIR += p5-Test-Spelling
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-Taint
@@ -630,8 +658,10 @@
      SUBDIR += p5-YAML-Tiny
      SUBDIR += p5-YAML-XS
      SUBDIR += p5-accessors
+     SUBDIR += p5-aliased
      SUBDIR += p5-boolean
      SUBDIR += p5-capitalization
+     SUBDIR += p5-common-sense
      SUBDIR += p5-enum
      SUBDIR += p5-libintl
      SUBDIR += p5-namespace-clean
@@ -732,12 +762,14 @@
      SUBDIR += rats
      SUBDIR += re2c
      SUBDIR += remake
+     SUBDIR += rsvndump
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activesupport
      SUBDIR += ruby-assistance
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-columnize
+     SUBDIR += ruby-cucumber
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
@@ -752,23 +784,27 @@
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
      SUBDIR += ruby-linecache
+     SUBDIR += ruby-locale
      SUBDIR += ruby-minitest
      SUBDIR += ruby-mocha
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-open4
      SUBDIR += ruby-parsetree
+     SUBDIR += ruby-polyglot
      SUBDIR += ruby-rack-test
      SUBDIR += ruby-rake
      SUBDIR += ruby-rcov
      SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
+     SUBDIR += ruby-ruby_parser
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-rubyforge
      SUBDIR += ruby-rubyinline
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-systemtimer
+     SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools

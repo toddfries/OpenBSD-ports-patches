@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.19 2009/05/12 07:50:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2009/10/11 13:17:00 kili Exp $
 
 COMMENT=	GNU Transport Layer Security library
 
-DISTNAME=	gnutls-2.6.6
+DISTNAME=	gnutls-2.8.4
 CATEGORIES=	security
 
-SHARED_LIBS=	gnutls-extra	14.0 \
-		gnutls-openssl	14.0 \
-		gnutls		14.0 \
-		gnutlsxx	14.0   # 37.1
+SHARED_LIBS=	gnutls-extra	15.0 \
+		gnutls-openssl	15.0 \
+		gnutls		15.0 \
+		gnutlsxx	15.0   # .40.11
 
 HOMEPAGE=	http://www.gnutls.org/
 
@@ -31,12 +31,16 @@ MODULES=	devel/gettext
 
 LIB_DEPENDS=	gcrypt.>=14::security/libgcrypt \
 		tasn1::security/libtasn1 \
-		lzo::archivers/lzo
+		lzo2::archivers/lzo2
 
 USE_LIBTOOL=	Yes
 
+# regression tests need this
+PORTHOME=	${WRKDIR}
+
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
+		--disable-guile \
 		--with-included-libcfg \
 		--with-lzo \
 		--with-libtasn1-prefix=${LOCALBASE} \

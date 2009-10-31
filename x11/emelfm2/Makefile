@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2009/05/06 16:20:01 giovanni Exp $
+# $OpenBSD: Makefile,v 1.8 2009/09/16 15:50:26 giovanni Exp $
 
 COMMENT =		GTK+2 file manager
 
-DISTNAME =		emelfm2-0.6.0
+DISTNAME =		emelfm2-0.6.2
+
 CATEGORIES =		x11
 HOMEPAGE =		http://emelfm2.net/
 
@@ -19,9 +20,15 @@ EXTRACT_SUFX =	.tar.bz2
 
 LIB_DEPENDS =	gdk_pixbuf-2.0,gdk-x11-2.0,gtk-x11-2.0::x11/gtk+2
 
-WANTLIB =	X11 c cairo glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
-		intl m pango-1.0 pangocairo-1.0 pthread
+MODULES =	devel/gettext
 
+WANTLIB =	c cairo glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
+		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
+		Xi Xinerama Xrandr Xrender atk-1.0 expat fontconfig \
+		freetype gio-2.0 glitz pangoft2-1.0 pixman-1 png xcb \
+		m pango-1.0 pangocairo-1.0 pthread pthread-stubs z
+
+BUILD_DEPENDS =	::devel/libmagic
 RUN_DEPENDS =	::devel/desktop-file-utils \
 		::devel/xdg-utils
 

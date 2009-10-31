@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.231 2009/06/11 22:30:02 jim Exp $
+# $OpenBSD: Makefile,v 1.236 2009/09/25 19:38:09 sthen Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
 
@@ -72,6 +72,7 @@
      SUBDIR += fetchmail
      SUBDIR += getmail
      SUBDIR += gmime
+     SUBDIR += gmime24
      SUBDIR += grepmail
      SUBDIR += greyscanner
      SUBDIR += hashcash
@@ -115,6 +116,7 @@
      SUBDIR += mutt
      SUBDIR += nail
      SUBDIR += nmh
+     SUBDIR += nmzmail
      SUBDIR += offlineimap
      SUBDIR += openwebmail
      SUBDIR += osbf-lua
@@ -128,12 +130,15 @@
      SUBDIR += p5-Email-FolderType
      SUBDIR += p5-Email-LocalDelivery
      SUBDIR += p5-Email-MIME
+     SUBDIR += p5-Email-MIME-Attachment-Stripper
      SUBDIR += p5-Email-MIME-ContentType
      SUBDIR += p5-Email-MIME-Creator
      SUBDIR += p5-Email-MIME-Encodings
      SUBDIR += p5-Email-MIME-Modifier
      SUBDIR += p5-Email-MessageID
+     SUBDIR += p5-Email-Reply
      SUBDIR += p5-Email-Send
+     SUBDIR += p5-Email-Sender
      SUBDIR += p5-Email-Simple
      SUBDIR += p5-Email-Simple-Creator
      SUBDIR += p5-Email-Valid
@@ -150,6 +155,7 @@
      SUBDIR += p5-Mail-Audit
      SUBDIR += p5-Mail-Box
      SUBDIR += p5-Mail-DKIM
+     SUBDIR += p5-Mail-GnuPG
      SUBDIR += p5-Mail-IMAPClient
      SUBDIR += p5-Mail-IMAPTalk
      SUBDIR += p5-Mail-Mbox-MessageParser

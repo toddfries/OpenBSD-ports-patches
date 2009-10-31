@@ -1,15 +1,20 @@
-# $OpenBSD: Makefile,v 1.41 2009/06/11 18:38:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.44 2009/10/11 18:13:25 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		lightweight GNOME text editor
 
+# PLIST regen is needed for at least the following ports when
+# the gedit plugins directory changes:
+# (i.e. ${LOCALBASE}/lib/gedit-2/plugins)
+# x11/gnome/gedit-plugins
+# x11/gnome/seahorse-plugins
+
 GNOME_PROJECT=		gedit
-GNOME_VERSION=		2.24.3
-PKGNAME=		${DISTNAME}p7
+GNOME_VERSION=		2.28.0
 CATEGORIES=		editors
 
-HOMEPAGE=		http://www.gnome.org/projects/gedit/
+HOMEPAGE=		http://projects.gnome.org/gedit/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,18 +22,18 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage \
-		Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c \
-		cairo dbus-1 dbus-glib-1 expat fontconfig freetype \
-		gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
-		glitz gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 \
-		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
-		png pthread stdc++ util xml2 z
+WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo
+WANTLIB += dbus-1 dbus-glib-1 expat ffi fontconfig freetype gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
+WANTLIB += stdc++ util xcb xml2 z
 
-MODULES=	devel/gettext \
+MODULES=	devel/gconf2 \
+		devel/gettext \
 		lang/python \
-		x11/gnome \
-		devel/gconf2
+		x11/gnome
 
 BUILD_DEPENDS=		:iso-codes-*:devel/iso-codes \
 			::x11/py-gtksourceview \
@@ -48,7 +53,8 @@ LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--enable-python \
-			--disable-attr
+			--disable-attr \
+			--disable-updater
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -lm -lstdc++ -lintl -liconv"
 

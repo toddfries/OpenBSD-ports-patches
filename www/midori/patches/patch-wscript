@@ -1,18 +1,27 @@
-$OpenBSD: patch-wscript,v 1.5 2009/04/27 19:27:21 landry Exp $
+$OpenBSD: patch-wscript,v 1.7 2009/09/21 08:01:25 landry Exp $
 We don't need those files installed..
---- wscript.orig	Sun Apr 19 22:16:33 2009
-+++ wscript	Thu Apr 23 21:42:19 2009
-@@ -267,12 +267,8 @@ def build (bld):
-     if option_enabled ('addons'):
-         bld.add_subdirs ('extensions')
+--- wscript.orig	Sat Sep 12 00:09:38 2009
++++ wscript	Sun Sep 13 13:55:02 2009
+@@ -63,7 +63,7 @@ def rc_file(self, node):
+     rctask.set_outputs (node.change_ext ('.rc.o'))
+     self.compiled_tasks.append (rctask)
+ Task.simple_task_type ('winrc', '${WINRC} -o${TGT} ${SRC}', color='BLUE',
+-    before='cc cxx', shell=False)
++    before='cc cxx')
  
--    if option_enabled ('docs'):
+ def configure (conf):
+     def option_checkfatal (option, desc):
+@@ -373,12 +373,8 @@ def build (bld):
+ 
+     bld.add_group ()
+ 
+-    if bld.env['docs']:
 -        bld.install_files ('${DOCDIR}/' + APPNAME + '/', \
 -            'AUTHORS ChangeLog COPYING EXPAT README TRANSLATE')
 -
      # Install default configuration
 -    bld.install_files ('${SYSCONFDIR}/xdg/' + APPNAME + '/', 'data/search')
-+    bld.install_files ('${DATADIR}/examples/' + APPNAME + '/', 'data/search')
++    bld.install_files ('${MDATADIR}/examples/' + APPNAME + '/', 'data/search')
  
      if bld.env['RST2HTML']:
          # FIXME: Build only if needed

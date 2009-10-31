@@ -1,10 +1,10 @@
-$OpenBSD: patch-common_platform_linux_h,v 1.1.1.1 2009/02/16 09:44:37 ajacoutot Exp $
---- common/platform.linux.h.orig	Wed Dec 24 20:17:57 2008
-+++ common/platform.linux.h	Fri Jan  9 15:09:32 2009
-@@ -48,8 +48,15 @@
- #include <ctype.h>		/* 64bit int definition */
+$OpenBSD: patch-common_platform_linux_h,v 1.3 2009/10/20 22:34:26 ajacoutot Exp $
+--- common/platform.linux.h.orig	Fri Oct  9 22:34:37 2009
++++ common/platform.linux.h	Tue Oct 20 23:41:36 2009
+@@ -61,8 +61,15 @@
  #include <dlfcn.h>
  #include <stddef.h>
+ #include <libgen.h>
 +#if defined(__OpenBSD__)
 +#include <sys/endian.h>
 +#ifndef MAX_PATH

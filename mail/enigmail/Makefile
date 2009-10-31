@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.20 2009/06/24 09:42:34 martynas Exp $
+# $OpenBSD: Makefile,v 1.22 2009/09/18 20:33:50 martynas Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GnuPG extension for Thunderbird
 
-VER=		0.95.7
+VER=		0.96.0
 DISTNAME=	enigmail-${VER}
-PKGNAME=	${DISTNAME}p3
 CATEGORIES=	mail security
 
 SHARED_LIBS=	enigmime	13.0
@@ -26,7 +25,7 @@ BUILD_DEPENDS=	::${THUNDERBIRD_DIR}:configure \
 		::archivers/unzip
 RUN_DEPENDS=	::security/gnupg
 
-LIB_DEPENDS=	mozilla-thunderbird/xpcom,mozilla-thunderbird/xpcom_compat,mozilla-thunderbird/xpcom_core:mozilla-thunderbird-2.0.0.22:${THUNDERBIRD_DIR}
+LIB_DEPENDS=	mozilla-thunderbird/xpcom,mozilla-thunderbird/xpcom_compat,mozilla-thunderbird/xpcom_core:mozilla-thunderbird-2.0.0.23:${THUNDERBIRD_DIR}
 WANTLIB=	c m nspr4 plc4 plds4
 
 USE_X11=	Yes
@@ -48,6 +47,9 @@ GLOBALDIR=	${PREFIX}/mozilla-thunderbird/extensions/${GUID}
 SUBST_VARS=	GUID
 
 post-extract:
+	@perl -pi -e 's|(genxpi.*) (\$$\(TARGET_XPCOM_ABI\))|\1 "\2"|g' \
+		${WRKDIST}/Makefile.in
+	@perl -pi -e 's|[-_]?\$${xpcomAbi}||g' ${WRKDIST}/genxpi
 	@mv ${WRKDIST} ${MOZBASE}/mailnews/extensions
 
 do-build:

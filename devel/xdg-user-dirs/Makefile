@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.4 2009/06/13 10:45:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2009/10/09 23:25:59 ajacoutot Exp $
 
 COMMENT=	utilities to manage well know user directories
 
-DISTNAME=	xdg-user-dirs-0.10
-PKGNAME=	${DISTNAME}p2
+DISTNAME=	xdg-user-dirs-0.11
 CATEGORIES=	devel
 
 HOMEPAGE=	http://freedesktop.org/wiki/Software/xdg-user-dirs/
+
+MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,6 +22,8 @@ WANTLIB=	c
 MODULES=	devel/gettext
 
 CONFIGURE_STYLE= gnu
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/xdg-user-dirs
 

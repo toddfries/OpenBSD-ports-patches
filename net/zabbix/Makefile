@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.6 2009/06/11 16:38:17 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2009/10/02 14:09:10 ajacoutot Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
 COMMENT-web =		network and application monitoring - web frontend
 COMMENT-doc =		network and application monitoring - non-free documentation
 
-VERSION =		1.6.4
+VERSION =		1.6.5
+MAJOR =			${VERSION:R}
 DISTNAME =		zabbix-${VERSION}
-PKGNAME-main =		zabbix-agent-${VERSION}p3
-PKGNAME-server =	zabbix-server-${VERSION}p4
-PKGNAME-doc =		zabbix-doc-${VERSION}p0
-PKGNAME-web =		zabbix-web-${VERSION}p2
+FULLPKGNAME-main =	zabbix-agent-${VERSION}p0
+PKGNAME-server =	zabbix-server-${VERSION}p0
+FULLPKGNAME-doc =	zabbix-doc-${VERSION}
+PKGNAME-web =		zabbix-web-${VERSION}
 CATEGORIES =		net
 
 HOMEPAGE =		http://www.zabbix.com/
@@ -33,7 +34,7 @@ MULTI_PACKAGES =	-main -doc
 PSEUDO_FLAVORS =	no_server
 FLAVORS =		mysql pgsql
 
-SUBST_VARS +=		PREFIX-web ZABBIX_WEB
+SUBST_VARS +=		PREFIX-web ZABBIX_WEB MAJOR
 
 WANTLIB =		c kvm m
 LIB_DEPENDS =		lber,ldap::databases/openldap
@@ -43,7 +44,8 @@ WANTLIB-doc =
 
 LIB_DEPENDS-server =	${LIB_DEPENDS} \
 			curl::net/curl \
-			netsnmp::net/net-snmp
+			netsnmp::net/net-snmp \
+			iksemel::textproc/iksemel
 RUN_DEPENDS-server =	::net/fping
 WANTLIB-server =	${WANTLIB} crypto idn ssl z
 
@@ -54,15 +56,17 @@ CONFIGURE_ARGS =	--enable-server \
 			--enable-ipv6 \
 			--with-libcurl \
 			--with-net-snmp \
-			--with-ldap
+			--with-ldap \
+			--with-jabber="${LOCALBASE}"
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			ac_cv_search___res_query=no
 
 PREFIX-web =		/var/www
 LIB_DEPENDS-web =
+RUN_DEPENDS-web =	::www/php5/extensions,-gd
 WANTLIB-web =
-ZABBIX_WEB =		${PREFIX-web}/htdocs/zabbix
+ZABBIX_WEB =		${PREFIX-web}/zabbix
 
 FLAVOR ?=		no_server
 
@@ -73,12 +77,12 @@ BACKEND =		${FLAVOR}
 .if ${BACKEND} == "mysql"
 MULTI_PACKAGES += -server -web
 LIB_DEPENDS-server +=	mysqlclient::databases/mysql,-main
-RUN_DEPENDS-web =	::www/php5/extensions,-mysql
+RUN_DEPENDS-web + =	::www/php5/extensions,-mysql
 CONFIGURE_ARGS +=	--with-mysql
 .elif ${BACKEND} == "pgsql"
 MULTI_PACKAGES += -server -web
 LIB_DEPENDS-server +=	pq::databases/postgresql,-main
-RUN_DEPENDS-web =	::www/php5/extensions,-pgsql
+RUN_DEPENDS-web + =	::www/php5/extensions,-pgsql
 CONFIGURE_ARGS +=	--with-pgsql
 .elif ${BACKEND} == "no_server"
 CONFIGURE_ARGS += --disable-server \
@@ -87,14 +91,16 @@ CONFIGURE_ARGS += --disable-server \
 ERRORS +=		"Fatal: Conflicting flavors: ${FLAVOR}";
 .endif
 
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/misc/conf/zabbix_server.conf \
+		${WRKSRC}/misc/conf/zabbix_proxy.conf
+
 post-install:
 	${INSTALL_DATA_DIR} ${DESTDIR}${PREFIX-web}/zabbix
 	cd ${WRKBUILD}/frontends/php && tar -cf - . | \
 		tar -C ${DESTDIR}${PREFIX-web}/zabbix -xf -
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/zabbix
 	${SUBST_CMD} -c ${FILESDIR}/README.OpenBSD \
-		${WRKBUILD}/README.OpenBSD
-	${INSTALL_DATA} ${WRKBUILD}/README.OpenBSD \
 		${PREFIX}/share/doc/zabbix/README.OpenBSD
 	${INSTALL_DATA} "${WRKBUILD}/docs/ZABBIX Manual v1.6 rev 17.pdf" \
 		${PREFIX}/share/doc/zabbix/ZABBIX_Manual_v1.6_rev17.pdf
@@ -120,8 +126,9 @@ post-install:
 	# Script to easy upgrading from previous major version
 	cd ${WRKSRC}/upgrades/ && tar -cf - dbpatches | \
 		tar -C ${PREFIX}/share/zabbix -xf -
-
-MAJOR =		${VERSION:R}
-SUBST_VARS =	MAJOR
+	chown ${SHAREOWN}:${SHAREGRP} \
+		${PREFIX}/share/doc/zabbix/README.OpenBSD \
+		${DESTDIR}${PREFIX-web}/conf/modules.sample/zabbix.conf \
+		${DESTDIR}${PREFIX-web}/conf/php5.sample/zabbix.ini
 
 .include <bsd.port.mk>

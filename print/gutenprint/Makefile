@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.12 2009/03/31 15:11:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2009/08/27 11:11:04 ajacoutot Exp $
 
 COMMENT-main=		high quality print drivers
 COMMENT-foomatic=	Foomatic data for gutenprint drivers
 COMMENT-gimp=		Gimp print plug-in
 
-V=			5.2.3
+V=			5.2.4
 DISTNAME=		gutenprint-${V}
-PKGNAME-main=		${DISTNAME}p0
-PKGNAME-foomatic=	foomatic-db-${DISTNAME}p0
-PKGNAME-gimp=		gutenprint-gimp-${V}p0
+PKGNAME-main=		${DISTNAME}
+PKGNAME-foomatic=	foomatic-db-${DISTNAME}
+PKGNAME-gimp=		gutenprint-gimp-${V}
 
 MAJOR_V=		${V:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=		MAJOR_V
@@ -56,7 +56,7 @@ WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
 WANTLIB += iconv intl m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png z
+WANTLIB += pcre pixman-1 png pthread-stubs xcb z
 
 WANTLIB-main=	${WANTLIB} ncurses readline
 WANTLIB-foomatic=
@@ -87,6 +87,7 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-cups=no
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
+			LIBS="-liconv -lintl" \
 			am_cv_prog_tar_ustar=plaintar
 
 .for i in DVIPS DB2PDF DVIPDF DB2PS DB2HTML DOXYGEN TEXI2HTML CONVERT

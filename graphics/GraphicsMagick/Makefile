@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.10 2009/04/22 13:19:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2009/09/01 14:22:27 okan Exp $
 
 COMMENT=	image processing tools with stable ABI
 
-DISTNAME=	GraphicsMagick-1.3.3
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	GraphicsMagick-1.3.6
 CATEGORIES=	graphics devel
 
-SHARED_LIBS +=	GraphicsMagick       1.0      # .3.3
-SHARED_LIBS +=	GraphicsMagick++     1.0      # .3.0
-SHARED_LIBS +=	GraphicsMagickWand   1.0      # .2.1
+SHARED_LIBS +=	GraphicsMagick       2.0      # .3.3
+SHARED_LIBS +=	GraphicsMagick++     2.0      # .3.0
+SHARED_LIBS +=	GraphicsMagickWand   2.0      # .2.1
 
 HOMEPAGE=	http://www.graphicsmagick.org/
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=graphicsmagick/}
@@ -38,7 +37,7 @@ CONFIGURE_ARGS+=	--with-quantum-depth=16 \
 			--without-modules \
 			--without-threads \
 			--without-gslib \
-			--with-perl=/usr/bin/perl \
+			--with-perl \
 			--with-ltdl-include=${LOCALBASE}/include \
 			--with-ltdl-lib=${LOCALBASE}/lib \
 			--disable-ltdl-install
@@ -58,7 +57,7 @@ CONFIGURE_ARGS+=	--without-x \
 			--without-ttf \
 			--without-wmf
 .else
-WANTLIB+=		ICE SM X11 Xau Xdmcp Xext freetype
+WANTLIB+=		ICE SM X11 Xau Xdmcp Xext freetype pthread-stubs xcb
 USE_X11=		Yes
 LIB_DEPENDS+=		wmflite.>=7::graphics/libwmf
 BUILD_DEPENDS+=		:ghostscript-*:print/ghostscript/gnu
@@ -71,14 +70,10 @@ CONFIGURE_ARGS+=	--with-wmf
 # with FLAVOR=no_x11, some regession tests do not pass
 # due to the absence of freetype
 
-REGRESS_DEPENDS=	:${PKGNAME}:${BASE_PKGPATH}
+post-build:
+	@cd ${WRKBUILD}/PerlMagick && perl Makefile.PL && ${MAKE} ${MAKE_FLAGS}
 
 post-install:
-	@perl -pi -e s,'-L${WRKBUILD}/(magick|wand)/.libs','',g \
-		${PREFIX}/bin/GraphicsMagick{,++}-config 
-.for f in GraphicsMagick++ GraphicsMagick GraphicsMagickWand
-	@perl -pi -e s,'-L${WRKBUILD}/(magick|wand)/.libs','',g \
-		${PREFIX}/lib/lib${f}.la
-.endfor
+	@cd ${WRKBUILD}/PerlMagick && ${MAKE} ${MAKE_FLAGS} ${FAKE_TARGET}
 
 .include <bsd.port.mk>

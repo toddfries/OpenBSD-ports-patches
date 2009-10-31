@@ -1,26 +1,26 @@
-# $OpenBSD: Makefile,v 1.120 2009/03/18 14:34:10 pea Exp $
+# $OpenBSD: Makefile,v 1.124 2009/10/02 16:03:02 pea Exp $
 
 COMMENT-main=	PostgreSQL RDBMS (client)
 COMMENT-server=	PostgreSQL RDBMS (server)
 COMMENT-docs=	PostgreSQL RDBMS documentation
 COMMENT-contrib=PostgreSQL RDBMS contributions
 
-VERSION=	8.3.7
+VERSION=	8.4.1
 DISTNAME=	postgresql-${VERSION}
-PKGNAME-main=	postgresql-client-${VERSION}
-PKGNAME-server=	postgresql-server-${VERSION}
-PKGNAME-docs=	postgresql-docs-${VERSION}
-PKGNAME-contrib=postgresql-contrib-${VERSION}
+PKGNAME-main=	postgresql-client-${VERSION}p1
+PKGNAME-server=	postgresql-server-${VERSION}p1
+PKGNAME-docs=	postgresql-docs-${VERSION}p1
+PKGNAME-contrib=postgresql-contrib-${VERSION}p1
 
 CATEGORIES=	databases
-SHARED_LIBS=	ecpg		7.0 \
-		ecpg_compat	4.0 \
-		pgtypes		4.0 \
-		pq		5.1
+SHARED_LIBS=	ecpg		7.1 \
+		ecpg_compat	4.1 \
+		pgtypes		4.1 \
+		pq		5.2
 
 HOMEPAGE=	http://www.postgresql.org/
 
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
+MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -57,7 +57,7 @@ CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--enable-integer-datetimes \
 		--includedir="${PREFIX}/include/postgresql" \
 		--datadir="${PREFIX}/share/postgresql" \
-		--with-docdir="${PREFIX}/share/doc/postgresql" \
+		--docdir="${PREFIX}/share/doc/postgresql" \
 		--with-includes="${INCLUDES}" \
 		--with-libraries="${LOCALBASE}/lib" \
 		--with-openssl \
@@ -113,7 +113,7 @@ NO_REGRESS=	Yes
 DOCS=	${WRKSRC}/COPYRIGHT ${WRKSRC}/HISTORY \
 	${WRKSRC}/INSTALL ${WRKSRC}/README \
 	${WRKSRC}/doc/README.mb.big5 ${WRKSRC}/doc/README.mb.jp \
-	${WRKSRC}/doc/FAQ ${WRKSRC}/doc/FAQ_DEV ${WRKSRC}/doc/TODO
+	${WRKSRC}/doc/TODO
 
 post-build:
 	cd ${WRKBUILD}/contrib && exec ${SETENV} ${MAKE_ENV} \

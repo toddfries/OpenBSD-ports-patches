@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.15 2009/03/23 19:08:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2009/10/14 18:44:04 sthen Exp $
 
 COMMENT=		fast array and numeric programming library for Python
 
-MODPY_EGG_VERSION=	1.2.1
+MODPY_EGG_VERSION=	1.3.0
 DISTNAME=		numpy-${MODPY_EGG_VERSION}
-PKGNAME=		py-${DISTNAME}p3
+PKGNAME=		py-${DISTNAME}p1
 CATEGORIES=		math devel
 
-HOMEPAGE=		http://numeric.scipy.org/
+HOMEPAGE=		http://numpy.scipy.org/
 
 MAINTAINER=		Damien Miller <djm@openbsd.org>
 
@@ -31,9 +31,10 @@ LIB_DEPENDS=            lapack::math/lapack
 
 pre-build:
 	cp -f ${WRKSRC}/numpy/distutils/site.cfg ${WRKSRC}/site.cfg
+	rm ${WRKSRC}/numpy/core/include/numpy/mingw_amd64_fenv.h
 
 do-regress: fake
 	${MAKE_ENV} PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} -c \
-	    'import numpy ; numpy.testing.NumpyTest(numpy).test(10)'
+	    'import numpy ; numpy.test()'
 
 .include <bsd.port.mk>

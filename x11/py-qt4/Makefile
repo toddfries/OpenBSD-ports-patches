@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2009/06/03 18:22:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2009/09/09 14:13:57 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	python Qt4 bindings
 COMMENT-docs=	py-qt4 documentation
 
-V=		4.4.4
+V=		4.5.4
 DISTNAME=	PyQt-x11-gpl-${V}
 PKGNAME=	py-qt4-${V}
-PKGNAME-main=	py-qt4-${V}
+PKGNAME-main=	py-qt4-${V}p0
 PKGNAME-docs=	py-qt4-docs-${V}
 
 CATEGORIES=	x11 devel
@@ -35,7 +35,7 @@ RUN_DEPENDS-docs=
 PKG_ARCH-docs=	*
 
 BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	:py-sip->=4.7.9:devel/py-sip \
+RUN_DEPENDS=	:py-sip->=4.8.1:devel/py-sip \
 		::x11/dbus-python
 LIB_DEPENDS=	QtAssistantClient,QtDesigner,QtGui,QtNetwork,QtOpenGL,QtScript,QtSql,QtSvg,QtTest,QtXml::x11/qt4 \
 		${MODPY_LIB_DEPENDS}
@@ -76,7 +76,19 @@ PYQTMODS=	QtCore QtGui QtNetwork QtOpenGL QtScript QtSql QtSvg \
 CONFIGURE_ARGS+=--enable=${i}
 .endfor
 
+MODPY_MAJOR=${MODPY_VERSION:C/\..*//}
+# the distfile has pyuic for both python 2 and 3, normally both are
+# installed and they're selected at runtime. this breaks bytecode
+# compilation for package generation, so just rm the wrong files.
+pre-configure:
+.if ${MODPY_MAJOR} == "2"
+	rm -r ${WRKSRC}/pyuic/uic/port_v2
+.else
+	rm -rf ${WRKSRC}/pyuic/uic/port_v3
+.endif
+
 post-install:
+	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py ${WRKINST}/${MODPY_SITEPKG}
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-qt4
 	cp -R ${WRKSRC}/doc/* ${PREFIX}/share/doc/py-qt4
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/py-qt4/*

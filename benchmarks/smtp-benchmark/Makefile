@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.3 2007/09/15 21:30:27 simon Exp $
+# $OpenBSD: Makefile,v 1.5 2009/09/15 17:37:21 jasper Exp $
 
 COMMENT=	SMTP benchmark to measure throughput of an MTA
 
 DISTNAME=	smtp-benchmark-1.0.4
+PKGNAME=	${DISTNAME}p0
 
 CATEGORIES=    	benchmarks mail
 
 HOMEPAGE=	http://www.etc.msys.ch/software/smtp-benchmark/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 SHARED_ONLY=	Yes
 
@@ -19,7 +18,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c pthread
 
-MASTER_SITES=  	ftp://ftp.etc.msys.ch/pub/sources/smtp-benchmark/
+MASTER_SITES=  	${HOMEPAGE}
 EXTRACT_SUFX=	.tgz
 
 NO_REGRESS=	Yes

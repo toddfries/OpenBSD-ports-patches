@@ -1,7 +1,7 @@
-$OpenBSD: patch-pidgin_Makefile_in,v 1.7 2008/10/23 02:55:44 brad Exp $
---- pidgin/Makefile.in.orig	Sun Oct 19 10:38:13 2008
-+++ pidgin/Makefile.in	Tue Oct 21 20:19:24 2008
-@@ -109,7 +109,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES
+$OpenBSD: patch-pidgin_Makefile_in,v 1.9 2009/09/08 06:35:24 steven Exp $
+--- pidgin/Makefile.in.orig	Wed Aug 19 04:13:14 2009
++++ pidgin/Makefile.in	Wed Aug 19 16:29:12 2009
+@@ -116,7 +116,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES
  LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
  	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
  	$(AM_CFLAGS) $(CFLAGS)

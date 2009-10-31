@@ -1,0 +1,25 @@
+$OpenBSD$
+--- x86_64.ld.orig	Sat Oct 24 04:15:22 2009
++++ x86_64.ld	Mon Oct 26 20:15:38 2009
+@@ -58,8 +58,8 @@ SECTIONS
+   .rodata         : { *(.rodata .rodata.* .gnu.linkonce.r.*) }
+   .rodata1        : { *(.rodata1) }
+   .eh_frame_hdr : { *(.eh_frame_hdr) }
+-  .eh_frame       : ONLY_IF_RO { KEEP (*(.eh_frame)) }
+-  .gcc_except_table   : ONLY_IF_RO { *(.gcc_except_table) }
++  .eh_frame       : { KEEP (*(.eh_frame)) }
++  .gcc_except_table   : { *(.gcc_except_table) }
+   /* Adjust the address for the data segment.  We want to adjust up to
+      the same address within the page on the next page up.  */
+   . = ALIGN (0x100000) - ((0x100000 - .) & (0x100000 - 1)); . = DATA_SEGMENT_ALIGN (0x100000, 0x1000);
+@@ -85,8 +85,8 @@ SECTIONS
+   .data1          : { *(.data1) }
+   .tdata	  : { *(.tdata .tdata.* .gnu.linkonce.td.*) }
+   .tbss		  : { *(.tbss .tbss.* .gnu.linkonce.tb.*) *(.tcommon) }
+-  .eh_frame       : ONLY_IF_RW { KEEP (*(.eh_frame)) }
+-  .gcc_except_table   : ONLY_IF_RW { *(.gcc_except_table) }
++  .eh_frame       : { KEEP (*(.eh_frame)) }
++  .gcc_except_table   : { *(.gcc_except_table) }
+   .dynamic        : { *(.dynamic) }
+   .ctors          :
+   {

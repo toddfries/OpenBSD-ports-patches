@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.9 2008/10/30 09:55:27 mbalmer Exp $ 
+# $OpenBSD: Makefile,v 1.11 2009/09/28 13:09:15 sthen Exp $ 
 
 COMMENT=	memo application
 
 HORDE_MODULE=	mnemo
 HORDE_NAME=	Mnemo
 
-DISTNAME=	${HORDE_MODULE}-h3-2.2.1
+DISTNAME=	${HORDE_MODULE}-h3-2.2.2
 CATEGORIES=	databases
 HOMEPAGE=	http://www.horde.org/${HORDE_MODULE}/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.122 2009/06/07 09:59:22 sturm Exp $
+# $OpenBSD: Makefile,v 1.126 2009/10/12 12:41:02 nicm Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -23,6 +23,7 @@
      SUBDIR += dnetc
      SUBDIR += dtach
      SUBDIR += dvtm
+     SUBDIR += ent
      SUBDIR += figlet
      SUBDIR += fileutils
      SUBDIR += findutils
@@ -88,10 +89,11 @@
      SUBDIR += tkcron
      SUBDIR += tkinfo
      SUBDIR += tkman
-     SUBDIR += tmux
      SUBDIR += tpwireless
      SUBDIR += ttyrec
+     SUBDIR += uniutils
      SUBDIR += viz
+     SUBDIR += vmware-vncpasswd
      SUBDIR += vttest
      SUBDIR += wmmand
      SUBDIR += wmtimer

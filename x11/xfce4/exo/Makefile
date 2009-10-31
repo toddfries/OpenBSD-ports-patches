@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2009/05/11 20:49:44 landry Exp $
+# $OpenBSD: Makefile,v 1.20 2009/10/10 07:56:18 landry Exp $
 
 COMMENT=	Xfce4 extension library
 
-XFCE_VERSION=	0.3.101
+XFCE_VERSION=	0.3.103
 XFCE_PROJECT=	exo
-PKGNAME=	${DISTNAME}p0
 
 SHARED_LIBS=	exo-0.3		5.0 \
 		exo-hal-0.3	5.0
@@ -21,6 +20,8 @@ MODULES=	x11/xfce4
 DESKTOP_FILES=	Yes
 
 CONFIGURE_ARGS=	--disable-python
+CONFIGURE_ENV=	ac_cv_header_sys_ucred_h=yes \
+		ac_cv_header_sys_mount_h=yes
 
 BUILD_DEPENDS=	:p5-URI-*:www/p5-URI
 LIB_DEPENDS=	notify.>=2::devel/libnotify \
@@ -33,6 +34,6 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
 		glitz gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 \
 		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
-		png pthread z
+		png pthread z pthread-stubs xcb
 
 .include <bsd.port.mk>

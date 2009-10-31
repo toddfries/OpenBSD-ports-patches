@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.221 2009/06/02 08:46:24 benoit Exp $
+# $OpenBSD: Makefile,v 1.225 2009/09/23 20:33:23 jasper Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -76,6 +76,7 @@
      SUBDIR += logsentry
      SUBDIR += logsurfer
      SUBDIR += luacrypto
+     SUBDIR += luasec
      SUBDIR += lxnb
      SUBDIR += mcrypt
      SUBDIR += mhash
@@ -124,15 +125,18 @@
      SUBDIR += p5-Crypt-Rijndael
      SUBDIR += p5-Crypt-SSLeay
      SUBDIR += p5-Crypt-SaltedHash
+     SUBDIR += p5-Crypt-Serpent
      SUBDIR += p5-Crypt-SmbHash
      SUBDIR += p5-Crypt-TripleDES
      SUBDIR += p5-Crypt-Twofish
      SUBDIR += p5-Digest-BubbleBabble
      SUBDIR += p5-Digest-HMAC
      SUBDIR += p5-Digest-MD2
+     SUBDIR += p5-Digest-MD4
      SUBDIR += p5-Digest-MD5-M4p
      SUBDIR += p5-Digest-Nilsimsa
      SUBDIR += p5-Digest-SHA1
+     SUBDIR += p5-Digest-Skein
      SUBDIR += p5-GPG
      SUBDIR += p5-GSSAPI
      SUBDIR += p5-GnuPG

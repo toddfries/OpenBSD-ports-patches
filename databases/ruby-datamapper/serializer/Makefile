@@ -1,17 +1,13 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/01/30 02:40:58 bernd Exp $
+# $OpenBSD: Makefile,v 1.3 2009/10/12 23:10:22 pirofti Exp $
 
 COMMENT =	allows DataMapper models and collections to be serialized
 
 DISTNAME =	dm-serializer-${VERSION}
 
-RUN_DEPENDS =	::databases/ruby-datamapper/core
+RUN_DEPENDS =	:ruby-dm-core->=${VERSION}:databases/ruby-datamapper/core
 
-REGRESS_DEPENDS =	::devel/ruby-rake \
-			::devel/ruby-rspec \
-			::converters/ruby-json \
-			::databases/ruby-do_sqlite3
-
-do-regress:
-	@cd ${WRKBUILD} && ${LOCALBASE}/bin/rake spec
+REGRESS_DEPENDS =	::converters/ruby-json \
+			::databases/ruby-do_sqlite3 \
+			::databases/ruby-datamapper/validations
 
 .include <bsd.port.mk>

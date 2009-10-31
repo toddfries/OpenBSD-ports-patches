@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/01/30 00:46:36 bernd Exp $
+# $OpenBSD: Makefile,v 1.3 2009/10/12 22:36:03 pirofti Exp $
 
 COMMENT =	Ruby extensions serving DataMapper and DataObjects
 
-DISTNAME =	extlib-0.9.10
+DISTNAME =	extlib-0.9.13
 PKGNAME =	ruby-${DISTNAME}
 CATEGORIES =	devel
 
@@ -20,11 +20,8 @@ CONFIGURE_STYLE =	ruby gem
 
 PKG_ARCH =		*
 
-REGRESS_DEPENDS =	::devel/ruby-rake \
-			::devel/ruby-rspec \
-			::converters/ruby-json
-
-do-regress:
-	@cd ${WRKBUILD} && ${LOCALBASE}/bin/rake spec
+MODRUBY_REGRESS =	rake
+RAKE_REGRESS_TARGET =	spec
+REGRESS_DEPENDS =	::converters/ruby-json
 
 .include <bsd.port.mk>

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.175 2009/06/18 19:47:07 landry Exp $
+# $OpenBSD: Makefile,v 1.181 2009/10/13 15:30:38 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
      SUBDIR += acx-firmware
      SUBDIR += anacron
      SUBDIR += apc-upsd
+     SUBDIR += apcd
      SUBDIR += autossh
      SUBDIR += bacula,mysql
      SUBDIR += bacula,pgsql
@@ -24,6 +25,7 @@
      SUBDIR += conky,no_x11
      SUBDIR += contool
      SUBDIR += d-feet
+     SUBDIR += dcfldd
      SUBDIR += diskrescue
      SUBDIR += dmassage
      SUBDIR += dmidecode
@@ -55,8 +57,6 @@
      SUBDIR += knutclient
      SUBDIR += krename
      SUBDIR += ktsuss
-     SUBDIR += libgksu
-     SUBDIR += libgksuui
      SUBDIR += libretto-config
      SUBDIR += libstatgrab
      SUBDIR += login_fingerprint
@@ -79,6 +79,7 @@
      SUBDIR += notification-daemon
      SUBDIR += nut
      SUBDIR += openpoppassd
+     SUBDIR += p5-Capture-Tiny
      SUBDIR += p5-File-Which
      SUBDIR += p5-Filesys-DiskSpace
      SUBDIR += p5-Filesys-Df
@@ -103,6 +104,7 @@
      SUBDIR += radiusreport
      SUBDIR += radmind
      SUBDIR += rancid
+     SUBDIR += resmon
      SUBDIR += rdiff-backup
      SUBDIR += rpl
      SUBDIR += rtty
@@ -144,6 +146,7 @@
      SUBDIR += upsd
      SUBDIR += usbutil
      SUBDIR += uvideo-firmware
+     SUBDIR += vifm
      SUBDIR += wdsetup
      SUBDIR += whowatch
      SUBDIR += wmapm

@@ -1,32 +1,34 @@
-# $OpenBSD: Makefile,v 1.17 2009/06/11 08:32:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2009/10/04 18:22:31 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	c++ cross-platform GUI toolkit
 
-DISTNAME=	wxWidgets-2.8.7
-PKGNAME=	wxWidgets-gtk2-2.8.7p4
-SHARED_LIBS=	wx_base			1.0	\
-		wx_base_net		1.0	\
-		wx_base_odbc		1.0	\
-		wx_base_xml		1.0	\
-		wx_gtk2_adv		1.0	\
-		wx_gtk2_aui		1.0	\
-		wx_gtk2_core		1.0	\
-		wx_gtk2_dbgrid		1.0	\
-		wx_gtk2_fl		1.0	\
-		wx_gtk2_gizmos		1.0	\
-		wx_gtk2_gizmos_xrc	1.0	\
-		wx_gtk2_gl		1.0	\
-		wx_gtk2_html		1.0	\
-		wx_gtk2_mmedia		1.0	\
-		wx_gtk2_ogl		1.0	\
-		wx_gtk2_plot		1.0	\
-		wx_gtk2_qa		1.0	\
-		wx_gtk2_richtext	1.0	\
-		wx_gtk2_stc		1.0	\
-		wx_gtk2_svg		1.0	\
-		wx_gtk2_xrc		1.0
+V=		2.8.10
+DISTNAME=	wxWidgets-${V}
+PKGNAME=	wxWidgets-gtk2-${V}p0
+
+SHARED_LIBS=	wx_base			2.0	\
+		wx_base_net		2.0	\
+		wx_base_odbc		2.0	\
+		wx_base_xml		2.0	\
+		wx_gtk2_adv		2.0	\
+		wx_gtk2_aui		2.0	\
+		wx_gtk2_core		2.0	\
+		wx_gtk2_dbgrid		2.0	\
+		wx_gtk2_fl		2.0	\
+		wx_gtk2_gizmos		2.0	\
+		wx_gtk2_gizmos_xrc	2.0	\
+		wx_gtk2_gl		2.0	\
+		wx_gtk2_html		2.0	\
+		wx_gtk2_mmedia		2.0	\
+		wx_gtk2_ogl		2.0	\
+		wx_gtk2_plot		2.0	\
+		wx_gtk2_qa		2.0	\
+		wx_gtk2_richtext	2.0	\
+		wx_gtk2_stc		2.0	\
+		wx_gtk2_svg		2.0	\
+		wx_gtk2_xrc		2.0
 CATEGORIES=	x11
 
 HOMEPAGE=	http://www.wxwidgets.org/
@@ -56,7 +58,7 @@ WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
 WANTLIB += c expat fontconfig freetype gio-2.0 glib-2.0 glitz
 WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 jpeg m ossaudio
 WANTLIB += pango-1.0 pangoft2-1.0 pixman-1 png pthread stdc++
-WANTLIB += tiff z
+WANTLIB += tiff z pthread-stubs xcb
 
 AUTOCONF_VERSION=2.59
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib -pthread" \

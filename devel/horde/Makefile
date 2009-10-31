@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.36 2008/12/13 08:53:19 mbalmer Exp $ 
+# $OpenBSD: Makefile,v 1.38 2009/09/28 13:09:15 sthen Exp $ 
 
 COMMENT=	modular framework for web-based applications
 
-DISTNAME=	horde-3.3.2
+DISTNAME=	horde-3.3.5
 CATEGORIES=	devel www
 HOMEPAGE=	http://www.horde.org/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

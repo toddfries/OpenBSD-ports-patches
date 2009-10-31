@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.20 2009/05/31 02:33:08 landry Exp $
+# $OpenBSD: Makefile,v 1.22 2009/09/04 11:38:31 landry Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	small and lightweight IDE
 
-DISTNAME=	geany-0.17
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	geany-0.18
+PKGNAME=	${DISTNAME}
 CATEGORIES=	devel
 
 HOMEPAGE=	http://www.geany.org
@@ -18,7 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=geany/}
+MASTER_SITES=	http://download.geany.org/
 EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	devel/gettext \
@@ -33,7 +33,8 @@ WANTLIB=	X11 Xext Xrender Xau Xcursor Xdmcp Xfixes Xi \
 		Xinerama Xrandr expat stdc++ c m z glitz png \
 		glib-2.0 gmodule-2.0 gobject-2.0 gio-2.0 \
 		fontconfig freetype atk-1.0 cairo \
-		pango-1.0 pangoft2-1.0 pangocairo-1.0 pixman-1
+		pango-1.0 pangoft2-1.0 pangocairo-1.0 pixman-1 \
+		pthread-stubs xcb
 
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils

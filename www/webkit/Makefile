@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2009/06/18 20:09:20 landry Exp $
+# $OpenBSD: Makefile,v 1.17 2009/10/11 18:31:12 landry Exp $
 
 COMMENT =	open source web browser engine
 
-V = 1.1.10
+V = 1.1.15.2
 DISTNAME =	webkit-${V}
 # XXX do not remove v0
 PKGNAME =	webkit-${V}v0
@@ -13,7 +13,7 @@ MASTER_SITES =	${HOMEPAGE}
 
 MAINTAINER =	Landry Breuil <gaston@gcu.info>
 
-SHARED_LIBS =	webkit-1.0	0.3
+SHARED_LIBS =	webkit-1.0	1.0
 
 # LGPLv2 / BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -38,6 +38,13 @@ CONFIGURE_STYLE =	gnu
 
 CONFIGURE_ARGS =	--disable-video
 
+#LIB_DEPENDS+=	gstreamer-0.10,gstbase-0.10::multimedia/gstreamer-0.10/core \
+#		gstvideo-0.10::multimedia/gstreamer-0.10/plugins-base \
+#RUN_DEPENDS =	::multimedia/gstreamer-0.10/plugins-base,-ogg \
+#		::multimedia/gstreamer-0.10/plugins-base,-vorbis \
+#		::multimedia/gstreamer-0.10/plugins-base,-theora
+
+
 CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -lX11"
 
@@ -48,15 +55,14 @@ WANTLIB =	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		expat fontconfig freetype gcrypt gio-2.0 glib-2.0 glitz gmodule-2.0 \
 		gnutls gobject-2.0 gpg-error gthread-2.0 intl jpeg m \
 		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pthread \
-		tasn1 z cairo pixman-1 png stdc++ xml2
+		tasn1 z cairo pixman-1 png pthread-stubs stdc++ xcb xml2
 
 LIB_DEPENDS =	gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0,gailutil::x11/gtk+2,-main \
 		icudata,icui18n,icuuc::textproc/icu4c \
 		sqlite3::databases/sqlite3 \
 		xslt::textproc/libxslt \
 		enchant::textproc/enchant \
-		soup-2.4:libsoup->=2.26:devel/libsoup
-
+		soup-2.4:libsoup->=2.28:devel/libsoup
 
 BUILD_DEPENDS =	::devel/bison \
 		::devel/gperf

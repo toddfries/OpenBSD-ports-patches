@@ -1,0 +1,22 @@
+$OpenBSD$
+--- pc-bios/optionrom/signrom.sh.orig	Sat Oct 24 04:15:22 2009
++++ pc-bios/optionrom/signrom.sh	Mon Oct 26 20:15:38 2009
+@@ -26,12 +26,16 @@ test "$1" -a "$2" || exit 1
+ sum=0
+ 
+ # find out the file size
+-x=`dd if="$1" bs=1 count=1 skip=2 2>/dev/null | od -t u1 -A n`
++tmp=`mktemp`
++dd if="$1" bs=1 count=1 skip=2 2>/dev/null > $tmp
++x=`od -v -t u1 $tmp | head -n 1 | cut -d " " -f 2- | sed "s/ //g" | sed "s/^0*//g"`
++rm $tmp
+ #size=`expr $x \* 512 - 1`
+ size=$(( $x * 512 - 1 ))
+ 
+ # now get the checksum
+-nums=`od -A n -t u1 -v "$1"`
++num_lines=`od -v -t u1 "$1" | wc -l`
++nums=`od -v -t u1 "$1" | head -n $(( num_lines - 1 ))  | cut -d " " -f 2-`
+ for i in ${nums}; do
+     # add each byte's value to sum
+     sum=`expr $sum + $i`

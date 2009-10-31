@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2009/06/04 07:09:34 giovanni Exp $
+# $OpenBSD: Makefile,v 1.7 2009/10/09 13:04:25 giovanni Exp $
 
 COMMENT =	powerful and simple qt4 editor
 
-V =		24.0.0
+V =		26.0.0
 DISTNAME =	tea-${V}
 PKGNAME =	teaqt-${V}
 CATEGORIES =	editors x11
@@ -27,6 +27,7 @@ WANTLIB =	ICE SM X11 Xext Xi Xinerama Xrender \
 LIB_DEPENDS =	aspell.>=16:aspell-*:textproc/aspell/core
 
 MODULES =	x11/qt4
+CONFIGURE_ENV =	USE_ASPELL=true USE_HUNSPELL=false
 
 USE_X11 =	Yes
 NO_REGRESS =	Yes

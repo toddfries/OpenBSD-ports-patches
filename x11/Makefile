@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.386 2009/06/15 11:20:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.400 2009/10/18 22:27:07 edd Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
-     SUBDIR += 915resolution
      SUBDIR += Xaw3d
      SUBDIR += XawMu
      SUBDIR += Xdialog
@@ -17,8 +16,6 @@
      SUBDIR += astime
      SUBDIR += aterm
      SUBDIR += aterm,big5
-     SUBDIR += aterm,big5,lite
-     SUBDIR += aterm,lite
      SUBDIR += autocutsel
      SUBDIR += awesome
      SUBDIR += awn
@@ -33,6 +30,7 @@
      SUBDIR += bricons
      SUBDIR += bwidget
      SUBDIR += chbg
+     SUBDIR += compiz
      SUBDIR += ctwm
      SUBDIR += dbus
      SUBDIR += dbus-glib
@@ -87,22 +85,25 @@
      SUBDIR += gromit
      SUBDIR += gtk+
      SUBDIR += gtk+2
-     SUBDIR += gtk+extra
      SUBDIR += gtk-chtheme
      SUBDIR += gtk-engines2
      SUBDIR += gtk-vnc
      SUBDIR += gtk2-clearlooks-engine
      SUBDIR += gtk2-murrine-engine
+     SUBDIR += gtk2-nodoka-engine
      SUBDIR += gtk2-theme-switch
      SUBDIR += gtk2mm
+     SUBDIR += gtkdatabox
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
+     SUBDIR += gtkhotkey
      SUBDIR += gtksourceview
      SUBDIR += gtksourceviewmm
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-x11-extras
      SUBDIR += human-icon-theme
+     SUBDIR += i3
      SUBDIR += icewm
      SUBDIR += icon-naming-utils
      SUBDIR += idesk
@@ -117,6 +118,7 @@
      SUBDIR += kde
      SUBDIR += kdirstat
      SUBDIR += keynav
+     SUBDIR += klavaro
      SUBDIR += kmplayer
      SUBDIR += kountdown
      SUBDIR += krusader
@@ -158,11 +160,14 @@
      SUBDIR += p5-Gnome2-Canvas
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
+     SUBDIR += p5-Gtk2-Ex-PodViewer
+     SUBDIR += p5-Gtk2-Ex-Simple-List
      SUBDIR += p5-Gtk2-GladeXML
      SUBDIR += p5-Tk
      SUBDIR += p5-Tk-ProgressBar-Mac
      SUBDIR += p5-Tk-Splash
      SUBDIR += p5-Tk-Stderr
+     SUBDIR += p5-Wx
      SUBDIR += p5-X-Osd
      SUBDIR += p5-X11-Protocol
      SUBDIR += pbrowser
@@ -172,10 +177,13 @@
      SUBDIR += pidgin-guifications
      SUBDIR += pidgin-libnotify
      SUBDIR += piewm
+     SUBDIR += pinot
+     SUBDIR += podbrowser
      SUBDIR += pwm
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
      SUBDIR += py-gtksourceview
+     SUBIDR += py-kiwi
      SUBDIR += py-osd
      SUBDIR += py-qt3
      SUBDIR += py-qt4
@@ -211,6 +219,8 @@
      SUBDIR += slim
      SUBDIR += slim-themes
      SUBDIR += slock
+     SUBDIR += smplayer
+     SUBDIR += spranq-ecofont-ttf
      SUBDIR += stalonetray
      SUBDIR += swisswatch
      SUBDIR += tango-icon-theme
@@ -239,6 +249,7 @@
      SUBDIR += wampager
      SUBDIR += windowmaker
      SUBDIR += windowmaker-extra
+     SUBDIR += winwrangler
      SUBDIR += wm2
      SUBDIR += wmbutton
      SUBDIR += wmcalclock
@@ -272,6 +283,7 @@
      SUBDIR += xaniroc
      SUBDIR += xantfarm
      SUBDIR += xarchive
+     SUBDIR += xarchiver
      SUBDIR += xautolock
      SUBDIR += xawtv
      SUBDIR += xbae

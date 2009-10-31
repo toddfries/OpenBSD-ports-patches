@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.227 2009/06/07 07:25:44 eric Exp $
+# $OpenBSD: Makefile,v 1.235 2009/10/15 22:20:01 phessler Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR += abcde
@@ -15,15 +15,18 @@
      SUBDIR += bmp
      SUBDIR += bonk
      SUBDIR += cdparanoia
+     SUBDIR += cmixer
      SUBDIR += cmt
      SUBDIR += cmu-sphinx3
      SUBDIR += cmu-sphinxbase
      SUBDIR += cplay
      SUBDIR += daapd
      SUBDIR += disc-cover
+     SUBDIR += dumb
      SUBDIR += easytag
      SUBDIR += esound
      SUBDIR += espeak
+     SUBDIR += exaile
      SUBDIR += faac
      SUBDIR += faad
      SUBDIR += festival
@@ -56,6 +59,7 @@
      SUBDIR += libcdaudio
      SUBDIR += libcddb
      SUBDIR += libcdio
+     SUBDIR += libdca
      SUBDIR += libgpod
      SUBDIR += libid3tag
      SUBDIR += libmad
@@ -114,6 +118,7 @@
      SUBDIR += p5-Audio-MPD
      SUBDIR += p5-Audio-MPD-Common
      SUBDIR += p5-Audio-Musepack
+     SUBDIR += p5-Audio-Scan
      SUBDIR += p5-Audio-Scrobbler
      SUBDIR += p5-Audio-WMA
      SUBDIR += p5-CDDB-File
@@ -132,6 +137,7 @@
      SUBDIR += p5-gnupod
      SUBDIR += p5-libvorbis
      SUBDIR += pacpl
+     SUBDIR += picard
      SUBDIR += pms
      SUBDIR += portaudio-svn
      SUBDIR += py-ao
@@ -142,7 +148,9 @@
      SUBDIR += py-mutagen
      SUBDIR += py-ogg
      SUBDIR += py-tagger
+     SUBDIR += py-tagpy
      SUBDIR += py-xmms
+     SUBDIR += pykaraoke
      SUBDIR += pympd
      SUBDIR += rhythmbox
      SUBDIR += rio500

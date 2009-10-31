@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.32 2009/03/11 21:38:06 sthen Exp $
+# $OpenBSD: Makefile,v 1.34 2009/09/15 17:37:22 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	clone of S, a powerful math/statistics/graphics language
 DISTNAME=	R-2.8.1
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p2
 SHARED_LIBS=	Rlapack 29.0 \
 		Rblas	29.0
 
 CATEGORIES=    	math
 HOMEPAGE=	http://www.r-project.org/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -20,7 +18,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB= 	ICE SM X11 Xau Xdmcp Xext Xmu Xrender Xss Xt c expat \
-		fontconfig freetype g2c m ncurses pixman-1 readline z
+		fontconfig freetype g2c m ncurses pixman-1 pthread-stubs \
+		readline xcb z
 
 MASTER_SITES=	http://cran.r-project.org/src/base/R-2/ \
 		http://cran.uk.r-project.org/src/base/R-2/ \

@@ -1,7 +1,7 @@
-$OpenBSD: patch-common_Makefile_in,v 1.2 2009/04/03 17:30:40 ajacoutot Exp $
---- common/Makefile.in.orig	Thu Mar 26 14:35:46 2009
-+++ common/Makefile.in	Fri Apr  3 19:36:33 2009
-@@ -281,7 +281,7 @@ AM_CPPFLAGS = $(DEBUGFLAGS) -DLINUX \
+$OpenBSD: patch-common_Makefile_in,v 1.5 2009/10/21 09:59:54 ajacoutot Exp $
+--- common/Makefile.in.orig	Fri Oct 16 20:39:22 2009
++++ common/Makefile.in	Wed Oct 21 11:32:04 2009
+@@ -291,7 +291,7 @@ AM_CPPFLAGS = $(DEBUGFLAGS) -DLINUX \
  	-I${top_srcdir}/mapi4linux/include -I${top_srcdir}/provider/common \
  	-I${top_srcdir}/libfreebusy
  
@@ -10,18 +10,18 @@ $OpenBSD: patch-common_Makefile_in,v 1.2 2009/04/03 17:30:40 ajacoutot Exp $
  libcommon_mapi_la_SOURCES = CommonUtil.cpp				\
  			rtfutil.cpp									\
  			codepage.cpp							\
-@@ -296,7 +296,7 @@ libcommon_mapi_la_SOURCES = CommonUtil.cpp				\
+@@ -306,7 +306,7 @@ libcommon_mapi_la_SOURCES = CommonUtil.cpp				\
  			ZarafaCode.cpp								\
- 			RecurrenceState.cpp						
+ 			ECABEntryID.cpp
  
 -libcommon_util_la_LDFLAGS = -static
 +libcommon_util_la_LDFLAGS = -version-info $(ECCLIENT_LIBRARY_VERSION)
  libcommon_util_la_SOURCES = platform.cpp			\
  			platform.linux.cpp						\
  			md5.cpp									\
-@@ -312,7 +312,7 @@ libcommon_util_la_SOURCES = platform.cpp			\
- 			str1252.cpp								\
- 			SymmetricCrypt.cpp		
+@@ -324,7 +324,7 @@ libcommon_util_la_SOURCES = platform.cpp			\
+ 			RecurrenceState.cpp						\
+ 			recurrence.cpp
  
 -libcommon_ssl_la_LDFLAGS = -static
 +libcommon_ssl_la_LDFLAGS = -version-info $(ECCLIENT_LIBRARY_VERSION)

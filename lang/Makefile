@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.89 2009/06/16 15:22:10 kurt Exp $
+# $OpenBSD: Makefile,v 1.91 2009/09/06 10:35:33 jolan Exp $
 # $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
 #
 
@@ -30,9 +30,11 @@
      SUBDIR += kaffe
      SUBDIR += klone
      SUBDIR += librep
+     SUBDIR += llvm-gcc4
      SUBDIR += lua
      SUBDIR += mawk
      SUBDIR += mono
+     SUBDIR += mono-basic
      SUBDIR += nhc98
      SUBDIR += ocaml
      SUBDIR += ocamlduce

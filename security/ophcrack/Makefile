@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2009/06/08 10:38:18 benoit Exp $
+# $OpenBSD: Makefile,v 1.4 2009/09/07 12:23:45 benoit Exp $
 
 COMMENT =		password cracker based on rainbow tables
 
-DISTNAME =		ophcrack-3.3.0
+DISTNAME =		ophcrack-3.3.1
 CATEGORIES =		security
 
 HOMEPAGE =		http://ophcrack.sourceforge.net/
@@ -35,7 +35,7 @@ FLAVOR ?=
 .if ${FLAVOR:L:Mgui}
 WANTLIB +=		ICE SM X11 Xext Xi Xinerama Xrender expat fontconfig
 WANTLIB +=		freetype glib-2.0 gobject-2.0 gthread-2.0 png
-WANTLIB +=		stdc++ z
+WANTLIB +=		pthread-stubs stdc++ xcb z
 MODULES +=		x11/qt4 \
 			devel/gettext
 LIB_DEPENDS +=		QtGui.>=8,QtCore.>=7::x11/qt4 \

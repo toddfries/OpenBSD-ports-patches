@@ -1,10 +1,22 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2009/01/28 13:20:23 pyr Exp $
+@comment $OpenBSD: PLIST,v 1.4 2009/10/22 22:34:59 sthen Exp $
 %%SHARED%%
 @bin bin/scrotwm
 @man man/cat1/scrotwm.0
+man/es/
+man/es/cat1/
+@man man/es/cat1/scrotwm.0
+man/it/
+man/it/cat1/
+@man man/it/cat1/scrotwm.0
 share/examples/scrotwm/
+@sample share/scrotwm/
+share/examples/scrotwm/baraction.sh
+@mode 0555
+@sample share/scrotwm/baraction.sh
+share/examples/scrotwm/initscreen.sh
+@sample share/scrotwm/initscreen.sh
+share/examples/scrotwm/screenshot.sh
+@sample share/scrotwm/screenshot.sh
+@mode
 share/examples/scrotwm/scrotwm.conf
 @sample ${SYSCONFDIR}/scrotwm.conf
-share/scrotwm/
-share/scrotwm/baraction.sh
-share/scrotwm/screenshot.sh

@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.48 2009/06/10 20:27:09 kili Exp $
+# $OpenBSD: Makefile,v 1.51 2009/09/25 12:43:16 giovanni Exp $
 
 COMMENT=	GNU Image Manipulation Program
 
-DISTNAME=	gimp-2.6.6
-PKGNAME=	${DISTNAME}p0
-SHARED_LIBS=	gimp-2.0	266.0	\
-		gimpbase-2.0	266.0	\
-		gimpcolor-2.0	266.0	\
-		gimpconfig-2.0	266.0	\
-		gimpmath-2.0	266.0	\
-		gimpmodule-2.0	266.0	\
-		gimpthumb-2.0	266.0	\
-		gimpui-2.0	266.0	\
-		gimpwidgets-2.0	266.0
+DISTNAME=	gimp-2.6.7
+SHARED_LIBS=	gimp-2.0	267.0	\
+		gimpbase-2.0	267.0	\
+		gimpcolor-2.0	267.0	\
+		gimpconfig-2.0	267.0	\
+		gimpmath-2.0	267.0	\
+		gimpmodule-2.0	267.0	\
+		gimpthumb-2.0	267.0	\
+		gimpui-2.0	267.0	\
+		gimpwidgets-2.0	267.0
 
 CATEGORIES=	graphics
 MAINTAINER=	Giovanni Bechis <giovanni@openbsd.org>
@@ -38,7 +37,7 @@ LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
 		poppler.>=3,poppler-glib.>=3::print/poppler \
 		gegl-0.0::graphics/gegl \
 		:py-gtk2-*:x11/py-gtk2 \
-		gnomevfs-2.>=2000::x11/gnome/vfs2
+		curl::net/curl
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -47,19 +46,19 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xext Xmu Xpm Xrender Xt atk-1.0 c \
-		Xcomposite Xdamage pcre \
-		avahi-client avahi-common avahi-glib \
+		Xcomposite Xdamage pcre crypto idn ssl \
 		fontconfig freetype glib-2.0 gmodule-2.0 \
 		gobject-2.0 jpeg.>=62 lcms.>=1 m pango-1.0 \
 		pangocairo-1.0 pangoft2-1.0 pixman-1 png.>=4 \
 		pthread ncurses xml2 z cairo dbus-1 glitz \
 		Xau Xcursor Xdmcp Xfixes Xi Xinerama Xrandr \
 		expat Xcomposite Xdamage gthread-2.0 pcre \
-		ORBit-2 bz2 croco-0.6 crypto gconf-2 gio-2.0 \
-		gsf-1 rsvg-2 ssl util babl-0.0
+		bz2 croco-0.6 gio-2.0 gsf-1 rsvg-2 babl-0.0 \
+		pthread-stubs xcb
 
 MODULES=	devel/gettext \
-		textproc/intltool
+		textproc/intltool \
+		lang/python
 
 USE_X11=	Yes
 USE_GMAKE=	Yes
@@ -68,8 +67,8 @@ AUTOCONF_VERSION= 2.61
 CONFIGURE_STYLE= autoconf
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ARGS+=--without-gtkhtml2 --without-gvfs \
-		--without-libcurl --without-webkit \
-		--enable-gimp-remote
+		--without-gnomevfs --with-libcurl \
+		--without-webkit --enable-gimp-remote
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 

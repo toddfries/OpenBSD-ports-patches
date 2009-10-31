@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.8 2009/03/16 10:42:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2009/08/10 06:34:56 kili Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		embedded video player for mozilla
 
 DISTNAME=		mplayerplug-in-3.55
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p2
 
 CATEGORIES=		www
 
@@ -23,14 +23,14 @@ WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
 WANTLIB += Xfixes Xi Xinerama Xpm Xrandr Xrender Xt atk-1.0 cairo
 WANTLIB += expat fontconfig freetype gio-2.0 glib-2.0 glitz gmodule-2.0
 WANTLIB += gobject-2.0 gthread-2.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pixman-1 png z
+WANTLIB += pangoft2-1.0 pixman-1 png pthread-stubs xcb z
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=mplayerplug-in/}
 
 MODULES=		devel/gettext
 
 BUILD_DEPENDS=		${MODGNU_AUTOMAKE_DEPENDS} \
-			:xulrunner-devel-*:devel/xulrunner,-devel
+			:xulrunner-devel-*:devel/xulrunner/1.8,-devel
 LIB_DEPENDS=		gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 RUN_DEPENDS=		::x11/mplayer
 

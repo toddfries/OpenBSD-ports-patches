@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.42 2009/05/31 21:12:26 benoit Exp $
+# $OpenBSD: Makefile,v 1.45 2009/09/10 15:29:06 naddy Exp $
 
      SUBDIR += arc
      SUBDIR += bzip
@@ -16,8 +16,8 @@
      SUBDIR += libarchive
      SUBDIR += libmspack
      SUBDIR += lxsplit
-     SUBDIR += lzma
      SUBDIR += lzo
+     SUBDIR += lzo2
      SUBDIR += lzop
      SUBDIR += macutil
      SUBDIR += makeself
@@ -29,6 +29,8 @@
      SUBDIR += p7zip
      SUBDIR += par1cmdline
      SUBDIR += par2cmdline
+     SUBDIR += pecl-rar
+     SUBDIR += pecl-zip
      SUBDIR += py-lzo
      SUBDIR += rar
      SUBDIR += ripole
@@ -42,6 +44,7 @@
      SUBDIR += unrar
      SUBDIR += unshield
      SUBDIR += unzip
+     SUBDIR += xz
      SUBDIR += zip
      SUBDIR += zipios
      SUBDIR += zoo

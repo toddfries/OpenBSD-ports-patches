@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.5 2009/04/22 11:44:09 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.8 2009/10/14 09:26:58 ajacoutot Exp $
 @bin bin/tracker-applet
 @bin bin/tracker-files
 @bin bin/tracker-info
@@ -45,7 +45,6 @@ include/tracker-keywords-glue.h
 include/tracker-metadata-glue.h
 include/tracker-search-glue.h
 include/tracker.h
-lib/deskbar-applet/modules-2.20-compatible/tracker-module.py
 lib/libtracker-gtk.a
 lib/libtracker-gtk.la
 @lib lib/libtracker-gtk.so.${LIBtracker-gtk_VERSION}
@@ -156,15 +155,9 @@ lib/tracker/libtracker-db.la
 lib/tracker/libtracker-module.a
 lib/tracker/libtracker-module.la
 @lib lib/tracker/libtracker-module.so.${LIBtracker-module_VERSION}
-lib/tracker/push-modules/
-lib/tracker/push-modules/daemon/
-lib/tracker/push-modules/daemon/libtracker-module_kmail-daemon-module.a
-lib/tracker/push-modules/daemon/libtracker-module_kmail-daemon-module.la
-lib/tracker/push-modules/daemon/libtracker-module_kmail-daemon-module.so
-lib/tracker/push-modules/indexer/
-lib/tracker/push-modules/indexer/libtracker-module_kmail-indexer-module.a
-lib/tracker/push-modules/indexer/libtracker-module_kmail-indexer-module.la
-lib/tracker/push-modules/indexer/libtracker-module_kmail-indexer-module.so
+libexec/deskbar-applet/
+libexec/deskbar-applet/modules-2.20-compatible/
+libexec/deskbar-applet/modules-2.20-compatible/tracker-module.py
 @bin libexec/tracker-extract
 @bin libexec/tracker-indexer
 @bin libexec/trackerd

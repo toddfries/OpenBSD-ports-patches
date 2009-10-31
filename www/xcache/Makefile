@@ -1,15 +1,18 @@
-# $OpenBSD: Makefile,v 1.4 2008/03/23 21:36:20 sthen Exp $
+# $OpenBSD: Makefile,v 1.6 2009/10/17 16:22:21 sthen Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	fast and stable PHP opcode cache
+COMMENT=	fast and stable PHP opcode cacher
 
-VERSION=	1.2.2
+VERSION=	1.3.0
 DISTNAME=	xcache-${VERSION}
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	www
 MASTER_SITES=	http://xcache.lighttpd.net/pub/Releases/${VERSION}/
 
 HOMEPAGE=	http://xcache.lighttpd.net/
+
+MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,7 +24,7 @@ AUTOCONF_VERSION=	2.59
 
 BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
 			::www/php5/core \
-			::devel/re2c
+			:re2c->=0.13.4:devel/re2c
 RUN_DEPENDS+=		::www/php5/core
 
 USE_LIBTOOL=		Yes
