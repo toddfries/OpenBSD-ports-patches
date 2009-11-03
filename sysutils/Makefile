@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.182 2009/10/28 11:15:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.184 2009/11/02 10:03:40 giovanni Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
@@ -26,6 +26,7 @@
      SUBDIR += contool
      SUBDIR += d-feet
      SUBDIR += dcfldd
+     SUBDIR += ddrescue
      SUBDIR += diskrescue
      SUBDIR += dmassage
      SUBDIR += dmidecode
@@ -157,7 +158,6 @@
      SUBDIR += wmmon
      SUBDIR += wmwlmon
      SUBDIR += xbatt
-     SUBDIR += xosview
      SUBDIR += xps
      SUBDIR += xuvmstat
      SUBDIR += zap

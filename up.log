@@ -3,76 +3,196 @@
 ? status.log
 ? sync.sh
 ? up.log
-P audio/exaile/Makefile
-U audio/exaile/distinfo
-P audio/exaile/patches/patch-Makefile
-P audio/exaile/patches/patch-data_exaile_desktop
-P audio/exaile/patches/patch-plugins_Makefile
-U audio/exaile/patches/patch-tools_compilepo_sh
-P audio/exaile/pkg/PLIST
-P devel/cvsweb/Makefile
-P devel/cvsweb/files/README.chroot
-P devel/json-glib/Makefile
-U devel/json-glib/distinfo
-P devel/p5-common-sense/Makefile
-U devel/p5-common-sense/distinfo
-P emulators/simh/Makefile
-P emulators/simh/patches/patch-sim_ether_c
-P geo/mapserver/Makefile
-U geo/mapserver/distinfo
-U geo/mapserver/patches/patch-mapows_c
-P geo/mapserver/pkg/MESSAGE-main
-P geo/qgis/Makefile
-U geo/qgis/distinfo
-P geo/qgis/patches/patch-CMakeLists_txt
-U geo/qgis/patches/patch-src_analysis_interpolation_qgsinterpolator_cpp
-U geo/qgis/patches/patch-src_analysis_interpolation_qgstininterpolator_cpp
-cvs server: geo/qgis/patches/patch-src_plugins_interpolation_qgsinterpolator_cpp is no longer in the repository
-cvs server: geo/qgis/patches/patch-src_plugins_interpolation_qgstininterpolator_cpp is no longer in the repository
-P geo/qgis/pkg/PFRAG.shared
-P geo/qgis/pkg/PLIST
-U misc/tkcron/Makefile
-cvs server: misc/tkcron/files/Makefile is no longer in the repository
-U misc/tkcron/patches/patch-tkcron-2_12_tcl
-cvs server: misc/tkcron/patches/patch-tkcron_tcl is no longer in the repository
-U misc/tkcron/pkg/DESCR
-M net/adsuck/Makefile
-M net/adsuck/distinfo
-P net/mldonkey/stable/Makefile
-U net/mldonkey/stable/distinfo
-P net/mldonkey/stable/patches/patch-config_Makefile_in
-P net/mldonkey/stable/patches/patch-config_configure_in
-P net/mldonkey/stable/pkg/PLIST
-P security/clamav/Makefile
-U security/clamav/distinfo
-P security/clamav/patches/patch-clamd_Makefile_in
-U security/clamav/patches/patch-database_Makefile_in
-P security/clamav/patches/patch-etc_Makefile_in
-P security/clamav/patches/patch-libclamav_Makefile_in
-P security/clamav/patches/patch-libclamav_ole2_extract_c
-U security/clamav/patches/patch-unit_tests_check_common_sh
-P sysutils/colorls/Makefile
-U sysutils/colorls/distinfo
-P sysutils/colorls/patches/patch-colorls_1
-P sysutils/colorls/patches/patch-ls_c
-P sysutils/colorls/patches/patch-print_c
-P sysutils/colorls/patches/patch-util_c
-P www/nginx/Makefile
-U www/nginx/distinfo
-P www/squid/Makefile
-U www/squid/distinfo
-P www/squid/patches/patch-errors_Makefile_in
-P www/squid/patches/patch-helpers_basic_auth_MSNT_Makefile_in
-P www/squid/patches/patch-helpers_negotiate_auth_squid_kerb_auth_Makefile_in
-P www/squid/patches/patch-icons_Makefile_in
-cvs server: www/squid/patches/patch-src_HttpHeaderTools_c is no longer in the repository
-P www/squid/patches/patch-src_Makefile_in
-P www/squid/patches/patch-tools_Makefile_in
-P www/webkit/Makefile
-P x11/gnome/desktop/Makefile
-U x11/gnome/desktop/patches/patch-configure
-U x11/gnome/desktop/patches/patch-libgnome-desktop_gnome-desktop-thumbnail_c
-P x11/gnome/utils/Makefile
-P x11/winwrangler/Makefile
-U x11/winwrangler/distinfo
-P x11/winwrangler/patches/patch-Makefile_in
+P INDEX
+P audio/aumix/patches/patch-src_common_c
+P databases/Makefile
+P databases/apache-couchdb/Makefile
+U databases/apache-couchdb/distinfo
+P databases/apache-couchdb/patches/patch-Makefile_in
+P databases/apache-couchdb/patches/patch-etc_couchdb_Makefile_in
+cvs server: databases/apache-couchdb/patches/patch-etc_couchdb_default_ini_tpl_in is no longer in the repository
+P databases/apache-couchdb/patches/patch-var_Makefile_in
+P databases/apache-couchdb/pkg/PLIST
+P databases/py-couchdb/Makefile
+U databases/py-couchdb/files/python.ini
+P databases/py-couchdb/pkg/PLIST
+P databases/py-elixir/Makefile
+U databases/py-elixir/distinfo
+P databases/py-elixir/pkg/PLIST
+cvs server: databases/xmysqladmin/Makefile is no longer in the repository
+cvs server: databases/xmysqladmin/distinfo is no longer in the repository
+cvs server: databases/xmysqladmin/patches/patch-Makefile is no longer in the repository
+cvs server: databases/xmysqladmin/pkg/DESCR is no longer in the repository
+cvs server: databases/xmysqladmin/pkg/PLIST is no longer in the repository
+P devel/Makefile
+P devel/libgtop2/Makefile
+P devel/libgtop2/patches/patch-configure
+P devel/libgtop2/patches/patch-sysdeps_bsd_glibtop_server_h
+U devel/libgtop2/patches/patch-sysdeps_common_mountlist_c
+P devel/llvm/Makefile
+U devel/llvm/distinfo
+U devel/llvm/patches/patch-tools_clang_lib_Driver_Tools_cpp
+P devel/llvm/patches/patch-tools_clang_lib_Sema_SemaDeclAttr_cpp
+P devel/llvm/pkg/PLIST
+P devel/m4/Makefile
+U devel/p5-MooseX-Role-Parameterized/Makefile
+U devel/p5-MooseX-Role-Parameterized/distinfo
+U devel/p5-MooseX-Role-Parameterized/pkg/DESCR
+U devel/p5-MooseX-Role-Parameterized/pkg/PLIST
+P education/verbiste/Makefile
+U education/verbiste/distinfo
+P education/verbiste/pkg/PLIST
+P games/numptyphysics/Makefile
+P games/numptyphysics/pkg/DESCR-npcomplete
+P geo/libchamplain/Makefile.inc
+U geo/libchamplain/core/distinfo
+P graphics/blender/Makefile
+U graphics/blender/patches/patch-source_blender_src_glutil_c
+U infrastructure/db/hosts-mips64
+P inputmethods/scim/Makefile
+U inputmethods/scim/distinfo
+U inputmethods/scim/patches/patch-configs_Makefile_in
+P inputmethods/scim/pkg/PLIST
+P lang/llvm-gcc4/Makefile
+U lang/llvm-gcc4/distinfo
+P lang/llvm-gcc4/patches/patch-gcc_c-common_c
+P lang/llvm-gcc4/patches/patch-gcc_config_gcc
+P lang/llvm-gcc4/patches/patch-gcc_cp_decl2_c
+P lang/llvm-gcc4/patches/patch-gcc_cp_parser_c
+P lang/llvm-gcc4/patches/patch-gcc_gcc_c
+cvs server: lang/llvm-gcc4/patches/patch-gcc_testsuite_ada_acats_run_acats is no longer in the repository
+cvs server: lang/llvm-gcc4/patches/patch-gcc_testsuite_ada_acats_run_all_sh is no longer in the repository
+cvs server: lang/llvm-gcc4/patches/patch-gcc_testsuite_gcc_dg_format_format_h is no longer in the repository
+P lang/llvm-gcc4/patches/patch-gcc_tree_c
+P mail/Makefile
+U mail/clamnailer/Makefile
+U mail/clamnailer/distinfo
+U mail/clamnailer/patches/patch-ClamNailer
+U mail/clamnailer/pkg/DESCR
+U mail/clamnailer/pkg/PLIST
+P mail/dovecot/Makefile
+P mail/dovecot/patches/patch-configure_in
+U mail/dovecot/patches/patch-src_auth_passdb-bsdauth_c
+U mail/dovecot/patches/patch-src_deliver_deliver_c
+U mail/dovecot/patches/patch-src_lib-index_mail-index_c
+U mail/dovecot/patches/patch-src_lib_fd-close-on-exec_c
+U mail/dovecot/patches/patch-src_lib_file-set-size_c
+U mail/dovecot/patches/patch-src_login-common_login-proxy_c
+P mail/fetchmail/Makefile
+U mail/fetchmail/distinfo
+P mail/fetchmail/patches/patch-Makefile_in
+P mail/roundcubemail/Makefile
+U mail/roundcubemail/distinfo
+P mail/roundcubemail/patches/patch-config_main_inc_php_dist
+P mail/roundcubemail/pkg/PLIST
+P net/Makefile
+P net/bird/Makefile
+U net/bird/distinfo
+P net/dss/Makefile
+P net/lftp/Makefile
+U net/lftp/distinfo
+U net/p5-Net-DNS-DynDNS/Makefile
+U net/p5-Net-DNS-DynDNS/distinfo
+U net/p5-Net-DNS-DynDNS/pkg/DESCR
+U net/p5-Net-DNS-DynDNS/pkg/PLIST
+P net/pmacct/Makefile
+U net/pmacct/distinfo
+cvs server: net/pmacct/patches/patch-src_bgp_bgp_c is no longer in the repository
+cvs server: net/pmacct/patches/patch-src_net_aggr_c is no longer in the repository
+cvs server: net/pmacct/patches/patch-src_nfprobe_plugin_nfprobe_plugin_c is no longer in the repository
+cvs server: net/pmacct/patches/patch-src_sfprobe_plugin_sfprobe_plugin_c is no longer in the repository
+P net/ssvnc/Makefile
+U net/ssvnc/distinfo
+P net/ssvnc/patches/patch-scripts_ssvnc
+P net/ssvnc/patches/patch-scripts_util_ssvnc_tcl
+P net/ssvnc/patches/patch-vnc_unixsrc_vncviewer_rfbproto_c
+P net/ssvnc/pkg/PLIST-gui
+P net/transmission/Makefile
+cvs server: net/transmission/patches/patch-daemon_remote_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_details_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_makemeta-ui_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_stats_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_torrent-cell-renderer_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_tr-prefs_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_tr-torrent_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_tr-window_c is no longer in the repository
+cvs server: net/transmission/patches/patch-gtk_util_c is no longer in the repository
+cvs server: net/transmission/patches/patch-libtransmission_blocklist_c is no longer in the repository
+cvs server: net/transmission/patches/patch-libtransmission_utils_c is no longer in the repository
+P plan9/9libs/Makefile
+P shells/bash/Makefile
+P shells/bash/distinfo
+P shells/bash/patches/patch-lib_glob_glob_c
+P sysutils/Makefile
+U sysutils/ddrescue/Makefile
+U sysutils/ddrescue/distinfo
+U sysutils/ddrescue/patches/patch-configure
+U sysutils/ddrescue/pkg/DESCR
+U sysutils/ddrescue/pkg/PLIST
+P sysutils/heartbeat/Makefile
+U sysutils/heartbeat/patches/patch-telecom_recoverymgrd_conf_yacc_y
+P sysutils/ncdu/Makefile
+U sysutils/ncdu/distinfo
+cvs server: sysutils/xosview/Makefile is no longer in the repository
+cvs server: sysutils/xosview/distinfo is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-Xdefaults_in is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_cpumeter_cc is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_kernel_cc is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_memmeter_cc is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_obsdintr_h is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_swapinternal_cc is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_swapinternal_h is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-bsd_swapmeter_cc is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-configure is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-general_h is no longer in the repository
+cvs server: sysutils/xosview/patches/patch-xosview_1 is no longer in the repository
+cvs server: sysutils/xosview/pkg/DESCR is no longer in the repository
+cvs server: sysutils/xosview/pkg/PLIST is no longer in the repository
+P www/Makefile
+P www/drupal6/Makefile
+U www/drupal6/bueditor/Makefile
+U www/drupal6/bueditor/distinfo
+U www/drupal6/bueditor/pkg/DESCR
+U www/drupal6/bueditor/pkg/PLIST
+U www/drupal6/theme-acquia-marina/Makefile
+U www/drupal6/theme-acquia-marina/distinfo
+U www/drupal6/theme-acquia-marina/pkg/DESCR
+U www/drupal6/theme-acquia-marina/pkg/PLIST
+P www/drupal6/workflow/Makefile
+U www/drupal6/workflow/distinfo
+P www/gecko-mediaplayer/Makefile
+U www/gecko-mediaplayer/distinfo
+P www/gecko-mediaplayer/patches/patch-configure
+P www/gecko-mediaplayer/patches/patch-src_Makefile_in
+U www/gecko-mediaplayer/patches/patch-src_plugin_cpp
+U www/gecko-mediaplayer/patches/patch-src_plugin_list_cpp
+cvs server: www/gecko-mediaplayer/patches/patch-src_plugin_types_std_cpp is no longer in the repository
+P www/gecko-mediaplayer/pkg/DESCR
+P www/gecko-mediaplayer/pkg/PLIST
+P www/moinmoin/Makefile
+U www/moinmoin/distinfo
+P www/moinmoin/pkg/PLIST
+U www/p5-WWW-Mechanize-TreeBuilder/Makefile
+U www/p5-WWW-Mechanize-TreeBuilder/distinfo
+U www/p5-WWW-Mechanize-TreeBuilder/pkg/DESCR
+U www/p5-WWW-Mechanize-TreeBuilder/pkg/PLIST
+cvs server: www/xoops/Makefile is no longer in the repository
+cvs server: www/xoops/distinfo is no longer in the repository
+cvs server: www/xoops/pkg/DESCR is no longer in the repository
+cvs server: www/xoops/pkg/MESSAGE is no longer in the repository
+cvs server: www/xoops/pkg/PLIST is no longer in the repository
+P x11/gnome/nautilus/Makefile
+P x11/gnome-mplayer/Makefile
+U x11/gnome-mplayer/distinfo
+U x11/gnome-mplayer/patches/patch-configure
+U x11/gnome-mplayer/patches/patch-gnome-mplayer_schemas_in
+P x11/gnome-mplayer/patches/patch-src_gui_c
+U x11/gnome-mplayer/patches/patch-src_gui_h
+U x11/gnome-mplayer/patches/patch-src_libgmlib_gm_parse_c
+U x11/gnome-mplayer/patches/patch-src_libgmlib_gm_parse_h
+U x11/gnome-mplayer/patches/patch-src_main_c
+U x11/gnome-mplayer/patches/patch-src_support_c
+cvs server: x11/gnome-mplayer/patches/patch-src_support_h is no longer in the repository
+U x11/gnome-mplayer/patches/patch-src_thread_c
+P x11/gnome-mplayer/pkg/MESSAGE
+P x11/gnome-mplayer/pkg/PLIST
