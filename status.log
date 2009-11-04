@@ -1,183 +1,52 @@
 # On branch master
 # Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git add <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   INDEX
-#	modified:   audio/aumix/patches/patch-src_common_c
-#	modified:   databases/Makefile
-#	modified:   databases/apache-couchdb/Makefile
-#	modified:   databases/apache-couchdb/distinfo
-#	modified:   databases/apache-couchdb/patches/patch-Makefile_in
-#	modified:   databases/apache-couchdb/patches/patch-etc_couchdb_Makefile_in
-#	deleted:    databases/apache-couchdb/patches/patch-etc_couchdb_default_ini_tpl_in
-#	modified:   databases/apache-couchdb/patches/patch-var_Makefile_in
-#	modified:   databases/apache-couchdb/pkg/PLIST
-#	modified:   databases/py-couchdb/Makefile
-#	modified:   databases/py-couchdb/pkg/PLIST
-#	modified:   databases/py-elixir/Makefile
-#	modified:   databases/py-elixir/distinfo
-#	modified:   databases/py-elixir/pkg/PLIST
-#	deleted:    databases/xmysqladmin/Makefile
-#	deleted:    databases/xmysqladmin/distinfo
-#	deleted:    databases/xmysqladmin/patches/patch-Makefile
-#	deleted:    databases/xmysqladmin/pkg/DESCR
-#	deleted:    databases/xmysqladmin/pkg/PLIST
-#	modified:   devel/Makefile
-#	modified:   devel/libgtop2/Makefile
-#	modified:   devel/libgtop2/patches/patch-configure
-#	modified:   devel/libgtop2/patches/patch-sysdeps_bsd_glibtop_server_h
-#	modified:   devel/llvm/Makefile
-#	modified:   devel/llvm/distinfo
-#	modified:   devel/llvm/patches/patch-tools_clang_lib_Sema_SemaDeclAttr_cpp
-#	modified:   devel/llvm/pkg/PLIST
-#	modified:   devel/m4/Makefile
-#	modified:   education/verbiste/Makefile
-#	modified:   education/verbiste/distinfo
-#	modified:   education/verbiste/pkg/PLIST
-#	modified:   games/numptyphysics/Makefile
-#	modified:   games/numptyphysics/pkg/DESCR-npcomplete
-#	modified:   geo/libchamplain/Makefile.inc
-#	modified:   geo/libchamplain/core/distinfo
-#	modified:   graphics/blender/Makefile
-#	modified:   infrastructure/db/hosts-mips64
-#	modified:   inputmethods/scim/Makefile
-#	modified:   inputmethods/scim/distinfo
-#	modified:   inputmethods/scim/pkg/PLIST
-#	modified:   lang/llvm-gcc4/Makefile
-#	modified:   lang/llvm-gcc4/distinfo
-#	modified:   lang/llvm-gcc4/patches/patch-gcc_c-common_c
-#	modified:   lang/llvm-gcc4/patches/patch-gcc_config_gcc
-#	modified:   lang/llvm-gcc4/patches/patch-gcc_cp_decl2_c
-#	modified:   lang/llvm-gcc4/patches/patch-gcc_cp_parser_c
-#	modified:   lang/llvm-gcc4/patches/patch-gcc_gcc_c
-#	deleted:    lang/llvm-gcc4/patches/patch-gcc_testsuite_ada_acats_run_acats
-#	deleted:    lang/llvm-gcc4/patches/patch-gcc_testsuite_ada_acats_run_all_sh
-#	deleted:    lang/llvm-gcc4/patches/patch-gcc_testsuite_gcc_dg_format_format_h
-#	modified:   lang/llvm-gcc4/patches/patch-gcc_tree_c
-#	modified:   mail/Makefile
-#	modified:   mail/dovecot/Makefile
-#	modified:   mail/dovecot/patches/patch-configure_in
-#	modified:   mail/fetchmail/Makefile
-#	modified:   mail/fetchmail/distinfo
-#	modified:   mail/fetchmail/patches/patch-Makefile_in
-#	modified:   mail/roundcubemail/Makefile
-#	modified:   mail/roundcubemail/distinfo
-#	modified:   mail/roundcubemail/patches/patch-config_main_inc_php_dist
-#	modified:   mail/roundcubemail/pkg/PLIST
-#	modified:   net/Makefile
-#	modified:   net/adsuck/Makefile
-#	modified:   net/bird/Makefile
-#	modified:   net/bird/distinfo
-#	modified:   net/dss/Makefile
-#	modified:   net/lftp/Makefile
-#	modified:   net/lftp/distinfo
-#	modified:   net/pmacct/Makefile
-#	modified:   net/pmacct/distinfo
-#	deleted:    net/pmacct/patches/patch-src_bgp_bgp_c
-#	deleted:    net/pmacct/patches/patch-src_net_aggr_c
-#	deleted:    net/pmacct/patches/patch-src_nfprobe_plugin_nfprobe_plugin_c
-#	deleted:    net/pmacct/patches/patch-src_sfprobe_plugin_sfprobe_plugin_c
-#	modified:   net/ssvnc/Makefile
-#	modified:   net/ssvnc/distinfo
-#	modified:   net/ssvnc/patches/patch-scripts_ssvnc
-#	modified:   net/ssvnc/patches/patch-scripts_util_ssvnc_tcl
-#	modified:   net/ssvnc/patches/patch-vnc_unixsrc_vncviewer_rfbproto_c
-#	modified:   net/ssvnc/pkg/PLIST-gui
-#	modified:   net/transmission/Makefile
-#	deleted:    net/transmission/patches/patch-daemon_remote_c
-#	deleted:    net/transmission/patches/patch-gtk_details_c
-#	deleted:    net/transmission/patches/patch-gtk_makemeta-ui_c
-#	deleted:    net/transmission/patches/patch-gtk_stats_c
-#	deleted:    net/transmission/patches/patch-gtk_torrent-cell-renderer_c
-#	deleted:    net/transmission/patches/patch-gtk_tr-prefs_c
-#	deleted:    net/transmission/patches/patch-gtk_tr-torrent_c
-#	deleted:    net/transmission/patches/patch-gtk_tr-window_c
-#	deleted:    net/transmission/patches/patch-gtk_util_c
-#	deleted:    net/transmission/patches/patch-libtransmission_blocklist_c
-#	deleted:    net/transmission/patches/patch-libtransmission_utils_c
-#	modified:   plan9/9libs/Makefile
-#	modified:   shells/bash/Makefile
-#	modified:   shells/bash/distinfo
-#	modified:   shells/bash/patches/patch-lib_glob_glob_c
+#	modified:   devel/cln/Makefile
+#	modified:   devel/p5-MooseX-Role-Parameterized/Makefile
+#	modified:   games/xcowsay/Makefile
+#	modified:   geo/openbsd-developers/Makefile
+#	modified:   geo/openbsd-developers/files/OpenBSD
+#	modified:   graphics/gpicview/Makefile
+#	modified:   mail/p5-Email-MIME-Attachment-Stripper/Makefile
+#	modified:   mail/p5-Email-MIME-Encodings/Makefile
+#	modified:   mail/p5-Email-Reply/Makefile
+#	modified:   mail/p5-Email-Sender/Makefile
+#	modified:   mail/p5-Email-Simple/Makefile
+#	modified:   multimedia/transcode/Makefile
+#	modified:   multimedia/transcode/distinfo
+#	modified:   multimedia/transcode/patches/patch-Makefile_in
+#	modified:   multimedia/transcode/patches/patch-avilib_Makefile_in
+#	modified:   multimedia/transcode/patches/patch-configure_in
+#	modified:   net/libdnet/Makefile
+#	modified:   net/libdnet/distinfo
+#	modified:   net/wget/Makefile
+#	modified:   net/wget/pkg/PLIST
+#	modified:   security/p5-Crypt-Serpent/Makefile
+#	modified:   security/p5-Digest-MD4/Makefile
+#	modified:   security/p5-Digest-Skein/Makefile
 #	modified:   status.log
-#	modified:   sysutils/Makefile
-#	modified:   sysutils/heartbeat/Makefile
-#	modified:   sysutils/ncdu/Makefile
-#	modified:   sysutils/ncdu/distinfo
-#	deleted:    sysutils/xosview/Makefile
-#	deleted:    sysutils/xosview/distinfo
-#	deleted:    sysutils/xosview/patches/patch-Xdefaults_in
-#	deleted:    sysutils/xosview/patches/patch-bsd_cpumeter_cc
-#	deleted:    sysutils/xosview/patches/patch-bsd_kernel_cc
-#	deleted:    sysutils/xosview/patches/patch-bsd_memmeter_cc
-#	deleted:    sysutils/xosview/patches/patch-bsd_obsdintr_h
-#	deleted:    sysutils/xosview/patches/patch-bsd_swapinternal_cc
-#	deleted:    sysutils/xosview/patches/patch-bsd_swapinternal_h
-#	deleted:    sysutils/xosview/patches/patch-bsd_swapmeter_cc
-#	deleted:    sysutils/xosview/patches/patch-configure
-#	deleted:    sysutils/xosview/patches/patch-general_h
-#	deleted:    sysutils/xosview/patches/patch-xosview_1
-#	deleted:    sysutils/xosview/pkg/DESCR
-#	deleted:    sysutils/xosview/pkg/PLIST
+#	modified:   textproc/p5-Template-Plugin-GD/Makefile
 #	modified:   up.log
-#	modified:   www/Makefile
-#	modified:   www/drupal6/Makefile
+#	modified:   www/drupal6/bueditor/Makefile
+#	modified:   www/drupal6/views_bulk_operations/Makefile
 #	modified:   www/drupal6/workflow/Makefile
-#	modified:   www/drupal6/workflow/distinfo
-#	modified:   www/gecko-mediaplayer/Makefile
-#	modified:   www/gecko-mediaplayer/distinfo
-#	modified:   www/gecko-mediaplayer/patches/patch-configure
-#	modified:   www/gecko-mediaplayer/patches/patch-src_Makefile_in
-#	deleted:    www/gecko-mediaplayer/patches/patch-src_plugin_types_std_cpp
-#	modified:   www/gecko-mediaplayer/pkg/DESCR
-#	modified:   www/gecko-mediaplayer/pkg/PLIST
-#	modified:   www/moinmoin/Makefile
-#	modified:   www/moinmoin/distinfo
-#	modified:   www/moinmoin/pkg/PLIST
-#	deleted:    www/xoops/Makefile
-#	deleted:    www/xoops/distinfo
-#	deleted:    www/xoops/pkg/DESCR
-#	deleted:    www/xoops/pkg/MESSAGE
-#	deleted:    www/xoops/pkg/PLIST
-#	modified:   x11/gnome-mplayer/Makefile
-#	modified:   x11/gnome-mplayer/distinfo
-#	modified:   x11/gnome-mplayer/patches/patch-src_gui_c
-#	modified:   x11/gnome-mplayer/patches/patch-src_main_c
-#	modified:   x11/gnome-mplayer/patches/patch-src_support_c
-#	deleted:    x11/gnome-mplayer/patches/patch-src_support_h
-#	modified:   x11/gnome-mplayer/pkg/MESSAGE
-#	modified:   x11/gnome-mplayer/pkg/PLIST
-#	modified:   x11/gnome/nautilus/Makefile
+#	modified:   www/opera/Makefile
+#	modified:   www/opera/distinfo
+#	modified:   www/opera/patches/patch-install_sh
+#	modified:   www/opera/pkg/PLIST
+#	modified:   www/p5-WWW-Mechanize-TreeBuilder/Makefile
+#	modified:   www/p5-WWW-Wikipedia/Makefile
+#	modified:   www/phpmyadmin/Makefile
+#	modified:   www/phpmyadmin/distinfo
+#	modified:   x11/xfce4/xfce4-mpc/Makefile
+#	modified:   x11/xfce4/xfce4-mpc/distinfo
+#	modified:   x11/xfce4/xfce4-mpc/pkg/PLIST
+#	modified:   x11/xfe/Makefile
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	databases/py-couchdb/files/
-#	devel/libgtop2/patches/patch-sysdeps_common_mountlist_c
-#	devel/llvm/patches/patch-tools_clang_lib_Driver_Tools_cpp
-#	devel/p5-MooseX-Role-Parameterized/
-#	graphics/blender/patches/patch-source_blender_src_glutil_c
-#	inputmethods/scim/patches/patch-configs_Makefile_in
-#	mail/clamnailer/
-#	mail/dovecot/patches/patch-src_auth_passdb-bsdauth_c
-#	mail/dovecot/patches/patch-src_deliver_deliver_c
-#	mail/dovecot/patches/patch-src_lib-index_mail-index_c
-#	mail/dovecot/patches/patch-src_lib_fd-close-on-exec_c
-#	mail/dovecot/patches/patch-src_lib_file-set-size_c
-#	mail/dovecot/patches/patch-src_login-common_login-proxy_c
-#	net/p5-Net-DNS-DynDNS/
-#	sysutils/ddrescue/
-#	sysutils/heartbeat/patches/patch-telecom_recoverymgrd_conf_yacc_y
-#	www/drupal6/bueditor/
-#	www/drupal6/theme-acquia-marina/
-#	www/gecko-mediaplayer/patches/patch-src_plugin_cpp
-#	www/gecko-mediaplayer/patches/patch-src_plugin_list_cpp
-#	www/p5-WWW-Mechanize-TreeBuilder/
-#	x11/gnome-mplayer/patches/patch-configure
-#	x11/gnome-mplayer/patches/patch-gnome-mplayer_schemas_in
-#	x11/gnome-mplayer/patches/patch-src_gui_h
-#	x11/gnome-mplayer/patches/patch-src_libgmlib_gm_parse_c
-#	x11/gnome-mplayer/patches/patch-src_libgmlib_gm_parse_h
-#	x11/gnome-mplayer/patches/patch-src_thread_c
+#	games/xcowsay/patches/
 no changes added to commit (use "git add" and/or "git commit -a")
