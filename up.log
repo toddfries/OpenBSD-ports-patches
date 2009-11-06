@@ -3,48 +3,56 @@
 ? status.log
 ? sync.sh
 ? up.log
-P audio/gmpc-libnotify/Makefile
-P devel/Makefile
-P devel/fossil/Makefile
-U devel/fossil/distinfo
-cvs server: devel/prc-tools/Makefile is no longer in the repository
-cvs server: devel/prc-tools/distinfo is no longer in the repository
-cvs server: devel/prc-tools/patches/patch-binutils-2_7_Makefile_in is no longer in the repository
-cvs server: devel/prc-tools/patches/patch-gcc-2_7_2_2_Makefile_in is no longer in the repository
-cvs server: devel/prc-tools/patches/patch-gcc-2_7_2_2_config_i386_x-freebsd is no longer in the repository
-cvs server: devel/prc-tools/patches/patch-gdb-4_16_Makefile_in is no longer in the repository
-cvs server: devel/prc-tools/patches/patch-prc-tools-0_5_0_Makefile is no longer in the repository
-cvs server: devel/prc-tools/patches/patch-prc-tools-0_5_0_build-prc_c is no longer in the repository
-cvs server: devel/prc-tools/pkg/DESCR is no longer in the repository
-cvs server: devel/prc-tools/pkg/PLIST is no longer in the repository
+P audio/sox/Makefile
+U audio/sox/distinfo
+cvs server: audio/sox/files/sndio.c is no longer in the repository
+cvs server: audio/sox/patches/patch-configure_ac is no longer in the repository
+cvs server: audio/sox/patches/patch-src_Makefile_am is no longer in the repository
+U audio/sox/patches/patch-src_formats_c
+cvs server: audio/sox/patches/patch-src_formats_h is no longer in the repository
+cvs server: audio/sox/patches/patch-src_sox_c is no longer in the repository
+P devel/p5-IO-Multiplex/Makefile
+U devel/p5-IO-Multiplex/distinfo
+P devel/p5-POE/Makefile
+U devel/p5-POE/distinfo
+P devel/p5-POE-Test-Loops/Makefile
+U devel/p5-POE-Test-Loops/distinfo
+P devel/p5-POE-Test-Loops/pkg/PLIST
 P net/Makefile
-cvs server: net/centericq/Makefile is no longer in the repository
-cvs server: net/centericq/distinfo is no longer in the repository
-cvs server: net/centericq/patches/patch-configure is no longer in the repository
-cvs server: net/centericq/patches/patch-kkconsui-0_1_src_cmenus_cc is no longer in the repository
-cvs server: net/centericq/patches/patch-po_Makefile_in_in is no longer in the repository
-cvs server: net/centericq/patches/patch-src_Makefile_in is no longer in the repository
-cvs server: net/centericq/patches/patch-src_hooks_Makefile_in is no longer in the repository
-cvs server: net/centericq/pkg/DESCR is no longer in the repository
-cvs server: net/centericq/pkg/PLIST is no longer in the repository
-P net/pidgin-facebookchat/Makefile
-U net/pidgin-facebookchat/distinfo
-P telephony/asterisk/Makefile
-U telephony/asterisk/distinfo
-U telephony/asterisk/patches/patch-bootstrap_sh
-P telephony/asterisk/pkg/PLIST-main
-P textproc/Makefile
-U textproc/p5-Lingua-EN-Fathom/Makefile
-U textproc/p5-Lingua-EN-Fathom/distinfo
-U textproc/p5-Lingua-EN-Fathom/pkg/DESCR
-U textproc/p5-Lingua-EN-Fathom/pkg/PLIST
-U textproc/p5-Lingua-EN-Syllable/Makefile
-U textproc/p5-Lingua-EN-Syllable/distinfo
-U textproc/p5-Lingua-EN-Syllable/pkg/DESCR
-U textproc/p5-Lingua-EN-Syllable/pkg/PLIST
+P net/nagios/Makefile
+U net/nagios/check_email_delivery/Makefile
+U net/nagios/check_email_delivery/distinfo
+U net/nagios/check_email_delivery/patches/patch-check_email_delivery
+U net/nagios/check_email_delivery/patches/patch-check_email_delivery_epn
+U net/nagios/check_email_delivery/pkg/DESCR
+U net/nagios/check_email_delivery/pkg/PLIST
+U net/nagios/check_sip/Makefile
+U net/nagios/check_sip/distinfo
+U net/nagios/check_sip/patches/patch-check_sip
+U net/nagios/check_sip/pkg/DESCR
+U net/nagios/check_sip/pkg/PLIST
+P net/nagios/plugins/Makefile
+U net/nagios/plugins/distinfo
+U net/p5-Net-SMTP-SSL/Makefile
+U net/p5-Net-SMTP-SSL/distinfo
+U net/p5-Net-SMTP-SSL/pkg/DESCR
+U net/p5-Net-SMTP-SSL/pkg/PLIST
+U net/p5-Net-SMTP-TLS/Makefile
+U net/p5-Net-SMTP-TLS/distinfo
+U net/p5-Net-SMTP-TLS/pkg/DESCR
+U net/p5-Net-SMTP-TLS/pkg/PLIST
+U net/p5-Net-SMTP_auth/Makefile
+U net/p5-Net-SMTP_auth/distinfo
+U net/p5-Net-SMTP_auth/pkg/DESCR
+U net/p5-Net-SMTP_auth/pkg/PLIST
+P security/py-paramiko/Makefile
+U security/py-paramiko/distinfo
+P textproc/sablotron/Makefile
+U www/bozohttpd/Makefile
 P x11/gnome/f-spot/Makefile
 U x11/gnome/f-spot/distinfo
-P x11/gnome/f-spot/patches/patch-configure
-P x11/gnome/f-spot/patches/patch-lib_libfspot_Makefile_in
-P x11/gnome/f-spot/patches/patch-lib_libjpegtran_Makefile_in
-P x11/gnome/f-spot/patches/patch-tools_Makefile_in
+P x11/gnome/metacity/patches/patch-src_core_main_c
+P x11/slim/Makefile
+P x11/slim/patches/patch-app_cpp
+P x11/slim/patches/patch-app_h
+P x11/slim/patches/patch-slim_conf

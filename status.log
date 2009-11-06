@@ -3,49 +3,45 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   audio/gmpc-libnotify/Makefile
-#	modified:   devel/Makefile
-#	modified:   devel/fossil/Makefile
-#	modified:   devel/fossil/distinfo
-#	deleted:    devel/prc-tools/Makefile
-#	deleted:    devel/prc-tools/distinfo
-#	deleted:    devel/prc-tools/patches/patch-binutils-2_7_Makefile_in
-#	deleted:    devel/prc-tools/patches/patch-gcc-2_7_2_2_Makefile_in
-#	deleted:    devel/prc-tools/patches/patch-gcc-2_7_2_2_config_i386_x-freebsd
-#	deleted:    devel/prc-tools/patches/patch-gdb-4_16_Makefile_in
-#	deleted:    devel/prc-tools/patches/patch-prc-tools-0_5_0_Makefile
-#	deleted:    devel/prc-tools/patches/patch-prc-tools-0_5_0_build-prc_c
-#	deleted:    devel/prc-tools/pkg/DESCR
-#	deleted:    devel/prc-tools/pkg/PLIST
+#	modified:   audio/sox/Makefile
+#	modified:   audio/sox/distinfo
+#	deleted:    audio/sox/files/sndio.c
+#	deleted:    audio/sox/patches/patch-configure_ac
+#	deleted:    audio/sox/patches/patch-src_Makefile_am
+#	deleted:    audio/sox/patches/patch-src_formats_h
+#	deleted:    audio/sox/patches/patch-src_sox_c
+#	modified:   devel/p5-IO-Multiplex/Makefile
+#	modified:   devel/p5-IO-Multiplex/distinfo
+#	modified:   devel/p5-POE-Test-Loops/Makefile
+#	modified:   devel/p5-POE-Test-Loops/distinfo
+#	modified:   devel/p5-POE-Test-Loops/pkg/PLIST
+#	modified:   devel/p5-POE/Makefile
+#	modified:   devel/p5-POE/distinfo
 #	modified:   net/Makefile
-#	deleted:    net/centericq/Makefile
-#	deleted:    net/centericq/distinfo
-#	deleted:    net/centericq/patches/patch-configure
-#	deleted:    net/centericq/patches/patch-kkconsui-0_1_src_cmenus_cc
-#	deleted:    net/centericq/patches/patch-po_Makefile_in_in
-#	deleted:    net/centericq/patches/patch-src_Makefile_in
-#	deleted:    net/centericq/patches/patch-src_hooks_Makefile_in
-#	deleted:    net/centericq/pkg/DESCR
-#	deleted:    net/centericq/pkg/PLIST
-#	modified:   net/pidgin-facebookchat/Makefile
-#	modified:   net/pidgin-facebookchat/distinfo
+#	modified:   net/nagios/Makefile
+#	modified:   net/nagios/plugins/Makefile
+#	modified:   net/nagios/plugins/distinfo
+#	modified:   security/py-paramiko/Makefile
+#	modified:   security/py-paramiko/distinfo
 #	modified:   status.log
-#	modified:   telephony/asterisk/Makefile
-#	modified:   telephony/asterisk/distinfo
-#	modified:   telephony/asterisk/pkg/PLIST-main
-#	modified:   textproc/Makefile
+#	modified:   textproc/sablotron/Makefile
 #	modified:   up.log
+#	modified:   www/bozohttpd/Makefile
 #	modified:   x11/gnome/f-spot/Makefile
 #	modified:   x11/gnome/f-spot/distinfo
-#	modified:   x11/gnome/f-spot/patches/patch-configure
-#	modified:   x11/gnome/f-spot/patches/patch-lib_libfspot_Makefile_in
-#	modified:   x11/gnome/f-spot/patches/patch-lib_libjpegtran_Makefile_in
-#	modified:   x11/gnome/f-spot/patches/patch-tools_Makefile_in
+#	modified:   x11/gnome/metacity/patches/patch-src_core_main_c
+#	modified:   x11/slim/Makefile
+#	modified:   x11/slim/patches/patch-app_cpp
+#	modified:   x11/slim/patches/patch-app_h
+#	modified:   x11/slim/patches/patch-slim_conf
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	telephony/asterisk/patches/patch-bootstrap_sh
-#	textproc/p5-Lingua-EN-Fathom/
-#	textproc/p5-Lingua-EN-Syllable/
+#	audio/sox/patches/patch-src_formats_c
+#	net/nagios/check_email_delivery/
+#	net/nagios/check_sip/
+#	net/p5-Net-SMTP-SSL/
+#	net/p5-Net-SMTP-TLS/
+#	net/p5-Net-SMTP_auth/
 no changes added to commit (use "git add" and/or "git commit -a")
