@@ -1,13 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2009/09/17 00:51:45 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2009/11/06 09:01:07 jasper Exp $
 
 COMMENT=	IPv6 address handling tools for PHP
 
 DISTNAME=	Net_IPv6-1.1.0b2
 PKGNAME=	pear-${DISTNAME:S/_/-/}p0
-CATEGORIES=	net pear
-
-MASTER_SITES=	http://pear.php.net/get/
-EXTRACT_SUFX=	.tgz
+CATEGORIES=	net
 
 MODULES=	www/pear
 

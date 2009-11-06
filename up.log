@@ -1,58 +1,92 @@
+Host key fingerprint is 3f:44:14:35:1b:65:cc:cb:da:17:6d:1d:e1:b4:a6:36
++--[ RSA 1024]----+
+|          oo++oo.|
+|         .   ==..|
+|          . .. =+|
+|         .    =.+|
+|        S .  E ..|
+|         o  o o .|
+|          o    . |
+|           .     |
+|                 |
++-----------------+
+
 ? .git
 ? .gitignore
 ? status.log
 ? sync.sh
 ? up.log
-P audio/sox/Makefile
-U audio/sox/distinfo
-cvs server: audio/sox/files/sndio.c is no longer in the repository
-cvs server: audio/sox/patches/patch-configure_ac is no longer in the repository
-cvs server: audio/sox/patches/patch-src_Makefile_am is no longer in the repository
-U audio/sox/patches/patch-src_formats_c
-cvs server: audio/sox/patches/patch-src_formats_h is no longer in the repository
-cvs server: audio/sox/patches/patch-src_sox_c is no longer in the repository
-P devel/p5-IO-Multiplex/Makefile
-U devel/p5-IO-Multiplex/distinfo
-P devel/p5-POE/Makefile
-U devel/p5-POE/distinfo
-P devel/p5-POE-Test-Loops/Makefile
-U devel/p5-POE-Test-Loops/distinfo
-P devel/p5-POE-Test-Loops/pkg/PLIST
-P net/Makefile
-P net/nagios/Makefile
-U net/nagios/check_email_delivery/Makefile
-U net/nagios/check_email_delivery/distinfo
-U net/nagios/check_email_delivery/patches/patch-check_email_delivery
-U net/nagios/check_email_delivery/patches/patch-check_email_delivery_epn
-U net/nagios/check_email_delivery/pkg/DESCR
-U net/nagios/check_email_delivery/pkg/PLIST
-U net/nagios/check_sip/Makefile
+P benchmarks/pear-Benchmark/Makefile
+P databases/pear-DB/Makefile
+P databases/pear-DB_DataObject/Makefile
+P databases/pear-MDB2/Makefile
+P databases/pear-MDB2-mysql/Makefile
+P databases/pear-MDB2-mysqli/Makefile
+P databases/pear-MDB2-sqlite/Makefile
+P devel/p5-Date-Calc/Makefile
+U devel/p5-Date-Calc/distinfo
+P devel/p5-Date-Calc/pkg/PLIST
+P devel/pear-Cache/Makefile
+P devel/pear-Config/Makefile
+P devel/pear-Date/Makefile
+U devel/pear-Log/Makefile
+U devel/pear-Log/distinfo
+P devel/pear-Log/pkg/PLIST
+P devel/pear-PHPUnit2/Makefile
+P mail/dovecot/Makefile
+U mail/dovecot/patches/patch-src_lib-storage_index_maildir_maildir-sync-index_c
+U mail/dovecot/patches/patch-src_master_login-process_c
+U mail/p5-MIME-Lite/Makefile
+U mail/p5-MIME-Lite/distinfo
+P mail/pear-Mail/Makefile
+P mail/pear-Mail-Mime/Makefile
+P math/p5-Bit-Vector/Makefile
+U math/p5-Bit-Vector/distinfo
+P multimedia/Makefile
+U multimedia/atomicparsley/Makefile
+U multimedia/atomicparsley/distinfo
+U multimedia/atomicparsley/files/Makefile
+U multimedia/atomicparsley/pkg/DESCR
+U multimedia/atomicparsley/pkg/PLIST
+P multimedia/get_iplayer/Makefile
+U multimedia/get_iplayer/distinfo
+P multimedia/get_iplayer/patches/patch-get_iplayer
+P net/nagios/check_sip/Makefile
 U net/nagios/check_sip/distinfo
-U net/nagios/check_sip/patches/patch-check_sip
-U net/nagios/check_sip/pkg/DESCR
-U net/nagios/check_sip/pkg/PLIST
-P net/nagios/plugins/Makefile
-U net/nagios/plugins/distinfo
-U net/p5-Net-SMTP-SSL/Makefile
-U net/p5-Net-SMTP-SSL/distinfo
-U net/p5-Net-SMTP-SSL/pkg/DESCR
-U net/p5-Net-SMTP-SSL/pkg/PLIST
-U net/p5-Net-SMTP-TLS/Makefile
-U net/p5-Net-SMTP-TLS/distinfo
-U net/p5-Net-SMTP-TLS/pkg/DESCR
-U net/p5-Net-SMTP-TLS/pkg/PLIST
-U net/p5-Net-SMTP_auth/Makefile
-U net/p5-Net-SMTP_auth/distinfo
-U net/p5-Net-SMTP_auth/pkg/DESCR
-U net/p5-Net-SMTP_auth/pkg/PLIST
-P security/py-paramiko/Makefile
-U security/py-paramiko/distinfo
-P textproc/sablotron/Makefile
-U www/bozohttpd/Makefile
-P x11/gnome/f-spot/Makefile
-U x11/gnome/f-spot/distinfo
-P x11/gnome/metacity/patches/patch-src_core_main_c
-P x11/slim/Makefile
-P x11/slim/patches/patch-app_cpp
-P x11/slim/patches/patch-app_h
-P x11/slim/patches/patch-slim_conf
+P net/pear-HTTP/Makefile
+P net/pear-HTTP-Request/Makefile
+P net/pear-Net-DNS/Makefile
+P net/pear-Net-IMAP/Makefile
+P net/pear-Net-IPv4/Makefile
+P net/pear-Net-IPv6/Makefile
+P net/pear-Net-LDAP/Makefile
+P net/pear-Net-SMTP/Makefile
+P net/pear-Net-Socket/Makefile
+P net/pear-Net-URL/Makefile
+P net/pear-Services-Weather/Makefile
+P net/py-IP/Makefile
+U net/py-IP/distinfo
+P security/pear-Auth/Makefile
+P security/pear-Auth-HTTP/Makefile
+P security/pear-Auth-SASL/Makefile
+P textproc/pear-File/Makefile
+P textproc/pear-XML-Parser/Makefile
+P textproc/pear-XML-RSS/Makefile
+P textproc/pear-XML-Serializer/Makefile
+P textproc/pear-XML-Tree/Makefile
+P textproc/pear-XML-Util/Makefile
+P www/pear/pear.port.mk
+P www/pear-HTML-Common2/Makefile
+P www/pear-HTML-Page2/Makefile
+P www/pear-HTML-QuickForm/Makefile
+P www/pear-HTML-Select/Makefile
+P www/pear-HTML-Template-IT/Makefile
+P www/pear-SOAP/Makefile
+P x11/gnome-mplayer/Makefile
+U x11/gnome-mplayer/patches/patch-src_common_h
+P x11/gnome-mplayer/patches/patch-src_gui_c
+P x11/gnome-mplayer/patches/patch-src_main_c
+P x11/gnome-mplayer/patches/patch-src_thread_c
+P x11/klavaro/Makefile
+U x11/klavaro/distinfo
+P x11/klavaro/pkg/PLIST

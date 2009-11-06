@@ -1,14 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2009/09/15 17:37:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2009/11/06 09:01:07 jasper Exp $
 
 COMMENT=	HTTP authentication
 
 V=		2.1.6
 DISTNAME=	Auth_HTTP-${V}
 PKGNAME=	pear-Auth-HTTP-${V}p0
-CATEGORIES=	security pear
-
-MASTER_SITES=	http://pear.php.net/get/
-EXTRACT_SUFX=	.tgz
+CATEGORIES=	security
 
 MODULES=	www/pear
 
