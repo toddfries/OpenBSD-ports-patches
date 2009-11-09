@@ -1,82 +1,95 @@
 # On branch master
 # Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
+#   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   benchmarks/pear-Benchmark/Makefile
-#	modified:   databases/pear-DB/Makefile
-#	modified:   databases/pear-DB_DataObject/Makefile
-#	modified:   databases/pear-MDB2-mysql/Makefile
-#	modified:   databases/pear-MDB2-mysqli/Makefile
-#	modified:   databases/pear-MDB2-sqlite/Makefile
-#	modified:   databases/pear-MDB2/Makefile
-#	modified:   devel/p5-Date-Calc/Makefile
-#	modified:   devel/p5-Date-Calc/distinfo
-#	modified:   devel/p5-Date-Calc/pkg/PLIST
-#	modified:   devel/pear-Cache/Makefile
-#	modified:   devel/pear-Config/Makefile
-#	modified:   devel/pear-Date/Makefile
-#	modified:   devel/pear-Log/Makefile
-#	modified:   devel/pear-Log/distinfo
-#	modified:   devel/pear-Log/pkg/PLIST
-#	modified:   devel/pear-PHPUnit2/Makefile
-#	modified:   mail/dovecot/Makefile
-#	modified:   mail/p5-MIME-Lite/Makefile
-#	modified:   mail/p5-MIME-Lite/distinfo
-#	modified:   mail/pear-Mail-Mime/Makefile
-#	modified:   mail/pear-Mail/Makefile
-#	modified:   math/p5-Bit-Vector/Makefile
-#	modified:   math/p5-Bit-Vector/distinfo
-#	modified:   multimedia/Makefile
-#	modified:   multimedia/get_iplayer/Makefile
-#	modified:   multimedia/get_iplayer/distinfo
-#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
-#	modified:   net/nagios/check_sip/Makefile
-#	modified:   net/nagios/check_sip/distinfo
-#	modified:   net/pear-HTTP-Request/Makefile
-#	modified:   net/pear-HTTP/Makefile
-#	modified:   net/pear-Net-DNS/Makefile
-#	modified:   net/pear-Net-IMAP/Makefile
-#	modified:   net/pear-Net-IPv4/Makefile
-#	modified:   net/pear-Net-IPv6/Makefile
-#	modified:   net/pear-Net-LDAP/Makefile
-#	modified:   net/pear-Net-SMTP/Makefile
-#	modified:   net/pear-Net-Socket/Makefile
-#	modified:   net/pear-Net-URL/Makefile
-#	modified:   net/pear-Services-Weather/Makefile
-#	modified:   net/py-IP/Makefile
-#	modified:   net/py-IP/distinfo
-#	modified:   security/pear-Auth-HTTP/Makefile
-#	modified:   security/pear-Auth-SASL/Makefile
-#	modified:   security/pear-Auth/Makefile
+#	modified:   archivers/unrar/Makefile
+#	modified:   archivers/unrar/patches/patch-makefile_unix
+#	modified:   audio/sonata/Makefile
+#	modified:   audio/sound-theme-freedesktop/Makefile
+#	modified:   audio/sox/Makefile
+#	modified:   devel/apr/Makefile
+#	modified:   devel/fossil/Makefile
+#	modified:   devel/fossil/pkg/DESCR
+#	modified:   devel/gconf2/Makefile
+#	modified:   devel/gconf2/patches/patch-gconf_gconftool_c
+#	modified:   editors/leafpad/Makefile
+#	modified:   editors/leafpad/distinfo
+#	modified:   editors/leafpad/pkg/MESSAGE
+#	modified:   editors/leafpad/pkg/PLIST
+#	modified:   editors/nedit/Makefile
+#	modified:   games/frozen-bubble/Makefile
+#	modified:   games/ggz/libggz/Makefile
+#	modified:   games/pioneers/Makefile
+#	modified:   games/pioneers/distinfo
+#	modified:   games/pioneers/patches/patch-Makefile_in
+#	modified:   games/pioneers/patches/patch-configure
+#	modified:   games/pioneers/pkg/PLIST
+#	modified:   geo/Makefile
+#	modified:   graphics/gtkam/Makefile
+#	modified:   graphics/gtkam/distinfo
+#	modified:   graphics/gtkam/patches/patch-Makefile_in
+#	modified:   graphics/gtkam/patches/patch-configure
+#	modified:   graphics/gtkam/patches/patch-src_gtkam-main_c
+#	modified:   graphics/gtkam/pkg/PLIST
+#	modified:   infrastructure/build/portslogger
+#	modified:   lang/unicon/Makefile
+#	modified:   mail/Makefile
+#	modified:   mail/alpine/Makefile
+#	modified:   mail/evolution-plugin-rss/Makefile
+#	modified:   mail/gmime24/Makefile
+#	modified:   mail/gmime24/distinfo
+#	modified:   mail/imap-uw/Makefile
+#	modified:   mail/imap-uw/files/README.OpenBSD
+#	modified:   mail/imap-uw/pkg/DESCR-c-client
+#	modified:   mail/imap-uw/pkg/DESCR-mailutil
+#	modified:   mail/imap-uw/pkg/DESCR-server
+#	modified:   mail/imap-uw/pkg/PLIST-c-client
+#	modified:   mail/imap-uw/pkg/PLIST-mailutil
+#	modified:   mail/imap-uw/pkg/PLIST-server
+#	modified:   net/transmission/Makefile
 #	modified:   status.log
-#	modified:   textproc/pear-File/Makefile
-#	modified:   textproc/pear-XML-Parser/Makefile
-#	modified:   textproc/pear-XML-RSS/Makefile
-#	modified:   textproc/pear-XML-Serializer/Makefile
-#	modified:   textproc/pear-XML-Tree/Makefile
-#	modified:   textproc/pear-XML-Util/Makefile
+#	modified:   sysutils/bacula/Makefile
+#	modified:   sysutils/bacula/distinfo
+#	modified:   sysutils/tkdvd/Makefile
+#	modified:   sysutils/tkdvd/patches/patch-TkDVD_sh
+#	modified:   sysutils/tkdvd/patches/patch-src-other_procedures_tcl
 #	modified:   up.log
-#	modified:   www/pear-HTML-Common2/Makefile
-#	modified:   www/pear-HTML-Page2/Makefile
-#	modified:   www/pear-HTML-QuickForm/Makefile
-#	modified:   www/pear-HTML-Select/Makefile
-#	modified:   www/pear-HTML-Template-IT/Makefile
-#	modified:   www/pear-SOAP/Makefile
-#	modified:   www/pear/pear.port.mk
-#	modified:   x11/gnome-mplayer/Makefile
-#	modified:   x11/gnome-mplayer/patches/patch-src_gui_c
-#	modified:   x11/gnome-mplayer/patches/patch-src_main_c
-#	modified:   x11/gnome-mplayer/patches/patch-src_thread_c
-#	modified:   x11/klavaro/Makefile
-#	modified:   x11/klavaro/distinfo
-#	modified:   x11/klavaro/pkg/PLIST
+#	modified:   www/Makefile
+#	modified:   www/drupal6/cck/Makefile
+#	modified:   www/drupal6/cck/distinfo
+#	modified:   www/drupal6/views/Makefile
+#	modified:   www/drupal6/views/distinfo
+#	deleted:    www/drupal6/views/patches/patch-plugins_views_plugin_cache_time_inc
+#	modified:   www/drupal6/views/pkg/PLIST
+#	modified:   www/drupal6/webform/Makefile
+#	modified:   www/drupal6/webform/distinfo
+#	modified:   www/drupal6/webform/patches/patch-webform_components_inc
+#	modified:   www/drupal6/webform/patches/patch-webform_module
+#	modified:   www/drupal6/webform/pkg/PLIST
+#	modified:   www/lighttpd/Makefile
+#	modified:   www/webkit/Makefile
+#	modified:   x11/emiclock/patches/patch-Imakefile
+#	modified:   x11/emiclock/patches/patch-config_h
+#	modified:   x11/emiclock/patches/patch-include_sound_h
+#	modified:   x11/gnome/krb5-auth-dialog/Makefile
+#	modified:   x11/gnome/krb5-auth-dialog/distinfo
+#	modified:   x11/gnome/krb5-auth-dialog/patches/patch-src_krb5-auth-dialog_c
+#	modified:   x11/gnome/krb5-auth-dialog/pkg/PLIST
+#	modified:   x11/xfce4/thunar-vcs/Makefile
+#	modified:   x11/xfce4/thunar-vcs/distinfo
+#	modified:   x11/xfce4/thunar-vcs/pkg/PLIST
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	mail/dovecot/patches/patch-src_lib-storage_index_maildir_maildir-sync-index_c
-#	mail/dovecot/patches/patch-src_master_login-process_c
-#	multimedia/atomicparsley/
-#	x11/gnome-mplayer/patches/patch-src_common_h
+#	editors/nedit/patches/patch-util_Makefile_common
+#	geo/tilecache/
+#	mail/imap-uw/files/c-client.cf
+#	sysutils/bacula/patches/patch-src_baconfig_h
+#	sysutils/tkdvd/patches/patch-src_proc_refresh_cmd_line_tcl
+#	www/lighttpd/patches/patch-src_connections_c
+#	www/lighttpd/patches/patch-src_mod_fastcgi_c
+#	www/surf/
+#	www/webkit/patches/patch-WebCore_plugins_PluginDatabase_cpp
 no changes added to commit (use "git add" and/or "git commit -a")
