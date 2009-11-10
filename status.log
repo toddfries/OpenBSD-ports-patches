@@ -3,93 +3,102 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   archivers/unrar/Makefile
-#	modified:   archivers/unrar/patches/patch-makefile_unix
-#	modified:   audio/sonata/Makefile
-#	modified:   audio/sound-theme-freedesktop/Makefile
-#	modified:   audio/sox/Makefile
-#	modified:   devel/apr/Makefile
-#	modified:   devel/fossil/Makefile
-#	modified:   devel/fossil/pkg/DESCR
-#	modified:   devel/gconf2/Makefile
-#	modified:   devel/gconf2/patches/patch-gconf_gconftool_c
-#	modified:   editors/leafpad/Makefile
-#	modified:   editors/leafpad/distinfo
-#	modified:   editors/leafpad/pkg/MESSAGE
-#	modified:   editors/leafpad/pkg/PLIST
-#	modified:   editors/nedit/Makefile
-#	modified:   games/frozen-bubble/Makefile
-#	modified:   games/ggz/libggz/Makefile
-#	modified:   games/pioneers/Makefile
-#	modified:   games/pioneers/distinfo
-#	modified:   games/pioneers/patches/patch-Makefile_in
-#	modified:   games/pioneers/patches/patch-configure
-#	modified:   games/pioneers/pkg/PLIST
-#	modified:   geo/Makefile
-#	modified:   graphics/gtkam/Makefile
-#	modified:   graphics/gtkam/distinfo
-#	modified:   graphics/gtkam/patches/patch-Makefile_in
-#	modified:   graphics/gtkam/patches/patch-configure
-#	modified:   graphics/gtkam/patches/patch-src_gtkam-main_c
-#	modified:   graphics/gtkam/pkg/PLIST
-#	modified:   infrastructure/build/portslogger
-#	modified:   lang/unicon/Makefile
-#	modified:   mail/Makefile
-#	modified:   mail/alpine/Makefile
-#	modified:   mail/evolution-plugin-rss/Makefile
-#	modified:   mail/gmime24/Makefile
-#	modified:   mail/gmime24/distinfo
-#	modified:   mail/imap-uw/Makefile
-#	modified:   mail/imap-uw/files/README.OpenBSD
-#	modified:   mail/imap-uw/pkg/DESCR-c-client
-#	modified:   mail/imap-uw/pkg/DESCR-mailutil
-#	modified:   mail/imap-uw/pkg/DESCR-server
-#	modified:   mail/imap-uw/pkg/PLIST-c-client
-#	modified:   mail/imap-uw/pkg/PLIST-mailutil
-#	modified:   mail/imap-uw/pkg/PLIST-server
-#	modified:   net/transmission/Makefile
+#	modified:   databases/db/v4/Makefile
+#	modified:   databases/qdbm/Makefile
+#	modified:   databases/ruby-sqlite3/Makefile
+#	modified:   devel/apache-ant/Makefile
+#	modified:   devel/cln/Makefile
+#	modified:   devel/jakarta-servletapi/Makefile
+#	modified:   devel/jdk/java.port.mk
+#	modified:   devel/vte/Makefile
+#	modified:   devel/vte/distinfo
+#	modified:   editors/openoffice3/Makefile
+#	modified:   graphics/gphoto2/Makefile
+#	modified:   graphics/gphoto2/distinfo
+#	modified:   graphics/gphoto2/patches/patch-configure
+#	modified:   graphics/gphoto2/patches/patch-gphoto2_shell_c
+#	modified:   graphics/gphoto2/pkg/PLIST
+#	modified:   graphics/libgphoto2/Makefile
+#	modified:   graphics/libgphoto2/distinfo
+#	modified:   graphics/libgphoto2/patches/patch-Makefile_in
+#	deleted:    graphics/libgphoto2/patches/patch-camlibs_canon_usb_c
+#	deleted:    graphics/libgphoto2/patches/patch-camlibs_ptp2_config_c
+#	deleted:    graphics/libgphoto2/patches/patch-configure
+#	modified:   graphics/libgphoto2/patches/patch-libgphoto2_port_Makefile_in
+#	deleted:    graphics/libgphoto2/patches/patch-libgphoto2_port_configure
+#	modified:   graphics/libgphoto2/patches/patch-tests_Makefile_in
+#	modified:   graphics/libgphoto2/pkg/PLIST
+#	modified:   graphics/p5-Image-MetaData-JPEG/Makefile
+#	modified:   graphics/p5-Image-MetaData-JPEG/distinfo
+#	modified:   graphics/p5-Image-MetaData-JPEG/pkg/PLIST
+#	modified:   infrastructure/db/user.list
+#	modified:   java/junit/Makefile
+#	modified:   mail/offlineimap/Makefile
+#	modified:   mail/offlineimap/distinfo
+#	modified:   mail/p5-Mail-Mbox-MessageParser/Makefile
+#	modified:   mail/p5-Mail-Mbox-MessageParser/distinfo
+#	modified:   misc/contacts/Makefile
+#	modified:   misc/contacts/distinfo
+#	modified:   misc/contacts/pkg/PLIST
+#	modified:   multimedia/get_iplayer/Makefile
+#	modified:   multimedia/get_iplayer/distinfo
+#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
+#	modified:   net/Makefile
+#	modified:   net/mldonkey/stable/Makefile
+#	modified:   net/nagios/Makefile
+#	modified:   net/nagios/check_sip/Makefile
+#	modified:   net/nagios/p5-Nagios-Plugin/Makefile
+#	modified:   net/ncftp/Makefile
+#	modified:   net/ncftp/distinfo
+#	modified:   net/p5-Net-SNMP/Makefile
+#	modified:   net/p5-Net-SNMP/distinfo
+#	modified:   net/p5-Net-SNMP/pkg/PLIST
+#	modified:   net/p5-Net-Whois-RIPE/Makefile
+#	modified:   net/p5-Net-Whois-RIPE/distinfo
 #	modified:   status.log
-#	modified:   sysutils/bacula/Makefile
-#	modified:   sysutils/bacula/distinfo
-#	modified:   sysutils/tkdvd/Makefile
-#	modified:   sysutils/tkdvd/patches/patch-TkDVD_sh
-#	modified:   sysutils/tkdvd/patches/patch-src-other_procedures_tcl
+#	modified:   sysutils/ruby-capistrano/Makefile
+#	modified:   textproc/ruby-hyperestraier/Makefile
+#	modified:   textproc/ruby-hyperestraier/patches/patch-rubynative_src_extconf_rb
+#	modified:   textproc/xerces/Makefile
 #	modified:   up.log
-#	modified:   www/Makefile
-#	modified:   www/drupal6/cck/Makefile
-#	modified:   www/drupal6/cck/distinfo
-#	modified:   www/drupal6/views/Makefile
-#	modified:   www/drupal6/views/distinfo
-#	deleted:    www/drupal6/views/patches/patch-plugins_views_plugin_cache_time_inc
-#	modified:   www/drupal6/views/pkg/PLIST
-#	modified:   www/drupal6/webform/Makefile
-#	modified:   www/drupal6/webform/distinfo
-#	modified:   www/drupal6/webform/patches/patch-webform_components_inc
-#	modified:   www/drupal6/webform/patches/patch-webform_module
-#	modified:   www/drupal6/webform/pkg/PLIST
-#	modified:   www/lighttpd/Makefile
-#	modified:   www/webkit/Makefile
-#	modified:   x11/emiclock/patches/patch-Imakefile
-#	modified:   x11/emiclock/patches/patch-config_h
-#	modified:   x11/emiclock/patches/patch-include_sound_h
-#	modified:   x11/gnome/krb5-auth-dialog/Makefile
-#	modified:   x11/gnome/krb5-auth-dialog/distinfo
-#	modified:   x11/gnome/krb5-auth-dialog/patches/patch-src_krb5-auth-dialog_c
-#	modified:   x11/gnome/krb5-auth-dialog/pkg/PLIST
+#	modified:   www/drupal6/Makefile
+#	modified:   www/ruby-merb/Makefile.inc
+#	modified:   www/ruby-merb/action-args/Makefile
+#	modified:   www/ruby-merb/activerecord/Makefile
+#	modified:   www/ruby-merb/assets/Makefile
+#	modified:   www/ruby-merb/auth-core/Makefile
+#	modified:   www/ruby-merb/auth-more/Makefile
+#	modified:   www/ruby-merb/auth-slice-password/Makefile
+#	modified:   www/ruby-merb/auth/Makefile
+#	modified:   www/ruby-merb/cache/Makefile
+#	modified:   www/ruby-merb/core/Makefile
+#	modified:   www/ruby-merb/datamapper/Makefile
+#	modified:   www/ruby-merb/exceptions/Makefile
+#	modified:   www/ruby-merb/gen/Makefile
+#	modified:   www/ruby-merb/haml/Makefile
+#	modified:   www/ruby-merb/helpers/Makefile
+#	modified:   www/ruby-merb/mailer/Makefile
+#	modified:   www/ruby-merb/merb/Makefile
+#	modified:   www/ruby-merb/more/Makefile
+#	modified:   www/ruby-merb/param-protection/Makefile
+#	modified:   www/ruby-merb/slices/Makefile
+#	modified:   www/tomcat/v4/Makefile
+#	modified:   www/wml/Makefile
+#	modified:   x11/gnome/cheese/patches/patch-src_cheese-webcam_c
+#	modified:   x11/gnome/gedit/Makefile
+#	modified:   x11/gnome/gedit/distinfo
+#	modified:   x11/gnome/gedit/pkg/PLIST
+#	modified:   x11/gnome/genius/Makefile
+#	modified:   x11/gnome/genius/distinfo
 #	modified:   x11/xfce4/thunar-vcs/Makefile
-#	modified:   x11/xfce4/thunar-vcs/distinfo
-#	modified:   x11/xfce4/thunar-vcs/pkg/PLIST
+#	modified:   x11/xfce4/thunar-vcs/pkg/DESCR
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	editors/nedit/patches/patch-util_Makefile_common
-#	geo/tilecache/
-#	mail/imap-uw/files/c-client.cf
-#	sysutils/bacula/patches/patch-src_baconfig_h
-#	sysutils/tkdvd/patches/patch-src_proc_refresh_cmd_line_tcl
-#	www/lighttpd/patches/patch-src_connections_c
-#	www/lighttpd/patches/patch-src_mod_fastcgi_c
-#	www/surf/
-#	www/webkit/patches/patch-WebCore_plugins_PluginDatabase_cpp
+#	net/mldonkey/stable/patches/patch-src_gtk2_gui_guiServers_ml
+#	net/mon/
+#	net/nagios/check_bioctl/
+#	www/drupal6/ldap_integration/
+#	x11/dbus-glib/patches/patch-dbus_dbus-gvalue_c
 no changes added to commit (use "git add" and/or "git commit -a")
