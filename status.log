@@ -3,102 +3,47 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   databases/db/v4/Makefile
-#	modified:   databases/qdbm/Makefile
-#	modified:   databases/ruby-sqlite3/Makefile
-#	modified:   devel/apache-ant/Makefile
-#	modified:   devel/cln/Makefile
-#	modified:   devel/jakarta-servletapi/Makefile
-#	modified:   devel/jdk/java.port.mk
-#	modified:   devel/vte/Makefile
-#	modified:   devel/vte/distinfo
-#	modified:   editors/openoffice3/Makefile
-#	modified:   graphics/gphoto2/Makefile
-#	modified:   graphics/gphoto2/distinfo
-#	modified:   graphics/gphoto2/patches/patch-configure
-#	modified:   graphics/gphoto2/patches/patch-gphoto2_shell_c
-#	modified:   graphics/gphoto2/pkg/PLIST
-#	modified:   graphics/libgphoto2/Makefile
-#	modified:   graphics/libgphoto2/distinfo
-#	modified:   graphics/libgphoto2/patches/patch-Makefile_in
-#	deleted:    graphics/libgphoto2/patches/patch-camlibs_canon_usb_c
-#	deleted:    graphics/libgphoto2/patches/patch-camlibs_ptp2_config_c
-#	deleted:    graphics/libgphoto2/patches/patch-configure
-#	modified:   graphics/libgphoto2/patches/patch-libgphoto2_port_Makefile_in
-#	deleted:    graphics/libgphoto2/patches/patch-libgphoto2_port_configure
-#	modified:   graphics/libgphoto2/patches/patch-tests_Makefile_in
-#	modified:   graphics/libgphoto2/pkg/PLIST
-#	modified:   graphics/p5-Image-MetaData-JPEG/Makefile
-#	modified:   graphics/p5-Image-MetaData-JPEG/distinfo
-#	modified:   graphics/p5-Image-MetaData-JPEG/pkg/PLIST
-#	modified:   infrastructure/db/user.list
-#	modified:   java/junit/Makefile
-#	modified:   mail/offlineimap/Makefile
-#	modified:   mail/offlineimap/distinfo
-#	modified:   mail/p5-Mail-Mbox-MessageParser/Makefile
-#	modified:   mail/p5-Mail-Mbox-MessageParser/distinfo
-#	modified:   misc/contacts/Makefile
-#	modified:   misc/contacts/distinfo
-#	modified:   misc/contacts/pkg/PLIST
-#	modified:   multimedia/get_iplayer/Makefile
-#	modified:   multimedia/get_iplayer/distinfo
-#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
-#	modified:   net/Makefile
-#	modified:   net/mldonkey/stable/Makefile
-#	modified:   net/nagios/Makefile
-#	modified:   net/nagios/check_sip/Makefile
-#	modified:   net/nagios/p5-Nagios-Plugin/Makefile
-#	modified:   net/ncftp/Makefile
-#	modified:   net/ncftp/distinfo
-#	modified:   net/p5-Net-SNMP/Makefile
-#	modified:   net/p5-Net-SNMP/distinfo
-#	modified:   net/p5-Net-SNMP/pkg/PLIST
-#	modified:   net/p5-Net-Whois-RIPE/Makefile
-#	modified:   net/p5-Net-Whois-RIPE/distinfo
+#	modified:   devel/py-setuptools/Makefile
+#	modified:   devel/py-setuptools/distinfo
+#	modified:   mail/dovecot/Makefile
+#	modified:   mail/dovecot/distinfo
+#	deleted:    mail/dovecot/patches/patch-src_auth_passdb-bsdauth_c
+#	deleted:    mail/dovecot/patches/patch-src_deliver_deliver_c
+#	deleted:    mail/dovecot/patches/patch-src_lib-index_mail-index_c
+#	deleted:    mail/dovecot/patches/patch-src_lib-storage_index_maildir_maildir-sync-index_c
+#	deleted:    mail/dovecot/patches/patch-src_lib_fd-close-on-exec_c
+#	deleted:    mail/dovecot/patches/patch-src_lib_file-set-size_c
+#	deleted:    mail/dovecot/patches/patch-src_login-common_login-proxy_c
+#	deleted:    mail/dovecot/patches/patch-src_master_login-process_c
+#	modified:   net/curl/Makefile
+#	modified:   net/curl/distinfo
+#	modified:   net/curl/patches/patch-docs_examples_Makefile_in
+#	modified:   net/curl/patches/patch-tests_libtest_Makefile_in
+#	modified:   net/slurm/Makefile
+#	modified:   net/slurm/patches/patch-src_if_media_c
+#	modified:   productivity/Makefile
+#	modified:   productivity/homebank/Makefile
+#	modified:   productivity/homebank/distinfo
+#	modified:   productivity/homebank/patches/patch-configure
+#	modified:   productivity/homebank/patches/patch-po_POTFILES_in
+#	modified:   productivity/homebank/pkg/PLIST
 #	modified:   status.log
-#	modified:   sysutils/ruby-capistrano/Makefile
-#	modified:   textproc/ruby-hyperestraier/Makefile
-#	modified:   textproc/ruby-hyperestraier/patches/patch-rubynative_src_extconf_rb
-#	modified:   textproc/xerces/Makefile
+#	modified:   sysutils/ruby-puppet/Makefile
+#	modified:   sysutils/ruby-puppet/distinfo
+#	modified:   sysutils/ruby-puppet/pkg/PLIST
 #	modified:   up.log
-#	modified:   www/drupal6/Makefile
-#	modified:   www/ruby-merb/Makefile.inc
-#	modified:   www/ruby-merb/action-args/Makefile
-#	modified:   www/ruby-merb/activerecord/Makefile
-#	modified:   www/ruby-merb/assets/Makefile
-#	modified:   www/ruby-merb/auth-core/Makefile
-#	modified:   www/ruby-merb/auth-more/Makefile
-#	modified:   www/ruby-merb/auth-slice-password/Makefile
-#	modified:   www/ruby-merb/auth/Makefile
-#	modified:   www/ruby-merb/cache/Makefile
-#	modified:   www/ruby-merb/core/Makefile
-#	modified:   www/ruby-merb/datamapper/Makefile
-#	modified:   www/ruby-merb/exceptions/Makefile
-#	modified:   www/ruby-merb/gen/Makefile
-#	modified:   www/ruby-merb/haml/Makefile
-#	modified:   www/ruby-merb/helpers/Makefile
-#	modified:   www/ruby-merb/mailer/Makefile
-#	modified:   www/ruby-merb/merb/Makefile
-#	modified:   www/ruby-merb/more/Makefile
-#	modified:   www/ruby-merb/param-protection/Makefile
-#	modified:   www/ruby-merb/slices/Makefile
-#	modified:   www/tomcat/v4/Makefile
-#	modified:   www/wml/Makefile
-#	modified:   x11/gnome/cheese/patches/patch-src_cheese-webcam_c
-#	modified:   x11/gnome/gedit/Makefile
-#	modified:   x11/gnome/gedit/distinfo
-#	modified:   x11/gnome/gedit/pkg/PLIST
-#	modified:   x11/gnome/genius/Makefile
-#	modified:   x11/gnome/genius/distinfo
-#	modified:   x11/xfce4/thunar-vcs/Makefile
-#	modified:   x11/xfce4/thunar-vcs/pkg/DESCR
+#	modified:   www/Makefile
+#	modified:   x11/gmrun/Makefile
+#	modified:   x11/gmrun/distinfo
+#	modified:   x11/gmrun/patches/patch-src_gtkcompletionline_cc
+#	modified:   x11/gmrun/pkg/PLIST
+#	modified:   x11/gnome/applets2/Makefile
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	net/mldonkey/stable/patches/patch-src_gtk2_gui_guiServers_ml
-#	net/mon/
-#	net/nagios/check_bioctl/
-#	www/drupal6/ldap_integration/
-#	x11/dbus-glib/patches/patch-dbus_dbus-gvalue_c
+#	productivity/sunbird/
+#	www/sabredav/
+#	x11/gmrun/patches/patch-src_gtkcompletionline_h
+#	x11/gnome/applets2/patches/patch-stickynotes_stickynotes_ui
 no changes added to commit (use "git add" and/or "git commit -a")
