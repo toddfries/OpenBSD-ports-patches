@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.436 2009/11/10 20:28:32 landry Exp $
+# $OpenBSD: Makefile,v 1.438 2009/11/12 20:16:55 landry Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -112,6 +112,7 @@
      SUBDIR += myreview
      SUBDIR += nag
      SUBDIR += nginx
+     SUBDIR += nginx,passenger
      SUBDIR += nostromo
      SUBDIR += ntlmaps
      SUBDIR += opera
@@ -210,6 +211,8 @@
      SUBDIR += p5-HTML-SimpleParse
      SUBDIR += p5-HTML-SiteTear
      SUBDIR += p5-HTML-Stream
+     SUBDIR += p5-HTML-StripScripts
+     SUBDIR += p5-HTML-StripScripts-Parser
      SUBDIR += p5-HTML-Table
      SUBDIR += p5-HTML-TableContentParser
      SUBDIR += p5-HTML-TableExtract

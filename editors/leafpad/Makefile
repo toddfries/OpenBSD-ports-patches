@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.24 2009/11/08 08:35:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2009/11/12 10:36:38 ajacoutot Exp $
 
 COMMENT=	simple GTK+ text editor
 
 DISTNAME=	leafpad-0.8.17
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	editors x11
 
 HOMEPAGE=	http://tarot.freeshell.org/leafpad/

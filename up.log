@@ -3,57 +3,49 @@
 ? status.log
 ? sync.sh
 ? up.log
-P devel/libtool/Makefile
-P devel/p5-DateTime/Makefile
-U devel/p5-DateTime/distinfo
-P games/wesnoth/Makefile
-U games/wesnoth/distinfo
-U games/wesnoth/patches/patch-Makefile_am
-U games/wesnoth/patches/patch-Makefile_in
-P games/wesnoth/patches/patch-configure
-U games/wesnoth/patches/patch-src_campaign_server_campaign_server_cpp
-U games/wesnoth/patches/patch-src_clipboard_cpp
-U games/wesnoth/patches/patch-src_editor2_editor_controller_cpp
-U games/wesnoth/patches/patch-src_game_cpp
-cvs server: games/wesnoth/patches/patch-src_help_cpp is no longer in the repository
-cvs server: games/wesnoth/patches/patch-src_language_cpp is no longer in the repository
-U games/wesnoth/patches/patch-src_mouse_events_cpp
-U games/wesnoth/patches/patch-src_network_cpp
-U games/wesnoth/patches/patch-src_preferences_cpp
-U games/wesnoth/patches/patch-src_server_jwsmtp_mailer_h
-P games/wesnoth/patches/patch-src_server_server_cpp
-cvs server: games/wesnoth/patches/patch-src_server_simple_wml_cpp is no longer in the repository
-U games/wesnoth/patches/patch-src_widgets_menu_hpp
-P games/wesnoth/pkg/PFRAG.no-lite
-P games/wesnoth/pkg/PLIST
-P infrastructure/db/user.list
-P mail/evolution/Makefile
-U mail/evolution/files/evolution.sh
-cvs server: mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in is no longer in the repository
-P mail/evolution/pkg/PLIST-main
-P net/Makefile
-P net/mon/client/Makefile
-P net/mon/client/pkg/PLIST
-U net/php-weathermap/Makefile
-U net/php-weathermap/distinfo
-U net/php-weathermap/pkg/DESCR
-U net/php-weathermap/pkg/PLIST
-P net/slurm/Makefile
-P net/slurm/pkg/DESCR
-P print/cups/Makefile
-P sysutils/Makefile
-cvs server: sysutils/p5-Mon/Makefile is no longer in the repository
-cvs server: sysutils/p5-Mon/distinfo is no longer in the repository
-cvs server: sysutils/p5-Mon/pkg/DESCR is no longer in the repository
-cvs server: sysutils/p5-Mon/pkg/PLIST is no longer in the repository
-U www/p5-HTML-Parser/Makefile
-U www/p5-HTML-Parser/distinfo
-P x11/gnome/gedit/Makefile
-U x11/gnome/gedit/distinfo
-P x11/gnome/session/Makefile
-U x11/gnome/session/patches/patch-gnome-session_gsm-dbus-client_c
-P x11/gnome/settings-daemon/Makefile
-cvs server: x11/gnome/settings-daemon/patches/patch-data_Makefile_in is no longer in the repository
-P x11/gnome/settings-daemon/patches/patch-gnome-settings-daemon_gnome-settings-module_c
-P x11/gnome/settings-daemon/patches/patch-plugins_media-keys_gsd-media-keys-manager_c
-P x11/gnome/settings-daemon/pkg/PLIST
+P mail/Makefile
+U mail/p5-MIME-Charset/Makefile
+U mail/p5-MIME-Charset/distinfo
+U mail/p5-MIME-Charset/pkg/DESCR
+U mail/p5-MIME-Charset/pkg/PLIST
+U mail/p5-MIME-EncWords/Makefile
+U mail/p5-MIME-EncWords/distinfo
+U mail/p5-MIME-EncWords/pkg/DESCR
+U mail/p5-MIME-EncWords/pkg/PLIST
+U mail/p5-MIME-Lite-HTML/Makefile
+U mail/p5-MIME-Lite-HTML/distinfo
+U mail/p5-MIME-Lite-HTML/pkg/DESCR
+U mail/p5-MIME-Lite-HTML/pkg/PLIST
+U net/rabbitmq/Makefile
+U net/rabbitmq/distinfo
+U net/rabbitmq/files/rabbitmq.conf
+U net/rabbitmq/patches/patch-Makefile
+U net/rabbitmq/patches/patch-scripts_rabbitmq-multi
+U net/rabbitmq/patches/patch-scripts_rabbitmq-server
+U net/rabbitmq/patches/patch-scripts_rabbitmqctl
+U net/rabbitmq/pkg/DESCR
+U net/rabbitmq/pkg/MESSAGE
+U net/rabbitmq/pkg/PLIST
+P net/unworkable/Makefile
+U net/unworkable/distinfo
+P net/unworkable/patches/patch-BSDmakefile
+P productivity/rednotebook/Makefile
+U productivity/rednotebook/distinfo
+P productivity/rednotebook/patches/patch-setup_py
+U productivity/rednotebook/pkg/MESSAGE
+P productivity/rednotebook/pkg/PLIST
+P www/Makefile
+P www/drupal6/Makefile
+U www/nodetype/Makefile
+U www/nodetype/distinfo
+U www/nodetype/pkg/DESCR
+U www/nodetype/pkg/PLIST
+U www/p5-HTML-StripScripts/Makefile
+U www/p5-HTML-StripScripts/distinfo
+U www/p5-HTML-StripScripts/pkg/DESCR
+U www/p5-HTML-StripScripts/pkg/PLIST
+U www/p5-HTML-StripScripts-Parser/Makefile
+U www/p5-HTML-StripScripts-Parser/distinfo
+U www/p5-HTML-StripScripts-Parser/pkg/DESCR
+U www/p5-HTML-StripScripts-Parser/pkg/PLIST
+P x11/py-gtk2/Makefile
