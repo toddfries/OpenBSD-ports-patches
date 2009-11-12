@@ -3,72 +3,57 @@
 ? status.log
 ? sync.sh
 ? up.log
-P devel/py-setuptools/Makefile
-U devel/py-setuptools/distinfo
-P mail/dovecot/Makefile
-P mail/dovecot/distinfo
-cvs server: mail/dovecot/patches/patch-src_auth_passdb-bsdauth_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_deliver_deliver_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_lib-index_mail-index_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_lib-storage_index_maildir_maildir-sync-index_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_lib_fd-close-on-exec_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_lib_file-set-size_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_login-common_login-proxy_c is no longer in the repository
-cvs server: mail/dovecot/patches/patch-src_master_login-process_c is no longer in the repository
-P net/curl/Makefile
-U net/curl/distinfo
-P net/curl/patches/patch-docs_examples_Makefile_in
-P net/curl/patches/patch-tests_libtest_Makefile_in
+P devel/libtool/Makefile
+P devel/p5-DateTime/Makefile
+U devel/p5-DateTime/distinfo
+P games/wesnoth/Makefile
+U games/wesnoth/distinfo
+U games/wesnoth/patches/patch-Makefile_am
+U games/wesnoth/patches/patch-Makefile_in
+P games/wesnoth/patches/patch-configure
+U games/wesnoth/patches/patch-src_campaign_server_campaign_server_cpp
+U games/wesnoth/patches/patch-src_clipboard_cpp
+U games/wesnoth/patches/patch-src_editor2_editor_controller_cpp
+U games/wesnoth/patches/patch-src_game_cpp
+cvs server: games/wesnoth/patches/patch-src_help_cpp is no longer in the repository
+cvs server: games/wesnoth/patches/patch-src_language_cpp is no longer in the repository
+U games/wesnoth/patches/patch-src_mouse_events_cpp
+U games/wesnoth/patches/patch-src_network_cpp
+U games/wesnoth/patches/patch-src_preferences_cpp
+U games/wesnoth/patches/patch-src_server_jwsmtp_mailer_h
+P games/wesnoth/patches/patch-src_server_server_cpp
+cvs server: games/wesnoth/patches/patch-src_server_simple_wml_cpp is no longer in the repository
+U games/wesnoth/patches/patch-src_widgets_menu_hpp
+P games/wesnoth/pkg/PFRAG.no-lite
+P games/wesnoth/pkg/PLIST
+P infrastructure/db/user.list
+P mail/evolution/Makefile
+U mail/evolution/files/evolution.sh
+cvs server: mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in is no longer in the repository
+P mail/evolution/pkg/PLIST-main
+P net/Makefile
+P net/mon/client/Makefile
+P net/mon/client/pkg/PLIST
+U net/php-weathermap/Makefile
+U net/php-weathermap/distinfo
+U net/php-weathermap/pkg/DESCR
+U net/php-weathermap/pkg/PLIST
 P net/slurm/Makefile
-P net/slurm/patches/patch-src_if_media_c
-P productivity/Makefile
-P productivity/homebank/Makefile
-U productivity/homebank/distinfo
-P productivity/homebank/patches/patch-configure
-P productivity/homebank/patches/patch-po_POTFILES_in
-P productivity/homebank/pkg/PLIST
-U productivity/sunbird/Makefile
-U productivity/sunbird/distinfo
-U productivity/sunbird/files/nsSound.cpp
-U productivity/sunbird/files/sunbird.desktop
-U productivity/sunbird/patches/patch-config_autoconf_mk_in
-U productivity/sunbird/patches/patch-configure_in
-U productivity/sunbird/patches/patch-content_xul_templates_src_nsTemplateMatchSet_h
-U productivity/sunbird/patches/patch-directory_c-sdk_config_OpenBSD_mk
-U productivity/sunbird/patches/patch-directory_c-sdk_configure_in
-U productivity/sunbird/patches/patch-extensions_spellcheck_myspell_src_Makefile_in
-U productivity/sunbird/patches/patch-extensions_spellcheck_myspell_src_mozMySpell_cpp
-U productivity/sunbird/patches/patch-extensions_transformiix_source_base_Double_cpp
-U productivity/sunbird/patches/patch-gfx_src_gtk_Makefile_in
-U productivity/sunbird/patches/patch-gfx_src_ps_nsFontMetricsPS_cpp
-U productivity/sunbird/patches/patch-gfx_src_psshared_nsCUPSShim_cpp
-U productivity/sunbird/patches/patch-js_Makefile_in
-U productivity/sunbird/patches/patch-js_src_jsnum_h
-U productivity/sunbird/patches/patch-js_src_xpconnect_shell_Makefile_in
-U productivity/sunbird/patches/patch-mail_app_mozilla_in
-U productivity/sunbird/patches/patch-mailnews_mime_src_mimemsg_cpp
-U productivity/sunbird/patches/patch-modules_libpref_src_init_all_js
-U productivity/sunbird/patches/patch-security_coreconf_OpenBSD_mk
-U productivity/sunbird/patches/patch-security_manager_ssl_src_Makefile_in
-U productivity/sunbird/patches/patch-security_manager_ssl_src_nsNSSComponent_cpp
-U productivity/sunbird/patches/patch-xpcom_components_nsNativeComponentLoader_cpp
-U productivity/sunbird/pkg/DESCR-lightning
-U productivity/sunbird/pkg/DESCR-main
-U productivity/sunbird/pkg/PLIST-lightning
-U productivity/sunbird/pkg/PLIST-main
-P sysutils/ruby-puppet/Makefile
-U sysutils/ruby-puppet/distinfo
-P sysutils/ruby-puppet/pkg/PLIST
-P www/Makefile
-U www/sabredav/Makefile
-U www/sabredav/distinfo
-U www/sabredav/pkg/DESCR
-U www/sabredav/pkg/MESSAGE
-U www/sabredav/pkg/PLIST
-P x11/gmrun/Makefile
-U x11/gmrun/distinfo
-P x11/gmrun/patches/patch-src_gtkcompletionline_cc
-U x11/gmrun/patches/patch-src_gtkcompletionline_h
-P x11/gmrun/pkg/PLIST
-P x11/gnome/applets2/Makefile
-U x11/gnome/applets2/patches/patch-stickynotes_stickynotes_ui
+P net/slurm/pkg/DESCR
+P print/cups/Makefile
+P sysutils/Makefile
+cvs server: sysutils/p5-Mon/Makefile is no longer in the repository
+cvs server: sysutils/p5-Mon/distinfo is no longer in the repository
+cvs server: sysutils/p5-Mon/pkg/DESCR is no longer in the repository
+cvs server: sysutils/p5-Mon/pkg/PLIST is no longer in the repository
+U www/p5-HTML-Parser/Makefile
+U www/p5-HTML-Parser/distinfo
+P x11/gnome/gedit/Makefile
+U x11/gnome/gedit/distinfo
+P x11/gnome/session/Makefile
+U x11/gnome/session/patches/patch-gnome-session_gsm-dbus-client_c
+P x11/gnome/settings-daemon/Makefile
+cvs server: x11/gnome/settings-daemon/patches/patch-data_Makefile_in is no longer in the repository
+P x11/gnome/settings-daemon/patches/patch-gnome-settings-daemon_gnome-settings-module_c
+P x11/gnome/settings-daemon/patches/patch-plugins_media-keys_gsd-media-keys-manager_c
+P x11/gnome/settings-daemon/pkg/PLIST

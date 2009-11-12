@@ -3,47 +3,60 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   devel/py-setuptools/Makefile
-#	modified:   devel/py-setuptools/distinfo
-#	modified:   mail/dovecot/Makefile
-#	modified:   mail/dovecot/distinfo
-#	deleted:    mail/dovecot/patches/patch-src_auth_passdb-bsdauth_c
-#	deleted:    mail/dovecot/patches/patch-src_deliver_deliver_c
-#	deleted:    mail/dovecot/patches/patch-src_lib-index_mail-index_c
-#	deleted:    mail/dovecot/patches/patch-src_lib-storage_index_maildir_maildir-sync-index_c
-#	deleted:    mail/dovecot/patches/patch-src_lib_fd-close-on-exec_c
-#	deleted:    mail/dovecot/patches/patch-src_lib_file-set-size_c
-#	deleted:    mail/dovecot/patches/patch-src_login-common_login-proxy_c
-#	deleted:    mail/dovecot/patches/patch-src_master_login-process_c
-#	modified:   net/curl/Makefile
-#	modified:   net/curl/distinfo
-#	modified:   net/curl/patches/patch-docs_examples_Makefile_in
-#	modified:   net/curl/patches/patch-tests_libtest_Makefile_in
+#	modified:   devel/libtool/Makefile
+#	modified:   devel/p5-DateTime/Makefile
+#	modified:   devel/p5-DateTime/distinfo
+#	modified:   games/wesnoth/Makefile
+#	modified:   games/wesnoth/distinfo
+#	modified:   games/wesnoth/patches/patch-configure
+#	deleted:    games/wesnoth/patches/patch-src_help_cpp
+#	deleted:    games/wesnoth/patches/patch-src_language_cpp
+#	modified:   games/wesnoth/patches/patch-src_server_server_cpp
+#	deleted:    games/wesnoth/patches/patch-src_server_simple_wml_cpp
+#	modified:   games/wesnoth/pkg/PFRAG.no-lite
+#	modified:   games/wesnoth/pkg/PLIST
+#	modified:   infrastructure/db/user.list
+#	modified:   mail/evolution/Makefile
+#	deleted:    mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in
+#	modified:   mail/evolution/pkg/PLIST-main
+#	modified:   net/Makefile
+#	modified:   net/mon/client/Makefile
+#	modified:   net/mon/client/pkg/PLIST
 #	modified:   net/slurm/Makefile
-#	modified:   net/slurm/patches/patch-src_if_media_c
-#	modified:   productivity/Makefile
-#	modified:   productivity/homebank/Makefile
-#	modified:   productivity/homebank/distinfo
-#	modified:   productivity/homebank/patches/patch-configure
-#	modified:   productivity/homebank/patches/patch-po_POTFILES_in
-#	modified:   productivity/homebank/pkg/PLIST
+#	modified:   net/slurm/pkg/DESCR
+#	modified:   print/cups/Makefile
 #	modified:   status.log
-#	modified:   sysutils/ruby-puppet/Makefile
-#	modified:   sysutils/ruby-puppet/distinfo
-#	modified:   sysutils/ruby-puppet/pkg/PLIST
+#	modified:   sysutils/Makefile
+#	deleted:    sysutils/p5-Mon/Makefile
+#	deleted:    sysutils/p5-Mon/distinfo
+#	deleted:    sysutils/p5-Mon/pkg/DESCR
+#	deleted:    sysutils/p5-Mon/pkg/PLIST
 #	modified:   up.log
-#	modified:   www/Makefile
-#	modified:   x11/gmrun/Makefile
-#	modified:   x11/gmrun/distinfo
-#	modified:   x11/gmrun/patches/patch-src_gtkcompletionline_cc
-#	modified:   x11/gmrun/pkg/PLIST
-#	modified:   x11/gnome/applets2/Makefile
+#	modified:   www/p5-HTML-Parser/Makefile
+#	modified:   www/p5-HTML-Parser/distinfo
+#	modified:   x11/gnome/gedit/Makefile
+#	modified:   x11/gnome/gedit/distinfo
+#	modified:   x11/gnome/session/Makefile
+#	modified:   x11/gnome/settings-daemon/Makefile
+#	deleted:    x11/gnome/settings-daemon/patches/patch-data_Makefile_in
+#	modified:   x11/gnome/settings-daemon/patches/patch-gnome-settings-daemon_gnome-settings-module_c
+#	modified:   x11/gnome/settings-daemon/patches/patch-plugins_media-keys_gsd-media-keys-manager_c
+#	modified:   x11/gnome/settings-daemon/pkg/PLIST
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	productivity/sunbird/
-#	www/sabredav/
-#	x11/gmrun/patches/patch-src_gtkcompletionline_h
-#	x11/gnome/applets2/patches/patch-stickynotes_stickynotes_ui
+#	games/wesnoth/patches/patch-Makefile_am
+#	games/wesnoth/patches/patch-Makefile_in
+#	games/wesnoth/patches/patch-src_campaign_server_campaign_server_cpp
+#	games/wesnoth/patches/patch-src_clipboard_cpp
+#	games/wesnoth/patches/patch-src_editor2_editor_controller_cpp
+#	games/wesnoth/patches/patch-src_game_cpp
+#	games/wesnoth/patches/patch-src_mouse_events_cpp
+#	games/wesnoth/patches/patch-src_network_cpp
+#	games/wesnoth/patches/patch-src_preferences_cpp
+#	games/wesnoth/patches/patch-src_server_jwsmtp_mailer_h
+#	games/wesnoth/patches/patch-src_widgets_menu_hpp
+#	net/php-weathermap/
+#	x11/gnome/session/patches/patch-gnome-session_gsm-dbus-client_c
 no changes added to commit (use "git add" and/or "git commit -a")
