@@ -3,217 +3,94 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   editors/leafpad/Makefile
-#	deleted:    editors/leafpad/pkg/MESSAGE
-#	deleted:    editors/openoffice/Makefile
-#	deleted:    editors/openoffice/distinfo
-#	deleted:    editors/openoffice/files/soffice.sh
-#	deleted:    editors/openoffice/patches/patch-autodoc_source_mkinc_fullcpp_mk
-#	deleted:    editors/openoffice/patches/patch-automation_source_testtool_objtest_cxx
-#	deleted:    editors/openoffice/patches/patch-binfilter_bf_sc_source_core_data_sc_cell_cxx
-#	deleted:    editors/openoffice/patches/patch-bridges_prj_build_lst
-#	deleted:    editors/openoffice/patches/patch-config_office_configure_in
-#	deleted:    editors/openoffice/patches/patch-config_office_set_soenv_in
-#	deleted:    editors/openoffice/patches/patch-cppu_source_uno_data_cxx
-#	deleted:    editors/openoffice/patches/patch-cppu_test_alignment_diagnose_h
-#	deleted:    editors/openoffice/patches/patch-cppu_util_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-crashrep_source_unx_main_cxx
-#	deleted:    editors/openoffice/patches/patch-crashrep_source_unx_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-dbaccess_source_ui_uno_copytablewizard_cxx
-#	deleted:    editors/openoffice/patches/patch-desktop_scripts_soffice_sh
-#	deleted:    editors/openoffice/patches/patch-desktop_source_migration_wizard_cxx
-#	deleted:    editors/openoffice/patches/patch-desktop_util_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-dtrans_source_X11_X11_selection_cxx
-#	deleted:    editors/openoffice/patches/patch-epm_epm-3_7_patch
-#	deleted:    editors/openoffice/patches/patch-extensions_source_nsplugin_source_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-extensions_source_plugin_unx_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-extensions_source_scanner_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-external_gcc3_specific_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-freetype_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-icc_SampleICC-1_3_2-bendian_patch
-#	deleted:    editors/openoffice/patches/patch-icc_SampleICC-1_3_2_patch
-#	deleted:    editors/openoffice/patches/patch-idlc_source_idlccompile_cxx
-#	deleted:    editors/openoffice/patches/patch-instsetoo_native_util_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-jvmaccess_util_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-jvmfwk_distributions_OpenOfficeorg_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-jvmfwk_plugins_sunmajor_pluginlib_sunversion_cxx
-#	deleted:    editors/openoffice/patches/patch-jvmfwk_plugins_sunmajor_pluginlib_sunversion_hxx
-#	deleted:    editors/openoffice/patches/patch-jvmfwk_sunmajor_pluginlib_sunjre_cxx
-#	deleted:    editors/openoffice/patches/patch-nas_nas-1_6_patch
-#	deleted:    editors/openoffice/patches/patch-odk_configure_pl
-#	deleted:    editors/openoffice/patches/patch-odk_setsdkenv_unix_csh_in
-#	deleted:    editors/openoffice/patches/patch-odk_setsdkenv_unix_sh_in
-#	deleted:    editors/openoffice/patches/patch-odk_settings_settings_mk
-#	deleted:    editors/openoffice/patches/patch-odk_source_unoapploader_unx_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-odk_util_makefile_pmk
-#	deleted:    editors/openoffice/patches/patch-portaudio_portaudio_v18_1_patch
-#	deleted:    editors/openoffice/patches/patch-postprocess_prj_build_lst
-#	deleted:    editors/openoffice/patches/patch-psprint_source_printer_cupsmgr_cxx
-#	deleted:    editors/openoffice/patches/patch-psprint_source_printer_printerinfomanager_cxx
-#	deleted:    editors/openoffice/patches/patch-psprint_source_printergfx_printerjob_cxx
-#	deleted:    editors/openoffice/patches/patch-pyuno_source_module_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-sal_inc_osl_endian_h
-#	deleted:    editors/openoffice/patches/patch-sal_inc_rtl_uuid_h
-#	deleted:    editors/openoffice/patches/patch-sal_inc_sal_alloca_h
-#	deleted:    editors/openoffice/patches/patch-sal_inc_sal_config_h
-#	deleted:    editors/openoffice/patches/patch-sal_inc_sal_types_h
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_backtrace_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_backtrace_h
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_file_cxx
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_file_error_transl_cxx
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_nlsupport_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_process_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_security_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_socket_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_system_h
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_tempfile_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_thread_c
-#	deleted:    editors/openoffice/patches/patch-sal_osl_unx_time_c
-#	deleted:    editors/openoffice/patches/patch-sal_rtl_source_alloc_c
-#	deleted:    editors/openoffice/patches/patch-sal_rtl_source_macro_hxx
-#	deleted:    editors/openoffice/patches/patch-sal_typesconfig_typesconfig_c
-#	deleted:    editors/openoffice/patches/patch-sal_workben_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-scp2_source_ooo_file_library_ooo_scp
-#	deleted:    editors/openoffice/patches/patch-scp2_source_ure_ure_scp
-#	deleted:    editors/openoffice/patches/patch-sdk_oo_util_makefile_pmk
-#	deleted:    editors/openoffice/patches/patch-setup_native_source_packinfo_packinfo_office_lang_txt
-#	deleted:    editors/openoffice/patches/patch-setup_native_source_packinfo_packinfo_office_txt
-#	deleted:    editors/openoffice/patches/patch-shell_source_backends_localebe_localebackend_cxx
-#	deleted:    editors/openoffice/patches/patch-shell_source_unix_misc_gnome-open-url_c
-#	deleted:    editors/openoffice/patches/patch-shell_source_unix_misc_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-shell_source_unix_sysshell_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-shell_source_unix_sysshell_recently_used_file_handler_cxx
-#	deleted:    editors/openoffice/patches/patch-solenv_bin_mapgen_pl
-#	deleted:    editors/openoffice/patches/patch-solenv_bin_modules_installer_download_pm
-#	deleted:    editors/openoffice/patches/patch-solenv_bin_modules_installer_globals_pm
-#	deleted:    editors/openoffice/patches/patch-solenv_bin_modules_installer_regmerge_pm
-#	deleted:    editors/openoffice/patches/patch-solenv_bin_modules_installer_worker_pm
-#	deleted:    editors/openoffice/patches/patch-solenv_bin_modules_osarch_pm
-#	deleted:    editors/openoffice/patches/patch-solenv_config_ssolar_cmn
-#	deleted:    editors/openoffice/patches/patch-solenv_inc_libs_mk
-#	deleted:    editors/openoffice/patches/patch-solenv_inc_settings_mk
-#	deleted:    editors/openoffice/patches/patch-solenv_inc_startup_OPENBSD_macros_mk
-#	deleted:    editors/openoffice/patches/patch-solenv_inc_tg_ext_mk
-#	deleted:    editors/openoffice/patches/patch-solenv_inc_unx_mk
-#	deleted:    editors/openoffice/patches/patch-solenv_inc_unxobsd_mk
-#	deleted:    editors/openoffice/patches/patch-soltools_checkdll_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-soltools_mkdepend_def_h
-#	deleted:    editors/openoffice/patches/patch-soltools_mkdepend_ifparser_c
-#	deleted:    editors/openoffice/patches/patch-soltools_mkdepend_main_c
-#	deleted:    editors/openoffice/patches/patch-stlport_STLport-4_5_patch
-#	deleted:    editors/openoffice/patches/patch-stlport_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-store_source_fileunx_hxx
-#	deleted:    editors/openoffice/patches/patch-store_util_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-svx_source_customshapes_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-tools_bootstrp_command_cxx
-#	deleted:    editors/openoffice/patches/patch-tools_inc_tools_inetdef_hxx
-#	deleted:    editors/openoffice/patches/patch-tools_inc_tools_solar_h
-#	deleted:    editors/openoffice/patches/patch-tools_inc_tools_stream_hxx
-#	deleted:    editors/openoffice/patches/patch-tools_source_fsys_unx_cxx
-#	deleted:    editors/openoffice/patches/patch-tools_source_stream_strmunx_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_ftp_ftpcontent_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_ftp_ftpurl_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_LinkSequence_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_LockEntrySequence_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_LockSequence_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_NeonHeadRequest_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_NeonPropFindRequest_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_NeonSession_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_NeonUri_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_UCBDeadPropertyValue_cxx
-#	deleted:    editors/openoffice/patches/patch-ucb_source_ucp_webdav_makefile_mk
-#	deleted:    editors/openoffice/patches/patch-udm_source_mkinc_fullcpp_mk
-#	deleted:    editors/openoffice/patches/patch-vcl_source_window_window_cxx
-#	deleted:    editors/openoffice/patches/patch-vcl_unx_inc_saldata_hxx
-#	deleted:    editors/openoffice/patches/patch-vcl_unx_inc_salunx_h
-#	deleted:    editors/openoffice/patches/patch-vcl_unx_source_app_i18n_ic_cxx
-#	deleted:    editors/openoffice/patches/patch-vcl_unx_source_app_saldisp_cxx
-#	deleted:    editors/openoffice/patches/patch-vcl_unx_source_app_vsound_hxx
-#	deleted:    editors/openoffice/patches/patch-vcl_unx_source_gdi_salogl_cxx
-#	deleted:    editors/openoffice/patches/patch-vcl_util_makefile_mk
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-bg
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-ca
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-de
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-es
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-fa
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-fi
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-fr
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-hu
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-it
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-ja
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-ko
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-lt
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-lv
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-nl
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-pl
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-pt-br
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-ru
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-sl
-#	deleted:    editors/openoffice/pkg/DESCR-i18n-sv
-#	deleted:    editors/openoffice/pkg/DESCR-java
-#	deleted:    editors/openoffice/pkg/DESCR-kde
-#	deleted:    editors/openoffice/pkg/DESCR-main
-#	deleted:    editors/openoffice/pkg/MESSAGE-main
-#	deleted:    editors/openoffice/pkg/PFRAG.shared-java
-#	deleted:    editors/openoffice/pkg/PFRAG.shared-kde
-#	deleted:    editors/openoffice/pkg/PFRAG.shared-main
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-bg
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-ca
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-de
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-es
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-fa
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-fi
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-fr
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-hu
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-it
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-ja
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-ko
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-lt
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-lv
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-nl
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-pl
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-pt-br
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-ru
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-sl
-#	deleted:    editors/openoffice/pkg/PLIST-i18n-sv
-#	deleted:    editors/openoffice/pkg/PLIST-java
-#	deleted:    editors/openoffice/pkg/PLIST-kde
-#	deleted:    editors/openoffice/pkg/PLIST-main
-#	modified:   graphics/Makefile
-#	modified:   graphics/gimp/stable/Makefile
-#	modified:   lang/gcc/4.2/Makefile
-#	modified:   mail/Makefile
-#	modified:   mail/zarafa/zarafa/Makefile
-#	modified:   mail/zarafa/zarafa/patches/patch-installer_linux_server_cfg
-#	modified:   mail/zarafa/zarafa/pkg/PLIST-main
-#	modified:   net/Makefile
-#	modified:   net/unworkable/Makefile
-#	modified:   net/unworkable/distinfo
-#	modified:   net/unworkable/patches/patch-BSDmakefile
-#	modified:   productivity/rednotebook/Makefile
-#	modified:   productivity/rednotebook/distinfo
-#	modified:   productivity/rednotebook/patches/patch-setup_py
-#	modified:   productivity/rednotebook/pkg/PLIST
+#	modified:   devel/fossil/Makefile
+#	modified:   devel/fossil/distinfo
+#	modified:   devel/gobject-introspection/Makefile
+#	modified:   devel/ivy/Makefile
+#	modified:   devel/mysql++/Makefile
+#	modified:   devel/p5-Carp-Clan/Makefile
+#	modified:   devel/p5-Carp-Clan/distinfo
+#	modified:   infrastructure/db/user.list
+#	modified:   korean/libhangul/Makefile
+#	modified:   korean/libhangul/distinfo
+#	deleted:    korean/libhangul/patches/patch-data_hanja_Makefile_in
+#	modified:   korean/libhangul/pkg/PLIST
+#	modified:   lang/librep/Makefile
+#	modified:   lang/librep/distinfo
+#	modified:   lang/librep/patches/patch-src_Makefile_in
+#	modified:   lang/librep/pkg/PLIST
+#	modified:   mail/postfix/snapshot/Makefile
+#	modified:   mail/postfix/snapshot/distinfo
+#	modified:   mail/postfix/snapshot/patches/patch-master.cf
+#	modified:   mail/postfix/snapshot/pkg/PLIST
+#	modified:   multimedia/hdhomerun/Makefile
+#	modified:   multimedia/hdhomerun/distinfo
+#	modified:   multimedia/hdhomerun/patches/patch-Makefile
+#	modified:   multimedia/hdhomerun/pkg/PLIST
+#	modified:   net/ldns/Makefile.inc
+#	modified:   net/ldns/drill/Makefile
+#	modified:   net/ldns/drill/distinfo
+#	modified:   net/ldns/libldns/Makefile
+#	modified:   net/ldns/libldns/distinfo
+#	modified:   net/ldns/libldns/patches/patch-Makefile_in
+#	modified:   net/ldns/libldns/patches/patch-configure
+#	modified:   net/ldns/libldns/patches/patch-util_c
+#	modified:   net/ldns/utils/Makefile
+#	modified:   net/ldns/utils/distinfo
+#	modified:   net/mon/client/Makefile
+#	modified:   net/nagios/Makefile
+#	modified:   net/nagios/check_sip/Makefile
+#	modified:   net/nagios/check_sip/patches/patch-check_sip
+#	modified:   security/Makefile
+#	modified:   security/stunnel/Makefile
+#	modified:   security/stunnel/distinfo
+#	modified:   shells/zsh/Makefile
+#	modified:   shells/zsh/pkg/PLIST
 #	modified:   status.log
+#	modified:   sysutils/consolekit/Makefile
+#	modified:   sysutils/consolekit/patches/patch-configure_ac
+#	modified:   sysutils/consolekit/patches/patch-src_ck-session_c
+#	modified:   sysutils/consolekit/patches/patch-src_ck-sysdeps-openbsd_c
+#	modified:   sysutils/consolekit/patches/patch-src_ck-sysdeps-unix_c
+#	modified:   sysutils/consolekit/pkg/PLIST
+#	modified:   textproc/Makefile
+#	modified:   textproc/tcpdf/Makefile
+#	modified:   textproc/tcpdf/distinfo
+#	modified:   textproc/tcpdf/pkg/PLIST
 #	modified:   up.log
-#	modified:   www/Makefile
-#	modified:   www/drupal6/Makefile
-#	modified:   x11/py-gtk2/Makefile
+#	modified:   www/blogsum/Makefile
+#	modified:   www/blogsum/distinfo
+#	modified:   www/blogsum/pkg/PLIST
+#	modified:   www/php5/extensions/Makefile
+#	modified:   www/wordpress/Makefile
+#	modified:   www/wordpress/distinfo
+#	modified:   x11/gnome/session/Makefile
+#	deleted:    x11/gnome/session/files/gsm-logout-dialog.c
+#	deleted:    x11/gnome/session/files/gsm-logout-dialog.h
+#	deleted:    x11/gnome/session/files/gsm-manager.c
+#	deleted:    x11/gnome/session/files/gsm-manager.h
+#	deleted:    x11/gnome/session/files/gsm-power-manager.c
+#	deleted:    x11/gnome/session/files/gsm-power-manager.h
+#	deleted:    x11/gnome/session/patches/patch-gnome-session_Makefile_in
+#	modified:   x11/gnome/session/pkg/PLIST
+#	modified:   x11/sawfish/Makefile
+#	modified:   x11/sawfish/distinfo
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	graphics/ctl/
-#	graphics/gimp/stable/patches/patch-plug-ins_file-bmp_bmp-read_c
-#	graphics/openexr-ctl/
-#	graphics/openexr-viewers/
-#	mail/p5-MIME-Charset/
-#	mail/p5-MIME-EncWords/
-#	mail/p5-MIME-Lite-HTML/
-#	net/rabbitmq/
-#	productivity/rednotebook/pkg/MESSAGE
-#	www/nodetype/
-#	www/p5-HTML-StripScripts-Parser/
-#	www/p5-HTML-StripScripts/
+#	devel/gobject-introspection/patches/patch-girepository_giroffsets_c
+#	net/nagios/check_hw_sensors/
+#	security/p5-Crypt-CipherSaber/
+#	shells/zsh/patches/patch-Completion_Unix_Command__tmux
+#	sysutils/consolekit/files/
+#	sysutils/consolekit/patches/patch-data_ConsoleKit_conf
+#	sysutils/consolekit/patches/patch-src_ck-manager_c
+#	sysutils/consolekit/patches/patch-tools_Makefile_in
+#	sysutils/consolekit/patches/patch-tools_openbsd_ck-system-stop
+#	textproc/py-nltk/
+#	www/php5/extensions/pkg/DESCR-tidy
+#	www/php5/extensions/pkg/PLIST-tidy
+#	x11/gnome/session/patches/patch-gnome-session_gsm-logout-dialog_c
+#	x11/gnome/session/patches/patch-gnome-session_gsm-manager_c
 no changes added to commit (use "git add" and/or "git commit -a")
