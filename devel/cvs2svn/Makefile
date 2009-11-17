@@ -4,10 +4,10 @@ COMMENT=		migrate repositories from CVS to Subversion/GIT
 
 # Beware! Upgrades need a new directory in MASTER_SITES,
 # otherwise you probably get the old files, not 404.
-MODPY_EGG_VERSION=	2.2.0
+MODPY_EGG_VERSION=	2.3.0
 DISTNAME=		cvs2svn-${MODPY_EGG_VERSION}
-PKGNAME=		${DISTNAME}p0
-MASTER_SITES=		${HOMEPAGE}files/documents/1462/44372/
+PKGNAME=		${DISTNAME}
+MASTER_SITES=		${HOMEPAGE}files/documents/1462/46528/
 
 CATEGORIES=		devel
 
