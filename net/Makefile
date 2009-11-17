@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.600 2009/10/27 23:46:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.606 2009/11/12 13:12:37 msf Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -39,7 +39,6 @@
      SUBDIR += bwm-ng
      SUBDIR += cadaver
      SUBDIR += castget
-     SUBDIR += centericq
      SUBDIR += cftp
      SUBDIR += charm
      SUBDIR += cjc
@@ -179,6 +178,7 @@
      SUBDIR += micq
      SUBDIR += mirror
      SUBDIR += mldonkey
+     SUBDIR += mon
      SUBDIR += mrtd
      SUBDIR += mrtg
      SUBDIR += mtr
@@ -249,6 +249,7 @@
      SUBDIR += p5-Net-DAV-Server
      SUBDIR += p5-Net-DBus
      SUBDIR += p5-Net-DNS
+     SUBDIR += p5-Net-DNS-DynDNS
      SUBDIR += p5-Net-DNS-SEC
      SUBDIR += p5-Net-Daemon
      SUBDIR += p5-Net-Dict
@@ -275,6 +276,9 @@
      SUBDIR += p5-Net-Radius
      SUBDIR += p5-Net-RawIP
      SUBDIR += p5-Net-SFTP
+     SUBDIR += p5-Net-SMTP-SSL
+     SUBDIR += p5-Net-SMTP-TLS
+     SUBDIR += p5-Net-SMTP_auth
      SUBDIR += p5-Net-SNMP
      SUBDIR += p5-Net-SNPP
      SUBDIR += p5-Net-SSH-Expect
@@ -338,6 +342,7 @@
      SUBDIR += pen
      SUBDIR += pfflowd
      SUBDIR += pfstat
+     SUBDIR += php-weathermap
      SUBDIR += pidgin
      SUBDIR += pidgin,gtkspell
      SUBDIR += pidgin-facebookchat
@@ -390,6 +395,7 @@
      SUBDIR += queryperf
      SUBDIR += queso
      SUBDIR += quirc
+     SUBDIR += rabbitmq
      SUBDIR += radiusd-cistron
      SUBDIR += radiusd-lucent
      SUBDIR += rbldnsd

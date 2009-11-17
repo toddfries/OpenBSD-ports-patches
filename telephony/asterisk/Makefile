@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.60 2009/09/04 00:46:35 sthen Exp $
+# $OpenBSD: Makefile,v 1.62 2009/11/04 21:51:49 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			1.4.26.2
+VER=			1.4.26.3
 # you can set PATCHVER=p0, p1 etc to bump everything,
 # this takes care of the subpackage/flavor maze
 PATCHVER=		
@@ -214,15 +214,10 @@ INSTALL_TARGET=		install samples
 EXAMPLEDIR=		${PREFIX}/share/examples/asterisk
 
 post-patch:
-	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-	    AUTOCONF_VERSION=${AUTOCONF_VERSION} aclocal -I autoconf
-	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-	    AUTOCONF_VERSION=${AUTOCONF_VERSION} autoconf
-	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-	    AUTOCONF_VERSION=${AUTOCONF_VERSION} autoheader
-	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-	    AUTOCONF_VERSION=${AUTOCONF_VERSION} automake \
-	    --add-missing --copy || true
+	cd ${WRKSRC}; \
+	    AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+	    ./bootstrap.sh
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/asterisk

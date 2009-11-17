@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.125 2009/09/15 22:56:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.128 2009/11/10 23:20:22 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-server= compact IMAP/POP3 server
 COMMENT-sieve=	Sieve mail filtering for Dovecot
 
 V_MAJOR=	1.1
-V_DOVECOT=	1.1.19
+V_DOVECOT=	1.1.20
 V_SIEVE=	1.1.7
 
 PKGNAME=	dovecot-${V_DOVECOT}
@@ -48,7 +48,7 @@ CFLAGS+=	-I/usr/include/kerberosV -I${LOCALBASE}/include
 
 USE_LIBTOOL=		Yes
 # Should be 2.63
-AUTOCONF_VERSION=	2.61
+AUTOCONF_VERSION=	2.62
 CONFIGURE_STYLE=	autoconf
 CONFIGURE_ARGS+=	--localstatedir=/var \
 			--with-gssapi \

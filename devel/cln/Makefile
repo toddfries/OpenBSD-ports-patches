@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.6 2009/10/22 10:40:33 pirofti Exp $
+# $OpenBSD: Makefile,v 1.8 2009/11/09 10:43:46 jasper Exp $
 
-NOT_FOR_ARCHS =	arm
+NOT_FOR_ARCHS =	arm mips64 sparc64
 
 COMMENT =	library for efficient computations 
 

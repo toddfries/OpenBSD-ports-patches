@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.44 2009/10/28 19:38:11 naddy Exp $
+# $OpenBSD: Makefile,v 1.46 2009/11/07 11:57:50 fgsch Exp $
 
 COMMENT-main=	lightweight BitTorrent command line and daemon client
 COMMENT-gui=	lightweight BitTorrent client with graphical interface
 
 VER=		1.76
 DISTNAME=	transmission-${VER}
-PKGNAME-main=	transmission-${VER}
-PKGNAME-gui=	transmission-gui-${VER}
+PKGNAME-main=	transmission-${VER}p1
+PKGNAME-gui=	transmission-gui-${VER}p1
 CATEGORIES=	net
 HOMEPAGE=	http://www.transmissionbt.com/
 
@@ -38,7 +38,7 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--disable-shared \
 		--disable-silent-rules \
 		--disable-wx
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -DHAVE_LONG_LONG=1" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		OPENSSL_CFLAGS="-I/usr/include" \
 		OPENSSL_LIBS="-lcrypto"
@@ -63,9 +63,5 @@ RUN_DEPENDS-gui=:${PKGNAME-main}:net/transmission,-main \
 		::devel/glib2,-fam
 USE_X11=	Yes
 .endif
-
-# Remove the \' printf flag from the translations, too.
-post-patch:
-	@cd ${WRKSRC}/po; perl -pi.bak -e "s/%'/%/g; s/%(.*?)'d/%\1d/g" *.po
 
 .include <bsd.port.mk>

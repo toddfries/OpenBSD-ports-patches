@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.750 2009/10/28 23:16:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.752 2009/11/04 13:36:55 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -483,6 +483,7 @@
      SUBDIR += p5-MooseX-Emulate-Class-Accessor-Fast
      SUBDIR += p5-MooseX-MethodAttributes
      SUBDIR += p5-MooseX-Params-Validate
+     SUBDIR += p5-MooseX-Role-Parameterized
      SUBDIR += p5-MooseX-SemiAffordanceAccessor
      SUBDIR += p5-MooseX-Types
      SUBDIR += p5-Mouse
@@ -692,7 +693,6 @@
      SUBDIR += pmk
      SUBDIR += poedit
      SUBDIR += popt
-     SUBDIR += prc-tools
      SUBDIR += proj
      SUBDIR += pscan
      SUBDIR += pth

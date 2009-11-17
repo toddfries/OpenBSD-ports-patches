@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.432 2009/10/23 17:25:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.438 2009/11/12 20:16:55 landry Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -112,6 +112,7 @@
      SUBDIR += myreview
      SUBDIR += nag
      SUBDIR += nginx
+     SUBDIR += nginx,passenger
      SUBDIR += nostromo
      SUBDIR += ntlmaps
      SUBDIR += opera
@@ -210,6 +211,8 @@
      SUBDIR += p5-HTML-SimpleParse
      SUBDIR += p5-HTML-SiteTear
      SUBDIR += p5-HTML-Stream
+     SUBDIR += p5-HTML-StripScripts
+     SUBDIR += p5-HTML-StripScripts-Parser
      SUBDIR += p5-HTML-Table
      SUBDIR += p5-HTML-TableContentParser
      SUBDIR += p5-HTML-TableExtract
@@ -266,6 +269,7 @@
      SUBDIR += p5-WWW-Curl
      SUBDIR += p5-WWW-Google-SiteMap
      SUBDIR += p5-WWW-Mechanize
+     SUBDIR += p5-WWW-Mechanize-TreeBuilder
      SUBDIR += p5-WWW-Robot
      SUBDIR += p5-WWW-Search
      SUBDIR += p5-WWW-Search-Ebay
@@ -367,6 +371,7 @@
      SUBDIR += ruby-thin
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
+     SUBDIR += sabredav
      SUBDIR += sarg
      SUBDIR += seamonkey
      SUBDIR += snownews
@@ -377,6 +382,7 @@
      SUBDIR += squid,snmp
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
+     SUBDIR += surf
      SUBDIR += surfraw
      SUBDIR += swfdec-plugin
      SUBDIR += syweb
@@ -417,7 +423,6 @@
      SUBDIR += xapian-omega
      SUBDIR += xcache
      SUBDIR += xmhtml
-     SUBDIR += xoops
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework

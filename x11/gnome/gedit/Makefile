@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2009/10/27 12:02:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.48 2009/11/11 22:36:43 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -11,8 +11,7 @@ COMMENT=		lightweight GNOME text editor
 # x11/gnome/seahorse-plugins
 
 GNOME_PROJECT=		gedit
-GNOME_VERSION=		2.28.0
-PKGNAME=		${DISTNAME}p1
+GNOME_VERSION=		2.28.2
 CATEGORIES=		editors
 
 HOMEPAGE=		http://projects.gnome.org/gedit/

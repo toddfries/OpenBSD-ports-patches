@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/09/23 19:06:46 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2009/11/12 23:08:39 jasper Exp $
 
 COMMENT =		simple distributed software configuration management 
 
-VERSION =		20090921191920
+VERSION =		20091111162119
 DISTNAME =		fossil-src-${VERSION}
-PKGNAME =		fossil-${VERSION}
+PKGNAME =		fossil-${VERSION}p0
 CATEGORIES =		devel www
+
+MAINTAINER =		James Turner <james@bsdgroup.org>
 
 HOMEPAGE =		http://fossil-scm.org/
 MASTER_SITES =		${HOMEPAGE}download/ \
@@ -17,6 +19,13 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
+FLAVORS=		static
+FLAVOR?=
+
+.if ${FLAVOR:L} == "static"
+MAKE_FLAGS =		LDFLAGS="-static"
+.endif
+
 WANTLIB =		c z
 
 MODULES =		lang/tcl
@@ -24,7 +33,7 @@ RUN_DEPENDS =		:gnupg-*:security/gnupg
 
 REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS}
 
-MAKE_FLAGS =		BCC="${CC}" TCC="${CC} -Wall"
+MAKE_FLAGS +=		BCC="${CC}" TCC="${CC} -Wall"
 
 do-regress:
 	@cd ${WRKSRC} && ${MODTCL_BIN} test/tester.tcl fossil
