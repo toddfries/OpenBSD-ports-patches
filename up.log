@@ -3,98 +3,143 @@
 ? status.log
 ? sync.sh
 ? up.log
-P devel/fossil/Makefile
-U devel/fossil/distinfo
-P devel/gobject-introspection/Makefile
-U devel/gobject-introspection/patches/patch-girepository_giroffsets_c
-P devel/ivy/Makefile
-P devel/mysql++/Makefile
-P devel/p5-Carp-Clan/Makefile
-U devel/p5-Carp-Clan/distinfo
+P audio/grip/Makefile
+U audio/grip/patches/patch-src_main_c
+P databases/xapian-core/Makefile
+U databases/xapian-core/distinfo
+P databases/xapian-core/pkg/PLIST
+P devel/Makefile
+U devel/p5-MooseX-Log-Log4perl/Makefile
+U devel/p5-MooseX-Log-Log4perl/distinfo
+U devel/p5-MooseX-Log-Log4perl/pkg/DESCR
+U devel/p5-MooseX-Log-Log4perl/pkg/PLIST
+P devel/py-xdg/Makefile
+U devel/py-xdg/distinfo
+cvs server: devel/py-xdg/patches/patch-xdg_DesktopEntry_py is no longer in the repository
+cvs server: devel/py-xdg/patches/patch-xdg_Menu_py is no longer in the repository
+P graphics/Makefile
+U graphics/lensfun/Makefile
+U graphics/lensfun/distinfo
+U graphics/lensfun/patches/patch-ac_py
+U graphics/lensfun/patches/patch-build_mak_compiler_gcc_mak
+U graphics/lensfun/patches/patch-build_mak_host_posix_mak
+U graphics/lensfun/patches/patch-configure
+U graphics/lensfun/patches/patch-libs_lensfun_lensfun_mak
+U graphics/lensfun/pkg/DESCR
+U graphics/lensfun/pkg/PLIST
+P graphics/libexif/Makefile
+U graphics/libexif/distinfo
+P graphics/libexif/patches/patch-Makefile_in
+P graphics/libexif/pkg/PLIST
+P graphics/ufraw/Makefile
+U graphics/ufraw/pkg/DESCR
+P infrastructure/build/libtool
 P infrastructure/db/user.list
-P korean/libhangul/Makefile
-U korean/libhangul/distinfo
-cvs server: korean/libhangul/patches/patch-data_hanja_Makefile_in is no longer in the repository
-P korean/libhangul/pkg/PLIST
-P lang/librep/Makefile
-U lang/librep/distinfo
-P lang/librep/patches/patch-src_Makefile_in
-P lang/librep/pkg/PLIST
-P mail/postfix/snapshot/Makefile
-U mail/postfix/snapshot/distinfo
-P mail/postfix/snapshot/patches/patch-master.cf
-P mail/postfix/snapshot/pkg/PLIST
-P multimedia/hdhomerun/Makefile
-U multimedia/hdhomerun/distinfo
-U multimedia/hdhomerun/patches/patch-Makefile
-P multimedia/hdhomerun/pkg/PLIST
-P net/ldns/Makefile.inc
-P net/ldns/drill/Makefile
-U net/ldns/drill/distinfo
-P net/ldns/libldns/Makefile
-U net/ldns/libldns/distinfo
-P net/ldns/libldns/patches/patch-Makefile_in
-P net/ldns/libldns/patches/patch-configure
-P net/ldns/libldns/patches/patch-util_c
-P net/ldns/utils/Makefile
-U net/ldns/utils/distinfo
-P net/mon/client/Makefile
-P net/nagios/Makefile
-U net/nagios/check_hw_sensors/Makefile
-U net/nagios/check_hw_sensors/distinfo
-U net/nagios/check_hw_sensors/pkg/DESCR
-U net/nagios/check_hw_sensors/pkg/PLIST
-P net/nagios/check_sip/Makefile
-P net/nagios/check_sip/patches/patch-check_sip
-P security/Makefile
-U security/p5-Crypt-CipherSaber/Makefile
-U security/p5-Crypt-CipherSaber/distinfo
-U security/p5-Crypt-CipherSaber/pkg/DESCR
-U security/p5-Crypt-CipherSaber/pkg/PLIST
-P security/stunnel/Makefile
-U security/stunnel/distinfo
-P shells/zsh/Makefile
-U shells/zsh/patches/patch-Completion_Unix_Command__tmux
-P shells/zsh/pkg/PLIST
-P sysutils/consolekit/Makefile
-U sysutils/consolekit/files/ck-get-x11-display-device
-U sysutils/consolekit/files/ck-get-x11-server-pid
-P sysutils/consolekit/patches/patch-configure_ac
-U sysutils/consolekit/patches/patch-data_ConsoleKit_conf
-U sysutils/consolekit/patches/patch-src_ck-manager_c
-P sysutils/consolekit/patches/patch-src_ck-session_c
-P sysutils/consolekit/patches/patch-src_ck-sysdeps-openbsd_c
-P sysutils/consolekit/patches/patch-src_ck-sysdeps-unix_c
-U sysutils/consolekit/patches/patch-tools_Makefile_in
-U sysutils/consolekit/patches/patch-tools_openbsd_ck-system-stop
-P sysutils/consolekit/pkg/PLIST
-P textproc/Makefile
-U textproc/py-nltk/Makefile
-U textproc/py-nltk/distinfo
-U textproc/py-nltk/patches/patch-setup_py
-U textproc/py-nltk/pkg/DESCR
-U textproc/py-nltk/pkg/PLIST
-P textproc/tcpdf/Makefile
-U textproc/tcpdf/distinfo
-P textproc/tcpdf/pkg/PLIST
-P www/blogsum/Makefile
-U www/blogsum/distinfo
-P www/blogsum/pkg/PLIST
-P www/php5/extensions/Makefile
-U www/php5/extensions/pkg/DESCR-tidy
-U www/php5/extensions/pkg/PLIST-tidy
-P www/wordpress/Makefile
-U www/wordpress/distinfo
+P lang/gforth/Makefile
+U lang/gforth/patches/patch-engine_engine_c
+P lang/vala/Makefile
+U lang/vala/distinfo
+P lang/vala/pkg/PLIST
+P mail/Makefile
+P mail/amavisd-new/Makefile
+P mail/amavisd-new/patches/patch-amavisd_conf
+P mail/amavisd-new/patches/patch-amavisd_conf-sample
+P mail/evolution/Makefile
+P mail/evolution/files/evolution.sh
+U mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in
+P mail/evolution/pkg/PFRAG.shared-main
+P mail/evolution/pkg/PLIST-main
+U mail/evolution-exchange/Makefile
+U mail/evolution-exchange/distinfo
+U mail/evolution-exchange/pkg/DESCR
+U mail/evolution-exchange/pkg/PLIST
+P mail/msmtp/Makefile
+U mail/msmtp/distinfo
+U mail/sqlgrey/Makefile
+U mail/sqlgrey/distinfo
+U mail/sqlgrey/patches/patch-Makefile
+U mail/sqlgrey/patches/patch-etc_sqlgrey_conf
+U mail/sqlgrey/patches/patch-update_sqlgrey_config
+U mail/sqlgrey/pkg/DESCR
+U mail/sqlgrey/pkg/PLIST
+P multimedia/get_iplayer/Makefile
+U multimedia/get_iplayer/distinfo
+P multimedia/get_iplayer/patches/patch-get_iplayer
+P net/flvstreamer/Makefile
+U net/flvstreamer/distinfo
+U net/flvstreamer/patches/patch-Makefile
+P net/flvstreamer/patches/patch-bytes_h
+U net/flvstreamer/patches/patch-streams_cpp
+P net/openfire/Makefile
+U net/openfire/patches/patch-src_i18n_openfire_i18n_en_properties
+P net/pure-ftpd/Makefile
+U net/pure-ftpd/distinfo
+P net/tor/Makefile
+U net/tor/distinfo
+U net/tor/patches/patch-src_common_tortls_c
+U net/tor/patches/patch-src_common_tortls_h
+U net/tor/patches/patch-src_or_connection_or_c
+P security/nss/Makefile
+U security/nss/patches/patch-mozilla_security_nss_lib_freebl_blapi_h
+P textproc/gtkaml/Makefile
+U textproc/gtkaml/distinfo
+cvs server: textproc/gtkaml/patches/patch-Makefile_in is no longer in the repository
+P textproc/gtkaml/patches/patch-src_GtkamlImplicitsStore_c
+P textproc/gtkaml/patches/patch-src_gtkamlc_h
+U www/drupal6/nodetype/Makefile
+U www/drupal6/nodetype/distinfo
+U www/drupal6/nodetype/pkg/DESCR
+U www/drupal6/nodetype/pkg/PLIST
+cvs server: www/nodetype/Makefile is no longer in the repository
+cvs server: www/nodetype/distinfo is no longer in the repository
+cvs server: www/nodetype/pkg/DESCR is no longer in the repository
+cvs server: www/nodetype/pkg/PLIST is no longer in the repository
+P www/syweb/Makefile
+P www/syweb/patches/patch-htdocs_syweb_class_graph_inc
+P x11/Makefile
+U x11/droid-fonts/Makefile
+U x11/droid-fonts/distinfo
+U x11/droid-fonts/pkg/DESCR
+U x11/droid-fonts/pkg/PLIST
+P x11/gnome/gnome.port.mk
+P x11/gnome/keyring/Makefile
+cvs server: x11/gnome/keyring/patches/patch-daemon_data_gnome-keyring_schemas_in is no longer in the repository
+cvs server: x11/gnome/keyring/pkg/MESSAGE is no longer in the repository
+P x11/gnome/keyring/pkg/PLIST
+P x11/gnome/menus/Makefile
+U x11/gnome/menus/patches/patch-libmenu_gmenu-tree_c
+U x11/gnome/menus/patches/patch-simple-editor_GMenuSimpleEditor_menutreemodel_py
+cvs server: x11/gnome/menus/pkg/MESSAGE is no longer in the repository
+P x11/gnome/menus/pkg/PLIST
+P x11/gnome/panel/Makefile
+P x11/gnome/panel/distinfo
+U x11/gnome/panel/patches/patch-gnome-panel_menu_c
+U x11/gnome/panel/patches/patch-gnome-panel_panel-menu-bar_c
+U x11/gnome/panel/patches/patch-gnome-panel_panel-menu-button_c
+P x11/gnome/panel/pkg/PLIST
+P x11/gnome/seahorse/Makefile
+P x11/gnome/seahorse/pkg/PLIST
 P x11/gnome/session/Makefile
-cvs server: x11/gnome/session/files/gsm-logout-dialog.c is no longer in the repository
-cvs server: x11/gnome/session/files/gsm-logout-dialog.h is no longer in the repository
-cvs server: x11/gnome/session/files/gsm-manager.c is no longer in the repository
-cvs server: x11/gnome/session/files/gsm-manager.h is no longer in the repository
-cvs server: x11/gnome/session/files/gsm-power-manager.c is no longer in the repository
-cvs server: x11/gnome/session/files/gsm-power-manager.h is no longer in the repository
-cvs server: x11/gnome/session/patches/patch-gnome-session_Makefile_in is no longer in the repository
-U x11/gnome/session/patches/patch-gnome-session_gsm-logout-dialog_c
-U x11/gnome/session/patches/patch-gnome-session_gsm-manager_c
-P x11/gnome/session/pkg/PLIST
-P x11/sawfish/Makefile
-U x11/sawfish/distinfo
+U x11/gnome/session/patches/patch-gnome-session_main_c
+P x11/kde/base3/Makefile
+P x11/kde/base3/patches/patch-startkde
+P x11/kde/libs3/Makefile
+U x11/kde/libs3/patches/patch-kded_kbuildsycoca_cpp
+P x11/kde/libs3/patches/patch-kioslave_file_file_cc
+cvs server: x11/kde/libs3/pkg/MESSAGE-main is no longer in the repository
+P x11/kde/libs3/pkg/PLIST-main
+P x11/pinot/Makefile
+U x11/pinot/distinfo
+cvs server: x11/pinot/patches/patch-Core_DaemonState_cpp is no longer in the repository
+cvs server: x11/pinot/patches/patch-Core_Makefile_in is no longer in the repository
+cvs server: x11/pinot/patches/patch-Core_WorkerThreads_cpp is no longer in the repository
+cvs server: x11/pinot/patches/patch-IndexSearch_Makefile_in is no longer in the repository
+cvs server: x11/pinot/patches/patch-IndexSearch_Xapian_Makefile_in is no longer in the repository
+P x11/pinot/patches/patch-Makefile_in
+cvs server: x11/pinot/patches/patch-README is no longer in the repository
+cvs server: x11/pinot/patches/patch-Tokenize_Makefile_in is no longer in the repository
+cvs server: x11/pinot/patches/patch-UI_GTK2_src_Makefile_in is no longer in the repository
+cvs server: x11/pinot/patches/patch-configure is no longer in the repository
+P x11/pinot/pkg/PLIST
+P x11/xfce4/xfce-utils/Makefile
+U x11/xfce4/xfce-utils/patches/patch-scripts_startxfce4_in

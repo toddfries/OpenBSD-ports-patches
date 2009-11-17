@@ -3,94 +3,123 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   devel/fossil/Makefile
-#	modified:   devel/fossil/distinfo
-#	modified:   devel/gobject-introspection/Makefile
-#	modified:   devel/ivy/Makefile
-#	modified:   devel/mysql++/Makefile
-#	modified:   devel/p5-Carp-Clan/Makefile
-#	modified:   devel/p5-Carp-Clan/distinfo
+#	modified:   audio/grip/Makefile
+#	modified:   databases/xapian-core/Makefile
+#	modified:   databases/xapian-core/distinfo
+#	modified:   databases/xapian-core/pkg/PLIST
+#	modified:   devel/Makefile
+#	modified:   devel/py-xdg/Makefile
+#	modified:   devel/py-xdg/distinfo
+#	deleted:    devel/py-xdg/patches/patch-xdg_DesktopEntry_py
+#	deleted:    devel/py-xdg/patches/patch-xdg_Menu_py
+#	modified:   graphics/Makefile
+#	modified:   graphics/libexif/Makefile
+#	modified:   graphics/libexif/distinfo
+#	modified:   graphics/libexif/patches/patch-Makefile_in
+#	modified:   graphics/libexif/pkg/PLIST
+#	modified:   graphics/ufraw/Makefile
+#	modified:   graphics/ufraw/pkg/DESCR
+#	modified:   infrastructure/build/libtool
 #	modified:   infrastructure/db/user.list
-#	modified:   korean/libhangul/Makefile
-#	modified:   korean/libhangul/distinfo
-#	deleted:    korean/libhangul/patches/patch-data_hanja_Makefile_in
-#	modified:   korean/libhangul/pkg/PLIST
-#	modified:   lang/librep/Makefile
-#	modified:   lang/librep/distinfo
-#	modified:   lang/librep/patches/patch-src_Makefile_in
-#	modified:   lang/librep/pkg/PLIST
-#	modified:   mail/postfix/snapshot/Makefile
-#	modified:   mail/postfix/snapshot/distinfo
-#	modified:   mail/postfix/snapshot/patches/patch-master.cf
-#	modified:   mail/postfix/snapshot/pkg/PLIST
-#	modified:   multimedia/hdhomerun/Makefile
-#	modified:   multimedia/hdhomerun/distinfo
-#	modified:   multimedia/hdhomerun/patches/patch-Makefile
-#	modified:   multimedia/hdhomerun/pkg/PLIST
-#	modified:   net/ldns/Makefile.inc
-#	modified:   net/ldns/drill/Makefile
-#	modified:   net/ldns/drill/distinfo
-#	modified:   net/ldns/libldns/Makefile
-#	modified:   net/ldns/libldns/distinfo
-#	modified:   net/ldns/libldns/patches/patch-Makefile_in
-#	modified:   net/ldns/libldns/patches/patch-configure
-#	modified:   net/ldns/libldns/patches/patch-util_c
-#	modified:   net/ldns/utils/Makefile
-#	modified:   net/ldns/utils/distinfo
-#	modified:   net/mon/client/Makefile
-#	modified:   net/nagios/Makefile
-#	modified:   net/nagios/check_sip/Makefile
-#	modified:   net/nagios/check_sip/patches/patch-check_sip
-#	modified:   security/Makefile
-#	modified:   security/stunnel/Makefile
-#	modified:   security/stunnel/distinfo
-#	modified:   shells/zsh/Makefile
-#	modified:   shells/zsh/pkg/PLIST
+#	modified:   lang/gforth/Makefile
+#	modified:   lang/vala/Makefile
+#	modified:   lang/vala/distinfo
+#	modified:   lang/vala/pkg/PLIST
+#	modified:   mail/Makefile
+#	modified:   mail/amavisd-new/Makefile
+#	modified:   mail/amavisd-new/patches/patch-amavisd_conf
+#	modified:   mail/amavisd-new/patches/patch-amavisd_conf-sample
+#	modified:   mail/evolution/Makefile
+#	modified:   mail/evolution/pkg/PFRAG.shared-main
+#	modified:   mail/evolution/pkg/PLIST-main
+#	modified:   mail/msmtp/Makefile
+#	modified:   mail/msmtp/distinfo
+#	modified:   multimedia/get_iplayer/Makefile
+#	modified:   multimedia/get_iplayer/distinfo
+#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
+#	modified:   net/flvstreamer/Makefile
+#	modified:   net/flvstreamer/distinfo
+#	modified:   net/flvstreamer/patches/patch-Makefile
+#	modified:   net/flvstreamer/patches/patch-bytes_h
+#	modified:   net/openfire/Makefile
+#	modified:   net/pure-ftpd/Makefile
+#	modified:   net/pure-ftpd/distinfo
+#	modified:   net/tor/Makefile
+#	modified:   net/tor/distinfo
+#	modified:   security/nss/Makefile
 #	modified:   status.log
-#	modified:   sysutils/consolekit/Makefile
-#	modified:   sysutils/consolekit/patches/patch-configure_ac
-#	modified:   sysutils/consolekit/patches/patch-src_ck-session_c
-#	modified:   sysutils/consolekit/patches/patch-src_ck-sysdeps-openbsd_c
-#	modified:   sysutils/consolekit/patches/patch-src_ck-sysdeps-unix_c
-#	modified:   sysutils/consolekit/pkg/PLIST
-#	modified:   textproc/Makefile
-#	modified:   textproc/tcpdf/Makefile
-#	modified:   textproc/tcpdf/distinfo
-#	modified:   textproc/tcpdf/pkg/PLIST
+#	modified:   textproc/gtkaml/Makefile
+#	modified:   textproc/gtkaml/distinfo
+#	deleted:    textproc/gtkaml/patches/patch-Makefile_in
+#	modified:   textproc/gtkaml/patches/patch-src_GtkamlImplicitsStore_c
+#	modified:   textproc/gtkaml/patches/patch-src_gtkamlc_h
 #	modified:   up.log
-#	modified:   www/blogsum/Makefile
-#	modified:   www/blogsum/distinfo
-#	modified:   www/blogsum/pkg/PLIST
-#	modified:   www/php5/extensions/Makefile
-#	modified:   www/wordpress/Makefile
-#	modified:   www/wordpress/distinfo
+#	deleted:    www/nodetype/Makefile
+#	deleted:    www/nodetype/distinfo
+#	deleted:    www/nodetype/pkg/DESCR
+#	deleted:    www/nodetype/pkg/PLIST
+#	modified:   www/syweb/Makefile
+#	modified:   www/syweb/patches/patch-htdocs_syweb_class_graph_inc
+#	modified:   x11/Makefile
+#	modified:   x11/gnome/gnome.port.mk
+#	modified:   x11/gnome/keyring/Makefile
+#	deleted:    x11/gnome/keyring/patches/patch-daemon_data_gnome-keyring_schemas_in
+#	deleted:    x11/gnome/keyring/pkg/MESSAGE
+#	modified:   x11/gnome/keyring/pkg/PLIST
+#	modified:   x11/gnome/menus/Makefile
+#	deleted:    x11/gnome/menus/pkg/MESSAGE
+#	modified:   x11/gnome/menus/pkg/PLIST
+#	modified:   x11/gnome/panel/Makefile
+#	modified:   x11/gnome/panel/distinfo
+#	modified:   x11/gnome/panel/pkg/PLIST
+#	modified:   x11/gnome/seahorse/Makefile
+#	modified:   x11/gnome/seahorse/pkg/PLIST
 #	modified:   x11/gnome/session/Makefile
-#	deleted:    x11/gnome/session/files/gsm-logout-dialog.c
-#	deleted:    x11/gnome/session/files/gsm-logout-dialog.h
-#	deleted:    x11/gnome/session/files/gsm-manager.c
-#	deleted:    x11/gnome/session/files/gsm-manager.h
-#	deleted:    x11/gnome/session/files/gsm-power-manager.c
-#	deleted:    x11/gnome/session/files/gsm-power-manager.h
-#	deleted:    x11/gnome/session/patches/patch-gnome-session_Makefile_in
-#	modified:   x11/gnome/session/pkg/PLIST
-#	modified:   x11/sawfish/Makefile
-#	modified:   x11/sawfish/distinfo
+#	modified:   x11/kde/base3/Makefile
+#	modified:   x11/kde/base3/patches/patch-startkde
+#	modified:   x11/kde/libs3/Makefile
+#	modified:   x11/kde/libs3/patches/patch-kioslave_file_file_cc
+#	deleted:    x11/kde/libs3/pkg/MESSAGE-main
+#	modified:   x11/kde/libs3/pkg/PLIST-main
+#	modified:   x11/pinot/Makefile
+#	modified:   x11/pinot/distinfo
+#	deleted:    x11/pinot/patches/patch-Core_DaemonState_cpp
+#	deleted:    x11/pinot/patches/patch-Core_Makefile_in
+#	deleted:    x11/pinot/patches/patch-Core_WorkerThreads_cpp
+#	deleted:    x11/pinot/patches/patch-IndexSearch_Makefile_in
+#	deleted:    x11/pinot/patches/patch-IndexSearch_Xapian_Makefile_in
+#	modified:   x11/pinot/patches/patch-Makefile_in
+#	deleted:    x11/pinot/patches/patch-README
+#	deleted:    x11/pinot/patches/patch-Tokenize_Makefile_in
+#	deleted:    x11/pinot/patches/patch-UI_GTK2_src_Makefile_in
+#	deleted:    x11/pinot/patches/patch-configure
+#	modified:   x11/pinot/pkg/PLIST
+#	modified:   x11/xfce4/xfce-utils/Makefile
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	devel/gobject-introspection/patches/patch-girepository_giroffsets_c
-#	net/nagios/check_hw_sensors/
-#	security/p5-Crypt-CipherSaber/
-#	shells/zsh/patches/patch-Completion_Unix_Command__tmux
-#	sysutils/consolekit/files/
-#	sysutils/consolekit/patches/patch-data_ConsoleKit_conf
-#	sysutils/consolekit/patches/patch-src_ck-manager_c
-#	sysutils/consolekit/patches/patch-tools_Makefile_in
-#	sysutils/consolekit/patches/patch-tools_openbsd_ck-system-stop
-#	textproc/py-nltk/
-#	www/php5/extensions/pkg/DESCR-tidy
-#	www/php5/extensions/pkg/PLIST-tidy
-#	x11/gnome/session/patches/patch-gnome-session_gsm-logout-dialog_c
-#	x11/gnome/session/patches/patch-gnome-session_gsm-manager_c
+#	audio/grip/patches/patch-src_main_c
+#	devel/p5-MooseX-Log-Log4perl/
+#	graphics/lensfun/
+#	lang/gforth/patches/patch-engine_engine_c
+#	mail/evolution-exchange/
+#	mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in
+#	mail/sqlgrey/
+#	net/flvstreamer/patches/patch-streams_cpp
+#	net/openfire/patches/patch-src_i18n_openfire_i18n_en_properties
+#	net/tor/patches/patch-src_common_tortls_c
+#	net/tor/patches/patch-src_common_tortls_h
+#	net/tor/patches/patch-src_or_connection_or_c
+#	security/nss/patches/patch-mozilla_security_nss_lib_freebl_blapi_h
+#	www/drupal6/nodetype/
+#	x11/droid-fonts/
+#	x11/gnome/menus/patches/patch-libmenu_gmenu-tree_c
+#	x11/gnome/menus/patches/patch-simple-editor_GMenuSimpleEditor_menutreemodel_py
+#	x11/gnome/panel/patches/patch-gnome-panel_menu_c
+#	x11/gnome/panel/patches/patch-gnome-panel_panel-menu-bar_c
+#	x11/gnome/panel/patches/patch-gnome-panel_panel-menu-button_c
+#	x11/gnome/session/patches/patch-gnome-session_main_c
+#	x11/kde/libs3/patches/patch-kded_kbuildsycoca_cpp
+#	x11/xfce4/xfce-utils/patches/patch-scripts_startxfce4_in
 no changes added to commit (use "git add" and/or "git commit -a")
