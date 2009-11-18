@@ -3,123 +3,91 @@
 #   (use "git add/rm <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
-#	modified:   audio/grip/Makefile
-#	modified:   databases/xapian-core/Makefile
-#	modified:   databases/xapian-core/distinfo
-#	modified:   databases/xapian-core/pkg/PLIST
+#	modified:   astro/celestia/Makefile
+#	deleted:    astro/celestia/pkg/MESSAGE
 #	modified:   devel/Makefile
-#	modified:   devel/py-xdg/Makefile
-#	modified:   devel/py-xdg/distinfo
-#	deleted:    devel/py-xdg/patches/patch-xdg_DesktopEntry_py
-#	deleted:    devel/py-xdg/patches/patch-xdg_Menu_py
-#	modified:   graphics/Makefile
-#	modified:   graphics/libexif/Makefile
-#	modified:   graphics/libexif/distinfo
-#	modified:   graphics/libexif/patches/patch-Makefile_in
-#	modified:   graphics/libexif/pkg/PLIST
-#	modified:   graphics/ufraw/Makefile
-#	modified:   graphics/ufraw/pkg/DESCR
-#	modified:   infrastructure/build/libtool
-#	modified:   infrastructure/db/user.list
-#	modified:   lang/gforth/Makefile
-#	modified:   lang/vala/Makefile
-#	modified:   lang/vala/distinfo
-#	modified:   lang/vala/pkg/PLIST
-#	modified:   mail/Makefile
-#	modified:   mail/amavisd-new/Makefile
-#	modified:   mail/amavisd-new/patches/patch-amavisd_conf
-#	modified:   mail/amavisd-new/patches/patch-amavisd_conf-sample
+#	modified:   devel/ffcall/Makefile
+#	modified:   devel/git/Makefile
+#	modified:   devel/git/distinfo
+#	modified:   devel/git/patches/patch-Makefile
+#	modified:   devel/git/patches/patch-builtin-help_c
+#	modified:   devel/git/patches/patch-gitweb_gitweb_perl
+#	modified:   devel/git/patches/patch-imap-send_c
+#	modified:   devel/git/patches/patch-t_t4019-diff-wserror_sh
+#	modified:   devel/git/pkg/PLIST-main
+#	modified:   devel/libtool/Makefile
+#	modified:   devel/llvm/Makefile
+#	modified:   devel/vte/Makefile
+#	modified:   devel/vte/distinfo
+#	modified:   editors/openoffice3/Makefile
+#	modified:   editors/subtitleeditor/Makefile
+#	modified:   emulators/dosbox/Makefile
+#	modified:   games/gtkballs/Makefile
+#	modified:   games/gtkballs/patches/patch-src_game_c
+#	modified:   graphics/gimp/stable/Makefile
+#	modified:   graphics/pngcrush/Makefile
+#	modified:   graphics/pngcrush/distinfo
+#	modified:   lang/gcc/4.2/Makefile
+#	modified:   lang/gcc/4.2/gcc4.port.mk
+#	modified:   lang/llvm-gcc4/Makefile
+#	modified:   lang/sbcl/Makefile
+#	modified:   lang/sbcl/distinfo
+#	modified:   lang/sbcl/patches/patch-contrib_asdf-module.mk
+#	modified:   lang/sbcl/patches/patch-contrib_vanilla-module.mk
+#	modified:   lang/sbcl/patches/patch-make-target-contrib.sh
+#	modified:   lang/sbcl/patches/patch-src_runtime_Config.x86-openbsd
+#	modified:   lang/sbcl/patches/patch-src_runtime_GNUmakefile
+#	deleted:    lang/sbcl/patches/patch-src_runtime_gc-common.c
+#	modified:   lang/sbcl/patches/patch-src_runtime_runtime.c
+#	deleted:    lang/sbcl/patches/patch-tests_subr.sh
+#	modified:   lang/sbcl/pkg/PLIST
+#	modified:   mail/enigmail-seamonkey/Makefile
+#	modified:   mail/enigmail/Makefile
+#	modified:   mail/evolution-exchange/Makefile
 #	modified:   mail/evolution/Makefile
-#	modified:   mail/evolution/pkg/PFRAG.shared-main
-#	modified:   mail/evolution/pkg/PLIST-main
-#	modified:   mail/msmtp/Makefile
-#	modified:   mail/msmtp/distinfo
-#	modified:   multimedia/get_iplayer/Makefile
-#	modified:   multimedia/get_iplayer/distinfo
-#	modified:   multimedia/get_iplayer/patches/patch-get_iplayer
-#	modified:   net/flvstreamer/Makefile
-#	modified:   net/flvstreamer/distinfo
-#	modified:   net/flvstreamer/patches/patch-Makefile
-#	modified:   net/flvstreamer/patches/patch-bytes_h
-#	modified:   net/openfire/Makefile
-#	modified:   net/pure-ftpd/Makefile
-#	modified:   net/pure-ftpd/distinfo
-#	modified:   net/tor/Makefile
-#	modified:   net/tor/distinfo
-#	modified:   security/nss/Makefile
+#	modified:   mail/mozilla-thunderbird/Makefile
+#	deleted:    multimedia/gstreamer-0.10/plugins-good/pkg/PLIST-gconf
+#	modified:   net/Makefile
 #	modified:   status.log
-#	modified:   textproc/gtkaml/Makefile
-#	modified:   textproc/gtkaml/distinfo
-#	deleted:    textproc/gtkaml/patches/patch-Makefile_in
-#	modified:   textproc/gtkaml/patches/patch-src_GtkamlImplicitsStore_c
-#	modified:   textproc/gtkaml/patches/patch-src_gtkamlc_h
+#	modified:   sysutils/Makefile
 #	modified:   up.log
-#	deleted:    www/nodetype/Makefile
-#	deleted:    www/nodetype/distinfo
-#	deleted:    www/nodetype/pkg/DESCR
-#	deleted:    www/nodetype/pkg/PLIST
-#	modified:   www/syweb/Makefile
-#	modified:   www/syweb/patches/patch-htdocs_syweb_class_graph_inc
-#	modified:   x11/Makefile
-#	modified:   x11/gnome/gnome.port.mk
-#	modified:   x11/gnome/keyring/Makefile
-#	deleted:    x11/gnome/keyring/patches/patch-daemon_data_gnome-keyring_schemas_in
-#	deleted:    x11/gnome/keyring/pkg/MESSAGE
-#	modified:   x11/gnome/keyring/pkg/PLIST
-#	modified:   x11/gnome/menus/Makefile
-#	deleted:    x11/gnome/menus/pkg/MESSAGE
-#	modified:   x11/gnome/menus/pkg/PLIST
-#	modified:   x11/gnome/panel/Makefile
-#	modified:   x11/gnome/panel/distinfo
-#	modified:   x11/gnome/panel/pkg/PLIST
-#	modified:   x11/gnome/seahorse/Makefile
-#	modified:   x11/gnome/seahorse/pkg/PLIST
-#	modified:   x11/gnome/session/Makefile
-#	modified:   x11/kde/base3/Makefile
-#	modified:   x11/kde/base3/patches/patch-startkde
-#	modified:   x11/kde/libs3/Makefile
-#	modified:   x11/kde/libs3/patches/patch-kioslave_file_file_cc
-#	deleted:    x11/kde/libs3/pkg/MESSAGE-main
-#	modified:   x11/kde/libs3/pkg/PLIST-main
-#	modified:   x11/pinot/Makefile
-#	modified:   x11/pinot/distinfo
-#	deleted:    x11/pinot/patches/patch-Core_DaemonState_cpp
-#	deleted:    x11/pinot/patches/patch-Core_Makefile_in
-#	deleted:    x11/pinot/patches/patch-Core_WorkerThreads_cpp
-#	deleted:    x11/pinot/patches/patch-IndexSearch_Makefile_in
-#	deleted:    x11/pinot/patches/patch-IndexSearch_Xapian_Makefile_in
-#	modified:   x11/pinot/patches/patch-Makefile_in
-#	deleted:    x11/pinot/patches/patch-README
-#	deleted:    x11/pinot/patches/patch-Tokenize_Makefile_in
-#	deleted:    x11/pinot/patches/patch-UI_GTK2_src_Makefile_in
-#	deleted:    x11/pinot/patches/patch-configure
-#	modified:   x11/pinot/pkg/PLIST
-#	modified:   x11/xfce4/xfce-utils/Makefile
+#	modified:   www/drupal6/Makefile
+#	modified:   www/firefox35/Makefile
+#	modified:   www/seamonkey/Makefile
+#	modified:   www/webkit/Makefile
+#	modified:   x11/gnome/nautilus-sendto/Makefile
+#	modified:   x11/gnome/nautilus-sendto/distinfo
+#	modified:   x11/gnome/nautilus-sendto/pkg/PLIST
+#	modified:   x11/gnome/tomboy/Makefile
+#	modified:   x11/gnome/tomboy/distinfo
 #
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-#	audio/grip/patches/patch-src_main_c
-#	devel/p5-MooseX-Log-Log4perl/
-#	graphics/lensfun/
-#	lang/gforth/patches/patch-engine_engine_c
-#	mail/evolution-exchange/
-#	mail/evolution/patches/patch-plugins_exchange-operations_Makefile_in
-#	mail/sqlgrey/
-#	net/flvstreamer/patches/patch-streams_cpp
-#	net/openfire/patches/patch-src_i18n_openfire_i18n_en_properties
-#	net/tor/patches/patch-src_common_tortls_c
-#	net/tor/patches/patch-src_common_tortls_h
-#	net/tor/patches/patch-src_or_connection_or_c
-#	security/nss/patches/patch-mozilla_security_nss_lib_freebl_blapi_h
-#	www/drupal6/nodetype/
-#	x11/droid-fonts/
-#	x11/gnome/menus/patches/patch-libmenu_gmenu-tree_c
-#	x11/gnome/menus/patches/patch-simple-editor_GMenuSimpleEditor_menutreemodel_py
-#	x11/gnome/panel/patches/patch-gnome-panel_menu_c
-#	x11/gnome/panel/patches/patch-gnome-panel_panel-menu-bar_c
-#	x11/gnome/panel/patches/patch-gnome-panel_panel-menu-button_c
-#	x11/gnome/session/patches/patch-gnome-session_main_c
-#	x11/kde/libs3/patches/patch-kded_kbuildsycoca_cpp
-#	x11/xfce4/xfce-utils/patches/patch-scripts_startxfce4_in
+#	astro/celestia/patches/patch-src_celestia_windatepicker_cpp
+#	astro/celestia/patches/patch-src_celestia_wineclipses_cpp
+#	astro/celestia/patches/patch-src_celestia_winmain_cpp
+#	astro/celestia/patches/patch-src_celestia_winstarbrowser_cpp
+#	astro/celestia/patches/patch-src_celestia_wintime_cpp
+#	devel/libtool/patches/patch-libltdl_ltdl_c
+#	devel/p5-MooseX-AttributeHelpers/
+#	devel/p5-MooseX-MultiInitArg/
+#	games/gtkballs/patches/patch-src_gtkballs_c
+#	graphics/gimp/stable/patches/patch-plug-ins_file-psd_psd-load_c
+#	graphics/gimp/stable/patches/patch-plug-ins_file-psd_psd_h
+#	lang/sbcl/patches/patch-src_code_common-os_lisp
+#	lang/sbcl/patches/patch-src_compiler_ir1util_lisp
+#	lang/sbcl/patches/patch-src_runtime_bsd-os_c
+#	lang/sbcl/patches/patch-src_runtime_os_h
+#	lang/sbcl/patches/patch-src_runtime_runtime_h
+#	lang/sbcl/patches/patch-src_runtime_save_c
+#	lang/sbcl/patches/patch-tests_timer_impure_lisp
+#	lang/sbcl/pkg/PFRAG.i386
+#	mail/mozilla-thunderbird/patches/patch-security_nss_lib_freebl_blapi_h
+#	net/munin/
+#	net/p5-Net-OAuth/
+#	sysutils/dellflash/
+#	www/drupal6/locale-de/
+#	www/firefox35/patches/patch-security_nss_lib_freebl_blapi_h
+#	www/seamonkey/patches/patch-security_nss_lib_freebl_blapi_h
 no changes added to commit (use "git add" and/or "git commit -a")

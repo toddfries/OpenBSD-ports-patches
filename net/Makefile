@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.606 2009/11/12 13:12:37 msf Exp $
+# $OpenBSD: Makefile,v 1.608 2009/11/17 11:23:26 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -184,6 +184,7 @@
      SUBDIR += mtr
      SUBDIR += mtr,no_x11
      SUBDIR += mudix
+     SUBDIR += munin
      SUBDIR += mutella
      SUBDIR += nagios
      SUBDIR += nam
@@ -268,6 +269,7 @@
      SUBDIR += p5-Net-Jabber
      SUBDIR += p5-Net-MySQL
      SUBDIR += p5-Net-Netmask
+     SUBDIR += p5-Net-OAuth
      SUBDIR += p5-Net-ParseWhois
      SUBDIR += p5-Net-Patricia
      SUBDIR += p5-Net-Pcap
