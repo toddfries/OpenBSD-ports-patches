@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.610 2009/11/18 19:15:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.612 2009/11/22 07:17:58 msf Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -410,14 +410,21 @@
      SUBDIR += rtg
      SUBDIR += rtmpdump
      SUBDIR += rtorrent
+     SUBDIR += ruby-amqp
+     SUBDIR += ruby-amqp-utils
+     SUBDIR += ruby-bunny
      SUBDIR += ruby-eventmachine
+     SUBDIR += ruby-minion
+     SUBDIR += ruby-net-dns
      SUBDIR += ruby-net-scp
      SUBDIR += ruby-net-sftp
      SUBDIR += ruby-net-ssh
      SUBDIR += ruby-net-ssh-gateway
+     SUBDIR += ruby-nmap-parser
      SUBDIR += ruby-pcap
      SUBDIR += ruby-rrdtool
      SUBDIR += ruby-snmp
+     SUBDIR += ruby-stomp
      SUBDIR += ruby-xmpp4r
      SUBDIR += samba
      SUBDIR += samba,cups
