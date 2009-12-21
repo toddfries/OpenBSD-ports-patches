@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/12/19 23:05:25 landry Exp $
+# $OpenBSD: Makefile,v 1.1.1.1 2009/12/20 14:23:41 ajacoutot Exp $
 
 COMMENT=	SSH File Transfer Protocol client
 
