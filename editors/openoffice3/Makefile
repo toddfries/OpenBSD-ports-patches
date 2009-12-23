@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2009/12/21 16:13:02 robert Exp $
+# $OpenBSD: Makefile,v 1.33 2009/12/22 15:08:35 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -9,8 +9,8 @@ COMMENT-java=	optional integration of OpenOffice java features
 VERSION=	3.1.1
 DISTNAME=	OOo_${VERSION}
 WRKDIST=	${WRKDIR}/OOO310_m19
-PKGNAME=	openoffice-${VERSION}
-PKGNAME-main=	openoffice-${VERSION}p2
+PKGNAME=	openoffice-${VERSION}p0
+PKGNAME-main=	openoffice-${VERSION}p4
 PKGNAME-kde=	openoffice-kde-${VERSION}
 PKGNAME-java=	openoffice-java-${VERSION}p0
 CATEGORIES=	editors productivity
@@ -30,7 +30,7 @@ MASTER_SITES=	http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSI
 MASTER_SITES0=	http://www.bsd.hu/~robert/ooo/ \
 		http://humppa.hu/ooo/
 
-DISTFILES=	ooo-desktop-0.1.tar.gz:0
+DISTFILES=	ooo-desktop-0.2.tar.gz:0
 
 .for dfile in binfilter core extensions l10n system
 DISTFILES+=	${DISTNAME}_src_${dfile}.tar.bz2
