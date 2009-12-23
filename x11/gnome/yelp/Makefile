@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.46 2009/10/11 17:31:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2009/11/24 09:01:47 ajacoutot Exp $
 
 COMMENT=		GNOME help browser
 
 GNOME_PROJECT=		yelp
-GNOME_VERSION=		2.28.0
+GNOME_VERSION=		2.28.1
+PKGNAME=		${DISTNAME}p0
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,14 +25,14 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-BUILD_DEPENDS=		::devel/xulrunner/1.8,-devel \
+BUILD_DEPENDS=		:xulrunner-devel->=1.8,<1.9:devel/xulrunner/1.8,-devel \
 			::x11/gnome/doc-utils
 RUN_DEPENDS=		::misc/shared-mime-info \
 			::textproc/docbook-dsssl \
 			::x11/gnome/users-guide \
 			::x11/gnome/doc-utils
 LIB_DEPENDS=		startup-notification-1::devel/startup-notification \
-			xulrunner/gtkembedmoz,xulrunner/xpcom,xulrunner/xul::devel/xulrunner/1.8,-main \
+			xulrunner/gtkembedmoz,xulrunner/xpcom,xulrunner/xul:xulrunner->=1.8,<1.9:devel/xulrunner/1.8,-main \
 			exslt,xslt::textproc/libxslt \
 			rarian::textproc/rarian
 

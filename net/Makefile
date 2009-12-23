@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.608 2009/11/17 11:23:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.613 2009/11/25 02:36:02 kevlo Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -292,6 +292,7 @@
      SUBDIR += p5-Net-Telnet
      SUBDIR += p5-Net-Telnet-Cisco
      SUBDIR += p5-Net-Traceroute
+     SUBDIR += p5-Net-Twitter
      SUBDIR += p5-Net-UPnP
      SUBDIR += p5-Net-Wake
      SUBDIR += p5-Net-Whois
@@ -339,7 +340,10 @@
      SUBDIR += pear-Net-SMTP
      SUBDIR += pear-Net-Socket
      SUBDIR += pear-Net-URL
+     SUBDIR += pear-Net-URL2
+     SUBDIR += pear-Net-URL-Mapper
      SUBDIR += pear-Services-Weather
+     SUBDIR += pear-Services-oEmbed
      SUBDIR += pebrot
      SUBDIR += pen
      SUBDIR += pfflowd
@@ -407,14 +411,21 @@
      SUBDIR += rtg
      SUBDIR += rtmpdump
      SUBDIR += rtorrent
+     SUBDIR += ruby-amqp
+     SUBDIR += ruby-amqp-utils
+     SUBDIR += ruby-bunny
      SUBDIR += ruby-eventmachine
+     SUBDIR += ruby-minion
+     SUBDIR += ruby-net-dns
      SUBDIR += ruby-net-scp
      SUBDIR += ruby-net-sftp
      SUBDIR += ruby-net-ssh
      SUBDIR += ruby-net-ssh-gateway
+     SUBDIR += ruby-nmap-parser
      SUBDIR += ruby-pcap
      SUBDIR += ruby-rrdtool
      SUBDIR += ruby-snmp
+     SUBDIR += ruby-stomp
      SUBDIR += ruby-xmpp4r
      SUBDIR += samba
      SUBDIR += samba,cups

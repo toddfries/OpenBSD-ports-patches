@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.285 2009/11/13 12:17:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.287 2009/11/25 22:01:09 jasper Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR += TclXML
@@ -72,6 +72,7 @@
      SUBDIR += odt2txt
      SUBDIR += oniguruma
      SUBDIR += openjade
+     SUBDIR += opensp
      SUBDIR += ots
      SUBDIR += p5-Blatte
      SUBDIR += p5-CGI-FastTemplate
@@ -230,6 +231,7 @@
      SUBDIR += py-jaxml
      SUBDIR += py-lxml
      SUBDIR += py-nltk
+     SUBDIR += py-pdf
      SUBDIR += py-pygments
      SUBDIR += py-rtf
      SUBDIR += py-sphinx
