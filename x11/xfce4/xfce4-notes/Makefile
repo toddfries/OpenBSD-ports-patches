@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2009/09/04 19:09:20 landry Exp $
+# $OpenBSD: Makefile,v 1.25 2009/12/21 16:07:44 landry Exp $
 
 COMMENT=	Xfce4 sticky notes panel plugin
 
-XFCE_VERSION=	1.7.1
+XFCE_VERSION=	1.7.2
 XFCE_PLUGIN=	notes
+PKGNAME=	${DISTNAME:S/-plugin//}p0
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes
@@ -12,6 +13,11 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
+DESKTOP_FILES =	Yes
+
+LIB_DEPENDS +=	unique-1.0::devel/libunique
+
+FAKE_FLAGS =	autostartdir=${PREFIX}/share/examples/xfce4-notes
 
 WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat \

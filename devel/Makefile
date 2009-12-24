@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.757 2009/11/22 06:49:14 msf Exp $
+# $OpenBSD: Makefile,v 1.759 2009/12/17 09:44:16 kevlo Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -772,6 +772,7 @@
      SUBDIR += pyusb
      SUBDIR += qgit
      SUBDIR += qt4-eventsview
+     SUBDIR += quirks
      SUBDIR += rapidsvn
      SUBDIR += rats
      SUBDIR += re2c
@@ -848,6 +849,7 @@
      SUBDIR += spe
      SUBDIR += splint
      SUBDIR += startup-notification
+     SUBDIR += stp
      SUBDIR += subversion
      SUBDIR += svk
      SUBDIR += swig

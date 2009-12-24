@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.18 2009/10/19 18:01:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2009/12/21 18:03:18 ajacoutot Exp $
 
 COMMENT-main=	GNOME virtual file system
 COMMENT-smb=	samba module for GVFS
 
 GNOME_PROJECT=	gvfs
-GNOME_VERSION=	1.4.1
+GNOME_VERSION=	1.4.3
 
-PKGNAME-main=	${DISTNAME}
+PKGNAME-main=	${DISTNAME}p0
 PKGNAME-smb=	${GNOME_PROJECT}-smb-${GNOME_VERSION}
 
 SHARED_LIBS +=	gvfscommon           2.0      # .0.0
@@ -38,7 +38,7 @@ LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		archive::archivers/libarchive \
 		soup-gnome-2.4.>=1::devel/libsoup,-gnome \
 		avahi-client,avahi-common,avahi-glib::net/avahi
-RUN_DEPENDS-main= :glib2-fam->=2.18.3:devel/glib2,-fam
+RUN_DEPENDS-main= :gamin-*:sysutils/gamin,-server
 
 LIB_DEPENDS-smb= ${LIB_DEPENDS} \
 		gvfscommon.>=2::${BASE_PKGPATH},-main \

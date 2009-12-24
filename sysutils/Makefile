@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.186 2009/11/18 01:13:41 todd Exp $
+# $OpenBSD: Makefile,v 1.189 2009/12/18 02:37:43 beck Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR += LPRng
@@ -36,7 +36,6 @@
      SUBDIR += dwdiff
      SUBDIR += e2fsprogs
      SUBDIR += eventlog
-     SUBDIR += fam
      SUBDIR += faubackup
      SUBDIR += fdupes
      SUBDIR += filelight
@@ -44,6 +43,8 @@
      SUBDIR += flyback
      SUBDIR += freedt
      SUBDIR += freeipmi
+     SUBDIR += fsstress
+     SUBDIR += gamin
      SUBDIR += ggrep
      SUBDIR += gkrellm
      SUBDIR += glastree

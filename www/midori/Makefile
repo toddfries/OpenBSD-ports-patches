@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.15 2009/11/23 21:27:44 landry Exp $
+# $OpenBSD: Makefile,v 1.17 2009/12/22 13:02:12 sthen Exp $
 
 COMMENT =	lightweight web browser
 
-XFCE_VERSION =	0.2.1
+XFCE_VERSION =	0.2.2
 XFCE_GOODIE =	midori
+PKGNAME =	${DISTNAME}p0
 
 MAINTAINER =	Landry Breuil <gaston@gcu.info>
 CATEGORIES =	www
@@ -21,6 +22,7 @@ DESKTOP_FILES =	Yes
 NO_REGRESS =	Yes
 
 LIB_DEPENDS =	webkit-1.0:webkit->=1.1.15v0:www/webkit \
+		notify::devel/libnotify \
 		sqlite3::databases/sqlite3 \
 		unique-1.0::devel/libunique \
 		soup-2.4:libsoup->=2.28.0:devel/libsoup
@@ -36,6 +38,6 @@ WANTLIB =	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz \
 		gmodule-2.0 gnutls gobject-2.0 gthread-2.0 gtk-x11-2.0 intl \
 		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pthread sqlite3 z \
-		cairo pixman-1 png pthread-stubs xcb xml2
+		dbus-1 dbus-glib-1 cairo pixman-1 png pthread-stubs xcb xml2
 
 .include <bsd.port.mk>

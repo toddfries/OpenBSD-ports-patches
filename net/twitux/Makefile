@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2009/09/04 03:57:39 jolan Exp $
+# $OpenBSD: Makefile,v 1.6 2009/12/22 11:41:47 sthen Exp $
 
 COMMENT=		Gtk-based GUI client for Twitter
 
 GNOME_PROJECT=		twitux
 GNOME_VERSION=		0.69
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p3
 
 CATEGORIES=     	net
 

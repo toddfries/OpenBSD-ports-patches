@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.45 2009/11/08 16:24:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.48 2009/12/15 15:33:25 jasper Exp $
 # $FreeBSD: Makefile,v 1.10 1998/03/28 14:36:34 steve Exp $
 
 COMMENT=		X11/Motif GUI text editor
 
 DISTNAME=		nedit-5.5
-PKGNAME=		${DISTNAME}p6
-DISTFILES=		${DISTNAME}-src${EXTRACT_SUFX}
+PKGNAME=		${DISTNAME}p8
+DISTFILES=		${DISTNAME}-src${EXTRACT_SUFX} \
+			nedit_patterns.tgz:1
 PATCHFILES=		wrapmark.diff:0
 CATEGORIES=		editors x11
 
@@ -13,16 +14,24 @@ MASTER_SITES=		http://www.nedit.org/ftp/v5_5/ \
 			${MASTER_SITE_SOURCEFORGE:=nedit/}
 
 MASTER_SITES0=		http://www.bsdfrog.org/OpenBSD/distfiles/
+MASTER_SITES1=		http://www.phil.uu.nl/~lievisse/distfiles/
+
+DIST_SUBDIR=		nedit
 
 HOMEPAGE=		http://www.nedit.org/
 
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
+
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	Xau Xdmcp Xft Xmu Xrender expat fontconfig freetype \
-		ICE SM X11 Xext Xp Xpm Xt c m iconv pthread-stubs xcb z
+WANTLIB += ICE SM X11 Xau Xdmcp Xext Xft Xmu Xp Xpm Xrender Xt
+WANTLIB += c expat fontconfig freetype m z
+
+MODULES=		converters/libiconv
 
 USE_X11=		Yes
 USE_MOTIF=		Any
@@ -32,7 +41,7 @@ NO_REGRESS=		Yes
 
 FLAVOR?=
 
-CFLAGS+=	-DBUILD_UNTESTED_NEDIT
+CFLAGS+=		-DBUILD_UNTESTED_NEDIT
 
 # gcc 3.3.5 internal compiler error
 .if ${MACHINE_ARCH} == "mips64"
@@ -50,5 +59,8 @@ do-install:
 		${PREFIX}/lib/X11/app-defaults/NEdit
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/nedit
 	${INSTALL_DATA} ${WRKSRC}/doc/nedit.doc ${PREFIX}/share/doc/nedit
+	${INSTALL_DATA_DIR} ${PREFIX}/share/nedit/patterns
+	${INSTALL_DATA} ${WRKDIR}/nedit_patterns/*.pats \
+		${PREFIX}/share/nedit/patterns/
 
 .include <bsd.port.mk>

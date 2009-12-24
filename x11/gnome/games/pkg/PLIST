@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.9 2009/10/13 00:00:42 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.11 2009/12/21 18:03:18 ajacoutot Exp $
 @bin bin/blackjack
 bin/glchess
 @mode g+s
@@ -1029,6 +1029,13 @@ share/gnome/help/glchess/cs/figures/new_game.png
 share/gnome/help/glchess/cs/figures/preferences_game.png
 share/gnome/help/glchess/cs/figures/preferences_view.png
 share/gnome/help/glchess/cs/glchess.xml
+share/gnome/help/glchess/da/
+share/gnome/help/glchess/da/figures/
+share/gnome/help/glchess/da/figures/game.png
+share/gnome/help/glchess/da/figures/new_game.png
+share/gnome/help/glchess/da/figures/preferences_game.png
+share/gnome/help/glchess/da/figures/preferences_view.png
+share/gnome/help/glchess/da/glchess.xml
 share/gnome/help/glchess/de/
 share/gnome/help/glchess/de/figures/
 share/gnome/help/glchess/de/figures/game.png
@@ -2580,6 +2587,7 @@ share/omf/glchess/
 share/omf/glchess/glchess-C.omf
 share/omf/glchess/glchess-ca.omf
 share/omf/glchess/glchess-cs.omf
+share/omf/glchess/glchess-da.omf
 share/omf/glchess/glchess-de.omf
 share/omf/glchess/glchess-el.omf
 share/omf/glchess/glchess-en_GB.omf
@@ -2793,6 +2801,6 @@ ${SCHEMAS_INSTDIR}/mahjongg.schemas
 ${SCHEMAS_INSTDIR}/same-gnome.schemas
 @exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true

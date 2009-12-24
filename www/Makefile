@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.439 2009/11/18 19:21:06 jasper Exp $
+# $OpenBSD: Makefile,v 1.442 2009/12/19 23:06:26 landry Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -18,6 +18,7 @@
      SUBDIR += cgicc
      SUBDIR += cgiparse
      SUBDIR += cherokee
+     SUBDIR += chromium
      SUBDIR += clearsilver
      SUBDIR += clearsilver,python
      SUBDIR += cms-ms
@@ -185,6 +186,7 @@
      SUBDIR += p5-Catalyst-View-Mason
      SUBDIR += p5-Config-ApacheFormat
      SUBDIR += p5-Data-URIEncode
+     SUBDIR += p5-Drupal-Admin
      SUBDIR += p5-FCGI-ProcManager
      SUBDIR += p5-Feed-Find
      SUBDIR += p5-HTML-Base
@@ -268,6 +270,7 @@
      SUBDIR += p5-WWW-Bugzilla
      SUBDIR += p5-WWW-Curl
      SUBDIR += p5-WWW-Google-SiteMap
+     SUBDIR += p5-WWW-IndexParser
      SUBDIR += p5-WWW-Mechanize
      SUBDIR += p5-WWW-Mechanize-TreeBuilder
      SUBDIR += p5-WWW-Robot

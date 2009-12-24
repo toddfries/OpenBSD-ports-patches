@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2009/07/12 20:55:19 ckuethe Exp $
+# $OpenBSD: Makefile,v 1.7 2009/12/09 16:55:51 ckuethe Exp $
 
 COMMENT=	Atmel AVR 8-bit RISC microcontrollers' GNU binutils
 
-VER=		2.18
+VER=		2.19.1
 DISTNAME=	binutils-${VER}
-PKGNAME=	avr-binutils-${VER}p0
+PKGNAME=	avr-binutils-${VER}
 EXTRACT_SUFX=	.tar.bz2
 
 HOMEPAGE=	http://www.gnu.org/software/binutils/

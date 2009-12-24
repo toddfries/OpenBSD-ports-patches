@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.14 2009/10/13 09:57:41 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.16 2009/12/22 13:02:11 sthen Exp $
 @bin bin/epiphany
 include/epiphany/
 include/epiphany/${M}/
@@ -327,6 +327,8 @@ share/locale/hr/LC_MESSAGES/epiphany.mo
 share/locale/hu/LC_MESSAGES/epiphany.mo
 share/locale/hy/LC_MESSAGES/epiphany.mo
 share/locale/id/LC_MESSAGES/epiphany.mo
+share/locale/ig/
+share/locale/ig/LC_MESSAGES/
 share/locale/ig/LC_MESSAGES/epiphany.mo
 share/locale/is/LC_MESSAGES/epiphany.mo
 share/locale/it/LC_MESSAGES/epiphany.mo
@@ -377,6 +379,8 @@ share/locale/uz/LC_MESSAGES/epiphany.mo
 share/locale/uz@cyrillic/LC_MESSAGES/epiphany.mo
 share/locale/vi/LC_MESSAGES/epiphany.mo
 share/locale/wa/LC_MESSAGES/epiphany.mo
+share/locale/yo/
+share/locale/yo/LC_MESSAGES/
 share/locale/yo/LC_MESSAGES/epiphany.mo
 share/locale/zh_CN/LC_MESSAGES/epiphany.mo
 share/locale/zh_HK/LC_MESSAGES/epiphany.mo
@@ -406,10 +410,10 @@ ${SCHEMAS_INSTDIR}/epiphany-lockdown.schemas
 ${SCHEMAS_INSTDIR}/epiphany.schemas
 @exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/HighContrastLargePrint 2> /dev/null || true
-@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/HighContrastLargePrint 2> /dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/HighContrastLargePrint 2> /dev/null || true
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/LowContrastLargePrint 2> /dev/null || true
-@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/LowContrastLargePrint 2> /dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/LowContrastLargePrint 2> /dev/null || true

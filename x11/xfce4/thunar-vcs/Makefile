@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2009/11/09 17:20:51 landry Exp $
+# $OpenBSD: Makefile,v 1.6 2009/12/21 16:07:44 landry Exp $
 
 COMMENT =	Thunar vcs integration plugin
 
 XFCE_VERSION =	0.1.2
 THUNAR_PLUGIN =	thunar-vcs-plugin
-PKGNAME =	${DISTNAME}p0
+PKGNAME=	${DISTNAME:S/-plugin//}p2
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
