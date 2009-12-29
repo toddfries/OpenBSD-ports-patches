@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.403 2009/12/20 00:37:06 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.405 2009/12/28 17:43:35 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR += Xaw3d
@@ -54,6 +54,7 @@
      SUBDIR += eterm,kanji
      SUBDIR += evilwm
      SUBDIR += extace
+     SUBDIR += farsi-bfonts-ttf
      SUBDIR += farsifonts-ttf
      SUBDIR += fbpanel
      SUBDIR += fleditor
@@ -76,6 +77,7 @@
      SUBDIR += gdesklets
      SUBDIR += gdevilspie
      SUBDIR += gentoo
+     SUBDIR += gigolo
      SUBDIR += gmrun
      SUBDIR += gnome
      SUBDIR += gnome-mplayer
