@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2009/12/21 21:03:56 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.4 2009/12/29 23:25:58 jasper Exp $
 @bin bin/rubrica2
 include/libral-1.0/
 include/libral-1.0/libral/
@@ -92,7 +92,6 @@ share/locale/uk/LC_MESSAGES/rubrica2.mo
 share/mime-info/
 share/mime-info/rubrica2.keys
 share/mime-info/rubrica2.mime
-share/pixmaps/
 share/pixmaps/rubrica2/
 share/pixmaps/rubrica2/16x16/
 share/pixmaps/rubrica2/16x16/ccare.png
