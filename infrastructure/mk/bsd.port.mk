@@ -1065,7 +1065,7 @@ BZIP2_EXTRACT_CASES ?= *.tar.bz2|*.tbz2) \
 EXTRACT_CASES += ${BZIP2_EXTRACT_CASES}
 .endif
 .if ${_USE_LZMA:L} != "no"
-BUILD_DEPENDS += :lzma-*:archivers/xz
+BUILD_DEPENDS += :xz-*:archivers/xz
 EXTRACT_CASES += *.tar.lzma) \
 	${LZMA} -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
 .endif
