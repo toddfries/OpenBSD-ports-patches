@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2007/10/08 08:22:43 steven Exp $
+# $OpenBSD: Makefile,v 1.4 2009/12/23 20:39:57 jasper Exp $
 
 COMMENT=		generator for pronounceable random words
 
-DISTNAME=		yould-0.3.3
-PKGNAME=		${DISTNAME}p0
+MODPY_EGG_VERSION=	0.3.7
+DISTNAME=		yould-${MODPY_EGG_VERSION}
 CATEGORIES=		textproc
 
 HOMEPAGE=		http://ygingras.net/yould
 
-# GPL
+# GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

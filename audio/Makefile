@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.208 2008/11/10 18:48:46 naddy Exp $
+# $OpenBSD: Makefile,v 1.236 2009/12/19 23:01:57 jakemsr Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR += abcde
@@ -15,13 +15,18 @@
      SUBDIR += bmp
      SUBDIR += bonk
      SUBDIR += cdparanoia
+     SUBDIR += cmixer
      SUBDIR += cmt
+     SUBDIR += cmu-sphinx3
+     SUBDIR += cmu-sphinxbase
      SUBDIR += cplay
      SUBDIR += daapd
      SUBDIR += disc-cover
+     SUBDIR += dumb
      SUBDIR += easytag
      SUBDIR += esound
      SUBDIR += espeak
+     SUBDIR += exaile
      SUBDIR += faac
      SUBDIR += faad
      SUBDIR += festival
@@ -31,15 +36,8 @@
      SUBDIR += freealut
      SUBDIR += gimmix
      SUBDIR += gmpc
-     SUBDIR += gmpc-autoplaylist
-     SUBDIR += gmpc-lastfm
-     SUBDIR += gmpc-lyrics
-     SUBDIR += gmpc-magnatune
-     SUBDIR += gmpc-qosd
-     SUBDIR += gmpc-serverstats
-     SUBDIR += gmpc-shout
-     SUBDIR += gmpc-stopbutton
-     SUBDIR += gmpccaa
+     SUBDIR += gmpc-libnotify
+     SUBDIR += gmpc-plugins
      SUBDIR += gnomad2
      SUBDIR += gogo
      SUBDIR += gqmpeg
@@ -56,16 +54,18 @@
      SUBDIR += ladspa
      SUBDIR += lame
      SUBDIR += liba52
-     SUBDIR += libao,
+     SUBDIR += libao
      SUBDIR += libcanberra
      SUBDIR += libcdaudio
      SUBDIR += libcddb
      SUBDIR += libcdio
+     SUBDIR += libdca
      SUBDIR += libgpod
      SUBDIR += libid3tag
      SUBDIR += libmad
      SUBDIR += libmikmod
      SUBDIR += libmikmod,esd
+     SUBDIR += libmp3splt
      SUBDIR += libmpcdec
      SUBDIR += libmpd
      SUBDIR += libmusicbrainz
@@ -92,6 +92,8 @@
      SUBDIR += mp3info
      SUBDIR += mp3info,no_x11
      SUBDIR += mp3splt
+     SUBDIR += mp3splt-gtk
+     SUBDIR += mp3wrap
      SUBDIR += mpc
      SUBDIR += mpd
      SUBDIR += mpd,tremor
@@ -116,6 +118,7 @@
      SUBDIR += p5-Audio-MPD
      SUBDIR += p5-Audio-MPD-Common
      SUBDIR += p5-Audio-Musepack
+     SUBDIR += p5-Audio-Scan
      SUBDIR += p5-Audio-Scrobbler
      SUBDIR += p5-Audio-WMA
      SUBDIR += p5-CDDB-File
@@ -134,15 +137,20 @@
      SUBDIR += p5-gnupod
      SUBDIR += p5-libvorbis
      SUBDIR += pacpl
+     SUBDIR += picard
+     SUBDIR += pms
      SUBDIR += portaudio-svn
      SUBDIR += py-ao
      SUBDIR += py-cddb
      SUBDIR += py-eyed3
      SUBDIR += py-id3
      SUBDIR += py-mpd
+     SUBDIR += py-mutagen
      SUBDIR += py-ogg
      SUBDIR += py-tagger
+     SUBDIR += py-tagpy
      SUBDIR += py-xmms
+     SUBDIR += pykaraoke
      SUBDIR += pympd
      SUBDIR += rhythmbox
      SUBDIR += rio500
@@ -156,11 +164,10 @@
      SUBDIR += shorten
      SUBDIR += sidplay
      SUBDIR += sonata
+     SUBDIR += sound-theme-freedesktop
      SUBDIR += soundtouch
      SUBDIR += soundtracker
-     SUBDIR += soundtracker,esd
      SUBDIR += sox
-     SUBDIR += sox,mp3,vorbis
      SUBDIR += speex
      SUBDIR += squeezecenter
      SUBDIR += streamripper
@@ -174,10 +181,13 @@
      SUBDIR += tracker
      SUBDIR += tremor
      SUBDIR += tremor-tools
+     SUBDIR += vagalume
+     SUBDIR += vamp-plugin-sdk
      SUBDIR += vlorb
      SUBDIR += vorbis-tools
      SUBDIR += vorbisgain
      SUBDIR += waveplay
+     SUBDIR += wavpack
      SUBDIR += wmix
      SUBDIR += wmmixer
      SUBDIR += wmmp
@@ -200,7 +210,10 @@
      SUBDIR += xmms-sid
      SUBDIR += xmms-speex
      SUBDIR += xmms-tremor
+     SUBDIR += xmms-wavpack
      SUBDIR += xmms-xf86audio
+     SUBDIR += xmms2
+     SUBDIR += xmms2-scrobbler
      SUBDIR += xmmsctrl
      SUBDIR += xmp
 

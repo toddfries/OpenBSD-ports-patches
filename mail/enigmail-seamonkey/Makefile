@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.4 2008/11/13 17:36:53 martynas Exp $
+# $OpenBSD: Makefile,v 1.13 2009/12/27 15:51:47 steven Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GnuPG extension for SeaMonkey
 
-VER=		0.95.7
+VER=		0.96.0
 DISTNAME=	enigmail-${VER}
-PKGNAME=	enigmail-seamonkey-${VER}p0
+PKGNAME=	enigmail-seamonkey-${VER}p1
 
 CATEGORIES=	mail security
 
-SHARED_LIBS=	enigmime	10.0
+SHARED_LIBS=	enigmime	11.0
 
 HOMEPAGE=	http://enigmail.mozdev.org/
 
@@ -27,7 +27,7 @@ BUILD_DEPENDS=	::${SEAMONKEY_DIR}:configure \
 		::archivers/unzip
 RUN_DEPENDS=	::security/gnupg
 
-LIB_DEPENDS=	seamonkey/xpcom,seamonkey/xpcom_compat,seamonkey/xpcom_core:seamonkey-1.1.13:${SEAMONKEY_DIR}
+LIB_DEPENDS=	seamonkey/xpcom,seamonkey/xpcom_compat,seamonkey/xpcom_core:seamonkey->=1.1.18p0:${SEAMONKEY_DIR}
 WANTLIB=	c m nspr4 plc4 plds4
 
 USE_X11=	Yes
@@ -47,6 +47,9 @@ GUID=		{847b3a00-7ab1-11d4-8f02-006008948af5}
 GLOBALDIR=	${PREFIX}/seamonkey
 
 post-extract:
+	@perl -pi -e 's|(genxpi.*) (\$$\(TARGET_XPCOM_ABI\))|\1 "\2"|g' \
+		${WRKDIST}/Makefile.in
+	@perl -pi -e 's|[-_]?\$${xpcomAbi}||g' ${WRKDIST}/genxpi
 	@mv ${WRKDIST} ${MOZBASE}/mailnews/extensions
 
 do-build:

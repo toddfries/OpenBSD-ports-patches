@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.31 2008/11/07 00:33:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.33 2009/08/10 06:31:08 kili Exp $
 
 COMMENT=	SDL TrueType fonts library
 
-V=		2.0.8
+V=		2.0.9
 DISTNAME=	SDL_ttf-${V}
-PKGNAME=	sdl-ttf-${V}p4
+PKGNAME=	sdl-ttf-${V}p0
 SHARED_LIBS=	SDL_ttf 7.0
 CATEGORIES=	devel graphics
 MASTER_SITES=	ftp://ftp.fr.freebsd.org/pub/FreeBSD/distfiles/ \
@@ -14,13 +14,14 @@ HOMEPAGE=	http://www.libsdl.org/projects/SDL_ttf/
 
 MAINTAINER=	Jolan Luff <jolan@openbsd.org>
 
-# GPL
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
+
 WANTLIB=		X11 Xau Xdmcp Xext Xrandr Xrender freetype iconv \
-			usbhid m z sndio
+			m pthread-stubs sndio usbhid xcb z
 
 LIB_DEPENDS=	SDL::devel/sdl
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2007/08/11 18:41:28 naddy Exp $
+# $OpenBSD: Makefile,v 1.17 2009/12/04 15:44:44 nicm Exp $
 
 COMMENT=	ls that can use color to display file attributes
 
-DISTNAME=	ls-4.2
-PKGNAME=	color${DISTNAME}
+DISTNAME=	ls-4.6
+PKGNAME=	color${DISTNAME}p0
 CATEGORIES=	sysutils
 
 MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
@@ -14,7 +14,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://sites.inka.de/~mips/unix/distfiles/
+MASTER_SITES=	http://shell.uugrn.org/~naddy/
 
 WRKDIST=	${WRKDIR}/ls
 NO_REGRESS=	Yes

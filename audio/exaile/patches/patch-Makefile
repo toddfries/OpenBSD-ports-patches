@@ -1,0 +1,49 @@
+$OpenBSD: patch-Makefile,v 1.2 2009/10/29 08:33:47 giovanni Exp $
+--- Makefile.orig	Mon Aug 24 23:25:03 2009
++++ Makefile	Wed Sep  2 10:28:25 2009
+@@ -1,16 +1,16 @@
+-PREFIX ?= /usr/local
++PREFIX = ${TRUEPREFIX}
+ LIBINSTALLDIR ?= /lib
+-XDGCONFDIR ?= /etc/xdg
++XDGCONFDIR ?= ${PREFIX}/share/exaile/xdg
+ 
+-EXAILELIBDIR = $(DESTDIR)$(PREFIX)$(LIBINSTALLDIR)/exaile
++EXAILELIBDIR = $(DESTDIR)${MODPY_SITEPKG}/exaile
+ EXAILESHAREDIR = $(DESTDIR)$(PREFIX)/share/exaile
+ 
+ all: compile
+ 	@echo "Ready to install..."
+ 
+ compile:
+-	python -m compileall -q xl xlgui
+-	-python -O -m compileall -q xl xlgui
++	${MODPY_BIN} -m compileall xl lib xlgui
++	-${MODPY_BIN} -O -m compileall xl lib xlgui
+ 	cd plugins && make && cd ..
+ 
+ make-install-dirs:
+@@ -87,8 +87,8 @@ install-target: make-install-dirs
+ 	# the printf here is for bsd compat, dont use echo!
+ 	cd $(DESTDIR)$(PREFIX)/bin && \
+ 	 printf "#!/bin/sh\n\
+-	 exec python $(PREFIX)$(LIBINSTALLDIR)/exaile/exaile.py \
+-	 --datadir=$(PREFIX)/share/exaile/data --startgui \"\$$@\"" \
++	 exec ${MODPY_BIN} ${MODPY_SITEPKG}/exaile/exaile.py \
++	 --datadir=$(PREFIX)/share/exaile/data --no-hal --startgui \"\$$@\"" \
+ 	 > exaile && \
+ 	 chmod 755 exaile
+ 	cd plugins && make install DESTDIR=$(DESTDIR) PREFIX=$(PREFIX) \
+@@ -128,10 +128,10 @@ pot:
+ 	find plugins -name "*.py" >> po/POTFILES.in
+ 	find plugins -name "*.glade" >> po/POTFILES.in
+ 	find plugins -name PLUGININFO >> po/POTFILES.in
+-	python tools/createpot.py
++	${MODPY_BIN} tools/createpot.py
+ 
+ translations:
+-	python tools/createpot.py compile
++	${MODPY_BIN} tools/createpot.py compile
+ 
+ potball:
+ 	tar --bzip2 --format=posix -cf exaile-po.tar.bz2 po/ \

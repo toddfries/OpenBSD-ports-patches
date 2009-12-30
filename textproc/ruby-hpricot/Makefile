@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.2 2008/06/14 23:57:18 landry Exp $
+# $OpenBSD: Makefile,v 1.5 2009/08/10 16:48:28 msf Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		flexible HTML parser
 
-DISTNAME=		hpricot-0.6
-PKGNAME=		ruby-${DISTNAME}p0
+VERSION=		0.8.1
+DISTNAME=		hpricot-${VERSION}
+PKGNAME=		ruby-${DISTNAME}
 CATEGORIES=		textproc
 
 HOMEPAGE=		http://code.whytheluckystiff.net/hpricot/
@@ -19,7 +20,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=		${MASTER_SITE_RUBYFORGE:=hobix/}
 
 WANTLIB=		c m
-LIB_DEPENDS=		ruby::lang/ruby
+LIB_DEPENDS=		${MODRUBY_LIB_DEPENDS}
 
 BUILD_DEPENDS=		::devel/ruby-rake
 
@@ -29,11 +30,6 @@ CONFIGURE_STYLE=	ruby gem
 
 REGRESS_DEPENDS=	::textproc/ruby-hpricot
 
-pre-install:
-	@cd ${WRKSRC} && ${LOCALBASE}/bin/rake gem && \
-		mv pkg/${DISTNAME}.gem ${WRKDIR}/${DISTNAME}.gem
-
-REGRESS_GEM_DIR=	${LOCALBASE}/lib/ruby/gems/1.8/gems
 do-regress:
 	@cd ${WRKSRC} && /usr/local/bin/ruby -rubygems -Ilib:test:lib \
 		-e "ARGV.each { |f| load f unless f =~ /^-/  }" \

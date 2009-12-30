@@ -1,0 +1,60 @@
+$OpenBSD: patch-gtkdoc_gtk-doc_make,v 1.1 2009/03/05 08:11:56 ajacoutot Exp $
+--- gtkdoc/gtk-doc.make.orig	Wed Jan 21 22:02:53 2009
++++ gtkdoc/gtk-doc.make	Tue Mar  3 09:27:23 2009
+@@ -4,15 +4,15 @@
+ # Everything below here is generic #
+ ####################################
+ 
+-if GTK_DOC_USE_LIBTOOL
+-GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
++#if GTK_DOC_USE_LIBTOOL
++GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+ GTKDOC_LD = $(LIBTOOL) --mode=link $(CC) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
+ GTKDOC_RUN = $(LIBTOOL) --mode=execute
+-else
+-GTKDOC_CC = $(CC) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+-GTKDOC_LD = $(CC) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
+-GTKDOC_RUN = sh -c
+-endif
++#else
++#GTKDOC_CC = $(CC) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
++#GTKDOC_LD = $(CC) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
++#GTKDOC_RUN = sh -c
++#endif
+ 
+ # We set GPATH here; this gives us semantics for GNU make
+ # which are more like other make's VPATH, when it comes to
+@@ -47,11 +47,11 @@ REPORT_FILES = \
+ 
+ CLEANFILES = $(SCANOBJ_FILES) $(REPORT_FILES) $(DOC_STAMPS)
+ 
+-if ENABLE_GTK_DOC
+-all-local: html-build.stamp
+-else
++#if ENABLE_GTK_DOC
++#all-local: html-build.stamp
++#else
+ all-local:
+-endif
++#endif
+ 
+ docs: html-build.stamp
+ 
+@@ -157,13 +157,13 @@ uninstall-local:
+ #
+ # Require gtk-doc when making dist
+ #
+-if ENABLE_GTK_DOC
++#if ENABLE_GTK_DOC
++#dist-check-gtkdoc:
++#else
+ dist-check-gtkdoc:
+-else
+-dist-check-gtkdoc:
+ 	@echo "*** gtk-doc must be installed and enabled in order to make dist"
+ 	@false
+-endif
++#endif
+ 
+ dist-hook: dist-check-gtkdoc dist-hook-local
+ 	mkdir $(distdir)/html

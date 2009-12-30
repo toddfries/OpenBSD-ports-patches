@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.18 2008/11/13 20:17:01 landry Exp $
+@comment $OpenBSD: PLIST,v 1.20 2009/09/18 10:21:53 ajacoutot Exp $
+%%SHARED%%
 @bin bin/pango-querymodules
 @bin bin/pango-view
 include/pango-1.0/
@@ -81,6 +82,7 @@ lib/pkgconfig/pangoft2.pc
 lib/pkgconfig/pangox.pc
 lib/pkgconfig/pangoxft.pc
 @man man/man1/pango-querymodules.1
+@man man/man1/pango-view.1
 share/examples/pango/
 @sample ${SYSCONFDIR}/pango/
 share/examples/pango/pango.modules
@@ -148,4 +150,3 @@ share/gtk-doc/html/pango/rotated-text.png
 share/gtk-doc/html/pango/style.css
 share/gtk-doc/html/pango/tools.html
 share/gtk-doc/html/pango/up.png
-%%SHARED%%

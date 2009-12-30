@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.12 2008/08/06 03:11:38 pvalchev Exp $
+# $OpenBSD: Makefile,v 1.16 2009/12/27 19:34:33 sthen Exp $
 
 COMMENT=	caching DNS forwarder and DHCP server
 
-DISTNAME=	dnsmasq-2.45
+DISTNAME=	dnsmasq-2.51
 CATEGORIES=	net
 
 MAINTAINER=	Rui Reis <rui@openbsd.org>
@@ -18,10 +18,14 @@ WANTLIB=		c
 
 MASTER_SITES=	http://www.thekelleys.org.uk/dnsmasq/
 
+MAKE_ENV=	CC="${CC}"
+
 NO_REGRESS=	Yes
 
 pre-build:
-	${SUBST_CMD} ${WRKSRC}/man/dnsmasq.8 ${WRKSRC}/src/config.h
+	${SUBST_CMD} ${WRKSRC}/man/dnsmasq.8 \
+		${WRKSRC}/src/config.h \
+		${WRKSRC}/dnsmasq.conf.example
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/src/dnsmasq ${PREFIX}/sbin

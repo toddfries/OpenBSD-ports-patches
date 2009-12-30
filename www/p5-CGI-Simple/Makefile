@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2008/07/27 11:00:48 simon Exp $
+# $OpenBSD: Makefile,v 1.12 2009/06/04 22:08:41 merdely Exp $
 
 COMMENT=	drop-in object-oriented CGI.pm replacement
 
 MODULES=	cpan
-DISTNAME=	CGI-Simple-1.105
+DISTNAME=	CGI-Simple-1.112
 CATEGORIES=	www
 
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>
@@ -15,5 +15,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 CONFIGURE_STYLE=modbuild
+RUN_DEPENDS=		::devel/p5-IO-stringy
+REGRESS_DEPENDS=	::www/p5-libwww
 
 .include <bsd.port.mk>

@@ -1,13 +1,18 @@
-# $OpenBSD: Makefile,v 1.8 2008/11/24 19:30:11 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2009/12/19 15:45:44 ajacoutot Exp $
 
 COMMENT=		compiler for the GObject type system
 
 GNOME_PROJECT=		vala
-GNOME_VERSION=		0.5.1
-SHARED_LIBS +=	vala                 1.0      # .0.0
+GNOME_VERSION=		0.7.9
+
+SHARED_LIBS +=	vala                 2.0      # .0.0
+
 CATEGORIES=		lang
 
 HOMEPAGE=		http://live.gnome.org/Vala
+
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -15,11 +20,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
-		Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig \
-		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
-		gthread-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pcre pixman-1 png pthread z
+WANTLIB=		c pcre pthread
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -27,17 +28,17 @@ MODULES=		devel/gettext \
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		::textproc/libxslt \
 			::textproc/p5-XML-LibXML
-LIB_DEPENDS=		gdk_pixbuf-2.0,gdk-x11-2.0,gtk-x11-2.0::x11/gtk+2
+LIB_DEPENDS=		glib-2.0.>=1800,gmodule-2.0,gobject-2.0,gthread-2.0::devel/glib2
 REGRESS_DEPENDS=	::shells/bash	
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=	--enable-gen-project \
+CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-vapigen
 CONFIGURE_ENV+= 	LDFLAGS="-L${LOCALBASE}/lib" \
 			CPPFLAGS="-I${LOCALBASE}/include"
 
-pre-regress:
-	${SUBST_CMD} ${WRKSRC}/tests/testrunner.sh
-	chmod +x ${WRKSRC}/tests/testrunner.sh
+pre-configure:
+	perl -pi -e 's,/bin/bash,${LOCALBASE}/bin/bash,g' \
+		${WRKSRC}/tests/testrunner.sh
 
 .include <bsd.port.mk>

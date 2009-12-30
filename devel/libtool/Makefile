@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.70 2008/05/02 10:17:32 steven Exp $
+# $OpenBSD: Makefile,v 1.73 2009/11/17 10:15:35 espie Exp $
 # $FreeBSD: Makefile,v 1.2 1998/09/23 16:15:53 vanilla Exp $
 
 COMMENT-main=	generic shared library support script
@@ -6,9 +6,9 @@ COMMENT-ltdl=	GNU libtool system independent dlopen wrapper
 
 VERSION=	1.5.26
 DISTNAME=	libtool-${VERSION}
-PKGNAME-main=	${DISTNAME}p0
-PKGNAME-ltdl=	libltdl-${VERSION}
-SHARED_LIBS=		ltdl 4.4
+PKGNAME-main=	${DISTNAME}p2
+PKGNAME-ltdl=	libltdl-${VERSION}p0
+SHARED_LIBS=		ltdl 4.5
 MODGNU_SHARED_LIBS=	ltdl '-no-undefined'
 
 CATEGORIES=	devel
@@ -21,7 +21,7 @@ BUILD_DEPENDS+=	${MODGNU_AUTOCONF_DEPENDS}
 
 MAINTAINER=	Brad Smith <brad@comstyle.com>
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -34,8 +34,8 @@ CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 # Strictly speaking, forcing GREP in MAKE_ENV should suffice, since the
 # libtool reconfigures during the build. But we want to play it safe for
 # future changes/updates, so force GREP in CONFIGURE_ENV, too.
-CONFIGURE_ENV=	GREP=/usr/bin/grep
-MAKE_ENV=	GREP=/usr/bin/grep
+CONFIGURE_ENV=	GREP=/usr/bin/grep lt_cv_path_SED=/usr/bin/sed
+MAKE_ENV=	GREP=/usr/bin/grep lt_cv_path_SED=/usr/bin/sed
 
 MULTI_PACKAGES=	-main -ltdl
 

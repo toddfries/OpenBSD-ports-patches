@@ -1,17 +1,16 @@
-# $OpenBSD: Makefile,v 1.9 2008/10/01 20:14:09 landry Exp $
+# $OpenBSD: Makefile,v 1.12 2009/11/23 16:46:20 benoit Exp $
 
 # we use "macppc" and not "powerpc" on purpose here ; i.e. apm(4) needed
 ONLY_FOR_ARCHS= amd64 arm i386 macppc sparc sparc64
 
 COMMENT=	light-weight system monitor
 
-DISTNAME=	conky-1.6.1
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	conky-1.7.2
 
 CATEGORIES=	sysutils
 HOMEPAGE=	http://conky.sourceforge.net/
 
-MAINTAINER=	Vlad Glagolev <stealth@sourcemage.org>
+MAINTAINER=	Benoit Lecocq <benoit@openbsd.org>
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=conky/}
 
@@ -21,23 +20,38 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB=	X11 Xau Xdamage Xdmcp Xext Xfixes Xft Xrender c crypto \
-		expat fontconfig freetype kvm m ossaudio pthread ssl z
+WANTLIB=	c crypto kvm m ossaudio pthread ssl z
 
 MODULES=	devel/gettext
 
 LIB_DEPENDS=	glib-2.0::devel/glib2 \
 		pcre::devel/pcre \
 		curl,idn::net/curl \
-		xml2::textproc/libxml
+		xml2::textproc/libxml \
+		lua.>=5.1::lang/lua
 
 USE_LIBTOOL=	Yes
+
+FLAVORS=	no_x11
+FLAVOR?=
+
+.if ${FLAVOR:L:Mno_x11}
+CONFIGURE_ARGS+=--disable-double-buffer \
+		--disable-x11 \
+		--disable-own-window
+.else
+WANTLIB+=	X11 Xau Xdamage Xdmcp Xext Xfixes Xft Xrender \
+		expat fontconfig freetype pthread-stubs xcb
 USE_X11=	Yes
+.endif
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=--enable-mpd \
 		--enable-rss \
-		--disable-portmon
+		--disable-config-output \
+		--disable-portmon \
+		--enable-lua \
+		--enable-curl
 
 post-install:
 	#fix garbage in manpage

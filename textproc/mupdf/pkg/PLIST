@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.2 2009/06/19 00:51:49 sthen Exp $
+@bin bin/mu_pdfclean
+@bin bin/mu_pdfdraw
+@bin bin/mu_pdfextract
+@bin bin/mu_pdfinfo
+@bin bin/mu_pdfshow
+@bin bin/mupdf
+@man man/man1/mupdf.1

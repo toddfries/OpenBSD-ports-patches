@@ -1,36 +1,35 @@
-# $OpenBSD: Makefile,v 1.16 2008/05/07 05:51:35 merdely Exp $
+# $OpenBSD: Makefile,v 1.23 2009/11/13 02:45:06 merdely Exp $
 
-COMMENT=	standard compliant weblog
+COMMENT =	standard compliant weblog
 
-DISTNAME=	wordpress-2.5.1
-CATEGORIES=	www
+DISTNAME =	wordpress-2.8.6
+CATEGORIES =	www
 
-HOMEPAGE=	http://wordpress.org/
-
-MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
+HOMEPAGE =	http://wordpress.org/
+MAINTAINER =	Michael Erdely <merdely@openbsd.org>
 
 # GPLv2
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =	Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES=	${HOMEPAGE}
+MASTER_SITES =	${HOMEPAGE}
 
-RUN_DEPENDS=	:php5-mysql-*:www/php5/extensions,-mysql
+RUN_DEPENDS =	:php5-mysql-*:www/php5/extensions,-mysql
 
-EXTRACT_ONLY=
-NO_BUILD=	Yes
-NO_REGRESS=	Yes
-PKG_ARCH=	*
+NO_BUILD =	Yes
+NO_REGRESS =	Yes
+PKG_ARCH =	*
 
-PREFIX=		/var/www
-INSTDIR=	${PREFIX}/wordpress
+PREFIX =	/var/www
+INSTDIR =	${PREFIX}/wordpress
+WRKDIST =	${WRKDIR}/wordpress
 
-SUBST_VARS=	INSTDIR
+SUBST_VARS =	INSTDIR
 
 do-install:
-	@cd ${PREFIX} && tar zxf ${FULLDISTDIR}/${DISTNAME}${EXTRACT_SUFX}
-	@chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/*
+	${INSTALL_DATA_DIR} ${PREFIX}/wordpress
+	cd ${WRKSRC} && pax -rw * ${PREFIX}/wordpress
 
 .include <bsd.port.mk>

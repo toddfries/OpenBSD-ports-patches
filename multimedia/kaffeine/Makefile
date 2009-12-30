@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.16 2008/07/12 05:29:17 brad Exp $
+# $OpenBSD: Makefile,v 1.19 2009/12/22 15:46:59 ajacoutot Exp $
 
 COMMENT=	video player for KDE
 
-VERSION=	0.8.7
+VERSION=	0.8.8
 DISTNAME=	kaffeine-${VERSION}
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	multimedia x11 x11/kde
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=kaffeine/}
+MASTER_SITES=	http://hftom.free.fr/ \
+		${MASTER_SITE_SOURCEFORGE:=kaffeine/}
 EXTRACT_SUFX=	.tar.bz2
 
-SHARED_LIBS +=	kaffeinepart         0.0      # .0.1
-SHARED_LIBS +=	kaffeineaudioencoder 0.0      # .0.1
+SHARED_LIBS=	kaffeinepart		0.0 \
+		kaffeineaudioencoder	0.0
 
 HOMEPAGE=	http://kaffeine.sourceforge.net/
 
@@ -20,12 +22,13 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xinerama Xrender Xtst art_lgpl_2 \
 		c expat fam fontconfig freetype iconv idn intl jpeg m ogg \
-		pcre pcreposix png pthread rpcsvc stdc++ util z
+		pcre pcreposix png pthread pthread-stubs rpcsvc stdc++ util \
+		xcb z
 
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS=	kdecore.>=7,DCOP,kdesu,kio,kdefx,kparts,kutils,kdeprint,kdeui,kwalletclient,khtml,kjs::x11/kde/libs3 \
 		vorbis,vorbisenc::audio/libvorbis \
-		cdda_interface,cdda_paranoia::audio/cdparanoia \
+		cdio,cdio_cdda,cdio_paranoia::audio/libcdio \
 		xine.>=20::multimedia/xine-lib
 
 SUBST_VARS=	VERSION
@@ -41,7 +44,8 @@ MAKE_FLAGS=	${MODKDE_MAKE_FLAGS}
 SEPARATE_BUILD=	simple
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.61
+# Should be 2.63
+AUTOCONF_VERSION= 2.62
 CONFIGURE_ARGS+= ${MODKDE_CONFIGURE_ARGS}
 CONFIGURE_ARGS+= --disable-libsuffix \
 		 --without-arts \

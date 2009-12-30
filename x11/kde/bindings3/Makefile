@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2008/08/29 11:27:43 espie Exp $
+# $OpenBSD: Makefile,v 1.58 2009/12/21 20:46:01 ajacoutot Exp $
 
 .if ${MACHINE_ARCH} == "powerpc"
 BROKEN =			gcc spins on x_20.cpp
@@ -8,11 +8,13 @@ COMMENT = 		K Desktop Environment, extra language support
 CATEGORIES =		x11 x11/kde devel
 VERSION =		3.5.10
 DISTNAME =		kdebindings-${VERSION}
-PKGNAME =		${DISTNAME}
+PKGNAME =		${DISTNAME}p5
 MODKDE_VERSION =	3.5.8
 SHARED_LIBS +=	kjsembed             2.0      # .1.0
 SHARED_LIBS +=	smokeqt              4.0      # .3.2
 SHARED_LIBS +=	smokekde             4.0      # .3.2
+
+MODULES =	x11/kde devel/gettext
 
 RUN_DEPENDS +=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS =	DCOP,kdecore.>=6,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kjs,kmdi,knewstuff,kparts,kscript,kspell,kutils,kwalletclient::x11/kde/libs3 \
@@ -20,12 +22,12 @@ LIB_DEPENDS =	DCOP,kdecore.>=6,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kjs,kmdi,kne
 		ruby::lang/ruby
 
 WANTLIB =	GLU Xext stdc++ X11 util m ICE Xrender SM pthread \
-		c fontconfig z GL \
-		png pcre jpeg art_lgpl_2 pcreposix iconv idn \
-		Xau Xdmcp expat fam freetype rpcsvc intl
+		c fontconfig z GL pthread-stubs xcb \
+		png pcre jpeg art_lgpl_2 pcreposix idn \
+		Xau Xdmcp expat fam freetype rpcsvc
 
 PYTHON_VER =		2.5
-BUILD_DEPENDS =		:python-${PYTHON_VER}.*:lang/python/${PYTHON_VER}
+BUILD_DEPENDS =		:python->=${PYTHON_VER},<2.6:lang/python/${PYTHON_VER}
 #			::devel/tmake
 
 MAKE_FLAGS +=		TMAKEPATH=${LOCALBASE}/share/tmake/openbsd-g++/ \

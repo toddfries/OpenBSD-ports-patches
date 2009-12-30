@@ -1,8 +1,8 @@
-@comment $OpenBSD: PLIST,v 1.5 2008/04/04 02:21:29 merdely Exp $
+@comment $OpenBSD: PLIST,v 1.7 2009/10/04 19:27:27 benoit Exp $
 @newgroup _privoxy:516
 @newuser _privoxy:516:_privoxy:daemon:Privoxy Account:/nonexistent:/sbin/nologin
 @man man/man1/privoxy.1
-sbin/privoxy
+@bin sbin/privoxy
 share/doc/privoxy/
 share/doc/privoxy/README
 share/examples/privoxy/
@@ -25,16 +25,16 @@ share/examples/privoxy/default.filter
 @sample ${SYSCONFDIR}/privoxy/default.filter
 @owner
 @group
+share/examples/privoxy/match-all.action
+@owner _privoxy
+@group _privoxy
+@sample ${SYSCONFDIR}/privoxy/match-all.action
+@owner
+@group
 share/examples/privoxy/regression-tests.action
 @owner _privoxy
 @group _privoxy
 @sample ${SYSCONFDIR}/privoxy/regression-tests.action
-@owner
-@group
-share/examples/privoxy/standard.action
-@owner _privoxy
-@group _privoxy
-@sample ${SYSCONFDIR}/privoxy/standard.action
 @owner
 @group
 share/examples/privoxy/templates/
@@ -247,6 +247,7 @@ share/examples/privoxy/templates/untrusted
 @sample ${SYSCONFDIR}/privoxy/templates/untrusted
 @owner
 @group
+share/examples/privoxy/templates/url-info-osd.xml
 share/examples/privoxy/user.action
 @owner _privoxy
 @group _privoxy

@@ -1,13 +1,27 @@
-$OpenBSD: patch-wscript,v 1.1 2008/10/26 13:06:29 landry Exp $
+$OpenBSD: patch-wscript,v 1.8 2009/11/23 21:27:44 landry Exp $
 We don't need those files installed..
---- wscript.orig	Sat Oct 25 13:18:15 2008
-+++ wscript	Sat Oct 25 13:18:32 2008
-@@ -175,8 +175,6 @@ def build (bld):
+--- wscript.orig	Fri Nov 13 23:31:25 2009
++++ wscript	Mon Nov 23 22:07:02 2009
+@@ -63,7 +63,7 @@ def rc_file(self, node):
+     self.compiled_tasks.append (rctask)
+ rc_file = extension ('.rc')(rc_file)
+ Task.simple_task_type ('winrc', '${WINRC} -o${TGT} ${SRC}', color='BLUE',
+-    before='cc cxx', shell=False)
++    before='cc cxx')
  
-     bld.add_subdirs ('katze midori icons')
+ def configure (conf):
+     def option_checkfatal (option, desc):
+@@ -384,12 +384,8 @@ def build (bld):
  
--    install_files ('DOCDIR', '/midori/', 'AUTHORS ChangeLog COPYING README')
+     bld.add_group ()
+ 
+-    if bld.env['docs']:
+-        bld.install_files ('${DOCDIR}/' + APPNAME + '/', \
+-            'AUTHORS COPYING ChangeLog EXPAT README')
 -
-     if bld.env ()['RST2HTML']:
+     # Install default configuration
+-    bld.install_files ('${SYSCONFDIR}/xdg/' + APPNAME + '/', 'data/search')
++    bld.install_files ('${MDATADIR}/examples/' + APPNAME + '/', 'data/search')
+ 
+     if bld.env['RST2HTML']:
          # FIXME: Build only if needed
-         if not os.access (blddir, os.F_OK):

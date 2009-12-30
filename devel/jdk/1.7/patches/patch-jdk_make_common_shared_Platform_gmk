@@ -1,15 +1,31 @@
-$OpenBSD: patch-jdk_make_common_shared_Platform_gmk,v 1.2 2008/03/21 02:46:43 kurt Exp $
---- jdk/make/common/shared/Platform.gmk.orig	Sat Dec  1 00:00:00 2007
-+++ jdk/make/common/shared/Platform.gmk	Thu Mar 20 09:06:34 2008
-@@ -275,6 +275,73 @@ ifeq ($(SYSTEM_UNAME), Linux)
-   MB_OF_MEMORY := $(shell free -m | fgrep Mem: | sed -e 's@\ \ *@ @g' | cut -d' ' -f2)
+$OpenBSD: patch-jdk_make_common_shared_Platform_gmk,v 1.6 2009/10/07 01:53:54 kurt Exp $
+--- jdk/make/common/shared/Platform.gmk.orig	Thu Sep 17 03:51:40 2009
++++ jdk/make/common/shared/Platform.gmk	Mon Oct  5 14:54:16 2009
+@@ -82,7 +82,7 @@ SYSTEM_UNAME := $(shell uname)
+ SCM_DIRs = .hg .svn CVS RCS SCCS Codemgr_wsdata deleted_files .hgignore .hgtags
+ # When changing SCM_DIRs also change SCM_DIRS_rexp and SCM_DIRS_prune:
+ SCM_DIRS_rexp = ".hg|.svn|CVS|RCS|SCCS|Codemgr_wsdata|deleted_files|.hgignore|.hgtags"
+-SCM_DIRS_prune = \( -name .hg -o -name .svn -o -name CVS -o -name RCS -o -name SCCS -o -name Codemgr_wsdata -o -name deleted_files -o -name .hgignore -o -name .hgtags \) -prune
++SCM_DIRS_prune = \( -name .hg -o -name .svn -o -name CVS -o -name RCS -o -name SCCS -o -name Codemgr_wsdata -o -name deleted_files -o -name .hgignore -o -name .hgtags -o -name \*.orig \) -prune
+ 
+ # Don't define this unless it's not defined
+ ifndef VARIANT
+@@ -211,6 +211,89 @@ ifeq ($(SYSTEM_UNAME), Linux)
+   MB_OF_MEMORY := $(shell free -m | fgrep Mem: | awk '{print $$2;}' )
  endif
  
 +ifeq ($(SYSTEM_UNAME), FreeBSD)
 +  PLATFORM = bsd
 +  OS_NAME = freebsd
 +  OS_VENDOR = FreeBSD
-+ REQUIRED_OS_VERSION = 6.0
++  REQUIRED_OS_VERSION = 6.0
++endif
++
++ifeq ($(SYSTEM_UNAME), Darwin)
++  PLATFORM = bsd
++  OS_NAME = darwin
++  OS_VENDOR = Apple
++  REQUIRED_OS_VERSION = 8.0
 +endif
 +
 +ifeq ($(SYSTEM_UNAME), NetBSD)
@@ -42,6 +58,15 @@ $OpenBSD: patch-jdk_make_common_shared_Platform_gmk,v 1.2 2008/03/21 02:46:43 ku
 +  ARCH        := $(shell $(archExpr) )
 +  ARCH_FAMILY := $(ARCH)
 +
++  # Darwin builds may be 32-bit or 64-bit data model.
++  ifeq ($(SYSTEM_UNAME), Darwin)
++    ifeq ($(ARCH), i586)
++      ifeq ($(ARCH_DATA_MODEL), 64)
++        ARCH=amd64
++      endif
++    endif
++  endif
++
 +  # i586 and sparc are 32 bit, amd64 and sparc64 are 64
 +  ifneq (,$(findstring $(ARCH), i586 sparc))
 +    ARCH_DATA_MODEL=32
@@ -66,34 +91,46 @@ $OpenBSD: patch-jdk_make_common_shared_Platform_gmk,v 1.2 2008/03/21 02:46:43 ku
 +  REQUIRED_FREE_SPACE=1500000
 +  # How much RAM does this machine have:
 +  ifeq ($(OS_VENDOR), OpenBSD)
-+    MB_OF_MEMORY=$(shell perl -e 'printf "%d", `sysctl hw.physmem | cut -d'=' -f2` / 1048576' )
++    MB_OF_MEMORY=$(shell sysctl -n hw.physmem | awk '{print int($$NF / 1048576); }' )
 +  else
-+    MB_OF_MEMORY := $(shell `sysctl hw.physmem | cut -d' ' -f2` / 1048576 )
++    MB_OF_MEMORY=$(shell (sysctl -n hw.physmem64 2> /dev/null || sysctl -n hw.physmem) | awk '{print int($$NF / 1048576); }' )
 +  endif
 +endif
 +
  # Windows with and without CYGWIN will be slightly different
  ifeq ($(SYSTEM_UNAME), Windows_NT)
    PLATFORM = windows
-@@ -390,7 +457,7 @@ endif
+@@ -376,6 +459,14 @@ ifneq ($(PLATFORM), windows)
+   ARCH_VM_SUBDIR=jre/lib/$(LIBARCH)
+ endif
+ 
++# Darwin-specific Overrides
++ifeq ($(SYSTEM_UNAME),Darwin)
++  # The suffix applied to runtime libraries
++  LIBRARY_SUFFIX = dylib
++  # The suffix applied to link libraries
++  LIB_SUFFIX = dylib
++endif
++
+ # Machines with 512Mb or less of real memory are considered low memory
  #    build machines and adjustments will be made to prevent excessing
  #    system swapping during the build.
- #    If we don't know, assume 512. Subtract 128 from MB for VM MAX.
--#    Don't set VM max over 1024-128=896.
-+#    Don't set VM max over 864-128=736.
- ifneq ($(MB_OF_MEMORY),)
-   LOW_MEMORY_MACHINE := $(shell \
-     if [ $(MB_OF_MEMORY) -le 512 ] ; then \
-@@ -399,10 +466,10 @@ ifneq ($(MB_OF_MEMORY),)
-       echo "false"; \
-     fi)
-   MAX_VM_MEMORY := $(shell \
--    if [ $(MB_OF_MEMORY) -le 1024 ] ; then \
-+    if [ $(MB_OF_MEMORY) -le 864 ] ; then \
-       expr $(MB_OF_MEMORY) '-' 128 ; \
-     else \
--      echo "896"; \
-+      echo "736"; \
-     fi)
-   MIN_VM_MEMORY := $(shell \
-     if [ $(MAX_VM_MEMORY) -le 128 ] ; then \
+@@ -413,6 +504,18 @@ ifeq ($(JDK_HAS_MEM_INFO),)
+   export LOW_MEMORY_MACHINE
+   export MAX_VM_MEMORY
+   export MIN_VM_MEMORY
++endif
++
++# for OpenBSD/i386 limit to 736 max
++ifeq ($(OS_VENDOR), OpenBSD)
++  ifeq ($(ARCH_DATA_MODEL), 32)
++    MAX_VM_MEMORY := $(shell \
++      if [ $(MAX_VM_MEMORY) -gt 736 ] ; then \
++        echo "736"; \
++      else \
++        echo "$(MAX_VM_MEMORY)" ; \
++      fi)
++  endif
+ endif
+ 
+ # If blanks in the username, use the first 4 words and pack them together

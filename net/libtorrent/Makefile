@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.17 2008/11/25 16:21:28 naddy Exp $
+# $OpenBSD: Makefile,v 1.20 2009/09/07 14:49:12 naddy Exp $
 
 COMMENT=		BitTorrent library written in C++
 
-DISTNAME=		libtorrent-0.12.4
-SHARED_LIBS +=  	torrent              15.0     # .11.4
+DISTNAME=		libtorrent-0.12.5
+SHARED_LIBS +=  	torrent              16.0     # .11.4
 CATEGORIES=		net devel
 
 HOMEPAGE=		http://libtorrent.rakshasa.no/
@@ -18,7 +18,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=		${HOMEPAGE}downloads/
 
 WANTLIB=		crypto
-LIB_DEPENDS=		sigc-2.0:libsigc++-2.*:devel/libsigc++-2
+LIB_DEPENDS=		sigc-2.0:libsigc++->=2,<3:devel/libsigc++-2
 
 USE_LIBTOOL=		Yes
 
@@ -26,7 +26,6 @@ AUTOCONF_VERSION=	2.62
 CONFIGURE_STYLE=	autoconf
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--enable-static \
-			--with-openssl \
 			--with-kqueue \
 			--disable-debug
 CONFIGURE_ENV=		OPENSSL_CFLAGS=-I/usr/include \

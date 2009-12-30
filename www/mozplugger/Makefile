@@ -1,20 +1,19 @@
-# $OpenBSD: Makefile,v 1.3 2007/08/02 21:58:10 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2009/08/10 06:34:56 kili Exp $
 
 SHARED_ONLY=		Yes
 COMMENT=		load programs inside browser to view movies, pdfs, etc
 DISTNAME=		mozplugger-1.8.1
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p2
 CATEGORIES=		www
 
 HOMEPAGE=		http://mozplugger.mozdev.org
-MAINTAINER=		Tobias Ulmer <tobiasu@tmux.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		X11 c
+WANTLIB=		X11 c pthread-stubs xcb
 
 MASTER_SITES=		${HOMEPAGE}/files/
 

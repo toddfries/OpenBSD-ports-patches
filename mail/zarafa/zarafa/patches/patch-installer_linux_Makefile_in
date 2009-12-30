@@ -1,0 +1,49 @@
+$OpenBSD: patch-installer_linux_Makefile_in,v 1.6 2009/10/21 09:59:54 ajacoutot Exp $
+--- installer/linux/Makefile.in.orig	Fri Oct 16 20:39:23 2009
++++ installer/linux/Makefile.in	Wed Oct 21 11:32:04 2009
+@@ -57,22 +57,11 @@ SOURCES =
+ DIST_SOURCES =
+ am__dist_data_DATA_DIST = server.cfg unix.cfg ldap.openldap.cfg \
+ 	ldap.active-directory.cfg spooler.cfg gateway.cfg monitor.cfg \
+-	dagent.cfg ical.cfg zarafa.logrotate zarafa-server.init.suse \
+-	zarafa-spooler.init.suse zarafa-gateway.init.suse \
+-	zarafa-monitor.init.suse zarafa-ical.init.suse \
+-	zarafa-server.init.fc zarafa-spooler.init.fc \
+-	zarafa-gateway.init.fc zarafa-monitor.init.fc \
+-	zarafa-ical.init.fc zarafa-server.init.cbs4 \
+-	zarafa-spooler.init.cbs4 zarafa-gateway.init.cbs4 \
+-	zarafa-monitor.init.cbs4 zarafa-ical.init.cbs4 \
++	dagent.cfg ical.cfg zarafa.logrotate \
+ 	db-convert-4.1-to-4.2 db-convert-4.20-to-4.21 \
+ 	db-convert-4.20-to-innodb.sql db-calc-storesize \
+ 	db-convert-attachments-to-files createuser.dotforward \
+-	db-convert-4.2x-to-5.00 ssl-certificates.sh \
+-	zarafa-dagent.init.cbs4 zarafa-dagent.init.suse \
+-	zarafa-dagent.init.fc licensed.cfg ldapms.openldap.cfg \
+-	ldapms.active-directory.cfg zarafa-licensed.init.cbs4 \
+-	zarafa-licensed.init.suse zarafa-licensed.init.fc
++	db-convert-4.2x-to-5.00 ssl-certificates.sh
+ dist_dataDATA_INSTALL = $(INSTALL_DATA)
+ am__dist_sysconf_DATA_DIST = ipsseg.crt
+ dist_sysconfDATA_INSTALL = $(INSTALL_DATA)
+@@ -220,6 +209,7 @@ datadir = ${docdir}
+ datarootdir = @datarootdir@
+ docdir = @docdir@
+ dvidir = @dvidir@
++egdir = ${prefix}/share/examples/zarafa
+ exec_prefix = @exec_prefix@
+ host = @host@
+ host_alias = @host_alias@
+@@ -249,12 +239,8 @@ sysconfdir = /etc/zarafa/report-ca
+ target_alias = @target_alias@
+ dist_data_DATA = server.cfg unix.cfg ldap.openldap.cfg ldap.active-directory.cfg \
+ 	spooler.cfg gateway.cfg monitor.cfg dagent.cfg ical.cfg zarafa.logrotate \
+-	zarafa-server.init.suse zarafa-spooler.init.suse zarafa-gateway.init.suse zarafa-monitor.init.suse zarafa-ical.init.suse \
+-	zarafa-server.init.fc zarafa-spooler.init.fc zarafa-gateway.init.fc zarafa-monitor.init.fc zarafa-ical.init.fc \
+-	zarafa-server.init.cbs4 zarafa-spooler.init.cbs4 zarafa-gateway.init.cbs4 zarafa-monitor.init.cbs4 zarafa-ical.init.cbs4 \
+ 	db-convert-4.1-to-4.2 db-convert-4.20-to-4.21 db-convert-4.20-to-innodb.sql db-calc-storesize db-convert-attachments-to-files \
+ 	createuser.dotforward db-convert-4.2x-to-5.00 ssl-certificates.sh \
+-	zarafa-dagent.init.cbs4 zarafa-dagent.init.suse zarafa-dagent.init.fc\
+ $(am__append_1)
+ dist_bin_SCRIPTS = zarafa-autorespond
+ @OSS_ONLY_FALSE@dist_sysconf_DATA = ipsseg.crt

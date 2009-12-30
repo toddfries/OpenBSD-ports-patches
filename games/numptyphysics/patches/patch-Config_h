@@ -1,0 +1,21 @@
+$OpenBSD: patch-Config_h,v 1.2 2009/10/22 23:07:54 sthen Exp $
+--- Config.h.orig	Fri Oct 31 18:04:08 2008
++++ Config.h	Sun Oct 18 17:12:02 2009
+@@ -37,7 +37,7 @@
+ #  define CLICK_TOLERANCE   16 //PIXELs 
+ #else
+ #  define ITERATION_RATE    60 //fps
+-#  define RENDER_RATE       20 //fps
++#  define RENDER_RATE       60 //fps
+ #  define SOLVER_ITERATIONS 10
+ #  define JOINT_TOLERANCE   4.0f //PIXELs
+ #  define SELECT_TOLERANCE  5.0f //PIXELS_PER_METREf)
+@@ -51,7 +51,7 @@
+ 
+ 
+ #ifndef INSTALL_BASE_PATH
+-#  define INSTALL_BASE_PATH "/usr/share/numptyphysics"
++#  define INSTALL_BASE_PATH "${TRUEPREFIX}/share/numptyphysics"
+ #endif
+ #define DEFAULT_LEVEL_PATH INSTALL_BASE_PATH
+ #define DEFAULT_RESOURCE_PATH DEFAULT_LEVEL_PATH

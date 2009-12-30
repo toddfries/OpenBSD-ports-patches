@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2008/09/11 21:45:43 martynas Exp $
+# $OpenBSD: Makefile,v 1.11 2009/12/22 16:28:00 ajacoutot Exp $
 
 COMMENT=	city-building simulation
 
 DISTNAME=	micropolis-20080211
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p2
 WRKDIST=	${WRKDIR}/micropolis
 
 CATEGORIES=	games
@@ -23,7 +23,7 @@ PERMIT_DISTFILES_FTP=	Yes
 NO_REGRESS=	Yes
 USE_X11=	Yes
 RUN_DEPENDS=	::devel/desktop-file-utils
-WANTLIB=	c m X11 Xext Xpm pthread
+WANTLIB=	X11 Xext Xpm c m pthread pthread-stubs xcb
 LIB_DEPENDS=	SDL::devel/sdl \
 		SDL_mixer::devel/sdl-mixer
 

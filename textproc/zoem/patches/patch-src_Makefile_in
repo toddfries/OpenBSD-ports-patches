@@ -1,0 +1,21 @@
+$OpenBSD: patch-src_Makefile_in,v 1.2 2009/12/23 22:09:20 jasper Exp $
+--- src/Makefile.in.orig	Fri May 29 14:24:17 2009
++++ src/Makefile.in	Wed Dec 23 21:56:37 2009
+@@ -101,7 +101,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ LDFLAGS = @LDFLAGS@
+ LIBOBJS = @LIBOBJS@
+-LIBS = @LIBS@
++LIBS = @LIBS@ -lm
+ LN_S = @LN_S@
+ LTLIBOBJS = @LTLIBOBJS@
+ MAINT = @MAINT@
+@@ -158,7 +158,7 @@ ops-env.c ops-constant.c curly.c digest.c entry.c \
+ iface.c source.c sink.c filter.c key.c dict.c ops.c parse.c read.c \
+ segment.c util.c zoem.c version.c
+ 
+-zoem_LDFLAGS = -lm
++zoem_LDFLAGS = 
+ LDADD = ../util/libutil.a
+ EXTRA_DIST = curly.h digest.h entry.h parse.h segment.h key.h dict.h \
+ source.h sink.h read.h util.h filter.h iface.h zlimits.h version.h \

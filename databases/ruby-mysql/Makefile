@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2008/07/04 19:57:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.9 2009/12/01 11:51:38 bernd Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	access a MySQL database from Ruby
 
-VERSION=	2.7.5
+VERSION=	2.8.1
 DISTNAME=	mysql-ruby-${VERSION}
-PKGNAME=	ruby-mysql-${VERSION}p1
+PKGNAME=	ruby-mysql-${VERSION}
 CATEGORIES=	databases
 
 HOMEPAGE=	http://tmtm.org/mysql/ruby/
@@ -23,8 +23,8 @@ MODULES=	lang/ruby
 
 WANTLIB=	c m
 
-LIB_DEPENDS=	mysqlclient::databases/mysql \
-		ruby::lang/ruby
+LIB_DEPENDS=	${MODRUBY_LIB_DEPENDS} \
+		mysqlclient::databases/mysql
 
 CONFIGURE_STYLE=ruby extconf
 

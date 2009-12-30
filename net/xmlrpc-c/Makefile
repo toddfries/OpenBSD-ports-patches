@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2008/03/15 10:35:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2009/05/31 15:54:18 benoit Exp $
 
 COMMENT=	XML-RPC C/C++ client-server implementation
 CATEGORIES=	net devel textproc
 
-V=		1.06.23
-DISTNAME=	xmlrpc-${V}
-PKGNAME=	xmlrpc-c-${V}
+V=		1.06.35
+DISTNAME=	xmlrpc-c-${V}
+
 EXTRACT_SUFX=	.tgz
 
 SHARED_LIBS +=	xmlrpc_util          1.0      # .9.15
@@ -37,6 +37,8 @@ LIB_DEPENDS=		curl::net/curl
 CONFIGURE_STYLE=	gnu
 USE_LIBTOOL=		Yes
 USE_GMAKE=		Yes
+
+MAKE_ENV=		COPTS="${CFLAGS}"
 
 # we don't have libwww for now, this guards against picking it up
 # if somebody ports it

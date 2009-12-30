@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2008/09/01 19:10:22 eric Exp $
+# $OpenBSD: Makefile,v 1.5 2009/11/19 17:13:52 eric Exp $
 
 COMMENT=	sqlite-based object persistence system for python
 
-VERSION=	0.5.28
+VERSION=	0.5.31
 DISTNAME=	Axiom-${VERSION}
 PKGNAME=	py-axiom-${VERSION}
 CATEGORIES=	databases
@@ -27,8 +27,7 @@ BUILD_DEPENDS+=	:py-epsilon-*:devel/py-epsilon \
 RUN_DEPENDS=	${BUILD_DEPENDS} \
 		:py-twisted-conch-*:devel/py-twisted/conch
 
-REGRESS_DEPENDS=${BUILD_DEPENDS} \
-	:python-bz2-${MODPY_VERSION}.*:lang/python/${MODPY_VERSION},-bz2
+REGRESS_DEPENDS=${BUILD_DEPENDS}
 
 MODPY_DISTUTILS_BUILD=	build --build-base=${WRKSRC}/.build
 MODPY_EGG_VERSION=	${VERSION}

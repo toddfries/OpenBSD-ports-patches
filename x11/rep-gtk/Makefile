@@ -1,40 +1,44 @@
-# $OpenBSD: Makefile,v 1.28 2008/07/04 16:25:45 naddy Exp $
+# $OpenBSD: Makefile,v 1.34 2009/12/22 11:06:20 ajacoutot Exp $
 
 COMMENT=	GTK+ binding for librep Lisp environment
 
-VERSION=	0.18
+VERSION=	0.90.1
 DISTNAME=	rep-gtk-${VERSION}
-PKGNAME=	${DISTNAME}p12
 CATEGORIES=     x11
 
 HOMEPAGE=       http://rep-gtk.sourceforge.net/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=	X11 Xext Xrender fontconfig freetype m z glib-2.0 cairo \
-		gmodule-2.0 gobject-2.0 atk-1.0 pango-1.0 glitz png \
-		pango-1.0 pangocairo-1.0 pangoft2-1.0
 
-MASTER_SITES=   ${MASTER_SITE_SOURCEFORGE:=rep-gtk/}
+WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
+WANTLIB += freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png
+WANTLIB += z pthread-stubs xcb
 
-BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	::lang/librep
-LIB_DEPENDS= 	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
+MASTER_SITES=   	${MASTER_SITE_SOURCEFORGE:=rep-gtk/}
+EXTRACT_SUFX=		.tar.bz2
 
-MODULES=	devel/gettext
+BUILD_DEPENDS=		${RUN_DEPENDS}
+RUN_DEPENDS=		:librep->=0.90.4:lang/librep
+LIB_DEPENDS= 		gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 
-GNU_ARCH=	${MACHINE_ARCH:S/amd64/x86_64/}-unknown-openbsd${OPSYS_VER}
-SUBST_VARS=     GNU_ARCH VERSION
+MODULES=		devel/gettext
 
-USE_X11=	Yes
-USE_GMAKE=      Yes
-CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
-CONFIGURE_ARGS+= --without-gnome --without-libglade
+GNU_ARCH=		${MACHINE_ARCH:S/amd64/x86_64/}-unknown-openbsd${OPSYS_VER}
+SUBST_VARS=		GNU_ARCH VERSION
 
-NO_REGRESS=	Yes
+USE_X11=		Yes
+USE_GMAKE=		Yes
+USE_LIBTOOL=		Yes
+
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
+
+NO_REGRESS=		Yes
 
 .include <bsd.port.mk>

@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2004/04/08 05:30:28 jolan Exp $
+# $OpenBSD: Makefile,v 1.5 2009/08/17 10:59:07 jasper Exp $
 
      SUBDIR+= af
+     SUBDIR+= ar
      SUBDIR+= bg
      SUBDIR+= br
      SUBDIR+= ca
@@ -11,6 +12,7 @@
      SUBDIR+= el
      SUBDIR+= eo
      SUBDIR+= es
+     SUBDIR+= fa
      SUBDIR+= fo
      SUBDIR+= fr
      SUBDIR+= ga
@@ -19,6 +21,7 @@
      SUBDIR+= id
      SUBDIR+= is
      SUBDIR+= it
+     SUBDIR+= lt
      SUBDIR+= mi
      SUBDIR+= ms
      SUBDIR+= mt
@@ -32,6 +35,7 @@
      SUBDIR+= ru
      SUBDIR+= sk
      SUBDIR+= sl
+     SUBDIR+= sr
      SUBDIR+= sv
      SUBDIR+= sw
      SUBDIR+= tn

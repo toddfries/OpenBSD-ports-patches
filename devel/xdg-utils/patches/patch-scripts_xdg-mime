@@ -1,6 +1,6 @@
-$OpenBSD: patch-scripts_xdg-mime,v 1.2 2008/11/01 19:30:07 ajacoutot Exp $
+$OpenBSD: patch-scripts_xdg-mime,v 1.5 2009/04/25 08:11:13 ajacoutot Exp $
 --- scripts/xdg-mime.orig	Sun Jun 24 21:57:57 2007
-+++ scripts/xdg-mime	Fri Oct 31 01:02:11 2008
++++ scripts/xdg-mime	Mon Feb  9 13:54:06 2009
 @@ -557,7 +557,7 @@ defapp_generic()
      [ -n "$xdg_user_dir" ] || xdg_user_dir="$HOME/.local/share"
      xdg_user_dir="$xdg_user_dir/$xdg_dir_name"
@@ -28,3 +28,12 @@ $OpenBSD: patch-scripts_xdg-mime,v 1.2 2008/11/01 19:30:07 ajacoutot Exp $
  [ -w $gnome_global_dir ] || gnome_global_dir=
  DEBUG 3 "gnome_user_dir: $gnome_user_dir"
  DEBUG 3 "gnome_global_dir: $gnome_global_dir"
+@@ -1076,7 +1076,7 @@ END {
+ 
+         # No quotes around $mimetypes
+         for x in $mimetypes ; do 
+-            if grep '^# Installed by xdg-mime' $kde_dir/$x.desktop &>/dev/null ; then
++            if grep '^# Installed by xdg-mime' $kde_dir/$x.desktop >/dev/null 2>&1; then
+                 DEBUG 1 "Removing $kde_dir/$x.desktop (KDE 3.x support)"
+                 rm -f $kde_dir/$x.desktop
+             fi

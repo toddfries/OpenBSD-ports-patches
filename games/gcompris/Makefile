@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.16 2008/10/16 17:03:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2009/12/22 16:28:00 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	educational game for children
 
-DISTNAME=	gcompris-8.4.7
+DISTNAME=	gcompris-8.4.13
+PKGNAME=	${DISTNAME}p0
+
 CATEGORIES=	games education
 
 HOMEPAGE=	http://gcompris.net/
@@ -24,7 +26,8 @@ WANTLIB=	Xau Xdmcp X11 Xext Xrender Xcomposite atk-1.0 c cairo z \
 		glib-2.0 glitz gmodule-2.0 gobject-2.0 gthread-2.0 \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 util pcre \
 		pangoft2-1.0 pixman-1 png pthread Xxf86vm expat Xcursor \
-		Xfixes Xi Xinerama Xrandr art_lgpl_2 gailutil
+		Xfixes Xi Xinerama Xrandr art_lgpl_2 gailutil gio-2.0 \
+		pthread-stubs xcb
 
 MODULES=	devel/gettext \
 		lang/python \
@@ -38,16 +41,14 @@ LIB_DEPENDS=	python${MODPY_VERSION}::lang/python/${MODPY_VERSION} \
 		gnet-2.0::net/gnet \
 		sqlite3::databases/sqlite3 \
 		gnomecanvas-2::x11/gnome/libgnomecanvas \
-		gstreamer-0.10:gstreamer-0.10.*:multimedia/gstreamer-0.10/core
+		gstreamer-0.10:gstreamer->=0.10,<0.11:multimedia/gstreamer-0.10/core
 RUN_DEPENDS=	::games/gnuchess \
 		::databases/py-sqlite2 \
 		::x11/py-gtk2 \
 		::games/tuxpaint \
 		::cad/gnucap \
 		:desktop-file-utils-*:devel/desktop-file-utils \
-		::multimedia/gstreamer-0.10/plugins-base,-ogg \
-		::multimedia/gstreamer-0.10/plugins-base,-vorbis \
-		::multimedia/gstreamer-0.10/plugins-good,-gconf \
+		::multimedia/gstreamer-0.10/plugins-base \
 		:yelp-*:x11/gnome/yelp
 
 USE_X11=	Yes

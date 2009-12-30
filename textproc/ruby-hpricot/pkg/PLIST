@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2008/04/19 17:21:28 bernd Exp $
+@comment $OpenBSD: PLIST,v 1.3 2009/05/19 22:22:18 bernd Exp $
 lib/ruby/gems/${MODRUBY_REV}/cache/${DISTNAME}.gem
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/
@@ -10,6 +10,9 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/BogusETag/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/BogusETag.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/BogusETag/Trav.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Builder.html
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/CData/
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/CData.html
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/CData/Trav.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Comment/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Comment.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Comment/Trav.html
@@ -24,6 +27,7 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Doc/Trav.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/DocType/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/DocType.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/DocType/Trav.html
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/ETag.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Elem/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Elem.html
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/rdoc/classes/Hpricot/Elem/Trav.html
@@ -84,6 +88,7 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/BogusETag/Trav/cdesc-Tra
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/BogusETag/cdesc-BogusETag.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/%3c%3c-i.yaml
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/add_child-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/build-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/cdesc-Builder.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/concat-i.yaml
@@ -96,6 +101,10 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/text%21-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/text-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/xhtml_strict-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Builder/xhtml_transitional-i.yaml
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/CData/
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/CData/Trav/
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/CData/Trav/cdesc-Trav.yaml
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/CData/cdesc-CData.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Comment/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Comment/Trav/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Comment/Trav/cdesc-Trav.yaml
@@ -131,24 +140,17 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/CssProxy/method_missing-
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/CssProxy/new-c.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/Trav/
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/Trav/author-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/Trav/cdesc-Trav.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/Trav/root-i.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/Trav/title-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Doc/cdesc-Doc.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/DocType/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/DocType/Trav/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/DocType/Trav/cdesc-Trav.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/DocType/cdesc-DocType.yaml
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/ETag/
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/ETag/cdesc-ETag.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/%5b%5d%3d-i.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/%5b%5d-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/cdesc-Trav.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/get_attribute-i.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/has_attribute%3f-i.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/remove_attribute-i.yaml
-lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/Trav/set_attribute-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elem/cdesc-Elem.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elements/
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Elements/%25-i.yaml
@@ -228,6 +230,7 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/innerText-i.yam
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/inner_html%3d-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/inner_html-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/inner_text-i.yaml
+lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/make-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/next-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/next_node-i.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Hpricot/Traverse/node_position-i.yaml
@@ -273,17 +276,27 @@ lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Object/cdesc-Object.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/Object/method_added-c.yaml
 lib/ruby/gems/${MODRUBY_REV}/doc/${DISTNAME}/ri/created.rid
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/
-lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/.require_paths
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/CHANGELOG
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/COPYING
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/README
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/Rakefile
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/FastXsService.java
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/Makefile
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/extconf.rb
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/fast_xs.c
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/fast_xs.o
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/fast_xs.so
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/fast_xs/mkmf.log
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/HpricotScanService.java
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/Makefile
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/extconf.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_common.rl
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_css.c
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_css.o
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_css.rl
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_scan.c
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_scan.h
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_scan.java.rl
@@ -291,9 +304,11 @@ lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_scan.o
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_scan.rl
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/hpricot_scan.so
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/mkmf.log
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/ext/hpricot_scan/test.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/extras/
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/extras/mingw-rbconfig.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/lib/
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/lib/fast_xs.so
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/lib/hpricot/
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/lib/hpricot.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/lib/hpricot/blankslate.rb
@@ -321,6 +336,7 @@ lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/files/utf8.html
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/files/week9.html
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/files/why.xml
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/load_files.rb
+lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/nokogiri-bench.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/test_alter.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/test_builder.rb
 lib/ruby/gems/${MODRUBY_REV}/gems/${DISTNAME}/test/test_parser.rb

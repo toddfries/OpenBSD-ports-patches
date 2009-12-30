@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.47 2008/11/05 18:08:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.51 2009/08/10 06:34:09 kili Exp $
 
 COMMENT=	graphical frontend for LaTeX (nearly WYSIWYG)
 
 DISTNAME=	lyx-1.4.3
-PKGNAME=	${DISTNAME}p2
+PKGNAME=	${DISTNAME}p5
 CATEGORIES=	print
 
 HOMEPAGE=	http://www.lyx.org/
@@ -11,8 +11,6 @@ HOMEPAGE=	http://www.lyx.org/
 EXTRACT_SUFX?=	.tar.bz2
 MASTER_SITES=	ftp://ftp.lyx.org/pub/lyx/stable/1.4.x/ \
 		ftp://ftp.lip6.fr/pub/lyx/stable/1.4.x/
-
-MAINTAINER=	Zvezdan Petkovic <zpetkovic@acm.org>
 
 # In XForms flavor: quasi-GPL (linked to closed source library)
 # In Qt flavor: GPL (this should be preferred for CD distribution)
@@ -30,7 +28,7 @@ RUN_DEPENDS=	::print/texlive/base \
 
 LIB_DEPENDS=	aspell::textproc/aspell/core
 
-WANTLIB=	ICE SM X11 c m stdc++ z
+WANTLIB += ICE SM X11 Xau Xdmcp c m pthread-stubs stdc++ xcb z
 
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
@@ -42,12 +40,12 @@ FLAVOR?=	qt
 .if ${FLAVOR:L} == "qt"
 MODULES+=	x11/qt3
 MODQT_MT=	Yes
-WANTLIB+=	pthread
+WANTLIB += pthread
 CONFIGURE_ARGS=	--with-frontend=qt ${MODQT_CONFIGURE_ARGS}
 CONFIGURE_ENV+=	LIBS=-pthread QTDIR=${MODQT_QTDIR}
 .elif ${FLAVOR:L} == "xforms"
-LIB_DEPENDS+=	forms.1::x11/xforms
-WANTLIB+=	Xpm flimage jpeg
+LIB_DEPENDS+=	forms,flimage::x11/xforms
+WANTLIB += Xpm jpeg
 CONFIGURE_ARGS=	--with-frontend=xforms
 .else
 ERRORS+= "Fatal: Conflicting flavor: ${FLAVOR}"
@@ -60,7 +58,6 @@ CONFIGURE_ARGS+=--with-extra-lib=${LOCALBASE}/lib \
 		--with-extra-inc="${LOCALBASE}/include \
 		${LOCALBASE}/include/X11" \
 		--disable-dependency-tracking
-CONFIGURE_ENV+=	PYTHON=${MODPY_BIN}
 
 # Necessary because of compilation error.  See:
 # http://www.boost.org/libs/graph/doc/trouble_shooting.html

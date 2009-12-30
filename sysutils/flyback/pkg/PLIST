@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2008/06/26 10:21:03 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.4 2009/12/22 12:51:52 sthen Exp $
 bin/flyback
 lib/python${MODPY_VERSION}/site-packages/flyback/
 lib/python${MODPY_VERSION}/site-packages/flyback/backup_backend.py
@@ -11,3 +11,5 @@ share/applications/flyback.desktop
 share/flyback/
 share/flyback/GPL.txt
 share/flyback/viewer.glade
+@exec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

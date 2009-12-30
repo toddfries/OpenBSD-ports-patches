@@ -1,21 +1,21 @@
-$OpenBSD: patch-makefile,v 1.7 2008/10/08 21:55:19 steven Exp $
---- makefile.orig	Sun Sep 21 00:54:47 2008
-+++ makefile	Wed Oct  8 23:51:23 2008
-@@ -2,7 +2,7 @@
- # Currently uses gcc only options in CFLAGS, just remove them for other C compilers.
+$OpenBSD: patch-makefile,v 1.10 2009/10/10 10:16:17 steven Exp $
+--- makefile.orig	Sat Sep  5 17:12:42 2009
++++ makefile	Sat Oct 10 12:13:26 2009
+@@ -6,7 +6,7 @@
  
  VERSION		= `cat VERSION`
--CFLAGS		+= -O2 -Wuninitialized -Wunused -Wshadow -Wformat -Wparentheses # gcc specific flags
-+CFLAGS		+= -Wuninitialized -Wunused -Wshadow -Wformat -Wparentheses # gcc specific flags
- CFLAGS		+= -DUNIX -DVERSION=\"$(VERSION)\" # C compiler flags
- LIBS		+= -lm # libraries to link
+ CFLAGS		+= -Wall -Wshadow -Wno-char-subscripts -fomit-frame-pointer # gcc specific flags
+-CFLAGS		+= -O -DUNIX -DVERSION=\"$(VERSION)\"
++CFLAGS		+= -DUNIX -DVERSION=\"$(VERSION)\"
+ LDLIBS		+= -lm # libraries to link
  
-@@ -13,7 +13,7 @@ LIBS		+= $(READLINE:1=-lreadline -lncurses)
- # Install directories:
+ # "make READLINE=1" to include readline support:
+@@ -20,7 +20,7 @@ LDLIBS		+= $(READLINE:1=-lreadline -lncurses)
+ # Install directories follow, installs everything in /usr/local by default:
  prefix		?= /usr/local
  bindir		?= $(prefix)/bin
 -mandir		?= $(prefix)/share/man
 +mandir		?= $(prefix)/man
  docdir		?= $(prefix)/share/doc
+ mathdocdir	?= $(docdir)/mathomatic
  
- MANHTML		= doc/mathomatic.1.html doc/matho-primes.1.html doc/matho-pascal.1.html doc/matho-sumsq.1.html

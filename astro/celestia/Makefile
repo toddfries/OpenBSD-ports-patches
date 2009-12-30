@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.8 2008/11/05 10:11:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2009/12/21 18:05:49 ajacoutot Exp $
 
 COMMENT=	free space simulator and planetarium
 
-DISTNAME=	celestia-1.5.1
-PKGNAME=	${DISTNAME}p1
+DISTNAME=	celestia-1.6.0
+PKGNAME=	${DISTNAME}p3
 CATEGORIES=	astro x11
 
 HOMEPAGE=	http://www.shatters.net/celestia/
@@ -18,12 +18,12 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=celestia/}
 
-WANTLIB =	GL GLU ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
-		Xext Xfixes Xi Xinerama Xmu Xrandr Xrender Xt atk-1.0 \
-		c cairo expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
-		glib-2.0 glitz gmodule-2.0 gobject-2.0 gtk-x11-2.0 \
-		jpeg m ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pangox-1.0 \
-		pcre pixman-1 png stdc++ z
+WANTLIB += GL GLU ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xmu Xrandr Xrender Xt atk-1.0
+WANTLIB += c cairo expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 gtk-x11-2.0
+WANTLIB += jpeg m ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pangox-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs stdc++ xcb z
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	gdkglext-x11-1.0,gtkglext-x11-1.0::x11/gtkglext \
@@ -44,6 +44,9 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-lua \
 		--enable-cairo \
 		--enable-theora
+
+# /usr/local/lib/libgthread-2.0.so.X.X: undefined symbol 'pthread_mutex_trylock'
+CFLAGS+=	-pthread
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/celestia/celestiacore.cpp

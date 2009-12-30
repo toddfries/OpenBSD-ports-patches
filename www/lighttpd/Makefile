@@ -1,19 +1,17 @@
-# $OpenBSD: Makefile,v 1.54 2008/10/23 20:29:17 brad Exp $
+# $OpenBSD: Makefile,v 1.64 2009/12/13 22:06:24 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
-DISTNAME=	lighttpd-1.4.20
+DISTNAME=	lighttpd-1.4.25
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	www net
-MASTER_SITES=	${HOMEPAGE}/download/
-
-MAINTAINER=	Brad Smith <brad@comstyle.com>
+MASTER_SITES=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
 
 HOMEPAGE=	http://www.lighttpd.net/
 
-LIB_DEPENDS+=	pcre::devel/pcre \
-		lua.>=5.1::lang/lua
+MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,13 +20,17 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c crypto m ssl z
 
+LIB_DEPENDS+=	pcre::devel/pcre \
+		lua.>=5.1::lang/lua
+RUN_DEPENDS+=	:spawn-fcgi-*:www/spawn-fcgi
+
 USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS+= --with-openssl \
-		 --without-bzip2 \
-		 --libdir="${PREFIX}/lib/lighttpd" \
-		 --with-lua
+CONFIGURE_ARGS+= --libdir="${PREFIX}/lib/lighttpd" \
+		 --with-lua \
+		 --with-openssl \
+		 --without-bzip2
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
@@ -50,7 +52,7 @@ pre-build:
 	@perl -pi -e "s,/usr/bin/rrdtool,${LOCALBASE}/bin/rrdtool,g" \
 	    ${WRKSRC}/doc/lighttpd.conf
 	@perl -pi -e "s,/etc/lighttpd,${SYSCONFDIR},g" \
-	    ${WRKSRC}/doc/lighttpd.1
+	    ${WRKSRC}/doc/lighttpd.8
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/lighttpd

@@ -1,9 +1,9 @@
-@comment $OpenBSD: PLIST,v 1.4 2008/01/30 12:18:59 sthen Exp $
-bin/ktcachecheck
-bin/ktorrent
+@comment $OpenBSD: PLIST,v 1.8 2009/12/22 00:31:23 sthen Exp $
+@bin bin/ktcachecheck
+@bin bin/ktorrent
 bin/ktshell
-bin/kttorinfo
-bin/ktupnptest
+@bin bin/kttorinfo
+@bin bin/ktupnptest
 ${KDE}/ktinfowidgetplugin.la
 ${KDE}/ktinfowidgetplugin.so
 ${KDE}/ktipfilterplugin.la
@@ -20,12 +20,14 @@ ${KDE}/ktschedulerplugin.la
 ${KDE}/ktschedulerplugin.so
 ${KDE}/ktsearchplugin.la
 ${KDE}/ktsearchplugin.so
-@comment ${KDE}/ktstatsplugin.la
-@comment ${KDE}/ktstatsplugin.so
+${KDE}/ktstatsplugin.la
+${KDE}/ktstatsplugin.so
 ${KDE}/ktupnpplugin.la
 ${KDE}/ktupnpplugin.so
 ${KDE}/ktwebinterfaceplugin.la
 ${KDE}/ktwebinterfaceplugin.so
+${KDE}/ktzeroconfplugin.la
+${KDE}/ktzeroconfplugin.so
 lib/libktorrent-${VERSION}.so
 lib/libktorrent.la
 lib/libktorrent.so
@@ -388,7 +390,7 @@ share/config.kcfg/ktrssfeedplugin.kcfg
 share/config.kcfg/ktscanfolderplugin.kcfg
 share/config.kcfg/ktschedulerplugin.kcfg
 share/config.kcfg/ktsearchplugin.kcfg
-@comment share/config.kcfg/ktstatsplugin.kcfg
+share/config.kcfg/ktstatsplugin.kcfg
 share/config.kcfg/ktupnpplugin.kcfg
 share/config.kcfg/ktwebinterfaceplugin.kcfg
 share/icons/hicolor/128x128/apps/ktorrent.png
@@ -441,6 +443,8 @@ share/locale/ru/LC_MESSAGES/ktorrent.mo
 share/locale/rw/LC_MESSAGES/ktorrent.mo
 share/locale/sk/LC_MESSAGES/ktorrent.mo
 share/locale/sr/LC_MESSAGES/ktorrent.mo
+share/locale/sr@Latn/
+share/locale/sr@Latn/LC_MESSAGES/
 share/locale/sr@Latn/LC_MESSAGES/ktorrent.mo
 share/locale/sv/LC_MESSAGES/ktorrent.mo
 share/locale/tr/LC_MESSAGES/ktorrent.mo
@@ -455,10 +459,10 @@ share/services/ktrssfeedplugin.desktop
 share/services/ktscanfolderplugin.desktop
 share/services/ktschedulerplugin.desktop
 share/services/ktsearchplugin.desktop
-@comment share/services/ktstatsplugin.desktop
+share/services/ktstatsplugin.desktop
 share/services/ktupnpplugin.desktop
 share/services/ktwebinterfaceplugin.desktop
 share/services/ktzeroconfplugin.desktop
 share/servicetypes/ktorrentplugin.desktop
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

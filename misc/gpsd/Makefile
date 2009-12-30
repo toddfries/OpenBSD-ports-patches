@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.25 2008/07/25 20:25:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.31 2009/12/16 14:59:40 kili Exp $
 
 COMMENT-main=		service daemon that monitors one or more GPSes
 COMMENT-motif=		motif-based test apps using gpsd
 COMMENT-php=		web-based gpsd monitor in php
 COMMENT-python=		python bindings for gpsd
 
-VERSION=		2.37
+VERSION=		2.38
 DISTNAME=		gpsd-${VERSION}
-PKGNAME-main=		gpsd-${VERSION}p2
-PKGNAME-motif=		gpsd-motif-${VERSION}
+PKGNAME-main=		gpsd-${VERSION}p0
+PKGNAME-motif=		gpsd-motif-${VERSION}p2
 PKGNAME-php=		gpsd-php-${VERSION}
-PKGNAME-python=		gpsd-python-${VERSION}p0
+PKGNAME-python=		gpsd-python-${VERSION}p1
 SHARED_LIBS=		gps	18.0
 CATEGORIES=		misc geo
 
@@ -45,12 +45,13 @@ BUILD_DEPENDS=		::textproc/libxslt \
 CONFIGURE_ARGS+=	--without-x
 .else
 MULTI_PACKAGES+=	-motif
-WANTLIB-motif=		ICE Xaw Xau Xdmcp Xext Xft Xmu Xp Xrender X11 SM Xt \
-			c m pthread expat fontconfig freetype iconv z
+WANTLIB-motif=		ICE Xaw8 Xau Xdmcp Xext Xft Xmu Xp Xpm Xrender X11 SM Xt \
+			c m pthread expat fontconfig freetype iconv jpeg png \
+			pthread-stubs xcb z
 LIB_DEPENDS-motif=	Xm::x11/openmotif gps::misc/gpsd
 USE_X11=		Yes
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ENV+=		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
+			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -lm"
 .endif
 
 .if ${FLAVOR:L:Mno_python}
@@ -59,10 +60,9 @@ CONFIGURE_ARGS+=	--disable-python
 MULTI_PACKAGES+=	-python
 MODULES=		lang/python
 LIB_DEPENDS-python=	gps::misc/gpsd
-WANTLIB-python=		c m pthread
+WANTLIB-python=
 RUN_DEPENDS-main=
 RUN_DEPENDS-motif=
-CONFIGURE_ENV+=		PYTHON="${MODPY_BIN}"
 .endif
 
 WANTLIB-main=		m ncurses c pthread

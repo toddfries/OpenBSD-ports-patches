@@ -1,7 +1,6 @@
-@comment $OpenBSD: PLIST,v 1.11 2007/12/15 20:54:19 ajacoutot Exp $
-bin/galculator
+@comment $OpenBSD: PLIST,v 1.14 2009/12/21 22:07:57 ajacoutot Exp $
+@bin bin/galculator
 @man man/man1/galculator.1
-share/applications/
 share/applications/galculator.desktop
 share/galculator/
 share/galculator/glade/
@@ -12,7 +11,9 @@ share/galculator/glade/dispctrl_bottom.glade
 share/galculator/glade/dispctrl_right.glade
 share/galculator/glade/dispctrl_right_vertical.glade
 share/galculator/glade/main_frame.glade
+share/galculator/glade/main_frame_hildon.glade
 share/galculator/glade/paper_view.glade
+share/galculator/glade/prefs-ume.glade
 share/galculator/glade/prefs.glade
 share/galculator/glade/scientific_buttons.glade
 share/locale/de/LC_MESSAGES/galculator.mo
@@ -22,13 +23,14 @@ share/locale/es_MX/LC_MESSAGES/galculator.mo
 share/locale/fr/LC_MESSAGES/galculator.mo
 share/locale/ja/LC_MESSAGES/galculator.mo
 share/locale/pl/LC_MESSAGES/galculator.mo
+share/locale/pt/LC_MESSAGES/galculator.mo
 share/locale/pt_BR/LC_MESSAGES/galculator.mo
 share/locale/ro/LC_MESSAGES/galculator.mo
 share/locale/ru/LC_MESSAGES/galculator.mo
 share/locale/sk/LC_MESSAGES/galculator.mo
 share/pixmaps/
-share/pixmaps/galculator/
-share/pixmaps/galculator/galculator.svg
-share/pixmaps/galculator/galculator_48x48.png
+share/pixmaps/galculator.png
+share/pixmaps/galculator.svg
+share/pixmaps/galculator.xpm
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

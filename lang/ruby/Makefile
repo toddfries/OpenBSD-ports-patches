@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2008/09/28 15:43:05 bernd Exp $
+# $OpenBSD: Makefile,v 1.73 2009/08/10 17:31:07 kili Exp $
 
 SHARED_ONLY=		Yes
 
@@ -8,13 +8,13 @@ COMMENT-gdbm=		gdbm interface for ruby
 COMMENT-tk=		tk interface for ruby
 
 VERSION=		1.8.6
-PATCHLEVEL=		287
+PATCHLEVEL=		369
 DISTNAME=		ruby-${VERSION}-p${PATCHLEVEL}
 SHARED_LIBS=		ruby 2.0
-PKGNAME-main=		ruby-${VERSION}.${PATCHLEVEL}
-PKGNAME-iconv=		ruby-iconv-${VERSION}.${PATCHLEVEL}
-PKGNAME-gdbm=		ruby-gdbm-${VERSION}.${PATCHLEVEL}
-PKGNAME-tk=		ruby-tk-${VERSION}.${PATCHLEVEL}
+PKGNAME-main=		ruby-${VERSION}.${PATCHLEVEL}p0
+PKGNAME-iconv=		ruby-iconv-${VERSION}.${PATCHLEVEL}p0
+PKGNAME-gdbm=		ruby-gdbm-${VERSION}.${PATCHLEVEL}p0
+PKGNAME-tk=		ruby-tk-${VERSION}.${PATCHLEVEL}p1
 
 CATEGORIES=		lang
 
@@ -71,8 +71,8 @@ LIB_DEPENDS-gdbm=	gdbm.>=3::databases/gdbm \
 RUN_DEPENDS-gdbm=
 
 .if !${FLAVOR:L:Mno_x11}
-WANTLIB-tk=		X11 c m tcl85
-LIB_DEPENDS-tk=		tk85:tk-8.5.*:x11/tk/8.5 \
+WANTLIB-tk=		X11 c m pthread-stubs tcl85 xcb
+LIB_DEPENDS-tk=		tk85:tk->=8.5,<8.6:x11/tk/8.5 \
 			ruby.>=1::lang/ruby
 RUN_DEPENDS-tk=
 .endif

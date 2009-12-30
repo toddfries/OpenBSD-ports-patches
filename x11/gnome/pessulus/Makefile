@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2008/11/21 19:06:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2009/12/21 18:03:19 ajacoutot Exp $
 
 COMMENT=		lockdown editor for GNOME
 
 GNOME_PROJECT=		pessulus
-GNOME_VERSION=		2.24.0
+GNOME_VERSION=		2.28.0
+PKGNAME=		${DISTNAME}p0
 
 HOMEPAGE=		http://live.gnome.org/Pessulus
 
@@ -18,15 +19,13 @@ MODULES=		lang/python \
 
 DESKTOP_FILES=		Yes
 
-BUILD_DEPENDS=		::devel/gettext \
-			::x11/gnome/py-gnome-desktop
+# help files are provided by gnome-user-docs
+MODGNOME_HELP_FILES=	Yes
+
+BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		::devel/gettext \
-			::www/epiphany \
-			::x11/gnome/panel \
-			::x11/gnome/py-gnome-desktop \
-			::x11/gnome/yelp
+			::x11/gnome/py-gnome-desktop
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.26 2008/09/29 18:48:22 simon Exp $
+# $OpenBSD: Makefile,v 1.29 2009/10/14 15:26:05 pea Exp $
 
 COMMENT=	library for WWW access in Perl
 
 MODULES=	cpan
-DISTNAME=	libwww-perl-5.805
-PKGNAME=	p5-${DISTNAME:S/-perl-/-/}p1
+DISTNAME=	libwww-perl-5.832
+PKGNAME=	p5-${DISTNAME:S/-perl-/-/}
 CATEGORIES=	www
 
 MAINTAINER=	Mathieu Sauve-Frankel <msf@openbsd.org> 
@@ -19,7 +19,8 @@ MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=LWP/}
 
 RUN_DEPENDS=	:p5-URI->1.10:www/p5-URI \
 		:p5-HTML-Parser->=3.33:www/p5-HTML-Parser \
-		:p5-Crypt-SSLeay-*:security/p5-Crypt-SSLeay \
+		::www/p5-HTML-Tagset \
+		:p5-Crypt-SSLeay-*|p5-IO-Socket-SSL-*:security/p5-Crypt-SSLeay \
 		:p5-HTTP-GHTTP-*:www/p5-HTTP-GHTTP
 BUILD_DEPENDS=	${RUN_DEPENDS}
 

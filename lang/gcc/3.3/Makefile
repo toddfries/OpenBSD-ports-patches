@@ -1,20 +1,20 @@
-# $OpenBSD: Makefile,v 1.34 2008/09/11 19:22:05 martynas Exp $
+# $OpenBSD: Makefile,v 1.40 2009/10/15 10:46:02 phessler Exp $
 
 ONLY_FOR_ARCHS=	alpha amd64 i386 m68k sparc sparc64 powerpc vax
 
 V=3.3.6
 FULL_VERSION=3.3.6
 FULL_PKGVERSION=3.3.6
-BOOTSTRAP_GEN = 6
+BOOTSTRAP_GEN = 7
 ADASTRAP = adastrap-i386-3.3.6-${BOOTSTRAP_GEN}.tgz
 
-PKGNAME-main=	gcc-${FULL_PKGVERSION}p12
-PKGNAME-c++ =	g++-${FULL_PKGVERSION}p10
-PKGNAME-estdc=	libstdc++-${FULL_PKGVERSION}p3
-PKGNAME-g77=	g77-${FULL_PKGVERSION}p9
-PKGNAME-java=	gcj-${FULL_PKGVERSION}p6
-PKGNAME-objc=	gobjc-${FULL_PKGVERSION}p10
-PKGNAME-ada=	gnat-${FULL_PKGVERSION}p8
+PKGNAME-main=	gcc-${FULL_PKGVERSION}p14
+PKGNAME-c++ =	g++-${FULL_PKGVERSION}p13
+PKGNAME-estdc=	libstdc++-${FULL_PKGVERSION}p4
+PKGNAME-g77=	g77-${FULL_PKGVERSION}p11
+PKGNAME-java=	gcj-${FULL_PKGVERSION}p10
+PKGNAME-objc=	gobjc-${FULL_PKGVERSION}p12
+PKGNAME-ada=	gnat-${FULL_PKGVERSION}p10
 SHARED_LIBS=	estdc++		6.0 \
 		g2c		1.0 \
 		-org-w3c-dom	1.0 \
@@ -37,7 +37,7 @@ FLAVOR?=c++ fortran objc
 FLAVOR+=c++
 .endif
 
-BUILD_DEPENDS=	:autoconf-2.13*:devel/autoconf/2.13
+BUILD_DEPENDS=	:autoconf-2.13:devel/autoconf/2.13
 BUILD_DEPENDS+=	::devel/metaauto
 
 # This can be patched out, apart from java that wants a pure parser.

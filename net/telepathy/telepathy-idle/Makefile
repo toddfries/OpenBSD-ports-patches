@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2007/12/30 22:50:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2009/06/11 10:57:34 jasper Exp $
 
 COMMENT=		flexible communications framework, IRC component
 
-DISTNAME=		telepathy-idle-0.1.2
-PKGNAME= 		${DISTNAME}p1
+DISTNAME=		telepathy-idle-0.1.4
 
-MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-idle}
+MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-idle/}
 
 WANTLIB=		c crypto dbus-1 dbus-glib-1 glib-2.0 gobject-2.0 \
 			pcre pthread ssl
@@ -13,9 +12,9 @@ WANTLIB=		c crypto dbus-1 dbus-glib-1 glib-2.0 gobject-2.0 \
 MODULES=		devel/gettext \
 			lang/python
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		${MODPY_EXPAT_DEPENDS} \
-			::textproc/libxslt
+BUILD_DEPENDS=		${RUN_DEPENDS} \
+			::devel/py-twisted/words
+RUN_DEPENDS=		::textproc/libxslt
 LIB_DEPENDS=		telepathy-glib::net/telepathy/telepathy-glib
 
 USE_GMAKE=		Yes
@@ -24,7 +23,9 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			OPENSSL_LIBS="-L/usr/lib -lssl -lcrypto" \
-			OPENSSL_CFLAGS="-I/usr/include" \
-			PYTHON="${MODPY_BIN}"
+			OPENSSL_CFLAGS="-I/usr/include"
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/configure
 
 .include <bsd.port.mk>

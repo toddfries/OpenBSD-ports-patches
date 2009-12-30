@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/01/15 02:00:56 okan Exp $
+# $OpenBSD: Makefile,v 1.4 2009/10/11 17:51:30 jasper Exp $
 
 COMMENT=		simple Python framework for web-based applications
 
-V=			2.5
-DISTNAME=		Quixote-$V
-PKGNAME=		py-quixote-$V
+MODPY_EGG_VERSION=	2.6
+DISTNAME=		Quixote-${MODPY_EGG_VERSION}
+PKGNAME=		py-quixote-${MODPY_EGG_VERSION}p0
 
 CATEGORIES=		www
 
 HOMEPAGE=		http://www.quixote.ca/
 MASTER_SITES=		${HOMEPAGE}releases/
 
-MAINTAINER=		Will Maier <willmaier@ml1.net>
+MAINTAINER=		Will Maier <wcmaier@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes

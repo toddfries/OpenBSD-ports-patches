@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.4 2008/10/02 20:36:04 simon Exp $
+# $OpenBSD: Makefile,v 1.6 2009/08/10 06:31:45 kili Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	perl interface to the cairo library
 
 MODULES=	cpan
-DISTNAME=	Cairo-1.040
-PKGNAME=	p5-${DISTNAME}p1
+DISTNAME=	Cairo-1.061
+PKGNAME=	p5-${DISTNAME}p0
 CATEGORIES=	graphics devel
 CPAN_AUTHOR=	TSCH
 
@@ -17,7 +17,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	X11 Xau Xdmcp Xrender expat fontconfig freetype \
-		pixman-1 m z glitz png
+		pixman-1 m z glitz png pthread-stubs xcb
 
 LIB_DEPENDS=	cairo.>=6::graphics/cairo
 BUILD_DEPENDS=	::devel/p5-ExtUtils-Depends \

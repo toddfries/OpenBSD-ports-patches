@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.4 2008/06/14 15:49:21 landry Exp $
+# $OpenBSD: Makefile,v 1.6 2009/06/04 00:18:31 jasper Exp $
 
 COMMENT=		GNU watch command
 
-DISTNAME=		procps-3.2.7
-PKGNAME=		${DISTNAME:S/procps/gnuwatch/}p0
+DISTNAME=		procps-3.2.8
+PKGNAME=		${DISTNAME:S/procps/gnuwatch/}
 CATEGORIES=		misc
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 HOMEPAGE=		http://procps.sourceforge.net/
 
-# GPL/LGPL
+# GPLv2/LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -23,7 +23,8 @@ NO_REGRESS=		Yes
 
 do-build:
 	${CC} ${CFLAGS} -c ${WRKSRC}/watch.c -o ${WRKSRC}/watch.o
-	${CC} ${CFLAGS} ${LDFLAGS} -lncurses ${WRKSRC}/watch.o -o ${WRKSRC}/gnuwatch
+	${CC} ${CFLAGS} ${LDFLAGS} ${WRKSRC}/watch.o -o ${WRKSRC}/gnuwatch \
+	    -lncurses
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/gnuwatch ${PREFIX}/bin

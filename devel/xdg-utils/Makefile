@@ -1,12 +1,17 @@
-# $OpenBSD: Makefile,v 1.3 2008/11/26 17:49:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2009/08/15 23:14:15 ajacoutot Exp $
+
+# XXX Are we affected by CVE-2008-0386? Our sed(1) does not behave as
+# the GNU version.
 
 COMMENT=	utilities to assist desktop integration tasks
 
 DISTNAME=	xdg-utils-1.0.2
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p7
 CATEGORIES=	devel
 
 HOMEPAGE=	http://portland.freedesktop.org/wiki/
+
+MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes

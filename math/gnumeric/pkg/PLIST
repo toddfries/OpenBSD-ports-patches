@@ -1,9 +1,9 @@
-@comment $OpenBSD: PLIST,v 1.13 2008/06/03 16:36:54 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.18 2009/12/21 22:07:57 ajacoutot Exp $
 %%SHARED%%
 bin/gnumeric
-bin/gnumeric-${VERSION}
-bin/ssconvert
-bin/ssindex
+@bin bin/gnumeric-${VERSION}
+@bin bin/ssconvert
+@bin bin/ssindex
 include/libspreadsheet-1.8/
 include/libspreadsheet-1.8/spreadsheet/
 include/libspreadsheet-1.8/spreadsheet/application.h
@@ -788,111 +788,58 @@ share/gnumeric/${VERSION}/templates/loan.gnumeric
 share/gnumeric/${VERSION}/templates/mileage.gnumeric
 share/gnumeric/${VERSION}/templates/purchase_order.gnumeric
 share/locale/am/LC_MESSAGES/gnumeric-functions.mo
-share/locale/am/LC_MESSAGES/gnumeric.mo
 share/locale/ar/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ar/LC_MESSAGES/gnumeric.mo
 share/locale/az/LC_MESSAGES/gnumeric-functions.mo
-share/locale/az/LC_MESSAGES/gnumeric.mo
 share/locale/bg/LC_MESSAGES/gnumeric-functions.mo
-share/locale/bg/LC_MESSAGES/gnumeric.mo
 share/locale/ca/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ca/LC_MESSAGES/gnumeric.mo
 share/locale/cs/LC_MESSAGES/gnumeric-functions.mo
-share/locale/cs/LC_MESSAGES/gnumeric.mo
 share/locale/da/LC_MESSAGES/gnumeric-functions.mo
-share/locale/da/LC_MESSAGES/gnumeric.mo
 share/locale/de/LC_MESSAGES/gnumeric-functions.mo
-share/locale/de/LC_MESSAGES/gnumeric.mo
 share/locale/dz/LC_MESSAGES/gnumeric-functions.mo
-share/locale/dz/LC_MESSAGES/gnumeric.mo
 share/locale/el/LC_MESSAGES/gnumeric-functions.mo
-share/locale/el/LC_MESSAGES/gnumeric.mo
 share/locale/en_CA/LC_MESSAGES/gnumeric-functions.mo
-share/locale/en_CA/LC_MESSAGES/gnumeric.mo
 share/locale/en_GB/LC_MESSAGES/gnumeric-functions.mo
-share/locale/en_GB/LC_MESSAGES/gnumeric.mo
 share/locale/es/LC_MESSAGES/gnumeric-functions.mo
-share/locale/es/LC_MESSAGES/gnumeric.mo
 share/locale/et/LC_MESSAGES/gnumeric-functions.mo
-share/locale/et/LC_MESSAGES/gnumeric.mo
 share/locale/fi/LC_MESSAGES/gnumeric-functions.mo
-share/locale/fi/LC_MESSAGES/gnumeric.mo
 share/locale/fr/LC_MESSAGES/gnumeric-functions.mo
-share/locale/fr/LC_MESSAGES/gnumeric.mo
 share/locale/ga/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ga/LC_MESSAGES/gnumeric.mo
 share/locale/gl/LC_MESSAGES/gnumeric-functions.mo
-share/locale/gl/LC_MESSAGES/gnumeric.mo
 share/locale/he/LC_MESSAGES/gnumeric-functions.mo
-share/locale/he/LC_MESSAGES/gnumeric.mo
 share/locale/hr/LC_MESSAGES/gnumeric-functions.mo
-share/locale/hr/LC_MESSAGES/gnumeric.mo
 share/locale/hu/LC_MESSAGES/gnumeric-functions.mo
-share/locale/hu/LC_MESSAGES/gnumeric.mo
 share/locale/it/LC_MESSAGES/gnumeric-functions.mo
-share/locale/it/LC_MESSAGES/gnumeric.mo
 share/locale/ja/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ja/LC_MESSAGES/gnumeric.mo
 share/locale/ko/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ko/LC_MESSAGES/gnumeric.mo
 share/locale/lt/LC_MESSAGES/gnumeric-functions.mo
-share/locale/lt/LC_MESSAGES/gnumeric.mo
 share/locale/lv/LC_MESSAGES/gnumeric-functions.mo
-share/locale/lv/LC_MESSAGES/gnumeric.mo
 share/locale/mk/LC_MESSAGES/gnumeric-functions.mo
-share/locale/mk/LC_MESSAGES/gnumeric.mo
 share/locale/ml/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ml/LC_MESSAGES/gnumeric.mo
 share/locale/mr/LC_MESSAGES/gnumeric-functions.mo
-share/locale/mr/LC_MESSAGES/gnumeric.mo
 share/locale/ms/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ms/LC_MESSAGES/gnumeric.mo
 share/locale/nb/LC_MESSAGES/gnumeric-functions.mo
-share/locale/nb/LC_MESSAGES/gnumeric.mo
 share/locale/ne/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ne/LC_MESSAGES/gnumeric.mo
 share/locale/nl/LC_MESSAGES/gnumeric-functions.mo
-share/locale/nl/LC_MESSAGES/gnumeric.mo
 share/locale/nn/LC_MESSAGES/gnumeric-functions.mo
-share/locale/nn/LC_MESSAGES/gnumeric.mo
-share/locale/oc/
-share/locale/oc/LC_MESSAGES/
 share/locale/oc/LC_MESSAGES/gnumeric-functions.mo
-share/locale/oc/LC_MESSAGES/gnumeric.mo
 share/locale/pl/LC_MESSAGES/gnumeric-functions.mo
-share/locale/pl/LC_MESSAGES/gnumeric.mo
 share/locale/pt/LC_MESSAGES/gnumeric-functions.mo
-share/locale/pt/LC_MESSAGES/gnumeric.mo
 share/locale/pt_BR/LC_MESSAGES/gnumeric-functions.mo
-share/locale/pt_BR/LC_MESSAGES/gnumeric.mo
 share/locale/ro/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ro/LC_MESSAGES/gnumeric.mo
 share/locale/ru/LC_MESSAGES/gnumeric-functions.mo
-share/locale/ru/LC_MESSAGES/gnumeric.mo
 share/locale/rw/LC_MESSAGES/gnumeric-functions.mo
-share/locale/rw/LC_MESSAGES/gnumeric.mo
 share/locale/sk/LC_MESSAGES/gnumeric-functions.mo
-share/locale/sk/LC_MESSAGES/gnumeric.mo
 share/locale/sr/LC_MESSAGES/gnumeric-functions.mo
-share/locale/sr/LC_MESSAGES/gnumeric.mo
+share/locale/sr@Latn/
+share/locale/sr@Latn/LC_MESSAGES/
 share/locale/sr@Latn/LC_MESSAGES/gnumeric-functions.mo
-share/locale/sr@Latn/LC_MESSAGES/gnumeric.mo
 share/locale/sv/LC_MESSAGES/gnumeric-functions.mo
-share/locale/sv/LC_MESSAGES/gnumeric.mo
-share/locale/te/
-share/locale/te/LC_MESSAGES/
 share/locale/te/LC_MESSAGES/gnumeric-functions.mo
-share/locale/te/LC_MESSAGES/gnumeric.mo
 share/locale/tr/LC_MESSAGES/gnumeric-functions.mo
-share/locale/tr/LC_MESSAGES/gnumeric.mo
 share/locale/uk/LC_MESSAGES/gnumeric-functions.mo
-share/locale/uk/LC_MESSAGES/gnumeric.mo
 share/locale/vi/LC_MESSAGES/gnumeric-functions.mo
-share/locale/vi/LC_MESSAGES/gnumeric.mo
 share/locale/zh_CN/LC_MESSAGES/gnumeric-functions.mo
-share/locale/zh_CN/LC_MESSAGES/gnumeric.mo
 share/locale/zh_TW/LC_MESSAGES/gnumeric-functions.mo
-share/locale/zh_TW/LC_MESSAGES/gnumeric.mo
 share/omf/gnumeric/
 share/omf/gnumeric/gnumeric-C.omf
 share/pixmaps/
@@ -917,13 +864,11 @@ share/pixmaps/gnumeric/right-down.png
 share/pixmaps/gnumeric/stf-druid.png
 share/pixmaps/gnumeric/win32-gnumeric.ico
 share/pixmaps/win32-gnumeric.ico
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/gnumeric/*.schemas > /dev/null
-share/schemas/gnumeric/
-share/schemas/gnumeric/gnumeric-dialogs.schemas
-share/schemas/gnumeric/gnumeric-general.schemas
-share/schemas/gnumeric/gnumeric-plugins.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/gnumeric/*.schemas > /dev/null
-@exec %D/bin/scrollkeeper-update -q
-@unexec %D/bin/scrollkeeper-update -q
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+${SCHEMAS_INSTDIR}/
+${SCHEMAS_INSTDIR}/gnumeric-dialogs.schemas
+${SCHEMAS_INSTDIR}/gnumeric-general.schemas
+${SCHEMAS_INSTDIR}/gnumeric-plugins.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

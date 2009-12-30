@@ -1,7 +1,69 @@
-$OpenBSD: patch-configure_in,v 1.8 2007/12/08 21:54:57 ajacoutot Exp $
---- configure.in.orig	Fri Nov 16 22:52:30 2007
-+++ configure.in	Fri Nov 23 16:25:25 2007
-@@ -607,7 +607,7 @@ AC_SUBST([GENERAL_PLUGIN_DIR])
+$OpenBSD: patch-configure_in,v 1.10 2009/01/03 17:56:03 jakemsr Exp $
+--- configure.in.orig	Fri Nov 16 16:52:30 2007
++++ configure.in	Thu Jan  1 22:36:59 2009
+@@ -202,12 +202,13 @@ AC_ARG_ENABLE([esd],
+ 	[enable_esd="yes"])
+ 
+ if test "x$enable_esd" = "xyes"; then
+-	AM_PATH_ESD([0.2.8], 
+-	   [have_esd=yes 
+-	    AC_CHECK_LIB([esd], [esd_get_latency], 
+-	       AC_DEFINE([HAVE_ESD_GET_LATENCY],,
+-		  [Define if libesd has the esd_get_latency function]))], 
+-	   [have_esd=no])
++	dnl AM_PATH_ESD([0.2.8], 
++	dnl    [have_esd=yes 
++	dnl     AC_CHECK_LIB([esd], [esd_get_latency], 
++	dnl        AC_DEFINE([HAVE_ESD_GET_LATENCY],,
++	dnl 	  [Define if libesd has the esd_get_latency function]))], 
++	dnl    [have_esd=no])
++	have_esd=no
+ else
+ 	AC_MSG_RESULT([*** esound plugin disabled per user request ***])
+ 	have_esd=no
+@@ -423,7 +424,8 @@ dnl ***
+ LIBS_save=$LIBS
+ CFLAGS_save=$CFLAGS
+ LDFLAGS_save=$LDFLAGS
+-AM_PATH_ALSA([0.9.0], [have_alsa=yes], [have_alsa=no])
++dnl AM_PATH_ALSA([0.9.0], [have_alsa=yes], [have_alsa=no])
++have_alsa=no
+ AM_CONDITIONAL([HAVE_ALSA], [test "x${have_alsa}" = "xyes"])
+ LIBS=$LIBS_save
+ CFLAGS=$CFLAGS_save
+@@ -449,7 +451,31 @@ if test "x$xmms_cv_newpcm_driver" = "xyes"; then
+ 	AC_DEFINE([HAVE_NEWPCM], [1], [Define if you have the FreeBSD newpcm driver])
+ fi
+ 
++dnl *** Check for libsndio
++SNDIO_LIBS=
++AC_ARG_ENABLE([sndio],
++	[  --disable-sndio           disable the libsndio output plugin],
++	[have_sndio=$enableval], [have_sndio=yes])
+ 
++if test "x$have_sndio" = "xauto"; then
++    AC_CHECK_HEADERS([sndio.h])
++    if test "x${ac_cv_header_sndio_h}" = "xyes"; then
++        have_sndio=yes
++    fi
++    if test "x${have_sndio}" = "xyes"; then
++        AC_CHECK_LIB(sndio, sio_open, [have_sndio=yes], [have_sndio=no])
++    fi
++fi
++if test "x$have_sndio" = "xyes"; then
++    AC_DEFINE([HAVE_SNDIO], [1], [Define if the libsndio output plugin should be built])
++    SNDIO_LIBS="$LIBS -lsndio"
++else
++    have_sndio=no
++fi
++AM_CONDITIONAL([HAVE_SNDIO], [test "x$have_sndio" = "xyes"])
++AC_SUBST(SNDIO_LIBS)
++    
++
+ AC_CHECK_HEADERS([linux/cdrom.h])
+ AC_CHECK_HEADERS([sys/cdrio.h])
+ AC_CHECK_HEADERS([sys/cdio.h])
+@@ -607,7 +633,7 @@ AC_SUBST([GENERAL_PLUGIN_DIR])
  AC_SUBST([VISUALIZATION_PLUGIN_DIR])
  AC_SUBST([pluginsubs])
  
@@ -10,3 +72,19 @@ $OpenBSD: patch-configure_in,v 1.8 2007/12/08 21:54:57 ajacoutot Exp $
  
  if test "x$enable_user_plugin_dir" = "xno"; then
  	AC_DEFINE(DISABLE_USER_PLUGIN_DIR,, [Define to disable per user plugin directory])
+@@ -635,6 +661,7 @@ Output/Makefile
+ Output/OSS/Makefile
+ Output/esd/Makefile
+ Output/disk_writer/Makefile
++Output/sndio/Makefile
+ Output/solaris/Makefile
+ Output/sun/Makefile
+ Output/alsa/Makefile
+@@ -670,6 +697,7 @@ echo "  Current xmms                $XMMS_PATH"
+ fi
+ 
+ echo "  Build OSS plugin:           $have_oss"
++echo "  Build sndio plugin:         $have_sndio"
+ echo "  Build esd plugin:           $have_esd"
+ echo "  Build Solaris plugin:       $have_solaris"
+ echo "  Build BSD Sun plugin:       $have_sun"

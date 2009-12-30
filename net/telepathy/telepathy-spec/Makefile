@@ -1,27 +1,30 @@
-# $OpenBSD: Makefile,v 1.10 2008/11/18 12:50:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2009/06/02 04:45:33 jasper Exp $
+
+PKG_ARCH=		*
 
 COMMENT=		flexible communications framework, specifications
 
-DISTNAME=		telepathy-spec-0.17.14
+DISTNAME=		telepathy-spec-0.17.25
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		books
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-spec/}
 
-BUILD_DEPENDS=		::lang/python/2.5 \
+BUILD_DEPENDS=		::devel/py-cheetah \
 			::textproc/libxslt \
 			::textproc/py-docutils
+
+MODULES+=		lang/python
+MODPY_RUNDEP=		No
 
 USE_GMAKE=		Yes
 
 NO_REGRESS=		Yes
 
-PKG_ARCH=		*
+CONFIGURE_STYLE=	none
 
-# XXX we should use MODPY_BIN from the lang/python MODULE but
-# we do not want to build/run_depends on python
 pre-configure:
-	perl -pi -e 's,!!MODPY_BIN!!,${LOCALBASE}/bin/python2.5,g' ${WRKSRC}/Makefile
-	perl -pi -e 's,!!MODPY_BIN!!,${LOCALBASE}/bin/python2.5,g' ${WRKSRC}/tools/*.py
+	${SUBST_CMD} ${WRKSRC}/Makefile ${WRKSRC}/tools/*.py
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/gtk-doc/html/telepathy-spec/

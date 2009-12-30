@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.1 2008/03/20 11:42:35 winiger Exp $
+# $OpenBSD: Makefile,v 1.4 2009/09/15 17:37:22 jasper Exp $
 
 COMMENT=	content management system built on top of Zope
 
 DISTNAME=	Plone-3.0.6
-PKGNAME=	${DISTNAME:L}
+PKGNAME=	${DISTNAME:L}p2
 
 MASTER_SITES=		https://launchpad.net/plone/3.0/3.0.6/+download/
 

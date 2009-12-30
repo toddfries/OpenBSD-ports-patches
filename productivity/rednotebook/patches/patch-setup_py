@@ -1,0 +1,15 @@
+$OpenBSD: patch-setup_py,v 1.2 2009/11/12 10:10:57 ajacoutot Exp $
+
+Fix build on clean system.
+
+--- setup.py.orig	Thu Nov 12 10:52:09 2009
++++ setup.py	Thu Nov 12 10:52:44 2009
+@@ -203,7 +203,7 @@ if set(['build', 'install', 'bdist', 'py2exe', 'i18n']
+ 
+ # Freedesktop parameters
+ share_dir = join(get_data_base_dir(), 'share')
+-if os.path.exists(share_dir): 
++if 1:
+ 	parameters['data_files'].extend([
+ 			(join(share_dir, 'applications'), ['rednotebook.desktop']),
+ 			(join(share_dir, 'icons/hicolor/48x48/apps'), ['rednotebook.png']),# new freedesktop.org spec

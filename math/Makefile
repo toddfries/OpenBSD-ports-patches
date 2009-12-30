@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.79 2008/10/16 00:19:30 sthen Exp $
+# $OpenBSD: Makefile,v 1.87 2009/11/27 18:17:31 jasper Exp $
 #
 
      SUBDIR += R
@@ -42,15 +42,20 @@
      SUBDIR += maxima
      SUBDIR += mcl
      SUBDIR += mcsim
+     SUBDIR += minisat
      SUBDIR += moo
      SUBDIR += netcdf
      SUBDIR += ntl
      SUBDIR += octave
      SUBDIR += p5-AI-FANN
      SUBDIR += p5-AI-NeuralNet-BackProp
+     SUBDIR += p5-AI-NeuralNet-Kohonen
+     SUBDIR += p5-AI-NeuralNet-Kohonen-Visual
      SUBDIR += p5-AI-NeuralNet-Mesh
      SUBDIR += p5-AI-Perceptron
+     SUBDIR += p5-Algorithm-NaiveBayes
      SUBDIR += p5-Bit-Vector
+     SUBDIR += p5-Data-PowerSet
      SUBDIR += p5-Chart-Math-Axis
      SUBDIR += p5-GraphViz
      SUBDIR += p5-Math-Bezier
@@ -61,11 +66,15 @@
      SUBDIR += p5-Math-Fibonacci
      SUBDIR += p5-Math-Fibonacci-Phi
      SUBDIR += p5-Math-GMP
+     SUBDIR += p5-Math-MatrixReal
      SUBDIR += p5-Math-Pari
      SUBDIR += p5-Math-Round
      SUBDIR += p5-Math-Spline
+     SUBDIR += p5-Math-Symbolic
+     SUBDIR += p5-Math-SymbolicX-ParserExtensionFactory
      SUBDIR += p5-Math-VecStat
      SUBDIR += p5-Set-IntSpan
+     SUBDIR += p5-Statistics-Contingency
      SUBDIR += p5-Statistics-Descriptive
      SUBDIR += pari
      SUBDIR += plplot
@@ -73,9 +82,11 @@
      SUBDIR += py-gnuplot
      SUBDIR += py-numpy
      SUBDIR += py-probstat
+     SUBDIR += py-scipy
      SUBDIR += qtoctave
      SUBDIR += sc
      SUBDIR += umfpack
+     SUBDIR += wcalc
      SUBDIR += wmcalc
      SUBDIR += xspread
      SUBDIR += yorick

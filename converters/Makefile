@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2008/10/16 00:19:30 sthen Exp $
+# $OpenBSD: Makefile,v 1.47 2009/05/11 09:36:48 jasper Exp $
 #
 
     SUBDIR += base64
@@ -9,6 +9,7 @@
     SUBDIR += libdvd
     SUBDIR += libdvdcss
     SUBDIR += libiconv
+    SUBDIR += libpst
     SUBDIR += mimepp
     SUBDIR += mpack
     SUBDIR += p5-Calendar-Simple
@@ -25,6 +26,7 @@
     SUBDIR += p5-Convert-UUlib
     SUBDIR += p5-Date-Tolkien-Shire
     SUBDIR += p5-DateManip
+    SUBDIR += p5-Encode-IMAPUTF7
     SUBDIR += p5-Finance-Currency-Convert-XE
     SUBDIR += p5-IDNA-Punycode
     SUBDIR += p5-JSON

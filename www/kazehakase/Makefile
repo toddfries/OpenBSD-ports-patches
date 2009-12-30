@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2008/11/13 12:29:24 landry Exp $
+# $OpenBSD: Makefile,v 1.16 2009/12/22 13:02:12 sthen Exp $
 
 COMMENT-main=	common files for kazehakase
 COMMENT-gecko=	lightweight gecko-based web browser
@@ -10,15 +10,12 @@ SHARED_ONLY=	Yes
 
 VERSION=	0.5.6
 DISTNAME=	kazehakase-${VERSION}
-PKGNAME-main=	kazehakase-common-${VERSION}
-PKGNAME-gecko=	${DISTNAME}
-PKGNAME-webkit=	kazehakase-webkit-${VERSION}
-MASTER_SITES=	http://osdn.dl.sourceforge.jp/kazehakase/33533/
-#doesn't work
-#MASTER_SITES=	${MASTER_SITE_SOURCEFORGE_JP:=kazehakase/}
+PKGNAME-main=	kazehakase-common-${VERSION}p4
+PKGNAME-gecko=	${DISTNAME}p6
+PKGNAME-webkit=	kazehakase-webkit-${VERSION}p4
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE_JP:=kazehakase/33533/}
 
 HOMEPAGE=	http://kazehakase.sourceforge.jp/
-MAINTAINER=	Landry Breuil <gaston@gcu.info>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -26,7 +23,13 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MULTI_PACKAGES=	-main -gecko -webkit
+MULTI_PACKAGES=	-main -gecko
+
+.if ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "i386" || \
+    ${MACHINE_ARCH} == "powerpc" || ${MACHINE_ARCH} == "amd64"
+# XXX give -gecko a chance to build on systems where webkit is not built
+MULTI_PACKAGES += -webkit
+.endif
 
 MODULES=	devel/gettext \
 		textproc/intltool
@@ -42,7 +45,7 @@ USE_LIBTOOL =		Yes
 
 FAKE_FLAGS =		sysconfdir=${TRUEPREFIX}/share/examples
 
-BUILD_DEPENDS =		:xulrunner-devel->=1.8:devel/xulrunner,-devel
+BUILD_DEPENDS =		:xulrunner-devel->=1.8,<1.9:devel/xulrunner/1.8,-devel
 
 RUN_DEPENDS-main =	${RUN_DEPENDS} \
 			::devel/desktop-file-utils
@@ -58,20 +61,21 @@ LIB_DEPENDS-main =	${LIB_DEPENDS} \
 
 LIB_DEPENDS-gecko =	${LIB_DEPENDS-main} \
 			lib/kazehakase/kazehakase::www/kazehakase,-main \
-			xulrunner/xpcom:xulrunner->=1.8:devel/xulrunner
+			xulrunner/xpcom:xulrunner->=1.8,<1.9:devel/xulrunner/1.8
 
 LIB_DEPENDS-webkit =	${LIB_DEPENDS} \
 			webkit-1.0::www/webkit
 
 WANTLIB =		ICE SM X11 Xau Xcursor Xdmcp Xext Xfixes Xi Xinerama \
 			Xrandr Xrender Xcomposite Xdamage expat fontconfig \
-			freetype m z png cairo iconv intl atk-1.0 glib-2.0 \
+			freetype m z png cairo iconv intl atk-1.0 gio-2.0 glib-2.0 \
 			gmodule-2.0 gobject-2.0 gthread-2.0 pango-1.0 \
-			pangocairo-1.0 pangoft2-1.0 glitz pcre pixman-1
+			pangocairo-1.0 pangoft2-1.0 glitz pcre pixman-1 tasn1 \
+			pthread-stubs xcb
 
 WANTLIB-main =		${WANTLIB} c gcrypt gpg-error pthread
 WANTLIB-gecko =		${WANTLIB} nspr4 plc4 plds4 gcrypt gpg-error
-WANTLIB-webkit =	${WANTLIB} Xt crypto curl icudata icui18n icuuc idn \
-			jpeg pthread sqlite3 ssl xml2 xslt
+WANTLIB-webkit =	${WANTLIB} Xt enchant gailutil gcrypt gnutls gpg-error \
+			icudata icui18n icuuc jpeg soup-2.4 sqlite3 stdc++ xml2 xslt
 
 .include <bsd.port.mk>

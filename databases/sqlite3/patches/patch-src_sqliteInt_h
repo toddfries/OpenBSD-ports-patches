@@ -1,8 +1,8 @@
-$OpenBSD: patch-src_sqliteInt_h,v 1.2 2008/10/27 17:14:18 simon Exp $
---- src/sqliteInt.h.orig	Sat Oct 25 19:43:37 2008
-+++ src/sqliteInt.h	Sat Oct 25 19:45:37 2008
+$OpenBSD: patch-src_sqliteInt_h,v 1.6 2009/12/19 23:08:48 sthen Exp $
+--- src/sqliteInt.h.orig	Fri Jun 26 16:14:55 2009
++++ src/sqliteInt.h	Fri Dec 18 22:05:53 2009
 @@ -35,11 +35,6 @@
- #pragma warn -spa /* Suspicous pointer arithmetic */
+ #pragma warn -spa /* Suspicious pointer arithmetic */
  #endif
  
 -/* Needed for various definitions... */
@@ -13,16 +13,16 @@ $OpenBSD: patch-src_sqliteInt_h,v 1.2 2008/10/27 17:14:18 simon Exp $
  /*
  ** Include standard header files as necessary
  */
-@@ -378,33 +373,26 @@ typedef INT16_TYPE i16;            /* 2-byte signed in
- typedef UINT8_TYPE u8;             /* 1-byte unsigned integer */
- typedef INT8_TYPE i8;              /* 1-byte signed integer */
+@@ -439,33 +434,26 @@ typedef INT8_TYPE i8;              /* 1-byte signed in
+ */
+ #define SQLITE_MAX_U32  ((((u64)1)<<32)-1)
  
 -/*
 -** Macros to determine whether the machine is big or little endian,
 -** evaluated at runtime.
 -*/
 -#ifdef SQLITE_AMALGAMATION
--const int sqlite3one;
+-const int sqlite3one = 1;
 +#include <sys/endian.h>
 +#if _BYTE_ORDER == _BIG_ENDIAN
 +#define SQLITE_BIGENDIAN	1
@@ -57,5 +57,14 @@ $OpenBSD: patch-src_sqliteInt_h,v 1.2 2008/10/27 17:14:18 simon Exp $
 +#define LARGEST_INT64	INT64_MAX
 +#define SMALLEST_INT64	INT64_MIN
  
- /*
- ** An instance of the following structure is used to store the busy-handler
+ /* 
+ ** Round up a number to the next larger multiple of 8.  This is used
+@@ -1511,7 +1499,7 @@ struct Expr {
+ 
+   int iTable;            /* TK_COLUMN: cursor number of table holding column
+                          ** TK_REGISTER: register number */
+-  i16 iColumn;           /* TK_COLUMN: column index.  -1 for rowid */
++  int iColumn;           /* TK_COLUMN: column index.  -1 for rowid */
+   i16 iAgg;              /* Which entry in pAggInfo->aCol[] or ->aFunc[] */
+   i16 iRightJoinTable;   /* If EP_FromJoin, the right table of the join */
+   u16 flags2;            /* Second set of flags.  EP2_... */

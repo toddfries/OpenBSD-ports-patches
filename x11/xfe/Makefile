@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.12 2008/08/20 08:43:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2009/11/03 13:27:43 stephan Exp $
 
 COMMENT=	MS-Explorer like file manager for X
 
 DISTNAME= 	xfe-1.19.2
+PKGNAME=	${DISTNAME}p4
 CATEGORIES= 	x11
 
 HOMEPAGE=	http://roland65.free.fr/xfe/
 
-MAINTAINER= 	Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=	Stephan A. Rickauer <stephan@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -18,7 +19,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=xfe/}
 
 WANTLIB=	X11 Xau Xdmcp Xft Xrender c expat fontconfig freetype \
-		m stdc++ png z
+		m pthread stdc++ png z pthread-stubs xcb
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	FOX-1.6.>=1::devel/fox
@@ -33,7 +34,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 			-I${X11BASE}/include/freetype2 \
 			-I${LOCALBASE}/include/libpng" \
 		LDFLAGS="-L${LOCALBASE}/lib \
-			-L${X11BASE}/lib -lXft"
+			-L${X11BASE}/lib -lXft -pthread"
 
 MAKE_FLAGS=	CXXFLAGS="${CXXFLAGS} -DHAVE_XFT_H"
 

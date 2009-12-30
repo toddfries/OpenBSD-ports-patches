@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2008/07/09 12:13:45 martynas Exp $
+# $OpenBSD: Makefile,v 1.8 2009/10/11 20:59:37 jasper Exp $
 
 COMMENT=		protocol definition, declaration and adaptation
 
 VERSION=		1.0
 REVISION=		2306
 DISTNAME=		PyProtocols
-PKGNAME=		py-protocols-${VERSION}r${REVISION}p1
+PKGNAME=		py-protocols-${VERSION}r${REVISION}p3
 
 CATEGORIES=		devel
 
@@ -19,7 +19,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		${MASTER_SITE_SUNSITE:=distributions/gentoo/distfiles/}
+MASTER_SITES=		http://mirrors.protection.cx/~martynas/python/
 DISTFILES=		PyProtocols-${VERSION}a0dev_r${REVISION}${EXTRACT_SUFX}
 
 MODULES=		lang/python

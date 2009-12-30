@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2007/12/10 21:09:09 martynas Exp $
+# $OpenBSD: Makefile,v 1.8 2009/11/23 00:45:27 fgsch Exp $
 
 COMMENT=		Python-based presentation tool
 
 DISTNAME=		bruce-1.2.1
+PKGNAME=		${DISTNAME}p0
 
 CATEGORIES=		productivity
 
@@ -16,7 +17,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		http://cheeseshop.python.org/packages/source/b/bruce/
+MASTER_SITES=		${MASTER_SITE_PYPI:=b/bruce/}
 
 MODULES=		lang/python
 RUN_DEPENDS=		::devel/pygame

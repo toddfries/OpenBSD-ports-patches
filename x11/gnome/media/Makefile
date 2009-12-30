@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.10 2008/11/23 22:59:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2009/12/21 18:03:19 ajacoutot Exp $
 
 COMMENT=		GNOME media utilities
 
 GNOME_PROJECT=		gnome-media
-GNOME_VERSION=		2.24.0.1
+GNOME_VERSION=		2.28.1
+PKGNAME=		${DISTNAME}p3
+
 SHARED_LIBS +=	gnome-media-profiles 0.0      # .0.0
+
 CATEGORIES=		x11
 
 # GPLv2/GFDLv1.1/LGPLv2
@@ -13,44 +16,31 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
-		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 atk-1.0 audiofile bonobo-2 bonobo-activation \
-		c cairo crypto dbus-1 dbus-glib-1 esd expat fontconfig \
-		freetype gailutil gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glade-2.0 \
-		glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 \
-		gobject-2.0 gthread-2.0 gtk-x11-2.0 jpeg m pcre pixman-1 png \
-		popt pthread ssl util xml2 z
+WANTLIB += ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+WANTLIB += Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo dbus-1
+WANTLIB += dbus-glib-1 expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 gstbase-0.10
+WANTLIB += gstreamer-0.10 gthread-2.0 gtk-x11-2.0 ltdl m ogg pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs vorbis vorbisfile xcb xml2 z
 
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			devel/gconf2
 
-BUILD_DEPENDS=		::textproc/scrollkeeper \
-			::multimedia/gstreamer-0.10/plugins-good,-gconf \
-			::x11/gnome/doc-utils
-LIB_DEPENDS=		gconf-2::devel/gconf2 \
-			bonoboui-2::x11/gnome/libbonoboui \
-			gnomevfs-2::x11/gnome/vfs2 \
-			gnomeui-2::x11/gnome/libgnomeui \
-			gstreamer-0.10,gstbase-0.10::multimedia/gstreamer-0.10/core \
-			gstinterfaces-0.10,gstaudio-0.10::multimedia/gstreamer-0.10/plugins-base \
-			pango-1.0,pangocairo-1.0,pangoft2-1.0::devel/pango
-RUN_DEPENDS=		::textproc/scrollkeeper
+BUILD_DEPENDS=		::multimedia/gstreamer-0.10/plugins-good
+LIB_DEPENDS=		glade-2.0::devel/libglade2 \
+			gstaudio-0.10.>=1,gstinterfaces-0.10:gstreamer-plugins-base->=0.10.25:multimedia/gstreamer-0.10/plugins-base \
+			canberra-gtk,canberra.>=1::audio/libcanberra
 
 MODGNOME_HELP_FILES=	Yes
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
-CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gnome-media \
-			--disable-schemas-install
+MODGCONF2_SCHEMAS_DIR=	gnome-media
 CONFIGURE_ENV=  	CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			CFLAGS="-I${LOCALBASE}/include ${CFLAGS}" \
 			CDROM_HOST="bsd"
-
-CFLAGS+=		-O0
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>
 

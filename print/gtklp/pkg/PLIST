@@ -1,6 +1,6 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2008/05/17 13:29:29 ajacoutot Exp $
-bin/gtklp
-bin/gtklpq
+@comment $OpenBSD: PLIST,v 1.3 2009/06/22 08:20:48 ajacoutot Exp $
+@bin bin/gtklp
+@bin bin/gtklpq
 @man man/man1/gtklp.1
 @man man/man1/gtklpq.1
 share/locale/ca/LC_MESSAGES/gtklp.mo
@@ -17,6 +17,9 @@ share/locale/cz/
 share/locale/cz/LC_MESSAGES/
 share/locale/cz/LC_MESSAGES/gtklp.mo
 share/locale/de/LC_MESSAGES/gtklp.mo
+share/locale/dk/
+share/locale/dk/LC_MESSAGES/
+share/locale/dk/LC_MESSAGES/gtklp.mo
 share/locale/en/LC_MESSAGES/gtklp.mo
 share/locale/es/LC_MESSAGES/gtklp.mo
 share/locale/fr/LC_MESSAGES/gtklp.mo

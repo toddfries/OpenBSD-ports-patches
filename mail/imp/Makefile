@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.23 2008/10/30 09:42:41 mbalmer Exp $ 
+# $OpenBSD: Makefile,v 1.27 2009/09/28 13:09:15 sthen Exp $ 
 
 COMMENT=	highly configurable pop3/imap4 webmail client
 
 HORDE_MODULE=	imp
 HORDE_NAME=	IMP
+V=		4.3.5
 
-DISTNAME=	${HORDE_MODULE}-h3-4.3
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	${HORDE_MODULE}-h3-${V}
 CATEGORIES=	mail www
 HOMEPAGE=	http://www.horde.org/${HORDE_MODULE}/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

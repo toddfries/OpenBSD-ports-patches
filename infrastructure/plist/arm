@@ -1,4 +1,4 @@
-# $OpenBSD: arm,v 1.19 2008/08/25 17:20:49 pvalchev Exp $
+# $OpenBSD: arm,v 1.24 2009/10/12 12:40:17 sthen Exp $
 # This is the master list of subdirs used to choose arm packages.
 # Use with ${PORTSDIR}/infrastructure/package/check-plist
 # to create actual SUBDIRLIST to pass to ports main Makefile.
@@ -24,26 +24,35 @@ mail/offlineimap
 mail/mutt/stable
 mail/mutt/snapshot
 mail/mutt/snapshot,sasl
-audio/libao,-esd
+audio/libao
 audio/vorbis-tools
 audio/mpg321
+audio/mpg123
 audio/waveplay
 net/curl
 net/ircII
+net/ircd-hybrid
+net/ircd-ratbox
 devel/id-utils
-www/konqueror-embedded
+# www/konqueror-embedded
 textproc/antiword
+textproc/mupdf
 textproc/xpdf
 x11/rdesktop
 net/samba
 games/xkobo,harder
 games/xlife
+x11/qt3,no_examples
+#x11/qt3,no_mysql,no_postgresql,no_examples
 x11/xglobe
 graphics/mpeg_play
 benchmarks/tcpblast
 www/links+
 www/links+,no_x11
 devel/git
+devel/mercurial
+devel/bzr
+devel/subversion
 graphics/gqview
 net/epic4
 security/bsd-airtools
@@ -52,11 +61,15 @@ editors/ldapvi
 editors/leafpad
 editors/nano
 net/lftp
+net/arp-scan
 net/ncftp
 net/snort
 net/ettercap
+emulators/fuse
+emulators/fuse-utils
 security/stunnel
 net/silc-client
+net/silc-server
 graphics/xfig
 x11/xautolock
 devel/gmake
@@ -74,8 +87,9 @@ games/xpat2
 audio/madplay
 audio/tremor-tools
 net/kismet
-# XXX warning mplayer not for CD just FTP
+# XXX warning mplayer/ffmpeg not for CD just FTP
 x11/mplayer
+graphics/ffmpeg
 shells/bash
 shells/tcsh
 shells/zsh
@@ -100,13 +114,13 @@ audio/xmms-tremor
 print/ps2eps
 print/texlive/base
 misc/dtach
-# Builds, but disabled for time reasons
-#x11/kde/base3
 net/ssvnc
 telephony/pjsua
+databases/sqlite
+databases/sqlite3
 databases/postgresql
 security/pwsafe
-archivers/lzma
+archivers/xz
 archivers/zip
 audio/mpc
 audio/mpd
@@ -120,10 +134,14 @@ converters/p5-DateManip
 converters/mpack
 net/irssi
 net/irssi-icb
+net/irssi-silc
+net/bitlbee
 misc/gpsd
 misc/screen,static
 x11/x2x
+x11/dmenu
 x11/dwm
+x11/scrotwm
 x11/wmii
 x11/awesome
 x11/rxvt
@@ -139,15 +157,25 @@ games/wtf
 math/moo
 net/bluetooth-tools
 net/darkstat
+net/dnsmasq
+net/dnstop
 net/dsocks
+net/fping
 net/gotthard
 net/igmpproxy
 net/iodine
 net/ipcalc
+net/ipv6calc
+net/mtr
+net/mtr,no_x11
 net/netrate
 net/netsed
 net/ngrep
 net/no-ip
+net/nsd
+net/unbound
+net/ldns/drill
+net/ladvd
 net/nslint
 net/nsping
 net/nssl
@@ -170,11 +198,9 @@ security/py-crypto
 math/gnuplot
 math/py-gnuplot
 net/scapy
-net/scapy6
 net/sharity-light
 net/sing
 net/sipsak
-net/sniffit
 net/softflowd
 net/ssldump
 net/tcpdpriv
@@ -193,10 +219,10 @@ net/unworkable
 net/vicq
 net/vsftpd
 net/wol
+www/kazehakase
 databases/mdbtools/snapshot
 databases/luasqlite3
 devel/luaalarm
-devel/luabitlib
 devel/luacopas
 devel/luaevent
 devel/luafs
@@ -205,6 +231,7 @@ devel/luaposix
 devel/luarexlib
 devel/luarings
 devel/luastdlib
+devel/ccache
 graphics/luagd
 net/luasocket
 security/luacrypto
@@ -214,6 +241,7 @@ print/ghostview
 print/detex
 print/pdfjam
 graphics/dcraw
+graphics/tgif
 productivity/calcurse
 productivity/devtodo
 productivity/gtimer
@@ -251,6 +279,7 @@ security/vpnc
 security/whisker
 security/wpa_supplicant
 sysutils/anacron
+sysutils/bacula,no_bat,sqlite3
 sysutils/clusterit
 sysutils/colortail
 sysutils/conky
@@ -266,9 +295,11 @@ sysutils/monitord
 sysutils/multitail
 sysutils/nut
 sysutils/pftop
+sysutils/pkg_mgr
 sysutils/pscpug
 sysutils/pstree
 sysutils/rtty
+sysutils/ruby-puppet
 sysutils/sdd
 sysutils/sec
 sysutils/setquota
@@ -293,6 +324,7 @@ www/dansguardian
 www/http_ping
 www/nginx
 www/nostromo
+www/ntlmaps
 www/surfraw
 www/lighttpd
 www/thttpd
@@ -304,11 +336,17 @@ www/w3m
 www/w3m,image
 www/w3mir
 x11/devilspie
-x11/dmenu
 x11/evilwm
 x11/gromit
+x11/dejavu-fonts
+x11/ecoliercourt-fonts
+x11/freefonts
+x11/freefont-ttf
+x11/jmk-fonts
 x11/liberation-fonts
+x11/wqy-bitmapfont
 x11/openbox
+x11/aterm
 x11/py-gtk2
 x11/obmenu
 x11/oroborus
@@ -317,6 +355,7 @@ x11/root-tail
 x11/slock
 x11/vdesk
 x11/x2vnc
+x11/x11vnc
 x11/xarchive
 x11/xkeycaps
 x11/xloadimage
@@ -326,6 +365,11 @@ x11/xtattr
 x11/xtermset
 x11/xtoolwait
 x11/yeahlaunch
+archivers/p7zip
 games/wesnoth,tinygui
 games/micropolis
 www/mozilla-firefox
+x11/kde/base3
+security/qca
+security/qca-tls
+x11/kde/network3

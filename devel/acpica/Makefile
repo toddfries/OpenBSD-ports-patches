@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2008/07/07 04:08:00 phessler Exp $
+# $OpenBSD: Makefile,v 1.4 2009/01/03 19:51:04 naddy Exp $
 
 ONLY_FOR_ARCHS =	amd64 i386
 
 COMMENT =		reference implementation of ACPI tools
 V =			20080701
 DISTNAME =		acpica-unix-${V}
-PKGNAME =		acpica-${V}
+PKGNAME =		acpica-${V}p0
 CATEGORIES =		devel
 
 HOMEPAGE =		http://www.acpica.org
@@ -17,9 +17,9 @@ WANTLIB =		c
 # Intel License
 # http://www.acpica.org/downloads/unix_source_code.php
 PERMIT_PACKAGE_CDROM =	export restrictions
-PERMIT_PACKAGE_FTP =	export restrictions
+PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =export restrictions
-PERMIT_DISTFILES_FTP =	export restrictions
+PERMIT_DISTFILES_FTP =	Yes
 
 USE_GMAKE =		Yes
 NO_REGRESS = 		Yes

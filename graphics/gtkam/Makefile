@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2008/06/18 11:44:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2009/12/22 16:06:41 ajacoutot Exp $
 
 COMMENT=	digital camera frontend
 
-DISTNAME=	gtkam-0.1.15
+DISTNAME=	gtkam-0.1.16.1
+PKGNAME=	${DISTNAME}p0
+
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://gphoto.sourceforge.net/proj/gtkam/
@@ -19,7 +21,8 @@ WANTLIB=	gmodule-2.0 X11 Xext Xrender gobject-2.0 glitz png \
 		atk-1.0 fontconfig freetype m c z cairo glib-2.0 pcre \
 		pango-1.0 pangocairo-1.0 pangoft2-1.0 Xau Xcursor \
 		Xdmcp Xfixes Xi Xinerama Xrandr exif expat ltdl usb \
-		Xcomposite Xdamage pixman-1 pthread
+		Xcomposite Xdamage pixman-1 pthread gio-2.0 \
+		pthread-stubs xcb
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gphoto/}
 

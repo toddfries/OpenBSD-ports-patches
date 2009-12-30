@@ -1,0 +1,38 @@
+@comment $OpenBSD: PFRAG.shared,v 1.3 2009/10/29 19:59:38 landry Exp $
+lib/libqgis_analysis.so
+@lib lib/libqgis_analysis.so.${LIBqgis_analysis_VERSION}
+lib/libqgis_core.so
+@lib lib/libqgis_core.so.${LIBqgis_core_VERSION}
+lib/libqgis_gui.so
+@lib lib/libqgis_gui.so.${LIBqgis_gui_VERSION}
+lib/libqgispython.so
+@lib lib/libqgispython.so.${LIBqgispython_VERSION}
+lib/qgis/
+lib/qgis/libcoordinatecaptureplugin.so
+lib/qgis/libcopyrightlabelplugin.so
+lib/qgis/libdelimitedtextplugin.so
+lib/qgis/libdelimitedtextprovider.so
+lib/qgis/libdiagramoverlay.so
+lib/qgis/libdxf2shpconverterplugin.so
+lib/qgis/libevis.so
+lib/qgis/libgeorefplugin.so
+lib/qgis/libgpsimporterplugin.so
+lib/qgis/libgpxprovider.so
+lib/qgis/libinterpolationplugin.so
+lib/qgis/libmemoryprovider.so
+lib/qgis/libnortharrowplugin.so
+lib/qgis/libogrconverterplugin.so
+lib/qgis/libogrprovider.so
+lib/qgis/liboracleplugin.so
+lib/qgis/libosmprovider.so
+lib/qgis/libpostgresprovider.so
+lib/qgis/libquickprintplugin.so
+lib/qgis/librasterterrainplugin.so
+lib/qgis/libscalebarplugin.so
+lib/qgis/libspatialiteprovider.so
+lib/qgis/libspitplugin.so
+lib/qgis/libwfsplugin.so
+lib/qgis/libwfsprovider.so
+lib/qgis/libwmsprovider.so
+share/qgis/python/qgis/core.so
+share/qgis/python/qgis/gui.so

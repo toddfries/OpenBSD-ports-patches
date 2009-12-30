@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.10 2008/05/30 09:41:21 fgsch Exp $
+# $OpenBSD: Makefile,v 1.12 2009/11/01 22:39:53 jasper Exp $
 
-.if ${MACHINE_ARCH} != "i386" && ${MACHINE_ARCH} != "sparc" && \
-    ${MACHINE_ARCH} != "sparc64"
-BROKEN=			varargs misuse, and unportable software
-.endif
+# varargs misuse, and unportable software
+ONLY_FOR_ARCHS= 	i386 sparc sparc64
 
 COMMENT=		Plan 9 compatibility libraries
 
 DISTNAME=		9libs-1.0
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p5
 CATEGORIES=		plan9 devel
 SHARED_LIBS=		Xg	0.0 \
 			frame	0.0 \
@@ -27,7 +25,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB =		ICE SM X11 Xau Xdmcp Xt m
+WANTLIB =		ICE SM X11 Xau Xdmcp Xt m pthread-stubs xcb
 
 MASTER_SITES=		${HOMEPAGE}
 

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.19 2008/11/15 14:05:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2009/10/06 19:20:51 ajacoutot Exp $
 
 COMMENT=	GNUstep base library
 
-DISTNAME=	gnustep-base-1.16.4
-SHARED_LIBS=	gnustep-base 2.0	# .1.16.4
+DISTNAME=	gnustep-base-1.18.0
+PKGNAME=	${DISTNAME}p2
+SHARED_LIBS=	gnustep-base 2.1	# .1.16.4
 CATEGORIES=	devel
 
 LIBDIR=		lib/GNUstep/Libraries/gnustep-base/Versions/${LIBgnustep-base_VERSION}
@@ -11,7 +12,12 @@ SUBST_VARS=	LIBDIR
 
 HOMEPAGE=	http://www.gnustep.org/
 
-WANTLIB=	c crypto gcrypt gpg-error iberty m objc pthread ssl tasn1 xml2 z
+WANTLIB += c crypto gcrypt gpg-error m objc pthread ssl xml2
+WANTLIB += z
+
+.if ${MACHINE_ARCH} != "i386"
+WANTLIB += iberty
+.endif
 
 MASTER_SITES=	${MASTER_SITE_GNUSTEP:=core/}
 
@@ -20,11 +26,16 @@ MODULES=	x11/gnustep \
 LIB_DEPENDS=	avcall.>=1,callback.>=1::devel/ffcall \
 		gmp.>=7::devel/gmp \
 		xslt.>=3::textproc/libxslt \
-		gnutls.>=13::security/gnutls
+		gnutls.>=13::security/gnutls \
+		dns_sd::net/avahi
 
 CONFIGURE_STYLE=gnu
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/avahi-compat-libdns_sd" \
+		LDFLAGS="-pthread"
 CONFIGURE_ARGS=	--disable-procfs \
 		--disable-procfs-psinfo
+
+CFLAGS+=	-pthread
 
 pre-configure:
 	@perl -pi -e 's,^MAJOR_VERSION=.*,MAJOR_VERSION=${LIBgnustep-base_VERSION:R},g;' \

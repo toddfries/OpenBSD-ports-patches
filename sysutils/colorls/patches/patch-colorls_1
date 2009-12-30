@@ -1,6 +1,6 @@
-$OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
---- colorls.1.orig	Sat Aug 11 20:38:04 2007
-+++ colorls.1	Sat Aug 11 20:37:37 2007
+$OpenBSD: patch-colorls_1,v 1.12 2009/10/29 20:10:39 naddy Exp $
+--- colorls.1.orig	Thu Oct 29 20:53:23 2009
++++ colorls.1	Thu Oct 29 21:04:05 2009
 @@ -37,11 +37,11 @@
  .Dt COLORLS 1
  .Os
@@ -13,10 +13,10 @@ $OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
 -.Op Fl 1AaCcdFfghikLlmnopqRrSsTtux
 +.Nm
 +.Op Fl 1AaCcdFfGghikLlmnopqRrSsTtux
- .Op Ar file ...
+ .Op Ar
  .Sh DESCRIPTION
  For each operand that names a
-@@ -112,6 +112,12 @@ and a vertical bar
+@@ -121,6 +121,12 @@ and a vertical bar
  after each that is a FIFO.
  .It Fl f
  Output is not sorted.
@@ -27,18 +27,18 @@ $OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
 +in the environment.
 +(See below.)
  .It Fl g
- The same as
+ List in long format as in
  .Fl l ,
-@@ -414,7 +420,7 @@ The
- .Nm
- utility exits 0 on success or \*(Gt0 if an error occurred.
+@@ -418,7 +424,7 @@ user immutable
+ .Pp
+ .Ex -std ls
  .Sh ENVIRONMENT
 -.Bl -tag -width BLOCKSIZE
 +.Bl -tag -width CLICOLOR_FORCE
  .It Ev BLOCKSIZE
  If the environment variable
  .Ev BLOCKSIZE
-@@ -424,6 +430,44 @@ option is not specified, the block counts
+@@ -428,11 +434,138 @@ option is not specified, the block counts
  (see
  .Fl s )
  will be displayed in units of that size block.
@@ -61,11 +61,7 @@ $OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
 +the
 +.Ev TERM
 +variable must be set to
-+.Dq wsvt25
-+and in an
-+.Xr xterm 1
-+to
-+.Dq Li xterm-xfree86 .
++.Dq wsvt25 .
 +Other terminal types may require similar adjustments.
 +Colorization is silently disabled if the output isn't directed to a terminal
 +unless the
@@ -83,10 +79,8 @@ $OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
  .It COLUMNS
  If this variable contains a string representing a
  decimal integer, it is used as the
-@@ -436,6 +480,99 @@ many pathname text columns to display
- based on the width provided
- (see
- .Fl C ) .
+ column position width for displaying
+ multiple-text-column output.
 +.It Ev LSCOLORS
 +The value of this variable describes what color to use for which
 +attribute when colors are enabled with
@@ -183,7 +177,7 @@ $OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
  .It Ev TZ
  The time zone to use when displaying dates.
  See
-@@ -445,24 +582,25 @@ for more information.
+@@ -442,24 +575,25 @@ for more information.
  .Sh EXAMPLES
  List the contents of the current working directory in long format:
  .Pp
@@ -212,8 +206,17 @@ $OpenBSD: patch-colorls_1,v 1.10 2007/08/11 18:41:28 naddy Exp $
  .Xr symlink 7 ,
  .Xr sticky 8
  .Sh STANDARDS
-@@ -492,6 +630,6 @@ flag differs between this implementation and
- .St -p1003.1-2004 .
+@@ -470,7 +604,7 @@ utility is compliant with the
+ specification.
+ .Pp
+ The flags
+-.Op Fl hT
++.Op Fl GhT
+ are extensions to that specification.
+ .Pp
+ Historically, the
+@@ -491,6 +625,6 @@ flags differs between this implementation and
+ .St -p1003.1-2008 .
  .Sh HISTORY
  An
 -.Nm

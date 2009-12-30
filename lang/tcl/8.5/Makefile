@@ -1,17 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2008/10/21 21:34:14 steven Exp $
+# $OpenBSD: Makefile,v 1.8 2009/11/21 02:50:23 sthen Exp $
 
 COMMENT =		Tool Command Language
 
-V =			8.5.5
-DISTNAME =		tcl${V}
-PKGNAME =		tcl-${V}
-
-SHARED_LIBS =		tcl85 0.2
-
+DISTNAME =		tcl8.5.8
+PKGNAME =		tcl-8.5.8
+SHARED_LIBS =		tcl85 0.5
 CATEGORIES =		lang lang/tcl
-
 HOMEPAGE =		http://www.tcl.tk/
-
 MAINTAINER =		Stuart Cassoff <stwo@users.sourceforge.net>
 
 # BSD
@@ -37,11 +32,8 @@ FAKE_FLAGS =		INSTALL_DATA_DIR="${INSTALL_DATA_DIR}" \
 			CONFIG_INSTALL_DIR="${WRKINST}${TRUEPREFIX}/lib/tcl8.5"
 
 REGRESS_FLAGS =		HOME=${TESTHOME}
-
 SEPARATE_BUILD =	concurrent
-
-AUTOCONF_VERSION =	2.59
-CONFIGURE_STYLE =	autoconf no-autoheader old
+CONFIGURE_STYLE =	gnu old
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--includedir="${PREFIX}/include/tcl8.5" \
 			--mandir="${PREFIX}/lib/tcl8.5/man" \
@@ -49,11 +41,7 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--enable-man-symlinks \
 			--disable-rpath
 
-CONFIGURE_ENV +=	SHLIB_VERSION="${LIBtcl85_VERSION}" \
-			CFLAGS=""
-
-# Needs a full network connection to run?
-#REGRESS_IS_INTERACTIVE=Yes
+CONFIGURE_ENV +=	SHLIB_VERSION="${LIBtcl85_VERSION}"
 
 FLAVORS =		threaded
 FLAVOR ?=

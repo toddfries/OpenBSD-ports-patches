@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.22 2008/07/27 10:47:53 sthen Exp $
+# $OpenBSD: Makefile,v 1.25 2009/08/07 04:49:38 steven Exp $
 
 COMMENT=	companion library to APR
 
 V=		1.2.10
 DISTNAME=	apr-util-$V
-FULLPKGNAME=	apr-util${MT}-$Vp1${FLAVOR_EXT:S/-mt//}
+FULLPKGNAME=	apr-util${MT}-$Vp4${FLAVOR_EXT:S/-mt//}
 SHARED_LIBS +=	aprutil-1${MT}          2.11     # .2.11
 
 CATEGORIES=	devel
@@ -25,7 +25,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${MASTER_SITE_APACHE:=apr/}
 
 WANTLIB=	expat
-LIB_DEPENDS=	lib/db4/db.>=4:db-4.*:databases/db/v4
+LIB_DEPENDS=	lib/db4/db.>=4:db->=4,<5:databases/db/v4
 
 MODULES=	converters/libiconv		
 USE_LIBTOOL=	Yes
@@ -49,6 +49,7 @@ WANTLIB+=		asn1 com_err crypto gssapi krb5 sasl2 ssl
 MT?=
 .if ${FLAVOR:L:Mmt}
 MT=-mt
+CONFIGURE_ENV+=	APRUTIL_EXPORT_LIBS=-pthread
 LIB_DEPENDS+=	apr-1-mt.=3:apr-mt-1.2.11:devel/apr,mt
 
 post-install:

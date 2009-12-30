@@ -1,0 +1,15 @@
+$OpenBSD: patch-src_Makefile_in,v 1.2 2009/11/01 18:25:21 landry Exp $
+
+fix mozilla plugin directory location
+
+--- src/Makefile.in.orig	Thu Sep  3 13:28:27 2009
++++ src/Makefile.in	Mon Oct 12 05:57:07 2009
+@@ -312,7 +312,7 @@ COMMONCODE = \
+ 	npp_gate.cpp \
+ 	npupp.h
+ 
+-install_libexecdir = $(libdir)/mozilla/plugins
++install_libexecdir = $(libdir)/mozilla-plugins
+ gecko_mediaplayer_so_SOURCES = \
+ 	plugin_types_std.cpp \
+ 	$(COMMONCODE)

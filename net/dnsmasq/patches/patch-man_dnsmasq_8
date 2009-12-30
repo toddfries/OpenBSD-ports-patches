@@ -1,7 +1,23 @@
-$OpenBSD: patch-man_dnsmasq_8,v 1.5 2008/08/06 03:11:38 pvalchev Exp $
---- man/dnsmasq.8.orig	Sun Jul 20 19:26:07 2008
-+++ man/dnsmasq.8	Tue Aug  5 11:00:00 2008
-@@ -872,7 +872,7 @@ with # are skipped. This flag may be given on the comm
+$OpenBSD: patch-man_dnsmasq_8,v 1.7 2009/12/27 19:34:33 sthen Exp $
+--- man/dnsmasq.8.orig	Mon Oct  5 22:15:32 2009
++++ man/dnsmasq.8	Thu Dec 24 14:21:01 2009
+@@ -106,13 +106,12 @@ Specify an alternate path for dnsmasq to record its pr
+ .TP
+ .B \-u, --user=<username>
+ Specify the userid to which dnsmasq will change after startup. Dnsmasq must normally be started as root, but it will drop root 
+-privileges after startup by changing id to another user. Normally this user is "nobody" but that 
++privileges after startup by changing id to another user. Normally this user is "_dnsmasq" but that 
+ can be over-ridden with this switch.
+ .TP
+ .B \-g, --group=<groupname> 
+ Specify the group which dnsmasq will run
+-as. The defaults to "dip", if available, to facilitate access to
+-/etc/ppp/resolv.conf which is not normally world readable.
++as. This defaults to "_dnsmasq".
+ .TP
+ .B \-v, --version
+ Print the version number.
+@@ -1011,7 +1010,7 @@ with # are always skipped. This flag may be given on t
  line or in a configuration file.
  .SH CONFIG FILE
  At startup, dnsmasq reads
@@ -10,9 +26,9 @@ $OpenBSD: patch-man_dnsmasq_8,v 1.5 2008/08/06 03:11:38 pvalchev Exp $
  if it exists. (On
  FreeBSD, the file is 
  .I /usr/local/etc/dnsmasq.conf
-@@ -1106,7 +1106,7 @@ dnsmasq has been tested successfully with one million 
- file needs a 1GHz processor and about 60Mb of RAM.
- 
+@@ -1266,7 +1265,7 @@ dnsmasq has no direct way of determining the charset i
+ assume that it is the system default. 
+  
  .SH FILES
 -.IR /etc/dnsmasq.conf 
 +.IR ${SYSCONFDIR}/dnsmasq.conf 

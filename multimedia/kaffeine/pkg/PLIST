@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.9 2008/07/12 05:29:17 brad Exp $
+@comment $OpenBSD: PLIST,v 1.11 2009/12/22 15:46:59 ajacoutot Exp $
 @bin bin/kaffeine
 include/kaffeine/
 include/kaffeine/kaffeineaudioencoder.h
@@ -120,10 +120,10 @@ share/locale/se/LC_MESSAGES/
 share/locale/se/LC_MESSAGES/kaffeine-${VERSION}.mo
 share/locale/sk/LC_MESSAGES/kaffeine-${VERSION}.mo
 share/locale/sr/LC_MESSAGES/kaffeine-${VERSION}.mo
+share/locale/sr@Latn/
+share/locale/sr@Latn/LC_MESSAGES/
 share/locale/sr@Latn/LC_MESSAGES/kaffeine-${VERSION}.mo
 share/locale/sv/LC_MESSAGES/kaffeine-${VERSION}.mo
-share/locale/tg/
-share/locale/tg/LC_MESSAGES/
 share/locale/tg/LC_MESSAGES/kaffeine-${VERSION}.mo
 share/locale/tr/LC_MESSAGES/kaffeine-${VERSION}.mo
 share/locale/uk/LC_MESSAGES/kaffeine-${VERSION}.mo
@@ -141,6 +141,6 @@ share/services/kaffeineoggvorbis.desktop
 share/services/xine_part.desktop
 share/servicetypes/kaffeineaudioencoder.desktop
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2008/10/08 21:45:13 simon Exp $
+# $OpenBSD: Makefile,v 1.14 2009/06/19 12:38:46 simon Exp $
 
 COMMENT=	Log4j implementation for Perl
 
 MODULES=	cpan
-DISTNAME=	Log-Log4perl-1.18
+DISTNAME=	Log-Log4perl-1.23
 CATEGORIES=	devel
 
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>

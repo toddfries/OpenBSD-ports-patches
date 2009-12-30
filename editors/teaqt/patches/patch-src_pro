@@ -1,0 +1,16 @@
+$OpenBSD: patch-src_pro,v 1.2 2009/10/09 13:04:25 giovanni Exp $
+--- src.pro.orig	Wed Sep 30 12:14:59 2009
++++ src.pro	Mon Oct  5 15:41:02 2009
+@@ -89,12 +89,10 @@ DISTFILES += ChangeLog \
+ 
+ 
+ contains(USE_ASPELL,true){
+-exists("/usr/include/aspell.h") { 
+     message ("ASpell enabled")
+     LIBS += -laspell
+     DEFINES += ASPELL_ENABLE
+     DEFINES += SPELLCHECK_ENABLE
+-}
+ }
+ 
+ contains(USE_HUNSPELL,true){

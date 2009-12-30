@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.26 2008/06/08 21:26:48 eric Exp $
+# $OpenBSD: Makefile,v 1.28 2009/08/10 06:31:44 kili Exp $
 
 COMMENT=	creating & editing GIF images and animations
 
-DISTNAME=	gifsicle-1.52
+DISTNAME=	gifsicle-1.55
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=    	graphics
 
 MAINTAINER=	Eric Faurot <eric@openbsd.org>
@@ -32,7 +33,7 @@ SEPARATE_BUILD=		concurrent
 CONFIGURE_ARGS+=	--disable-gifview
 .else
 USE_X11=	Yes
-WANTLIB+=	ICE SM X11
+WANTLIB+=	ICE SM X11 pthread-stubs xcb
 .endif
 
 .include <bsd.port.mk>

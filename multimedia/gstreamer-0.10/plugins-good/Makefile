@@ -1,175 +1,117 @@
-# $OpenBSD: Makefile,v 1.25 2008/11/03 23:24:08 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.50 2009/12/14 11:36:26 espie Exp $
 
-COMMENT-main =		multimedia framework - good plugins
-COMMENT-aalib =		multimedia framework - aalib plugin
-COMMENT-cairo =		multimedia framework - cairo plugin
-COMMENT-gconf =		multimedia framework - conf elements
-COMMENT-esd =		multimedia framework - esound plugin
-COMMENT-flac =		multimedia framework - flac plugin
-COMMENT-speex =		multimedia framework - speex plugin
-COMMENT-taglib =	multimedia framework - taglib plugin
-COMMENT-dv =		multimedia framework - dv plugin
-COMMENT-jpeg =		multimedia framework - jpeg plugin
-COMMENT-png =		multimedia framework - png plugin
-COMMENT-gdk =		multimedia framework - gdk pixbuf plugin
-COMMENT-caca =		multimedia framework - libcaca plugin
-COMMENT-shout =		multimedia framework - shoutcast plugin
-COMMENT-soup =		multimedia framework - libsoup plugin
+COMMENT-main =		good elements for GStreamer
+COMMENT-aalib =		aalib element for GStreamer (good)
+COMMENT-dv =		dv element for GStreamer (good)
+COMMENT-gdk =		gdk pixbuf element for GStreamer (good)
+COMMENT-caca =		libcaca element for GStreamer (good)
+COMMENT-soup =		libsoup element for GStreamer (good)
 
-V =			0.10.8
+V =			0.10.17
 DISTNAME =		gst-plugins-good-$V
-PKGNAME-main =		gstreamer-plugins-good-$Vp5
-PKGNAME-aalib =		gstreamer-aalib-$Vp0
-PKGNAME-cairo =		gstreamer-cairo-$Vp1
-PKGNAME-gconf =		gstreamer-confelements-$Vp0
-PKGNAME-esd =		gstreamer-esd-$Vp0
-PKGNAME-flac =		gstreamer-flac-$Vp0
-PKGNAME-speex =		gstreamer-speex-$Vp0
-PKGNAME-taglib =	gstreamer-taglib-$Vp0
-PKGNAME-dv =		gstreamer-dv-$Vp0
-PKGNAME-jpeg =		gstreamer-jpeg-$Vp0
-PKGNAME-png =		gstreamer-png-$Vp0
-PKGNAME-gdk =		gstreamer-gdk-pixbuf-$Vp1
-PKGNAME-caca =		gstreamer-libcaca-$Vp0
-PKGNAME-shout =		gstreamer-shoutcast-$Vp0
-PKGNAME-soup =		gstreamer-libsoup-$Vp0
 
+PKGNAME-main =		gstreamer-plugins-good-$Vp0v0
+PKGNAME-aalib =		gstreamer-aalib-$V
+PKGNAME-dv =		gstreamer-dv-$V
+PKGNAME-gdk =		gstreamer-gdk-pixbuf-$V
+PKGNAME-caca =		gstreamer-libcaca-$V
+PKGNAME-soup =		gstreamer-libsoup-$V
 
-MULTI_PACKAGES =	-main -aalib -cairo -gconf -esd -flac -speex \
-			-taglib -dv -jpeg -png -gdk -caca -shout -soup
-SHARED_LIBS =
+MULTI_PACKAGES =	-main -aalib \
+			-dv -gdk -caca -soup
 
 MASTER_SITES =		${MASTER_SITE_GST:=gst-plugins-good/}
 
 USE_X11 =		Yes
-MODULES =		devel/gettext
+MODULES =		devel/gettext \
+			devel/gconf2
+
+MODGCONF2_LIBDEP=	No
+MODGCONF2_SCHEMAS_DIR=	gst-plugins
+
+.for i in ${MULTI_PACKAGES}
+REGRESS_DEPENDS +=	::${BASE_PKGPATH},${i}
+.endfor
 
 RUN_DEPENDS =		::${BUILD_PKGPATH}
 WANTLIB =		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
 			pcre xml2 m z
-LIB_DEPENDS =		gstreamer-0.10:gstreamer->=0.10:$P/core
+LIB_DEPENDS =		gstreamer-0.10,gstbase-0.10:gstreamer->=0.10:$P/core
 
 WANTLIB-main =		${WANTLIB} \
-			ICE SM X11 Xdamage Xext Xfixes ossaudio sndio \
-			gstcontroller-0.10 gstbase-0.10 Xau Xdmcp
+			ICE SM X11 Xdamage Xext Xfixes sndio ossaudio \
+			gstcontroller-0.10 Xau Xdmcp \
+			pthread-stubs xcb Xrender cairo expat \
+			fontconfig freetype glitz ogg pixman-1 png \
+			stdc++ theora vorbis ORBit-2 dbus-1 dbus-glib-1
 LIB_DEPENDS-main =	${LIB_DEPENDS} \
+			${MODGCONF2_LIB_DEPENDS} \
 			oil-0.3::devel/liboil \
-			gstaudio-0.10,gstinterfaces-0.10,gstnetbuffer-0.10,gstriff-0.10,gstrtp-0.10,gsttag-0.10,gstvideo-0.10,gstfft-0.10,gstrtsp-0.10,gstsdp-0.10::$P/plugins-base
-RUN_DEPENDS-main =	
+			gstaudio-0.10,gstinterfaces-0.10,gstnetbuffer-0.10,gstriff-0.10,gstrtp-0.10,gsttag-0.10,gstvideo-0.10,gstfft-0.10,gstrtsp-0.10,gstsdp-0.10,gstpbutils-0.10::$P/plugins-base \
+			FLAC.>=9::audio/flac \
+			jpeg.>=62::graphics/jpeg \
+			tag.>=7::audio/taglib \
+			wavpack::audio/wavpack \
+			speex::audio/speex \
+			gsttag-0.10::$P/plugins-base \
+			shout::net/libshout \
+			bz2.>=10::archivers/bzip2
+RUN_DEPENDS-main =	${MODGCONF2_RUN_DEPENDS} \
+			${MODGETTEXT_RUN_DEPENDS}
 
 WANTLIB-aalib=		${WANTLIB} \
-			X11 ncurses gstbase-0.10 Xau Xdmcp
+			X11 ncurses Xau Xdmcp pthread-stubs xcb
 LIB_DEPENDS-aalib =	${LIB_DEPENDS} \
 			aa::graphics/aalib
 
-WANTLIB-cairo =		${WANTLIB} \
-			X11 Xau Xdmcp Xrender fontconfig freetype \
-			pixman-1 glitz png gstbase-0.10 expat
-LIB_DEPENDS-cairo =	${LIB_DEPENDS} \
-			cairo::graphics/cairo
-
-WANTLIB-gconf =		${WANTLIB} \
-			ORBit-2
-LIB_DEPENDS-gconf =	${LIB_DEPENDS} \
-			gconf-2::devel/gconf2
-
-WANTLIB-esd =		${WANTLIB} \
-			audiofile gstbase-0.10
-
-LIB_DEPENDS-esd=	${LIB_DEPENDS} \
-			esd::audio/esound \
-			gstaudio-0.10,gstinterfaces-0.10::$P/plugins-base
-
-WANTLIB-flac =		${WANTLIB} \
-			ogg gstbase-0.10
-
-LIB_DEPENDS-flac =	${LIB_DEPENDS} \
-			FLAC::audio/flac \
-			gsttag-0.10::$P/plugins-base
-
-WANTLIB-speex =		${WANTLIB} \
-			gstbase-0.10
-
-LIB_DEPENDS-speex =	${LIB_DEPENDS} \
-			speex::audio/speex \
-			gsttag-0.10::$P/plugins-base
-
-WANTLIB-taglib =	${WANTLIB} \
-			stdc++ gstbase-0.10
-
-LIB_DEPENDS-taglib =	${LIB_DEPENDS} \
-			gsttag-0.10::$P/plugins-base \
-			tag::audio/taglib
-
-WANTLIB-dv =		${WANTLIB} \
-			gstbase-0.10
-
+WANTLIB-dv =		${WANTLIB}
 LIB_DEPENDS-dv =	${LIB_DEPENDS} \
 			dv::multimedia/libdv \
 			gstaudio-0.10,gstinterfaces-0.10::$P/plugins-base
 
-WANTLIB-jpeg =		${WANTLIB} \
-
-LIB_DEPENDS-jpeg =	${LIB_DEPENDS} \
-			jpeg::graphics/jpeg
-
-WANTLIB-png =		${WANTLIB} \
-
-LIB_DEPENDS-png =	${LIB_DEPENDS} \
-			png::graphics/png
-
 WANTLIB-gdk =		${WANTLIB} \
-			X11 Xcomposite Xdamage Xext Xrender atk-1.0 \
-			cairo fontconfig freetype glitz pango-1.0 \
-			pangocairo-1.0 pangoft2-1.0 pixman-1 png gstbase-0.10 \
-			Xau Xcursor Xdmcp Xfixes Xi Xinerama Xrandr expat
-
+			gio-2.0
 LIB_DEPENDS-gdk =	${LIB_DEPENDS} \
-			gdk_pixbuf-2.0,gtk-x11-2.0,gdk-x11-2.0::x11/gtk+2 \
+			gdk_pixbuf-2.0::x11/gtk+2 \
 			gstvideo-0.10::$P/plugins-base
 
-BUILD_DEPENDS +=	::graphics/libcaca
-
 WANTLIB-caca =		${WANTLIB} \
-			X11 gstbase-0.10 ncurses Xau Xdmcp
-
-LIB_DEPENDS-caca =	${LIB_DEPENDS}
-
-WANTLIB-shout =		${WANTLIB} \
-			gstbase-0.10 ogg speex vorbis theora
-
-LIB_DEPENDS-shout =	${LIB_DEPENDS} \
-			speex::audio/speex \
-			shout::net/libshout
+			X11 ncurses Xau Xdmcp pthread-stubs xcb
+LIB_DEPENDS-caca =	${LIB_DEPENDS} \
+			caca::graphics/libcaca
 
 WANTLIB-soup =		${WANTLIB} \
-			gio-2.0 gstbase-0.10 gsttag-0.10
-
+			ORBit-2 dbus-1 dbus-glib-1 gcrypt gio-2.0 \
+			gnome-keyring gnutls gpg-error gsttag-0.10 proxy \
+			sqlite3 tasn1
 LIB_DEPENDS-soup =	${LIB_DEPENDS} \
-			soup-2.4::devel/libsoup
+			${MODGCONF2_LIB_DEPENDS} \
+			soup-2.4,soup-gnome-2.4::devel/libsoup,-gnome
 
-BUILD_DEPENDS +=	${MODGNU_AUTOCONF_DEPENDS} \
-			${MODGNU_AUTOMAKE_DEPENDS} 
-AUTOMAKE_VERSION =	1.9
-CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	--with-aalib-prefix=${LOCALBASE} \
-			--disable-cdio \
 			--disable-dv1394 \
-			--without-check \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gst-plugins \
-			--disable-schemas-install \
-			--enable-experimental \
+			--disable-hal \
+			--disable-osx_audio \
+			--disable-osx_video \
+			--disable-pulse \
+			--disable-directsound \
+			--disable-sunaudio \
+			--disable-esd \
+			--disable-esdtest \
 			--enable-gst_v4l2 \
-			--with-default-audiosink=libsndiosink \
-			--with-default-audiosrc=libsndiosrc \
-			--with-default-videosink=xvimagesink \
-			--with-default-videosrc=v4l2src
+			--enable-goom
+CONFIGURE_ENV +=	ac_cv_path_PYTHON=""
 
 post-extract:
 	cp -R ${FILESDIR} ${WRKSRC}/ext/libsndio
 
+AUTOMAKE_VERSION =	1.9
+BUILD_DEPENDS +=	${MODGNU_AUTOMAKE_DEPENDS}
+
+# autopoint(1) uses HOME, make sure it exists
 pre-configure:
-	cd ${WRKSRC} && AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} NOCONFIGURE="true" ./autogen.sh
+	cd ${WRKSRC} && HOME=${WRKDIST} AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} AUTOMAKE=automake-${AUTOMAKE_VERSION} \
+		NOCONFIGURE="true" ./autogen.sh
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.14 2008/07/24 10:10:34 martynas Exp $
+@comment $OpenBSD: PLIST,v 1.18 2009/12/21 22:20:12 ajacoutot Exp $
 %%SHARED%%
 bin/mozilla-thunderbird
 bin/thunderbird
@@ -253,6 +253,14 @@ mozilla-thunderbird/icons/mozicon16.xpm
 mozilla-thunderbird/icons/mozicon50.xpm
 mozilla-thunderbird/init.d/
 mozilla-thunderbird/init.d/README
+mozilla-thunderbird/isp/
+mozilla-thunderbird/isp/SpamAssassin.sfd
+mozilla-thunderbird/isp/SpamPal.sfd
+mozilla-thunderbird/isp/en-US/
+mozilla-thunderbird/isp/en-US/gmail.rdf
+mozilla-thunderbird/isp/movemail.rdf
+mozilla-thunderbird/isp/rss.rdf
+@lib mozilla-thunderbird/libsqlite3.so.${LIBsqlite3_VERSION}
 @bin mozilla-thunderbird/mozilla-thunderbird-bin
 @bin mozilla-thunderbird/mozilla-xremote-client
 @bin mozilla-thunderbird/regxpcom
@@ -425,10 +433,8 @@ mozilla-thunderbird/run-mozilla.sh
 @bin mozilla-thunderbird/thunderbird-bin
 share/applications/thunderbird.desktop
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
-@exec rm -rf /tmp/.mozilla
-@exec cd %D/mozilla-thunderbird && env HOME=/tmp LD_LIBRARY_PATH=%D/mozilla-thunderbird ./regxpcom
-@exec rm -rf /tmp/.mozilla
+@unexec-delete %D/bin/update-desktop-database
+@exec TEMP=`mktemp -d` && cd %D/mozilla-thunderbird && env HOME=$TEMP LD_LIBRARY_PATH=%D/mozilla-thunderbird ./regxpcom && rm -fr $TEMP
 @unexec rm -f %D/mozilla-thunderbird/components/compreg.dat
 @unexec rm -f %D/mozilla-thunderbird/components/xpti.dat
 @unexec rm -f %D/mozilla-thunderbird/chrome/chrome.rdf

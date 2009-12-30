@@ -1,0 +1,12 @@
+$OpenBSD: patch-hyphen_makefile_mk,v 1.2 2009/05/08 15:43:50 robert Exp $
+--- hyphen/makefile.mk.orig.port	Fri Apr 10 10:36:58 2009
++++ hyphen/makefile.mk	Fri Apr 10 10:37:09 2009
+@@ -52,7 +52,7 @@ CONFIGURE_DIR=$(BUILD_DIR)
+ #relative to CONFIGURE_DIR
+ # still needed also in system-hyphen case as it creates the makefile
+ CONFIGURE_ACTION=configure
+-CONFIGURE_FLAGS= --disable-shared --with-pic
++CONFIGURE_FLAGS= --with-pic
+ 
+ .IF "$(COM)"=="C52" && "$(CPU)"=="U"
+ LCL_CONFIGURE_CFLAGS+=-m64

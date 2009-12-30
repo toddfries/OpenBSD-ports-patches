@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.17 2008/10/30 09:45:50 mbalmer Exp $ 
+# $OpenBSD: Makefile,v 1.20 2009/09/28 13:09:15 sthen Exp $ 
 
 COMMENT=	contact management module for Horde
 
 HORDE_MODULE=	turba
 HORDE_NAME=	Turba
 
-DISTNAME=	${HORDE_MODULE}-h3-2.3
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	${HORDE_MODULE}-h3-2.3.2
 CATEGORIES=	www
 HOMEPAGE=	http://www.horde.org/${HORDE_MODULE}/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes

@@ -1,13 +1,19 @@
-# $OpenBSD: Makefile,v 1.9 2008/10/03 07:21:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2009/08/11 08:42:08 ajacoutot Exp $
 
 COMMENT=	GNUstep gui backend
 
-DISTNAME=	gnustep-back-0.14.0
+V=		0.16.0
+DISTNAME=	gnustep-back-${V}
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	devel
+
+BACKENDV=	${V:C/([0-9])*[.]([0-9]*).*/\1\2/1}
+SUBST_VARS=	BACKENDV
 
 HOMEPAGE=	http://www.gnustep.org/
 
-WANTLIB=	GL X11 Xt Xext Xmu c freetype m objc pthread z
+WANTLIB=	GL X11 Xt Xext Xmu c freetype m objc pthread z \
+		pthread-stubs xcb
 
 MASTER_SITES=	${MASTER_SITE_GNUSTEP:=core/}
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.222 2008/11/24 09:42:07 pirofti Exp $
+# $OpenBSD: Makefile,v 1.243 2009/12/15 12:53:25 sthen Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
 
@@ -17,6 +17,7 @@
      SUBDIR += bogofilter,qdbm
      SUBDIR += bogofilter,sqlite3
      SUBDIR += bulk_mailer
+     SUBDIR += clamnailer
      SUBDIR += clamsmtp
      SUBDIR += claws-mail
      SUBDIR += claws-mail,ldap
@@ -36,13 +37,14 @@
      SUBDIR += dkim-milter
      SUBDIR += dovecot
      SUBDIR += dovecot,ldap
-     SUBDIR += dovecot,ldap,mysql,postgresql,sqlite
+     SUBDIR += dovecot,ldap,mysql,postgresql,sqlite,bdb
      SUBDIR += dovecot,mysql
      SUBDIR += dovecot,postgresql
      SUBDIR += dovecot,sqlite
      SUBDIR += drac
      SUBDIR += dspam
      SUBDIR += dspam,hash
+     SUBDIR += dspam,hash,domainscale
      SUBDIR += dspam,ldap
      SUBDIR += dspam,mysql
      SUBDIR += dspam,pgsql
@@ -50,32 +52,29 @@
      SUBDIR += enigmail
      SUBDIR += enigmail-seamonkey
      SUBDIR += evolution
+     SUBDIR += evolution-exchange
      SUBDIR += evolution-plugin-rss
      SUBDIR += evolution-plugin-webcal
      SUBDIR += exim
      SUBDIR += exim,ldap
-     SUBDIR += exim,ldap,no_x11
      SUBDIR += exim,mysql
-     SUBDIR += exim,mysql,no_x11
-     SUBDIR += exim,mysql,postgresql,ldap,no_x11
-     SUBDIR += exim,no_exiscan
-     SUBDIR += exim,no_exiscan,no_x11
-     SUBDIR += exim,no_x11
+     SUBDIR += exim,mysql,postgresql,ldap
      SUBDIR += exim,postgresql
-     SUBDIR += exim,postgresql,no_x11
      SUBDIR += exmh2
+     SUBDIR += extsmail
      SUBDIR += faces
      SUBDIR += fdm
      SUBDIR += femail
      SUBDIR += fetchmail
      SUBDIR += getmail
      SUBDIR += gmime
+     SUBDIR += gmime24
      SUBDIR += grepmail
+     SUBDIR += greyscanner
      SUBDIR += hashcash
      SUBDIR += hypermail
      SUBDIR += hypermail,gdbm
      SUBDIR += imap-uw
-     SUBDIR += imap-uw,plaintext
      SUBDIR += imapfilter
      SUBDIR += imapproxy
      SUBDIR += imapsync
@@ -112,6 +111,7 @@
      SUBDIR += mutt
      SUBDIR += nail
      SUBDIR += nmh
+     SUBDIR += nmzmail
      SUBDIR += offlineimap
      SUBDIR += openwebmail
      SUBDIR += osbf-lua
@@ -120,16 +120,20 @@
      SUBDIR += p5-Email-Address
      SUBDIR += p5-Email-Date
      SUBDIR += p5-Email-Date-Format
+     SUBDIR += p5-Email-Filter
      SUBDIR += p5-Email-Folder
      SUBDIR += p5-Email-FolderType
      SUBDIR += p5-Email-LocalDelivery
      SUBDIR += p5-Email-MIME
+     SUBDIR += p5-Email-MIME-Attachment-Stripper
      SUBDIR += p5-Email-MIME-ContentType
      SUBDIR += p5-Email-MIME-Creator
      SUBDIR += p5-Email-MIME-Encodings
      SUBDIR += p5-Email-MIME-Modifier
      SUBDIR += p5-Email-MessageID
+     SUBDIR += p5-Email-Reply
      SUBDIR += p5-Email-Send
+     SUBDIR += p5-Email-Sender
      SUBDIR += p5-Email-Simple
      SUBDIR += p5-Email-Simple-Creator
      SUBDIR += p5-Email-Valid
@@ -139,17 +143,22 @@
      SUBDIR += p5-GetLive
      SUBDIR += p5-Log-Procmail
      SUBDIR += p5-MIME-Base32
+     SUBDIR += p5-MIME-Charset
+     SUBDIR += p5-MIME-EncWords
      SUBDIR += p5-MIME-Lite
+     SUBDIR += p5-MIME-Lite-HTML
      SUBDIR += p5-MIME-Types
      SUBDIR += p5-MIME-tools
      SUBDIR += p5-Mail-Alias
      SUBDIR += p5-Mail-Audit
      SUBDIR += p5-Mail-Box
      SUBDIR += p5-Mail-DKIM
+     SUBDIR += p5-Mail-GnuPG
      SUBDIR += p5-Mail-IMAPClient
      SUBDIR += p5-Mail-IMAPTalk
      SUBDIR += p5-Mail-Mbox-MessageParser
      SUBDIR += p5-Mail-POP3Client
+     SUBDIR += p5-Mail-SPF-Iterator
      SUBDIR += p5-Mail-SPF-Query
      SUBDIR += p5-Mail-Sender
      SUBDIR += p5-Mail-SpamAssassin
@@ -157,7 +166,10 @@
      SUBDIR += p5-Mail-Webmail-Gmail
      SUBDIR += p5-SMTP-Server
      SUBDIR += pear-Mail
+     SUBDIR += pear-Mail-mimeDecode
      SUBDIR += pear-Mail-Mime
+     SUBDIR += pear-Mime-Type
+     SUBDIR += pecl-mailparse
      SUBDIR += perdition
      SUBDIR += pflogsumm
      SUBDIR += pgpsendmail
@@ -190,6 +202,7 @@
      SUBDIR += solid-pop3d
      SUBDIR += solid-pop3d,apop
      SUBDIR += spambayes
+     SUBDIR += sqlgrey
      SUBDIR += swaks
      SUBDIR += sylpheed
      SUBDIR += sylpheed,gpgme
@@ -207,5 +220,7 @@
      SUBDIR += xfmail
      SUBDIR += xfmail,esd
      SUBDIR += xlbiff
+     SUBDIR += z-push
+     SUBDIR += zarafa
 
 .include <bsd.port.subdir.mk>

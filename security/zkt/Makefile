@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2008/08/22 21:55:15 jakob Exp $
+# $OpenBSD: Makefile,v 1.5 2009/08/11 10:38:32 jakob Exp $
 
 COMMENT=	DNSsec Zone Key Tool
 
-DISTNAME=	zkt-0.97
-PKGNAME=	${DISTNAME}
+DISTNAME=	zkt-0.99c
 CATEGORIES=	security
 
 HOMEPAGE=	http://www.hznet.de/dns/zkt/
@@ -29,7 +28,7 @@ do-install:
 	${INSTALL_PROGRAM} ${WRKBUILD}/dnssec-signer ${PREFIX}/sbin
 	${INSTALL_PROGRAM} ${WRKBUILD}/dnssec-zkt ${PREFIX}/sbin
 	${INSTALL_PROGRAM} ${WRKBUILD}/zkt-soaserial ${PREFIX}/sbin
-	${INSTALL_MAN} ${WRKBUILD}/dnssec-signer.8 ${PREFIX}/man/man8
-	${INSTALL_MAN} ${WRKBUILD}/dnssec-zkt.8 ${PREFIX}/man/man8
+	${INSTALL_MAN} ${WRKBUILD}/man/dnssec-signer.8 ${PREFIX}/man/man8
+	${INSTALL_MAN} ${WRKBUILD}/man/dnssec-zkt.8 ${PREFIX}/man/man8
 
 .include <bsd.port.mk>

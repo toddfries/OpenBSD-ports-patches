@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.43 2008/08/28 08:52:00 espie Exp $
+# $OpenBSD: Makefile,v 1.46 2009/12/21 20:46:02 ajacoutot Exp $
 
 COMMENT = 		some useless KDE applications
 CATEGORIES =		x11 x11/kde games
 VERSION =		3.5.10
 DISTNAME =		kdetoys-${VERSION}
-PKGNAME =		${DISTNAME}
+PKGNAME =		${DISTNAME}p2
 MODKDE_VERSION ?=	3.5.8
+
+MODULES =		x11/kde devel/gettext
 
 RUN_DEPENDS +=		:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS = 		kdecore.>=6,DCOP,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kjs,kparts,kscreensaver,kutils,kwalletclient::x11/kde/libs3
@@ -13,6 +15,7 @@ LIB_DEPENDS = 		kdecore.>=6,DCOP,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kjs,kparts
 SEPARATE_BUILD =	flavored
 
 WANTLIB =	ICE SM X11 Xext Xrender art_lgpl_2 c jpeg m pcre pcreposix png \
-		pthread stdc++ util z iconv idn Xau Xdmcp fam rpcsvc intl
+		pthread stdc++ util z idn Xau Xdmcp fam rpcsvc \
+		pthread-stubs xcb
 
 .include <bsd.port.mk>

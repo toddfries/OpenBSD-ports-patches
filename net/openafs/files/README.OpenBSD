@@ -23,14 +23,14 @@ Some knob twiddling you may find useful:
 To setup OpenAFS, you must first have a KerberosV realm setup.  Below
 are brief instructions to do so.  See 'info heimdal' for further details.
 
-Once the KerberosV realm is setup, run '${PREFIX}/sbin/openafs-setup'
+Once the KerberosV realm is setup, run '${TRUEPREFIX}/sbin/openafs-setup'
 to setup your first OpenAFS server in your cell.
 
 Add the below to /etc/rc.local:
 
-   if [ -x ${PREFIX}/sbin/bosserver ]; then
+   if [ -x ${TRUEPREFIX}/sbin/bosserver ]; then
 	echo -n " openafs"
-	PATH=${PREFIX}/bin:${PREFIX}/sbin:$PATH
+	PATH=${TRUEPREFIX}/bin:${TRUEPREFIX}/sbin:$PATH
 
 	# help this detach from console, proper fix is to properly daemonize!
 	sh -c "bosserver -log -syslog > /dev/null 2>&1 &"
@@ -45,6 +45,7 @@ Add the below to /etc/rc.local:
 		vos listvol localhost -noauth 2> /dev/null| \
 		awk '
 		/ partition / { sub(":","",$9); part=$9; next; }
+		/\?\?.* K Not attached/ { printf "%s %s\n",part,$2; }
 		/R[OW].* K .*-line/ { printf "%s %s\n",part,$2; }'
 	)
 
@@ -61,7 +62,7 @@ Add the below to /etc/rc.local:
 		let i=i+1
 		vid=${volumes[$i]}
 		let i=i+1
-		bos salvage localhost $part $vid -localauth > /var/tmp/$vid.log 2>&1
+		bos salvage localhost $part $vid -orphans attach -localauth > /var/tmp/$vid.log 2>&1
 	done
 
         echo -n ")"
@@ -69,8 +70,8 @@ Add the below to /etc/rc.local:
 
 Add the following to /etc/rc.shutdown:
 
-   if [ -x ${PREFIX}/bin/bos ]; then
-        ${PREFIX}/bin/bos shutdown localhost -localauth -wait
+   if [ -x ${TRUEPREFIX}/bin/bos ]; then
+        ${TRUEPREFIX}/bin/bos shutdown localhost -localauth -wait
         sleep 1
         pkill bosserver
    fi
@@ -98,11 +99,11 @@ Setting a default krb5.conf is useful on all AFS clients and servers.
   cell=example.com
   host=kdc0
   sed 's/%host%/'$host'/g;s/%cell%/'$cell'/g;s/%REALM%/'$REALM'/g' \
-	< ${PREFIX}/share/examples/openafs/krb5.conf > krb5.conf
+	< ${TRUEPREFIX}/share/examples/openafs/krb5.conf > krb5.conf
 
 Create the heimdal directory:
 
-  mkdir -p 700 /var/heimdal
+  mkdir -m 700 /var/heimdal
 
 Initialize the basic key:
 
@@ -114,11 +115,6 @@ Initialize the Kerberos realm:
    kadmin> init EXAMPLE.COM
    Max ticket life [1 day]:unlimited
    Max renewable life [1 week]:unlimited
-   Principal expiration time [never]:
-   Password expiration time [never]:
-   Attributes []:
-   todd@EXAMPLE.COM's Password: 
-   Verifying - todd@EXAMPLE.COM's Password: 
    kadmin> add todd/admin
    Max ticket life [1 day]:
    Max renewable life [1 week]:
@@ -145,11 +141,11 @@ On the server run:
 
 Verify authentication works:
 
-  kinit todd
-  todd@EXAMPLE.COM's Password: 
+  kinit todd/admin
+  todd/admin@EXAMPLE.COM's Password: 
   klist
    Credentials cache: FILE:/tmp/krb5cc_1000
-        Principal: todd@EXAMPLE.COM
+        Principal: todd/admin@EXAMPLE.COM
 
      Issued           Expires          Principal
    Jul 20 22:10:41  Aug 30 22:10:41  krbtgt/EXAMPLE.COM@EXAMPLE.COM

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.21 2008/11/20 23:41:32 martynas Exp $
+@comment $OpenBSD: PLIST,v 1.24 2009/12/22 13:02:12 sthen Exp $
 @conflict firefox3-*
 @conflict mozilla-firebird-*
 @pkgpath www/firefox3
@@ -38,6 +38,7 @@ mozilla-firefox/components/FeedConverter.js
 mozilla-firefox/components/FeedProcessor.js
 mozilla-firefox/components/FeedWriter.js
 mozilla-firefox/components/WebContentConverter.js
+mozilla-firefox/components/aboutRights.js
 mozilla-firefox/components/aboutRobots.js
 mozilla-firefox/components/accessibility.xpt
 mozilla-firefox/components/alerts.xpt
@@ -402,9 +403,7 @@ mozilla-firefox/searchplugins/wikipedia.xml
 mozilla-firefox/searchplugins/yahoo.xml
 share/applications/firefox.desktop
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
-@exec rm -rf /tmp/.mozilla
-@exec cd %D/mozilla-firefox && env HOME=/tmp LD_LIBRARY_PATH=%D/mozilla-firefox ./regxpcom
-@exec rm -rf /tmp/.mozilla
+@unexec-delete %D/bin/update-desktop-database
+@exec TEMP=`mktemp -d` && cd %D/mozilla-firefox && env HOME=$TEMP LD_LIBRARY_PATH=%D/mozilla-firefox ./regxpcom && rm -fr $TEMP
 @unexec rm -f %D/mozilla-firefox/components/compreg.dat
 @unexec rm -f %D/mozilla-firefox/components/xpti.dat

@@ -1,18 +1,20 @@
-# $OpenBSD: Makefile,v 1.17 2008/09/03 13:29:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.24 2009/12/04 12:12:32 sthen Exp $
 
 COMMENT=	wiki and bug tracking system for software projects
 
-MODPY_EGG_VERSION=0.10.5
-DISTNAME=	trac-${MODPY_EGG_VERSION}
-PKGNAME=	${DISTNAME}p0
+MODPY_EGG_VERSION=0.11.6
+DISTNAME=	Trac-${MODPY_EGG_VERSION}
+PKGNAME=	trac-${MODPY_EGG_VERSION}
 CATEGORIES=	www devel
 
-MAINTAINER=	Ben Lovett <ben@tilderoot.com>
+MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 HOMEPAGE=	http://trac.edgewall.org/
 
 MASTER_SITES=	ftp://ftp.edgewall.com/pub/trac/ \
 		http://ftp.edgewall.com/pub/trac/
+
+MODPY_SETUPTOOLS=	Yes
 
 # BSD
 PERMIT_PACKAGE_CDROM=   Yes
@@ -22,20 +24,13 @@ PERMIT_DISTFILES_FTP=   Yes
 
 MODULES=	lang/python
 
-MY_DEPENDS=	::databases/py-sqlite2 \
+RUN_DEPENDS=	::databases/py-sqlite2 \
 		::devel/subversion,-python \
+		::print/enscript \
 		::textproc/py-docutils \
-		::www/clearsilver,python
-
-RUN_DEPENDS=	${MY_DEPENDS} \
-		::print/enscript
-
-BUILD_DEPENDS=	${MY_DEPENDS}
-
-post-install:
-	@perl -pi -e 's#${WRKINST}##' ${WRKSRC}/trac/siteconfig.py
-	@${INSTALL_SCRIPT} ${WRKSRC}/trac/siteconfig.py \
-		${PREFIX}/lib/python${MODPY_VERSION}/site-packages/trac/
+		::textproc/py-pygments \
+		:clearsilver-*-python:www/clearsilver,python \
+		::www/py-genshi
 
 do-regress:
 	@cd ${WRKSRC} && PYTHONPATH=. ${MODPY_BIN} ./trac/test.py

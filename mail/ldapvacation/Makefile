@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.7 2007/09/16 00:17:05 merdely Exp $
+# $OpenBSD: Makefile,v 1.9 2009/09/15 17:37:21 jasper Exp $
 
 COMMENT=	return 'I am not here' indication stored in a LDAP tree
 
 DISTNAME=	ldapvacation-1.1.3
+PKGNAME=	${DISTNAME}p0
 
 CATEGORIES=    	mail
 
 HOMEPAGE=	http://www.etc.msys.ch/software/ldapvacation/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 SHARED_ONLY=	Yes
 
@@ -20,7 +19,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c pthread
 
-MASTER_SITES=  	ftp://ftp.etc.msys.ch/pub/sources/ldapvacation/
+MASTER_SITES=  	${HOMEPAGE}
 EXTRACT_SUFX=	.tgz
 
 LIB_DEPENDS=	ldap_r.>=8,lber.>=8::databases/openldap

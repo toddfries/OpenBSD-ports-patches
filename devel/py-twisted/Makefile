@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2006/07/29 14:37:37 alek Exp $
+# $OpenBSD: Makefile,v 1.3 2009/10/14 12:47:48 landry Exp $
 
      SUBDIR += core
      SUBDIR += conch

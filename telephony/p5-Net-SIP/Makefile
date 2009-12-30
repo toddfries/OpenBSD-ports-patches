@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2008/10/02 23:00:41 bluhm Exp $
+# $OpenBSD: Makefile,v 1.7 2009/09/04 23:48:35 bluhm Exp $
 
 COMMENT=		perl framework for SIP
 
-DISTNAME=		Net-SIP-0.49
+DISTNAME=		Net-SIP-0.54
 
 CATEGORIES=		net telephony
 
@@ -16,6 +16,5 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		cpan
 RUN_DEPENDS=		:p5-Net-DNS->=0.56:net/p5-Net-DNS
-REGRESS_DEPENDS=	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

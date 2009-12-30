@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2008/04/17 08:35:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2009/12/22 16:28:00 ajacoutot Exp $
 
 COMMENT= 		billiard game
 CATEGORIES=		x11 x11/kde games
 DISTNAME=		kbilliards-0.8.7b
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p4
 
 HOMEPAGE=		http://www.hostnotfound.it/kbilliards.php
 MASTER_SITES=		http://www.hostnotfound.it/kbilliards/
@@ -16,11 +16,11 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 artsflow \
-		artsflow_idl audiofile bz2 c esd fam glib-2.0 \
+		artsflow_idl audiofile bz2 c fam glib-2.0 \
 		gmodule-2.0 gthread-2.0 idn jpeg kmedia2_idl m mad \
-		mcop ogg ossaudio pcre png pthread qt-mt qtmcop rpcsvc \
+		mcop ogg pcre png pthread pthread-stubs qt-mt qtmcop rpcsvc sndio \
 		soundserver_idl stdc++ util vorbis vorbisenc \
-		vorbisfile z
+		vorbisfile xcb z
 
 MODULES=		x11/kde	devel/gettext
 
@@ -35,8 +35,6 @@ AUTOCONF_VERSION=	2.59
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
 USE_X11=		Yes
-
-CFLAGS+=		-Dsqrtl=sqrt
 
 PORTHOME?=		${WRKDIR}
 

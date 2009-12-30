@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2008/11/18 01:51:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2009/08/10 06:31:07 kili Exp $
 
 SHARED_ONLY=		Yes
 ONLY_FOR_ARCHS= 	amd64 i386
@@ -7,8 +7,8 @@ COMMENT-main=		Java2(TM) Standard Edition Dev Kit v${V}
 COMMENT-jre=		Java2(TM) Standard Edition Runtime Environment v${V}
 V=			1.6.0.03
 PKGNAME=		jdk-${V}
-PKGNAME-main=		jdk-${V}p4
-PKGNAME-jre=		jre-${V}p4
+PKGNAME-main=		jdk-${V}p8
+PKGNAME-jre=		jre-${V}p8
 
 CATEGORIES=		devel/jdk java
 
@@ -47,7 +47,8 @@ BUILD_DEPENDS=		::archivers/gtar \
 			::print/cups \
 			::x11/openmotif
 MODULES=		converters/libiconv
-WANTLIB=		X11 Xext Xi Xtst c m ossaudio pthread stdc++ z
+WANTLIB=		X11 Xext Xi Xtst c m ossaudio pthread pthread-stubs \
+			stdc++ xcb z
 
 USE_X11=		Yes
 USE_GMAKE=		Yes
@@ -64,25 +65,24 @@ MAKE_ENV=		ALT_MOTIF_DIR="${LOCALBASE}" \
 			CXX="${CXX}" \
 			DEFAULT_LIBPATH="/usr/lib:${X11BASE}/lib:${LOCALBASE}/lib" \
 			USER="${USER}" \
-			HOTSPOT_BUILD_JOBS=${MAKE_JOBS}
+			HOTSPOT_BUILD_JOBS=${HOTSPOT_BUILD_JOBS}
 
 # Error message for distfile.
 FETCH_MANUALLY=		"You must manually fetch the distribution files, place"
 FETCH_MANUALLY+=	"them in ${FULLDISTDIR} and then run make again."
 FETCH_MANUALLY+=	"Get the JDK 6u3 Source file:"
-FETCH_MANUALLY+=	" ${JRLSRC}"
+FETCH_MANUALLY+=	" http://download.java.net/jdk6/6u3/promoted/b05/${JRLSRC}"
 FETCH_MANUALLY+=	"and the JDK Binaries file:"
-FETCH_MANUALLY+=	" ${JRLBIN}"
+FETCH_MANUALLY+=	" http://download.java.net/jdk6/6u3/promoted/b05/${JRLBIN}"
 FETCH_MANUALLY+=	"and the Mozilla Binaries file:"
-FETCH_MANUALLY+=	" ${JRLMOZ}"
-FETCH_MANUALLY+=	"from http://download.java.net/jdk6/6u3/promoted/b05/index.html"
+FETCH_MANUALLY+=	" http://download.java.net/jdk6/6u3/promoted/b05/${JRLMOZ}"
 FETCH_MANUALLY+=	""
 FETCH_MANUALLY+=	"Get the BSD patchset file:"
 FETCH_MANUALLY+=	" ${PATCHSET}"
 FETCH_MANUALLY+=	"from http://www.eyesbeyond.com/freebsddom/java/jdk16.html"
 
 FLAVORS=		no_web with_ipv6
-PSEUDO_FLAVORS=		native_bootstrap
+PSEUDO_FLAVORS=		native_bootstrap jdk17_bootstrap
 FLAVOR?=
 
 .if !${FLAVOR:L:Mwith_ipv6}
@@ -93,11 +93,24 @@ MAKE_ENV+=		DONT_ENABLE_IPV6=YES
 EXTRACT_CASES+=		*.jar) true ;;
 
 .if ${FLAVOR:L:Mnative_bootstrap}
-BUILD_DEPENDS+=		:jdk-1.6*:devel/jdk/1.6
+INSTALLED!= (pkg_info -e "jdk->=1.6,<1.7" -q && echo yes) || echo no
+.if ${INSTALLED:L} != "yes"
+ERRORS += "Fatal: This flavor requires an installed 1.6 jdk package"
+.endif
+BUILD_DEPENDS+=		:jdk->=1.6,<1.7:devel/jdk/1.6
 MAKE_ENV+=		ALT_BOOTDIR="${LOCALBASE}/${JDKHOME}"
 .else
-BUILD_DEPENDS+=		:jdk-1.5*:devel/jdk/1.5
+.if ${FLAVOR:L:Mjdk17_bootstrap}
+INSTALLED!= (pkg_info -e "jdk->=1.7,<1.8" -q && echo yes) || echo no
+.if ${INSTALLED:L} != "yes"
+ERRORS += "Fatal: This flavor requires an installed 1.7 jdk package"
+.endif
+BUILD_DEPENDS+=		:jdk->=1.7,<1.8:devel/jdk/1.7
+MAKE_ENV+=		ALT_BOOTDIR="${LOCALBASE}/jdk-1.7.0"
+.else
+BUILD_DEPENDS+=		:jdk->=1.5,<1.6:devel/jdk/1.5
 MAKE_ENV+=		ALT_BOOTDIR="${LOCALBASE}/jdk-1.5.0"
+.endif
 .endif
 
 .if !${FLAVOR:L:Mno_web}

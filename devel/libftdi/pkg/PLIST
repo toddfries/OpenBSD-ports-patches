@@ -1,0 +1,15 @@
+@comment $OpenBSD: PLIST,v 1.2 2009/03/16 14:27:24 espie Exp $
+@conflict cppunit-<1.12
+%%SHARED%%
+@bin bin/bitbang
+@bin bin/bitbang2
+@bin bin/bitbang_cbus
+@bin bin/bitbang_ft2232
+@bin bin/find_all
+bin/libftdi-config
+@bin bin/simple
+include/ftdi.h
+lib/libftdi.a
+lib/libftdi.la
+lib/pkgconfig/
+lib/pkgconfig/libftdi.pc

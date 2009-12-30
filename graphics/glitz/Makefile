@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2007/10/31 22:31:04 eric Exp $
+# $OpenBSD: Makefile,v 1.8 2009/08/10 06:31:44 kili Exp $
 
 COMMENT=		OpenGL image compositing library
 
 DISTNAME=		glitz-0.5.6
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p2
+
 SHARED_LIBS +=	glitz                2.0      # .1.0
 SHARED_LIBS +=	glitz-glx            2.0      # .1.0
 
@@ -13,7 +14,7 @@ HOMEPAGE=		http://www.freedesktop.org/Software/glitz
 
 MAINTAINER=		Eric Faurot <eric@openbsd.org>
 
-WANTLIB=		GL X11 Xau Xdmcp m pthread
+WANTLIB=		GL X11 Xau Xdmcp m pthread-stubs xcb
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes

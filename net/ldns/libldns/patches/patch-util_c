@@ -1,0 +1,12 @@
+$OpenBSD: patch-util_c,v 1.3 2009/11/13 03:46:47 jakob Exp $
+--- util.c.orig	Tue Oct 13 15:00:22 2009
++++ util.c	Thu Nov 12 15:25:11 2009
+@@ -273,7 +273,7 @@ ldns_init_random(FILE *fd, unsigned int size)
+ 	seed = LDNS_XMALLOC(uint8_t, size);
+ 
+ 	if (!fd) {
+-		if ((rand_f = fopen("/dev/urandom", "r")) == NULL) {
++		if ((rand_f = fopen("/dev/arandom", "r")) == NULL) {
+ 			/* no readable /dev/urandom, try /dev/random */
+ 			if ((rand_f = fopen("/dev/random", "r")) == NULL) {
+ 				/* no readable /dev/random either, and no entropy

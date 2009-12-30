@@ -1,87 +1,90 @@
-# $OpenBSD: Makefile,v 1.20 2008/06/09 22:59:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2009/12/22 15:43:15 ajacoutot Exp $
 
 COMMENT=		music management application for GNOME
 
 GNOME_PROJECT=		rhythmbox
-GNOME_VERSION=		0.11.5
+GNOME_VERSION=		0.12.6
+PKGNAME=		${DISTNAME}p1
+
 SHARED_LIBS +=  rhythmbox-core       0.0      # .0.0
+
 CATEGORIES=		audio
 
 HOMEPAGE=		http://www.rhythmbox.org/
 
-# GPLv2
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
+
+# GPLv2 with exception clause
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
-		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 asn1 atk-1.0 audiofile bonobo-2 \
-		bonobo-activation bonoboui-2 c cairo com_err crypto db \
-		dbus-1 dbus-glib-1 esd expat fontconfig freetype \
-		gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
-		glade-2.0 glib-2.0 glitz gmodule-2.0 gnome-2 \
-		gnome-keyring gnomecanvas-2 gnomevfs-2 gobject-2.0 \
-		gssapi gstbase-0.10 gstcontroller-0.10 \
-		gstinterfaces-0.10 gstpbutils-0.10 gstreamer-0.10 \
-		gthread-2.0 gtk-x11-2.0 jpeg krb5 m neon nspr4 nss3 \
-		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
-		plc4 plds4 png popt pthread smime3 softokn3 soup-2.4 \
-		ssl ssl3 util xml2 z
+WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender asn1 atk-1.0
+WANTLIB += c cairo crypto dbus-1 dbus-glib-1 expat fontconfig
+WANTLIB += freetype gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
+WANTLIB += glade-2.0 glib-2.0 glitz gmime-2.4 gmodule-2.0 gnome-keyring
+WANTLIB += gnutls gobject-2.0 gpg-error gssapi gstbase-0.10 gstcontroller-0.10
+WANTLIB += gstinterfaces-0.10 gstpbutils-0.10 gstreamer-0.10 gsttag-0.10
+WANTLIB += gthread-2.0 gtk-x11-2.0 krb5 m neon pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png proxy pthread pthread-stubs
+WANTLIB += soup-2.4 sqlite3 ssl tasn1 util xcb xml2 z
 
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			lang/python \
+			devel/gconf2
 
-BUILD_DEPENDS=		:gstreamer-gnome->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-gnome
-LIB_DEPENDS=		musicbrainz3::audio/libmusicbrainz \
+BUILD_DEPENDS=		:gstreamer-gnome->=0.10.25:multimedia/gstreamer-0.10/plugins-base,-gnome \
+			::multimedia/gstreamer-0.10/py-gstreamer
+LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
+			musicbrainz3::audio/libmusicbrainz \
 			notify::devel/libnotify \
-			gnomeui-2::x11/gnome/libgnomeui \
 			gnome-media-profiles::x11/gnome/media \
-			totem-plparser::x11/gnome/totem-pl-parser \
-			sexy::x11/libsexy \
-			camel-1.2.>=10,edataserver-1.2::databases/evolution-data-server
-RUN_DEPENDS=		:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-gnome \
-			:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-ogg \
-			:gstreamer-plugins-base->=0.10.19:multimedia/gstreamer-0.10/plugins-base,-vorbis \
-			:gstreamer-plugins-good->=0.10.8:multimedia/gstreamer-0.10/plugins-good,-flac \
-			:gstreamer-plugins-good->=0.10.8:multimedia/gstreamer-0.10/plugins-good,-gconf \
-			:gstreamer-plugins-ugly->=0.10.7:multimedia/gstreamer-0.10/plugins-ugly,-mad \
-			::x11/gnome/icon-theme
+			totem-plparser:totem-pl-parser->=2.28.1:x11/gnome/totem-pl-parser \
+			gstcdda-0.10:gstreamer-cdda->=0.10.25:multimedia/gstreamer-0.10/plugins-base,-cdda \
+			soup-gnome-2.4.>=1::devel/libsoup,-gnome \
+			avahi-client,avahi-common,avahi-glib::net/avahi \
+			ffi::devel/libffi
+RUN_DEPENDS=		:gstreamer-plugins-base->=0.10.25:multimedia/gstreamer-0.10/plugins-base,-gnome \
+			::x11/gnome/icon-theme \
+			::multimedia/gstreamer-0.10/py-gstreamer
 REGRESS_DEPENDS=	::devel/check
 
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
-AUTOCONF_VERSION=	2.61
-CONFIGURE_STYLE= 	autoconf
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/rhythmbox/ \
-			--disable-schemas-install \
-			--enable-nautilus-menu \
+MODGCONF2_SCHEMAS_DIR=	rhythmbox
+
+CONFIGURE_STYLE= 	gnu
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--disable-silent-rules \
 			--with-database=tree \
-			--with-metadata-helper \
+			--with-gnome-keyring \
+			--with-mdns=avahi \
+			--with-x \
+			--enable-python \
+			--enable-daap \
 			--disable-scrollkeeper \
-			--disable-python \
-			--disable-daap \
-			--disable-ipod-writing \
-			--without-cd-burning \
 			--without-hal \
-			--without-mdns \
 			--without-mtp \
 			--without-ipod \
+			--without-hal \
+			--without-libbrasero-media \
+			--without-libnautilus-burn \
 			--disable-vala \
-			--disable-browser-plugin \
 			--disable-fm-radio \
-			--disable-lirc \
-			--without-internal-gsequence
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			--disable-lirc
 
-# The regression tests require a running instance of X.
-# You will also need to set the XAUTHORITY environment variable to point 
-# to the appropriate .Xauthority file. 
-REGRESS_IS_INTERACTIVE= Yes
-REGRESS_FLAGS=DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
+
+# XXX TODO: plugins subpackage
+CONFIGURE_ARGS+=	--disable-browser-plugin
+CONFIGURE_ENV+=		MOZILLA_PLUGINDIR=${PREFIX}/lib/mozilla-plugins
+
+REGRESS_IS_INTERACTIVE= x11
 
 .include <bsd.port.mk>

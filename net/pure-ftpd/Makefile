@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.38 2007/09/01 20:11:21 kili Exp $
+# $OpenBSD: Makefile,v 1.46 2009/12/05 18:33:26 chl Exp $
 
 COMMENT=	small, easy to set up, fast and very secure FTP server
 
-DISTNAME=	pure-ftpd-1.0.21
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	pure-ftpd-1.0.27
 CATEGORIES=	net
 MASTER_SITES=	ftp://ftp.pureftpd.org/pub/pure-ftpd/releases/ \
 		ftp://ftp2.fr.pureftpd.org/pub/mirrors/ftp.fr.pureftpd.org/pub/pure-ftpd/releases/ \
-		ftp://ftp3.fr.pureftpd.org/pure-ftpd/releases/ \
+		ftp://ftp3.fr.pureftpd.org/pub/pure-ftpd/releases/ \
+		ftp://ftp4.fr.pureftpd.org/pub/pure-ftpd/releases/ \
 		ftp://ftp.dk.pureftpd.org/mirrors/pure-ftpd/releases/ \
-		ftp://ftp.es.pureftpd.org/mirror/pureftpd/latest/releases/ \
+		ftp://ftp.es.pureftpd.org/mirror/pure-ftpd/releases/ \
 		ftp://ftp.nl.pureftpd.org/pub/pure-ftpd/releases/ \
 		ftp://ftp.fr.pureftpd.org/pub/pure-ftpd/releases/ \
-		ftp://ftp.cn.pureftpd.org/pub/pureftpd/pure-ftpd/releases/ \
 		${MASTER_SITE_SOURCEFORGE:=pureftpd/}
 
 HOMEPAGE=	http://www.pureftpd.org/
@@ -30,14 +29,16 @@ SEPARATE_BUILD=	concurrent
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= --with-everything \
 		 --with-paranoidmsg \
-		 --with-privsep \
+		 --with-rfc2640 \
 		 --with-tls
 
-FLAVORS=	ldap mysql postgresql no_banner virtual_chroot
+MODULES=	converters/libiconv
+
+FLAVORS=	ldap mysql postgresql virtual_chroot
 FLAVOR?=
 
 .if ${FLAVOR:L:Mldap}
-LIB_DEPENDS+= ldap.>=2,lber:openldap-client-2.*:databases/openldap
+LIB_DEPENDS+= ldap.>=2,lber:openldap-client->=2,<3:databases/openldap
 CONFIGURE_ARGS+= --with-ldap="${LOCALBASE}"
 DOCS+=	README.LDAP pureftpd.schema
 CONF_FILE+= pureftpd-ldap.conf
@@ -57,10 +58,6 @@ CONFIGURE_ARGS+= --with-pgsql="${LOCALBASE}"
 DOCS+=	README.PGSQL
 CONF_FILE+= pureftpd-pgsql.conf
 WANTLIB+=	m z
-.endif
-
-.if ${FLAVOR:L:Mno_banner}
-CONFIGURE_ARGS+= --without-banner
 .endif
 
 .if ${FLAVOR:L:Mvirtual_chroot}

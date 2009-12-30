@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.2 2009/09/14 15:53:09 landry Exp $
+%%SHARED%%
+include/ev++.h
+include/ev.h
+lib/libev.a
+lib/libev.la
+@man man/man3/ev.3

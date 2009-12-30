@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.95 2008/08/26 16:52:29 espie Exp $
+# $OpenBSD: Makefile,v 1.106 2009/12/21 20:46:01 ajacoutot Exp $
 
 COMMENT-main =		K Desktop Environment, libraries
 COMMENT-cups =		K Desktop Environment, cups support
@@ -7,8 +7,8 @@ VERSION =		3.5.10
 DISTNAME =		kdelibs-${VERSION}
 MASTER_SITES0 =  	ftp://ftp.kde.org/pub/kde/security_patches/
 
-PKGNAME-main =		${DISTNAME}
-PKGNAME-cups =		kdecups-${VERSION}
+PKGNAME-main =		${DISTNAME}p7
+PKGNAME-cups =		kdecups-${VERSION}p5
 MODKDE_VERSION =		3.5.8
 SHARED_LIBS +=	DCOP                 7.0      # .6.0
 SHARED_LIBS +=	kdefx                7.0      # .6.0
@@ -58,11 +58,14 @@ VMEM_WARNING =	Yes
 MULTI_PACKAGES =	-main -cups
 CONFIGURE_ARGS += 	--enable-cups
 
+MODULES =	x11/kde devel/gettext
+
 LIB_DEPENDS =	art_lgpl_2::graphics/libart \
 		idn::devel/libidn \
-		fam::sysutils/fam
-WANTLIB =	iconv intl util jpeg m X11 ICE Xrender c SM pthread \
-		stdc++ Xext z png rpcsvc Xau Xdmcp
+		fam.>=1::sysutils/gamin 
+WANTLIB =	asn1 crypto gssapi util jpeg krb5 m X11 \
+		ICE Xrender c SM pthread stdc++ Xext z png \
+		Xau Xdmcp pthread-stubs xcb
 
 LIB_DEPENDS-main =	\
 	${LIB_DEPENDS} \
@@ -77,10 +80,10 @@ LIB_DEPENDS-main =	\
 
 WANTLIB-main =	${WANTLIB} \
 		Half Iex IlmThread Imath \
-		audiofile esd glib-2.0 \
+		audiofile glib-2.0 \
 		gmodule-2.0 gthread-2.0 mad ogg \
-		ossaudio vorbisenc vorbis vorbisfile \
-		xml2 krb5 gssapi crypto asn1
+		sndio vorbisenc vorbis vorbisfile \
+		xml2
 
 
 RUN_DEPENDS-main = \
@@ -94,7 +97,7 @@ LIB_DEPENDS-cups = \
 	cups::print/cups
 
 WANTLIB-cups =	${WANTLIB} \
-		crypto ssl
+		ssl
 
 
 SEPARATE_BUILD =	flavored

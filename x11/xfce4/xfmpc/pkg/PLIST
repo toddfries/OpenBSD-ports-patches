@@ -1,0 +1,42 @@
+@comment $OpenBSD: PLIST,v 1.3 2009/12/21 16:07:45 landry Exp $
+@bin bin/xfmpc
+@man man/man1/xfmpc.1
+share/applications/xfmpc.desktop
+share/locale/ar/
+share/locale/ar/LC_MESSAGES/
+share/locale/ar/LC_MESSAGES/xfmpc.mo
+share/locale/ast/
+share/locale/ast/LC_MESSAGES/
+share/locale/ast/LC_MESSAGES/xfmpc.mo
+share/locale/ca/LC_MESSAGES/xfmpc.mo
+share/locale/cs/LC_MESSAGES/xfmpc.mo
+share/locale/da/LC_MESSAGES/xfmpc.mo
+share/locale/de/LC_MESSAGES/xfmpc.mo
+share/locale/en_GB/
+share/locale/en_GB/LC_MESSAGES/
+share/locale/en_GB/LC_MESSAGES/xfmpc.mo
+share/locale/es/LC_MESSAGES/xfmpc.mo
+share/locale/eu/LC_MESSAGES/xfmpc.mo
+share/locale/fi/LC_MESSAGES/xfmpc.mo
+share/locale/fr/LC_MESSAGES/xfmpc.mo
+share/locale/gl/LC_MESSAGES/xfmpc.mo
+share/locale/hu/LC_MESSAGES/xfmpc.mo
+share/locale/id/LC_MESSAGES/xfmpc.mo
+share/locale/it/LC_MESSAGES/xfmpc.mo
+share/locale/ja/LC_MESSAGES/xfmpc.mo
+share/locale/nl/LC_MESSAGES/xfmpc.mo
+share/locale/pt/LC_MESSAGES/xfmpc.mo
+share/locale/pt_BR/LC_MESSAGES/xfmpc.mo
+share/locale/sl/LC_MESSAGES/xfmpc.mo
+share/locale/sv/LC_MESSAGES/xfmpc.mo
+share/locale/tr/LC_MESSAGES/xfmpc.mo
+share/locale/uk/LC_MESSAGES/xfmpc.mo
+share/locale/ur/
+share/locale/ur/LC_MESSAGES/
+share/locale/ur/LC_MESSAGES/xfmpc.mo
+share/locale/ur_PK/
+share/locale/ur_PK/LC_MESSAGES/
+share/locale/ur_PK/LC_MESSAGES/xfmpc.mo
+share/locale/zh_CN/LC_MESSAGES/xfmpc.mo
+@exec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

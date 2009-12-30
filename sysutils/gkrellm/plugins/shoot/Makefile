@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.12 2008/06/06 10:27:55 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2009/08/10 06:34:30 kili Exp $
 
 COMMENT=	snapshot and background plugin for Gkrellm2
 
 V=		0.4.3
 DISTNAME=	gkrellshoot-${V}
-PKGNAME=	${DISTNAME}p10
+PKGNAME=	${DISTNAME}p12
 CATEGORIES=	x11
 
 HOMEPAGE=	http://gkrellshoot.sourceforge.net

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.85 2008/07/21 06:07:10 brad Exp $
+# $OpenBSD: Makefile,v 1.89 2009/12/04 15:26:48 pea Exp $
 
 COMMENT-main=	Open source LDAP software (client)
 COMMENT-server=	Open source LDAP software (server)
 
 DISTNAME=		openldap-2.3.43
-FULLPKGNAME-main=	${DISTNAME:S/-/-client-/}
-PKGNAME-server=		${DISTNAME:S/-/-server-/}
+FULLPKGNAME-main=	${DISTNAME:S/-/-client-/}p1
+PKGNAME-server=		${DISTNAME:S/-/-server-/}p2
 
 SHARED_LIBS +=	lber                 9.1      # .2.15
 SHARED_LIBS +=	ldap                 9.1      # .2.15
@@ -16,8 +16,6 @@ SHARED_LIBS +=	ldap_r-2.3           9.1      # .2.15
 CATEGORIES=	databases net
 
 HOMEPAGE=	http://www.openldap.org/
-
-MAINTAINER=     Marc Balmer <mbalmer@openbsd.org>
 
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
@@ -79,7 +77,7 @@ CPPFLAGS+=		-I${LOCALBASE}/include/sasl
 .if ${FLAVOR:L:Mbdb}
 BROKEN=			OpenLDAP 2.3 is incompatible with Berkeley DB 4.6
 CONFIGURE_ARGS+=	--enable-bdb --enable-hdb
-LIB_DEPENDS+=		lib/db4/db.>=4:db-4.*:databases/db/v4
+LIB_DEPENDS+=		lib/db4/db.>=4:db->=4,<5:databases/db/v4
 CPPFLAGS+=		-I${LOCALBASE}/include/db4
 LDFLAGS+=		-L${LOCALBASE}/lib/db4
 LIBS+=			-ldb

@@ -1,50 +1,54 @@
-# $OpenBSD: Makefile,v 1.11 2008/11/23 22:59:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.31 2009/12/21 18:03:18 ajacoutot Exp $
 
-COMMENT=		API documentation browser for GNOME
+COMMENT=	API documentation browser for GNOME
 
-GNOME_PROJECT=		devhelp
-GNOME_VERSION=		0.20
-SHARED_LIBS +=	devhelp-1             0.0        # .0.0
-CATEGORIES=		textproc
+GNOME_PROJECT=	devhelp
+GNOME_VERSION=	2.28.1
+PKGNAME=	${DISTNAME}p0
 
-HOMEPAGE=		http://developer.imendio.com/projects/devhelp/
+SHARED_LIBS +=	devhelp-1             1.0        # .0.0
 
-# GPL
+CATEGORIES=	textproc
+
+HOMEPAGE=	http://live.gnome.org/devhelp
+
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE ORBit-2 SM X11 XRes Xau Xcomposite Xcursor Xdamage \
-		Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 \
-		c cairo expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
-		glib-2.0 glitz gmodule-2.0 gobject-2.0 gthread-2.0 \
-		gtk-x11-2.0 m nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		pcre pixman-1 plc4 plds4 png pthread xml2 z
+WANTLIB += ICE SM X11 XRes Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 c
+WANTLIB += cairo dbus-1 dbus-glib-1 enchant execinfo expat fontconfig
+WANTLIB += freetype gailutil gcrypt gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 glitz gmodule-2.0 gnutls gobject-2.0
+WANTLIB += gpg-error gthread-2.0 gtk-x11-2.0 icudata icui18n icuuc
+WANTLIB += jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs soup-2.4 sqlite3 stdc++ tasn1
+WANTLIB += xcb xcb-atom xcb-aux xcb-event xml2 xslt z
 
-MODULES=		devel/gettext \
-			lang/python \
-			x11/gnome
+MODULES=	devel/gettext \
+		lang/python \
+		x11/gnome \
+		devel/gconf2
 
-BUILD_DEPENDS=		::devel/xulrunner,-devel \
-			:gnome-doc-utils-*:x11/gnome/doc-utils
-LIB_DEPENDS=		gconf-2::devel/gconf2 \
-			glade-2.0::devel/libglade2 \
-			wnck-1::devel/libwnck \
-			startup-notification-1::devel/startup-notification \
-			xulrunner/gtkembedmoz,xulrunner/xpcom::devel/xulrunner,-main
+BUILD_DEPENDS=	:gnome-doc-utils-*:x11/gnome/doc-utils
+LIB_DEPENDS=	wnck-1::devel/libwnck \
+		startup-notification-1::devel/startup-notification \
+		ORBit-2.>=3::devel/ORBit2 \
+		gconf-2.>=6::devel/gconf2 \
+		unique-1.0.>=1::devel/libunique \
+		webkit-1.0::www/webkit
 
-USE_X11=		Yes
-DESKTOP_FILES=		Yes
-CONFIGURE_ARGS+= 	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/devhelp/ \
-			--disable-schemas-install \
-			--with-gecko=xulrunner
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+USE_X11=	Yes
+DESKTOP_FILES=	Yes
+MODGCONF2_SCHEMAS_DIR=	devhelp
 
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
+CONFIGURE_ARGS=	${CONFIGURE_SHARED}
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>
 
-CONFIGURE_ARGS+=	--sysconfdir="${SYSCONFDIR}/gnome"
+CONFIGURE_ARGS+= --sysconfdir="${SYSCONFDIR}/gnome"

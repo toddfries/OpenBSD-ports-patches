@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.17 2007/09/15 23:29:58 merdely Exp $
+# $OpenBSD: Makefile,v 1.19 2009/11/27 21:30:38 jakob Exp $
 
 COMMENT=	processes logfiles and perform certain actions
 
-DISTNAME=	logsurfer-1.5b
-PKGNAME=	${DISTNAME}p0
+VERSION=	1.7
+DISTNAME=	logsurfer+-${VERSION}
+PKGNAME=	logsurfer-${VERSION}
 CATEGORIES=	security
-EXTRACT_SUFX=	.tar
 
 MAINTAINER=     Jakob Schlyter <jakob@openbsd.org>
 
@@ -15,11 +15,15 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c
 
-MASTER_SITES=	ftp://ftp.cert.dfn.de/pub/tools/audit/logsurfer/ \
-		ftp://ftp.tuwien.ac.at/infosys/security/dfn/tools/audit/logsurfer/
+HOMEPAGE=	http://www.crypt.gen.nz/logsurfer/
+
+MASTER_SITES=	http://kerryt.orcon.net.nz/ \
+		http://www.crypt.gen.nz/logsurfer/
 
 CONFIGURE_STYLE=	gnu
 
 NO_REGRESS=	Yes
+
+NOT_FOR_ARCHS=	${LP64_ARCHS}
 
 .include <bsd.port.mk>

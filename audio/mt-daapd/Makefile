@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/02 20:44:25 kili Exp $
+# $OpenBSD: Makefile,v 1.12 2009/08/07 19:25:29 martynas Exp $
 
 COMMENT=	multi-threaded DAAP server
 
 DISTNAME=	mt-daapd-0.2.4.2
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p3
 CATEGORIES=	audio net
 
 HOMEPAGE=	http://www.mt-daapd.org/
@@ -16,22 +16,15 @@ PERMIT_PACKAGE_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mt-daapd/}
 
-LIB_DEPENDS=	gdbm.>=3::databases/gdbm \
+LIB_DEPENDS=	avahi-client,avahi-common::net/avahi \
 		id3tag.>=3::audio/libid3tag
 
-WANTLIB=	c pthread z
-
-FLAVORS=	howl
-FLAVOR?=
+WANTLIB += c gdbm pthread z
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--with-gdbm-includes=${LOCALBASE}/include \
-		--with-gdbm-libs=${LOCALBASE}/lib
-
-.if ${FLAVOR:L:Mhowl}
-LIB_DEPENDS+=	howl::net/howl
-CONFIGURE_ARGS+=--enable-howl --with-howl-includes=${LOCALBASE}/include/howl
-.endif
+		--with-gdbm-libs=${LOCALBASE}/lib \
+		--enable-avahi
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/contrib/mt-daapd.conf

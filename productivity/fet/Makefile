@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2007/08/31 09:04:02 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2009/12/01 13:12:41 jasper Exp $
 
 COMMENT=		automatically create timetables
 
-DISTNAME=		fet-5.2.13
+DISTNAME=		fet-5.11.0
 CATEGORIES=		productivity x11
 
 HOMEPAGE=		http://www.lalescu.ro/liviu/fet/
@@ -12,9 +12,10 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
-WANTLIB=	ICE SM X11 Xcursor Xext Xfixes Xi Xinerama Xrandr Xrender \
-		c crypto fontconfig freetype glib-2.0 gthread-2.0 m \
-		png pthread ssl stdc++ z
+
+WANTLIB += ICE SM X11 Xext Xi Xinerama Xrender c expat fontconfig
+WANTLIB += freetype glib-2.0 gobject-2.0 gthread-2.0 m png pthread
+WANTLIB += pthread-stubs stdc++ xcb z
 
 MASTER_SITES=		${HOMEPAGE}/download/ \
 			http://timetabling.de/download/
@@ -37,8 +38,11 @@ do-configure:
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/fet ${PREFIX}/bin
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/fet
-	${INSTALL_DATA} ${WRKSRC}/doc/algorithm.txt ${PREFIX}/share/doc/fet 
+	${INSTALL_DATA} ${WRKSRC}/doc/algorithm-explanation/* \
+		${PREFIX}/share/doc/fet 
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/fet
-	${INSTALL_DATA} ${WRKSRC}/sample_inputs/* ${PREFIX}/share/examples/fet
+	cd ${WRKSRC}/examples/ && umask 022 && pax -rw . \
+		${PREFIX}/share/examples/fet
+	${INSTALL_MAN} ${WRKSRC}/doc/fet.1 ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

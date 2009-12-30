@@ -1,54 +1,75 @@
-# $OpenBSD: Makefile,v 1.30 2007/09/15 20:34:00 simon Exp $
+# $OpenBSD: Makefile,v 1.35 2009/10/10 14:16:55 sthen Exp $
 
-V=		0.63
+COMMENT=	database drivers for Sybase/Microsoft SQL Server
+
+V=		0.82
+PATCHVER=	20090903
 DISTNAME=	freetds-$V
-PKGNAME=	${DISTNAME}p1
-CATEGORIES=	databases
-SHARED_LIBS +=	tds                  4.0      # .4.0
-SHARED_LIBS +=	ct                   3.0      # .3.0
-SHARED_LIBS +=	sybdb                5.0      # .5.0
-SHARED_LIBS +=	tdssrv               2.0      # .2.0
+PATCHFILES=	freetds-post82-${PATCHVER}.diff.fixed.gz:0
+PKGNAME=	${DISTNAME}.1pre${PATCHVER}
 
-# GPL
+SHARED_LIBS += ct                   4.0      # .4.0
+SHARED_LIBS += sybdb                6.0      # .5.0
+SHARED_LIBS += tdsodbc              0.0      # .0.0
+
+CATEGORIES=	databases
+
+HOMEPAGE=	http://www.freetds.org/
+
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	c ncurses readline
+MASTER_SITES0=	http://spacehopper.org/mirrors/
 
-COMMENT=	project to document and implement the TDS protocol
-HOMEPAGE=	http://www.freetds.org/
+WANTLIB=	c ncurses readline pthread z
+
 MASTER_SITES=	ftp://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/stable/
+
+MODULES=	devel/gettext
+BUILD_DEPENDS=	::devel/doxygen
+LIB_DEPENDS=	iodbc,iodbcinst::databases/iodbc,-main \
+		gcrypt::security/libgcrypt \
+		gnutls::security/gnutls \
+		gpg-error::security/libgpg-error \
+		tasn1::security/libtasn1
 
 FLAVORS=	msdblib
 FLAVOR?=
 
 USE_LIBTOOL=	Yes
-
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-static \
-		--with-libiconv-prefix="${LOCALBASE}" \
 		--disable-threadsafe \
-		--disable-odbc
+		--enable-static \
+		--with-gnutls \
+		--with-iodbc="${LOCALBASE}" \
+		--with-libiconv-prefix="${LOCALBASE}"
+
+CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include -L${LOCALBASE}/lib"
 
 .if $(FLAVOR:L:Mmsdblib)
 CONFIGURE_ARGS+=--enable-msdblib
 .endif
 
 MAKE_ENV=	RM=rm
-MODULES=	converters/libiconv
-DOC=		share/doc/freetds-$V
+DOC=		share/doc/freetds
 SUBST_VARS=	DOC V
 
+pre-configure:
+	@${SUBST_CMD} ${WRKSRC}/src/odbc/connectparams.c
+
 post-install:
-	@sed -e "s:@sysconfdir@:${SYSCONFDIR}:g" ${WRKSRC}/freetds.conf > \
-		${WRKSRC}/freetds.conf.new
 	@mkdir ${PREFIX}/share/examples/freetds
-	${INSTALL_DATA} ${WRKSRC}/freetds.conf.new \
+	${INSTALL_DATA} ${WRKSRC}/freetds.conf \
 		${PREFIX}/share/examples/freetds/freetds.conf-sample
 	${INSTALL_DATA} ${WRKSRC}/src/pool/pool.conf \
 		${PREFIX}/share/examples/freetds/pool.conf-sample
+	@cd ${PREFIX}/lib && ln -s libtdsodbc.so.${LIBtdsodbc_VERSION} \
+		libtdsodbc.so
+	@mv ${PREFIX}/share/doc/freetds-$V.1.dev.20090930 \
+		${PREFIX}/share/doc/freetds
 
 .include <bsd.port.mk>

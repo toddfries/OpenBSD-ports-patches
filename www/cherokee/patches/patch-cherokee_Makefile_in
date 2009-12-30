@@ -1,7 +1,7 @@
-$OpenBSD: patch-cherokee_Makefile_in,v 1.1.1.1 2008/09/05 11:19:48 ajacoutot Exp $
---- cherokee/Makefile.in.orig	Sat Aug 30 17:53:31 2008
-+++ cherokee/Makefile.in	Sat Aug 30 17:54:28 2008
-@@ -1018,7 +1018,8 @@ $(common_ldflags) \
+$OpenBSD: patch-cherokee_Makefile_in,v 1.5 2009/07/27 17:06:16 sthen Exp $
+--- cherokee/Makefile.in.orig	Wed Jul  1 14:57:29 2009
++++ cherokee/Makefile.in	Thu Jul 23 22:57:56 2009
+@@ -1286,7 +1286,8 @@ $(common_ldflags) \
  -module \
  -avoid-version \
  -export-dynamic \

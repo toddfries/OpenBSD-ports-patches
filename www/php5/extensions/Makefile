@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2008/09/18 13:37:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2009/12/22 10:39:28 robert Exp $
 
 FULLPKGNAME-main=	php5-extensions-${V}
 COMMENT-main=		informational package about PHP5 extensions
@@ -329,6 +329,17 @@ MULTI_PACKAGES+=	-sybase_ct
 COMMENT-sybase_ct=	sybase database access extensions for php5
 CONFIGURE_ARGS+=        --with-sybase-ct=shared,${LOCALBASE}
 LIB_DEPENDS-sybase_ct=	ct::databases/freetds
+.endif
+
+# tidy
+PSEUDO_FLAVORS+=	no_tidy
+.if ${FLAVOR:L:Mno_tidy}
+CONFIGURE_ARGS+=	--without-tidy
+.else
+MULTI_PACKAGES+=	-tidy
+COMMENT-tidy=		tidy HTML cleaner bindings
+CONFIGURE_ARGS+=	--with-tidy=shared
+LIB_DEPENDS-tidy=	tidy::www/tidy
 .endif
 
 # xml-rpc

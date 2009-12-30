@@ -1,16 +1,12 @@
-$OpenBSD: patch-etc_Makefile_in,v 1.4 2008/11/07 22:33:06 sthen Exp $
---- etc/Makefile.in.orig	Thu Oct 30 16:13:31 2008
-+++ etc/Makefile.in	Fri Nov  7 02:29:18 2008
-@@ -381,11 +381,7 @@ uninstall-am:
+$OpenBSD: patch-etc_Makefile_in,v 1.6 2009/10/30 01:09:34 sthen Exp $
+--- etc/Makefile.in.orig	Wed Oct 28 15:54:51 2009
++++ etc/Makefile.in	Wed Oct 28 20:20:55 2009
+@@ -418,6 +418,8 @@ uninstall-am:
  
  
  install-data-local:
--	$(mkinstalldirs) $(DESTDIR)$(CFGINST)
--	@test -f $(DESTDIR)$(CFGINST)/clamd.conf || \
--	$(INSTALL_DATA) $(srcdir)/clamd.conf $(DESTDIR)$(CFGINST)
--	@test -f $(DESTDIR)$(CFGINST)/freshclam.conf || \
--	$(INSTALL_DATA) $(srcdir)/freshclam.conf $(DESTDIR)$(CFGINST)
 +
- # Tell versions [3.59,3.63) of GNU make to not export all variables.
- # Otherwise a system limit (for SysV at least) may be exceeded.
- .NOEXPORT:
++NOT-install-data-local:
+ 	$(mkinstalldirs) $(DESTDIR)$(CFGINST)
+ 	@test -f $(DESTDIR)$(CFGINST)/clamd.conf || \
+ 	$(INSTALL_DATA) $(srcdir)/clamd.conf $(DESTDIR)$(CFGINST)

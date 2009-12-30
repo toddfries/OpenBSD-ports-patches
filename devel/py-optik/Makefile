@@ -1,24 +1,35 @@
-# $OpenBSD: Makefile,v 1.13 2007/10/08 08:22:39 steven Exp $
+# $OpenBSD: Makefile,v 1.15 2009/10/02 22:26:58 benoit Exp $
 
 COMMENT=	command line parsing library for Python
 
-VERSION=	1.3
-DISTNAME=	Optik-${VERSION}
-PKGNAME=	py-optik-${VERSION}p1
-CATEGORIES=    	devel
+MODPY_EGG_VERSION = 1.5.3
+DISTNAME =	optik-${MODPY_EGG_VERSION}
+PKGNAME =	py-${DISTNAME}
+CATEGORIES =   	devel
 
-HOMEPAGE=	http://optik.sourceforge.net/
+HOMEPAGE =	http://optik.sourceforge.net/
+
+MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 
 # BSD License
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=optik/}
+MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=optik/}
 
-MODULES=	lang/python
+MODULES =	lang/python
 
+DOCSDIR =	${PREFIX}/share/doc/py-optik
+EXAMPLESDIR =	${PREFIX}/share/examples/py-optik
+
+post-install:
+		${INSTALL_DATA_DIR} ${DOCSDIR}
+		${INSTALL_DATA_DIR} ${EXAMPLESDIR}
+		${INSTALL_DATA} ${WRKSRC}/doc/* ${DOCSDIR}
+		${INSTALL_DATA} ${WRKSRC}/examples/* ${EXAMPLESDIR}
+                                                
 NO_REGRESS=	Yes
-
+                                                                        
 .include <bsd.port.mk>

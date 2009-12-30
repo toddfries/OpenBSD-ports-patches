@@ -1,5 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.3 2008/10/27 00:07:11 jasper Exp $
-%%SHARED%%
+@comment $OpenBSD: PLIST,v 1.5 2009/01/20 10:43:53 jasper Exp $
 @bin bin/mc-account
 include/libmcclient/
 include/libmcclient/_gen/
@@ -61,20 +60,18 @@ include/mission-control/mcd-proxy.h
 include/mission-control/mcd-service.h
 lib/libmcclient.a
 lib/libmcclient.la
+@lib lib/libmcclient.so.${LIBmcclient_VERSION}
 lib/libmissioncontrol-client.a
 lib/libmissioncontrol-client.la
+@lib lib/libmissioncontrol-client.so.${LIBmissioncontrol-client_VERSION}
 lib/libmissioncontrol-server.a
 lib/libmissioncontrol-server.la
-lib/pkgconfig/
+@lib lib/libmissioncontrol-server.so.${LIBmissioncontrol-server_VERSION}
 lib/pkgconfig/libmcclient.pc
 lib/pkgconfig/libmissioncontrol.pc
 lib/pkgconfig/mission-control.pc
 @bin libexec/mission-control
-share/dbus-1/
-share/dbus-1/services/
 share/dbus-1/services/org.freedesktop.Telepathy.MissionControl.service
-share/gtk-doc/
-share/gtk-doc/html/
 share/gtk-doc/html/libmissioncontrol/
 share/gtk-doc/html/libmissioncontrol-server/
 share/gtk-doc/html/libmissioncontrol-server/McdChannel.html

@@ -1,0 +1,20 @@
+Zarafa webaccess has been installed under
+${INSTDIR}
+
+You should point the followings to the DocumentRoot of your web-server:
+   # ln -s ../zarafa-webaccess ${PREFIX}/htdocs/webaccess
+(make sure you use a relative symlink since Apache is chrooted)
+
+You need to edit the config.php file installed under:
+${INSTDIR} for regular web client access
+
+You may want to edit ${PREFIX}/conf/php.ini according to
+   ${INSTDIR}/.htaccess
+In any case, short_open_tag must be "On".
+
+If you want to debug the webaccess, copy the following file
+   ${INSTDIR}/debug.php.disabled
+to
+   ${INSTDIR}/debug.php
+The debugging output will then be available under:
+   ${INSTDIR}/debug.txt

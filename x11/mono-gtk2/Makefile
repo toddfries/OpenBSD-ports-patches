@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.4 2008/11/19 16:39:11 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/12/17 14:00:34 ajacoutot Exp $
 
 COMMENT=	.NET language binding for the GTK+2 toolkit
 
 MAJOR=		12
-MINOR=		5
+MINOR=		9
 VERSION=	2.${MAJOR}.${MINOR}
 
 DISTNAME=	gtk-sharp-${VERSION}
-PKGNAME=	mono-gtk2-${VERSION}
+PKGNAME=	mono-gtk2-${VERSION}p1
 CATEGORIES=	x11
+
+HOMEPAGE=	http://mono-project.com/GtkSharp
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -26,12 +28,16 @@ USE_LIBTOOL=	Yes
 WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig \
 		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 m \
-		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png xml2 z
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png xml2 z \
+		pthread-stubs xcb
 
-MODULES=	devel/gettext lang/mono
+MODULES=	devel/gettext \
+		lang/mono
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
-		glade-2.0::devel/libglade2 \
-		::lang/mono
+		glade-2.0::devel/libglade2
+
+BUILD_DEPENDS=	${RUN_DEPENDS}
+RUN_DEPENDS=	::lang/mono
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

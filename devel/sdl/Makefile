@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.67 2008/11/02 14:53:51 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.73 2009/08/10 06:31:08 kili Exp $
 
 COMMENT=	cross-platform multimedia library
 
 VERSION=	1.2.13
 DISTNAME=	SDL-${VERSION}
-PKGNAME=	${DISTNAME:L}p6
+PKGNAME=	${DISTNAME:L}p12
 CATEGORIES=	devel
 
 HOMEPAGE=	http://www.libsdl.org/
@@ -27,7 +27,7 @@ MASTER_SITES0=	http://dev.beastie.hu/ \
 BUILD_DEPENDS+=	:yasm-*:devel/yasm
 .endif
 
-FLAVORS=	esd arts aa caca no_x11 altivec
+FLAVORS=	aa caca no_x11 altivec
 FLAVOR?=
 
 USE_LIBTOOL=	Yes
@@ -40,35 +40,21 @@ SHARED_LIBS=	SDL	8.0
 CONFIGURE_ENV+=	X11BASE="${X11BASE}" \
 		CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
-		WITH_LIBSNDIO="Yes"
+		WITH_SNDIO="Yes"
 
 # in case devel/usb is installed, don't pick it up.
 CONFIGURE_ENV+= ac_cv_lib_usb_hid_init=no \
 		ac_cv_header_usb_h=no
 
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
+		 --disable-arts \
+		 --disable-esd \
 		 --disable-oss \
 		 --disable-ltdl \
 		 --disable-pulseaudio \
 		 --enable-nasm \
 		 --enable-pthread-sem \
 		 --enable-sunaudio
-
-.if ${FLAVOR:L:Mesd}
-# used via dlopen()
-LIB_DEPENDS+=	esd.>=2::audio/esound
-CONFIGURE_ARGS+= --enable-esd
-.else
-CONFIGURE_ARGS+= --disable-esd
-.endif
-
-.if ${FLAVOR:L:Marts}
-LIB_DEPENDS+=	artsc::x11/kde/arts3
-WANTLIB+=	glib-2.0 gmodule-2.0 gthread-2.0 intl pcre stdc++
-CONFIGURE_ARGS+= --enable-arts --disable-arts-shared
-.else
-CONFIGURE_ARGS+= --disable-arts
-.endif
 
 .if ${FLAVOR:L:Maa}
 LIB_DEPENDS+=	aa::graphics/aalib
@@ -91,7 +77,7 @@ CONFIGURE_ARGS+= --without-x \
 		 --disable-video-x11
 .else
 USE_X11=	Yes
-WANTLIB+=	X11.>=10 Xau Xdmcp Xext Xrandr Xrender
+WANTLIB+=	X11.>=10 Xau Xdmcp Xext Xrandr Xrender pthread-stubs xcb
 .endif
 
 .if ${FLAVOR:L:Maltivec}

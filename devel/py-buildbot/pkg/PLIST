@@ -1,7 +1,12 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2008/07/23 00:36:45 fgsch Exp $
+@comment $OpenBSD: PLIST,v 1.4 2009/11/21 13:41:15 fgsch Exp $
 bin/buildbot
 lib/python${MODPY_VERSION}/site-packages/buildbot/
-lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/
+lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/PKG-INFO
+lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/SOURCES.txt
+lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/dependency_links.txt
+lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/requires.txt
+lib/python${MODPY_VERSION}/site-packages/buildbot-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/top_level.txt
 lib/python${MODPY_VERSION}/site-packages/buildbot/__init__.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/__init__.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/buildbot.png
@@ -50,6 +55,8 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/clients/sendchange.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/clients/sendchange.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/dnotify.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/dnotify.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/ec2buildslave.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/ec2buildslave.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/interfaces.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/interfaces.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/locks.py
@@ -73,6 +80,8 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/process/factory.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/process/factory.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/process/process_twisted.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/process/process_twisted.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/process/properties.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/process/properties.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/process/step_twisted2.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/process/step_twisted2.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/scheduler.py
@@ -130,6 +139,8 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/__init__.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/__init__.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/about.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/about.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/auth.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/auth.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/base.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/base.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/baseweb.py
@@ -138,9 +149,15 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/build.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/build.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/builder.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/builder.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/buildstatus.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/buildstatus.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/changes.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/changes.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/classic.css
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/feeds.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/feeds.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/grid.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/grid.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/index.html
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/logs.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/status/web/logs.pyc
@@ -162,8 +179,22 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/steps/__init__.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/__init__.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/dummy.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/dummy.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/master.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/master.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/maxq.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/maxq.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/__init__.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/__init__.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/rpmbuild.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/rpmbuild.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/rpmlint.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/rpmlint.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/rpmspec.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/steps/package/rpm/rpmspec.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/python.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/python.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/steps/python_twisted.py
@@ -193,6 +224,12 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/freshcvs.6
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/freshcvs.7
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/freshcvs.8
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/freshcvs.9
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/launchpad.1
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/launchpad.2
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/launchpad.3
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/launchpad.4
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/launchpad.5
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/launchpad.6
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/svn-commit.1
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/svn-commit.2
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/mail/syncmail.1
@@ -214,6 +251,8 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_buildreq.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_buildreq.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_buildstep.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_buildstep.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_changemaster.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_changemaster.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_changes.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_changes.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_config.py
@@ -222,16 +261,28 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_control.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_control.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_dependencies.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_dependencies.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_ec2buildslave.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_ec2buildslave.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_limitlogs.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_limitlogs.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_locks.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_locks.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_maildir.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_maildir.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_mailparse.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_mailparse.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_mergerequests.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_mergerequests.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_ordering.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_ordering.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_p4poller.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_p4poller.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_package_rpm.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_package_rpm.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_properties.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_properties.pyc
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_reconfig.py
+lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_reconfig.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_run.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_run.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_runner.py
@@ -264,43 +315,55 @@ lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_webparts.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/test/test_webparts.pyc
 lib/python${MODPY_VERSION}/site-packages/buildbot/util.py
 lib/python${MODPY_VERSION}/site-packages/buildbot/util.pyc
-share/doc/buildbot/
-share/doc/buildbot/README
-share/doc/buildbot/buildbot.html
-share/doc/buildbot/contrib/
-share/doc/buildbot/contrib/CSS/
-share/doc/buildbot/contrib/CSS/sample1.css
-share/doc/buildbot/contrib/CSS/sample2.css
 @comment share/doc/buildbot/contrib/OS-X/
 @comment share/doc/buildbot/contrib/OS-X/README
 @comment share/doc/buildbot/contrib/OS-X/net.sourceforge.buildbot.master.plist
 @comment share/doc/buildbot/contrib/OS-X/net.sourceforge.buildbot.slave.plist
-share/doc/buildbot/contrib/README.txt
-share/doc/buildbot/contrib/arch_buildbot.py
-share/doc/buildbot/contrib/bb_applet.py
-share/doc/buildbot/contrib/darcs_buildbot.py
-share/doc/buildbot/contrib/fakechange.py
-share/doc/buildbot/contrib/git_buildbot.py
-share/doc/buildbot/contrib/hg_buildbot.py
-share/doc/buildbot/contrib/run_maxq.py
-share/doc/buildbot/contrib/svn_buildbot.py
-share/doc/buildbot/contrib/svn_watcher.py
-share/doc/buildbot/contrib/svnpoller.py
-share/doc/buildbot/contrib/viewcvspoll.py
 @comment share/doc/buildbot/contrib/windows/
 @comment share/doc/buildbot/contrib/windows/buildbot.bat
 @comment share/doc/buildbot/contrib/windows/buildbot2.bat
 @comment share/doc/buildbot/contrib/windows/buildbot_service.py
 @comment share/doc/buildbot/contrib/windows/setup.py
-share/doc/buildbot/hexnut32.png
-share/doc/buildbot/hexnut48.png
-share/doc/buildbot/hexnut64.png
-share/doc/buildbot/images/
-share/doc/buildbot/images/master.png
-share/doc/buildbot/images/overview.png
-share/doc/buildbot/images/slavebuilder.png
-share/doc/buildbot/images/slaves.png
-share/doc/buildbot/images/status.png
-share/examples/buildbot/
-share/examples/buildbot/hello.cfg
-share/examples/buildbot/twisted_master.cfg
+share/doc/py-buildbot/
+share/doc/py-buildbot/README
+share/doc/py-buildbot/buildbot.html
+share/doc/py-buildbot/contrib/
+share/doc/py-buildbot/contrib/CSS/
+share/doc/py-buildbot/contrib/CSS/sample1.css
+share/doc/py-buildbot/contrib/CSS/sample2.css
+@comment share/doc/py-buildbot/contrib/OS-X/
+@comment share/doc/py-buildbot/contrib/OS-X/README
+@comment share/doc/py-buildbot/contrib/OS-X/net.sourceforge.buildbot.master.plist
+@comment share/doc/py-buildbot/contrib/OS-X/net.sourceforge.buildbot.slave.plist
+share/doc/py-buildbot/contrib/README.txt
+share/doc/py-buildbot/contrib/arch_buildbot.py
+share/doc/py-buildbot/contrib/bb_applet.py
+share/doc/py-buildbot/contrib/bzr_buildbot.py
+share/doc/py-buildbot/contrib/darcs_buildbot.py
+share/doc/py-buildbot/contrib/fakechange.py
+share/doc/py-buildbot/contrib/generate_changelog.py
+share/doc/py-buildbot/contrib/git_buildbot.py
+share/doc/py-buildbot/contrib/github_buildbot.py
+share/doc/py-buildbot/contrib/hg_buildbot.py
+share/doc/py-buildbot/contrib/run_maxq.py
+share/doc/py-buildbot/contrib/svn_buildbot.py
+share/doc/py-buildbot/contrib/svn_watcher.py
+share/doc/py-buildbot/contrib/svnpoller.py
+share/doc/py-buildbot/contrib/viewcvspoll.py
+@comment share/doc/py-buildbot/contrib/windows/
+@comment share/doc/py-buildbot/contrib/windows/buildbot.bat
+@comment share/doc/py-buildbot/contrib/windows/buildbot2.bat
+@comment share/doc/py-buildbot/contrib/windows/buildbot_service.py
+@comment share/doc/py-buildbot/contrib/windows/setup.py
+share/doc/py-buildbot/hexnut32.png
+share/doc/py-buildbot/hexnut48.png
+share/doc/py-buildbot/hexnut64.png
+share/doc/py-buildbot/images/
+share/doc/py-buildbot/images/master.png
+share/doc/py-buildbot/images/overview.png
+share/doc/py-buildbot/images/slavebuilder.png
+share/doc/py-buildbot/images/slaves.png
+share/doc/py-buildbot/images/status.png
+share/examples/py-buildbot/
+share/examples/py-buildbot/hello.cfg
+share/examples/py-buildbot/twisted_master.cfg

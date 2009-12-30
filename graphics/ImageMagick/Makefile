@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.102 2008/11/20 13:29:56 okan Exp $
+# $OpenBSD: Makefile,v 1.105 2009/08/10 06:31:44 kili Exp $
 
 COMMENT=		image processing tools
 
 VER=			6.4.5
-DASHVER=		3
+DASHVER=		6
 DISTNAME=		ImageMagick-${VER}-${DASHVER}
-PKGNAME=		ImageMagick-${VER}.${DASHVER}
+PKGNAME=		ImageMagick-${VER}.${DASHVER}p0
 
 SHARED_LIBS +=		Magick++	13.0	# .1.0
 SHARED_LIBS +=		MagickCore	1.0	# .1.0
@@ -15,10 +15,12 @@ CATEGORIES=		graphics
 
 HOMEPAGE=		http://www.imagemagick.org
 
-MASTER_SITES=		${HOMEPAGE}/download/ \
+MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=imagemagick/} \
+			${HOMEPAGE}/download/ \
 			ftp://ftp.fu-berlin.de/unix/X11/graphics/ImageMagick/ \
+			ftp://ftp.fu-berlin.de/unix/X11/graphics/ImageMagick/legacy/ \
 			http://gd.tuwien.ac.at/graphics/ImageMagick/ \
-			${MASTER_SITE_SOURCEFORGE:=imagemagick/}
+			http://gd.tuwien.ac.at/graphics/ImageMagick/legacy/
 
 # http://www.imagemagick.org/script/license.php
 PERMIT_PACKAGE_CDROM=	Yes
@@ -45,6 +47,7 @@ CONFIGURE_ARGS+=	--with-quantum-depth=16 \
 			--without-dps \
 			--without-fpx \
 			--without-gvc \
+			--without-lqr \
 			--without-modules \
 			--without-openexr \
 			--without-threads \
@@ -55,7 +58,7 @@ CONFIGURE_ARGS+=	--with-quantum-depth=16 \
 			--disable-ltdl-install
 
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
+			LDFLAGS="-L${WRKBUILD}/magick/.libs -L${WRKBUILD}/wand/.libs -L${LOCALBASE}/lib" \
 			ac_cv_path_LaunchDelegate=no
 
 FLAVORS=		no_x11
@@ -70,7 +73,7 @@ CONFIGURE_ARGS+=	--without-x \
 			--without-wmf
 .else
 WANTLIB+=		ICE SM X11 Xau Xdmcp Xext Xt expat fontconfig \
-			freetype iconv
+			freetype iconv pthread-stubs xcb
 USE_X11=		Yes
 LIB_DEPENDS+=		wmflite.>=7::graphics/libwmf \
 			xml2.>=9::textproc/libxml

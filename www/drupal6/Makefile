@@ -1,0 +1,57 @@
+# $OpenBSD: Makefile,v 1.23 2009/11/25 11:15:17 espie Exp $
+
+SUBDIR += FCKeditor
+SUBDIR += admin-menu
+SUBDIR += advanced_help
+SUBDIR += advanced_user
+SUBDIR += alternate_login
+SUBDIR += auto_nodetitle
+SUBDIR += backup_migrate
+SUBDIR += bueditor
+SUBDIR += captcha
+SUBDIR += cck
+SUBDIR += compact_forms
+SUBDIR += contemplate
+SUBDIR += content_access
+SUBDIR += core
+SUBDIR += ctools
+SUBDIR += date
+SUBDIR += devel
+SUBDIR += dhtml_menu
+SUBDIR += draft
+SUBDIR += filefield
+SUBDIR += globalredirect
+SUBDIR += imageapi
+SUBDIR += imagecache
+SUBDIR += imagecache_profiles
+SUBDIR += imagefield
+SUBDIR += ldap_integration
+SUBDIR += locale-de
+SUBDIR += locale-fr
+SUBDIR += locale-it
+SUBDIR += locale-ja
+SUBDIR += masquerade
+SUBDIR += meta-tags
+SUBDIR += nodeaccess_userreference
+SUBDIR += nodetype
+SUBDIR += panels
+SUBDIR += pathauto
+SUBDIR += phpmailer
+SUBDIR += poormanscron
+SUBDIR += printer-friendly
+SUBDIR += publishcontent
+SUBDIR += scheduler
+SUBDIR += schema
+SUBDIR += securelogin
+SUBDIR += theme-acquia-marina
+SUBDIR += theme-newsflash
+SUBDIR += themesettingsapi
+SUBDIR += token
+SUBDIR += user_import
+SUBDIR += user_readonly
+SUBDIR += views
+SUBDIR += views_bulk_operations
+SUBDIR += webform
+SUBDIR += workflow
+
+.include <bsd.port.subdir.mk>

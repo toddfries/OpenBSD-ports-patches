@@ -1,7 +1,7 @@
-$OpenBSD: patch-lib_MailScanner_ConfigDefs_pl,v 1.5 2008/11/07 02:33:58 brad Exp $
---- lib/MailScanner/ConfigDefs.pl.orig	Wed Aug 20 11:22:39 2008
-+++ lib/MailScanner/ConfigDefs.pl	Thu Sep  4 00:53:09 2008
-@@ -340,8 +340,8 @@ qmailintdhashnumber		1
+$OpenBSD: patch-lib_MailScanner_ConfigDefs_pl,v 1.8 2009/10/07 20:59:29 sthen Exp $
+--- lib/MailScanner/ConfigDefs.pl.orig	Thu Jul 30 15:16:52 2009
++++ lib/MailScanner/ConfigDefs.pl	Sun Aug  2 03:31:39 2009
+@@ -358,8 +358,8 @@ qmailintdhashnumber		1
  # filename containing a list of directories.
  [Simple,Other]
  cachetiming		1800,300,10800,172800,600
@@ -11,8 +11,8 @@ $OpenBSD: patch-lib_MailScanner_ConfigDefs_pl,v 1.5 2008/11/07 02:33:58 brad Exp
 +CustomFunctionsDir	%PREFIX%/lib/MailScanner/MailScanner/CustomFunctions
  FileCommand		/usr/bin/file
  FirstCheck		mcp
- GunzipCommand		/bin/gunzip
-@@ -363,7 +363,7 @@ QuarantinePerms		0600
+ getipfromheader		0
+@@ -383,7 +383,7 @@ QuarantinePerms		0600
  RunAsUser		0
  RunAsGroup		0
  SACache			/var/spool/MailScanner/incoming/SpamAssassin.cache.db

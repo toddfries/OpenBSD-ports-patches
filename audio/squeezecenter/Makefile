@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.2 2008/11/17 12:31:27 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2009/07/12 19:58:28 sthen Exp $
 
 COMMENT =	streaming audio server for Squeezebox network music players
 
-V =		7.2.1
+V =		7.3.3
 PKGNAME =	squeezecenter-${V}
 DISTNAME =	squeezecenter-${V}-noCPAN
 CATEGORIES =	audio net
 
 MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
-HOMEPAGE =	http://www.slimdevices.com/
+HOMEPAGE =	http://www.slimdevices.com/pi_features.html
 
 # Main software is GPLv2, supplied with some CPAN modules packaged,
 # but unfortunately also with proprietary (required) firmware, also
@@ -28,6 +28,7 @@ WRKDIST =	${WRKDIR}/${DISTNAME:S/.no-cpan-arch//}
 
 RUN_DEPENDS =	::audio/flac \
 		::audio/lame \
+		::audio/wavpack \
 		:mysql-server-*:databases/mysql,-server \
 		:p5-Cache-Cache->=1.04:devel/p5-Cache-Cache \
 		:p5-Carp-Clan->=5.3:devel/p5-Carp-Clan \
@@ -90,9 +91,11 @@ pre-configure:
 	@ln -s ${TRUEPREFIX}/share/mysql/english/errmsg.sys \
 	    ${WRKSRC}/MySQL/errmsg.sys  
 	@rm -rf ${WRKSRC}/CPAN
-	@${SUBST_CMD} ${WRKSRC}/Slim/Utils/OSDetect.pm
+	@${SUBST_CMD} -c ${FILESDIR}/Custom.pm \
+	    ${WRKSRC}/Slim/Utils/OS/Custom.pm
 
 NO_BUILD =	yes
+NO_REGRESS =	yes
 PMDIR =		libdata/perl5/site_perl/Slim
 SSLIBDIR =	libdata/squeezecenter
 SSSHAREDIR =	share/squeezecenter
@@ -110,5 +113,6 @@ do-install:
 	cd ${WRKSRC}/; tar cf - Firmware Graphics HTML IR MySQL Plugins \
 	    SQL strings.txt | tar xf - -C ${PREFIX}/${SSSHAREDIR}/
 	touch ${PREFIX}/share/examples/squeezecenter/empty
+	find ${PREFIX} -name '*.orig' -print0 | xargs -0 rm
 
 .include <bsd.port.mk>

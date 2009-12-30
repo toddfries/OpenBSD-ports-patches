@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.182 2008/11/17 18:23:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.203 2009/11/27 17:41:25 landry Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -7,6 +7,7 @@
      SUBDIR += afternoonstalker
      SUBDIR += agm
      SUBDIR += alephone
+     SUBDIR += allegro
      SUBDIR += amoebax
      SUBDIR += amph
      SUBDIR += an
@@ -26,6 +27,7 @@
      SUBDIR += cgoban
      SUBDIR += childsplay
      SUBDIR += childsplay-plugins
+     SUBDIR += chocolate-doom
      SUBDIR += circuit
      SUBDIR += clines
      SUBDIR += cmatrix
@@ -38,12 +40,16 @@
      SUBDIR += crossfire-client
      SUBDIR += csmash
      SUBDIR += defendguin
+     SUBDIR += doomdata
      SUBDIR += dopewars
      SUBDIR += dopewars,no_x11
      SUBDIR += dungeon-crawl
      SUBDIR += eboard
      SUBDIR += eboard-extras
+     SUBDIR += egoboo
+     SUBDIR += einstein
      SUBDIR += enigma
+     SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
      SUBDIR += forcedattack
@@ -51,12 +57,16 @@
      SUBDIR += freeciv
      SUBDIR += freedroid
      SUBDIR += freedroidrpg
+     SUBDIR += fretsonfire
      SUBDIR += frotz
+     SUBDIR += frozen-bubble
+     SUBDIR += gargoyle
      SUBDIR += gcompris
      SUBDIR += gemdropx
      SUBDIR += ggz
      SUBDIR += glsfcave
      SUBDIR += glutton
+     SUBDIR += gnome-mastermind
      SUBDIR += gnuchess
      SUBDIR += gnugo
      SUBDIR += gnushogi
@@ -67,6 +77,7 @@
      SUBDIR += heroes
      SUBDIR += icebreaker
      SUBDIR += ivan
+     SUBDIR += jbrickshooter
      SUBDIR += kbilliards
      SUBDIR += kobodeluxe
      SUBDIR += kobodeluxe,harder
@@ -79,6 +90,7 @@
      SUBDIR += lincity
      SUBDIR += lincity-ng
      SUBDIR += londonlaw
+     SUBDIR += lostpixels
      SUBDIR += maelstrom
      SUBDIR += micropolis
      SUBDIR += mirrormagic
@@ -93,11 +105,14 @@
      SUBDIR += netris
      SUBDIR += neverball
      SUBDIR += newvox
+     SUBDIR += numptyphysics
      SUBDIR += oilwar
      SUBDIR += omega
      SUBDIR += openarena
      SUBDIR += openttd
+     SUBDIR += opensonic
      SUBDIR += pathological
+     SUBDIR += pingus
      SUBDIR += pioneers
      SUBDIR += pokerth
      SUBDIR += prboom
@@ -107,7 +122,9 @@
      SUBDIR += quake,
      SUBDIR += quake,ggi
      SUBDIR += quake2
+     SUBDIR += rftg
      SUBDIR += ri-li
+     SUBDIR += roadfighter
      SUBDIR += rocksndiamonds
      SUBDIR += scummvm
      SUBDIR += scummvm-tools
@@ -115,10 +132,12 @@
      SUBDIR += sdlzombies
      SUBDIR += singularity
      SUBDIR += ski
+     SUBDIR += sl
      SUBDIR += slash
      SUBDIR += slash,no_x11
      SUBDIR += slash-em
      SUBDIR += slash-em,no_x11
+     SUBDIR += snipe2d
      SUBDIR += spacehulk
      SUBDIR += spatial
      SUBDIR += speyes
@@ -128,6 +147,7 @@
      SUBDIR += sudoku
      SUBDIR += sudoku-solver
      SUBDIR += taxipilot
+     SUBDIR += teeworlds
      SUBDIR += toppler
      SUBDIR += tornado
      SUBDIR += tetrinetx
@@ -163,6 +183,7 @@
      SUBDIR += xbreaky
      SUBDIR += xbubble
      SUBDIR += xchomp
+     SUBDIR += xcowsay
      SUBDIR += xcubes
      SUBDIR += xdeblock
      SUBDIR += xdino
@@ -180,6 +201,7 @@
      SUBDIR += xminesweep
      SUBDIR += xmj
      SUBDIR += xmris
+     SUBDIR += xmoto
      SUBDIR += xneko
      SUBDIR += xonix
      SUBDIR += xpat2
@@ -190,7 +212,6 @@
      SUBDIR += xscorch
      SUBDIR += xscrabble
      SUBDIR += xskat
-     SUBDIR += xsol
      SUBDIR += xsoldier
      SUBDIR += xteddy
      SUBDIR += xwelltris

@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.13 2007/09/15 23:30:00 merdely Exp $
+# $OpenBSD: Makefile,v 1.15 2009/08/30 20:37:16 rui Exp $
 
 COMMENT=	Prelude log analyzer
 
-DISTNAME=	prelude-lml-0.9.10
+DISTNAME=	prelude-lml-0.9.15
 
-WANTLIB=	c pthread z gcrypt gpg-error gnutls
+WANTLIB=	c gcrypt gnutls gpg-error m tasn1 z
 MODULES=	devel/gettext
+
+MASTER_SITES=	http://www.prelude-ids.com/download/releases/prelude-lml/
 
 CONFIGURE_STYLE=gnu
 

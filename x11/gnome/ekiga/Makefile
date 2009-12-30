@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2008/07/26 10:39:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2009/12/21 18:03:18 ajacoutot Exp $
 
 COMMENT=	SIP and H.323 compatible conferencing application
 
 GNOME_PROJECT=	ekiga
 GNOME_VERSION=	2.0.12
-PKGNAME=	${DISTNAME}p5
+PKGNAME=	${DISTNAME}p21
 
 CATEGORIES=	net multimedia
 
 HOMEPAGE=	http://www.ekiga.org/
-
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -18,41 +16,41 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
-		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 asn1 atk-1.0 audiofile bonobo-2 \
-		bonobo-activation bonoboui-2 c cairo com_err crypto db \
-		dbus-1 dbus-glib-1 esd expat fontconfig freetype \
-		gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 glib-2.0 \
-		glitz gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 \
-		gnomevfs-2 gobject-2.0 gssapi gthread-2.0 gtk-x11-2.0 \
-		jpeg krb5 m nspr4 nss3 pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 plc4 plds4 png popt pt pthread \
-		smime3 softokn3 ssl ssl3 stdc++ usbhid util xml2 z
+WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
+WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
+WANTLIB += Xrender art_lgpl_2 asn1 atk-1.0 audiofile avahi-client
+WANTLIB += avahi-common avahi-glib bonobo-2 bonobo-activation
+WANTLIB += bonoboui-2 c cairo com_err crypto dbus-1 dbus-glib-1
+WANTLIB += expat fontconfig freetype gailutil gcrypt gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 gnome-2
+WANTLIB += gnome-keyring gnomecanvas-2 gnomevfs-2 gnutls gobject-2.0
+WANTLIB += gpg-error gssapi gthread-2.0 gtk-x11-2.0 krb5 m nspr4
+WANTLIB += nss3 pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += plc4 plds4 png popt pt pthread smime3 sndio softokn3
+WANTLIB += soup-2.4 sqlite3 ssl ssl3 stdc++ tasn1 usbhid util
+WANTLIB += xml2 z pthread-stubs xcb
 
 MODULES=	devel/gettext \
-		x11/gnome
+		x11/gnome \
+		devel/gconf2
 
-BUILD_DEPENDS=	:scrollkeeper-*:textproc/scrollkeeper \
-		::x11/gnome/doc-utils
-RUN_DEPENDS=	:scrollkeeper-*:textproc/scrollkeeper
 LIB_DEPENDS=	gnomeui-2.>=2000::x11/gnome/libgnomeui \
 		opal::net/opal \
 		SDL.>=8::devel/sdl \
-		camel-1.2.>=10,ebook-1.2,edataserver-1.2::databases/evolution-data-server
+		camel-1.2.>=10,ebook-1.2,edataserver-1.2::databases/evolution-data-server \
+		esd.>=2::audio/esound
 
 USE_X11=	Yes
 DESKTOP_FILES=	Yes
 MODGNOME_HELP_FILES=Yes
+MODGCONF2_SCHEMAS_DIR= ekiga
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib -pthread"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-dbus \
-		--disable-schemas-install \
+		--enable-avahi \
 		--disable-scrollkeeper \
-		--disable-avahi \
-		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/ekiga \
 		--with-pwlib-dir=${LOCALBASE} \
 		--with-opal-dir=${LOCALBASE}
 

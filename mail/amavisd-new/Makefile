@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.8 2008/09/29 18:53:38 simon Exp $
+# $OpenBSD: Makefile,v 1.12 2009/11/16 10:37:31 giovanni Exp $
 
 COMMENT=		interface between mailer MTA and content checkers
 
-DISTNAME=		amavisd-new-2.6.1
+DISTNAME=		amavisd-new-2.6.4
 PKGNAME=		${DISTNAME}p0
 CATEGORIES=		mail security
 
 HOMEPAGE=		http://www.ijs.si/software/amavisd/
-MAINTAINER=		Giovanni Bechis <g.bechis@snb.it>
+MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -24,13 +24,11 @@ MASTER_SITES=		${HOMEPAGE} \
 RUN_DEPENDS=		::archivers/arc \
 			::archivers/bzip2 \
 			::archivers/cabextract \
-			::archivers/freeze \
 			::archivers/lha \
 			::archivers/lzop \
 			:p5-Archive-Zip->=1.14:archivers/p5-Archive-Zip \
+			::archivers/p7zip,-rar \
 			::archivers/ripole \
-			::archivers/unarj \
-			::archivers/unrar \
 			::archivers/unzip \
 			::archivers/zoo \
 			::converters/p5-Convert-TNEF \
@@ -41,6 +39,8 @@ RUN_DEPENDS=		::archivers/arc \
 			::mail/p5-Mail-SpamAssassin \
 			:p5-Mail-DKIM->=0.31:mail/p5-Mail-DKIM \
 			::mail/p5-MIME-tools \
+			::net/net-snmp,-perl \
+			::security/clamav \
 			::sysutils/p5-Unix-Syslog
 
 NO_BUILD=		Yes
@@ -56,11 +56,19 @@ do-install:
 			${PREFIX}/bin/amavisd-nanny
 	${INSTALL_SCRIPT} ${WRKSRC}/amavisd-release \
 			${PREFIX}/bin/amavisd-release
+	${INSTALL_SCRIPT} ${WRKSRC}/amavisd-snmp-subagent \
+			${PREFIX}/bin/amavisd-snmp-subagent
+	${INSTALL_SCRIPT} ${WRKSRC}/p0f-analyzer.pl \
+			${PREFIX}/bin/p0f-analyzer.pl
+	${INSTALL_DATA} ${WRKSRC}/JpegTester.pm \
+			${PREFIX}/libdata/perl5/site_perl/JpegTester.pm
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/AAAREADME.first \
 			${PREFIX}/share/doc/amavisd-new
+	${INSTALL_DATA} ${WRKSRC}/AMAVIS-MIB.txt ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/INSTALL ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/LDAP.schema ${PREFIX}/share/doc/amavisd-new
+	${INSTALL_DATA} ${WRKSRC}/LDAP.ldif ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/LICENSE ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/MANIFEST ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/README_FILES/README.* \

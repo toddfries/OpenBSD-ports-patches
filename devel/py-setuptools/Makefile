@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.8 2008/04/15 09:31:47 martynas Exp $
+# $OpenBSD: Makefile,v 1.13 2009/12/13 21:10:52 kili Exp $
 
 COMMENT=	simplified packaging system for Python modules
 
-MODPY_EGG_VERSION=	0.6c8
+MODPY_EGG_VERSION=	0.6c11
 DISTNAME=		setuptools-${MODPY_EGG_VERSION}
-PKGNAME=		py-${DISTNAME}
+PKGNAME=		py-${DISTNAME:S/c/./}v0
 CATEGORIES=		devel
 PKG_ARCH=		*
 
 MAINTAINER=	Damien Miller <djm@openbsd.org>
 
-MASTER_SITES=	http://cheeseshop.python.org/packages/source/s/setuptools/
+MASTER_SITES=	${MASTER_SITE_PYPI:=s/setuptools/}
 HOMEPAGE=	http://peak.telecommunity.com/DevCenter/setuptools
 
 # Zope Public License or Python Software Foundation license

@@ -1,27 +1,18 @@
-# $OpenBSD: Makefile,v 1.3 2008/09/17 02:40:27 okan Exp $
+# $OpenBSD: Makefile,v 1.9 2009/12/05 14:45:08 jim Exp $
 
 COMMENT =	encrypted backup using rsync algorithm
 
-MODPY_EGG_VERSION = 0.5.01
+MODPY_EGG_VERSION = 0.6.06
 DISTNAME =	duplicity-${MODPY_EGG_VERSION}
+
 CATEGORIES =	sysutils
 
 HOMEPAGE =	http://www.nongnu.org/duplicity/
-MASTER_SITES =	http://savannah.nongnu.org/download/duplicity/ \
-		http://download.savannah.gnu.org/releases/duplicity/ \
-		http://nongnu.askapache.com/duplicity/ \
-		http://nongnu.bigsearcher.com/duplicity/ \
-		http://mirror.publicns.net/pub/nongnu/duplicity/ \
-		http://nongnu.mirror.ironie.org/releases/duplicity/ \
-		http://savannah.c3sl.ufpr.br/duplicity/ \
-		http://savannah.releasenotes.org/duplicity/ \
-		http://www.de-mirrors.de/nongnu/duplicity/ \
-		http://ftp.cc.uoc.gr/mirrors/nongnu.org/duplicity/ \
-		http://ftp.twaren.net/Unix/NonGNU/duplicity/
-			
-MAINTAINER =	Bruno Bigras <bruno@burnbox.net>
+MASTER_SITES =	${MASTER_SITE_SAVANNAH:=duplicity/}
 
-# GPLv3
+MAINTAINER =	Jim Razmus II <jim@openbsd.org>
+
+# GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
@@ -30,11 +21,9 @@ PERMIT_DISTFILES_FTP =	Yes
 MODULES =	lang/python
 
 LIB_DEPENDS +=	rsync::net/librsync
-RUN_DEPENDS +=	::devel/py-pexpect \
-		::net/py-boto \
+RUN_DEPENDS +=	::net/py-boto \
 		::net/ncftp \
-		::security/py-gnupg \
-		${MODPY_EXPAT_DEPENDS}
+		::security/py-gnupg
 
 MAKE_ENV +=	LIBRSYNC_DIR=${LOCALBASE}
 

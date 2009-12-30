@@ -1,12 +1,11 @@
-$OpenBSD: patch-configure,v 1.8 2008/09/19 21:51:00 rui Exp $
---- configure.orig	Tue Aug  5 10:42:21 2008
-+++ configure	Tue Aug  5 10:42:57 2008
-@@ -19341,7 +19341,7 @@ LOCALSTATEDIR=`eval echo $localstatedir`
+--- configure.orig	Tue Jul 28 23:44:16 2009
++++ configure	Mon Aug 10 23:02:40 2009
+@@ -19708,7 +19708,7 @@ LOCALSTATEDIR=`eval echo $localstatedir`
  # Set CFLAGS _after_ all the above checks, since our warnings are stricter
  # than autoconf's macros like.
- if test "$ac_cv_c_compiler_gnu" = yes; then
+ if test "$GCC" = yes; then
 -  CFLAGS="$CFLAGS -Wall -g -O2"
-+  CFLAGS="$CFLAGS -Wall"
- else
-   CFLAGS="$CFLAGS -g -O"
-   enable_gcc_warnings=no
++  CFLAGS="$CFLAGS -Wall -g"
+   # Disable GCC's strict aliasing checks.  They are an hours-to-debug
+   # accident waiting to happen.
+   CFLAGS="$CFLAGS -fno-strict-aliasing"

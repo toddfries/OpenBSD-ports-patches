@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2008/11/21 17:06:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2009/12/21 18:03:18 ajacoutot Exp $
 
 COMMENT=		graphical predictive text input system
 
 GNOME_PROJECT=		dasher
-GNOME_VERSION=		4.9.0
+GNOME_VERSION=		4.10.1
+PKGNAME=		${DISTNAME}p6
 
 CATEGORIES=		x11
 
@@ -14,30 +15,29 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			devel/gconf2
 
-WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
-		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender Xtst art_lgpl_2 atk-1.0 audiofile bonobo-2 \
-		bonobo-activation bonoboui-2 c cairo crypto dbus-1 \
-		dbus-glib-1 esd expat fontconfig freetype gailutil \
-		gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glade-2.0 \
-		glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 \
-		gnomevfs-2 gobject-2.0 gthread-2.0 gtk-x11-2.0 m pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png popt \
-		pthread ssl stdc++ util xml2 z
+WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
+WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
+WANTLIB += Xrender Xtst art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation
+WANTLIB += bonoboui-2 c cairo crypto dbus-1 dbus-glib-1 expat
+WANTLIB += fontconfig freetype gailutil gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glade-2.0 glib-2.0 glitz gmodule-2.0 gnome-2
+WANTLIB += gnome-keyring gnomecanvas-2 gnomevfs-2 gobject-2.0
+WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png popt pthread ssl stdc++
+WANTLIB += util xml2 z avahi-client avahi-common avahi-glib
+WANTLIB += pthread-stubs xcb
 
-BUILD_DEPENDS=		::x11/gnome/doc-utils
 LIB_DEPENDS=		gnomeui-2::x11/gnome/libgnomeui \
 			cspi,spi::x11/gnome/at-spi
-RUN_DEPENDS=		::x11/gnome/doc-utils
 
 USE_X11=		Yes
 MODGNOME_HELP_FILES=	Yes
 DESKTOP_FILES=		Yes
-CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/dasher/ \
-			--disable-schema-install \
-			--disable-scrollkeeper \
+MODGCONF2_SCHEMAS_DIR=	dasher
+CONFIGURE_ARGS+=	--disable-scrollkeeper \
 			--with-cairo \
 			--with-gnome \
 			--enable-a11y \
@@ -45,8 +45,5 @@ CONFIGURE_ARGS+=	--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/dasher/
 CONFIGURE_ENV=  	CPPFLAGS="-I${LOCALBASE}/include " \
 			LDFLAGS="-L${LOCALBASE}/lib " \
 			CFLAGS="${CFLAGS} -I${LOCALBASE}/include "
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

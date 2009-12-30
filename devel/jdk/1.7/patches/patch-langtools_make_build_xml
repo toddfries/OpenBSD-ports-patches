@@ -1,0 +1,21 @@
+$OpenBSD: patch-langtools_make_build_xml,v 1.2 2009/10/07 01:53:54 kurt Exp $
+--- langtools/make/build.xml.orig	Thu Sep 17 03:53:28 2009
++++ langtools/make/build.xml	Sat Sep 26 10:12:04 2009
+@@ -105,7 +105,8 @@
+         </chmod>
+         <mkdir dir="${dist.lib.dir}"/>
+         <jar file="${dist.lib.dir}/classes.jar" basedir="${build.classes.dir}"/>
+-        <zip file="${dist.lib.dir}/src.zip" basedir="${src.classes.dir}"/>
++        <zip file="${dist.lib.dir}/src.zip" basedir="${src.classes.dir}"
++             excludes="**/*.orig"/>
+     </target>
+ 
+     <target name="build-bootstrap-tools" depends="build-bootstrap-javac,build-bootstrap-javadoc,build-bootstrap-doclets,build-bootstrap-javah"/>
+@@ -550,6 +551,7 @@
+                     <fileset dir="${src.classes.dir}">
+                         <include name="@{includes}"/>
+                         <exclude name="**/*.java"/>
++                        <exclude name="**/*.orig"/>
+                         <exclude name="**/*.properties"/>
+                         <exclude name="**/*-template"/>
+                         <exclude name="**/package.html"/>

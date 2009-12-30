@@ -1,21 +1,10 @@
-$OpenBSD: patch-config_Makefile_in,v 1.11 2008/11/21 17:43:02 jasper Exp $
---- config/Makefile.in.orig	Tue Nov 18 22:17:19 2008
-+++ config/Makefile.in	Tue Nov 18 22:51:36 2008
-@@ -259,7 +259,7 @@ am__quote = @am__quote@
- am__tar = @am__tar@
- am__untar = @am__untar@
- atspidir = @atspidir@
--authdir = $(localstatedir)/gdm
-+authdir = $(localstatedir)/db/gdm
- bindir = @bindir@
- build = @build@
- build_alias = @build_alias@
-@@ -713,18 +713,6 @@ install-data-hook: gdm.conf gdm.conf-custom Xsession I
- 	if test '!' -d $(DESTDIR)$(gnomercdir); then \
- 		$(mkinstalldirs) $(DESTDIR)$(gnomercdir); \
+$OpenBSD: patch-config_Makefile_in,v 1.13 2009/03/19 08:26:42 ajacoutot Exp $
+--- config/Makefile.in.orig	Thu Mar 19 06:00:25 2009
++++ config/Makefile.in	Thu Mar 19 09:01:36 2009
+@@ -709,18 +709,6 @@ install-data-hook: gdm.conf gdm.conf-custom Xsession I
  		chmod 755 $(DESTDIR)$(gnomercdir); \
--	fi
--
+ 	fi
+ 
 -	if test '!' -d $(DESTDIR)$(logdir); then \
 -		$(mkinstalldirs) $(DESTDIR)$(logdir); \
 -		chmod 755 $(DESTDIR)$(logdir); \
@@ -26,6 +15,8 @@ $OpenBSD: patch-config_Makefile_in,v 1.11 2008/11/21 17:43:02 jasper Exp $
 -		$(mkinstalldirs) $(DESTDIR)$(authdir); \
 -		chmod 1770 $(DESTDIR)$(authdir); \
 -		chown root:gdm $(DESTDIR)$(authdir) || : ; \
- 	fi
- 
+-	fi
+-
  	system=`uname`; \
+ 	if test -f /usr/include/security/pam_appl.h; then \
+ 	  if test '!' -d $(DESTDIR)$(PAM_PREFIX)/pam.d; then \

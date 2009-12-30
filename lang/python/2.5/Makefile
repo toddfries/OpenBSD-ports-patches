@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.27 2008/10/19 07:13:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.32 2009/11/22 22:53:19 jasper Exp $
 
 VERSION=		2.5
-PATCHLEVEL=		.2
-PKG_PATCHLEVEL=		p7
+PATCHLEVEL=		.4
+PKG_PATCHLEVEL=		p2
 SHARED_LIBS=		python2.5 1.0
 
-# PSUBDIR=		python/${VERSION}
-
-.if ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "sparc64"
+.if ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "amd64" || \
+    ${MACHINE_ARCH} == "sparc64" || ${MACHINE_ARCH} == "mips64"
 PATCH_LIST=		patch-* sup64-*
 .endif
 

@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.10 2008/02/02 09:35:42 steven Exp $
+# $OpenBSD: Makefile,v 1.12 2009/12/27 21:40:34 jasper Exp $
 
 COMMENT= 		personal finance tracking and performance tool
 
 DISTNAME=		xinvest-2.6.9
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p3
 CATEGORIES=		productivity x11
-
-HOMEPAGE= 		http://xinvest.dotsrc.org/
 
 MAINTAINER=		Martynas Venckus <martynas@openbsd.org>
 
@@ -16,9 +14,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xpm Xt c m 
+WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xpm Xt c m pthread-stubs xcb
 
-MASTER_SITES=	${HOMEPAGE}
+MASTER_SITES=	http://www.phil.uu.nl/~lievisse/distfiles/
 
 USE_X11=	Yes
 USE_MOTIF=	Yes

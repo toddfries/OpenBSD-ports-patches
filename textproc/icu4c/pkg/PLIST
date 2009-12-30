@@ -1,13 +1,13 @@
-@comment $OpenBSD: PLIST,v 1.3 2008/10/31 09:56:15 landry Exp $
+@comment $OpenBSD: PLIST,v 1.5 2009/06/07 00:54:43 landry Exp $
 @bin bin/derb
 @bin bin/genbrk
+@bin bin/gencfu
 @bin bin/gencnval
 @bin bin/genctd
 @bin bin/genrb
 bin/icu-config
 @bin bin/makeconv
 @bin bin/pkgdata
-@bin bin/uconv
 include/layout/
 include/layout/LEFontInstance.h
 include/layout/LEGlyphFilter.h
@@ -25,14 +25,19 @@ include/layout/playout.h
 include/layout/plruns.h
 include/unicode/
 include/unicode/basictz.h
+include/unicode/bms.h
+include/unicode/bmsearch.h
 include/unicode/brkiter.h
+include/unicode/bytestream.h
 include/unicode/calendar.h
 include/unicode/caniter.h
 include/unicode/chariter.h
 include/unicode/choicfmt.h
 include/unicode/coleitr.h
 include/unicode/coll.h
+include/unicode/colldata.h
 include/unicode/curramt.h
+include/unicode/currpinf.h
 include/unicode/currunit.h
 include/unicode/datefmt.h
 include/unicode/dbbi.h
@@ -45,6 +50,7 @@ include/unicode/dtitvfmt.h
 include/unicode/dtitvinf.h
 include/unicode/dtptngen.h
 include/unicode/dtrule.h
+include/unicode/errorcode.h
 include/unicode/fieldpos.h
 include/unicode/fmtable.h
 include/unicode/format.h
@@ -56,6 +62,7 @@ include/unicode/measure.h
 include/unicode/msgfmt.h
 include/unicode/normlzr.h
 include/unicode/numfmt.h
+include/unicode/numsys.h
 include/unicode/parseerr.h
 include/unicode/parsepos.h
 include/unicode/platform.h
@@ -75,11 +82,16 @@ include/unicode/search.h
 include/unicode/simpletz.h
 include/unicode/smpdtfmt.h
 include/unicode/sortkey.h
+include/unicode/std_string.h
 include/unicode/strenum.h
+include/unicode/stringpiece.h
 include/unicode/stsearch.h
 include/unicode/symtable.h
 include/unicode/tblcoll.h
 include/unicode/timezone.h
+include/unicode/tmunit.h
+include/unicode/tmutamt.h
+include/unicode/tmutfmt.h
 include/unicode/translit.h
 include/unicode/tzrule.h
 include/unicode/tztrans.h
@@ -94,6 +106,7 @@ include/unicode/uclean.h
 include/unicode/ucnv.h
 include/unicode/ucnv_cb.h
 include/unicode/ucnv_err.h
+include/unicode/ucnvsel.h
 include/unicode/ucol.h
 include/unicode/ucoleitr.h
 include/unicode/uconfig.h
@@ -132,6 +145,7 @@ include/unicode/usearch.h
 include/unicode/uset.h
 include/unicode/usetiter.h
 include/unicode/ushape.h
+include/unicode/uspoof.h
 include/unicode/usprep.h
 include/unicode/ustdio.h
 include/unicode/ustream.h
@@ -150,10 +164,12 @@ include/unicode/utypes.h
 include/unicode/uversion.h
 include/unicode/vtzone.h
 lib/icu/
-lib/icu/4.0/
-lib/icu/4.0/Makefile.inc
+lib/icu/${VERSION}/
+lib/icu/${VERSION}/Makefile.inc
+lib/icu/${VERSION}/pkgdata.inc
 lib/icu/Makefile.inc
 lib/icu/current
+lib/icu/pkgdata.inc
 @lib lib/libicudata.so.${LIBicudata_VERSION}
 @lib lib/libicui18n.so.${LIBicui18n_VERSION}
 @lib lib/libicuio.so.${LIBicuio_VERSION}
@@ -169,7 +185,6 @@ lib/icu/current
 @man man/man1/icu-config.1
 @man man/man1/makeconv.1
 @man man/man1/pkgdata.1
-@man man/man1/uconv.1
 @man man/man8/genccode.8
 @man man/man8/gencmn.8
 @man man/man8/gensprep.8
@@ -180,11 +195,10 @@ lib/icu/current
 @bin sbin/gensprep
 @bin sbin/genuca
 @bin sbin/icupkg
-@bin sbin/icuswap
 share/icu/
-share/icu/4.0/
-share/icu/4.0/config/
-share/icu/4.0/config/mh-bsd-gcc
-share/icu/4.0/license.html
-@comment share/icu/4.0/install-sh
-@comment share/icu/4.0/mkinstalldirs
+share/icu/${VERSION}/
+share/icu/${VERSION}/config/
+share/icu/${VERSION}/config/mh-bsd-gcc
+@comment share/icu/${VERSION}/install-sh
+share/icu/${VERSION}/license.html
+@comment share/icu/${VERSION}/mkinstalldirs

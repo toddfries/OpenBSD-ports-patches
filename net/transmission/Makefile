@@ -1,24 +1,24 @@
-# $OpenBSD: Makefile,v 1.27 2008/07/09 19:43:42 naddy Exp $
+# $OpenBSD: Makefile,v 1.49 2009/12/22 11:41:47 sthen Exp $
 
 COMMENT-main=	lightweight BitTorrent command line and daemon client
 COMMENT-gui=	lightweight BitTorrent client with graphical interface
 
-VER=		1.22
+VER=		1.76
 DISTNAME=	transmission-${VER}
-PKGNAME-main=	transmission-${VER}
-PKGNAME-gui=	transmission-gui-${VER}
+PKGNAME-main=	transmission-${VER}p1
+PKGNAME-gui=	transmission-gui-${VER}p4
 CATEGORIES=	net
 HOMEPAGE=	http://www.transmissionbt.com/
 
 MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
 
-# GPLv3
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://download.m0k.org/transmission/files/
+MASTER_SITES=	http://mirrors.m0k.org/transmission/files/
 EXTRACT_SUFX=	.tar.bz2
 
 PSEUDO_FLAVORS=	no_gui
@@ -29,13 +29,16 @@ MULTI_PACKAGES=	-main
 WANTLIB=	c crypto idn m pthread ssl z
 WANTLIB-main=	${WANTLIB}
 
-MODULES=	devel/gettext
+MODULES=	devel/gettext textproc/intltool
+LIB_DEPENDS=	curl.>=13::net/curl
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--disable-shared --disable-wx
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+CONFIGURE_ARGS=	--disable-shared \
+		--disable-silent-rules \
+		--disable-wx
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -DHAVE_LONG_LONG=1" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		OPENSSL_CFLAGS="-I/usr/include" \
 		OPENSSL_LIBS="-lcrypto"
@@ -50,20 +53,15 @@ WANTLIB-gui=	${WANTLIB} X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		Xfixes Xi Xinerama Xrandr Xrender atk-1.0 cairo dbus-1 \
 		dbus-glib-1 expat fontconfig freetype gio-2.0 glib-2.0 glitz \
 		gmodule-2.0 gobject-2.0 gthread-2.0 pango-1.0 pangoft2-1.0 \
-		pangocairo-1.0 pixman-1 png pcre
-LIB_DEPENDS=	gdk_pixbuf-2.0,gdk-x11-2.0,gtk-x11-2.0::x11/gtk+2 \
-		notify.>=2::devel/libnotify \
-		curl.>=9::net/curl
+		pangocairo-1.0 pixman-1 png pcre pthread-stubs xcb
+LIB_DEPENDS+=	gdk_pixbuf-2.0,gdk-x11-2.0,gtk-x11-2.0::x11/gtk+2 \
+		notify.>=2::devel/libnotify
 LIB_DEPENDS-main=${MODGETTEXT_LIB_DEPENDS} \
-		curl.>=9::net/curl
-RUN_DEPENDS-main=${MODGETTEXT_RUN_DEPENDS}
+		curl.>=13::net/curl
 RUN_DEPENDS-gui=:${PKGNAME-main}:net/transmission,-main \
-		::devel/desktop-file-utils ${RUN_DEPENDS}
+		::devel/desktop-file-utils \
+		:gamin-*:sysutils/gamin,-server,no_python
 USE_X11=	Yes
 .endif
-
-# Remove the \' printf flag from the translations, too.
-post-patch:
-	@cd ${WRKSRC}/po; perl -pi.bak -e "s/%'/%/g; s/%(.*?)'d/%\1d/g" *.po
 
 .include <bsd.port.mk>

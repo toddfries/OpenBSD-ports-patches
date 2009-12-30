@@ -1,0 +1,26 @@
+$OpenBSD: patch-provider_libserver_ECSessionGroup_cpp,v 1.2 2009/10/20 22:34:26 ajacoutot Exp $
+--- provider/libserver/ECSessionGroup.cpp.orig	Fri Oct  9 22:34:40 2009
++++ provider/libserver/ECSessionGroup.cpp	Tue Oct 20 23:41:37 2009
+@@ -50,6 +50,10 @@
+ #include <mapidefs.h>
+ #include <mapitags.h>
+ 
++#ifdef __OpenBSD__
++#include <pthread.h>
++#endif
++
+ #include "ECSession.h"
+ #include "ECSessionGroup.h"
+ #include "SOAPUtils.h"
+@@ -58,6 +62,11 @@
+ #define new DEBUG_NEW
+ #undef THIS_FILE
+ static char THIS_FILE[] = __FILE__;
++#endif
++
++#ifdef __OpenBSD__
++#define PTHREAD_MUTEX_RECURSIVE_NP PTHREAD_MUTEX_RECURSIVE
++#define PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP PTHREAD_MUTEX_INITIALIZER
+ #endif
+ 
+ /*

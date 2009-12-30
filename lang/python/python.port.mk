@@ -1,4 +1,4 @@
-# $OpenBSD: python.port.mk,v 1.24 2008/10/27 00:02:27 ajacoutot Exp $
+# $OpenBSD: python.port.mk,v 1.30 2009/08/08 21:58:10 sthen Exp $
 #
 #	python.port.mk - Xavier Santolaria <xavier@santolaria.net>
 #	This file is in the public domain.
@@ -7,11 +7,22 @@ SHARED_ONLY=		Yes
 
 CATEGORIES+=		lang/python
 
+# XXX x11/gtk+2 hardcodes this.
 MODPY_VERSION?=		2.5
+.if ${MODPY_VERSION} == 2.3
+MODPY_VSPEC = >=${MODPY_VERSION},<2.4
+.elif ${MODPY_VERSION} == 2.4
+MODPY_VSPEC = >=${MODPY_VERSION},<2.5
+.elif ${MODPY_VERSION} == 2.5
+MODPY_VSPEC = >=${MODPY_VERSION},<2.6
+.elif ${MODPY_VERSION} == 2.6
+MODPY_VSPEC = >=${MODPY_VERSION},<2.7
+.endif
+MODPYSPEC = python-${MODPY_VSPEC}
 
-MODPY_RUN_DEPENDS=	:python-${MODPY_VERSION}*:lang/python/${MODPY_VERSION}
-MODPY_LIB_DEPENDS=	python${MODPY_VERSION}:python-${MODPY_VERSION}*:lang/python/${MODPY_VERSION}
-_MODPY_BUILD_DEPENDS=	:python-${MODPY_VERSION}*:lang/python/${MODPY_VERSION}
+MODPY_RUN_DEPENDS=	:${MODPYSPEC}:lang/python/${MODPY_VERSION}
+MODPY_LIB_DEPENDS=	python${MODPY_VERSION}:${MODPYSPEC}:lang/python/${MODPY_VERSION}
+_MODPY_BUILD_DEPENDS=	:${MODPYSPEC}:lang/python/${MODPY_VERSION}
 
 MODPY_RUNDEP?=		Yes
 
@@ -33,8 +44,7 @@ REGRESS_TARGET?=	test
 .endif
 
 .if !defined(NO_SHARED_LIBS) || ${NO_SHARED_LIBS:U} != YES
-MODPY_EXPAT_DEPENDS=	:python-expat-${MODPY_VERSION}*:lang/python/${MODPY_VERSION},-expat	
-MODPY_TKINTER_DEPENDS=	:python-tkinter-${MODPY_VERSION}*:lang/python/${MODPY_VERSION},-tkinter
+MODPY_TKINTER_DEPENDS=	:python-tkinter-${MODPY_VSPEC}:lang/python/${MODPY_VERSION},-tkinter
 .endif
 
 MODPY_BIN=		${LOCALBASE}/bin/python${MODPY_VERSION}
@@ -53,10 +63,12 @@ MODPY_DISTUTILS_INSTALL?=	install --prefix=${LOCALBASE} \
 				--root=${DESTDIR} \
 				--single-version-externally-managed
 .else
-MODPY_DISTUTILS_INSTALL?=	install --prefix=${PREFIX}
+MODPY_DISTUTILS_INSTALL?=	install --prefix=${LOCALBASE} \
+				--root=${DESTDIR}
 .endif
 
 MAKE_ENV+=	CC=${CC}
+CONFIGURE_ENV+=	PYTHON="${MODPY_BIN}"
 
 _MODPY_CMD=	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} \
 			${MODPY_BIN} ./${MODPY_SETUP}

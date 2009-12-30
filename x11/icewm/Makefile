@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.37 2008/08/21 07:34:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.40 2009/08/11 08:42:08 ajacoutot Exp $
 
-COMMENT=	small, fast window manager
+COMMENT=	small and fast window manager
 
-DISTNAME=	icewm-1.2.35
-PKGNAME=	${DISTNAME}p2
+DISTNAME=	icewm-1.2.37
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	x11	
 
 HOMEPAGE=	http://www.icewm.org/
@@ -18,7 +18,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xft Xinerama Xrandr Xrender \
 		c expat fontconfig freetype jpeg m png stdc++ tiff \
-		ungif z
+		ungif z pthread-stubs xcb
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=icewm/}
 
@@ -43,9 +43,20 @@ CONFIGURE_ARGS=	--with-imlib=${PREFIX}/bin \
 		--with-kdedatadir=${LOCALBASE}/share \
 		--with-x \
 		--enable-shaped-decorations \
-		--enable-gradients \
 		--enable-corefonts \
 		--enable-i18n
+
+# XXX rendering bug on big-endian systems 
+.if ${MACHINE_ARCH} != "hppa" && ${MACHINE_ARCH} != "m68k" && \
+${MACHINE_ARCH} != "m88k" && ${MACHINE_ARCH} != "mips64" && \
+${MACHINE_ARCH} != "powerpc" && ${MACHINE_ARCH} != "sparc" && \
+${MACHINE_ARCH} != "sparc64"
+CONFIGURE_ARGS+= --enable-gradients
+.endif
+
+# XXX TODO
+#CONFIGURE_ARGS+=--with-icesound=sndio
+
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

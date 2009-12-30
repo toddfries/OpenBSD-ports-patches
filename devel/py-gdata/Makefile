@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2008/11/23 16:54:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2009/10/26 11:37:51 sthen Exp $
 
 COMMENT=	Python client library for Google data APIs
 
-MODPY_EGG_VERSION=1.2.2
-DISTNAME=	gdata.py-${MODPY_EGG_VERSION}
+MODPY_EGG_VERSION=2.0.4
+DISTNAME=	gdata-${MODPY_EGG_VERSION}
 PKGNAME=	py-gdata-${MODPY_EGG_VERSION}
 CATEGORIES=	devel
 
@@ -24,7 +24,7 @@ REGRESS_IS_INTERACTIVE=	Yes
 
 do-regress: fake
 	@cd ${WRKSRC}/tests && ${MAKE_ENV} \
-		PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} ./run_all_tests.py
+		PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} ./run_data_tests.py
 
 D=	${PREFIX}/share/doc/py-gdata
 E=	${PREFIX}/share/examples/py-gdata

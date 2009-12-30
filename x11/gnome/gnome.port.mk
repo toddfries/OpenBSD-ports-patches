@@ -1,12 +1,15 @@
-# $OpenBSD: gnome.port.mk,v 1.20 2008/11/23 22:56:37 jasper Exp $
+# $OpenBSD: gnome.port.mk,v 1.25 2009/11/16 08:39:28 ajacoutot Exp $
 #
 # Module for GNOME related ports
 #
 
-CATEGORIES+=		x11/gnome
+.if !defined(GNOME_PROJECT) || !defined(GNOME_VERSION)
+ERRORS+=	"Fatal: using GNOME module, but missing GNOME_PROJECT and/or GNOME_VERSION"
+.endif
 
+CATEGORIES+=		x11/gnome
 DISTNAME=		${GNOME_PROJECT}-${GNOME_VERSION}
-VERSION=		${GNOME_VERSION}
+VERSION?=		${GNOME_VERSION}
 
 .if ${NO_BUILD:L} == "no"
 USE_LIBTOOL?=		Yes
@@ -21,7 +24,12 @@ MODGNOME_RUN_DEPENDS+=	:desktop-file-utils-*:devel/desktop-file-utils
 # Set to 'yes' if there are .xml GNOME help files under
 # share/gnome/help/ in the package list.
 .if defined(MODGNOME_HELP_FILES) && ${MODGNOME_HELP_FILES:L} == "yes"
+MODGNOME_BUILD_DEPENDS+= ::x11/gnome/doc-utils
 MODGNOME_RUN_DEPENDS+=	:yelp-*:x11/gnome/yelp
+.endif
+
+.if defined(MODGNOME_BUILD_DEPENDS)
+BUILD_DEPENDS+=		${MODGNOME_BUILD_DEPENDS}
 .endif
 
 .if defined(MODGNOME_RUN_DEPENDS)
@@ -32,3 +40,11 @@ MASTER_SITES?=		${MASTER_SITE_GNOME:=sources/${GNOME_PROJECT}/${GNOME_VERSION:C/
 EXTRACT_SUFX?=		.tar.bz2
 
 USE_GMAKE?=		Yes
+
+# Disable "silent rules" and "shave" aka clean build output (CC $FILE)
+.if defined(CONFIGURE_STYLE)
+. if ${CONFIGURE_STYLE:L:Mgnu} || ${CONFIGURE_STYLE:L:Mautoconf}
+  CONFIGURE_ARGS+=	--disable-silent-rules
+  CONFIGURE_ARGS+=	--disable-shave
+. endif
+.endif

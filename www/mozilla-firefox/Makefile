@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.105 2008/11/20 23:41:32 martynas Exp $
+# $OpenBSD: Makefile,v 1.129 2009/12/22 13:02:12 sthen Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc sparc64
 
 COMMENT=	redesign of Mozilla's browser component
 
-VER=		3.0.4
+VER=		3.0.16
 DISTNAME=	mozilla
-PKGNAME=	mozilla-firefox-${VER}
+PKGNAME=	mozilla-firefox-${VER}p0
 SO_VERSION=	20.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
@@ -38,23 +38,23 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${VER}/source/
+#MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${VER}/source/
+MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${VER}-real/source/
 DISTFILES=	firefox-${VER}-source.tar.bz2
 
 MODULES=	devel/gettext lang/python
-RUN_DEPENDS=	:esound-*:audio/esound \
-		:desktop-file-utils-*:devel/desktop-file-utils
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 BUILD_DEPENDS=	:libIDL-*:devel/libIDL \
 		:zip->=2.3:archivers/zip
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
-		nspr4.>=20,plc4.>=20,plds4.>=20:nspr->=4.7:devel/nspr \
-		nss3.>=22,smime3.>=22,softokn3.>=22,ssl3.>=22:nss->=3.12:security/nss \
-		sqlite3.>=10.0:sqlite3->=3.5:databases/sqlite3
+		nspr4.>=21,plc4.>=21,plds4.>=21:nspr->=4.8:devel/nspr \
+		nss3.>=23,smime3.>=23,softokn3.>=23,ssl3.>=23:nss->=3.12.3:security/nss \
+		sqlite3.>=10.0:sqlite3->=3.6.7:databases/sqlite3
 WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xft Xi \
 		Xinerama Xrandr Xrender Xt atk-1.0 c cairo expat fontconfig \
-		freetype glib-2.0 glitz gmodule-2.0 gobject-2.0 gthread-2.0 \
-		jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png \
-		pthread stdc++ z
+		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
+		gthread-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
+		pixman-1 png pthread pthread-stubs stdc++ xcb z
 
 VMEM_WARNING=	Yes
 
@@ -94,6 +94,7 @@ CONFIGURE_ARGS=	--with-system-jpeg=${LOCALBASE}	\
 		--enable-system-sqlite		\
 		--enable-canvas			\
 		--disable-libxul		\
+		--disable-crashreporter		\
 		--enable-official-branding
 
 # from browser/config/mozconfig
@@ -110,7 +111,6 @@ MAKE_ENV=	MOZ_CO_PROJECT=browser \
 		SO_VERSION="${SO_VERSION}"
 CONFIGURE_ENV=	${MAKE_ENV} \
 		MOZ_ENABLE_COREXFONTS=1 \
-		PYTHON="${MODPY_BIN}" \
 		topsrcdir=${WRKSRC}
 
 MODPY_RUNDEP=	No
@@ -120,6 +120,9 @@ MOZ=		${PREFIX}/mozilla-firefox
 
 DATADIRS=	chrome components defaults dictionaries extensions \
 		greprefs icons modules plugins res searchplugins
+
+post-extract:
+	@cp -f ${FILESDIR}/nsSound.cpp ${WRKSRC}/widget/src/gtk2/
 
 pre-configure:
 	perl -pi -e 's|_LOCALBASE_|${LOCALBASE}|g; s|_X11BASE_|${X11BASE}|g' \

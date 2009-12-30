@@ -1,0 +1,24 @@
+$OpenBSD: patch-configure,v 1.2 2009/10/23 15:39:51 jasper Exp $
+
+Enable libffi on hppa and powerpc platforms.
+
+--- configure.orig	Fri Dec 19 17:12:45 2008
++++ configure	Fri Oct 23 17:10:16 2009
+@@ -20976,7 +20976,7 @@ case "$host" in
+ 	TARGET=FRV; TARGETDIR=frv
+ 	;;
+ 
+-  hppa*-*-linux* | parisc*-*-linux*)
++  hppa*-*-linux* | hppa*-*-openbsd* | parisc*-*-linux*)
+ 	TARGET=PA_LINUX; TARGETDIR=pa
+ 	;;
+   hppa*64-*-hpux*)
+@@ -21033,7 +21033,7 @@ case "$host" in
+   powerpc-*-aix* | rs6000-*-aix*)
+ 	TARGET=POWERPC_AIX; TARGETDIR=powerpc
+ 	;;
+-  powerpc-*-freebsd*)
++  powerpc-*-freebsd* | powerpc-*-openbsd*)
+ 	TARGET=POWERPC_FREEBSD; TARGETDIR=powerpc
+ 	;;
+   powerpc*-*-rtems*)

@@ -1,16 +1,21 @@
-# $OpenBSD: Makefile,v 1.38 2008/11/27 18:22:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.53 2009/11/17 22:10:43 jasper Exp $
 
 COMMENT-main=		terminal emulation library
 COMMENT-python= 	python bindings for vte
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.17.4
-PKGNAME-main=		${DISTNAME}p0
+GNOME_VERSION=		0.22.5
+PKGNAME-main=		${DISTNAME}
 PKGNAME-python= 	py-${DISTNAME}
+
 CATEGORIES=		devel
-SHARED_LIBS+=	vte	12.0    # .12.3
+
+SHARED_LIBS+=	vte	13.0    # .14.0
 
 HOMEPAGE=		http://www.gnome.org/
+
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -25,17 +30,18 @@ MODULES=		devel/gettext \
 MODPY_RUNDEP=		No
 MULTI_PACKAGES= 	-main -python
 
-WANTLIB-main=		${WANTLIB-python} util c
-LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			gdk-x11-2.0.>=1000,gdk_pixbuf-2.0.>=1000,gtk-x11-2.0.>=1000::x11/gtk+2
-
-WANTLIB-python= 	ICE SM X11 Xau Xcursor Xdmcp Xext Xfixes \
-                        Xft Xi Xinerama Xcomposite Xrandr Xrender \
+WANTLIB=	 	X11 Xau Xcursor Xdmcp Xext Xfixes \
+                        Xi Xinerama Xcomposite Xrandr Xrender \
                         Xdamage atk-1.0 cairo expat fontconfig \
                         freetype m z gio-2.0 glib-2.0 glitz gmodule-2.0 \
                         gobject-2.0 ncurses pango-1.0 pangocairo-1.0 \
-                        pangoft2-1.0 pangox-1.0 pangoxft-1.0 pcre \
-                        pixman-1 png z
+                        pangoft2-1.0 pcre pixman-1 png pthread-stubs xcb z
+
+WANTLIB-main=		${WANTLIB} util c
+LIB_DEPENDS-main=	${LIB_DEPENDS} \
+			gdk-x11-2.0.>=1000,gdk_pixbuf-2.0.>=1000,gtk-x11-2.0.>=1000::x11/gtk+2
+
+WANTLIB-python= 	${WANTLIB} ffi
 
 BUILD_DEPENDS=		${RUN_DEPENDS-python}
 LIB_DEPENDS-python=	${LIB_DEPENDS-main} \
@@ -48,7 +54,6 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-python
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

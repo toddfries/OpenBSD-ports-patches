@@ -5,5 +5,6 @@ Exec=seamonkey
 Terminal=false
 Type=Application
 Icon=!!PREFIX!!/seamonkey/chrome/icons/default/seamonkey.png
-Categories=Application;PIM
+Categories=Application;Network;
+MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;
 StartupNotify=True

@@ -1,0 +1,11 @@
+$OpenBSD: patch-scripts_kamdbctl,v 1.2 2009/09/12 09:42:04 sthen Exp $
+--- scripts/kamdbctl.orig	Sat Sep 12 09:05:19 2009
++++ scripts/kamdbctl	Sat Sep 12 09:05:23 2009
+@@ -51,7 +51,7 @@ fi
+ if [ -f "$MYLIBDIR/kamdbctl.base" ]; then
+ 	. "$MYLIBDIR/kamdbctl.base"
+ else
+-	echo -e "Cannot load core functions '$MYLIBDIR/kamdbctl.base' - exiting ...\n"
++	printf "Cannot load core functions '$MYLIBDIR/kamdbctl.base' - exiting ...\n"
+ 	exit -1
+ fi

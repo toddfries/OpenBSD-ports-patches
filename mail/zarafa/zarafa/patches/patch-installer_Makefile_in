@@ -1,0 +1,19 @@
+$OpenBSD: patch-installer_Makefile_in,v 1.4 2009/10/21 09:59:54 ajacoutot Exp $
+--- installer/Makefile.in.orig	Fri Oct 16 20:39:23 2009
++++ installer/Makefile.in	Wed Oct 21 11:32:04 2009
+@@ -273,12 +273,12 @@ distclean-libtool:
+ uninstall-info-am:
+ install-dist_dataDATA: $(dist_data_DATA)
+ 	@$(NORMAL_INSTALL)
+-	test -z "$(datadir)" || $(mkdir_p) "$(DESTDIR)$(datadir)"
++	test -z "$(docdir)" || $(mkdir_p) "$(DESTDIR)$(docdir)"
+ 	@list='$(dist_data_DATA)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+-	  echo " $(dist_dataDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(datadir)/$$f'"; \
+-	  $(dist_dataDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(datadir)/$$f"; \
++	  echo " $(dist_dataDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(docdir)/$$f'"; \
++	  $(dist_dataDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(docdir)/$$f"; \
+ 	done
+ 
+ uninstall-dist_dataDATA:

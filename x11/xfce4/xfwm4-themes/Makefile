@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.11 2008/11/06 15:34:47 landry Exp $
+# $OpenBSD: Makefile,v 1.13 2009/08/11 19:55:52 landry Exp $
 PKG_ARCH=	*
 
-COMMENT=	window decoration themes for xfwm4
+COMMENT=	Xfwm4 window decoration themes
 
-XFCE_PROJECT=	xfwm4-themes
-
-HOMEPAGE=	http://www.xfce.org/projects/
+XFCE_ARTWORK=	xfwm4-themes
+XFCE_VERSION=	4.6.0
+PKGNAME=	${DISTNAME}p0
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes

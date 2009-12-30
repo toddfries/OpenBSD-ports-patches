@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.8 2008/11/21 16:56:44 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2009/12/21 18:03:17 ajacoutot Exp $
 
 COMMENT=		easy GNOME menu editing tool
 
 GNOME_PROJECT=		alacarte
-GNOME_VERSION=		0.11.6
+GNOME_VERSION=		0.12.4
+PKGNAME=		${DISTNAME}p1
+
 CATEGORIES=		x11
 
 # LGPLv2
@@ -17,18 +19,14 @@ MODULES=		lang/python \
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		::devel/gettext \
-			:python-expat-${MODPY_VERSION}*:lang/python/${MODPY_VERSION},-expat \
-			:fam-*:sysutils/fam \
 			:py-gtk2->=2.8.6:x11/py-gtk2 \
 			:gnome-menus-*:x11/gnome/menus \
-			:py-gnome-*:x11/gnome/py-gnome \
-			::textproc/scrollkeeper
+			:py-gnome-*:x11/gnome/py-gnome
 
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			PYTHON="${MODPY_BIN}"
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Alacarte/util.py

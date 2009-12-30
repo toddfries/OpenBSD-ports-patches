@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2008/06/12 06:46:40 eric Exp $
+# $OpenBSD: Makefile,v 1.10 2009/10/14 12:47:48 landry Exp $
 
 COMMENT=	experimental HTTP/1.1 server framework
 
@@ -6,7 +6,7 @@ CATEGORIES+=	www
 
 VERSION=	8.1.0
 DISTNAME=	TwistedWeb2-${VERSION}
-PKGNAME=	py-twisted-web2-${VERSION}
+PKGNAME=	py-twisted-web2-${VERSION}p1
 
 HOMEPAGE=	http://twistedmatrix.com/trac/wiki/TwistedWeb2
 

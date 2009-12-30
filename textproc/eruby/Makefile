@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2008/07/04 19:57:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.10 2009/08/10 16:48:27 msf Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		interprets Ruby code embedded in a text file
 
 DISTNAME=		eruby-1.0.5
-PKGNAME=		${DISTNAME}p4
+PKGNAME=		${DISTNAME}p6
 CATEGORIES=		textproc	
 
 SHARED_LIBS=		eruby 1.05
@@ -23,7 +23,7 @@ MASTER_SITES=		${HOMEPAGE}archive/
 
 MODULES=		lang/ruby
 
-LIB_DEPENDS=		ruby::lang/ruby
+LIB_DEPENDS=		${MODRUBY_LIB_DEPENDS}
 
 CONFIGURE_STYLE=	simple
 CONFIGURE_SCRIPT=	configure.rb

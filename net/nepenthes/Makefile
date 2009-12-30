@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.20 2008/02/16 10:56:41 rui Exp $
+# $OpenBSD: Makefile,v 1.22 2009/07/24 22:50:10 rui Exp $
 SHARED_ONLY=	Yes
 
 COMMENT=	determine the malware activity on a network
 
 DISTNAME=	nepenthes-0.2.2 
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	net
 
 HOMEPAGE=	http://nepenthes.mwcollect.org/
@@ -49,7 +50,7 @@ LIB_DEPENDS+=   prelude.>=8::security/prelude/libprelude
 CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include  \
                 -I${LOCALBASE}/include/libprelude/" \
 		LDFLAGS="-L${LOCALBASE}/lib -pthread"
-WANTLIB+=	gcrypt gnutls gpg-error iconv intl pthread
+WANTLIB+=	gcrypt gnutls gpg-error iconv intl pthread tasn1
 CONFIGURE_ARGS+=--enable-prelude
 MESSAGE=        ${PKGDIR}/MESSAGE-prelude
 .else

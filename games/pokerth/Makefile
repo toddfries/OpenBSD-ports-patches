@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.6 2008/11/07 12:20:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2009/12/22 16:28:01 ajacoutot Exp $
 
 COMMENT=	Qt4 poker game with online capabilities
 
-V=		0.6.2
+V=		0.6.3
 DISTNAME=	PokerTH-${V}-src
 PKGNAME=	pokerth-${V}p2
 CATEGORIES=	games x11
@@ -21,9 +21,10 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pokerth/}
 
 EXTRACT_SUFX=	.tar.bz2
 
-WANTLIB=	ICE SDL SM X11 Xext Xi Xinerama Xrandr \
+WANTLIB=	ICE SDL SM X11 Xext Xi Xinerama \
 		Xrender c crypto fontconfig freetype glib-2.0 \
-		gthread-2.0 m png pthread stdc++ z QtGui ssl
+		gthread-2.0 m png pthread stdc++ z QtGui ssl \
+		expat gobject-2.0 pthread-stubs xcb
 
 MODULES=	devel/gettext \
 		x11/qt4
@@ -42,17 +43,20 @@ MAKE_FLAGS=	QMAKE_CXX=${CXX} \
 
 FAKE_FLAGS=	INSTALL_ROOT=${DESTDIR}
 
+SEPARATE_BUILD=	concurrent
+
 VMEM_WARNING=	Yes
 NO_REGRESS=	Yes
 USE_GMAKE=	Yes
 USE_X11=	Yes
 
 do-configure:
-	cd ${WRKSRC} && \
-		env -i ${CONFIGURE_ENV} qmake4 ${MAKE_FLAGS} pokerth.pro
+	cd ${WRKBUILD} && \
+		env -i ${CONFIGURE_ENV} qmake4 ${MAKE_FLAGS} \
+		${WRKSRC}/pokerth.pro
 
 post-install:
-	${INSTALL_PROGRAM} ${WRKSRC}/pokerth ${PREFIX}/bin
-	${INSTALL_PROGRAM} ${WRKSRC}/bin/pokerth_server ${PREFIX}/bin
+	${INSTALL_PROGRAM} ${WRKBUILD}/pokerth ${PREFIX}/bin
+	${INSTALL_PROGRAM} ${WRKBUILD}/bin/pokerth_server ${PREFIX}/bin
 
 .include <bsd.port.mk>

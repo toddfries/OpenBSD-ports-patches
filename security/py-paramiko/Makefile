@@ -1,38 +1,43 @@
-# $OpenBSD: Makefile,v 1.16 2007/10/08 08:22:42 steven Exp $
+# $OpenBSD: Makefile,v 1.21 2009/11/05 07:19:21 benoit Exp $
 
-COMMENT=	Python module that implements the SSH2 protocol
+COMMENT = 	Python module that implements the SSH2 protocol
 
-DISTNAME=	paramiko-1.6.2
-PKGNAME=	py-${DISTNAME}p1
-CATEGORIES=	security
+MODPY_EGG_VERSION = 	1.7.6
+DISTNAME = 		paramiko-${MODPY_EGG_VERSION}
+PKGNAME = 		py-${DISTNAME}
+CATEGORIES = 		security
 
-HOMEPAGE=	http://www.lag.net/paramiko/
+HOMEPAGE = 		http://www.lag.net/paramiko/
+
+MAINTAINER = 		Benoit Lecocq <benoit@openbsd.org>
 
 # LGPL
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM = 	Yes
+PERMIT_PACKAGE_FTP = 	Yes
+PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_FTP = 	Yes
 
-MASTER_SITES=	${HOMEPAGE}download/
+MASTER_SITES = 	${HOMEPAGE}download/
 
-MODULES=	lang/python
+MODULES = 	lang/python
 
-MODPY_SETUPTOOLS=Yes
+MODPY_SETUPTOOLS = Yes
 
-RUN_DEPENDS=	::security/py-crypto
+RUN_DEPENDS = 	::security/py-crypto
+REGRESS_DEPENDS = ${RUN_DEPENDS}
 
-NO_REGRESS=	Yes
-
-DOCSDIR=	${PREFIX}/share/doc/py-paramiko
-EXAMPLESDIR=	${PREFIX}/share/examples/py-paramiko
-
+pre-build:
+	@perl -pi -e "s,^\#\!/usr/bin/env python,#!${MODPY_BIN}," \
+	  ${WRKSRC}/demos/*.py
+        
 post-install:
-	${INSTALL_DATA_DIR} ${DOCSDIR}/{private,public}
-	${INSTALL_DATA} ${WRKSRC}/docs/{index.html,epydoc.css} ${DOCSDIR}
-	${INSTALL_DATA} ${WRKSRC}/docs/private/* ${DOCSDIR}/private
-	${INSTALL_DATA} ${WRKSRC}/docs/public/* ${DOCSDIR}/public
-	${INSTALL_DATA_DIR} ${EXAMPLESDIR}/demos
-	${INSTALL_DATA} ${WRKSRC}/demos/* ${EXAMPLESDIR}/demos
+	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-paramiko
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/py-paramiko
+	${INSTALL_DATA} ${WRKSRC}/docs/* ${PREFIX}/share/doc/py-paramiko
+	${INSTALL_DATA} ${WRKSRC}/demos/* \
+	  ${PREFIX}/share/examples/py-paramiko
+
+do-regress:
+	cd ${WRKSRC} && ${MODPY_BIN} test.py --verbose
 
 .include <bsd.port.mk>

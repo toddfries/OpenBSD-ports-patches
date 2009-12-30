@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2008/07/04 19:57:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.15 2009/11/09 17:45:24 bernd Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		Ruby interface to hyperestraier
 
 DISTNAME=		hyperestraier-1.4.13
-PKGNAME=		ruby-hyperestraier-1.0.0p7
+PKGNAME=		ruby-hyperestraier-1.0.0p11
 CATEGORIES=		textproc
 
 HOMEPAGE=		http://hyperestraier.sourceforge.net/
@@ -23,7 +23,7 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=hyperestraier/}
 WANTLIB=		c m
 MODULES=		lang/ruby
 
-LIB_DEPENDS=		ruby.>=1::lang/ruby \
+LIB_DEPENDS=		${MODRUBY_LIB_DEPENDS} \
 			estraier.>=8::textproc/hyperestraier
 
 CONFIGURE_STYLE=	gnu

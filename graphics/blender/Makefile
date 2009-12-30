@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2007/12/12 15:14:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2009/11/01 13:10:52 jasper Exp $
 
 COMMENT=	3D creation software
 
-DISTNAME=	blender-2.45
-PKGNAME=	${DISTNAME}p1
+DISTNAME=	blender-2.49b
+PKGNAME=	${DISTNAME}p0
+
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://www.blender.org/
@@ -26,8 +27,9 @@ RUN_DEPENDS=	::graphics/tiff
 BUILD_DEPENDS=	::graphics/tiff
 LIB_DEPENDS=	png::graphics/png \
 		jpeg::graphics/jpeg \
+		GLEW::graphics/glew \
 		SDL::devel/sdl \
-		python${PYTHON_VER}:python-${PYTHON_VER}.*:lang/python/${PYTHON_VER}
+		python${PYTHON_VER}:python->=${PYTHON_VER},<2.6:lang/python/${PYTHON_VER}
 
 WANTLIB=	GL GLU X11 Xi c m pthread stdc++ util z
 
@@ -49,6 +51,8 @@ MODSCONS_ENV=	CC=${CC} CXX=${CXX} C_WARN="-Wall" \
 		BF_FANCY=0 \
 		BF_QUIET=0 \
 		BF_PYTHON=${LOCALBASE} BF_PYTHON_VERSION=${PYTHON_VER} \
+		BF_GLEW=${LOCALBASE} \
+		BF_GLEW_LIB=GLEW BF_GLEW_LIBPATH=${LOCALBASE}/lib \
 		BF_JPEG=${LOCALBASE} \
 		BF_PNG=${LOCALBASE} \
 		BF_SDL_INC="${LOCALBASE}/include/SDL ${LOCALBASE}/include" \

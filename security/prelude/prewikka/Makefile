@@ -1,11 +1,14 @@
-# $OpenBSD: Makefile,v 1.15 2008/10/13 12:05:24 sturm Exp $
+# $OpenBSD: Makefile,v 1.17 2009/08/30 20:37:16 rui Exp $
 
 COMMENT=	Prelude Management Console
 
-DISTNAME=	prewikka-0.9.12.1
-PKGNAME=	prelude-${DISTNAME}p0
+MODPY_EGG_VERSION=0.9.17
+DISTNAME=	prewikka-0.9.17
+PKGNAME=	prelude-${DISTNAME}
 
 MODULES=	lang/python
+
+MASTER_SITES=	http://www.prelude-ids.com/download/releases/prewikka/
 
 BUILD_DEPENDS=	:gettext->=0.17:devel/gettext \
 		:py-cheetah-*:devel/py-cheetah

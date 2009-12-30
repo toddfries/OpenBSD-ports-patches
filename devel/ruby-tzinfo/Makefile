@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.7 2008/10/24 22:31:36 bernd Exp $
+# $OpenBSD: Makefile,v 1.9 2009/08/20 22:13:00 bernd Exp $
 
 COMMENT=		Ruby timezone library
 
-VERSION=		0.3.11
+VERSION=		0.3.14
 DISTNAME=		tzinfo-${VERSION}
 PKGNAME=		ruby-tzinfo-${VERSION}
 CATEGORIES=		devel
@@ -23,9 +23,6 @@ CONFIGURE_STYLE=	ruby gem
 
 PKG_ARCH=		*
 
-REGRESS_DEPENDS=	::devel/ruby-rake
-
-do-regress:
-	@cd ${WRKBUILD} && ${LOCALBASE}/bin/rake test
+MODRUBY_REGRESS=	rake
 
 .include <bsd.port.mk>

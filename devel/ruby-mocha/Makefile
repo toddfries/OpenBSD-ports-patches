@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2008/10/24 22:25:59 bernd Exp $
+# $OpenBSD: Makefile,v 1.7 2009/08/20 22:02:53 bernd Exp $
 
 COMMENT=	Ruby library for mocking and stubbing
 
-DISTNAME=	mocha-0.9.1
+DISTNAME=	mocha-0.9.7
 PKGNAME=	ruby-${DISTNAME}
 CATEGORIES=     devel
 
@@ -25,7 +25,7 @@ CONFIGURE_STYLE=ruby gem
 
 PKG_ARCH=	*
 
-do-regress:
-	@cd ${WRKBUILD} && ${LOCALBASE}/bin/rake test:acceptance test:units
+MODRUBY_REGRESS = rake
+RAKE_REGRESS_TARGET = test:acceptance test:units
 
 .include <bsd.port.mk>

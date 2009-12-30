@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2008/10/27 13:29:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2009/12/22 15:54:32 ajacoutot Exp $
 
 COMMENT=		printer (CUPS) administration tool
 
-DISTNAME=		system-config-printer-1.0.9
+DISTNAME=		system-config-printer-1.0.16
+PKGNAME=		${DISTNAME}p0
+
 CATEGORIES=		print sysutils
 
 HOMEPAGE=		http://cyberelk.net/tim/software/system-config-printer/
@@ -36,12 +38,16 @@ CONFIGURE_ENV+= 	CPPFLAGS=-I${LOCALBASE}/include \
 			LDFLAGS=-L${LOCALBASE}/lib
 
 SUBST_FILES=		applet.py cupshelpers/cupshelpers.py pysmb.py \
-			system-config-printer.py my-default-printer \
-			system-config-printer system-config-printer-applet \
+			system-config-printer.py \
 			manage-print-jobs.desktop.in \
 			my-default-printer.desktop.in \
 			print-applet.desktop.in \
-			system-config-printer.desktop.in
+			system-config-printer.desktop.in \
+			troubleshoot/SchedulerNotRunning.py \
+			Makefile.in
+
+FAKE_FLAGS=	dbusdir=${PREFIX}/share/examples/system-config-printer/dbus-1/system.d/ \
+		autostartdir=${PREFIX}/share/examples/system-config-printer/xdg/autostart/
 
 pre-configure:
 	find ${WRKDIST} -name \*.py | \

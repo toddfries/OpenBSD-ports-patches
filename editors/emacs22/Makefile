@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2008/07/04 15:39:17 naddy Exp $
+# $OpenBSD: Makefile,v 1.9 2009/11/22 15:07:13 jasper Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self-documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
 
-VERSION=		22.2
+VERSION=		22.3
 DISTNAME=		emacs-${VERSION}
-PKGNAME-main=		emacs-${VERSION}p0
+PKGNAME-main=		emacs-${VERSION}p1
 FULLPKGNAME-el=		emacs-el-${VERSION}p0
 FULLPKGPATH-el=		editors/emacs22,-el
 
@@ -32,7 +32,8 @@ FLAVOR?=
 
 GCCARCH=		${MACHINE_ARCH}-unknown-openbsd${OPSYS_VER}
 
-CONFIGURE_STYLE=	gnu
+AUTOCONF_VERSION=	2.61
+CONFIGURE_STYLE=	autoconf
 CONFIGURE_ARGS=		${GCCARCH} --with-pop --localstatedir=/var
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
@@ -67,9 +68,10 @@ LIB_DEPENDS-main+=	gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0::x11/gtk+2 \
 			ungif::graphics/libungif
 WANTLIB-main+=		ICE SM X11 Xdmcp Xext Xft Xpm Xrender Xau Xcomposite \
 			Xcursor Xdamage Xfixes Xi Xinerama Xrandr \
-			atk-1.0 cairo expat fontconfig freetype glib-2.0 \
-			glitz gmodule-2.0 gobject-2.0 iconv intl pango-1.0 \
-			pangocairo-1.0 pangoft2-1.0 pixman-1 pthread z
+			atk-1.0 cairo expat fontconfig freetype gio-2.0 \
+			glib-2.0 glitz gmodule-2.0 gobject-2.0 iconv intl \
+			pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 pthread \
+			pthread-stubs xcb z
 .else
 CONFIGURE_ARGS+=	--with-x-toolkit=athena --without-toolkit-scroll-bars
 USE_X11=		Yes
@@ -77,10 +79,18 @@ LIB_DEPENDS-main=	jpeg::graphics/jpeg \
 			png::graphics/png \
 			tiff::graphics/tiff \
 			ungif::graphics/libungif 
-WANTLIB-main+=		ICE SM X11 Xaw Xext Xmu Xpm Xt z
+WANTLIB-main+=		ICE SM X11 Xaw Xext Xmu Xpm Xt pthread-stubs xcb z
 .endif
 
-RUN_DEPENDS-el=		:emacs-${VERSION}*:${PKGPATH}
+RUN_DEPENDS-el=		:emacs-${VERSION}:${PKGPATH}
 PKG_ARCH-el=		*
+
+.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "mips64"
+post-extract:
+	touch ${WRKSRC}/leim/quail/tsang-b5.el
+
+post-install:
+	gzip -f ${PREFIX}/share/emacs/${VERSION}/leim/quail/tsang-b5.el
+.endif
 
 .include <bsd.port.mk>

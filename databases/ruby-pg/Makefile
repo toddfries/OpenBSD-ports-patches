@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/09/28 16:03:41 bernd Exp $
+# $OpenBSD: Makefile,v 1.3 2009/04/06 07:52:12 bernd Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	PostgreSQL database interface for ruby
 
-DISTNAME =	pg-0.7.9.2008.08.17
+DISTNAME =	pg-0.8.0
 PKGNAME =	ruby-${DISTNAME}
 CATEGORIES =	databases
 

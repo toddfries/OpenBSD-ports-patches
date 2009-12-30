@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2008/01/13 17:21:35 martynas Exp $
+# $OpenBSD: Makefile,v 1.7 2009/11/23 00:45:27 fgsch Exp $
 
 COMMENT=		plugin to support use of Cheetah templates
 
 VERSION=		1.0
 DISTNAME=		TurboCheetah-${VERSION}
-PKGNAME=		py-turbocheetah-${VERSION}
+PKGNAME=		py-turbocheetah-${VERSION}p0
 
 CATEGORIES=		devel
 
@@ -18,7 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		http://cheeseshop.python.org/packages/source/T/TurboCheetah/
+MASTER_SITES=		${MASTER_SITE_PYPI:=T/TurboCheetah/}
 
 MODULES=		lang/python
 RUN_DEPENDS=		::devel/py-cheetah

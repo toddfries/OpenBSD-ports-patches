@@ -1,10 +1,9 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2008/01/15 02:00:56 okan Exp $
-%%SHARED%%
-lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_VERSION}-py${MODPY_VERSION}.egg-info/
-lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_VERSION}-py${MODPY_VERSION}.egg-info/PKG-INFO
-lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_VERSION}-py${MODPY_VERSION}.egg-info/SOURCES.txt
-lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_VERSION}-py${MODPY_VERSION}.egg-info/dependency_links.txt
-lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_VERSION}-py${MODPY_VERSION}.egg-info/top_level.txt
+@comment $OpenBSD: PLIST,v 1.3 2009/10/11 17:51:30 jasper Exp $
+lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/
+lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/PKG-INFO
+lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/SOURCES.txt
+lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/dependency_links.txt
+lib/python${MODPY_VERSION}/site-packages/Quixote-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/top_level.txt
 lib/python${MODPY_VERSION}/site-packages/quixote/
 lib/python${MODPY_VERSION}/site-packages/quixote/__init__.py
 lib/python${MODPY_VERSION}/site-packages/quixote/__init__.pyc
@@ -39,6 +38,7 @@ lib/python${MODPY_VERSION}/site-packages/quixote/form/widget.pyc
 lib/python${MODPY_VERSION}/site-packages/quixote/html/
 lib/python${MODPY_VERSION}/site-packages/quixote/html/__init__.py
 lib/python${MODPY_VERSION}/site-packages/quixote/html/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/quixote/html/_c_htmltext.so
 lib/python${MODPY_VERSION}/site-packages/quixote/html/_py_htmltext.py
 lib/python${MODPY_VERSION}/site-packages/quixote/html/_py_htmltext.pyc
 lib/python${MODPY_VERSION}/site-packages/quixote/html/qpy_templateio.py
@@ -52,6 +52,7 @@ lib/python${MODPY_VERSION}/site-packages/quixote/logger.pyc
 lib/python${MODPY_VERSION}/site-packages/quixote/ptl/
 lib/python${MODPY_VERSION}/site-packages/quixote/ptl/__init__.py
 lib/python${MODPY_VERSION}/site-packages/quixote/ptl/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/quixote/ptl/cimport.so
 lib/python${MODPY_VERSION}/site-packages/quixote/ptl/install.py
 lib/python${MODPY_VERSION}/site-packages/quixote/ptl/install.pyc
 lib/python${MODPY_VERSION}/site-packages/quixote/ptl/ptl_compile.py

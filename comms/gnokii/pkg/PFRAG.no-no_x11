@@ -1,5 +1,5 @@
-@comment $OpenBSD: PFRAG.no-no_x11,v 1.4 2008/06/01 17:33:36 ajacoutot Exp $
-bin/xgnokii
+@comment $OpenBSD: PFRAG.no-no_x11,v 1.6 2009/12/21 18:11:02 ajacoutot Exp $
+@bin bin/xgnokii
 lib/pkgconfig/xgnokii.pc
 @man man/man1/xgnokii.1
 share/applications/xgnokii.desktop
@@ -97,4 +97,4 @@ share/xgnokii/help/pl_PL/sms.html
 share/xgnokii/help/pl_PL/speeddial.html
 share/xgnokii/help/pl_PL/xkeyb.html
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

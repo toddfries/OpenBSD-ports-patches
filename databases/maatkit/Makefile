@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.3 2008/11/10 10:15:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/07/20 13:01:18 giovanni Exp $
 
 COMMENT =	MySQL maatkit tools
 
-DISTNAME =	maatkit-2442
+DISTNAME =	maatkit-4047
 CATEGORIES =	databases perl5
 
-HOMEPAGE =	http:/www.maatkit.org/
+HOMEPAGE =	http://www.maatkit.org/
 
-MAINTAINER =	Giovanni Bechis <g.bechis@snb.it>
+MAINTAINER =	Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes

@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.152 2008/10/30 00:03:42 pirofti Exp $
+# $OpenBSD: Makefile,v 1.169 2009/11/01 22:58:51 jasper Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR += architect
+     SUBDIR += apache-couchdb
      SUBDIR += db
      SUBDIR += dbh
      SUBDIR += directoryassistant
@@ -15,8 +16,11 @@
      SUBDIR += jxplorer
      SUBDIR += keximdb
      SUBDIR += lbdb
+     SUBDIR += libdbi
+     SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
      SUBDIR += luasqlite3
+     SUBDIR += luma
      SUBDIR += maatkit
      SUBDIR += mdbtools/snapshot
      SUBDIR += mnemo
@@ -32,6 +36,7 @@
      SUBDIR += openldap
      SUBDIR += p5-AsciiDB-TagFile
      SUBDIR += p5-BerkeleyDB
+     SUBDIR += p5-CGI-Application-Plugin-DBH
      SUBDIR += p5-Catalyst-Controller-Rose
      SUBDIR += p5-Catalyst-Model-CDBI
      SUBDIR += p5-Catalyst-Model-DBI
@@ -74,6 +79,7 @@
      SUBDIR += p5-DBIx-Migration
      SUBDIR += p5-DBIx-SearchBuilder
      SUBDIR += p5-DBIx-XHTML_Table
+     SUBDIR += p5-DBM-Deep
      SUBDIR += p5-Data-Page
      SUBDIR += p5-Data-Pageset
      SUBDIR += p5-Data-RandomPerson
@@ -96,8 +102,11 @@
      SUBDIR += p5-pgsql
      SUBDIR += p5-sybperl
      SUBDIR += pear-DB
+     SUBDIR += pear-DB_DataObject
      SUBDIR += pear-MDB2
      SUBDIR += pear-MDB2-mysql
+     SUBDIR += pear-MDB2-mysqli
+     SUBDIR += pear-MDB2-sqlite
      SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3
@@ -111,10 +120,12 @@
      SUBDIR += postgresql_autodoc
      SUBDIR += py-axiom
      SUBDIR += py-cdb
+     SUBDIR += py-couchdb
      SUBDIR += py-elixir
      SUBDIR += py-ldap,python2.4
      SUBDIR += py-ldap,python2.5
      SUBDIR += py-mysql
+     SUBDIR += py-odbc
      SUBDIR += py-pgsql
      SUBDIR += py-psycopg,python2.4
      SUBDIR += py-psycopg,python2.5
@@ -130,11 +141,19 @@
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += ruby-activerecord
      SUBDIR += ruby-bdb
+     SUBDIR += ruby-couchrest
+     SUBDIR += ruby-couch_potato
+     SUBDIR += ruby-datamapper
+     SUBDIR += ruby-data_objects
+     SUBDIR += ruby-do_sqlite3
+     SUBDIR += ruby-kirbybase
      SUBDIR += ruby-ldap
      SUBDIR += ruby-mysql
      SUBDIR += ruby-pg
      SUBDIR += ruby-postgres
+     SUBDIR += ruby-sequel
      SUBDIR += ruby-sqlite3
+     SUBDIR += ruby-validatable
      SUBDIR += sharedance
      SUBDIR += skytools
      SUBDIR += sqlite
@@ -144,7 +163,7 @@
      SUBDIR += sqlports
      SUBDIR += sqsh
      SUBDIR += tdb
+     SUBDIR += xapian-core
      SUBDIR += xmysql
-     SUBDIR += xmysqladmin
 
 .include <bsd.port.subdir.mk>

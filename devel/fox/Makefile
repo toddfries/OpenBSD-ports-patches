@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2007/08/10 12:44:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2009/08/10 06:31:07 kili Exp $
 
 COMMENT=	C++ toolkit for GUI
 CATEGORIES=	devel
 
 DISTNAME=	fox-1.6.28
+PKGNAME=	${DISTNAME}p1
+
 SHARED_LIBS +=	FOX-1.6              1.0      # .0.28
 SHARED_LIBS +=	CHART-1.6            1.0      # .0.28
 MASTER_SITES=	${HOMEPAGE}/ftp/
@@ -36,6 +38,7 @@ FOX=		fox-1.6
 SUBST_VARS=	FOX
 
 WANTLIB=	GL GLU X11 Xau Xcursor Xdmcp Xext Xfixes Xrender Xrandr c m \
-		stdc++ z pthread Xft expat fontconfig freetype
+		stdc++ z pthread Xft expat fontconfig freetype \
+		pthread-stubs xcb
 
 .include <bsd.port.mk>

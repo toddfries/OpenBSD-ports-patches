@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.53 2008/06/29 20:44:51 sthen Exp $
+# $OpenBSD: Makefile,v 1.56 2009/12/22 16:06:41 ajacoutot Exp $
 
 COMMENT=	Gtk-based graphic file viewer
 
-DISTNAME=	gqview-2.0.4
-PKGNAME=	${DISTNAME}p4
+DISTNAME=	gqview-2.1.5
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gqview/}
 
@@ -19,13 +19,16 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xi \
 		Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig \
-		freetype glib-2.0 glitz gmodule-2.0 gobject-2.0 m pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 pixman-1 png z
+		freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 m \
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png \
+		pthread-stubs xcb z
 
 MODULES=	devel/gettext
 
-RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
-LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
+		::devel/xdg-utils
+LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
+		lcms::graphics/lcms
 
 USE_X11=	Yes
 CONFIGURE_STYLE= gnu

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.26 2008/11/19 17:26:20 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2009/08/10 06:31:08 kili Exp $
 
 COMMENT=	graphical user interface library for C++
 
 DISTNAME=	libuta-0.4.4
-PKGNAME=	${DISTNAME}p6
+PKGNAME=	${DISTNAME}p8
 SHARED_LIBS=		uta 42.0
 MODGNU_SHARED_LIBS=	uta ''
 
@@ -19,14 +19,15 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB=	SDL X11 Xau Xdmcp Xext m mikmod ogg pthread stdc++ usbhid \
-		Xrandr Xrender iconv sndio vorbis vorbisfile z
+		Xrandr Xrender iconv sndio vorbis vorbisfile z \
+		pthread-stubs xcb
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=libuta/}
 
 LIB_DEPENDS=	smpeg.>=1.3::devel/smpeg \
 		SDL_mixer::devel/sdl-mixer \
 		png.>=2::graphics/png \
-		sigc:libsigc++-1.*:devel/libsigc++ \
+		sigc:libsigc++->=1,<2:devel/libsigc++ \
 		ttf.>=1.3::print/freetype
 
 USE_LIBTOOL=	Yes

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.115 2008/10/28 14:05:58 naddy Exp $
+# $OpenBSD: Makefile,v 1.126 2009/10/12 12:41:02 nicm Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -12,7 +12,6 @@
      SUBDIR += calentool
      SUBDIR += cbb
      SUBDIR += ccze
-     SUBDIR += cdrchive
      SUBDIR += cdrdao
      SUBDIR += clex
      SUBDIR += contacts
@@ -24,6 +23,7 @@
      SUBDIR += dnetc
      SUBDIR += dtach
      SUBDIR += dvtm
+     SUBDIR += ent
      SUBDIR += figlet
      SUBDIR += fileutils
      SUBDIR += findutils
@@ -52,9 +52,11 @@
      SUBDIR += most
      SUBDIR += mshell
      SUBDIR += openbabel
+     SUBDIR += omconsole
      SUBDIR += p5-Acme-LOLCAT
      SUBDIR += p5-CreditCard
      SUBDIR += p5-File-MMagic
+     SUBDIR += p5-File-MMagic-XS
      SUBDIR += p5-File-Rotate-Backup
      SUBDIR += p5-Finance-IIF
      SUBDIR += p5-Finance-Quote
@@ -64,6 +66,7 @@
      SUBDIR += p5-Spreadsheet-ParseExcel
      SUBDIR += p5-Spreadsheet-WriteExcel
      SUBDIR += p5-Term-Animation
+     SUBDIR += p5-User
      SUBDIR += p5-User-Identity
      SUBDIR += pdmenu
      SUBDIR += pfm
@@ -86,10 +89,11 @@
      SUBDIR += tkcron
      SUBDIR += tkinfo
      SUBDIR += tkman
-     SUBDIR += tmux
      SUBDIR += tpwireless
      SUBDIR += ttyrec
+     SUBDIR += uniutils
      SUBDIR += viz
+     SUBDIR += vmware-vncpasswd
      SUBDIR += vttest
      SUBDIR += wmmand
      SUBDIR += wmtimer
@@ -98,6 +102,7 @@
      SUBDIR += xd
      SUBDIR += xdelta
      SUBDIR += xgas
+     SUBDIR += xkcd-viewer
      SUBDIR += xless
      SUBDIR += xnc
      SUBDIR += xtar

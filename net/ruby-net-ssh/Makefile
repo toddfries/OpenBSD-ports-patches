@@ -1,29 +1,31 @@
-# $OpenBSD: Makefile,v 1.7 2008/11/19 14:40:23 pirofti Exp $
+# $OpenBSD: Makefile,v 1.11 2009/10/13 19:37:52 pirofti Exp $
 
-COMMENT=	pure-ruby implementation of the SSH2 client protocol
+COMMENT =	pure-ruby implementation of the SSH2 client protocol
 
-DISTNAME=	net-ssh-2.0.4
-PKGNAME=	ruby-${DISTNAME}
-CATEGORIES=	net
+DISTNAME =	net-ssh-2.0.15
+PKGNAME =	ruby-${DISTNAME}
+CATEGORIES =	net
 
 # bsd/ruby
-PERMIT_PACKAGE_CDROM=	yes
-PERMIT_PACKAGE_FTP=	yes
-PERMIT_DISTFILES_CDROM=	yes
-PERMIT_DISTFILES_FTP=	yes
+PERMIT_PACKAGE_CDROM =		yes
+PERMIT_PACKAGE_FTP =		yes
+PERMIT_DISTFILES_CDROM =	yes
+PERMIT_DISTFILES_FTP =		yes
 
-MASTER_SITES=	${MASTER_SITE_RUBYFORGE:=net-ssh/}
+MASTER_SITES =	${MASTER_SITE_RUBYFORGE:=net-ssh/}
 
-MODULES=	lang/ruby
+MODULES =	lang/ruby
 
-BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	:ruby-needle-1.3.0:devel/ruby-needle
+BUILD_DEPENDS =	${RUN_DEPENDS}
+RUN_DEPENDS =	:ruby-highline-*:devel/ruby-highline
 
-CONFIGURE_STYLE=ruby gem
+CONFIGURE_STYLE =	ruby gem
 
-REGRESS_DEPENDS=	:ruby-mocha-*:devel/ruby-mocha
+REGRESS_DEPENDS =	:ruby-mocha-*:devel/ruby-mocha \
+			::devel/ruby-test-unit
+
 do-regress:
-	@cd ${WRKBUILD} && ${RUBY} -Ilib test/test_all.rb
+	@cd ${WRKBUILD} && ${RUBY} -Ilib -rubygems test/test_all.rb
 
 PKG_ARCH=	*
 

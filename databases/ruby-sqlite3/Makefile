@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2008/09/28 15:58:55 bernd Exp $
+# $OpenBSD: Makefile,v 1.10 2009/11/09 17:09:22 bernd Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,12 +6,10 @@ COMMENT=	access a SQLite3 database from ruby
 
 VERSION=	1.2.4
 DISTNAME=	sqlite3-ruby-${VERSION}
-PKGNAME=	ruby-sqlite3-${VERSION}
+PKGNAME=	ruby-sqlite3-${VERSION}p0
 CATEGORIES=	databases
 
 HOMEPAGE=	http://sqlite-ruby.rubyforge.org/
-
-MAINTAINER=	Bernd Ahlers <bernd@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -28,7 +26,7 @@ WANTLIB=		c m
 # swig is needed to build the native extension
 BUILD_DEPENDS=		::devel/swig
 LIB_DEPENDS=		sqlite3.>=8:sqlite3->=3.3.4:databases/sqlite3 \
-			ruby.>=1::lang/ruby
+			${MODRUBY_LIB_DEPENDS}
 
 CONFIGURE_STYLE=	ruby gem
 

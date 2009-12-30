@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.28 2008/09/03 14:33:06 jakob Exp $
+# $OpenBSD: Makefile,v 1.31 2009/06/01 12:15:57 jakob Exp $
 
 COMMENT=	DKIM milter
 
-DISTNAME=	dkim-milter-2.7.2
-PKGNAME=	${DISTNAME}
+DISTNAME=	dkim-milter-2.8.3
 CATEGORIES=	mail
 HOMEPAGE=	http://sourceforge.net/projects/dkim-milter/
 
@@ -17,7 +16,7 @@ PERMIT_PACKAGE_FTP=		Yes
 PERMIT_DISTFILES_CDROM=		Patent
 PERMIT_DISTFILES_FTP=		Yes
 
-WANTLIB=	c crypto pthread milter ssl
+WANTLIB=	c crypto milter pthread ssl
 
 EXAMPLESDIR=	share/examples/dkim-milter
 
@@ -31,6 +30,7 @@ do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/obj.*/dkim-filter/dkim-testkey ${PREFIX}/bin
 	${INSTALL_PROGRAM} ${WRKSRC}/obj.*/dkim-filter/dkim-testssp ${PREFIX}/bin
 	${INSTALL_SCRIPT} ${WRKSRC}/dkim-filter/dkim-genkey.sh ${PREFIX}/bin/dkim-genkey
+	${INSTALL_MAN} ${WRKSRC}/dkim-filter/dkim-filter.conf.5 ${PREFIX}/man/man5
 	${INSTALL_MAN} ${WRKSRC}/dkim-filter/dkim-filter.8 ${PREFIX}/man/man8
 	${INSTALL_MAN} ${WRKSRC}/dkim-filter/dkim-testkey.8 ${PREFIX}/man/man8
 	${INSTALL_MAN} ${WRKSRC}/dkim-filter/dkim-testssp.8 ${PREFIX}/man/man8

@@ -1,0 +1,14 @@
+$OpenBSD: patch-tool_tlsmode,v 1.2 2009/03/24 15:34:34 naddy Exp $
+--- tool/tlsmode.orig	Sun Mar 19 08:21:23 2006
++++ tool/tlsmode	Tue Mar 24 16:32:20 2009
+@@ -38,8 +38,8 @@ case "x$option_tls" in
+     cflags=`libgnutls-config --cflags`;
+     liblink=`libgnutls-config --libs` ;;
+   x2) # xopenssl | xOpenSSL)
+-    cflags=`pkg-config --cflags openssl`;
+-    liblink=`pkg-config --libs openssl` ;;
++    cflags='-I/usr/include/openssl';
++    liblink='-lssl -lcrypto';;
+   x3) # xmatrixssl | xMatrixSSL)
+     liblink='-lmatrixssl' ;;
+   *) echo "$me: bad OPTION_TLS parameter" >&2; (exit 1); exit 1 ;;

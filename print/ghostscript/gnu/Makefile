@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.60 2008/11/19 09:59:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.69 2009/09/13 20:59:16 ajacoutot Exp $
 
 COMMENT=	GNU PostScript interpreter
 
 VERSION=	8.63
 DISTNAME=	ghostscript-${VERSION}
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p9
 CATEGORIES=	print lang
 SHARED_LIBS=	gs	11.0
 
@@ -73,9 +73,12 @@ MAKE_FLAGS=	BINDIR=./obj				\
 		SHARE_ZLIB=1				\
 		SOBINRELDIR=../obj			\
 		SOOBJRELDIR=../obj			\
+		SOC_CFLAGS="${SOC_CFLAGS}"		\
+		SOC_LIBS="${SOC_LIBS}"			\
 		STDLIBS='-pthread -lm -liconv'		\
 		SYNC=posync				\
 		TRUE_PREFIX='${LOCALBASE}'		\
+		USE_GTK=${USE_GTK}			\
 		XLDFLAGS=-L${LOCALBASE}/lib		\
 		prefix='${PREFIX}'
 
@@ -90,9 +93,25 @@ CONFIGURE_ENV=		AWK=/usr/bin/awk			\
 			LDFLAGS='${LDFLAGS} -L${LOCALBASE}/lib'	\
 			LIBS=-ljpeg
 
+# Hack to let ALL_TARGET etc. depend on the value of NO_SHARED_LIBS,
+# which is available only after the inclusion of bsd.port.mk.
+ALL_TARGET_NON_SHARED-No = 	so
+ALL_TARGET_NON_SHARED-Yes = 	all
+INSTALL_TARGET_NON_SHARED-No =	install install-so
+INSTALL_TARGET_NON_SHARED-Yes =	install
+
+SOC_LIBS =			-L${LOCALBASE}/lib -ljpeg -pthread
+
 .if ${FLAVOR:L:Ma4}
 CFLAGS+=	-DA4
 .endif
+
+# A word about the GTK_DEVICES and NOGTK_DEVICES variables.
+# Originally, the display device is used by the gtk+ versions of
+# ghostscript, but it works fine when called from external helpers or
+# libraries (e.g. libspectre). With the correct sorting of device
+# drivers, we can have a default output device set to x11 and a working
+# 'display' driver without enforcing the gtk FLAVOR.
 
 .if ${FLAVOR:L:Mgtk} && ${FLAVOR:L:Mno_x11}
 ERRORS+= "Fatal: Conflicting flavors: ${FLAVOR}"
@@ -101,20 +120,25 @@ LIB_DEPENDS+=	gdk-x11-2.0.>=1000,gdk_pixbuf-2.0.>=1000,gtk-x11-2.0.>=1000::x11/g
 MODULES+=	devel/gettext
 WANTLIB+=	Xcomposite Xcursor Xdamage Xau Xdmcp Xfixes Xi Xinerama \
 		Xrandr Xrender atk-1.0 cairo expat fontconfig freetype \
-		glib-2.0 glitz gmodule-2.0 gobject-2.0 pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 pixman-1
-MAKE_FLAGS+=	SOC_CFLAGS="$$(pkg-config gtk+-2.0 --cflags)" \
-		SOC_LIBS="$$(pkg-config gtk+-2.0 --libs) -pthread"
-ALL_TARGET=	so
-INSTALL_TARGET=	install install-so
+		gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pixman-1 pthread-stubs xcb
 NOT_FOR_ARCHS=	${NO_SHARED_ARCHS}
-DEVICES+=	${GTK_DEVICES}
+SOC_CFLAGS=	$$(pkg-config gtk+-2.0 --cflags)
+SOC_LIBS+=	$$(pkg-config gtk+-2.0 --libs)
+USE_GTK=	Yes
+GTK_DEVICES=	display
+NOGTK_DEVICES=
+.else
+USE_GTK=	No
+GTK_DEVICES=
+NOGTK_DEVICES= display
 .endif
 
 .if !${FLAVOR:L:Mno_x11}
 USE_X11=	Yes
 WANTLIB+=	X11 Xt Xext
-DEVICES+=	${X11_DEVICES}
+DEVICES+=	${GTK_DEVICES} ${X11_DEVICES} ${NOGTK_DEVICES}
+SOC_LIBS+=	-L${X11BASE}/lib -lXt -lXt -lXext
 .endif
 
 NO_REGRESS=	Yes
@@ -139,13 +163,13 @@ STRIP=		:
 .endif
 
 post-install:
-.if ${FLAVOR:L:Mgtk}
-	${STRIP} ${PREFIX}/bin/gsc
-	${STRIP} ${PREFIX}/bin/gsx
-	ln -sf gsc ${PREFIX}/bin/gs
-.else
+	if [ -x ${PREFIX}/bin/gsc ]; then \
+		mv ${PREFIX}/bin/gsc ${PREFIX}/bin/gs; \
+	fi
+	if [ -x ${PREFIX}/bin/gsx ]; then \
+		mv ${PREFIX}/bin/gsx ${PREFIX}/bin/gs; \
+	fi
 	${STRIP} ${PREFIX}/bin/gs
-.endif
 	cd ${PREFIX}/man/man1 && \
 		ln -sf ps2ps.1 eps2eps.1 && \
 		ln -sf gslp.1 gsbj.1 && \
@@ -160,8 +184,8 @@ post-install:
 		ln -sf ps2pdf.1 ps2pdf13.1 && \
 		ln -sf ps2pdf.1 ps2pdf14.1 && \
 		ln -sf ps2ps.1 eps2eps.1
-	mv ${DESTDIR}/etc/cups/* ${PREFIX}/share/ghostscript/${VERSION}/examples
-	rm -rf ${DESTDIR}/etc/cups
+	mv ${DESTDIR}/${SYSCONFDIR}/cups/* ${PREFIX}/share/ghostscript/${VERSION}/examples
+	rm -rf ${DESTDIR}/${SYSCONFDIR}/cups
 
 # Device list based on configure.ac:
 # X_DEVS (skipping x11_ and x11alt_, since those are dependencies of
@@ -275,7 +299,7 @@ DEVICES+=	ijs
 # Cups
 DEVICES+=	cups
 
-# gtk (display driver)
-GTK_DEVICES=	display
-
 .include <bsd.port.mk>
+
+ALL_TARGET =		${ALL_TARGET_NON_SHARED-${NO_SHARED_LIBS}}
+INSTALL_TARGET =	${INSTALL_TARGET_NON_SHARED-${NO_SHARED_LIBS}}

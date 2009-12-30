@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.99 2008/09/18 13:37:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.108 2009/11/22 16:40:03 ajacoutot Exp $
 
 COMMENT-main=	SMB and CIFS client and server for UNIX
 COMMENT-docs=	additional documentation and examples for Samba
 
-DISTNAME=		samba-3.0.32
+DISTNAME=		samba-3.0.37
 PKGNAME-main=		${DISTNAME}p0
 FULLPKGNAME-docs=	${DISTNAME:S/-/-docs-/}
 SHARED_LIBS=		smbclient	1.0 \
@@ -12,8 +12,6 @@ SHARED_LIBS=		smbclient	1.0 \
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.samba.org/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
@@ -67,7 +65,7 @@ MULTI_PACKAGES= -main -docs
 
 .if ${FLAVOR:L:Mcups}
 LIB_DEPENDS+=	cups::print/cups
-WANTLIB+=	ssl m pthread z
+WANTLIB += asn1 crypto gssapi krb5 m pthread ssl z
 .else
 CONFIGURE_ARGS+= --disable-cups
 .endif
@@ -90,7 +88,7 @@ WANTLIB+=	asn1 com_err gssapi krb5
 CONFIGURE_ARGS+= --without-ads
 .endif
 
-.if ${FLAVOR:L:Mads} || ${FLAVOR:L:Mcups}
+.if ${FLAVOR:L:Mads}
 WANTLIB+=	crypto
 .endif
 

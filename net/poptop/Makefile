@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.8 2008/11/21 15:05:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2009/03/26 08:36:30 giovanni Exp $
 
 COMMENT=		PPTP Server
 
-PKGNAME=		poptop-1.3.0p0
-DISTNAME=		pptpd-1.3.0
+V=1.3.4
+DISTNAME=		pptpd-$V
+PKGNAME=		poptop-$Vp0
 CATEGORIES=		net
 
 HOMEPAGE=		http://www.poptop.org/
 
-MAINTAINER=		Giovanni Bechis <g.bechis@snb.it>
+MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,10 +22,8 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=poptop/}
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--with-bsdppp --with-pppd-ip-alloc
-USE_GMAKE=      yes
-
-post-patch:
-	@perl -pi -e 's,/usr,${PREFIX},g' ${WRKSRC}/pptpctrl.c
+FAKE_FLAGS=		DESTDIR=
+USE_GMAKE=		Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/poptop

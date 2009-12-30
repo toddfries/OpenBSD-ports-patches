@@ -1,26 +1,34 @@
-# $OpenBSD: Makefile,v 1.2 2007/12/30 22:51:07 jasper Exp $
-
-BROKEN= 		needs avahi
+# $OpenBSD: Makefile,v 1.6 2009/08/09 20:08:04 sthen Exp $
 
 COMMENT=		flexible communications framework, local-link component
 
-DISTNAME=		telepathy-salut-0.1.5
+DISTNAME=		telepathy-salut-0.3.9
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-salut/}
 
-WANTLIB=		dbus-1 glib-2.0 gobject-2.0
+WANTLIB += c crypto dbus-1 dbus-glib-1 gcrypt gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gnutls gobject-2.0 gpg-error gthread-2.0
+WANTLIB += m pcre pthread ssl tasn1 xml2 z
 
 MODULES=		devel/gettext \
 			lang/python
 
-LIB_DEPENDS=		dbus-glib-1::x11/dbus-glib
+LIB_DEPENDS=		avahi-client,avahi-common,avahi-glib,avahi-gobject::net/avahi \
+			soup-2.4.>=1::devel/libsoup \
+			telepathy-glib.>=4::net/telepathy/telepathy-glib
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
+
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
-			OPENSSL_LIBS="-L/usr/lib -lssl -lcrypto" \
-			OPENSSL_CFLAGS="-I/usr/include"
+			LIBSSL_LIBS="-L/usr/lib -lssl -lcrypto" \
+			LIBSSL_CFLAGS="-I/usr/include" \
+			ac_cv_prog_PYTHON="${MODPY_BIN}"
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--enable-ssl
+
+REGRESS_DEPENDS=	::devel/check
 
 .include <bsd.port.mk>

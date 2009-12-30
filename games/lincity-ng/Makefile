@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2008/01/04 17:48:34 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2009/12/22 16:28:00 ajacoutot Exp $
 
 COMMENT=	city simulation game
 
-DISTNAME=	lincity-ng-1.1.2
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	lincity-ng-2.0
+PKGNAME=	${DISTNAME}p1
 EXTRACT_SUFX=	.tar.bz2
-CATEGORIES=	games
+CATEGORIES=	games x11
 
 HOMEPAGE=	http://lincity-ng.berlios.de/wiki/index.php/Main_Page
 
@@ -17,7 +17,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	GL SDL X11 c m pthread stdc++ z
+WANTLIB=	GL SDL X11 c m pthread pthread-stubs stdc++ xcb z
+
+MODULES=	converters/libiconv
 
 LIB_DEPENDS=	SDL_gfx::devel/sdl-gfx \
 		SDL_image::devel/sdl-image \
@@ -27,14 +29,16 @@ LIB_DEPENDS=	SDL_gfx::devel/sdl-gfx \
 		xml2::textproc/libxml
 BUILD_DEPENDS=	::devel/jam
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
+NO_REGRESS=	Yes
 
+USE_X11=	Yes
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
-		LIBS="-pthread"
+		LIBS="-liconv -pthread"
 CONFIGURE_STYLE=gnu
 
 do-build:
-	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} jam
+	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} jam -dx
 
 do-install:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${ALL_FAKE_FLAGS} jam \

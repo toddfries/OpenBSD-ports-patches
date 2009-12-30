@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2007/09/15 20:09:42 simon Exp $
+# $OpenBSD: Makefile,v 1.8 2009/08/10 06:31:45 kili Exp $
 
 COMMENT=	parametrical modeling of 3D humanoid characters
 
 DISTNAME=	makehuman-0.9
-PKGNAME=	${DISTNAME}p2
+PKGNAME=	${DISTNAME}p4
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://www.dedalo-3d.com/
@@ -18,11 +18,12 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=makehuman/}
 
-WANTLIB=	GL GLU ICE SM X11 Xi Xmu c m stdc++ z Xau Xdmcp Xext Xt
+WANTLIB=	GL GLU ICE SM X11 Xau Xdmcp Xext Xi Xmu Xt Xxf86vm c m \
+		pthread-stubs stdc++ xcb z
 
 RUN_DEPENDS=	::graphics/aqsis
 LIB_DEPENDS=	animorph::graphics/animorph \
-		glut.>=3::graphics/glut \
+		glut.>=4::graphics/freeglut \
 		mhgui::graphics/mhgui \
 		png.>=5::graphics/png
 

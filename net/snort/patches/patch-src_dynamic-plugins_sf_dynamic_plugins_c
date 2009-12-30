@@ -1,7 +1,7 @@
-$OpenBSD: patch-src_dynamic-plugins_sf_dynamic_plugins_c,v 1.2 2008/02/12 14:13:32 rui Exp $
---- src/dynamic-plugins/sf_dynamic_plugins.c.orig	Thu Feb  7 09:41:13 2008
-+++ src/dynamic-plugins/sf_dynamic_plugins.c	Thu Feb  7 09:41:29 2008
-@@ -218,8 +218,7 @@ void LoadAllLibs(char *path, LoadLibraryFunc loadFunc)
+$OpenBSD: patch-src_dynamic-plugins_sf_dynamic_plugins_c,v 1.4 2009/08/16 13:31:27 rui Exp $
+--- src/dynamic-plugins/sf_dynamic_plugins.c.orig	Mon Jan 26 22:50:08 2009
++++ src/dynamic-plugins/sf_dynamic_plugins.c	Wed Apr  8 12:40:35 2009
+@@ -233,8 +233,7 @@ void LoadAllLibs(char *path, LoadLibraryFunc loadFunc)
          dirEntry = readdir(directory);
          while (dirEntry)
          {

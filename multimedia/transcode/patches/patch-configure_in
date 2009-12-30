@@ -1,0 +1,22 @@
+$OpenBSD: patch-configure_in,v 1.2 2009/11/03 14:32:33 sthen Exp $
+--- configure.in.orig	Sat Oct 31 12:39:02 2009
++++ configure.in	Sun Nov  1 20:42:17 2009
+@@ -888,7 +888,8 @@ TC_PKG_HAVE(lame, LAME)
+ dnl
+ dnl xvid
+ dnl
+-TC_PKG_CHECK(xvid, no, xvid, no, xvid.h, xvidcore, xvid_global, xvid,
++XVID_EXTRA_LIBS="$XVID_EXTRA_LIBS -pthread"
++TC_PKG_CHECK(xvid, no, XVID, no, xvid.h, xvidcore, xvid_global, xvid,
+  [http://www.xvid.org/])
+ if test x"$have_xvid" = x"yes" ; then
+   AC_MSG_CHECKING([xvid version >= 1.0])
+@@ -907,7 +908,7 @@ int main() {
+       [cannot compile and run a test program])],,
+     [AC_MSG_RESULT([cross compiling; assumed OK...])])
+   if test x"$xvid_version_ok" = x"yes"; then
+-    XVID_LIBS="-lxvidcore"
++    XVID_LIBS="-lxvidcore $XVID_EXTRA_LIBS"
+   else
+     have_xvid="no"
+     TC_PKG_ERROR(xvid, xvid.h, yes, xvid, [http://www.xvid.org/],

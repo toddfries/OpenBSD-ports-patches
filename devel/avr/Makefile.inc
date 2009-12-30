@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile.inc,v 1.3 2005/12/09 16:01:00 aanriot Exp $
+# $OpenBSD: Makefile.inc,v 1.5 2009/12/09 16:34:06 ckuethe Exp $
 
 CATEGORIES=	devel
 
-MAINTAINER=	Martin Reindl <martin@openbsd.org>	\
-		Alexandre Anriot <aanriot@openbsd.org>
+MAINTAINER=	Chris Kuethe <ckuethe@openbsd.org>
 
 CONFIGURE_STYLE=gnu
 

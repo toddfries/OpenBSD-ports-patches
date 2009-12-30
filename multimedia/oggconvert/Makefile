@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2008/10/28 14:00:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2009/12/22 15:46:59 ajacoutot Exp $
 
 COMMENT=	convert media files to Vorbis, Theora and Dirac
 
-DISTNAME=	oggconvert-0.3.0
-PKGNAME=	${DISTNAME}p0
+MODPY_EGG_VERSION=0.3.2
+DISTNAME=	oggconvert-${MODPY_EGG_VERSION}
+PKGNAME=	${DISTNAME}p2
+
 CATEGORIES=	multimedia sysutils
 
 HOMEPAGE=	http://oggconvert.tristanb.net/
@@ -14,8 +16,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}/releases/ \
-		http://humppa.nl/distfiles/
+MASTER_SITES=	${HOMEPAGE}/releases/${MODPY_EGG_VERSION}/ \
+		http://www.phil.uu.nl/~lievisse/distfiles/
 
 MODULES=	lang/python
 
@@ -26,16 +28,12 @@ PKG_ARCH=	*
 BUILD_DEPENDS=	::multimedia/gstreamer-0.10/py-gstreamer
 RUN_DEPENDS=	::multimedia/gstreamer-0.10/py-gstreamer \
 		:desktop-file-utils-*:devel/desktop-file-utils \
-		::multimedia/gstreamer-0.10/plugins-base,-ogg \
-		::multimedia/gstreamer-0.10/plugins-base,-vorbis \
-		::multimedia/gstreamer-0.10/plugins-base,-theora \
-		::multimedia/gstreamer-0.10/plugins-good,-jpeg \
-		::multimedia/gstreamer-0.10/plugins-good,-taglib \
-		::multimedia/gstreamer-0.10/plugins-bad,-xvid \
-		::multimedia/gstreamer-0.10/plugins-ugly,-mad \
-		::multimedia/gstreamer-0.10/plugins-ugly,-mpeg2
+		::multimedia/gstreamer-0.10/plugins-base \
+		::multimedia/gstreamer-0.10/plugins-good \
+		::multimedia/gstreamer-0.10/plugins-ugly \
+		:gstreamer-ffmpeg->=0.10.5:multimedia/gstreamer-0.10/plugins-ffmpeg
 
-post-patch:
-	@perl -pi -e 's,/usr/bin/python,${MODPY_BIN},' ${WRKSRC}/oggconvert
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/oggconvert
 
 .include <bsd.port.mk>

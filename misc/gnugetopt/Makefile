@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.5 2008/08/19 22:17:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/03/25 14:32:22 naddy Exp $
 
 COMMENT=	GNU getopt(1) utility
 
 DISTNAME=	getopt-1.1.4
-PKGNAME=	gnu${DISTNAME}p0
+PKGNAME=	gnu${DISTNAME}p2
 CATEGORIES=	misc
 
-HOMEPAGE=      http://software.frodo.looijaard.name/getopt/
+HOMEPAGE=	http://software.frodo.looijaard.name/getopt/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -22,7 +22,9 @@ MODULES=	devel/gettext
 
 USE_GMAKE=	Yes
 MAKE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -lintl -liconv"
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		LIBS="-lintl -liconv" \
+		CC="${CC}"
 
 NO_REGRESS=	Yes
 

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2008/09/25 21:29:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2009/09/03 07:37:21 jasper Exp $
 
 COMMENT= 		POE Filter for parsing XML
 
-DISTNAME=		POE-Filter-XML-0.33
+DISTNAME=		POE-Filter-XML-0.38
 CATEGORIES=		textproc
 
 # GPLv2
@@ -15,9 +15,9 @@ MODULES=		cpan
 
 CONFIGURE_STYLE=	modbuild
 
-RUN_DEPENDS=		::devel/p5-Filter-Template \
-			::devel/p5-POE \
-			:p5-XML-SAX->=0.14:textproc/p5-XML-SAX \
+RUN_DEPENDS=		::devel/p5-POE \
+			:p5-XML-SAX->=0.16:textproc/p5-XML-SAX \
+			::textproc/p5-XML-LibXML \
 			::textproc/p5-XML-SAX-Expat-Incremental
 
 .include <bsd.port.mk>

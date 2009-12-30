@@ -1,19 +1,20 @@
-# $OpenBSD: Makefile,v 1.37 2008/11/19 05:28:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.65 2009/12/22 15:54:32 ajacoutot Exp $
 
 COMMENT=		Common Unix Printing System
 
-VERSION=		1.2.7
+VERSION=		1.3.11
 DISTNAME=		cups-${VERSION}-source
-PKGNAME=		cups-${VERSION}p14
+PKGNAME=		cups-${VERSION}p6
+
 CATEGORIES=		print sysutils
 
-SHARED_LIBS+=		cups		3.0
-# XXX ghostscript needs to dlopen() libcupsimage.so.2
-SHARED_LIBS+=		cupsimage	2.3
+SHARED_LIBS+=		cups		4.0
+# XXX ghostscript needs to dlopen() libcupsimage.so.3
+SHARED_LIBS+=		cupsimage	3.0
 
 HOMEPAGE=		http://www.cups.org/
 
-MAITAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2 - LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,7 +22,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c m z stdc++ pthread crypto ssl
+WANTLIB += asn1 c crypto gssapi jpeg krb5 m pthread ssl z
 
 MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
 			http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
@@ -35,38 +36,58 @@ EXTRACT_SUFX=		.tar.bz2
 RUN_DEPENDS=		:desktop-file-utils-*:devel/desktop-file-utils \
 			::devel/xdg-utils
 LIB_DEPENDS=		png.>=3::graphics/png \
-			jpeg.>=62::graphics/jpeg \
-			tiff.>=35::graphics/tiff
+			tiff.>=35::graphics/tiff \
+			dbus-1.>=7::x11/dbus \
+# only build the -main subpackage to prevent cyclic dependency
+LIB_DEPENDS+=		dns_sd::net/avahi,no_gtk,no_mono,no_qt3,no_qt4
 
 FAKE_FLAGS=		BINMODE=${BINMODE} \
-			SHAREMODE=${SHAREMODE}
+			SHAREMODE=${SHAREMODE} \
+			ICONDIR=${DESTDIR}${PREFIX}/share/icons \
+			MENUDIR=${DESTDIR}${PREFIX}/share/applications \
+			DBUSDIR=${WRKINST}/${TRUEPREFIX}/share/examples/cups/dbus-1/system.d \
+			PDFTOPS="pdftops"
 
 MAKE_ENV+=		LIBcups_VERSION=${LIBcups_VERSION} \
 			LIBcupsimage_VERSION=${LIBcupsimage_VERSION}
 
+# UTF8 desktop file patch
+DIFF_ARGS=		-a
+
 CONFIGURE_STYLE=	gnu dest
 AUTOCONF_VERSION=	2.59
-CONFIGURE_ARGS+=	--with-cups-user=_cups \
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--with-cups-user=_cups \
 			--with-cups-group=_cups \
-			${CONFIGURE_SHARED} \
+			--with-system-groups=wheel \
 			--localstatedir=/var \
-			--enable-ssl \
 			--without-java \
-			--without-perl \
+			--with-perl="/usr/bin/perl" \
+			--with-optim="${CFLAGS}" \
 			--without-php \
 			--without-python \
-			--disable-dbus \
+			--enable-image \
+			--enable-dbus \
+			--enable-raw-printing \
+			--enable-gssapi \
+			--enable-dnssd \
+			--disable-pap \
+			--disable-ldap \
+			--disable-slp \
+			--disable-default-shared \
+			--disable-pdftops \
 			--disable-gnutls
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-			  -I${LOCALBASE}/include/libpng" \
+				-I${LOCALBASE}/include/libpng \
+				-I${LOCALBASE}/include/avahi-compat-libdns_sd" \
 			DSOFLAGS="-L${LOCALBASE}/lib" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
+			LDFLAGS="-L${LOCALBASE}/lib -pthread" \
 			LIBcups_VERSION=${LIBcups_VERSION} \
-			LIBcupsimage_VERSION=${LIBcupsimage_VERSION}
+			LIBcupsimage_VERSION=${LIBcupsimage_VERSION} \
+			ac_cv_path_CUPS_GHOSTSCRIPT="${LOCALBASE}/bin/gs"
 
-CFLAGS+=		"-I${LOCALBASE}/include" \
-			"-I${LOCALBASE}/include/libpng"
+CFLAGS+=		-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 WRKDIST=		${WRKDIR}/${DISTNAME:S/-source//}
 USE_GMAKE=		Yes
@@ -75,6 +96,11 @@ REGRESS_FLAGS=		LOCALBASE=${LOCALBASE}
 
 REGRESS_DEPENDS=	::print/htmldoc
 REGRESS_IS_INTERACTIVE=	Yes
+
+# gcc 3.3.5 internal compiler error
+.if ${MACHINE_ARCH} == "mips64"
+CFLAGS+=	-O0
+.endif
 
 FLAVORS=	ldap
 FLAVOR?=
@@ -86,21 +112,32 @@ LIB_DEPENDS+=		ldap,lber::databases/openldap
 CONFIGURE_ARGS+=	--disable-ldap
 .endif
 
+post-extract:
+	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
+
 post-configure:
 	cd ${WRKBUILD} && perl -pi -e 's|\$${DESTDIR}||g' init/cups.sh \
 	    config.h cups-config conf/cupsd.conf man/*.man
 	${SUBST_CMD} ${WRKSRC}/Makefile
 
 post-install:
-	@${INSTALL_DATA_DIR} ${PREFIX}/share/examples/cups/init
-	@cd ${WRKINST}${SYSCONFDIR}/cups && cp -R * \
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/cups/init
+	cd ${WRKINST}${SYSCONFDIR}/cups && cp -R * \
 		${PREFIX}/share/examples/cups
-	@rm -r ${WRKINST}${SYSCONFDIR}/cups ${WRKINST}/var/run \
+	rm -r ${WRKINST}${SYSCONFDIR}/cups ${WRKINST}/var/run \
 	    ${WRKINST}/var/cache
-	@${INSTALL_DATA} ${WRKBUILD}/init/cups.sh ${PREFIX}/share/cups/init
+	${INSTALL_DATA} ${WRKBUILD}/init/cups.sh ${PREFIX}/share/cups/init
 .for file in cups-enable cups-disable
-	@sed s,y0y0y0,${LOCALBASE}, < ${FILESDIR}/${file} > \
-		${PREFIX}/sbin/${file}
+	cp ${FILESDIR}/${file} ${WRKBUILD}
+	${SUBST_CMD} ${WRKBUILD}/${file}
+	${INSTALL_SCRIPT} ${WRKBUILD}/${file} ${PREFIX}/sbin
 .endfor
+
+# Create a link to foomatic drivers database ; we do it here instead of
+# using --enable-ppds-to-cups in the foomatic-db port so that we don't
+# need to depend on it (other printer driver packages install PPDs under
+# ${PREFIX}/share/foomatic/db/source/PPD too, e.g. foo2zjs, hpijs...).
+	ln -sf ${LOCALBASE}/share/foomatic/db/source/PPD \
+		${PREFIX}/share/cups/model/foomatic-db-ppds
 
 .include <bsd.port.mk>

@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.3 2008/11/05 21:25:28 weerd Exp $
+# $OpenBSD: Makefile,v 1.6 2009/08/03 16:57:44 sthen Exp $
 
-ONLY_FOR_ARCHS =	i386 macppc
+ONLY_FOR_ARCHS =	amd64 i386 macppc
 
 COMMENT-main =		OpenArena client
 COMMENT-server =	OpenArena server
@@ -12,16 +12,14 @@ CATEGORIES =		games x11
 
 V =			0.8.1
 
-PKGNAME-main =		openarena-${V}
-PKGNAME-server =	openarena-server-${V}
-PKGNAME-data =		openarena-data-${V}
+PKGNAME-main =		openarena-${V}p0
+PKGNAME-server =	openarena-server-${V}p0
+PKGNAME-data =		openarena-data-${V}p1
 
-PKG_ARCH-data =		i386,macppc
+PKG_ARCH-data =		amd64,i386,macppc
 
 DISTNAME =		oa${V:S/.//g}
 DISTFILES =		${DISTNAME}.zip openarena-engine-${V}-1.tar.bz2
-
-MAINTAINER =		Antti Harri <iku@openbsd.fi>
 
 MS_PREFIX =		http://download.tuxfamily.org/openarena/rel/
 HOMEPAGE =		http://www.openarena.ws/

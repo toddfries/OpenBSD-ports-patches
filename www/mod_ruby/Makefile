@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.7 2007/09/15 20:38:22 merdely Exp $
+# $OpenBSD: Makefile,v 1.9 2009/08/10 16:51:38 msf Exp $
 
 COMMENT=		module that embeds Ruby into Apache
 
 DISTNAME=		mod_ruby-1.2.6
-PKGNAME=		${DISTNAME}p0
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		www
 
 HOMEPAGE=		http://modruby.net/
 
 MAINTAINER=		Adam Montague <amontague@siriushosting.com>
 
-MODULES=		apache-module
+MODULES=		apache-module lang/ruby
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -23,7 +23,7 @@ MODAPACHE_NAME=		ruby
 
 MASTER_SITES=		http://modruby.net/archive/
 
-LIB_DEPENDS=		ruby::lang/ruby
+LIB_DEPENDS=		${MODRUBY_LIB_DEPENDS}
 
 CONFIGURE_STYLE=	simple
 CONFIGURE_SCRIPT=	configure.rb

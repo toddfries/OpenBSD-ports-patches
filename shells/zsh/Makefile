@@ -1,23 +1,17 @@
-# $OpenBSD: Makefile,v 1.49 2008/11/04 10:00:59 pea Exp $
+# $OpenBSD: Makefile,v 1.52 2009/12/16 15:03:28 pea Exp $
 
 COMMENT=	Z shell, Bourne shell-compatible
 
-V=		4.3.9
+V=		4.3.10
 DISTNAME=	zsh-$V
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	shells
 
 MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 HOMEPAGE=	http://www.zsh.org/
 
-MASTER_SITES=	ftp://ftp.zsh.org/zsh/ \
-		${HOMEPAGE}pub/ \
-		http://mirrors.dotsrc.org/zsh/ \
-		ftp://ftp.fu-berlin.de/pub/unix/shells/zsh/ \
-		http://www.math.technion.ac.il/pub/zsh/ \
-		ftp://ftp.demon.nl/pub/mirrors/zsh/ \
-		ftp://sunsite.icm.edu.pl/pub/unix/shells/zsh/ \
-		http://zsh.raveland.org/
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=zsh/}
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes

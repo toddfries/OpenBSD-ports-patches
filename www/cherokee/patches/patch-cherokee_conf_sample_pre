@@ -1,17 +1,17 @@
-$OpenBSD: patch-cherokee_conf_sample_pre,v 1.1.1.1 2008/09/05 11:19:48 ajacoutot Exp $
---- cherokee.conf.sample.pre.orig	Mon Aug 18 20:56:55 2008
-+++ cherokee.conf.sample.pre	Sat Aug 30 18:59:25 2008
-@@ -10,6 +10,9 @@
+$OpenBSD: patch-cherokee_conf_sample_pre,v 1.4 2009/07/27 17:06:16 sthen Exp $
+--- cherokee.conf.sample.pre.orig	Mon May 25 08:16:06 2009
++++ cherokee.conf.sample.pre	Tue Jun  9 22:35:47 2009
+@@ -13,6 +13,9 @@
  #
- server!port = 80
- server!port_tls = 443
+ server!bind!1!port = 80
+ server!timeout = 15
 +server!user = _cherokee
 +server!group = _cherokee
 +server!ipv6 = 0
- server!timeout = 60
  server!keepalive = 1
  server!keepalive_max_requests = 500
-@@ -26,10 +29,10 @@ vserver!1!directory_index = index.php,index.html
+ server!server_tokens = full
+@@ -27,10 +30,10 @@ vserver!1!directory_index = index.html
  
  vserver!1!logger = combined
  vserver!1!logger!access!type = file
@@ -24,11 +24,11 @@ $OpenBSD: patch-cherokee_conf_sample_pre,v 1.1.1.1 2008/09/05 11:19:48 ajacoutot
  
  vserver!1!rule!1!match = default
  vserver!1!rule!1!handler = common
-@@ -47,7 +50,7 @@ vserver!1!rule!3!handler = file
+@@ -48,7 +51,7 @@ vserver!1!rule!3!handler = file
  
  vserver!1!rule!4!match = directory
  vserver!1!rule!4!match!directory = /cgi-bin
--vserver!1!rule!4!document_root = %prefix%/lib/cgi-bin/
+-vserver!1!rule!4!document_root = %prefix%/lib/cgi-bin
 +vserver!1!rule!4!document_root = %wwwroot%/cgi-bin/
  vserver!1!rule!4!handler = cgi
  

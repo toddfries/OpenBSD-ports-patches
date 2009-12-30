@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.222 2008/11/20 13:30:54 okan Exp $
+# $OpenBSD: Makefile,v 1.252 2009/11/16 12:40:11 sthen Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -9,8 +9,11 @@
      SUBDIR += aalib
      SUBDIR += aalib,no_x11
      SUBDIR += agg
+     SUBDIR += allegropng
+     SUBDIR += amide
      SUBDIR += animorph
      SUBDIR += aqsis
+     SUBDIR += autopano-sift-c
      SUBDIR += babl
      SUBDIR += barcode
      SUBDIR += blender
@@ -20,20 +23,25 @@
      SUBDIR += cal3d
      SUBDIR += camlimages
      SUBDIR += cfdg
+     SUBDIR += clutter
      SUBDIR += colorexplorer
      SUBDIR += comix
      SUBDIR += compface
      SUBDIR += cqcam
+     SUBDIR += ctl
      SUBDIR += dcmtk
      SUBDIR += dcraw
      SUBDIR += dia
+     SUBDIR += dia,gnome
      SUBDIR += digikam
      SUBDIR += digikam-doc
+     SUBDIR += discwrapper
      SUBDIR += djview4
      SUBDIR += djvulibre
      SUBDIR += djvulibre,no_x11
      SUBDIR += dumpmpeg
      SUBDIR += dvdrip
+     SUBDIR += enblend-enfuse
      SUBDIR += enjoympeg
      SUBDIR += evince
      SUBDIR += exiv2
@@ -42,7 +50,10 @@
      SUBDIR += ffmpegthumbnailer
      SUBDIR += flash
      SUBDIR += fnlib
+     SUBDIR += freeimage
+     SUBDIR += freeglut
      SUBDIR += fswebcam
+     SUBDIR += ftgl
      SUBDIR += fxtv
      SUBDIR += fyre
      SUBDIR += gd
@@ -57,21 +68,24 @@
      SUBDIR += gii
      SUBDIR += gimp
      SUBDIR += gle
+     SUBDIR += glew
      SUBDIR += glitz
      SUBDIR += glpng
      SUBDIR += glut
      SUBDIR += gmt
      SUBDIR += gocr
-     SUBDIR += gphoto
+     SUBDIR += goocanvas
      SUBDIR += gphoto2
      SUBDIR += gpicview
      SUBDIR += gqview
      SUBDIR += gracula
+     SUBDIR += grap
      SUBDIR += gthumb
      SUBDIR += gtkam
-     SUBDIR += gtksee
+     SUBDIR += gtkimageview
      SUBDIR += gwenview
      SUBDIR += gwenview-i18n
+     SUBDIR += hugin
      SUBDIR += ilmbase
      SUBDIR += imlib
      SUBDIR += imlib2
@@ -79,6 +93,7 @@
      SUBDIR += inkscape
      SUBDIR += iview
      SUBDIR += jasper
+     SUBDIR += jbig2dec
      SUBDIR += jbigkit
      SUBDIR += jhead
      SUBDIR += jpeg
@@ -89,6 +104,7 @@
      SUBDIR += kipi-plugins
      SUBDIR += l2p
      SUBDIR += lcms
+     SUBDIR += lensfun
      SUBDIR += libart
      SUBDIR += libcaca
      SUBDIR += libdivxdecore
@@ -103,8 +119,10 @@
      SUBDIR += liblqr
      SUBDIR += libmng
      SUBDIR += libmpeg2
+     SUBDIR += libpano13
      SUBDIR += libungif
      SUBDIR += libwmf
+     SUBDIR += libxmi
      SUBDIR += luagd
      SUBDIR += luvcview
      SUBDIR += makehuman
@@ -118,8 +136,11 @@
      SUBDIR += netpbm
      SUBDIR += ocrad
      SUBDIR += openexr
+     SUBDIR += openexr-ctl
+     SUBDIR += openexr-viewers
      SUBDIR += openjpeg
      SUBDIR += p5-Cairo
+     SUBDIR += p5-Captcha-reCAPTCHA
      SUBDIR += p5-Chart
      SUBDIR += p5-Color-Calc
      SUBDIR += p5-GD
@@ -141,11 +162,12 @@
      SUBDIR += p5-Imager
      SUBDIR += p5-SVG
      SUBDIR += p5-SVG-Graph
+     SUBDIR += pecl-imagick
+     SUBDIR += pigment
      SUBDIR += png
      SUBDIR += png2ico
      SUBDIR += pngcrush
      SUBDIR += pngmeta
-     SUBDIR += pornview
      SUBDIR += potrace
      SUBDIR += povray
      SUBDIR += povray,no_x11
@@ -155,19 +177,27 @@
      SUBDIR += py-cairo
      SUBDIR += py-dot
      SUBDIR += py-gd
+     SUBDIR += py-goocanvas
+     SUBDIR += py-graphics
      SUBDIR += py-matplotlib
+     SUBDIR += py-opengl
      SUBDIR += py-pyx
+     SUBDIR += py-pigment
      SUBDIR += pycha
      SUBDIR += qiv
+     SUBDIR += quesoglc
      SUBDIR += rawstudio
+     SUBDIR += ruby-color
      SUBDIR += ruby-gd2
      SUBDIR += ruby-gdk-imlib
      SUBDIR += ruby-gdk-pixbuf
      SUBDIR += ruby-gruff
+     SUBDIR += ruby-mini_magick
      SUBDIR += ruby-rmagick
      SUBDIR += s10sh
      SUBDIR += sane-backends
      SUBDIR += sane-frontends
+     SUBDIR += scratch
      SUBDIR += scrot
      SUBDIR += smpeg-xmms
      SUBDIR += sng
@@ -178,6 +208,7 @@
      SUBDIR += tiff
      SUBDIR += tiff2png
      SUBDIR += ufraw
+     SUBDIR += ufraw,lensfun
      SUBDIR += vcdimager
      SUBDIR += vid
      SUBDIR += videod

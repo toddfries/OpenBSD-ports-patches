@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.6 2008/08/20 16:14:03 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.11 2009/12/21 18:03:18 ajacoutot Exp $
 @bin bin/gossip
 lib/bonobo/
 lib/bonobo/servers/
@@ -12,7 +12,7 @@ share/examples/gossip/sound/
 share/examples/gossip/sound/events/
 @sample ${SYSCONFDIR}/gnome/sound/events/
 share/examples/gossip/sound/events/gossip.soundlist
-@sample ${SYSCONFDIR}/gnome/sound/gossip.soundlist
+@sample ${SYSCONFDIR}/gnome/sound/events/gossip.soundlist
 share/gossip/
 share/gossip/GNOME_Peekaboo_Applet.xml
 share/gossip/chat.glade
@@ -88,10 +88,10 @@ share/locale/vi/LC_MESSAGES/gossip.mo
 share/locale/zh_CN/LC_MESSAGES/gossip.mo
 share/locale/zh_HK/LC_MESSAGES/gossip.mo
 share/locale/zh_TW/LC_MESSAGES/gossip.mo
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/share/schemas/gossip/*.schemas > /dev/null
-share/schemas/gossip/
-share/schemas/gossip/gossip.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/share/schemas/gossip/*.schemas > /dev/null
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+${SCHEMAS_INSTDIR}/
+${SCHEMAS_INSTDIR}/gossip.schemas
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 share/sounds/
 share/sounds/gossip/
 share/sounds/gossip/chat1.wav
@@ -100,8 +100,6 @@ share/sounds/gossip/offline.wav
 share/sounds/gossip/online.wav
 share/sounds/gossip/send.wav
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
-@exec %D/bin/scrollkeeper-update -q
-@unexec %D/bin/scrollkeeper-update -q
+@unexec-delete %D/bin/update-desktop-database

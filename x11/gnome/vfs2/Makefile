@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.39 2008/11/21 18:25:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.54 2009/12/08 18:55:29 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,10 +6,10 @@ COMMENT-main=		GNOME Virtual File System
 COMMENT-smb=		samba module for gnome-vfs2
 
 GNOME_PROJECT=		gnome-vfs
-GNOME_VERSION=		2.24.0
-PKGNAME=		gnome-vfs2-${VERSION}
-PKGNAME-main=		gnome-vfs2-${VERSION}
+GNOME_VERSION=		2.24.2
+PKGNAME-main=		gnome-vfs2-${VERSION}p2
 PKGNAME-smb=		gnome-vfs2-smb-${VERSION}
+
 MULTI_PACKAGES=		-main -smb
 
 SHARED_LIBS +=	gnomevfs-2           2400.0   # .2400.0
@@ -24,32 +24,34 @@ WANTLIB=	crypto dbus-1 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
 		m pcre ssl util z
 
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			devel/gconf2
+
 BUILD_DEPENDS=		:gnome-mime-data->=2.0.0:x11/gnome/mime-data
 LIB_DEPENDS=		ORBit-2.>=2::devel/ORBit2 \
-			gconf-2.>=5::devel/gconf2 \
 			xml2.>=9::textproc/libxml \
 			dbus-glib-1.>=3::x11/dbus-glib
+# only build the -main subpackage to prevent cyclic dependency
+LIB_DEPENDS+=		avahi-client,avahi-common,avahi-glib::net/avahi,no_gtk,no_mono,no_qt3,no_qt4
 RUN_DEPENDS=		:gnome-mime-data->=2.0.0:x11/gnome/mime-data
 
-WANTLIB-main=		${WANTLIB} c asn1 gssapi krb5 pthread rpcsvc stdc++
+WANTLIB-main=		${WANTLIB} c asn1 gssapi krb5 pthread
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			cdda_interface,cdda_paranoia::audio/cdparanoia \
 			bz2.>=10::archivers/bzip2 \
-			fam::sysutils/fam
+			fam.>=1::sysutils/gamin
 
-WANTLIB-smb=		${WANTLIB}
 LIB_DEPENDS-smb=	${LIB_DEPENDS} \
 			smbclient::net/samba \
 			gnomevfs-2.>=2400::x11/gnome/vfs2
 RUN_DEPENDS-smb=	${RUN_DEPENDS}
 
 USE_X11=		Yes
+MODGCONF2_SCHEMAS_DIR=	gnome-vfs2
+
 CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gnome-vfs2 \
-			--disable-schemas-install \
 			--enable-cdda \
-			--disable-avahi \
+			--enable-avahi \
 			--disable-howl
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

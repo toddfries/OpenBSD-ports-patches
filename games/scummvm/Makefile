@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.29 2008/10/19 10:23:09 jsg Exp $
+# $OpenBSD: Makefile,v 1.33 2009/12/22 16:28:01 ajacoutot Exp $
 
 .if ${MACHINE_ARCH} == "hppa"
 BROKEN=		gcc bug
 .endif
 
 COMMENT=	graphical adventure game interpreter
-DISTNAME=	scummvm-0.12.0
+DISTNAME=	scummvm-1.0.0
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	games x11 emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scummvm/}
 
@@ -18,7 +19,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		X11 Xext c m pthread stdc++ usbhid z
+WANTLIB=		X11 Xext c m pthread pthread-stubs stdc++ usbhid xcb z
 
 .if ${MACHINE_ARCH} == "i386"
 BUILD_DEPENDS=	::devel/nasm
@@ -27,11 +28,10 @@ BUILD_DEPENDS=	::devel/nasm
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS=	SDL::devel/sdl \
 		mad.>=2::audio/libmad \
-		mpeg2::graphics/libmpeg2 \
 		FLAC.>=5::audio/flac
 
 CONFIGURE_STYLE=simple
-CONFIGURE_ARGS+=--disable-alsa --disable-debug
+CONFIGURE_ARGS+=--disable-alsa --disable-debug --enable-sci
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
@@ -69,9 +69,7 @@ do-install:
 	    ${PREFIX}/share/doc/scummvm
 	${INSTALL_DATA} ${WRKSRC}/icons/scummvm.{svg,xpm} ${PREFIX}/share/icons
 	${INSTALL_MAN} ${WRKSRC}/dists/scummvm.6 ${PREFIX}/man/man6
-	${INSTALL_DATA} ${WRKSRC}/gui/themes/classic080.ini \
-	    ${PREFIX}/share/scummvm
-	${INSTALL_DATA} ${WRKSRC}/gui/themes/{modern.ini,modern.zip} \
+	${INSTALL_DATA} ${WRKSRC}/gui/themes/{scummmodern,scummclassic}.zip \
 	    ${PREFIX}/share/scummvm
 	${INSTALL_DATA} ${WRKSRC}/dists/scummvm.desktop \
 	    ${PREFIX}/share/applications

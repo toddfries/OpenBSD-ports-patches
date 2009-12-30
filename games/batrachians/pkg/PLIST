@@ -1,15 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2008/10/27 20:42:09 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.3 2009/12/22 16:28:00 ajacoutot Exp $
 @bin bin/batrachians
 @man man/man6/batrachians.6
 share/applications/batrachians.desktop
-share/doc/batrachians/
-share/doc/batrachians/AUTHORS
-share/doc/batrachians/COPYING
-share/doc/batrachians/INSTALL
-share/doc/batrachians/NEWS
-share/doc/batrachians/README
-share/doc/batrachians/THANKS
-share/doc/batrachians/TODO
 share/pixmaps/
 share/pixmaps/batrachians.png
 share/sounds/
@@ -21,4 +13,4 @@ share/sounds/batrachians/game-starts.wav
 share/sounds/batrachians/splash.wav
 share/sounds/batrachians/tongue-out.wav
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

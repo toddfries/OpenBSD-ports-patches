@@ -1,14 +1,18 @@
-# $OpenBSD: Makefile,v 1.13 2007/11/13 14:54:31 steven Exp $
+# $OpenBSD: Makefile,v 1.19 2009/12/22 16:28:00 ajacoutot Exp $
 
-COMMENT=	graphical multiplayer 3-d tank war game
-DISTNAME=	bzflag-2.0.8
-PKGNAME=	${DISTNAME}p3
+# crashes the X server in some configurations on macppc
+NOT_FOR_ARCHS=	powerpc
+
+COMMENT=	graphical multiplayer 3D tank war game
+
+DISTNAME=	bzflag-2.0.12
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	games x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=bzflag/}
 
 HOMEPAGE=	http://www.bzflag.org/
 
-# LGPL
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
@@ -20,21 +24,32 @@ USE_X11=	Yes
 
 MODULES=	devel/gettext
 
-LIB_DEPENDS=	SDL.>=4::devel/sdl curl.>=3::net/curl
+LIB_DEPENDS=	SDL.>=4::devel/sdl \
+		curl.>=3::net/curl \
+		GLEW::graphics/glew \
+		cares::net/libcares
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 
-WANTLIB=	GL GLU ICE SM X11 Xau Xdmcp Xext Xrandr Xrender \
-		c crypto idn m ncurses pthread ssl stdc++ usbhid z
+WANTLIB=	GL GLU ICE SM X11 Xau Xdmcp Xext Xrandr Xrender c \
+		crypto idn m ncurses pthread-stubs pthread sndio \
+		ssl stdc++ usbhid xcb z
 
-AUTOCONF_VERSION=2.59
-CONFIGURE_STYLE=gnu autoconf
-CONFIGURE_ARGS+=--disable-adns --enable-debug
-CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include" LDFLAGS="-L${LOCALBASE}/include"
+AUTOCONF_VERSION= 2.61
+CONFIGURE_STYLE= autoconf
+CONFIGURE_ARGS+= --disable-ccachetest \
+		 --with-glew
+CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		ac_cv_lib_bind_gethostent=no
 
 pre-build:
-	@sed -e 's|@LINUX_TRUE@||g ; s|@LINUX_FALSE@|#|g' \
-		${WRKSRC}/src/platform/Makefile.in > \
-		${WRKSRC}/src/platform/Makefile.sed
-	@mv ${WRKSRC}/src/platform/Makefile.sed \
-		${WRKSRC}/src/platform/Makefile.in
+	@perl -pi -e 's|\@LINUX_TRUE\@||g;' \
+	    -e 's|\@LINUX_FALSE\@|#|g;' \
+	    ${WRKSRC}/src/platform/Makefile.in
+
+post-install:
+	${INSTALL_DATA_DIR} ${PREFIX}/share/applications
+	@mv ${PREFIX}/share/bzflag/bzflag.desktop \
+	    ${PREFIX}/share/applications
 
 .include <bsd.port.mk>

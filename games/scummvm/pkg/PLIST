@@ -1,5 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.6 2007/12/15 20:37:53 ajacoutot Exp $
-bin/scummvm
+@comment $OpenBSD: PLIST,v 1.8 2009/12/22 16:28:01 ajacoutot Exp $
+@bin bin/scummvm
 @man man/man6/scummvm.6
 share/applications/
 share/applications/scummvm.desktop
@@ -11,8 +11,7 @@ share/icons/
 share/icons/scummvm.svg
 share/icons/scummvm.xpm
 share/scummvm/
-share/scummvm/classic080.ini
-share/scummvm/modern.ini
-share/scummvm/modern.zip
+share/scummvm/scummclassic.zip
+share/scummvm/scummmodern.zip
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

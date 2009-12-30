@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/10/27 00:01:45 bernd Exp $
+# $OpenBSD: Makefile,v 1.3 2009/08/10 06:31:08 kili Exp $
 
 COMMENT =	Qt4 port of the Scintilla source code editor
 
 VERSION =	2.3
 DISTNAME =	QScintilla-gpl-${VERSION}
-PKGNAME =	qscintilla-${VERSION}
+PKGNAME =	qscintilla-${VERSION}p1
 CATEGORIES =	editors x11
 
 SHARED_LIBS =	qscintilla2 0.0
@@ -21,8 +21,9 @@ MASTER_SITES = http://www.riverbankcomputing.com/static/Downloads/QScintilla2/
 
 MODULES = devel/gettext x11/qt4
 
-WANTLIB =	ICE SM X11 Xext Xi Xinerama Xrandr Xrender fontconfig \
-		freetype glib-2.0 gthread-2.0 m png z
+WANTLIB =	ICE SM X11 Xext Xi Xinerama Xrender expat fontconfig \
+		freetype glib-2.0 gobject-2.0 gthread-2.0 m png pthread-stubs \
+		xcb z
 
 LIB_DEPENDS =	QtCore,QtGui::x11/qt4
 

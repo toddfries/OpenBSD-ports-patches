@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.53 2008/08/26 16:52:29 espie Exp $
+# $OpenBSD: Makefile,v 1.57 2009/12/21 20:46:01 ajacoutot Exp $
 
 COMMENT =		K Desktop Environment, games
 
 CATEGORIES =		x11 x11/kde games
 VERSION =		3.5.10
 DISTNAME =		kdegames-${VERSION}
-PKGNAME =		${DISTNAME}
+PKGNAME =		${DISTNAME}p3
 MODKDE_VERSION =	3.5.8
 SHARED_LIBS +=	kdegames             4.0      # .3.0
 SHARED_LIBS +=	atlantic             4.0      # .3.0
@@ -13,14 +13,17 @@ SHARED_LIBS +=	atlantikclient       4.0      # .3.0
 SHARED_LIBS +=	atlantikui           4.0      # .3.0
 SHARED_LIBS +=	kolf                 4.0      # .3.0
 
+MODULES =	x11/kde devel/gettext
+
 RUN_DEPENDS +=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS = 	kdecore.>=6,artskde,DCOP,kdefx,kdeprint,kdesu,kdeui,kdnssd,kio,kparts::x11/kde/libs3
 SEPARATE_BUILD =	flavored
 
 WANTLIB =	ICE SM X11 Xext Xrender art_lgpl_2 artsflow artsflow_idl \
-		audiofile c esd glib-2.0 gmodule-2.0 gthread-2.0 \
-		jpeg kmedia2_idl kwalletclient m mad mcop ogg ossaudio png \
-		pthread qtmcop soundserver_idl stdc++ util vorbis vorbisenc \
-		vorbisfile z iconv intl idn Xau Xdmcp fam rpcsvc pcre
+		audiofile c glib-2.0 gmodule-2.0 gthread-2.0 \
+		jpeg kmedia2_idl kwalletclient m mad mcop ogg png pthread \
+		qtmcop sndio soundserver_idl stdc++ util vorbis vorbisenc \
+		vorbisfile z idn Xau Xdmcp fam rpcsvc pcre \
+		pthread-stubs xcb
 
 .include <bsd.port.mk>

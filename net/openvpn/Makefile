@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2008/11/27 11:38:32 fkr Exp $
+# $OpenBSD: Makefile,v 1.28 2009/12/11 23:05:37 benoit Exp $
 
 COMMENT=	easy-to-use, robust, and highly configurable VPN
 
-VERSION=	2.1_rc15
+VERSION=	2.1.0
 DISTNAME=	openvpn-${VERSION}
-PKGNAME=	${DISTNAME:S/_//g}
 CATEGORIES=	net security
 
 HOMEPAGE=	http://openvpn.net/
@@ -16,19 +15,18 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c crypto ssl 
+WANTLIB=		c crypto ssl pthread
 
 MASTER_SITES=	${HOMEPAGE}/release/
 
-LIB_DEPENDS=	lzo::archivers/lzo
+LIB_DEPENDS=	lzo2::archivers/lzo2
 
 SEPARATE_BUILD=	concurrent
 
 FAKE=		lib
 CONFIGURE_STYLE=gnu
 
-# pthread support is supposed to be unstable on OpenBSD
-CONFIGURE_ARGS+=--disable-pthread \
+CONFIGURE_ARGS+=--enable-pthread \
 		--with-lzo-headers=${DEPBASE}/include \
 		--with-lzo-lib=${DEPBASE}/lib \
 		--enable-password-save

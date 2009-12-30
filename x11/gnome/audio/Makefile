@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2008/11/21 17:52:11 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2009/02/11 15:47:49 jasper Exp $
 
-COMMENT=		audio files for Gnome
+COMMENT=		audio files for GNOME
 
 GNOME_PROJECT=		gnome-audio
 GNOME_VERSION=		2.22.2
+PKGNAME=		${DISTNAME}p2
 
 MODULES=		x11/gnome
 

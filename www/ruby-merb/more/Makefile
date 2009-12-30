@@ -1,19 +1,21 @@
-# $OpenBSD: Makefile,v 1.3 2008/06/14 23:59:37 landry Exp $
+# $OpenBSD: Makefile,v 1.5 2009/11/09 17:09:22 bernd Exp $
 
-COMMENT=	The Full Stack. Take what you need; leave what you don't.
+COMMENT =	the full Merb stack
 
-DISTNAME=	merb-more-${VERSION}
-PKGNAME=	ruby-${DISTNAME}p0
+DISTNAME =	merb-more-${VERSION}
+PKGNAME =	ruby-${DISTNAME}p0
 
-RUN_DEPENDS=	::www/ruby-merb/core \
+RUN_DEPENDS =	::www/ruby-merb/core \
 		::www/ruby-merb/action-args \
 		::www/ruby-merb/assets \
+		::www/ruby-merb/slices \
+		::www/ruby-merb/auth \
+		::www/ruby-merb/cache \
+		::www/ruby-merb/exceptions \
 		::www/ruby-merb/gen \
 		::www/ruby-merb/haml \
-		::www/ruby-merb/builder \
+		::www/ruby-merb/helpers \
 		::www/ruby-merb/mailer \
-		::www/ruby-merb/parts \
-		::www/ruby-merb/cache \
-		::www/ruby-merb/freezer
+		::www/ruby-merb/param-protection
 
 .include <bsd.port.mk>

@@ -1,27 +1,28 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/02/08 23:25:56 espie Exp $
+# $OpenBSD: Makefile,v 1.4 2009/05/23 15:35:12 benoit Exp $
 
 COMMENT =	astronomic computations as a library
 
+DISTNAME =	libnova-0.13.0
+SHARED_LIBS +=	nova	1.0	# .0.0
 CATEGORIES =	astro devel
+
 HOMEPAGE =	http://libnova.sourceforge.net/
-MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=libnova/}
-DISTNAME =	libnova-0.12.1
 
-SHARED_LIBS +=	nova            0.0           # .1.0
-
-# LGPL
+# LGPLv2
 PERMIT_DISTFILES_FTP =		Yes
 PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_PACKAGE_CDROM = 		Yes
 
-CONFIGURE_STYLE =		gnu
-USE_LIBTOOL =			Yes
-SEPARATE_BUILD =		simple
+WANTLIB +=		c m
 
-# cheat until we get long double trigonometry
-MAKE_FLAGS = CPPFLAGS='-Dcosl=cos -Dsinl=sin -Dacosl=acos -Dasinl=asin -Datan2l=atan2'
+MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=libnova/}
 
-WANTLIB += c m
+SEPARATE_BUILD =	simple
+USE_LIBTOOL =		Yes
+
+CONFIGURE_STYLE =	gnu
+CONFIGURE_ARGS =	${CONFIGURE_SHARED}
+CONFIGURE_ENV =		CPPFLAGS="${CFLAGS}"
 
 .include <bsd.port.mk>

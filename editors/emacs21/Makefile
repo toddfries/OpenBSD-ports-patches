@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2008/07/04 15:39:17 naddy Exp $
+# $OpenBSD: Makefile,v 1.44 2009/08/10 06:31:08 kili Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -6,9 +6,9 @@ COMMENT-leim=		Library of Emacs Input Methods
 
 VERSION=		21.4
 DISTNAME=		emacs-${VERSION}
-PKGNAME-main=		${DISTNAME}p7
-FULLPKGNAME-el=		emacs-el-${VERSION}p0
-FULLPKGNAME-leim=	emacs-leim-${VERSION}p0
+PKGNAME-main=		${DISTNAME}p10
+FULLPKGNAME-el=		emacs-el-${VERSION}p1
+FULLPKGNAME-leim=	emacs-leim-${VERSION}p1
 
 CATEGORIES=		editors
 
@@ -53,14 +53,14 @@ WANTLIB-main=		c m ncurses ossaudio
 CONFIGURE_ARGS+=	--with-x=no
 .else
 USE_X11=Yes
-LIB_DEPENDS-main=		ungif.>=5::graphics/libungif \
+LIB_DEPENDS-main=	ungif.>=5::graphics/libungif \
 			jpeg.>=62::graphics/jpeg \
 			png.>=2::graphics/png \
 			tiff.>=35::graphics/tiff
-WANTLIB-main+=		ICE SM X11 Xaw Xext Xmu Xpm Xt z
+WANTLIB-main+=		ICE SM X11 Xaw Xext Xmu Xpm Xt pthread-stubs xcb z
 .endif
 
-RUN_DEPENDS=		:emacs-${VERSION}*:${PKGPATH}
+RUN_DEPENDS=		:emacs-${VERSION}:${PKGPATH}
 RUN_DEPENDS-main=
 
 PKG_ARCH-el=		*

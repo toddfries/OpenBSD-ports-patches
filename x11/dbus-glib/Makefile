@@ -1,9 +1,16 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/12 22:09:20 brad Exp $
+# $OpenBSD: Makefile,v 1.15 2009/10/14 17:59:49 ajacoutot Exp $
 
 COMMENT=	glib bindings for dbus message system
 
-DISTNAME=	dbus-glib-0.76
-SHARED_LIBS+=	dbus-glib-1	4.0
+# XXX 0.82.0 has a bug with gio/gvfs, make sure the following command
+# works before updating:
+#    gvfs-mount ftp://ftp.openbsd.org
+
+DISTNAME=	dbus-glib-0.80
+PKGNAME=	${DISTNAME}p1v0
+
+SHARED_LIBS+=	dbus-glib-1	4.2 # .3.0
+
 CATEGORIES=	x11
 
 HOMEPAGE=	http://dbus.freedesktop.org/
@@ -22,16 +29,18 @@ MODULES=	devel/gettext
 LIB_DEPENDS=	dbus-1.>=7::x11/dbus \
 		glib-2.0,gobject-2.0::devel/glib2
 
-#CFLAGS+=	-I${LOCALBASE}/include -pthread
-
 SEPARATE_BUILD=	simple
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
+
 CONFIGURE_STYLE=gnu
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--enable-bash-completion \
+		--enable-gtk-doc=no \
+		--with-test-socket-dir=${WRKDIR}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
-pre-build:
-	@cp ${FILESDIR}/dbus-bus-introspect.xml ${WRKBUILD}/tools
+FAKE_FLAGS+=	completiondir="${PREFIX}/share/examples/dbus-glib"
 
 .include <bsd.port.mk>

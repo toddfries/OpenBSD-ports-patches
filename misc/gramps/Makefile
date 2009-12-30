@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2008/06/09 15:45:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2009/12/21 22:35:03 ajacoutot Exp $
 
 COMMENT=	genealogical research and analysis management program system
 
-DISTNAME=	gramps-3.0.1
+DISTNAME=	gramps-3.1.3
+
 CATEGORIES=	misc x11
 
 HOMEPAGE=	http://www.gramps-project.org/
@@ -18,16 +19,16 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gramps/}
 MODULES=	lang/python \
 		textproc/intltool
 
-BUILD_DEPENDS=	:py-gnome-*:x11/gnome/py-gnome \
-		:gnome-doc-utils-*:x11/gnome/doc-utils
-RUN_DEPENDS=	:py-gnome-*:x11/gnome/py-gnome \
-		:python-bsddb-${MODPY_VERSION}*:lang/python/${MODPY_VERSION},-bsddb \
+BUILD_DEPENDS=	:gnome-doc-utils-*:x11/gnome/doc-utils \
+		:py-gnome-*:x11/gnome/py-gnome
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
+		::devel/xdg-utils \
+		${MODPY_RUN_DEPENDS:S/python/python-bsddb/},-bsddb \
 		:graphviz-*:math/graphviz \
 		:shared-mime-info-*:misc/shared-mime-info \
-		:desktop-file-utils-*:devel/desktop-file-utils \
-		::x11/gnome/py-gnome-extras \
+		::x11/gnome/librsvg \
 		::x11/gnome/py-gnome-desktop \
-		:librsvg-*-!no_gnome:x11/gnome/librsvg
+		::x11/gnome/py-gnome-extras
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

@@ -1,4 +1,4 @@
-# $OpenBSD: FS.pm,v 1.5 2008/11/01 14:49:51 espie Exp $
+# $OpenBSD: FS.pm,v 1.10 2009/10/27 15:48:52 ajacoutot Exp $
 # Copyright (c) 2008 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
@@ -107,9 +107,10 @@ sub is_shared_object
 {
 	my $filename = shift;
 	$filename = resolve_link($filename);
-	my $check=`/usr/bin/file $filename`;
+	my $check=`/usr/bin/file \Q$filename\E`;
 	chomp $check;
-	if ($check =~m/\: ELF (32|64)-bit (MSB|LSB) shared object\,/ ||
+	if (($check =~m/\: ELF (32|64)-bit (MSB|LSB) shared object\,/ &&
+	    $check !~m/^.*(uses shared libs)/) ||
 	    $check =~m/OpenBSD\/.* demand paged shared library/) {
 	    	return 1;
 	} else {
@@ -129,9 +130,9 @@ sub is_binary
 {
 	my $filename = shift;
 	return 0 if -l $filename or ! -x $filename;
-	my $check=`/usr/bin/file $filename`;
+	my $check=`/usr/bin/file \Q$filename\E`;
 	chomp $check;
-	if ($check =~m/\: ELF (32|64)-bit (MSB|LSB) executable\,.+ for OpenBSD\,/) {
+	if ($check =~m/\: (setuid |setgid |)ELF (32|64)-bit (MSB|LSB) (executable|shared object)\,.+ for OpenBSD\,/) {
 	    	return 1;
 	} else {
 		return 0;
@@ -154,10 +155,9 @@ sub is_info
 	open my $fh, '<', $filename or return 0;
 	my $tag = <$fh>;
 	return 0 unless defined $tag;
-	chomp $tag;
-	$tag.=<$fh>;
+	$tag .= <$fh>;
 	close $fh;
-	if ($tag =~ /^This is .*, produced by [Mm]akeinfo(?: version |-)?.*[\d\s]from/) {
+	if ($tag =~ /^This\sis\s.*,\sproduced\sby\s[Mm]akeinfo(?:\sversion\s|\-)?.*[\d\s]from/s) {
 		return 1;
 	} else {
 		return 0;
@@ -298,7 +298,7 @@ sub get_files
 	my $mtree = {};
 	OpenBSD::Mtree::parse($mtree, '/usr/local', '/etc/mtree/BSD.local.dist');
 	OpenBSD::Mtree::parse($mtree, '/', '/etc/mtree/4.4BSD.dist');
-	OpenBSD::Mtree::parse($mtree, '/usr/X11R6', '/etc/mtree/BSD.x11.dist');
+	OpenBSD::Mtree::parse($mtree, '/', '/etc/mtree/BSD.x11.dist');
 	$mtree->{'/usr/local/lib/X11'} = 1;
 	$mtree->{'/usr/local/include/X11'} = 1;
 	$mtree->{'/usr/local/lib/X11/app-defaults'} = 1;

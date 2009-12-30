@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.4 2007/12/09 22:37:30 simon Exp $
+# $OpenBSD: Makefile,v 1.6 2009/08/08 08:01:58 sthen Exp $
 
 COMMENT=	economic and military simulation game
 
 DISTNAME= 	widelands-build-11-source
-PKGNAME=	widelands-0.11p1
+PKGNAME=	widelands-0.11p2
 CATEGORIES=	games
 EXTRACT_SUFX=	.tar.bz2
 
@@ -27,9 +27,9 @@ LIB_DEPENDS=	SDL_gfx::devel/sdl-gfx \
 		SDL_ttf::devel/sdl-ttf
 
 MODULES=	devel/gettext \
-		devel/scons
-
-PYTHON_VER=	2.5
+		devel/scons \
+		lang/python
+MODPY_RUNDEP=	No
 
 WRKDIST=	${WRKDIR}/widelands
 
@@ -46,7 +46,7 @@ MODSCONS_FLAGS=	\
 	extra_lib_path="${LOCALBASE}/lib"
 
 pre-configure:
-	perl -pi -e 's,^#!/usr/bin/python,#!${LOCALBASE}/bin/python${PYTHON_VER},' \
+	perl -pi -e 's,^#!/usr/bin/python,#!${MODPY_BIN},' \
 		${WRKSRC}/utils/buildlocale.py
 
 .include <bsd.port.mk>

@@ -1,27 +1,32 @@
-# $OpenBSD: Makefile,v 1.36 2008/11/24 18:14:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.54 2009/12/14 13:54:23 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		data backends for the Evolution mail/PIM suite
 
 GNOME_PROJECT=		evolution-data-server
-GNOME_VERSION=		2.24.2
+GNOME_VERSION=		2.28.2
+
 CATEGORIES=		databases
-SHARED_LIBS +=	edataserver-1.2      10.0     # .11.0
-SHARED_LIBS +=	ebackend-1.2           0.0       # .0.0
+
+SHARED_LIBS +=	edataserver-1.2      10.1     # .11.0
+SHARED_LIBS +=	ebackend-1.2         0.1      # .0.0
 SHARED_LIBS +=	egroupwise-1.2       13.1     # .13.1
 SHARED_LIBS +=	exchange-storage-1.2 3.0      # .3.0
-SHARED_LIBS +=	gdata-1.2            0.0      # .1.0
-SHARED_LIBS +=	gdata-google-1.2     0.0      # .1.0
-SHARED_LIBS +=	camel-1.2            14.0     # .14.0
-SHARED_LIBS +=	camel-provider-1.2   14.0     # .14.0
-SHARED_LIBS +=	ebook-1.2            12.0     # .12.0
+SHARED_LIBS +=	gdata-1.2            1.0      # .1.0
+SHARED_LIBS +=	gdata-google-1.2     1.0      # .1.0
+SHARED_LIBS +=	camel-1.2            14.1     # .14.1
+SHARED_LIBS +=	camel-provider-1.2   14.1     # .14.1
+SHARED_LIBS +=	ebook-1.2            12.1     # .12.1
 SHARED_LIBS +=	edata-book-1.2       6.1      # .6.1
 SHARED_LIBS +=	ecal-1.2             9.1      # .9.1
 SHARED_LIBS +=	edata-cal-1.2        6.2      # .6.2
-SHARED_LIBS +=	edataserverui-1.2    9.0      # .9.0
+SHARED_LIBS +=	edataserverui-1.2    9.1      # .9.1
 
 HOMEPAGE=		http://www.gnome.org/projects/evolution/
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -29,15 +34,15 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ORBit-2 ORBitCosNaming-2 X11 Xau Xcomposite Xcursor \
-		Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender \
-		asn1 atk-1.0 audiofile bonobo-2 bonobo-activation c \
-		cairo com_err crypto dbus-1 dbus-glib-1 esd expat fontconfig \
-		freetype gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
-		glib-2.0 glitz gmodule-2.0 gnomevfs-2 gobject-2.0 gssapi \
-		gthread-2.0 gtk-x11-2.0 krb5 m nspr4 pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 plc4 plds4 png popt pthread \
-		sasl2 sqlite3 ssl util xml2 z
+WANTLIB += ORBit-2 ORBitCosNaming-2 X11 Xau Xcomposite Xcursor
+WANTLIB += Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender
+WANTLIB += asn1 atk-1.0 c cairo com_err crypto dbus-1 dbus-glib-1
+WANTLIB += expat fontconfig freetype gconf-2 gcrypt gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
+WANTLIB += gssapi gthread-2.0 gtk-x11-2.0 krb5 m nspr4 pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4
+WANTLIB += png proxy pthread pthread-stubs sasl2 soup-2.4 soup-gnome-2.4
+WANTLIB += sqlite3 ssl tasn1 xcb xml2 z
 
 MODULES=		devel/gettext \
 			lang/python \
@@ -46,13 +51,16 @@ MODULES=		devel/gettext \
 BUILD_DEPENDS=		:autoconf-${AUTOCONF_VERSION}:devel/autoconf/${AUTOCONF_VERSION} \
 			:bison-*:devel/bison \
 			:libgnomeui-*:x11/gnome/libgnomeui
-LIB_DEPENDS= 		db:db-4.*:databases/db/v4 \
+LIB_DEPENDS= 		db:db->=4,<5:databases/db/v4 \
 			ldap,lber::databases/openldap \
 			glade-2.0::devel/libglade2 \
-			soup-2.4::devel/libsoup \
+			gpg-error::security/libgpg-error \
+			gnutls::security/gnutls \
 			nss3.>=19,smime3.>=19,softokn3.>=19,ssl3.>=19:nss->=3.11.4p1:security/nss \
-			gnome-2::x11/gnome/libgnome \
-			gnome-keyring.>=3::x11/gnome/keyring
+			ical,icalss,icalvcal::textproc/libical \
+			gnome-keyring::x11/gnome/keyring \
+			bonobo-2,bonobo-activation::x11/gnome/libbonobo \
+			gweather::x11/gnome/libgweather
 			
 USE_X11=		Yes
 YACC=			bison
@@ -72,7 +80,8 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/db4" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-R=			${GNOME_VERSION:R}
+# Only get the first x.y which is needed in the PLIST.
+R=			${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=		R
 
 post-extract:

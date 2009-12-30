@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-tk,v 1.5 2007/12/27 18:32:33 bernd Exp $
+@comment $OpenBSD: PLIST-tk,v 1.7 2009/06/16 09:12:44 bernd Exp $
 lib/ruby/${REV}/${SUB}/tcltklib.so
 lib/ruby/${REV}/${SUB}/tkutil.so
 lib/ruby/${REV}/multi-tk.rb

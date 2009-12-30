@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.2 2008/01/15 15:12:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2009/09/09 14:30:01 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	python Qt3 bindings
 
-V=		3.17.4
+V=		3.18.1
 DISTNAME=	PyQt-x11-gpl-${V}
 PKGNAME=	py-qt3-${V}
 
 CATEGORIES=	x11 devel
 
-HOMEPAGE=	http://www.riverbankcomputing.co.uk/pyqt/index.php
+HOMEPAGE=	http://www.riverbankcomputing.co.uk/software/pyqt/intro
 
 MAINTAINER=	Lars Hansson <lars@unet.net.ph>
 
@@ -23,12 +23,12 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	GL GLU X11 Xext Xmu c m pthread stdc++
 
 BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	::devel/py-sip
+RUN_DEPENDS=	:py-sip->=4.8.1:devel/py-sip
 LIB_DEPENDS=	qui.>=2::x11/qt3
 
 NO_REGRESS=	Yes
 
-MASTER_SITES=	http://www.riverbankcomputing.com/Downloads/PyQt3/GPL/
+MASTER_SITES=	http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/
 
 MODULES=	x11/qt3 \
 		lang/python

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/09/01 09:55:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2009/10/25 22:24:14 jasper Exp $
 
 COMMENT=		base class for creating plugin enabled POE Components
 
-DISTNAME=		POE-Component-Pluggable-1.10
+DISTNAME=		POE-Component-Pluggable-1.24
 CATEGORIES=		devel
 
 # perl
@@ -13,7 +13,8 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		cpan
 
-RUN_DEPENDS=		:p5-POE->=1.0002:devel/p5-POE
+RUN_DEPENDS=		:p5-POE->=1.0002:devel/p5-POE \
+			::devel/p5-Task-Weaken
 
 EG_DIR= 		${PREFIX}/share/examples/p5-POE-Component-Pluggable
 

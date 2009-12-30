@@ -1,12 +1,17 @@
-$OpenBSD: patch-jdk_src_share_classes_java_awt_GraphicsEnvironment_java,v 1.1 2008/03/19 18:05:45 kurt Exp $
---- jdk/src/share/classes/java/awt/GraphicsEnvironment.java.orig	Tue Oct 30 05:00:59 2007
-+++ jdk/src/share/classes/java/awt/GraphicsEnvironment.java	Wed Nov  7 18:16:18 2007
-@@ -148,7 +148,7 @@ public abstract class GraphicsEnvironment {
+$OpenBSD: patch-jdk_src_share_classes_java_awt_GraphicsEnvironment_java,v 1.3 2009/10/07 01:53:54 kurt Exp $
+--- jdk/src/share/classes/java/awt/GraphicsEnvironment.java.orig	Thu Sep 17 03:51:55 2009
++++ jdk/src/share/classes/java/awt/GraphicsEnvironment.java	Sat Sep 26 10:00:48 2009
+@@ -149,7 +149,12 @@ public abstract class GraphicsEnvironment {
                          } else {
                              String osName = System.getProperty("os.name");
                              headless = defaultHeadless =
 -                                Boolean.valueOf(("Linux".equals(osName) || "SunOS".equals(osName)) &&
-+                                Boolean.valueOf(("Linux".equals(osName) || "SunOS".equals(osName) || "FreeBSD".equals(osName) || "NetBSD".equals(osName) || "OpenBSD".equals(osName)) &&
++                                Boolean.valueOf(("Linux".equals(osName) ||
++                                                "SunOS".equals(osName) ||
++                                                "FreeBSD".equals(osName) ||
++                                                "NetBSD".equals(osName) ||
++                                                "OpenBSD".equals(osName) ||
++                                                "Darwin".equals(osName)) &&
                                                  (System.getenv("DISPLAY") == null));
                          }
                      } else if (nm.equals("true")) {

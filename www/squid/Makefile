@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.96 2008/08/20 16:35:15 brad Exp $
+# $OpenBSD: Makefile,v 1.100 2009/10/30 00:56:57 sthen Exp $
 
 COMMENT=	WWW and FTP proxy cache and accelerator
 
-DISTNAME=	squid-2.7.STABLE4
+DISTNAME=	squid-2.7.STABLE7
 CATEGORIES=	www
-MASTER_SITES=	${HOMEPAGE}Versions/v2/2.7/
+MASTER_SITES=	${HOMEPAGE}/Versions/v2/2.7/
 DIST_SUBDIR=	squid
 
 HOMEPAGE=	http://www.squid-cache.org/
@@ -39,7 +39,7 @@ EXTERNAL_ACL=	ip_user unix_group
 STOREIO=	aufs ufs diskd null
 
 SEPARATE_BUILD=	concurrent
-AUTOCONF_VERSION= 2.61
+AUTOCONF_VERSION= 2.62
 CONFIGURE_STYLE= autoconf
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/cfgaux
 CONFIGURE_ARGS+=--datadir="${PREFIX}/share/squid" \

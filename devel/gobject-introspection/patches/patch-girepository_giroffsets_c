@@ -1,0 +1,50 @@
+$OpenBSD: patch-girepository_giroffsets_c,v 1.2 2009/12/22 15:19:52 ajacoutot Exp $
+
+Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
+
+--- girepository/giroffsets.c.orig	Mon Nov 23 18:27:56 2009
++++ girepository/giroffsets.c	Thu Dec 17 10:14:17 2009
+@@ -316,7 +316,7 @@ get_field_size_alignment (GIrNodeField *field,
+   return success;
+ }
+ 
+-#define ALIGN(n, align) (((n) + (align) - 1) & ~((align) - 1))
++#define G_ALIGN(n, align) (((n) + (align) - 1) & ~((align) - 1))
+ 
+ static gboolean
+ compute_struct_field_offsets (GIrNode     *node,
+@@ -350,7 +350,7 @@ compute_struct_field_offsets (GIrNode     *node,
+ 					    module, modules,
+ 					    &member_size, &member_alignment))
+ 		{
+-		  size = ALIGN (size, member_alignment);
++		  size = G_ALIGN (size, member_alignment);
+ 		  alignment = MAX (alignment, member_alignment);
+ 		  field->offset = size;
+ 		  size += member_size;
+@@ -364,14 +364,14 @@ compute_struct_field_offsets (GIrNode     *node,
+ 	}
+       else if (member->type == G_IR_NODE_CALLBACK)
+ 	{
+-          size = ALIGN (size, ffi_type_pointer.alignment);
++          size = G_ALIGN (size, ffi_type_pointer.alignment);
+           alignment = MAX (alignment, ffi_type_pointer.alignment);
+ 	  size += ffi_type_pointer.size;
+ 	}
+     }
+ 
+   /* Structs are tail-padded out to a multiple of their alignment */
+-  size = ALIGN (size, alignment);
++  size = G_ALIGN (size, alignment);
+ 
+   if (!have_error)
+     {
+@@ -429,7 +429,7 @@ compute_union_field_offsets (GIrNode     *node,
+     }
+ 
+   /* Unions are tail-padded out to a multiple of their alignment */
+-  size = ALIGN (size, alignment);
++  size = G_ALIGN (size, alignment);
+ 
+   if (!have_error)
+     {

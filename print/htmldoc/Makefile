@@ -1,21 +1,22 @@
-# $OpenBSD: Makefile,v 1.21 2007/09/15 21:36:44 merdely Exp $
+# $OpenBSD: Makefile,v 1.24 2009/12/20 17:28:21 benoit Exp $
 
 COMMENT=	convert HTML pages to PDF/PS format
 
 V=			1.8.27
 DISTNAME=		htmldoc-${V}
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p4
 CATEGORIES=     	print www
 
 HOMEPAGE=		http://www.htmldoc.org/
 
-MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=		Benoit Lecocq <benoit@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
 WANTLIB=		c crypto m ssl z
 
 DISTFILES=		${DISTNAME}-source${EXTRACT_SUFX}
@@ -30,7 +31,7 @@ FLAVOR?=
 .if ${FLAVOR:L:Mno_x11}
 CONFIGURE_ARGS+=	--without-gui
 LIB_DEPENDS=		jpeg.>=62::graphics/jpeg \
-			png.>=2::graphics/png
+			png.>=8::graphics/png
 .else
 LIB_DEPENDS=		fltk.>=1,fltk_images.>=1::x11/fltk
 WANTLIB+=		X11 Xau Xdmcp Xext Xpm jpeg png

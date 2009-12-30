@@ -1,48 +1,49 @@
-# $OpenBSD: Makefile,v 1.18 2008/10/02 20:32:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2009/10/27 13:12:48 jasper Exp $
 
 COMMENT-main=	Prelude framework database-access library
 COMMENT-pgsql=	PostgreSQL module for libpreludedb
 COMMENT-mysql=	MySQL module for libpreludedb
 COMMENT-sqlite=	SQLite3 module for libpreludedb
 
-VERSION=	0.9.13
+VERSION=	0.9.15.3
 DISTNAME=	libpreludedb-${VERSION}
 
-MODPY_EGG_VERSION=0.0.0
-
-PKGNAME-main=	prelude-libpreludedb-${VERSION}p2
+PKGNAME-main=	prelude-libpreludedb-${VERSION}p0
 PKGNAME-pgsql=	prelude-libpreludedb-pgsql-${VERSION}p0
 PKGNAME-mysql=	prelude-libpreludedb-mysql-${VERSION}p0
 PKGNAME-sqlite=	prelude-libpreludedb-sqlite-${VERSION}p0
 
+MODPY_EGG_VERSION=0.0.0
+
+MASTER_SITES=	http://www.prelude-ids.com/download/releases/libpreludedb/
+
 MODULES=	lang/python \
 		devel/gettext
 
-SHARED_LIBS=	preludedb	4.7	# .4.5
+SHARED_LIBS=	preludedb	4.9
 
-WANTLIB=	z
-WANTLIB-main=	${WANTLIB} c pthread
+WANTLIB=	tasn1 z
+WANTLIB-main=	${WANTLIB} c
 WANTLIB-mysql=	${WANTLIB} crypto m ssl
 
 LIB_DEPENDS=		gcrypt.>=12::security/libgcrypt \
 			gnutls.>=12::security/gnutls \
 			gpg-error.>=1::security/libgpg-error \
-			prelude.>=7::security/prelude/libprelude
+			prelude.>=20.1::security/prelude/libprelude
 
 LIB_DEPENDS-pgsql=	${LIB_DEPENDS} \
-			preludedb.>=3::${BUILD_PKGPATH} \
+			preludedb.>=4.9::${BUILD_PKGPATH} \
 			pq.>=4::databases/postgresql
 
 LIB_DEPENDS-mysql=	${LIB_DEPENDS} \
-			preludedb.>=3::${BUILD_PKGPATH} \
+			preludedb.>=4.9::${BUILD_PKGPATH} \
 			lib/mysql/mysqlclient.>=16::databases/mysql
 
 LIB_DEPENDS-sqlite=	${LIB_DEPENDS} \
-			preludedb.>=3::${BUILD_PKGPATH} \
+			preludedb.>=4.9::${BUILD_PKGPATH} \
 			sqlite3.>=8::databases/sqlite3
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	PYTHON=${MODPY_BIN}
 
 PSEUDO_FLAVORS=	no_pgsql no_mysql no_sqlite
 FLAVOR?=
@@ -50,9 +51,9 @@ MULTI_PACKAGES=	-main
 
 .if empty(FLAVOR:L:Mno_pgsql)
 MULTI_PACKAGES+=-pgsql
-CONFIGURE_ARGS+=--with-pgsql
+CONFIGURE_ARGS+=--with-postgresql
 .else
-CONFIGURE_ARGS+=--without-pgsql
+CONFIGURE_ARGS+=--without-postgresql
 .endif
 
 .if empty(FLAVOR:L:Mno_mysql)

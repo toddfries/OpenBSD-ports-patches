@@ -1,37 +1,37 @@
-# $OpenBSD: Makefile,v 1.13 2008/02/01 20:26:42 martynas Exp $
+# $OpenBSD: Makefile,v 1.17 2009/08/07 11:53:40 jasper Exp $
 
 COMMENT=	ORBit2 Python bindings
 
-V=		2.14.3
-DISTNAME=	pyorbit-${V}
-PKGNAME=	py-orbit-${V}p2
+GNOME_VERSION=	2.24.0
+GNOME_PROJECT=	pyorbit
+PKGNAME=	py-orbit-${VERSION}
 CATEGORIES=	devel
 
 HOMEPAGE=	http://www.pygtk.org/
 
-# LGPL
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${MASTER_SITE_GNOME:=sources/pyorbit/2.14/}
-
 WANTLIB=	m util IDL-2 pcre glib-2.0 gmodule-2.0 gobject-2.0 \
 		gthread-2.0
 
-MODULES=	devel/gettext lang/python
-LIB_DEPENDS=	python${MODPY_VERSION}:python-${MODPY_VERSION}*:lang/python/${MODPY_VERSION} \
+MODULES=	devel/gettext \
+		lang/python \
+		x11/gnome
+
+LIB_DEPENDS=	${MODPY_LIB_DEPENDS} \
 		ORBit-2,ORBit-imodule-2::devel/ORBit2
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
+LIBTOOL_FLAGS+=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	LIBS="-pthread -lm -lutil" \
-		PYTHON=${MODPY_BIN}
+CONFIGURE_ENV=	LIBS="-pthread -lm -lutil"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-static
+		--disable-static
 
 pre-configure:
 	@find ${WRKDIST} -name \*.py | \

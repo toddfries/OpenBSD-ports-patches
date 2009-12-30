@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.29 2008/11/13 17:35:44 martynas Exp $
+# $OpenBSD: Makefile,v 1.42 2009/12/22 13:02:12 sthen Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 i386 powerpc sparc sparc64
 
 COMMENT=	integrated mozilla application suite
 
-VER=		1.1.13
+VER=		1.1.18
 DISTNAME=	seamonkey-${VER}.source
-PKGNAME=	seamonkey-${VER}
+PKGNAME=	seamonkey-${VER}p1
 
-SO_VERSION=	10.0
+SO_VERSION=	11.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 .for _lib in accessibility addrbook appcomps auth autoconfig bayesflt \
@@ -20,7 +20,7 @@ SO_VERSION=	10.0
 	msgdb msgimap msgmdn msgnews msgsmime myspell necko necko2 \
 	nsappshell nsprefm oji p3p permissions pipboot pipnss pippki \
 	pref profile rdf remoteservice searchservice spellchecker \
-	sroaming storagecomps system-pref transformiix txmgr \
+	sqlite3 sroaming storagecomps system-pref transformiix txmgr \
 	typeaheadfind uconv ucvmath universalchardet vcard wallet \
 	walletviewers webbrwsr websrvcs widget_gtk2 xmlextras \
 	xpcom_compat_c xpconnect xpinstall xremoteservice gfxpsshar \
@@ -41,40 +41,31 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/${VER}/
-.for id version in \
-	0 1.1.2 \
-	1 1.1.8 \
-	2 1.1.9 \
-	3 1.1.10 \
-	4 1.1.11 \
-	5 1.1.12 \
-	6 1.1.13
-MASTER_SITES${id}+=	http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/${version}/contrib-localized/
-.endfor
+MASTER_SITES0=	http://www.openbsddistfiles.org/~martynas/mozilla/seamonkey/langpacks/
 
-LANGUAGES=	be-BY 2 1.1.9 \
-		ca-AD 1 1.1.8 \
-		cs-CZ 5 1.1.12 \
-		de-AT 6 1.1.13 \
-		el-GR 0 1.1.2 \
-		es-ES 3 1.1.10 \
-		fr-FR 5 1.1.12 \
-		he-IL 0 1.1.2 \
-		hu-HU 4 1.1.11 \
-		it-IT 4 1.1.11 \
-		lt-LT 5 1.1.12 \
-		nl-NL 6 1.1.13 \
-		pl-PL 6 1.1.13 \
-		pt-BR 5 1.1.12 \
-		ru-RU 6 1.1.13 \
-		ur-PK 2 1.1.9 \
-		sv-SE 5 1.1.12
+LANGUAGES=	be-BY 1.1.9 \
+		ca-AD 1.1.15 \
+		cs-CZ 1.1.17 \
+		de-AT 1.1.18 \
+		el-GR 1.1.2 \
+		es-ES 1.1.13 \
+		fr-FR 1.1.16 \
+		he-IL 1.1.2 \
+		hu-HU 1.1.16 \
+		it-IT 1.1.17 \
+		lt-LT 1.1.18 \
+		nl-NL 1.1.17 \
+		pl-PL 1.1.18 \
+		pt-BR 1.1.18 \
+		ru-RU 1.1.18 \
+		ur-PK 1.1.9 \
+		sv-SE 1.1.12
 BINLANGS=	be-BY el-GR fr-FR pl-PL pt-BR
 
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 
-.for language id version in ${LANGUAGES}
-DISTFILES+=	seamonkey-${version}.${language}.langpack.xpi:${id}
+.for language version in ${LANGUAGES}
+DISTFILES+=	seamonkey-${version}.${language}.langpack.xpi:0
 .endfor
 
 EXTRACT_CASES += *.xpi) \
@@ -87,17 +78,16 @@ BUILD_DEPENDS=	:libIDL-*:devel/libIDL \
 		:zip->=2.3:archivers/zip \
 		:unzip-*:archivers/unzip
 LIB_DEPENDS=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
-		nspr4.>=17,plc4.>=17,plds4.>=17:nspr->=4.6.4p1:devel/nspr \
-		nss3.>=19,smime3.>=19,softokn3.>=19,ssl3.>=19:nss->=3.11.4p1:security/nss
+		nspr4.>=21,plc4.>=21,plds4.>=21:nspr->=4.8:devel/nspr \
+		nss3.>=23,smime3.>=23,softokn3.>=23,ssl3.>=23:nss->=3.12.3:security/nss
 
-RUN_DEPENDS=	:esound-*:audio/esound \
-		:desktop-file-utils-*:devel/desktop-file-utils
+RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 WANTLIB=	c glib-2.0 m pthread stdc++ \
 		X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xft Xi Xinerama Xrandr Xrender Xt atk-1.0 \
 		cairo expat fontconfig freetype glitz gmodule-2.0 \
 		gobject-2.0 gthread-2.0 jpeg pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pangox-1.0 pixman-1 png z
+		pangoft2-1.0 pangox-1.0 pixman-1 png pthread-stubs xcb z gio-2.0
 
 VMEM_WARNING=	Yes
 
@@ -155,11 +145,12 @@ DATADIRS=	chrome components defaults dictionaries greprefs \
 		init.d plugins res searchplugins
 
 post-extract:
+	@cp -f ${FILESDIR}/nsSound.cpp ${WRKSRC}/widget/src/gtk2/
 .for i in ${BINLANGS}	# normalize
 	@mv -f ${WRKDIR}/$i/bin/* ${WRKDIR}/$i/
 	@rmdir ${WRKDIR}/$i/bin
 .endfor
-.for language id version in ${LANGUAGES}
+.for language version in ${LANGUAGES}
 	@rm -f ${WRKDIR}/${language}/chrome/*-{mac,win}.jar
 .endfor
 
@@ -188,7 +179,7 @@ do-install:
 	@sed -e 's,!!PREFIX!!,${TRUEPREFIX},g' \
 		< ${FILESDIR}/README.OpenBSD > ${MOZ}/README.OpenBSD
 	${INSTALL_MAN} ${WRKSRC}/dist/man/man1/seamonkey.1 ${PREFIX}/man/man1/
-.for language id version in ${LANGUAGES}
+.for language version in ${LANGUAGES}
 	${INSTALL_DATA} ${WRKDIR}/${language}/chrome/*.jar ${MOZ}/chrome/
 	sh ${FILESDIR}/genchrome ${WRKDIR}/${language}/install.js \
 		${language} >> ${MOZ}/chrome/installed-chrome.txt

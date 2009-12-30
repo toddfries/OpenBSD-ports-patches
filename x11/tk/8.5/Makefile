@@ -1,17 +1,12 @@
-# $OpenBSD: Makefile,v 1.6 2008/10/21 21:34:41 steven Exp $
+# $OpenBSD: Makefile,v 1.12 2009/11/21 02:50:23 sthen Exp $
 
 COMMENT =		graphical toolkit for Tcl
 
-V =			8.5.5
-DISTNAME =		tk${V}
-PKGNAME =		tk-${V}
-
-SHARED_LIBS =		tk85 0.2
-
+DISTNAME =		tk8.5.8
+PKGNAME =		tk-8.5.8
+SHARED_LIBS =		tk85 0.5
 CATEGORIES =		x11 x11/tk
-
 HOMEPAGE =		http://www.tcl.tk/
-
 MAINTAINER =		Stuart Cassoff <stwo@users.sourceforge.net>
 
 # BSD
@@ -20,12 +15,11 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		X11 Xau Xdmcp Xext Xft Xrender Xss c expat fontconfig freetype m z
+WANTLIB =		X11 Xau Xdmcp Xext Xft Xrender Xss c expat fontconfig freetype m z \
+			pthread-stubs xcb
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=tcl/}
 DISTFILES =		${DISTNAME}-src.tar.gz
-
-LIB_DEPENDS =           tcl85:tcl-${V}:lang/tcl/8.5
 
 .if ${MACHINE_ARCH} != "m88k" && ${MACHINE_ARCH} != "vax"
 MAKE_FLAGS +=		TK_BUILD_EXP_FILE="libtk85.a" \
@@ -39,15 +33,11 @@ FAKE_FLAGS =		INSTALL_DATA_DIR="${INSTALL_DATA_DIR}" \
 			CONFIG_INSTALL_DIR="${WRKINST}${TRUEPREFIX}/lib/tk8.5" \
 			DEMO_INSTALL_DIR="${WRKINST}${TRUEPREFIX}/share/examples/tk8.5"
 
-REGRESS_FLAGS =		HOME=${TESTHOME} \
-			DISPLAY=${DISPLAY} \
-			XAUTHORITY=${XAUTHORITY}
+REGRESS_FLAGS =		HOME=${TESTHOME}
 
 SEPARATE_BUILD =	concurrent
 USE_X11 =		Yes
-
-AUTOCONF_VERSION =	2.59
-CONFIGURE_STYLE =	autoconf no-autoheader old
+CONFIGURE_STYLE =	gnu old
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--includedir="${PREFIX}/include/tk8.5" \
 			--mandir="${PREFIX}/lib/tk8.5/man" \
@@ -56,11 +46,9 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--disable-rpath \
 			--with-tcl="${LOCALBASE}/lib/tcl8.5"
 
-CONFIGURE_ENV +=	SHLIB_VERSION="${LIBtk85_VERSION}" \
-			CFLAGS=""
+CONFIGURE_ENV +=	SHLIB_VERSION="${LIBtk85_VERSION}"
 
-# This regression test wants an X11 display
-REGRESS_IS_INTERACTIVE =Yes
+REGRESS_IS_INTERACTIVE = x11
 
 FLAVORS =		threaded
 FLAVOR ?=
@@ -68,6 +56,9 @@ FLAVOR ?=
 .if ${FLAVOR:L:Mthreaded}
 CONFIGURE_ARGS +=	--enable-threads
 WANTLIB +=		pthread
+LIB_DEPENDS =		tcl85:tcl->=8.5.8,<8.5.9-${FLAVOR}:lang/tcl/8.5
+.else
+LIB_DEPENDS =		tcl85:tcl->=8.5.8,<8.5.9:lang/tcl/8.5
 .endif
 
 WRKSRC =		${WRKDIST}/unix
@@ -76,11 +67,6 @@ REGRESS_TARGET =	test
 TESTHOME =		${WRKDIR}/testhome
 
 pre-regress:
-.for t in DISPLAY XAUTHORITY
-.  if !defined($t)
-	@echo "$t needs to be set to run regress"; exit 1
-.  endif
-.endfor
 	@mkdir -p ${TESTHOME}
 
 post-install:

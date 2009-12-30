@@ -1,21 +1,55 @@
-Needed to adjust the version numbering scheme. Without it,
-librairies ends up with weird names.
-
---- source/configure.orig	Mon Sep 22 21:04:14 2008
-+++ source/configure	Wed Oct 29 11:15:42 2008
-@@ -1359,6 +1359,7 @@ echo "$as_me: error: Cannot determine ICU version numb
-    { (exit 1); exit 1; }; }
-     fi
- fi
-+ENTRYPOINT_VERSION=`echo $VERSION | sed -e 's/\.//'`
- LIB_VERSION=`echo $VERSION | sed -e 's/\.//' -e 's/^\([^.]*\)$/\1.0/'`
- LIB_VERSION_MAJOR=`echo $LIB_VERSION | sed 's/\..*//'`
+$OpenBSD: patch-source_configure,v 1.6 2009/06/07 00:54:43 landry Exp $
+--- source/configure.orig	Sat May  9 20:22:27 2009
++++ source/configure	Sat May  9 20:21:03 2009
+@@ -5588,13 +5588,13 @@ if test $threads = true; then
+   # moving on to a more generic test
  
-@@ -9091,6 +9092,7 @@ s,@ECHO_T@,$ECHO_T,;t t
- s,@LIBS@,$LIBS,;t t
- s,@PACKAGE@,$PACKAGE,;t t
- s,@VERSION@,$VERSION,;t t
-+s,@ENTRYPOINT_VERSION@,$ENTRYPOINT_VERSION,;t t
- s,@LIB_VERSION@,$LIB_VERSION,;t t
- s,@LIB_VERSION_MAJOR@,$LIB_VERSION_MAJOR,;t t
- s,@UNICODE_VERSION@,$UNICODE_VERSION,;t t
+ 
+-{ $as_echo "$as_me:$LINENO: checking for pthread_attr_init in -lpthread" >&5
+-$as_echo_n "checking for pthread_attr_init in -lpthread... " >&6; }
++{ $as_echo "$as_me:$LINENO: checking for pthread_attr_init in -pthread" >&5
++$as_echo_n "checking for pthread_attr_init in -pthread... " >&6; }
+ if test "${ac_cv_lib_pthread_pthread_attr_init+set}" = set; then
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lpthread  $LIBS"
++LIBS="-pthread  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -5658,7 +5658,7 @@ if test "x$ac_cv_lib_pthread_pthread_attr_init" = x""y
+ #define HAVE_LIBPTHREAD 1
+ _ACEOF
+ 
+-  LIBS="-lpthread $LIBS"
++  LIBS="-pthread $LIBS"
+ 
+ fi
+ 
+@@ -5809,13 +5809,13 @@ fi
+     else
+       # For HP 11
+ 
+-{ $as_echo "$as_me:$LINENO: checking for pthread_mutex_init in -lpthread" >&5
+-$as_echo_n "checking for pthread_mutex_init in -lpthread... " >&6; }
++{ $as_echo "$as_me:$LINENO: checking for pthread_mutex_init in -pthread" >&5
++$as_echo_n "checking for pthread_mutex_init in -pthread... " >&6; }
+ if test "${ac_cv_lib_pthread_pthread_mutex_init+set}" = set; then
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lpthread  $LIBS"
++LIBS="-pthread  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -5879,7 +5879,7 @@ if test "x$ac_cv_lib_pthread_pthread_mutex_init" = x""
+ #define HAVE_LIBPTHREAD 1
+ _ACEOF
+ 
+-  LIBS="-lpthread $LIBS"
++  LIBS="-pthread $LIBS"
+ 
+ fi
+ 

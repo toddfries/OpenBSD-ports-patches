@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2008/11/21 17:43:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2009/12/21 18:03:18 ajacoutot Exp $
 
 COMMENT=		binary editor
 
 GNOME_PROJECT=		ghex
-GNOME_VERSION=		2.22.0
+GNOME_VERSION=		2.24.0
+PKGNAME=		${DISTNAME}p6
+
 SHARED_LIBS +=  gtkhex               1.0      # .0.0
 CATEGORIES=		sysutils editors
 
@@ -15,28 +17,28 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite \
 		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender art_lgpl_2 atk-1.0 audiofile bonobo-2 bonobo-activation \
-		bonoboui-2 c cairo crypto dbus-1 dbus-glib-1 esd expat \
-		fontconfig freetype gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 \
+		Xrender art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation \
+		bonoboui-2 c cairo crypto dbus-1 dbus-glib-1 expat \
+		fontconfig freetype gailutil gdk-x11-2.0 gdk_pixbuf-2.0 \
 		gio-2.0 glib-2.0 glitz gmodule-2.0 gnome-2 gnome-keyring \
 		gnomecanvas-2 gnomeprint-2-2 gnomevfs-2 gobject-2.0 \
 		gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 png popt pthread ssl util xml2 z
+		pangoft2-1.0 pcre pixman-1 png popt pthread ssl util xml2 z \
+		avahi-client avahi-common avahi-glib pthread-stubs xcb
 
 MODULES=		devel/gettext \
-			x11/gnome
+			x11/gnome \
+			devel/gconf2
 
-BUILD_DEPENDS=		::x11/gnome/doc-utils
 LIB_DEPENDS=		gnomeui-2::x11/gnome/libgnomeui \
 			gnomeprintui-2-2::x11/gnome/libgnomeprintui
-RUN_DEPENDS=		::x11/gnome/doc-utils
 
 MODGNOME_HELP_FILES=	Yes
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
-CONFIGURE_ARGS+=	${ENABLE_SHARED} \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/ghex2 \
-			--disable-schemas-install
+MODGCONF2_SCHEMAS_DIR=	ghex2
+
+CONFIGURE_ARGS+=	${ENABLE_SHARED}
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.10 2008/09/22 13:53:02 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2009/11/02 17:20:10 sthen Exp $
 
 COMMENT =	imap4 webmail client
 
-DISTNAME =	roundcubemail-0.2-beta
-PKGNAME =	roundcubemail-0.2b
+DISTNAME =	roundcubemail-0.3.1
 CATEGORIES =	mail www
 HOMEPAGE =	http://www.roundcube.net/
 
@@ -25,12 +24,13 @@ PREFIX =	/var/www
 INSTDIR =	${PREFIX}/roundcubemail
 SUBST_VARS =	INSTDIR
 
-RUN_DEPENDS =	:php5-core-*:www/php5/core
+RUN_DEPENDS =	:php5-core-*:www/php5/core \
+		:php5-mbstring-*:www/php5/extensions,-mbstring
 
 do-install:
-	@cp -Rp ${WRKDIST} ${INSTDIR}
-	@chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
-	@find ${INSTDIR} -name \*.orig -exec rm -f {} \;
-	@rm -rf ${INSTDIR}/installer
+	cp -Rp ${WRKDIST} ${INSTDIR}
+	mv ${INSTDIR}/config/mimetypes.php ${INSTDIR}/config/mimetypes.php.dist
+	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
+	find ${INSTDIR} \( -name \*.orig -or -name \*.src \) -exec rm -f {} \;
 
 .include <bsd.port.mk>

@@ -1,0 +1,43 @@
+$OpenBSD: patch-etc_Makefile_in,v 1.2 2009/02/11 13:17:28 pea Exp $
+--- etc/Makefile.in.orig	Wed Nov 12 08:54:12 2008
++++ etc/Makefile.in	Tue Feb 10 14:18:14 2009
+@@ -21,7 +21,7 @@
+ #  permission and modified beyond recognition.
+ 
+ VPATH = @srcdir@
+-pkgdatadir = $(datadir)/@PACKAGE@
++pkgdatadir = $(datadir)/examples/@PACKAGE@
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+@@ -383,26 +383,10 @@ uninstall-am: uninstall-pkgdataDATA
+ 
+ 
+ install-data-local: all
+-	@if test "$(DO_CONF_INSTALL)" = "yes"; then \
+-	if test -f $(DESTDIR)$(sysconfdir)/rancid.conf ; then \
+-	    echo ""; \
+-	    echo "WARNING: *** $(DESTDIR)$(sysconfdir)/rancid.conf exists.  See "; \
+-	    echo "         *** $(pkgdatadir)/rancid.conf.sample for new"; \
+-	    echo "         *** examples."; \
+-	    echo ""; \
+-	else \
+-	    $(INSTALL_DATA) rancid.conf.sample $(DESTDIR)$(sysconfdir)/rancid.conf; \
+-	fi; \
+-	if test -f $(DESTDIR)$(sysconfdir)/lg.conf ; then \
+-	    echo ""; \
+-	    echo "WARNING: *** $(DESTDIR)$(sysconfdir)/lg.conf exists.  See "; \
+-	    echo "         *** $(pkgdatadir)/lg.conf.sample for new"; \
+-	    echo "         *** examples."; \
+-	    echo ""; \
+-	else \
+-	    $(INSTALL_DATA) lg.conf.sample $(DESTDIR)$(sysconfdir)/lg.conf; \
+-	fi; \
+-	fi
++	test -z "$(pkgdatadir)" || $(mkdir_p) "$(DESTDIR)$(pkgdatadir)"
++	$(INSTALL_DATA) ../cloginrc.sample $(DESTDIR)$(pkgdatadir)/cloginrc.sample; \
++	$(INSTALL_DATA) rancid.conf.sample $(DESTDIR)$(pkgdatadir)/rancid.conf; \
++	$(INSTALL_DATA) lg.conf.sample $(DESTDIR)$(pkgdatadir)/lg.conf; \
+ 
+ lg.conf.sample: Makefile $(srcdir)/lg.conf.sample.in
+ 	rm -f lg.conf.sample lg.conf.sample.tmp; \

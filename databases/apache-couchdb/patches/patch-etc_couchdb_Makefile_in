@@ -1,0 +1,14 @@
+$OpenBSD: patch-etc_couchdb_Makefile_in,v 1.4 2009/11/02 18:51:27 bernd Exp $
+--- etc/couchdb/Makefile.in.orig	Thu Oct  8 06:18:17 2009
++++ etc/couchdb/Makefile.in	Tue Oct 13 22:01:28 2009
+@@ -354,9 +354,8 @@ info: info-am
+ 
+ info-am:
+ 
+-install-data-am: install-localconfDATA
++install-data-am:
+ 	@$(NORMAL_INSTALL)
+-	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
+ 
+ install-dvi: install-dvi-am
+ 

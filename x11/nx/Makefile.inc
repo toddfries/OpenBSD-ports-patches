@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.2 2008/11/25 19:06:09 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.5 2009/03/30 17:04:42 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,13 +6,15 @@ CATEGORIES+=	x11/nx
 
 HOMEPAGE?=	http://www.nomachine.com/
 
+MAJOR_VERSION?=	3.3.0
+
 # GPLv2/LGPLv2
 PERMIT_PACKAGE_CDROM?=	Yes
 PERMIT_PACKAGE_FTP?=	Yes
 PERMIT_DISTFILES_CDROM?=Yes
 PERMIT_DISTFILES_FTP?=	Yes
 
-MASTER_SITES?=		http://64.34.161.181/download/${VERSION}/sources/
+MASTER_SITES?=		http://64.34.161.181/download/${MAJOR_VERSION}/sources/
 DIST_SUBDIR=		nx
 
 USE_GMAKE?=		Yes

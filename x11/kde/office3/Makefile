@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.53 2008/11/20 13:40:48 okan Exp $
+# $OpenBSD: Makefile,v 1.59 2009/12/21 20:46:02 ajacoutot Exp $
 
 COMMENT=		office suite for KDE
 
@@ -8,7 +8,7 @@ VMEM_WARNING=		Yes
 MASTER_SITES?=		${MASTER_SITE_KDE:S@$@stable/koffice-${VERSION}/src/@}
 
 DISTNAME=	koffice-${VERSION}
-PKGNAME=	${DISTNAME}p5
+PKGNAME=	${DISTNAME}p11
 
 MASTER_SITES0=		ftp://ftp.kde.org/pub/kde/security_patches/
 PATCHFILES=		koffice-xpdf-CVE-2007-3387.diff:0 \
@@ -76,9 +76,11 @@ SEPARATE_BUILD=	flavored
 MODKDE_VERSION=	3.5.7
 AUTOCONF_VERSION=2.61
 
+MODULES =	x11/kde devel/gettext
+
 RUN_DEPENDS+=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS=	kdecore.>=4,DCOP,artskde,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kparts,kspell,kabc,kjs,kresources,ktexteditor,kutils,kwalletclient,vcard,kspell2,knewstuff,kmdi::x11/kde/libs3 \
-		python2.5:python-2.5.*:lang/python/2.5 \
+		python2.5:python->=2.5,<2.6:lang/python/2.5 \
 		art_lgpl_2.>=5::graphics/libart \
 		wv2::converters/wv2 \
 		MagickCore.>=1,MagickWand.>=1::graphics/ImageMagick \
@@ -88,17 +90,17 @@ LIB_DEPENDS=	kdecore.>=4,DCOP,artskde,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kpart
 		exif.>=12::graphics/libexif \
 		paper::print/libpaper \
 		poppler-qt::print/poppler,-qt \
-		GraphicsMagick::graphics/GraphicsMagick \
+		GraphicsMagick.>=1::graphics/GraphicsMagick \
 		wpd::textproc/libwpd
 
 
 WANTLIB=	ICE SM X11 Xext Xrender artsflow artsflow_idl audiofile bz2 c \
-		esd freetype glib-2.0 gmodule-2.0 gobject-2.0 \
-		gsf-1 gthread-2.0 iconv intl jasper jpeg kmedia2_idl lcms \
-		m mad mcop ogg ossaudio pcre pcreposix png pthread qtmcop \
+		freetype glib-2.0 gmodule-2.0 gobject-2.0 \
+		gsf-1 gthread-2.0 jasper jpeg kmedia2_idl lcms \
+		m mad mcop ogg pcre pcreposix png pthread qtmcop sndio \
 		soundserver_idl stdc++ tiff util vorbis vorbisenc vorbisfile \
 		xml2 xslt z Xt termcap Xi fontconfig crypto readline ssl \
-		IlmImf Half Imath Iex idn GL GLU poppler \
+		IlmImf Half Imath Iex idn GL GLU poppler pthread-stubs xcb \
 		Xau Xdmcp expat fam rpcsvc IlmThread gio-2.0 wmflite
 
 

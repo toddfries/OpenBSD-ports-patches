@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2008/07/02 14:32:30 naddy Exp $
+# $OpenBSD: Makefile,v 1.19 2009/08/06 23:40:47 martynas Exp $
 
 COMMENT=	flexible POP3 server
 
 VERSION=	0.15
 DISTNAME=	solid-pop3d-${VERSION}
-PKGNAME=	${DISTNAME}p0		# also see below
+PKGNAME=	${DISTNAME}p4
 CATEGORIES=	mail
 MASTER_SITES=	ftp://dione.ids.pl/pub/solidpop3d/
 
@@ -31,7 +31,6 @@ NO_REGRESS=	Yes
 # enable support for APOP authentication.
 .if ${FLAVOR:L:Mapop}
 CONFIGURE_ARGS+= --enable-userconfig --enable-apop
-PKGNAME=${DISTNAME}p2
 .else
 CONFIGURE_ARGS+= --disable-userconfig --disable-apop
 .endif

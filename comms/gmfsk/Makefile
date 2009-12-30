@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.7 2008/09/10 17:25:26 martynas Exp $
+# $OpenBSD: Makefile,v 1.17 2009/08/10 06:30:30 kili Exp $
 
 COMMENT=	GNOME multimode HF terminal
 
-DISTNAME=	gmfsk-0.6
-PKGNAME=	${DISTNAME}p4
+GNOME_PROJECT=	gmfsk
+GNOME_VERSION=	0.6
+PKGNAME=	${DISTNAME}p13
 CATEGORIES=    	comms hamradio
 
 HOMEPAGE=	http://gmfsk.connect.fi/
-MASTER_SITES=	http://gmfsk.connect.fi/	\
+MASTER_SITES=	${HOMEPAGE}	\
 		http://he.fi/pub/ham/unix/linux/hfmodems/
+EXTRACT_SUFX=	.tar.gz
 
 MAINTAINER=	Jason Wright <jason@openbsd.org>
 
@@ -18,33 +20,34 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB +=	ICE SM X11 Xau Xcursor Xdmcp Xext Xfixes Xi Xinerama \
-		Xcomposite Xdamage Xrandr Xrender audiofile c esd \
-		expat fontconfig freetype pthread stdc++ m z atk-1.0 \
-		cairo gailutil glib-2.0 glitz gmodule-2.0 gobject-2.0 \
-		gthread-2.0 iconv intl pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 png ORBit-2 art_lgpl_2 bonobo-2 \
-		bonobo-activation bonoboui-2 gconf-2 gnome-2 \
-		gnome-keyring gnomecanvas-2 gnomevfs-2 pixman-1 popt xml2
+WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender art_lgpl_2 atk-1.0
+WANTLIB += bonobo-2 bonobo-activation bonoboui-2 c cairo dbus-1
+WANTLIB += expat fontconfig freetype gio-2.0 glib-2.0
+WANTLIB += glitz gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2
+WANTLIB += gnomevfs-2 gobject-2.0 gthread-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pixman-1 png popt pthread pthread-stubs stdc++ xcb
+WANTLIB += xml2 z
 
-RUN_DEPENDS=		:scrollkeeper-*:textproc/scrollkeeper \
-			:yelp-*:x11/gnome/yelp
-BUILD_DEPENDS=		:scrollkeeper-*:textproc/scrollkeeper
+MODULES=		devel/gettext \
+			x11/gnome \
+			devel/gconf2
+
+MODGNOME_HELP_FILES=	Yes
+USE_GMAKE=		No
+MODGCONF2_SCHEMAS_DIR=	gmfsk
+
+BUILD_DEPENDS=		::textproc/rarian
 LIB_DEPENDS=		fftw.>=2::math/fftw \
-			gtk-x11-2.0,gdk_pixbuf-2.0,gdk-x11-2.0::x11/gtk+2 \
+			gailutil,gtk-x11-2.0,gdk_pixbuf-2.0,gdk-x11-2.0::x11/gtk+2 \
 			hamlib.>=2::comms/hamlib \
 			gnomeui-2::x11/gnome/libgnomeui
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		--enable-hamlib \
-			--disable-schemas-install \
-			--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gmfsk
+CONFIGURE_ARGS=		--enable-hamlib
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
 USE_X11=		Yes
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

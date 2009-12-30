@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.3 2008/08/31 17:32:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2009/12/22 16:28:01 ajacoutot Exp $
 
 COMMENT-main=	free open source 2D MMORPG
 COMMENT-music=	music addon for TMW
 
-DISTNAME=	tmw-0.0.26
+DISTNAME=	tmw-0.0.29.1
 
 V_MUSIC=	0.2
 
-PKGNAME-main=	${DISTNAME}
+PKGNAME-main=	${DISTNAME}p0
 PKGNAME-music=	tmw-music-${V_MUSIC}
 
 CATEGORIES=	games x11
@@ -31,6 +31,8 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=themanaworld/}
 
 MULTI_PACKAGES=	-main -music
 
+MODULES=	devel/gettext
+
 USE_X11=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
@@ -39,6 +41,7 @@ RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS=	SDL_image::devel/sdl-image \
 		SDL_net::devel/sdl-net \
 		SDL_mixer::devel/sdl-mixer \
+		SDL_ttf::devel/sdl-ttf \
 		guichan,guichan_sdl::devel/guichan \
 		curl::net/curl \
 		idn::devel/libidn \
@@ -53,7 +56,7 @@ PKG_ARCH-music=*
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 			-I${LOCALBASE}/include/libpng" \
-		LDFLAGS="`sdl-config --libs`"
+		LDFLAGS="`sdl-config --libs` -liconv -lintl"
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/tmw/data/music

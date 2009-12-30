@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2008/11/07 14:09:08 bernd Exp $
+# $OpenBSD: Makefile,v 1.8 2009/10/10 10:48:49 sthen Exp $
 
 COMMENT-main =		little brother's database, email address query tools
 COMMENT-ldap =		LDAP support for little brother's database
 
-VERSION =		0.35.1
+VERSION =		0.36
 DISTNAME =		lbdb_${VERSION}
 
-PKGNAME-main =		lbdb-${VERSION}
-PKGNAME-ldap =		lbdb-ldap-${VERSION}
+# bump all subpackages together
+PKGNAME-main =		lbdb-${VERSION}p4
+PKGNAME-ldap =		lbdb-ldap-${VERSION}p4
 
 CATEGORIES =		databases mail
 
@@ -15,19 +16,18 @@ HOMEPAGE =		http://www.spinnaker.de/lbdb/
 
 MULTI_PACKAGES =	-main -ldap
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-RUN_DEPENDS-main =	::textproc/gsed \
-			::sysutils/ggrep
-
 RUN_DEPENDS-ldap =	::databases/p5-ldap \
 			:${FULLPKGNAME-main}:databases/lbdb
 
-WANTLIB =		c
+MODULES =		converters/libiconv
+WANTLIB-main =		c
+LIB_DEPENDS-ldap =
 
 MASTER_SITES =		http://www.spinnaker.de/debian/
 
@@ -37,6 +37,7 @@ USE_GMAKE =		Yes
 CONFIGURE_STYLE =	gnu
 
 CONFIGURE_ARGS += 	--libdir=${PREFIX}/lib/lbdb \
+			--with-libiconv-prefix=${LOCALBASE} \
 			--without-abook \
 			--without-addr-email \
 			--without-niscat \
@@ -45,6 +46,10 @@ CONFIGURE_ARGS += 	--libdir=${PREFIX}/lib/lbdb \
 			--without-pgp \
 			--without-evolution-addressbook-export \
 			--enable-lbdb-dotlock
+CONFIGURE_ENV =		ac_cv_path_BASH=NONE \
+			ac_cv_path_GAWK=NONE \
+			CPPFLAGS="${CPPFLAGS} -I${LOCALBASE}/include" \
+			LDFLAGS="${LDFLAGS} -L${LOCALBASE}/lib"
 
 WRKDIST =		${WRKDIR}/${DISTNAME:S/_/-/}
 

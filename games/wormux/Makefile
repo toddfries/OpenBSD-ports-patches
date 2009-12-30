@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/04 19:17:27 landry Exp $
+# $OpenBSD: Makefile,v 1.15 2009/12/22 16:28:01 ajacoutot Exp $
 
 COMMENT=		free software clone of Worms(R) game concept
 
-DISTNAME=		wormux-0.8.1
+DISTNAME=		wormux-0.8.4
+PKGNAME=		${DISTNAME}p1
 CATEGORIES=		games
 
 HOMEPAGE=		http://wormux.org
@@ -12,7 +13,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		SDL X11 c crypto idn m png pthread ssl stdc++ z
+WANTLIB=		SDL X11 c crypto idn m png pthread pthread-stubs ssl \
+			stdc++ xcb z
 
 MASTER_SITES=		http://download.gna.org/wormux/
 EXTRACT_SUFX=		.tar.bz2
@@ -26,14 +28,13 @@ LIB_DEPENDS=		SDL_gfx::devel/sdl-gfx \
 			curl.>=5::net/curl \
 			xml2::textproc/libxml
 
-BUILD_DEPENDS=		::devel/automake/1.9
-
 MODULES=		devel/gettext
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV+= 	CPPFLAGS="-I${LOCALBASE}/include ${CFLAGS}" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib" \
+			MKDIR_P='mkdir -p'
 
-pre-fake:
-	# the provided script is broken
-	cp ${LOCALBASE}/share/automake-1.9/install-sh ${WRKSRC}
+post-extract:
+	rm -Rf ${WRKSRC}/data/locale
+
 .include <bsd.port.mk>

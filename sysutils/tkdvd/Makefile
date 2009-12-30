@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.6 2008/11/10 20:18:14 steven Exp $
+# $OpenBSD: Makefile,v 1.9 2009/11/07 15:54:33 ajacoutot Exp $
 
 COMMENT=		GUI to dvd+rw-tools and cdrecord
 
-DISTNAME=		tkdvd-4.0.6
-PKGNAME=		${DISTNAME}p1
+DISTNAME=		tkdvd-4.0.9
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		sysutils
 
 HOMEPAGE=		http://regis.damongeot.free.fr/tkdvd/
 
 MAINTAINER=		Vlad Glagolev <stealth@sourcemage.org>
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

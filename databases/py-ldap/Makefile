@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2008/02/08 10:12:15 winiger Exp $
+# $OpenBSD: Makefile,v 1.20 2009/09/15 17:37:21 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,14 +7,12 @@ COMMENT-examples=	example programs for the LDAP client API for Python
 
 V=			2.3.1
 DISTNAME=		python-ldap-${V}
-PKGNAME-main=		py-ldap-${V}p0
-FULLPKGNAME-examples=	py-ldap-examples-${V}
+PKGNAME-main=		py-ldap-${V}p2
+FULLPKGNAME-examples=	py-ldap-examples-${V}p1
 
 CATEGORIES=		databases
 
 HOMEPAGE=		http://python-ldap.sourceforge.net/
-
-MAINTAINER=		Marc Balmer <mbalmer@openbsd.org>
 
 # Python
 PERMIT_PACKAGE_FTP=	Yes

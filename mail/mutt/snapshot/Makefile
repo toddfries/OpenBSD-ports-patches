@@ -1,16 +1,20 @@
-# $OpenBSD: Makefile,v 1.49 2008/05/22 14:40:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.57 2009/07/29 20:26:45 sthen Exp $
 
 COMMENT=	tty-based e-mail client, development version
 
-VERSION=	1.5.18
+VERSION=	1.5.20
 DISTNAME=	mutt-${VERSION}
-MASTER_SITES=	${MASTER_SITES_MUTT:=devel/}
+PKGNAME=	${DISTNAME}p2
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mutt/} \
+		${MASTER_SITES_MUTT:=devel/}
 
 WANTLIB=	z
 
 FLAVORS=	idn sasl sidebar
 FLAVOR?=
 
+# should be 2.63
+AUTOCONF_VERSION= 2.62
 CONFIGURE_ARGS= --enable-hcache \
 		--enable-smtp \
 		--without-gdbm
@@ -24,11 +28,14 @@ LIB_DEPENDS+=	sasl2::security/cyrus-sasl2
 
 MUTTRCDIR=	doc/
 
+DIST_COMPRESSED=compressed-1.5.20.diff.gz:2
+DIST_SIDEBAR=	sidebar-1.5.20.diff.gz:2
+
 .if ${FLAVOR:L:Msidebar}
-PATCHFILES+=		patch-${VERSION}.sidebar-b.txt:1
+PATCHFILES+=		${DIST_SIDEBAR}
 PATCH_DIST_STRIP=	-p1
 .else
-SUPDISTFILES+=		patch-${VERSION}.sidebar-b.txt:1
+SUPDISTFILES+=		${DIST_SIDEBAR}
 .endif
 
 .include <bsd.port.mk>

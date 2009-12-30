@@ -1,34 +1,16 @@
-$OpenBSD: patch-jdk_make_sun_awt_mawt_gmk,v 1.1 2008/03/19 18:05:45 kurt Exp $
---- jdk/make/sun/awt/mawt.gmk.orig	Tue Oct 30 05:04:26 2007
-+++ jdk/make/sun/awt/mawt.gmk	Wed Nov  7 18:13:36 2007
-@@ -139,7 +139,7 @@ CFLAGS += -DMOTIF_VERSION=$(MOTIF_VERSION)
- 
- ifeq ($(STATIC_MOTIF),true)
-     LIBXM = $(MOTIF_LIB)/libXm.a -lXp -lXmu
--    ifeq ($(PLATFORM), linux)
-+    ifneq (,$(findstring $(PLATFORM), linux bsd))
- 	ifeq ($(ARCH_DATA_MODEL), 64)
-             LIBXT = -lXt
-         else
-@@ -154,7 +154,7 @@ ifeq ($(STATIC_MOTIF),true)
-     endif
- else
-     LIBXM = -L$(MOTIF_LIB) -lXm -lXp
--    ifeq ($(PLATFORM), linux)
-+    ifneq (,$(findstring $(PLATFORM), linux bsd))
- 	LIBXT = -lXt
- 	LIBSM = 
- 	LIBICE = 
-@@ -172,7 +172,7 @@ ifeq ($(PLATFORM), solaris)
- OTHER_LDLIBS = $(LIBXM) -lXt -lXext $(LIBXTST) $(LIBXMU) -lX11 -lXi
+$OpenBSD: patch-jdk_make_sun_awt_mawt_gmk,v 1.4 2009/10/07 01:53:54 kurt Exp $
+--- jdk/make/sun/awt/mawt.gmk.orig	Thu Sep 17 03:51:41 2009
++++ jdk/make/sun/awt/mawt.gmk	Sat Sep 26 10:00:48 2009
+@@ -169,7 +169,7 @@ ifeq ($(PLATFORM), solaris)
+ OTHER_LDLIBS = -lXt -lXext $(LIBXTST) $(LIBXMU) -lX11 -lXi
  endif
  
 -ifeq ($(PLATFORM), linux)
 +ifneq (,$(findstring $(PLATFORM), linux bsd))
  OTHER_CFLAGS += -DMLIB_NO_LIBSUNMATH
- OTHER_CFLAGS += -DMOTIF_VERSION=2
+ # XXX what is this define below? Isn't it motif-related?
  OTHER_CFLAGS += -DXMSTRINGDEFINES=1
-@@ -183,8 +183,12 @@ endif
+@@ -180,8 +180,12 @@ endif
  # !HEADLESS
  
  OTHER_LDLIBS += $(JVMLIB) $(LIBCXX) \
@@ -42,23 +24,17 @@ $OpenBSD: patch-jdk_make_sun_awt_mawt_gmk,v 1.1 2008/03/19 18:05:45 kurt Exp $
  #
  # Sun CC with -Xa misdefines __STDC__ to 0 (zero).
  # The following will force checking of X11 prototypes.
-@@ -196,15 +200,6 @@ endif
- #
- # Other extra flags needed for compiling.
- #
--CPPFLAGS += -I$(CUPS_HEADERS_PATH)
--
--ifndef HEADLESS
--CPPFLAGS += -I$(MOTIF_DIR)/include \
--            -I$(OPENWIN_HOME)/include 
--LDFLAGS  += -L$(MOTIF_LIB) -L$(OPENWIN_LIB)
--
--endif # !HEADLESS
--
- CPPFLAGS += -I$(SHARE_SRC)/native/$(PKGDIR)/debug \
-             -I$(SHARE_SRC)/native/$(PKGDIR)/../font \
-             -I$(PLATFORM_SRC)/native/$(PKGDIR)/../font \
-@@ -227,10 +222,24 @@ CPPFLAGS += -I$(SHARE_SRC)/native/$(PKGDIR)/debug \
+@@ -198,6 +202,9 @@ CPPFLAGS += -I$(CUPS_HEADERS_PATH)
+ ifndef HEADLESS
+ CPPFLAGS += -I$(OPENWIN_HOME)/include 
+ LDFLAGS  += -L$(OPENWIN_LIB)
++ifeq ($(OS_NAME), netbsd)
++LDFLAGS  += -Wl,-R$(OPENWIN_LIB)
++endif
+ 
+ endif # !HEADLESS
+ 
+@@ -223,16 +230,33 @@ CPPFLAGS += -I$(SHARE_SRC)/native/$(PKGDIR)/debug \
          -I$(PLATFORM_SRC)/native/$(PKGDIR) \
          $(EVENT_MODEL)
  
@@ -75,11 +51,20 @@ $OpenBSD: patch-jdk_make_sun_awt_mawt_gmk,v 1.1 2008/03/19 18:05:45 kurt Exp $
  # Checking for the X11/extensions headers at the additional location
    CPPFLAGS += -I/X11R6/include/X11/extensions \
                -I/usr/include/X11/extensions
-+endif
-+
+ endif
+ 
 +ifeq ($(PLATFORM), bsd)
 +  CPPFLAGS += -I$(OPENWIN_HOME)/include/X11/extensions \
 +              -I$(OPENWIN_HOME)/include 
++endif
++
+ ifeq ($(PLATFORM), solaris)
+   CPPFLAGS += -I$(OPENWIN_HOME)/include/X11/extensions
  endif
  
- ifeq ($(PLATFORM), solaris)
++ifneq ($(PLATFORM), windows)
++  CPPFLAGS += -DX11_PATH=\"$(X11_PATH)\" -DPACKAGE_PATH=\"$(PACKAGE_PATH)\"
++endif
+ 
+ LDFLAGS += -L$(LIBDIR)/$(LIBARCH)/$(TSOBJDIR) \
+ 	   $(AWT_RUNPATH)

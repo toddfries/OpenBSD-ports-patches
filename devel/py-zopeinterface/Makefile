@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.4 2008/03/26 20:35:52 eric Exp $
+# $OpenBSD: Makefile,v 1.8 2009/08/07 08:36:52 fgsch Exp $
 
-COMMENT=	zope.interface package from Zope 3
+COMMENT=	object interface infrastructure from Zope 3
 
-VERSION=	3.3.0
-DISTNAME=	zope.interface-${VERSION}
-PKGNAME=	py-zopeinterface-${VERSION}
+MODPY_EGG_VERSION=	3.5.1
+
+DISTNAME=	zope.interface-${MODPY_EGG_VERSION}
+PKGNAME=	py-zopeinterface-${MODPY_EGG_VERSION}
 CATEGORIES=	devel
 
-HOMEPAGE=	http://zope.org/Products/ZopeInterface/
+HOMEPAGE=	http://pypi.python.org/pypi/zope.interface
 
 MAINTAINER=	Eric Faurot <eric@openbsd.org>
 
@@ -17,24 +18,18 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 
-MASTER_SITES=	http://www.zope.org/Products/ZopeInterface/${VERSION}/
+MASTER_SITES=	${MASTER_SITE_PYPI:=z/zope.interface/}
 
 MODULES=	lang/python
-SUBST_VARS=	VERSION
 
 MODPY_SETUPTOOLS=	Yes
 
-TESTS=	test_advice.py		\
-	test_document.py	\
-	test_element.py		\
-	test_odd_declarations.py\
-	test_sorting.py		\
-	test_verify.py
+REGRESS_DEPENDS=	:py-zopetesting-*:devel/py-zopetesting
 
-do-regress: fake
-	for i in ${TESTS}; do \
-	echo $$i; env PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} \
-		${WRKINST}${MODPY_SITEPKG}/zope/interface/tests/$$i; \
-	done
+do-regress:
+	cd ${WRKSRC} && \
+		${MODPY_BIN} bootstrap.py && \
+		./bin/buildout && \
+		./bin/test
 
 .include <bsd.port.mk>

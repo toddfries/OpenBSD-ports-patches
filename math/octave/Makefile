@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2008/11/04 22:41:59 steven Exp $
+# $OpenBSD: Makefile,v 1.44 2009/12/21 22:07:57 ajacoutot Exp $
 
 # vax:   no IEEE arithmetic
 # sparc: fPIC version of libgcc.a needed but not available
@@ -6,8 +6,9 @@ NOT_FOR_ARCHS=	vax sparc
 
 COMMENT=	high-level language for numerical computations
 
-VERSION=	3.0.3
+VERSION=	3.0.5
 DISTNAME=	octave-${VERSION}
+PKGNAME=	${DISTNAME}p1
 CATEGORIES=	math
 
 SHARED_LIBS=	cruft		5.0 \
@@ -26,9 +27,9 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c g2c m ncurses readline stdc++ z
 
-MASTER_SITES=	ftp://ftp.octave.org/pub/octave/bleeding-edge/ \
-		ftp://neacm.fe.up.pt/pub/octave/bleeding-edge/ \
-		ftp://ftp.u-aizu.ac.jp/pub/SciEng/numanal/Octave/bleeding-edge/
+MASTER_SITES=	ftp://ftp.octave.org/pub/octave/ \
+		ftp://ftp.u-aizu.ac.jp/pub/SciEng/numanal/Octave/ \
+		ftp://neacm.fe.up.pt/pub/octave/
 
 BUILD_DEPENDS=	::devel/desktop-file-utils
 RUN_DEPENDS=	::devel/gmake \

@@ -1,0 +1,37 @@
+@comment $OpenBSD: PLIST,v 1.3 2009/09/27 17:06:12 ajacoutot Exp $
+z-push/
+z-push/INSTALL
+z-push/LICENSE
+z-push/backend/
+z-push/backend/backend.php
+z-push/backend/diffbackend.php
+z-push/backend/ics.php
+z-push/backend/imap.php
+z-push/backend/maildir.php
+z-push/backend/vcarddir.php
+z-push/compat.php
+z-push/config.php.dist
+@sample z-push/config.php
+z-push/debug.php
+z-push/include/
+z-push/include/mimeDecode.php
+z-push/include/utils.php
+z-push/include/z_RFC822.php
+z-push/include/z_ical.php
+z-push/include/z_tnef.php
+z-push/index.php
+z-push/memimporter.php
+z-push/proto.php
+z-push/request.php
+@mode 755
+@owner www
+z-push/state/
+@mode
+@owner
+z-push/statemachine.php
+z-push/streamer.php
+z-push/streamimporter.php
+z-push/version.php
+z-push/wbxml.php
+z-push/zpushdefs.php
+z-push/zpushdtd.php

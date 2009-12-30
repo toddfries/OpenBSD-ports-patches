@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2008/10/28 13:39:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.53 2009/12/22 15:31:26 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 ONLY_FOR_ARCHS=		amd64 i386
@@ -11,10 +11,10 @@ COMMENT-browser=	HTML Browser Widget library for swt/eclipse
 ECLIPSE_VER=		3.2.2
 DISTNAME=		eclipse-sourceBuild-srcIncluded-${ECLIPSE_VER}
 PKGNAME=		eclipse-sdk-${ECLIPSE_VER}
-PKGNAME-main=		eclipse-sdk-${ECLIPSE_VER}p7
-PKGNAME-swt=		swt-${ECLIPSE_VER}p0
-PKGNAME-gnome=		swt-gnome-${ECLIPSE_VER}p1
-PKGNAME-browser=	swt-browser-${ECLIPSE_VER}p0
+PKGNAME-main=		eclipse-sdk-${ECLIPSE_VER}p12
+PKGNAME-swt=		swt-${ECLIPSE_VER}p1
+PKGNAME-gnome=		swt-gnome-${ECLIPSE_VER}p2
+PKGNAME-browser=	swt-browser-${ECLIPSE_VER}p3
 SHARED_LIBS=		swt-atk-gtk-3236	4.0 \
 			swt-awt-gtk-3236	4.0 \
 			swt-gtk-3236		4.0 \
@@ -57,7 +57,7 @@ VMEM_WARNING=		Yes
 MODULES=		java devel/gettext
 MODJAVA_VER=		1.5+
 
-BUILD_DEPENDS=		::devel/xulrunner,-devel \
+BUILD_DEPENDS=		:xulrunner-devel->=1.8,<1.9:devel/xulrunner/1.8,-devel \
 			:apache-ant->=1.6.1:devel/apache-ant
 
 USE_GMAKE=		Yes
@@ -68,7 +68,7 @@ MULTI_PACKAGES=		-main -swt -gnome -browser
 
 RUN_DEPENDS-main=	::java/javaPathHelper \
 			${MODJAVA_RUN_DEPENDS} \
-			:swt-browser-${ECLIPSE_VER}*:devel/eclipse/sdk,-browser \
+			:swt-browser-${ECLIPSE_VER}:devel/eclipse/sdk,-browser \
 			::devel/desktop-file-utils
 LIB_DEPENDS-main=	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 
@@ -78,17 +78,17 @@ WANTLIB-main=		X11 Xau Xcursor Xdmcp Xext Xfixes Xi Xinerama \
 			freetype atk-1.0 glib-2.0 gmodule-2.0 \
 			gobject-2.0 glitz png iconv intl \
 			pango-1.0 pangoft2-1.0 pangocairo-1.0 cairo \
-			pixman-1
+			pixman-1 gio-2.0 pthread-stubs xcb
 
 LIB_DEPENDS-swt=	gtk-x11-2.0::x11/gtk+2
 WANTLIB-swt=		GL GLU Xtst m atk-1.0 cairo gthread-2.0
 
-RUN_DEPENDS-gnome=	:swt-${ECLIPSE_VER}*:devel/eclipse/sdk,-swt
+RUN_DEPENDS-gnome=	:swt-${ECLIPSE_VER}:devel/eclipse/sdk,-swt
 LIB_DEPENDS-gnome=	gnomeui-2::x11/gnome/libgnomeui
 WANTLIB-gnome=		gnome-2 gnomevfs-2
 
-RUN_DEPENDS-browser=	:swt-${ECLIPSE_VER}*:devel/eclipse/sdk,-swt
-LIB_DEPENDS-browser=	xulrunner/gtkembedmoz,xulrunner/xpcom::devel/xulrunner
+RUN_DEPENDS-browser=	:swt-${ECLIPSE_VER}:devel/eclipse/sdk,-swt
+LIB_DEPENDS-browser=	xulrunner/gtkembedmoz,xulrunner/xpcom:xulrunner->=1.8,<1.9:devel/xulrunner/1.8
 WANTLIB-browser=	c nspr4 plc4 plds4
 
 MOZILLA_HOME=		${LOCALBASE}/xulrunner
@@ -127,11 +127,11 @@ SUBST_VARS=		ECLIPSE_ARCH
 
 # Build out openbsd source from linux source
 pre-patch:
-	@exec ${SETENV} WRKSRC=${WRKSRC} ECLIPSE_WS=${ECLIPSE_WS} \
-		${FILESDIR}/prepatch.sh
+	@${SETENV} WRKSRC=${WRKSRC} ECLIPSE_WS=${ECLIPSE_WS} \
+		sh ${FILESDIR}/prepatch.sh
 
 do-build:
-	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
+	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} \
 		./build -os ${ECLIPSE_OS} -ws ${ECLIPSE_WS} -arch ${ECLIPSE_ARCH} -java5home ${JAVA_HOME} -compilelibs
 
 do-install:

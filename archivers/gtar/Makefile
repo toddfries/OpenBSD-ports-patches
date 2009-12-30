@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.47 2008/04/18 14:52:25 naddy Exp $
+# $OpenBSD: Makefile,v 1.50 2009/09/10 15:30:21 naddy Exp $
 
 COMMENT=	GNU version of the traditional tape archiver
 
-DISTNAME=	tar-1.20
-PKGNAME=	g${DISTNAME}
+DISTNAME=	tar-1.22
+PKGNAME=	g${DISTNAME}p0
 CATEGORIES=	archivers
 HOMEPAGE=	http://www.gnu.org/software/tar/
 
 MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
 
-# GPLv3
+# GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -19,7 +19,7 @@ MASTER_SITES=	${MASTER_SITE_GNU:=tar/}
 EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	devel/gettext
-RUN_DEPENDS=	::archivers/bzip2 ::archivers/lzma
+RUN_DEPENDS=	::archivers/bzip2 ::archivers/lzop ::archivers/xz
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--program-prefix=g
@@ -35,7 +35,7 @@ FLAVOR?=
 .if ${FLAVOR:L:Mstatic}
 LDSTATIC=	-static
 MODULES=
-BUILD_DEPENDS=	:gettext->=0.16.1:devel/gettext
+BUILD_DEPENDS=	:gettext->=0.17:devel/gettext
 CONFIGURE_ENV+=	SHLIBEXT=""
 .else
 LDSTATIC=

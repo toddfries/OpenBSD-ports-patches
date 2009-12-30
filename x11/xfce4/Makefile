@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.28 2008/09/22 13:37:50 landry Exp $
+# $OpenBSD: Makefile,v 1.35 2009/09/29 20:07:00 landry Exp $
 
      SUBDIR+= exo
      SUBDIR+= gtk-xfce-engine
-     SUBDIR+= libxfce4mcs
+     SUBDIR+= libxfce4menu
      SUBDIR+= libxfce4util
      SUBDIR+= libxfcegui4
      SUBDIR+= mousepad
@@ -11,14 +11,15 @@
      SUBDIR+= ristretto
      SUBDIR+= terminal
      SUBDIR+= thunar
+     SUBDIR+= thunar-archive
      SUBDIR+= thunar-media-tags
      SUBDIR+= thunar-thumbnailers
-     SUBDIR+= xfce-mcs-manager
-     SUBDIR+= xfce-mcs-plugins
+     SUBDIR+= thunar-vcs
      SUBDIR+= xfce-utils
      SUBDIR+= xfce4-appfinder
      SUBDIR+= xfce4-battery
      SUBDIR+= xfce4-clipman
+     SUBDIR+= xfce4-dev-tools
      SUBDIR+= xfce4-dict
      SUBDIR+= xfce4-diskperf
      SUBDIR+= xfce4-fsguard
@@ -26,13 +27,18 @@
      SUBDIR+= xfce4-icon-theme
      SUBDIR+= xfce4-mailwatch
      SUBDIR+= xfce4-mixer
+     SUBDIR+= xfce4-modemlights
+     SUBDIR+= xfce4-mount
      SUBDIR+= xfce4-mpc
      SUBDIR+= xfce4-netload
      SUBDIR+= xfce4-notes
+     SUBDIR+= xfce4-notifyd
      SUBDIR+= xfce4-panel
      SUBDIR+= xfce4-places
+     SUBDIR+= xfce4-quicklauncher
      SUBDIR+= xfce4-session
      SUBDIR+= xfce4-screenshooter
+     SUBDIR+= xfce4-settings
      SUBDIR+= xfce4-smartbookmark
      SUBDIR+= xfce4-systemload
      SUBDIR+= xfce4-time-out
@@ -41,7 +47,9 @@
      SUBDIR+= xfce4-weather
      SUBDIR+= xfce4-wmdock
      SUBDIR+= xfce4-xkb
+     SUBDIR+= xfconf
      SUBDIR+= xfdesktop
+     SUBDIR+= xfmpc
      SUBDIR+= xfprint
      SUBDIR+= xfwm4
      SUBDIR+= xfwm4-themes

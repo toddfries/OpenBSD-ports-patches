@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2008/10/02 20:35:09 simon Exp $
+# $OpenBSD: Makefile,v 1.12 2009/10/25 22:19:41 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	event loop processing
 
 MODULES=	cpan
-DISTNAME=	Event-1.11
-PKGNAME=	p5-${DISTNAME}p0
+DISTNAME=	Event-1.13
 CATEGORIES=	devel
 
 MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>

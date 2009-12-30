@@ -1,19 +1,19 @@
-# $OpenBSD: Makefile,v 1.4 2008/10/26 12:59:01 landry Exp $
+# $OpenBSD: Makefile,v 1.21 2009/11/29 10:08:26 landry Exp $
 
 COMMENT =	open source web browser engine
 
-V = 37790
-DISTNAME =	WebKit-r${V}
-PKGNAME =	webkit-${V}
+V = 1.1.15.4
+DISTNAME =	webkit-${V}
+# XXX do not remove v0. pX comes before vX.
+PKGNAME =	webkit-${V}v0
 CATEGORIES =	www
-EXTRACT_SUFX =	.tar.bz2
 
-HOMEPAGE =	http://webkit.org/
-MASTER_SITES =	http://builds.nightly.webkit.org/files/trunk/src/
+HOMEPAGE =	http://webkitgtk.org/
+MASTER_SITES =	${HOMEPAGE}
 
 MAINTAINER =	Landry Breuil <gaston@gcu.info>
 
-SHARED_LIBS =	webkit-1.0	0.0
+SHARED_LIBS =	webkit-1.0	1.0
 
 # LGPLv2 / BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -21,48 +21,48 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
+VMEM_WARNING =	Yes
+
 USE_X11 =	Yes
 USE_GMAKE =	Yes
 USE_LIBTOOL =	Yes
 
-.if ${MACHINE_ARCH} == "sparc64"
-BROKEN =	SIGBUS at runtime, being worked on
-.endif
-
 MODULES =	converters/libiconv \
 		textproc/intltool \
 		gcc4
+
 MODGCC4_ARCHES =*
 MODGCC4_LANGS =	c c++
 
-AUTOMAKE_VERSION =	1.9
-AUTOCONF_VERSION =	2.59
 CONFIGURE_STYLE =	gnu
+
+CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
+		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -lX11" \
+		ac_cv_path_FLEX=${LOCALBASE}/bin/gflex
 
 MAKE_FILE =	GNUmakefile
 
 WANTLIB =	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
-		Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 c crypto \
-		expat fontconfig freetype glib-2.0 glitz gmodule-2.0 \
-		gobject-2.0 gthread-2.0 idn intl jpeg m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pthread ssl z cairo pixman-1 png xml2
+		Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 c \
+		expat fontconfig freetype gcrypt gio-2.0 glib-2.0 glitz gmodule-2.0 \
+		gnutls gobject-2.0 gpg-error gthread-2.0 intl jpeg m \
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pthread \
+		tasn1 z cairo pixman-1 png pthread-stubs stdc++ xcb xml2
 
-LIB_DEPENDS =	gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0::x11/gtk+2,-main \
+LIB_DEPENDS =	gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0,gailutil::x11/gtk+2,-main \
+		gstreamer-0.10,gstbase-0.10::multimedia/gstreamer-0.10/core \
+		gstvideo-0.10,gstpbutils-0.10::multimedia/gstreamer-0.10/plugins-base \
 		icudata,icui18n,icuuc::textproc/icu4c \
 		sqlite3::databases/sqlite3 \
 		xslt::textproc/libxslt \
-		curl::net/curl
-
+		enchant::textproc/enchant \
+		soup-2.4:libsoup->=2.28:devel/libsoup
 
 BUILD_DEPENDS =	::devel/bison \
-		::devel/gperf \
-		${MODGNU_AUTOCONF_DEPENDS} \
-		${MODGNU_AUTOMAKE_DEPENDS}
+		::devel/flex \
+		::devel/gperf
 
 pre-configure:
-	cd ${WRKSRC} && AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} autoreconf --install
-	cd ${WRKSRC} && AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} automake --add-missing --copy
+	${SUBST_CMD} ${WRKSRC}/WebCore/plugins/PluginDatabase.cpp
 
 .include <bsd.port.mk>

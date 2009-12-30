@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2008/10/13 19:44:37 brad Exp $
+# $OpenBSD: Makefile,v 1.16 2009/08/31 22:48:17 ckuethe Exp $
 
 COMMENT-main=		GPS waypoint, track, and route conversion tool
 COMMENT-gui=		Tk front-end to gpsbabel
 
-VERSION=		1.3.5
+VERSION=		1.3.6
 DISTNAME=		gpsbabel-${VERSION}
 PKGNAME-main=		gpsbabel-${VERSION}
 PKGNAME-gui=		gpsbabel-gui-${VERSION}
@@ -36,8 +36,10 @@ CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			WEB=${WRKSRC}
 
 USE_GMAKE=		Yes
-NO_REGRESS=		Yes # expects FP conversion to be exact and invertible
 MULTI_PACKAGES=		-main -gui
+
+MODULES=		x11/tk
+MODTK_VERSION=		8.4
 
 BUILD_DEPENDS=		::textproc/libxslt \
 			::textproc/docbook \
@@ -50,7 +52,7 @@ WANTLIB-main=		expat m c z
 LIB_DEPENDS-gui=
 PKG_ARCH-gui=	*
 RUN_DEPENDS-gui=	::geo/gpsbabel \
-			:tk-8.4.*:x11/tk/8.4
+			${MODTK_RUN_DEPENDS}
 
 post-build:
 	gmake -C ${WRKSRC} doc
@@ -59,7 +61,7 @@ do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/gpsbabel ${PREFIX}/bin
 	${INSTALL_SCRIPT} ${WRKSRC}/guibabel ${PREFIX}/bin
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/gpsbabel
-	${INSTALL_DATA} ${WRKSRC}/babelweb/htmldoc-${VERSION}/*.html \
+	${INSTALL_DATA} ${WRKSRC}/babelweb/htmldoc-*/*.html \
 		${PREFIX}/share/doc/gpsbabel
 	${INSTALL_DATA} ${WRKSRC}/README* ${PREFIX}/share/doc/gpsbabel
 

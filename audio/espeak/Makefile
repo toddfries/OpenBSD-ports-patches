@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2008/11/03 20:23:18 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2009/05/14 19:24:06 sturm Exp $
 
 COMMENT=		compact speech synthesizer
 
-DISTNAME=		espeak-1.37-source
-PKGNAME=		${DISTNAME:S/-source//}p0
+DISTNAME=		espeak-1.40.02-source
+PKGNAME=		${DISTNAME:S/-source//}p1
 SHARED_LIBS=		espeak 0.0
+
 CATEGORIES=		audio devel
 
 HOMEPAGE=		http://espeak.sourceforge.net/
@@ -38,7 +39,7 @@ MAKE_FLAGS +=		EXTRA_FLAGS="-fPIC"
 SUBST_VARS=		PREFIX LIBespeak_VERSION
 
 post-extract:
-	@cp ${WRKSRC}/portaudio19.h ${WRKSRC}/portaudio.h
+	@cp ${LOCALBASE}/include/portaudio.h ${WRKSRC}/portaudio.h
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/speech.h ${WRKSRC}/Makefile

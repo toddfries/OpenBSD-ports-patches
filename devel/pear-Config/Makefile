@@ -1,15 +1,11 @@
-# $OpenBSD: Makefile,v 1.8 2007/09/16 02:53:11 merdely Exp $
+# $OpenBSD: Makefile,v 1.11 2009/11/06 09:01:07 jasper Exp $
 
 COMMENT=	configuration file library for PHP
 
 DISTNAME=	Config-1.10.7
-PKGNAME=	pear-${DISTNAME}p0
-CATEGORIES=	devel pear
+PKGNAME=	pear-${DISTNAME}p1
+CATEGORIES=	devel
 
-MASTER_SITES=	http://pear.php.net/get/
-EXTRACT_SUFX=	.tgz
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 MODULES=	www/pear
 
 RUN_DEPENDS=	:pear-XML-Parser-*:textproc/pear-XML-Parser \

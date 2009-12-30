@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.4 2008/10/02 20:35:09 simon Exp $
+# $OpenBSD: Makefile,v 1.7 2009/10/20 21:54:50 bluhm Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	Perl interface to the lchown(2) system call
+COMMENT=	perl interface to the lchown(2) system call
 
-MODULES=	cpan
-DISTNAME=	Lchown-1.00
-PKGNAME=	p5-${DISTNAME}p0
+DISTNAME=	Lchown-1.01
+
 CATEGORIES=	devel
 
-MAINTAINER=	Alexander Bluhm <alexander_bluhm@genua.de>
+MAINTAINER=	Alexander Bluhm <bluhm@openbsd.org>
 
 # perl
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,6 +16,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-CPAN_AUTHOR=	NCLEATON
+MODULES=		cpan
+CPAN_AUTHOR=		NCLEATON
+
+CONFIGURE_STYLE=	modbuild
 
 .include <bsd.port.mk>

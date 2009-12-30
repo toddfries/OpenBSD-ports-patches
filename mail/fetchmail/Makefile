@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile,v 1.114 2008/10/30 15:33:59 bernd Exp $
+# $OpenBSD: Makefile,v 1.118 2009/11/02 19:47:49 sthen Exp $
 
 COMMENT=	mail retrieval utility for POP2, POP3, KPOP, IMAP and more
 
-DISTNAME=	fetchmail-6.3.8
-PKGNAME=	${DISTNAME}p2
+DISTNAME=	fetchmail-6.3.13
 CATEGORIES=	mail
 MASTER_SITES=	${MASTER_SITE_BERLIOS:=fetchmail/}
 
 HOMEPAGE=	http://fetchmail.berlios.de/
 
-MAINTAINER=	Bernd Ahlers <bernd@openbsd.org>
-
-# GPL
+# GPLv2(+)
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -22,8 +19,11 @@ MODULES=		devel/gettext
 
 SEPARATE_BUILD=		concurrent
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		--enable-inet6 --with-ssl \
-			--with-kerberos5 --enable-NTLM
+CFLAGS=			-I${LOCALBASE}/include
+CONFIGURE_ENV=		PYTHON=:
+CONFIGURE_ARGS=		--with-ssl \
+			--with-kerberos5 \
+			--enable-NTLM
 
 EXTRACT_SUFX=		.tar.bz2
 

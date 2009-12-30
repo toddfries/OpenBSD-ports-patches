@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.59 2008/08/28 08:52:00 espie Exp $
+# $OpenBSD: Makefile,v 1.64 2009/12/21 20:46:02 ajacoutot Exp $
 
 COMMENT = 		K Desktop Environment, multimedia applications
 CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdemultimedia-${VERSION}
-PKGNAME =		${DISTNAME}
+PKGNAME =		${DISTNAME}p4
 MODKDE_VERSION =	3.5.8
 SHARED_LIBS +=	artsbuilder          1.0      # .0.0
 SHARED_LIBS +=	artsmidi_idl         1.0      # .0.0
@@ -35,6 +35,9 @@ SHARED_LIBS +=	arts_splay           1.0      # .0.0
 SHARED_LIBS +=	arts_mpeglib-0.3.0   1.0      # .0.3
 
 FLAVORS =	debug
+
+MODULES =	x11/kde devel/gettext
+
 LIB_DEPENDS = 	DCOP,kdecore.>=6,kdefakes,kdefx,kdesu,kdeui,kio,khtml,kmid,kparts,kmediaplayer,kjs,kutils,kwalletclient,kdeprint::x11/kde/libs3 \
 	artsc,artsflow,artsflow_idl,artskde,kmedia2_idl,mcop,qtmcop,soundserver_idl::x11/kde/arts3 \
 		ogg::audio/libogg \
@@ -42,7 +45,7 @@ LIB_DEPENDS = 	DCOP,kdecore.>=6,kdefakes,kdefx,kdesu,kdeui,kio,khtml,kmid,kparts
 		vorbis,vorbisenc,vorbisfile::audio/libvorbis \
 		cdda_paranoia,cdda_interface::audio/cdparanoia \
 		tag::audio/taglib \
-		gstreamer-0.10:gstreamer-0.10.*:multimedia/gstreamer-0.10/core \
+		gstreamer-0.10:gstreamer->=0.10,<0.11:multimedia/gstreamer-0.10/core \
 		ltdl::devel/libtool,-ltdl \
 		theora::multimedia/libtheora \
 		akode::audio/akode \
@@ -60,9 +63,9 @@ CONFIGURE_ARGS +=	--without-lame
 CONFIGURE_ENV +=	aktion_has_xanim=yes
 
 WANTLIB =	ICE SM X11 Xau Xdmcp Xext Xrender Xv Xxf86dga Xxf86vm \
-		art_lgpl_2 audiofile c esd expat fam fontconfig freetype \
-		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 iconv idn intl \
-		jpeg m mad ossaudio pcre pcreposix png pthread rpcsvc stdc++ \
-		util xml2 z
+		art_lgpl_2 audiofile c expat fam fontconfig freetype \
+		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 idn \
+		jpeg m mad ossaudio pcre pcreposix png pthread rpcsvc sndio \
+		stdc++ util xml2 z pthread-stubs xcb
 
 .include <bsd.port.mk>

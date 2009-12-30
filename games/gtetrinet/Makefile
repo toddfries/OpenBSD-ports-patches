@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2008/09/29 18:16:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2009/12/22 16:28:00 ajacoutot Exp $
 
 MULTI_PACKAGES=	-main -themes
 
 COMMENT-main=	tetrinet client
 COMMENT-themes=	collection of gtetrinet themes
 DISTNAME=	gtetrinet-0.7.11
-PKGNAME-main=	${DISTNAME}p4
-PKGNAME-themes=	gtetrinet-themes-20070623p0
+PKGNAME-main=	${DISTNAME}p10
+PKGNAME-themes=	gtetrinet-themes-20070623p1
 CATEGORIES=	x11 games
 
 HOMEPAGE=	http://gtetrinet.sourceforge.net/
@@ -34,31 +34,34 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MODULES=		textproc/intltool
+MODULES=		textproc/intltool \
+			devel/gconf2
 
-LIB_DEPENDS-main=	gnome-2::x11/gnome/libgnome \
+LIB_DEPENDS-main=	${MODGCONF2_LIB_DEPENDS} \
+			gnome-2::x11/gnome/libgnome \
 			gnomeui-2::x11/gnome/libgnomeui \
 			esd:esound->=0.2.38:audio/esound
 LIB_DEPENDS-themes=
-RUN_DEPENDS-main=	:desktop-file-utils-*:devel/desktop-file-utils
+RUN_DEPENDS-main=	${RUN_DEPENDS} \
+			:desktop-file-utils-*:devel/desktop-file-utils
 RUN_DEPENDS-themes=	::games/gtetrinet
 PKG_ARCH-themes=	*
 
-WANTLIB-main=	ICE ORBit-2 SM X11 Xau Xcursor Xdmcp Xext Xfixes Xi \
-		Xcomposite Xdamage \
-		Xinerama Xrandr Xrender art_lgpl_2 atk-1.0 audiofile \
-		bonobo-2 bonobo-activation bonoboui-2 c cairo expat \
-		fontconfig freetype gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0 \
-		glib-2.0 glitz gmodule-2.0 gnome-keyring gnomecanvas-2 \
-		gnomevfs-2 gobject-2.0 gthread-2.0 gtk-x11-2.0 iconv \
-		intl m pango-1.0 pangocairo-1.0 pangoft2-1.0 png popt \
-		pthread xml2 z gailutil pixman-1
-WANTLIB-themes=
+WANTLIB-main += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB-main += Xext Xfixes Xi Xinerama Xrandr Xrender art_lgpl_2 atk-1.0
+WANTLIB-main += audiofile bonobo-2 bonobo-activation bonoboui-2 c cairo
+WANTLIB-main += dbus-1 expat fontconfig freetype gailutil gdk-x11-2.0
+WANTLIB-main += gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 gnome-keyring
+WANTLIB-main += gnomecanvas-2 gnomevfs-2 gobject-2.0 gthread-2.0 gtk-x11-2.0
+WANTLIB-main += iconv intl m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB-main += pixman-1 png popt pthread pthread-stubs sndio xcb xml2 z
+WANTLIB-themes =
+
+MODGCONF2_SCHEMAS_DIR= gtetrinet
+MODGCONF2_LIBDEP= No
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS+=--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/gtetrinet \
-		--disable-schemas-install \
-		--enable-ipv6
+CONFIGURE_ARGS+=--enable-ipv6
 
 CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
@@ -82,4 +85,3 @@ post-install:
 .include <bsd.port.mk>
 
 CONFIGURE_ARGS+=--sysconfdir=${SYSCONFDIR}/gnome
-

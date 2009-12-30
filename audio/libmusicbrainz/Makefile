@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/03/25 09:19:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2009/05/25 13:59:09 ajacoutot Exp $
 
 COMMENT=		library for audio metadata lookup
 
-DISTNAME=		libmusicbrainz-3.0.1
+DISTNAME=		libmusicbrainz-3.0.2
+
 SHARED_LIBS=		musicbrainz3	0.0	# .6.1
 CATEGORIES=		audio
 

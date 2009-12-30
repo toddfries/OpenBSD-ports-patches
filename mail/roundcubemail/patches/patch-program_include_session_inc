@@ -1,7 +1,7 @@
-$OpenBSD: patch-program_include_session_inc,v 1.4 2008/09/22 13:53:02 sthen Exp $
---- program/include/session.inc.orig	Thu Sep 18 12:54:14 2008
-+++ program/include/session.inc	Sun Sep 21 20:35:56 2008
-@@ -190,6 +190,9 @@ function rcube_sess_regenerate_id()
+$OpenBSD: patch-program_include_session_inc,v 1.6 2009/09/05 15:46:24 sthen Exp $
+--- program/include/session.inc.orig	Fri May 29 20:10:24 2009
++++ program/include/session.inc	Mon Aug  3 15:53:03 2009
+@@ -264,6 +264,9 @@ function rcube_sess_regenerate_id()
    return true;
  }
  

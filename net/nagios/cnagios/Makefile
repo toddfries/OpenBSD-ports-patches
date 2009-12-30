@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2008/04/20 10:06:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2009/12/15 21:59:05 okan Exp $
 
 COMMENT =		console interface for nagios
 
 DISTNAME =		cnagios-0.25
+PKGNAME =		${DISTNAME}p1
 CATEGORIES =		net
 
-HOMEPAGE =		http://noc.hep.wisc.edu/cnagios.html
-
-MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
+HOMEPAGE =		http://noc.hep.wisc.edu/cnagios.txt
 
 WANTLIB =		c perl util curses m
 
@@ -17,7 +16,8 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		ftp://noc.hep.wisc.edu/pub/src/cnagios/
+MASTER_SITES =		ftp://noc.hep.wisc.edu/src/cnagios/ \
+			ftp://noc.hep.wisc.edu/src/cnagios/old-versions/
 
 NO_REGRESS =		Yes
 

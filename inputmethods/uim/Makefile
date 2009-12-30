@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2008/10/28 13:59:13 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2009/12/21 21:25:28 ajacoutot Exp $
 
 COMMENT-main=	multilingual input method library
 COMMENT-gtk=	uim for GTK
@@ -13,11 +13,11 @@ V=		1.5.3
 DISTNAME=	uim-$V
 MASTER_SITES=	http://uim.googlecode.com/files/
 HOMEPAGE=	http://code.google.com/p/uim/
-PKGNAME-main=	uim-$Vp0
-PKGNAME-gtk=	uim-gtk-$Vp0
-PKGNAME-qt=	uim-qt-$Vp0
-PKGNAME-kde=	uim-kde-$Vp0
-PKGNAME-gnome=	uim-gnome-$Vp0
+PKGNAME-main=	uim-$Vp2
+PKGNAME-gtk=	uim-gtk-$Vp2
+PKGNAME-qt=	uim-qt-$Vp1
+PKGNAME-kde=	uim-kde-$Vp1
+PKGNAME-gnome=	uim-gnome-$Vp5
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -45,7 +45,7 @@ USE_X11=	Yes
 AUTOCONF_VERSION=	2.62
 SUBST_VARS=	MODQT_PLUGINS
 
-WANTLIB=	X11 Xau Xdmcp Xext c m
+WANTLIB=	X11 Xau Xdmcp Xext c m pthread-stubs xcb
 
 RUN_DEPENDS-main=${RUN_DEPENDS} \
 		:desktop-file-utils-*:devel/desktop-file-utils
@@ -73,7 +73,7 @@ WANTLIB-kde=	${WANTLIB} Xrender ICE SM idn jpeg png util z \
 
 LIB_DEPENDS-gtk=${LIB_DEPENDS-main} ${uim_LIB_DEPENDS} \
 		gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0::x11/gtk+2
-WANTLIB-gtk=	${WANTLIB} glib-2.0 gmodule-2.0 pangoft2-1.0 \
+WANTLIB-gtk=	${WANTLIB} gio-2.0 glib-2.0 gmodule-2.0 pangoft2-1.0 \
 		gobject-2.0 pango-1.0 atk-1.0 \
 		pangocairo-1.0 cairo glitz png z expat \
 		Xcomposite Xcursor Xdamage Xfixes Xi Xinerama Xrandr \
@@ -84,12 +84,13 @@ LIB_DEPENDS-gnome=uim,gcroots,uim-scm::inputmethods/uim \
 		${MODGETTEXT_LIB_DEPENDS} \
 		gtk-x11-2.0,gdk-x11-2.0,gdk_pixbuf-2.0::x11/gtk+2 \
 		panel-applet-2::x11/gnome/panel
-WANTLIB-gnome=	${WANTLIB-gtk} ICE SM crypto gthread-2.0 jpeg pthread ssl \
-		ORBit-2 ORBitCosNaming-2 art_lgpl_2 audiofile bonobo-2 \
-		bonobo-activation esd gconf-2 glade-2.0 gnome-2 gnomecanvas-2 \
+WANTLIB-gnome=	${WANTLIB-gtk} ICE SM crypto gthread-2.0 pthread ssl \
+		ORBit-2 ORBitCosNaming-2 art_lgpl_2 bonobo-2 \
+		bonobo-activation gconf-2 gnome-2 gnomecanvas-2 \
 		popt xml2 bonoboui-2 gnome-keyring gnomeui-2 gnomevfs-2 \
 		Xcomposite Xcursor Xdamage Xfixes Xi Xinerama Xrandr \
-		dbus-1 dbus-glib-1 gailutil pcre pixman-1 util
+		dbus-1 dbus-glib-1 gailutil pcre pixman-1 util \
+		avahi-client avahi-common avahi-glib
 
 MAKE_FLAGS=	moduledir='${LOCALBASE}/lib/gtk-2.0/2.10.0/immodules' \
 		UIM_QT_LDFLAGS='-pthread -L${X11BASE}/lib -L${MODQT_LIBDIR} -lqt-mt -lXext -lX11' \

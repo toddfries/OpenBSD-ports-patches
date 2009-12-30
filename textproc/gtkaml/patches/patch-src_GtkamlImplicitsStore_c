@@ -1,71 +1,60 @@
-$OpenBSD: patch-src_GtkamlImplicitsStore_c,v 1.4 2008/11/24 19:30:34 jasper Exp $
+$OpenBSD: patch-src_GtkamlImplicitsStore_c,v 1.11 2009/11/14 11:41:04 ajacoutot Exp $
 
 Fix a gint-gsize-confusion to get rid of a bus error on sparc64.
 
---- src/GtkamlImplicitsStore.c.orig	Mon Nov 24 20:23:08 2008
-+++ src/GtkamlImplicitsStore.c	Mon Nov 24 20:25:59 2008
-@@ -68,7 +68,7 @@ enum  {
+--- src/GtkamlImplicitsStore.c.orig	Tue Oct 27 09:07:16 2009
++++ src/GtkamlImplicitsStore.c	Sat Nov 14 12:37:38 2009
+@@ -133,7 +133,7 @@ enum  {
  	GTKAML_KEY_FILE_WRAPPER_DUMMY_PROPERTY
  };
- static gboolean gtkaml_key_file_wrapper_has_key (GtkamlKeyFileWrapper* self, const char* group, const char* key);
--static char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, int* result_length1);
-+static char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, gsize* result_length1);
- static GtkamlKeyFileWrapper* gtkaml_key_file_wrapper_construct (GType object_type);
- static GtkamlKeyFileWrapper* gtkaml_key_file_wrapper_new (void);
+ gboolean gtkaml_key_file_wrapper_has_key (GtkamlKeyFileWrapper* self, const char* group, const char* key);
+-char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, int* result_length1);
++char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, gsize* result_length1);
+ GtkamlKeyFileWrapper* gtkaml_key_file_wrapper_new (void);
+ GtkamlKeyFileWrapper* gtkaml_key_file_wrapper_construct (GType object_type);
  static GObject * gtkaml_key_file_wrapper_constructor (GType type, guint n_construct_properties, GObjectConstructParam * construct_properties);
-@@ -159,14 +159,14 @@ static gboolean gtkaml_key_file_wrapper_has_key (Gtkam
+@@ -241,7 +241,7 @@ gboolean gtkaml_key_file_wrapper_has_key (GtkamlKeyFil
  }
  
  
--static char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, int* result_length1) {
-+static char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, gsize* result_length1) {
- 	GError * inner_error;
+-char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, int* result_length1) {
++char** gtkaml_key_file_wrapper_get_string_list (GtkamlKeyFileWrapper* self, const char* group, const char* key, gsize* result_length1) {
+ 	char** result;
+ 	GError * _inner_error_;
  	g_return_val_if_fail (self != NULL, NULL);
- 	g_return_val_if_fail (group != NULL, NULL);
- 	g_return_val_if_fail (key != NULL, NULL);
- 	inner_error = NULL;
- 	{
--		gint _tmp0;
-+		gsize _tmp0;
- 		char** _tmp1;
- 		_tmp1 = NULL;
- 		return (_tmp1 = g_key_file_get_string_list (self->key_file, group, key, &_tmp0, &inner_error), (*result_length1) = _tmp0, _tmp1);
-@@ -348,15 +348,15 @@ GeeList* gtkaml_implicits_store_get_adds (GtkamlImplic
- 			{
- 				if (gtkaml_key_file_wrapper_has_key (kfw, class_name, "adds")) {
- 					char** _tmp1;
--					gint kf_adds_length1;
--					gint _tmp0;
-+					gsize kf_adds_length1;
-+					gsize _tmp0;
- 					char** kf_adds;
- 					_tmp1 = NULL;
- 					kf_adds = (_tmp1 = gtkaml_key_file_wrapper_get_string_list (kfw, class_name, "adds", &_tmp0), kf_adds_length1 = _tmp0, _tmp1);
- 					{
- 						char** add_collection;
- 						int add_collection_length1;
--						int add_it;
-+						gsize add_it;
- 						add_collection = kf_adds;
- 						add_collection_length1 = kf_adds_length1;
- 						for (add_it = 0; (kf_adds_length1 != -1 && add_it < kf_adds_length1) || (kf_adds_length1 == -1 && add_collection[add_it] != NULL); add_it = add_it + 1) {
-@@ -399,8 +399,8 @@ GeeList* gtkaml_implicits_store_get_method_parameters 
- 			{
- 				if (gtkaml_key_file_wrapper_has_key (kfw, class_name, method_name)) {
- 					char** _tmp1;
--					gint kf_parameters_length1;
--					gint _tmp0;
-+					gsize kf_parameters_length1;
-+					gsize _tmp0;
- 					char** kf_parameters;
- 					GeeList* _tmp8;
- 					_tmp1 = NULL;
-@@ -408,7 +408,7 @@ GeeList* gtkaml_implicits_store_get_method_parameters 
- 					{
- 						char** parameter_collection;
- 						int parameter_collection_length1;
--						int parameter_it;
-+						gsize parameter_it;
- 						parameter_collection = kf_parameters;
- 						parameter_collection_length1 = kf_parameters_length1;
- 						for (parameter_it = 0; (kf_parameters_length1 != -1 && parameter_it < kf_parameters_length1) || (kf_parameters_length1 == -1 && parameter_collection[parameter_it] != NULL); parameter_it = parameter_it + 1) {
+@@ -452,14 +452,14 @@ ValaList* gtkaml_implicits_store_get_adds (GtkamlImpli
+ 			if (gtkaml_key_file_wrapper_has_key (kfw, class_name, "adds")) {
+ 				char** _tmp1_;
+ 				gint kf_adds_size;
+-				gint kf_adds_length1;
+-				gint _tmp0_;
++				gsize kf_adds_length1;
++				gsize _tmp0_;
+ 				char** kf_adds;
+ 				kf_adds = (_tmp1_ = gtkaml_key_file_wrapper_get_string_list (kfw, class_name, "adds", &_tmp0_), kf_adds_length1 = _tmp0_, kf_adds_size = kf_adds_length1, _tmp1_);
+ 				{
+ 					char** add_collection;
+ 					int add_collection_length1;
+-					int add_it;
++					gsize add_it;
+ 					add_collection = kf_adds;
+ 					add_collection_length1 = kf_adds_length1;
+ 					for (add_it = 0; add_it < kf_adds_length1; add_it = add_it + 1) {
+@@ -505,14 +505,14 @@ ValaList* gtkaml_implicits_store_get_method_parameters
+ 			if (gtkaml_key_file_wrapper_has_key (kfw, class_name, method_name)) {
+ 				char** _tmp3_;
+ 				gint kf_parameters_size;
+-				gint kf_parameters_length1;
+-				gint _tmp2_;
++				gsize kf_parameters_length1;
++				gsize _tmp2_;
+ 				char** kf_parameters;
+ 				kf_parameters = (_tmp3_ = gtkaml_key_file_wrapper_get_string_list (kfw, class_name, method_name, &_tmp2_), kf_parameters_length1 = _tmp2_, kf_parameters_size = kf_parameters_length1, _tmp3_);
+ 				{
+ 					char** parameter_collection;
+ 					int parameter_collection_length1;
+-					int parameter_it;
++					gsize parameter_it;
+ 					parameter_collection = kf_parameters;
+ 					parameter_collection_length1 = kf_parameters_length1;
+ 					for (parameter_it = 0; parameter_it < kf_parameters_length1; parameter_it = parameter_it + 1) {

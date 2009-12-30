@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.17 2008/11/07 01:15:01 brad Exp $
+# $OpenBSD: Makefile,v 1.20 2009/08/10 06:33:02 kili Exp $
 
 COMMENT=		tools to edit/modify/encode video streams
 
 DISTNAME=		mjpegtools-1.9.0rc3
-PKGNAME=		${DISTNAME}p1
+PKGNAME=		${DISTNAME}p4
 CATEGORIES=		multimedia
 SHARED_LIBS=		lavfile		4.0 \
 			lavfile-1.9	4.0 \
@@ -20,7 +20,7 @@ SHARED_LIBS=		lavfile		4.0 \
 
 HOMEPAGE=		http://mjpeg.sourceforge.net/
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -30,9 +30,10 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=mjpeg/}
 
 WANTLIB=		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 			Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
-			expat fontconfig freetype glib-2.0 glitz gmodule-2.0 \
-			gobject-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-			pcre pthread pixman-1 stdc++ usbhid z
+			expat fontconfig freetype gio-2.0 glib-2.0 glitz \
+			gmodule-2.0 gobject-2.0 m pango-1.0 pangocairo-1.0 \
+			pangoft2-1.0 pcre pthread pthread-stubs pixman-1 \
+			sndio stdc++ usbhid xcb z
 
 MODULES+=		devel/gettext
 LIB_DEPENDS=		SDL.>=2:sdl-*-!no_x11:devel/sdl \
@@ -45,7 +46,9 @@ USE_X11=		Yes
 USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--with-x --with-libpng --with-libdv
+			--with-x \
+			--with-libpng \
+			--with-libdv
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
 			LDFLAGS="-L${LOCALBASE}/lib" \

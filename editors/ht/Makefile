@@ -1,46 +1,52 @@
-# $OpenBSD: Makefile,v 1.11 2008/06/02 19:38:09 okan Exp $
+# $OpenBSD: Makefile,v 1.16 2009/11/23 10:48:30 benoit Exp $
 
-COMMENT=		file editor/viewer/analyzer for executables
+COMMENT =		file editor/viewer/analyzer for executables
 
-DISTNAME=		ht-2.0.14
-CATEGORIES=		editors
+DISTNAME =		ht-2.0.18
+CATEGORIES =		editors
 
-HOMEPAGE=		http://hte.sourceforge.net/
+HOMEPAGE =		http://hte.sourceforge.net/
 
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=hte/}
+MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
 
-# GPL
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+# GPLv2
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB=		c m ncurses stdc++
+WANTLIB =		c m ncurses stdc++
 
-CONFIGURE_STYLE=	gnu
-USE_GMAKE=		Yes
+MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=hte/}
 
-FLAVORS=		no_x11
-FLAVOR?=
+CONFIGURE_STYLE =	gnu
+USE_GMAKE =		Yes
 
-LIB_DEPENDS=		lzo::archivers/lzo
+FLAVORS =		no_x11
+FLAVOR ?=
 
-CONFIGURE_ENV=		CFLAGS="-I${LOCALBASE}/include" \
+LIB_DEPENDS =		lzo2::archivers/lzo2
+
+CONFIGURE_ENV =		CFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=		--program-transform-name='s/ht/hte/'
+CONFIGURE_ARGS =	--program-transform-name='s/ht/hte/'
 
 .if ${FLAVOR:Mno_x11}
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include"
-CONFIGURE_ARGS+=	--disable-x11-textmode
+CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include"
+CONFIGURE_ARGS +=	--disable-x11-textmode
 .else
-USE_X11=		Yes
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
+USE_X11 =		Yes
+CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			X11BASE=${X11BASE}
-CONFIGURE_ARGS+=	--enable-x11-textmode
-WANTLIB+=		X11
+CONFIGURE_ARGS +=	--enable-x11-textmode
+WANTLIB +=		X11
 .endif
 
+do-install:
+	chmod +x ${WRKSRC}/install-sh
+	 
 post-install:
+	${INSTALL_PROGRAM} ${WRKBUILD}/ht ${PREFIX}/bin/hte
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/ht
 	${INSTALL_DATA} ${WRKSRC}/doc/{README,ht.html} ${PREFIX}/share/doc/ht
 

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2008/11/11 20:10:34 steven Exp $
+# $OpenBSD: Makefile,v 1.8 2009/08/30 16:44:45 steven Exp $
 
 COMMENT =		library for nipper
 
-DISTNAME =		libnipper-0.12.4
+DISTNAME =		libnipper-0.12.6
 CATEGORIES =		security net
 
 SHARED_LIBS =		nipper 0.0
@@ -16,7 +16,6 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =No
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=nipper/}
 EXTRACT_SUFX =		.tgz
 
 CONFIGURE_STYLE =	cmake

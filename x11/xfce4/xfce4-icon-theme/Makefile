@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.16 2008/11/22 09:24:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2009/12/21 16:07:44 landry Exp $
 PKG_ARCH=	*
 
-COMMENT=	icon theme for xfce4
+COMMENT=	Xfce4 icon theme
 
-XFCE_PROJECT=	xfce4-icon-theme
-PKGNAME=	${DISTNAME}p0
-
-HOMEPAGE=	http://www.xfce.org/projects
+XFCE_ARTWORK=	xfce4-icon-theme
+XFCE_VERSION=	4.4.3
+PKGNAME=	${DISTNAME}p4
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes

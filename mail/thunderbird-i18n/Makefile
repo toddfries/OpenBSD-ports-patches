@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.24 2008/10/02 19:53:12 naddy Exp $
+# $OpenBSD: Makefile,v 1.30 2009/11/29 18:52:24 naddy Exp $
 
 PKG_ARCH=	*
 
-V=		2.0.0.17
+V=		2.0.0.23
 NAME=		thunderbird-i18n
 PKGNAME=	${NAME}-${V}
 
@@ -20,10 +20,9 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/${V}/linux-i686/xpi/
 
-LANGUAGES=	be bg ca cs da de el en-GB es-AR es-ES eu fi fr \
-		ga-IE hu it ja ko lt nb-NO nl nn-NO pl pt-BR pt-PT \
-		ru sk sl sv-SE tr zh-CN zh-TW
-#		broken: mk pa-IN
+LANGUAGES=	af be bg ca cs da de el en-GB es-AR es-ES eu fi fr \
+		ga-IE he hu it ja ko lt mk nb-NO nl nn-NO pa-IN pl \
+		pt-BR pt-PT ru sk sl sv-SE tr uk zh-CN zh-TW
 
 BUILD_DEPENDS=	:unzip-*:archivers/unzip
 RUN_DEPENDS=	:mozilla-thunderbird-${V}:mail/mozilla-thunderbird
@@ -42,7 +41,7 @@ PKGNAME-$i=	${NAME}-$i-${V}
 COMMENT-$i=	$i language pack for Thunderbird
 LPACKDIR-$i=	${PREFIX}/mozilla-thunderbird/extensions/langpack-$i@thunderbird.mozilla.org
 .endfor
-PKGNAME-en-GB=	${NAME}-en-GB-${V}p0
+PKGNAME-en-GB=	${NAME}-en-GB-${V}
 
 # use the same for all subpackages
 MESSAGE=	${PKGDIR}/MESSAGE

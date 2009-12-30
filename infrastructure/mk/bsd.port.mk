@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.958 2008/11/18 11:45:41 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.972 2009/10/14 13:01:03 steven Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -68,10 +68,14 @@ FETCH_PACKAGES ?= No
 CLEANDEPENDS ?= No
 USE_SYSTRACE ?= No
 BULK ?= No
-RECURSIVE_FETCH_LIST ?= Yes
+RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
-WRKOBJDIR ?=
+.if ${USE_SYSTRACE:L} == "yes"
+WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/pobj
+.else
+WRKOBJDIR ?= ${PORTSDIR}/pobj
+.endif
 FAKEOBJDIR ?=
 BULK_TARGETS ?=
 BULK_DO ?=
@@ -205,7 +209,7 @@ _okay_words = depends work fake -f flavors dist install sub packages package \
 	readmes bulk force plist build
 .for _w in ${_clean:L}
 .  if !${_okay_words:M${_w}}
-ERRORS += "Fatal: unknown clean command: ${_w}"
+ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
 .  endif
 .endfor
 
@@ -316,9 +320,14 @@ MAKE_PROGRAM = ${MAKE}
 
 USE_LIBTOOL ?= No
 _lt_libs =
-.if ${USE_LIBTOOL:L} == "yes"
+.if ${USE_LIBTOOL:L} != "no"
+.  if ${USE_LIBTOOL:L} == "gnu"
 LIBTOOL ?= ${DEPBASE}/bin/libtool
 BUILD_DEPENDS += ::devel/libtool
+.  else
+LIBTOOL ?= ${DEPBASE}/bin/libtool
+BUILD_DEPENDS += ::devel/libtool
+.  endif
 CONFIGURE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_FLAGS += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
@@ -349,7 +358,6 @@ SUBPACKAGE ?= -
 SUBPACKAGE ?= -main
 .endif
 
-_FETCH_MAKEFILE_NAMES =
 FLAVOR ?=
 FLAVORS ?=
 PSEUDO_FLAVORS ?=
@@ -579,7 +587,15 @@ BZIP2 ?= bzip2
 LZMA  ?= lzma
 
 
-MAKE_ENV += EXTRA_SYS_MK_INCLUDES="<bsd.own.mk>"
+# copy selected info from bsd.own.mk
+MAKE_ENV += ELF_TOOLCHAIN=${ELF_TOOLCHAIN} USE_GCC3=${USE_GCC3} \
+	PICFLAG=${PICFLAG} ASPICFLAG=${ASPICFLAG} \
+	BINGRP=bin BINOWN=root BINMODE=555 NONBINMODE=444 DIRMODE=755 \
+	INSTALL_COPY=-c INSTALL_STRIP=${INSTALL_STRIP} \
+	MANGRP=bin MANOWN=root MANMODE=444
+.if defined(NOPIC)
+MAKE_ENV += NOPIC=${NOPIC}
+.endif
 
 
 .if !empty(FAKEOBJDIR_${PKGPATH})
@@ -623,6 +639,11 @@ ALL_REGRESS_FLAGS = ${MAKE_FLAGS} ${REGRESS_FLAGS}
 REGRESS_LOGFILE ?= ${WRKDIR}/regress.log
 REGRESS_LOG ?= | tee ${REGRESS_LOGFILE}
 REGRESS_STATUS_IGNORE ?=
+
+.if defined(REGRESS_IS_INTERACTIVE) && ${REGRESS_IS_INTERACTIVE:L} == "x11"
+REGRESS_FLAGS += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+XAUTHORITY ?= ${HOME}/.Xauthority
+.endif
 
 _PACKAGE_COOKIE_DEPS=${_FAKE_COOKIE}
 
@@ -1738,7 +1759,7 @@ _internal-fetch-all:
 	@cd ${.CURDIR} && exec ${MAKE} pre-fetch __FETCH_ALL=Yes
 .endif
 .if target(do-fetch)
-	@cd ${.CURDIR} && exec ${MAKE} do-fetch __FETCH_ALL=Yes
+ERRORS += "Fatal: you're not allowed to override do-fetch"
 .else
 # What FETCH-ALL normally does:
 .  if !empty(MAKESUMFILES)
@@ -2223,6 +2244,16 @@ ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 .if ${NO_REGRESS:L} == "no"
 	@${ECHO_MSG} "===>  Regression check for ${FULLPKGNAME}${_MASTER}"
+# When interactive tests need X11
+.  if defined(REGRESS_IS_INTERACTIVE) && ${REGRESS_IS_INTERACTIVE:L} == "x11"
+.    if !defined(DISPLAY) || !exists(${XAUTHORITY})
+	@echo 1>&2 "The regression tests require a running instance of X."
+	@echo 1>&2 "You will also need to set the environment variable DISPLAY"
+	@echo 1>&2 "to point to an active X11 display and XAUTHORITY to point"
+	@echo 1>&2 "to the appropriate .Xauthority file."
+	@exit 1
+.    endif
+.  endif
 .  if target(pre-regress)
 	@cd ${.CURDIR} && exec ${MAKE} pre-regress
 .  endif
@@ -2368,11 +2399,10 @@ ${_F}:
 	test -f ${_F:T} && exit 0; \
 	select='${_EVERYTHING:M*${_F:S@^${FULLDISTDIR}/@@}\:[0-9]}'; \
 	f=${_F:S@^${FULLDISTDIR}/@@}; \
-	${ECHO_MSG} ">> $$f doesn't seem to exist on this system."; \
 	${_CDROM_OVERRIDE}; \
 	${_SITE_SELECTOR}; \
 	for site in $$sites; do \
-		${ECHO_MSG} ">> Fetch $${site}$$f."; \
+		${ECHO_MSG} ">> Fetch $${site}$$f"; \
 		if ${FETCH_CMD} $${site}$$f; then \
 				file=${_F:S@^${DISTDIR}/@@}; \
 				ck=`cd ${DISTDIR} && ${_size_fragment}`; \
@@ -2380,7 +2410,6 @@ ${_F}:
 					${ECHO_MSG} ">> Checksum file does not exist"; \
 					exit 0; \
 				elif grep -q "^$$ck\$$" ${CHECKSUM_FILE}; then \
-					${ECHO_MSG} ">> Size matches for ${_F}"; \
 					exit 0; \
 				else \
 					if grep -q "SIZE ($$file)" ${CHECKSUM_FILE}; then \
@@ -2490,7 +2519,7 @@ _fetch-makefile:
 .  if ${PERMIT_DISTFILES_CDROM:L} == "yes"
 	@echo -n " cdrom"
 .  endif
-	@echo ":: ${_FETCH_MAKEFILE_NAMES}"
+	@echo ": ${_FETCH_MAKEFILE_NAMES}"
 # write generic package dependencies
 	@echo ".PHONY: ${_FETCH_MAKEFILE_NAMES}"
 .  if ${RECURSIVE_FETCH_LIST:L} == "yes"
@@ -2758,11 +2787,11 @@ _print-package-args:
 		${_flavor_fragment}; \
 		libspecs='';comma=''; \
 		if default=`eval $$toset ${MAKE} _print-packagename`; then \
-			case "X$$pkg" in X) pkg=`echo $$default|${_version2default}`;; \
+			case "X$$pkg" in X) pkg=`echo "$$default" |${_version2default}`;; \
 			esac; \
-			if ${_PKG_QUERY} $$pkg -q; then \
+			if ${_PKG_QUERY} "$$pkg" -q; then \
 				listlibs='echo ${DEPDIR}$$shdir/lib*'; \
-				case $$dir in ${PKGPATH}) \
+				case "$$dir" in ${PKGPATH}) \
 					listlibs="$$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}; $$listlibs";; \
 				esac; \
 			else \
@@ -2773,7 +2802,7 @@ _print-package-args:
 				case "$$check" in \
 				*.a) continue;; \
 				Failed) \
-					echo 1>&2 "Can't resolve libspec $$d"; \
+					echo 1>&2 "Can't resolve libspec $$d (in ${SUBPACKAGE})"; \
 					exit 1;; \
 				*) \
 					echo "-W $$check";; \
@@ -3023,6 +3052,7 @@ uninstall deinstall:
 .endif
 
 peek-ftp:
+	@echo "DISTFILES=${DISTFILES}"
 	@mkdir -p ${FULLDISTDIR}; cd ${FULLDISTDIR}; echo "cd ${FULLDISTDIR}"; \
 	for i in ${MASTER_SITES:Mftp*}; do \
 		echo "Connecting to $$i"; ${FETCH_CMD} $$i ; break; \
@@ -3067,7 +3097,8 @@ dump-vars:
 .endif
 
 _all_phony = ${_recursive_depends_targets} ${_recursive_describe_targets} \
-	${_recursive_targets} _build-dir-depends _fetch-makefile _fetch-onefile \
+	${_recursive_targets} ${_dangerous_recursive_targets} \
+	_build-dir-depends _fetch-makefile _fetch-onefile \
 	_internal-all _internal-build _internal-build-depends \
 	_internal-buildlib-depends _internal-buildwantlib-depends \
 	_internal-checksum _internal-clean _internal-configure _internal-depends \
@@ -3085,14 +3116,14 @@ _all_phony = ${_recursive_depends_targets} ${_recursive_describe_targets} \
 	build-depends build-depends-list checkpatch clean clean-depends \
 	delete-package depends distpatch do-build do-configure do-distpatch \
 	do-extract do-fetch do-install do-package do-regress fetch-all \
-	install-all lib-depends lib-depends-list makesum \
-	peek-ftp plist port-lib-depends-check post-build post-configure \
+	install-all lib-depends lib-depends-list \
+	peek-ftp port-lib-depends-check post-build post-configure \
 	post-distpatch post-extract post-fetch post-install post-package \
 	post-patch post-regress pre-build pre-configure pre-extract pre-fake \
 	pre-fetch pre-install pre-package pre-patch pre-regress \
 	print-build-depends print-run-depends readme readmes rebuild \
 	regress-depends repackage run-depends run-depends-list show-required-by \
-	subpackage uninstall update-patches update-plist mirror-maker-fetch \
+	subpackage uninstall mirror-maker-fetch \
 	lock unlock
 
 .if defined(_DEBUG_TARGETS)

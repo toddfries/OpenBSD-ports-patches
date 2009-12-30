@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2008/10/10 12:38:03 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2009/06/06 21:59:38 ajacoutot Exp $
 
 COMMENT=	perl module to manage XML RSS files
 
-DISTNAME=	XML-RSS-1.36
+DISTNAME=	XML-RSS-1.43
+PKGNAME=	p5-${DISTNAME}p0
 CATEGORIES=	textproc
 
 # perl
@@ -11,7 +12,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MODULES=	cpan
+MODULES=		cpan
+
+CONFIGURE_STYLE=	modbuild
 
 RUN_DEPENDS=	::devel/p5-DateTime \
 		::devel/p5-DateTime-Format-Mail \
@@ -27,7 +30,7 @@ REGRESS_DEPENDS=::devel/p5-Test-Differences \
 EXAMPLE_LOC=	${PREFIX}/share/examples/p5-XML-RSS
 
 post-install:
-	@find ${WRKSRC} -name \*.orig -print0 | xargs -0 rm -f
+	find ${WRKSRC} -name \*.orig -print0 | xargs -0 rm -f
 	${INSTALL_DATA_DIR} ${EXAMPLE_LOC}
 	cd ${WRKSRC}/examples && pax -rw . ${EXAMPLE_LOC}
 	chown -R ${SHAREOWN}:${SHAREGRP} ${EXAMPLE_LOC}

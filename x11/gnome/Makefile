@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.80 2008/11/25 08:24:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.105 2009/10/22 16:44:44 ajacoutot Exp $
 
      SUBDIR += alacarte
      SUBDIR += applets2
@@ -6,9 +6,11 @@
      SUBDIR += audio
      SUBDIR += backgrounds
      SUBDIR += baker
+     SUBDIR += bug-buddy
      SUBDIR += build
      SUBDIR += cheese
      SUBDIR += common
+     SUBDIR += conduit
      SUBDIR += controlcenter2
      SUBDIR += dasher
      SUBDIR += deskbar-applet
@@ -20,28 +22,33 @@
      SUBDIR += ekiga
      SUBDIR += empathy
      SUBDIR += eog
+     SUBDIR += eog-plugins
      SUBDIR += file-roller
+     SUBDIR += f-spot
      SUBDIR += games
+     SUBDIR += games-extra-data
      SUBDIR += gcalctool
      SUBDIR += gdl
      SUBDIR += gdm
      SUBDIR += gedit
      SUBDIR += gedit-plugins
+     SUBDIR += genius
      SUBDIR += ghex
-     SUBDIR += gnopernicus
      SUBDIR += gok
      SUBDIR += gossip
      SUBDIR += gucharmap
      SUBDIR += gvfs
+     SUBDIR += gyrus
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += keyring
-     SUBDIR += keyring-manager
      SUBDIR += keyring-query
+     SUBDIR += krb5-auth-dialog
      SUBDIR += libbonobo
      SUBDIR += libbonoboui
      SUBDIR += libgail-gnome
      SUBDIR += libgda
+     SUBIDR += libgdamm
      SUBDIR += libgnome
      SUBDIR += libgnomemm
      SUBDIR += libgnomecanvas
@@ -62,7 +69,11 @@
      SUBDIR += metacity
      SUBDIR += mime-data
      SUBDIR += mono-gnome
+     SUBDIR += mono-gnome-desktop
+     SUBDIR += mousetweaks
      SUBDIR += nautilus
+     SUBDIR += nautilus-open-terminal
+     SUBDIR += nautilus-sendto
      SUBDIR += orca
      SUBDIR += panel
      SUBDIR += pessulus
@@ -70,8 +81,11 @@
      SUBDIR += py-gnome
      SUBDIR += py-gnome-desktop
      SUBDIR += py-gnome-extras
+     SUBDIR += py-nautilus
      SUBDIR += scan
+     SUBDIR += screensaver
      SUBDIR += seahorse
+     SUBDIR += seahorse-plugins
      SUBDIR += session
      SUBDIR += settings-daemon
      SUBDIR += speech
@@ -82,10 +96,12 @@
      SUBDIR += tomboy
      SUBDIR += totem
      SUBDIR += totem-pl-parser
+     SUBDIR += tracker
      SUBDIR += users-guide
      SUBDIR += utils
      SUBDIR += vfs2
      SUBDIR += vfsmm
+     SUBDIR += video-arcade
      SUBDIR += vinagre
      SUBDIR += vino
      SUBDIR += yelp

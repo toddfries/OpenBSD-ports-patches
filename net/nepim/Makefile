@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2007/09/15 22:36:55 merdely Exp $
+# $OpenBSD: Makefile,v 1.10 2009/10/27 06:12:59 jasper Exp $
 
 COMMENT=		network pipe meter
 
-DISTNAME=		nepim-0.39
+DISTNAME=		nepim-0.53
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		net sysutils
 
 HOMEPAGE=		http://www.nongnu.org/nepim/
@@ -14,7 +15,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB= c
 
-MASTER_SITES=		http://download.savannah.gnu.org/releases/nepim/
+MASTER_SITES=		${MASTER_SITE_SAVANNAH:=nepim/}
 
 LIB_DEPENDS=		oop.>=4::devel/liboop
 
@@ -26,7 +27,7 @@ WRKSRC=         	${WRKDIST}/src
 ALL_TARGET=		default
 
 do-configure:
-	@perl -pi -e 's,!!PREFIX!!,${PREFIX},' ${WRKSRC}/Makefile
+	${SUBST_CMD} ${WRKSRC}/Makefile
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/nepim ${PREFIX}/bin

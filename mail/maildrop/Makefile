@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.26 2008/05/07 20:02:47 mbalmer Exp $
+# $OpenBSD: Makefile,v 1.29 2009/12/22 11:21:33 giovanni Exp $
 
 COMMENT-main=		mail delivery agent with filtering abilities
 COMMENT-utils=		quota tools for the Courier mail suite
 
-V=			2.0.4
+V=			2.2.0
 DISTNAME=		maildrop-$V
-PKGNAME-main=		maildrop-$V
+PKGNAME-main=		maildrop-$Vp0
 FULLPKGNAME-utils=	courier-utils-$V
 CATEGORIES=		mail
 
 HOMEPAGE=		http://www.courier-mta.org/maildrop/
-MAINTAINER=		Marc Balmer <mbalmer@openbsd.org>
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=courier/}
 EXTRACT_SUFX=		.tar.bz2
@@ -21,7 +20,7 @@ FLAVOR?=
 MULTI_PACKAGES=		-main -utils
 
 
-# GPL
+# GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -29,7 +28,8 @@ PERMIT_DISTFILES_FTP=	Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		LDFLAGS="-L${LOCALBASE}/lib" \
-			CPPFLAGS="${CFLAGS:C/ *$//} -I${LOCALBASE}/include"
+			CPPFLAGS="${CFLAGS:C/ *$//} -I${LOCALBASE}/include" \
+			ac_cv_header_fam_h=no ac_cv_lib_fam_FAMOpen=no
 MAKE_ENV=		INCLUDES="-I${LOCALBASE}/include"
 
 SUBST_VARS=             MAILDROPCONF

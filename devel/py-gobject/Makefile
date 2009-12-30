@@ -1,13 +1,19 @@
-# $OpenBSD: Makefile,v 1.11 2008/11/16 21:47:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2009/10/12 17:19:16 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Python bindings for glib2 gobject
 
-V=		2.15.4
-DISTNAME=	pygobject-${V}
-PKGNAME=	py-gobject-${V}
-SHARED_LIBS +=  pyglib-2.0       0.0             # .0.0
+# XXX on update, add GObj. Introspection support to graphics/evince
+GNOME_PROJECT=	pygobject
+GNOME_VERSION=	2.18.0
+
+PKGNAME=	py-gobject-${GNOME_VERSION}p0v0
+
+SHARED_LIBS +=  pyglib-2.0-python${MODPY_VERSION} 0.0      # .0.0
+
+PYGLIB_VER=	${LIBpyglib-2.0-python${MODPY_VERSION}_VERSION}
+SUBST_VARS+=	PYGLIB_VER
 
 CATEGORIES=	devel x11
 
@@ -21,22 +27,17 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	pcre
 
-MASTER_SITES=	${MASTER_SITE_GNOME:=sources/pygobject/${V:R}/}
-EXTRACT_SUFX=	.tar.bz2
+MODULES=	devel/gettext \
+		lang/python \
+		x11/gnome
 
-MODULES=	devel/gettext lang/python
-LIB_DEPENDS=	gio-2.0.>=1800.0,glib-2.0.>=1800.0,gmodule-2.0.>=2.1800,gobject-2.0.>=1800.0,gthread-2.0.>=1800.0::devel/glib2
+LIB_DEPENDS=	ffi::devel/libffi \
+		gio-2.0.>=1800.0,glib-2.0.>=1800.0,gmodule-2.0.>=2.1800,gobject-2.0.>=1800.0,gthread-2.0.>=1800.0::devel/glib2
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	PYTHON="${MODPY_BIN}"
 
 REGRESS_DEPENDS=	:${PKGNAME}:${BUILD_PKGPATH}
 
-# The regression tests require a running instance of X.
-# You will also need to set the XAUTHORITY environment variable to point 
-# to the appropriate .Xauthority file. 
-REGRESS_IS_INTERACTIVE= Yes
-REGRESS_FLAGS=DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+REGRESS_IS_INTERACTIVE= x11
 
 .include <bsd.port.mk>

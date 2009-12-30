@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.41 2008/09/15 22:06:11 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.50 2009/09/02 11:50:56 sthen Exp $
 
 COMMENT=	audio/video converter and streamer with bktr(4) support
 
 V=			20080620
 DISTNAME=		ffmpeg-svn-${V}
-PKGNAME=		ffmpeg-${V}p4
+PKGNAME=		ffmpeg-${V}p12
 SHARED_LIBS=		avutil		6.0 \
-			avcodec		13.0 \
+			avcodec		13.1 \
 			avformat	12.0 \
 			postproc	12.0 \
 			avdevice	2.0 \
@@ -15,7 +15,6 @@ SHARED_LIBS=		avutil		6.0 \
 CATEGORIES=		graphics multimedia
 
 HOMEPAGE=		http://ffmpeg.mplayerhq.hu/
-MAINTAINER=		Jacob Meuser <jakemsr@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	patents
@@ -33,12 +32,13 @@ LIB_DEPENDS=		SDL.>=4::devel/sdl \
 			mp3lame.>=0.1::audio/lame \
 			vorbis.>=4.0,vorbisenc.>=2.0::audio/libvorbis \
 			a52::audio/liba52 \
-			x264.>=1::multimedia/x264 \
+			x264.>=3::multimedia/x264 \
 			theora::multimedia/libtheora \
+			schroedinger-1.0::multimedia/schroedinger \
 			Imlib2::graphics/imlib2 \
 			bz2.>=10::archivers/bzip2
 
-WANTLIB=		X11 Xext c freetype m pthread ogg ossaudio z
+WANTLIB=		X11 Xext c freetype m ogg oil-0.3 ossaudio pthread z
 
 USE_X11=		Yes
 USE_GMAKE=		Yes
@@ -50,7 +50,7 @@ CFLAGS+=-fomit-frame-pointer
 
 # inter-library dependencies for the current configuration
 LIBavutil_EXTRALIBS=-lm
-LIBavcodec_EXTRALIBS=-L${LOCALBASE}/lib -lfaac -lfaad -lmp3lame -lvorbis -lvorbisenc -la52 -ltheora -logg -lx264 -lz -lm -pthread -Wl,-rpath,${LOCALBASE}/lib 
+LIBavcodec_EXTRALIBS=-L${LOCALBASE}/lib -lfaac -lfaad -lmp3lame -lvorbis -lvorbisenc -la52 -lschroedinger-1.0 -loil-0.3 -ltheora -logg -lx264 -lz -lm -pthread -Wl,-rpath,${LOCALBASE}/lib 
 LIBavformat_EXTRALIBS=-L${LOCALBASE}/lib -lbz2 -lm -Wl,-rpath,${LOCALBASE}/lib
 LIBpostproc_EXTRALIBS=-lm
 LIBavdevice_EXTRALIBS=-L${X11BASE}/lib -lX11 -lXext -lossaudio -lm -Wl,-rpath,${LOCALBASE}/lib -Wl,-rpath,${X11BASE}/lib
@@ -73,6 +73,7 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-libfaac \
 			--enable-libfaad \
 			--enable-libmp3lame \
+			--enable-libschroedinger \
 			--enable-libtheora \
 			--enable-libvorbis \
 			--enable-libx264 \
@@ -113,6 +114,11 @@ MAKE_FLAGS=		${VERSION_FLAGS} \
 FAKE_FLAGS=		${VERSION_FLAGS} \
 			LDCONFIG=true
 
+.ifdef DEBUG
+CONFIGURE_ARGS+=	--disable-stripping
+.endif
+
+ALL_TARGET=		all tools/qt-faststart
 # regression tests incompatible with libswscale
 #REGRESS_TARGET=	codectest
 NO_REGRESS=		Yes
@@ -121,6 +127,7 @@ pre-configure:
 	-mkdir ${WRKTMP}
 
 post-install:
+	${INSTALL_PROGRAM} ${WRKBUILD}/tools/qt-faststart ${PREFIX}/bin
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/ffmpeg
 .for doc in faq ffmpeg-doc ffplay-doc ffserver-doc hooks
 	${INSTALL_DATA} ${WRKBUILD}/doc/${doc}.html ${PREFIX}/share/doc/ffmpeg

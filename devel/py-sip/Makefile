@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.4 2008/01/15 21:16:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2009/09/09 14:11:27 jasper Exp $
+
+# XXX: Don't forget to update x11/py-qt{3,4} when updating this port.
 
 SHARED_ONLY=	Yes
 
 COMMENT=	automatically generate Python bindings for C and C++ libs
 
-DISTNAME=	sip-4.7.3
-PKGNAME=	py-${DISTNAME}p0
+DISTNAME=	sip-4.8.2
+PKGNAME=	py-${DISTNAME}
 CATEGORIES=	devel
 
-HOMEPAGE=	http://www.riverbankcomputing.co.uk/sip/
+HOMEPAGE=	http://www.riverbankcomputing.co.uk/software/sip/intro
 
 MAINTAINER=	Lars Hansson <lars@unet.net.ph>
 
@@ -20,7 +22,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	m c stdc++
 
-MASTER_SITES=	http://www.riverbankcomputing.com/Downloads/sip4/
+MASTER_SITES=	http://www.riverbankcomputing.co.uk/static/Downloads/sip4/
 
 MODULES=	lang/python
 
@@ -40,7 +42,6 @@ NO_REGRESS=	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-sip
-	${INSTALL_DATA} ${WRKSRC}/doc/sipref.txt \
-		${PREFIX}/share/doc/py-sip
+	${INSTALL_DATA} ${WRKSRC}/doc/html/_sources/* ${PREFIX}/share/doc/py-sip
 
 .include <bsd.port.mk>

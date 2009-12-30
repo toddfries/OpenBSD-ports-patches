@@ -1,13 +1,15 @@
-# $OpenBSD: Makefile,v 1.16 2008/03/19 21:50:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2009/09/20 21:38:19 ajacoutot Exp $
 
 COMMENT=	utilities for 'desktop' entries
 
 DISTNAME=	desktop-file-utils-0.15
+PKGNAME=	${DISTNAME}p1
+
 CATEGORIES=	devel
 
 HOMEPAGE=	http://freedesktop.org/wiki/Software/desktop-file-utils
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

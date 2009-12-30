@@ -1,0 +1,16 @@
+$OpenBSD: patch-toolkit_xre_nsXREDirProvider_cpp,v 1.2 2009/08/03 21:27:00 martynas Exp $
+--- toolkit/xre/nsXREDirProvider.cpp.orig	Thu Jul 30 18:30:33 2009
++++ toolkit/xre/nsXREDirProvider.cpp	Mon Aug  3 22:47:28 2009
+@@ -1144,11 +1144,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
+   NS_ENSURE_SUCCESS(rv, rv);
+ #elif defined(XP_UNIX)
+   static const char *const sysSExtDir = 
+-#ifdef HAVE_USR_LIB64_DIR
+-    "/usr/lib64/mozilla/extensions";
+-#else
+-    "/usr/lib/mozilla/extensions";
+-#endif
++    "_LOCALBASE_/lib/mozilla-extensions";
+ 
+   rv = NS_NewNativeLocalFile(nsDependentCString(sysSExtDir), PR_FALSE,
+                              getter_AddRefs(localDir));

@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.10 2008/06/12 20:36:34 sthen Exp $
+# $OpenBSD: Makefile,v 1.12 2009/11/18 00:49:09 sthen Exp $
 
 COMMENT=	x86 with DOS emulator targeted at playing games
-DISTNAME=	dosbox-0.72
+DISTNAME=	dosbox-0.73
 PKGNAME=	${DISTNAME}p0
 CATEGORIES=	games x11 emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dosbox/}
@@ -15,6 +15,7 @@ PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
+
 WANTLIB=		SDL c m pthread stdc++ z
 
 LIB_DEPENDS=	SDL_net::devel/sdl-net \
@@ -23,6 +24,10 @@ LIB_DEPENDS=	SDL_net::devel/sdl-net \
 
 USE_X11=	Yes
 NO_REGRESS=	Yes
+
+MODULES+=       gcc4
+MODGCC4_ARCHES= *
+MODGCC4_LANGS=  c c++
 
 CONFIGURE_STYLE= gnu
 CONFIGURE_ENV=CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include" 

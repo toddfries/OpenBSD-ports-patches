@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2008/11/26 09:05:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2009/07/27 17:06:16 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,19 +6,22 @@ COMMENT-main =	fast, flexible and easy to configure Web Server
 COMMENT-geoip =	GeoIP module for Cherokee web server
 COMMENT-ldap =	LDAP module for Cherokee web server
 COMMENT-mysql =	MySQL module for Cherokee web server
+COMMENT-streaming = Streaming module for Cherokee web server
 
-VERSION =	0.8.1
+VERSION =	0.99.20
+DIR =		0.99
 DISTNAME =	cherokee-${VERSION}
 
-PKGNAME-main =	${DISTNAME}p0
-PKGNAME-ldap=   cherokee-ldap-${VERSION}
-PKGNAME-mysql=  cherokee-mysql-${VERSION}
-PKGNAME-geoip=  cherokee-geoip-${VERSION}
+PKGNAME-main =	${DISTNAME}
+PKGNAME-ldap =	cherokee-ldap-${VERSION}
+PKGNAME-mysql =	cherokee-mysql-${VERSION}
+PKGNAME-geoip =	cherokee-geoip-${VERSION}
+PKGNAME-streaming = cherokee-streaming-${VERSION}
 
-SHARED_LIBS +=	cherokee-base        0.0      # .0.1
-SHARED_LIBS +=	cherokee-client      0.0      # .0.1
-SHARED_LIBS +=	cherokee-config      0.0      # .0.1
-SHARED_LIBS +=	cherokee-server      0.0      # .0.1
+SHARED_LIBS =	cherokee-base		0.0 \
+		cherokee-client		0.0 \
+		cherokee-config		0.0 \
+		cherokee-server		0.0
 
 CATEGORIES =	www
 
@@ -32,10 +35,12 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes 
 PERMIT_DISTFILES_FTP =	Yes 
 
-MASTER_SITES  =	${HOMEPAGE}/download/${VERSION:R}/${VERSION}/ \
-		http://cherokee.osuosl.org/${VERSION:R}/${VERSION}/
+MASTER_SITES =	${HOMEPAGE}download/${DIR}/${VERSION}/ \
+		http://ftp.heanet.ie/mirrors/cherokee/${DIR}/${VERSION}/ \
+		http://www.ring.gr.jp/archives/net/cherokee/${DIR}/${VERSION}/ \
+		http://cherokee.osuosl.org/${DIR}/${VERSION}/
 
-MULTI_PACKAGES =-main -ldap -mysql -geoip
+MULTI_PACKAGES =-main -ldap -mysql -geoip -streaming
 
 MODULES =	lang/python
 
@@ -44,6 +49,7 @@ BUILD_DEPENDS =	::textproc/py-docutils \
 
 LIB_DEPENDS-main =	pcre::devel/pcre
 WANTLIB-main =		c crypto pthread ssl
+RUN_DEPENDS-main =	::www/spawn-fcgi
 
 LIB_DEPENDS-geoip =	GeoIP.>=6::net/GeoIP
 WANTLIB-geoip =		crypto
@@ -57,6 +63,14 @@ LIB_DEPENDS-mysql =	mysqlclient.>=19::databases/mysql
 WANTLIB-mysql =		crypto m ssl z
 RUN_DEPENDS-mysql =	::${BASE_PKGPATH}
 
+LIB_DEPENDS-streaming =	avutil.>=6,avcodec.>=13,avformat.>=12::graphics/ffmpeg \
+			bz2::archivers/bzip2
+WANTLIB-streaming =	crypto m
+RUN_DEPENDS-streaming = ::${BASE_PKGPATH}
+
+FLAVORS =	debug
+FLAVOR ?=
+
 USE_LIBTOOL =	Yes
 LIBTOOL_FLAGS =	--tag=disable-static
 
@@ -67,21 +81,29 @@ FAKE_FLAGS =	cherokeeconfdir="${PREFIX}/share/examples/cherokee/etc" \
 CONFIGURE_STYLE =	gnu	
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
-			PHPCGI="${LOCALBASE}/bin/php-fastcgi"
+			PHPCGI="${LOCALBASE}/bin/php-fastcgi" \
+			ac_cv_func_getgrnam_r=no
 CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--disable-static \
 			--sysconfdir=${SYSCONFDIR} \
 			--localstatedir=/var \
 			--enable-tls=openssl \
 			--with-wwwroot=/var/cherokee \
+			--disable-nls \
 			--disable-pam \
 			--with-geoip \
 			--with-ldap \
-			--with-mysql
+			--with-mysql \
+			--with-ffmpeg 
 
-SUBST_PY=	admin/server.py qa/fcgi.py qa/run-tests.py \
-		contrib/06to07.py contrib/tracelor.py \
-		contrib/07to08.py contrib/05to06.py
+.if ${FLAVOR:L:Mdebug}
+CFLAGS +=		-O0 -g3
+CONFIGURE_ARGS +=	--enable-trace
+.endif
+
+SUBST_PY =		admin/server.py qa/fcgi.py qa/run-tests.py \
+			contrib/06to07.py contrib/tracelor.py \
+			contrib/07to08.py contrib/05to06.py
 
 pre-configure:
 .for i in ${SUBST_PY}

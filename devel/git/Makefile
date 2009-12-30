@@ -1,75 +1,78 @@
-# $OpenBSD: Makefile,v 1.37 2008/11/12 12:36:29 bernd Exp $
+# $OpenBSD: Makefile,v 1.64 2009/12/17 10:15:12 bernd Exp $
 
-COMMENT-main=		GIT - Tree History Storage Tool
-COMMENT-svn=		GIT - subversion interoperability tools
-COMMENT-x11=		GIT - graphical tools
+COMMENT-main =	GIT - Tree History Storage Tool
+COMMENT-svn =	GIT - subversion interoperability tools
+COMMENT-x11 =	GIT - graphical tools
 
-V=			1.6.0.4
-DISTNAME=		git-${V}
-PKGNAME-main=		${DISTNAME}
-PKGNAME-svn=		git-svn-${V}
-PKGNAME-x11=		git-x11-${V}
-CATEGORIES=		devel
+V =		1.6.5.7
+DISTNAME =	git-${V}
+PKGNAME-main =	${DISTNAME}
+PKGNAME-svn =	git-svn-${V}
+PKGNAME-x11 =	git-x11-${V}
+CATEGORIES =	devel
 
-HOMEPAGE=		http://git.or.cz/
+HOMEPAGE =	http://git-scm.com/
 
-MAINTAINER=		Bernd Ahlers <bernd@openbsd.org>
+MAINTAINER =	Bernd Ahlers <bernd@openbsd.org>
 
-# GPL
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+# GPLv2 only
+PERMIT_PACKAGE_CDROM = Yes
+PERMIT_PACKAGE_FTP = Yes
+PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_FTP = Yes
 
-DOC_DISTFILES=		git-manpages-${V}${EXTRACT_SUFX} \
+DOC_DISTFILES =		git-manpages-${V}${EXTRACT_SUFX} \
 			git-htmldocs-${V}${EXTRACT_SUFX}
-DISTFILES=		${DISTNAME}${EXTRACT_SUFX} ${DOC_DISTFILES}
-EXTRACT_ONLY=		${DISTNAME}${EXTRACT_SUFX}
+DISTFILES =		${DISTNAME}${EXTRACT_SUFX} ${DOC_DISTFILES}
+EXTRACT_ONLY =		${DISTNAME}${EXTRACT_SUFX}
 
-MASTER_SITES=		ftp://ftp.kernel.org/pub/software/scm/git/ \
+MASTER_SITES =		ftp://ftp.kernel.org/pub/software/scm/git/ \
 			ftp://ftp.de.kernel.org/pub/software/scm/git/ \
 			ftp://ftp.au.kernel.org/pub/software/scm/git/
 
-TAR=			${LOCALBASE}/bin/gtar
+TAR =			${LOCALBASE}/bin/gtar
 
-MODULES=		converters/libiconv
+MODULES =		converters/libiconv x11/tk
 
-BUILD_DEPENDS=		::archivers/gtar \
+BUILD_DEPENDS =		::archivers/gtar \
 			::devel/p5-Error
 
-MULTI_PACKAGES=		-main -svn -x11
+MULTI_PACKAGES =	-main -svn -x11
 
-WANTLIB-main=		c expat crypto z
-RUN_DEPENDS-main=	::net/rsync \
+WANTLIB-main =		c expat crypto ssl z
+RUN_DEPENDS-main =	::net/rsync \
 			::devel/p5-Error \
+			:cvsps-*:devel/cvsps \
 			${MODLIBICONV_RUN_DEPENDS}
-LIB_DEPENDS-main=	curl.>=3::net/curl \
+LIB_DEPENDS-main =	curl.>=3::net/curl \
 			${MODLIBICONV_LIB_DEPENDS}
 
-RUN_DEPENDS-svn=	::${BASE_PKGPATH} \
+RUN_DEPENDS-svn =	::${BASE_PKGPATH} \
 			::devel/p5-Term-ReadKey \
 			::devel/subversion,-perl \
 			::www/p5-URI \
 			::www/p5-libwww
-LIB_DEPENDS-svn=
-PKG_ARCH-svn=		*
+LIB_DEPENDS-svn =
+PKG_ARCH-svn =		*
 
-RUN_DEPENDS-x11=	:${PKGNAME}:${BASE_PKGPATH},-main \
-			:tk-8.5.*:x11/tk/8.5
-LIB_DEPENDS-x11=
-PKG_ARCH-x11=		*
+RUN_DEPENDS-x11 =	::${BASE_PKGPATH},-main \
+			${MODTK_RUN_DEPENDS}
+LIB_DEPENDS-x11 =
+PKG_ARCH-x11 =		*
 
-MAKE_ENV=		prefix=${PREFIX} CC="${CC}" CFLAGS="${CFLAGS}" V=1 \
+MAKE_ENV =		prefix=${PREFIX} CC="${CC}" CFLAGS="${CFLAGS}" V=1 \
 			SYSCONFDIR=${SYSCONFDIR} \
-			TCLTK_PATH=${LOCALBASE}/bin/wish8.5 \
-			TCL_PATH=${LOCALBASE}/bin/tclsh8.5
+			TCLTK_PATH=${MODTK_BIN} \
+			TCL_PATH=${MODTCL_BIN}
 
-USE_X11=		Yes
-USE_GMAKE=		Yes
+USE_GMAKE =		Yes
 
-REGRESS_DEPENDS=	:zip-*:archivers/zip \
+REGRESS_DEPENDS =	:zip-*:archivers/zip \
 			:cvsps-*:devel/cvsps \
 			::devel/subversion,-perl
+
+GITWEB =		README INSTALL git-favicon.png git-logo.png \
+			gitweb.cgi gitweb.css
 
 post-extract:
 	@mkdir -p ${WRKSRC}/doc
@@ -77,6 +80,10 @@ post-extract:
 	@${TAR} -C ${WRKSRC}/doc -xzf ${FULLDISTDIR}/${distfile}${EXTRACT_SUFX}
 .endfor
 	@rm -f ${WRKSRC}/doc/man1/git-p4import.1
+	@cd ${WRKSRC} && perl -pi -e "s|/usr/share/git|${TRUEPREFIX}/share/git|g" \
+		Documentation/git-clone.txt Documentation/git-init.txt \
+		doc/man1/git-clone.1 doc/man1/git-init.1 doc/git-clone.txt \
+		doc/git-init.txt doc/git-clone.html doc/git-init.html
 
 post-install:
 	${INSTALL_DATA} ${WRKBUILD}/libgit.a ${PREFIX}/lib
@@ -92,6 +99,9 @@ post-install:
 	${INSTALL_DATA} ${WRKBUILD}/contrib/hooks/post-receive-email \
 		${PREFIX}/share/git-core/templates/hooks/post-receive-email.sample
 	chown -R ${BINOWN}:${BINGRP} ${PREFIX}/libexec/git
+	${INSTALL_DATA_DIR} ${PREFIX}/share/gitweb
+	cd ${WRKSRC}/gitweb && \
+		${INSTALL_DATA} ${GITWEB} ${PREFIX}/share/gitweb
 
 do-regress:
 	cd ${WRKSRC} && ${MAKE_ENV} ${MAKE_PROGRAM} \

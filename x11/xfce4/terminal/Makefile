@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2008/11/06 15:34:46 landry Exp $
+# $OpenBSD: Makefile,v 1.16 2009/12/21 16:07:44 landry Exp $
 
-COMMENT=	lightweight vte-based terminal for xfce4
+COMMENT=	Xfce4 vte-based terminal
 
-XFCE_VERSION=	0.2.8.3
-XFCE_PROJECT=	Terminal
+XFCE_VERSION=	0.4.2
+XFCE_GOODIE=	Terminal
 # :L is here for a reason
-PKGNAME=	${DISTNAME:L}
+PKGNAME=	${DISTNAME:L}p0
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes
@@ -16,12 +16,11 @@ PERMIT_PACKAGE_FTP=	Yes
 MODULES=	x11/xfce4
 DESKTOP_FILES=	Yes
 
-LIB_DEPENDS=	exo-0.3.>=5::x11/xfce4/exo \
+LIB_DEPENDS=	exo-0.3::x11/xfce4/exo \
 		dbus-glib-1::x11/dbus-glib \
-		dbus-1.>=6::x11/dbus \
-		vte.>=11::devel/vte
+		vte::devel/vte
 
-WANTLIB=	X11 atk-1.0 c gdk-x11-2.0 gdk_pixbuf-2.0 glib-2.0 gobject-2.0 \
-		gtk-x11-2.0 startup-notification-1 xfce4util
+WANTLIB=	X11 atk-1.0 c dbus-1 gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
+		glib-2.0 gobject-2.0 gtk-x11-2.0 pango-1.0 xfce4util
 
 .include <bsd.port.mk>

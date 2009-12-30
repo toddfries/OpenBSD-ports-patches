@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2007/11/13 14:06:22 steven Exp $
+# $OpenBSD: Makefile,v 1.31 2009/08/10 06:31:08 kili Exp $
 
 COMMENT=	easy to use, graphical editor
 
@@ -6,7 +6,7 @@ CATEGORIES=	editors
 MASTER_SITES=	${HOMEPAGE}
 HOMEPAGE= 	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 DISTNAME=	cooledit-3.17.14
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p5
 
 SHARED_LIBS=	Cw	1.0
 
@@ -16,11 +16,11 @@ FLAVORS=	python
 FLAVOR?=
 
 PYTHON_VER=	2.4
-WANTLIB=	X11 Xau Xdmcp c util
+WANTLIB=	X11 Xau Xdmcp c pthread-stubs util xcb
 USE_LIBTOOL=	Yes
 
 .if ${FLAVOR:L:Mpython}
-LIB_DEPENDS+=	python${PYTHON_VER}:python-${PYTHON_VER}*:lang/python/${PYTHON_VER}
+LIB_DEPENDS+=	python${PYTHON_VER}:python->=${PYTHON_VER},<2.5:lang/python/${PYTHON_VER}
 CONFIGURE_ENV+=	PYTHON_VER=${PYTHON_VER} LOCALBASE=${LOCALBASE}
 WANTLIB+=	pthread m 
 .else

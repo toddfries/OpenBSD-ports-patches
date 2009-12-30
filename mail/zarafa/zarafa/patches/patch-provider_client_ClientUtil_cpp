@@ -1,0 +1,19 @@
+$OpenBSD: patch-provider_client_ClientUtil_cpp,v 1.2 2009/10/20 22:34:26 ajacoutot Exp $
+--- provider/client/ClientUtil.cpp.orig	Fri Oct  9 22:34:38 2009
++++ provider/client/ClientUtil.cpp	Tue Oct 20 23:41:37 2009
+@@ -76,6 +76,15 @@ static char THIS_FILE[]=__FILE__;
+ #define new DEBUG_NEW
+ #endif
+ 
++#ifdef __OpenBSD__
++size_t strnlen(const char *string, size_t maxlen)
++{
++	size_t i;
++	for (i= 0; i < maxlen && *string != '\0'; i++, string++);
++	return i;
++}
++#endif
++
+ HRESULT ClientUtil::HrInitializeStatusRow (char * lpszProviderDisplay, ULONG ulResourceType, LPMAPISUP lpMAPISup, LPSPropValue lpspvIdentity, ULONG ulFlags)
+ {
+ 	HRESULT			hResult = hrSuccess;

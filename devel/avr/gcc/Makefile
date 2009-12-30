@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2008/10/01 04:52:19 ckuethe Exp $
+# $OpenBSD: Makefile,v 1.13 2009/12/09 16:34:06 ckuethe Exp $
 
 COMMENT=	Atmel AVR 8-bit RISC microcontrollers' XGCC
 
 V=4.2.2
 
+#GPLv2+
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
@@ -19,14 +20,11 @@ MAKE_ADA=No
 
 DISTNAME=	gcc-${V}
 EXTRACT_SUFX=	.tar.bz2
-PKGNAME=	avr-gcc-${V}
+PKGNAME=	avr-gcc-${V}p2
 
 MASTER_SITES= 		${MASTER_SITE_GNU:=gcc/gcc-$(V)/}
 
-LIB_DEPENDS+=		gmp:gmp->=4.2:devel/gmp \
-			mpfr::devel/mpfr
-
-BUILD_DEPENDS+=		:autoconf-2.13*:devel/autoconf/2.13 \
+BUILD_DEPENDS+=		:autoconf-2.13:devel/autoconf/2.13 \
 			:bison-*:devel/bison		\
 			::devel/metaauto		\
 			::devel/avr/binutils

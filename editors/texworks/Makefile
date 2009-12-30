@@ -1,0 +1,44 @@
+# $OpenBSD: Makefile,v 1.6 2009/10/13 14:36:26 edd Exp $
+
+COMMENT =		easy to use LaTeX and ConTeXt editor
+
+DISTNAME =		texworks-0.2.3
+CATEGORIES =		editors print
+HOMEPAGE =		http://www.tug.org/texworks/
+MAINTAINER =		Edd Barrett <edd@openbsd.org>
+
+# GPLv2
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
+
+WANTLIB += ICE SM X11 Xext Xi Xinerama Xrender c expat fontconfig
+WANTLIB += freetype glib-2.0 gobject-2.0 gthread-2.0 m png poppler
+WANTLIB += pthread stdc++ z
+
+MASTER_SITES =		http://texworks.googlecode.com/files/
+
+MODULES =		x11/qt4 \
+			devel/gettext
+LIB_DEPENDS =		hunspell-1.2::textproc/hunspell \
+			dbus-1::x11/dbus \
+			poppler-qt4::print/poppler,-qt4 \
+			QtDBus,QtGui,QtXml::x11/qt4
+RUN_DEPENDS = 		:texlive_base-*:print/texlive/base
+
+USE_X11 =		Yes
+USE_GMAKE =		Yes
+
+NO_REGRESS =		Yes
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/src/TWUtils.cpp
+
+do-configure:
+	cd ${WRKSRC} && qmake4
+
+do-install:
+	${INSTALL_PROGRAM} ${WRKSRC}/texworks ${PREFIX}/bin
+
+.include <bsd.port.mk>

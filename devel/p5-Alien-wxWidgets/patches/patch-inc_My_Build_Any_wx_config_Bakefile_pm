@@ -1,0 +1,27 @@
+$OpenBSD: patch-inc_My_Build_Any_wx_config_Bakefile_pm,v 1.2 2009/12/09 21:45:12 landry Exp $
+use glob() to find all matching $lib.so.*, and take the last value
+--- inc/My/Build/Any_wx_config_Bakefile.pm.orig	Sat Dec  5 16:17:30 2009
++++ inc/My/Build/Any_wx_config_Bakefile.pm	Wed Dec  9 22:13:18 2009
+@@ -3,7 +3,6 @@ package My::Build::Any_wx_config_Bakefile;
+ use strict;
+ our @ISA = qw(My::Build::Any_wx_config::Base);
+ use Config;
+-
+ sub awx_wx_config_data {
+     my $self = shift;
+     return $self->{awx_data} if $self->{awx_data};
+@@ -41,8 +40,13 @@ sub awx_wx_config_data {
+         $key = 'core' if $key =~ m/^gtk2?[ud]{0,2}/
+                               && $self->awx_is_monolithic
+                               && $lib =~ m/(?:gtk2?|mac)[ud]{0,2}-/;
+-        my $dll = "lib${name}." . $self->awx_dlext . $libsuffix;
++        my $dll = "lib${name}." . $self->awx_dlext;
+ 
++	my @t = glob("${LOCALBASE}/lib/$dll.*");
++	if ($#t >= 0) {
++		$dll = $t[-1];
++		$dll =~ s/.*\///g;
++	}
+         $data{dlls}{$key} = { dll  => $dll,
+                               link => $lib };
+     }

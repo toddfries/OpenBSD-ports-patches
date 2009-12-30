@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.37 2008/09/10 16:47:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.42 2009/12/27 22:09:24 jasper Exp $
 
 COMMENT=	CAD drawing program for X11
 
-VERSION=	3.2.5
+VERSION=	3.2.5b
 DISTNAME=	xfig.${VERSION}.full
-PKGNAME=	xfig-${VERSION}p0
+PKGNAME=	xfig-${VERSION}p2
 CATEGORIES=	graphics x11
 
 HOMEPAGE=	http://www.xfig.org/
@@ -15,7 +15,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM Xau Xdmcp X11 Xext Xmu Xp Xpm Xt c m z
+WANTLIB += ICE SM X11 Xmu Xp Xpm Xt c m pthread-stubs xcb z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mcj/}
 
@@ -40,5 +40,9 @@ WRKDIST=	${WRKDIR}/xfig.${VERSION}
 NO_REGRESS=	Yes
 
 USE_X11=	Yes
+
+post-extract:
+	chmod -R a+rX ${WRKSRC}/Libraries
+	find ${WRKSRC}/Libraries -type f -exec chmod -x \{\} \;
 
 .include <bsd.port.mk>

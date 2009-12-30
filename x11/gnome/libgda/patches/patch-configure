@@ -1,30 +1,38 @@
-$OpenBSD: patch-configure,v 1.3 2008/11/21 18:35:31 jasper Exp $
---- configure.orig	Tue Jul 22 16:00:07 2008
-+++ configure	Tue Nov 18 12:53:57 2008
-@@ -19951,7 +19951,7 @@ fi
+$OpenBSD: patch-configure,v 1.8 2009/10/14 23:30:43 jasper Exp $
+--- configure.orig	Sat Oct 10 14:24:25 2009
++++ configure	Thu Oct 15 00:04:43 2009
+@@ -21701,7 +21701,6 @@ fi
  
  
  case $host_cpu in
 -x86_64* | sparc64* | s390x* | ppc64* | powerpc64* ) lib="lib64";;
-+s390x* | ppc64* | powerpc64* ) lib="lib64";;
  *) lib="lib";;
  esac
  
-@@ -21412,6 +21412,8 @@ else
- fi
+@@ -21891,7 +21890,6 @@ _ACEOF
+ 				BDB_LIBS="-L${bdbdir}/bin -ldb47"
+ 				break
+ 			fi
+-
+ 			if test $platform_win32 = no -a -f $d/include/db.h -a -f $d/$lib/libdb$linklibext
+ 			then
+ 				{ $as_echo "$as_me:$LINENO: result: found Berkeley DB in $d" >&5
+@@ -21907,8 +21905,7 @@ _ACEOF
+ 				BDB_LIBS="-L${bdbdir}/${lib} -ldb"
+ 				break
+ 			fi
+-			if test $platform_win32 = no -a -f $d/include/db.h -a -f $d/lib/libdb$linklibext
+-			then
++			if [ $platform_win32 == "no" ]; then
+ 				{ $as_echo "$as_me:$LINENO: result: found Berkeley DB in $d" >&5
+ $as_echo "found Berkeley DB in $d" >&6; }
  
- else
-+if false;
-+then # no sqlite
- 	SQLITE_MODULES="sqlite3 >= 3.3"
- 
- pkg_failed=no
-@@ -21648,6 +21650,8 @@ $as_echo "Using this version of SQLite" >&6; }
-         	fi
- 	fi
- 
-+fi # no sqlite
-+have_sqlite=no
- 
- if test x"$have_sqlite" = "xyes"; then
-   HAVE_SQLITE_TRUE=
+@@ -21972,7 +21970,7 @@ then
+ $as_echo_n "checking for ODBC files... " >&6; }
+ 	for d in $dir /usr /usr/local
+ 	do
+-		if test -f $d/$lib/libodbc$linklibext -a -f $d/include/sql.h
++		if test -f $d/$lib/libodbc$linklibext* -a -f $d/include/sql.h
+ 		then
+ 			{ $as_echo "$as_me:$LINENO: result: found ODBC in $d" >&5
+ $as_echo "found ODBC in $d" >&6; }

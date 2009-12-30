@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.19 2008/01/21 17:13:32 ian Exp $
+# $OpenBSD: Makefile,v 1.28 2009/12/22 15:54:32 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	DTP program
 DISTNAME=	scribus-1.3.4
-PKGNAME=	${DISTNAME}p2
+PKGNAME=	${DISTNAME}p11
 CATEGORIES=	print
 
 # These are actually internal modules, not generic shared libs
@@ -14,23 +14,23 @@ SHARED_LIBS=	scribus12format		0.0 \
 
 HOMEPAGE=	http://www.scribus.net/
 
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
-
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM?=	Yes
 PERMIT_PACKAGE_FTP?=	Yes
 PERMIT_DISTFILES_CDROM?=Yes
 PERMIT_DISTFILES_FTP?=	Yes
 
-
-WANTLIB=	ICE SM X11 Xext c crypto freetype \
-		m pthread stdc++ ssl z util fontconfig Xau Xdmcp expat
+WANTLIB += ICE SM X11 Xau Xdmcp Xext asn1 c crypto expat fontconfig
+WANTLIB += freetype gssapi krb5 m pthread pthread-stubs ssl stdc++
+WANTLIB += util xcb z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scribus/}
 
 EXTRACT_SUFX=	.tar.bz2
 
-MODULES=	x11/qt3 converters/libiconv lang/python
+MODULES=	x11/qt3 \
+		converters/libiconv \
+		lang/python
 MODQT_MT=	Yes
 
 RUN_DEPENDS=	:shared-mime-info-*:misc/shared-mime-info \
@@ -40,7 +40,7 @@ LIB_DEPENDS=	jpeg::graphics/jpeg \
 		art_lgpl_2::graphics/libart \
 		png::graphics/png \
 		tiff::graphics/tiff \
-		python${MODPY_VERSION}:python-${MODPY_VERSION}.*:lang/python/${MODPY_VERSION} \
+		${MODPY_LIB_DEPENDS} \
 		cups::print/cups \
 		xml2::textproc/libxml
 
@@ -48,7 +48,8 @@ USE_X11=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 
-CONFIGURE_STYLE=gnu
+CONFIGURE_STYLE=autoconf gnu
+AUTOCONF_VERSION=2.60
 CONFIGURE_ARGS=	${MODQT_CONFIGURE_ARGS} \
 		--with-extra-libs=${LOCALBASE}/lib \
 		--with-extra-includes=${LOCALBASE}/include/libpng:${LOCALBASE}/include

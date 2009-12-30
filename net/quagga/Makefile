@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2008/05/23 12:55:58 claudio Exp $
+# $OpenBSD: Makefile,v 1.14 2009/05/12 12:18:04 sthen Exp $
 
 COMMENT=	multi-threaded routing daemon
 
-DISTNAME=	quagga-0.99.9
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	quagga-0.99.12
 SHARED_LIBS=    ospf	0.0     \
                 zebra	0.0
 CATEGORIES=	net
@@ -11,7 +10,7 @@ MASTER_SITES=	http://www.quagga.net/download/
 
 HOMEPAGE=	http://www.quagga.net/
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -38,7 +37,8 @@ CONFIGURE_ENV=	LIBS=-lcurses
 
 FAKE_FLAGS=    exampledir='${PREFIX}/share/examples/quagga'
 
-FLAVORS=	snmp
+# XXX broken
+#FLAVORS=	snmp
 FLAVOR?=
 
 .if ${FLAVOR:L:Msnmp}

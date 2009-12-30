@@ -1,0 +1,30 @@
+$OpenBSD: patch-waf-light,v 1.2 2009/12/27 18:42:05 landry Exp $
+
+trick waf-light to make it found installed version
+
+--- waf-light.orig	Sat Nov 14 23:09:11 2009
++++ waf-light	Sun Dec 27 19:04:24 2009
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!${MODPY_BIN}
+ # encoding: utf-8
+ # Thomas Nagy, 2005-2009
+ 
+@@ -127,16 +127,7 @@ def find_lib():
+ 		if w: return w
+ 		err("waf-light requires wafadmin -> export WAFDIR=/folder")
+ 
+-	dir = "/lib/%s-%s-%s/" % (WAF, VERSION, REVISION)
+-	for i in [INSTALL,'/usr','/usr/local','/opt']:
+-		w = test(i+dir)
+-		if w: return w
+-
+-	#waf-local
+-	s = '.%s-%s-%s'
+-	if sys.platform == 'win32': s = s[1:]
+-	dir = join(base, s % (WAF, VERSION, REVISION))
+-	w = test(dir)
++	w = test("${MODPY_SITEPKG}")
+ 	if w: return w
+ 
+ 	#unpack

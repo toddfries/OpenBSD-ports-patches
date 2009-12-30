@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2008/04/17 08:35:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2009/12/22 12:51:52 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	powerful KDE batch file renamer
 
 DISTNAME=	krename-3.0.14
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p4
 CATEGORIES=	sysutils x11 x11/kde
 
 EXTRACT_SUFX=	.tar.bz2
@@ -20,8 +20,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xrender c jpeg m png pthread \
-		rpcsvc stdc++ util z
+WANTLIB += ICE SM X11 Xau Xdmcp Xext Xrender c fam jpeg m png
+WANTLIB += pthread pthread-stubs stdc++ util xcb z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=krename/}
 
@@ -30,7 +30,6 @@ MODULES=	x11/kde devel/gettext
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
 		::x11/kde/base3
 LIB_DEPENDS=	art_lgpl_2.>=5::graphics/libart \
-		fam::sysutils/fam \
 		idn.>=16.30:libidn->=1.1:devel/libidn \
 		DCOP.>=7,kdecore,kdefx,kdesu,kdeui,kio,kparts,kwalletclient::x11/kde/libs3
 

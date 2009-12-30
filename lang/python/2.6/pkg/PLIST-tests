@@ -1,9 +1,10 @@
-@comment $OpenBSD: PLIST-tests,v 1.1 2008/10/18 12:03:56 djm Exp $
+@comment $OpenBSD: PLIST-tests,v 1.5 2009/10/27 23:35:09 sthen Exp $
 @option no-default-conflict
-@conflict python-tests->=2.6,<2.6
+@conflict python-tests->=2.6,<2.7
 lib/python2.6/test/
 lib/python2.6/test/185test.db
 lib/python2.6/test/README
+lib/python2.6/test/Sine-1000Hz-300ms.aif
 lib/python2.6/test/__init__.py
 lib/python2.6/test/__init__.pyc
 lib/python2.6/test/__init__.pyo
@@ -295,6 +296,9 @@ lib/python2.6/test/test_abstract_numbers.pyo
 lib/python2.6/test/test_aepack.py
 lib/python2.6/test/test_aepack.pyc
 lib/python2.6/test/test_aepack.pyo
+lib/python2.6/test/test_aifc.py
+lib/python2.6/test/test_aifc.pyc
+lib/python2.6/test/test_aifc.pyo
 lib/python2.6/test/test_al.py
 lib/python2.6/test/test_al.pyc
 lib/python2.6/test/test_al.pyo
@@ -678,6 +682,9 @@ lib/python2.6/test/test_future3.pyo
 lib/python2.6/test/test_future4.py
 lib/python2.6/test/test_future4.pyc
 lib/python2.6/test/test_future4.pyo
+lib/python2.6/test/test_future5.py
+lib/python2.6/test/test_future5.pyc
+lib/python2.6/test/test_future5.pyo
 lib/python2.6/test/test_future_builtins.py
 lib/python2.6/test/test_future_builtins.pyc
 lib/python2.6/test/test_future_builtins.pyo
@@ -813,6 +820,9 @@ lib/python2.6/test/test_largefile.pyo
 lib/python2.6/test/test_lib2to3.py
 lib/python2.6/test/test_lib2to3.pyc
 lib/python2.6/test/test_lib2to3.pyo
+lib/python2.6/test/test_linecache.py
+lib/python2.6/test/test_linecache.pyc
+lib/python2.6/test/test_linecache.pyo
 lib/python2.6/test/test_linuxaudiodev.py
 lib/python2.6/test/test_linuxaudiodev.pyc
 lib/python2.6/test/test_linuxaudiodev.pyo
@@ -1110,6 +1120,9 @@ lib/python2.6/test/test_slice.pyo
 lib/python2.6/test/test_smtplib.py
 lib/python2.6/test/test_smtplib.pyc
 lib/python2.6/test/test_smtplib.pyo
+lib/python2.6/test/test_smtpnet.py
+lib/python2.6/test/test_smtpnet.pyc
+lib/python2.6/test/test_smtpnet.pyo
 lib/python2.6/test/test_socket.py
 lib/python2.6/test/test_socket.pyc
 lib/python2.6/test/test_socket.pyo
@@ -1359,6 +1372,9 @@ lib/python2.6/test/test_zipfile64.pyo
 lib/python2.6/test/test_zipimport.py
 lib/python2.6/test/test_zipimport.pyc
 lib/python2.6/test/test_zipimport.pyo
+lib/python2.6/test/test_zipimport_support.py
+lib/python2.6/test/test_zipimport_support.pyc
+lib/python2.6/test/test_zipimport_support.pyo
 lib/python2.6/test/test_zlib.py
 lib/python2.6/test/test_zlib.pyc
 lib/python2.6/test/test_zlib.pyo
@@ -1389,3 +1405,4 @@ lib/python2.6/test/wrongcert.pem
 lib/python2.6/test/xmltests.py
 lib/python2.6/test/xmltests.pyc
 lib/python2.6/test/xmltests.pyo
+lib/python2.6/test/zipdir.zip

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2007/09/15 23:54:18 merdely Exp $
+# $OpenBSD: Makefile,v 1.11 2009/05/26 14:08:22 benoit Exp $
 # $FreeBSD: ports/misc/ytree/Makefile,v 1.10 2000/04/30 20:15:23 steve Exp $
 
 COMMENT=	DOS-XTREE(tm) look-a-like file manager
 
-DISTNAME=	ytree-1.89
+DISTNAME=	ytree-1.92
 CATEGORIES=	misc
 
 HOMEPAGE=	http://www.han.de/~werner/ytree.html
@@ -12,18 +12,20 @@ MAINTAINER=	William Yodlowsky <bsd@openbsd.rutgers.edu>
 
 MASTER_SITES=	http://www.han.de/~werner/
 
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c curses readline
+
+WANTLIB=	c curses readline
 
 ALL_TARGET=	ytree
 
 NO_REGRESS=	Yes
 
 CFLAGS+=	-DCOLOR_SUPPORT -DREADLINE_SUPPORT
-LDFLAGS+=	-lcompat -lcurses -lreadline
+LDFLAGS+=	-lcompat -lreadline -lcurses
 MAKE_FLAGS+=	CC=${CC} CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}"
 
 do-install:

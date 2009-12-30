@@ -1,13 +1,15 @@
-# $OpenBSD: Makefile,v 1.23 2008/04/25 22:39:33 miod Exp $
+# $OpenBSD: Makefile,v 1.25 2009/08/26 00:15:26 sthen Exp $
 
 COMMENT=	win land without colliding with 'flyers' and 'eaters'
 
 DISTNAME=	xonix-1.4
-PKGNAME=	${DISTNAME}p4
+PKGNAME=	${DISTNAME}p6
 CATEGORIES=	games
 
-MASTER_SITES=	ftp://ftp.interface-business.de/pub/outgoing/
+MASTER_SITES=	ftp://ftp.interface-business.de/pub/outgoing/ \
+		http://spacehopper.org/mirrors/
 
+# BSD
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

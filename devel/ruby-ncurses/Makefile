@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2008/07/04 19:57:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.22 2009/08/10 15:27:13 msf Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		Ruby interface to ncurses
 
 VERSION=		1.1
 DISTNAME=		ncurses-ruby-${VERSION}
-PKGNAME=		ruby-ncurses-${VERSION}p2
+PKGNAME=		ruby-ncurses-${VERSION}p4
 CATEGORIES=		devel
 
 HOMEPAGE=		http://ncurses-ruby.berlios.de/
@@ -23,7 +23,7 @@ EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		lang/ruby
 
-LIB_DEPENDS=		ruby.>=1.84::lang/ruby
+LIB_DEPENDS=		${MODRUBY_LIB_DEPENDS}
 
 CONFIGURE_STYLE=	ruby extconf
 

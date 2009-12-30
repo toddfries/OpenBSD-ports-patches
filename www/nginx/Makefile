@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.9 2008/09/01 15:47:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2009/11/23 04:35:11 william Exp $
 
 COMMENT=	robust and small HTTP server and mail proxy server
 
-DISTNAME=	nginx-0.6.32
+DISTNAME=	nginx-0.7.64
 CATEGORIES=	www
 
 HOMEPAGE=	http://nginx.net/
 
-MAINTAINER=	Darrin Chandler <dwchandler@stilyagin.com>
+MAINTAINER=	William Yodlowsky <bsd@openbsd.rutgers.edu>
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
@@ -40,17 +40,24 @@ CONFIGURE_ARGS=		--prefix=${SYSCONFDIR}/nginx \
 			--with-http_ssl_module \
 			--with-http_stub_status_module \
 			--with-mail \
-			--with-mail_ssl_module
+			--with-mail_ssl_module \
+			--with-ipv6
 
-# Get rid of '#include <malloc.h>' which caused many warnings
-CONFIGURE_ARGS+=	--with-cc-opt="-DNGX_HAVE_MALLOC_H=0"
+FLAVORS=               passenger
+FLAVOR?=
+
+.if ${FLAVOR:L:Mpassenger}
+CONFIGURE_ARGS +=      --add-module=${LOCALBASE}/lib/phusion_passenger/ext/nginx
+BUILD_DEPENDS +=       ::www/ruby-passenger
+RUN_DEPENDS +=         ::www/ruby-passenger
+WANTLIB +=             m pthread stdc++
+.endif
 
 NO_REGRESS=		Yes
 ALL_TARGET=
 
 pre-configure:
-	@perl -pi -e 's,!!NGINX_DIR!!,${NGINX_DIR},' \
-		${WRKBUILD}/conf/nginx.conf
+	@${SUBST_CMD} ${WRKBUILD}/conf/nginx.conf
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/nginx/

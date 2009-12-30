@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.68 2008/06/15 00:06:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.73 2009/12/22 15:08:35 ajacoutot Exp $
 
 COMMENT=	free cross-platform WYSIWYG word processor
 
-VERSION=	2.4.6
+VERSION=	2.6.8
 MAJORVER=	${VERSION:C/..$//}
 DISTNAME=	abiword-${VERSION}
-PKGNAME=	${DISTNAME}p5
+PKGNAME=	${DISTNAME}p0
+
 CATEGORIES=	editors
 
 HOMEPAGE=	http://www.abisource.com/
@@ -15,22 +16,24 @@ MODULES=	devel/gettext
 RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS=	fribidi::devel/fribidi \
 		popt::devel/popt \
-		gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
-		gnomeprintui-2-2::x11/gnome/libgnomeprintui
+		gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0,gailutil::x11/gtk+2 \
+		gnomeprintui-2-2::x11/gnome/libgnomeprintui \
+		wmf.>=8,wmflite,wv::converters/wv \
+		enchant.>=5::textproc/enchant
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xext Xft Xrender art_lgpl_2 atk-1.0 c Xrandr \
-		Xau Xcomposite Xcursor Xdamage Xdmcp Xfixes Xi Xinerama \
-		expat fontconfig freetype gailutil glade-2.0 glib-2.0 \
-		gmodule-2.0 gnomecanvas-2 gnomeprint-2-2 gobject-2.0 glitz \
-		gthread-2.0 m pango-1.0 pangocairo-1.0 cairo \
-		pangoft2-1.0 pangoxft-1.0 pixman-1 png pthread stdc++ \
-		xml2.>=9 z
+WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+WANTLIB += Xfixes Xft Xi Xinerama Xrandr Xrender art_lgpl_2 atk-1.0
+WANTLIB += c cairo expat fontconfig freetype gio-2.0 glade-2.0
+WANTLIB += glib-2.0 glitz gmodule-2.0 gnomecanvas-2 gnomeprint-2-2
+WANTLIB += gobject-2.0 gthread-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pangoxft-1.0 pixman-1 png pthread stdc++
+WANTLIB += xml2 z pthread-stubs xcb gio-2.0 gsf-1 jpeg
 
 MASTER_SITES=   ${HOMEPAGE}/downloads/abiword/${VERSION}/source/
 
@@ -38,7 +41,8 @@ USE_GMAKE=	Yes
 USE_X11=	Yes
 
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS=	--disable-gucharmap --disable-enchant --without-pspell
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--enable-printing
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -DMAXSTRINGCHARS=512" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
@@ -47,30 +51,23 @@ FLAVOR?=
 
 .if ${FLAVOR:L:Mgnome}
 LIB_DEPENDS+=	gnomeui-2::x11/gnome/libgnomeui \
-		ORBit-2::devel/ORBit2
+		gsf-gnome-1.>=114:libgsf-gnome-*:devel/libgsf,-gnome
 WANTLIB+=	ORBit-2 bonobo-2 bonobo-activation bonoboui-2 \
-		gconf-2 gnome-2 gnomeui-2 gnomevfs-2 
-CONFIGURE_ARGS+= --enable-gnome
+		gconf-2 gnome-2 gnomeui-2 gnomevfs-2 dbus-1 gnome-keyring
+CONFIGURE_ARGS+= --enable-gnomevfs \
+		--enable-gnomeui \
+		--enable-gucharmap
+.else
+CONFIGURE_ARGS+= --disable-gnomevfs \
+		--disable-gnomeui \
+		--disable-gucharmap
 .endif
 
 MAKE_FILE=	GNUmakefile
-
-WRKDIST=	${WRKDIR}/abiword-${VERSION}
-WRKSRC=		${WRKDIST}/abi
 
 SUBST_VARS=	MAJORVER
 
 pre-configure:
 	@perl -pi -e "s|libpng12|libpng|g" ${WRKSRC}/configure
-
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/abiword/Manual
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/abiword/Tutorials
-	${INSTALL_MAN} ${WRKDIST}/abiword-docs/man/abiword.1 \
-	    ${PREFIX}/man/man1
-	${INSTALL_DATA} ${WRKDIST}/abiword-docs/Manual/en/Abiword_Manual.abw \
-	    ${PREFIX}/share/doc/abiword/Manual
-	cd ${WRKDIST}/abiword-docs/Tutorials && tar cf - jmp klw | \
-	    tar xf - -C ${PREFIX}/share/doc/abiword/Tutorials
 
 .include <bsd.port.mk>

@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile.inc,v 1.1 2008/03/20 11:42:34 winiger Exp $
+# $OpenBSD: Makefile.inc,v 1.3 2009/09/15 17:37:22 jasper Exp $
 
 COMMENT=	content management system built on top of Zope
 
 CATEGORIES=	www
 
 HOMEPAGE=	http://www.plone.org/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -20,5 +18,4 @@ MODULES=		www/zope
 MODZOPE_VERSION?=	2.9
 PY_FLAVOR=		python${MODZOPE_PYTHON_VERSION}
 
-RUN_DEPENDS+=	:python-expat-${MODZOPE_PYTHON_VERSION}*:lang/python/${MODZOPE_PYTHON_VERSION},-expat \
-		:py-Imaging-*-${PY_FLAVOR}:graphics/py-Imaging,${PY_FLAVOR}
+RUN_DEPENDS+=	:py-Imaging-*-${PY_FLAVOR}:graphics/py-Imaging,${PY_FLAVOR}

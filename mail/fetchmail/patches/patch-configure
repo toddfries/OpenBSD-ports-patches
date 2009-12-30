@@ -1,45 +1,21 @@
-$OpenBSD: patch-configure,v 1.12 2007/04/13 13:22:25 bernd Exp $
---- configure.orig	Fri Apr  6 20:41:49 2007
-+++ configure	Sun Apr  8 10:04:06 2007
-@@ -8535,7 +8535,7 @@ _ACEOF
+$OpenBSD: patch-configure,v 1.14 2009/10/11 20:52:17 sthen Exp $
+--- configure.orig	Sun Oct 11 20:56:53 2009
++++ configure	Sun Oct 11 22:37:47 2009
+@@ -8275,7 +8275,7 @@ $as_echo "$ac_try_echo") >&5
+ 	 test "$cross_compiling" = yes ||
+ 	 $as_test_x conftest$ac_exeext
+        }; then
+-  LIBINTL="$LIBINTL $LIBICONV"
++  LIBINTL="$LTLIBINTL $LTLIBICONV"
+                 LTLIBINTL="$LTLIBINTL $LTLIBICONV"
+                 gt_cv_func_gnugettext2_libintl=yes
  
- 
- 
--    INTLLIBS="$LIBINTL"
-+    INTLLIBS="$LTLIBINTL"
- 
- 
- 
-@@ -13251,7 +13251,7 @@ cat >>confdefs.h <<\_ACEOF
+@@ -12561,7 +12561,7 @@ cat >>confdefs.h <<\_ACEOF
  _ACEOF
  
-   CEFLAGS="$CEFLAGS -I/usr/include/kerberosV"
+   CFLAGS="$CFLAGS -I/usr/include/kerberosV"
 -  LIBS="$LIBS -lasn1 -lkrb5 -lcom_err -lkafs"
 +  LIBS="$LIBS -lkrb5"
  elif krb5-config 2> /dev/null >/dev/null ; then
    krb5_prefix=`krb5-config --prefix krb5`
-   { echo "$as_me:$LINENO: result: krb5-config points to kerberosV under $krb5_prefix" >&5
-@@ -16962,8 +16962,8 @@ pythondir!$pythondir$ac_delim
- pkgpythondir!$pkgpythondir$ac_delim
- pyexecdir!$pyexecdir$ac_delim
- pkgpyexecdir!$pkgpyexecdir$ac_delim
--HAVE_PYTHON_TRUE!$HAVE_PYTHON_TRUE$ac_delim
--HAVE_PYTHON_FALSE!$HAVE_PYTHON_FALSE$ac_delim
-+HAVE_PYTHON_TRUE!#$ac_delim
-+HAVE_PYTHON_FALSE!#$ac_delim
- CC!$CC$ac_delim
- CFLAGS!$CFLAGS$ac_delim
- LDFLAGS!$LDFLAGS$ac_delim
-@@ -17037,10 +17037,10 @@ GMSGFMT!$GMSGFMT$ac_delim
- XGETTEXT!$XGETTEXT$ac_delim
- MSGMERGE!$MSGMERGE$ac_delim
- INTL_MACOSX_LIBS!$INTL_MACOSX_LIBS$ac_delim
--LIBICONV!$LIBICONV$ac_delim
-+LIBICONV!$LTLIBICONV$ac_delim
- LTLIBICONV!$LTLIBICONV$ac_delim
- INTLLIBS!$INTLLIBS$ac_delim
--LIBINTL!$LIBINTL$ac_delim
-+LIBINTL!$LTLIBINTL$ac_delim
- LTLIBINTL!$LTLIBINTL$ac_delim
- POSUB!$POSUB$ac_delim
- LIBOBJS!$LIBOBJS$ac_delim
+   { $as_echo "$as_me:$LINENO: result: krb5-config points to kerberosV under $krb5_prefix" >&5

@@ -1,22 +1,29 @@
-# $OpenBSD: Makefile,v 1.14 2008/06/29 20:44:51 sthen Exp $
+# $OpenBSD: Makefile,v 1.36 2009/12/22 16:06:40 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	document viewer for multiple document formats
 COMMENT-djvu=	evince document viewer backend for djvu documents
 COMMENT-dvi=	evince document viewer backend for dvi documents
+COMMENT-nautilus= evince plugin for nautilus
 
-V=		2.22.1.1
-DISTNAME=	evince-${V}
+GNOME_PROJECT=	evince
+GNOME_VERSION=	2.28.2
+
 CATEGORIES=	graphics print
 
-PKGNAME-main=	${DISTNAME}p1
-PKGNAME-djvu=	evince-djvu-${V}p0
-PKGNAME-dvi=	evince-dvi-${V}p0
+PKGNAME-main=	${DISTNAME}p0
+PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
+PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
+PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
-SHARED_LIBS=	evbackend	0.0 # .0.0
+SHARED_LIBS +=  evdocument 0.0                   # .1.0
+SHARED_LIBS +=  evview     0.0                   # .1.0
 
 HOMEPAGE=	http://www.gnome.org/projects/evince/
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_FTP=	Yes
@@ -24,68 +31,82 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 
-MASTER_SITES=	${MASTER_SITE_GNOME:=sources/evince/${V:C,\.[0-9]\.[0-9]*$,,}/}
+MODULES=	devel/gettext \
+		x11/gnome \
+		devel/gconf2
 
-MODULES=	devel/gettext textproc/intltool
+BUILD_DEPENDS=	::x11/gnome/icon-theme
 
-BUILD_DEPENDS=	:gnome-doc-utils-*:x11/gnome/doc-utils \
+MULTI_PACKAGES=	-main -djvu -dvi -nautilus
+
+WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
+WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += glitz gmodule-2.0 gobject-2.0 gtk-x11-2.0 m pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs
+WANTLIB += xcb z
+
+WANTLIB-main=	${WANTLIB} ICE ORBit-2 SM c dbus-1 dbus-glib-1 \
+		gnome-keyring gs gthread-2.0 \
+		jpeg pthread tiff xml2 lcms
+LIB_DEPENDS-main= poppler.>=3,poppler-glib.>=3::print/poppler \
+		spectre::print/libspectre \
+		gnome-keyring::x11/gnome/keyring \
+		${MODGCONF2_LIB_DEPENDS} \
+		${MODGETTEXT_LIB_DEPENDS}
+RUN_DEPENDS-main= ${RUN_DEPENDS} \
+		:shared-mime-info-*:misc/shared-mime-info \
 		:ghostscript-*:print/ghostscript/gnu \
 		::x11/gnome/icon-theme
 
-MULTI_PACKAGES=	-main -djvu -dvi
+WANTLIB-djvu=	${WANTLIB} jpeg
+# port-lib-depends-check misses these ones because the depending lib
+# is under lib/evince/1/backends/
+LIB_DEPENDS-djvu= ${MODGETTEXT_LIB_DEPENDS} \
+		evdocument::${BASE_PKGPATH} \
+		djvulibre.>=21::graphics/djvulibre
+RUN_DEPENDS-djvu= ${MODGCONF2_RUN_DEPENDS}
 
-WANTLIB=	ORBit-2 ORBitCosNaming-2 X11 Xau Xcomposite \
-		Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr \
-		Xrender atk-1.0 audiofile bonobo-2 \
-		bonobo-activation cairo crypto dbus-1 dbus-glib-1 \
-		esd expat fontconfig freetype gconf-2 gdk-x11-2.0 \
-		gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 \
-		gnome-2 gnomevfs-2 gobject-2.0 \
-		gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 png popt ssl util xml2 z
+WANTLIB-dvi=	${WANTLIB} gs
+# port-lib-depends-check misses these ones because the depending lib
+# is under lib/evince/1/backends/
+LIB_DEPENDS-dvi= ${MODGETTEXT_LIB_DEPENDS} \
+		evdocument::${BASE_PKGPATH} \
+		kpathsea.>=1::print/texlive/base \
+		spectre::print/libspectre
+RUN_DEPENDS-dvi= ${MODGCONF2_RUN_DEPENDS}
 
-WANTLIB-main=		${WANTLIB} ICE SM art_lgpl_2 bonoboui-2 c gailutil \
-			glade-2.0 gnome-keyring gnomecanvas-2 jpeg pthread \
-			tiff
-LIB_DEPENDS-main=	gnomeui-2.>=2000::x11/gnome/libgnomeui \
-			poppler.>=3,poppler-glib.>=3::print/poppler \
-			${MODGETTEXT_LIB_DEPENDS}
-RUN_DEPENDS-main=	:scrollkeeper-*:textproc/scrollkeeper \
-			:shared-mime-info-*:misc/shared-mime-info \
-			:ghostscript-*:print/ghostscript/gnu \
-			::x11/gnome/icon-theme \
-			:yelp-*:x11/gnome/yelp
+WANTLIB-nautilus= ${WANTLIB} gthread-2.0
+LIB_DEPENDS-nautilus= evdocument::${BASE_PKGPATH} \
+		${MODGETTEXT_LIB_DEPENDS} \
+		${MODLIBICONV_LIB_DEPENDS} \
+		nautilus-extension.>=2::x11/gnome/nautilus
+RUN_DEPENDS-nautilus=
 
-WANTLIB-djvu=		${WANTLIB} jpeg
-LIB_DEPENDS-djvu=	evbackend::${BASE_PKGPATH} \
-			djvulibre::graphics/djvulibre \
-			${MODGETTEXT_LIB_DEPENDS}
+USE_X11=	Yes
+MODGNOME_HELP_FILES= Yes
+DESKTOP_FILES=	Yes
+MODGCONF2_SCHEMAS_DIR= evince
+MODGCONF2_LIBDEP= No
 
-WANTLIB-dvi=		${WANTLIB}
-LIB_DEPENDS-dvi=	evbackend::${BASE_PKGPATH} \
-			kpathsea::print/texlive/base \
-			${MODGETTEXT_LIB_DEPENDS}
+LIBTOOL_FLAGS=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--disable-comics \
+CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
+		--disable-static \
+		--disable-comics \
 		--disable-impress \
-		--disable-nautilus \
-		--disable-schemas-install \
+		--enable-nautilus \
 		--disable-scrollkeeper \
 		--enable-djvu \
 		--enable-dvi \
-		--enable-pixbuf \
-		--with-gconf-schema-file-dir=${LOCALBASE}/share/schemas/evince/
+		--enable-pixbuf
+
+# needs recent py-gobject
+CONFIGURE_ARGS+= --enable-introspection=no
+
 CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-
-
-USE_LIBTOOL=	Yes
-USE_X11=	Yes
-USE_GMAKE=	Yes
-
-post-patch:
-	@ln -s /usr/bin/true ${WRKDIR}/bin/scrollkeeper-update
 
 .include <bsd.port.mk>

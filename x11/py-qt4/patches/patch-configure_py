@@ -1,11 +1,11 @@
-$OpenBSD: patch-configure_py,v 1.1.1.1 2008/01/15 13:25:23 ajacoutot Exp $
---- configure.py.orig	Mon Jan 14 13:53:23 2008
-+++ configure.py	Mon Jan 14 13:54:59 2008
-@@ -1328,7 +1328,7 @@ def check_license():
+$OpenBSD: patch-configure_py,v 1.3 2009/09/05 16:18:43 sthen Exp $
+--- configure.py.orig	Thu Sep  3 23:05:04 2009
++++ configure.py	Thu Sep  3 23:05:47 2009
+@@ -1495,7 +1495,7 @@ Type 'no' to decline the terms of the license.
+             sys.stdout.flush()
  
-         while 1:
              try:
--                resp = raw_input("Do you accept the terms of the license? ")
+-                resp = sys.stdin.readline()
 +                resp = "yes"
              except KeyboardInterrupt:
                  raise SystemExit

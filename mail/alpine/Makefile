@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2008/10/15 14:31:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2009/11/08 08:22:53 ajacoutot Exp $
 
 COMMENT-main=	UW e-mail client
 COMMENT-pico=	UW text editor
@@ -14,9 +14,9 @@ CATEGORIES=	mail news
 CATEGORIES-pico=editors
 CATEGORIES-pilot=sysutils
 
-PKGNAME-main=	alpine-${V}
-PKGNAME-pico=	pico-${PICO_V}
-PKGNAME-pilot=	pilot-${PILOT_V}p1
+PKGNAME-main=	alpine-${V}p0
+PKGNAME-pico=	pico-${PICO_V}p1
+PKGNAME-pilot=	pilot-${PILOT_V}p3
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -36,7 +36,7 @@ WANTLIB-main=	${WANTLIB} asn1 com_err crypto des gssapi kafs krb5 ssl
 MULTI_PACKAGES=	-main -pico -pilot
 
 MODULES=	devel/gettext
-BUILD_DEPENDS=	:c-client->=2007b-!plaintext:mail/imap-uw,-c-client \
+BUILD_DEPENDS=	:c-client->=2007b:mail/imap-uw,-c-client \
 		:aspell-*:textproc/aspell/core
 RUN_DEPENDS=	:aspell-*:textproc/aspell/core
 

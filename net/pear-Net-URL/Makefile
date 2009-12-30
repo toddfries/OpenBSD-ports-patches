@@ -1,15 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2007/09/15 22:36:58 merdely Exp $
+# $OpenBSD: Makefile,v 1.7 2009/11/06 09:01:07 jasper Exp $
 
 COMMENT=	easy parsing of URLs for PHP
 
 DISTNAME=	Net_URL-1.0.14
-PKGNAME=	pear-${DISTNAME:S/_/-/}p1
-CATEGORIES=	net pear
+PKGNAME=	pear-${DISTNAME:S/_/-/}p2
+CATEGORIES=	net
 
-MASTER_SITES=	http://pear.php.net/get/
-EXTRACT_SUFX=	.tgz
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 MODULES=	www/pear
 
 # BSD License

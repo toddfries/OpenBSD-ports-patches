@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.42 2008/09/21 18:25:32 rui Exp $
+# $OpenBSD: Makefile,v 1.46 2009/12/19 22:34:58 sthen Exp $
 
 COMMENT=	extract, list, and test RAR archives
 
-DISTNAME=	unrarsrc-3.8.2
-PKGNAME=	unrar-3.82
+DISTNAME=	unrarsrc-3.9.7
+PKGNAME=	unrar-3.97
 CATEGORIES=	archivers
 
 HOMEPAGE=	http://www.rarlab.com/
@@ -25,11 +25,11 @@ MAKE_FILE=	makefile.unix
 MAKE_FLAGS=	CXX="${CXX}" CXXFLAGS="${CXXFLAGS}"
 
 # gcc 3.3.5 internal compiler error
-.if ${MACHINE_ARCH} == "mips64"
+.if ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "mips64"
 EXTRA_CFLAGS=	-O0
 .endif
 
-MAKE_FLAGS+=		EXTRA_CFLAGS=${EXTRA_CFLAGS}
+MAKE_FLAGS+=	EXTRA_CFLAGS=${EXTRA_CFLAGS}
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKBUILD}/unrar ${PREFIX}/bin

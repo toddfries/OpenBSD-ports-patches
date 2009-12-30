@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.9 2008/11/18 09:10:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2009/12/21 20:46:02 ajacoutot Exp $
 
 COMMENT=		terminal emulator for X
 
-DISTNAME=		roxterm-1.13.0
+DISTNAME=		roxterm-1.14.2
 CATEGORIES=		x11
+PKGNAME=		${DISTNAME}p1
 
 HOMEPAGE=		http://roxterm.sourceforge.net/
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=roxterm/}
 
-MAINTAINER=		Jona Joachim <jaj@hcl-club.lu>
+MAINTAINER=		Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -16,12 +17,12 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
-		Xfixes Xft Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
+WANTLIB = 	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
+		Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		dbus-1 expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
-		glib-2.0 glitz gmodule-2.0 gobject-2.0 gtk-x11-2.0 \
-		m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 pangox-1.0 \
-		pangoxft-1.0 pcre png pthread xml2 z pixman-1
+		gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 gtk-x11-2.0 \
+		m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 \
+		pcre pixman-1 png pthread xml2 z pthread-stubs xcb
 
 MODULES=		devel/gettext
 

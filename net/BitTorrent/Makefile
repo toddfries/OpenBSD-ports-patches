@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.27 2007/10/08 08:22:41 steven Exp $
+# $OpenBSD: Makefile,v 1.29 2009/08/11 23:47:14 martynas Exp $
 
 COMMENT-main=	cooperative file distribution system implemented in Python
 COMMENT-gui=	graphical interface components for BitTorrent
 
 VERSION=	4.4.0
 DISTNAME=	BitTorrent-${VERSION}
-PKGNAME-main=	${DISTNAME}p4
-PKGNAME-gui=	BitTorrent-gui-${VERSION}p4
+PKGNAME-main=	${DISTNAME}p6
+PKGNAME-gui=	BitTorrent-gui-${VERSION}p6
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.bittorrent.com/

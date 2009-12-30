@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.209 2008/11/26 23:44:16 simon Exp $
+# $OpenBSD: Makefile,v 1.227 2009/12/17 14:15:31 benoit Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -21,9 +21,11 @@
      SUBDIR += cgichk
      SUBDIR += chrootuid
      SUBDIR += clamav
+     SUBDIR += clusterssh
      SUBDIR += cops
      SUBDIR += corkscrew
      SUBDIR += crack
+     SUBDIR += cracklib
      SUBDIR += crank
      SUBDIR += cryptcat
      SUBDIR += cryptokit
@@ -36,6 +38,7 @@
      SUBDIR += despoof
      SUBDIR += dsniff
      SUBDIR += dsniff,no_x11
+     SUBDIR += fcrackzip
      SUBDIR += fragroute
      SUBDIR += fragrouter
      SUBDIR += fwbuilder
@@ -57,6 +60,7 @@
      SUBDIR += keychain
      SUBDIR += klaxon
      SUBDIR += l0phtcrack
+     SUBDIR += libfprint
      SUBDIR += libfwbuilder
      SUBDIR += libgcrypt
      SUBDIR += libgpg-error
@@ -70,6 +74,7 @@
      SUBDIR += logsentry
      SUBDIR += logsurfer
      SUBDIR += luacrypto
+     SUBDIR += luasec
      SUBDIR += lxnb
      SUBDIR += mcrypt
      SUBDIR += mhash
@@ -83,6 +88,7 @@
      SUBDIR += opencdk
      SUBDIR += openct
      SUBDIR += opensc
+     SUBDIR += ophcrack
      SUBDIR += otpcalc
      SUBDIR += outguess
      SUBDIR += p0f
@@ -100,6 +106,7 @@
      SUBDIR += p5-Crypt-Blowfish
      SUBDIR += p5-Crypt-Blowfish_PP
      SUBDIR += p5-Crypt-CBC
+     SUBDIR += p5-Crypt-CipherSaber
      SUBDIR += p5-Crypt-DES
      SUBDIR += p5-Crypt-DES-EDE3
      SUBDIR += p5-Crypt-DH
@@ -117,15 +124,18 @@
      SUBDIR += p5-Crypt-Rijndael
      SUBDIR += p5-Crypt-SSLeay
      SUBDIR += p5-Crypt-SaltedHash
+     SUBDIR += p5-Crypt-Serpent
      SUBDIR += p5-Crypt-SmbHash
      SUBDIR += p5-Crypt-TripleDES
      SUBDIR += p5-Crypt-Twofish
      SUBDIR += p5-Digest-BubbleBabble
      SUBDIR += p5-Digest-HMAC
      SUBDIR += p5-Digest-MD2
+     SUBDIR += p5-Digest-MD4
      SUBDIR += p5-Digest-MD5-M4p
      SUBDIR += p5-Digest-Nilsimsa
      SUBDIR += p5-Digest-SHA1
+     SUBDIR += p5-Digest-Skein
      SUBDIR += p5-GPG
      SUBDIR += p5-GSSAPI
      SUBDIR += p5-GnuPG
@@ -141,6 +151,7 @@
      SUBDIR += parse
      SUBDIR += passwdqc
      SUBDIR += pcsc-lite
+     SUBDIR += pdfcrack
      SUBDIR += pear-Auth
      SUBDIR += pear-Auth-HTTP
      SUBDIR += pear-Auth-SASL
@@ -155,22 +166,27 @@
      SUBDIR += pwgen
      SUBDIR += pwsafe
      SUBDIR += py-Rijndael
+     SUBDIR += py-crack
      SUBDIR += py-cryptkit
      SUBDIR += py-crypto
      SUBDIR += py-gnupg
      SUBDIR += py-openssl
      SUBDIR += py-paramiko
+     SUBDIR += py-pykpass
      SUBDIR += py-sslwrapper
      SUBDIR += qca
      SUBDIR += qca-tls
      SUBDIR += radiusniff
      SUBDIR += rarcrack
      SUBDIR += rdp
+     SUBDIR += ruby-bcrypt
      SUBDIR += ruby-ezcrypto
      SUBDIR += ruby-openid
      SUBDIR += ruby-yadis
+     SUBDIR += samdump2
      SUBDIR += scanlogd
      SUBDIR += scanssh
+     SUBDIR += scrypt
      SUBDIR += sentinel
      SUBDIR += shash
      SUBDIR += shash,static
@@ -179,7 +195,7 @@
      SUBDIR += smbsniff
      SUBDIR += smtpscan
      SUBDIR += smurflog
-     SUBDIR += socks5
+     SUBDIR += ssh-askpass-fullscreen
      SUBDIR += stegdetect
      SUBDIR += steghide
      SUBDIR += stel

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2008/07/04 16:46:10 naddy Exp $
+# $OpenBSD: Makefile,v 1.7 2009/12/15 10:05:55 jasper Exp $
 
 BRANCH=		21.4
 VERSION=	19
-PKGNAME=	${DISTNAME}p6
+PKGNAME=	${DISTNAME}p10
 
 WANTLIB=	c m ncurses util
 
@@ -38,7 +38,7 @@ FLAVOR?=
 CONFIGURE_ARGS+=--without-x11
 .else
 USE_X11=	Yes
-WANTLIB+=	ICE SM X11 Xau Xaw Xext Xmu Xpm Xt z
+WANTLIB+=	ICE SM X11 Xau Xaw Xext Xmu Xpm Xt pthread-stubs xcb z
 
 CONFIGURE_ARGS+=--with-menubars=lucid \
 		--with-scrollbars=lucid \

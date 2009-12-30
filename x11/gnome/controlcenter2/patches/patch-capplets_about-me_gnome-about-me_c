@@ -1,30 +1,34 @@
-$OpenBSD: patch-capplets_about-me_gnome-about-me_c,v 1.2 2008/11/21 17:02:49 jasper Exp $
---- capplets/about-me/gnome-about-me.c.orig	Tue Nov 11 20:57:09 2008
-+++ capplets/about-me/gnome-about-me.c	Tue Nov 11 20:58:39 2008
-@@ -32,6 +32,7 @@
- #include <glade/glade.h>
- #include <pwd.h>
- #include <unistd.h>
-+#include <sys/types.h>
- #include <libebook/e-book.h>
+$OpenBSD: patch-capplets_about-me_gnome-about-me_c,v 1.4 2009/10/13 19:09:05 ajacoutot Exp $
+
+Spawn a gnome-terminal to allow users to change their passwords, as we cannot
+fork passwd(1) to the background.
+From Open Solaris' control-center-01-passwd-in-terminal.diff
+
+--- capplets/about-me/gnome-about-me.c.orig	Mon Aug 17 10:40:16 2009
++++ capplets/about-me/gnome-about-me.c	Tue Oct 13 19:25:22 2009
+@@ -820,7 +820,25 @@ about_me_passwd_clicked_cb (GtkWidget *button, GnomeAb
+ 	GtkBuilder *dialog;
  
- #include "e-image-chooser.h"
-@@ -330,12 +331,17 @@ static char *
- get_user_login (void)
- {
- 	char buf[LINE_MAX * 4];
--	struct passwd pwd, *err;
-+	struct passwd *pwd;
+ 	dialog = me->dialog;
++#if defined __OpenBSD__
++    /* Use gnome-terminal embedded passwd due to inability to fork passwd in
++     * the background.
++     */
++    {
++        GError  *error = NULL;
++        gchar   *command = NULL;
++
++        command = g_strdup_printf("gnome-terminal --window --title '%s' --hide-menubar -e /usr/bin/passwd",
++                                _("Change password") );
++
++        if ( command != NULL ) {
++            g_spawn_command_line_async( command, &error);
++            g_free(command);
++        }
++    }
++#else
+ 	gnome_about_me_password (GTK_WINDOW (WID ("about-me-dialog")));
++#endif
+ }
  
- 	int i;
- #if defined(__sun) && !defined(_POSIX_PTHREAD_SEMANTICS)
- 	i = getpwuid_r (getuid (), &pwd, buf, sizeof (buf));
- 	return (i != 0) ? g_strdup (pwd.pw_name) : NULL;
-+#elif __OpenBSD__
-+	pwd = getpwuid(getuid());
-+	if (pwd == NULL)
-+		return NULL;
-+	return g_strdup (pwd->pw_name);
- #else
- 	i = getpwuid_r (getuid (), &pwd, buf, sizeof (buf), &err);
- 	return ((i == 0) && (err == &pwd)) ? g_strdup (pwd.pw_name) : NULL;
+ static void

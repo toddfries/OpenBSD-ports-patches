@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.25 2007/10/08 08:22:42 steven Exp $
+# $OpenBSD: Makefile,v 1.28 2009/03/25 13:52:31 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Python interface to cURL library
 
-VERSION=	7.15.5.1
-DISTNAME=	pycurl-${VERSION}
-PKGNAME=	py-curl-${VERSION}p1
+MODPY_EGG_VERSION=	7.19.0
+DISTNAME=	pycurl-${MODPY_EGG_VERSION}
+PKGNAME=	py-curl-${MODPY_EGG_VERSION}p0
 CATEGORIES=    	net
 
 HOMEPAGE=	http://pycurl.sourceforge.net/
 
-# LGPL
+# dual: LGPL or MIT-like
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
@@ -23,7 +23,7 @@ MASTER_SITES=	${HOMEPAGE}download/ \
 
 MODULES=	lang/python
 
-LIB_DEPENDS=	curl.>=5::net/curl
+LIB_DEPENDS=	curl.>=12::net/curl
 
 do-regress: fake
 	@cd ${WRKSRC}/tests && ${MAKE_ENV} \

@@ -1,26 +1,31 @@
-# $OpenBSD: Makefile,v 1.4 2007/10/08 08:22:39 steven Exp $
+# $OpenBSD: Makefile,v 1.8 2009/12/08 11:22:56 benoit Exp $
 
-COMMENT=	ASN.1 library for Python
+COMMENT =	ASN.1 library for Python
 
-DISTNAME=	pyasn1-0.0.5a
-PKGNAME=	${DISTNAME:S/py/py-/}p0
-CATEGORIES=	devel
-PKG_ARCH=	*
+MODPY_EGG_VERSION =	0.0.10a
+DISTNAME =		pyasn1-${MODPY_EGG_VERSION}
+PKGNAME =		${DISTNAME:S/py/py-/}
+CATEGORIES =		devel
+PKG_ARCH =		*
 
-HOMEPAGE=	http://pyasn1.sourceforge.net/
+HOMEPAGE =		http://pyasn1.sourceforge.net/
+
+MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
 
 # BSD-style
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_DISTFILES_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
 
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pyasn1/}
+MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=pyasn1/}
 
-MODULES=	lang/python
+MODULES =		lang/python
 
-DOCSDIR=	${PREFIX}/share/doc/py-asn1
-EXAMPLESDIR=	${PREFIX}/share/examples/py-asn1
+MODPY_SETUPTOOLS =	Yes
+
+DOCSDIR =	${PREFIX}/share/doc/py-asn1
+EXAMPLESDIR =	${PREFIX}/share/examples/py-asn1
 
 post-install:
 	${INSTALL_DATA_DIR} ${DOCSDIR}

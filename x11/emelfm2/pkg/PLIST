@@ -1,8 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2008/10/30 19:32:32 landry Exp $
+@comment $OpenBSD: PLIST,v 1.5 2009/12/21 20:46:01 ajacoutot Exp $
 %%SHARED%%
 @bin bin/emelfm2
 lib/emelfm2/
-lib/emelfm2/plugins/
 @man man/man1/emelfm2.1
 share/application-registry/
 share/application-registry/emelfm2.applications
@@ -21,7 +20,11 @@ share/doc/emelfm2/SPEC
 share/doc/emelfm2/TODO
 share/doc/emelfm2/USAGE
 share/doc/emelfm2/WARNING
-share/doc/emelfm2/help.txt
+share/locale/de/LC_MESSAGES/emelfm2.mo
+share/locale/fr/LC_MESSAGES/emelfm2.mo
+share/locale/ja/LC_MESSAGES/emelfm2.mo
+share/locale/pl/LC_MESSAGES/emelfm2.mo
+share/locale/ru/LC_MESSAGES/emelfm2.mo
 share/pixmaps/
 share/pixmaps/emelfm2/
 share/pixmaps/emelfm2/add_mark_bottom_48.png
@@ -37,7 +40,7 @@ share/pixmaps/emelfm2/emelfm2_32.png
 share/pixmaps/emelfm2/emelfm2_48.png
 share/pixmaps/emelfm2/filter_48.png
 share/pixmaps/emelfm2/filter_off_48.png
-share/pixmaps/emelfm2/gtk-discard.svg
+share/pixmaps/emelfm2/gtk-discard_20.png
 share/pixmaps/emelfm2/hidden_noshow_48.png
 share/pixmaps/emelfm2/hidden_show_48.png
 share/pixmaps/emelfm2/mirror_horiz_48.png
@@ -64,6 +67,8 @@ share/pixmaps/emelfm2/plugin_glob_48.png
 share/pixmaps/emelfm2/plugin_move_48.png
 share/pixmaps/emelfm2/plugin_pack_48.png
 share/pixmaps/emelfm2/plugin_rename_48.png
+share/pixmaps/emelfm2/plugin_selmatch_48.png
+share/pixmaps/emelfm2/plugin_tag_48.png
 share/pixmaps/emelfm2/plugin_timeset_48.png
 share/pixmaps/emelfm2/plugin_unpack_48.png
 share/pixmaps/emelfm2/proceed_32.png
@@ -80,4 +85,4 @@ share/pixmaps/emelfm2/trash_48.png
 share/pixmaps/emelfm2/user_commands_48.png
 share/pixmaps/emelfm2/view_48.png
 @exec %D/bin/update-desktop-database
-@unexec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

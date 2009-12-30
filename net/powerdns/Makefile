@@ -1,27 +1,25 @@
-# $OpenBSD: Makefile,v 1.3 2008/10/28 15:21:49 naddy Exp $
+# $OpenBSD: Makefile,v 1.10 2009/06/23 22:59:57 sthen Exp $
+
+SHARED_ONLY=		Yes
 
 COMMENT-main=		modern authoritative nameserver
-COMMENT-mysql=		mysql database access emodule for powerdns
+COMMENT-mysql=		mysql database access module for powerdns
 COMMENT-pgsql=		pgsql database access module for powerdns
 COMMENT-sqlite=		sqlite database access module for powerdns
 COMMENT-sqlite3=	sqlite3 database access module for powerdns
+COMMENT-ldap=		ldap module for powerdns
 
-V=			2.9.21.1
+V=			2.9.22
 DISTNAME=		pdns-${V}
 PKGNAME=		powerdns-${V}
-PKGNAME-main=		powerdns-${V}p1
+PKGNAME-main=		powerdns-${V}
 PKGNAME-mysql=		powerdns-mysql-${V}
 PKGNAME-pgsql=		powerdns-pgsql-${V}
 PKGNAME-sqlite= 	powerdns-sqlite-${V}
 PKGNAME-sqlite3=	powerdns-sqlite3-${V}
+PKGNAME-ldap=		powerdns-ldap-${V}
 CATEGORIES=		net
 HOMEPAGE=		http://www.powerdns.com/
-
-SHARED_LIBS=		geobackend 	0.0 \
-			gmysqlbackend	0.0 \
-			gpgsqlbackend	0.0 \
-			gsqlite3backend	0.0 \
-			gsqlitebackend	0.0
 
 MULTI_PACKAGES=		-main
 
@@ -31,7 +29,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB-main=		c crypto m pthread ssl stdc++ z
+WANTLIB-main=		c m pthread stdc++ z
 
 MASTER_SITES=		http://downloads.powerdns.com/releases/
 
@@ -51,7 +49,8 @@ CONFIGURE_ARGS+=	--without-mysql
 MULTI_PACKAGES+=	-mysql
 CONFIGURE_ARGS+=	--with-mysql=${LOCALBASE}
 LIB_DEPENDS-mysql=	lib/mysql/mysqlclient.>=10::databases/mysql
-WANTLIB-mysql+= 	z
+RUN_DEPENDS-mysql=	:${FULLPKGNAME-main}:net/powerdns
+WANTLIB-mysql+= 	crypto m ssl z
 BACKENDS+=		gmysql
 .endif
 
@@ -62,7 +61,9 @@ CONFIGURE_ARGS+=	--without-pgsql
 MULTI_PACKAGES+=	-pgsql
 CONFIGURE_ARGS+=	--with-pgsql=${LOCALBASE} \
 			--with-pgsql-includes=${LOCALBASE}/include/postgresql
-LIB_DEPENDS-pgsql=	pq.>=2:postgresql-client-*:databases/postgresql
+LIB_DEPENDS-pgsql=	pq.>=2::databases/postgresql,-main
+RUN_DEPENDS-pgsql=	:${FULLPKGNAME-main}:net/powerdns
+WANTLIB-pgsql=		crypto ssl z
 BACKENDS+=		gpgsql
 .endif
 
@@ -74,6 +75,7 @@ MULTI_PACKAGES+=	-sqlite
 CONFIGURE_ARGS+=	--with-sqlite=${LOCALBASE} \
 			--with-sqlite-includes=${LOCALBASE}/include
 LIB_DEPENDS-sqlite=	sqlite.>=8::databases/sqlite
+RUN_DEPENDS-sqlite=	:${FULLPKGNAME-main}:net/powerdns
 WANTLIB-sqlite+=	z
 BACKENDS+=		gsqlite
 .endif
@@ -86,16 +88,37 @@ MULTI_PACKAGES+=	-sqlite3
 CONFIGURE_ARGS+=	--with-sqlite3=${LOCALBASE} \
 			--with-sqlite3-includes=${LOCALBASE}/include
 LIB_DEPENDS-sqlite3=	sqlite3.>=8::databases/sqlite3
+RUN_DEPENDS-sqlite3=	:${FULLPKGNAME-main}:net/powerdns
 WANTLIB-sqlite3+=	z
 BACKENDS+=		gsqlite3
 .endif
 
+# LDAP
+.if ${FLAVOR:L:Mno_ldap}
+CONFIGURE_ARGS+=	--without-ldap
+.else
+MULTI_PACKAGES+=	-ldap
+LIB_DEPENDS-ldap=	lber,ldap_r::databases/openldap
+RUN_DEPENDS-ldap=	:${FULLPKGNAME-main}:net/powerdns
+CONFIGURE_ARGS+=	--with-ldap=${LOCALBASE} \
+			--with-ldap-includes=${LOCALBASE}/include
+WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 sasl2 ssl z
+BACKENDS+=		ldap
+.endif
+
 USE_LIBTOOL=		Yes
 
-CONFIGURE_STYLE=	gnu
+BUILD_DEPENDS+=          ${MODGNU_AUTOCONF_DEPENDS}
+
+AUTOCONF_VERSION=	2.61
+
+CONFIGURE_STYLE=	gnu autoconf
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS+=	--with-dynmodules="${BACKENDS}" \
+CONFIGURE_ARGS+=	--enable-shared=no \
+			--libdir="${PREFIX}/lib/powerdns" \
+			--with-modules="geo" \
+			--with-dynmodules="${BACKENDS}" \
 			--disable-recursor # OpenBSD lacks ucontext.h, see PR 5099
 
 EXAMPLE_TABLES= 	tables-mysql.sql \
@@ -113,4 +136,4 @@ post-install:
 
 .include <bsd.port.mk>
 
-CONFIGURE_ARGS+=	--sysconfdir="${SYSCONFDIR}/pdns"
+CONFIGURE_ARGS+=	--sysconfdir="${SYSCONFDIR}/pdns" \

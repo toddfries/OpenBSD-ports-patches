@@ -1,15 +1,13 @@
-$OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
---- dovecot-example.conf.orig	Sun Nov 23 16:53:53 2008
-+++ dovecot-example.conf	Sun Nov 23 18:26:49 2008
-@@ -10,13 +10,12 @@
- # value inside quotes, eg.: key = "# char and trailing whitespace  "
- 
+$OpenBSD: patch-dovecot-example_conf,v 1.47 2009/05/19 08:10:56 sthen Exp $
+--- dovecot-example.conf.orig	Wed May 13 12:41:46 2009
++++ dovecot-example.conf	Mon May 18 05:51:18 2009
+@@ -12,12 +12,11 @@
  # Default values are shown for each setting, it's not required to uncomment
--# any of the lines. Exception to this are paths, they're just examples with
--# the real defaults being based on configure options. The paths listed here
--# are for configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
--# --with-ssldir=/etc/ssl
-+# any of the lines.
+ # those. These are exceptions to this though: No sections (e.g. namespace {})
+ # or plugin settings are added by default, they're listed only as examples.
+-# Paths are also just examples with the real defaults being based on configure
+-# options. The paths listed here are for configure --prefix=/usr
+-# --sysconfdir=/etc --localstatedir=/var --with-ssldir=/etc/ssl
  
 +# *** NOTE *** Some values HAVE been changed for OpenBSD use.
 +
@@ -19,7 +17,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
  
  # Protocols we want to be serving: imap imaps pop3 pop3s
  # If you only want to use dovecot-auth, you can set this to "none".
-@@ -38,13 +37,13 @@
+@@ -39,13 +38,13 @@
  #     listen = *:10100
  #     ..
  #   }
@@ -35,7 +33,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
  
  # Should all IMAP and POP3 processes be killed when Dovecot master process
  # shuts down. Setting this to "no" means that Dovecot can be upgraded without
-@@ -90,7 +89,7 @@
+@@ -92,7 +91,7 @@
  # dropping root privileges, so keep the key file unreadable by anyone but
  # root. Included doc/mkcert.sh can be used to easily generate self-signed
  # certificate, just make sure to update the domains in dovecot-openssl.cnf
@@ -44,7 +42,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
  #ssl_key_file = /etc/ssl/private/dovecot.pem
  
  # If key file is password protected, give the password here. Alternatively
-@@ -134,7 +133,7 @@
+@@ -136,7 +135,7 @@
  # which login needs to be able to connect to. The sockets are created when
  # running as root, so you don't have to worry about permissions. Note that
  # everything in this directory is deleted when Dovecot is started.
@@ -53,7 +51,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
  
  # chroot login process to the login_dir. Only reason not to do this is if you
  # wish to run the whole Dovecot without roots. <doc/wiki/Rootless.txt>
-@@ -144,7 +143,7 @@
+@@ -146,7 +145,7 @@
  # and don't use it anywhere else. The user must also belong to a group where
  # only it has access, it's used to control access for authentication process.
  # Note that this user is NOT used to access mails. <doc/wiki/UserIds.txt>
@@ -173,9 +171,9 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
 -  #sendmail_path = /usr/lib/sendmail
 +  #sendmail_path = /usr/sbin/sendmail
  
-   # Human readable error message for rejection mails. Use can use variables:
-   #  %n = CRLF, %r = reason, %s = subject, %t = recipient
-@@ -694,7 +694,7 @@ protocol lda {
+   # Subject: header to use for rejection mails. You can use the same variables
+   # as for rejection_reason below.
+@@ -698,7 +698,7 @@ protocol lda {
  ##
  
  # Executable location
@@ -184,7 +182,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
  
  # Set max. process size in megabytes.
  #auth_process_size = 256
-@@ -827,7 +827,7 @@ auth default {
+@@ -831,7 +831,7 @@ auth default {
    # database (passwd usually), you can use static userdb.
    # REMEMBER: You'll need /etc/pam.d/dovecot file created for PAM
    # authentication to actually work. <doc/wiki/PasswordDatabase.PAM.txt>
@@ -193,7 +191,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
      # [session=yes] [setcred=yes] [failure_show_msg=yes]
      # [cache_key=<key>] [<service name>]
      #
-@@ -856,7 +856,7 @@ auth default {
+@@ -860,7 +860,7 @@ auth default {
      #   args = session=yes %Ls
      #   args = cache_key=%u dovecot
      #args = dovecot
@@ -202,7 +200,7 @@ $OpenBSD: patch-dovecot-example_conf,v 1.44 2008/11/25 00:44:58 brad Exp $
  
    # System users (NSS, /etc/passwd, or similiar)
    # In many systems nowadays this uses Name Service Switch, which is
-@@ -876,10 +876,10 @@ auth default {
+@@ -880,10 +880,10 @@ auth default {
  
    # PAM-like authentication for OpenBSD.
    # <doc/wiki/PasswordDatabase.BSDAuth.txt>

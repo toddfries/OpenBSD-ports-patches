@@ -1,6 +1,6 @@
---- filter/source/pdf/impdialog.cxx.orig.port	Mon Oct 27 13:46:19 2008
-+++ filter/source/pdf/impdialog.cxx	Mon Oct 27 13:47:18 2008
-@@ -1454,8 +1454,8 @@
+--- filter/source/pdf/impdialog.cxx.orig.port	Mon Feb  2 16:38:56 2009
++++ filter/source/pdf/impdialog.cxx	Thu May  7 23:14:16 2009
+@@ -1436,8 +1436,8 @@ ImplErrorDialog::ImplErrorDialog( const std::set< vcl:
  
  {
      // load images

@@ -1,19 +1,21 @@
-# $OpenBSD: Makefile,v 1.2 2008/05/18 09:17:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2009/12/22 16:06:40 ajacoutot Exp $
 
 COMMENT =	simple and fast image viewer for X
 
-DISTNAME =	gpicview-0.1.9
-PKGNAME =	${DISTNAME}p0
+DISTNAME =	gpicview-0.2.1
+PKGNAME =	${DISTNAME}p1
 
 CATEGORIES =	graphics x11
 
-HOMEPAGE =	http://lxde.org/gpicview/
+MAINTAINER =	Stephan A. Rickauer <stephan@openbsd.org>
+
+HOMEPAGE =	http://lxde.org/
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
 WANTLIB += freetype glib-2.0 glitz gmodule-2.0 gobject-2.0 jpeg
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png
-WANTLIB += pthread z
+WANTLIB += gio-2.0 pthread pthread-stubs xcb z
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =		Yes
@@ -27,9 +29,14 @@ MODULES =	devel/gettext
 
 LIB_DEPENDS =	gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 RUN_DEPENDS =	:desktop-file-utils-*:devel/desktop-file-utils
+MODULES +=      textproc/intltool
 
+USE_GMAKE =	yes
 USE_X11 =	yes
 USE_LIBTOOL =	yes
+
+# regress tests in po dir are broken
+NO_REGRESS =	yes
 
 CONFIGURE_STYLE = gnu
 

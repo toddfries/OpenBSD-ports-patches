@@ -1,0 +1,172 @@
+$OpenBSD: patch-doc_manual_xml,v 1.6 2009/12/16 18:39:11 ajacoutot Exp $
+--- doc/manual.xml.orig	Tue Dec 15 16:07:43 2009
++++ doc/manual.xml	Wed Dec 16 18:33:53 2009
+@@ -783,9 +783,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default:
+ 			  <replaceable>/var/run/zarafa-dagent.pid</replaceable>
+@@ -1135,11 +1133,6 @@
+ 		  <replaceable>/path/to/server.cfg</replaceable>
+ 		</para>
+ 
+-		<para>You may also use the init.d scripts:</para>
+-		<para><command>/etc/init.d/zarafa-server</command>
+-		[<replaceable>start</replaceable>|
+-		<replaceable>stop</replaceable>|
+-		<replaceable>restart</replaceable>]</para>
+ 	  </refsection>
+ 
+ 	  <refsection>
+@@ -2733,9 +2726,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default:
+ 			  <replaceable>/var/run/zarafa-server.pid</replaceable>
+@@ -5134,13 +5125,8 @@
+ 		</para>
+ 
+ 		<para>The spooler process will keep running and watching the
+-		outgoing queue for new mail to send. You may also use the
+-		init.d scripts:</para>
+-
+-		<para><command>/etc/init.d/zarafa-spooler</command>
+-		[<replaceable>start</replaceable>|
+-		<replaceable>stop</replaceable>|
+-		<replaceable>restart</replaceable>]</para>
++		outgoing queue for new mail to send.
++		</para>
+ 	  </refsection>
+ 
+ 	  <refsection>
+@@ -5312,9 +5298,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default:
+ 			  <replaceable>/var/run/zarafa-spooler.pid</replaceable>
+@@ -5679,13 +5663,8 @@
+ 
+ 		<para><command>zarafa-gateway</command></para>
+ 
+-		<para>The gateway process will keep running. You may also use
+-		the init.d scripts:</para>
+-
+-		<para><command>/etc/init.d/zarafa-gateway</command>
+-		[<replaceable>start</replaceable>|
+-		<replaceable>stop</replaceable>|
+-		<replaceable>restart</replaceable>]</para>
++		<para>The gateway process will keep running.
++		</para>
+ 	  </refsection>
+ 
+ 	  <refsection>
+@@ -5897,9 +5876,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default:
+ 			  <replaceable>/var/run/zarafa-gateway.pid</replaceable>
+@@ -6245,14 +6222,8 @@
+ 
+ 		<para>The monitor checks user mailbox sizes. The monitor sends
+ 		a quota email when the warning quota limit is reached. When
+-		started, the program will keep running. You may also use the
+-		init.d scripts:
++		started, the program will keep running.
+ 		</para>
+-
+-		<para><command>/etc/init.d/zarafa-monitor</command>
+-		[<replaceable>start</replaceable>|
+-		<replaceable>stop</replaceable>|
+-		<replaceable>restart</replaceable>]</para>
+ 	  </refsection>
+ 
+ 	  <refsection>
+@@ -6395,9 +6366,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default value: /var/run/zarafa-monitor.pid
+ 			  </para>
+@@ -7649,13 +7618,8 @@
+ 
+ 		<para><command>zarafa-ical</command></para>
+ 
+-		<para>The iCal/CalDAV gateway process will keep running. You may also use
+-		the init.d scripts:</para>
+-
+-		<para><command>/etc/init.d/zarafa-ical</command>
+-		[<replaceable>start</replaceable>|
+-		<replaceable>stop</replaceable>|
+-		<replaceable>restart</replaceable>]</para>
++		<para>The iCal/CalDAV gateway process will keep running.
++		</para>
+ 	  </refsection>
+ 
+ 	  <refsection>
+@@ -7830,9 +7794,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default:
+ 			  <replaceable>/var/run/zarafa-ical.pid</replaceable>
+@@ -8136,13 +8098,8 @@
+ 
+ 		<para><command>zarafa-licensed</command></para>
+ 
+-		<para>The zarafa-licensed process will keep running. You may also use
+-		the init.d scripts:</para>
+-
+-		<para><command>/etc/init.d/zarafa-licensed</command>
+-		[<replaceable>start</replaceable>|
+-		<replaceable>stop</replaceable>|
+-		<replaceable>restart</replaceable>]</para>
++		<para>The zarafa-licensed process will keep running.
++		</para>
+ 	  </refsection>
+ 
+ 	  <refsection>
+@@ -8286,9 +8243,7 @@
+ 		  <varlistentry>
+ 			<term><option>pid_file</option></term>
+ 			<listitem>
+-			  <para>Write the process ID number to this file. This is
+-			  used by the init.d script to correctly stop/restart the
+-			  service.
++			  <para>Write the process ID number to this file.
+ 			  </para>
+ 			  <para>Default:
+ 			  <replaceable>/var/run/zarafa-licensed.pid</replaceable>

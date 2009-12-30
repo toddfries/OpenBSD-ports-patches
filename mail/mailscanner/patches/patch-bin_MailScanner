@@ -1,13 +1,13 @@
-$OpenBSD: patch-bin_MailScanner,v 1.5 2008/11/07 02:33:58 brad Exp $
---- bin/MailScanner.orig	Sat Nov  1 15:03:52 2008
-+++ bin/MailScanner	Thu Nov  6 20:24:55 2008
+$OpenBSD: patch-bin_MailScanner,v 1.9 2009/10/07 20:59:29 sthen Exp $
+--- bin/MailScanner.orig	Thu Aug 13 06:18:29 2009
++++ bin/MailScanner	Thu Aug 13 11:39:04 2009
 @@ -1,4 +1,4 @@
 -#!/usr/bin/perl -I/opt/MailScanner/lib
 +#!/usr/bin/perl -I%PREFIX%/lib/MailScanner
  #
  #   MailScanner - SMTP E-Mail Virus Scanner
  #   Copyright (C) 2002  Julian Field
-@@ -48,7 +48,7 @@ BEGIN {
+@@ -72,7 +72,7 @@ BEGIN {
    # of each element
    foreach $path (reverse @oldinc) {
      next unless $path =~ /\//;
@@ -16,7 +16,7 @@ $OpenBSD: patch-bin_MailScanner,v 1.5 2008/11/07 02:33:58 brad Exp $
      unshift @INC, $path;
    }
  
-@@ -179,8 +179,6 @@ if ($Versions) {
+@@ -209,8 +209,6 @@ if ($Versions) {
    my($module, $s, $v, $m);
  
    printf("Running on\n%s", `uname -a`);
@@ -25,19 +25,7 @@ $OpenBSD: patch-bin_MailScanner,v 1.5 2008/11/07 02:33:58 brad Exp $
    printf("This is Perl version %f (%vd)\n", $], $^V);
    print "\nThis is MailScanner version " . $MailScanner::Config::MailScannerVersion . "\n";
    print "Module versions are:\n";
-@@ -207,9 +205,10 @@ $Debug = 1 if $DebugSpamAssassin;
- 
- # Check version of MIME-tools against its requirements
- my $error = 0;
-+
- if ($MIME::Tools::VERSION > 5.420) {
-   # They have a new MIME-tools so must have new File::Temp
--  if ($IO::VERSION<1.23) {
-+  if ($IO::VERSION<1.22) {
-     print STDERR "\n\n**** ERROR: You must upgrade your perl IO module to at least\n**** ERROR: version 1.2301 or MailScanner will not work!\n\n";
-     $error = 1;
-   }
-@@ -250,7 +249,7 @@ if ($WantLintOnly || $WantLintLiteOnly) {
+@@ -280,7 +278,7 @@ if ($WantLintOnly || $WantLintLiteOnly) {
  # Find the mailscanner.conf file, with a default just in case.
  my $ConfFile = $ARGV[0];
  # Use the default if we couldn't find theirs. Will save a lot of grief.
@@ -45,13 +33,31 @@ $OpenBSD: patch-bin_MailScanner,v 1.5 2008/11/07 02:33:58 brad Exp $
 +$ConfFile = '%SYSCONFDIR%/MailScanner/MailScanner.conf' if $ConfFile eq "" ||
                                                         !(-f $ConfFile);
  
- # Check the MailScanner version number against what is in MailScanner.conf
-@@ -295,7 +294,7 @@ if (MailScanner::Config::QuickPeek($ConfFile, 'virussc
+ # Do they just want a dump of the processing-database table?
+@@ -335,7 +333,7 @@ if (MailScanner::Config::QuickPeek($ConfFile, 'virussc
  Currently you are using no virus scanners.
  This is probably not what you want.
  
 -In your /opt/MailScanner/etc/MailScanner.conf file, set
-+In your %SYSCONFDIR%/MailScanner.conf file, set
++In your %SYSCONFDIR%/MailScanner/MailScanner.conf file, set
      Virus Scanners = clamav
  Then download
      http://www.sng.ecs.soton.ac.uk/mailscanner/files/4/install-Clam-SA.tar.gz
+@@ -422,7 +420,7 @@ if ($WantLintOnly || $WantLintLiteOnly) {
+   }
+   my $cluid = MailScanner::Config::QuickPeek($ConfFile, 'runasuser');
+   my $clgid = MailScanner::Config::QuickPeek($ConfFile, 'runasgroup');
+-  my $clr = system("/opt/MailScanner/bin/mailscanner_create_locks \"$lockdir\" \"$cluid\" \"$clgid\"");
++  my $clr = system("%PREFIX%/bin/mailscanner_create_locks \"$lockdir\" \"$cluid\" \"$clgid\"");
+   print STDERR "Error: Attempt to create locks in $lockdir failed!\n"
+     if ($clr>>8) != 0;
+ 
+@@ -719,7 +717,7 @@ if ($locksdir eq "" || $locksdir =~ /tmp$/i) {
+   print STDERR "Please move your \"Lockfile Dir\" setting in MailScanner.conf.\n";
+   print STDERR "It should point outside /tmp, preferably /var/spool/MailScanner/incoming/Locks\n";
+ }
+-my $cl = system("/opt/MailScanner/bin/mailscanner_create_locks \"$locksdir\" \"$uname\" \"$gname\"");
++my $cl = system("%PREFIX%/bin/mailscanner_create_locks \"$locksdir\" \"$uname\" \"$gname\"");
+ print STDERR "Error: Attempt to create locks in $locksdir failed!\n"
+  if ($cl>>8) != 0;
+ 

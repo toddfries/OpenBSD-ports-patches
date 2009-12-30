@@ -1,10 +1,10 @@
-# $OpenBSD $
+# $OpenBSD: Makefile,v 1.3 2009/08/13 13:30:10 jasper Exp $
 
 COMMENT =	Python DB-API 2.0 compliant interface to PostgreSQL
 
 MODPY_EGG_VERSION = 2.5.1
 DISTNAME =	pyPgSQL-${MODPY_EGG_VERSION}
-PKGNAME =	py-pgsql-${MODPY_EGG_VERSION}
+PKGNAME =	py-pgsql-${MODPY_EGG_VERSION}p0
 CATEGORIES =	databases
 
 HOMEPAGE =	http://pypgsql.sourceforge.net/

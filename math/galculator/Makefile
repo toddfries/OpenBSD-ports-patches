@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.26 2008/06/29 20:44:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.31 2009/12/21 22:07:57 ajacoutot Exp $
 
 COMMENT=	GTK2-based scientific calculator
 
-DISTNAME=	galculator-1.3.1
+DISTNAME=	galculator-1.3.4
 PKGNAME=	${DISTNAME}p2
 CATEGORIES=	math
 HOMEPAGE=	http://galculator.sourceforge.net/
@@ -18,12 +18,13 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	X11 Xau Xcursor Xdmcp Xext Xfixes Xi Xinerama Xrandr \
 		Xcomposite Xdamage pcre \
 		Xrender atk-1.0 c expat fontconfig \
-		freetype gdk-x11-2.0 gdk_pixbuf-2.0 glib-2.0 \
+		freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
 		gmodule-2.0 gobject-2.0 gtk-x11-2.0 m \
 		pango-1.0 xml2 z pangocairo-1.0 cairo glitz png \
-		pangoft2-1.0 pixman-1
+		pangoft2-1.0 pixman-1 pthread-stubs xcb
 
-MODULES=	devel/gettext
+MODULES=	devel/gettext \
+		textproc/intltool
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=galculator/}
 EXTRACT_SUFX=	.tar.bz2

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.46 2008/11/11 09:05:09 jakob Exp $
+# $OpenBSD: Makefile,v 1.51 2009/08/18 21:59:10 jakob Exp $
 
 COMMENT=	authoritative-only name server daemon
 
-VERSION=	3.2.0
+VERSION=	3.2.3
 DISTNAME=	nsd-${VERSION}
+PKGNAME=	${DISTNAME}
 CATEGORIES=	net
 
 MASTER_SITES=	http://www.nlnetlabs.nl/downloads/nsd/
@@ -32,8 +33,12 @@ CONFIGURE_ARGS+=	--enable-bind8-stats \
 
 NO_REGRESS=	Yes
 
+DOCS=		README NSD-FOR-BIND-USERS
+
 post-install:
+	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/nsd
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/nsd
+	cd ${WRKSRC}/doc; ${INSTALL_DATA} ${DOCS} ${PREFIX}/share/doc/nsd
 	mv ${WRKINST}/${SYSCONFDIR}/nsd/nsd.conf.sample ${PREFIX}/share/examples/nsd/nsd.conf
 
 .include <bsd.port.mk>

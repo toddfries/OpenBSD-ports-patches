@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.52 2008/08/29 11:27:43 espie Exp $
+# $OpenBSD: Makefile,v 1.57 2009/12/21 20:46:01 ajacoutot Exp $
 
 COMMENT =		K Desktop Environment, addons
 CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdeaddons-${VERSION}
-PKGNAME =		${DISTNAME}
+PKGNAME =		${DISTNAME}p4
 MODKDE_VERSION =	3.5.8
+
+MODULES =	x11/kde devel/gettext
 
 RUN_DEPENDS +=	:desktop-file-utils-*:devel/desktop-file-utils
 LIB_DEPENDS = 	kdecore.>=6,kdnssd,knewstuff,DCOP,artskde,kabc,katepartinterfaces,kdefx,kdeprint,kdesu,kdeui,khtml,kio,kjs,kmediaplayer,kparts,kresources,ktexteditor,kutils,kwalletclient,vcard::x11/kde/libs3 \
@@ -16,7 +18,7 @@ LIB_DEPENDS = 	kdecore.>=6,kdnssd,knewstuff,DCOP,artskde,kabc,katepartinterfaces
 		kabinterfaces::x11/kde/pim3 \
 		gdk,gtk::x11/gtk+ \
 		xmms::audio/xmms \
-		lib/db4/db_cxx:db-4.*:databases/db/v4
+		lib/db4/db_cxx:db->=4,<5:databases/db/v4
 
 # XXX no version number on noatunarts
 #WANTLIB+=	noatunarts 
@@ -24,10 +26,10 @@ LIB_DEPENDS = 	kdecore.>=6,kdnssd,knewstuff,DCOP,artskde,kabc,katepartinterfaces
 SEPARATE_BUILD =	flavored
 
 WANTLIB =	ICE SM X11 Xext Xi Xrender art_lgpl_2 artsflow artsflow_idl \
-		audiofile c esd glib glib-2.0 gmodule gmodule-2.0 \
-		iconv intl jpeg kimproxy kmedia2_idl m mad mcop ogg \
-		ossaudio pcre pcreposix png pthread qtmcop soundserver_idl \
+		audiofile c glib glib-2.0 gmodule gmodule-2.0 \
+		jpeg kimproxy kmedia2_idl m mad mcop ogg \
+		pcre pcreposix png pthread qtmcop sndio soundserver_idl \
 		stdc++ usbhid util vorbis vorbisenc vorbisfile z \
-		gthread-2.0 idn Xau Xdmcp fam rpcsvc Xrandr
+		gthread-2.0 idn Xau Xdmcp fam rpcsvc Xrandr pthread-stubs xcb
 
 .include <bsd.port.mk>

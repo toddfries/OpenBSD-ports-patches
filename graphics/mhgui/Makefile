@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2007/09/15 20:09:42 simon Exp $
+# $OpenBSD: Makefile,v 1.7 2009/08/10 06:31:45 kili Exp $
 
 COMMENT=	GUI widget library used in MakeHuman
 
 DISTNAME=	mhgui-0.1
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p3
 SHARED_LIBS +=	mhgui 0.0			# .0.0
 CATEGORIES=	graphics
 
@@ -19,10 +19,11 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=makehuman/}
 
-WANTLIB=	GL GLU ICE SM X11 Xi Xmu Xau Xdmcp Xext Xt m z
+WANTLIB=	GL GLU ICE SM X11 Xau Xdmcp Xext Xi Xmu Xt Xxf86vm m \
+		pthread-stubs xcb z
 
 LIB_DEPENDS=	animorph::graphics/animorph \
-		glut.>=3:glut->=3.7p2:graphics/glut \
+		glut.>=4::graphics/freeglut \
 		png.>=5::graphics/png
 
 USE_X11=	Yes

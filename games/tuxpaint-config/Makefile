@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2008/10/16 17:00:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2009/12/17 17:11:00 ajacoutot Exp $
 
 COMMENT=	graphical tool to change Tux Paint's settings
 
-DISTNAME=	tuxpaint-config-0.0.11
+DISTNAME=	tuxpaint-config-0.0.12
 CATEGORIES=	games graphics
 
 HOMEPAGE=	http://www.tuxpaint.org/
@@ -17,7 +17,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tuxpaint/}
 
-WANTLIB=	X11 Xext c m stdc++ Xau Xdmcp
+WANTLIB=	X11 Xau Xdmcp Xext c m stdc++
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	fltk.>=6::x11/fltk \
@@ -25,8 +25,9 @@ LIB_DEPENDS=	fltk.>=6::x11/fltk \
 RUN_DEPENDS=	::games/tuxpaint
 
 USE_X11=	Yes
+USE_GMAKE=	Yes
 
-MAKE_ENV+=	SYSCONFDIR=${SYSCONFDIR}
+MAKE_ENV+=	SYSCONFDIR=${SYSCONFDIR} CXX=${CXX}
 
 NO_REGRESS=	Yes
 

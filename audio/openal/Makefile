@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2008/04/04 09:33:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2009/12/16 21:12:20 naddy Exp $
 
 COMMENT=	cross-platform 3D audio API
 
 DISTNAME=	openal-0.0.8
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p5
 CATEGORIES=	audio
 SHARED_LIBS +=  openal               1.0      # .0.0
 
@@ -16,16 +16,34 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		m
 
-MASTER_SITES=	http://www.openal.org/openal_webstf/downloads/
+MASTER_SITES=	http://openbsd.dead-parrot.de/distfiles/
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 
-CONFIGURE_STYLE=gnu
+AUTOCONF_VERSION=2.59
+AUTOMAKE_VERSION=1.9
+CONFIGURE_STYLE=autoconf automake
 CONFIGURE_ARGS=	--disable-vorbis \
 		--disable-arts \
 		--disable-mp3 \
 		--disable-esd \
 		--disable-sdl
+
+MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/admin/autotools
+
+post-extract:
+	@cp ${FILESDIR}/alc_backend_sndio.c ${WRKSRC}/src/backends/
+
+AUTO_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
+
+post-patch:
+	@echo "Running aclocal-${AUTOMAKE_VERSION} in ${WRKSRC}"
+	@cd ${WRKSRC}; ${AUTO_ENV} aclocal -I admin/autotools/m4
+
+pre-configure:
+	@echo "Running automake-${AUTOMAKE_VERSION} in ${WRKSRC}"
+	@cd ${WRKSRC}; ${AUTO_ENV} automake --foreign
 
 .include <bsd.port.mk>

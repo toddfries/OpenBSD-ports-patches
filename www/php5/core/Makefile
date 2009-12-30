@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.38 2008/08/21 15:51:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.53 2009/12/22 10:39:28 robert Exp $
 
 COMMENT-main=	server-side HTML-embedded scripting language
 COMMENT-fastcgi=stand-alone FastCGI version of PHP
 
 PKGNAME=	php5-core-${V}
-PKGNAME-main=	php5-core-${V}p0
+PKGNAME-main=	php5-core-${V}
 PKGNAME-fastcgi=php5-fastcgi-${V}
 
 DISTFILES=	php-${V}.tar.gz
@@ -25,9 +25,11 @@ CONFIGURE_ARGS+=--with-apxs=/usr/sbin/apxs \
 		--enable-ftp \
 		--with-pcre-regex \
 		--enable-sockets \
+		--enable-sysvmsg \
 		--enable-sysvsem \
 		--enable-sysvshm \
 		--enable-exif \
+		--enable-zend-multibyte \
 		--without-sqlite \
 		--without-pdo-sqlite \
 		--with-pear=${LOCALBASE}/share/php5 \
@@ -52,9 +54,6 @@ pre-fake:
 	${INSTALL_DATA_DIR} ${PREFIX}/${APACHE_MODULE_SUBDIR}
 INSTALL_TARGET= install-headers install-build install-programs
 DESTDIRNAME=	INSTALL_ROOT
-
-post-patch:
-	mv ${WRKDIR}/suhosin-${SUHOSIN_V} ${WRKSRC}/ext/suhosin
 
 pre-configure:
 	@perl -pi -e "s,OPENBSD_PEAR_ROOT,'${CHROOT_DIR}/pear',g" \

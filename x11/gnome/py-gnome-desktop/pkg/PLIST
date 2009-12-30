@@ -1,8 +1,10 @@
-@comment $OpenBSD: PLIST,v 1.2 2008/11/21 19:08:42 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.5 2009/10/13 11:13:12 ajacoutot Exp $
 lib/pkgconfig/gnome-python-desktop-2.0.pc
 lib/python${MODPY_VERSION}/site-packages/gtk-2.0/bugbuddy.py
 lib/python${MODPY_VERSION}/site-packages/gtk-2.0/bugbuddy.pyc
 lib/python${MODPY_VERSION}/site-packages/gtk-2.0/bugbuddy.pyo
+lib/python${MODPY_VERSION}/site-packages/gtk-2.0/evince.la
+lib/python${MODPY_VERSION}/site-packages/gtk-2.0/evince.so
 lib/python${MODPY_VERSION}/site-packages/gtk-2.0/evolution/
 lib/python${MODPY_VERSION}/site-packages/gtk-2.0/evolution/__init__.py
 lib/python${MODPY_VERSION}/site-packages/gtk-2.0/evolution/ebook.la
@@ -51,6 +53,12 @@ share/examples/py-gnome-desktop/applet/
 share/examples/py-gnome-desktop/applet/GNOME_PythonAppletSample.server
 share/examples/py-gnome-desktop/applet/README
 share/examples/py-gnome-desktop/applet/applet.py
+share/examples/py-gnome-desktop/braseroburn/
+share/examples/py-gnome-desktop/braseroburn/write-audio-video.py
+share/examples/py-gnome-desktop/braseroburn/write-data.py
+share/examples/py-gnome-desktop/braseroburn/write-image.py
+share/examples/py-gnome-desktop/braseromedia/
+share/examples/py-gnome-desktop/braseromedia/drive_selection.py
 share/examples/py-gnome-desktop/gnomeprint/
 share/examples/py-gnome-desktop/gnomeprint/README
 share/examples/py-gnome-desktop/gnomeprint/example_01.py
@@ -66,8 +74,8 @@ share/examples/py-gnome-desktop/gnomeprint/example_10.py
 share/examples/py-gnome-desktop/gnomeprint/example_11.py
 share/examples/py-gnome-desktop/gnomeprint/sample-image.png
 share/examples/py-gnome-desktop/gnomeprint/test-print.py
-@comment share/examples/py-gnome-desktop/gtksourceview
-@comment share/examples/py-gnome-desktop/gtksourceview/test-widget.py
+share/examples/py-gnome-desktop/gtksourceview/
+share/examples/py-gnome-desktop/gtksourceview/test-widget.py
 share/examples/py-gnome-desktop/keyring-async.py
 share/examples/py-gnome-desktop/keyring.py
 share/examples/py-gnome-desktop/mediaprofiles/
@@ -106,6 +114,7 @@ share/pygtk/2.0/defs/_gnomedesktop.defs
 share/pygtk/2.0/defs/applet.defs
 share/pygtk/2.0/defs/art.defs
 share/pygtk/2.0/defs/ebook.defs
+share/pygtk/2.0/defs/evince.defs
 share/pygtk/2.0/defs/gnomekeyring.defs
 share/pygtk/2.0/defs/mediaprofiles.defs
 share/pygtk/2.0/defs/metacity.defs

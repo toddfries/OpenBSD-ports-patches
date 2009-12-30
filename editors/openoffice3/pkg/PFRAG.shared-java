@@ -1,13 +1,11 @@
-@comment $OpenBSD: PFRAG.shared-java,v 1.1.1.1 2008/10/30 18:51:07 robert Exp $
-openoffice/program/javaloader.uno.so
-openoffice/program/javavm.uno.so
-openoffice/program/libhsqldb2.so
-openoffice/program/libjava_uno.so
-openoffice/program/libjdbc2.so
-openoffice/program/libjpipe.so
-openoffice/program/libjuh.so
-openoffice/program/libjuhx.so
-openoffice/program/libjvmaccessgcc3.so
-openoffice/program/libjvmfwk.so
-openoffice/program/libofficebean.so
-openoffice/program/sunjavaplugin.so
+@comment $OpenBSD: PFRAG.shared-java,v 1.6 2009/07/06 23:33:36 naddy Exp $
+openoffice.org/ure/lib/javaloader.uno.so
+openoffice.org/ure/lib/javavm.uno.so
+openoffice.org/ure/lib/libjava_uno.so
+openoffice.org/ure/lib/libjpipe.so
+openoffice.org/ure/lib/libjuh.so
+openoffice.org/ure/lib/libjuhx.so
+openoffice.org/ure/lib/sunjavaplugin.so
+openoffice.org/basis3.1/program/libhsqldb.so
+openoffice.org/basis3.1/program/libjdbc.so
+openoffice.org/basis3.1/program/libofficebean.so

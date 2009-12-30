@@ -1,0 +1,15 @@
+$OpenBSD: patch-lib_libfspot_Makefile_in,v 1.4 2009/11/04 18:17:58 ajacoutot Exp $
+
+Correct linking, from debian_libfspot-linkage.dpatch.
+
+--- lib/libfspot/Makefile.in.orig	Thu Oct 29 11:20:26 2009
++++ lib/libfspot/Makefile.in	Wed Nov  4 19:05:36 2009
+@@ -320,6 +320,8 @@ libfspot_la_SOURCES = \
+ 	f-utils.h
+ 
+ libfspot_la_LIBADD = \
++	-lX11						\
++	$(F_LIBS)					\
+ 	$(LCMS_LIBS)					\
+ 	$(EXIF_LIBS)					\
+ 	$(GIO_LIBS)					\

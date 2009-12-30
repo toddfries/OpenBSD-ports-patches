@@ -1,6 +1,6 @@
-$OpenBSD: patch-etc_snort_conf,v 1.2 2008/02/12 14:13:32 rui Exp $
---- etc/snort.conf.orig	Fri Sep  7 20:32:45 2007
-+++ etc/snort.conf	Mon Nov 19 22:23:57 2007
+$OpenBSD: patch-etc_snort_conf,v 1.4 2009/08/16 13:31:27 rui Exp $
+--- etc/snort.conf.orig	Wed Mar 11 14:22:03 2009
++++ etc/snort.conf	Wed Apr  8 12:47:17 2009
 @@ -78,7 +78,10 @@ var SNMP_SERVERS $HOME_NET
  # like this:
  #
@@ -19,8 +19,8 @@ $OpenBSD: patch-etc_snort_conf,v 1.2 2008/02/12 14:13:32 rui Exp $
  # such as:  c:\snort\rules
 -var RULE_PATH ../rules
 -var PREPROC_RULE_PATH ../preproc_rules
-+var RULE_PATH %%SYSCONFDIR%%/snort/rules
-+var PREPROC_RULE_PATH %%SYSCONFDIR%%/snort/preproc_rules
++var RULE_PATH ${SYSCONFDIR}/snort/rules
++var PREPROC_RULE_PATH ${SYSCONFDIR}/snort/preproc_rules
  
  # Configure the snort decoder
  # ============================

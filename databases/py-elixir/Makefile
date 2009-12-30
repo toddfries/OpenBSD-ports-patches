@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2008/08/30 02:24:32 fgsch Exp $
+# $OpenBSD: Makefile,v 1.4 2009/11/01 11:45:39 fgsch Exp $
 
 COMMENT =	declarative mapper for SQLAlchemy
 
-MODPY_EGG_VERSION =	0.6.1
+MODPY_EGG_VERSION =	0.7.0
 DISTNAME =	Elixir-${MODPY_EGG_VERSION}
 PKGNAME =	py-${DISTNAME:L}
 
@@ -16,7 +16,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =	http://pypi.python.org/packages/source/E/Elixir/
+MASTER_SITES =	${MASTER_SITE_PYPI:=E/Elixir/}
 
 MODULES =	lang/python
 MODPY_SETUPTOOLS =	Yes

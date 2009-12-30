@@ -1,12 +1,26 @@
-$OpenBSD: patch-jackd_engine_c,v 1.4 2008/06/28 05:49:30 jakemsr Exp $
---- jackd/engine.c.orig	Sun Jun 15 12:49:49 2008
-+++ jackd/engine.c	Sun Jun 15 12:55:19 2008
+$OpenBSD: patch-jackd_engine_c,v 1.7 2009/12/09 10:15:08 jakemsr Exp $
+--- jackd/engine.c.orig	Tue Dec  2 08:29:23 2008
++++ jackd/engine.c	Mon Dec  7 22:18:52 2009
 @@ -1383,7 +1383,7 @@ handle_external_client_request (jack_engine_t *engine,
  	if ((r = read (client->request_fd, &req, sizeof (req)))
  	    < (ssize_t) sizeof (req)) {
  		if (r == 0) {
 -#ifdef JACK_USE_MACH_THREADS
-+#if defined(JACK_USE_MACH_THREADS) || defined __OpenBSD__
++#if defined(JACK_USE_MACH_THREADS) || defined(__OpenBSD__)
  			/* poll is implemented using
  			   select (see the macosx/fakepoll
  			   code). When the socket is closed
+@@ -1561,9 +1561,13 @@ jack_server_thread (void *arg)
+ 			} else if (engine->pfd[i].revents & POLLIN) {
+ 
+ 				if (handle_external_client_request (engine, engine->pfd[i].fd)) {
++#if 0
+ 					jack_error ("could not handle external"
+ 						    " client request");
+ 					jack_engine_signal_problems (engine);
++#else
++					;
++#endif
+ 				}
+ 			}
+ 		}

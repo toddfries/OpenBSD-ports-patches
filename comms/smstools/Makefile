@@ -1,36 +1,42 @@
-# $OpenBSD: Makefile,v 1.6 2008/10/30 13:45:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2009/12/02 14:24:35 sthen Exp $
 
-COMMENT=		gateway to send and receive SMS through GSM mobile phones
+COMMENT =	gateway to send and receive SMS through GSM mobile phones
 
-DISTNAME=		smstools3-3.1.3
+DISTNAME =	smstools3-3.1.6
 
-CATEGORIES=		comms
+CATEGORIES =	comms
 
-HOMEPAGE=		http://smstools3.kekekasvi.com/
+HOMEPAGE =	http://smstools3.kekekasvi.com/
 
-MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
+MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB=		c
+WANTLIB =	c
 
-MASTER_SITES=		${HOMEPAGE}/packages/
+MASTER_SITES =	${HOMEPAGE}/packages/
 
-USE_GMAKE=		Yes
-NO_REGRESS=		Yes
-WRKDIST=		${WRKDIR}/smstools3
-WRKSRC= 		${WRKDIST}/src
+# some scripts use formail
+RUN_DEPENDS =	::mail/procmail
+LIB_DEPENDS =	mm::devel/mm
+
+USE_GMAKE =	Yes
+NO_REGRESS =	Yes
+WRKDIST =	${WRKDIR}/smstools3
+WRKSRC = 	${WRKDIST}/src
 
 # gcc 3.3.5 internal compiler error
 .if ${MACHINE_ARCH} == "mips64"
-EXTRA_CFLAGS=   -O0
+CFLAGS +=	-O0
 .endif
 
-MAKE_FLAGS+=		EXTRA_CFLAGS=${EXTRA_CFLAGS}
+EXTRA_CFLAGS +=	-I${LOCALBASE}/include -L${LOCALBASE}/lib
+
+MAKE_FLAGS +=	CFLAGS="${CFLAGS} -D NUMBER_OF_MODEMS=64 `mm-config --cflags`"
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/smsd ${PREFIX}/bin

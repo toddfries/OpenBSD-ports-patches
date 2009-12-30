@@ -1,0 +1,19 @@
+$OpenBSD: patch-common_platform_h,v 1.2 2009/10/20 22:34:26 ajacoutot Exp $
+--- common/platform.h.orig	Fri Oct  9 22:34:37 2009
++++ common/platform.h	Tue Oct 20 23:41:36 2009
+@@ -51,9 +51,15 @@
+ 
+   // We have to include this now in case select.h is included too soon.
+   // Increase our maximum amount of file descriptors to 8192
++#if OPENBSD
++  #include <sys/types.h>
++  #undef FD_SETSIZE
++  #define FD_SETSIZE 1024
++#else
+   #include <bits/types.h>
+   #undef __FD_SETSIZE
+   #define __FD_SETSIZE 8192
++#endif
+ 
+   #include "config.h"
+   #include "platform.linux.h"

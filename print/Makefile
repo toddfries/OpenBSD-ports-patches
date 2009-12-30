@@ -1,4 +1,4 @@
-#	$OpenBSD: Makefile,v 1.76 2008/10/28 13:01:31 kili Exp $
+#	$OpenBSD: Makefile,v 1.80 2009/05/19 13:48:34 ajacoutot Exp $
 
     SUBDIR += a2ps,a4
     SUBDIR += a2ps,letter
@@ -33,10 +33,10 @@
     SUBDIR += htmldoc
     SUBDIR += htmldoc,no_x11
     SUBDIR += ijs
-    SUBDIR += jadetex
     SUBDIR += l2a
     SUBDIR += latex-mk
     SUBDIR += libpaper
+    SUBDIR += libspectre
     SUBDIR += lilypond
     SUBDIR += lout
     SUBDIR += lss
@@ -54,10 +54,12 @@
     SUBDIR += ps2eps
     SUBDIR += pscal
     SUBDIR += psdim
-    SUBDIR += psutils
+    SUBDIR += psutils,a4
+    SUBDIR += psutils,letter
     SUBDIR += py-cups
     SUBDIR += py-reportlab
     SUBDIR += scribus
+    SUBDIR += splix
     SUBDIR += system-config-printer
     SUBDIR += t1utils
     SUBDIR += texlive

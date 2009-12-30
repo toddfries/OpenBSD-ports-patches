@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.7 2008/10/30 09:43:55 mbalmer Exp $ 
+# $OpenBSD: Makefile,v 1.9 2009/09/28 13:09:15 sthen Exp $ 
 
 COMMENT=	mail filter rules for imp
 
 HORDE_MODULE=	ingo
 HORDE_NAME=	Ingo
 
-DISTNAME=	${HORDE_MODULE}-h3-1.2.1
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	${HORDE_MODULE}-h3-1.2.2
 CATEGORIES=	mail www
 HOMEPAGE=	http://www.horde.org/${HORDE_MODULE}/
-
-MAINTAINER=	Marc Balmer <mbalmer@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
