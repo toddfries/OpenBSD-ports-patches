@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.122 2009/10/11 10:39:42 steven Exp $
+# $OpenBSD: Makefile,v 1.124 2010/01/04 14:13:51 jasper Exp $
 
 COMMENT-main=		XML parsing library
 COMMENT-python=		Python bindings for libxml

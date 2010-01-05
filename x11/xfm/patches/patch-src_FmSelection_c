@@ -1,0 +1,26 @@
+$OpenBSD: patch-src_FmSelection_c,v 1.2 2010/01/03 22:53:32 jasper Exp $
+--- src/FmSelection.c.orig	Wed Sep 24 14:32:50 1997
++++ src/FmSelection.c	Sun Jan  3 01:03:08 2010
+@@ -45,7 +45,7 @@
+  XtVaSetValues(fw->status,
+ 	XtNbackground,saved_bg,
+ 	XtNforeground,saved_fg,
+-	0);
++	(void *)NULL);
+ }
+ 
+ static Boolean ConvertSelection( 
+@@ -168,11 +168,11 @@
+      XtVaGetValues(fw->status,
+ 	XtNbackground,&saved_bg,
+ 	XtNforeground,&saved_fg,
+-	0);
++	(void *)NULL);
+      XtVaSetValues(fw->status,
+ 	XtNbackground,resources.highlight_pixel,
+ 	XtNforeground,saved_bg,
+-	0);
++	(void *)NULL);
+      selection_owner=fw;
+    } else {
+      unhighlight(fw);
