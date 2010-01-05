@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.21 2008/02/02 09:18:54 steven Exp $
+# $OpenBSD: Makefile,v 1.23 2010/01/03 22:53:32 jasper Exp $
 
 COMMENT=	X11 File Manager
 
 DISTNAME=	xfm-1.4.3
-PKGNAME=	${DISTNAME}p1
+PKGNAME=	${DISTNAME}p3
 CATEGORIES=	x11
 
 HOMEPAGE=	http://www.musikwissenschaft.uni-mainz.de/~ag/xfm/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

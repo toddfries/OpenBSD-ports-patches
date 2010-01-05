@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.442 2009/12/19 23:06:26 landry Exp $
+# $OpenBSD: Makefile,v 1.445 2010/01/04 19:11:02 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -23,6 +23,7 @@
      SUBDIR += clearsilver,python
      SUBDIR += cms-ms
      SUBDIR += cntlm
+     SUBDIR += community-id
      SUBDIR += concrete5
      SUBDIR += cronolog
      SUBDIR += cssed
@@ -75,10 +76,10 @@
      SUBDIR += mantis
      SUBDIR += mediawiki
      SUBDIR += mhonarc
+     SUBDIR += midori
      SUBDIR += mimetex
      SUBDIR += mindterm
      SUBDIR += minimo
-     SUBDIR += midori
      SUBDIR += mod_auth_bsd
      SUBDIR += mod_auth_kerb
      SUBDIR += mod_auth_ldap
@@ -304,8 +305,8 @@
      SUBDIR += pecl-swish
      SUBDIR += pecl-uploadprogress
      SUBDIR += perlbal
-     SUBDIR += php-openid
      SUBDIR += php-markdown
+     SUBDIR += php-openid
      SUBDIR += php5
      SUBDIR += phpicalendar
      SUBDIR += phpldapadmin
@@ -322,8 +323,8 @@
      SUBDIR += polipo
      SUBDIR += pound
      SUBDIR += privoxy
-     SUBDIR += py-beautifulsoup
      SUBDIR += py-CherryPy
+     SUBDIR += py-beautifulsoup
      SUBDIR += py-cherrypy2
      SUBDIR += py-clientform
      SUBDIR += py-django
@@ -364,8 +365,8 @@
      SUBDIR += ruby-addressable
      SUBDIR += ruby-fcgi
      SUBDIR += ruby-httpclient
-     SUBDIR += ruby-merb
      SUBDIR += ruby-mechanize
+     SUBDIR += ruby-merb
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-passenger
      SUBDIR += ruby-rack
@@ -386,6 +387,7 @@
      SUBDIR += squid,snmp
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
+     SUBDIR += statusnet
      SUBDIR += surf
      SUBDIR += surfraw
      SUBDIR += swfdec-plugin
@@ -401,8 +403,8 @@
      SUBDIR += trac-ldapplugin
      SUBDIR += tracnav
      SUBDIR += transproxy
-     SUBDIR += turba
      SUBDIR += tt-rss
+     SUBDIR += turba
      SUBDIR += twiki
      SUBDIR += twill
      SUBDIR += visitors
@@ -415,8 +417,8 @@
      SUBDIR += wApua
      SUBDIR += wbox
      SUBDIR += webalizer
-     SUBDIR += webkit
      SUBDIR += webcollab
+     SUBDIR += webkit
      SUBDIR += weblint
      SUBDIR += wml
      SUBDIR += wordpress
