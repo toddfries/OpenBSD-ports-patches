@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/03/04 20:33:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2010/01/06 09:32:46 jasper Exp $
 
 COMMENT=		backend for searching www.ebay.com
 
-DISTNAME=		WWW-Search-Ebay-3.008
+DISTNAME=		WWW-Search-Ebay-3.015
 CATEGORIES=		www
 
 # perl
@@ -14,6 +14,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MODULES=		cpan
 
 RUN_DEPENDS=		::www/p5-WWW-Search
+REGRESS_DEPENDS=	::devel/p5-IO-Capture
 
 MAKE_ENV+=		TEST_POD="Yes"
 
