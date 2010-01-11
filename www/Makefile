@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.447 2010/01/08 13:22:28 stephan Exp $
+# $OpenBSD: Makefile,v 1.450 2010/01/10 13:59:14 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR += ajaxterm
@@ -326,6 +326,7 @@
      SUBDIR += pound
      SUBDIR += privoxy
      SUBDIR += py-CherryPy
+     SUBDIR += py-beaker
      SUBDIR += py-beautifulsoup
      SUBDIR += py-cherrypy2
      SUBDIR += py-clientform
@@ -333,14 +334,17 @@
      SUBDIR += py-flup
      SUBDIR += py-formencode
      SUBDIR += py-genshi
+     SUBDIR += py-htmltmpl
      SUBDIR += py-httplib2
      SUBDIR += py-jinja2
      SUBDIR += py-jonpy
+     SUBDIR += py-mako
      SUBDIR += py-meld3
      SUBDIR += py-nevow
      SUBDIR += py-paste
      SUBDIR += py-paste-deploy
      SUBDIR += py-paste-script
+     SUBDIR += py-pylons
      SUBDIR += py-quixote
      SUBDIR += py-repoze-profile
      SUBDIR += py-routes
