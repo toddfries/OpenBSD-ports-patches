@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2009/12/16 17:59:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2010/01/11 12:28:42 jasper Exp $
 
 COMMENT=		General Atomistic Modelling Graphic Interface
 
-V=			0.14.3
+V=			0.14.4
 DISTNAME=		gamgi-all-${V}
 PKGNAME=		${DISTNAME:S/-all//}
 CATEGORIES=		education x11
@@ -33,7 +33,7 @@ RUN_DEPENDS=		::graphics/netpbm \
 WRKDIST=		${WRKDIR}/gamgi${V}/
 WRKSRC= 		${WRKDIST}/src/
 MAKE_FILE=		${WRKSRC}/makefile
-ALL_TARGET=		# empty
+ALL_TARGET=		# This comment intentionally left senseless.
 
 NO_REGRESS=		Yes
 
@@ -48,8 +48,7 @@ do-install:
 	${INSTALL_DATA_DIR} ${DOC_DIR} ${DATA_DIR}
 	${INSTALL_DATA} ${WRKDIST}/dat/all.xml ${PREFIX}/share/gamgi
 	# Clean an empty directory and swap file.
-	rm -fr ${WRKDIST}/dat/util/python/ \
-		${WRKDIST}/doc/project/.links_scientific.html.swp
+	rm -fr ${WRKDIST}/dat/util/python/
 	cd ${WRKDIST}/doc/ && umask 022 && pax -rw . ${DOC_DIR}
 	cd ${WRKDIST}/dat/ && umask 022 && pax -rw . ${DATA_DIR}
 
