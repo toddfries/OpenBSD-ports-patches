@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2009/12/16 17:59:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2010/01/16 22:01:29 matthieu Exp $
 
 COMMENT=		General Atomistic Modelling Graphic Interface
 
-V=			0.14.3
+V=			0.14.4
 DISTNAME=		gamgi-all-${V}
-PKGNAME=		${DISTNAME:S/-all//}
+PKGNAME=		${DISTNAME:S/-all//}p0
 CATEGORIES=		education x11
 
 HOMEPAGE=		http://www.gamgi.org/
@@ -27,13 +27,12 @@ WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0
 
 LIB_DEPENDS=		gdkglext-x11-1.0,gtkglext-x11-1.0::x11/gtkglext
-RUN_DEPENDS=		::graphics/netpbm \
-			::x11/dejavu-fonts
+RUN_DEPENDS=		::graphics/netpbm
 
 WRKDIST=		${WRKDIR}/gamgi${V}/
 WRKSRC= 		${WRKDIST}/src/
 MAKE_FILE=		${WRKSRC}/makefile
-ALL_TARGET=		# empty
+ALL_TARGET=		# This comment intentionally left senseless.
 
 NO_REGRESS=		Yes
 
@@ -48,8 +47,7 @@ do-install:
 	${INSTALL_DATA_DIR} ${DOC_DIR} ${DATA_DIR}
 	${INSTALL_DATA} ${WRKDIST}/dat/all.xml ${PREFIX}/share/gamgi
 	# Clean an empty directory and swap file.
-	rm -fr ${WRKDIST}/dat/util/python/ \
-		${WRKDIST}/doc/project/.links_scientific.html.swp
+	rm -fr ${WRKDIST}/dat/util/python/
 	cd ${WRKDIST}/doc/ && umask 022 && pax -rw . ${DOC_DIR}
 	cd ${WRKDIST}/dat/ && umask 022 && pax -rw . ${DATA_DIR}
 

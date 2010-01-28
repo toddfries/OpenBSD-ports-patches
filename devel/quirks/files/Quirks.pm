@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.11 2009/12/25 22:43:50 espie Exp $
+# $OpenBSD: Quirks.pm,v 1.14 2010/01/26 10:51:22 espie Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -88,6 +88,7 @@ my $base_exceptions = {
 # 4.7 stuff
 	'p5-Parse-CPAN-Meta' => "$p5/Parse/CPAN/Meta.pm",
 	'p5-parent' => "$p5/parent.pm",
+	'dejavu-fonts' => "/usr/X11R6/lib/X11/fonts/TTF/DejaVuSans.ttf",
 };
 
 my $stem_extensions = {
@@ -96,6 +97,8 @@ my $stem_extensions = {
 	'teTeX_base' => 'texlive_base',
 	'teTeX_texmf' => ['texlive_texmf-full', 'texlive_texmf-minimal'],
 	'teTeX_texmf-doc' => 'texlive_docs',
+	'control-center2' => 'gnome-control-center',
+	'gnome2-user-docs' => 'gnome-user-docs',
 # 4.6snap
 	'thunar-vcs-plugin' => 'thunar-vcs',
 	'fam' => 'libgamin',

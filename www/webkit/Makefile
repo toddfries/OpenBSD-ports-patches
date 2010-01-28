@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.21 2009/11/29 10:08:26 landry Exp $
+# $OpenBSD: Makefile,v 1.23 2010/01/23 10:14:37 landry Exp $
 
 COMMENT =	open source web browser engine
 
-V = 1.1.15.4
+V = 1.1.18
 DISTNAME =	webkit-${V}
 # XXX do not remove v0. pX comes before vX.
-PKGNAME =	webkit-${V}v0
+PKGNAME =	webkit-${V}p0v0
 CATEGORIES =	www
 
 HOMEPAGE =	http://webkitgtk.org/
@@ -13,7 +13,7 @@ MASTER_SITES =	${HOMEPAGE}
 
 MAINTAINER =	Landry Breuil <gaston@gcu.info>
 
-SHARED_LIBS =	webkit-1.0	1.0
+SHARED_LIBS =	webkit-1.0	2.0 #.16.0
 
 # LGPLv2 / BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -41,6 +41,9 @@ CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -
 		ac_cv_path_FLEX=${LOCALBASE}/bin/gflex
 
 MAKE_FILE =	GNUmakefile
+
+RUN_DEPENDS =	::multimedia/gstreamer-0.10/plugins-ffmpeg \
+		::multimedia/gstreamer-0.10/plugins-good
 
 WANTLIB =	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 c \

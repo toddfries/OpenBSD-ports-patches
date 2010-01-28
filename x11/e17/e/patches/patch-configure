@@ -1,0 +1,30 @@
+$OpenBSD: patch-configure,v 1.2 2010/01/12 08:42:13 ajacoutot Exp $
+
+Make sure we don't link against static libintl.a
+
+--- configure.orig	Mon Jun 15 07:13:54 2009
++++ configure	Mon Jan 11 20:58:30 2010
+@@ -13168,7 +13168,7 @@ fi
+ 
+ 
+ 
+-MODULE_ARCH="$host_os-$host_cpu-$release"
++MODULE_ARCH="$host_cpu-$release"
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -15762,12 +15762,12 @@ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ #include <libintl.h>
+ extern int _nl_msg_cat_cntr;
+-extern int *_nl_domain_bindings;
++extern int libintl_nl_domain_bindings;
+ int
+ main ()
+ {
+ bindtextdomain ("", "");
+-return (int) gettext ("") + _nl_msg_cat_cntr + *_nl_domain_bindings
++return (int) gettext ("") + _nl_msg_cat_cntr + libintl_nl_domain_bindings
+   ;
+   return 0;
+ }

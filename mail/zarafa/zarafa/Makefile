@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.30 2009/12/16 18:39:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.32 2010/01/12 15:59:34 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-php=	MAPI extensions for php5
 
-V=		6.30.6
+V=		6.30.8
 DISTNAME=	zarafa-${V}
 
 PKGNAME-main=	${DISTNAME}
@@ -78,8 +78,8 @@ FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/zarafa/report-ca \
 		QUOTATEMPLATEDIR=${PREFIX}/share/examples/zarafa/quotamail
 
 SUB_SCRIPTS=	createcompany.d/00createpublic groups_common.sh \
-		createuser.d/00createstore deleteuser.d/99deletestore \
-		companies_common.sh users_common.sh
+		createuser.d/00createstore companies_common.sh \
+		users_common.sh
 
 CONF_FILES=	dagent.cfg gateway.cfg ical.cfg ldap.active-directory.cfg \
 		ldap.openldap.cfg monitor.cfg server.cfg spooler.cfg \

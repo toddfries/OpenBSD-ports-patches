@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.762 2010/01/04 10:43:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.770 2010/01/12 19:27:08 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR += ElectricFence
@@ -251,6 +251,7 @@
      SUBDIR += p5-B-Deobfuscate
      SUBDIR += p5-B-Graph
      SUBDIR += p5-B-Hooks-EndOfScope
+     SUBDIR += p5-B-Hooks-OP-Check
      SUBDIR += p5-B-Keywords
      SUBDIR += p5-BFD
      SUBDIR += p5-BSD-Resource
@@ -323,6 +324,7 @@
      SUBDIR += p5-Config-IniFiles
      SUBDIR += p5-Config-Options
      SUBDIR += p5-Config-Tiny
+     SUBDIR += p5-Context-Preserve
      SUBDIR += p5-Curses
      SUBDIR += p5-Curses-UI
      SUBDIR += p5-Curses-Widgets
@@ -367,10 +369,12 @@
      SUBDIR += p5-Devel-Caller
      SUBDIR += p5-Devel-Cover
      SUBDIR += p5-Devel-Cycle
+     SUBDIR += p5-Devel-Declare
      SUBDIR += p5-Devel-FastProf
      SUBDIR += p5-Devel-GlobalDestruction
      SUBDIR += p5-Devel-Leak
      SUBDIR += p5-Devel-NYTProf
+     SUBDIR += p5-Devel-PartialDump
      SUBDIR += p5-Devel-SawAmpersand
      SUBDIR += p5-Devel-Size
      SUBDIR += p5-Devel-SmallProf
@@ -379,6 +383,7 @@
      SUBDIR += p5-Devel-Trace
      SUBDIR += p5-Devel-ebug
      SUBDIR += p5-Devel-ptkdb
+     SUBDIR += p5-Device-USB
      SUBDIR += p5-Directory-Scratch
      SUBDIR += p5-Env-PS1
      SUBDIR += p5-Error
@@ -468,6 +473,9 @@
      SUBDIR += p5-LockFile-Simple
      SUBDIR += p5-Log-Agent
      SUBDIR += p5-Log-Dispatch
+     SUBDIR += p5-Log-Dispatch-Binlog
+     SUBDIR += p5-Log-Dispatch-Config
+     SUBDIR += p5-Log-Dispatch-Config-TestLog
      SUBDIR += p5-Log-Dispatch-FileRotate
      SUBDIR += p5-Log-Log4perl
      SUBDIR += p5-Log-Trace
@@ -481,16 +489,26 @@
      SUBDIR += p5-Module-ScanDeps
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Moose
+     SUBDIR += p5-MooseX-Async
      SUBDIR += p5-MooseX-AttributeHelpers
      SUBDIR += p5-MooseX-Clone
+     SUBDIR += p5-MooseX-Declare
      SUBDIR += p5-MooseX-Emulate-Class-Accessor-Fast
+     SUBDIR += p5-MooseX-LazyRequire
+     SUBDIR += p5-MooseX-LogDispatch
      SUBDIR += p5-MooseX-Log-Log4perl
+     SUBDIR += p5-MooseX-Meta-TypeConstraint-ForceCoercion
      SUBDIR += p5-MooseX-MethodAttributes
+     SUBDIR += p5-MooseX-Method-Signatures
      SUBDIR += p5-MooseX-MultiInitArg
      SUBDIR += p5-MooseX-Params-Validate
+     SUBDIR += p5-MooseX-POE
      SUBDIR += p5-MooseX-Role-Parameterized
      SUBDIR += p5-MooseX-SemiAffordanceAccessor
+     SUBDIR += p5-MooseX-Traits
      SUBDIR += p5-MooseX-Types
+     SUBDIR += p5-MooseX-Types-Path-Class
+     SUBDIR += p5-MooseX-Types-Structured
      SUBDIR += p5-Mouse
      SUBDIR += p5-Net-Server
      SUBDIR += p5-Number-Compare
@@ -502,9 +520,11 @@
      SUBDIR += p5-PAR
      SUBDIR += p5-PAR-Dist
      SUBDIR += p5-POE
+     SUBDIR += p5-POE-API-Peek
      SUBDIR += p5-POE-Component-IKC
      SUBDIR += p5-POE-Component-Pluggable
      SUBDIR += p5-POE-Component-PubSub
+     SUBDIR += p5-POE-Component-Supervisor
      SUBDIR += p5-POE-Loop-Event
      SUBDIR += p5-POE-Loop-Tk
      SUBDIR += p5-POE-Test-Loops
@@ -520,6 +540,7 @@
      SUBDIR += p5-Params-Validate
      SUBDIR += p5-Paranoid
      SUBDIR += p5-Parse-CPAN-Meta
+     SUBDIR += p5-Parse-Method-Signatures
      SUBDIR += p5-Parse-PlainConfig
      SUBDIR += p5-Parse-RecDescent
      SUBDIR += p5-Path-Class
@@ -622,6 +643,7 @@
      SUBDIR += p5-Test-Spelling
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-Taint
+     SUBDIR += p5-Test-TempDir
      SUBDIR += p5-Test-Tester
      SUBDIR += p5-Test-URI
      SUBDIR += p5-Test-Unit
@@ -713,6 +735,7 @@
      SUBDIR += py-bytecodeassembler
      SUBDIR += py-cheetah
      SUBDIR += py-configobj
+     SUBDIR += py-coverage
      SUBDIR += py-ctypes
      SUBDIR += py-dateutil
      SUBDIR += py-decorator
