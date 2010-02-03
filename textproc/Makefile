@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.289 2010/01/04 10:56:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.291 2010/02/01 17:00:14 espie Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
+     SUBDIR =
      SUBDIR += TclXML
      SUBDIR += agrep
      SUBDIR += antiword
@@ -95,6 +96,7 @@
      SUBDIR += p5-Lingua-EN-Inflect
      SUBDIR += p5-Lingua-EN-Inflect-Number
      SUBDIR += p5-Lingua-EN-Summarize
+     SUBDIR += p5-Lingua-EN-Syllable
      SUBDIR += p5-Lingua-PT-Stemmer
      SUBDIR += p5-Lingua-Stem
      SUBDIR += p5-Lingua-Stem-Fr

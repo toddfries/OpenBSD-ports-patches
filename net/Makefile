@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.617 2010/01/04 10:56:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.619 2010/02/01 17:00:13 espie Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
+     SUBDIR =
      SUBDIR += BitTorrent
      SUBDIR += GeoIP
      SUBDIR += adns
@@ -190,7 +191,6 @@
      SUBDIR += nam
      SUBDIR += nbtscan
      SUBDIR += ncftp
-     SUBDIR += ndiff
      SUBDIR += nemesis
      SUBDIR += neon
      SUBDIR += nepenthes
