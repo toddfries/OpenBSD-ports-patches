@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.71 2010/02/03 00:18:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.73 2010/02/26 18:42:12 espie Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			1.6.0.22
+VER=			1.6.0.25
 # you can set PATCHVER=p0, p1 etc to bump everything,
 # this takes care of the subpackage/flavor maze
 #PATCHVER=		p0
 CORESOUNDS=		1.4.17
 DISTNAME=		asterisk-${VER:S/rc/-rc/}
-FULLPKGNAME-main=	asterisk-${VER}${PATCHVER}
+PKGNAME-main=		asterisk-${VER}${PATCHVER}
 
 CATEGORIES=		telephony
 
@@ -185,7 +185,6 @@ LIB_DEPENDS-jabber=	iksemel::textproc/iksemel
 LIB_DEPENDS-main+=	h323::net/openh323 \
 			pt::devel/pwlib
 WANTLIB-main+=		SDL avutil expat lber ldap ldap_r sasl2
-FULLPKGNAME-main=	asterisk-${VER}${PATCHVER}-h323
 .else
 CONFIGURE_ARGS+=	--with-pwlib=no \
 			--with-h323=no
@@ -212,8 +211,10 @@ LIB_DEPENDS-fax=	spandsp::telephony/spandsp \
 			tiff::graphics/tiff
 .endif
 
-.for i in ${MULTI_PACKAGES:S/-main//}
+.for i in ${MULTI_PACKAGES:N-main}
+# the subpackages aren't flavoured, so overwrite the default name/path
 FULLPKGNAME$i ?=	asterisk$i-${VER}${PATCHVER}
+FULLPKGPATH$i ?=	${PKGPATH},$i
 RUN_DEPENDS$i +=	:asterisk-${VER}:${PKGPATH}
 .endfor
 
@@ -232,7 +233,7 @@ post-patch:
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/asterisk
 	${INSTALL_DATA} ${WRKSRC}/{BUGS,CHANGES,COPYING,CREDITS} \
-		${WRKSRC}/{ChangeLog,LICENSE,README,UPGRADE*.txt} \
+		${WRKSRC}/{ChangeLog,LICENSE,README*,UPGRADE*.txt} \
 		${PREFIX}/share/doc/asterisk
 	${INSTALL_DATA} `find ${WRKSRC}/doc -type f` \
 		${PREFIX}/share/doc/asterisk
