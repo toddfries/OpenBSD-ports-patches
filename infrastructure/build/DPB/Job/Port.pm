@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.4 2010/02/27 09:28:47 espie Exp $
+# $OpenBSD: Port.pm,v 1.6 2010/03/02 02:33:15 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -20,6 +20,7 @@ use warnings;
 use DPB::Job;
 package DPB::Task::Port;
 use Time::HiRes qw(time);
+use OpenBSD::Paths;
 
 our @ISA = qw(DPB::Task::Fork);
 sub new
@@ -51,7 +52,7 @@ sub finalize
 	$self->{ended} = time();
 	DPB::Clock->unregister($self);
 	$core->job->finished_task($self);
-	return 1;
+	return $core->{status} == 0;
 }
 
 sub elapsed
@@ -66,6 +67,15 @@ sub stopped_clock
 	$self->{started} += $gap;
 }
 
+sub redirect
+{
+	my ($self, $log) = @_;
+	close STDOUT;
+	close STDERR;
+	open STDOUT, '>>', $log or die "Can't write to $log";
+	open STDERR, '>&STDOUT' or die "bad redirect";
+}
+
 sub run
 {
 	my ($self, $core) = @_;
@@ -73,26 +83,31 @@ sub run
 	my $t = $self->{phase};
 	my $ports = $job->{builder}->{ports};
 	my $fullpkgpath = $job->{v}->fullpkgpath;
-	my $log = $job->{log};
 	my $make = $job->{builder}->{make};
+	my $sudo = OpenBSD::Paths->sudo;
 	my $shell = $core->{shell};
-	close STDOUT;
-	close STDERR;
-	open STDOUT, '>>', $log or die "Can't write to $log";
-	open STDERR, '>&STDOUT' or die "bad redirect";
+	$self->redirect($job->{log});
 	my @args = ($t, "TRUST_PACKAGES=Yes", 
 	    "REPORT_PROBLEM='exit 1'");
 	if ($job->{special}) {
 		push(@args, "WRKOBJDIR=/tmp/ports");
 	}
 	if (defined $shell) {
+		unshift(@args, $shell->make);
+		if ($self->{sudo}) {
+			unshift(@args, $sudo);
+		}
 		$shell->run("cd $ports && SUBDIR=".
-		    $fullpkgpath." ".join(' ',$shell->make, @args));
+		    $fullpkgpath." ".join(' ', @args));
 	} else {
 		chdir($ports) or 
 		    die "Wrong ports tree $ports";
 		$ENV{SUBDIR} = $fullpkgpath;
-		exec {$make} ("make", @args);
+		if ($self->{sudo}) {
+			exec {$sudo}("sudo", $make, @args);
+		} else {
+			exec {$make} ("make", @args);
+		}
 	}
 	exit(1);
 }
@@ -101,15 +116,47 @@ sub notime { 0 }
 
 package DPB::Task::Port::NoTime;
 our @ISA = qw(DPB::Task::Port);
-
-package DPB::Task::Port::Fetch;
-our @ISA = qw(DPB::Task::Port::NoTime);
 sub notime { 1 }
+
+package DPB::Task::Port::ShowSize;
+our @ISA = qw(DPB::Task::Port);
+
+sub fork
+{
+	my ($self, $core) = @_;
+	open($self->{fh}, "-|");
+}
+
+sub redirect
+{
+	my ($self, $log) = @_;
+}
 
 sub finalize
 {
 	my ($self, $core) = @_;
-	$self->SUPER::finalize($core);
+	my $fh = $self->{fh};
+	if ($core->{status} == 0) {
+		my $line = <$fh>;
+		$line = <$fh>;
+		if ($line =~ m/^\s*(\d+)\s+/) {
+			my $sz = $1;
+			my $job = $core->job;
+			my $f2 = $job->{builder}->{logger}->open("size");
+			print $f2 $job->{v}->fullpkgpath, " $sz\n";
+		}
+	}
+	close($fh);
+	return 1;
+}
+
+
+package DPB::Task::Port::Fetch;
+our @ISA = qw(DPB::Task::Port::NoTime);
+
+sub finalize
+{
+	my ($self, $core) = @_;
 
 	# if there's a watch file, then we remove the current size,
 	# so that we DON'T take prepare into account.
@@ -120,15 +167,36 @@ sub finalize
 			$job->{offset} = $sz;
 		}
 	}
-	return 1;
+	$self->SUPER::finalize($core);
+}
+
+package DPB::Task::Port::Clean;
+our @ISA = qw(DPB::Task::Port::NoTime);
+
+sub finalize
+{
+	my ($self, $core) = @_;
+	# didn't clean right, and no sudo yet:
+	# run ourselves again (but log the problem)
+	if ($core->{status} != 0 && !$self->{sudo}) {
+		$self->{sudo} = 1;
+		my $job = $core->job;
+		unshift(@{$job->{tasks}}, $self);
+		my $fh = $job->{builder}->{logger}->open("clean");
+		print $fh $job->{v}->fullpkgpath, "\n";
+		$core->{status} = 0;
+		return 1;
+	}
+	$self->SUPER::finalize($core);
 }
 
 package DPB::Port::TaskFactory;
 my $repo = {
 	default => 'DPB::Task::Port',
-	clean => 'DPB::Task::Port::NoTime',
+	clean => 'DPB::Task::Port::Clean',
 	prepare => 'DPB::Task::Port::NoTime',
 	fetch => 'DPB::Task::Port::Fetch',
+	'show-size' => 'DPB::Task::Port::ShowSize',
 };
 
 sub create
