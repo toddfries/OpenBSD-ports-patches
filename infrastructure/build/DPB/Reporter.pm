@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Reporter.pm,v 1.5 2010/03/01 18:01:11 espie Exp $
+# $OpenBSD: Reporter.pm,v 1.7 2010/03/05 07:50:15 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -158,6 +158,7 @@ sub new
 		$self->{home} = $self->{terminal}->Tputs("ho", 1);
 		$self->{clear} = $self->{terminal}->Tputs("cl", 1);
 		$self->{down} = $self->{terminal}->Tputs("do", 1);
+		$self->{glitch} = $self->{terminal}->Tputs("xn", 1);
 		if ($self->{home}) {
 			$self->{write} = "go_write_home";
 		} else {
@@ -211,8 +212,8 @@ sub cut_lines
 sub clamped
 {
 	my ($self, $line) = @_;
-	if (length $line >= $self->{width}) {
-		return substr($line, 0, $self->{width});
+	if (!$self->{glitch} && length $line == $self->{width}) {
+		return $line;
 	} else {
 		return $line."\n";
 	}
