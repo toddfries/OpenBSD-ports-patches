@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.254 2010/02/01 17:00:13 espie Exp $
+# $OpenBSD: Makefile,v 1.256 2010/03/22 22:33:56 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -200,6 +200,7 @@
      SUBDIR += sane-frontends
      SUBDIR += scratch
      SUBDIR += scrot
+     SUBDIR += simple-scan
      SUBDIR += smpeg-xmms
      SUBDIR += sng
      SUBDIR += swfdec
@@ -227,5 +228,6 @@
      SUBDIR += xsane
      SUBDIR += xv
      SUBDIR += xzgv
+     SUBDIR += zbar
 
 .include <bsd.port.subdir.mk>
