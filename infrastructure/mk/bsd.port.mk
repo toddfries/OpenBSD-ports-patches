@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.979 2010/03/05 07:49:29 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.986 2010/03/22 20:19:12 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -123,6 +123,8 @@ ARCH ?!= uname -m
 OPSYS = OpenBSD
 OPSYS_VER = ${OSREV}
 
+# not all powerpc have apm(4), hence the use of macppc
+APM_ARCHS = amd64 arm i386 loongson macppc sparc sparc64
 LP64_ARCHS = alpha amd64 hppa64 sparc64 mips64 mips64el
 NO_SHARED_ARCHS = m88k vax
 
@@ -795,6 +797,13 @@ _PKG_ADD_AUTO ?=
 _PKG_ADD_AUTO += -a
 .endif
 
+_TERM_ENV = PKG_TMPDIR=${PKG_TMPDIR}
+.for _v in TERM TERMCAP ftp_proxy http_proxy
+.  if defined(${_v})
+_TERM_ENV += ${_v}=${${_v}:Q}
+.  endif
+.endfor
+
 _PKG_ARGS += -DFLAVORS=${FLAVOR_EXT:Q}
 _tmpvars += FLAVORS=${FLAVOR_EXT:Q}
 _PKG_ARGS += -B ${WRKINST}
@@ -1230,8 +1239,16 @@ IGNORE += "is not for ${NOT_FOR_ARCHS}"
 IGNORE += "requires shared libraries"
 .endif
 
-.if defined(BROKEN) && ${TRY_BROKEN:L} != "yes"
+.if ${TRY_BROKEN:L} != "yes"
+.  if defined(BROKEN-${ARCH})
+IGNORE += "is marked as broken for ${ARCH}: ${BROKEN-${ARCH}:Q}"
+.  endif
+.  if ${MACHINE_ARCH} != ${ARCH} && defined(BROKEN-${MACHINE_ARCH})
+IGNORE += "is marked as broken for ${MACHINE_ARCH}: ${BROKEN-${MACHINE_ARCH}:Q}"
+.  endif
+.  if defined(BROKEN) 
 IGNORE += "is marked as broken: ${BROKEN:Q}"
+.  endif
 .endif
 .if defined(COMES_WITH)
 IGNORE += "-- ${FULLPKGNAME${SUBPACKAGE}:C/-[0-9].*//g} comes with ${OPSYS} as of release ${COMES_WITH}"
@@ -1305,9 +1322,9 @@ _force_update_fragment = { \
 			exit 1; \
 		fi; \
 	}
-_PKG_ADD_FORCE = -F update -F updatedepends -r
+_PKG_ADD_FORCE = -D update -D updatedepends
 .  if ${FORCE_UPDATE:L} == "hard"
-_PKG_ADD_FORCE += -F installed
+_PKG_ADD_FORCE += -D installed
 .  endif
 .else
 _force_update_fragment = :
@@ -1492,7 +1509,7 @@ _grab_libs_from_plist = sed -n -e '/^@lib /{ s///; p; }' \
 ${_CACHE_REPO}/${_PKGFILE${_S}}:
 	@mkdir -p ${@D}
 	@${ECHO_MSG} -n "===>  Looking for ${_PKGFILE${_S}} in \$$PKG_PATH - "
-	@if ${SETENV} ftp_proxy=${ftp_proxy} http_proxy=${http_proxy} PKG_CACHE=${_CACHE_REPO} PKG_PATH=${_CACHE_REPO}:${_PKG_REPO}:${PACKAGE_REPOSITORY}/${NO_ARCH}/:${PKG_PATH} PKG_TMPDIR=${PKG_TMPDIR} pkg_add -n -q ${_PKG_ADD_FORCE} ${_PKGFILE${_S}} >/dev/null 2>&1; then \
+	@if ${SETENV} ${_TERM_ENV} PKG_CACHE=${_CACHE_REPO} PKG_PATH=${_CACHE_REPO}:${_PKG_REPO}:${PACKAGE_REPOSITORY}/${NO_ARCH}/:${PKG_PATH} pkg_add -n -q ${_PKG_ADD_FORCE} -D installed -D downgrade ${_PKGFILE${_S}} >/dev/null 2>&1; then \
 		${ECHO_MSG} "found"; \
 		exit 0; \
 	else \
@@ -1564,10 +1581,10 @@ ${_INSTALL_COOKIE${_S}}:
 	@if ${_PKG_QUERY} ${FULLPKGNAME${_S}}; then \
 		echo "Package ${FULLPKGNAME${_S}} is already installed"; \
 	else \
-		${SUDO} ${SETENV} PKG_PATH=${_PKG_REPO} PKG_TMPDIR=${PKG_TMPDIR} pkg_add ${_PKG_ADD_AUTO} ${PKGFILE${_S}}; \
+		${SUDO} ${SETENV} ${_TERM_ENV} PKG_PATH=${_PKG_REPO} pkg_add ${_PKG_ADD_AUTO} ${PKGFILE${_S}}; \
 	fi
 .  else
-	@${SUDO} ${SETENV} PKG_PATH=${_PKG_REPO} PKG_TMPDIR=${PKG_TMPDIR} pkg_add ${_PKG_ADD_AUTO} ${PKGFILE${_S}}
+	@${SUDO} ${SETENV} ${_TERM_ENV} PKG_PATH=${_PKG_REPO} pkg_add ${_PKG_ADD_AUTO} ${PKGFILE${_S}}
 .  endif
 	@-${SUDO} ${_MAKE_COOKIE} $@
 
@@ -1602,7 +1619,7 @@ ${_FUPDATE_COOKIE${_S}}:
 	@mkdir -p ${UPDATE_COOKIES_DIR}
 .  endif
 	@${ECHO_MSG} "===> Updating/installing for ${FULLPKGNAME${_S}}"
-	@${SUDO} ${SETENV} PKG_PATH=${_PKG_REPO} PKG_TMPDIR=${PKG_TMPDIR} pkg_add ${_PKG_ADD_AUTO} -r ${_PKG_ADD_FORCE} ${PKGFILE${_S}}
+	@${SUDO} ${SETENV} ${_TERM_ENV} PKG_PATH=${_PKG_REPO} pkg_add ${_PKG_ADD_AUTO} -r ${_PKG_ADD_FORCE} ${PKGFILE${_S}}
 	@${_MAKE_COOKIE} $@
 .endfor
 

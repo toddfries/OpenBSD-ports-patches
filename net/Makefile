@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.619 2010/02/01 17:00:13 espie Exp $
+# $OpenBSD: Makefile,v 1.622 2010/03/22 22:28:18 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -169,11 +169,11 @@
      SUBDIR += libshout
      SUBDIR += libst
      SUBDIR += libtorrent
+     SUBDIR += libupnp
      SUBDIR += livemedia
      SUBDIR += loudmouth
      SUBDIR += luasocket
      SUBDIR += maradns
-     SUBDIR += mbrowse
      SUBDIR += mcabber
      SUBDIR += meanwhile
      SUBDIR += micq
@@ -450,6 +450,7 @@
      SUBDIR += slirp
      SUBDIR += slurm
      SUBDIR += smokeping
+     SUBDIR += snmptt
      SUBDIR += snort
      SUBDIR += snort,mysql
      SUBDIR += snort,postgresql
@@ -496,6 +497,7 @@
      SUBDIR += unbound
      SUBDIR += unison
      SUBDIR += unworkable
+     SUBDIR += ushare
      SUBDIR += uucp
      SUBDIR += valknut
      SUBDIR += vicq
