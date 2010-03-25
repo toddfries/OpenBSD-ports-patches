@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.22 2009/12/21 18:03:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2010/03/24 22:53:55 ajacoutot Exp $
 
-BROKEN=			segfault on startup
+SHARED_ONLY=		Yes
+
+BROKEN=			waiting for ajacoutot@
 
 COMMENT=		personal photo management application for GNOME
 
 GNOME_VERSION=		0.6.1.5
 GNOME_PROJECT=		f-spot
-PKGNAME=		${DISTNAME}p0
-
-SHARED_LIBS +=	fspotjpegtran        0.0      # .0.0
-SHARED_LIBS +=	fspot                0.0      # .0.0
+PKGNAME=		${DISTNAME}p1
 
 CATEGORIES=		graphics
 
@@ -43,9 +42,9 @@ USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
+BUILD_DEPENDS=		${RUN_DEPENDS} \
+			::shells/bash
 RUN_DEPENDS=		::graphics/libgphoto2 \
-			::sysutils/ndesk-dbus-glib \
 			::x11/gnome/mono-gnome \
 			::x11/gnome/screensaver
 LIB_DEPENDS+=		exif::graphics/libexif \
@@ -54,19 +53,25 @@ LIB_DEPENDS+=		exif::graphics/libexif \
 
 MODGCONF2_SCHEMAS_DIR=	f-spot
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-scrollkeeper
-CONFIGURE_ENV=          CPPFLAGS="-I${LOCALBASE}/include" \
-                        LDFLAGS="-L${LOCALBASE}/lib"
+LIBTOOL_FLAGS=		--tag=disable-static
 
-DLLMAP_FILES=	lib/libgphoto2-sharp/libgphoto2-sharp.dll.config \
-		lib/dbus-sharp-glib/NDesk.DBus.GLib.dll.config \
-		lib/gtk-sharp-beans/gtk-sharp-beans.dll.config \
-		lib/gio-sharp/gio/gio-sharp.dll.config \
-		lib/mono-addins/Mono.Addins/Mono.Addins.dll.config \
-		src/FSpot.Widgets.dll.config \
-		src/FSpot.Utils.dll.config \
-		src/f-spot.exe.config \
-		src/Cms.dll.config
+CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
+			--disable-scrollkeeper \
+			--disable-static
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
+
+DLLMAP_FILES=		lib/dbus-sharp-glib/NDesk.DBus.GLib.dll.config \
+			lib/dbus-sharp-glib/NDesk.DBus.GLib.dll.config \
+			lib/gio-sharp/gio/gio-sharp.dll.config \
+			lib/gtk-sharp-beans/gtk-sharp-beans.dll.config \
+			lib/libgphoto2-sharp/libgphoto2-sharp.dll.config \
+			src/Cms.dll.config.in \
+			src/FSpot.Utils.dll.config \
+			src/FSpot.Widgets.dll.config.in \
+			src/f-spot.exe.config.in
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/icon-theme-installer
 
 .include <bsd.port.mk>

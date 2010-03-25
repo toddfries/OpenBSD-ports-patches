@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.407 2010/02/01 17:00:14 espie Exp $
+# $OpenBSD: Makefile,v 1.410 2010/03/24 16:19:56 naddy Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -37,7 +37,6 @@
      SUBDIR += dbus-glib
      SUBDIR += dbus-python
      SUBDIR += dclock
-     SUBDIR += dejavu-fonts
      SUBDIR += devilspie
      SUBDIR += dmenu
      SUBDIR += driconf
@@ -210,7 +209,6 @@
      SUBDIR += rox-filer
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
-     SUBDIR += ruby-gtk
      SUBDIR += rxvt
      SUBDIR += sawfish
      SUBDIR += sclock
@@ -268,7 +266,6 @@
      SUBDIR += wmmenu,gdk_pixbuf
      SUBDIR += wmname
      SUBDIR += wmpinboard
-     SUBDIR += wmtheme
      SUBDIR += wmthemeinstall
      SUBDIR += wmtime
      SUBDIR += wmtz
