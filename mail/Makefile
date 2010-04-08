@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.246 2010/02/01 17:00:13 espie Exp $
+# $OpenBSD: Makefile,v 1.249 2010/04/03 09:48:25 landry Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
  
@@ -37,6 +37,7 @@
      SUBDIR += cyrus-imapd,drac
      SUBDIR += dkim-milter
      SUBDIR += dovecot
+     SUBDIR += dovecot,bdb
      SUBDIR += dovecot,ldap
      SUBDIR += dovecot,ldap,mysql,postgresql,sqlite,bdb
      SUBDIR += dovecot,mysql
@@ -51,7 +52,6 @@
      SUBDIR += dspam,pgsql
      SUBDIR += elm
      SUBDIR += enigmail
-     SUBDIR += enigmail-seamonkey
      SUBDIR += evolution
      SUBDIR += evolution-exchange
      SUBDIR += evolution-plugin-rss
@@ -206,6 +206,7 @@
      SUBDIR += swaks
      SUBDIR += sylpheed
      SUBDIR += sylpheed,gpgme
+     SUBDIR += sympa
      SUBDIR += teapop
      SUBDIR += thunderbird-i18n
      SUBDIR += tkrat

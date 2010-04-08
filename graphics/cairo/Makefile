@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2009/08/10 06:31:44 kili Exp $
+# $OpenBSD: Makefile,v 1.27 2010/04/02 08:21:14 eric Exp $
 
 COMMENT=		vector graphics library
 
-DISTNAME=		cairo-1.8.8
+DISTNAME=		cairo-1.8.10
 PKGNAME=		${DISTNAME}p0
-SHARED_LIBS=		cairo   9.2
+SHARED_LIBS=		cairo   9.3
 CATEGORIES=		graphics
 
 HOMEPAGE=		http://cairographics.org/introduction
@@ -12,7 +12,8 @@ HOMEPAGE=		http://cairographics.org/introduction
 MAINTAINER=		Eric Faurot <eric@openbsd.org>
 
 WANTLIB=		X11 Xau Xdmcp Xrender expat fontconfig freetype m \
-			pixman-1.>=12.0 pthread-stubs xcb z
+			pixman-1.>=12.0 pthread-stubs xcb xcb-render \
+			xcb-render-util z
 
 # LGPLv2.1 / MPL 1.1
 PERMIT_PACKAGE_CDROM=	Yes
@@ -30,10 +31,10 @@ LIB_DEPENDS=		png::graphics/png \
 			glitz.>=2:glitz->=0.5.6:graphics/glitz
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		png_REQUIRES=libpng
 CONFIGURE_ARGS=		--enable-glitz \
 			--enable-pdf \
-			--enable-ps
+			--enable-ps \
+			--enable-xcb
 
 REGRESS_DEPENDS=	:ghostscript-*:print/ghostscript/gnu
 

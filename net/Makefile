@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.624 2010/03/23 21:21:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.627 2010/04/05 21:17:39 xsa Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -25,6 +25,7 @@
      SUBDIR += arping
      SUBDIR += arpwatch
      SUBDIR += avahi
+     SUBDIR += avahi,
      SUBDIR += axel
      SUBDIR += axyftp
      SUBDIR += balance
@@ -100,6 +101,7 @@
      SUBDIR += galago-daemon
      SUBDIR += gftp
      SUBDIR += gmudix
+     SUBDIR += gnaughty
      SUBDIR += gnet
      SUBDIR += gnugk
      SUBDIR += gopher
@@ -492,6 +494,7 @@
      SUBDIR += transmission
      SUBDIR += trickle
      SUBDIR += ttcp
+     SUBDIR += twirssi
      SUBDIR += twitux
      SUBDIR += ucspi-unix
      SUBDIR += udptunnel

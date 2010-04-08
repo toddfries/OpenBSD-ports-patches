@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.26 2009/12/21 18:03:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2010/04/05 10:52:50 robert Exp $
 
 COMMENT=	desktop note-taking application written in C\#
 
 GNOME_PROJECT=	tomboy
-GNOME_VERSION=	1.0.1
-PKGNAME=	${DISTNAME}p1
+GNOME_VERSION=	1.2.0
+PKGNAME=	tomboy-${VERSION}p0
 
 CATEGORIES=	x11
 
@@ -43,6 +43,7 @@ RUN_DEPENDS=	::devel/mono-addins \
 		:gnome-icon-theme->=2.18.0:x11/gnome/icon-theme
 
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
+		--disable-update-mimedb \
 		--enable-sketching=no
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

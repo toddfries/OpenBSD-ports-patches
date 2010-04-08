@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2009/12/21 21:21:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2010/04/03 23:24:09 sthen Exp $
 
 COMMENT =	gpx file viewer
 
 VERSION =	0.1.2
 DISTNAME =	gpx-viewer-${VERSION}
-PKGNAME=	${DISTNAME}p0
+PKGNAME=	${DISTNAME}p1
 
 CATEGORIES =	geo x11
 
@@ -21,7 +21,8 @@ MASTER_SITES =	http://edge.launchpad.net/gpx-viewer/trunk/${VERSION}/+download/
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib" \
+			ac_cv_path_VALAC=""
 USE_GMAKE =		yes
 
 MODULES =	devel/gettext \
@@ -37,5 +38,7 @@ WANTLIB += glitz gmodule-2.0 gnutls gobject-2.0 gpg-error gthread-2.0
 WANTLIB += gtk-x11-2.0 json-glib-1.0 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += soup-2.4 sqlite3 tasn1 xcb xml2 z Xxf86vm drm
+WANTLIB += ORBit-2 dbus-1 dbus-glib-1 gconf-2 gnome-keyring proxy
+WANTLIB += soup-gnome-2.4
 
 .include <bsd.port.mk>

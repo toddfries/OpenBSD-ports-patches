@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2010/03/20 17:02:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2010/04/05 10:59:29 robert Exp $
 
 COMMENT-main=	framework for Multicast DNS Service Discovery
 COMMENT-gtk=	GUI client utilities for avahi
@@ -10,9 +10,9 @@ V=		0.6.25
 DISTNAME=	avahi-${V}
 CATEGORIES=	net devel
 
-PKGNAME-main=	avahi-${V}p6
+PKGNAME-main=	avahi-${V}p7
 PKGNAME-gtk=	avahi-gtk-${V}p4
-PKGNAME-mono=	mono-avahi-${V}p0
+PKGNAME-mono=	mono-avahi-${V}p1
 PKGNAME-qt3=	avahi-qt3-${V}p2
 PKGNAME-qt4=	avahi-qt4-${V}p1
 
@@ -40,7 +40,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${HOMEPAGE}/download/
 
 PSEUDO_FLAVORS=	no_gtk no_mono no_qt3 no_qt4
-FLAVOR?=
+FLAVOR?=	no_gtk no_mono no_qt3 no_qt4
 
 MULTI_PACKAGES=	-main
 
@@ -132,7 +132,7 @@ USE_GMAKE=	Yes
 USE_X11=	Yes
 USE_LIBTOOL=	Yes
 
-AUTOCONF_VERSION= 2.62
+AUTOCONF_VERSION= 2.63
 
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \

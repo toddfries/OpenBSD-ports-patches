@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.9 2010/03/23 09:57:45 espie Exp $
+# $OpenBSD: Port.pm,v 1.11 2010/04/06 10:10:03 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -109,6 +109,44 @@ package DPB::Task::Port::NoTime;
 our @ISA = qw(DPB::Task::Port);
 sub notime { 1 }
 
+package DPB::Task::Port::Depends;
+our @ISA=qw(DPB::Task::Port::NoTime);
+
+sub run
+{
+	my ($self, $core) = @_;
+	my $job = $core->job;
+	my $dep = {};
+	for my $kind (qw(BUILD_DEPENDS LIB_DEPENDS)) {
+		if (exists $job->{v}{info}{$kind}) {
+			for my $d (values %{$job->{v}{info}{$kind}}) {
+				$dep->{$d->fullpkgname.".tgz"} = 1;
+			}
+		}
+	}
+	exit(0) unless %$dep;
+	my $sudo = OpenBSD::Paths->sudo;
+	my $shell = $core->{shell};
+	$self->redirect($job->{log});
+	my @cmd = ('/usr/sbin/pkg_add');
+	if ($job->{builder}->{update}) {
+		push(@cmd, "-rq", "-Dupdate", "-Dupdatedepends");
+	}
+	if ($job->{builder}->{forceupdate}) {
+		push(@cmd,  "-Dinstalled");
+	}
+	print join(' ', @cmd, (sort keys %$dep)), "\n";
+	my $path = $job->{builder}->{fullrepo}.'/';
+	if (defined $shell) {
+		$shell->run(join(' ', "PKG_PATH=$path", $sudo, @cmd, 
+		    (sort keys %$dep)));
+	} else {
+		$ENV{PKG_PATH} = $path;
+		exec{$sudo}($sudo, @cmd, sort keys %$dep);
+	}
+	exit(1);
+}
+
 package DPB::Task::Port::ShowSize;
 our @ISA = qw(DPB::Task::Port);
 
@@ -207,6 +245,7 @@ my $repo = {
 	clean => 'DPB::Task::Port::Clean',
 	prepare => 'DPB::Task::Port::NoTime',
 	fetch => 'DPB::Task::Port::Fetch',
+	depends => 'DPB::Task::Port::Depends',
 	'show-size' => 'DPB::Task::Port::ShowSize',
 	'show-fake-size' => 'DPB::Task::Port::ShowFakeSize',
 };
@@ -231,7 +270,7 @@ sub new
 	if ($builder->{clean}) {
 		push @todo, "clean";
 	}
-	push(@todo, qw(prepare fetch patch configure build));
+	push(@todo, qw(depends prepare fetch patch configure build));
 	if ($builder->{size}) {
 		push @todo, 'show-size';
 	}

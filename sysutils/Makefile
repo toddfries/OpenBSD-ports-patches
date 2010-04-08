@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.196 2010/03/22 17:43:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.198 2010/04/02 11:42:29 jasper Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR =
@@ -61,6 +61,7 @@
      SUBDIR += knutclient
      SUBDIR += krename
      SUBDIR += ktsuss
+     SUBDIR += lat
      SUBDIR += libretto-config
      SUBDIR += libstatgrab
      SUBDIR += login_fingerprint
@@ -162,6 +163,7 @@
      SUBDIR += wmmon
      SUBDIR += wmwlmon
      SUBDIR += xbatt
+     SUBDIR += xjobs
      SUBDIR += xps
      SUBDIR += xstatbar
      SUBDIR += xuvmstat

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.776 2010/03/25 10:28:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.782 2010/04/07 06:24:14 stephan Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -170,6 +170,7 @@
      SUBDIR += libio
      SUBDIR += libixp
      SUBDIR += libmagic
+     SUBDIR += libmpc
      SUBDIR += libmtp
      SUBDIR += libnotify
      SUBDIR += libofx
@@ -222,6 +223,7 @@
      SUBDIR += mpfr
      SUBDIR += mysql++
      SUBDIR += mysql-gui-common
+     SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
      SUBDIR += nspr
@@ -244,6 +246,7 @@
      SUBDIR += p5-Alien-wxWidgets
      SUBDIR += p5-Any-Moose
      SUBDIR += p5-AnyEvent
+     SUBDIR += p5-AnyEvent-HTTP
      SUBDIR += p5-App-CLI
      SUBDIR += p5-App-Info
      SUBDIR += p5-AppConfig
@@ -256,6 +259,7 @@
      SUBDIR += p5-B-Hooks-EndOfScope
      SUBDIR += p5-B-Hooks-OP-Check
      SUBDIR += p5-B-Keywords
+     SUBDIR += p5-B-Utils
      SUBDIR += p5-BFD
      SUBDIR += p5-BSD-Resource
      SUBDIR += p5-BSD-stat
@@ -334,10 +338,12 @@
      SUBDIR += p5-Data-Alias
      SUBDIR += p5-Data-Buffer
      SUBDIR += p5-Data-Dump
+     SUBDIR += p5-Data-Dump-Streamer
      SUBDIR += p5-Data-Dumper-Simple
      SUBDIR += p5-Data-Flow
      SUBDIR += p5-Data-FormValidator
      SUBDIR += p5-Data-Hierarchy
+     SUBDIR += p5-Data-ICal
      SUBDIR += p5-Data-Lazy
      SUBDIR += p5-Data-OptList
      SUBDIR += p5-Data-Random
@@ -656,6 +662,8 @@
      SUBDIR += p5-Test-YAML-Valid
      SUBDIR += p5-Test-use-ok
      SUBDIR += p5-Text-FixEOL
+     SUBDIR += p5-Text-vFile-asData
+     SUBDIR += p5-Throwable
      SUBDIR += p5-Tie-Array-Sorted
      SUBDIR += p5-Tie-CPHash
      SUBDIR += p5-Tie-Cache
