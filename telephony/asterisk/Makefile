@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.73 2010/02/26 18:42:12 espie Exp $
+# $OpenBSD: Makefile,v 1.80 2010/04/10 12:45:35 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			1.6.0.25
+VER=			1.6.2.6
 # you can set PATCHVER=p0, p1 etc to bump everything,
 # this takes care of the subpackage/flavor maze
-#PATCHVER=		p0
+PATCHVER=		p1
 CORESOUNDS=		1.4.17
 DISTNAME=		asterisk-${VER:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}${PATCHVER}
@@ -28,10 +28,11 @@ PERMIT_DISTFILES_FTP=	Yes
 MULTI_PACKAGES+=	-main
 SUBST_VARS+=		CORESOUNDS
 
-WANTLIB-main=		c crypto m pthread ssl stdc++ termcap z
+WANTLIB-main=		c crypto iconv m pthread ssl stdc++ termcap z
 LIB_DEPENDS-main=	gsm::audio/gsm \
 			ogg.>=5::audio/libogg \
 			vorbis.>=5,vorbisenc.>=2::audio/libvorbis \
+			xml2::textproc/libxml \
 			sqlite3.>=3::databases/sqlite3 \
 			execinfo::devel/libexecinfo \
 			popt::devel/popt
@@ -43,8 +44,7 @@ USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	autoconf
-# Should be 2.63(?)
-AUTOCONF_VERSION=	2.62
+AUTOCONF_VERSION=	2.63
 AUTOMAKE_VERSION=	1.9
 BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
 			${MODGNU_AUTOMAKE_DEPENDS}
@@ -112,8 +112,6 @@ CONFIGURE_ARGS+=	--with-iodbc=no \
 MULTI_PACKAGES+=	-odbc
 COMMENT-odbc=		ODBC support for Asterisk
 LIB_DEPENDS-odbc=	iodbc.>=3::databases/iodbc
-CONFIGURE_ARGS+=	--with-iodbc=${LOCALBASE} \
-			--with-ltdl=${LOCALBASE}
 .endif
 
 # snmp
@@ -128,23 +126,19 @@ LIB_DEPENDS-snmp=	netsnmp.>=7::net/net-snmp \
 			netsnmpagent.>=7::net/net-snmp \
 			netsnmphelpers.>=7::net/net-snmp \
 			netsnmpmibs.>=7::net/net-snmp
-CONFIGURE_ARGS+=	--with-netsnmp=${LOCALBASE}
 .endif
 
 # speex
-# XXX crashes at startup (bus error)
-#PSEUDO_FLAVORS+=	no_speex
-#.if ${FLAVOR:L:Mno_speex}
+PSEUDO_FLAVORS+=	no_speex
+.if ${FLAVOR:L:Mno_speex}
 CONFIGURE_ARGS+=	--with-speex=no
-#.else
-#MULTI_PACKAGES+=	-speex
-#COMMENT-speex=		Speex codec for Asterisk
-#WANTLIB-speex=		m
-#LIB_DEPENDS-speex=	speex.>=7:speex->=1.2rc1:audio/speex \
-#			speexdsp:speex->=1.2rc1:audio/speex
-#CONFIGURE_ARGS+=	--with-speex=${LOCALBASE} \
-#			--with-speexdsp=${LOCALBASE}
-#.endif
+.else
+MULTI_PACKAGES+=	-speex
+COMMENT-speex=		Speex codec for Asterisk
+WANTLIB-speex=		m
+LIB_DEPENDS-speex=	speex.>=7:speex->=1.2rc1:audio/speex \
+			speexdsp:speex->=1.2rc1:audio/speex
+.endif
 
 # curl
 PSEUDO_FLAVORS+=	no_curl
@@ -155,7 +149,6 @@ MULTI_PACKAGES+=	-curl
 COMMENT-curl=		libCURL support for Asterisk
 WANTLIB-curl=		crypto idn ssl z
 LIB_DEPENDS-curl=	curl.>=6::net/curl
-CONFIGURE_ARGS+=	--with-curl=${LOCALBASE}
 .endif
 
 # postgresql
@@ -167,7 +160,6 @@ MULTI_PACKAGES+=	-pgsql
 COMMENT-pgsql=		PostgreSQL support for Asterisk
 WANTLIB-pgsql=		z
 LIB_DEPENDS-pgsql=	pq.>=5::databases/postgresql
-CONFIGURE_ARGS+=	--with-postgres=${LOCALBASE}
 .endif
 
 # jabber
@@ -178,13 +170,13 @@ CONFIGURE_ARGS+=	--with-iksemel=no
 MULTI_PACKAGES+=	-jabber
 COMMENT-jabber=		Jabber support for Asterisk
 LIB_DEPENDS-jabber=	iksemel::textproc/iksemel
+WANTLIB-jabber=		crypto ssl
 .endif
 
 # h323
 .if ${FLAVOR:L:Mh323}
-LIB_DEPENDS-main+=	h323::net/openh323 \
-			pt::devel/pwlib
-WANTLIB-main+=		SDL avutil expat lber ldap ldap_r sasl2
+LIB_DEPENDS-main+=	h323.>=3::net/h323plus
+WANTLIB-main+=		SDL avutil expat lber ldap ldap_r pt.>=3 sasl2
 .else
 CONFIGURE_ARGS+=	--with-pwlib=no \
 			--with-h323=no

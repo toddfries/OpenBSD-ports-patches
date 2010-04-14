@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2010/03/22 16:56:13 robert Exp $
+# $OpenBSD: Makefile,v 1.39 2010/04/08 16:40:04 robert Exp $
 
 # sync with net/avahi,-mono
 ONLY_FOR_ARCHS=	amd64 i386 powerpc # arm
@@ -6,7 +6,7 @@ ONLY_FOR_ARCHS=	amd64 i386 powerpc # arm
 COMMENT=	cross platform, open source .NET developement framework
 
 DISTNAME=	mono-2.6.3
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p17
 
 CATEGORIES=	lang devel
 
@@ -16,7 +16,7 @@ SHARED_LIBS +=  mono-profiler-aot    1.0      # .0.0
 
 HOMEPAGE=	http://www.mono-project.com/
 
-MAINTAINER=	Aleksander Piotrowski <alek@openbsd.org>
+MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 # GPLv2, LGPL, MIT X11, MPL
 PERMIT_PACKAGE_FTP=	Yes
@@ -33,6 +33,8 @@ EXTRACT_SUFX=	.tar.bz2
 MODULES=	devel/gettext \
 		lang/mono
 
+MODMONO_DEPS=	No
+
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 
@@ -45,27 +47,19 @@ BUILD_DEPENDS=	:bison-*:devel/bison \
 RUN_DEPENDS=	::x11/libgdiplus
 LIB_DEPENDS=	gc::devel/boehm-gc
 
-AUTOCONF_VERSION=2.62
+AUTOCONF_VERSION=2.63
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib" \
 		CPPFLAGS="-I${LOCALBASE}/include" \
 		LC_ALL=C
-CONFIGURE_ARGS= ${CONFIGURE_SHARED} \
-                --with-gc=boehm \
-                --with-glib=system \
-                --with-tls=pthread \
-                --with-jit=yes \
-                --with-interp=no \
-                --with-sigaltstack=no \
-                --with-libgdiplus=installed \
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--with-glib=system \
+		--with-tls=pthread \
+		--with-jit=yes \
+		--with-interp=no \
+		--with-libgdiplus=installed \
 		--enable-quiet-build=no \
-                --disable-shared-handles
-
-.if ${MACHINE_ARCH} == "amd64"
-CONFIGURE_ENV+=	CFLAGS="-DSIZEOF_VOID_P=8"
-.else
-CONFIGURE_ENV+=	CFLAGS="-DSIZEOF_VOID_P=4"
-.endif
+		--disable-shared-handles
 
 REGRESS_TARGET=check
 
@@ -87,8 +81,6 @@ BASH_SCRIPTS=	mcs/class/Mono.WebBrowser/build-csproj2k5 \
 		scripts/mono-find-requires.in \
 		scripts/mono-find-provides.in \
 		scripts/mono-test-install \
-		web/mono-build-w32.sh \
-		build-mingw32.sh \
 		mono/arch/arm/dpiops.sh
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples

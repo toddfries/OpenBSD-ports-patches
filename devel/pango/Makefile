@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.38 2009/11/21 13:29:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.40 2010/04/06 10:15:59 sthen Exp $
 
 COMMENT=		library for layout and rendering of text
 
-V=			1.24.5
+V=			1.28.0
 DISTNAME=		pango-${V}
 PKGNAME=		${DISTNAME}p0
 
-SHARED_LIBS += pango-1.0	   1801.0    # .2400.5
-SHARED_LIBS += pangox-1.0	   1801.0    # .2400.5
-SHARED_LIBS += pangoft2-1.0	   1801.0    # .2400.5
-SHARED_LIBS += pangoxft-1.0	   1801.0    # .2400.5
-SHARED_LIBS += pangocairo-1.0	   1801.0    # .2400.5
+SHARED_LIBS +=  pango-1.0            1802.0   # .2800.0
+SHARED_LIBS +=  pangox-1.0           1802.0   # .2800.0
+SHARED_LIBS +=  pangoft2-1.0         1802.0   # .2800.0
+SHARED_LIBS +=  pangoxft-1.0         1802.0   # .2800.0
+SHARED_LIBS +=  pangocairo-1.0       1802.0   # .2800.0
 
 CATEGORIES=		devel x11
 
@@ -23,7 +23,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	X11 Xau Xdmcp Xft Xrender c expat fontconfig freetype \
-		glitz m pcre pixman-1 png pthread-stubs xcb z
+		glitz m pcre pixman-1 png pthread-stubs xcb z \
+		xcb-render xcb-render-util
 
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/pango/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
 EXTRACT_SUFX=		.tar.bz2
@@ -38,7 +39,10 @@ USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED}
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--disable-gtk-doc \
+			--disable-silent-rules \
+			--disable-introspection
 CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include"
 
 FAKE_FLAGS=		aliasdir=${PREFIX}/share/examples/pango \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.451 2010/02/01 17:00:14 espie Exp $
+# $OpenBSD: Makefile,v 1.454 2010/04/08 08:08:08 stephan Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -76,6 +76,7 @@
      SUBDIR += man2web
      SUBDIR += mantis
      SUBDIR += mediawiki
+     SUBDIR += mediawiki-CategoryTree
      SUBDIR += mediawiki-httpauth
      SUBDIR += mhonarc
      SUBDIR += midori
@@ -326,6 +327,7 @@
      SUBDIR += polipo
      SUBDIR += pound
      SUBDIR += privoxy
+     SUBDIR += puppet-dashboard
      SUBDIR += py-CherryPy
      SUBDIR += py-beaker
      SUBDIR += py-beautifulsoup
@@ -436,6 +438,7 @@
      SUBDIR += xapian-omega
      SUBDIR += xcache
      SUBDIR += xmhtml
+     SUBDIR += xxxterm
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework

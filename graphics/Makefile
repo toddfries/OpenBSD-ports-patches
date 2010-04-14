@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.256 2010/03/22 22:33:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.258 2010/03/25 22:08:58 jasper Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -50,7 +50,6 @@
      SUBDIR += ffmpeg
      SUBDIR += ffmpegthumbnailer
      SUBDIR += flash
-     SUBDIR += fnlib
      SUBDIR += freeglut
      SUBDIR += freeimage
      SUBDIR += fswebcam
@@ -190,8 +189,6 @@
      SUBDIR += rawstudio
      SUBDIR += ruby-color
      SUBDIR += ruby-gd2
-     SUBDIR += ruby-gdk-imlib
-     SUBDIR += ruby-gdk-pixbuf
      SUBDIR += ruby-gruff
      SUBDIR += ruby-mini_magick
      SUBDIR += ruby-rmagick

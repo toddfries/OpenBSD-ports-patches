@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.9 2009/09/21 18:33:57 landry Exp $
+# $OpenBSD: Makefile,v 1.11 2010/04/09 13:32:57 landry Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT-main =		bundle of plugins for gmpc
 COMMENT-wikipedia =	wikipedia plugin for gmpc
 
-VERSION =	0.19.0
+VERSION =	0.20.0
 DISTNAME =	gmpc-plugins-${VERSION}
 PKGNAME-main =		${DISTNAME}
-PKGNAME-wikipedia =	gmpc-wikipedia-${VERSION}
+PKGNAME-wikipedia =	gmpc-wikipedia-${VERSION}p0
 
 CATEGORIES =	audio
 
@@ -45,7 +45,8 @@ LIB_DEPENDS-wikipedia =	${LIB_DEPENDS} \
 			webkit-1.0::www/webkit
 WANTLIB-wikipedia =	${WANTLIB} ICE SM Xt enchant gcrypt gnutls gpg-error \
 			icudata icui18n icuuc jpeg soup-2.4 tasn1 xslt \
-			gailutil
+			gailutil gstbase-0.10 gstpbutils-0.10 gstreamer-0.10 \
+			gstvideo-0.10
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
 WANTLIB += Xfixes Xi Xinerama Xrandr Xrender atk-1.0 cairo
@@ -67,6 +68,7 @@ USE_GMAKE =	Yes
 
 CONFIGURE_STYLE =gnu
 CONFIGURE_ARGS+=--disable-mserver \
+		--disable-mmkeys \
 		--disable-libnotify \
 		--disable-lirc
 

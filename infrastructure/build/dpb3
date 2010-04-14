@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: dpb3,v 1.8 2010/03/20 18:29:18 espie Exp $
+# $OpenBSD: dpb3,v 1.12 2010/04/12 13:30:11 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -40,12 +40,13 @@ use DPB::Heuristics;
 use DPB::Locks;
 use DPB::Logger;
 use DPB::Job;
+use DPB::Grabber;
 
 use OpenBSD::Paths;
 my $make = $ENV{MAKE} || OpenBSD::Paths->make;
 
 our ($opt_t, $opt_e, $opt_T, $opt_c, $opt_h, $opt_A, $opt_j, $opt_a, 
-    $opt_r, $opt_s,
+    $opt_r, $opt_s, $opt_u, $opt_U,
     $opt_L, $opt_m, $opt_f, $opt_x);
 my @subdirlist;
 
@@ -90,10 +91,10 @@ sub parse_build_file
 
 my @build_files = ();
 my $heuristics = DPB::Heuristics->new;
-set_usage("dpb3 [-acersx] [-A arch] [-j N] [-P plist] [-h hosts] [-L logdir] [-b log] ",
+set_usage("dpb3 [-acersuUx] [-A arch] [-j N] [-P plist] [-h hosts] [-L logdir] [-b log] ",
 	"[-t ctimeout] [-T dtimeout] [-m threshold] [path ...]");
 try {
-getopts('acersh:xA:f:j:m:P:b:L:S:t:T:', {
+getopts('acersuUh:xA:f:j:m:P:b:L:S:t:T:', {
 	    P => sub {
 		my $file = shift;
 		open my $fh, '<', $file or die "Can't open $file\n";
@@ -162,14 +163,15 @@ if (defined $opt_j && $opt_j !~ m/^\d+$/) {
 my $fullrepo = "$repo/$arch/all";
 if ($opt_h) {
 	DPB::Core->parse_hosts_file($opt_h, $arch, $opt_t, $logger, $heuristics);
-} else {
-	$opt_j //= `sysctl -n hw.ncpu`;
-	chomp($opt_j);
 }
 
-$opt_j //= 0;
-for (1 .. $opt_j) {
-	DPB::Core::Factory->new('localhost');
+my $prop = {};
+if ($opt_j) {
+	$prop->{jobs} = $opt_j;
+}
+
+if ($opt_j || !$opt_h) {
+	DPB::Core::Factory->new('localhost', $prop);
 }
 
 if (@build_files > 0) {
@@ -180,7 +182,8 @@ if (@build_files > 0) {
 }
 
 my $builder = DPB::PortBuilder->new(
-    $opt_c, $opt_s, $fullrepo, $logger, $ports, $make, $heuristics);
+    $opt_c, $opt_s, $opt_u, $opt_U, $fullrepo, $logger, $ports, $make, 
+    $heuristics);
 
 my $locker = DPB::Locks->new($lockdir);
 my $engine = DPB::Engine->new($builder, $heuristics, $logger, $locker);
@@ -191,7 +194,6 @@ while (!DPB::Core->avail) {
 	sleep 1;
 }
 my $core = DPB::Core->get;
-my $loglist = DPB::Util->make_hot($logger->open("vars"));
 #my $dump = DPB::Util->make_hot($logger->open('dump'));
 
 my $keep_going = 1;
@@ -218,64 +220,30 @@ sub handle_non_waiting_jobs
 	} else {
 		$reporter->report;
 	}
+	return $keep_going;
 }
 
-sub finish
-{
-	my $h = shift;
-	for my $v (values %$h) {
-		$engine->new_path($v);
-	}
-	handle_non_waiting_jobs(1);
-}
-
-sub grab_subdirs
-{
-	my $list = shift;
-	DPB::Vars->grab_list($core, $ports, $make, $list, $loglist, $dpb,
-	    sub {
-		finish(shift);
-	});
-}
-
-sub complete_subdirs
-{
-	# more passes if necessary
-	while ($keep_going) {
-		my @subdirlist = ();
-		for my $v (DPB::PkgPath->seen) {
-			next if defined $v->{info};
-			if (defined $v->{tried}) {
-				$engine->add_fatal($v);
-			}
-			$v->add_to_subdirlist(\@subdirlist);
-			$v->{tried} = 1;
-		}
-		last if @subdirlist == 0;
-
-		grab_subdirs(\@subdirlist);
-	}
-}
+my $grabber = DPB::Grabber->new($ports, $make, $logger, $engine, $dpb,
+	sub { handle_non_waiting_jobs(1) });
 
 if (@subdirlist > 0) {
-	grab_subdirs(\@subdirlist);
+	$grabber->grab_subdirs($core, \@subdirlist);
 }
 
-complete_subdirs();
+$grabber->complete_subdirs($core);
 
 if ($opt_a) {
-	grab_subdirs(undef);
+	$grabber->grab_subdirs($core);
 }
 
 
-complete_subdirs();
+$grabber->complete_subdirs($core);
 # give back "our" core to the pool.
 
 if (!$opt_e) {
 	$core->mark_ready;
 }
 # and let's wait for all jobs now.
-close($loglist);
 
 $engine->finished_scanning;
 #$engine->dump($dump);

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2010/03/20 17:02:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2010/04/08 18:53:40 ajacoutot Exp $
 
 COMMENT-main=	framework for Multicast DNS Service Discovery
 COMMENT-gtk=	GUI client utilities for avahi
@@ -10,11 +10,11 @@ V=		0.6.25
 DISTNAME=	avahi-${V}
 CATEGORIES=	net devel
 
-PKGNAME-main=	avahi-${V}p6
-PKGNAME-gtk=	avahi-gtk-${V}p4
-PKGNAME-mono=	mono-avahi-${V}p0
-PKGNAME-qt3=	avahi-qt3-${V}p2
-PKGNAME-qt4=	avahi-qt4-${V}p1
+PKGNAME-main=	avahi-${V}p8
+PKGNAME-gtk=	avahi-gtk-${V}p5
+PKGNAME-mono=	mono-avahi-${V}p3
+PKGNAME-qt3=	avahi-qt3-${V}p3
+PKGNAME-qt4=	avahi-qt4-${V}p2
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -40,7 +40,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${HOMEPAGE}/download/
 
 PSEUDO_FLAVORS=	no_gtk no_mono no_qt3 no_qt4
-FLAVOR?=
+FLAVOR?=	no_gtk no_mono no_qt3 no_qt4
 
 MULTI_PACKAGES=	-main
 
@@ -64,8 +64,11 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 . if !${FLAVOR:L:Mno_mono}
 MULTI_PACKAGES+= -mono
 MODULES+=	lang/mono
-BUILD_DEPENDS+=	::x11/mono-gtk2
-RUN_DEPENDS-mono= ::x11/mono-gtk2
+BUILD_DEPENDS+=	${MODMONO_BUILD_DEPENDS} \
+		::x11/mono-gtk2
+RUN_DEPENDS-mono= ${MODMONO_RUN_DEPENDS} \
+		::net/avahi,-main \
+		::x11/mono-gtk2
 LIB_DEPENDS-mono= # empty
 WANTLIB-mono=	# empty
 . else
@@ -86,7 +89,8 @@ BUILD_DEPENDS+=	:python-gdbm-*:lang/python/${MODPY_VERSION},-gdbm \
 LIB_DEPENDS-gtk= ${MODGETTEXT_LIB_DEPENDS} \
 		avahi-client,avahi-common,avahi-core,avahi-glib::net/avahi \
 		glade-2.0.>=1::devel/libglade2
-RUN_DEPENDS-gtk= :python-gdbm-*:lang/python/${MODPY_VERSION},-gdbm \
+RUN_DEPENDS-gtk= ${MODPY_RUN_DEPENDS} \
+		:python-gdbm-*:lang/python/${MODPY_VERSION},-gdbm \
 		::x11/py-gtk2 \
 		::x11/dbus-python \
 		::devel/py-twisted/web \
@@ -132,7 +136,10 @@ USE_GMAKE=	Yes
 USE_X11=	Yes
 USE_LIBTOOL=	Yes
 
-AUTOCONF_VERSION= 2.62
+MODPY_RUNDEP=	No
+MODMONO_DEPS=	No
+
+AUTOCONF_VERSION= 2.63
 
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \

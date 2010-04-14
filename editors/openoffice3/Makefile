@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2010/02/02 12:32:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2010/04/06 21:56:31 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -6,11 +6,11 @@ COMMENT-main=	multi-platform productivity suite
 COMMENT-kde=	optional integration of OpenOffice to the KDE environment
 COMMENT-java=	optional integration of OpenOffice java features
 
-VERSION=	3.1.1
+VERSION=	3.2.0
 DISTNAME=	OOo_${VERSION}
-WRKDIST=	${WRKDIR}/OOO310_m19
-PKGNAME=	openoffice-${VERSION}p1
-PKGNAME-main=	openoffice-${VERSION}p6
+WRKDIST=	${WRKDIR}/OOO320_m12
+PKGNAME=	openoffice-${VERSION}p0
+PKGNAME-main=	openoffice-${VERSION}p0
 PKGNAME-kde=	openoffice-kde-${VERSION}p0
 PKGNAME-java=	openoffice-java-${VERSION}p1
 CATEGORIES=	editors productivity
@@ -68,7 +68,7 @@ LANGS=			bg ca de es fa fi fr hu it ja ko \
 
 .for l in ${LANGS:L}
 MULTI_PACKAGES+=	-i18n-$l
-PKGNAME-i18n-$l=	openoffice-i18n-$l-${VERSION}p0
+PKGNAME-i18n-$l=	openoffice-i18n-$l-${VERSION}
 COMMENT-i18n-$l=	$l language pack for OpenOffice.Org
 RUN_DEPENDS-i18n-$l=	::editors/openoffice3
 WANTLIB-i18n-$l=
@@ -83,7 +83,7 @@ BUILD_DEPENDS+=	:zip-*:archivers/zip \
 		:bash-*:shells/bash \
 		:p5-Archive-Zip-*:archivers/p5-Archive-Zip \
 		::print/cups \
-		::devel/boost \
+		:boost->=1.41.0:devel/boost \
 		:xpdf-3.02:textproc/xpdf:patch
 
 MODULES+=	lang/python \
@@ -127,7 +127,7 @@ LIB_DEPENDS-java=	:db-java->=4,<5:databases/db/v4,-java,java \
 RUN_DEPENDS-java=	${MODJAVA_RUN_DEPENDS} \
 			::editors/openoffice3 \
 			::java/javaPathHelper
-WANTLIB-java=		c estdc++ m pthread xml2
+WANTLIB-java=		c estdc++ m pthread
 
 USE_X11=	Yes
 USE_GMAKE=	Yes
@@ -154,6 +154,7 @@ CONFIGURE_ARGS=	--disable-gnome-vfs \
 		--disable-pasf \
 		--enable-cairo \
 		--enable-kde \
+		--enable-hids \
 		--with-system-jpeg \
 		--with-system-python \
 		--with-system-libxml \
@@ -186,10 +187,15 @@ CONFIGURE_ARGS+=--without-java
 # Some cool OpenOffice.Org extensions
 CONFIGURE_ARGS+=	--enable-minimizer \
 			--enable-presenter-console \
-			--enable-pdfimport
+			--enable-pdfimport \
+			--enable-report-builder \
+			--enable-wiki-publisher
 EXTENSIONS=		minimizer/sun-presentation-minimizer.oxt \
 			presenter/presenter-screen.oxt \
-			pdfimport/pdfimport.oxt
+			pdfimport/pdfimport.oxt \
+			swext/wiki-publisher.oxt \
+			sun-report-builder.oxt
+
 
 .if ${FLAVOR:L:Mdebug}
 CONFIGURE_ARGS+=	--enable-symbols \
@@ -197,21 +203,24 @@ CONFIGURE_ARGS+=	--enable-symbols \
 .endif
 
 MAKE_ENV+=	envcflags="${CFLAGS}" LOCALBASE="${LOCALBASE}"
+.if !${FLAVOR:L:Mno_java}
+MAKE_ENV+=	LD_LIBRARY_PATH=${JAVA_HOME}/jre/lib/${ARCH}:${JAVA_HOME}/jre/lib/${ARCH}/client:${JAVA_HOME}/jre/lib/${ARCH}/server
+.endif
+MAKE_ENV+=	TMP=${WRKSRC}
 
 # kludge
 TCSH=		${LOCALBASE}/bin/tcsh
 
 .if ${FLAVOR:L:Mparallel}
 NCPU!=		echo $$((`sysctl -n hw.ncpu`+1))
-.else
-NCPU=		1
+NCPUFLAG=	-P ${NCPU}
 .endif
 
 .if ${FLAVOR:L:Mnormal_build}
-BUILD_CMD=	cd instsetoo_native && build.pl -P ${NCPU} --all && \
+BUILD_CMD=	cd instsetoo_native && build.pl ${NCPUFLAG} --all && \
 		cd util && dmake ooolanguagepack
 .else
-BUILD_CMD=	cd instsetoo_native && build.pl -P ${NCPU} --all --dlv_switch -link && \
+BUILD_CMD=	cd instsetoo_native && build.pl ${NCPUFLAG} --all --dlv_switch -link && \
 		cd util && dmake ooolanguagepack
 .endif
 
@@ -250,13 +259,13 @@ do-install:
 			${INSTALL_DATA} $$ICONS ${PREFIX}/share/icons/hicolor/48x48/apps; \
 		done
 
-	cd ${WRKSRC}/instsetoo_native/unxobsd.pro/OpenOffice/portable/install/en-US*/openbsd-* && \
+	cd ${WRKSRC}/instsetoo_native/unxobsd.pro/OpenOffice/portable/install/en-US/openbsd && \
 		for SW in `ls -1 *.sw`; do \
 			${TAR} xf $$SW -C ${WRKDIR}/tmp; \
 		done
 
 .for l in ${LANGS}
-	cd ${WRKSRC}/instsetoo_native/unxobsd.pro/OpenOffice_languagepack/portable/install/$l/openbsd-* && \
+	cd ${WRKSRC}/instsetoo_native/unxobsd.pro/OpenOffice_languagepack/portable/install/$l/openbsd && \
 		for SW in `ls -1 *.sw`; do \
 			${TAR} xf $$SW -C ${WRKDIR}/tmp; \
 		done
@@ -264,7 +273,7 @@ do-install:
 
 	cd ${WRKDIR}/tmp/opt ; ${TAR} cf - -C . . | ${TAR} xf - -C ${PREFIX}
 
-	cd ${WRKSRC}/solver/310/unxobsd.pro/bin && \
+	cd ${WRKSRC}/solver/320/unxobsd.pro/bin && \
 		${INSTALL_DATA}	${EXTENSIONS} ${PREFIX}/openoffice.org3/share/extension/install
 
 	${INSTALL_SCRIPT} ${FILESDIR}/soffice.sh ${PREFIX}/bin/soffice

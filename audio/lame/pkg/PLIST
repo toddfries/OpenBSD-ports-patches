@@ -1,0 +1,22 @@
+@comment $OpenBSD: PLIST,v 1.10 2010/03/29 07:55:55 ajacoutot Exp $
+@pkgpath audio/lame
+@pkgpath audio/lame,no_x11
+@bin bin/lame
+@bin bin/mp3rtp
+include/lame/
+include/lame/lame.h
+lib/libmp3lame.a
+lib/libmp3lame.la
+@man man/man1/lame.1
+share/doc/lame/
+share/doc/lame/basic.html
+share/doc/lame/contributors.html
+share/doc/lame/examples.html
+share/doc/lame/history.html
+share/doc/lame/id3.html
+share/doc/lame/index.html
+share/doc/lame/lame.css
+share/doc/lame/modes.html
+share/doc/lame/node6.html
+share/doc/lame/switchs.html
+%%SHARED%%

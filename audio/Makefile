@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.238 2010/02/01 17:00:12 espie Exp $
+# $OpenBSD: Makefile,v 1.241 2010/04/05 18:59:42 landry Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR =
@@ -68,6 +68,7 @@
      SUBDIR += libmp3splt
      SUBDIR += libmpcdec
      SUBDIR += libmpd
+     SUBDIR += libmpdclient
      SUBDIR += libmusicbrainz
      SUBDIR += libnjb
      SUBDIR += libogg
@@ -76,7 +77,6 @@
      SUBDIR += libsndfile
      SUBDIR += libvorbis
      SUBDIR += libworkman
-     SUBDIR += lopster
      SUBDIR += mac
      SUBDIR += madplay
      SUBDIR += midish
@@ -137,6 +137,7 @@
      SUBDIR += p5-gnupod
      SUBDIR += p5-libvorbis
      SUBDIR += pacpl
+     SUBDIR += pianobar
      SUBDIR += picard
      SUBDIR += pms
      SUBDIR += portaudio-svn

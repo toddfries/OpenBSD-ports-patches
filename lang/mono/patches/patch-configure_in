@@ -1,13 +1,13 @@
-$OpenBSD: patch-configure_in,v 1.2 2010/03/21 13:43:10 robert Exp $
+$OpenBSD: patch-configure_in,v 1.4 2010/04/08 12:12:33 robert Exp $
 --- configure.in.orig	Thu Feb 25 16:20:57 2010
-+++ configure.in	Sun Mar 21 10:58:51 2010
-@@ -147,8 +147,11 @@ case "$host" in
++++ configure.in	Thu Apr  8 12:14:12 2010
+@@ -147,14 +147,19 @@ case "$host" in
  		;;
  	*-*-*openbsd*)
  		platform_win32=no
 -		CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE -DGC_FREEBSD_THREADS -DPLATFORM_BSD"
 -		libmono_cflags="-D_THREAD_SAFE"
-++		CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE -DGC_FREEBSD_THREADS -DPLATFORM_BSD -D_GNU_SOURCE -D_REENTRANT -DUSE_MMAP"
+++		CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE -DGC_OPENBSD_THREADS -DPLATFORM_BSD -D_GNU_SOURCE -D_REENTRANT -DUSE_MMAP"
 +		if test "x$disable_munmap" != "xyes"; then
 +		CPPFLAGS="$CPPFLAGS -DUSE_MUNMAP"
 +		fi
@@ -15,7 +15,15 @@ $OpenBSD: patch-configure_in,v 1.2 2010/03/21 13:43:10 robert Exp $
  		LDFLAGS="$LDFLAGS -pthread"
  		libmono_ldflags="-pthread"
  		need_link_unlink=yes
-@@ -314,7 +317,7 @@ fi
+ 		AC_DEFINE(PTHREAD_POINTER_ID)
+ 		libdl=
++		gc_default=boehm
+ 		libgc_threads=pthreads
++		with_sigaltstack=no
+ 		use_sigposix=yes
+ 		;;
+ 	*-*-linux*)
+@@ -314,7 +319,7 @@ fi
  
  AM_CONDITIONAL(NO_VERSION_SCRIPT, test x$no_version_script = xyes)
  
@@ -24,7 +32,15 @@ $OpenBSD: patch-configure_in,v 1.2 2010/03/21 13:43:10 robert Exp $
  AC_CHECK_HEADERS(sys/user.h sys/socket.h sys/ipc.h sys/sem.h sys/utsname.h alloca.h ucontext.h pwd.h sys/select.h netinet/tcp.h netinet/in.h unistd.h sys/types.h)
  
  
-@@ -1228,6 +1231,9 @@ if test x$platform_win32 = xno; then
+@@ -764,6 +769,7 @@ case "x$gc" in
+ 		AC_SUBST(HAVE_BOEHM_GC)
+ 		LIBGC_LIBS="-lgc $libdl"
+ 		LIBGC_STATIC_LIBS="$LIBGC_LIBS"
++		libmono_ldflags="$libmono_ldflags -lgc"
+ 
+ 		# AC_CHECK_FUNCS does not work for some reason...
+ 		AC_CHECK_LIB(gc, GC_gcj_malloc, found_gcj_malloc="yes",,$libdl)
+@@ -1228,6 +1234,9 @@ if test x$platform_win32 = xno; then
  		*-*-*freebsd*)
  			AC_CHECK_LIB(pthread, main, LIBS="$LIBS -pthread")
  		;;
@@ -34,7 +50,7 @@ $OpenBSD: patch-configure_in,v 1.2 2010/03/21 13:43:10 robert Exp $
  		*)
  			AC_CHECK_LIB(pthread, main, LIBS="$LIBS -lpthread")
  		;;
-@@ -1620,6 +1626,7 @@ if test x$platform_win32 = xno; then
+@@ -1620,6 +1629,7 @@ if test x$platform_win32 = xno; then
  	AC_CHECK_MEMBERS(
  		[struct kinfo_proc.kp_proc],,, 
  		[#include <sys/types.h>
@@ -42,7 +58,7 @@ $OpenBSD: patch-configure_in,v 1.2 2010/03/21 13:43:10 robert Exp $
  		 #include <sys/sysctl.h>
  		 #include <sys/proc.h>
  		 ])
-@@ -1743,7 +1750,7 @@ AC_MSG_RESULT($try_dev_random)
+@@ -1743,7 +1753,7 @@ AC_MSG_RESULT($try_dev_random)
  
  case "{$target}" in
      *-openbsd*)
@@ -51,7 +67,7 @@ $OpenBSD: patch-configure_in,v 1.2 2010/03/21 13:43:10 robert Exp $
      ;;
  
  dnl Win32 does not have /dev/random, they have their own method...
-@@ -1932,8 +1939,8 @@ JIT_SUPPORTED=no
+@@ -1932,8 +1942,8 @@ JIT_SUPPORTED=no
  INTERP_SUPPORTED=no
  LIBC="libc.so.6"
  INTL="libc.so.6"

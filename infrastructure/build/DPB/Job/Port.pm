@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.8 2010/03/04 14:23:01 espie Exp $
+# $OpenBSD: Port.pm,v 1.13 2010/04/12 13:43:05 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -67,15 +67,6 @@ sub stopped_clock
 	$self->{started} += $gap;
 }
 
-sub redirect
-{
-	my ($self, $log) = @_;
-	close STDOUT;
-	close STDERR;
-	open STDOUT, '>>', $log or die "Can't write to $log";
-	open STDERR, '>&STDOUT' or die "bad redirect";
-}
-
 sub run
 {
 	my ($self, $core) = @_;
@@ -117,6 +108,46 @@ sub notime { 0 }
 package DPB::Task::Port::NoTime;
 our @ISA = qw(DPB::Task::Port);
 sub notime { 1 }
+
+package DPB::Task::Port::Depends;
+our @ISA=qw(DPB::Task::Port::NoTime);
+
+sub run
+{
+	my ($self, $core) = @_;
+	my $job = $core->job;
+	my $dep = {};
+	my $v = $job->{v};
+	for my $kind (qw(BUILD_DEPENDS LIB_DEPENDS)) {
+		if (exists $v->{info}{$kind}) {
+			for my $d (values %{$v->{info}{$kind}}) {
+				next if $d eq $v;
+				$dep->{$d->fullpkgname} = 1;
+			}
+		}
+	}
+	exit(0) unless %$dep;
+	my $sudo = OpenBSD::Paths->sudo;
+	my $shell = $core->{shell};
+	$self->redirect($job->{log});
+	my @cmd = ('/usr/sbin/pkg_add');
+	if ($job->{builder}->{update}) {
+		push(@cmd, "-rq", "-Dupdate", "-Dupdatedepends");
+	}
+	if ($job->{builder}->{forceupdate}) {
+		push(@cmd,  "-Dinstalled");
+	}
+	print join(' ', @cmd, (sort keys %$dep)), "\n";
+	my $path = $job->{builder}->{fullrepo}.'/';
+	if (defined $shell) {
+		$shell->run(join(' ', "PKG_PATH=$path", $sudo, @cmd, 
+		    (sort keys %$dep)));
+	} else {
+		$ENV{PKG_PATH} = $path;
+		exec{$sudo}($sudo, @cmd, sort keys %$dep);
+	}
+	exit(1);
+}
 
 package DPB::Task::Port::ShowSize;
 our @ISA = qw(DPB::Task::Port);
@@ -216,6 +247,7 @@ my $repo = {
 	clean => 'DPB::Task::Port::Clean',
 	prepare => 'DPB::Task::Port::NoTime',
 	fetch => 'DPB::Task::Port::Fetch',
+	depends => 'DPB::Task::Port::Depends',
 	'show-size' => 'DPB::Task::Port::ShowSize',
 	'show-fake-size' => 'DPB::Task::Port::ShowFakeSize',
 };
@@ -240,7 +272,7 @@ sub new
 	if ($builder->{clean}) {
 		push @todo, "clean";
 	}
-	push(@todo, qw(prepare fetch patch configure build));
+	push(@todo, qw(depends prepare fetch patch configure build));
 	if ($builder->{size}) {
 		push @todo, 'show-size';
 	}

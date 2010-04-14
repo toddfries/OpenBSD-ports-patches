@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.19 2009/01/09 17:43:38 naddy Exp $
+# $OpenBSD: Makefile,v 1.21 2010/04/12 08:39:32 jasper Exp $
 
-.if ${MACHINE_ARCH} == "hppa"
-BROKEN=		signal-related bug? any program linked with this hangs
-.endif
+# Signal-related bug? any program linked with this hangs
+NOT_FOR_ARCHS=	hppa
 
 COMMENT=	callback framework for C++
 
 DISTNAME=	libsigc++-1.0.4
-PKGNAME=	${DISTNAME}p3
+PKGNAME=	${DISTNAME}p4
 SHARED_LIBS=		sigc 1.0
 MODGNU_SHARED_LIBS=	sigc '-no-undefined'
 

@@ -1,0 +1,12 @@
+$OpenBSD: patch-vcl_unx_source_dtrans_X11_selection_cxx,v 1.1 2010/03/30 11:03:07 robert Exp $
+--- vcl/unx/source/dtrans/X11_selection.cxx.orig.port	Mon Jan 25 19:02:10 2010
++++ vcl/unx/source/dtrans/X11_selection.cxx	Mon Jan 25 19:04:29 2010
+@@ -40,7 +40,7 @@
+ #include <X11/Xlib.h>
+ #include <X11/X.h>
+ #include <X11/Xutil.h>
+-#if defined(LINUX) || defined(NETBSD) || defined (FREEBSD)
++#if defined(LINUX) || defined(NETBSD) || defined (FREEBSD) || defined (OPENBSD)
+ #include <sys/poll.h>
+ #else
+ #include <poll.h>

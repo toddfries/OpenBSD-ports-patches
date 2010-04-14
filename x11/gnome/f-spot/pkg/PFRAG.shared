@@ -1,3 +1,0 @@
-@comment $OpenBSD: PFRAG.shared,v 1.2 2009/08/15 17:40:05 ajacoutot Exp $
-@lib lib/f-spot/libfspot.so.${LIBfspot_VERSION}
-@lib lib/f-spot/libfspotjpegtran.so.${LIBfspotjpegtran_VERSION}

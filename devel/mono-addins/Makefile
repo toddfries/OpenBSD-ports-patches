@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2008/11/24 20:04:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2010/04/06 17:50:35 ajacoutot Exp $
 
 COMMENT=	framework for creating extensible applications
 
 DISTNAME=	mono-addins-0.4
+PKGNAME=	${DISTNAME}p0
 CATEGORIES=	devel lang
 
 HOMEPAGE=	http://www.mono-project.com/Mono.Addins
