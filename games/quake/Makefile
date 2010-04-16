@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2010/03/20 16:59:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.27 2010/04/15 14:11:01 ajacoutot Exp $
 
 COMMENT-main=		Quake/Quake-world client
 COMMENT-server=		Quake world server
 CATEGORIES=		games
 
-FULLPKGNAME-server=	quakeworld-server-20000101p6
+FULLPKGNAME-server=	quakeworld-server-20000101p6p0
 FULLPKGPATH-server=	games/quake,-server
 PKGNAME-main=		quake-20000101p8
 DISTNAME=		quake-v6-bsd-kame
@@ -56,7 +56,7 @@ WANTLIB-main=		X11 Xext c m pthread-stubs xcb
 CONFIGURE_ARGS+=	--with-opengl=yes --with-opengl-includes=${X11BASE}/include
 WANTLIB+=		GL X11 Xext pthread
 .else
-BROKEN=			choose either sdl, ggi, gl or x11
+ERRORS+=		choose either sdl, ggi, gl or x11
 .endif
 
 WRKDIST=	${WRKDIR}/quakeforge

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2009/03/16 11:40:25 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2010/04/15 13:27:48 ajacoutot Exp $
 
 COMMENT=	bayesian spam filter
 
 DISTNAME=	bogofilter-1.1.6
-PKGNAME =	${DISTNAME}p0
+PKGNAME =	${DISTNAME}p1
 CATEGORIES=	mail
 
 MAINTAINER=	Marc Espie <espie@openbsd.org>
@@ -33,6 +33,7 @@ LIB_DEPENDS+=		sqlite3.>=8::databases/sqlite3
 DB_ENGINE=		qdbm
 LIB_DEPENDS+=		qdbm.>=11::databases/qdbm
 .else
+BROKEN-hppa=		configure stuck on testing if BDB supports shared environments
 DB_DIR=			db
 LIB_DEPENDS+=		lib/db/db.=3:db->=3,<4:databases/db/v3
 .endif

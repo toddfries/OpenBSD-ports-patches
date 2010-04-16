@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.39 2010/04/06 21:56:31 robert Exp $
+# $OpenBSD: Makefile,v 1.41 2010/04/15 14:58:25 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -10,7 +10,7 @@ VERSION=	3.2.0
 DISTNAME=	OOo_${VERSION}
 WRKDIST=	${WRKDIR}/OOO320_m12
 PKGNAME=	openoffice-${VERSION}p0
-PKGNAME-main=	openoffice-${VERSION}p0
+PKGNAME-main=	openoffice-${VERSION}p1
 PKGNAME-kde=	openoffice-kde-${VERSION}p0
 PKGNAME-java=	openoffice-java-${VERSION}p1
 CATEGORIES=	editors productivity
@@ -78,6 +78,7 @@ LIB_DEPENDS-i18n-$l=
 
 BUILD_DEPENDS+=	:zip-*:archivers/zip \
 		:unzip-*:archivers/unzip \
+		:gtar-*:archivers/gtar \
 		:bison-*:devel/bison \
 		:tcsh-*:shells/tcsh \
 		:bash-*:shells/bash \
