@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2008/10/08 17:17:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2010/04/15 21:40:30 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	Perl defines relating to AF_INET6 sockets
 
 MODULES=	cpan
 DISTNAME=	Socket6-0.22
+PKGNAME=	p5-${DISTNAME}p0
 CATEGORIES=	net devel
 
 # 3-clause BSD
