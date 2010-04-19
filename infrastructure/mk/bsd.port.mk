@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.989 2010/04/12 13:08:20 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.991 2010/04/17 10:16:11 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -127,7 +127,7 @@ OPSYS_VER = ${OSREV}
 
 ALL_ARCHS = alpha amd64 arm armish arm hppa hppa64 i386 landisk \
 	loongson luna88k m68k m88k mac68k macppc mips64 mips64el \
-	mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 zaurus
+	mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus
 # not all powerpc have apm(4), hence the use of macppc
 APM_ARCHS = amd64 arm i386 loongson macppc sparc sparc64
 LP64_ARCHS = alpha amd64 hppa64 sparc64 mips64 mips64el
@@ -3125,12 +3125,26 @@ dump-vars:
 	@echo ${FULLPKGPATH}.${_v}=${${_v}:Q}
 .   endif
 .  endfor
+.  for _v in ${_ALL_VARIABLES_PER_ARCH}
+.    for _a in ${ALL_ARCHS}
+.      if defined(${_v}-${_a})
+	@echo ${FULLPKGPATH}.${_v}-${_a}=${${_v}-${_a}:Q}
+.      endif
+.    endfor
+.  endfor
 .else
 .  for _S in ${MULTI_PACKAGES}
 .    for _v in ${_ALL_VARIABLES}
 .     if defined(${_v})
 	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}:Q}
 .     endif
+.    endfor
+.    for _v in ${_ALL_VARIABLES_PER_ARCH}
+.      for _a in ${ALL_ARCHS}
+.        if defined(${_v}-${_a})
+	@echo ${FULLPKGPATH${_S}}.${_v}-${_a}=${${_v}-${_a}:Q}
+.        endif
+.      endfor
 .    endfor
 .    for _v in ${_ALL_VARIABLES_INDEXED}
 .      if defined(${_v}${_S})
@@ -3139,13 +3153,6 @@ dump-vars:
 .    endfor
 .  endfor
 .endif
-.for _v in ${_ALL_VARIABLES_PER_ARCH}
-.  for _a in ${ALL_ARCHS}
-.    if defined(${_v}-${_a})
-	@echo ${FULLPKGPATH}.${_v}-${_a}=${${_v}-${_a}:Q}
-.    endif
-.  endfor
-.endfor
 
 
 _all_phony = ${_recursive_depends_targets} \
