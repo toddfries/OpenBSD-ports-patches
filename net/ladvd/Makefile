@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2009/07/26 10:50:10 kili Exp $
+# $OpenBSD: Makefile,v 1.6 2010/04/21 22:57:04 alek Exp $
 
 COMMENT =		link advertisement (LLDP/CDP etc) daemon
 
@@ -23,5 +23,9 @@ CONFIGURE_STYLE =	gnu autoconf
 CONFIGURE_ARGS +=	--with-user=_ladvd --with-chroot-dir=/var/empty
 
 WANTLIB =		c event
+
+# enables regression tests;  GNU configure script enables them
+# only if devel/check is available at build time
+BUILD_DEPENDS =		::devel/check
 
 .include <bsd.port.mk>

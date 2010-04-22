@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.785 2010/04/14 06:35:14 stephan Exp $
+# $OpenBSD: Makefile,v 1.789 2010/04/21 23:00:18 nicm Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -80,6 +80,7 @@
      SUBDIR += dtc
      SUBDIR += eclipse
      SUBDIR += ectags
+     SUBDIR += eggdbus
      SUBDIR += ethos
      SUBDIR += fasm
      SUBDIR += ffcall
@@ -136,7 +137,6 @@
      SUBDIR += iso-codes
      SUBDIR += itcl
      SUBDIR += ivy
-     SUBDIR += jad
      SUBDIR += jakarta-servletapi
      SUBDIR += jam
      SUBDIR += jdk
@@ -158,6 +158,7 @@
      SUBDIR += libdvdread
      SUBDIR += libelf
      SUBDIR += libev
+     SUBDIR += libeventextra
      SUBDIR += libexecinfo
      SUBDIR += libffi
      SUBDIR += libfmt
@@ -768,6 +769,7 @@
      SUBDIR += py-kid
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
+     SUBDIR += py-mox
      SUBDIR += py-mxDateTime,python2.4
      SUBDIR += py-mxDateTime,python2.5
      SUBDIR += py-nose

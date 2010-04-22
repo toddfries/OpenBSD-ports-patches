@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.112 2010/04/10 16:52:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.115 2010/04/21 07:41:29 jasper Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -42,6 +42,7 @@
      SUBDIR += gyrus
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
+     SUBDIR += icon-theme-extras
      SUBDIR += keyring
      SUBDIR += keyring-query
      SUBDIR += krb5-auth-dialog
@@ -51,6 +52,7 @@
      SUBDIR += libgda
      SUBDIR += libgdamm
      SUBDIR += libgnome
+     SUBDIR += libgnome-keyring
      SUBDIR += libgnomemm
      SUBDIR += libgnomecanvas
      SUBDIR += libgnomecanvasmm
@@ -60,7 +62,6 @@
      SUBDIR += libgnomeuimm
      SUBDIR += libgnomeprint
      SUBDIR += libgnomeprintui
-     SUBDIR += libgtkhtml
      SUBDIR += librsvg
      SUBDIR += libgweather
      SUBDIR += libxklavier
