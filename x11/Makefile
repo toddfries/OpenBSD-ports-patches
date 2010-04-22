@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.413 2010/04/08 09:03:10 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.415 2010/04/22 22:06:34 kili Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -105,11 +105,12 @@
      SUBDIR += gtksourceviewmm
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
-     SUBDIR += hs-x11-extras
+     SUBDIR += hs-X11
      SUBDIR += human-icon-theme
      SUBDIR += i3
      SUBDIR += icewm
      SUBDIR += icon-naming-utils
+     SUBDIR += icontool
      SUBDIR += idesk
      SUBDIR += inconsolata-font
      SUBDIR += industrial-icon-theme
