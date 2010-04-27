@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.115 2010/04/21 07:41:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.118 2010/04/24 16:36:33 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += alacarte
      SUBDIR += anjuta
+     SUBDIR += anjuta-extras
      SUBDIR += applets2
      SUBDIR += at-spi
      SUBDIR += audio
@@ -72,6 +73,7 @@
      SUBDIR += mime-data
      SUBDIR += mono-gnome
      SUBDIR += mono-gnome-desktop
+     SUBDIR += mono-keyring
      SUBDIR += mousetweaks
      SUBDIR += nautilus
      SUBDIR += nautilus-open-terminal
@@ -93,6 +95,7 @@
      SUBDIR += settings-daemon
      SUBDIR += speech
      SUBDIR += ssh-askpass
+     SUBDIR += system-monitor
      SUBDIR += terminal
      SUBDIR += themes
      SUBDIR += themes-extras

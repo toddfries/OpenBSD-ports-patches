@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.15 2009/06/02 04:45:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2010/04/23 17:59:12 jasper Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		flexible communications framework, specifications
 
-DISTNAME=		telepathy-spec-0.17.25
+DISTNAME=		telepathy-spec-0.19.5
 PKGNAME=		${DISTNAME}p1
 CATEGORIES=		books
 
@@ -28,7 +28,7 @@ pre-configure:
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/gtk-doc/html/telepathy-spec/
-	${INSTALL_DATA} ${WRKSRC}/doc/{spec.html,telepathy-spec.devhelp2} \
+	${INSTALL_DATA} ${WRKSRC}/doc/spec/* \
 		${PREFIX}/share/gtk-doc/html/telepathy-spec/
 
 .include <bsd.port.mk>

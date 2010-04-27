@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.59 2010/04/22 09:17:50 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.62 2010/04/26 07:06:49 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		data backends for the Evolution mail/PIM suite
 
 GNOME_PROJECT=		evolution-data-server
-GNOME_VERSION=		2.30.0
+GNOME_VERSION=		2.30.1
 
 CATEGORIES=		databases
 
@@ -45,9 +45,11 @@ WANTLIB += ssl tasn1 xcb xcb-render xcb-render-util xml2 z
 
 MODULES=		devel/gettext \
 			lang/python \
+			textproc/intltool \
 			x11/gnome
 
-BUILD_DEPENDS=		:bison-*:devel/bison
+BUILD_DEPENDS=		:bison-*:devel/bison \
+			:gperf-*:devel/gperf
 LIB_DEPENDS= 		db:db->=4,<5:databases/db/v4 \
 			ldap,lber::databases/openldap \
 			gpg-error::security/libgpg-error \
@@ -86,9 +88,3 @@ post-extract:
 		${WRKSRC}/addressbook/libebook/gen-western-table.py
 
 .include <bsd.port.mk>
-
-# XXX:
-# No NTLM support in OpenLDAP; Plaintext password authentication will be
-# used when connecting to the Exchange Global Catalog server. Consider 
-# installing the evo-openldap package, or building OpenLDAP with the 
-# patch in servers/exchange/docs/openldap-ntlm.diff

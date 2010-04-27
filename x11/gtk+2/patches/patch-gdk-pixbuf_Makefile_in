@@ -1,6 +1,6 @@
-$OpenBSD: patch-gdk-pixbuf_Makefile_in,v 1.27 2010/04/20 19:03:37 ajacoutot Exp $
+$OpenBSD: patch-gdk-pixbuf_Makefile_in,v 1.30 2010/04/25 20:35:08 ajacoutot Exp $
 --- gdk-pixbuf/Makefile.in.orig	Tue Mar 23 04:32:58 2010
-+++ gdk-pixbuf/Makefile.in	Tue Apr 20 19:24:50 2010
++++ gdk-pixbuf/Makefile.in	Sun Apr 25 22:29:27 2010
 @@ -1379,7 +1379,7 @@ test_gdk_pixbuf_LDADD = $(LDADDS)
  gdk_pixbuf_csource_SOURCES = gdk-pixbuf-csource.c
  gdk_pixbuf_csource_LDADD = $(LDADDS)

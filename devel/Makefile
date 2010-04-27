@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.789 2010/04/21 23:00:18 nicm Exp $
+# $OpenBSD: Makefile,v 1.795 2010/04/26 17:23:47 sthen Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -37,6 +37,7 @@
      SUBDIR += bouml
      SUBDIR += bzr
      SUBDIR += c2hs
+     SUBDIR += cabal-install
      SUBDIR += catalyst
      SUBDIR += catalyst-tutorial
      SUBDIR += ccache
@@ -127,7 +128,24 @@
      SUBDIR += help2man
      SUBDIR += hmake
      SUBDIR += horde
-     SUBDIR += hs-newbinary
+     SUBDIR += hs-HUnit
+     SUBDIR += hs-QuickCheck
+     SUBDIR += hs-binary
+     SUBDIR += hs-dataenc
+     SUBDIR += hs-deepseq
+     SUBDIR += hs-fgl
+     SUBDIR += hs-ghc-paths
+     SUBDIR += hs-hashed-storage
+     SUBDIR += hs-language-c
+     SUBDIR += hs-mmap
+     SUBDIR += hs-network
+     SUBDIR += hs-parallel
+     SUBDIR += hs-parsec
+     SUBDIR += hs-readline
+     SUBDIR += hs-regex-base
+     SUBDIR += hs-regex-compat
+     SUBDIR += hs-regex-posix
+     SUBDIR += hs-stm
      SUBDIR += hscolour
      SUBDIR += hudson
      SUBDIR += id-utils
@@ -164,6 +182,7 @@
      SUBDIR += libfmt
      SUBDIR += libftdi
      SUBDIR += libgdata
+     SUBDIR += libgee
      SUBDIR += libglade2
      SUBDIR += libglademm
      SUBDIR += libgsf
@@ -188,6 +207,7 @@
      SUBDIR += libsoup
      SUBDIR += libspectrum
      SUBDIR += libstdc++-man
+     SUBDIR += libtalloc
      SUBDIR += libtool
      SUBDIR += libunicode
      SUBDIR += libunique
@@ -219,6 +239,7 @@
      SUBDIR += mk
      SUBDIR += mm
      SUBDIR += mono-addins
+     SUBDIR += mono-notify
      SUBDIR += monodevelop
      SUBDIR += monotone
      SUBDIR += mowgli
@@ -894,6 +915,7 @@
      SUBDIR += startup-notification
      SUBDIR += stp
      SUBDIR += subversion
+     SUBDIR += subversion,gnome_keyring
      SUBDIR += svk
      SUBDIR += swig
      SUBDIR += t1lib

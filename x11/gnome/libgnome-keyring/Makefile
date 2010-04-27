@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/04/20 14:27:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2010/04/26 20:34:50 ajacoutot Exp $
 
 COMMENT=	library for gnome keyring integration
 
 GNOME_PROJECT=	libgnome-keyring
-GNOME_VERSION=	2.30.0
+GNOME_VERSION=	2.30.1
 
 SHARED_LIBS +=  gnome-keyring        6.0      # .1.1
 
@@ -14,13 +14,16 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += dbus-1 dbus-glib-1 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gpg-error pcre
+WANTLIB += gpg-error pcre gthread-2.0 z
 
 MODULES=	devel/gettext \
 		x11/gnome
 
 LIB_DEPENDS=	gcrypt::security/libgcrypt \
 		eggdbus-1::devel/eggdbus
+
+# There is no sense in providing the keyring library without the daemon.
+RUN_DEPENDS=	::x11/gnome/keyring
 
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-gtk-doc=no
