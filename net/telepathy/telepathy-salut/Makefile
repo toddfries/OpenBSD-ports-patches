@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2009/08/09 20:08:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2010/04/23 17:59:12 jasper Exp $
 
 COMMENT=		flexible communications framework, local-link component
 
-DISTNAME=		telepathy-salut-0.3.9
+DISTNAME=		telepathy-salut-0.3.11
+PKGNAME=		${DISTNAME}p0
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-salut/}
 
@@ -15,7 +16,7 @@ MODULES=		devel/gettext \
 
 LIB_DEPENDS=		avahi-client,avahi-common,avahi-glib,avahi-gobject::net/avahi \
 			soup-2.4.>=1::devel/libsoup \
-			telepathy-glib.>=4::net/telepathy/telepathy-glib
+			telepathy-glib.>=5::net/telepathy/telepathy-glib
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.456 2010/04/21 16:27:28 landry Exp $
+# $OpenBSD: Makefile,v 1.458 2010/04/24 00:08:03 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -43,12 +43,14 @@
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
      SUBDIR += firefox35
-     SUBDIR += galeon
      SUBDIR += gecko-mediaplayer
      SUBDIR += gnash
      SUBDIR += gtkhtml3
      SUBDIR += havp
      SUBDIR += hiawatha
+     SUBDIR += hs-cgi
+     SUBDIR += hs-html
+     SUBDIR += hs-xhtml
      SUBDIR += http_load
      SUBDIR += http_ping
      SUBDIR += igal

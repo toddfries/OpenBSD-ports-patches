@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2010/04/20 20:23:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.70 2010/04/25 08:43:29 stsp Exp $
 
 COMMENT-main=		subversion revision control system
 COMMENT-perl=		perl interface to subversion
@@ -6,16 +6,16 @@ COMMENT-python=		python interface to subversion
 COMMENT-ruby=		ruby interface to subversion
 COMMENT-ap2=		apache2 subversion modules
 
-VERSION=		1.6.6
+VERSION=		1.6.11
 DISTNAME=		subversion-${VERSION}
-PKGNAME-main=		${DISTNAME}p1
-FULLPKGNAME-perl=	p5-SVN-${VERSION}p0
+PKGNAME-main=		${DISTNAME}
+FULLPKGNAME-perl=	p5-SVN-${VERSION}
 FULLPKGPATH-perl=	devel/subversion,-perl
-FULLPKGNAME-python=	py-subversion-${VERSION}p0
+FULLPKGNAME-python=	py-subversion-${VERSION}
 FULLPKGPATH-python=	devel/subversion,-python
-FULLPKGNAME-ruby=	ruby-subversion-${VERSION}p1
+FULLPKGNAME-ruby=	ruby-subversion-${VERSION}
 FULLPKGPATH-ruby=	devel/subversion,-ruby
-FULLPKGNAME-ap2=	ap2-subversion-${VERSION}p0
+FULLPKGNAME-ap2=	ap2-subversion-${VERSION}
 FULLPKGPATH-ap2=	devel/subversion,-ap2
 
 SO_VERSION=	1.2
@@ -28,7 +28,7 @@ SHARED_LIBS+=	${_lib} ${SO_VERSION}
 
 CATEGORIES=	devel
 
-HOMEPAGE=	http://subversion.tigris.org/
+HOMEPAGE=	http://subversion.apache.org
 
 MAINTAINER=	Stefan Sperling <stsp@openbsd.org>
 
@@ -38,7 +38,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}/downloads/
+# Subversion 1.6.x tarballs are still hosted at tigris.org, not apache.org
+MASTER_SITES=	http://subversion.tigris.org/downloads/
 EXTRACT_SUFX=	.tar.bz2
 
 PSEUDO_FLAVORS=	no_bindings no_ap2
@@ -54,6 +55,8 @@ LIB_DEPENDS=	neon.>=26:neon->=0.26.2:net/neon \
 		aprutil-1::devel/apr-util \
 		sasl2.>=2::security/cyrus-sasl2 \
 		sqlite3::databases/sqlite3
+
+BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS}
 
 MULTI_PACKAGES=	-main
 
@@ -132,13 +135,14 @@ BUILD_DEPENDS+=	:swig->=1.3.36:devel/swig
 
 .if ${FLAVOR:L:Mgnome_keyring}
 SHARED_ONLY=	Yes
+MODULES+=	converters/libiconv
 LIB_DEPENDS-main+= ${LIB_DEPENDS} \
 		dbus-1.>=7::x11/dbus \
-		glib-2.0::devel/glib2 \
+		glib-2.0,gio-2.0,gmodule-2.0,gobject-2.0::devel/glib2 \
 		gnome-keyring.>=6:libgnome-keyring-*:x11/gnome/libgnome-keyring \
 		pcre.>=2::devel/pcre \
 		${MODGETTEXT_LIB_DEPENDS}
-zWANTLIB-main+=	apr-1 aprutil-1 iconv
+WANTLIB-main+=	apr-1 aprutil-1 dbus-glib-1 eggdbus-1 gcrypt gpg-error
 SHARED_LIBS+=	svn_auth_gnome_keyring-1 ${SO_VERSION}
 # gnome-keyring depends on dbus depends on pthread, so svn won't be able
 # to load libsvn_auth_gnome_keyring without the main executable being compiled
@@ -153,7 +157,7 @@ MAKE_FLAGS=	MAKE=${MAKE_PROGRAM}
 USE_LIBTOOL=	Yes
 # should be 2.63
 AUTOCONF_VERSION=2.62
-CONFIGURE_STYLE=autoconf
+CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	PYTHON2=${MODPY_BIN}
 CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
 		--with-sasl=${LOCALBASE} \

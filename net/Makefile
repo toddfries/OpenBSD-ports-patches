@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.628 2010/04/08 09:03:10 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.631 2010/04/24 16:37:30 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -105,6 +105,7 @@
      SUBDIR += gnugk
      SUBDIR += gopher
      SUBDIR += gotthard
+     SUBDIR += gsnmp
      SUBDIR += gtk-gnutella
      SUBDIR += h323plus
      SUBDIR += haproxy
@@ -302,6 +303,7 @@
      SUBDIR += p5-Net-Whois-RIPE
      SUBDIR += p5-Net-Whois-Raw
      SUBDIR += p5-Net-XMPP
+     SUBDIR += p5-Net-XWhois
      SUBDIR += p5-Net-Z3950-Zoom
      SUBDIR += p5-NetAddr-IP
      SUBDIR += p5-NetPacket
@@ -399,7 +401,6 @@
      SUBDIR += py-snmp
      SUBDIR += py-xmpp
      SUBDIR += py-zsi
-     SUBDIR += pymsn
      SUBDIR += quagga
      SUBDIR += queryperf
      SUBDIR += queso
