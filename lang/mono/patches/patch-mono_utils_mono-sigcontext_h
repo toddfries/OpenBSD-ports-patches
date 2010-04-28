@@ -1,24 +1,7 @@
-$OpenBSD: patch-mono_utils_mono-sigcontext_h,v 1.2 2010/03/23 08:25:26 robert Exp $
---- mono/utils/mono-sigcontext.h.orig	Fri Sep 25 16:58:11 2009
-+++ mono/utils/mono-sigcontext.h	Tue Mar 23 08:56:28 2010
-@@ -54,6 +54,16 @@
- 	#define UCONTEXT_REG_ESI(ctx) (((ucontext_t*)(ctx))->uc_mcontext.__gregs [_REG_ESI])
- 	#define UCONTEXT_REG_EDI(ctx) (((ucontext_t*)(ctx))->uc_mcontext.__gregs [_REG_EDI])
- 	#define UCONTEXT_REG_EIP(ctx) (((ucontext_t*)(ctx))->uc_mcontext.__gregs [_REG_EIP])
-+#elif defined(__OpenBSD__)
-+	#define UCONTEXT_REG_EAX(ctx) ((ctx)->sc_eax)
-+	#define UCONTEXT_REG_EBX(ctx) ((ctx)->sc_ebx)
-+	#define UCONTEXT_REG_ECX(ctx) ((ctx)->sc_ecx)
-+	#define UCONTEXT_REG_EDX(ctx) ((ctx)->sc_edx)
-+	#define UCONTEXT_REG_EBP(ctx) ((ctx)->sc_ebp)
-+	#define UCONTEXT_REG_ESP(ctx) ((ctx)->sc_esp)
-+	#define UCONTEXT_REG_ESI(ctx) ((ctx)->sc_esi)
-+	#define UCONTEXT_REG_EDI(ctx) ((ctx)->sc_edi)
-+	#define UCONTEXT_REG_EIP(ctx) ((ctx)->sc_eip)
- #else
- 	#define UCONTEXT_REG_EAX(ctx) (((ucontext_t*)(ctx))->uc_mcontext.gregs [REG_EAX])
- 	#define UCONTEXT_REG_EBX(ctx) (((ucontext_t*)(ctx))->uc_mcontext.gregs [REG_EBX])
-@@ -70,6 +80,21 @@
+$OpenBSD: patch-mono_utils_mono-sigcontext_h,v 1.4 2010/04/28 17:06:26 robert Exp $
+--- mono/utils/mono-sigcontext.h.orig	Tue Apr 27 10:09:07 2010
++++ mono/utils/mono-sigcontext.h	Tue Apr 27 10:09:37 2010
+@@ -80,6 +80,21 @@
  
  #ifdef __FreeBSD__
  #define UCONTEXT_GREGS(ctx)	&(((ucontext_t*)(ctx))->uc_mcontext)

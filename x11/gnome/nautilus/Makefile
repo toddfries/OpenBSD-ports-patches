@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.61 2010/04/26 15:11:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.63 2010/04/27 17:28:03 jasper Exp $
 
 COMMENT=		GNOME shell and file manager
 
@@ -9,11 +9,13 @@ COMMENT=		GNOME shell and file manager
 # x11/gnome/file-roller
 # x11/gnome/nautilus-open-terminal
 # x11/gnome/nautilus-sendto
+# x11/gnome/seahorse-plugins
 # x11/gnome/totem
 # x11/gnome/tracker
 
 GNOME_PROJECT=		nautilus
 GNOME_VERSION=		2.30.1
+PKGNAME=		${DISTNAME}p0
 
 SHARED_LIBS +=	nautilus-extension   2.0      # .2.0
 
@@ -46,7 +48,7 @@ RUN_DEPENDS=		:shared-mime-info->=0.21:misc/shared-mime-info \
 			:gnome-icon-theme-*:x11/gnome/icon-theme \
 			:gvfs->=1.0.3:x11/gnome/gvfs
 LIB_DEPENDS=		exif::graphics/libexif \
-			gnome-desktop-2::x11/gnome/desktop \
+			gnome-desktop-2.>=8.0::x11/gnome/desktop \
 			unique-1.0.>=1::devel/libunique
 
 USE_X11=		Yes
