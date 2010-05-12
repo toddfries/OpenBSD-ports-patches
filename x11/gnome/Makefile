@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.119 2010/04/29 06:39:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.121 2010/05/04 20:39:29 jasper Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -10,6 +10,7 @@
      SUBDIR += backgrounds
      SUBDIR += baker
      SUBDIR += bug-buddy
+     SUBDIR += byzanz
      SUBDIR += cheese
      SUBDIR += common
      SUBDIR += conduit
@@ -37,7 +38,6 @@
      SUBDIR += genius
      SUBDIR += ghex
      SUBDIR += gok
-     SUBDIR += gossip
      SUBDIR += gucharmap
      SUBDIR += gvfs
      SUBDIR += gyrus

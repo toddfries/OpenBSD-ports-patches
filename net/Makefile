@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.632 2010/04/29 05:35:34 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.634 2010/05/03 19:33:38 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -103,6 +103,8 @@
      SUBDIR += gnaughty
      SUBDIR += gnet
      SUBDIR += gnugk
+     SUBDIR += gnugk,mysql
+     SUBDIR += gnugk,pgsql
      SUBDIR += gopher
      SUBDIR += gotthard
      SUBDIR += gsnmp
@@ -210,6 +212,7 @@
      SUBDIR += netrate
      SUBDIR += netsed
      SUBDIR += nfdump
+     SUBDIR += nfsen
      SUBDIR += ngrep
      SUBDIR += nicotine
      SUBDIR += nmap

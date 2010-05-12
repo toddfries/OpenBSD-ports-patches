@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.259 2010/04/22 22:12:07 kili Exp $
+# $OpenBSD: Makefile,v 1.261 2010/04/30 17:07:10 jasper Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -57,7 +57,6 @@
      SUBDIR += fxtv
      SUBDIR += fyre
      SUBDIR += gd
-     SUBDIR += gdk-pixbuf
      SUBDIR += gegl
      SUBDIR += gfract
      SUBDIR += ggi
@@ -125,6 +124,7 @@
      SUBDIR += libungif
      SUBDIR += libwmf
      SUBDIR += libxmi
+     SUBDIR += lsys
      SUBDIR += luagd
      SUBDIR += luvcview
      SUBDIR += makehuman

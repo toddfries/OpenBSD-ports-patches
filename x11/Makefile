@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.415 2010/04/22 22:06:34 kili Exp $
+# $OpenBSD: Makefile,v 1.418 2010/05/10 08:27:46 dcoppa Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -106,6 +106,7 @@
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-X11
+     SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme
      SUBDIR += i3
      SUBDIR += icewm
@@ -211,6 +212,7 @@
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
      SUBDIR += rxvt
+     SUBDIR += rxvt-unicode
      SUBDIR += sawfish
      SUBDIR += sclock
      SUBDIR += scrotwm
@@ -245,7 +247,6 @@
      SUBDIR += vdesk
      SUBDIR += viewfax
      SUBDIR += vlc
-     SUBDIR += vlc,altivec
      SUBDIR += waimea
      SUBDIR += wampager
      SUBDIR += windowmaker
@@ -321,6 +322,7 @@
      SUBDIR += xlogout
      SUBDIR += xmascot
      SUBDIR += xmbdfed
+     SUBDIR += xmobar
      SUBDIR += xmold
      SUBDIR += xmonad
      SUBDIR += xosd
