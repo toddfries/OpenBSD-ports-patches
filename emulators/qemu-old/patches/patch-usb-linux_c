@@ -1,4 +1,4 @@
-$OpenBSD: patch-usb-linux_c,v 1.1 2008/06/19 05:51:17 todd Exp $
+$OpenBSD: patch-usb-linux_c,v 1.1.1.1 2010/05/27 17:33:43 fgsch Exp $
 --- usb-linux.c.orig	Sun Jan  6 13:38:42 2008
 +++ usb-linux.c	Tue Jun 17 19:33:23 2008
 @@ -958,17 +958,4 @@ void usb_host_info(void)

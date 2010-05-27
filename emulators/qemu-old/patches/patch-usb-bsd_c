@@ -1,4 +1,4 @@
-$OpenBSD: patch-usb-bsd_c,v 1.1 2008/06/19 05:51:17 todd Exp $
+$OpenBSD: patch-usb-bsd_c,v 1.1.1.1 2010/05/27 17:33:42 fgsch Exp $
 --- usb-bsd.c.orig	Tue Jun 17 19:46:59 2008
 +++ usb-bsd.c	Wed Jun 18 08:37:28 2008
 @@ -0,0 +1,602 @@
