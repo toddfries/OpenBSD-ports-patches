@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.249 2010/04/03 09:48:25 landry Exp $
+# $OpenBSD: Makefile,v 1.251 2010/05/25 12:18:16 stephan Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
  
@@ -22,6 +22,7 @@
      SUBDIR += clamsmtp
      SUBDIR += claws-mail
      SUBDIR += claws-mail,ldap
+     SUBDIR += claws-mail-attremover
      SUBDIR += claws-mail-cachesaver
      SUBDIR += claws-mail-htmlviewer
      SUBDIR += claws-mail-notification
@@ -218,8 +219,6 @@
      SUBDIR += wmmultipop3
      SUBDIR += wmpop3
      SUBDIR += xfaces
-     SUBDIR += xfmail
-     SUBDIR += xfmail,esd
      SUBDIR += xlbiff
      SUBDIR += z-push
      SUBDIR += zarafa

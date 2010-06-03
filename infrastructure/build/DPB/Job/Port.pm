@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.16 2010/04/26 08:32:53 espie Exp $
+# $OpenBSD: Port.pm,v 1.20 2010/05/10 13:02:35 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -79,6 +79,7 @@ sub run
 	my $shell = $core->{shell};
 	$self->redirect($job->{log});
 	my @args = ($t, "TRUST_PACKAGES=Yes",
+	    "FETCH_PACKAGES=No",
 	    "REPORT_PROBLEM='exit 1'", "BULK=No");
 	if ($job->{special}) {
 		push(@args, "WRKOBJDIR=/tmp/ports");
@@ -118,20 +119,32 @@ sub run
 	my $job = $core->job;
 	my $dep = {};
 	my $v = $job->{v};
-	my $base = $v->{pkgpath};
 	for my $kind (qw(BUILD_DEPENDS LIB_DEPENDS)) {
 		if (exists $v->{info}{$kind}) {
 			for my $d (values %{$v->{info}{$kind}}) {
-				next if $d->{pkgpath} eq $v;
+				next if $d->{pkgpath} eq $v->{pkgpath};
 				$dep->{$d->fullpkgname} = 1;
 			}
 		}
 	}
+	# recurse for extra stuff
+	if (exists $v->{info}{EXTRA}) {
+		for my $two (values %{$v->{info}{EXTRA}}) {
+			for my $kind (qw(RUN_DEPENDS LIB_DEPENDS)) {
+				if (exists $two->{info}{$kind}) {
+					for my $d (values %{$two->{info}{$kind}}) {
+						$dep->{$d->fullpkgname} = 1;
+					}
+				}
+			}
+		}
+	}
+
 	exit(0) unless %$dep;
 	my $sudo = OpenBSD::Paths->sudo;
 	my $shell = $core->{shell};
 	$self->redirect($job->{log});
-	my @cmd = ('/usr/sbin/pkg_add');
+	my @cmd = ('/usr/sbin/pkg_add', '-a');
 	if ($job->{builder}->{update}) {
 		push(@cmd, "-rqU", "-Dupdate", "-Dupdatedepends");
 	}

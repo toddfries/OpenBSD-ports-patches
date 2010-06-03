@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/04/09 16:41:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2010/05/12 10:56:02 ajacoutot Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
@@ -6,12 +6,14 @@ COMMENT-web =		network and application monitoring - web frontend
 
 VERSION =		1.8.2
 DISTNAME =		zabbix-${VERSION}
-FULLPKGNAME-main =	zabbix-agent-${VERSION}p0
+FULLPKGNAME-main =	zabbix-agent-${VERSION}p3
 FULLPKGPATH-main =	net/zabbix,-main
-PKGNAME-server =	zabbix-server-${VERSION}p0
-FULLPKGNAME-web =	zabbix-web-${VERSION}p0
+PKGNAME-server =	zabbix-server-${VERSION}p2
+FULLPKGNAME-web =	zabbix-web-${VERSION}p2
 FULLPKGPATH-web =	net/zabbix,-web
 CATEGORIES =		net
+
+MAJV =			${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 
 HOMEPAGE =		http://www.zabbix.com/
 
@@ -27,9 +29,9 @@ MODULES=		converters/libiconv
 
 MULTI_PACKAGES =	-main -web
 PSEUDO_FLAVORS =	no_server
-FLAVORS =		mysql pgsql
+FLAVORS =		mysql pgsql sqlite3
 
-SUBST_VARS +=		PREFIX-web ZABBIX_WEB
+SUBST_VARS +=		PREFIX-web ZABBIX_WEB MAJV
 
 WANTLIB =		c kvm m
 LIB_DEPENDS =		lber,ldap::databases/openldap
@@ -39,6 +41,8 @@ LIB_DEPENDS-server =	${LIB_DEPENDS} \
 			netsnmp::net/net-snmp \
 			iksemel::textproc/iksemel
 RUN_DEPENDS-server =	::net/fping
+# we want the _zabbix user&group as well as README.OpenBSD
+RUN_DEPENDS-server +=	:zabbix-agent-${VERSION}:net/zabbix,-main
 WANTLIB-server =	${WANTLIB} crypto idn ssl z
 
 CONFIGURE_STYLE =	gnu
@@ -56,7 +60,8 @@ CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 
 PREFIX-web =		/var/www
 LIB_DEPENDS-web =
-RUN_DEPENDS-web =	::www/php5/extensions,-gd
+RUN_DEPENDS-web =	::www/php5/extensions,-gd \
+			::www/php5/extensions,-mbstring
 WANTLIB-web =
 ZABBIX_WEB =		${PREFIX-web}/zabbix
 
@@ -74,6 +79,10 @@ CONFIGURE_ARGS +=	--with-mysql
 MULTI_PACKAGES += -server
 LIB_DEPENDS-server +=	pq::databases/postgresql,-main
 CONFIGURE_ARGS +=	--with-pgsql
+.elif ${BACKEND} == "sqlite3"
+MULTI_PACKAGES += -server
+LIB_DEPENDS-server +=	sqlite3.>=14::databases/sqlite3,-main
+CONFIGURE_ARGS +=	--with-sqlite3
 .elif ${BACKEND} == "no_server"
 CONFIGURE_ARGS += --disable-server \
 		--disable-proxy

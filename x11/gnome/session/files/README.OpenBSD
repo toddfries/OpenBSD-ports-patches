@@ -1,4 +1,4 @@
-$OpenBSD: README.OpenBSD,v 1.33 2010/04/20 15:55:12 ajacoutot Exp $
+$OpenBSD: README.OpenBSD,v 1.39 2010/05/14 10:23:04 ajacoutot Exp $
 
 The OpenBSD/GNOME desktop
 =========================
@@ -23,9 +23,6 @@ install at least the following packages:
 	gnome-utils
 
 (xscreensaver can be used instead of gnome-screensaver)
-
-This file will briefly explain to you how to make this experience more
-pleasant.
 
 * A note about accessibility
   --------------------------
@@ -67,6 +64,7 @@ related ports under the x11/gnome category)
    * gnome-development-monitor - GUI to follow GNOME development activity
 
  - Graphics & Multimedia
+   * byzanz - makes a desktop recording optimized for webpages
    * cheese - take photos and videos with your webcam
    * eog-plugins - plugins for EOG
    * evince - document viewer for multiple document formats
@@ -77,6 +75,13 @@ related ports under the x11/gnome category)
    * simple-scan - simple scanning utility
    * totem - multimedia player
 
+ - Office & Productivity
+   * abiword - WYSIWYG word processor
+   * gnumeric - spreadsheet application
+   * hamster-applet - time tracker applet
+   * planner - project management
+   * tomboy - desktop note-taking
+
  - Utilities
    * alacarte - simple menu editing tool
    * conduit - all-in-one synchronization application
@@ -86,19 +91,22 @@ related ports under the x11/gnome category)
    * gnome-nettool - interface for various networking tools
    * nautilus-sendto - integrate applications into Nautilus
    * pessulus - lockdown editor for desktop
-   * planner - project management
    * seahorse (+seahorse-plugins) - encryption, keys and passwords manager
    * system-config-printer - printer (CUPS) administration tool
-   * tomboy - desktop note-taking
    * tracker-search - powerful desktop search tool and indexer
    * vinagre - VNC Client (remote Desktop client)
    * vino - VNC server (allows remote access to your Desktop)
    * xdg-user-dirs-gtk - manage well know user directories
 
  - Themes
-   * gnome-icon-theme-extras - extra icons for GNOME
-   * gnome-themes-extras - extra themes for GNOME
-   * tango-icon-theme - Tango icon theme
+   * gnome-icon-theme-extras - extra icons
+   * gnome-icon-theme-symbolic - theme extension for special UI contexts
+   * gnome-themes-extras - extra themes
+   * gtk2-aurora-engine - Aurora GTK+2 theme engine
+   * gtk2-equinox-engine - Equinox GTK+2 theme engine
+   * gtk2-murrine-engine - Murrine GTK+2 theme engine
+   * gtk2-nodoka-engine - Nodoka GTK+2 theme engine
+   * tango-icon-theme (+tango-icon-theme-extras) - Tango icon theme
 
 * Startup and more documentation
   ------------------------------

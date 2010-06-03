@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.13 2010/04/24 00:35:20 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.16 2010/05/20 17:55:43 ajacoutot Exp $
 @bin bin/tracker-control
 @bin bin/tracker-explorer
 @bin bin/tracker-import
@@ -226,26 +226,44 @@ share/tracker/languages/stopwords.ru
 share/tracker/languages/stopwords.sv
 share/tracker/miners/
 share/tracker/miners/tracker-miner-applications.desktop
-share/tracker/miners/tracker-miner-emails.desktop
+share/tracker/miners/tracker-miner-evolution.desktop
 share/tracker/miners/tracker-miner-files.desktop
 share/tracker/ontologies/
+share/tracker/ontologies/10-xsd.description
 share/tracker/ontologies/10-xsd.ontology
+share/tracker/ontologies/11-rdf.description
 share/tracker/ontologies/11-rdf.ontology
+share/tracker/ontologies/12-nrl.description
 share/tracker/ontologies/12-nrl.ontology
+share/tracker/ontologies/20-dc.description
 share/tracker/ontologies/20-dc.ontology
+share/tracker/ontologies/30-nie.description
 share/tracker/ontologies/30-nie.ontology
+share/tracker/ontologies/31-nao.description
 share/tracker/ontologies/31-nao.ontology
+share/tracker/ontologies/32-nco.description
 share/tracker/ontologies/32-nco.ontology
+share/tracker/ontologies/33-nfo.description
 share/tracker/ontologies/33-nfo.ontology
+share/tracker/ontologies/34-nmo.description
 share/tracker/ontologies/34-nmo.ontology
+share/tracker/ontologies/35-ncal.description
 share/tracker/ontologies/35-ncal.ontology
+share/tracker/ontologies/36-scal.description
 share/tracker/ontologies/36-scal.ontology
+share/tracker/ontologies/37-nid3.description
 share/tracker/ontologies/37-nid3.ontology
+share/tracker/ontologies/38-nmm.description
 share/tracker/ontologies/38-nmm.ontology
+share/tracker/ontologies/39-mto.description
 share/tracker/ontologies/39-mto.ontology
+share/tracker/ontologies/40-mlo.description
 share/tracker/ontologies/40-mlo.ontology
+share/tracker/ontologies/41-mfo.description
 share/tracker/ontologies/41-mfo.ontology
+share/tracker/ontologies/89-mtp.description
 share/tracker/ontologies/89-mtp.ontology
+share/tracker/ontologies/90-tracker.description
 share/tracker/ontologies/90-tracker.ontology
 share/tracker/rss_viewer.ui
 share/tracker/sqlite-contents.sql
@@ -264,6 +282,7 @@ share/tracker/tracker-status.xml
 share/tracker/tracker-writeback.xml
 share/tracker/tst.ui
 share/vala/vapi/tracker-client-0.8.vapi
+share/vala/vapi/tracker-miner-0.8.deps
 share/vala/vapi/tracker-miner-0.8.vapi
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor
 @unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor

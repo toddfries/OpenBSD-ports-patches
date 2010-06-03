@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.30 2010/04/27 14:44:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2010/05/26 14:52:35 ajacoutot Exp $
 
 COMMENT=	base icon theme for GNOME
 
 GNOME_PROJECT=	gnome-icon-theme
-GNOME_VERSION=	2.30.2
+GNOME_VERSION=	2.30.3
 
 CATEGORIES=	x11
 
@@ -17,6 +17,8 @@ MODULES=	x11/gnome
 
 BUILD_DEPENDS=	:gettext-*:devel/gettext \
 		:icon-naming-utils->=0.8.90:x11/icon-naming-utils
+
+PKG_ARCH=	*
 
 USE_X11=	Yes
 USE_LIBTOOL=	No

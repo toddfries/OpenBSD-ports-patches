@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.129 2010/03/23 11:59:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.131 2010/05/18 20:44:13 kili Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -89,6 +89,7 @@
      SUBDIR += tkcron
      SUBDIR += tkinfo
      SUBDIR += tkman
+     SUBDIR += tpp
      SUBDIR += tpwireless
      SUBDIR += ttyrec
      SUBDIR += uniutils
@@ -100,7 +101,6 @@
      SUBDIR += wordnet
      SUBDIR += xcdroast
      SUBDIR += xd
-     SUBDIR += xdelta
      SUBDIR += xgas
      SUBDIR += xkcd-viewer
      SUBDIR += xless

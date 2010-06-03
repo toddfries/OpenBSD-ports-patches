@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortBuilder.pm,v 1.6 2010/04/15 09:59:07 espie Exp $
+# $OpenBSD: PortBuilder.pm,v 1.8 2010/05/22 08:43:18 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -28,10 +28,10 @@ use DPB::Job::Port;
 sub new
 {
 	my $class = shift;
-	my ($opt_c, $opt_s, $opt_u, $opt_U, $fullrepo, $logger, $ports, $make, 
+	my ($opt_c, $opt_s, $opt_u, $opt_U, $fullrepo, $logger, $ports, $make,
 	    $h) = @_;
 	my $self = bless {clean => $opt_c,  size => $opt_s,
-	    fullrepo => $fullrepo, 
+	    fullrepo => $fullrepo,
 	    logger => $logger, ports => $ports, make => $make,
 	    heuristics => $h}, $class;
 	if ($opt_u || $opt_U) {
@@ -51,11 +51,17 @@ sub init
 	$self->{global} = $self->{logger}->open("build");
 }
 
-sub check
+sub pkgfile
 {
 	my ($self, $v) = @_;
 	my $name = $v->fullpkgname;
-	return -f "$self->{fullrepo}/$name.tgz";
+	return "$self->{fullrepo}/$name.tgz";
+}
+
+sub check
+{
+	my ($self, $v) = @_;
+	return -f $self->pkgfile($v);
 }
 
 sub report
@@ -68,11 +74,13 @@ sub report
 	if (defined $job->{offset}) {
 		$sz -= $job->{offset};
 	}
-	print $log "$pkgpath $host ", $job->totaltime, " ", $sz, " ", 
+	print $log "$pkgpath $host ", $job->totaltime, " ", $sz, " ",
 	    $job->timings;
 	if ($self->check($v)) {
 		print $log  "\n";
 	} else {
+		open my $fh, '>>', $job->{log};
+		print $fh "Error: ", $self->pkgfile($v), " does not exist\n";
 		print $log  "!\n";
 	}
 }

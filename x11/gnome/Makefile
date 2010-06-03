@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.118 2010/04/24 16:36:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.121 2010/05/04 20:39:29 jasper Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -10,6 +10,7 @@
      SUBDIR += backgrounds
      SUBDIR += baker
      SUBDIR += bug-buddy
+     SUBDIR += byzanz
      SUBDIR += cheese
      SUBDIR += common
      SUBDIR += conduit
@@ -37,13 +38,13 @@
      SUBDIR += genius
      SUBDIR += ghex
      SUBDIR += gok
-     SUBDIR += gossip
      SUBDIR += gucharmap
      SUBDIR += gvfs
      SUBDIR += gyrus
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += icon-theme-extras
+     SUBDIR += icon-theme-symbolic
      SUBDIR += keyring
      SUBDIR += keyring-query
      SUBDIR += krb5-auth-dialog

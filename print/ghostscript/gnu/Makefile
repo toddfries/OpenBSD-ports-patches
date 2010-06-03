@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.72 2010/03/31 16:22:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.74 2010/05/24 14:25:05 kili Exp $
 
 COMMENT=	GNU PostScript interpreter
 
@@ -51,7 +51,7 @@ MAKE_FLAGS=	BINDIR=./obj				\
 		CUPSSERVERBIN="$$(cups-config --serverbin)" \
 		CUPSSERVERROOT="$$(cups-config --serverroot)" \
 		CUPSDATA="$$(cups-config --datadir)"	\
-		DEVICE_DEVS='${DEVICES:=$(DD)%.dev}'	\
+		DEVICE_DEVS='${DEVICES:C/.*/\$(DD)&.dev/}'	\
 		EXTRALIBS="${EXTRALIBS}"		\
 		GLGENDIR=./obj				\
 		GLOBJDIR=./obj				\
@@ -71,8 +71,6 @@ MAKE_FLAGS=	BINDIR=./obj				\
 		SHARE_JPEG=1				\
 		SHARE_LIBPNG=1				\
 		SHARE_ZLIB=1				\
-		SOBINRELDIR=../obj			\
-		SOOBJRELDIR=../obj			\
 		SOC_CFLAGS="${SOC_CFLAGS}"		\
 		SOC_LIBS="${SOC_LIBS}"			\
 		STDLIBS='-pthread -lm -liconv'		\

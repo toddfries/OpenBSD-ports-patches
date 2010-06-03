@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.631 2010/04/24 16:37:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.636 2010/05/24 18:02:54 bluhm Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -103,6 +103,8 @@
      SUBDIR += gnaughty
      SUBDIR += gnet
      SUBDIR += gnugk
+     SUBDIR += gnugk,mysql
+     SUBDIR += gnugk,pgsql
      SUBDIR += gopher
      SUBDIR += gotthard
      SUBDIR += gsnmp
@@ -111,6 +113,7 @@
      SUBDIR += haproxy
      SUBDIR += honeyd
      SUBDIR += hping
+     SUBDIR += hpodder
      SUBDIR += hs-HTTP
      SUBDIR += httptunnel
      SUBDIR += icb
@@ -209,6 +212,7 @@
      SUBDIR += netrate
      SUBDIR += netsed
      SUBDIR += nfdump
+     SUBDIR += nfsen
      SUBDIR += ngrep
      SUBDIR += nicotine
      SUBDIR += nmap
@@ -266,6 +270,7 @@
      SUBDIR += p5-Net-Google
      SUBDIR += p5-Net-ICQ2000
      SUBDIR += p5-Net-ICal
+     SUBDIR += p5-Net-INET6Glue
      SUBDIR += p5-Net-IP
      SUBDIR += p5-Net-IPv4Addr
      SUBDIR += p5-Net-IRC
@@ -533,6 +538,7 @@
      SUBDIR += zabbix
      SUBDIR += zabbix,mysql
      SUBDIR += zabbix,pgsql
+     SUBDIR += zabbix,sqlite3
      SUBDIR += zenirc
      SUBDIR += ziproxy
      SUBDIR += znc

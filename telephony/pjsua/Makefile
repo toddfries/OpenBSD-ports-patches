@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.6 2010/04/15 14:58:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2010/05/14 10:16:32 dcoppa Exp $
 
 COMMENT=		lightweight sip client
 
-VERSION=		1.5.5
+VERSION=		1.6
 DISTNAME=		pjproject-${VERSION}
 PKGNAME=		pjsua-${VERSION}p0
 EXTRACT_SUFX=		.tar.bz2
@@ -30,7 +30,8 @@ CONFIGURE_ARGS=		--disable-oss \
 			--with-external-pa \
 			--with-external-speex
 CONFIGURE_ENV+=		CFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib" \
+			ac_cv_lib_uuid_uuid_generate=no
 
 USE_GMAKE=		Yes
 NO_REGRESS=		Yes

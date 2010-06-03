@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.241 2010/04/05 18:59:42 landry Exp $
+# $OpenBSD: Makefile,v 1.243 2010/05/09 18:00:30 jakemsr Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR =
@@ -154,7 +154,6 @@
      SUBDIR += pykaraoke
      SUBDIR += pympd
      SUBDIR += rhythmbox
-     SUBDIR += rio500
      SUBDIR += rioutil
      SUBDIR += rplay
      SUBDIR += rsynth
@@ -178,7 +177,6 @@
      SUBDIR += tempest
      SUBDIR += timidity
      SUBDIR += toolame
-     SUBDIR += tosha
      SUBDIR += tracker
      SUBDIR += tremor
      SUBDIR += tremor-tools
@@ -187,7 +185,6 @@
      SUBDIR += vlorb
      SUBDIR += vorbis-tools
      SUBDIR += vorbisgain
-     SUBDIR += waveplay
      SUBDIR += wavpack
      SUBDIR += wmix
      SUBDIR += wmmixer

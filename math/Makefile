@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.91 2010/03/23 20:39:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.94 2010/05/11 17:14:50 pirofti Exp $
 #
 
      SUBDIR =
@@ -11,7 +11,9 @@
      SUBDIR += calc
      SUBDIR += calcoo
      SUBDIR += cblas
+     SUBDIR += ccolamd
      SUBDIR += cfitsio
+     SUBDIR += colamd
      SUBDIR += coq
      SUBDIR += ecm
      SUBDIR += eigen
@@ -84,6 +86,7 @@
      SUBDIR += py-numpy
      SUBDIR += py-probstat
      SUBDIR += py-scipy
+     SUBDIR += qrupdate
      SUBDIR += qtoctave
      SUBDIR += sc
      SUBDIR += umfpack

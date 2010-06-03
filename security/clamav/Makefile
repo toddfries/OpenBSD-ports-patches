@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.48 2010/04/01 13:18:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.50 2010/05/27 09:54:09 sthen Exp $
 
 COMMENT=		virus scanner
-DISTNAME=		clamav-0.96
+DISTNAME=		clamav-0.96.1
+PKGNAME=		${DISTNAME}p0
 CATEGORIES=		security
 SHARED_LIBS=		clamav 13.0 \
 			clamunrar 2.0 \
@@ -17,7 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c m milter ncurses pthread z
+WANTLIB=		c m milter ncurses pthread stdc++ z
 
 BUILD_DEPENDS=		::devel/check
 
@@ -50,6 +51,8 @@ CONFIGURE_ARGS+=        --disable-clamav \
 			--with-ltdl-lib=${LOCALBASE}/lib
 
 REGRESS_TARGET=		check
+MODULES=		lang/python
+MODPY_RUNDEP=		no
 
 CONFIGURE_ENV+=		LDFLAGS="-pthread -L/usr/lib -L${WRKSRC}/libclamav/.libs -L${LOCALBASE}/lib" \
 			CPPFLAGS="-I/usr/include -I${LOCALBASE}/include"
@@ -64,5 +67,8 @@ post-install:
 		clamav-milter.conf ${PREFIX}/share/examples/clamav
 	cd ${WRKSRC}/examples; ${INSTALL_DATA} ex1.c \
 		${PREFIX}/share/examples/clamav
+
+pre-regress:
+	ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
 .include <bsd.port.mk>

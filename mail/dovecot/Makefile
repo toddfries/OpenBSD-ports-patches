@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.136 2010/04/14 08:28:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.138 2010/05/02 22:42:44 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,11 +7,11 @@ COMMENT-sieve=	Sieve mail filtering for Dovecot
 
 V_MAJOR=	1.2
 V_DOVECOT=	1.2.11
-V_SIEVE=	0.1.15
+V_SIEVE=	0.1.16
 V_MANAGESIEVE=	0.11.11
 
 PKGNAME=	dovecot-${V_DOVECOT}
-PKGNAME-server=	dovecot-${V_DOVECOT}p3
+PKGNAME-server=	dovecot-${V_DOVECOT}p4
 FULLPKGNAME-sieve= dovecot-sieve-${V_SIEVE}p0v0
 FULLPKGPATH-sieve= ${PKGPATH},-sieve
 
@@ -113,7 +113,7 @@ post-configure:
 	(cd ${WRKSRC}; ${MAKE_PROGRAM} dovecot-config)
 	(cd ${SIEVE_DIR}; ${SETENV} ${CONFIGURE_ENV} \
 		./configure --with-dovecot=${WRKSRC} \
-		--mandir=${PREFIX}/man)
+		--mandir=${PREFIX}/man --docdir=${PREFIX}/share/doc/)
 	(cd ${MANAGESIEVE_DIR}; ${SETENV} ${CONFIGURE_ENV} \
 		./configure --with-dovecot=${WRKSRC} \
 		--with-dovecot-sieve=${SIEVE_DIR})

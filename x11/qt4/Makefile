@@ -1,5 +1,6 @@
-# $OpenBSD: Makefile,v 1.67 2010/04/25 19:03:30 espie Exp $
+# $OpenBSD: Makefile,v 1.72 2010/05/26 11:34:13 dcoppa Exp $
 
+USE_GMAKE =		Yes
 COMMENT-debug =		C++ GUI toolkit, debug
 COMMENT-main =		C++ X11 GUI toolkit
 COMMENT-examples =	examples for qt4
@@ -17,8 +18,8 @@ PKGNAME-examples =	qt4-examples-${PKGVERSION}
 PKGNAME-sqlite2 =	qt4-sqlite2-${PKGVERSION}
 PKGNAME-sqlite =	qt4-sqlite-${PKGVERSION}
 PKGNAME-tds =		qt4-tds-${PKGVERSION}
-PKGNAME-main =		qt4-${VERSION}
-PKGNAME-debug =		qt4-debug-${PKGVERSION}
+PKGNAME-main =		qt4-${VERSION}p2
+PKGNAME-debug =		qt4-debug-${PKGVERSION}p0
 FULLPKGNAME-html =	qt4-html-${PKGVERSION}
 FULLPKGPATH-html =	${BASE_PKGPATH},-html
 
@@ -118,11 +119,14 @@ CONFIGURE_ARGS += 	-I${LOCALBASE}/include/postgresql \
 
 CONFIGURE_ENV =		LOCALBASE=${LOCALBASE} QTDIR="${WRKSRC}" \
 			X11BASE=${X11BASE}
+.if defined(MAKE_JOBS)
+CONFIGURE_ENV +=	BOOTSTRAP_MAKE_FLAGS='-j${MAKE_JOBS}'
+.endif
 
 # fix to avoid gcc generating a huge uncompilable intermediate assembly
 .if ${MACHINE_ARCH} == "hppa"
-CXXFLAGS =		-finline-limit=60
-CONFIGURE_ENV +=	OPENSOURCE_CXXFLAGS=${CXXFLAGS}
+CXXFLAGS +=		-finline-limit=60
+CONFIGURE_ENV +=	OPENSOURCE_CXXFLAGS="${CXXFLAGS}"
 .endif
 
 BUILD_DEPENDS +=	::print/cups
@@ -229,20 +233,19 @@ LIB_DEPENDS-html =
 WANTLIB-html =
 PKG_ARCH-html =	*
 
-MODULES =
-#MODULES += gcc4
-#MODGCC4_ARCHES = *
-#MODGCC4_LANGS =	c++
+.include <bsd.own.mk>
 
-.if ${MODULES:Mgcc4}
+.if ${COMPILER_VERSION:L:Mgcc4*}
+CONFIGURE_ARGS +=	-platform openbsd-g++4
 PKG_ARGS += -DGCC4=1
 LIB_DEPENDS-examples +=	QtWebKit,QtXmlPatterns::${BASE_PKGPATH}
 WANTLIB-examples +=	sqlite3
 LIB_DEPENDS-main += sqlite3::databases/sqlite3
 .else
 PKG_ARGS += -DGCC4=0
-commonWANTLIB += 	stdc++
 .endif
+
+commonWANTLIB += 	stdc++
 
 QT_BASEDIR =	${PREFIX}/lib/qt4
 QT_INCDIR =	${PREFIX}/include/X11/qt4
@@ -272,6 +275,9 @@ MAKE_FLAGS +=	LIB$l_VERSION=$v
 
 DESTDIRNAME =	INSTALL_ROOT
 
+pre-patch:
+	cd ${WRKDIST} && cp -R mkspecs/openbsd-g++ mkspecs/openbsd-g++4
+
 post-install:
 	# extra doc
 	cd ${WRKSRC}; ${INSTALL_DATA} ${DOCS} ${QT_DOC}
@@ -299,7 +305,5 @@ post-install:
 .endfor
 # cleanup
 	cd ${PREFIX}/lib/qt4 && ln -sf ../../include/X11/qt4 include
-
-USE_GMAKE =	Yes
 
 .include <bsd.port.mk>

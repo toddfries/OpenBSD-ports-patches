@@ -1,32 +1,34 @@
-# $OpenBSD: Makefile,v 1.27 2010/04/25 21:20:45 kili Exp $
+# $OpenBSD: Makefile,v 1.30 2010/05/24 14:33:03 kili Exp $
 
 COMMENT =		advanced revision control system written in Haskell
 
-DISTNAME =		darcs-2.4.1
-PKGNAME =		${DISTNAME}p0
+DISTNAME =		darcs-2.4.4
 
 CATEGORIES =		devel
 HOMEPAGE =		http://www.darcs.net/
 
-WANTLIB =		c m ncurses pthread util z
+WANTLIB =		c m ncurses util z
 MODULES =		lang/ghc converters/libiconv
 MODGHC_BUILD =		cabal hackage nort
+MODGHC_SETUP_CONF_ARGS =-f '-threaded'
 LIB_DEPENDS =		curl.>=2::net/curl
 
 # Yes, build dependencies, because GHC libs are still static and we
 # don't want to pull in all of ghc.
 BUILD_DEPENDS =		:hs-zlib->=0.5.0,<0.6.0:archivers/hs-zlib \
-			:hs-hashed-storage-0.4.11:devel/hs-hashed-storage \
+			:hs-hashed-storage-0.4.13:devel/hs-hashed-storage \
 			:hs-parsec->=2.0,<3.1:devel/hs-parsec \
 			:hs-regex-compat->=0.71,<0.94:devel/hs-regex-compat \
 			:hs-html->=1.0,<1.1:www/hs-html \
 			${RUN_DEPENDS} \
 			::textproc/latex2html
 
+REGRESS_DEPENDS =	::shells/bash
+
 # For the documentation
 USE_GMAKE =		Yes
 
-# Weird permission alert! (Hopefully fixed in the next release)
+# Weird permission alert! (still not fixed)
 post-extract:
 	@chmod -R a+r ${WRKSRC}
 

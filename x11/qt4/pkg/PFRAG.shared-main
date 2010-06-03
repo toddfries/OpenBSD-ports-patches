@@ -1,4 +1,4 @@
-@comment $OpenBSD: PFRAG.shared-main,v 1.5 2010/04/19 09:36:30 espie Exp $
+@comment $OpenBSD: PFRAG.shared-main,v 1.7 2010/05/25 08:01:59 espie Exp $
 %%GCC4%%
 @lib lib/libQt3Support.so.${LIBQt3Support_VERSION}
 @lib lib/libQtAssistantClient.so.${LIBQtAssistantClient_VERSION}

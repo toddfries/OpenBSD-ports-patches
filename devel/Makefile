@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.795 2010/04/26 17:23:47 sthen Exp $
+# $OpenBSD: Makefile,v 1.801 2010/05/27 08:38:47 espie Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -51,6 +51,7 @@
      SUBDIR += cln
      SUBDIR += cmake
      SUBDIR += codeblocks
+     SUBDIR += codeworker
      SUBDIR += commoncpp
      SUBDIR += cook
      SUBDIR += coxpcall
@@ -128,14 +129,18 @@
      SUBDIR += help2man
      SUBDIR += hmake
      SUBDIR += horde
+     SUBDIR += hs-ConfigFile
      SUBDIR += hs-HUnit
+     SUBDIR += hs-MissingH
      SUBDIR += hs-QuickCheck
      SUBDIR += hs-binary
+     SUBDIR += hs-convertible
      SUBDIR += hs-dataenc
      SUBDIR += hs-deepseq
      SUBDIR += hs-fgl
      SUBDIR += hs-ghc-paths
      SUBDIR += hs-hashed-storage
+     SUBDIR += hs-hslogger
      SUBDIR += hs-language-c
      SUBDIR += hs-mmap
      SUBDIR += hs-network
@@ -178,6 +183,8 @@
      SUBDIR += libev
      SUBDIR += libeventextra
      SUBDIR += libexecinfo
+     SUBDIR += libf2c
+     SUBDIR += libf2c-old
      SUBDIR += libffi
      SUBDIR += libfmt
      SUBDIR += libftdi
@@ -443,6 +450,7 @@
      SUBDIR += p5-File-Copy-Recursive
      SUBDIR += p5-File-CreationTime
      SUBDIR += p5-File-DesktopEntry
+     SUBDIR += p5-File-DirCompare
      SUBDIR += p5-File-Find-Rule
      SUBDIR += p5-File-Find-Rule-Filesys-Virtual
      SUBDIR += p5-File-Find-Rule-Perl
@@ -523,6 +531,8 @@
      SUBDIR += p5-Module-Pluggable-Fast
      SUBDIR += p5-Module-Refresh
      SUBDIR += p5-Module-ScanDeps
+     SUBDIR += p5-Module-Starter
+     SUBDIR += p5-Module-Starter-Plugin-CGIApp
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Moose
      SUBDIR += p5-MooseX-Async
@@ -929,6 +939,7 @@
      SUBDIR += tla
      SUBDIR += tmake
      SUBDIR += ucpp
+     SUBDIR += udis86
      SUBDIR += uisp
      SUBDIR += uthash
      SUBDIR += uuid

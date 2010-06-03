@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2010/02/23 20:12:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2010/05/23 11:55:52 espie Exp $
 
 COMMENT=	order a sparse matrix prior to Cholesky factorization
 
 VERSION=	2.2.0
 DISTNAME=	AMD-${VERSION}
-PKGNAME=	amd-${VERSION}p1
+PKGNAME=	amd-${VERSION}p2
 SHARED_LIBS=	amd	0.0 \
 		amdf77	0.0
 
@@ -23,13 +23,18 @@ MASTER_SITES0=	${HOMEPAGE}../UFconfig/
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} UFconfig-3.0.0.tar.gz:0
 WRKDIST=	${WRKDIR}/AMD
 WRKSRC=		${WRKDIST}/Source
+MODULES=	fortran
+MODFORTRAN_WANTG77= Yes
+BUILD_DEPENDS=	${MODFORTRAN_BUILD_DEPENDS}
+
 
 MAKE_FILE=	${FILESDIR}/Makefile
 MAKE_ENV=	SHLIB_MAJOR=${LIBamd_VERSION:R} \
 		SHLIB_MINOR=${LIBamd_VERSION:E}
 MAKE_FLAGS=	CSRC="${CSRC}"
 MAKE_ENV_F77=	SHLIB_MAJOR=${LIBamdf77_VERSION:R} \
-		SHLIB_MINOR=${LIBamdf77_VERSION:E}
+		SHLIB_MINOR=${LIBamdf77_VERSION:E} \
+		PATH=${PORTPATH}
 FAKE_FLAGS=	LIBDIR=${LOCALBASE}/lib DEBUGLIBS=no
 CFLAGS+=	-I${WRKDIST}/Include -I${WRKDIR}/UFconfig
 
@@ -60,5 +65,6 @@ post-install:
 		${ALL_FAKE_FLAGS} -f ${FILESDIR}/Makefile.f77 ${INSTALL_TARGET}
 	${INSTALL_DATA_DIR} ${PREFIX}/include/amd
 	${INSTALL_DATA} ${WRKDIST}/Include/amd.h ${PREFIX}/include/amd
+	${INSTALL_DATA} ${WRKDIR}/UFconfig/UFconfig.h ${PREFIX}/include/amd
 
 .include <bsd.port.mk>

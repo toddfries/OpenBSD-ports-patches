@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.415 2010/04/22 22:06:34 kili Exp $
+# $OpenBSD: Makefile,v 1.420 2010/05/26 21:17:29 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -93,6 +93,7 @@
      SUBDIR += gtk-vnc
      SUBDIR += gtk2-aurora-engine
      SUBDIR += gtk2-clearlooks-engine
+     SUBDIR += gtk2-equinox-engine
      SUBDIR += gtk2-murrine-engine
      SUBDIR += gtk2-nodoka-engine
      SUBDIR += gtk2-theme-switch
@@ -106,6 +107,7 @@
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-X11
+     SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme
      SUBDIR += i3
      SUBDIR += icewm
@@ -185,6 +187,7 @@
      SUBDIR += piewm
      SUBDIR += pinot
      SUBDIR += podbrowser
+     SUBDIR += ptsans
      SUBDIR += pwm
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
@@ -211,6 +214,7 @@
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
      SUBDIR += rxvt
+     SUBDIR += rxvt-unicode
      SUBDIR += sawfish
      SUBDIR += sclock
      SUBDIR += scrotwm
@@ -245,7 +249,6 @@
      SUBDIR += vdesk
      SUBDIR += viewfax
      SUBDIR += vlc
-     SUBDIR += vlc,altivec
      SUBDIR += waimea
      SUBDIR += wampager
      SUBDIR += windowmaker
@@ -321,6 +324,7 @@
      SUBDIR += xlogout
      SUBDIR += xmascot
      SUBDIR += xmbdfed
+     SUBDIR += xmobar
      SUBDIR += xmold
      SUBDIR += xmonad
      SUBDIR += xosd
