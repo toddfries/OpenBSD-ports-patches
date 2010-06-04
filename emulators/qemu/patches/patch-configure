@@ -1,7 +1,49 @@
-$OpenBSD$
---- configure.orig	Sat Oct 24 04:15:22 2009
-+++ configure	Mon Oct 26 20:15:38 2009
-@@ -2104,7 +2104,7 @@ echo "datadir=\${prefix}$datasuffix" >> $config_host_m
+$OpenBSD: patch-configure,v 1.13 2010/05/27 17:55:05 fgsch Exp $
+--- configure.orig	Tue Feb 23 20:54:38 2010
++++ configure	Tue Mar  9 08:12:32 2010
+@@ -34,12 +34,12 @@ interp_prefix="/usr/gnemul/qemu-%M"
+ static="no"
+ sparc_cpu=""
+ cross_prefix=""
+-cc="gcc"
++cc="${CC:-cc}"
+ audio_drv_list=""
+ audio_card_list="ac97 es1370 sb16"
+ audio_possible_cards="ac97 es1370 sb16 cs4231a adlib gus"
+ block_drv_whitelist=""
+-host_cc="gcc"
++host_cc="${CC:-cc}"
+ ar="ar"
+ make="make"
+ install="install"
+@@ -93,7 +93,7 @@ ld="${cross_prefix}${ld}"
+ 
+ # default flags for all hosts
+ QEMU_CFLAGS="-fno-strict-aliasing $QEMU_CFLAGS"
+-CFLAGS="-g $CFLAGS"
++CFLAGS="$CFLAGS"
+ QEMU_CFLAGS="-Wall -Wundef -Wendif-labels -Wwrite-strings -Wmissing-prototypes $QEMU_CFLAGS"
+ QEMU_CFLAGS="-Wstrict-prototypes -Wredundant-decls $QEMU_CFLAGS"
+ QEMU_CFLAGS="-D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE $QEMU_CFLAGS"
+@@ -1788,7 +1788,7 @@ fi
+ # After here, no more $cc or $ld runs
+ 
+ if test "$debug" = "no" ; then
+-  CFLAGS="-O2 $CFLAGS"
++  CFLAGS="$CFLAGS"
+ fi
+ 
+ # Consult white-list to determine whether to enable werror
+@@ -1836,7 +1836,7 @@ else
+   if test -z "$prefix" ; then
+       prefix="/usr/local"
+   fi
+-  mansuffix="/share/man"
++  mansuffix="/man"
+   datasuffix="/share/qemu"
+   docsuffix="/share/doc/qemu"
+   binsuffix="/bin"
+@@ -2167,7 +2167,7 @@ echo "datadir=\${prefix}$datasuffix" >> $config_host_m
  echo "docdir=\${prefix}$docsuffix" >> $config_host_mak
  echo "MAKE=$make" >> $config_host_mak
  echo "INSTALL=$install" >> $config_host_mak
@@ -10,3 +52,16 @@ $OpenBSD$
  echo "INSTALL_DATA=$install -m0644 -p" >> $config_host_mak
  echo "INSTALL_PROG=$install -m0755 -p" >> $config_host_mak
  echo "CC=$cc" >> $config_host_mak
+@@ -2575,7 +2575,11 @@ if test "$gprof" = "yes" ; then
+   fi
+ fi
+ 
+-linker_script="-Wl,-T../config-host.ld -Wl,-T,\$(SRC_PATH)/\$(ARCH).ld"
++if test "$targetos" != "OpenBSD"; then
++  linker_script="-Wl,-T../config-host.ld -Wl,-T,\$(SRC_PATH)/\$(ARCH).ld"
++else
++  linker_script=""
++fi
+ if test "$target_linux_user" = "yes" -o "$target_bsd_user" = "yes" ; then
+   case "$ARCH" in
+   sparc)

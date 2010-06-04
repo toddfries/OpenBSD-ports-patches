@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.997 2010/05/23 09:22:50 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.999 2010/05/28 12:34:22 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -132,10 +132,10 @@ ALL_ARCHS = alpha amd64 arm armish arm hppa hppa64 i386 landisk \
 APM_ARCHS = amd64 arm i386 loongson macppc sparc sparc64
 LP64_ARCHS = alpha amd64 hppa64 sparc64 mips64 mips64el
 NO_SHARED_ARCHS = m88k vax
-GCC4_ARCHS =
-GCC3_ARCHS = alpha amd64 arm armish beagle gumstix hppa hppa64 i386 \
+GCC4_ARCHS = amd64 sparc64
+GCC3_ARCHS = alpha arm armish beagle gumstix hppa hppa64 i386 \
 	landisk loongson macppc mips64 mips64el mvmeppc palm powerpc sgi sh \
-	socppc sparc64 zaurus
+	socppc zaurus
 GCC2_ARCHS = aviion luna88k m68k m88k mac68k mvme68k mvme88k sparc vax
 
 # Set NO_SHARED_LIBS for those machines that don't support shared libraries.
@@ -1718,6 +1718,8 @@ ${WRKDIR}/.dep${_i:C,[|:/<=>*],-,g}: ${_WRKDIR_COOKIE}
 		IFS=:; read pkg subdir target; \
 		extra_msg="(DEPENDS ${_i})"; \
 		${_flavor_fragment}; defaulted=false; checkinstall=true; \
+		_ignore_cookie=${@:S/.dep/.ignored/}; \
+		toset="$$toset _IGNORE_COOKIE=$${_ignore_cookie}"; \
 		case "X$$target" in X) target=${DEPENDS_TARGET};; esac; \
 		case "X$$target" in \
 		Xinstall|Xreinstall) early_exit=false;; \
@@ -1765,7 +1767,8 @@ ${WRKDIR}/.dep${_i:C,[|:/<=>*],-,g}: ${_WRKDIR_COOKIE}
 				fi; \
 			fi; \
 			${ECHO_MSG} "===>  Verifying $$target for $$what in $$dir"; \
-			if (eval $$toset exec ${MAKE} $$target); then \
+			if (eval $$toset exec ${MAKE} $$target) && \
+				! test -e $${_ignore_cookie}; then \
 				${ECHO_MSG} "===> Returning to build of ${FULLPKGNAME${SUBPACKAGE}}${_MASTER}"; \
 			else \
 				${REPORT_PROBLEM}; \
@@ -1850,7 +1853,9 @@ _internal-all _internal-build _internal-checksum _internal-configure \
 .  if !defined(IGNORE_SILENT)
 	@${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} ${IGNORE}."
 .  endif
-
+.  if defined(_IGNORE_COOKIE)
+	@echo "${IGNORE}" >${_IGNORE_COOKIE}
+.  endif
 .else
 
 .  if ${ELF_TOOLCHAIN:L} == "no"

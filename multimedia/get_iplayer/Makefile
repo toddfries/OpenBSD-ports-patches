@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.42 2010/05/26 20:24:23 sthen Exp $
+# $OpenBSD: Makefile,v 1.45 2010/06/01 15:05:38 sthen Exp $
 
-COMMENT =		download BBC iPlayer and ITV programmes
+COMMENT =		download/stream programmes from BBC iPlayer
 
-DISTNAME =		get_iplayer-2.77
+DISTNAME =		get_iplayer-2.78
 PKGNAME =		${DISTNAME}p0
 CATEGORIES =		multimedia
 
-HOMEPAGE =		http://linuxcentre.net/get_iplayer/
+# http://git.infradead.org/get_iplayer.git
+HOMEPAGE =		http://www.infradead.org/get_iplayer/
 
 MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
 
@@ -27,7 +28,8 @@ RUN_DEPENDS =		::audio/id3lib \
 			::www/p5-HTML-Parser \
 			:p5-libwww->=5.826:www/p5-libwww
 
-NO_BUILD =		Yes
+BUILD_DEPENDS =		${RUN_DEPENDS}
+
 NO_REGRESS =		Yes
 PKG_ARCH =		*
 
@@ -35,11 +37,15 @@ pre-configure:
 	${SUBST_CMD} ${WRKSRC}/get_iplayer
 	${SUBST_CMD} -c ${FILESDIR}/options.sample ${WRKSRC}/options.sample
 
+do-build:
+	-cd ${WRKSRC}; ./get_iplayer --manpage get_iplayer.1
+
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/get_iplayer/plugins
 	${INSTALL_DATA} ${WRKSRC}/options.sample ${PREFIX}/share/get_iplayer
 	${INSTALL_SCRIPT} ${WRKSRC}/get_iplayer ${PREFIX}/bin
 	${INSTALL_SCRIPT} ${WRKSRC}/plugins/* \
 	    ${PREFIX}/share/get_iplayer/plugins
+	${INSTALL_MAN} ${WRKSRC}/get_iplayer.1 ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

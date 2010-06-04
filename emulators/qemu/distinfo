@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 MD5 (qemu-0.11.50.tar.lzma) = p7e7v4qkTtLjXm3UvQ2rRg==
 RMD160 (qemu-0.11.50.tar.lzma) = QPvtueHdsqDZY4tpzpjYLCchtws=
 SHA1 (qemu-0.11.50.tar.lzma) = Am7DxfmWVJaUja12WR2MIyp/fy4=
 SHA256 (qemu-0.11.50.tar.lzma) = UbVF47aRy5bEzfM65QodrGxn/XizqKyS9WNp4zOBBkI=
 SIZE (qemu-0.11.50.tar.lzma) = 2671531
+=======
+MD5 (qemu-0.12.3.tar.gz) = 0hXkVoZQ6AGYFjlxdMCQ4Q==
+RMD160 (qemu-0.12.3.tar.gz) = EN0W7pcKGaZwZJH6RCXdvqHaK6M=
+SHA1 (qemu-0.12.3.tar.gz) = A+wwe+CUuyFrtb4XKX6fM+GgG1Y=
+SHA256 (qemu-0.12.3.tar.gz) = POJvj7CllBiyBkomusS0DqTkk6y8PfetWTJjVHf63ks=
+SIZE (qemu-0.12.3.tar.gz) = 4693581
+>>>>>>> origin/master
