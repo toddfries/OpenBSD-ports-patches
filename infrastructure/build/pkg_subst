@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 # ex:ts=8 sw=4:
-# $OpenBSD: pkg_subst,v 1.4 2010/04/06 09:39:51 espie Exp $
+# $OpenBSD: pkg_subst,v 1.6 2010/06/05 07:59:05 espie Exp $
 #
 # Copyright (c) 2008 Marc Espie <espie@openbsd.org>
 #
@@ -16,24 +16,42 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# very simple script, only allows substitutions
+# rather simple script
 
 use strict;
 use warnings;
 use OpenBSD::Getopt;
 use OpenBSD::Subst;
 use OpenBSD::Error;
+use OpenBSD::IdCache;
 
 my $subst = OpenBSD::Subst->new;
 
 our $opt_c;
+my ($fuid, $fgid);
+my ($uidc, $gidc);
+
 set_usage(
-'pkg_subst [-c] [-Dvar=value ...] [file ...]');
+'pkg_subst [-c] [-Dvar=value ...] [-g group] [-o owner] [file ...]');
 try { 
-	getopts('D:ch',
+	getopts('D:g:o:ch',
 	    {'D' =>
 		    sub { 
 			    $subst->parse_option(shift);
+		    },
+	     'o' => sub {
+			    my $owner = shift;
+
+			    $uidc //= OpenBSD::UidCache->new;
+			    $fuid = $uidc->lookup($owner, -1);
+			    die "$owner is not a valid user" if $fuid == -1;
+		    },
+	     'g' => sub {
+			    my $group = shift;
+
+			    $gidc //= OpenBSD::GidCache->new;
+			    $fgid = $gidc->lookup($group, -1);
+			    die "$group is not a valid group" if $fgid == -1;
 		    },
 	     'h' => sub {	Usage(); },
 	    });
@@ -60,10 +78,16 @@ while (my $src = shift) {
 		rename($dest, $src) or die "Can't rename $dest: $!";
 	}
 	$subst->copy($src, $dest);
-	# copy rights as well (and owner/group if we're root)
+	# copy rights, owner, group as well
 	my ($uid, $gid, $mode) = (stat $src)[4, 5, 2];
-	if ($< == 0) {
-		chown $uid, $gid, $dest; # not checked
+	my $r1 = chown $fuid // $uid, $fgid // $gid, $dest;
+	my $r2 = chmod $mode & 07777, $dest;
+	if (defined $fuid || defined $fgid || $< == 0) {
+		if ($r1 == 0) {
+			die "chown on $dest failed";
+		}
+		if ($r2 == 0) {
+			die "chmod on $dest failed";
+		}
 	}
-	chmod $mode & 07777, $dest; # not checked
 }
