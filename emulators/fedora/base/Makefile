@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2010/03/22 13:54:21 sturm Exp $
+# $OpenBSD: Makefile,v 1.13 2010/06/07 09:18:38 ajacoutot Exp $
 
 COMMENT=	Linux compatibility package based on Fedora Core 4
 
@@ -64,8 +64,6 @@ MASTER_SITES0=	${MASTER_SITE_FEDORA:=updates/4/i386/}
 
 DISTFILES=	${RPMS}
 
-BUILD_DEPENDS=	:gcpio-*:archivers/gcpio
-
 RPMDIR=		${FULLDISTDIR}
 
 RPMS=		atk-1.9.1-1.i386.rpm \
@@ -112,7 +110,7 @@ PATCH_LIST=
 do-install:
 	${INSTALL_DATA_DIR} ${FEDORADIR}
 .for rpm in ${RPMS:S/:0//}
-	cd ${FEDORADIR}; rpm2cpio ${RPMDIR}/${rpm} | gcpio -idm --quiet
+	cd ${FEDORADIR}; rpm2cpio ${RPMDIR}/${rpm} | cpio -id
 .endfor
 # fix gcpio -d creating dirs with mode 700
 	find ${FEDORADIR} -type d -perm 700 | xargs -r chmod 755
