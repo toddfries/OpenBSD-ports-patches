@@ -6,6 +6,7 @@ COMMENT=	Open Phone Abstraction Library
 
 V=		3.6.8
 DISTNAME=	opal-${V}
+PKGNAME=	${DISTNAME}p0
 
 SUBST_VARS+=	V
 
@@ -61,11 +62,11 @@ CONFIGURE_ARGS=	--disable-localspeex \
 CONFIGURE_ARGS+= --disable-vpb
 
 # XXX our FFmpeg is too old
-CONFIGURE_ARGS+= --disable-h264
-#BUILD_DEPENDS=	${RUN_DEPENDS}
-#RUN_DEPENDS=	::graphics/ffmpeg # dlopen(3) libavcodec.so
-#LIB_DEPENDS+=	x264::multimedia/x264
-#LDFLAGS+=	-pthread
+#CONFIGURE_ARGS+= --disable-h264
+BUILD_DEPENDS=	${RUN_DEPENDS}
+RUN_DEPENDS=	::graphics/ffmpeg # dlopen(3) libavcodec.so
+LIB_DEPENDS+=	x264::multimedia/x264
+LDFLAGS+=	-pthread
 
 .ifndef DEBUG
 CONFIGURE_ENV+=	DEBUG_BUILD="no"
