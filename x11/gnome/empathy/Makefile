@@ -1,13 +1,9 @@
-# $OpenBSD: Makefile,v 1.36 2010/04/26 15:31:55 jasper Exp $
-
-# XXX
-# (empathy:10245): Gtk-WARNING **: could not load image: Icon 'im-xmpp' not present in theme
-# make a symlink from im-jabber to im-xmpp if needed?
+# $OpenBSD: Makefile,v 1.38 2010/06/10 13:47:53 ajacoutot Exp $
 
 COMMENT= 		telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
-GNOME_VERSION=		2.30.1
+GNOME_VERSION=		2.30.1.1
 
 CATEGORIES=		net
 
@@ -58,7 +54,7 @@ LIB_DEPENDS=		canberra,canberra-gtk::audio/libcanberra \
 RUN_DEPENDS=		::net/telepathy/telepathy-gabble \
 			::net/telepathy/telepathy-haze \
 			::net/telepathy/telepathy-idle \
-			::x11/hicolor-icon-theme
+			:gnome-icon-theme->=2.30.3:x11/gnome/icon-theme
 
 USE_X11=		Yes
 DESKTOP_FILES=		Yes
