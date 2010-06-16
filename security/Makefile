@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.230 2010/04/04 16:05:03 jasper Exp $
+# $OpenBSD: Makefile,v 1.232 2010/06/15 13:18:01 pea Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -69,6 +69,7 @@
      SUBDIR += libgpg-error
      SUBDIR += libgringotts
      SUBDIR += libident
+     SUBDIR += libksba
      SUBDIR += libmcrypt
      SUBDIR += libnipper
      SUBDIR += libotr
@@ -162,6 +163,7 @@
      SUBDIR += pgp5
      SUBDIR += pgpdump
      SUBDIR += pidgin-otr
+     SUBDIR += pinentry
      SUBDIR += portscanner
      SUBDIR += portsentry
      SUBDIR += ppgen
