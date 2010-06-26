@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $OpenBSD: libtool,v 1.121 2010/06/25 05:21:35 steven Exp $
+# $OpenBSD: libtool,v 1.125 2010/06/25 21:39:35 steven Exp $
 
 # Copyright (c) 2007-2010 Steven Mestdagh <steven@openbsd.org>
 #
@@ -285,7 +285,7 @@ sub parse_linkargs1
 					push @$result, $lafile;
 					next;
 				} else {
-					$libs->{$key}->find($dirs, 1, $libsearchdirs);
+					$libs->{$key}->find($dirs, 1, 'notyet', $libsearchdirs);
 					my @deps = $libs->{$key}->inspect;
 					foreach my $d (@deps) {
 						my $k = main::basename $d;
@@ -646,6 +646,7 @@ sub link
 	Trace::debug {"creating link command for library (linked ",
 		($shared) ? "dynam" : "stat", "ically)\n"};
 
+	my $what = ref($self);
 	my @libflags;
 	my @cmd;
 	my $ltdir = $main::ltdir;
@@ -691,9 +692,7 @@ sub link
 			next if (!defined $l->{lafile});
 			my $lainfo = LaFile->parse($l->{lafile});
 			next if ($lainfo->stringize('dlname') ne '');
-			if (!defined $l->{fullpath}) {
-				$l->find($dirs, 0);
-			}
+			$l->find($dirs, 0, $what);
 			my $a = $l->{fullpath};
 			if ($a =~ m/\.a$/ && $a !~ m/_pic\.a/) {
 				# extract objects from archive
@@ -720,11 +719,16 @@ sub link
 		($symbolsfile = "$odir/$ltdir/$la") =~ s/\.la$/.exp/;
 		main::get_symbollist($symbolsfile, $opts->{'export-symbols-regex'}, $objs);
 	}
+	my $i = 0;
 	foreach my $k (@$finalorderedlibs) {
 		my $l = $libs->{$k};
-		if (!defined $l->{fullpath}) {
-			$l->find($dirs, 1);
+		$l->find($dirs, 1, $what);
+		if ($l->{dropped}) {
+			# remove library if dependency on it has been dropped
+			delete $libs->{$k};
+			splice(@$finalorderedlibs, $i, 1);
 		}
+		$i++;
 	}
 
 	my @libobjects = values %$libs;
@@ -893,6 +897,7 @@ sub link
 	Trace::debug {"linking program (",
 		($self->{shared}) ? "dynam" : "stat", "ically)\n"};
 
+	my $what = ref($self);
 	my $fpath  = $self->{outfilepath};
 	my $RPdirs = $self->{RPdirs};
 
@@ -949,12 +954,7 @@ sub link
 			$libs->{$k} = Library->new($k);
 		}
 		my $l = $libs->{$k};
-		# here we find shared or static libraries
-		if (defined $l->{fullpath} && $l->{fullpath} =~ m/\.a$/) {
-			# static library was registered already, don't search
-		} else {
-			$l->find($dirs, $self->{shared});
-		}
+		$l->find($dirs, $self->{shared}, $what);
 	}
 
 	my @libobjects = values %$libs;
@@ -997,12 +997,17 @@ package Library;
 # XXX pick the right one if multiple are found!
 sub find
 {
-	my ($self, $dirs, $shared, $ldconfigdirs) = @_;
+	my ($self, $dirs, $shared, $linkmode, $ldconfigdirs) = @_;
 
 	my $libtofind = $self->{key};
 	my $libfile = 0;
 	my @globbedlib;
 	my $ltdir = $main::ltdir;
+
+	my $pic = '';	# used when finding static libraries
+	if ($linkmode eq 'LaFile') {
+		$pic = '_pic';
+	}
 
 	if (defined $self->{lafile}) {
 		# if there is a .la file, use the info from there
@@ -1054,24 +1059,32 @@ sub find
 				$libfile = $globbedlib[0];
 				last;
 			} else {	# XXX find static library instead?
-				if (-f "$sd/lib$libtofind.a") {
+				my $spath = "$sd/lib$libtofind$pic.a";
+				if (-f $spath) {
 					Trace::debug {"found static $libtofind in $sd\n"};
-					$libfile = "$sd/lib$libtofind.a";
+					$libfile = $spath;
 					last;
 				}
 			}
 		   } else {
 			# look for a static library
-			if (-f "$sd/lib$libtofind.a") {
+			my $spath = "$sd/lib$libtofind.a";
+			if (-f $spath) {
 				Trace::debug {"found static $libtofind in $sd\n"};
-				$libfile = "$sd/lib$libtofind.a";
+				$libfile = $spath;
 				last;
 			}
 		   }
 		}
 	}
 	if (!$libfile) {
-		die "$libtofind not found!\n";
+		if (defined $self->{fullpath}) { delete $self->{fullpath}; }
+		if ($linkmode eq 'LaFile') {
+			say "warning: dependency on $libtofind dropped";
+			$self->{dropped} = 1;
+		} elsif ($linkmode eq 'Program') {
+			die "$libtofind not found!\n";
+		}
 	}
 	$self->{fullpath} = $libfile;
 	Trace::debug {"\$libs->{$self->{key}}->{fullpath} = ", $self->{fullpath}, "\n"};
