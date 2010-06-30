@@ -63,10 +63,12 @@ CONFIGURE_ARGS+= --disable-vpb
 
 # XXX our FFmpeg is too old
 #CONFIGURE_ARGS+= --disable-h264
+CONFIGURE_ARGS+= --enable-h264
 BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	::graphics/ffmpeg # dlopen(3) libavcodec.so
 LIB_DEPENDS+=	x264::multimedia/x264
 LDFLAGS+=	-pthread
+CFLAGS+=	-pthread
 
 .ifndef DEBUG
 CONFIGURE_ENV+=	DEBUG_BUILD="no"
