@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/06/28 15:55:21 ajacoutot Exp $
-
-BROKEN=		WIP does not work yet
+# $OpenBSD: Makefile,v 1.9 2010/07/01 07:50:59 ajacoutot Exp $
 
 COMMENT=	framework for defining and tracking users
 
