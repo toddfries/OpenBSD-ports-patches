@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST-ncurses,v 1.2 2010/06/29 01:10:44 robert Exp $
+@conflict php5-ncurses->=5.2
+@pkgpath www/php5/extensions,-ncurses
+lib/php-${PV}/modules/ncurses.so
+share/examples/php-${PV}/ncurses.ini

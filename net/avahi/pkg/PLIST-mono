@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-mono,v 1.1 2009/10/09 17:36:20 ajacoutot Exp $
+@comment $OpenBSD: PLIST-mono,v 1.3 2010/06/28 18:52:31 robert Exp $
 lib/mono/avahi-sharp/
 lib/mono/avahi-sharp/avahi-sharp.dll
 lib/mono/avahi-ui-sharp/

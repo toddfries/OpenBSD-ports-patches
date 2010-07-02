@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# $OpenBSD: make-plist,v 1.145 2010/04/26 12:00:57 espie Exp $
+# $OpenBSD: make-plist,v 1.149 2010/06/28 11:24:01 espie Exp $
 # Copyright (c) 2004-2008 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
@@ -37,7 +37,7 @@ our @ISA = (qw(OpenBSD::Subst));
 
 sub new
 {
-	bless {h => {}, r => [], l => {}}, shift;
+	bless {h => {}, r => [], l => {}, found => {}}, shift;
 }
 
 sub hash
@@ -80,19 +80,25 @@ sub reverse
 	return $_;
 }
 
+my $first_warn = 1;
 sub reverse_with_lib
 {
 	my ($self, $_) = @_;
 	if (m/^(.*?)lib([^\/]+)\.so\.(\d+\.\d+)$/) {
 		my ($path, $name, $version) = ($1, $2, $3);
 		if (!defined $self->{l}->{$name}) {
-			print STDERR "WARNING: unregistered shared lib: $name "
-			. "(version: $version)\n";
+			if ($first_warn) {
+				print STDERR "WARNING: unregistered shared lib(s)\n";
+				$first_warn = 0;
+			}
+			print STDERR "SHARED_LIBS +=\t$name ", 
+			    ' 'x (25-length($name)), "0.0 # $version\n";
 		    $self->{l}->{$name} = $version;
 		} elsif ($self->{l}->{$name} ne $version) {
 			print STDERR "WARNING: version mismatch for lib: $name "
 			. "($version vs. $self->{l}->{$name})\n";
 		}
+		$self->{found}->{$name} = 1;
 		return $self->reverse("${path}lib$name.so.")."\${LIB${name}_VERSION}";
 	} else {
 		return $self->reverse($_);
@@ -884,6 +890,10 @@ sub handle_file
 		    return;
 		}
 		my $short = short_name($file, $p);
+		if (!defined $short) {
+			print STDERR $file->path, " does not belong\n";
+			return;
+		}
 		my $o = create_object($file->type, $short, $item);
 		if (!defined $o) {
 		    next;
@@ -1131,4 +1141,10 @@ if (($default->{wantshared} || (defined $default->{shared}) && $default->{shared
 			    die "Can't write plist: ", prettify($plist), "\n";
 		}
 	}
+}
+
+# and rechecking libraries
+for my $name (sort keys %{$subst->{l}}) {
+	next if $subst->{found}{$name};
+	print STDERR "WARNING: didn't find any library to match SHARED_LIBS $name\n";
 }

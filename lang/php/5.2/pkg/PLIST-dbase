@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST-dbase,v 1.2 2010/06/29 01:10:44 robert Exp $
+@conflict php5-dbase->=5.2
+@pkgpath www/php5/extensions,-dbase
+lib/php-${PV}/modules/dbase.so
+share/examples/php-${PV}/dbase.ini

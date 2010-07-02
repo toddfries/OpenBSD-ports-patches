@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.805 2010/06/17 22:11:23 bluhm Exp $
+# $OpenBSD: Makefile,v 1.809 2010/06/30 07:19:58 sthen Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -131,10 +131,14 @@
      SUBDIR += hmake
      SUBDIR += horde
      SUBDIR += hs-ConfigFile
+     SUBDIR += hs-FindBin
      SUBDIR += hs-HUnit
+     SUBDIR += hs-HsSyck
+     SUBDIR += hs-MetaObject
      SUBDIR += hs-MissingH
      SUBDIR += hs-QuickCheck
      SUBDIR += hs-binary
+     SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
      SUBDIR += hs-dataenc
      SUBDIR += hs-deepseq
@@ -151,11 +155,15 @@
      SUBDIR += hs-pango
      SUBDIR += hs-parallel
      SUBDIR += hs-parsec
+     SUBDIR += hs-pugs-DrIFT
+     SUBDIR += hs-pugs-compat
      SUBDIR += hs-readline
      SUBDIR += hs-regex-base
      SUBDIR += hs-regex-compat
+     SUBDIR += hs-regex-pcre-builtin
      SUBDIR += hs-regex-posix
      SUBDIR += hs-stm
+     SUBDIR += hs-stringtable-atom
      SUBDIR += hscolour
      SUBDIR += hudson
      SUBDIR += id-utils
@@ -287,6 +295,7 @@
      SUBDIR += p5-AppConfig
      SUBDIR += p5-AppConfig-Std
      SUBDIR += p5-Array-Compare
+     SUBDIR += p5-Array-Diff
      SUBDIR += p5-Array-Window
      SUBDIR += p5-AutoXS-Header
      SUBDIR += p5-B-Deobfuscate
@@ -377,6 +386,7 @@
      SUBDIR += p5-Data-Dumper-Simple
      SUBDIR += p5-Data-Flow
      SUBDIR += p5-Data-FormValidator
+     SUBDIR += p5-Data-HexDump
      SUBDIR += p5-Data-Hierarchy
      SUBDIR += p5-Data-ICal
      SUBDIR += p5-Data-ICal-TimeZone
@@ -647,6 +657,7 @@
      SUBDIR += p5-Sub-Name
      SUBDIR += p5-Sub-Override
      SUBDIR += p5-Sub-Uplevel
+     SUBDIR += p5-Sys-SigAction
      SUBDIR += p5-TAP-Parser
      SUBDIR += p5-Taint-Runtime
      SUBDIR += p5-Task-Weaken

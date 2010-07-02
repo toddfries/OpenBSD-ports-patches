@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.2 2009/06/04 21:42:40 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.4 2010/06/28 18:52:31 robert Exp $
 @conflict howl-*
 @newgroup _avahi:629
 @newgroup _avahi-autoipd:630

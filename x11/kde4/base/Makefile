@@ -1,37 +1,29 @@
-# $OpenBSD: Makefile,v 1.7 2010/04/15 14:34:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2010/06/22 23:31:55 espie Exp $
 
 COMMENT =		K Desktop Environment, base
 DISTNAME =		kdebase-${VERSION}
-PKGNAME =		${DISTNAME}p0
+PKGNAME =		${DISTNAME}
 
-SHARED_LIBS +=	kateinterfaces       2.0      # .4.0
-SHARED_LIBS +=	kdecorations         3.0      # .4.0
-SHARED_LIBS +=	kfontinst            2.0      # .4.0
-SHARED_LIBS +=	kfontinstui          0.0      # .4.0
-SHARED_LIBS +=	kickermain           3.0      # .2.0
 SHARED_LIBS +=	konq                 8.0      # .6.0
 SHARED_LIBS +=	konqsidebarplugin    5.0      # .4.0
-SHARED_LIBS +=	kscreensaver         8.0      # .5.0
-SHARED_LIBS +=	ksgrd                5.0      # .4.0
-SHARED_LIBS +=	ksplashthemes        2.0      # .4.0
-SHARED_LIBS +=	kworkspace           0.0      # .1.0
-SHARED_LIBS +=	plasma               0.0      # .1.0
-SHARED_LIBS +=	taskbar              5.0      # .4.0
-SHARED_LIBS +=	taskmanager          3.0      # .4.0
 SHARED_LIBS +=	dolphinprivate       0.0      # .1.0
 SHARED_LIBS +=	konquerorprivate     0.0      # .4.0
 
-LIB_DEPENDS +=	kdecore.>=8,kde3support,kdesu,kdeui,kfile,khtml,kio,kjs,knotifyconfig,kparts,kpty,ktexteditor,kutils,phonon,solid,nepomuk::x11/kde4/libs \
-		qimageblitz::x11/kde4/qimageblitz
+BUILD_DEPENDS +=	::x11/kde4/automoc
+LIB_DEPENDS +=	kdecore.>=8,kde3support,kdesu,kdeui,kfile,khtml,kio,kjs,knotifyconfig,kparts,kpty,ktexteditor,kutils,solid,knewstuff3,plasma,nepomuk,nepomukquery::x11/kde4/libs \
+	phonon.>=5::multimedia/phonon \
+	qimageblitz::x11/kde4/qimageblitz
 
-WANTLIB += ICE SM X11 Xau Xcursor Xdmcp
-WANTLIB += Xext Xfixes Xft Xi Xinerama Xpm Xrandr Xrender
-WANTLIB += Xt Xtst c fontconfig freetype jpeg m png pthread
-WANTLIB += stdc++ util z
+WANTLIB += ICE SM X11 Xau Xdmcp
+WANTLIB += Xext Xft Xpm Xrender
+WANTLIB += Xt c m pthread
+WANTLIB += stdc++ z soprano
 WANTLIB += Qt3Support QtDBus QtGui QtNetwork QtSvg QtXml
-WANTLIB += gif bz2 pcre pcreposix
-WANTLIB += dbus-1 fam glib-2.0 gthread-2.0 iconv intl
-WANTLIB += streams streamanalyzer soprano
+WANTLIB += glib-2.0
+WANTLIB += GL GLU
 
+# these come from libs in real case
+pre-install:
+	mkdir -p ${PREFIX}/share/doc/HTML/en/common
 
 .include <bsd.port.mk>

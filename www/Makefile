@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.459 2010/06/18 16:55:10 landry Exp $
+# $OpenBSD: Makefile,v 1.461 2010/06/29 20:11:53 landry Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -118,6 +118,7 @@
      SUBDIR += mycalendar
      SUBDIR += myreview
      SUBDIR += nag
+     SUBDIR += netsurf
      SUBDIR += nginx
      SUBDIR += nginx,passenger
      SUBDIR += nostromo
@@ -283,6 +284,7 @@
      SUBDIR += p5-WWW-Robot
      SUBDIR += p5-WWW-Search
      SUBDIR += p5-WWW-Search-Ebay
+     SUBDIR += p5-WWW-Tumblr
      SUBDIR += p5-WWW-Wikipedia
      SUBDIR += p5-Weather-Com
      SUBDIR += p5-WebService-Audioscrobbler

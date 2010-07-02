@@ -1,0 +1,18 @@
+$OpenBSD: patch-man_zkt-keyman_8,v 1.1 2010/06/20 14:01:35 jakob Exp $
+--- man/zkt-keyman.8.orig	Fri Jun 11 10:49:01 2010
++++ man/zkt-keyman.8	Fri Jun 11 11:21:54 2010
+@@ -282,12 +282,12 @@ Specifies the name of the default global configuration
+ 
+ .SH FILES
+ .TP
+-.I /var/named/dnssec.conf
++.I /var/named/etc/dnssec.conf
+ Built-in default global configuration file.
+ The name of the default global config file is settable via
+ the environment variable ZKT_CONFFILE.
+ .TP
+-.I /var/named/dnssec-<view>.conf
++.I /var/named/etc/dnssec-<view>.conf
+ View specific global configuration file.
+ .TP
+ .I ./dnssec.conf

@@ -1,18 +1,18 @@
-# $OpenBSD: Makefile,v 1.45 2010/04/27 21:03:25 landry Exp $
+# $OpenBSD: Makefile,v 1.48 2010/06/28 21:34:39 landry Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	alpha amd64 i386 powerpc sparc sparc64
 
 COMMENT=	integrated mozilla application suite
 
-VER=		2.0.4
+VER=		2.0.5
 DISTNAME=	seamonkey-${VER}.source
-PKGNAME=	seamonkey-${VER}p0
+PKGNAME=	seamonkey-${VER}
 EXTRACT_SUFX=	.tar.bz2
 
 # must be in sync with SO_VERSION in mail/mozilla-thunderbird
 # for mail/enigmail and productivity/sunbird,-seamonkey to work fine
-SO_VERSION=	15.0
+SO_VERSION=	16.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 .for _lib in accessibility appcomps auth autoconfig caps chardet chrome commandlines \
@@ -85,7 +85,8 @@ WANTLIB=	c glib-2.0 m pthread stdc++ sndio \
 		Xext Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 \
 		cairo expat fontconfig freetype glitz gmodule-2.0 \
 		gobject-2.0 gthread-2.0 jpeg pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1 png pthread-stubs xcb z gio-2.0
+		pangoft2-1.0 pixman-1 png pthread-stubs xcb z gio-2.0 \
+		xcb-render xcb-render-util
 
 VMEM_WARNING=	Yes
 
@@ -95,7 +96,6 @@ NO_REGRESS=	Yes
 
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/mozilla/build/autoconf \
 				${WRKSRC}/mozilla/js/src/build/autoconf \
-				${WRKSRC}/mozilla/nsprpub/build/autoconf \
 				${WRKSRC}/directory/c-sdk/config/autoconf
 
 AUTOCONF_VERSION= 2.13
@@ -155,7 +155,6 @@ pre-configure:
 	cd ${WRKSRC}/directory/c-sdk && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}
 	cd ${WRKSRC}/mozilla && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}
 	cd ${WRKSRC}/mozilla/js/src && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}
-	cd ${WRKSRC}/mozilla/nsprpub && ${SETENV} ${AUTOCONF_ENV} ${AUTOCONF}
 	${SUBST_CMD} ${WRKSRC}/mozilla/js/src/xpconnect/shell/Makefile.in \
 		${WRKSRC}/mozilla/xpcom/io/nsAppFileLocationProvider.cpp \
 		${WRKSRC}/mozilla/extensions/spellcheck/hunspell/src/mozHunspell.cpp \

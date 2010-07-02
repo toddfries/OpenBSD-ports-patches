@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.92 2010/06/17 09:17:52 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.94 2010/06/20 13:56:11 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=	VideoLAN client; multimedia player
 
 V=		1.0.6
 DISTNAME=	vlc-${V}
-PKGNAME-main=	${DISTNAME}p3
+PKGNAME-main=	${DISTNAME}p5
 CATEGORIES=	x11
 MASTER_SITES=	http://download.videolan.org/pub/videolan/vlc/${V}/
 EXTRACT_SUFX=	.tar.bz2
@@ -47,7 +47,6 @@ LIB_DEPENDS-main=${LIB_DEPENDS} \
 		x264::multimedia/x264 \
 		schroedinger-1.0::multimedia/schroedinger \
 		dvbpsi.>=3::graphics/libdvbpsi \
-		gsm.>=1.0::audio/gsm \
 		speex::audio/speex \
 		tag::audio/taglib \
 		vorbis.>=6,vorbisenc.>=2::audio/libvorbis \
@@ -60,7 +59,7 @@ WANTLIB-main=	GL GLU ICE SM SDL X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xi Xinerama Xrandr Xrender Xv Xxf86vm atk-1.0 bz2 \
 		c cairo dbus-glib-1 expat faac fontconfig freetype gdk-x11-2.0 \
 		gdk_pixbuf-2.0 gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0 \
-		gthread-2.0 gtk-x11-2.0 jpeg m mp3lame oil-0.3 ogg pango-1.0 \
+		gsm gthread-2.0 gtk-x11-2.0 jpeg m mp3lame oil-0.3 ogg pango-1.0 \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 pthread-stubs pthread \
 		stdc++.>=46.0 sndio tiff usbhid xcb-keysyms xcb-render \
 		xcb-render-util xcb z
@@ -104,11 +103,13 @@ CONFIGURE_ARGS+=--disable-altivec \
 		--enable-realrtsp \
 		--enable-release \
 		--enable-theora \
-		--without-contrib
-CONFIGURE_ENV+=	CPPFLAGS="-I${WRKSRC}/include -I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
+		--without-contrib \
+		--without-tuning
+CONFIGURE_ENV+=	LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
 		PKG_CONFIG_PATH="${LOCALBASE}/lib/qt4/pkgconfig" \
 		LOCALBASE=${LOCALBASE}
+
+CPPFLAGS=	-I${WRKSRC}/include -I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 MULTI_PACKAGES=-main
 
@@ -118,17 +119,11 @@ FLAVOR?=
 .if !${FLAVOR:L:Mno_web}
 MULTI_PACKAGES+=-web
 COMMENT-web=	Mozilla plugin for embedded media playback
-PKGNAME-web=	vlc-web-${V}p0
+PKGNAME-web=	vlc-web-${V}p2
 BUILD_DEPENDS+=	:xulrunner-devel->=1.9:devel/xulrunner/1.9,-devel
 CONFIGURE_ARGS+=--enable-mozilla --with-mozilla-sdk-path=${LOCALBASE}/xulrunner1.9
-CONFIGURE_ENV+=	CPPFLAGS="-I${WRKSRC}/include -I${X11BASE}/include -I${LOCALBASE}/include \
-			  -I${LOCALBASE}/include/libpng \
-			  -I${LOCALBASE}/include/nspr \
-			  -I${LOCALBASE}/xulrunner1.9/include -DOPENBSD" \
-		with_mozilla_pkg="libxul" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
-		PKG_CONFIG_PATH="${LOCALBASE}/lib/qt4/pkgconfig" \
-		LOCALBASE=${LOCALBASE}
+CONFIGURE_ENV+=	with_mozilla_pkg="libxul"
+CPPFLAGS+=	-I${LOCALBASE}/include/nspr -I${LOCALBASE}/xulrunner1.9/include -DOPENBSD
 PORTPATH=	${WRKDIR}/bin:/usr/bin:/bin:/usr/sbin:/sbin:${DEPBASE}/bin:${LOCALBASE}/bin:${X11BASE}/bin:${LOCALBASE}/xulrunner1.9
 LIB_DEPENDS-web=${LIB_DEPENDS} \
 		vlc,vlccore::${BASE_PKGPATH} \
@@ -140,7 +135,7 @@ WANTLIB-web=	ICE SM X11 Xau Xdmcp Xt Xpm m pthread-stubs stdc++.>=46.0 xcb
 .if !${FLAVOR:L:Mno_jack}
 MULTI_PACKAGES+=-jack
 COMMENT-jack=	jackd audio output module for VLC
-FULLPKGNAME-jack=vlc-jack-${V}
+FULLPKGNAME-jack=vlc-jack-${V}p0
 FULLPKGPATH-jack=x11/vlc,-jack
 CONFIGURE_ARGS+=--enable-jack
 LIB_DEPENDS-jack=${LIB_DEPENDS} \
@@ -151,8 +146,9 @@ RUN_DEPENDS-jack=::${BASE_PKGPATH}
 WANTLIB-jack=	m
 .endif
 
+CONFIGURE_ENV+=	CPPFLAGS="${CPPFLAGS}"
+
 .if ${MACHINE_ARCH} == "amd64"
-CONFIGURE_ARGS+= --disable-mmx
 PKG_ARGS+=-Damd64=1
 .else
 PKG_ARGS+=-Damd64=0
@@ -165,7 +161,6 @@ PKG_ARGS+=-Di386=0
 .endif
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/configure.ac
 	@perl -pi -e 's/grep -v /grep -av /' ${WRKSRC}/src/Makefile.in
 
 post-install:
