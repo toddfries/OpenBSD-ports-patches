@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1007 2010/06/20 07:48:20 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1011 2010/07/05 09:00:28 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -720,6 +720,7 @@ ${_v}${_s} ?= ${${_v}}
 _PACKAGE_LINKS =
 NO_ARCH ?= no-arch
 _PKG_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/
+_TMP_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/tmp/
 _CACHE_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cache/
 PKGFILE = ${_PKG_REPO}${_PKGFILE${SUBPACKAGE}}
 
@@ -849,14 +850,14 @@ _tmpvars += ${_v}=${${_v:S/^^//}:Q}
 .    endif
 .  endfor
 
-SUBST_CMD = perl ${PORTSDIR}/infrastructure/build/pkg_subst
-.for _v in ${SUBST_VARS}
-SUBST_CMD += -D${_v}=${${_v:S/^^//}:Q}
-.endfor
-
 PKG_ARGS${_S} += -DFULLPKGPATH=${FULLPKGPATH${_S}}
 PKG_ARGS${_S} += -DPERMIT_PACKAGE_CDROM=${PERMIT_PACKAGE_CDROM${_S}:Q}
 PKG_ARGS${_S} += -DPERMIT_PACKAGE_FTP=${PERMIT_PACKAGE_FTP${_S}:Q}
+.endfor
+
+SUBST_CMD = perl ${PORTSDIR}/infrastructure/build/pkg_subst
+.for _v in ${SUBST_VARS}
+SUBST_CMD += -D${_v}=${${_v:S/^^//}:Q}
 .endfor
 
 # XXX
@@ -1286,31 +1287,11 @@ _noshared =
 .endif
 
 _libresolve_fragment = \
-	case "$$d" in \
-	*/*) shdir="${LOCALBASE}/$${d%/*}";; \
-	*) shdir="${LOCALBASE}/lib";; \
-	esac; \
-	check=`eval $$listlibs 2>/dev/null| \
+	check=`for _lib in $$libs; do echo $$_lib; done | \
 		LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} \
 			perl ${PORTSDIR}/infrastructure/build/resolve-lib \
 				${_noshared} $$d` \
 			|| check=Failed
-
-_syslibresolve_fragment = \
-	case "$$d" in \
-	/*) \
-		shdir="$${d%/*}/";; \
-	*/*) \
-		shdir="${DEPBASE}/$${d%/*}";; \
-	*) \
-		shdir="${DEPBASE}/lib"; \
-		listlibs="$$listlibs /usr/lib/lib* ${X11BASE}/lib/lib*";; \
-	esac; \
-	check=`eval $$listlibs 2>/dev/null| \
-		LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} \
-		perl ${PORTSDIR}/infrastructure/build/resolve-lib ${_noshared} $$d` \
-		|| check=Failed
-
 
 PORT_LD_LIBRARY_PATH = ${LOCALBASE}/lib:${X11BASE}/lib:/usr
 _set_ld_library_path = :
@@ -1345,6 +1326,7 @@ _BUILDWANTLIB = ${WANTLIB}
 .  for _s in ${MULTI_PACKAGES}
 _BUILDLIB_DEPENDS += ${LIB_DEPENDS${_s}:N*\:${_path}:N*\:${_path},*}
 _BUILDWANTLIB += ${WANTLIB${_s}}
+_LIB4${_s} = ${LIB_DEPENDS${_s}:M*\:${_path}} ${LIB_DEPENDS${_s}:M*\:${_path},*}
 .  endfor
 .endfor
 
@@ -1526,7 +1508,7 @@ ${_CACHE_REPO}/${_PKGFILE${_S}}:
 # The real package
 
 ${_PACKAGE_COOKIE${_S}}:
-	@mkdir -p ${@D}
+	@mkdir -p ${@D} ${_TMP_REPO}
 .  if ${FETCH_PACKAGES:L} == "yes" && !defined(_TRIED_FETCHING_${_PACKAGE_COOKIE${_S}})
 	@f=${_CACHE_REPO}/${_PKGFILE${_S}}; \
 	cd ${.CURDIR} && ${MAKE} $$f && \
@@ -1544,16 +1526,19 @@ ${_PACKAGE_COOKIE${_S}}:
 	@${ECHO_MSG} "===>  Building package for ${FULLPKGNAME${_S}}"
 	@${ECHO_MSG} "Create ${_PACKAGE_COOKIE${_S}}"
 	@cd ${.CURDIR} && \
-      deps=`SUBPACKAGE=${_S} ${MAKE} _print-package-args` && \
-	  if ${SUDO} ${_PKG_CREATE} $$deps ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}}; then \
-	    mode=`id -u`:`id -g`; ${SUDO} ${CHOWN} $${mode} ${_PACKAGE_COOKIE${_S}}; \
-		if ${_check_lib_depends} ${_PACKAGE_COOKIE${_S}} && \
-			${_register_plist} ${_PACKAGE_COOKIE${_S}}; then \
-				exit 0; \
-		fi; \
-	  fi && \
-	  ${SUDO} ${MAKE} _internal-clean=package && \
-	  exit 1
+	tmp=${_TMP_REPO}${_PKGFILE${_S}} && \
+	if deps=`SUBPACKAGE=${_S} ${MAKE} _print-package-args` && \
+		${SUDO} ${_PKG_CREATE} $$deps ${PKG_ARGS${_S}} $$tmp && \
+		${_check_lib_depends} $$tmp && \
+		${_register_plist} $$tmp && \
+		mv $$tmp ${_PACKAGE_COOKIE${_S}} && \
+		mode=`id -u`:`id -g` && \
+		${SUDO} ${CHOWN} $${mode} ${_PACKAGE_COOKIE${_S}}; then \
+		 	exit 0; \
+	else \
+		${SUDO} rm -f $$tmp; \
+	    exit 1; \
+	fi
 # End of PACKAGE.
 .    endif
 .    if target(post-package)
@@ -2844,48 +2829,73 @@ _print-package-args:
 	@echo '${_i}'|{ \
 		IFS=:; read dep pkg subdir target; \
 		${_flavor_fragment}; \
-		libspecs='';comma=''; \
 		if default=`eval $$toset ${MAKE} _print-packagename`; then \
 			case "X$$pkg" in X) pkg=`echo "$$default" |${_version2default}`;; \
 			esac; \
-			if ${_PKG_QUERY} "$$pkg" -q; then \
-				listlibs='echo ${DEPDIR}$$shdir/lib*'; \
-				case "$$dir" in ${PKGPATH}) \
-					listlibs="$$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}; $$listlibs";; \
-				esac; \
-			else \
-				listlibs="$$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}"; \
-			fi; \
+			libs=`eval $$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}`; \
+			needed=false; \
 			IFS=,; for d in $$dep; do \
-				${_libresolve_fragment}; \
-				case "$$check" in \
+ 				${_libresolve_fragment}; \
+ 				case "$$check" in \
 				*.a) continue;; \
 				Failed) \
-					echo 1>&2 "Can't resolve libspec $$d (in ${SUBPACKAGE})"; \
+					echo 1>&2 "Can't resolve libspec $$d (for ${_i} in ${SUBPACKAGE})"; \
 					exit 1;; \
-				*) \
-					echo "-W $$check";; \
+ 				*) \
+					needed=true;; \
 				esac; \
 			done; \
-			echo "-P $$subdir:$$pkg:$$default"; \
+			exec 3>&2; \
+			unset IFS; for d in ${_DEPRUNLIBS:S/>/\>/g}; do \
+				if $$needed; then continue; fi; \
+				exec 2>/dev/null; \
+				${_libresolve_fragment}; \
+				case "$$check" in \
+				*.a|Failed) \
+					continue;; \
+				*) \
+					needed=true;; \
+				esac; \
+			done; \
+			exec 2>&3; \
+			if $$needed; then echo "-P $$subdir:$$pkg:$$default"; fi; \
 		else \
 			echo 1>&2 "Problem with dependency ${_i}"; \
 			exit 1; \
 		fi; \
 	}
 .  endfor
-.  for _i in ${WANTLIB${SUBPACKAGE}}
-	@d='${_i}'; listlibs='echo $$shdir/lib*'; \
-	${_syslibresolve_fragment}; \
-	case "$$check" in \
-	*.a) ;; \
-	Failed) \
-		echo 1>&2 "Can't resolve libspec $$d"; \
-		exit 1;; \
-	*) \
-		echo "-W $$check";; \
-	esac
-.   endfor
+	@libs=`for i in ${_LIB4${SUBPACKAGE}:S/>/\>/g:S/</\</g}; do echo "$$i"| { \
+		IFS=:; read dep pkg subdir target; \
+		${_flavor_fragment}; \
+		if default=$$(eval $$toset ${MAKE} _print-packagename); then \
+			case "X$$pkg" in X) pkg=$$(echo "$$default" |${_version2default});; \
+			esac; \
+			eval $$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}; \
+		else \
+			echo 1>&2 "Problem with dependency ${_i}"; \
+			exit 1; \
+		fi; }; \
+		done;`; \
+	listlibs="echo $$libs; echo ${LOCALBASE}/lib/lib* /usr/lib/lib* ${X11BASE}/lib/lib*"; \
+	for d in ${_DEPRUNLIBS:S/>/\>/g}; do \
+		case "$$d" in \
+		/*) listlibs="$$listlibs $${d%/*}/lib*";; \
+		*/*) listlibs="$$listlibs ${LOCALBASE}/$${d%/*}/lib*";; \
+		esac; \
+	done; \
+	if found=`eval $$listlibs 2>/dev/null| \
+		LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} perl \
+		${PORTSDIR}/infrastructure/build/resolve-lib ${_noshared} ${_DEPRUNLIBS:S/>/\>/g}`; then \
+		for k in $$found; do \
+			case $$k in *.a) ;; \
+			*) echo "-W $$k";; \
+			esac; \
+		done; \
+	else \
+		echo 1>&2 "Can't resolve libspec"; \
+		exit 1; \
+	fi
 .endif
 
 _list-port-libs:
