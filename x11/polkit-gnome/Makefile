@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2010/07/02 17:14:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.1.1.1 2010/07/05 10:51:16 ajacoutot Exp $
 
 COMMENT=	PolicyKit integration for GNOME/GTK+2
 
-GNOME_PROJECT=	polkit-gnome
-GNOME_VERSION=	0.96
+DISTNAME=	polkit-gnome-0.96
 
-CATEGORIES=	sysutils
+CATEGORIES=	x11 sysutils
 
 EXTRACT_SUFX=	.tar.bz2
 
@@ -31,11 +30,15 @@ WANTLIB += pthread-stubs xcb xcb-render xcb-render-util z
 MASTER_SITES=	http://hal.freedesktop.org/releases/
 
 MODULES=	devel/gettext \
-		x11/gnome
+		textproc/intltool
 
 LIB_DEPENDS=	polkit-agent-1,polkit-gobject-1::sysutils/polkit \
 		gdk-x11-2.0.>=1403,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2
 
+USE_LIBTOOL=	Yes
+USE_GMAKE=	Yes
+
+CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2010/07/01 07:55:42 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.1.1.1 2010/07/05 10:51:16 ajacoutot Exp $
 %%SHARED%%
 include/polkit-gtk-1/
 include/polkit-gtk-1/polkitgtk/
