@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1011 2010/07/05 09:00:28 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1016 2010/07/06 12:38:26 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -103,7 +103,7 @@ _ALL_VARIABLES += DISTFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
-	ONLY_FOR_ARCHS NOT_FOR_ARCHS BROKEN COMES_WITH \
+	BROKEN COMES_WITH \
 	REGRESS_DEPENDS USE_GMAKE USE_GROFF MODULES FLAVORS \
 	NO_BUILD NO_REGRESS SHARED_ONLY PSEUDO_FLAVORS \
 	REGRESS_IS_INTERACTIVE \
@@ -114,6 +114,7 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
+	ONLY_FOR_ARCHS NOT_FOR_ARCHS \
 	PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM WANTLIB CATEGORIES DESCR
 .endif
 # special purpose user settings
@@ -400,6 +401,42 @@ SUBPACKAGE ?= -
 SUBPACKAGE ?= -main
 .endif
 
+_MULTI_PACKAGES =
+.for _s in ${MULTI_PACKAGES}
+
+# ONLY_FOR_ARCHS is special, since it can be undefined
+.  if defined(ONLY_FOR_ARCHS)
+ONLY_FOR_ARCHS${_s} ?= ${ONLY_FOR_ARCHS}
+.  endif
+.  if defined(NOT_FOR_ARCHS)
+NOT_FOR_ARCHS${_s} ?= ${NOT_FOR_ARCHS}
+.  endif
+
+# compute _ARCH_OK for ignore
+.  if defined(ONLY_FOR_ARCHS${_s})
+_ARCH_OK${_s} = 0
+.    for __ARCH in ${MACHINE_ARCH} ${ARCH}
+.      if !empty(ONLY_FOR_ARCHS${_s}:M${__ARCH})
+_ARCH_OK${_s} = 1
+.      endif
+.    endfor
+.  endif
+_ARCH_OK${_s} ?= 1
+.  if defined(NOT_FOR_ARCHS${_s})
+.    for __ARCH in ${MACHINE_ARCH} ${ARCH}
+.      if !empty(NOT_FOR_ARCHS${_s}:M${__ARCH})
+_ARCH_OK${_s} = 0
+.      endif
+.    endfor
+.  endif
+
+# allow subpackages to vanish on architectures that don't
+# support them
+.  if ${_ARCH_OK${_s}} == 1
+_MULTI_PACKAGES += ${_s}
+.  endif
+.endfor
+
 FLAVOR ?=
 FLAVORS ?=
 PSEUDO_FLAVORS ?=
@@ -538,7 +575,7 @@ _INSTALL_PRE_COOKIE =	${WRKINST}/.install_started
 _UPDATE_COOKIES =
 _FUPDATE_COOKIES =
 _INSTALL_COOKIES =
-.for _S in ${MULTI_PACKAGES}
+.for _S in ${_MULTI_PACKAGES}
 .  if !empty(UPDATE_COOKIES_DIR)
 _UPDATE_COOKIE${_S} =	${UPDATE_COOKIES_DIR}/${FULLPKGNAME${_S}}
 _FUPDATE_COOKIE${_S} =	${UPDATE_COOKIES_DIR}/F${FULLPKGNAME${_S}}
@@ -725,7 +762,7 @@ _TMP_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/tmp/
 _CACHE_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cache/
 PKGFILE = ${_PKG_REPO}${_PKGFILE${SUBPACKAGE}}
 
-.for _S in ${MULTI_PACKAGES}
+.for _S in ${_MULTI_PACKAGES}
 _PKGFILE${_S} = ${FULLPKGNAME${_S}}${PKG_SUFX}
 .  if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
 .   if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
@@ -1235,29 +1272,14 @@ IGNORE += "is not an interactive port"
 .if ${USE_X11:L} == "yes" && !exists(${X11BASE})
 IGNORE += "uses X11, but ${X11BASE} not found"
 .endif
-.if defined(ONLY_FOR_ARCHS)
-_ARCH_OK = 0
-.  for __ARCH in ${MACHINE_ARCH} ${ARCH}
-.    if !empty(ONLY_FOR_ARCHS:M${__ARCH})
-_ARCH_OK = 1
-.    endif
-.  endfor
-.  if ${_ARCH_OK} == 0
+.if ${_ARCH_OK${SUBPACKAGE}} == 0
+.  if defined(ONLY_FOR_ARCHS${SUBPACKAGE})
 .    if ${MACHINE_ARCH} == "${ARCH}"
-IGNORE += "is only for ${ONLY_FOR_ARCHS}, not ${MACHINE_ARCH}"
+IGNORE += "is only for ${ONLY_FOR_ARCHS${SUBPACKAGE}}, not ${MACHINE_ARCH}"
 .    else
-IGNORE += "is only for ${ONLY_FOR_ARCHS}, not ${MACHINE_ARCH} \(${ARCH}\)"
+IGNORE += "is only for ${ONLY_FOR_ARCHS${SUBPACKAGE}}, not ${MACHINE_ARCH} \(${ARCH}\)"
 .    endif
-.  endif
-.endif
-.if defined(NOT_FOR_ARCHS)
-_ARCH_OK = 1
-.  for __ARCH in ${MACHINE_ARCH} ${ARCH}
-.    if !empty(NOT_FOR_ARCHS:M${__ARCH})
-_ARCH_OK = 0
-.    endif
-.  endfor
-.  if ${_ARCH_OK} == 0
+.  else
 IGNORE += "is not for ${NOT_FOR_ARCHS}"
 .  endif
 .endif
@@ -1343,10 +1365,11 @@ _BUILDLIB_DEPENDS = ${LIB_DEPENDS}
 _BUILDWANTLIB = ${WANTLIB}
 # strip inter-multi-packages dependencies during building
 .for _path in ${PKGPATH:S,^mystuff/,,}
-.  for _s in ${MULTI_PACKAGES}
+.  for _s in ${_MULTI_PACKAGES}
 _BUILDLIB_DEPENDS += ${LIB_DEPENDS${_s}:N*\:${_path}:N*\:${_path},*}
 _BUILDWANTLIB += ${WANTLIB${_s}}
 _LIB4${_s} = ${LIB_DEPENDS${_s}:M*\:${_path}} ${LIB_DEPENDS${_s}:M*\:${_path},*}
+_LIB4 += ${_LIB4${_s}}
 .  endfor
 .endfor
 
@@ -1418,6 +1441,9 @@ _DEPBUILDLIBS = ${_BUILDLIB_DEPENDS:C/:.*//:S/,/ /g}
 _DEPBUILDLIBS += ${_BUILDWANTLIB}
 _DEPRUNLIBS += ${WANTLIB${SUBPACKAGE}}
 
+# the _DEP*LIBSPECS_COOKIES are only there to force reevaluation of
+# _DEPBUILDWANTLIB_COOKIE and _DEPRUNWANTLIB_COOKIE when the dependencies
+# change (the list will change, and so the cookie will be regenerated)
 .if ${NO_DEPENDS:L} == "no"
 .  for i in ${_DEPBUILDLIBS:C,[|:/<=>*],-,g}
 _DEPBUILDLIBSPECS_COOKIES += ${WRKDIR}/.spec-$i
@@ -1785,18 +1811,27 @@ _internal-regress-depends: ${_DEPREGRESS_COOKIES}
 _internal-buildlib-depends: ${_DEPBUILDLIB_COOKIES}
 _internal-runlib-depends: ${_DEPRUNLIB_COOKIES}
 
+# very quick rule, create this to force reevaluation of next rule when
+# the dependencies in the Makefile are changed
 .  if !empty(_DEPLIBSPECS_COOKIES)
 ${_DEPLIBSPECS_COOKIES}: ${_WRKDIR_COOKIE}
 	@${_MAKE_COOKIE} $@
 .endif
 
+# similar rules for _DEPBUILDWANTLIB_COOKIE and _DEPRUNWANTLIB_COOKIE
 .for _m in BUILD RUN
 .  if !empty(_DEP${_m}WANTLIB_COOKIE)
 ${_DEP${_m}WANTLIB_COOKIE}: ${_DEP${_m}LIBSPECS_COOKIES} \
 	${_DEP${_m}LIB_COOKIES} ${_DEPBUILD_COOKIES} ${_WRKDIR_COOKIE}
 .    if !empty(_DEP${_m}LIBS)
 	@${ECHO_MSG} "===>  Verifying specs: ${_DEP${_m}LIBS}"
-	@listlibs="echo ${LOCALBASE}/lib/lib* /usr/lib/lib* ${X11BASE}/lib/lib*"; \
+	@libs=`for i in ${_LIB4:S/>/\>/g:S/</\</g}; do echo "$$i"| { \
+		IFS=:; read dep pkg subdir target; \
+		${_flavor_fragment}; \
+		eval $$toset ${MAKE} print-plist-libs; \
+		}; \
+		done;`; \
+	listlibs="echo $$libs; echo ${LOCALBASE}/lib/lib* /usr/lib/lib* ${X11BASE}/lib/lib*"; \
 	for d in ${_DEP${_m}LIBS:S/>/\>/g}; do \
 		case "$$d" in \
 		/*) listlibs="$$listlibs $${d%/*}/lib*";; \
@@ -2440,6 +2475,9 @@ print-plist-all-with-depends:
 print-plist-contents:
 	@${_plist_header}; ${_PKG_CREATE} -n -Q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}};${_plist_footer}
 
+print-plist-libs:
+	@${_plist_header}; ${_PKG_CREATE} -n -Q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}|${_grab_libs_from_plist};${_plist_footer}
+
 _internal-package-only: ${_PACKAGE_COOKIES}
 
 _internal-subpackage: ${_PACKAGE_COOKIES${SUBPACKAGE}
@@ -2853,7 +2891,7 @@ _print-package-args:
 		if default=`eval $$toset ${MAKE} _print-packagename`; then \
 			case "X$$pkg" in X) pkg=`echo "$$default" |${_version2default}`;; \
 			esac; \
-			libs=`eval $$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}`; \
+			libs=`eval $$toset ${MAKE} print-plist-libs`; \
 			needed=false; \
 			IFS=,; for d in $$dep; do \
  				${_libresolve_fragment}; \
@@ -2889,11 +2927,8 @@ _print-package-args:
 	@libs=`for i in ${_LIB4${SUBPACKAGE}:S/>/\>/g:S/</\</g}; do echo "$$i"| { \
 		IFS=:; read dep pkg subdir target; \
 		${_flavor_fragment}; \
-		if default=$$(eval $$toset ${MAKE} _print-packagename); then \
-			case "X$$pkg" in X) pkg=$$(echo "$$default" |${_version2default});; \
-			esac; \
-			eval $$toset ${MAKE} print-plist-contents|${_grab_libs_from_plist}; \
-		else \
+		if ! eval $$toset ${MAKE} print-plist-libs; \
+		then \
 			echo 1>&2 "Problem with dependency ${_i}"; \
 			exit 1; \
 		fi; }; \
@@ -2932,15 +2967,14 @@ _list-port-libs:
 		else \
 			mkdir -p $${fulldir%/*}; \
 			${_flavor_fragment}; \
-			eval $$toset ${MAKE} print-plist-contents | \
-				${_grab_libs_from_plist}|tee $$fulldir; \
+			eval $$toset ${MAKE} print-plist-libs | tee $$fulldir; \
 		fi; \
 	done
 .else
 	@${MAKE} run-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
-		eval $$toset ${MAKE} print-plist-contents ; \
-	done | ${_grab_libs_from_plist}
+		eval $$toset ${MAKE} print-plist-libs ; \
+	done
 .endif
 	@echo /usr/lib/lib* ${X11BASE}/lib/lib*
 
