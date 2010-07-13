@@ -807,22 +807,30 @@ _PKGFILE${_S} = ${FULLPKGNAME${_S}}${PKG_SUFX}
 .  if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
 .   if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
 _PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${NO_ARCH}/${_PKGFILE${_S}}
+_PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
+_PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
+.   else
+_PACKAGE_COOKIE${_S} = ${_PKG_REPO}/${_PKGFILE${_S}}
+_PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${_PKG_REPO}/${_PKGFILE${_S}}
+.   endif
 .  else
-_PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
+_PACKAGE_COOKIE${_S} = ${_PKG_REPO}/${_PKGFILE${_S}}
+_PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${_PKG_REPO}/${_PKGFILE${_S}}
 .  endif
 .endfor
 
 .for _S in ${_MULTI_PACKAGES}
-.  if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
+.  if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
+.   if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
 _PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
 _PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
+.   endif
+.  else
+_PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
+_PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
 .  endif
 _PACKAGE_COOKIES${_S} += ${_PACKAGE_COOKIE${_S}}
-.  if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
-_PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/ftp/${_PKGFILE${_S}}
-_PACKAGE_LINKS += ${MACHINE_ARCH}/ftp/${_PKGFILE${_S}} ${MACHINE_ARCH}/all/${_PKGFILE${_S}}
-.  endif
 .  if ${PERMIT_PACKAGE_CDROM${_S}:L} == "yes"
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cdrom/${_PKGFILE${_S}}
 _PACKAGE_LINKS += ${MACHINE_ARCH}/cdrom/${_PKGFILE${_S}} ${MACHINE_ARCH}/all/${_PKGFILE${_S}}
@@ -1626,7 +1634,8 @@ ${_PACKAGE_COOKIE${_S}}:
 		${SUDO} ${_PKG_CREATE} $$deps ${PKG_ARGS${_S}} $$tmp && \
 		${_check_lib_depends} $$tmp && \
 		${_register_plist} $$tmp && \
-		mv $$tmp ${_PACKAGE_COOKIE${_S}} && \
+		cp $$tmp ${_PACKAGE_COOKIE${_S}} && \
+		rm $$tmp && \
 		mode=`id -u`:`id -g` && \
 		${SUDO} ${CHOWN} $${mode} ${_PACKAGE_COOKIE${_S}}; then \
 		 	exit 0; \
@@ -2581,6 +2590,7 @@ ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
 	@rm -f $@
 	@n=$?;n=$${n%/*};n=$${n##*/};f=$?;f=$${f##*/}; \
 		echo "Link ../$$n/$$f to $@"; \
+		rm -f $@; \
 		ln -s ../$$n/$$f $@ 2>/dev/null || \
 	  	cp -p $? $@
 .endfor
