@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.97 2010/07/08 21:28:49 espie Exp $
+# $OpenBSD: Makefile,v 1.99 2010/07/12 20:44:02 kili Exp $
 
 COMMENT-main = 		K Desktop Environment, basic applications
 COMMENT-plugins =	Konqueror nsplugins, essentially native JDK
@@ -6,8 +6,8 @@ COMMENT-samba =		K Desktop Environment, samba support
 CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdebase-${VERSION}
-PKGNAME-main =		${DISTNAME}p10
-PKGNAME-samba =		kdesamba-${VERSION}p2
+PKGNAME-main =		${DISTNAME}
+PKGNAME-samba =		kdesamba-${VERSION}
 MODKDE_VERSION =	3.5.8
 SHARED_LIBS +=	konq                 7.0      # .6.0
 SHARED_LIBS +=	kateutils            1.0      # .0.0
@@ -43,11 +43,17 @@ LIB_DEPENDS-main = ${LIB_DEPENDS} \
 		::security/cyrus-sasl2 \
 		::devel/libusb \
 		::devel/glib2
+
+LIB_DEPENDS-samba = ${LIB_DEPENDS} \
+		:samba->=3:net/samba
+
+
+REVISION-main =		11
 WANTLIB-main = ${WANTLIB} GL GLU Half Iex IlmImf IlmThread Imath Xcomposite \
 	Xcursor Xdamage Xdamage Xfixes Xfixes Xft Xi Xinerama Xmu Xrandr Xss \
 	Xt Xtst Xxf86misc Xxf86vm Xxf86vm asn1 audiofile c com_err crypto drm \
 	drm expat fontconfig freetype glib-2.0 gmodule-2.0 gssapi gthread-2.0 \
-	krb5 lber-2.3 lcms ldap-2.3 lib/kde3/artsflow lib/kde3/artsflow_idl \
+	krb5 lber ldap lib/kde3/artsflow lib/kde3/artsflow_idl \
 	lib/kde3/artskde lib/kde3/kabc lib/kde3/katepartinterfaces \
 	lib/kde3/kdefakes lib/kde3/kdeprint lib/kde3/kdeprint_management \
 	lib/kde3/kdnssd lib/kde3/khtml lib/kde3/kjs lib/kde3/kmedia2_idl \
@@ -56,9 +62,7 @@ WANTLIB-main = ${WANTLIB} GL GLU Half Iex IlmImf IlmThread Imath Xcomposite \
 	mng ogg pcre pcreposix pthread qtmcop sasl2 sndio soundserver_idl ssl \
 	usb vcard vorbis vorbisenc vorbisfile xkbfile
 
-
-LIB_DEPENDS-samba = ${LIB_DEPENDS} \
-		:samba->=3:net/samba
+REVISION-samba =	2
 WANTLIB-samba = ${WANTLIB} execinfo lib/samba/smbclient pthread talloc tdb \
 	wbclient
 

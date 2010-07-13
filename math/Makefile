@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.94 2010/05/11 17:14:50 pirofti Exp $
+# $OpenBSD: Makefile,v 1.96 2010/07/12 04:52:08 espie Exp $
 #
 
      SUBDIR =
@@ -17,6 +17,7 @@
      SUBDIR += coq
      SUBDIR += ecm
      SUBDIR += eigen
+     SUBDIR += eigen2
      SUBDIR += fann
      SUBDIR += fftw
      SUBDIR += fftw3
@@ -89,6 +90,7 @@
      SUBDIR += qrupdate
      SUBDIR += qtoctave
      SUBDIR += sc
+     SUBDIR += udunits
      SUBDIR += umfpack
      SUBDIR += wcalc
      SUBDIR += wmcalc
