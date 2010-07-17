@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.424 2010/07/09 16:55:44 sebastia Exp $
+# $OpenBSD: Makefile,v 1.426 2010/07/17 05:57:59 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -190,6 +190,7 @@
      SUBDIR += pinot
      SUBDIR += podbrowser
      SUBDIR += polkit-gnome
+     SUBDIR += polkit-qt4
      SUBDIR += ptsans
      SUBDIR += pwm
      SUBDIR += py-Xlib
@@ -241,7 +242,10 @@
      SUBDIR += tint
      SUBDIR += tk
      SUBDIR += tkcon
+     SUBDIR += tkdnd
+     SUBDIR += tkhtml
      SUBDIR += tktable
+     SUBDIR += tktray
      SUBDIR += tktreectrl
      SUBDIR += transset-df
      SUBDIR += trayer

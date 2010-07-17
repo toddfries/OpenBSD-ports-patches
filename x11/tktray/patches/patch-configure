@@ -1,0 +1,22 @@
+$OpenBSD: patch-configure,v 1.2 2010/07/16 11:25:12 sebastia Exp $
+
+remove parameters that gcc2 doesn't know of, and do not overwrite CFLAGS_OPTIMIZE
+
+--- configure.orig	Sat May 15 13:48:50 2010
++++ configure	Fri Jul 16 12:36:32 2010
+@@ -6401,12 +6401,12 @@ fi
+     ECHO_VERSION='`echo ${PACKAGE_VERSION}`'
+     TCL_LIB_VERSIONS_OK=ok
+     CFLAGS_DEBUG=-g
+-    CFLAGS_OPTIMIZE=-O
++    #CFLAGS_OPTIMIZE=-O
+     if test "$GCC" = yes; then :
+ 
+ 	# TEA specific:
+-	CFLAGS_OPTIMIZE=-O2
+-	CFLAGS_WARNING="-W -Wall -Wno-unused-parameter -Wno-missing-field-initializers -ansi -pedantic"
++	CFLAGS_OPTIMIZE=""
++	CFLAGS_WARNING="-W -Wall -ansi -pedantic"
+ 
+ else
+   CFLAGS_WARNING=""
