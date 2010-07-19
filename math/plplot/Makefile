@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2010/06/15 20:47:38 steven Exp $
+# $OpenBSD: Makefile,v 1.32 2010/07/18 18:49:01 naddy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -16,9 +16,12 @@ SHARED_LIBS=	csirocsa	2.0	\
 		plplottcltkd	12.0	\
 		tclmatrixd	12.0
 
-PKGNAME-main=	${DISTNAME}p2
-PKGNAME-c++ =	plplot-c++-${VERSION}p2
-PKGNAME-f77=	plplot-f77-${VERSION}p5
+PKGNAME-main=	${DISTNAME}
+PKGNAME-c++ =	plplot-c++-${VERSION}
+PKGNAME-f77=	plplot-f77-${VERSION}
+REVISION-main=	2
+REVISION-c++ =	2
+REVISION-f77=	5
 
 CATEGORIES=	math graphics
 
@@ -66,7 +69,7 @@ CONFIGURE_ARGS=	-D ENABLE_java=OFF \
 		-D ENABLE_octave=OFF \
 		-D PLD_wxwidgets=OFF
 
-GCC_ARCH=       ${MACHINE_ARCH}-unknown-openbsd${OPSYS_VER}
+GCC_ARCH=       ${MACHINE_ARCH}-unknown-openbsd${OSREV}
 GNU_ARCH=       ${GCC_ARCH:S/amd64/x86_64/}
 SUBST_VARS+=	GNU_ARCH
 
