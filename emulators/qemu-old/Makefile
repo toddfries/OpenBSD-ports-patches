@@ -6,7 +6,7 @@ ONLY_FOR_ARCHS=		i386 powerpc
 COMMENT=		multi system emulator
 
 DISTNAME=		qemu-0.9.1
-PKGNAME=		${DISTNAME}p13
+REVISION=		14
 CATEGORIES=		emulators
 
 HOMEPAGE=		http://www.nongnu.org/qemu/
@@ -20,6 +20,9 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_OPENBSD}
+
+MODULES=		gcc3
+MODGCC3_ARCHES=		i386 powerpc
 
 BUILD_DEPENDS=		::textproc/texi2html
 USE_GMAKE=		Yes
