@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2010/04/03 20:07:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.8 2010/07/24 08:01:40 ajacoutot Exp $
 
 COMMENT=	SMTP benchmark to measure throughput of an MTA
 
 DISTNAME=	smtp-benchmark-1.0.4
-PKGNAME=	${DISTNAME}p1
+REVISION=	1
 
 CATEGORIES=    	benchmarks mail
 
