@@ -1,6 +1,6 @@
-@comment $OpenBSD: PLIST-seamonkey,v 1.1 2010/04/03 09:46:09 landry Exp $
-@conflict enigmail-seamonkey-<1.0
-@pkgpath mail/enigmail-seamonkey
+@comment $OpenBSD: PLIST,v 1.1.1.1 2010/07/27 20:18:24 landry Exp $
+@conflict enigmail-seamonkey-<=1.0.1
+@pkgpath mail/enigmail,-seamonkey
 seamonkey/extensions/${GUID}/
 seamonkey/extensions/${GUID}/chrome/
 seamonkey/extensions/${GUID}/chrome.manifest

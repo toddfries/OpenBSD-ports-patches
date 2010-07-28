@@ -1,7 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.11 2010/07/09 15:39:00 landry Exp $
-@pkgpath www/seamonkey,-main
-bin/${MOZILLA_PROJECT}
-@man man/man1/${MOZILLA_PROJECT}.1
+@comment $OpenBSD: PLIST-main,v 1.1 2010/07/27 17:01:16 landry Exp $
+@conflict mozilla-thunderbird-<=3.0.5
+@pkgpath mail/mozilla-thunderbird
+bin/thunderbird
 ${MOZILLA_PROJECT}/
 ${MOZILLA_PROJECT}/README.OpenBSD
 ${MOZILLA_PROJECT}/application.ini
@@ -16,72 +16,27 @@ ${MOZILLA_PROJECT}/chrome/gloda.jar
 ${MOZILLA_PROJECT}/chrome/gloda.manifest
 ${MOZILLA_PROJECT}/chrome/icons/
 ${MOZILLA_PROJECT}/chrome/icons/default/
-${MOZILLA_PROJECT}/chrome/icons/default/JSConsoleWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/JSConsoleWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/JSConsoleWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/abcardWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/abcardWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/abcardWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/ablistWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/ablistWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/ablistWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/addressbookWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/addressbookWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/addressbookWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/bmPropsWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/bmPropsWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/bmPropsWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/bookmark-window.png
-${MOZILLA_PROJECT}/chrome/icons/default/bookmark-window16.png
-${MOZILLA_PROJECT}/chrome/icons/default/bookmark-window48.png
-${MOZILLA_PROJECT}/chrome/icons/default/default.png
 ${MOZILLA_PROJECT}/chrome/icons/default/default16.png
+${MOZILLA_PROJECT}/chrome/icons/default/default22.png
+${MOZILLA_PROJECT}/chrome/icons/default/default24.png
+${MOZILLA_PROJECT}/chrome/icons/default/default256.png
+${MOZILLA_PROJECT}/chrome/icons/default/default32.png
 ${MOZILLA_PROJECT}/chrome/icons/default/default48.png
-${MOZILLA_PROJECT}/chrome/icons/default/downloadManager.png
-${MOZILLA_PROJECT}/chrome/icons/default/downloadManager16.png
-${MOZILLA_PROJECT}/chrome/icons/default/downloadManager48.png
-${MOZILLA_PROJECT}/chrome/icons/default/editorWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/editorWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/editorWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/findBookmarkWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/findBookmarkWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/findBookmarkWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/findHistoryWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/findHistoryWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/findHistoryWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/history-window.png
-${MOZILLA_PROJECT}/chrome/icons/default/history-window16.png
-${MOZILLA_PROJECT}/chrome/icons/default/history-window48.png
-${MOZILLA_PROJECT}/chrome/icons/default/main-window.png
-${MOZILLA_PROJECT}/chrome/icons/default/main-window16.png
-${MOZILLA_PROJECT}/chrome/icons/default/main-window48.png
-${MOZILLA_PROJECT}/chrome/icons/default/messengerWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/messengerWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/messengerWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/msgcomposeWindow.png
-${MOZILLA_PROJECT}/chrome/icons/default/msgcomposeWindow16.png
-${MOZILLA_PROJECT}/chrome/icons/default/msgcomposeWindow48.png
-${MOZILLA_PROJECT}/chrome/icons/default/${MOZILLA_PROJECT}.png
-${MOZILLA_PROJECT}/chrome/icons/default/venkman-window.png
-${MOZILLA_PROJECT}/chrome/icons/default/venkman-window16.png
-${MOZILLA_PROJECT}/chrome/icons/default/venkman-window48.png
 ${MOZILLA_PROJECT}/chrome/messenger.jar
 ${MOZILLA_PROJECT}/chrome/messenger.manifest
 ${MOZILLA_PROJECT}/chrome/newsblog.jar
 ${MOZILLA_PROJECT}/chrome/newsblog.manifest
 ${MOZILLA_PROJECT}/chrome/pippki.jar
 ${MOZILLA_PROJECT}/chrome/pippki.manifest
-${MOZILLA_PROJECT}/chrome/reporter.jar
-${MOZILLA_PROJECT}/chrome/reporter.manifest
 ${MOZILLA_PROJECT}/chrome/toolkit.jar
 ${MOZILLA_PROJECT}/chrome/toolkit.manifest
 ${MOZILLA_PROJECT}/components/
-${MOZILLA_PROJECT}/components/FeedConverter.js
 ${MOZILLA_PROJECT}/components/FeedProcessor.js
-${MOZILLA_PROJECT}/components/FeedWriter.js
+${MOZILLA_PROJECT}/components/GPSDGeolocationProvider.js
 ${MOZILLA_PROJECT}/components/NetworkGeolocationProvider.js
-${MOZILLA_PROJECT}/components/WebContentConverter.js
+${MOZILLA_PROJECT}/components/aboutRights.js
 ${MOZILLA_PROJECT}/components/accessibility.xpt
+${MOZILLA_PROJECT}/components/activity.xpt
 ${MOZILLA_PROJECT}/components/addrbook.xpt
 ${MOZILLA_PROJECT}/components/alerts.xpt
 ${MOZILLA_PROJECT}/components/appshell.xpt
@@ -93,8 +48,10 @@ ${MOZILLA_PROJECT}/components/chardet.xpt
 ${MOZILLA_PROJECT}/components/chrome.xpt
 ${MOZILLA_PROJECT}/components/commandhandler.xpt
 ${MOZILLA_PROJECT}/components/commandlines.xpt
+${MOZILLA_PROJECT}/components/components.list
 ${MOZILLA_PROJECT}/components/composer.xpt
 ${MOZILLA_PROJECT}/components/content_base.xpt
+${MOZILLA_PROJECT}/components/content_events.xpt
 ${MOZILLA_PROJECT}/components/content_html.xpt
 ${MOZILLA_PROJECT}/components/content_htmldoc.xpt
 ${MOZILLA_PROJECT}/components/content_xmldoc.xpt
@@ -102,7 +59,6 @@ ${MOZILLA_PROJECT}/components/content_xslt.xpt
 ${MOZILLA_PROJECT}/components/content_xtf.xpt
 ${MOZILLA_PROJECT}/components/contentprefs.xpt
 ${MOZILLA_PROJECT}/components/cookie.xpt
-${MOZILLA_PROJECT}/components/directory.xpt
 ${MOZILLA_PROJECT}/components/docshell.xpt
 ${MOZILLA_PROJECT}/components/dom.xpt
 ${MOZILLA_PROJECT}/components/dom_base.xpt
@@ -177,27 +133,26 @@ ${MOZILLA_PROJECT}/components/layout_xul_tree.xpt
 @lib ${MOZILLA_PROJECT}/components/libimport.so.${LIBimport_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libintlapp.so.${LIBintlapp_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libjar50.so.${LIBjar50_VERSION}
+@lib ${MOZILLA_PROJECT}/components/libjsctypes.so.${LIBjsctypes_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libjsd.so.${LIBjsd_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmail.so.${LIBmail_VERSION}
+@lib ${MOZILLA_PROJECT}/components/libmailcomps.so.${LIBmailcomps_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmork.so.${LIBmork_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmozfind.so.${LIBmozfind_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmozldap.so.${LIBmozldap_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmsgsmime.so.${LIBmsgsmime_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libnecko.so.${LIBnecko_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libnsappshell.so.${LIBnsappshell_VERSION}
-@lib ${MOZILLA_PROJECT}/components/liboji.so.${LIBoji_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libpermissions.so.${LIBpermissions_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libpipboot.so.${LIBpipboot_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libpipnss.so.${LIBpipnss_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libpippki.so.${LIBpippki_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libplaces.so.${LIBplaces_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libpref.so.${LIBpref_VERSION}
 @lib ${MOZILLA_PROJECT}/components/librdf.so.${LIBrdf_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libremoteservice.so.${LIBremoteservice_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libsatchel.so.${LIBsatchel_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libspellchecker.so.${LIBspellchecker_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libstoragecomps.so.${LIBstoragecomps_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libsuite.so.${LIBsuite_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libsystem-pref.so.${LIBsystem-pref_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libtkautocomplete.so.${LIBtkautocomplete_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libtoolkitcomps.so.${LIBtoolkitcomps_VERSION}
@@ -216,6 +171,8 @@ ${MOZILLA_PROJECT}/components/layout_xul_tree.xpt
 ${MOZILLA_PROJECT}/components/locale.xpt
 ${MOZILLA_PROJECT}/components/loginmgr.xpt
 ${MOZILLA_PROJECT}/components/lwbrk.xpt
+${MOZILLA_PROJECT}/components/mailContentHandler.js
+${MOZILLA_PROJECT}/components/mailprofilemigration.xpt
 ${MOZILLA_PROJECT}/components/mailview.xpt
 ${MOZILLA_PROJECT}/components/mdn-service.js
 ${MOZILLA_PROJECT}/components/mime.xpt
@@ -248,47 +205,41 @@ ${MOZILLA_PROJECT}/components/newsblog.js
 ${MOZILLA_PROJECT}/components/nsAbAutoCompleteMyDomain.js
 ${MOZILLA_PROJECT}/components/nsAbAutoCompleteSearch.js
 ${MOZILLA_PROJECT}/components/nsAbLDAPAttributeMap.js
-${MOZILLA_PROJECT}/components/nsAboutAbout.js
-${MOZILLA_PROJECT}/components/nsAboutCertError.js
-${MOZILLA_PROJECT}/components/nsAboutFeeds.js
-${MOZILLA_PROJECT}/components/nsAboutRights.js
-${MOZILLA_PROJECT}/components/nsAboutSessionRestore.js
+${MOZILLA_PROJECT}/components/nsActivity.js
+${MOZILLA_PROJECT}/components/nsActivityManager.js
+${MOZILLA_PROJECT}/components/nsActivityManagerUI.js
 ${MOZILLA_PROJECT}/components/nsAddonRepository.js
 ${MOZILLA_PROJECT}/components/nsBadCertHandler.js
 ${MOZILLA_PROJECT}/components/nsBlocklistService.js
-${MOZILLA_PROJECT}/components/nsBrowserContentHandler.js
-${MOZILLA_PROJECT}/components/nsComposerCmdLineHandler.js
 ${MOZILLA_PROJECT}/components/nsContentDispatchChooser.js
 ${MOZILLA_PROJECT}/components/nsContentPrefService.js
 ${MOZILLA_PROJECT}/components/nsDefaultCLH.js
+${MOZILLA_PROJECT}/components/nsDownloadManagerUI.js
 ${MOZILLA_PROJECT}/components/nsExtensionManager.js
 ${MOZILLA_PROJECT}/components/nsFilePicker.js
+${MOZILLA_PROJECT}/components/nsFormAutoComplete.js
 ${MOZILLA_PROJECT}/components/nsHandlerService.js
 ${MOZILLA_PROJECT}/components/nsHelperAppDlg.js
+${MOZILLA_PROJECT}/components/nsINIProcessor.js
 ${MOZILLA_PROJECT}/components/nsLDAPProtocolHandler.js
-${MOZILLA_PROJECT}/components/nsLivemarkService.js
 ${MOZILLA_PROJECT}/components/nsLoginInfo.js
 ${MOZILLA_PROJECT}/components/nsLoginManager.js
 ${MOZILLA_PROJECT}/components/nsLoginManagerPrompter.js
+${MOZILLA_PROJECT}/components/nsMailDefaultHandler.js
 ${MOZILLA_PROJECT}/components/nsMailNewsCommandLineHandler.js
 ${MOZILLA_PROJECT}/components/nsMsgTraitService.js
-${MOZILLA_PROJECT}/components/nsPlacesDBFlush.js
+${MOZILLA_PROJECT}/components/nsPhishingProtectionApplication.js
 ${MOZILLA_PROJECT}/components/nsProgressDialog.js
 ${MOZILLA_PROJECT}/components/nsProxyAutoConfig.js
 ${MOZILLA_PROJECT}/components/nsSMTPProtocolHandler.js
-${MOZILLA_PROJECT}/components/nsSessionStartup.js
-${MOZILLA_PROJECT}/components/nsSessionStore.js
-${MOZILLA_PROJECT}/components/nsSidebar.js
-${MOZILLA_PROJECT}/components/nsSuiteDownloadManagerUI.js
-${MOZILLA_PROJECT}/components/nsSuiteGlue.js
-${MOZILLA_PROJECT}/components/nsTaggingService.js
+${MOZILLA_PROJECT}/components/nsSetDefaultMail.js
 ${MOZILLA_PROJECT}/components/nsTryToClose.js
-${MOZILLA_PROJECT}/components/nsTypeAheadFind.js
 ${MOZILLA_PROJECT}/components/nsURLFormatter.js
-${MOZILLA_PROJECT}/components/nsUpdateService.js
+${MOZILLA_PROJECT}/components/nsUpdateTimerManager.js
+${MOZILLA_PROJECT}/components/nsUrlClassifierLib.js
+${MOZILLA_PROJECT}/components/nsUrlClassifierListManager.js
 ${MOZILLA_PROJECT}/components/nsWebHandlerApp.js
 ${MOZILLA_PROJECT}/components/offlineStartup.js
-${MOZILLA_PROJECT}/components/oji.xpt
 ${MOZILLA_PROJECT}/components/parentalcontrols.xpt
 ${MOZILLA_PROJECT}/components/pipboot.xpt
 ${MOZILLA_PROJECT}/components/pipnss.xpt
@@ -305,17 +256,13 @@ ${MOZILLA_PROJECT}/components/satchel.xpt
 ${MOZILLA_PROJECT}/components/saxparser.xpt
 ${MOZILLA_PROJECT}/components/shellservice.xpt
 ${MOZILLA_PROJECT}/components/shistory.xpt
-${MOZILLA_PROJECT}/components/smile.xpt
-${MOZILLA_PROJECT}/components/smileApplication.js
 ${MOZILLA_PROJECT}/components/smime-service.js
 ${MOZILLA_PROJECT}/components/spellchecker.xpt
+${MOZILLA_PROJECT}/components/steel.xpt
+${MOZILLA_PROJECT}/components/steelApplication.js
 ${MOZILLA_PROJECT}/components/storage-Legacy.js
 ${MOZILLA_PROJECT}/components/storage-mozStorage.js
 ${MOZILLA_PROJECT}/components/storage.xpt
-${MOZILLA_PROJECT}/components/suitebrowser.xpt
-${MOZILLA_PROJECT}/components/suitecommon.xpt
-${MOZILLA_PROJECT}/components/suitefeeds.xpt
-${MOZILLA_PROJECT}/components/suitemigration.xpt
 ${MOZILLA_PROJECT}/components/toolkitprofile.xpt
 ${MOZILLA_PROJECT}/components/toolkitremote.xpt
 ${MOZILLA_PROJECT}/components/txEXSLTRegExFunctions.js
@@ -325,6 +272,7 @@ ${MOZILLA_PROJECT}/components/uconv.xpt
 ${MOZILLA_PROJECT}/components/unicharutil.xpt
 ${MOZILLA_PROJECT}/components/update.xpt
 ${MOZILLA_PROJECT}/components/uriloader.xpt
+${MOZILLA_PROJECT}/components/url-classifier.xpt
 ${MOZILLA_PROJECT}/components/urlformatter.xpt
 ${MOZILLA_PROJECT}/components/webBrowser_core.xpt
 ${MOZILLA_PROJECT}/components/webbrowserpersist.xpt
@@ -353,184 +301,26 @@ ${MOZILLA_PROJECT}/defaults/autoconfig/prefcalls.js
 ${MOZILLA_PROJECT}/defaults/messenger/
 ${MOZILLA_PROJECT}/defaults/messenger/mailViews.dat
 ${MOZILLA_PROJECT}/defaults/pref/
-${MOZILLA_PROJECT}/defaults/pref/browser-prefs.js
+${MOZILLA_PROJECT}/defaults/pref/all-l10n.js
+${MOZILLA_PROJECT}/defaults/pref/all-thunderbird.js
 ${MOZILLA_PROJECT}/defaults/pref/channel-prefs.js
 ${MOZILLA_PROJECT}/defaults/pref/composer.js
 ${MOZILLA_PROJECT}/defaults/pref/mailnews.js
 ${MOZILLA_PROJECT}/defaults/pref/mdn.js
-${MOZILLA_PROJECT}/defaults/pref/reporter.js
 ${MOZILLA_PROJECT}/defaults/pref/smime.js
-${MOZILLA_PROJECT}/defaults/pref/suite-l10n.js
+${MOZILLA_PROJECT}/defaults/pref/thunderbird-branding.js
 ${MOZILLA_PROJECT}/defaults/profile/
-${MOZILLA_PROJECT}/defaults/profile/bookmarks.html
-${MOZILLA_PROJECT}/defaults/profile/chrome/
-${MOZILLA_PROJECT}/defaults/profile/chrome/userChrome-example.css
-${MOZILLA_PROJECT}/defaults/profile/chrome/userContent-example.css
 ${MOZILLA_PROJECT}/defaults/profile/localstore.rdf
 ${MOZILLA_PROJECT}/defaults/profile/mimeTypes.rdf
-${MOZILLA_PROJECT}/defaults/profile/panels.rdf
-${MOZILLA_PROJECT}/defaults/profile/search.rdf
+${MOZILLA_PROJECT}/defaults/profile/prefs.js
 ${MOZILLA_PROJECT}/dictionaries/
 ${MOZILLA_PROJECT}/dictionaries/en-US.aff
 ${MOZILLA_PROJECT}/dictionaries/en-US.dic
 ${MOZILLA_PROJECT}/extensions/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/chrome/inspector.jar
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/components/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/components/inspector-cmdline.js
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/defaults/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/defaults/preferences/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/defaults/preferences/inspector.js
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/Linux/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/Linux/chrome/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/Linux/chrome/icons/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/Linux/chrome/icons/default/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/Linux/chrome/icons/default/winInspectorMain.xpm
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/Linux/chrome/icons/default/winInspectorMain16.xpm
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/OS2/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/OS2/chrome/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/OS2/chrome/icons/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/OS2/chrome/icons/default/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/OS2/chrome/icons/default/winInspectorMain.ico
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/WINNT/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/WINNT/chrome/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/WINNT/chrome/icons/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/WINNT/chrome/icons/default/
-${MOZILLA_PROJECT}/extensions/inspector@mozilla.org/platform/WINNT/chrome/icons/default/winInspectorMain.ico
-${MOZILLA_PROJECT}/extensions/langpack-be@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-be@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-be@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-be@${MOZILLA_PROJECT}.mozilla.org/chrome/be.jar
-${MOZILLA_PROJECT}/extensions/langpack-be@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-ca@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-ca@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-ca@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-ca@${MOZILLA_PROJECT}.mozilla.org/chrome/ca.jar
-${MOZILLA_PROJECT}/extensions/langpack-ca@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-cs@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-cs@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-cs@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-cs@${MOZILLA_PROJECT}.mozilla.org/chrome/cs.jar
-${MOZILLA_PROJECT}/extensions/langpack-cs@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-de@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-de@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-de@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-de@${MOZILLA_PROJECT}.mozilla.org/chrome/de.jar
-${MOZILLA_PROJECT}/extensions/langpack-de@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-es-AR@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-es-AR@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-es-AR@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-es-AR@${MOZILLA_PROJECT}.mozilla.org/chrome/es-AR.jar
-${MOZILLA_PROJECT}/extensions/langpack-es-AR@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-es-ES@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-es-ES@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-es-ES@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-es-ES@${MOZILLA_PROJECT}.mozilla.org/chrome/es-ES.jar
-${MOZILLA_PROJECT}/extensions/langpack-es-ES@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-fr@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-fr@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-fr@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-fr@${MOZILLA_PROJECT}.mozilla.org/chrome/fr.jar
-${MOZILLA_PROJECT}/extensions/langpack-fr@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-gl@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-gl@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-gl@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-gl@${MOZILLA_PROJECT}.mozilla.org/chrome/gl.jar
-${MOZILLA_PROJECT}/extensions/langpack-gl@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-hu@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-hu@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-hu@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-hu@${MOZILLA_PROJECT}.mozilla.org/chrome/hu.jar
-${MOZILLA_PROJECT}/extensions/langpack-hu@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-it@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-it@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-it@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-it@${MOZILLA_PROJECT}.mozilla.org/chrome/it.jar
-${MOZILLA_PROJECT}/extensions/langpack-it@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-ka@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-ka@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-ka@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-ka@${MOZILLA_PROJECT}.mozilla.org/chrome/ka.jar
-${MOZILLA_PROJECT}/extensions/langpack-ka@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-lt@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-lt@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-lt@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-lt@${MOZILLA_PROJECT}.mozilla.org/chrome/lt.jar
-${MOZILLA_PROJECT}/extensions/langpack-lt@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-nb-NO@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-nb-NO@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-nb-NO@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-nb-NO@${MOZILLA_PROJECT}.mozilla.org/chrome/nb-NO.jar
-${MOZILLA_PROJECT}/extensions/langpack-nb-NO@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-nl@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-nl@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-nl@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-nl@${MOZILLA_PROJECT}.mozilla.org/chrome/nl.jar
-${MOZILLA_PROJECT}/extensions/langpack-nl@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-pl@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-pl@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-pl@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-pl@${MOZILLA_PROJECT}.mozilla.org/chrome/pl.jar
-${MOZILLA_PROJECT}/extensions/langpack-pl@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-pt-PT@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-pt-PT@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-pt-PT@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-pt-PT@${MOZILLA_PROJECT}.mozilla.org/chrome/pt-PT.jar
-${MOZILLA_PROJECT}/extensions/langpack-pt-PT@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-ru@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-ru@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-ru@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-ru@${MOZILLA_PROJECT}.mozilla.org/chrome/ru.jar
-${MOZILLA_PROJECT}/extensions/langpack-ru@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-sk@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-sk@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-sk@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-sk@${MOZILLA_PROJECT}.mozilla.org/chrome/sk.jar
-${MOZILLA_PROJECT}/extensions/langpack-sk@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-sv-SE@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-sv-SE@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-sv-SE@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-sv-SE@${MOZILLA_PROJECT}.mozilla.org/chrome/sv-SE.jar
-${MOZILLA_PROJECT}/extensions/langpack-sv-SE@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/langpack-tr@${MOZILLA_PROJECT}.mozilla.org/
-${MOZILLA_PROJECT}/extensions/langpack-tr@${MOZILLA_PROJECT}.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/langpack-tr@${MOZILLA_PROJECT}.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/langpack-tr@${MOZILLA_PROJECT}.mozilla.org/chrome/tr.jar
-${MOZILLA_PROJECT}/extensions/langpack-tr@${MOZILLA_PROJECT}.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/chrome/
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/chrome.manifest
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/chrome/modern.jar
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/icon.png
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/install.rdf
-${MOZILLA_PROJECT}/extensions/modern@themes.mozilla.org/preview.png
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome.manifest
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/chatzilla.jar
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/icons/
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/icons/default/
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/icons/default/chatzilla-window.ico
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/icons/default/chatzilla-window.xpm
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/chrome/icons/default/chatzilla-window16.xpm
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/components/
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/components/chatzilla-service.js
-${MOZILLA_PROJECT}/extensions/{59c81df5-4b7a-477b-912d-4e0fdf64e5f2}/install.rdf
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/icon.png
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/preview.png
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/chrome/
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/chrome.manifest
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/chrome/venkman.jar
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/components/
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/components/venkman-service.js
-${MOZILLA_PROJECT}/extensions/{f13b157f-b174-47e7-a34d-4815ddfdfeb8}/install.rdf
 ${MOZILLA_PROJECT}/greprefs/
 ${MOZILLA_PROJECT}/greprefs/all.js
 ${MOZILLA_PROJECT}/greprefs/security-prefs.js
@@ -543,7 +333,6 @@ ${MOZILLA_PROJECT}/isp/rss.rdf
 @lib ${MOZILLA_PROJECT}/libgfxpsshar.so.${LIBgfxpsshar_VERSION}
 @lib ${MOZILLA_PROJECT}/libgkgfx.so.${LIBgkgfx_VERSION}
 @lib ${MOZILLA_PROJECT}/libgtkxtbin.so.${LIBgtkxtbin_VERSION}
-@lib ${MOZILLA_PROJECT}/libjsj.so.${LIBjsj_VERSION}
 @lib ${MOZILLA_PROJECT}/libldap60.so.${LIBldap60_VERSION}
 @lib ${MOZILLA_PROJECT}/libldif60.so.${LIBldif60_VERSION}
 @lib ${MOZILLA_PROJECT}/libmozjs.so.${LIBmozjs_VERSION}
@@ -555,19 +344,37 @@ ${MOZILLA_PROJECT}/isp/rss.rdf
 @lib ${MOZILLA_PROJECT}/libxpcom_core.so.${LIBxpcom_core_VERSION}
 @lib ${MOZILLA_PROJECT}/libxul.so.${LIBxul_VERSION}
 ${MOZILLA_PROJECT}/modules/
+${MOZILLA_PROJECT}/modules/CertUtils.jsm
 ${MOZILLA_PROJECT}/modules/DownloadLastDir.jsm
 ${MOZILLA_PROJECT}/modules/DownloadUtils.jsm
+${MOZILLA_PROJECT}/modules/FileUtils.jsm
+${MOZILLA_PROJECT}/modules/IOUtils.js
 ${MOZILLA_PROJECT}/modules/ISO8601DateUtils.jsm
+${MOZILLA_PROJECT}/modules/LightweightThemeConsumer.jsm
+${MOZILLA_PROJECT}/modules/LightweightThemeManager.jsm
+${MOZILLA_PROJECT}/modules/MailConsts.js
 ${MOZILLA_PROJECT}/modules/MailUtils.js
 ${MOZILLA_PROJECT}/modules/Microformats.js
-${MOZILLA_PROJECT}/modules/PlacesDBUtils.jsm
+${MOZILLA_PROJECT}/modules/MsgHdrSyntheticView.js
+${MOZILLA_PROJECT}/modules/NetUtil.jsm
 ${MOZILLA_PROJECT}/modules/PluralForm.jsm
-${MOZILLA_PROJECT}/modules/Sanitizer.jsm
+${MOZILLA_PROJECT}/modules/SearchIntegration.js
 ${MOZILLA_PROJECT}/modules/SpatialNavigation.js
 ${MOZILLA_PROJECT}/modules/StringBundle.js
 ${MOZILLA_PROJECT}/modules/WindowDraggingUtils.jsm
 ${MOZILLA_PROJECT}/modules/XPCOMUtils.jsm
-${MOZILLA_PROJECT}/modules/autoconfigUtils.jsm
+${MOZILLA_PROJECT}/modules/activity/
+${MOZILLA_PROJECT}/modules/activity/activityModules.js
+${MOZILLA_PROJECT}/modules/activity/alertHook.js
+${MOZILLA_PROJECT}/modules/activity/autosync.js
+${MOZILLA_PROJECT}/modules/activity/glodaIndexer.js
+${MOZILLA_PROJECT}/modules/activity/moveCopy.js
+${MOZILLA_PROJECT}/modules/activity/pop3Download.js
+${MOZILLA_PROJECT}/modules/activity/sendLater.js
+${MOZILLA_PROJECT}/modules/appIdleManager.js
+${MOZILLA_PROJECT}/modules/attachmentChecker.js
+${MOZILLA_PROJECT}/modules/ctypes.jsm
+${MOZILLA_PROJECT}/modules/dbViewWrapper.js
 ${MOZILLA_PROJECT}/modules/debug.js
 ${MOZILLA_PROJECT}/modules/errUtils.js
 ${MOZILLA_PROJECT}/modules/folderUtils.jsm
@@ -599,9 +406,14 @@ ${MOZILLA_PROJECT}/modules/gloda/suffixtree.js
 ${MOZILLA_PROJECT}/modules/gloda/utils.js
 ${MOZILLA_PROJECT}/modules/iteratorUtils.jsm
 ${MOZILLA_PROJECT}/modules/jsTreeSelection.js
+${MOZILLA_PROJECT}/modules/mailMigrator.js
+${MOZILLA_PROJECT}/modules/mailViewManager.js
+${MOZILLA_PROJECT}/modules/mailnewsMigrator.js
+${MOZILLA_PROJECT}/modules/quickFilterManager.js
+${MOZILLA_PROJECT}/modules/searchSpec.js
+${MOZILLA_PROJECT}/modules/sessionStoreManager.js
 ${MOZILLA_PROJECT}/modules/templateUtils.js
 ${MOZILLA_PROJECT}/modules/traceHelper.js
-${MOZILLA_PROJECT}/modules/utils.js
 ${MOZILLA_PROJECT}/modules/virtualFolderWrapper.js
 @bin ${MOZILLA_PROJECT}/mozilla-xremote-client
 ${MOZILLA_PROJECT}/platform.ini
@@ -613,7 +425,7 @@ ${MOZILLA_PROJECT}/res/
 ${MOZILLA_PROJECT}/res/EditorOverride.css
 ${MOZILLA_PROJECT}/res/arrow.gif
 ${MOZILLA_PROJECT}/res/arrowd.gif
-${MOZILLA_PROJECT}/res/broken-image.gif
+${MOZILLA_PROJECT}/res/broken-image.png
 ${MOZILLA_PROJECT}/res/charsetData.properties
 ${MOZILLA_PROJECT}/res/charsetalias.properties
 ${MOZILLA_PROJECT}/res/contenteditable.css
@@ -642,7 +454,7 @@ ${MOZILLA_PROJECT}/res/html.css
 ${MOZILLA_PROJECT}/res/html/folder.png
 ${MOZILLA_PROJECT}/res/langGroups.properties
 ${MOZILLA_PROJECT}/res/language.properties
-${MOZILLA_PROJECT}/res/loading-image.gif
+${MOZILLA_PROJECT}/res/loading-image.png
 ${MOZILLA_PROJECT}/res/mathml.css
 ${MOZILLA_PROJECT}/res/quirk.css
 ${MOZILLA_PROJECT}/res/svg.css
@@ -668,20 +480,10 @@ ${MOZILLA_PROJECT}/res/ua.css
 ${MOZILLA_PROJECT}/res/unixcharset.properties
 ${MOZILLA_PROJECT}/res/viewsource.css
 ${MOZILLA_PROJECT}/run-mozilla.sh
-@bin ${MOZILLA_PROJECT}/${MOZILLA_PROJECT}-bin
-${MOZILLA_PROJECT}/searchplugins/
-${MOZILLA_PROJECT}/searchplugins/dmoz.png
-${MOZILLA_PROJECT}/searchplugins/dmoz.src
-${MOZILLA_PROJECT}/searchplugins/google.png
-${MOZILLA_PROJECT}/searchplugins/google.src
-${MOZILLA_PROJECT}/searchplugins/jeeves.png
-${MOZILLA_PROJECT}/searchplugins/jeeves.src
-share/applications/${MOZILLA_PROJECT}.desktop
-@exec TEMP=`mktemp -d` && cd %D/seamonkey && env HOME=$TEMP LD_LIBRARY_PATH=%D/seamonkey ./regxpcom && rm -fr $TEMP
-@unexec rm -f %D/seamonkey/chrome/chrome.rdf
-@unexec rm -f %D/seamonkey/chrome/overlays.rdf
-@unexec rm -f %D/seamonkey/chrome/stylesheets.rdf
-@unexec rm -f %D/seamonkey/components/compreg.dat
-@unexec rm -f %D/seamonkey/components/xpti.dat
+@bin ${MOZILLA_PROJECT}/thunderbird-bin
+share/applications/thunderbird.desktop
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database
+@exec TEMP=`mktemp -d` && cd %D/mozilla-thunderbird && env HOME=$TEMP LD_LIBRARY_PATH=%D/mozilla-thunderbird ./regxpcom && rm -fr $TEMP
+@unexec rm -f %D/mozilla-thunderbird/components/compreg.dat
+@unexec rm -f %D/mozilla-thunderbird/components/xpti.dat

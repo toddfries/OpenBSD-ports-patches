@@ -1,45 +1,102 @@
-@comment $OpenBSD: PLIST,v 1.20 2010/07/09 16:55:59 landry Exp $
-bin/thunderbird
+@comment $OpenBSD: PLIST,v 1.1 2010/07/27 16:52:36 landry Exp $
+@conflict sunbird-<=1.0b1
+@pkgpath productivity/sunbird,-main
+bin/${MOZILLA_PROJECT}
+@comment mozilla-thunderbird/
+@comment mozilla-thunderbird/extensions/
+share/applications/${MOZILLA_PROJECT}.desktop
 ${MOZILLA_PROJECT}/
-${MOZILLA_PROJECT}/README.OpenBSD
 ${MOZILLA_PROJECT}/application.ini
+${MOZILLA_PROJECT}/calendar-js/
+${MOZILLA_PROJECT}/calendar-js/calAlarm.js
+${MOZILLA_PROJECT}/calendar-js/calAlarmMonitor.js
+${MOZILLA_PROJECT}/calendar-js/calAlarmService.js
+${MOZILLA_PROJECT}/calendar-js/calAttachment.js
+${MOZILLA_PROJECT}/calendar-js/calAttendee.js
+${MOZILLA_PROJECT}/calendar-js/calCachedCalendar.js
+${MOZILLA_PROJECT}/calendar-js/calCalendarManager.js
+${MOZILLA_PROJECT}/calendar-js/calCalendarSearchService.js
+${MOZILLA_PROJECT}/calendar-js/calDateTimeFormatter.js
+${MOZILLA_PROJECT}/calendar-js/calDavCalendar.js
+${MOZILLA_PROJECT}/calendar-js/calDavRequestHandlers.js
+${MOZILLA_PROJECT}/calendar-js/calEvent.js
+${MOZILLA_PROJECT}/calendar-js/calFilter.js
+${MOZILLA_PROJECT}/calendar-js/calFreeBusyService.js
+${MOZILLA_PROJECT}/calendar-js/calHtmlExport.js
+${MOZILLA_PROJECT}/calendar-js/calICSCalendar.js
+${MOZILLA_PROJECT}/calendar-js/calIcsImportExport.js
+${MOZILLA_PROJECT}/calendar-js/calIcsParser.js
+${MOZILLA_PROJECT}/calendar-js/calIcsSerializer.js
+${MOZILLA_PROJECT}/calendar-js/calItemBase.js
+${MOZILLA_PROJECT}/calendar-js/calItipItem.js
+${MOZILLA_PROJECT}/calendar-js/calListFormatter.js
+${MOZILLA_PROJECT}/calendar-js/calMemoryCalendar.js
+${MOZILLA_PROJECT}/calendar-js/calMonthGridPrinter.js
+${MOZILLA_PROJECT}/calendar-js/calOutlookCSVImportExport.js
+${MOZILLA_PROJECT}/calendar-js/calProtocolHandler.js
+${MOZILLA_PROJECT}/calendar-js/calRecurrenceInfo.js
+${MOZILLA_PROJECT}/calendar-js/calRelation.js
+${MOZILLA_PROJECT}/calendar-js/calStorageCalendar.js
+${MOZILLA_PROJECT}/calendar-js/calTimezoneService.js
+${MOZILLA_PROJECT}/calendar-js/calTodo.js
+${MOZILLA_PROJECT}/calendar-js/calTransactionManager.js
+${MOZILLA_PROJECT}/calendar-js/calUtils.js
+${MOZILLA_PROJECT}/calendar-js/calWcapCalendar.js
+${MOZILLA_PROJECT}/calendar-js/calWcapCalendarItems.js
+${MOZILLA_PROJECT}/calendar-js/calWcapErrors.js
+${MOZILLA_PROJECT}/calendar-js/calWcapRequest.js
+${MOZILLA_PROJECT}/calendar-js/calWcapSession.js
+${MOZILLA_PROJECT}/calendar-js/calWcapUtils.js
+${MOZILLA_PROJECT}/calendar-js/calWeekInfoService.js
+${MOZILLA_PROJECT}/calendar-js/calWeekPrinter.js
 ${MOZILLA_PROJECT}/chrome/
+${MOZILLA_PROJECT}/chrome/calendar-en-US.jar
+${MOZILLA_PROJECT}/chrome/calendar-en-US.manifest
+${MOZILLA_PROJECT}/chrome/calendar.jar
+${MOZILLA_PROJECT}/chrome/calendar.manifest
 ${MOZILLA_PROJECT}/chrome/classic.jar
 ${MOZILLA_PROJECT}/chrome/classic.manifest
 ${MOZILLA_PROJECT}/chrome/comm.jar
 ${MOZILLA_PROJECT}/chrome/comm.manifest
 ${MOZILLA_PROJECT}/chrome/en-US.jar
 ${MOZILLA_PROJECT}/chrome/en-US.manifest
-${MOZILLA_PROJECT}/chrome/gloda.jar
-${MOZILLA_PROJECT}/chrome/gloda.manifest
 ${MOZILLA_PROJECT}/chrome/icons/
 ${MOZILLA_PROJECT}/chrome/icons/default/
-${MOZILLA_PROJECT}/chrome/icons/default/default16.png
-${MOZILLA_PROJECT}/chrome/icons/default/default22.png
-${MOZILLA_PROJECT}/chrome/icons/default/default24.png
-${MOZILLA_PROJECT}/chrome/icons/default/default256.png
-${MOZILLA_PROJECT}/chrome/icons/default/default32.png
-${MOZILLA_PROJECT}/chrome/icons/default/default48.png
-${MOZILLA_PROJECT}/chrome/messenger.jar
-${MOZILLA_PROJECT}/chrome/messenger.manifest
-${MOZILLA_PROJECT}/chrome/newsblog.jar
-${MOZILLA_PROJECT}/chrome/newsblog.manifest
+${MOZILLA_PROJECT}/chrome/icons/default/calendar-alarm-dialog.xpm
+${MOZILLA_PROJECT}/chrome/icons/default/calendar-event-dialog.xpm
+${MOZILLA_PROJECT}/chrome/icons/default/calendar-event-summary-dialog.xpm
+${MOZILLA_PROJECT}/chrome/icons/default/calendar-task-dialog.xpm
+${MOZILLA_PROJECT}/chrome/icons/default/calendar-task-summary-dialog.xpm
+${MOZILLA_PROJECT}/chrome/icons/default/default.xpm
 ${MOZILLA_PROJECT}/chrome/pippki.jar
 ${MOZILLA_PROJECT}/chrome/pippki.manifest
+${MOZILLA_PROJECT}/chrome/${MOZILLA_PROJECT}-en-US.jar
+${MOZILLA_PROJECT}/chrome/${MOZILLA_PROJECT}-en-US.manifest
+${MOZILLA_PROJECT}/chrome/${MOZILLA_PROJECT}.jar
+${MOZILLA_PROJECT}/chrome/${MOZILLA_PROJECT}.manifest
 ${MOZILLA_PROJECT}/chrome/toolkit.jar
 ${MOZILLA_PROJECT}/chrome/toolkit.manifest
 ${MOZILLA_PROJECT}/components/
 ${MOZILLA_PROJECT}/components/FeedProcessor.js
 ${MOZILLA_PROJECT}/components/NetworkGeolocationProvider.js
-${MOZILLA_PROJECT}/components/aboutRights.js
 ${MOZILLA_PROJECT}/components/accessibility.xpt
-${MOZILLA_PROJECT}/components/activity.xpt
-${MOZILLA_PROJECT}/components/addrbook.xpt
 ${MOZILLA_PROJECT}/components/alerts.xpt
 ${MOZILLA_PROJECT}/components/appshell.xpt
 ${MOZILLA_PROJECT}/components/appstartup.xpt
 ${MOZILLA_PROJECT}/components/autocomplete.xpt
 ${MOZILLA_PROJECT}/components/autoconfig.xpt
+${MOZILLA_PROJECT}/components/calCompositeCalendar.js
+${MOZILLA_PROJECT}/components/calDavCalendarModule.js
+${MOZILLA_PROJECT}/components/calICSCalendarModule.js
+${MOZILLA_PROJECT}/components/calImportExportModule.js
+${MOZILLA_PROJECT}/components/calItemModule.js
+${MOZILLA_PROJECT}/components/calMemoryCalendarModule.js
+${MOZILLA_PROJECT}/components/calStorageCalendarModule.js
+${MOZILLA_PROJECT}/components/calWcapCalendarModule.js
+${MOZILLA_PROJECT}/components/calbase.xpt
+${MOZILLA_PROJECT}/components/calbaseinternal.xpt
+${MOZILLA_PROJECT}/components/caldav.xpt
+${MOZILLA_PROJECT}/components/calendarService.js
 ${MOZILLA_PROJECT}/components/caps.xpt
 ${MOZILLA_PROJECT}/components/chardet.xpt
 ${MOZILLA_PROJECT}/components/chrome.xpt
@@ -87,33 +144,27 @@ ${MOZILLA_PROJECT}/components/fastfind.xpt
 ${MOZILLA_PROJECT}/components/feeds.xpt
 ${MOZILLA_PROJECT}/components/filepicker.xpt
 ${MOZILLA_PROJECT}/components/find.xpt
-${MOZILLA_PROJECT}/components/fts3tok.xpt
 ${MOZILLA_PROJECT}/components/gfx.xpt
-${MOZILLA_PROJECT}/components/glautocomp.js
 ${MOZILLA_PROJECT}/components/htmlparser.xpt
 ${MOZILLA_PROJECT}/components/imgicon.xpt
 ${MOZILLA_PROJECT}/components/imglib2.xpt
-${MOZILLA_PROJECT}/components/impComm4xMail.xpt
-${MOZILLA_PROJECT}/components/import.xpt
 ${MOZILLA_PROJECT}/components/inspector.xpt
 ${MOZILLA_PROJECT}/components/intl.xpt
 ${MOZILLA_PROJECT}/components/jar.xpt
 ${MOZILLA_PROJECT}/components/jsconsole-clhandler.js
 ${MOZILLA_PROJECT}/components/jsdservice.xpt
-${MOZILLA_PROJECT}/components/jsmimeemitter.js
 ${MOZILLA_PROJECT}/components/layout_base.xpt
 ${MOZILLA_PROJECT}/components/layout_printing.xpt
 ${MOZILLA_PROJECT}/components/layout_xul.xpt
 ${MOZILLA_PROJECT}/components/layout_xul_tree.xpt
 @lib ${MOZILLA_PROJECT}/components/libaccessibility.so.${LIBaccessibility_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libappcomps.so.${LIBappcomps_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libauth.so.${LIBauth_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libautoconfig.so.${LIBautoconfig_VERSION}
+@lib ${MOZILLA_PROJECT}/components/libcalbasecomps.so.${LIBcalbasecomps_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libcaps.so.${LIBcaps_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libchardet.so.${LIBchardet_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libchrome.so.${LIBchrome_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libcommandlines.so.${LIBcommandlines_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libcomposer.so.${LIBcomposer_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libcookie.so.${LIBcookie_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libdocshell.so.${LIBdocshell_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libembedcomponents.so.${LIBembedcomponents_VERSION}
@@ -125,16 +176,11 @@ ${MOZILLA_PROJECT}/components/layout_xul_tree.xpt
 @lib ${MOZILLA_PROJECT}/components/libi18n.so.${LIBi18n_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libimgicon.so.${LIBimgicon_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libimglib2.so.${LIBimglib2_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libimport.so.${LIBimport_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libintlapp.so.${LIBintlapp_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libjar50.so.${LIBjar50_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libjsd.so.${LIBjsd_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libmail.so.${LIBmail_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libmailcomps.so.${LIBmailcomps_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmork.so.${LIBmork_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libmozfind.so.${LIBmozfind_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libmozldap.so.${LIBmozldap_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libmsgsmime.so.${LIBmsgsmime_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libnecko.so.${LIBnecko_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libnsappshell.so.${LIBnsappshell_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libpermissions.so.${LIBpermissions_VERSION}
@@ -152,8 +198,6 @@ ${MOZILLA_PROJECT}/components/layout_xul_tree.xpt
 @lib ${MOZILLA_PROJECT}/components/libtoolkitcomps.so.${LIBtoolkitcomps_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libtxmgr.so.${LIBtxmgr_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libuconv.so.${LIBuconv_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libucvmath.so.${LIBucvmath_VERSION}
-@lib ${MOZILLA_PROJECT}/components/libuniversalchardet.so.${LIBuniversalchardet_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libunixproxy.so.${LIBunixproxy_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libwebbrwsr.so.${LIBwebbrwsr_VERSION}
 @lib ${MOZILLA_PROJECT}/components/libwidget_gtk2.so.${LIBwidget_gtk2_VERSION}
@@ -165,24 +209,9 @@ ${MOZILLA_PROJECT}/components/layout_xul_tree.xpt
 ${MOZILLA_PROJECT}/components/locale.xpt
 ${MOZILLA_PROJECT}/components/loginmgr.xpt
 ${MOZILLA_PROJECT}/components/lwbrk.xpt
-${MOZILLA_PROJECT}/components/mailContentHandler.js
-${MOZILLA_PROJECT}/components/mailprofilemigration.xpt
-${MOZILLA_PROJECT}/components/mailview.xpt
-${MOZILLA_PROJECT}/components/mdn-service.js
-${MOZILLA_PROJECT}/components/mime.xpt
 ${MOZILLA_PROJECT}/components/mimetype.xpt
 ${MOZILLA_PROJECT}/components/mozbrwsr.xpt
 ${MOZILLA_PROJECT}/components/mozfind.xpt
-${MOZILLA_PROJECT}/components/mozldap.xpt
-${MOZILLA_PROJECT}/components/msgAsyncPrompter.js
-${MOZILLA_PROJECT}/components/msgbase.xpt
-${MOZILLA_PROJECT}/components/msgcompose.xpt
-${MOZILLA_PROJECT}/components/msgdb.xpt
-${MOZILLA_PROJECT}/components/msgimap.xpt
-${MOZILLA_PROJECT}/components/msglocal.xpt
-${MOZILLA_PROJECT}/components/msgnews.xpt
-${MOZILLA_PROJECT}/components/msgsearch.xpt
-${MOZILLA_PROJECT}/components/msgsmime.xpt
 ${MOZILLA_PROJECT}/components/necko.xpt
 ${MOZILLA_PROJECT}/components/necko_about.xpt
 ${MOZILLA_PROJECT}/components/necko_cache.xpt
@@ -195,13 +224,6 @@ ${MOZILLA_PROJECT}/components/necko_res.xpt
 ${MOZILLA_PROJECT}/components/necko_socket.xpt
 ${MOZILLA_PROJECT}/components/necko_strconv.xpt
 ${MOZILLA_PROJECT}/components/necko_viewsource.xpt
-${MOZILLA_PROJECT}/components/newsblog.js
-${MOZILLA_PROJECT}/components/nsAbAutoCompleteMyDomain.js
-${MOZILLA_PROJECT}/components/nsAbAutoCompleteSearch.js
-${MOZILLA_PROJECT}/components/nsAbLDAPAttributeMap.js
-${MOZILLA_PROJECT}/components/nsActivity.js
-${MOZILLA_PROJECT}/components/nsActivityManager.js
-${MOZILLA_PROJECT}/components/nsActivityManagerUI.js
 ${MOZILLA_PROJECT}/components/nsAddonRepository.js
 ${MOZILLA_PROJECT}/components/nsBadCertHandler.js
 ${MOZILLA_PROJECT}/components/nsBlocklistService.js
@@ -213,25 +235,17 @@ ${MOZILLA_PROJECT}/components/nsExtensionManager.js
 ${MOZILLA_PROJECT}/components/nsFilePicker.js
 ${MOZILLA_PROJECT}/components/nsHandlerService.js
 ${MOZILLA_PROJECT}/components/nsHelperAppDlg.js
-${MOZILLA_PROJECT}/components/nsLDAPProtocolHandler.js
 ${MOZILLA_PROJECT}/components/nsLoginInfo.js
 ${MOZILLA_PROJECT}/components/nsLoginManager.js
 ${MOZILLA_PROJECT}/components/nsLoginManagerPrompter.js
-${MOZILLA_PROJECT}/components/nsMailDefaultHandler.js
-${MOZILLA_PROJECT}/components/nsMailNewsCommandLineHandler.js
-${MOZILLA_PROJECT}/components/nsMsgTraitService.js
-${MOZILLA_PROJECT}/components/nsPhishingProtectionApplication.js
 ${MOZILLA_PROJECT}/components/nsProgressDialog.js
 ${MOZILLA_PROJECT}/components/nsProxyAutoConfig.js
-${MOZILLA_PROJECT}/components/nsSMTPProtocolHandler.js
-${MOZILLA_PROJECT}/components/nsSetDefaultMail.js
+${MOZILLA_PROJECT}/components/nsSearchService.js
+${MOZILLA_PROJECT}/components/nsSearchSuggestions.js
 ${MOZILLA_PROJECT}/components/nsTryToClose.js
 ${MOZILLA_PROJECT}/components/nsURLFormatter.js
 ${MOZILLA_PROJECT}/components/nsUpdateService.js
-${MOZILLA_PROJECT}/components/nsUrlClassifierLib.js
-${MOZILLA_PROJECT}/components/nsUrlClassifierListManager.js
 ${MOZILLA_PROJECT}/components/nsWebHandlerApp.js
-${MOZILLA_PROJECT}/components/offlineStartup.js
 ${MOZILLA_PROJECT}/components/parentalcontrols.xpt
 ${MOZILLA_PROJECT}/components/pipboot.xpt
 ${MOZILLA_PROJECT}/components/pipnss.xpt
@@ -246,17 +260,14 @@ ${MOZILLA_PROJECT}/components/proxyObjInst.xpt
 ${MOZILLA_PROJECT}/components/rdf.xpt
 ${MOZILLA_PROJECT}/components/satchel.xpt
 ${MOZILLA_PROJECT}/components/saxparser.xpt
-${MOZILLA_PROJECT}/components/shellservice.xpt
 ${MOZILLA_PROJECT}/components/shistory.xpt
-${MOZILLA_PROJECT}/components/smime-service.js
 ${MOZILLA_PROJECT}/components/spellchecker.xpt
-${MOZILLA_PROJECT}/components/steel.xpt
-${MOZILLA_PROJECT}/components/steelApplication.js
 ${MOZILLA_PROJECT}/components/storage-Legacy.js
 ${MOZILLA_PROJECT}/components/storage-mozStorage.js
 ${MOZILLA_PROJECT}/components/storage.xpt
 ${MOZILLA_PROJECT}/components/toolkitprofile.xpt
 ${MOZILLA_PROJECT}/components/toolkitremote.xpt
+${MOZILLA_PROJECT}/components/toolkitsearch.xpt
 ${MOZILLA_PROJECT}/components/txEXSLTRegExFunctions.js
 ${MOZILLA_PROJECT}/components/txmgr.xpt
 ${MOZILLA_PROJECT}/components/txtsvc.xpt
@@ -264,8 +275,8 @@ ${MOZILLA_PROJECT}/components/uconv.xpt
 ${MOZILLA_PROJECT}/components/unicharutil.xpt
 ${MOZILLA_PROJECT}/components/update.xpt
 ${MOZILLA_PROJECT}/components/uriloader.xpt
-${MOZILLA_PROJECT}/components/url-classifier.xpt
 ${MOZILLA_PROJECT}/components/urlformatter.xpt
+${MOZILLA_PROJECT}/components/wcap.xpt
 ${MOZILLA_PROJECT}/components/webBrowser_core.xpt
 ${MOZILLA_PROJECT}/components/webbrowserpersist.xpt
 ${MOZILLA_PROJECT}/components/webshell_idls.xpt
@@ -290,47 +301,47 @@ ${MOZILLA_PROJECT}/defaults/
 ${MOZILLA_PROJECT}/defaults/autoconfig/
 ${MOZILLA_PROJECT}/defaults/autoconfig/platform.js
 ${MOZILLA_PROJECT}/defaults/autoconfig/prefcalls.js
-${MOZILLA_PROJECT}/defaults/messenger/
-${MOZILLA_PROJECT}/defaults/messenger/mailViews.dat
 ${MOZILLA_PROJECT}/defaults/pref/
-${MOZILLA_PROJECT}/defaults/pref/all-l10n.js
-${MOZILLA_PROJECT}/defaults/pref/all-thunderbird.js
 ${MOZILLA_PROJECT}/defaults/pref/channel-prefs.js
-${MOZILLA_PROJECT}/defaults/pref/composer.js
-${MOZILLA_PROJECT}/defaults/pref/mailnews.js
-${MOZILLA_PROJECT}/defaults/pref/mdn.js
-${MOZILLA_PROJECT}/defaults/pref/smime.js
-${MOZILLA_PROJECT}/defaults/pref/thunderbird-branding.js
+${MOZILLA_PROJECT}/defaults/pref/${MOZILLA_PROJECT}-l10n.js
+${MOZILLA_PROJECT}/defaults/pref/${MOZILLA_PROJECT}.js
 ${MOZILLA_PROJECT}/defaults/profile/
-${MOZILLA_PROJECT}/defaults/profile/localstore.rdf
-${MOZILLA_PROJECT}/defaults/profile/mimeTypes.rdf
 ${MOZILLA_PROJECT}/defaults/profile/prefs.js
 ${MOZILLA_PROJECT}/dictionaries/
 ${MOZILLA_PROJECT}/dictionaries/en-US.aff
 ${MOZILLA_PROJECT}/dictionaries/en-US.dic
 ${MOZILLA_PROJECT}/extensions/
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/chrome/
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/chrome.manifest
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/chrome/calendar-timezones-en-US.jar
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/chrome/calendar-timezones.jar
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/defaults/
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/defaults/preferences/
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/defaults/preferences/preferences.js
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/install.rdf
+${MOZILLA_PROJECT}/extensions/calendar-timezones@mozilla.org/timezones.sqlite
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/
+${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/chrome.manifest
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/icon.png
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
 ${MOZILLA_PROJECT}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/preview.png
+${MOZILLA_PROJECT}/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/
+${MOZILLA_PROJECT}/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/chrome.manifest
+${MOZILLA_PROJECT}/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/install.rdf
 ${MOZILLA_PROJECT}/greprefs/
 ${MOZILLA_PROJECT}/greprefs/all.js
 ${MOZILLA_PROJECT}/greprefs/security-prefs.js
 ${MOZILLA_PROJECT}/greprefs/xpinstall.js
-${MOZILLA_PROJECT}/isp/
-${MOZILLA_PROJECT}/isp/SpamAssassin.sfd
-${MOZILLA_PROJECT}/isp/SpamPal.sfd
-${MOZILLA_PROJECT}/isp/movemail.rdf
-${MOZILLA_PROJECT}/isp/rss.rdf
+${MOZILLA_PROJECT}/icons/
+${MOZILLA_PROJECT}/icons/mozicon128.png
+${MOZILLA_PROJECT}/icons/mozicon16.xpm
+${MOZILLA_PROJECT}/icons/mozicon50.xpm
 @lib ${MOZILLA_PROJECT}/libgfxpsshar.so.${LIBgfxpsshar_VERSION}
 @lib ${MOZILLA_PROJECT}/libgkgfx.so.${LIBgkgfx_VERSION}
 @lib ${MOZILLA_PROJECT}/libgtkxtbin.so.${LIBgtkxtbin_VERSION}
-@lib ${MOZILLA_PROJECT}/libldap60.so.${LIBldap60_VERSION}
-@lib ${MOZILLA_PROJECT}/libldif60.so.${LIBldif60_VERSION}
 @lib ${MOZILLA_PROJECT}/libmozjs.so.${LIBmozjs_VERSION}
-@lib ${MOZILLA_PROJECT}/libprldap60.so.${LIBprldap60_VERSION}
 @lib ${MOZILLA_PROJECT}/libsqlite3.so.${LIBsqlite3_VERSION}
-@lib ${MOZILLA_PROJECT}/libssldap60.so.${LIBssldap60_VERSION}
 @lib ${MOZILLA_PROJECT}/libthebes.so.${LIBthebes_VERSION}
 @lib ${MOZILLA_PROJECT}/libxpcom.so.${LIBxpcom_VERSION}
 @lib ${MOZILLA_PROJECT}/libxpcom_core.so.${LIBxpcom_core_VERSION}
@@ -339,64 +350,20 @@ ${MOZILLA_PROJECT}/modules/
 ${MOZILLA_PROJECT}/modules/DownloadLastDir.jsm
 ${MOZILLA_PROJECT}/modules/DownloadUtils.jsm
 ${MOZILLA_PROJECT}/modules/ISO8601DateUtils.jsm
-${MOZILLA_PROJECT}/modules/MailConsts.js
-${MOZILLA_PROJECT}/modules/MailUtils.js
 ${MOZILLA_PROJECT}/modules/Microformats.js
-${MOZILLA_PROJECT}/modules/MsgHdrSyntheticView.js
 ${MOZILLA_PROJECT}/modules/PluralForm.jsm
-${MOZILLA_PROJECT}/modules/SearchIntegration.js
 ${MOZILLA_PROJECT}/modules/SpatialNavigation.js
-${MOZILLA_PROJECT}/modules/StringBundle.js
 ${MOZILLA_PROJECT}/modules/WindowDraggingUtils.jsm
 ${MOZILLA_PROJECT}/modules/XPCOMUtils.jsm
-${MOZILLA_PROJECT}/modules/activity/
-${MOZILLA_PROJECT}/modules/activity/activityModules.js
-${MOZILLA_PROJECT}/modules/activity/alertHook.js
-${MOZILLA_PROJECT}/modules/activity/autosync.js
-${MOZILLA_PROJECT}/modules/activity/glodaIndexer.js
-${MOZILLA_PROJECT}/modules/activity/moveCopy.js
-${MOZILLA_PROJECT}/modules/activity/sendLater.js
-${MOZILLA_PROJECT}/modules/appIdleManager.js
-${MOZILLA_PROJECT}/modules/attachmentChecker.js
-${MOZILLA_PROJECT}/modules/autoconfigUtils.jsm
-${MOZILLA_PROJECT}/modules/dbViewWrapper.js
+${MOZILLA_PROJECT}/modules/calAlarmUtils.jsm
+${MOZILLA_PROJECT}/modules/calAuthUtils.jsm
+${MOZILLA_PROJECT}/modules/calIteratorUtils.jsm
+${MOZILLA_PROJECT}/modules/calItipUtils.jsm
+${MOZILLA_PROJECT}/modules/calProviderUtils.jsm
+${MOZILLA_PROJECT}/modules/calStorageHelpers.jsm
+${MOZILLA_PROJECT}/modules/calStorageUpgrade.jsm
+${MOZILLA_PROJECT}/modules/calUtils.jsm
 ${MOZILLA_PROJECT}/modules/debug.js
-${MOZILLA_PROJECT}/modules/errUtils.js
-${MOZILLA_PROJECT}/modules/folderUtils.jsm
-${MOZILLA_PROJECT}/modules/gloda/
-${MOZILLA_PROJECT}/modules/gloda/collection.js
-${MOZILLA_PROJECT}/modules/gloda/connotent.js
-${MOZILLA_PROJECT}/modules/gloda/databind.js
-${MOZILLA_PROJECT}/modules/gloda/datamodel.js
-${MOZILLA_PROJECT}/modules/gloda/datastore.js
-${MOZILLA_PROJECT}/modules/gloda/dbview.js
-${MOZILLA_PROJECT}/modules/gloda/everybody.js
-${MOZILLA_PROJECT}/modules/gloda/explattr.js
-${MOZILLA_PROJECT}/modules/gloda/facet.js
-${MOZILLA_PROJECT}/modules/gloda/fundattr.js
-${MOZILLA_PROJECT}/modules/gloda/gloda.js
-${MOZILLA_PROJECT}/modules/gloda/index_ab.js
-${MOZILLA_PROJECT}/modules/gloda/index_msg.js
-${MOZILLA_PROJECT}/modules/gloda/indexer.js
-${MOZILLA_PROJECT}/modules/gloda/log4moz.js
-${MOZILLA_PROJECT}/modules/gloda/mimeTypeCategories.js
-${MOZILLA_PROJECT}/modules/gloda/mimemsg.js
-${MOZILLA_PROJECT}/modules/gloda/msg_search.js
-${MOZILLA_PROJECT}/modules/gloda/noun_freetag.js
-${MOZILLA_PROJECT}/modules/gloda/noun_mimetype.js
-${MOZILLA_PROJECT}/modules/gloda/noun_tag.js
-${MOZILLA_PROJECT}/modules/gloda/public.js
-${MOZILLA_PROJECT}/modules/gloda/query.js
-${MOZILLA_PROJECT}/modules/gloda/suffixtree.js
-${MOZILLA_PROJECT}/modules/gloda/utils.js
-${MOZILLA_PROJECT}/modules/iteratorUtils.jsm
-${MOZILLA_PROJECT}/modules/jsTreeSelection.js
-${MOZILLA_PROJECT}/modules/mailViewManager.js
-${MOZILLA_PROJECT}/modules/quickSearchManager.js
-${MOZILLA_PROJECT}/modules/searchSpec.js
-${MOZILLA_PROJECT}/modules/templateUtils.js
-${MOZILLA_PROJECT}/modules/traceHelper.js
-${MOZILLA_PROJECT}/modules/virtualFolderWrapper.js
 @bin ${MOZILLA_PROJECT}/mozilla-xremote-client
 ${MOZILLA_PROJECT}/platform.ini
 ${MOZILLA_PROJECT}/plugins/
@@ -404,7 +371,6 @@ ${MOZILLA_PROJECT}/plugins/
 @lib ${MOZILLA_PROJECT}/plugins/libunixprintplugin.so.${LIBunixprintplugin_VERSION}
 @bin ${MOZILLA_PROJECT}/regxpcom
 ${MOZILLA_PROJECT}/res/
-${MOZILLA_PROJECT}/res/EditorOverride.css
 ${MOZILLA_PROJECT}/res/arrow.gif
 ${MOZILLA_PROJECT}/res/arrowd.gif
 ${MOZILLA_PROJECT}/res/broken-image.gif
@@ -413,23 +379,14 @@ ${MOZILLA_PROJECT}/res/charsetalias.properties
 ${MOZILLA_PROJECT}/res/contenteditable.css
 ${MOZILLA_PROJECT}/res/designmode.css
 ${MOZILLA_PROJECT}/res/dtd/
-${MOZILLA_PROJECT}/res/dtd/mathml.dtd
 ${MOZILLA_PROJECT}/res/dtd/xhtml11.dtd
 ${MOZILLA_PROJECT}/res/entityTables/
 ${MOZILLA_PROJECT}/res/entityTables/html40Latin1.properties
 ${MOZILLA_PROJECT}/res/entityTables/html40Special.properties
 ${MOZILLA_PROJECT}/res/entityTables/html40Symbols.properties
 ${MOZILLA_PROJECT}/res/entityTables/htmlEntityVersions.properties
-${MOZILLA_PROJECT}/res/entityTables/mathml20.properties
 ${MOZILLA_PROJECT}/res/entityTables/transliterate.properties
-${MOZILLA_PROJECT}/res/fonts/
-${MOZILLA_PROJECT}/res/fonts/mathfont.properties
-${MOZILLA_PROJECT}/res/fonts/mathfontSTIXNonUnicode.properties
-${MOZILLA_PROJECT}/res/fonts/mathfontSTIXSize1.properties
-${MOZILLA_PROJECT}/res/fonts/mathfontStandardSymbolsL.properties
-${MOZILLA_PROJECT}/res/fonts/mathfontUnicode.properties
 ${MOZILLA_PROJECT}/res/forms.css
-${MOZILLA_PROJECT}/res/grabber.gif
 ${MOZILLA_PROJECT}/res/hiddenWindow.html
 ${MOZILLA_PROJECT}/res/html/
 ${MOZILLA_PROJECT}/res/html.css
@@ -437,35 +394,15 @@ ${MOZILLA_PROJECT}/res/html/folder.png
 ${MOZILLA_PROJECT}/res/langGroups.properties
 ${MOZILLA_PROJECT}/res/language.properties
 ${MOZILLA_PROJECT}/res/loading-image.gif
-${MOZILLA_PROJECT}/res/mathml.css
 ${MOZILLA_PROJECT}/res/quirk.css
 ${MOZILLA_PROJECT}/res/svg.css
-${MOZILLA_PROJECT}/res/table-add-column-after-active.gif
-${MOZILLA_PROJECT}/res/table-add-column-after-hover.gif
-${MOZILLA_PROJECT}/res/table-add-column-after.gif
-${MOZILLA_PROJECT}/res/table-add-column-before-active.gif
-${MOZILLA_PROJECT}/res/table-add-column-before-hover.gif
-${MOZILLA_PROJECT}/res/table-add-column-before.gif
-${MOZILLA_PROJECT}/res/table-add-row-after-active.gif
-${MOZILLA_PROJECT}/res/table-add-row-after-hover.gif
-${MOZILLA_PROJECT}/res/table-add-row-after.gif
-${MOZILLA_PROJECT}/res/table-add-row-before-active.gif
-${MOZILLA_PROJECT}/res/table-add-row-before-hover.gif
-${MOZILLA_PROJECT}/res/table-add-row-before.gif
-${MOZILLA_PROJECT}/res/table-remove-column-active.gif
-${MOZILLA_PROJECT}/res/table-remove-column-hover.gif
-${MOZILLA_PROJECT}/res/table-remove-column.gif
-${MOZILLA_PROJECT}/res/table-remove-row-active.gif
-${MOZILLA_PROJECT}/res/table-remove-row-hover.gif
-${MOZILLA_PROJECT}/res/table-remove-row.gif
 ${MOZILLA_PROJECT}/res/ua.css
 ${MOZILLA_PROJECT}/res/unixcharset.properties
 ${MOZILLA_PROJECT}/res/viewsource.css
 ${MOZILLA_PROJECT}/run-mozilla.sh
-@bin ${MOZILLA_PROJECT}/thunderbird-bin
-share/applications/thunderbird.desktop
+@bin ${MOZILLA_PROJECT}/${MOZILLA_PROJECT}-bin
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database
-@exec TEMP=`mktemp -d` && cd %D/mozilla-thunderbird && env HOME=$TEMP LD_LIBRARY_PATH=%D/mozilla-thunderbird ./regxpcom && rm -fr $TEMP
-@unexec rm -f %D/mozilla-thunderbird/components/compreg.dat
-@unexec rm -f %D/mozilla-thunderbird/components/xpti.dat
+@exec TEMP=`mktemp -d` && cd %D/sunbird && env HOME=$TEMP LD_LIBRARY_PATH=%D/sunbird ./regxpcom && rm -fr $TEMP
+@unexec rm -f %D/sunbird/components/compreg.dat
+@unexec rm -f %D/sunbird/components/xpti.dat
