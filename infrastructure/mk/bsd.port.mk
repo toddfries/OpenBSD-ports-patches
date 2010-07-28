@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1023 2010/07/18 18:49:01 naddy Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1025 2010/07/24 10:35:38 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -715,7 +715,7 @@ LZMA  ?= lzma
 
 
 # copy selected info from bsd.own.mk
-MAKE_ENV += ELF_TOOLCHAIN=${ELF_TOOLCHAIN} USE_GCC3=${USE_GCC3} \
+MAKE_ENV += ELF_TOOLCHAIN=${ELF_TOOLCHAIN} COMPILER_VERSION=${COMPILER_VERSION} \
 	PICFLAG=${PICFLAG} ASPICFLAG=${ASPICFLAG} \
 	BINGRP=bin BINOWN=root BINMODE=555 NONBINMODE=444 DIRMODE=755 \
 	INSTALL_COPY=-c INSTALL_STRIP=${INSTALL_STRIP} \
@@ -1881,14 +1881,14 @@ ${_DEP${_m}WANTLIB_COOKIE}: ${_DEP${_m}LIBSPECS_COOKIES} \
 	${_DEP${_m}LIB_COOKIES} ${_DEPBUILD_COOKIES} ${_WRKDIR_COOKIE}
 .    if !empty(_DEP${_m}LIBS)
 	@${ECHO_MSG} "===>  Verifying specs: ${_DEP${_m}LIBS}"
-	@libs=`for i in ${_LIB4:S/>/\>/g:S/</\</g}; do echo "$$i"| { \
+	@libs=`for i in ${_LIB4:QL}; do echo "$$i"| { \
 		IFS=:; read dep pkg subdir target; \
 		${_flavor_fragment}; \
 		eval $$toset ${MAKE} print-plist-libs; \
 		}; \
 		done;`; \
 	listlibs="echo $$libs; echo ${LOCALBASE}/lib/lib* /usr/lib/lib* ${X11BASE}/lib/lib*"; \
-	for d in ${_DEP${_m}LIBS:S/>/\>/g}; do \
+	for d in ${_DEP${_m}LIBS:QL}; do \
 		case "$$d" in \
 		/*) listlibs="$$listlibs $${d%/*}/lib*";; \
 		*/*) listlibs="$$listlibs ${DEPBASE}/$${d%/*}/lib*";; \
@@ -1896,7 +1896,7 @@ ${_DEP${_m}WANTLIB_COOKIE}: ${_DEP${_m}LIBSPECS_COOKIES} \
 	done; \
 	if found=`eval $$listlibs 2>/dev/null| \
 		LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} perl \
-		${PORTSDIR}/infrastructure/build/resolve-lib ${_noshared} ${_DEP${_m}LIBS:S/>/\>/g}`; then \
+		${PORTSDIR}/infrastructure/build/resolve-lib ${_noshared} ${_DEP${_m}LIBS:QL}`; then \
 		line="===>  found"; \
 		for k in $$found; do line="$$line $$k"; done; \
 		${ECHO_MSG} "$$line"; \
@@ -2962,7 +2962,7 @@ _print-package-args:
 				esac; \
 			done; \
 			exec 3>&2; \
-			unset IFS; for d in ${_DEPRUNLIBS:S/>/\>/g}; do \
+			unset IFS; for d in ${_DEPRUNLIBS:QL}; do \
 				if $$needed; then continue; fi; \
 				exec 2>/dev/null; \
 				${_libresolve_fragment}; \
@@ -2981,7 +2981,7 @@ _print-package-args:
 		fi; \
 	}
 .  endfor
-	@libs=`for i in ${_LIB4${SUBPACKAGE}:S/>/\>/g:S/</\</g}; do echo "$$i"| { \
+	@libs=`for i in ${_LIB4${SUBPACKAGE}:QL}; do echo "$$i"| { \
 		IFS=:; read dep pkg subdir target; \
 		${_flavor_fragment}; \
 		if ! eval $$toset ${MAKE} print-plist-libs; \
@@ -2991,7 +2991,7 @@ _print-package-args:
 		fi; }; \
 		done;`; \
 	listlibs="echo $$libs; echo ${LOCALBASE}/lib/lib* /usr/lib/lib* ${X11BASE}/lib/lib*"; \
-	for d in ${_DEPRUNLIBS:S/>/\>/g}; do \
+	for d in ${_DEPRUNLIBS:QL}; do \
 		case "$$d" in \
 		/*) listlibs="$$listlibs $${d%/*}/lib*";; \
 		*/*) listlibs="$$listlibs ${LOCALBASE}/$${d%/*}/lib*";; \
@@ -2999,7 +2999,7 @@ _print-package-args:
 	done; \
 	if found=`eval $$listlibs 2>/dev/null| \
 		LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} perl \
-		${PORTSDIR}/infrastructure/build/resolve-lib ${_noshared} ${_DEPRUNLIBS:S/>/\>/g}`; then \
+		${PORTSDIR}/infrastructure/build/resolve-lib ${_noshared} ${_DEPRUNLIBS:QL}`; then \
 		for k in $$found; do \
 			case $$k in *.a) ;; \
 			*) echo "-W $$k";; \
@@ -3046,7 +3046,7 @@ _print-package-signature-run:
 .endfor
 
 _print-package-signature-lib:
-	@echo $$LIST_LIBS| LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} perl ${PORTSDIR}/infrastructure/build/resolve-lib ${_DEPRUNLIBS:S/>/\>/g}
+	@echo $$LIST_LIBS| LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} perl ${PORTSDIR}/infrastructure/build/resolve-lib ${_DEPRUNLIBS:QL}
 .for _i in ${LIB_DEPENDS${SUBPACKAGE}}
 	@echo '${_i}' |{ \
 		IFS=:; read dep pkg subdir target; \

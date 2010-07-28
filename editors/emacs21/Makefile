@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2010/07/18 18:49:01 naddy Exp $
+# $OpenBSD: Makefile,v 1.49 2010/07/26 18:08:00 ajacoutot Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -6,11 +6,14 @@ COMMENT-leim=		Library of Emacs Input Methods
 
 VERSION=		21.4
 DISTNAME=		emacs-${VERSION}
-PKGNAME-main=		${DISTNAME}p11
-FULLPKGNAME-el=		emacs-el-${VERSION}p2
+PKGNAME-main=		${DISTNAME}
+FULLPKGNAME-el=		emacs-el-${VERSION}
 FULLPKGPATH-el=		editors/emacs21,-el
-FULLPKGNAME-leim=	emacs-leim-${VERSION}p2
+FULLPKGNAME-leim=	emacs-leim-${VERSION}
 FULLPKGPATH-leim=	editors/emacs21,-leim
+REVISION-main=		13
+REVISION-el=		3
+REVISION-leim=		3
 
 CATEGORIES=		editors
 
@@ -41,25 +44,21 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
 			LDFLAGS="${ELF_TOOLCHAIN:L:S/yes/-Z/:S/no//} \
 				 -L${LOCALBASE}/lib"
 
-# Disable propolice on powerpc due to gcc3+propolice bug.
-.if ${MACHINE_ARCH} == "powerpc"
-CONFIGURE_ENV+=		CFLAGS="${CFLAGS} -fno-stack-protector"
-.endif
-
 MAKE_ENV=		INSTALL_EMACS="${INSTALL_SCRIPT}"
 
 SUBST_VARS=		GCCARCH VERSION
 
 WANTLIB-main=		c m ncurses ossaudio
+
 .if ${FLAVOR:L:Mno_x11}
 CONFIGURE_ARGS+=	--with-x=no
 .else
 USE_X11=Yes
-LIB_DEPENDS-main=	ungif.>=5::graphics/libungif \
-			jpeg.>=62::graphics/jpeg \
-			png.>=2::graphics/png \
-			tiff.>=35::graphics/tiff
-WANTLIB-main+=		ICE SM X11 Xaw Xext Xmu Xpm Xt pthread-stubs xcb z
+LIB_DEPENDS-main=	::graphics/libungif \
+			::graphics/png \
+			::graphics/tiff
+WANTLIB-main+=		ICE SM X11 Xaw Xext Xmu Xpm Xt z
+WANTLIB-main+=		ungif jpeg png tiff
 .endif
 
 RUN_DEPENDS=		:emacs-${VERSION}:${PKGPATH}

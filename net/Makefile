@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.641 2010/06/28 18:42:53 robert Exp $
+# $OpenBSD: Makefile,v 1.645 2010/07/28 18:18:48 sebastia Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -100,6 +100,7 @@
      SUBDIR += gajim
      SUBDIR += galago-daemon
      SUBDIR += gftp
+     SUBDIR += gloox
      SUBDIR += gmudix
      SUBDIR += gnaughty
      SUBDIR += gnet
@@ -370,6 +371,7 @@
      SUBDIR += pktstat
      SUBDIR += plushs
      SUBDIR += pmacct
+     SUBDIR += poco
      SUBDIR += poink
      SUBDIR += pop3gwd
      SUBDIR += poptop
@@ -408,6 +410,7 @@
      SUBDIR += py-pcs
      SUBDIR += py-snmp
      SUBDIR += py-xmpp
+     SUBDIR += py-xmpppy
      SUBDIR += py-zsi
      SUBDIR += quagga
      SUBDIR += queryperf
@@ -476,6 +479,7 @@
      SUBDIR += synergy
      SUBDIR += tacacs+
      SUBDIR += tclcurl
+     SUBDIR += tcludp
      SUBDIR += tcpcat
      SUBDIR += tcpdpriv
      SUBDIR += tcpflow
