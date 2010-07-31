@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.143 2010/07/24 09:51:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.145 2010/07/30 21:55:16 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -12,7 +12,9 @@ V_MANAGESIEVE=	0.11.11
 
 PKGNAME=	dovecot-${V_DOVECOT}
 PKGNAME-server=	dovecot-${V_DOVECOT}
+REVISION-server= 0
 FULLPKGNAME-sieve= dovecot-sieve-${V_SIEVE}
+REVISION-sieve=	1
 EPOCH-sieve=	0
 FULLPKGPATH-sieve= ${PKGPATH},-sieve
 
@@ -26,7 +28,7 @@ DISTFILES=	dovecot-${V_DOVECOT}.tar.gz \
 		dovecot-${V_MAJOR}-managesieve-${V_MANAGESIEVE}.tar.gz:0 \
 		${DIST_MANAGESIEVE}:0
 
-DIST_MANAGESIEVE= dovecot-1.2.12-managesieve-${V_MANAGESIEVE}.diff.gz
+DIST_MANAGESIEVE= dovecot-${V_DOVECOT}-managesieve-${V_MANAGESIEVE}.diff.gz
 
 HOMEPAGE=	http://www.dovecot.org/
 
@@ -50,6 +52,15 @@ SUBPACKAGE?=	-server
 PSEUDO_FLAVORS=	no_sieve
 FLAVORS=	bdb ldap mysql postgresql sqlite
 FLAVOR?=
+
+# XXX The produced dovecot-sieve package ends up linked to any
+# other library (database/ldap) used in the build thus producing
+# bad packages in bulk build. Temporarily work around this in a
+# nasty way by knocking out the sieve subpackage if another
+# flavor is used.
+.if ! ${FLAVOR} == ""
+FLAVOR+=	no_sieve
+.endif
 
 CFLAGS+=	-I/usr/include/kerberosV -I${LOCALBASE}/include
 
