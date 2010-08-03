@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2010/04/07 14:04:00 stephan Exp $
+# $OpenBSD: Makefile,v 1.5 2010/08/03 11:10:39 stephan Exp $
 
 COMMENT =	plain textarea editor to facilitate code writing
 

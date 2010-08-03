@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2010/04/20 21:10:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2010/08/03 11:49:44 stephan Exp $
 
 COMMENT=	GNU Transport Layer Security library
 
