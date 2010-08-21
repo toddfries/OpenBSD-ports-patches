@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2010/04/20 10:03:36 espie Exp $
+# $OpenBSD: Makefile,v 1.65 2010/08/20 23:11:07 espie Exp $
 # $FreeBSD: Makefile,v 1.36 1997/10/04 15:54:31 jkh Exp $
 #
 
@@ -13,7 +13,7 @@ DISTFILES_DB ?= ${.CURDIR}/infrastructure/db/locate.database
 .elif defined(key) || defined(name) || defined(category) || defined(author)
 
 # set up subdirs from the index, assume it's up-to-date
-_CMD = perl ${.CURDIR}/infrastructure/build/index-retrieve index='${.CURDIR}/INDEX'
+_CMD = perl ${.CURDIR}/infrastructure/bin/retrieve-index index='${.CURDIR}/INDEX'
 .  if defined(key)
 _CMD += key='${key}'
 .  endif
@@ -103,15 +103,13 @@ search:	${.CURDIR}/INDEX
 .  endif
 .endif
 
-LOCKDIR ?=
-
 mirror-maker:
 	@mkdir -p ${MIRROR_MK:H}
 .if !empty(LOCKDIR)
 	@echo "EXEC = " >${MIRROR_MK}
 	@echo 'LOCKDIR = ${LOCKDIR}' >>${MIRROR_MK}
 	@echo 'PORTSDIR = ${PORTSDIR}' >>${MIRROR_MK}
-	@echo 'LOCK_CMD = perl $${PORTSDIR}/infrastructure/build/dolock' >>${MIRROR_MK}
+	@echo 'LOCK_CMD = perl $${PORTSDIR}/infrastructure/bin/dolock' >>${MIRROR_MK}
 	@echo 'UNLOCK_CMD = rm -f' >>${MIRROR_MK}
 	@echo 'SIMPLE_LOCK = $${LOCK_CMD} $${LOCKDIR}/$$$$lock.lock; trap "$${UNLOCK_CMD} $${LOCKDIR}/$$$$lock.lock" 0 1 2 3 13 15' >>${MIRROR_MK}
 .else
