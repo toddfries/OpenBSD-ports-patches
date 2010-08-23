@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.22 2010/02/24 13:40:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.26 2010/08/22 19:39:43 sthen Exp $
 
 COMMENT =	imap4 webmail client
 
-DISTNAME =	roundcubemail-0.3.1
-PKGNAME =	${DISTNAME}p1
+DISTNAME =	roundcubemail-0.4
+REVISION =	2
 CATEGORIES =	mail www
 HOMEPAGE =	http://www.roundcube.net/
 
@@ -23,17 +23,21 @@ PKG_ARCH =	*
 
 PREFIX =	/var/www
 INSTDIR =	${PREFIX}/roundcubemail
-SUBST_VARS =	INSTDIR
+TINSTDIR =	${TRUEPREFIX}/roundcubemail
+SUBST_VARS =	INSTDIR TINSTDIR
 
-RUN_DEPENDS =	:php5-core-*:www/php5/core \
-		:php5-mbstring-*:www/php5/extensions,-mbstring
+RUN_DEPENDS =	::www/php5/core \
+		::www/php5/extensions,-mbstring \
+		:php5-mysql-*|php5-pgsql-*|php5-sqlite-*:www/php5/extensions,-sqlite
 
 do-install:
 	cp -Rp ${WRKDIST} ${INSTDIR}
 .for i in .htaccess config/mimetypes.php
 	mv ${INSTDIR}/$i ${INSTDIR}/$i.dist
 .endfor
-	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
+	${SUBST_CMD} -c ${FILESDIR}/roundcubemail.conf \
+	    ${INSTDIR}/roundcubemail.conf.dist; \
+	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}; \
 	find ${INSTDIR} \( -name \*.orig -or -name \*.src \) -exec rm -f {} \;
 
 .include <bsd.port.mk>

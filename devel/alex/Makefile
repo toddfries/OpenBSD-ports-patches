@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2010/07/17 13:54:30 kili Exp $
+# $OpenBSD: Makefile,v 1.17 2010/08/22 07:20:02 kili Exp $
 
 COMMENT =	lexical analyser generator for Haskell
 
 DISTNAME =	alex-2.3.2
-REVISION =	2
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.haskell.org/alex/
@@ -14,6 +13,7 @@ PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
+REVISION =		3
 WANTLIB =		c gmp m pthread util
 
 MODULES =		lang/ghc converters/libiconv
@@ -31,6 +31,9 @@ BUILD_DEPENDS +=	::textproc/docbook \
 			::textproc/libxslt
 
 LIB_DEPENDS =		::devel/gmp
+
+post-extract:
+	@chmod -R a+r ${WRKSRC}
 
 post-build:
 	@cd ${WRKBUILD}/doc && exec ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} html
