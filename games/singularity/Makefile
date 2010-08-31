@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.4 2009/03/15 14:39:03 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2010/08/31 07:28:54 ajacoutot Exp $
 
 COMMENT=	simulation of a true AI
 
 V=		0.27
 DISTNAME=	singularity_${V}
-PKGNAME=	singularity-${V}p0
+PKGNAME=	singularity-${V}
 CATEGORIES=	games
+
+REVISION =	1
 
 MODPY_EGG_VERSION=	${V}
 

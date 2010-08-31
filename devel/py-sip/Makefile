@@ -1,18 +1,18 @@
-# $OpenBSD: Makefile,v 1.11 2010/04/19 14:14:34 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2010/08/30 22:24:15 jasper Exp $
 
 # XXX: Don't forget to update x11/py-qt{3,4} when updating this port.
+# XXX: Upstream doesn't keep old files; if updating please mirror or ask sthen@
 
 SHARED_ONLY=	Yes
 
 COMMENT=	automatically generate Python bindings for C and C++ libs
 
-DISTNAME=	sip-4.10.2
+DISTNAME=	sip-4.10.5
 PKGNAME=	py-${DISTNAME}
+REVISION =	0
 CATEGORIES=	devel
 
 HOMEPAGE=	http://www.riverbankcomputing.co.uk/software/sip/intro
-
-MAINTAINER=	Lars Hansson <lars@unet.net.ph>
 
 # SIP license (Python like)
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,7 +22,8 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	m c stdc++
 
-MASTER_SITES=	http://www.riverbankcomputing.co.uk/static/Downloads/sip4/
+MASTER_SITES=	http://www.riverbankcomputing.co.uk/static/Downloads/sip4/ \
+		http://spacehopper.org/mirrors/
 
 MODULES=	lang/python
 

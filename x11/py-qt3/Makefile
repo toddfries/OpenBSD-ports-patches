@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.6 2010/07/30 09:23:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2010/08/30 21:47:46 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	python Qt3 bindings
 
+# XXX: Upstream doesn't keep old files; if updating please mirror or ask sthen@
 V=		3.18.1
 DISTNAME=	PyQt-x11-gpl-${V}
 PKGNAME=	py-qt3-${V}
 
-REVISION=	0
+REVISION=	1
 
 CATEGORIES=	x11 devel
 
@@ -30,7 +31,8 @@ LIB_DEPENDS=	::x11/qt3
 
 NO_REGRESS=	Yes
 
-MASTER_SITES=	http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/
+MASTER_SITES=	http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/ \
+		http://spacehopper.org/mirrors/
 
 MODULES=	x11/qt3 \
 		lang/python
