@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.21 2010/08/25 20:27:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.24 2010/09/06 14:48:26 ajacoutot Exp $
 
 COMMENT=	glib bindings for dbus message system
 
-DISTNAME=	dbus-glib-0.86
+DISTNAME=	dbus-glib-0.88
 
+REVISION=	0
 EPOCH=		0
-REVISION=	2
 
-SHARED_LIBS+=	dbus-glib-1	4.2 # .3.0
+SHARED_LIBS+=	dbus-glib-1	4.3 # .3.0
 
 CATEGORIES=	x11
 
-HOMEPAGE=	http://dbus.freedesktop.org/
+HOMEPAGE=	http://www.freedesktop.org/wiki/Software/DBusBindings/
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -23,7 +23,7 @@ PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB=	expat c pthread pcre dbus-1 glib-2.0 gobject-2.0 gthread-2.0
 
-MASTER_SITES=	${HOMEPAGE}releases/dbus-glib/
+MASTER_SITES=	http://dbus.freedesktop.org/releases/dbus-glib/
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	::x11/dbus \
@@ -32,6 +32,7 @@ LIB_DEPENDS=	::x11/dbus \
 SEPARATE_BUILD=	simple
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
+LIBTOOL=	/usr/ports/infrastructure/bin/libtool
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
@@ -42,6 +43,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
-FAKE_FLAGS+=	completiondir="${PREFIX}/share/examples/dbus-glib"
+FAKE_FLAGS=	completiondir="${PREFIX}/share/examples/dbus-glib"
 
 .include <bsd.port.mk>

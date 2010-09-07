@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2010/03/21 10:32:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2010/09/06 14:56:28 ajacoutot Exp $
 
 COMMENT=	PHP OpenID implementation
 
@@ -7,6 +7,8 @@ BASE_URL=	http://source.keyboard-monkeys.org
 
 DISTNAME=	cid-${V}
 PKGNAME=	community-id-${V}
+
+REVISION=	1
 
 CATEGORIES=	www security
 
@@ -45,5 +47,7 @@ do-install:
 	cp -Rp ${WRKBUILD} ${INSTDIR}
 	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 	find ${INSTDIR} -type f -name \*.orig | xargs rm
+	${INSTALL_DATA} ${FILESDIR}/communityid.conf \
+		${INSTDIR}/communityid.conf.dist
 
 .include <bsd.port.mk>
