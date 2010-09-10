@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.825 2010/09/03 18:28:33 millert Exp $
+# $OpenBSD: Makefile,v 1.828 2010/09/09 22:52:53 ckuethe Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -183,6 +183,7 @@
      SUBDIR += libast
      SUBDIR += libaudiofile
      SUBDIR += libavl
+     SUBDIR += libbfd
      SUBDIR += libbio
      SUBDIR += libconfig
      SUBDIR += libconfuse
@@ -242,6 +243,7 @@
      SUBDIR += luaalarm
      SUBDIR += luabitop
      SUBDIR += luacopas
+     SUBDIR += luadoc
      SUBDIR += luaevent
      SUBDIR += luafs
      SUBDIR += luapack
@@ -736,6 +738,7 @@
      SUBDIR += p5-Tie-Cache-LRU
      SUBDIR += p5-Tie-Cache-LRU-Expires
      SUBDIR += p5-Tie-Hash-Indexed
+     SUBDIR += p5-Tie-Hash-MultiValue
      SUBDIR += p5-Tie-IxHash
      SUBDIR += p5-Tie-LLHash
      SUBDIR += p5-Tie-RegexpHash
