@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2010/08/21 19:17:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2010/09/13 14:24:44 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GObject-based parsing library
 
 GNOME_PROJECT=	totem-pl-parser
-GNOME_VERSION=	2.30.2
+GNOME_VERSION=	2.30.3
 
 SHARED_LIBS +=	totem-plparser		3.0 # .17.0
 SHARED_LIBS +=	totem-plparser-mini	3.0 # .17.0
@@ -28,7 +28,7 @@ WANTLIB += soup-gnome-2.4 sqlite3 tasn1
 MODULES=	devel/gettext \
 		x11/gnome
 
-LIB_DEPENDS=	:gmime->=2.4:mail/gmime24 \
+LIB_DEPENDS=	:gmime->=2.4,<2.6:mail/gmime24 \
 		::textproc/libxml \
 		::devel/libsoup,-gnome
 
