@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.8 2010/08/25 06:34:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2010/09/15 14:25:19 robert Exp $
 
 COMMENT=		industrial-grade ticketing system
 
 DISTNAME=		rt-3.8.8
-REVISION=		1
+REVISION=		3
 CATEGORIES=		www
 
-HOMEPAGE=		http://www.bestpractical.com/rt/
+MAINTAINER=		Robert Nagy <robert@openbsd.org>
 
-MAINTAINER=		Mathieu Sauve-Frankel <msf@openbsd.org>
+HOMEPAGE=		http://www.bestpractical.com/rt/
 
 MASTER_SITES=		http://www.fsck.com/pub/rt/release/ \
 			ftp://ftp.eu.uu.net/pub/unix/ticketing/rt/release/
