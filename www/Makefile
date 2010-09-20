@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.466 2010/07/30 11:28:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.468 2010/09/19 16:44:06 jim Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -51,7 +51,10 @@
      SUBDIR += horde
      SUBDIR += hs-cgi
      SUBDIR += hs-html
+     SUBDIR += hs-snap-core
+     SUBDIR += hs-snap-server
      SUBDIR += hs-xhtml
+     SUBDIR += hs-xhtml-combinators
      SUBDIR += http_load
      SUBDIR += http_ping
      SUBDIR += igal

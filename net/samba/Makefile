@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.121 2010/08/28 18:55:18 sthen Exp $
+# $OpenBSD: Makefile,v 1.123 2010/09/18 12:36:27 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
 
-DISTNAME=		samba-3.5.4
+DISTNAME=		samba-3.5.5
 PKGNAME-main=		${DISTNAME}
-REVISION-main=		4
 FULLPKGNAME-docs=	${DISTNAME:S/-/-docs-/}
 FULLPKGPATH-docs=	net/samba,-docs
 SHARED_LIBS=		smbclient	2.0 \
@@ -28,7 +27,7 @@ PERMIT_PACKAGE_FTP=		Yes
 PERMIT_DISTFILES_CDROM=		Yes
 PERMIT_DISTFILES_FTP=		Yes
 
-WANTLIB=	c ncurses pthread readline z
+WANTLIB=	c execinfo ncurses popt pthread readline talloc tdb z
 
 MASTER_SITES=	http://download.samba.org/samba/ftp/ \
 		http://us2.samba.org/samba/ftp/ \
@@ -37,10 +36,10 @@ MASTER_SITES=	http://download.samba.org/samba/ftp/ \
 MODULES=	converters/libiconv
 
 BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS}
-LIB_DEPENDS=	tdb.>=2:tdb->=1.2:databases/tdb \
-		popt::devel/popt \
-		execinfo::devel/libexecinfo \
-		talloc::devel/libtalloc
+LIB_DEPENDS=	:tdb->=1.2:databases/tdb \
+		::devel/popt \
+		::devel/libexecinfo \
+		::devel/libtalloc
 
 MAKE_FLAGS+=	PASSWD_PROGRAM="/usr/bin/passwd"  \
 		LIBSMBCLIENT_SOVER="${LIBsmbclient_VERSION}" \

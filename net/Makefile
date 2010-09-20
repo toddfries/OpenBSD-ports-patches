@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.650 2010/09/13 19:47:03 landry Exp $
+# $OpenBSD: Makefile,v 1.652 2010/09/20 07:56:06 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -32,7 +32,6 @@
      SUBDIR += bing
      SUBDIR += bird
      SUBDIR += bird,v6
-     SUBDIR += bitchx
      SUBDIR += bitlbee
      SUBDIR += bluetooth-tools
      SUBDIR += bnc
@@ -117,6 +116,7 @@
      SUBDIR += hping
      SUBDIR += hpodder
      SUBDIR += hs-HTTP
+     SUBDIR += hs-network-bytestring
      SUBDIR += httptunnel
      SUBDIR += icb
      SUBDIR += icbirc

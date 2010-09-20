@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.301 2010/09/07 14:07:19 edd Exp $
+# $OpenBSD: Makefile,v 1.304 2010/09/19 17:25:55 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -36,10 +36,18 @@
      SUBDIR += gtk-doc
      SUBDIR += gtkaml
      SUBDIR += gtkspell
+     SUBDIR += gtranslator
      SUBDIR += hevea
      SUBDIR += hgrep
      SUBDIR += highlight
      SUBDIR += hs-HaXml
+     SUBDIR += hs-attoparsec
+     SUBDIR += hs-attoparsec-iteratee
+     SUBDIR += hs-bytestring-nums
+     SUBDIR += hs-bytestring-show
+     SUBDIR += hs-heist
+     SUBDIR += hs-hexpat
+     SUBDIR += hs-xml
      SUBDIR += html
      SUBDIR += hunspell
      SUBDIR += hyperestraier
