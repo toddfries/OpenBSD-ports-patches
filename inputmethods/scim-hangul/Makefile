@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2010/07/24 11:44:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2010/09/21 19:39:25 fgsch Exp $
 
 SHARED_ONLY=	Yes
 
@@ -36,7 +36,7 @@ LIB_DEPENDS=	::korean/libhangul \
 		::inputmethods/scim
 
 USE_X11=	Yes
-USE_LIBTOOL=	Yes
+USE_LIBTOOL =	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu

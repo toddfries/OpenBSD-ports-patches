@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.5 2009/07/12 19:58:28 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2010/09/21 10:28:11 sthen Exp $
 
 COMMENT =	streaming audio server for Squeezebox network music players
 
+# note, newer versions want p5-EV which in turn wants threaded perl
 V =		7.3.3
 PKGNAME =	squeezecenter-${V}
 DISTNAME =	squeezecenter-${V}-noCPAN
+REVISION =	0
 CATEGORIES =	audio net
 
 MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
-HOMEPAGE =	http://www.slimdevices.com/pi_features.html
+HOMEPAGE =	http://wiki.slimdevices.com/index.php/SqueezeCenter
 
 # Main software is GPLv2, supplied with some CPAN modules packaged,
 # but unfortunately also with proprietary (required) firmware, also
