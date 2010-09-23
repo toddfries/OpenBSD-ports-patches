@@ -1,4 +1,4 @@
-# $OpenBSD: ghc.port.mk,v 1.10 2010/06/18 21:37:16 kili Exp $
+# $OpenBSD: ghc.port.mk,v 1.13 2010/09/23 12:26:37 jasper Exp $
 # Module for Glasgow Haskell Compiler
 
 # Not yet ported to other architectures
@@ -14,7 +14,7 @@ MODGHC_BIN =		${LOCALBASE}/bin/ghc
 # depending ports using CABAL tend to install into locations as
 # lib/Foo-${FooVersion}/ghc-${MODGHC_VER}, so they need the exact
 # version of ghc. Depending ports thus need full depends specs,
-# i.e. RUN_DEPENDS = :ghc-${MODGHC_VERSION}:lang/ghc, and not
+# i.e. RUN_DEPENDS = :ghc-${MODGHC_VER}:lang/ghc, and not
 # just ::lang/ghc.
 .if ${PKGPATH} != "lang/ghc"
 BUILD_DEPENDS +=	::lang/ghc
@@ -26,13 +26,14 @@ BUILD_DEPENDS +=	::lang/ghc
 # Add "nort" if the port doesn't depend on the GHC runtime. This will
 # also turn off the default "hs-" prefix for PKGNAME.
 # Finally, set it to or add "hackage" if the distfiles are avialable on
-# hackage.org.
+# hackage.haskell.org.
 
 MODGHC_BUILD ?=
 
 . if !${MODGHC_BUILD:L:Mnort}
 PKGNAME ?=		hs-${DISTNAME}
 RUN_DEPENDS +=		:ghc-${MODGHC_VER}:lang/ghc
+CATEGORIES +=		lang/ghc
 . endif
 
 . if ${MODGHC_BUILD:L:Mhackage}
