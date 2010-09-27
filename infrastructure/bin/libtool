@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $OpenBSD: libtool,v 1.4 2010/09/19 17:30:52 steven Exp $
+# $OpenBSD: libtool,v 1.10 2010/09/25 17:14:48 steven Exp $
 
 # Copyright (c) 2007-2010 Steven Mestdagh <steven@openbsd.org>
 #
@@ -192,8 +192,10 @@ sub internal_resolve_la
 			    $lainfo->deplib_list);
 		    push(@{$lainfo->{'cached_deplibs'}},
 			@{$lainfo->deplib_list});
-		    push(@{$lainfo->{'cached_libdirs'}},
-			$lainfo->{'libdir'});
+		    if ($lainfo->{'libdir'} ne '') {
+			push(@{$lainfo->{'cached_libdirs'}},
+			    $lainfo->{'libdir'});
+		    }
 		    if (@{$lainfo->{'cached_deplibs'}} > 50) {
 		    	$lainfo->{'cached_deplibs'} = main::reverse_zap_duplicates_ref($lainfo->{'cached_deplibs'});
 		    }
@@ -242,9 +244,6 @@ sub resolve_la
 # -Lfoo, -lfoo, foo.a, foo.la
 # recursively find .la files corresponding to -l flags; if there is no .la
 # file, just inspect the library file itself for any dependencies.
-# XXX the variable $lashared will register whether or not a .la file is
-#     found which refers to a shared library
-#     this is used to decide where to link executables and create wrappers
 sub parse_linkargs1
 {
 	state $seen_pthread = 0;
@@ -253,13 +252,13 @@ sub parse_linkargs1
 	Trace::debug {"parse_linkargs1, level: $level\n"};
 	Trace::debug {"  args: @$args\n"};
 	my $result   = $self->{result};
-	my $lashared = $self->{seen_la_shared};
 
 	# first read all directories where we can search libraries
 	foreach my $a (@$args) {
 		if ($a =~ m/^-L(.*)/) {
 			if (!exists $dirs->{$1}) {
 				$dirs->{$1} = 1;
+				Trace::debug {"    adding $a to deplibs\n"} if ($level == 0);
 				push @$deplibs, $a;
 			}
 		}
@@ -288,6 +287,7 @@ sub parse_linkargs1
 				if ($lafile) {
 					$libs->{$key}->{lafile} = $lafile;
 					my $absla = main::abs_path($lafile);
+					Trace::debug {"    adding $absla to deplibs\n"} if ($level == 0);
 					push @$deplibs, $absla;
 					push @$result, $lafile;
 					next;
@@ -300,9 +300,10 @@ sub parse_linkargs1
 						$k =~ s/^lib//;
 						push(@largs, "-l$k");
 					}
-					push @$deplibs, $a;
 				}
 			}
+			Trace::debug {"    adding $a to deplibs\n"} if ($level == 0);
+			push @$deplibs, $a;
 			push(@$result, $a);
 			my $dummy = []; # no need to add deplibs recursively
 			$self->parse_linkargs1($dummy, $Rresolved,
@@ -327,7 +328,6 @@ sub parse_linkargs1
 			my $oldlib = $lainfo->{'old_library'};
 			my $libdir = $lainfo->{'libdir'};
 			if ($dlname ne '') {
-				$$lashared = 1;
 				if (!exists $libs->{$key}) {
 					$libs->{$key} = Library->new($key);
 					$libs->{$key}->{lafile} = $fulla;
@@ -359,6 +359,9 @@ sub parse_linkargs1
 # (this list may contain duplicates)
 # fill staticlibs array, which is the sequence of static and convenience
 #   libraries
+# XXX the variable $parser->{seen_la_shared} will register whether or not
+#     a .la file is found which refers to a shared library
+#     this is used to decide where to link executables and create wrappers
 sub parse_linkargs2
 {
 	state $seen_pthread = 0;
@@ -410,6 +413,9 @@ sub parse_linkargs2
 			my $lainfo = LaFile->parse($fulla);
 			my $dlname = $lainfo->stringize('dlname');
 			my $oldlib = $lainfo->stringize('old_library');
+			if ($dlname ne '') {
+				$self->{seen_la_shared} = 1;
+			}
 			if ($dlname eq '' && -f "$d/$ltdir/$oldlib") {
 				push @$staticlibs, "$d/$ltdir/$oldlib";
 			} else {
@@ -901,7 +907,6 @@ sub link
 	my $libdirs = shift;
 	my $parser = shift;
 	my $opts = shift;
-	my $seen_la_shared = shift;
 
 	my $ltdir = $main::ltdir;
 	Trace::debug {"linking program (",
@@ -917,12 +922,6 @@ sub link
 	my @libflags;
 	my @cmd;
 	my $dst;
-	if ($self->{shared} && $seen_la_shared) {
-		$dst = ($odir eq '.') ? "$ltdir/$fname" : "$odir/$ltdir/$fname";
-		mkdir "$odir/$ltdir" if (! -d "$odir/$ltdir");
-	} else {
-		$dst = ($odir eq '.') ? $fname : "$odir/$fname";
-	}
 
 	Trace::debug {"argvstring (pre resolve_la): @{$parser->{args}}\n"};
 	my $args = $parser->resolve_la($deplibs, $libdirs);
@@ -930,12 +929,21 @@ sub link
 	my $orderedlibs = [];
 	my $staticlibs = [];
 	$parser->{args} = $args;
+	$parser->{seen_la_shared} = 0;
 	$args = $parser->parse_linkargs2(\@main::Rresolved,
 		\@main::libsearchdirs, $orderedlibs, $staticlibs, $dirs, $libs);
 	Trace::debug {"staticlibs = \n", join("\n", @$staticlibs), "\n"};
 	Trace::debug {"orderedlibs = @$orderedlibs\n"};
 	my $finalorderedlibs = main::reverse_zap_duplicates_ref($orderedlibs);
 	Trace::debug {"final orderedlibs = @$finalorderedlibs\n"};
+
+	if ($self->{shared} && $parser->{seen_la_shared}) {
+		$dst = ($odir eq '.') ? "$ltdir/$fname" : "$odir/$ltdir/$fname";
+		mkdir "$odir/$ltdir" if (! -d "$odir/$ltdir");
+		$self->write_wrapper();
+	} else {
+		$dst = ($odir eq '.') ? $fname : "$odir/$fname";
+	}
 
 	my $symbolsfile;
 	if ($opts->{'export-symbols'}) {
@@ -1452,8 +1460,6 @@ if ($mode eq 'compile') {
 
 	my $parser = Parser->new(\@ARGV);
 	$parser->{result} = [];
-	my $seen_la_shared = 0;
-	$parser->{seen_la_shared} = \$seen_la_shared;
 
 	if ($linkmode == PROGRAM) {
 		my $program = Program->new;
@@ -1473,7 +1479,6 @@ if ($mode eq 'compile') {
 		$parser->{args} = $parser->{result};
 		Trace::debug {"end parse_linkargs1\n"};
 		Trace::debug {"deplibs = @$deplibs\n"};
-		$seen_la_shared = ${$parser->{seen_la_shared}};
 
 		$program->{objlist} = \@objs;
 		if (@objs == 0) {
@@ -1489,10 +1494,7 @@ if ($mode eq 'compile') {
 		@$RPdirs = (@Ropts, @RPopts, @Rresolved);
 		$program->{RPdirs} = $RPdirs;
 
-		$program->link($ltprog, $dirs, $libs, $deplibs, $libdirs, $parser, \%opts, $seen_la_shared);
-		if ($program->{shared} && $seen_la_shared) {
-			$program->write_wrapper();
-		}
+		$program->link($ltprog, $dirs, $libs, $deplibs, $libdirs, $parser, \%opts);
 	} elsif ($linkmode == LIBRARY) {
 		my $lainfo = LaFile->new;
 
@@ -1527,7 +1529,6 @@ if ($mode eq 'compile') {
 		$parser->{args} = $parser->{result};
 		Trace::debug {"end parse_linkargs1\n"};
 		Trace::debug {"deplibs = @$deplibs\n"};
-		$seen_la_shared = ${$parser->{seen_la_shared}};
 
 		my $sover = '0.0';
 		my $origver = 'unknown';
@@ -1719,10 +1720,19 @@ sub process_deplibs
 
 	foreach my $lf (@$linkflags) {
 		if ($lf =~ m/-L\S+\Q$ltdir\E$/) {
+		} elsif ($lf =~ m/-L\./) {
 		} elsif ($lf =~ m/\/\S+\/(\S+\.la)/) {
 			my $lafile = $1;
-			$lf = LaFile->parse($lf)->{'libdir'}.'/'.$lafile;
-			push @$result, $lf;
+			my $libdir = LaFile->parse($lf)->{'libdir'};
+			if ($libdir eq '') {
+				# this drops libraries which will not be
+				# installed
+				# XXX improve checks when adding to deplibs
+				say "warning: $lf dropped from deplibs";
+			} else {
+				$lf = $libdir.'/'.$lafile;
+				push @$result, $lf;
+			}
 		} else {
 			push @$result, $lf;
 		}
@@ -1758,6 +1768,8 @@ sub generate_objlist
 			} else {
 				$allpic = 0;
 			}
+		} elsif ($a =~ m/\S+\.o$/) {
+			push @$objs, $a;
 		} else {
 			push @$result, $a;
 		}
@@ -1815,6 +1827,10 @@ sub get_symbollist
 	my $filepath = shift;
 	my $regex = shift;
 	my $objlist = shift;
+
+	if (@$objlist == 0) {
+		die "get_symbollist: object list is empty\n";
+	}
 
 	Trace::debug {"generating symbol list in file: $filepath\n"};
 	my $symbols = [];

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2010/07/24 23:05:08 naddy Exp $
+# $OpenBSD: Makefile,v 1.7 2010/09/23 23:25:53 jeremy Exp $
 
 SHARED_ONLY =	Yes
 
@@ -6,12 +6,10 @@ COMMENT =	Nginx module for deploying Ruby applications
 
 DISTNAME =	passenger-2.2.5
 PKGNAME =	ruby-${DISTNAME}
-REVISION =	2
+REVISION =	4
 CATEGORIES =	www
 
 HOMEPAGE =	http://www.modrails.com/
-
-MAINTAINER =	Bernd Ahlers <bernd@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM = Yes
@@ -37,10 +35,10 @@ PORTHOME =		${WRKDIR}
 MAKE_ENV +=		CC=${CC} CXX=${CXX}
 
 do-build:
-	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${LOCALBASE}/bin/rake nginx
+	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${RAKE} nginx
 	@perl -pi -e "s#PASSENGER_ROOT =.*#PASSENGER_ROOT = '${PREFIX}/lib/phusion_passenger'#g" \
 		${WRKSRC}/bin/passenger-config
-	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${LOCALBASE}/bin/rake fakeroot
+	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${RAKE} fakeroot
 	@find ${WRKBUILD}/pkg/fakeroot -name '*.orig' | xargs -r rm -f
 
 do-install:

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.12 2010/09/23 13:47:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2010/09/24 13:09:57 ajacoutot Exp $
 
 COMMENT=		flexible communications framework, local-link component
 
 DISTNAME=		telepathy-salut-0.3.13
+REVISION=		0
 
 MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-salut/}
 
@@ -18,9 +19,6 @@ BUILD_DEPENDS=		::textproc/libxslt
 LIB_DEPENDS=		::net/avahi \
 			::devel/libsoup \
 			::net/telepathy/telepathy-glib
-
-USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \

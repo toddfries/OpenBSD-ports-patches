@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2009/08/10 16:29:23 msf Exp $
+# $OpenBSD: Makefile,v 1.13 2010/09/23 23:30:49 jeremy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,9 +6,10 @@ COMMENT=	access a PostgreSQL database from ruby
 
 DISTNAME=	postgres-0.7.9.2008.01.28
 PKGNAME=	ruby-${DISTNAME}
+REVISION =      1
 CATEGORIES=	databases
 
-MAINTAINER=	Markus Friedl <markus@openbsd.org> 
+MAINTAINER=	Jeremy Evans <jeremy@openbsd.org> 
 
 # Ruby License
 PERMIT_PACKAGE_CDROM=	Yes

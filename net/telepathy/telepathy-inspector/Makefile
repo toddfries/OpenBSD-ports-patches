@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/08/30 21:26:30 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2010/09/23 14:24:22 jasper Exp $
 
 COMMENT=	display information about a given connection manager
 
@@ -25,8 +25,8 @@ LIB_DEPENDS=		glade-2.0::devel/libglade2 \
 			telepathy-glib::net/telepathy/telepathy-glib
 
 USE_X11=		Yes
-USE_GMAKE=		Yes
 CONFIGURE_STYLE=	gnu
+USE_LIBTOOL=		No
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/configure

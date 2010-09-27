@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.48 2010/07/13 16:39:55 naddy Exp $
+# $OpenBSD: Makefile,v 1.50 2010/09/26 13:40:11 naddy Exp $
 
 COMMENT=	fast console MPEG audio player and decoder library
 
-DISTNAME=	mpg123-1.12.3
+DISTNAME=	mpg123-1.12.4
 SHARED_LIBS=	mpg123	2.2	# .25.0
 CATEGORIES=	audio
 HOMEPAGE=	http://www.mpg123.de/
@@ -29,7 +29,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} --enable-static \
 		--with-audio=sndio \
 		--with-optimization=0
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${WRKBUILD}/src/libmpg123/.libs -L${LOCALBASE}/lib"
+		LDFLAGS="-L${LOCALBASE}/lib"
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/build
 
 .if ${MACHINE_ARCH} == "arm"

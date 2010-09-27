@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2010/09/23 13:47:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2010/09/23 14:24:22 jasper Exp $
 
 PKG_ARCH=		*
 
@@ -16,10 +16,9 @@ BUILD_DEPENDS=		::devel/py-cheetah \
 MODULES+=		lang/python
 MODPY_RUNDEP=		No
 
-USE_GMAKE=		Yes
-
 NO_REGRESS=		Yes
 
+USE_LIBTOOL=		No
 CONFIGURE_STYLE=	none
 
 pre-configure:

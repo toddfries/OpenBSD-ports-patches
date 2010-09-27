@@ -1,0 +1,28 @@
+TeX Live 2010 - Work in Progress (edd@)
+$OpenBSD: README,v 1.2 2010/09/24 21:59:56 edd Exp $
+-------------------------------------------------------------------
+
+ * Get base compilers working:
+
+ * Get xindy linking against clisp (done)
+
+ * Test build works.
+   amd64 - done
+   i386
+   sparc64
+
+ * Test basic functionality on monolithic texmf
+ 
+ * Do texmf split
+   -> hack texmf.cnf
+   -> Split down -docs even further this year: docs_srcs + docs_built
+   -> make fmtutil.cnf configs
+
+ * Get packing list @execs in place and deps correct
+
+ * Test lots
+
+ * Pre-generate maps and formats and install from FILESDIR
+   -> check this is platform independent.
+
+ * Link to build as print/texlive

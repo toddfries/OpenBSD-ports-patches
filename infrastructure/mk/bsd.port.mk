@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1034 2010/09/22 18:43:30 landry Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1039 2010/09/25 13:39:02 steven Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -134,9 +134,10 @@ ALL_ARCHS = alpha amd64 arm armish arm hppa hppa64 i386 landisk \
 APM_ARCHS = amd64 arm i386 loongson macppc sparc sparc64
 LP64_ARCHS = alpha amd64 hppa64 sparc64 mips64 mips64el
 NO_SHARED_ARCHS = m88k vax
-GCC4_ARCHS = amd64 i386 hppa macppc mvmeppc powerpc socppc sparc64
+GCC4_ARCHS = amd64 i386 hppa loongson macppc mips64 mips64el mvmeppc powerpc \
+	sgi socppc sparc64
 GCC3_ARCHS = alpha arm armish beagle gumstix hppa64 \
-	landisk loongson mips64 mips64el palm sgi sh zaurus
+	landisk palm sh zaurus
 GCC2_ARCHS = aviion luna88k m68k m88k mac68k mvme68k mvme88k sparc vax
 
 # Set NO_SHARED_LIBS for those machines that don't support shared libraries.
@@ -238,6 +239,9 @@ _clean = ${clean}
 .if empty(_clean) || ${_clean:L} == "depends"
 _clean += work
 .endif
+.if ${_clean:L:Mall}
+_clean += work build packages plist
+.endif
 .if ${CLEANDEPENDS_${PKGPATH}:L} == "yes"
 _clean += depends
 .endif
@@ -246,9 +250,6 @@ _clean += fake
 .endif
 .if ${_clean:L:Mforce}
 _clean += -f
-.endif
-.if ${_clean:L:Mall}
-_clean += work build flavors packages plist
 .endif
 # check that clean is clean
 _okay_words = depends work fake -f flavors dist install sub packages package \
@@ -372,7 +373,6 @@ LIBTOOL ?= ${DEPBASE}/bin/libtool
 BUILD_DEPENDS += ::devel/libtool
 .  else
 LIBTOOL ?= ${PORTSDIR}/infrastructure/bin/libtool
-BUILD_DEPENDS += ::devel/libtool
 .  endif
 CONFIGURE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
@@ -2602,12 +2602,11 @@ _internal-clean:
 		if [ -L $$i ]; then ${SUDO} rm -rf `readlink $$i`; fi; \
 		${SUDO} rm -rf $$i; \
 	done
-.  else
+.  endif
 	@if [ -L ${WRKDIR} ]; then rm -rf `readlink ${WRKDIR}`; fi
 	@rm -rf ${WRKDIR}
-.   if !empty(WRKDIR_LINKNAME)
+.  if !empty(WRKDIR_LINKNAME)
 	@if [ -L ${WRKDIR_LINKNAME} ]; then rm -f ${.CURDIR}/${WRKDIR_LINKNAME}; fi
-.   endif
 .  endif
 .elif ${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} != "no"
 	@rm -rf ${WRKBUILD} ${_CONFIGURE_COOKIE} ${_BUILD_COOKIE}
