@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.2 2009/10/10 23:17:11 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.4 2010/09/28 07:52:04 jasper Exp $
 
 SHARED_ONLY?=		Yes
 
@@ -6,7 +6,7 @@ CATEGORIES+=		graphics/clutter x11
 
 HOMEPAGE?=		http://www.clutter-project.org/
 
-# LGPLv2.1/perl
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM?=  Yes
 PERMIT_PACKAGE_FTP?=    Yes
 PERMIT_DISTFILES_CDROM?=Yes
@@ -23,6 +23,6 @@ LIBTOOL_FLAGS?=		--tag=disable-static
 
 CONFIGURE_STYLE?=	gnu
 
-MAJOR?=			0.10
-API_VERSION?=		1.0
+API_VERSION?=		0.10
+MAJOR?=			1.0
 SUBST_VARS?=		MAJOR API_VERSION
