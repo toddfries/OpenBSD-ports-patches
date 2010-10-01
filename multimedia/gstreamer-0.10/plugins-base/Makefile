@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2010/09/20 16:11:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2010/09/30 15:48:06 ajacoutot Exp $
 
 COMMENT-main =		base elements for GStreamer
 COMMENT-cdda =		cd paranoia element for GStreamer (plugins-base)

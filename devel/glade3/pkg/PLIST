@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.13 2010/09/28 17:09:11 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.15 2010/09/30 15:25:38 jasper Exp $
 %%SHARED%%
 @bin bin/glade-3
 include/libgladeui-1.0/

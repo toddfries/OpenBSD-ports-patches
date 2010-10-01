@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2010/07/06 16:27:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2010/09/30 19:45:04 landry Exp $
 
 COMMENT =		lightweight web browser
 
 NETSURF_PROJECT =	netsurf
-NETSURF_VERSION =	2.5
-PKGNAME =		${DISTNAME:S/-src//}p0
+NETSURF_VERSION =	2.6
 
 CATEGORIES=		www
 
@@ -18,7 +17,7 @@ LIB_DEPENDS =		hubbub::www/netsurf/hubbub \
 			nsgif::www/netsurf/libnsgif \
 			nsbmp::www/netsurf/libnsbmp \
 			mng::graphics/libmng \
-			gdk-x11-2.0,gdk_pixbuf-2.0,gtk-x11-2.0::x11/gtk+2 \
+			gdk-x11-2.0,gtk-x11-2.0::x11/gtk+2 \
 			glade-2.0::devel/libglade2 \
 			rsvg-2::x11/gnome/librsvg \
 			curl::net/curl
@@ -29,7 +28,7 @@ WANTLIB +=		pangoft2-1.0 parserutils png wapcaplet xml2
 WANTLIB += 		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += 		Xi Xinerama Xrandr Xrender c crypto expat fontconfig
 WANTLIB += 		freetype m pixman-1 pthread pthread-stubs ssl xcb
-WANTLIB +=		xcb-render xcb-render-util z
+WANTLIB +=		xcb-render xcb-render-util z gdk_pixbuf-2.0
 
 WRKDIST =		${WRKDIR}/netsurf
 

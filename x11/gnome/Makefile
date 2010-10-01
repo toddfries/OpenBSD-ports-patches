@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.124 2010/09/23 13:21:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.126 2010/09/30 10:22:15 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -11,7 +11,6 @@
      SUBDIR += baker
      SUBDIR += bug-buddy
      SUBDIR += byzanz
-     SUBDIR += cheese
      SUBDIR += common
      SUBDIR += conduit
      SUBDIR += controlcenter2
@@ -103,7 +102,7 @@
      SUBDIR += totem
      SUBDIR += totem-pl-parser
      SUBDIR += tracker
-     SUBDIR += users-guide
+     SUBDIR += user-docs
      SUBDIR += utils
      SUBDIR += vfs2
      SUBDIR += video-arcade
