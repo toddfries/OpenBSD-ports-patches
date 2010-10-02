@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.97 2010/09/30 09:01:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.100 2010/10/02 09:25:11 jasper Exp $
 
 COMMENT-main=		applets for use with the GNOME panel
 COMMENT-battstat=	GNOME applet for monitoring battery level
@@ -8,6 +8,9 @@ GNOME_VERSION=		2.32.0
 
 PKGNAME-main=		gnome-applets2-${VERSION}
 PKGNAME-battstat=	gnome-applets2-battstat-${VERSION}
+
+REVISION-main=		1
+REVISION-battstat=	0
 
 CATEGORIES=		x11
 
@@ -37,12 +40,15 @@ RUN_DEPENDS=		:gnome-icon-theme->=2.15.91:x11/gnome/icon-theme \
 			:py-gnome-desktop->=2.32.0:x11/gnome/py-gnome-desktop
 MODPY_RUNDEP=		No
 LIB_DEPENDS=		::devel/libnotify \
-			::x11/gnome/panel
+			:gnome-panel->=2.32.0.2:x11/gnome/panel
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			::multimedia/gstreamer-0.10/core \
 			::multimedia/gstreamer-0.10/plugins-base \
 			::devel/libgtop2 \
 			:gucharmap->=1.8:x11/gnome/gucharmap
+
+# clicking on the multiload-applet will attempt to start gnome-system-monitor
+RUN_DEPENDS+=		::x11/gnome/system-monitor
 
 MULTI_PACKAGES=		-main -battstat
 ONLY_FOR_ARCHS-battstat = ${APM_ARCHS}
@@ -61,9 +67,6 @@ CONFIGURE_ARGS+=	--disable-frequency-selector \
 
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-# XXX hangs forever on configure during gnomeapplet check
-CONFIGURE_ENV+=		py_cv_mod_gnomeapplet_=yes
 
 WANTLIB-main += ${WANTLIB} gstbase-0.10 gstreamer-0.10 gucharmap XRes
 WANTLIB-main += kvm gcrypt gnome-desktop-2 gnutls gpg-error gweather
