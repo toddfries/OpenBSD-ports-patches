@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.91 2010/08/06 02:52:05 william Exp $
+# $OpenBSD: Makefile,v 1.93 2010/10/09 10:25:06 pea Exp $
 
 COMMENT-main=	Open source LDAP software (client)
 COMMENT-server=	Open source LDAP software (server)
 
 DISTNAME=		openldap-2.3.43
-PKGNAME-main=		${DISTNAME:S/-/-client-/}p1
-PKGNAME-server=		${DISTNAME:S/-/-server-/}p3
+PKGNAME-main=		${DISTNAME:S/-/-client-/}
+PKGNAME-server=		${DISTNAME:S/-/-server-/}
+REVISION-main=		2
+REVISION-server= 	4
 
 SHARED_LIBS +=	lber                 9.1      # .2.15
 SHARED_LIBS +=	ldap                 9.1      # .2.15
@@ -92,7 +94,8 @@ CONFIGURE_ENV+=		CPPFLAGS="${CPPFLAGS}" \
 RUN_DEPENDS-server=	:${FULLPKGNAME-main}:databases/openldap
 WANTLIB-server=		${WANTLIB} perl util wrap m pthread
 
-USE_LIBTOOL=	Yes
+# XXX Perl libtools produces an invalid executable
+USE_LIBTOOL=	gnu
 
 pre-build:
 	@cd ${WRKBUILD}; ${MAKE_PROGRAM} depend

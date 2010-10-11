@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.9 2010/09/26 09:49:53 kili Exp $
+# $OpenBSD: Makefile.inc,v 1.11 2010/10/11 08:12:31 jasper Exp $
 
 #
 # For legacy reasons (smooth updates), directory is xulrunner.
@@ -28,7 +28,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES+=		http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/${VERSION}/source
+MASTER_SITES+=		http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/${VERSION}/source \
+			http://openbsddistfiles.com/martynas/mozilla/xulrunner/
 DISTFILES?=		xulrunner-${VERSION}-source.tar.bz2
 
 MODULES+=		devel/gettext
@@ -41,7 +42,7 @@ WANTLIB+=		c glib-2.0 m pthread stdc++ \
 
 WANTLIB-main+=		${WANTLIB} X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 			Xext Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 \
-			cairo expat fontconfig freetype glitz gmodule-2.0 \
+			cairo expat fontconfig freetype gmodule-2.0 \
 			gobject-2.0 gthread-2.0 jpeg pango-1.0 pangocairo-1.0 \
 			pangoft2-1.0 pixman-1 png pthread-stubs xcb z gio-2.0 \
 			xcb-render xcb-render-util \

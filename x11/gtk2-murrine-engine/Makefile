@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.18 2010/10/01 15:53:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2010/10/11 08:19:58 jasper Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	beautiful glass-like GTK+ 2.x engine and themes
 
-VERSION =	0.98.1
+VERSION =	0.98.1.1
 DISTNAME =	murrine-${VERSION}
 PKGNAME =	gtk2-murrine-engine-${VERSION}
+REVISION=	0
 CATEGORIES =	x11
 
 HOMEPAGE =	http://cimitan.com/murrine/
@@ -41,10 +42,11 @@ DISTFILES =	${DISTNAME}.tar.bz2 \
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
-WANTLIB += freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
+WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png z pthread-stubs xcb gdk-x11-2.0 gdk_pixbuf-2.0 gtk-x11-2.0
 WANTLIB += gthread-2.0 xcb-render xcb-render-util
+WANTLIB += GL X11-xcb Xxf86vm drm xcb-shm
 
 MODULES =	devel/gettext \
 		textproc/intltool

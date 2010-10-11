@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.21 2010/08/25 20:27:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2010/10/07 14:48:38 ajacoutot Exp $
 
 COMMENT=	utilities for 'desktop' entries
 
-DISTNAME=	desktop-file-utils-0.16
-REVISION=	1
+DISTNAME=	desktop-file-utils-0.17
 EXTRACT_SUFX=	.tar.bz2
 
 CATEGORIES=	devel
@@ -20,7 +19,7 @@ WANTLIB=	c glib-2.0 pcre pthread
 
 MASTER_SITES=	http://freedesktop.org/software/desktop-file-utils/releases/
 
-MODULES=	devel/gettext	
+MODULES=	devel/gettext
 
 LIB_DEPENDS=	::devel/glib2
 

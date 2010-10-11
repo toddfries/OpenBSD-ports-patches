@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/09/03 17:50:49 naddy Exp $
+# $OpenBSD: Makefile,v 1.22 2010/10/11 08:17:16 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		vector font editor/converter
 
 DISTNAME=		fontforge_full-20100501
 PKGNAME=		${DISTNAME:S,_full,,}
-REVISION =		1
+REVISION =		3
 EXTRACT_SUFX=		.tar.bz2
 SHARED_LIBS=		fontforge	3.0 \
 			gdraw		5.0 \
@@ -29,7 +29,7 @@ PERMIT_DISTFILES_CDROM= Yes
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=fontforge/}
 
 WANTLIB +=		ICE SM X11 Xau Xdmcp Xext Xft Xi Xrender c cairo \
-			expat fontconfig freetype gif glib-2.0 glitz \
+			expat fontconfig freetype gif glib-2.0 \
 			gmodule-2.0 gobject-2.0 gthread-2.0 jpeg m pcre \
 			pango-1.0 pangocairo-1.0 pangoft2-1.0 pangoxft-1.0 \
 			pixman-1 png pthread pthread-stubs tiff util xcb \
@@ -47,11 +47,6 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS}	\
 			::textproc/libxml
 
 WRKDIST=		${WRKDIR}/${DISTNAME:S,_full,,}
-
-.if ${MACHINE_ARCH:Mmips64el}
-# XXX gcc 3.3 ICE
-MAKE_FLAGS +=		CFLAGS_fontinfo.c=-O1
-.endif
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include		\

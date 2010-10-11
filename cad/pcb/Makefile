@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.13 2010/09/13 07:10:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2010/10/11 08:11:40 jasper Exp $
 
 COMMENT=	printed circuit board layout tool
-DISTNAME=	pcb-20091103
+DISTNAME=	pcb-20100929
 REVISION=	0
 CATEGORIES=	cad
 
@@ -17,7 +17,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
-WANTLIB += freetype gio-2.0 glib-2.0 glitz gmodule-2.0 gobject-2.0
+WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
 WANTLIB += png pthread-stubs xcb z gd.>=20 gdk-x11-2.0 gdk_pixbuf-2.0
 WANTLIB += gtk-x11-2.0 gthread-2.0 pthread xcb-render xcb-render-util

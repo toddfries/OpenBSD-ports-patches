@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.179 2010/08/30 21:00:56 fgsch Exp $
+# $OpenBSD: Makefile,v 1.181 2010/10/10 15:53:35 dcoppa Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR =
@@ -146,6 +146,7 @@
      SUBDIR += py-sybase
      SUBDIR += qdbm
      SUBDIR += qt3-sqlite3-plugin
+     SUBDIR += redis
      SUBDIR += ruby-activerecord
      SUBDIR += ruby-bdb
      SUBDIR += ruby-couch_potato
@@ -159,6 +160,7 @@
      SUBDIR += ruby-pg
      SUBDIR += ruby-postgres
      SUBDIR += ruby-sequel
+     SUBDIR += ruby-sequel_pg
      SUBDIR += ruby-sqlite3
      SUBDIR += ruby-validatable
      SUBDIR += sharedance

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.840 2010/10/01 09:48:27 sebastia Exp $
+# $OpenBSD: Makefile,v 1.844 2010/10/08 09:41:49 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -120,6 +120,7 @@
      SUBDIR += gperf
      SUBDIR += gputils
      SUBDIR += grcs
+     SUBDIR += gsettings-desktop-schemas
      SUBDIR += gsl
      SUBDIR += gtest
      SUBDIR += gtk2hs-buildtools
@@ -206,6 +207,7 @@
      SUBDIR += libavl
      SUBDIR += libbfd
      SUBDIR += libbio
+     SUBDIR += libclog
      SUBDIR += libconfig
      SUBDIR += libconfuse
      SUBDIR += libdaemon
@@ -227,6 +229,7 @@
      SUBDIR += libglademm
      SUBDIR += libgsf
      SUBDIR += libgtop2
+     SUBDIR += libhid
      SUBDIR += libidn
      SUBDIR += libio
      SUBDIR += libixp
@@ -959,6 +962,7 @@
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-systemtimer
      SUBDIR += ruby-term-ansicolor
+     SUBDIR += ruby-tilt
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-trollop
      SUBDIR += ruby-tzinfo
