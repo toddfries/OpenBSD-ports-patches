@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2007/09/15 20:59:38 merdely Exp $
+# $OpenBSD: Makefile,v 1.17 2010/10/20 15:23:04 naddy Exp $
 #
 
 COMMENT=	powerful command-line front end to diff

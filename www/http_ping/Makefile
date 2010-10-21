@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2007/09/15 20:38:21 merdely Exp $
+# $OpenBSD: Makefile,v 1.11 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	HTTP latency performance testing client
 

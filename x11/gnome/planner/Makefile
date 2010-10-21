@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.33 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=		project management application
 
@@ -43,7 +43,6 @@ LIB_DEPENDS=		::x11/gnome/libbonoboui \
 			::x11/gnome/libgnomeui \
 			${MODPY_LIB_DEPENDS}
 
-USE_X11=		Yes
 MODGNOME_HELP_FILES=	Yes
 DESKTOP_FILES=		Yes
 MODGCONF2_SCHEMAS_DIR=	planner
@@ -60,6 +59,7 @@ CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			UPDATE_DESKTOP_DATABASE="/usr/bin/false"
+USE_GROFF =	Yes
 
 .include <bsd.port.mk>
 

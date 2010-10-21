@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=		screen magnifier for the GNOME desktop
 
@@ -26,8 +26,6 @@ WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += xcb z gconf-2 xcb-render xcb-render-util loginhelper spi
 
-USE_X11=		Yes
-
 MODULES=		devel/gettext \
 			lang/python \
 			x11/gnome
@@ -42,6 +40,7 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-colorblind-applet=no
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 SUBST_VARS=		LIBgnome-mag_VERSION
 

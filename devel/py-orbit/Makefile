@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2010/08/30 22:24:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=	ORBit2 Python bindings
 

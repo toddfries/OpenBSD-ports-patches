@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2010/08/31 08:15:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=		Nostromo webserver
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2010/10/19 08:13:57 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -44,7 +44,6 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-USE_X11=		Yes
 MODGNOME_HELP_FILES=	Yes
 DESKTOP_FILES=		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
@@ -56,6 +55,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-cpp-rtti
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 # the plugin needs a gecko epiphany, ours uses webkit
 CONFIGURE_ARGS+= --disable-epiphany

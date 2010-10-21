@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/09/30 10:20:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=		assistive technology for people with visual impairments
 
@@ -23,10 +23,10 @@ RUN_DEPENDS=		::x11/gnome/py-gnome \
 			::x11/dbus-python \
 			::devel/gettext
 
-USE_X11=		Yes
 DESKTOP_FILES=		Yes
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 .include <bsd.port.mk>

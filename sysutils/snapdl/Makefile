@@ -1,4 +1,4 @@
-#$OpenBSD: Makefile,v 1.2 2010/07/15 10:32:26 giovanni Exp $
+#$OpenBSD: Makefile,v 1.4 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT =		download snapshots of OpenBSD-current
 

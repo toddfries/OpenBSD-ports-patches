@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.43 2010/10/11 08:12:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.46 2010/10/18 21:35:48 sthen Exp $
 
 COMMENT-main=	configuration database system for GNOME
 COMMENT-polkit=	PolicyKit integration for GConf2
@@ -56,8 +56,6 @@ LIB_DEPENDS-polkit= ${LIB_DEPENDS} \
 		::devel/gconf2 \
 		::sysutils/polkit
 
-USE_X11=	Yes
-
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV= 	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
@@ -66,6 +64,7 @@ CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--disable-introspection \
 		--without-openldap \
 		--enable-defaults-service
+USE_GROFF =	Yes
 
 FAKE_FLAGS=	sysgconfdir=${PREFIX}/share/examples/gconf2 \
 		sysconfdir=${PREFIX}/share/examples/gconf2

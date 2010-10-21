@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.22 2010/09/16 01:38:53 marco Exp $
+# $OpenBSD: Makefile,v 1.24 2010/10/20 00:38:58 marco Exp $
 
 COMMENT=		small tiling window manager
 
 SHARED_LIBS=		swmhack 0.0
 
-DISTNAME=		scrotwm-0.9.26
+DISTNAME=		scrotwm-0.9.27
 EXTRACT_SUFX=		.tgz
 CATEGORIES=		x11
 
@@ -28,6 +28,7 @@ MAKE_FLAGS=	BINDIR="${TRUEPREFIX}/bin" \
 		MANDIR="${TRUEPREFIX}/man/cat" \
 		SHLIB_MAJOR=${LIBswmhack_VERSION:C/\..*//} \
 		SHLIB_MINOR=${LIBswmhack_VERSION:C/.*\.//}
+USE_GROFF =	Yes
 
 pre-configure:
 	@${SUBST_CMD} ${WRKSRC}/scrotwm.conf ${WRKSRC}/scrotwm.c
@@ -39,7 +40,7 @@ post-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/screenshot.sh ${PREFIX}/share/examples/scrotwm
 	${INSTALL_DATA} ${WRKSRC}/scrotwm.conf ${PREFIX}/share/examples/scrotwm
 
-.for i in es it ru
+.for i in es it pt ru
 	${INSTALL_DATA_DIR} ${PREFIX}/man/$i/cat1
 	mv ${PREFIX}/man/cat1/scrotwm_$i.0 ${PREFIX}/man/$i/cat1/scrotwm.0
 .endfor

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2010/10/11 08:18:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/19 07:54:22 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -43,7 +43,6 @@ LIB_DEPENDS=	::x11/gnome/gdl \
 		::x11/gnome/libgda \
 		::devel/libunique
 
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 MODGNOME_HELP_FILES= Yes
 
@@ -56,5 +55,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 			-I${LOCALBASE}/include/db4" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		LIBS="-liconv -lintl"
+USE_GROFF =	Yes
 
 .include <bsd.port.mk>

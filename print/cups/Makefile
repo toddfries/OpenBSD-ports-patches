@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.78 2010/08/22 10:48:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.80 2010/10/18 21:25:08 espie Exp $
 
 COMMENT=	Common Unix Printing System
 
 VERSION=	1.4.4
 DISTNAME=	cups-${VERSION}-source
 PKGNAME=	cups-${VERSION}
-REVISION=	2
+REVISION=	3
 
 CATEGORIES=	print sysutils
 
@@ -72,6 +72,7 @@ AUTOCONF_VERSION= 2.62
 AUTOMAKE_VERSION= 1.9
 
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 
 CONFIGURE_STYLE= gnu dest
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2010/07/24 08:01:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=	SMTP benchmark to measure throughput of an MTA
 

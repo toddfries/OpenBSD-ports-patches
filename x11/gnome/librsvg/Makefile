@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.56 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=	SAX-based render library for SVG files
 
@@ -33,13 +33,13 @@ LIB_DEPENDS=	::x11/gtk+2 \
 		::www/libcroco
 RUN_DEPENDS=	::x11/gtk-engines2
 
-USE_X11=		Yes
 CONFIGURE_ARGS+=	--with-svgz \
 			--with-croco \
 			--enable-gtk-theme \
 			--disable-gtk-doc
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 pre-configure:
 	perl -pi -e 's,/usr/bin/env python,${MODPY_BIN},' \

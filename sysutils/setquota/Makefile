@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2007/09/15 21:14:02 merdely Exp $
+# $OpenBSD: Makefile,v 1.24 2010/10/20 15:23:04 naddy Exp $
 # Original from: Ejovi Nuwere <ejovi@ejovi.net>
 
 COMMENT=	command line quota tools

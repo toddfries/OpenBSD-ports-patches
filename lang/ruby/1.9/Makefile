@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2010/10/06 18:43:11 jeremy Exp $
+# $OpenBSD: Makefile,v 1.4 2010/10/18 19:20:42 espie Exp $
 
 COMMENT-main =		object oriented script language with threads
 COMMENT-gdbm =		gdbm interface for Ruby
@@ -16,6 +16,8 @@ PKGNAME-gdbm =		ruby-gdbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-dbm =		ruby-dbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-tk =		ruby-tk-${VERSION}.${PATCHLEVEL}
 
+REVISION-main =		0
+
 CONFIGURE_ARGS =	--program-suffix=19 \
 			--with-soname=ruby19 \
 			--enable-pthread \
@@ -25,6 +27,7 @@ CONFIGURE_ARGS =	--program-suffix=19 \
 CONFIGURE_ENV =		LIBruby19_VERSION=${LIBruby19_VERSION}
 
 MODULES =		converters/libiconv
+USE_GROFF =	Yes
 
 WANTLIB-main =		c crypto ffi m ncurses pthread readline ssl termcap \
 			util yaml z

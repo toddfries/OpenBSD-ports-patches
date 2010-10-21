@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/09/03 14:39:07 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2010/10/19 21:04:52 naddy Exp $
 # $RuOBSD: Makefile,v 1.7 2003/08/18 18:40:14 grange Exp $
 
 COMMENT=		Bohlin's IrDA utilities

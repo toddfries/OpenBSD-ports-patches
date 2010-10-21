@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2010/07/24 23:05:08 naddy Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/19 19:46:12 naddy Exp $
 
 .include <bsd.own.mk>
 .  if ${COMPILER_VERSION:L:Mgcc4*}

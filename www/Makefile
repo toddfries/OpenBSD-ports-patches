@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.471 2010/10/06 11:41:43 sebastia Exp $
+# $OpenBSD: Makefile,v 1.473 2010/10/18 07:19:07 dcoppa Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -63,7 +63,6 @@
      SUBDIR += jesred
      SUBDIR += junkbuster
      SUBDIR += kazehakase
-     SUBDIR += konqueror-embedded
      SUBDIR += ktdms
      SUBDIR += larbin
      SUBDIR += libcroco
@@ -320,6 +319,7 @@
      SUBDIR += perlbal
      SUBDIR += php-markdown
      SUBDIR += php-openid
+     SUBDIR += php-predis
      SUBDIR += php5
      SUBDIR += phpicalendar
      SUBDIR += phpldapadmin

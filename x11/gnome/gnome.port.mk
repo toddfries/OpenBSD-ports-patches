@@ -1,4 +1,4 @@
-# $OpenBSD: gnome.port.mk,v 1.26 2010/04/22 23:19:13 ajacoutot Exp $
+# $OpenBSD: gnome.port.mk,v 1.29 2010/10/19 22:49:35 espie Exp $
 #
 # Module for GNOME related ports
 #
@@ -46,4 +46,9 @@ USE_GMAKE?=		Yes
 . if ${CONFIGURE_STYLE:L:Mgnu} || ${CONFIGURE_STYLE:L:Mautoconf}
   CONFIGURE_ARGS+=	--disable-silent-rules
 . endif
+.endif
+
+# XXX not 100% reliable
+.if defined(WANTLIB) && ${WANTLIB:MX11}
+USE_X11=	Yes
 .endif

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2010/07/26 09:45:37 kevlo Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/19 14:33:40 robert Exp $
 
 COMMENT=	brain teaser game
 
-DISTNAME=	gbrainy-1.42
+DISTNAME=	gbrainy-1.52
 
 CATEGORIES=	games
 
@@ -31,6 +31,7 @@ RUN_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
 
 USE_X11=	Yes
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

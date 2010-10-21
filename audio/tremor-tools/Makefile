@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/09/06 00:04:28 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2010/10/18 21:35:48 sthen Exp $
 
 COMMENT=	integer-only ogg vorbis command-line player
 DISTNAME=	vorbis-tools-1.0
@@ -17,6 +17,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
+USE_GROFF=	Yes
 
 AUTOCONF_VERSION=2.59
 AUTOMAKE_VERSION=1.4

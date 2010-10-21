@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/04/24 13:13:45 wcmaier Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/18 21:50:39 sthen Exp $
 
 ONLY_FOR_ARCHS =	i386
 COMMENT =		high-speed threaded Scheme interpreter
@@ -29,6 +29,7 @@ CONFIGURE_ARGS =	--machine=${MACHINE-TYPE} \
 			--installprefix=${TRUEPREFIX} \
 			--temproot=${WRKINST} \
 			--force-relink --threads
+USE_GROFF =	Yes
 			
 NO_REGRESS =		Yes
 

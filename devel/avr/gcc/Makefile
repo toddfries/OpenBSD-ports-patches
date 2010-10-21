@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2010/08/26 05:16:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2010/10/18 17:47:51 espie Exp $
 
 COMMENT=	Atmel AVR 8-bit RISC microcontrollers' XGCC
 
@@ -20,7 +20,7 @@ DISTFILES=	gcc-core-${V}${EXTRACT_SUFX} \
 		gcc-g++-${V}${EXTRACT_SUFX}
 #EXTRACT_ONLY=	${DISTFILES}
 
-MASTER_SITES= 		${MASTER_SITE_GNU:=gcc/gcc-$(V)/}
+MASTER_SITES= 		${MASTER_SITE_GCC:=releases/gcc-$(V)/}
 
 BUILD_DEPENDS+=		:autoconf-2.13:devel/autoconf/2.13 \
 			:bison-*:devel/bison		\
@@ -48,6 +48,7 @@ MAKE_ENV=	MACHINE_ARCH=avr
 
 SEPARATE_BUILD=	concurrent
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 YACC=		bison
 
 REGRESS_DEPENDS=::devel/dejagnu

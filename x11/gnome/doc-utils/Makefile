@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2010/09/30 07:34:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.37 2010/10/19 15:21:04 ajacoutot Exp $
 
 COMMENT=	collection of documentation utilities for the GNOME project
 
@@ -26,6 +26,7 @@ RUN_DEPENDS=	::devel/gettext \
 		::textproc/rarian
 
 USE_LIBTOOL=	No
+USE_GROFF =	Yes
 CONFIGURE_ARGS=	--disable-scrollkeeper
 CONFIGURE_ENV=	CPPFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

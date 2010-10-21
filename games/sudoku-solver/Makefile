@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2010/07/10 14:39:04 naddy Exp $
+# $OpenBSD: Makefile,v 1.10 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=	sudoku puzzle solver with cli, gui, and web ui
 

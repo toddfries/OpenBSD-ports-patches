@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2010/09/30 07:42:59 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/19 15:21:04 ajacoutot Exp $
 
 COMMENT=		developer documentation for GNOME
 

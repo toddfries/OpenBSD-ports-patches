@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2010/10/01 16:25:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2010/10/19 15:21:04 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -34,6 +34,7 @@ BUILD_DEPENDS=		::devel/m4
 
 LIB_DEPENDS=		::devel/glib2mm \
 			::x11/gnome/libgda
+
 
 CONFIGURE_ARGS+= 	${CONFIGURE_SHARED}
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \

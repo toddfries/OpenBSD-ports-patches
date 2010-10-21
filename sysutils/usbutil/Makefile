@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.16 2009/01/14 00:58:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/20 15:36:46 naddy Exp $
 
 COMMENT=	USB developer utilities
 
 DISTNAME=	usbutil-0.5
-PKGNAME=	${DISTNAME}p0
+REVISION=	0
 CATEGORIES=	sysutils
 
 MASTER_SITES=	ftp://ftp.augustsson.net/pub/netbsd/
@@ -16,7 +16,7 @@ WANTLIB=		c
 
 NO_REGRESS=	Yes
 
-INSTALL_TARGET=	man install
+ALL_TARGET=	all man
 
 post-install:
 	${INSTALL_MAN} ${WRKSRC}/usbgen.0 ${PREFIX}/man/cat8

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2010/03/30 10:51:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=		IDL parsing library
 
@@ -25,6 +25,7 @@ MODULES=		devel/gettext \
 
 WANTLIB=		pcre
 LIB_DEPENDS=		glib-2.0::devel/glib2
+
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}

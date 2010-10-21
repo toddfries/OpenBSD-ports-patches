@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.60 2010/10/11 08:19:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.62 2010/10/19 08:13:56 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -36,7 +36,6 @@ RUN_DEPENDS=		::x11/gnome/py-gnome
 LIB_DEPENDS=		::devel/startup-notification
 
 MODGNOME_HELP_FILES=	Yes
-USE_X11=		Yes
 DESKTOP_FILES=		Yes
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
 CONFIGURE_ARGS+=	--with-gnome-distributor="OpenBSD Ports" \
@@ -44,6 +43,7 @@ CONFIGURE_ARGS+=	--with-gnome-distributor="OpenBSD Ports" \
 			--disable-gtk-doc
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 # stop systrace spam by avoiding xsltproc to access net
 pre-configure:

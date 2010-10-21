@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.48 2010/09/27 20:20:35 sthen Exp $
+# $OpenBSD: Makefile,v 1.51 2010/10/19 01:07:41 sthen Exp $
 
 COMMENT =		download/stream programmes from BBC iPlayer
 
 DISTNAME =		get_iplayer-2.78
-REVISION =		3
+REVISION =		4
 CATEGORIES =		multimedia
 
 # http://git.infradead.org/get_iplayer.git
 HOMEPAGE =		http://www.infradead.org/get_iplayer/
-
-MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM =	Yes 
@@ -30,6 +28,7 @@ RUN_DEPENDS =		::audio/id3lib \
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 
+USE_GROFF =		Yes
 NO_REGRESS =		Yes
 PKG_ARCH =		*
 

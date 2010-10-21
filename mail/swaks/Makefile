@@ -1,15 +1,12 @@
-# $OpenBSD: Makefile,v 1.3 2010/01/26 20:59:23 kili Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/18 22:08:31 kili Exp $
 
 COMMENT=	swiss army knife SMTP transaction tester
 
-DISTNAME=	swaks.20061116.0
-PKGNAME=	${DISTNAME:C/\./-/}
+DISTNAME=	swaks-20100211.0
 CATEGORIES=	mail
-EXTRACT_SUFX=
-EXTRACT_ONLY=
 
-HOMEPAGE=	http://jetmore.org/john/code/\#swaks
-MASTER_SITES=	http://jetmore.org/john/code/
+HOMEPAGE=	http://jetmore.org/john/code/swaks/
+MASTER_SITES=	http://jetmore.org/john/code/swaks/
 
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>
 
@@ -22,10 +19,10 @@ PERMIT_DISTFILES_FTP=	Yes
 RUN_DEPENDS=	::net/p5-Net-DNS \
 		::security/p5-Net_SSLeay
 
+USE_GROFF =	Yes
 NO_REGRESS=	YES
 
 do-build:
-	cp ${DISTDIR}/${DISTNAME} ${WRKSRC}/swaks
 	cd ${WRKSRC} && pod2man swaks swaks.1
 
 do-install:

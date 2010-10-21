@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/07/29 21:13:59 weerd Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT =		show Ethernet Multicast memberships
 

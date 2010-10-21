@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/06/10 06:06:26 lum Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	modified OpenBSD top command
 

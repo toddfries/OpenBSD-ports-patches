@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2010/10/19 08:13:57 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -41,8 +41,6 @@ RUN_DEPENDS=	::archivers/zip \
 LIB_DEPENDS=	::x11/gnome/nautilus \
 		::databases/evolution-data-server
 
-USE_X11=	Yes
-
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--with-gajim=${LOCALBASE}
@@ -53,6 +51,7 @@ CONFIGURE_ARGS+= --with-plugins="evolution gajim pidgin removable-devices"
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 FAKE_FLAGS=	schemadir=${PREFIX}/share/schemas/nautilus-sendto
 

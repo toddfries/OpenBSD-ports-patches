@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2010/09/26 07:11:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=		JSON parser for GLib-based libraries and applications
 

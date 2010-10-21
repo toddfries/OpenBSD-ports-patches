@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2010/07/12 22:07:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=	automagic packet filter configurator for FTP
 

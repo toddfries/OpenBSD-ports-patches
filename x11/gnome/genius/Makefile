@@ -1,6 +1,8 @@
-# $OpenBSD: Makefile,v 1.14 2010/10/11 08:19:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2010/10/18 13:18:14 jasper Exp $
 
 BROKEN=		console is never spawned - pthreads(3) bug?
+
+SHARED_ONLY=	Yes
 
 COMMENT=	advanced general purpose calculator
 
@@ -39,7 +41,6 @@ LIB_DEPENDS=	::x11/gtksourceview \
 
 MODGNOME_HELP_FILES= Yes
 DESKTOP_FILES=	Yes
-USE_X11=	Yes
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -lgmp"

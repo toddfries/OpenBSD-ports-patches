@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/09/02 08:22:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	i/o generator
 PKGNAME=	iogen-3.1

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.70 2010/05/27 14:55:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.73 2010/10/19 07:54:26 espie Exp $
 
 COMMENT-main=	PDF viewer for X11
 COMMENT-utils=	PDF conversion tools
 
 DISTNAME=	xpdf-3.02
-PKGNAME-main=	xpdf-3.02.4p1
+PKGNAME-main=	xpdf-3.02.4
+REVISION-main=	3
 PKGNAME-utils=	xpdf-utils-3.02.4
 CATEGORIES=	textproc x11
 
@@ -28,6 +29,7 @@ PERMIT_DISTFILES_FTP=	Yes
 USE_X11=	Yes
 USE_MOTIF=	openmotif
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+= --enable-multithreaded \
 		 --without-Sgm-library \

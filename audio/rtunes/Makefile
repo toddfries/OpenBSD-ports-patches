@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2010/09/06 00:04:28 sthen Exp $
+# $OpenBSD: Makefile,v 1.12 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=		Streams audio to Apple AirPort Express device
 

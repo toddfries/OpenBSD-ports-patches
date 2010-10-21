@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2010/10/11 08:12:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2010/10/18 21:50:38 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -17,6 +17,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	cpan \
 		devel/gettext
+USE_GROFF =	Yes
 
 LIB_DEPENDS=	pangocairo-1.0,pango-1.0,pangoft2-1.0::devel/pango
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2007/12/04 19:15:10 sturm Exp $
+# $OpenBSD: Makefile,v 1.20 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	multiprocessing HTTP performance testing client
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2010/04/03 20:07:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.17 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	daemon to modify pf tables from userland
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2010/04/03 22:45:14 schwarze Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	provide fingerprint authentication
 

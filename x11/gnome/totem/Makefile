@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.50 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.52 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=	official media player for GNOME
 
@@ -67,10 +67,10 @@ RUN_DEPENDS+=	::multimedia/gstreamer-0.10/plugins-good \
 # gst-inspect-0.10 needs to access ${HOME}
 PORTHOME=	${WRKDIR}
 
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 MODGNOME_HELP_FILES=Yes
 MODGCONF2_SCHEMAS_DIR= totem
+USE_GROFF =	Yes
 
 # Browser bemused lirc mythtv sample-python sample-val sidebar-test
 # publish iplayer pythonconsole coherence_upnp tracker

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2010/08/30 21:47:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=	GTK C code documentation system
 

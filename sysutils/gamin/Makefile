@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/08/30 17:57:31 fgsch Exp $
+# $OpenBSD: Makefile,v 1.15 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT-main=	file and directory monitoring system
 COMMENT-server=	gamin file monitoring server
@@ -37,6 +37,7 @@ PSEUDO_FLAVORS=	no_python no_server
 FLAVOR?=
 
 MODULES=	x11/gnome
+
 
 LIB_DEPENDS-main=
 RUN_DEPENDS-main=

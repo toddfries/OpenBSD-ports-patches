@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.151 2010/10/11 08:19:04 jasper Exp $
+# $OpenBSD: Makefile,v 1.154 2010/10/19 08:02:54 espie Exp $
 
 COMMENT =	Mozilla web browser
 
@@ -8,7 +8,7 @@ MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	mozilla-firefox
 MOZILLA_CODENAME =	browser
 
-REVISION =	1
+REVISION =	3
 
 SO_VERSION =	22.1
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -33,6 +33,7 @@ MODULES =	www/mozilla devel/gettext lang/python
 MODPY_RUNDEP =	No
 
 USE_X11 =	Yes
+USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
 NO_REGRESS =	Yes
 

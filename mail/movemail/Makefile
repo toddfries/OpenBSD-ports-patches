@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2007/09/16 00:17:05 merdely Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	move your mail box to another location
 

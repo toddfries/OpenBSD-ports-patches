@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2010/09/24 15:23:06 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/18 22:43:10 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -14,12 +14,15 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+WANTLIB += cdaudio
+
 MODULES=	cpan
+USE_GROFF =	Yes
 NO_REGRESS=	Yes
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
-LIB_DEPENDS=	cdaudio.>=1::audio/libcdaudio
+LIB_DEPENDS=	::audio/libcdaudio
 
 .include <bsd.port.mk>

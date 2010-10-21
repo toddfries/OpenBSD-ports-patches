@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.33 2010/09/03 14:39:07 sthen Exp $
+# $OpenBSD: Makefile,v 1.35 2010/10/18 21:35:48 sthen Exp $
 
 COMMENT=	manage remote serial consoles via TCP/IP
 
@@ -25,6 +25,7 @@ CONFIGURE_STYLE= autoconf
 CONFIGURE_ARGS=	--with-64bit 		\
 		--with-openssl 		\
 		--with-master=localhost
+USE_GROFF =	Yes
 
 REGRESS_TARGET=	test
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2010/07/12 22:07:41 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2010/10/18 21:50:39 sthen Exp $
 
 COMMENT=	Cistron RADIUS server
 
@@ -29,6 +29,7 @@ FAKE_FLAGS+=	BINDIR='${WRKINST}${PREFIX}/bin' \
 		SBINDIR='${WRKINST}${PREFIX}/sbin' \
 		MANDIR='${WRKINST}${PREFIX}/man' \
 		RADIUS_DIR='${WRKINST}${PREFIX}/share/examples/radiusd-cistron'
+USE_GROFF =	Yes
 NO_REGRESS=	Yes
 
 post-install:

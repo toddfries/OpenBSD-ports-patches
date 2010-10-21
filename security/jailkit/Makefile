@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/09/20 07:15:30 sebastia Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/18 21:41:45 espie Exp $
 			
 COMMENT=		utilities for jailing a user or process
 
-DISTNAME=		jailkit-2.12
+DISTNAME=		jailkit-2.13
 CATEGORIES=    		security sysutils
 
 HOMEPAGE=		http://olivier.sessink.nl/jailkit/
@@ -27,6 +27,7 @@ CONFIGURE_ENV=		PYTHONINTERPRETER=${MODPY_BIN} \
 CONFIGURE_ARGS=		--sysconfdir=${SYSCONFDIR}
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples
+USE_GROFF =	Yes
 
 MAN_P=  jailkit.8 jk_check.8 jk_chrootlaunch.8 jk_chrootsh.8 jk_cp.8 \
 	jk_init.8 jk_jailuser.8 jk_lsh.8 jk_socketd.8 jk_uchroot.8 \

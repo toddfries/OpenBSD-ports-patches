@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/09/30 12:55:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=	C++ binding for the ATK library
 

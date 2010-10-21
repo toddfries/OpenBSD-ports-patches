@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2010/08/30 17:57:31 fgsch Exp $
+# $OpenBSD: Makefile,v 1.13 2010/10/20 11:29:46 dcoppa Exp $
 
 COMMENT=	distributed command execution
 
 DISTNAME=	tentakel-357
-REVISION =	1
+REVISION =	2
 CATEGORIES=	sysutils
 MAINTAINER=	Sebastian Stark <seb@todesplanet.de>
 HOMEPAGE=	http://tentakel.biskalar.de/
@@ -22,6 +22,7 @@ MODULES=	lang/python
 
 WRKSRC=		${WRKDIST}/py
 
+USE_GROFF =	Yes
 REGRESS_IS_INTERACTIVE=	yes
 
 do-configure:

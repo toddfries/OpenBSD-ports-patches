@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2010/09/24 21:10:16 steven Exp $
+# $OpenBSD: Makefile,v 1.26 2010/10/19 07:43:00 espie Exp $
 
 COMMENT-main=		network backup solution (client)
 COMMENT-server=		network backup solution (server)
@@ -13,8 +13,9 @@ FULLPKGNAME-bat=	bacula-bat-$V
 FULLPKGPATH-bat=	${PKGPATH},-bat
 CATEGORIES=		sysutils
 
-REVISION-main=		0
-REVISION-server=	0
+REVISION-main=		1
+REVISION-server=	1
+REVISION-bat=		0
 
 SHARED_LIBS +=		bac		1.0 # .1.0
 SHARED_LIBS +=		baccfg		1.0 # .1.0
@@ -47,6 +48,7 @@ SUBST_VARS=		SD_USER BACULACONF BACULASTATE TRUEPREFIX
 CONFIGURE_STYLE=	simple
 USE_GMAKE=		yes
 USE_LIBTOOL=		yes
+USE_GROFF =	Yes
 NO_REGRESS=		yes
 
 PSEUDO_FLAVORS=		no_bat no_server

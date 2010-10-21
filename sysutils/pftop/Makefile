@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2010/04/03 22:04:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/20 15:23:04 naddy Exp $
 #
 
 COMMENT=	curses-based real time state and rule display for pf

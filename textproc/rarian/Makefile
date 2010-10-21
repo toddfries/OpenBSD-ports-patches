@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2010/09/01 16:38:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2010/10/19 15:21:04 ajacoutot Exp $
 
 COMMENT=		documentation metadata library
 

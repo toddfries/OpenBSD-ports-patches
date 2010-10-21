@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2010/07/12 22:07:40 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT-main=	packet filter statistics visualization
 COMMENT-daemon=	pfstat daemon

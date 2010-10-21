@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2010/08/31 08:15:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=		APC SmartUPS daemon
 

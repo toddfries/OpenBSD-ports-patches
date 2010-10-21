@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2010/08/23 14:46:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.27 2010/10/19 19:45:53 espie Exp $
 
 COMMENT =		Music Player Daemon
 DISTNAME =		mpd-0.15.12
@@ -55,6 +55,7 @@ CONFIGURE_ARGS +=	--enable-ao \
 # OggFLAC and tremor tests, initgroups(3)
 CONFIGURE_ENV =		LDFLAGS="-L${LOCALBASE}/lib" \
 			CPPFLAGS="-I${LOCALBASE}/include -D_BSD_SOURCE"
+USE_GROFF =	Yes
 
 .if ${FLAVOR:L:Mtremor}
 CONFIGURE_ARGS +=	--with-tremor \
@@ -64,15 +65,17 @@ CONFIGURE_ARGS +=	--with-tremor \
 			--disable-lame-encoder \
 			--disable-aac \
 			--disable-mpc
-LIB_DEPENDS +=		vorbisidec::audio/tremor
+LIB_DEPENDS +=		::audio/tremor
+WANTLIB +=		vorbisidec
 .else
-WANTLIB +=		theora
-LIB_DEPENDS +=		vorbis,vorbisfile,vorbisenc::audio/libvorbis \
-			speex::audio/speex \
-			mp3lame::audio/lame \
-			shout::net/libshout \
-			faad,mp4ff:faad->=2.6.1p0:audio/faad \
-			mpcdec::audio/libmpcdec
+WANTLIB +=		theora vorbis vorbisfile vorbisenc speex mp3lame \
+			shout faad mp4ff mpcdec
+LIB_DEPENDS +=		::audio/libvorbis \
+			::audio/speex \
+			::audio/lame \
+			::net/libshout \
+			:faad->=2.6.1p0:audio/faad \
+			::audio/libmpcdec
 CONFIGURE_ARGS +=	--enable-aac
 .endif
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.75 2010/06/27 19:55:04 kili Exp $
+# $OpenBSD: Makefile,v 1.77 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=	library for manipulating PNG images
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.23 2010/04/01 13:49:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=		high-performance 2D graphics library
 

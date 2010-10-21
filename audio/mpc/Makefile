@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2010/05/26 13:59:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/18 22:43:10 sthen Exp $
 
 COMMENT=		command line client for mpd
 
@@ -15,8 +15,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c
-LIB_DEPENDS=		mpdclient::audio/libmpdclient
+WANTLIB=		c mpdclient
+LIB_DEPENDS=		::audio/libmpdclient
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=musicpd/}
 
@@ -25,6 +25,7 @@ MODULES=		converters/libiconv
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		ac_cv_func_iconv=yes
 CONFIGURE_ENV=		LDFLAGS="-L${LOCALBASE}/lib -liconv"
+USE_GROFF =	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mpc

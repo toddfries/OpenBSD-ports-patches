@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2010/10/11 08:14:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/18 18:13:15 espie Exp $
 
 COMMENT=	simple scanning utility
 
@@ -40,8 +40,8 @@ DESKTOP_FILES=	Yes
 MODGNOME_HELP_FILES= Yes
 MODGCONF2_SCHEMAS_DIR= simple-scan
 
-USE_X11=	Yes
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

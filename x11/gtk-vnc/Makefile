@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2010/10/11 08:19:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2010/10/19 08:13:57 espie Exp $
 
 COMMENT-main=		VNC viewer widget for GTK
 COMMENT-plugin=		gtk-vnc browser plugin
@@ -49,8 +49,6 @@ LIB_DEPENDS-plugin=	${LIB_DEPENDS} \
 			::${BASE_PKGPATH}
 WANTLIB-plugin=		${WANTLIB} gvnc-1.0 gtk-vnc-1.0 gnutls sasl2
 
-USE_X11=		Yes
-
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--with-examples \
@@ -60,6 +58,7 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-introspection
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 .if ${FLAVOR:L:Mno_plugin}
 CONFIGURE_ARGS+=	--enable-plugin=no

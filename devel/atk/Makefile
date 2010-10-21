@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2010/09/27 11:55:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.32 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=	accessibility toolkit used by gtk+
 

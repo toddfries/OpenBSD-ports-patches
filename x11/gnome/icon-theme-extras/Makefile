@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/07/13 20:37:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/19 15:21:04 ajacoutot Exp $
 
 COMMENT=	extra icon theme for GNOME
 

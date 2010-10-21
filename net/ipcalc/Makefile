@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2010/07/12 22:07:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=	small network calculator
 

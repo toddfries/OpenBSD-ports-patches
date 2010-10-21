@@ -1,6 +1,6 @@
-$OpenBSD: patch-tests_Makefile_in,v 1.16 2010/09/30 07:17:19 ajacoutot Exp $
---- tests/Makefile.in.orig	Sat Sep 18 21:28:25 2010
-+++ tests/Makefile.in	Mon Sep 27 14:43:37 2010
+$OpenBSD: patch-tests_Makefile_in,v 1.17 2010/10/11 20:41:44 kili Exp $
+--- tests/Makefile.in.orig	Mon Sep 27 18:10:13 2010
++++ tests/Makefile.in	Sun Oct 10 15:00:56 2010
 @@ -639,8 +639,7 @@ test_programs = \
  	thread-test				\
  	threadpool-test				\
@@ -11,3 +11,12 @@ $OpenBSD: patch-tests_Makefile_in,v 1.16 2010/09/30 07:17:19 ajacoutot Exp $
  
  test_scripts = run-collate-tests.sh run-assert-msg-test.sh
  test_script_support_programs = unicode-collate
+@@ -1403,7 +1402,7 @@ test: test-nonrecursive
+ 
+ # test-nonrecursive: run tests only in cwd
+ test-nonrecursive: ${TEST_PROGS}
+-@OS_UNIX_TRUE@	@test -z "${TEST_PROGS}" || MALLOC_CHECK_=2 MALLOC_PERTURB_=$$(($${RANDOM:-256} % 256)) ${GTESTER} --verbose ${TEST_PROGS}
++@OS_UNIX_TRUE@	@test -z "${TEST_PROGS}" || MALLOC_CHECK_=2 MALLOC_PERTURB_=$$(($${RANDOM:-256} % 256)) ${GTESTER} -k --verbose ${TEST_PROGS}
+ 
+ # test-report: run tests in subdirs and generate report
+ # perf-report: run tests in subdirs with -m perf and generate report

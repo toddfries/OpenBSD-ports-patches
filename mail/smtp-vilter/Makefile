@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2010/04/03 20:07:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.39 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	sendmail milter to scan messages for viruses and spam
 

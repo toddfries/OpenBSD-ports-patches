@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.33 2010/10/11 08:17:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2010/10/18 21:25:09 espie Exp $
 
 SHARED_ONLY =	Yes
 
@@ -63,7 +63,6 @@ LIB_DEPENDS =	goffice-0.8::devel/goffice \
 		gtkhtml-3.14::www/gtkhtml3 \
 		gnomeui-2.>=2400::x11/gnome/libgnomeui
 
-USE_X11 =		Yes
 CONFIGURE_STYLE =	gnu
 # --disable-ofx until libofx/libsp is fixed to work with .so
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
@@ -71,6 +70,7 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--disable-ofx
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 # Steps to build the docs.
 DOC_DIR=		${WRKDIR}/gnucash-docs-${DOC_VERSION}

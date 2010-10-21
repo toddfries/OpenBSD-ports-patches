@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.22 2010/10/11 08:19:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.25 2010/10/19 08:13:56 espie Exp $
+
+SHARED_ONLY=	Yes
 
 COMMENT=	graphical bug reporting tool for GNOME
 
 GNOME_PROJECT=	bug-buddy
 GNOME_VERSION=	2.32.0
-REVISION=	0
+REVISION=	1
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -41,8 +43,8 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libelf" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-eds
+USE_GROFF =	Yes
 
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 MODGCONF2_SCHEMAS_DIR= bug-buddy
 

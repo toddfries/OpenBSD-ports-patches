@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=	monitor kerberos tickets
 
@@ -30,7 +30,6 @@ MODULES=	devel/gettext \
 
 LIB_DEPENDS=	::devel/libnotify
 
-USE_X11=	Yes
 MODGCONF2_SCHEMAS_DIR= krb5-auth-dialog
 MODGNOME_HELP_FILES= Yes
 DESKTOP_FILES=	Yes
@@ -46,6 +45,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-libnotify \
 		--enable-pkinit \
 		--disable-network-manager
+USE_GROFF =	Yes
 
 post-extract:
 	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin

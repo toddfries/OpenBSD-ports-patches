@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2008/06/13 14:21:13 merdely Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/18 21:35:48 sthen Exp $
 
 
 COMMENT=		SNPP, TAP, email notification application
@@ -32,6 +32,7 @@ SAMPLES=	email2page.conf sendpage.cf snpp.conf
 DOCS=		Changes FEATURES README THANKS
 DOCS2=		PagingCentrals.txt README pc-testing.txt postfix.txt \
 		sendmail.txt sendpage.php
+USE_GROFF =	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/sendpage

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.94 2010/10/04 06:28:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.97 2010/10/18 17:47:53 espie Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
@@ -33,7 +33,11 @@ EXTRACT_SUFX=		.tar.bz2
 
 MULTI_PACKAGES=		-main -docs
 
-MODULES=		devel/gettext
+MODULES=		devel/gettext \
+			lang/python
+
+MODPY_RUNDEP=		No
+MODPY_BUILDDEP=		Yes	# XXX: glib2 wants python for the regress tests
 
 WANTLIB-main=		c pthread z pcre fam
 
@@ -47,10 +51,15 @@ RUN_DEPENDS-docs=
 
 # DBus is only used in the GDBus test cases
 REGRESS_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
-			::x11/dbus
+			::x11/dbus \
+			::devel/py-gobject \
+			::x11/dbus-python
+
+REGRESS_FLAGS=		-k
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
+USE_GROFF =	Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-static \
@@ -74,5 +83,7 @@ pre-configure:
 		${WRKSRC}/gio/gdbusconnection.c \
 		${WRKSRC}/gio/gdbusaddress.c \
 		${WRKSRC}/gio/gdbusprivate.c ${WRKSRC}/po/*.po
+	perl -pi -e 's,/usr/bin/env python,${MODPY_BIN},' \
+		${WRKSRC}/gio/tests/gdbus-testserver.py
 
 .include <bsd.port.mk>

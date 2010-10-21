@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2010/04/23 17:49:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/19 15:21:04 ajacoutot Exp $
 
 COMMENT=		extra themes and artwork for GNOME games
 

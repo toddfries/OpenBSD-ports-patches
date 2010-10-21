@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2010/10/11 08:14:01 jasper Exp $
+# $OpenBSD: Makefile,v 1.19 2010/10/18 18:00:18 espie Exp $
 
 COMMENT=	Settlers of Catan for GNOME/Gtk
 
@@ -38,11 +38,11 @@ BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	::x11/gnome/librsvg
 LIB_DEPENDS=	gnome-2.>=1900::x11/gnome/libgnome
 
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 MODGNOME_HELP_FILES=Yes
 
 CONFIGURE_STYLE=gnu
+USE_GROFF =	Yes
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		ac_cv_path_pngtopnm=""

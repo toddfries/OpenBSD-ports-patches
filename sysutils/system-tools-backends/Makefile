@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/09/10 13:49:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/19 15:21:03 ajacoutot Exp $
 
 COMMENT=	cross-platform configuration modules
 

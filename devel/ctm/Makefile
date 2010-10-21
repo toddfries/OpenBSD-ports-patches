@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/04/03 19:39:50 naddy Exp $
+# $OpenBSD: Makefile,v 1.14 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=		directory synchronization over mail
 

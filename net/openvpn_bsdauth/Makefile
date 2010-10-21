@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/08/30 18:33:45 fkr Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT =	BSD Auth helper program for OpenVPN
 

@@ -1,11 +1,14 @@
-# $OpenBSD: Makefile,v 1.5 2009/03/14 14:47:28 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/18 17:47:50 espie Exp $
 
 COMMENT=	gcc for arm-elf cross-development
 
 VERSION=	3.4.5
 FULL_VERSION=	3.4-20050913
 DISTNAME=	gcc-${FULL_VERSION}
-PKGNAME=	${CONFIG}-gcc-${VERSION}p1
+PKGNAME=	${CONFIG}-gcc-${VERSION}
+REVISION=	2
+
+SUBST_VARS+=	VERSION
 
 # GPL
 PERMIT_PACKAGE_FTP=	Yes
@@ -24,11 +27,7 @@ MAKE_ADA=	No
 
 EXTRACT_SUFX=	.tar.bz2
 
-MASTER_SITE_GCC=ftp://gcc.gnu.org/pub/gcc/ \
-		ftp://ftp.uvsq.fr/pub/gcc/ \
-		ftp://ftp.grolier.fr/pub/egcs/
-
-MASTER_SITES= 	${MASTER_SITE_GCC:=snapshots/$(FULL_VERSION)/}
+MASTER_SITES= 	http://distfiles.nl/
 
 BUILD_DEPENDS+=	:autoconf-2.13:devel/autoconf/2.13	\
 		::devel/bison				\
@@ -49,6 +48,7 @@ MAKE_ENV=	MACHINE_ARCH=arm-elf
 
 SEPARATE_BUILD=	concurrent
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 YACC=		bison
 
 REGRESS_DEPENDS=::devel/dejagnu

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2010/10/11 08:15:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.57 2010/10/18 20:52:05 espie Exp $
 
 COMMENT=		spreadsheet application for GNOME
 
@@ -43,12 +43,12 @@ LIB_DEPENDS=		::graphics/libart \
 			::devel/libgsf,-gnome \
 			::textproc/libxml
 
-USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
 MODGCONF2_SCHEMAS_DIR=	gnumeric
 
 USE_LIBTOOL=		Yes
+USE_GROFF =	Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-gnome \
 			--without-gda \

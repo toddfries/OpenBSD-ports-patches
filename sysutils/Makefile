@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.211 2010/10/03 21:14:22 armani Exp $
+# $OpenBSD: Makefile,v 1.215 2010/10/17 11:15:59 landry Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR =
      SUBDIR += LPRng
      SUBDIR += acx-firmware
      SUBDIR += anacron
+     SUBDIR += apachetop
      SUBDIR += apc-upsd
      SUBDIR += apcupsd
      SUBDIR += apcd
@@ -99,6 +100,7 @@
      SUBDIR += p5-Filesys-DiskSpace
      SUBDIR += p5-Filesys-Virtual
      SUBDIR += p5-Filesys-Virtual-Plain
+     SUBDIR += p5-Parse-DMIDecode
      SUBDIR += p5-Proc-ProcessTable
      SUBDIR += p5-Proc-Queue
      SUBDIR += p5-Quota
@@ -109,6 +111,8 @@
      SUBDIR += p5-Unix-PID
      SUBDIR += p5-Unix-Statgrab
      SUBDIR += p5-Unix-Syslog
+     SUBDIR += py-daemon
+     SUBDIR += py-lockfile
      SUBDIR += pciutils
      SUBDIR += pftop
      SUBDIR += pgt-firmware

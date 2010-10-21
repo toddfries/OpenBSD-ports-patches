@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2009/02/03 22:46:14 martynas Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/19 09:21:04 sthen Exp $
 # Original from: Kyle Wheeler <kyle@memoryhole.net>
 
 COMMENT =		natural-expression command-line calculator
@@ -23,5 +23,6 @@ USE_GMAKE =		Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV +=	LDFLAGS="-L${LOCALBASE}/lib" \
 			CPPFLAGS="-I${LOCALBASE}/include"
+USE_GROFF =	Yes
 
 .include <bsd.port.mk>

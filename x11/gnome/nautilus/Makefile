@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.71 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.73 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=		GNOME shell and file manager
 
@@ -53,12 +53,12 @@ LIB_DEPENDS=		::graphics/libexif \
 			::x11/gnome/desktop \
 			::devel/libunique
 
-USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGCONF2_SCHEMAS_DIR=	nautilus
 
 AUTOCONF_VERSION=	2.63
 CONFIGURE_STYLE=	autoconf gnu
+USE_GROFF =	Yes
 
 CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
 			--disable-gtk-doc \

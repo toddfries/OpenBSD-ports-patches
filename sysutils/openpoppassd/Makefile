@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2010/04/04 15:34:01 naddy Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=		daemon for changing passwords
 

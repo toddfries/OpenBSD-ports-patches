@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/10/09 08:44:13 benoit Exp $
+# $OpenBSD: Makefile,v 1.11 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT =	bozotic HTTP server
 

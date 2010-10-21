@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2008/01/12 19:15:37 okan Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/18 21:50:39 sthen Exp $
 
 COMMENT=	mailing list manager
 
@@ -29,6 +29,7 @@ MAKE_FLAGS+=	W_HOME=${PREFIX}/lib/majordomo \
 		W_MAJORDOMO_CFDIR=${SYSCONFDIR}/majordomo \
 		W_MAJORDOMO_CF=majordomo.cf \
 		POSIX=""
+USE_GROFF =	Yes
 
 NO_REGRESS=	Yes
 

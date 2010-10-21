@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/04/15 14:11:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=	Garmin GPS upload/download utilities
 

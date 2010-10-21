@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2010/09/26 13:40:11 naddy Exp $
+# $OpenBSD: Makefile,v 1.7 2010/10/18 22:43:10 sthen Exp $
 
 COMMENT =		audio codec for lossless, lossy and hybrid compression
 
@@ -15,10 +15,10 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
+WANTLIB =		c m
+
 MASTER_SITES =		${HOMEPAGE}			
 EXTRACT_SUFX =		.tar.bz2
-
-WANTLIB =		c m
 
 MODULES =		converters/libiconv 
 
@@ -29,5 +29,6 @@ CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--with-libiconv-prefix="${LOCALBASE}"
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 .include <bsd.port.mk>

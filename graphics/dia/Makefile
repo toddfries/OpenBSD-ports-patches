@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2010/10/11 08:14:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.70 2010/10/18 21:50:39 sthen Exp $
 
 COMMENT=	technical diagrams drawing tool
 
@@ -34,7 +34,6 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		lang/python
 
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 
 CONFIGURE_STYLE=gnu
@@ -45,6 +44,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-cairo \
 		--enable-db2html=no \
 		--with-hardbooks=no
+USE_GROFF =	Yes
 
 FLAVORS=	gnome
 FLAVOR?=

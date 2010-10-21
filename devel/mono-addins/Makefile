@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2010/04/06 17:50:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2010/10/18 17:47:54 espie Exp $
 
 COMMENT=	framework for creating extensible applications
 
-DISTNAME=	mono-addins-0.4
-PKGNAME=	${DISTNAME}p0
+DISTNAME=	mono-addins-0.5
 CATEGORIES=	devel lang
 
 HOMEPAGE=	http://www.mono-project.com/Mono.Addins
@@ -18,6 +17,7 @@ MASTER_SITES=	http://www.go-mono.com/sources/mono-addins/
 EXTRACT_SUFX=	.tar.bz2
 
 USE_GMAKE=	Yes
+USE_GROFF =	Yes
 
 MODULES=	lang/mono
 BUILD_DEPENDS=	${RUN_DEPENDS}

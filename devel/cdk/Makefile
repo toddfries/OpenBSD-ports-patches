@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2008/10/15 13:32:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2010/10/18 21:35:48 sthen Exp $
 
 COMMENT=	curses development kit
 
@@ -29,6 +29,7 @@ USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--with-ncurses \
 		--with-libtool
+USE_GROFF =	Yes
 
 NO_REGRESS=	Yes
 

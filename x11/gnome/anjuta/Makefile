@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2010/10/11 08:19:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2010/10/19 08:13:56 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -62,7 +62,6 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			::x11/gtksourceview
 
 LIBTOOL_FLAGS=		--tag=disable-static
-USE_X11 =		Yes
 DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
 MODGCONF2_SCHEMAS_DIR=	anjuta
@@ -75,6 +74,7 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+USE_GROFF =	Yes
 
 FAKE_FLAGS=		itlocaledir=${PREFIX}/share/locale/
 

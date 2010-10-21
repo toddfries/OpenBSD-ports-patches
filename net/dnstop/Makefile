@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2009/08/26 08:36:03 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2010/10/18 18:36:46 espie Exp $
 
 COMMENT =		pcap-based DNS query monitor
 
 DISTNAME =		dnstop-20090128
+REVISION =		0
 CATEGORIES =		net
 
 MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
@@ -15,6 +16,7 @@ PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += 		c curses pcap
 
+USE_GROFF =	Yes
 CONFIGURE_STYLE =	gnu dest
 
 HOMEPAGE =		http://dns.measurement-factory.com/tools/dnstop/

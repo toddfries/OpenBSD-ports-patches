@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2010/09/24 15:23:05 sthen Exp $
+# $OpenBSD: Makefile,v 1.27 2010/10/19 19:45:53 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,7 +11,8 @@ MASTER_SITES=	http://www.oberhumer.com/opensource/lzo/download/
 
 HOMEPAGE=	http://www.oberhumer.com/opensource/lzo/
 
-LIB_DEPENDS=	lzo.>=1::archivers/lzo
+LIB_DEPENDS =	::archivers/lzo
+WANTLIB =	lzo.>=1
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,6 +22,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 REVISION = 	3
 CONFIGURE_STYLE= perl
+USE_GROFF =	Yes
 
 WRKDIST=	${WRKDIR}/Compress-LZO-1.08
 

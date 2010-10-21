@@ -1,0 +1,12 @@
+$OpenBSD: patch-gio_tests_Makefile_in,v 1.1 2010/10/11 20:41:44 kili Exp $
+--- gio/tests/Makefile.in.orig	Mon Sep 27 18:10:12 2010
++++ gio/tests/Makefile.in	Sun Oct 10 14:41:18 2010
+@@ -1538,7 +1538,7 @@ test: test-nonrecursive
+ 
+ # test-nonrecursive: run tests only in cwd
+ test-nonrecursive: ${TEST_PROGS}
+-@OS_UNIX_TRUE@	@test -z "${TEST_PROGS}" || MALLOC_CHECK_=2 MALLOC_PERTURB_=$$(($${RANDOM:-256} % 256)) ${GTESTER} --verbose ${TEST_PROGS}
++@OS_UNIX_TRUE@	@test -z "${TEST_PROGS}" || MALLOC_CHECK_=2 MALLOC_PERTURB_=$$(($${RANDOM:-256} % 256)) ${GTESTER} -k --verbose ${TEST_PROGS}
+ 
+ # test-report: run tests in subdirs and generate report
+ # perf-report: run tests in subdirs with -m perf and generate report

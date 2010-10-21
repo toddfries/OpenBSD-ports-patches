@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.123 2010/09/18 12:36:27 sthen Exp $
+# $OpenBSD: Makefile,v 1.125 2010/10/18 19:07:19 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
 
-DISTNAME=		samba-3.5.5
+DISTNAME=		samba-3.5.6
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-docs=	${DISTNAME:S/-/-docs-/}
 FULLPKGPATH-docs=	net/samba,-docs
 SHARED_LIBS=		smbclient	2.0 \
 			smbsharemodes	0.0 \
 			netapi		0.0 \
-			addns		0.0 \
 			wbclient	0.0
 
 CATEGORIES=		net
@@ -52,7 +51,8 @@ CONFDIR=		${SYSCONFDIR}/samba
 SAMBA_LOGDIR=		/var/log/samba
 SUBST_VARS=		CONFDIR
 
-USE_GMAKE=		yes
+USE_GMAKE=		Yes
+USE_GROFF=		Yes
 SEPARATE_BUILD=		simple
 CONFIGURE_STYLE=	gnu
 AUTOCONF_VERSION=	2.63

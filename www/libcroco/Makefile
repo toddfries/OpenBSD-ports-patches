@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/08/26 16:59:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/19 15:21:04 ajacoutot Exp $
 
 COMMENT=		generic CSS parsing library for GNOME project
 

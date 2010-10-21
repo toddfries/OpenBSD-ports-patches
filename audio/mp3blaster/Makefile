@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/01/11 07:51:26 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.14 2010/10/18 22:43:10 sthen Exp $
 
 COMMENT=	text console audio player with an interactive interface
 
@@ -12,12 +12,12 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	c m ncurses ogg pthread sndio stdc++
+WANTLIB=	c m ncurses ogg pthread sidplay sndio stdc++ vorbis vorbisfile
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mp3blaster/}
 
-LIB_DEPENDS=	sidplay.>=1::audio/libsidplay \
-		vorbis.>=1,vorbisfile.>=2::audio/libvorbis
+LIB_DEPENDS=	::audio/libsidplay \
+		::audio/libvorbis
 
 AUTOCONF_VERSION=2.61
 AUTOMAKE_VERSION=1.9
@@ -27,6 +27,7 @@ CONFIGURE_ARGS=	--without-esd \
 		--without-sdl \
 		--with-sndio
 CONFIGURE_ENV+=	ac_cv_lib_ossaudio_main=no
+USE_GROFF =	Yes
 
 post-extract:
 	@cp ${FILESDIR}/sndioplayer.cc ${WRKSRC}/mpegsound

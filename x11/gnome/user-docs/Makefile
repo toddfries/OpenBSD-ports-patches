@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/09/30 09:16:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2010/10/19 15:21:04 ajacoutot Exp $
 
 # This port does not run_depends on yelp on purpose, as it would
 # create a cyclic dependency.

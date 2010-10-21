@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.60 2010/10/11 08:11:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.63 2010/10/18 21:35:48 sthen Exp $
 
 # coherence plugin is installed but not activated by default so we don't
 # enforce dependency on multimedia/coherence to lower requirements
@@ -61,7 +61,6 @@ RUN_DEPENDS+=		::multimedia/gstreamer-0.10/plugins-good
 
 REGRESS_DEPENDS=	::devel/check
 
-USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGNOME_HELP_FILES=	Yes
 MODGCONF2_SCHEMAS_DIR=	rhythmbox
@@ -82,6 +81,7 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-vala \
 			--disable-fm-radio \
 			--disable-lirc
+USE_GROFF =	Yes
 
 # requires libmtp >= 0.3
 CONFIGURE_ARGS+=	--without-mtp

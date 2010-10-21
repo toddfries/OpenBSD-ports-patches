@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.844 2010/10/08 09:41:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.848 2010/10/17 19:07:54 armani Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -77,6 +77,7 @@
      SUBDIR += ddd
      SUBDIR += dejagnu
      SUBDIR += desktop-file-utils
+     SUBDIR += dissy
      SUBDIR += doc++
      SUBDIR += dotconf
      SUBDIR += doxygen
@@ -864,6 +865,7 @@
      SUBDIR += py-kid
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
+     SUBDIR += py-minimock
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime,python2.4
      SUBDIR += py-mxDateTime,python2.6
@@ -876,6 +878,7 @@
      SUBDIR += py-peak-rules
      SUBDIR += py-pexpect
      SUBDIR += py-prioritized_methods
+     SUBDIR += py-progressbar
      SUBDIR += py-protocols
      SUBDIR += py-psyco
      SUBDIR += py-py
@@ -922,6 +925,7 @@
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activesupport
      SUBDIR += ruby-assistance
+     SUBDIR += ruby-bacon
      SUBDIR += ruby-clio
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-columnize

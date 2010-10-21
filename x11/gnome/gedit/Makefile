@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2010/10/11 08:19:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.59 2010/10/19 08:13:57 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -49,7 +49,6 @@ RUN_DEPENDS=		:py-gtk2->=2.12.0:x11/py-gtk2 \
 			::x11/gnome/py-gnome
 
 MODGNOME_HELP_FILES=	Yes
-USE_X11=		Yes
 DESKTOP_FILES=		Yes
 MODGCONF2_SCHEMAS_DIR=	gedit
 LIBTOOL_FLAGS=		--tag=disable-static
@@ -62,5 +61,6 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 #CONFIGURE_ARGS+=	--enable-gvfs-metadata
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -lm -lstdc++ -lintl -liconv"
+USE_GROFF =	Yes
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.82 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.84 2010/10/19 08:13:57 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -55,7 +55,6 @@ LIB_DEPENDS= 	::databases/evolution-data-server \
 RUN_DEPENDS=	:notification-daemon-*|notification-daemon-xfce-*|xfce4-notifyd-*:sysutils/notification-daemon
 
 MODGNOME_HELP_FILES= Yes
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 MODGCONF2_SCHEMAS_DIR=	gnome-panel
 
@@ -74,6 +73,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
 MODULES+=	lang/python
 MODPY_BUILDDEP=	No
 MODPY_RUNDEP=	No
+USE_GROFF =	Yes
 
 pre-configure:
 	perl -pi -e 's,xsltproc -o,xsltproc --nonet -o,g' \

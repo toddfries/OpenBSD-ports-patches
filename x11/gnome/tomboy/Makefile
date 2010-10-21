@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2010/10/11 08:19:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.37 2010/10/19 08:13:57 espie Exp $
 
 COMMENT=	desktop note-taking application written in C\#
 
@@ -27,7 +27,6 @@ MODULES=	x11/gnome \
 		devel/gettext \
 		devel/gconf2
 
-USE_X11=	Yes
 DESKTOP_FILES=	Yes
 
 MODGNOME_HELP_FILES=	Yes
@@ -53,6 +52,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 # needs gmime-sharp and galago-sharp
 CONFIGURE_ARGS+= --enable-evolution=no \
 		--enable-galago=no
+USE_GROFF =	Yes
 
 # this is *.config.in on purpose (and not *.config)
 DLLMAP_FILES=	Tomboy/Tomboy.exe.config.in \

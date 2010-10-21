@@ -1,4 +1,4 @@
-#	$OpenBSD: Makefile,v 1.6 2010/09/28 09:29:14 sthen Exp $
+#	$OpenBSD: Makefile,v 1.8 2010/10/20 15:23:04 naddy Exp $
 
 COMMENT=		Marco's Object Oriented calculator
 

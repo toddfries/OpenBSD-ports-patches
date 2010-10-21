@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2010/07/21 14:07:43 landry Exp $
+# $OpenBSD: Makefile,v 1.13 2010/10/18 20:52:09 espie Exp $
 
 COMMENT=	distributed memory object caching system
 
-DISTNAME=	memcached-1.4.3
-REVISION=	1
+DISTNAME=	memcached-1.4.5
 CATEGORIES=	misc
 
 HOMEPAGE=	http://www.danga.com/memcached/
@@ -17,11 +16,15 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c event pthread
 
+MODULES=		gcc3
+MODGCC3_ARCHES=		sparc
+
 MASTER_SITES=		http://memcached.googlecode.com/files/
 MASTER_SITES0=		${HOMEPAGE}/dist/
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS= 	--with-libevent=/usr --disable-coverage
+USE_GROFF =	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/memcached

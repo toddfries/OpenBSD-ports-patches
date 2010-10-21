@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/07/12 22:07:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2010/10/19 21:04:52 naddy Exp $
 
 COMMENT=		bluetooth network tools
 DISTNAME=		bluetooth-tools-20081122
