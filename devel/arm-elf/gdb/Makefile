@@ -1,25 +1,22 @@
-# $OpenBSD: Makefile,v 1.3 2010/10/18 17:47:50 espie Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/22 15:32:33 jasper Exp $
 
 COMMENT=	gdb for arm-elf cross-development
 
-DISTNAME=	gdb-6.4
+DISTNAME=	gdb-7.1
 
 HOMEPAGE=	http://www.gnu.org/software/gdb/
 
-# GPL
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-
-WANTLIB=	c m ncurses
+WANTLIB=	c expat m ncurses z
 
 MASTER_SITES=	${MASTER_SITE_GNU:=gdb/}
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
 
 CFLAGS+=	-Dunix
+
+CONFIGURE_ARGS+=	--enable-multilib \
+			--enable-thumb \
+			--enable-interwork
 
 REGRESS_DEPENDS=::devel/dejagnu
 

@@ -1,19 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2007/09/16 02:52:57 merdely Exp $
+# $OpenBSD: Makefile,v 1.4 2010/10/22 15:32:33 jasper Exp $
 
 COMMENT=	newlib for arm-elf cross-development
 
-DISTNAME=	newlib-1.14.0
+DISTNAME=	newlib-1.18.0
 
 HOMEPAGE=	http://sourceware.org/newlib/
 
-# multiple copyrights, but basically bsd
-# see: /usr/local/share/doc/newlib
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-
 MASTER_SITES=	ftp://sources.redhat.com/pub/newlib/
+
+EXTRACT_SUFX=	.tar.gz
 
 BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	::devel/arm-elf/gcc
@@ -21,6 +16,7 @@ RUN_DEPENDS=	::devel/arm-elf/gcc
 # cope with user settings in /etc/mk.conf
 MAKE_FLAGS=	CFLAGS="-I${LOCALBASE}/include"
 USE_GMAKE=	Yes
+USE_GROFF=	No
 CONFIGURE_ARGS+=--enable-interwork \
 		--enable-multilib
 
