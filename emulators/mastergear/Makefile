@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2007/09/16 00:45:13 merdely Exp $
+# $OpenBSD: Makefile,v 1.11 2010/10/24 21:17:48 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=	i386
 
 COMMENT=	emulates the Sega GameGear and MasterSystem
 
-PKGNAME=	mastergear-1.4p0
+PKGNAME=	mastergear-1.4
+REVISION=	0
 DISTNAME=	MG14-Linux-80x86-bin
 
 CATEGORIES=	emulators games
@@ -20,7 +21,6 @@ EXTRACT_SUFX=	.tar.Z
 
 RUN_DEPENDS=	::emulators/fedora/base
 
-USE_X11=	Yes
 NO_BUILD=	Yes
 NO_REGRESS=	Yes
 WRKDIST=	${WRKDIR}

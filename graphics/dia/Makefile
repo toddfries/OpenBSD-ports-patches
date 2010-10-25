@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.70 2010/10/18 21:50:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.72 2010/10/25 08:03:52 jasper Exp $
 
 COMMENT=	technical diagrams drawing tool
 
 GNOME_PROJECT=	dia
 GNOME_VERSION=	0.97.1
-REVISION=	4
+REVISION=	5
 
 CATEGORIES=	graphics
 
@@ -60,6 +60,7 @@ WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM bonobo-2 bonobo-activation
 WANTLIB += bonoboui-2 crypto dbus-1 dbus-glib-1 gconf-2 gailutil
 WANTLIB += gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 popt ssl
 WANTLIB += util canberra gcrypt gpg-error ltdl ogg vorbis vorbisfile
+WANTLIB += ${MODPY_WANTLIB}
 MODGNOME_HELP_FILES= Yes
 .else
 # help is only installed and usable with yelp

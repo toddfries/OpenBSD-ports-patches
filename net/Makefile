@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.655 2010/10/16 08:59:28 landry Exp $
+# $OpenBSD: Makefile,v 1.659 2010/10/25 12:45:00 pea Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -29,6 +29,7 @@
      SUBDIR += axel
      SUBDIR += axyftp
      SUBDIR += balance
+     SUBDIR += bindgraph
      SUBDIR += bing
      SUBDIR += bird
      SUBDIR += bird,v6
@@ -246,6 +247,9 @@
      SUBDIR += openvpn_bsdauth
      SUBDIR += osrtspproxy
      SUBDIR += p5-Bot-BasicBot
+     SUBDIR += p5-Business-PayPal
+     SUBDIR += p5-Business-PayPal-API
+     SUBDIR += p5-Business-PayPal-IPN
      SUBDIR += p5-Chatbot-Eliza
      SUBDIR += p5-DNS-ZoneParse
      SUBDIR += p5-Danga-Socket
@@ -517,6 +521,7 @@
      SUBDIR += twirssi
      SUBDIR += twitux
      SUBDIR += ucspi-unix
+     SUBDIR += udns
      SUBDIR += udptunnel
      SUBDIR += unbound
      SUBDIR += unison
@@ -526,6 +531,7 @@
      SUBDIR += valknut
      SUBDIR += vicq
      SUBDIR += vncsnapshot
+     SUBDIR += vnstat
      SUBDIR += vsftpd
      SUBDIR += walker
      SUBDIR += weex

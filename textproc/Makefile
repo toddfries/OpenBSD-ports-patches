@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.306 2010/10/19 21:26:26 espie Exp $
+# $OpenBSD: Makefile,v 1.309 2010/10/23 17:33:09 jakemsr Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -65,6 +65,7 @@
      SUBDIR += lgrind
      SUBDIR += libebml
      SUBDIR += libical
+     SUBDIR += liblrdf
      SUBDIR += libnxml
      SUBDIR += libtextcat
      SUBDIR += libwpd
@@ -243,6 +244,7 @@
      SUBDIR += py-Chart
      SUBDIR += py-ElementTree
      SUBDIR += py-HappyDoc
+     SUBDIR += py-MarkupSafe
      SUBDIR += py-cElementTree
      SUBDIR += py-chardet
      SUBDIR += py-cssutils
@@ -302,6 +304,7 @@
      SUBDIR += unrtf
      SUBDIR += urlview
      SUBDIR += validate
+     SUBDIR += vgrind
      SUBDIR += wdg-sgml-lib
      SUBDIR += wdiff
      SUBDIR += xerces

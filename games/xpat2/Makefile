@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2010/10/18 18:00:19 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2010/10/24 21:19:03 ajacoutot Exp $
 
 COMMENT=	X11 solitaire with 14 variations
 
 DISTNAME=	xpat2-1.07
-PKGNAME=	${DISTNAME}p1
+REVISION=	2
 CATEGORIES=	games
 
 MASTER_SITES=	http://www.ibiblio.org/pub/linux/games/solitaires/
@@ -18,7 +18,6 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xau Xdmcp Xaw Xext Xmu Xpm Xt c pthread-stubs xcb
 
-USE_X11=	Yes
 USE_GROFF =	Yes
 
 WRKSRC=		${WRKDIST}/src

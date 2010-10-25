@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/02/01 17:00:14 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/25 09:44:53 sebastia Exp $
 
      SUBDIR =
      SUBDIR += addresses
@@ -6,10 +6,13 @@
      SUBDIR += base
      SUBDIR += examples
      SUBDIR += gnumail
+     SUBDIR += gorm
      SUBDIR += gui
      SUBDIR += gworkspace
      SUBDIR += imageviewer
      SUBDIR += make
      SUBDIR += pantomime
+     SUBDIR += simpleagenda
+     SUBDIR += terminal
 
 .include <bsd.port.subdir.mk>

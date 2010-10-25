@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2010/09/19 13:03:33 kili Exp $
+# $OpenBSD: Makefile,v 1.31 2010/10/24 21:21:00 ajacoutot Exp $
 
 COMMENT=	3D creation software
 
@@ -32,9 +32,9 @@ LIB_DEPENDS=	png::graphics/png \
 		${MODPY_LIB_DEPENDS}
 
 WANTLIB=	GL GLU X11 Xi c m pthread stdc++ util z
+WANTLIB += ${MODPY_WANTLIB}
 
 SEPARATE_BUILD=	simple
-USE_X11=	Yes
 NO_REGRESS=	Yes
 
 CFLAGS+=	-fPIC -funsigned-char -fno-strict-aliasing

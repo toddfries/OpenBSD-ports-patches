@@ -1,0 +1,24 @@
+$OpenBSD: patch-plugins_node_d_openbsd_cpu_in,v 1.1 2010/10/23 15:52:23 sthen Exp $
+--- plugins/node.d.openbsd/cpu.in.orig	Fri Oct 15 00:05:17 2010
++++ plugins/node.d.openbsd/cpu.in	Fri Oct 15 00:05:46 2010
+@@ -35,12 +35,7 @@ fi
+ 
+ if [ "$1" = "config" ]; then
+ 
+-	OSV=`/sbin/sysctl -n kern.osrelease | cut -f1 -d.`
+-	if [ "$OSV" = "4" ]; then
+-		STATUNITS=`/sbin/sysctl -n kern.clockrate | cut -f16 -d' '`
+-	elif [ "$OSV" -ge "5" ]; then
+-		STATUNITS=`/sbin/sysctl -n kern.clockrate | cut -f13 -d' '`
+-	fi
++	STATUNITS=`/sbin/sysctl -n kern.clockrate | cut -f15 -d' '`
+ 	PERCENT=`/sbin/sysctl -n hw.ncpu | awk '{print ($1)*100}'`
+ 	NCPU=`/sbin/sysctl -n hw.ncpu`
+ 	if [ "$scaleto100" = yes ]; then
+@@ -104,5 +99,5 @@ if [ "$1" = "config" ]; then
+ 	exit 0
+ fi
+ 
+-/sbin/sysctl kern.cp_time | awk '{ print "user.value " $2 "\nnice.value " $3 "\nsystem.value " $4 "\ninterrupt.value " $5 "\nidle.value " $6 }'
++/sbin/sysctl -n kern.cp_time | awk -F , '{ print "user.value " $1 "\nnice.value " $2 "\nsystem.value " $3 "\ninterrupt.value " $4 "\nidle.value " $5 }'
+ 

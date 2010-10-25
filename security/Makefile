@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.241 2010/09/22 05:18:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.244 2010/10/24 14:40:13 steven Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -25,7 +25,6 @@
      SUBDIR += clusterssh
      SUBDIR += cops
      SUBDIR += corkscrew
-     SUBDIR += crack
      SUBDIR += cracklib
      SUBDIR += cryptcat
      SUBDIR += cryptokit
@@ -61,6 +60,7 @@
      SUBDIR += jailkit
      SUBDIR += john
      SUBDIR += kedpm
+     SUBDIR += keepassx
      SUBDIR += keychain
      SUBDIR += klaxon
      SUBDIR += l0phtcrack
@@ -70,6 +70,7 @@
      SUBDIR += libgcrypt
      SUBDIR += libgpg-error
      SUBDIR += libgringotts
+     SUBDIR += libgsasl
      SUBDIR += libident
      SUBDIR += libksba
      SUBDIR += libmcrypt

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.16 2010/10/19 07:43:00 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2010/10/25 18:11:26 sthen Exp $
 
 ONLY_FOR_ARCHS= ${APM_ARCHS}
 
 COMMENT=	light-weight system monitor
 
 DISTNAME=	conky-1.7.2
-PKGNAME=	${DISTNAME}p0
+REVISION=	1
 
 CATEGORIES=	sysutils
 HOMEPAGE=	http://conky.sourceforge.net/
@@ -43,7 +43,6 @@ CONFIGURE_ARGS+=--disable-double-buffer \
 .else
 WANTLIB+=	X11 Xau Xdamage Xdmcp Xext Xfixes Xft Xrender \
 		expat fontconfig freetype pthread-stubs xcb
-USE_X11=	Yes
 .endif
 
 CONFIGURE_STYLE=gnu

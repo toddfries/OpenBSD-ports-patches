@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2010/07/18 10:30:41 steven Exp $
+# $OpenBSD: Makefile,v 1.16 2010/10/23 17:01:26 steven Exp $
 
 COMMENT=	order a sparse matrix prior to Cholesky factorization
 
-VERSION=	2.2.0
+VERSION=	2.2.1
 DISTNAME=	AMD-${VERSION}
 PKGNAME=	amd-${VERSION}
-REVISION=	2
 SHARED_LIBS=	amd	0.0 \
 		amdf77	0.0
 
@@ -25,7 +24,7 @@ DISTFILES=	${DISTNAME}${EXTRACT_SUFX} UFconfig-3.0.0.tar.gz:0
 WRKDIST=	${WRKDIR}/AMD
 WRKSRC=		${WRKDIST}/Source
 MODULES=	fortran
-MODFORTRAN_WANTG77= Yes
+MODFORTRAN_COMPILER = g77
 BUILD_DEPENDS=	${MODFORTRAN_BUILD_DEPENDS}
 
 

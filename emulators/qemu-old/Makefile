@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2010/10/18 18:00:17 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2010/10/24 21:17:48 ajacoutot Exp $
 
 # no success building on other archs yet
 ONLY_FOR_ARCHS=		amd64 i386 powerpc
@@ -47,10 +47,9 @@ FLAVOR?=
 CONFIGURE_ARGS+=	--disable-gfx-check \
 			--disable-sdl
 .else
-LIB_DEPENDS=    	SDL::devel/sdl
+LIB_DEPENDS=    	::devel/sdl
 
-USE_X11=		Yes
-WANTLIB+=		pthread
+WANTLIB+=		pthread SDL
 .endif
 
 pre-configure:

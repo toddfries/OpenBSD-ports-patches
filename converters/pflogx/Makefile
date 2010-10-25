@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2010/09/12 16:49:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2010/10/24 21:06:36 ajacoutot Exp $
 
 COMMENT=		convert pf logs to XML
 
 DISTNAME=		pflogx_086
-PKGNAME=		pflogx-0.86p2
+PKGNAME=		pflogx-0.86
+REVISION=		2
 CATEGORIES=		converters
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
@@ -15,6 +16,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
 WANTLIB= 		c expat m pcap stdc++
 
 MASTER_SITES=		${HOMEPAGE}/releases/ \
@@ -27,7 +29,6 @@ MAKE_FLAGS=		WITH_EXPAT=1 \
 NO_REGRESS=		Yes
 
 WRKDIST=		${WRKDIR}/pflogx/
-USE_X11=		Yes
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/src/pflogx ${PREFIX}/bin/

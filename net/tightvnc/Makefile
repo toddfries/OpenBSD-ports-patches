@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2010/10/18 18:36:59 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2010/10/24 21:30:02 ajacoutot Exp $
 
 COMMENT-main=	cross-platform remote desktop access
 COMMENT-viewer=	client for cross-platform remote desktop access
@@ -7,7 +7,7 @@ VERSION=	1.3.10
 PKGNAME-main=	tightvnc-${VERSION}
 PKGNAME-viewer=	tightvnc-viewer-${VERSION}
 REVISION-main=	0
-REVISION-viewer=0
+REVISION-viewer=1
 DISTNAME=	tightvnc-${VERSION}_unixsrc
 CATEGORIES=	net
 
@@ -23,7 +23,6 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=vnc-tight/}
 
-USE_X11=	Yes
 
 WRKDIST=	${WRKDIR}/vnc_unixsrc
 

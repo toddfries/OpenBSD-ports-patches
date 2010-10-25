@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2007/09/16 00:45:13 merdely Exp $
+# $OpenBSD: Makefile,v 1.12 2010/10/24 21:17:49 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=	i386
 
 COMMENT=	emulates the Nintendo Gameboy
 
-PKGNAME=	vgb-2.1p0
+PKGNAME=	vgb-2.1
+REVISION=	0
 DISTNAME=	VGB21-Linux-80x86-bin
 
 CATEGORIES=	emulators games
@@ -20,7 +21,6 @@ EXTRACT_SUFX=	.tar.Z
 
 RUN_DEPENDS=	::emulators/fedora/base
 
-USE_X11=	Yes
 NO_BUILD=	Yes
 NO_REGRESS=	Yes
 WRKDIST=	${WRKDIR}

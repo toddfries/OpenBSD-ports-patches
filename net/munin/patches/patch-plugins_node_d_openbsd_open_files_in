@@ -1,0 +1,18 @@
+$OpenBSD: patch-plugins_node_d_openbsd_open_files_in,v 1.1 2010/10/23 15:52:23 sthen Exp $
+--- plugins/node.d.openbsd/open_files.in.orig	Fri Oct 15 00:02:09 2010
++++ plugins/node.d.openbsd/open_files.in	Fri Oct 15 00:02:26 2010
+@@ -17,7 +17,7 @@
+ 
+ if [ "$1" = "autoconf" ]; then
+     if [ -x /sbin/sysctl ]; then
+-        /sbin/sysctl kern.openfiles > /dev/null
++        /sbin/sysctl kern.nfiles > /dev/null
+     	if [ $? = "0" ]; then
+ 	    	echo yes
+     		exit 0
+@@ -50,4 +50,4 @@ fi
+ echo -n 'max.value '
+ /sbin/sysctl -n kern.maxfiles
+ echo -n 'used.value '
+-/sbin/sysctl -n kern.openfiles
++/sbin/sysctl -n kern.nfiles

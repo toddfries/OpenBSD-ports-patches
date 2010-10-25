@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.213 2010/10/06 17:06:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.215 2010/10/25 12:13:55 edd Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -31,6 +31,7 @@
      SUBDIR += chocolate-doom
      SUBDIR += circuit
      SUBDIR += clines
+     SUBDIR += clonekeen
      SUBDIR += cmatrix
      SUBDIR += connect4
      SUBDIR += corewars
@@ -53,6 +54,7 @@
      SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
+     SUBDIR += foobillard
      SUBDIR += forcedattack
      SUBDIR += fotaq
      SUBDIR += freeciv

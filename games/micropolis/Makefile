@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.11 2009/12/22 16:28:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2010/10/24 21:19:02 ajacoutot Exp $
 
 COMMENT=	city-building simulation
 
 DISTNAME=	micropolis-20080211
-PKGNAME=	${DISTNAME}p2
+REVISION=	3
 WRKDIST=	${WRKDIR}/micropolis
 
 CATEGORIES=	games
 
 HOMEPAGE=	http://www.donhopkins.com/home/micropolis/
 MASTER_SITES=	http://freedaemon.com/~deanna/
-
-MAINTAINER=	Deanna Phillips <deanna@openbsd.org>
 
 # GPLv3
 # beware of SimCity, tm of Electronic Arts
@@ -21,7 +19,6 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 NO_REGRESS=	Yes
-USE_X11=	Yes
 RUN_DEPENDS=	::devel/desktop-file-utils
 WANTLIB=	X11 Xext Xpm c m pthread pthread-stubs xcb
 LIB_DEPENDS=	SDL::devel/sdl \

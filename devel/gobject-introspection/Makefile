@@ -1,20 +1,19 @@
-# $OpenBSD: Makefile,v 1.16 2010/10/18 17:47:53 espie Exp $
+# $OpenBSD: Makefile,v 1.19 2010/10/25 11:39:59 steven Exp $
 
 # Look at cairo-related regression failure.
 # and cairo/cairo.h: No such file or directory during build.
+#
+# Look at re-entering tests/.
 
 COMMENT=		GObject Introspection
 
-GNOME_VERSION=		0.6.14
+GNOME_VERSION=		0.9.12
 GNOME_PROJECT=		gobject-introspection
-
-REVISION=		3
-
+REVISION=		0
 CATEGORIES=		devel
 
-SHARED_LIBS +=  girepository-1.0     0.0      # .0.0
-SHARED_LIBS +=  girepository-everything-1.0 0.0      # .1.0
-SHARED_LIBS +=  girepository-gimarshallingtests-1.0 0.0      # .1.0
+SHARED_LIBS +=  girepository-1.0     1.0      # 1.0
+#SHARED_LIBS +=	everything-1.0      0.0          # .0.0
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 			Antoine Jacoutot <ajacoutot@openbsd.org>
@@ -42,8 +41,9 @@ LIB_DEPENDS=		::devel/glib2 \
 			::graphics/cairo
 BUILD_DEPENDS=		::devel/bison
 
+# weird libtool use by some python script
 USE_LIBTOOL=		gnu
-USE_GROFF =	Yes
+USE_GROFF =		Yes
 
 YACC=			bison
 
@@ -60,10 +60,10 @@ SUBST_VARS+=		MODPY_SITEPKG LIBTOOL
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Makefile.introspection \
 		${WRKSRC}/gir/Makefile.in \
+		${WRKSRC}/giscanner/utils.py \
 		${WRKSRC}/tests/scanner/Makefile.in \
 		${WRKSRC}/tests/offsets/Makefile.in \
-		${WRKSRC}/tools/g-ir-scanner.in \
-		${WRKSRC}/gir/Everything-1.0-expected.gir
+		${WRKSRC}/tools/g-ir-scanner.in
 	perl -pi -e "s,'cc','${CC}'," ${WRKSRC}/giscanner/sourcescanner.py
 
 .include <bsd.port.mk>

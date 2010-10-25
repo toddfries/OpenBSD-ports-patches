@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.39 2010/08/28 09:42:45 sthen Exp $
+# $OpenBSD: Makefile,v 1.41 2010/10/24 21:30:01 ajacoutot Exp $
 
 COMMENT-main=	host and service monitor
 COMMENT-web=	cgis and webpages for nagios
@@ -6,6 +6,7 @@ COMMENT-web=	cgis and webpages for nagios
 V=		3.2.1
 DISTNAME=	nagios-${V}
 PKGNAME-main=	nagios-${V}
+REVISION-main=	0
 PKGNAME-web=	nagios-web-${V}
 CATEGORIES=	net
 
@@ -44,7 +45,6 @@ CONFIGURE_ARGS+=--datadir=/var/www/nagios \
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib"
 
-USE_X11=	Yes
 
 FLAVORS=	chroot
 FLAVOR?=

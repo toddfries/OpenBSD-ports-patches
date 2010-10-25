@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2010/10/18 18:13:14 espie Exp $
+# $OpenBSD: Makefile,v 1.23 2010/10/24 21:21:01 ajacoutot Exp $
 
 COMMENT=	play mpeg movies on X11
 
 DISTNAME=	mpeg_play-2.4
-PKGNAME=	${DISTNAME}p1
+REVISION=	2
 CATEGORIES=	graphics
 
 MASTER_SITES=	http://bmrc.berkeley.edu/ftp/pub/multimedia/mpeg/play/
@@ -25,9 +25,5 @@ pre-patch:
 	cp ${WRKSRC}/mpeg_play.1 ${WRKSRC}/mpeg_play.man
 
 NO_REGRESS=	Yes
-USE_X11=	Yes
-
-post-install:
-	${INSTALL_MAN} ${WRKSRC}/mpeg_play.1 ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

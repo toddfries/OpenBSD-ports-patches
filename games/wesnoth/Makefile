@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2010/10/22 18:35:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.37 2010/10/24 21:19:03 ajacoutot Exp $
 
 COMMENT=	fantasy turn-based strategy game
 
@@ -53,7 +53,6 @@ AUTOCONF_VERSION=	2.60
 CONFIGURE_ENV+=	CPPFLAGS=-I${LOCALBASE}/include \
 		LDFLAGS=-L${LOCALBASE}/lib
 
-# XXX: Provide the tools
 CONFIGURE_ARGS+=--enable-server \
 		--enable-campaign-server \
 		--enable-editor \
@@ -64,7 +63,6 @@ CONFIGURE_ARGS+=--enable-server \
 
 MAKE_FLAGS=	LIBINTL="-L${LOCALBASE}/lib -lintl -liconv"
 
-USE_X11=	Yes
 USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 

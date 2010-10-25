@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.34 2010/10/18 21:25:07 espie Exp $
+# $OpenBSD: Makefile,v 1.38 2010/10/25 10:11:22 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	video stream processing tools
 
 DISTNAME=	transcode-1.1.5
-REVISION=	4
+REVISION=	5
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_BERLIOS:=tcforge/}
 EXTRACT_SUFX=	.tar.bz2
@@ -17,9 +17,13 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=	ICE SM X11 Xau Xaw Xdmcp Xext Xpm Xrandr Xrender Xt \
-		Xv bz2 c faad freetype gsm m orc-0.4 pthread-stubs pthread \
-		schroedinger-1.0 sndio speex usbhid xcb z
+
+WANTLIB += ICE SDL SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt
+WANTLIB += Xv bz2 a52 avcodec avformat avutil c dv dvdread faac faad
+WANTLIB += freetype gsm jpeg m mp3lame mpeg2 mpeg2convert ogg orc-0.4
+WANTLIB += postproc pthread-stubs pthread schroedinger-1.0 sndio
+WANTLIB += speex theora usbhid vorbis vorbisenc vorbisfile x264
+WANTLIB += xcb xml2 xvidcore z
 
 FLAVORS=	lzo mjpegtools quicktime altivec
 FLAVOR?=
@@ -31,32 +35,33 @@ PKG_ARGS+=	-Di386=0
 .endif
 
 MODULES=	converters/libiconv
-LIB_DEPENDS=	SDL.>=2::devel/sdl \
-		a52::audio/liba52 \
-		avcodec.>=13.1,avformat.>=12,avutil.>=6,postproc.>=6:ffmpeg->=20080620p10:graphics/ffmpeg \
-		dv.>=4::multimedia/libdv \
-		dvdread.>=3::devel/libdvdread \
-		jpeg.>=62::graphics/jpeg \
-		mp3lame::audio/lame \
-		faac::audio/faac \
-		mpeg2,mpeg2convert::graphics/libmpeg2 \
-		ogg.>=5::audio/libogg \
-		theora.>=1::multimedia/libtheora \
-		vorbis.>=3,vorbisenc.>=2,vorbisfile.>=4::audio/libvorbis \
-		xml2.>=8::textproc/libxml \
-		xvidcore::multimedia/xvidcore \
-		x264::multimedia/x264
-RUN_DEPENDS=	::graphics/ffmpeg \
-		::audio/sox \
+
+LIB_DEPENDS=	::audio/faac \
+		::audio/lame \
+		::audio/liba52 \
+		::audio/libogg \
+		::audio/libvorbis \
+		::devel/libdvdread \
+		::devel/sdl \
+		:ffmpeg->=20080620p10:graphics/ffmpeg \
+		::graphics/jpeg \
+		::graphics/libmpeg2 \
+		::multimedia/libdv \
+		::multimedia/libtheora \
+		::multimedia/x264 \
+		::multimedia/xvidcore \
+		::textproc/libxml
+
+RUN_DEPENDS=	::audio/sox \
 		::audio/vorbis-tools \
 		::audio/toolame \
+		::graphics/ffmpeg \
 		::x11/mplayer
 
 BUILD_DEPENDS+=	::devel/libtool
 
 SEPARATE_BUILD=	concurrent
 
-USE_X11=	Yes
 USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 LIBTOOL_FLAGS+=	--tag=disable-static

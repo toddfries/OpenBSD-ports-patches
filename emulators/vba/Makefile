@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/10/11 08:13:01 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2010/10/24 21:17:49 ajacoutot Exp $
 
 COMMENT=		Gameboy Advance emulator
 
@@ -22,7 +22,8 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		gdkmm-2.4 gio-2.0 giomm-2.4 glade-2.0 glib-2.0 glibmm-2.4 \
 		gmodule-2.0 gobject-2.0 gtk-x11-2.0 gtkmm-2.4 \
 		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4 \
-		pixman-1 pthread pthread-stubs sigc-2.0 stdc++ xml2 xcb z
+		pixman-1 pthread pthread-stubs sigc-2.0 stdc++ xml2 xcb z \
+		glademm-2.4 SDL cairo png
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=vba/}
 
@@ -33,13 +34,12 @@ MODGCC3_LANGS=          c c++
 MODULES+=		devel/gettext
 
 USE_LIBTOOL=		Yes
-USE_X11=		Yes
 USE_GMAKE=		Yes
 
-LIB_DEPENDS=		glademm-2.4::devel/libglademm \
-			SDL::devel/sdl \
-			cairo::graphics/cairo \
-			png::graphics/png
+LIB_DEPENDS=		::devel/libglademm \
+			::devel/sdl \
+			::graphics/cairo \
+			::graphics/png
 
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.59

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.25 2010/10/18 18:00:16 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2010/10/24 21:17:48 ajacoutot Exp $
 
 COMMENT=		ARM/M88k/MIPS/PowerPC/SuperH machines emulator
 
 DISTNAME=		gxemul-0.4.7.1
-PKGNAME=		${DISTNAME}p0
+REVISION=		0
 CATEGORIES=		emulators
 HOMEPAGE=		http://gavare.se/gxemul/
 
@@ -28,7 +28,6 @@ FLAVOR?=
 .if ${FLAVOR:L:Mno_x11}
 CONFIGURE_ARGS=		--disable-x
 .else
-USE_X11=		Yes
 WANTLIB+=		X11 pthread-stubs xcb
 .endif
 

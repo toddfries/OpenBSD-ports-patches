@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2010/10/18 20:52:07 espie Exp $
+# $OpenBSD: Makefile,v 1.38 2010/10/24 21:25:51 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -17,9 +17,9 @@ SHARED_LIBS=	csirocsa	2.0	\
 PKGNAME-main=	${DISTNAME}
 PKGNAME-c++ =	plplot-c++-${VERSION}
 PKGNAME-f77=	plplot-f77-${VERSION}
-REVISION-main=	3
-REVISION-c++ =	3
-REVISION-f77=	6
+REVISION-main=	4
+REVISION-c++ =	4
+REVISION-f77=	7
 
 CATEGORIES=	math graphics
 
@@ -38,9 +38,8 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=plplot/}
 MODULES=	devel/gettext \
 		fortran
 
-MODFORTRAN_WANTG77 = Yes
+MODFORTRAN_COMPILER = g77
 
-USE_X11=	Yes
 USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 BUILD_DEPENDS=	::print/ghostscript/gnu-fonts \
@@ -72,11 +71,12 @@ FLAVOR?=
 
 MULTI_PACKAGES=	-main -c++ -f77
 
-myWANTLIB=	ICE SM X11 Xau Xdmcp Xext Xrender cairo expat \
-		fontconfig freetype gd glib-2.0 glitz gmodule-2.0 \
-		gobject-2.0 gthread-2.0 jpeg m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1 png pthread-stubs xcb xcb-render \
-		xcb-render-util z
+myWANTLIB=	GL ICE SM X11 Xau Xdamage Xdmcp Xext Xfixes \
+		Xrender Xxf86vm cairo drm expat fontconfig \
+		freetype gd glib-2.0 gmodule-2.0 gobject-2.0 \
+		gthread-2.0 jpeg m pango-1.0 pangocairo-1.0 \
+		pangoft2-1.0 pixman-1 png pthread-stubs xcb \
+		xcb-render xcb-shm z
 
 WANTLIB-main=	${myWANTLIB} c pthread
 WANTLIB-c++ =	${myWANTLIB} csirocsa plplotd stdc++
@@ -86,7 +86,6 @@ myLIB_DEPENDS=	::devel/glib2 \
 		::devel/pango \
 		::graphics/cairo \
 		::graphics/gd \
-		::graphics/glitz \
 		${MODGETTEXT_LIB_DEPENDS}
 
 LIB_DEPENDS-main=	${myLIB_DEPENDS}

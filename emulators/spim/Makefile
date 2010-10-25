@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.18 2010/10/18 18:00:17 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2010/10/24 21:17:49 ajacoutot Exp $
 
 COMMENT=	MIPS R2000/R3000 simulator
 
 DISTNAME=	spim-7.3
-PKGNAME=	${DISTNAME}p2
+REVISION=	2
 CATEGORIES=	emulators
 
 HOMEPAGE=	http://www.cs.wisc.edu/~larus/spim.html
@@ -27,7 +27,6 @@ XMKMF=		xmkmf
 
 FAKE_FLAGS=	PREFIX="${PREFIX}"
 
-USE_X11=	Yes
 USE_GROFF =	Yes
 
 do-build:

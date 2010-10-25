@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2010/10/18 18:00:18 espie Exp $
+# $OpenBSD: Makefile,v 1.34 2010/10/24 21:19:01 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -27,6 +27,7 @@ WANTLIB += xcb-render-util xml2 z atk-1.0 cairo croco-0.6 gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 gtk-x11-2.0 pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 png rsvg-2 gnet-2.0 sqlite3
 WANTLIB += gstreamer-0.10
+WANTLIB += ${MODPY_WANTLIB}
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gcompris/}
 
@@ -52,7 +53,6 @@ RUN_DEPENDS=	::games/gnuchess \
 		::multimedia/gstreamer-0.10/plugins-base \
 		:yelp-*:x11/gnome/yelp
 
-USE_X11=	Yes
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 USE_GROFF =	Yes

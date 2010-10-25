@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.37 2010/10/18 20:52:05 espie Exp $
+# $OpenBSD: Makefile,v 1.40 2010/10/24 21:25:50 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	clone of S, a powerful math/statistics/graphics language
 DISTNAME=	R-2.8.1
-REVISION=	3
+REVISION=	4
 SHARED_LIBS=	Rlapack 29.0 \
 		Rblas	29.0
 
@@ -17,9 +17,11 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB= 	ICE SM X11 Xau Xdmcp Xext Xmu Xrender Xss Xt c expat \
-		fontconfig freetype m ncurses pixman-1 pthread-stubs \
-		readline xcb xcb-render xcb-render-util z \
+WANTLIB= 	GL ICE SM X11 Xau Xdamage Xdmcp Xext Xfixes Xmu Xrender Xss Xt \
+		Xxf86vm bz2 c cairo drm expat fontconfig freetype glib-2.0 \
+		gmodule-2.0 gobject-2.0 gthread-2.0 jpeg m ncurses pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png  pthread-stubs \
+		readline tiff xcb xcb-render xcb-shm z \
 		${MODFORTRAN_WANTLIB}
 
 MASTER_SITES=	http://cran.r-project.org/src/base/R-2/ \
@@ -27,23 +29,20 @@ MASTER_SITES=	http://cran.r-project.org/src/base/R-2/ \
 		http://cran.us.r-project.org/src/base/R-2/ \
 		http://cran.dk.r-project.org/src/base/R-2/
 
-USE_X11=	Yes
-USE_GROFF =	Yes
+USE_GROFF=	Yes
 MODULES=	fortran devel/gettext x11/tk
-MODFORTRAN_WANTG77=Yes
+MODFORTRAN_COMPILER = g77
 
 BUILD_DEPENDS=	${MODFORTRAN_BUILD_DEPENDS}
 LIB_DEPENDS=	${MODFORTRAN_LIB_DEPENDS} \
 		${MODTK_LIB_DEPENDS} \
-		bz2::archivers/bzip2 \
-		cairo::graphics/cairo \
-		jpeg.>=60::graphics/jpeg \
-		glitz::graphics/glitz \
-		glib-2.0,gmodule-2.0,gobject-2.0,gthread-2.0::devel/glib2 \
-		pango-1.0,pangocairo-1.0,pangoft2-1.0::devel/pango \
-		pcre:pcre->=4:devel/pcre \
-		png::graphics/png \
-		tiff::graphics/tiff
+		::archivers/bzip2 \
+		::graphics/cairo \
+		::graphics/jpeg \
+		::devel/glib2 \
+		::devel/pango \
+		::graphics/png \
+		::graphics/tiff
 
 CONFIGURE_STYLE=gnu
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/tools
@@ -66,7 +65,7 @@ FAKE_FLAGS=	PREFIX=${PREFIX} \
 		LIBRlapack_VERSION=${LIBRlapack_VERSION}
 
 post-install:
-	perl -i -pe 's:^R_HOME_DIR=.*:R_HOME_DIR=${TRUEPREFIX}/lib/R:' \
+	@perl -i -pe 's:^R_HOME_DIR=.*:R_HOME_DIR=${TRUEPREFIX}/lib/R:' \
 		${PREFIX}/bin/R
 
 .include <bsd.port.mk>

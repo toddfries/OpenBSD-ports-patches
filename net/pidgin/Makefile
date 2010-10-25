@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.73 2010/10/18 18:36:56 espie Exp $
+# $OpenBSD: Makefile,v 1.76 2010/10/24 21:30:01 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,21 +6,15 @@ COMMENT-main=	multi-protocol instant messaging client
 COMMENT-finch=	multi-protocol instant messaging client, console client
 COMMENT-libpurple= multi-protocol instant messaging library
 
-VERSION=	2.7.3
+VERSION=	2.7.4
 DISTNAME=	pidgin-${VERSION}
 PKGNAME-main=	pidgin-${VERSION}
 PKGNAME-finch=	finch-${VERSION}
 PKGNAME-libpurple= libpurple-${VERSION}
-
 .for i in -finch -libpurple
 FULLPKGNAME$i= ${PKGNAME$i}${FLAVOR_EXT:S/-gtkspell//}
 FULLPKGPATH$i= ${PKGPATH},$i${FLAVOR_EXT:S/-gtkspell//:S/-/,/g}
 .endfor
-
-REVISION-main=	2
-REVISION-finch=	2
-REVISION-libpurple= 1
-
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pidgin/}
 
@@ -54,6 +48,7 @@ WANTLIB-main=	X11 Xau Xdmcp ICE SM Xcomposite Xcursor Xdamage Xext \
 WANTLIB-libpurple= crypto ssl ${WANTLIB}
 
 WANTLIB-finch=	X11 Xau Xdmcp ncurses panel pthread-stubs xcb ${WANTLIB}
+WANTLIB-finch += ${MODPY_WANTLIB}
 
 MODULES=	devel/gettext \
 		textproc/intltool \
@@ -79,13 +74,12 @@ MODGCONF2_SCHEMAS_DIR=	pidgin
 MODGCONF2_LIBDEP=	No
 
 SEPARATE_BUILD=	simple
-USE_X11=	Yes
 USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS+=	--tag=disable-static
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
+USE_GROFF=	Yes
 CONFIGURE_STYLE= autoconf
-# Should be 2.65
+# Should be 2.67
 AUTOCONF_VERSION= 2.64
 CONFIGURE_ARGS+= --disable-avahi \
 		 --disable-cap \
