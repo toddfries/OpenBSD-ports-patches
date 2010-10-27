@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.432 2010/10/23 10:40:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.434 2010/10/26 21:43:50 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -69,6 +69,7 @@
      SUBDIR += freefarsi-ttf
      SUBDIR += freefont-ttf
      SUBDIR += freefonts
+     SUBDIR += freerdp
      SUBDIR += fsv
      SUBDIR += fvwm2
      SUBDIR += fvwm2,i18n
@@ -111,6 +112,7 @@
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-X11
+     SUBDIR += hs-X11-xft
      SUBDIR += hs-gtk
      SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme

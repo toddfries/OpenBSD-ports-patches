@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.7 2010/10/23 14:10:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2010/10/27 11:06:06 ajacoutot Exp $
+
+SHARED_ONLY=	Yes
 
 COMMENT=	sytem configuration GUI for desktops
 
 GNOME_PROJECT=	gnome-system-tools
 GNOME_VERSION=	2.32.0
 
-REVISION=	1
+REVISION=	3
 
 CATEGORIES=	sysutils
 
@@ -32,6 +34,8 @@ MODULES=	devel/gettext \
 LIB_DEPENDS=	::devel/liboobs \
 		::x11/polkit-gnome \
 		::x11/gnome/nautilus
+
+RUN_DEPENDS=	::devel/dconf
 
 DESKTOP_FILES=	Yes
 

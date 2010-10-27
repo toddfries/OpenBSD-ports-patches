@@ -1,4 +1,4 @@
-.\"	$OpenBSD: dpb.1,v 1.5 2010/10/24 10:01:57 espie Exp $
+.\"	$OpenBSD: dpb.1,v 1.7 2010/10/27 17:53:24 espie Exp $
 .\"
 .\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 .\"
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: October 24 2010 $
+.Dd $Mdocdate: October 27 2010 $
 .Dt DPB 1
 .Os
 .Sh NAME
@@ -152,7 +152,7 @@ figures out in which order to build things on the fly, and constantly
 displays information relative to what's currently building.
 There's a list currently running, one line per task, with the task name,
 local pid, the build host name, and advancement based on the log file size.
-This is followed by a two-line display:
+This is followed by a three-line display:
 .Bl -tag -width BB=
 .It I=
 number of built packages that can be installed.
@@ -166,6 +166,8 @@ we have a free slot.
 number of packages to build, where dependencies are not yet resolved.
 .It !=
 number of ignored packages.
+.It L=
+list of packages that cannot currently be built because of locks.
 .It E=
 list of packages in error, that cannot currently be built.
 .El
@@ -174,10 +176,6 @@ Note that those numbers refer to pkgpaths known to
 .Nm .
 In general, those numbers will be slightly higher than the actual number
 of packages being built, since several paths may lead to the same package.
-.Pp
-P will stay at zero until the listing job is finished, since
-.Nm
-needs full backwards dependencies to compute it.
 .Pp
 .Nm
 uses some heuristics to try to maximise Q as soon as possible.
@@ -227,6 +225,15 @@ current work, but it can be handy: in an emergency, one can start a second
 .Nm
 to obtain a specific package right now, in parallel with the original
 .Nm .
+.Pp
+Note that
+.Nm
+is very careful not to run two builds from the same pkgpath at the
+same time, even on different machines:
+in some cases, MULTI_PACKAGES and FLAVOR combinations may lead to the
+same package being built simultaneously, and since the package repository
+is shared, this can easily lead to trouble.
+.Pp
 .Sh SHUTTING DOWN GRACEFULLY
 .Nm
 periodically checks for a file named

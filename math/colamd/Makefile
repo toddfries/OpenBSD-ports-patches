@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2010/07/18 10:30:41 steven Exp $
+# $OpenBSD: Makefile,v 1.5 2010/10/27 18:25:08 steven Exp $
 
 COMMENT =	library for column approximate minimum degree ordering
 
 DISTNAME =	COLAMD-2.7.2
 PKGNAME =	${DISTNAME:L}
-REVISION =	0
+REVISION =	2
 SHARED_LIBS +=  colamd	0.0
 CATEGORIES =	math
 
@@ -19,16 +19,16 @@ PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =	${HOMEPAGE}/
-MASTER_SITES0 =	${HOMEPAGE}../UFconfig/
-DISTFILES =	${DISTNAME}${EXTRACT_SUFX} UFconfig-3.0.0.tar.gz:0
 WRKDIST =	${WRKDIR}/COLAMD
 WRKSRC =	${WRKDIST}/Source
 
+BUILD_DEPENDS =	::math/ufconfig
+RUN_DEPENDS =	::math/ufconfig
 
 MAKE_ENV=	SHLIB_MAJOR=${LIBcolamd_VERSION:R} \
 		SHLIB_MINOR=${LIBcolamd_VERSION:E}
 
-CFLAGS +=	-I${WRKDIST}/Include -I${WRKDIR}/UFconfig
+CFLAGS +=	-I${WRKDIST}/Include -I${LOCALBASE}/include
 FAKE_FLAGS =	LIBDIR=${LOCALBASE}/lib DEBUGLIBS=no
 
 MAKE_FILE=	${FILESDIR}/Makefile
@@ -43,5 +43,4 @@ PKG_ARGS+=	-Dno_mips64=1
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/include/colamd
 	${INSTALL_DATA} ${WRKDIST}/Include/colamd.h ${PREFIX}/include/colamd
-	${INSTALL_DATA} ${WRKDIR}/UFconfig/UFconfig.h ${PREFIX}/include/colamd
 .include <bsd.port.mk>

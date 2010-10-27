@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.48 2010/10/24 21:40:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.50 2010/10/27 12:59:29 landry Exp $
 
 COMMENT =	Mozilla web browser
 
@@ -7,16 +7,28 @@ MOZILLA_BRANCH =	1.9.1
 MOZILLA_PROJECT =	firefox35
 MOZILLA_CODENAME =	browser
 
+REVISION =		0
+
 SO_VERSION =	24.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 MOZILLA_LIBS =	browsercomps browserdirprovider imgicon mozjs \
 		xpcom xul nullplugin unixprintplugin
 
-CATEGORIES =	www
-
-FLAVORS =	debug
 FLAVOR ?=
+.if ${FLAVOR:L:Mdebug}
+MOZILLA_LIBS += accessibility appcomps auth autoconfig caps chardet chrome \
+	commandlines composer cookie docshell embedcomponents fileview \
+	gkgfxthebes gklayout gkplugin htmlpars i18n imglib2 intlapp \
+	jar50 jsd mozfind necko nsappshell oji permissions \
+	pipboot pipnss pippki places pref rdf remoteservice \
+	satchel spellchecker storagecomps system-pref tkautocomplete \
+	toolkitcomps txmgr uconv ucvmath universalchardet \
+	unixproxy webbrwsr widget_gtk2 windowds xpconnect xpinstall \
+	zipwriter gfxpsshar gkgfx gtkxtbin jsj thebes xpcom_core
+.endif
+
+CATEGORIES =	www
 
 HOMEPAGE=	http://www.mozilla.org/projects/firefox/
 
@@ -41,11 +53,6 @@ CONFIGURE_ARGS +=	--enable-official-branding
 CONFIGURE_ARGS +=	--enable-system-sqlite
 LIB_DEPENDS +=		:sqlite3->=3.6.16:databases/sqlite3
 WANTLIB +=		sqlite3.>=13.3
-
-.if ${FLAVOR:L:Mdebug}
-CONFIGURE_ARGS+=--enable-debug
-.endif
-
 
 MOZILLA_DATADIRS =	chrome components defaults dictionaries extensions \
 			greprefs icons modules plugins res searchplugins

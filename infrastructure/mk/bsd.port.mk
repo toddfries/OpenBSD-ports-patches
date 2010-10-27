@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1043 2010/10/24 20:41:23 ajacoutot Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1048 2010/10/27 17:38:18 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -311,6 +311,13 @@ TARGETS += ${_s}-${_t}
 .    endif
 .  endfor
 .endfor
+.for _t in post-patch pre-configure configure pre-fake pre-install
+.  for _m in ${MODULES:T:U}
+.    if defined(MOD${_m}_${_t})
+TARGETS += MOD${_m}_${_t}
+.    endif
+.  endfor
+.endfor
 
 .if ${MACHINE_ARCH} != ${ARCH}
 PKG_ARCH ?= ${MACHINE_ARCH},${ARCH}
@@ -366,6 +373,7 @@ LIBTOOL_FLAGS ?=
 
 # where configuration files should go
 SYSCONFDIR ?= /etc
+RCDIR ?= /etc/rc.d
 USE_GMAKE ?= No
 .if ${USE_GMAKE:L} == "yes"
 BUILD_DEPENDS += ::devel/gmake
@@ -509,7 +517,7 @@ BASE_PKGPATH := ${PKGPATH}
 _FLAVOR_EXT2 :=
 BUILD_PKGPATH := ${PKGPATH}
 _PKG_ARGS =
-_README_DIR = ${PREFIX}/share/doc/pkg-readmes/
+_README_DIR = ${LOCALBASE}/share/doc/pkg-readmes
 
 # (applies only to PLIST for now)
 .if !empty(FLAVORS)
@@ -911,7 +919,8 @@ _lt_libs += lib${_n:S/+/_/g:S/-/_/g:S/./_/g}_ltversion=${_v}
 
 # Create the generic variable substitution list, from subst vars
 SUBST_VARS += MACHINE_ARCH ARCH HOMEPAGE ^PREFIX ^SYSCONFDIR FLAVOR_EXT \
-	MAINTAINER ^BASE_PKGPATH ^LOCALBASE ^X11BASE ^TRUEPREFIX
+	FULLPKGNAME MAINTAINER ^BASE_PKGPATH ^LOCALBASE ^X11BASE ^TRUEPREFIX \
+	^RCDIR
 _tmpvars =
 
 _PKG_ADD_AUTO ?=
@@ -2335,6 +2344,11 @@ ${_CONFIGURE_COOKIE}: ${_PATCH_COOKIE}
 .if target(pre-configure)
 	@${_MAKESYS} pre-configure
 .endif
+.for _m in ${MODULES:T:U}
+.  if defined(MOD${_m}_pre-configure)
+	@${MOD${_m}_pre-configure}
+.  endif
+.endfor
 .if target(do-configure)
 	@${_MAKESYS} do-configure
 .else
@@ -2464,17 +2478,28 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 .endfor
 .if ${MULTI_PACKAGES} == "-"
 	@if test -e ${PKGDIR}/README; then \
-		${INSTALL_DATA_DIR} ${WRKINST}${_README_DIR}; \
-		${SUDO} ${SUBST_CMD} -c ${PKGDIR}/README ${WRKINST}${_README_DIR}/${FULLPKGNAME}; \
+		r=${WRKINST}${_README_DIR}/${FULLPKGNAME}; \
+		echo "Installing ${PKGDIR}/README as $$r"; \
+		${SUDO} ${SUBST_CMD} -c ${PKGDIR}/README $$r; \
 	fi
 .else
 .  for _s in ${MULTI_PACKAGES}
 	@if test -e ${PKGDIR}/README-${_s}; then \
-		${INSTALL_DATA_DIR} ${WRKINST}${_README_DIR}; \
-		${SUDO} ${SUBST_CMD} -c ${PKGDIR}/README-${_s} ${WRKINST}${_README_DIR}/${FULLPKGNAME${_s}}; \
+		r=${WRKINST}${_README_DIR}/${FULLPKGNAME${_s}}; \
+		echo "Installing ${PKGDIR}/README-${_s} as $$r"; \
+		${SUDO} ${SUBST_CMD} -c ${PKGDIR}/README-${_s} $$r; \
 	fi
 .  endfor
 .endif
+	@cd ${PKGDIR} && for i in *.rc; do \
+		if test X"$$i" != "X*.rc"; then \
+			r=${WRKINST}${RCDIR}/$${i%.rc}; \
+			echo "Installing ${PKGDIR}/$$i as $$r"; \
+			${SUDO} ${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -c $$i $$r; \
+			${SUDO} chmod ${BINMODE} $$r; \
+		fi; \
+	done
+			
 	@${SUDO} ${_MAKE_COOKIE} $@
 
 .if empty(PLIST_DB)

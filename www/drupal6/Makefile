@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2010/10/25 12:35:43 stephan Exp $
+# $OpenBSD: Makefile,v 1.44 2010/10/27 14:01:36 stephan Exp $
 
 SUBDIR =
 SUBDIR += CKeditor
@@ -26,6 +26,7 @@ SUBDIR += devel
 SUBDIR += dhtml_menu
 SUBDIR += diff
 SUBDIR += draft
+SUBDIR += faq
 SUBDIR += filefield
 SUBDIR += filefield_sources
 SUBDIR += globalredirect
@@ -60,10 +61,11 @@ SUBDIR += printer-friendly
 SUBDIR += publishcontent
 SUBDIR += relevant_content
 SUBDIR += rules
-SUBDIR += search_config
 SUBDIR += scheduler
 SUBDIR += schema
+SUBDIR += search_config
 SUBDIR += securelogin
+SUBDIR += session_api
 SUBDIR += spamspan
 SUBDIR += tables
 SUBDIR += theme-acquia-marina
@@ -72,10 +74,12 @@ SUBDIR += theme-zen
 SUBDIR += themesettingsapi
 SUBDIR += token
 SUBDIR += transliteration
+SUBDIR += ubercart
 SUBDIR += user_import
 SUBDIR += user_readonly
 SUBDIR += view_unpublished
 SUBDIR += views
+SUBDIR += views_bonus
 SUBDIR += views_bulk_operations
 SUBDIR += webform
 SUBDIR += workflow
