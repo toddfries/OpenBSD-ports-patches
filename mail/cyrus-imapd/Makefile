@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.34 2010/10/18 19:59:15 espie Exp $
+# $OpenBSD: Makefile,v 1.36 2010/10/29 12:54:43 ajacoutot Exp $
 
 COMMENT-main=	Cyrus IMAP server
 COMMENT-perl=	perl utils for the Cyrus IMAP server
 
-V=		2.3.16
+V=		2.4.2
 DISTNAME=	cyrus-imapd-${V}
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	1
 FULLPKGNAME-perl=cyrus-imapd-perl-${V}
 FULLPKGPATH-perl=mail/cyrus-imapd,-perl
-REVISION-perl=	1
+
+REVISION-main=	0
+
 CATEGORIES=	mail
 
 HOMEPAGE=	http://www.cyrusimap.org/
@@ -56,7 +57,6 @@ CONFIGURE_ARGS=	--with-service-path=${LOCALBASE}/libexec/cyrus-imapd \
 		--with-gss_impl=heimdal \
 		--enable-gssapi=/usr \
 		--enable-idled \
-		--enable-listext \
 		--enable-murder \
 		--enable-nntp \
 		--without-zephyr \
