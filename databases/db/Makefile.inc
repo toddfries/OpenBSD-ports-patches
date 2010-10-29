@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.27 2010/09/22 06:50:39 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.29 2010/10/28 22:20:59 jasper Exp $
 
 COMMENT-main=	Berkeley DB package, revision ${REV}
 COMMENT-tcl=	TCL bindings for Berkeley DB, revision ${REV}

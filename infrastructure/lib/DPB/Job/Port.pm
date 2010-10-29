@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.3 2010/09/02 11:16:09 jasper Exp $
+# $OpenBSD: Port.pm,v 1.5 2010/10/28 14:21:18 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -162,6 +162,15 @@ sub run
 	}
 	exit(1);
 }
+
+sub finalize
+{
+	my ($self, $core) = @_;
+	$self->SUPER::finalize($core);
+	$core->{status} = 0;
+	return 1;
+}
+
 
 package DPB::Task::Port::ShowSize;
 our @ISA = qw(DPB::Task::Port);

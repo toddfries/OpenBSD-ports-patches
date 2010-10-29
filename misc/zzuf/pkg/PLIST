@@ -1,10 +1,10 @@
-@comment $OpenBSD: PLIST,v 1.2 2010/10/27 09:49:12 steven Exp $
+@comment $OpenBSD: PLIST,v 1.4 2010/10/28 10:17:54 steven Exp $
 %%SHARED%%
-@bin bin/zzcat
 @bin bin/zzuf
+@bin bin/zzufcat
 lib/zzuf/
 lib/zzuf/libzzuf.a
 lib/zzuf/libzzuf.la
-@man man/man1/zzcat.1
 @man man/man1/zzuf.1
+@man man/man1/zzufcat.1
 @man man/man3/libzzuf.3

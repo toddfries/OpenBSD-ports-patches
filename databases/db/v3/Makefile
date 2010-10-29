@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.18 2010/07/10 20:06:54 naddy Exp $
+# $OpenBSD: Makefile,v 1.20 2010/10/28 22:20:59 jasper Exp $
 
 REV=		3
 DBLIBDIR=	lib/db
 VERSION=	${REV}.1.17
-PKGNAME-main=	${DISTNAME}p8
-PKGNAME-tcl=	db-tcl-${VERSION}p5
+PKGNAME-main=	${DISTNAME}
+PKGNAME-tcl=	db-tcl-${VERSION}
+REVISION-main=	10
+REVISION--tcl=	7
 SHARED_LIBS +=	db                   3.1      # .0.0
 SHARED_LIBS +=	db_cxx               4.0      # .0.0
 SHARED_LIBS +=	db_tcl               4.0      # .0.0
