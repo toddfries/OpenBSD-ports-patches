@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.38 2010/11/05 13:47:46 espie Exp $
+# $OpenBSD: Makefile,v 1.40 2010/11/06 16:07:00 espie Exp $
 .include <bsd.own.mk>
 
 COMMENT-main=	PDF rendering library
@@ -80,12 +80,14 @@ WANTLIB-main=	${cWANTLIB} Xcursor Xext Xfixes Xi Xinerama Xrandr gio-2.0 \
 		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 pango-1.0 xml2 \
 		pangocairo-1.0 pangoft2-1.0 pixman-1 gdk_pixbuf-2.0 openjpeg \
 		X11 Xau Xcomposite Xdamage Xdmcp Xrender cairo pcre png \
-		pthread-stubs xcb xcb-render xcb-render-util gdk-x11-2.0 lcms
-WANTLIB-qt=	${cWANTLIB} lcms openjpeg xml2 poppler png ${MODQT3_WANTLIB}
+		pthread-stubs xcb xcb-render xcb-render-util gdk-x11-2.0 lcms \
+		${MODGETTEXT_WANTLIB}
+WANTLIB-qt=	${cWANTLIB} lcms openjpeg xml2 poppler png ${MODQT3_WANTLIB} \
+		${MODLIBICONV_WANTLIB}
 WANTLIB-qt4=	${cWANTLIB} ICE QtCore QtGui QtXml SM X11 Xau Xdmcp Xext Xi \
                 Xinerama Xrender glib-2.0 gobject-2.0 gthread-2.0 lcms \
 		openjpeg pcre png poppler pthread-stubs xcb xml2 \
-		QtCore QtGui QtXml
+		QtCore QtGui QtXml ${MODGETTEXT_WANTLIB}
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+= --enable-xpdf-headers \

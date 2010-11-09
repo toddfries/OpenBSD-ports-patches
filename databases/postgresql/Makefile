@@ -1,22 +1,24 @@
-# $OpenBSD: Makefile,v 1.129 2010/10/18 17:06:08 espie Exp $
+# $OpenBSD: Makefile,v 1.132 2010/11/08 14:57:56 ajacoutot Exp $
 
 COMMENT-main=	PostgreSQL RDBMS (client)
 COMMENT-server=	PostgreSQL RDBMS (server)
 COMMENT-docs=	PostgreSQL RDBMS documentation
 COMMENT-contrib=PostgreSQL RDBMS contributions
 
-VERSION=	8.4.5
+VERSION=	9.0.1
 DISTNAME=	postgresql-${VERSION}
 PKGNAME-main=	postgresql-client-${VERSION}
 PKGNAME-server=	postgresql-server-${VERSION}
 PKGNAME-docs=	postgresql-docs-${VERSION}
 PKGNAME-contrib=postgresql-contrib-${VERSION}
 
+REVISION-server=	0
+
 CATEGORIES=	databases
-SHARED_LIBS=	ecpg		7.1 \
-		ecpg_compat	4.1 \
+SHARED_LIBS=	ecpg		7.2 \
+		ecpg_compat	4.2 \
 		pgtypes		4.1 \
-		pq		5.2
+		pq		5.3
 
 HOMEPAGE=	http://www.postgresql.org/
 
@@ -52,7 +54,7 @@ CONFIGURE_STYLE=gnu
 
 .include <bsd.own.mk>
 
-INCLUDES=	${LOCALBASE}/include
+INCLUDES=	${LOCALBASE}/include /usr/include/kerberosV
 CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-perl \
 		--enable-integer-datetimes \
@@ -63,12 +65,9 @@ CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-libraries="${LOCALBASE}/lib" \
 		--with-openssl \
 		--with-ossp-uuid \
-		--with-libxml
-
-.if ${KERBEROS5} == "yes"
-CONFIGURE_ARGS+=--with-krb5
-INCLUDES+=	/usr/include/kerberosV
-.endif
+		--with-libxml \
+		--disable-thread-safety \
+		--with-krb5
 
 # There is no spinlock support for hppa yet. Until we have access to
 # a system to get this working, disable them for now. There is
@@ -80,19 +79,21 @@ CONFIGURE_ARGS+=--disable-spinlocks
 
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config
 
-INSTALL_TARGET=	install
+INSTALL_TARGET=	install-world
 
-LIB_DEPENDS-main= xml2::textproc/libxml
+LIB_DEPENDS-main= ::textproc/libxml
+WANTLIB-main =	${WANTLIB} xml2
 
-WANTLIB-server=	${WANTLIB} perl
 
-LIB_DEPENDS-server= pq.>=4:postgresql-client-${VERSION}:databases/postgresql \
+LIB_DEPENDS-server= :postgresql-client-${VERSION}:databases/postgresql \
 		    ${LIB_DEPENDS-main}
+WANTLIB-server=	${WANTLIB-main} perl pq.>=4
 RUN_DEPENDS-contrib=:postgresql-server-${VERSION}:databases/postgresql,-server
 
-LIB_DEPENDS-contrib= pq.>=4:postgresql-client-${VERSION}:databases/postgresql \
+LIB_DEPENDS-contrib= :postgresql-client-${VERSION}:databases/postgresql \
 		     ${LIB_DEPENDS-main} \
-		     uuid::devel/uuid
+		     ::devel/uuid
+WANTLIB-contrib = 	${WANTLIB-main} pq.>=4 uuid
 
 WANTLIB-docs=
 PKG_ARCH-docs=	*
@@ -131,11 +132,7 @@ post-build:
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/postgresql
 	${INSTALL_DATA} ${DOCS} ${PREFIX}/share/doc/postgresql
-	@sed -e s#!!PREFIX!!#${TRUEPREFIX}#g ${FILESDIR}/README.OpenBSD > \
-		${WRKBUILD}/README.OpenBSD
-	${INSTALL_DATA} ${WRKBUILD}/README.OpenBSD \
-		${PREFIX}/share/doc/postgresql
 	cd ${WRKBUILD}/contrib && exec ${SETENV} ${MAKE_ENV} DESTDIR=${WRKINST} \
-	    ${MAKE_PROGRAM} ${MAKE_FLAGS} ${INSTALL_TARGET}
+		${MAKE_PROGRAM} ${MAKE_FLAGS} ${INSTALL_TARGET}
 
 .include <bsd.port.mk>

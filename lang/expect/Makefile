@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2010/10/18 19:20:41 espie Exp $
+# $OpenBSD: Makefile,v 1.56 2010/11/08 09:28:25 espie Exp $
 
 COMMENT=	sophisticated scripter based on Tcl/Tk
 
@@ -38,13 +38,15 @@ MODULES=	x11/tk
 WANTLIB+= X11 z pthread-stubs xcb
 WANTLIB+= Xau Xdmcp Xext Xft Xrender Xss expat fontconfig freetype
 MAKE_FLAGS+=	TK=Yes
-LIB_DEPENDS+=	${MODTK_LIB_DEPENDS}
+LIB_DEPENDS +=	${MODTK_LIB_DEPENDS}
+WANTLIB +=	${MODTK_WANTLIB}
 CONFIGURE_ARGS+=--with-tk="${MODTK_LIBDIR}" \
 		--with-tkinclude="${MODTK_INCDIR}"
 .else
-MODULES=	lang/tcl
-LIB_DEPENDS+=	${MODTCL_LIB_DEPENDS}
-CONFIGURE_ARGS+=--with-tk=no
+MODULES =	lang/tcl
+LIB_DEPENDS +=	${MODTCL_LIB_DEPENDS}
+WANTLIB +=	${MODTCL_WANTLIB}
+CONFIGURE_ARGS +=--with-tk=no
 .endif
 
 REGRESS_TARGET=	test

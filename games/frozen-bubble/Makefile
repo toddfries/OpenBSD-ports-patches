@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/10/18 18:00:18 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2010/11/08 23:12:31 espie Exp $
 
 SHARED_ONLY =		Yes
 
@@ -26,7 +26,7 @@ MASTER_SITES =		${HOMEPAGE}/data/
 EXTRACT_SUFX =		.tar.bz2
 
 USE_GMAKE =		Yes
-USE_GROFF =	Yes
+USE_GROFF =		Yes
 
 # No regress tests here
 NO_REGRESS =		Yes
@@ -44,15 +44,18 @@ RUN_DEPENDS-main =	::devel/p5-SDL \
 			::${BASE_PKGPATH},-server
 
 LIB_DEPENDS-main =	${MODGETTEXT_LIB_DEPENDS} \
-			SDL_Pango::devel/sdl-pango \
-			SDL_mixer::devel/sdl-mixer \
-			glib-2.0,gmodule-2.0,gobject-2.0::devel/glib2
+			::devel/sdl-pango \
+			::devel/sdl-mixer \
+			::devel/glib2
 
 LIB_DEPENDS-server =	${MODGETTEXT_LIB_DEPENDS} \
-			glib-2.0::devel/glib2
+			::devel/glib2
 
-WANTLIB-main =		SDL X11 m pango-1.0 pthread pthread-stubs xcb
-WANTLIB-server =	c
+WANTLIB-main =		${MODGETTEXT_WANTLIB} \
+			SDL X11 m pango-1.0 pthread pthread-stubs xcb \
+			SDL_Pango SDL_mixer glib-2.0 gmodule-2.0 \
+			gobject-2.0
+WANTLIB-server =	${MODGETTEXT_WANTLIB} c glib-2.0
 
 MULTI_PACKAGES =	-main -server
 

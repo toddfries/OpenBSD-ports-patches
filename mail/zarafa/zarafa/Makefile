@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.50 2010/11/03 11:57:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.52 2010/11/06 16:07:00 espie Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
@@ -6,7 +6,7 @@ COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
 PKGNAME-main=	zarafa-${V}
 PKGNAME-web=	zarafa-webaccess-${V}
 
-REVISION-main=	3
+REVISION-main=	4
 
 CATEGORIES=	mail www productivity
 
@@ -30,6 +30,7 @@ BUILD_DEPENDS=	::www/php5/core \
 		::textproc/xmlto \
 		::net/curl
 
+WANTLIB-main =	${MODGETTEXT_WANTLIB}
 WANTLIB-main += asn1 c com_err crypto gssapi krb5 m ncurses pthread ssl
 WANTLIB-main += sasl2 stdc++ z xml2 mysqlclient lber-2.3 ldap-2.3 uuid execinfo
 WANTLIB-main += vmime-zarafa ical icalss
@@ -43,6 +44,7 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		:zarafa-libvmime->=0.7.1p6:mail/zarafa/libvmime \
 		::textproc/libical
 
+WANTLIB-web += ${MODGETTEXT_WANTLIB}
 WANTLIB-web += execinfo ical icalss uuid vmime-zarafa common_mapi
 WANTLIB-web += common_util freebusy icalmapi inetmapi mapi m stdc++ z
 
@@ -131,7 +133,6 @@ post-install:
 	${INSTALL_DATA} /dev/null ${WRKINST}${INSTDIR}/debug.txt 
 	chown -R ${SHAREOWN}:${SHAREGRP} ${WRKINST}${INSTDIR}
 
-	${SUBST_CMD} -c ${FILESDIR}/README.OpenBSD ${PREFIX}/share/doc/zarafa/README.OpenBSD
 	${SUBST_CMD} -c ${FILESDIR}/zarafa.m4 ${PREFIX}/share/examples/zarafa/zarafa.m4
 	${SUBST_CMD} -c ${FILESDIR}/local_zarafa.m4 ${PREFIX}/share/examples/zarafa/local_zarafa.m4
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/zarafa

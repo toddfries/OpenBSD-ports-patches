@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2010/11/03 21:32:08 kili Exp $
+# $OpenBSD: Makefile,v 1.48 2010/11/06 19:11:43 kili Exp $
 
 COMMENT-main =		compiler for the functional language Haskell
 COMMENT-doc =		documentation for GHC
@@ -36,10 +36,11 @@ LIB_DEPENDS-main =	${LIB_DEPENDS} ::devel/gmp
 RUN_DEPENDS-doc =
 RUN_DEPENDS-main =
 
-REVISION-main =		5
-WANTLIB-main =		c gmp m ncursesw pthread util
+REVISION-main =		7
+WANTLIB-main =		${WANTLIB} c gmp m ncursesw pthread util
 
-REVISION-doc =		1
+REVISION-doc =		2
+WANTLIB-doc =
 
 MASTER_SITES =		http://darcs.haskell.org/download/dist/${MODGHC_VER}/ \
 			${HOMEPAGE}dist/${MODGHC_VER}/ \
@@ -121,7 +122,7 @@ post-install:
 	echo 'p="$${0%/*}/ghc-pkg --global-conf $${0%/*}/package.conf.d"' && \
 	for p in $$($$GHC_PKG list --simple); do \
 		echo \$$p register --force - \<\< \'EOF\' && \
-		$$GHC_PKG describe $$p && \
+		$$GHC_PKG describe $$p | sed '/^pkgpath:$$/s@$$@ ${PKGPATH}@' && \
 		echo EOF; \
 	done && \
 	${INSTALL_SCRIPT} /dev/null unregister.sh && \

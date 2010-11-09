@@ -1,0 +1,22 @@
+$OpenBSD: README,v 1.1 2010/11/08 21:25:44 edd Exp $
+
+Possible issues with using MPlayer on OpenBSD:
+
+all arches:
+  The GUI is deprecated so we stripped it from the build. You can use
+  x11/gnome-mplayer or x11/smplayer instead.
+
+  Mencoder is not expected to do a good job of multiplexing into container
+  formats other than AVI or MPEG.
+
+i386:
+  win32 codecs were disabled in OpenBSD's build, as the open-source codecs
+  are now of decent quality.
+
+arm:
+  You may encounter slow video output.  In this case you can disable
+  the X.Org screen rotation in /etc/X11/xorg.conf. Depending on the
+  video you are playing you may want to pass the -framedrop or the
+  -hardframedrop option to mplayer.
+
+See the package description for a list of FLAVORs and their meaning.
