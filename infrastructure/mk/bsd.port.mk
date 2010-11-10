@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1053 2010/11/07 00:03:38 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1055 2010/11/09 23:55:28 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -1568,7 +1568,7 @@ _DO_LOCK = \
 .  endfor
 
 _SIMPLE_LOCK = \
-	${_LOCK}; trap '${_UNLOCK}' 0 1 2 3 13 15
+	${_LOCK}; locked=true; trap 'if $$locked; then ${_UNLOCK}; locked=false; fi' 0 1 2 3 13 15
 
 .endif
 _SIMPLE_LOCK ?= :
