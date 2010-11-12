@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1055 2010/11/09 23:55:28 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1057 2010/11/11 19:03:25 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -1644,8 +1644,9 @@ ${_PACKAGE_COOKIE${_S}}:
 # What PACKAGE normally does:
 	@${ECHO_MSG} "===>  Building package for ${FULLPKGNAME${_S}}"
 .  if ${LIB_DEPENDS${_S}:M?*\:*\:*}
-	@${ECHO_MSG} "WARNING: Old style LIB_DEPENDS:"
+	@${ECHO_MSG} "Error: Old style LIB_DEPENDS:"
 	@${ECHO_MSG} "LIB_DEPENDS${_S} = ${LIB_DEPENDS${_S}}"
+	@exit 1
 .  endif
 	@${ECHO_MSG} "Create ${_PACKAGE_COOKIE${_S}}"
 	@cd ${.CURDIR} && \
@@ -1979,7 +1980,7 @@ ${WRKINST}/.saved_libs: ${_FAKE_COOKIE}
 
 port-lib-depends-check: ${WRKINST}/.saved_libs
 .  for _S in ${MULTI_PACKAGES}
-	-@SUBPACKAGE=${_S} ${MAKE} print-plist-with-depends | \
+	-@SUBPACKAGE=${_S} ${MAKE} _print-plist-with-extra-depends | \
 	 ${_CHECK_LIB_DEPENDS} -s ${WRKINST}/.saved_libs
 .  endfor
 
@@ -2558,6 +2559,29 @@ print-plist-with-depends:
 		exit 1; \
 	fi ; \
 	${_plist_footer}
+
+# XXX this helps for port-lib-depends-check
+# create "extra" depends lines that correspond to LIB_DEPENDS that would
+# be stripped because there is no lib depending on them in WANTLIB
+
+_print-plist-with-extra-depends:
+.if ${NO_SHARED_LIBS:L} != "yes"
+.  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
+	@echo '${_i}'|{ \
+		IFS=:; read dep pkg subdir target; \
+		${_flavor_fragment}; \
+		if default=`eval $$toset ${MAKE} _print-packagename`; then \
+			case "X$$pkg" in X) pkg=`echo "$$default" |${_version2default}`;; \
+			esac; \
+			echo "@depend $$subdir:$$pkg:$$default"; \
+		else \
+			echo 1>&2 "Problem with dependency ${_i}"; \
+			exit 1; \
+		fi; \
+	}
+.  endfor
+.endif
+	@${_MAKE} print-plist-with-depends
 
 print-plist-all:
 .for _S in ${MULTI_PACKAGES}
@@ -3373,7 +3397,7 @@ _all_phony = ${_recursive_depends_targets} \
 	print-build-depends print-run-depends readme readmes rebuild \
 	regress-depends repackage run-depends run-depends-list show-required-by \
 	subpackage uninstall mirror-maker-fetch \
-	lock unlock
+	lock unlock _print-plist-with-extra-depends
 
 .if defined(_DEBUG_TARGETS)
 .  for _t in ${_all_phony}
