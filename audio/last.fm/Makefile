@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2010/10/24 21:00:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2010/11/15 13:08:37 espie Exp $
 
 COMMENT =		official Last.fm client
 
@@ -28,18 +28,17 @@ PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += X11 c m pthread sndio stdc++ z
-WANTLIB += QtGui.>=8 QtNetwork.>=7 QtSql.>=7 QtXml.>=7
-WANTLIB += fftw3f.>=4 gpod.>=600.0 mad samplerate.>=1 portaudio
+WANTLIB += QtGui>=8 QtNetwork>=7 QtSql>=7 QtXml>=7
+WANTLIB += fftw3f>=4 gpod>=600 mad samplerate>=1 portaudio
 
 MODULES =		x11/qt4
 
-LIB_DEPENDS =		::x11/qt4 \
-			::math/fftw3,float \
-			::audio/libgpod \
-			::audio/libmad \
-			::audio/libsamplerate \
-			::audio/portaudio-svn
-RUN_DEPENDS =		::devel/desktop-file-utils
+LIB_DEPENDS =		math/fftw3,float \
+			audio/libgpod \
+			audio/libmad \
+			audio/libsamplerate \
+			audio/portaudio-svn
+RUN_DEPENDS =		devel/desktop-file-utils
 
 
 NO_REGRESS =		Yes

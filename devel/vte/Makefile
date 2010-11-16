@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.65 2010/10/18 13:28:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.67 2010/11/15 19:46:10 espie Exp $
 
 COMMENT-main=		terminal emulation library
 COMMENT-python= 	python bindings for vte
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.26.1
+GNOME_VERSION=		0.26.2
 PKGNAME-main=		${DISTNAME}
 PKGNAME-python= 	py-${DISTNAME}
 
@@ -34,21 +34,21 @@ WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
-WANTLIB += pixman-1 png pthread-stubs xcb xcb-render xcb-render-util
-WANTLIB += z gthread-2.0 gdk_pixbuf-2.0 gdk-x11-2.0
+WANTLIB += pixman-1 png pthread-stubs xcb xcb-render drm xcb-shm
+WANTLIB += z gthread-2.0 gdk_pixbuf-2.0 gdk-x11-2.0 GL Xxf86vm
 
 WANTLIB-main=		${WANTLIB} util c pthread
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			::x11/gtk+2
+			x11/gtk+2
 
-WANTLIB-python= 	${WANTLIB} ffi vte.>=14 gtk-x11-2.0
+WANTLIB-python= 	${WANTLIB} ffi vte>=14 gtk-x11-2.0
 
 BUILD_DEPENDS=		${RUN_DEPENDS-python}
 LIB_DEPENDS-python=	${LIB_DEPENDS-main} \
-			::${BASE_PKGPATH} \
-			::devel/libffi
+			${BASE_PKGPATH} \
+			devel/libffi
 RUN_DEPENDS-python=	${MODPY_RUN_DEPENDS} \
-			::x11/py-gtk2
+			x11/py-gtk2
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \

@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.10 2010/10/18 17:06:08 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2010/11/15 13:11:24 espie Exp $
 
 COMMENT=	sql parsing and processing
 
 MODULES=	cpan
 DISTNAME=	SQL-Statement-1.15
 CATEGORIES=	databases
-USE_GROFF =	Yes
 
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 

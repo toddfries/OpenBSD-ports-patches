@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.99 2010/11/07 17:00:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.101 2010/11/15 19:45:58 espie Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
 
-VERSION=		2.26.0
+VERSION=		2.26.1
 DISTNAME=		glib-${VERSION}
 PKGNAME-main=		glib2-${VERSION}
 PKGNAME-docs=		glib2-docs-${VERSION}
-
-REVISION-main=		1
 
 CATEGORIES=		devel
 
@@ -42,8 +40,8 @@ MODPY_BUILDDEP=		Yes	# XXX: glib2 wants python for the regress tests
 WANTLIB-main=		${WANTLIB} c pthread z pcre fam
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			:pcre->=7.2:devel/pcre \
-			::sysutils/gamin,no_server,no_python
+			pcre->=7.2:devel/pcre \
+			sysutils/gamin,no_server,no_python
 
 PKG_ARCH-docs=		*
 WANTLIB-docs=
@@ -51,16 +49,16 @@ LIB_DEPENDS-docs=
 RUN_DEPENDS-docs=
 
 # DBus is only used in the GDBus test cases
-REGRESS_DEPENDS=	:desktop-file-utils-*:devel/desktop-file-utils \
-			::x11/dbus \
-			::devel/py-gobject \
-			::x11/dbus-python
+REGRESS_DEPENDS=	devel/desktop-file-utils \
+			x11/dbus \
+			devel/py-gobject \
+			x11/dbus-python
 
 REGRESS_FLAGS=		-k
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
-USE_GROFF =	Yes
+USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-static \

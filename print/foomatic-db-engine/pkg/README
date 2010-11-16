@@ -1,0 +1,16 @@
+$OpenBSD: README,v 1.1 2010/11/13 09:48:42 ajacoutot Exp $
+
+Using foomatic-db-engine under OpenBSD
+======================================
+
+PPD files can be generated using foomatic-ppdfile(1) as in the following
+example for an Epson Stylus C64:
+
+$ foomatic-ppdfile -P C64
+Epson Stylus C64 Id='Epson-Stylus_C64' Driver='gutenprint' CompatibleDrivers='gimp-print gutenprint gutenprint-ijs-simplified.5.2 gutenprint-ijs.5.2 '
+$ foomatic-ppdfile -p 'Epson-Stylus_C64' -d 'gutenprint-ijs.5.2' > C64.ppd
+
+C64.ppd can then be used with CUPS or with lpd(8) and foomatic-rip(1) as
+the input filter.
+Drivers availability depends on what db you have installed on your system
+(i.e. foomatic-db, foomatic-db-gutenprint...).

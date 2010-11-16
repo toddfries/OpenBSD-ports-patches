@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.27 2010/10/30 23:00:28 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2010/11/15 00:22:54 espie Exp $
 
 CATEGORIES =		databases
-V =			1.12
+V =			1.13
 DISTNAME =		sqlports-$V
 DISTFILES =
 COMMENT =		sqlite database of ports
@@ -29,7 +29,7 @@ do-install:
 	${INSTALL_DATA} ${DBNAME} ${PREFIX}/share
 	${INSTALL_DATA} ${DBNAME}-compact ${PREFIX}/share
 
-BUILD_DEPENDS =		::databases/p5-DBD-SQLite
+BUILD_DEPENDS =		databases/p5-DBD-SQLite
 NO_REGRESS =		Yes
 NO_CHECKSUM =		Yes
 

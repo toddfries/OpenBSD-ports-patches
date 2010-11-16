@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.132 2010/11/08 14:57:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.134 2010/11/15 12:44:20 espie Exp $
 
 COMMENT-main=	PostgreSQL RDBMS (client)
 COMMENT-server=	PostgreSQL RDBMS (server)
@@ -81,19 +81,19 @@ MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config
 
 INSTALL_TARGET=	install-world
 
-LIB_DEPENDS-main= ::textproc/libxml
+LIB_DEPENDS-main= textproc/libxml
 WANTLIB-main =	${WANTLIB} xml2
 
 
-LIB_DEPENDS-server= :postgresql-client-${VERSION}:databases/postgresql \
+LIB_DEPENDS-server= postgresql-client-${VERSION}:databases/postgresql \
 		    ${LIB_DEPENDS-main}
-WANTLIB-server=	${WANTLIB-main} perl pq.>=4
-RUN_DEPENDS-contrib=:postgresql-server-${VERSION}:databases/postgresql,-server
+WANTLIB-server=	${WANTLIB-main} perl pq>=4
+RUN_DEPENDS-contrib=postgresql-server-${VERSION}:databases/postgresql,-server
 
-LIB_DEPENDS-contrib= :postgresql-client-${VERSION}:databases/postgresql \
+LIB_DEPENDS-contrib= postgresql-client-${VERSION}:databases/postgresql \
 		     ${LIB_DEPENDS-main} \
-		     ::devel/uuid
-WANTLIB-contrib = 	${WANTLIB-main} pq.>=4 uuid
+		     devel/uuid
+WANTLIB-contrib = 	${WANTLIB-main} pq>=4 uuid
 
 WANTLIB-docs=
 PKG_ARCH-docs=	*

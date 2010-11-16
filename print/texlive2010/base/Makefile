@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/09 13:38:22 edd Exp $
+# $OpenBSD: Makefile,v 1.13 2010/11/15 08:11:54 jasper Exp $
 
 COMMENT =		base binaries for TeXLive typesetting distribution
 
@@ -19,7 +19,9 @@ RUN_DEPENDS =		:ghostscript-*:print/ghostscript/gnu \
 			:ps2eps-*:print/ps2eps \
 			:psutils-*:print/psutils \
 			:t1utils-*:print/t1utils \
-			:texlive_texmf-minimal-${V}:print/texlive2010/texmf,-main
+			:texlive_texmf-minimal-${V}:print/texlive2010/texmf,-main \
+			::print/latex-mk \
+			::print/pdfjam
 			
 LIB_DEPENDS =		::devel/t1lib \
 			::graphics/png \
@@ -107,9 +109,6 @@ pre-install:
 
 post-install:
 	rm -Rf ${WRKSRC}/inst
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/texlive
-	${INSTALL_DATA} ${FILESDIR}/README.OpenBSD \
-		${PREFIX}/share/doc/texlive
 
 	# following tradition, texmf is in ${PREFIX}/share
 	mv ${PREFIX}/texmf ${PREFIX}/share/texmf

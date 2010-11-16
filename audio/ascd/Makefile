@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/10/24 21:00:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2010/11/15 12:44:20 espie Exp $
 # $FreeBSD: ports/audio/ascd/Makefile,v 1.17 2000/09/25 12:21:17 asami Exp $
 
 COMMENT= 		cd player for Afterstep or Window Maker
@@ -16,15 +16,15 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		X11 Xau Xdmcp Xext Xpm c workman.>=1
+WANTLIB=		X11 Xau Xdmcp Xext Xpm c workman>=1
 
 MASTER_SITES=		http://worldserver.oleane.com/rsn/Archives/
 DISTFILES=		${DISTNAME}-src.tgz ${DATAFILES}
 DATAFILES=		ascd-0.13pr6-themes.tgz
 
-LIB_DEPENDS=		::audio/libworkman
+LIB_DEPENDS=		audio/libworkman
 
-USE_GROFF =	Yes
+USE_GROFF =		Yes
 NO_REGRESS=		Yes
 CONFIGURE_STYLE=	imake
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/10/18 17:06:06 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2010/11/15 12:44:20 espie Exp $
 
 COMMENT=	small application for managing a LDAP address book
 
@@ -21,8 +21,8 @@ MASTER_SITES=	${HOMEPAGE}
 MODULES=	lang/python
 PY_FLAVOR=	python${MODPY_VERSION}
 
-RUN_DEPENDS=	:py-gtk2-*:x11/py-gtk2 \
-                :py-ldap-*-${PY_FLAVOR}:databases/py-ldap,${PY_FLAVOR}
+RUN_DEPENDS=	x11/py-gtk2 \
+                py-ldap-*-${PY_FLAVOR}:databases/py-ldap,${PY_FLAVOR}
 
 NO_BUILD=	Yes
 NO_REGRESS=	Yes

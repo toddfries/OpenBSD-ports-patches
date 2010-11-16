@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.7 2010/10/18 16:52:47 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2010/11/15 00:22:48 espie Exp $
 
 COMMENT =	console client for pandora
 
-DISTNAME =	pianobar-2010.10.07
+DISTNAME =	pianobar-2010.11.06
 EXTRACT_SUFX =	.tar.bz2
 CATEGORIES =	audio
 
@@ -23,9 +23,9 @@ PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	ao c faad m mad pthread
 
-LIB_DEPENDS =	::audio/libao \
-		::audio/faad \
-		::audio/libmad
+LIB_DEPENDS =	audio/libao \
+		audio/faad \
+		audio/libmad
 
 CFLAGS +=	-I${LOCALBASE}/include
 
