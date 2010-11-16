@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2010/08/30 21:16:56 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2010/11/16 10:17:56 jasper Exp $
 
 COMMENT=	Prelude Management Console
 
 MODPY_EGG_VERSION=0.9.17
 DISTNAME=	prewikka-0.9.17
 PKGNAME=	prelude-${DISTNAME}
-REVISION=	1
+REVISION=	2
 
 MODULES=	lang/python
 
@@ -17,22 +17,12 @@ BUILD_DEPENDS=	:gettext->=0.17:devel/gettext \
 RUN_DEPENDS=	:prelude-manager-*:security/prelude/manager	\
 		:py-cheetah-*:devel/py-cheetah
 
+NO_REGRESS=	Yes
+VERSION=	${DISTNAME:S/prewikka-//}
+SUBST_VARS+=	VERSION
+
 pre-install:
-	@${INSTALL_DATA} ${FILESDIR}/siteconfig.py		\
+	${SUBST_CMD} -c ${FILESDIR}/siteconfig.py \
 		${WRKSRC}/prewikka/siteconfig.py
-	@perl -pi -e "s,%%PREFIX%%,${PREFIX},"			\
-		${WRKSRC}/prewikka/siteconfig.py
-	@perl -pi -e "s,%%SYSCONFDIR%%,${SYSCONFDIR},"		\
-		${WRKSRC}/prewikka/siteconfig.py
-	@perl -pi -e "s,%%VERSION%%,${DISTNAME:S/prewikka-//},"	\
-		${WRKSRC}/prewikka/siteconfig.py
-	@perl -pi -e 's#${WRKINST}##' ${WRKSRC}/prewikka/siteconfig.py
-
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/prewikka/
-	${INSTALL_DATA} ${FILESDIR}/README.OpenBSD \
-		${PREFIX}/share/doc/prewikka/
-
-NO_REGRESS=Yes
 
 .include <bsd.port.mk>

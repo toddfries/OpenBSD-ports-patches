@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1058 2010/11/14 11:17:36 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1060 2010/11/16 09:39:45 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -563,7 +563,7 @@ ERRORS += "Fatal: no flavors for this port."
 
 USE_GROFF ?= No
 .if ${USE_GROFF:L} == "yes"
-BUILD_DEPENDS += groff->=1.15.4.7p2:textproc/groff
+BUILD_DEPENDS += textproc/groff>=1.15.4.7p2
 _PKG_ARGS += -DUSE_GROFF=1
 .endif
 
@@ -1423,14 +1423,19 @@ _FULL_PACKAGE_NAME ?= No
 _CHECK_DEPENDS =
 
 # normalization of depends to remove extra :
+
+# also, the C,...., part basically does this:
+# if the depends contains only pkgpath>=something
+# then we rebuild it as STEM->=something:pkgpath
+
 .for _v in BUILD LIB RUN REGRESS
 _CHECK_DEPENDS +:= ${${_v}_DEPENDS}
-${_v}_DEPENDS := ${${_v}_DEPENDS:S/^://:S/^://}
+${_v}_DEPENDS := ${${_v}_DEPENDS:S/^://:S/^://:C,^([^:]+/[^:<=>]+)([<=>][^:]+)$,STEM-\2:\1,}
 .endfor
 .for _s in ${MULTI_PACKAGES}
 .  for _v in RUN LIB
 _CHECK_DEPENDS +:= ${${_v}_DEPENDS${_s}}
-${_v}_DEPENDS${_s} := ${${_v}_DEPENDS${_s}:S/^://:S/^://}
+${_v}_DEPENDS${_s} := ${${_v}_DEPENDS${_s}:S/^://:S/^://:C,^([^:]+/[^:<=>]+)([<=>][^:]+)$,STEM-\2:\1,}
 .  endfor
 .endfor
 
@@ -2023,7 +2028,7 @@ ${WRKINST}/.saved_libs: ${_FAKE_COOKIE}
 
 port-lib-depends-check: ${WRKINST}/.saved_libs
 .  for _S in ${MULTI_PACKAGES}
-	-@SUBPACKAGE=${_S} ${MAKE} _print-plist-with-extra-depends | \
+	@-SUBPACKAGE=${_S} ${MAKE} _print-plist-with-extra-depends | \
 	 ${_CHECK_LIB_DEPENDS} -s ${WRKINST}/.saved_libs
 .  endfor
 
@@ -2611,16 +2616,9 @@ _print-plist-with-extra-depends:
 .if ${NO_SHARED_LIBS:L} != "yes"
 .  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
 	@echo '${_i}'|{ \
-		IFS=:; read dep pkg subdir target; \
-		${_flavor_fragment}; \
-		if default=`eval $$toset ${MAKE} _print-packagename`; then \
-			case "X$$pkg" in X) pkg=`echo "$$default" |${_version2default}`;; \
-			esac; \
-			echo "@depend $$subdir:$$pkg:$$default"; \
-		else \
-			echo 1>&2 "Problem with dependency ${_i}"; \
-			exit 1; \
-		fi; \
+		${_parse_spec}; \
+		${_complete_pkgspec}; \
+		echo "@depend $$subdir:$$pkg:$$default"; \
 	}
 .  endfor
 .endif
