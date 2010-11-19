@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/09 18:22:26 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2010/11/17 19:37:49 jasper Exp $
 
 COMMENT =	kde wrapper around exiv2
 CATEGORIES =	graphics
 DISTNAME =	libkexiv2-0.1.9
+REVISION =	0
 HOMEPAGE =	http://www.kipi-plugins.org/
 EXTRACT_SUFX =	.tar.bz2
 
@@ -18,7 +19,8 @@ SHARED_LIBS +=	kexiv2                  3.0   # .5.0
 SHARED_ONLY =		Yes
 AUTOCONF_VERSION =	2.61
 MODKDE_VERSION =	3.5.7
-MODULES =		x11/kde
+MODULES =		devel/gettext \
+			x11/kde
 
 # GPL
 PERMIT_DISTFILES_CDROM =Yes
@@ -26,10 +28,10 @@ PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 
-WANTLIB =	ICE SM X11 Xext Xrender iconv intl jpeg m png \
+WANTLIB =	ICE SM X11 Xext Xrender jpeg m png \
 		util z idn art_lgpl_2 Xau Xdmcp expat \
-		pthread-stubs xcb exiv2.>=0.1 kdecore.>=7 DCOP kdefx
-LIB_DEPENDS =	:exiv2->=0.12:graphics/exiv2 \
-		::x11/kde/libs3
+		pthread-stubs xcb exiv2>=0.1 kdecore>=7 DCOP kdefx
+LIB_DEPENDS =	graphics/exiv2>=0.12 \
+		x11/kde/libs3
 
 .include <bsd.port.mk>

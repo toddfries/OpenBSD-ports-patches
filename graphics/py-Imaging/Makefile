@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2010/11/15 20:57:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.48 2010/11/17 18:37:25 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -16,6 +16,8 @@ FULLPKGPATH-examples=	graphics/py-Imaging,-examples
 PKGNAME-bin=		py-Imaging-bin-${MODPY_EGG_VERSION}
 FULLPKGNAME-docs=	py-Imaging-docs-${MODPY_EGG_VERSION}
 FULLPKGPATH-docs=	graphics/py-Imaging,-docs
+
+REVISION-main=		0
 
 CATEGORIES=		graphics
 
@@ -36,10 +38,10 @@ MODULES=		lang/python x11/tk
 
 RUN_DEPENDS=		${MODPY_TKINTER_DEPENDS}
 RUN_DEPENDS-bin=	${RUN_DEPENDS} \
-			:py-Imaging-*:graphics/py-Imaging
+			graphics/py-Imaging
 BUILD_DEPENDS=		${RUN_DEPENDS}
-LIB_DEPENDS-main=	::graphics/jpeg \
-			::graphics/lcms \
+LIB_DEPENDS-main=	graphics/jpeg \
+			graphics/lcms \
 			${MODTK_LIB_DEPENDS}
 
 FLAVORS=		python2.4 python2.6

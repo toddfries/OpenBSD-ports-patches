@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST-main,v 1.1.1.1 2010/11/14 23:46:39 robert Exp $
+@comment $OpenBSD: PLIST-main,v 1.4 2010/11/18 19:17:34 robert Exp $
+@conflict openoffice-*
 %%SHARED%%
 bin/oobase${BV}
 bin/oocalc${BV}
@@ -144,6 +145,7 @@ lib/libreoffice/basis${BV}/presets/uno_packages/
 lib/libreoffice/basis${BV}/presets/uno_packages/cache/
 lib/libreoffice/basis${BV}/presets/wordbook/
 lib/libreoffice/basis${BV}/program/
+lib/libreoffice/basis${BV}/program/OGLTrans.uno.so
 lib/libreoffice/basis${BV}/program/addin/
 lib/libreoffice/basis${BV}/program/cde-open-url
 lib/libreoffice/basis${BV}/program/fundamentalbasisrc
@@ -966,6 +968,7 @@ lib/libreoffice/basis${BV}/share/config/soffice.cfg/modules/swxform/toolbar/tool
 lib/libreoffice/basis${BV}/share/config/soffice.cfg/modules/swxform/toolbar/viewerbar.xml
 lib/libreoffice/basis${BV}/share/config/soffice.cfg/simpress/
 lib/libreoffice/basis${BV}/share/config/soffice.cfg/simpress/effects.xml
+lib/libreoffice/basis${BV}/share/config/soffice.cfg/simpress/transitions-ogl.xml
 lib/libreoffice/basis${BV}/share/config/soffice.cfg/simpress/transitions.xml
 lib/libreoffice/basis${BV}/share/config/symbol/
 lib/libreoffice/basis${BV}/share/config/symbol/l_2people.bmp
@@ -1713,6 +1716,7 @@ lib/libreoffice/basis${BV}/share/registry/impress.xcd
 lib/libreoffice/basis${BV}/share/registry/lingucomponent.xcd
 lib/libreoffice/basis${BV}/share/registry/main.xcd
 lib/libreoffice/basis${BV}/share/registry/math.xcd
+lib/libreoffice/basis${BV}/share/registry/ogltrans.xcd
 lib/libreoffice/basis${BV}/share/registry/oo-ad-ldap.xcd.sample
 lib/libreoffice/basis${BV}/share/registry/oo-ldap.xcd.sample
 lib/libreoffice/basis${BV}/share/registry/pyuno.xcd
@@ -2339,11 +2343,11 @@ lib/libreoffice/share/extensions/presenter-screen/help/
 lib/libreoffice/share/extensions/presenter-screen/help/component.txt
 lib/libreoffice/share/extensions/presenter-screen/help/en-US/
 @comment lib/libreoffice/share/extensions/presenter-screen/help/en-US/caption/
-@comment lib/libreoffice/share/extensions/presenter-screen/help/en-US/caption/com.sun.PresenterScreen-openbsd_x86_64%2Fpresenter.xhp
-lib/libreoffice/share/extensions/presenter-screen/help/en-US/com.sun.PresenterScreen-openbsd_x86_64/
-lib/libreoffice/share/extensions/presenter-screen/help/en-US/com.sun.PresenterScreen-openbsd_x86_64/presenter.xhp
+@comment lib/libreoffice/share/extensions/presenter-screen/help/en-US/caption/com.sun.PresenterScreen-openbsd_${OA}%2Fpresenter.xhp
+lib/libreoffice/share/extensions/presenter-screen/help/en-US/com.sun.PresenterScreen-openbsd_${OA}/
+lib/libreoffice/share/extensions/presenter-screen/help/en-US/com.sun.PresenterScreen-openbsd_${OA}/presenter.xhp
 @comment lib/libreoffice/share/extensions/presenter-screen/help/en-US/content/
-@comment lib/libreoffice/share/extensions/presenter-screen/help/en-US/content/com.sun.PresenterScreen-openbsd_x86_64%2Fpresenter.xhp
+@comment lib/libreoffice/share/extensions/presenter-screen/help/en-US/content/com.sun.PresenterScreen-openbsd_${OA}%2Fpresenter.xhp
 lib/libreoffice/share/extensions/presenter-screen/help/en-US/help.db_
 lib/libreoffice/share/extensions/presenter-screen/help/en-US/help.ht_
 lib/libreoffice/share/extensions/presenter-screen/help/en-US/help.jar

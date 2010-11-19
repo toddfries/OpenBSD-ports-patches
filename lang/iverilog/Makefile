@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2010/10/18 19:20:42 espie Exp $
+# $OpenBSD: Makefile,v 1.4 2010/11/17 10:16:11 jasper Exp $
 
 COMMENT=		Verilog simulation and synthesis tool
 
-V=			0.9.2
+V=			0.9.3
 DISTNAME=		verilog-$V
 PKGNAME=		iverilog-$V
 CATEGORIES=		lang devel
@@ -21,7 +21,7 @@ WANTLIB += c m readline stdc++ termcap z
 
 USE_GMAKE=		Yes
 
-BUILD_DEPENDS=		::devel/bison
+BUILD_DEPENDS=		devel/bison
 YACC=			bison
 
 CONFIGURE_STYLE=	gnu
@@ -31,7 +31,6 @@ CFLAGS+=		-fPIC
 
 VVP_DOCS=		README.txt opcodes.txt
 DOC_DIR=		${PREFIX}/share/doc/iverilog
-USE_GROFF =	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${DOC_DIR}/{ivlpp,vvp}

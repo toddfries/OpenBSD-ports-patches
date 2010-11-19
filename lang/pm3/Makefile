@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2007/09/16 00:27:06 merdely Exp $
+# $OpenBSD: Makefile,v 1.10 2010/11/18 11:16:07 espie Exp $
 
 CATEGORIES=	lang
 ONLY_FOR_ARCHS=	i386
@@ -32,6 +32,7 @@ USE_MOTIF=	any
 post-extract:
 	@cd ${WRKDIST} && \
 	    tar zxf ${FULLDISTDIR}/pm3-${V}a-OpenBSD_386-boot.tgz
+	@rm -f ${WRKDIST}/language/modula3/m3compiler/m3cc/gcc/assert.h
 
 PATCH_DIST_STRIP=-p1
 

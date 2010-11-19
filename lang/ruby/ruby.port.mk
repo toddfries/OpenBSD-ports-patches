@@ -1,4 +1,4 @@
-# $OpenBSD: ruby.port.mk,v 1.34 2010/11/10 09:00:10 landry Exp $
+# $OpenBSD: ruby.port.mk,v 1.37 2010/11/17 08:05:18 espie Exp $
 
 # ruby module
 
@@ -25,7 +25,7 @@ FLAVORS+=		jruby
 # ruby19-* and jruby uses jruby-*.  In most cases, PKGNAME in the port
 # should be set to the same as DISTNAME, and this will insert the
 # correct package prefix.
-FULLPKGNAME?=		${MODRUBY_PKG_PREFIX}-${PKGNAME:S/^ruby-//}
+FULLPKGNAME?=		${MODRUBY_PKG_PREFIX}-${PKGNAME}
 
 # If the port can work on both ruby 1.9 and another version of ruby,
 # and gem installs binaries for it, the binaries on ruby 1.9 are installed
@@ -46,7 +46,7 @@ MODRUBY_REV=		1.8
 .      if ${FLAVOR:L:Mruby19} || ${FLAVOR:L:Mjruby}
 ERRORS+=		"Fatal: Conflicting flavors used: ${FLAVOR}"
 .      endif
-FLAVOR=
+FLAVOR=			${FLAVOR:L:Nruby18}
 MODRUBY_REV=		1.8
 .    elif ${FLAVOR:L:Mruby19}
 .      if ${FLAVOR:L:Mruby18} || ${FLAVOR:L:Mjruby}
@@ -113,9 +113,9 @@ MAKE_ENV+=		JAVA_MEM='-Xms256m -Xmx256m'
 .else
 RUBY=			${LOCALBASE}/bin/ruby${MODRUBY_BINREV}
 RAKE=			${LOCALBASE}/bin/rake${MODRUBY_BINREV}
-MODRUBY_RSPEC_DEPENDS =	:${MODRUBY_PKG_PREFIX}-rspec-*:devel/ruby-rspec,${MODRUBY_FLAVOR}
+MODRUBY_RSPEC_DEPENDS =	devel/ruby-rspec,${MODRUBY_FLAVOR}
 .  if ${MODRUBY_REV} == 1.8
-MODRUBY_RAKE_DEPENDS =	:ruby-rake-*:devel/ruby-rake
+MODRUBY_RAKE_DEPENDS =	devel/ruby-rake
 RSPEC=			${LOCALBASE}/bin/spec
 .  else
 RSPEC=			${LOCALBASE}/bin/spec${MODRUBY_BINREV}
@@ -125,17 +125,17 @@ RSPEC=			${LOCALBASE}/bin/spec${MODRUBY_BINREV}
 MODRUBY_REGRESS?=
 
 .if ${MODRUBY_REV} == jruby
-MODRUBY_RUN_DEPENDS=	::lang/jruby
+MODRUBY_RUN_DEPENDS=	lang/jruby
 .else
 MODRUBY_WANTLIB=	ruby${MODRUBY_BINREV}
-MODRUBY_RUN_DEPENDS=	:${MODRUBY_PKGSPEC}:lang/ruby/${MODRUBY_REV}
+MODRUBY_RUN_DEPENDS=	${MODRUBY_PKGSPEC}:lang/ruby/${MODRUBY_REV}
 .endif
 
 MODRUBY_LIB_DEPENDS=	${MODRUBY_RUN_DEPENDS}
 MODRUBY_BUILD_DEPENDS=	${MODRUBY_RUN_DEPENDS}
 
 .if ${MODRUBY_REV} == 1.8
-MODRUBY_ICONV_DEPENDS=	:ruby-iconv->=1.8,<=1.9:lang/ruby/${MODRUBY_REV},-iconv
+MODRUBY_ICONV_DEPENDS=	ruby-iconv->=1.8,<=1.9:lang/ruby/${MODRUBY_REV},-iconv
 .else
 MODRUBY_ICONV_DEPENDS=	${MODRUBY_RUN_DEPENDS}
 .endif
@@ -193,6 +193,10 @@ pre-configure:
 .  endif
 .endif
 
+MODRUBY_EXTRACT_COOKIE = ${WRKDIR}/.modruby_extract_done
+MODRUBY_BUILD_COOKIE = ${WRKBUILD}/.modruby_build_done
+MODRUBY_INSTALL_COOKIE = ${WRKINST}/.modruby_install_done
+
 .if ${CONFIGURE_STYLE:L:Mext} || ${CONFIGURE_STYLE:L:Mextconf}
 # Ruby C exensions are specific to an arch and are loaded as
 # shared libraries (not compiled into ruby), so set SHARED_ONLY
@@ -222,8 +226,8 @@ MASTER_SITES?=	${MASTER_SITE_RUBYGEMS}
 EXTRACT_SUFX=	.gem
 # Ruby 1.9 and JRuby ship with ruby-gems
 .  if ${MODRUBY_REV} == 1.8
-BUILD_DEPENDS+=	:ruby-gems->=1.3.7p0:devel/ruby-gems
-RUN_DEPENDS+=	:ruby-gems->=1.3.7p0:devel/ruby-gems
+BUILD_DEPENDS+=	devel/ruby-gems>=1.3.7p0
+RUN_DEPENDS+=	devel/ruby-gems>=1.3.7p0
 .  endif
 
 # Just like all ruby C extensions should set SHARED_ONLY,
@@ -275,36 +279,31 @@ GEM_FLAGS+=	--format-executable
 # under WRKDIST so it can be patched easily to remove or change dependencies.
 # Remove any signing of packages, as patching the gem could then break the
 # signatures.
-.  if !target(do-extract)
-do-extract:
+${MODRUBY_EXTRACT_COOKIE}:
 	mkdir -p ${WRKDIST} ${_GEM_CONTENT}
 	cd ${_GEM_CONTENT} && tar -xf ${FULLDISTDIR}/${DISTNAME}${EXTRACT_SUFX}
 	cd ${WRKDIST} && tar -xzf ${_GEM_DATAFILE} && rm ${_GEM_DATAFILE}
 	cd ${_GEM_CONTENT} && gunzip metadata.gz && \
 		mv metadata ${WRKDIST}/.metadata
 	rm -f ${_GEM_CONTENT}/*.gz.sig
-.  endif
 
 # Rebuild the gem manually after possible patching, then install it to a
 # temporary directory (not the final directory under fake, since that would
 # require root access and building C extensions as root).
-.  if !target(do-build)
-do-build:
+${MODRUBY_BUILD_COOKIE}:
 	cd ${WRKDIST} && gzip .metadata && \
 		mv .metadata.gz ${_GEM_CONTENT}/metadata.gz
 	cd ${WRKDIST} && find . -type f \! -name '*.orig'  -print | \
 		pax -wz -s '/^\.\///' -f ${_GEM_DATAFILE}
 	cd ${_GEM_CONTENT} && tar -cf ${WRKDIR}/${_GEM_PATCHED} *.gz
 	mkdir -p ${GEM_BASE}
-	env -i ${MAKE_ENV} HOME=${GEM_BASE}/.. ${GEM} install \
-		${GEM_FLAGS} ${WRKDIR}/${_GEM_PATCHED}
-.  endif
+	env -i ${MAKE_ENV} HOME=${GEM_BASE}/.. GEM_HOME=${GEM_BASE} \
+		${GEM} install ${GEM_FLAGS} ${WRKDIR}/${_GEM_PATCHED}
 
 # Take the temporary gem directory, install the binary stub files to
 # the appropriate directory, and move and fix ownership the gem library
 # files.
-.  if !target(do-install)
-do-install:
+${MODRUBY_INSTALL_COOKIE}:
 	if [ -d ${GEM_BASE_BIN} ]; then \
 		${INSTALL_DATA_DIR} ${PREFIX}/${GEM_BIN}; \
 		for f in ${GEM_BASE_BIN}/*; do \
@@ -315,30 +314,39 @@ do-install:
 	${INSTALL_DATA_DIR} ${GEM_ABS_PATH}
 	cd ${GEM_BASE_LIB} && mv * ${GEM_ABS_PATH}
 	chown -R ${SHAREOWN}:${SHAREGRP} ${GEM_ABS_PATH}
+
+.  if !target(do-extract)
+do-extract: ${MODRUBY_EXTRACT_COOKIE}
 .  endif
+.  if !target(do-build)
+do-build: ${MODRUBY_BUILD_COOKIE}
+.  endif
+.  if !target(do-install)
+do-install: ${MODRUBY_INSTALL_COOKIE}
+.  endif
+
 .elif ${CONFIGURE_STYLE:L:Msetup}
 MODRUBY_configure= \
 	cd ${WRKSRC}; ${SETENV} ${CONFIGURE_ENV} ${RUBY} setup.rb config \
 		--prefix=${PREFIX} ${CONFIGURE_ARGS};
-.  if !target(do-build)
-do-build:
+
+${MODRUBY_BUILD_COOKIE}:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${RUBY} setup.rb setup
-.  endif
-.  if !target(do-install)
-do-install:
+
+${MODRUBY_INSTALL_COOKIE}:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${RUBY} setup.rb install \
 		--prefix=${DESTDIR}
+
+.  if !target(do-build)
+do-build: ${MODRUBY_BUILD_COOKIE}
+.  endif
+.  if !target(do-install)
+do-install: ${MODRUBY_INSTALL_COOKIE}
 .  endif
 .endif
 
 # These are mostly used by the non-gem ports.
-SUBST_VARS+=		MODRUBY_BIN_REV MODRUBY_LIBREV MODRUBY_ARCH
-
-# This is only for backwards compatibility with old PLISTs. New
-# PLISTs should only use MODRUBY_LIBREV.
-.if ${MODRUBY_REV} == 1.8
-SUBST_VARS+=		MODRUBY_REV
-.endif
+SUBST_VARS+=		MODRUBY_LIBREV MODRUBY_ARCH
 
 # regression stuff
 

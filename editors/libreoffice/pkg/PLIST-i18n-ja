@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST-i18n-ja,v 1.1.1.1 2010/11/14 23:46:37 robert Exp $
+@comment $OpenBSD: PLIST-i18n-ja,v 1.4 2010/11/17 14:41:17 robert Exp $
+@conflict openoffice-i18n-ja-*
 !%%no_java%%
 lib/libreoffice/basis${BV}/help/ja/
 lib/libreoffice/basis${BV}/help/ja/default.css
@@ -64,7 +65,6 @@ lib/libreoffice/basis${BV}/presets/config/hatching_ja.soh
 lib/libreoffice/basis${BV}/presets/config/modern_ja.sog
 lib/libreoffice/basis${BV}/presets/config/palette_ja.soc
 lib/libreoffice/basis${BV}/presets/config/styles_ja.sod
-lib/libreoffice/basis${BV}/program/libdict_ja.so
 lib/libreoffice/basis${BV}/program/resource/abpja.res
 lib/libreoffice/basis${BV}/program/resource/accja.res
 lib/libreoffice/basis${BV}/program/resource/adabasuija.res
@@ -278,11 +278,11 @@ lib/libreoffice/share/extensions/pdfimport/registration/LICENSE_ja
 lib/libreoffice/share/extensions/presentation-minimizer/registration/LICENSE_ja
 lib/libreoffice/share/extensions/presenter-screen/help/ja/
 @comment lib/libreoffice/share/extensions/presenter-screen/help/ja/caption/
-@comment lib/libreoffice/share/extensions/presenter-screen/help/ja/caption/com.sun.PresenterScreen-openbsd_x86_64%2Fpresenter.xhp
-lib/libreoffice/share/extensions/presenter-screen/help/ja/com.sun.PresenterScreen-openbsd_x86_64/
-lib/libreoffice/share/extensions/presenter-screen/help/ja/com.sun.PresenterScreen-openbsd_x86_64/presenter.xhp
+@comment lib/libreoffice/share/extensions/presenter-screen/help/ja/caption/com.sun.PresenterScreen-openbsd_${OA}%2Fpresenter.xhp
+lib/libreoffice/share/extensions/presenter-screen/help/ja/com.sun.PresenterScreen-openbsd_${OA}/
+lib/libreoffice/share/extensions/presenter-screen/help/ja/com.sun.PresenterScreen-openbsd_${OA}/presenter.xhp
 @comment lib/libreoffice/share/extensions/presenter-screen/help/ja/content/
-@comment lib/libreoffice/share/extensions/presenter-screen/help/ja/content/com.sun.PresenterScreen-openbsd_x86_64%2Fpresenter.xhp
+@comment lib/libreoffice/share/extensions/presenter-screen/help/ja/content/com.sun.PresenterScreen-openbsd_${OA}%2Fpresenter.xhp
 lib/libreoffice/share/extensions/presenter-screen/help/ja/help.db_
 lib/libreoffice/share/extensions/presenter-screen/help/ja/help.ht_
 lib/libreoffice/share/extensions/presenter-screen/help/ja/help.jar

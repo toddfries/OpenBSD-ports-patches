@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2010/11/06 16:07:00 espie Exp $
+# $OpenBSD: Makefile,v 1.42 2010/11/18 22:30:04 sthen Exp $
 .include <bsd.own.mk>
 
 COMMENT-main=	PDF rendering library
@@ -9,6 +9,7 @@ V=		0.14.4
 DISTNAME=	poppler-$V
 CATEGORIES=	print
 PKGNAME-main=	poppler-$V
+REVISION-main=	0
 FULLPKGNAME-qt=	poppler-qt-$V
 FULLPKGNAME-qt4=poppler-qt4-$V
 
@@ -29,35 +30,28 @@ PERMIT_DISTFILES_CDROM=	Yes
 
 MASTER_SITES=	${HOMEPAGE}
 
-QT4INC=
-
 PSEUDO_FLAVORS=no_qt no_qt4
-MULTI_PACKAGES=-main
-FLAVOR-arm=no_qt4
-FLAVOR-powerpc=no_qt4
-FLAVOR?=${FLAVOR-${MACHINE_ARCH}}
+FLAVOR?=
 
-NOT_FOR_ARCHS-qt4 = arm powerpc
+MULTI_PACKAGES=-main
 
 cWANTLIB=	expat freetype fontconfig jpeg m z stdc++
 
-CXXFLAGS+=	-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 .if empty(FLAVOR:L:Mno_qt)
 MULTI_PACKAGES+=-qt
 MODULES+=	x11/qt3 converters/libiconv
-CXXFLAGS+=	-I${MODQT4_INCDIR}
 .else
 CONFIGURE_ARGS+=	--disable-poppler-qt
 .endif
 
+NOT_FOR_ARCHS-qt4 = arm
 .if empty(FLAVOR:L:Mno_qt4)
 MULTI_PACKAGES+=-qt4
 .endif
 
-.if ${MULTI_PACKAGES:L:M-qt4} && ${MACHINE_ARCH} != "arm" && ${MACHINE_ARCH} != "powerpc"
+.if ${MULTI_PACKAGES:L:M-qt4} && ${MACHINE_ARCH} != "arm"
 MODULES+=	x11/qt4 converters/libiconv
-CXXFLAGS+=	-I${MODQT3_INCDIR}
 .else
 CONFIGURE_ARGS+=	--disable-poppler-qt4
 .endif
@@ -80,8 +74,8 @@ WANTLIB-main=	${cWANTLIB} Xcursor Xext Xfixes Xi Xinerama Xrandr gio-2.0 \
 		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 pango-1.0 xml2 \
 		pangocairo-1.0 pangoft2-1.0 pixman-1 gdk_pixbuf-2.0 openjpeg \
 		X11 Xau Xcomposite Xdamage Xdmcp Xrender cairo pcre png \
-		pthread-stubs xcb xcb-render xcb-render-util gdk-x11-2.0 lcms \
-		${MODGETTEXT_WANTLIB}
+		pthread-stubs xcb xcb-render gdk-x11-2.0 lcms GL Xxf86vm \
+		drm xcb-shm ${MODGETTEXT_WANTLIB}
 WANTLIB-qt=	${cWANTLIB} lcms openjpeg xml2 poppler png ${MODQT3_WANTLIB} \
 		${MODLIBICONV_WANTLIB}
 WANTLIB-qt4=	${cWANTLIB} ICE QtCore QtGui QtXml SM X11 Xau Xdmcp Xext Xi \
@@ -96,11 +90,11 @@ CONFIGURE_ARGS+= --enable-xpdf-headers \
 		--disable-utils \
 		--enable-zlib
 
-CONFIGURE_ENV+=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include ${QT4INC}" \
-		CFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ENV+= LDFLAGS="-L${LOCALBASE}/lib"
 
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
+
+CFLAGS+=	-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 .include <bsd.port.mk>

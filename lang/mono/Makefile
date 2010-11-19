@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.53 2010/11/07 19:12:42 espie Exp $
+# $OpenBSD: Makefile,v 1.55 2010/11/18 22:40:16 robert Exp $
 
 COMMENT=	cross platform, open source .NET developement framework
 
-DISTNAME=	mono-2.8
-REVISION=	0
+DISTNAME=	mono-2.8.1
 
 CATEGORIES=	lang devel
 
@@ -40,10 +39,10 @@ SUBST_VARS=	LIBTOOL
 
 MAKE_FLAGS=	EXTERNAL_MCS=false
 
-BUILD_DEPENDS=	:bison-*:devel/bison \
+BUILD_DEPENDS=	devel/bison \
 		${RUN_DEPENDS}
-RUN_DEPENDS=	::x11/libgdiplus
-LIB_DEPENDS=	::devel/boehm-gc
+RUN_DEPENDS=	x11/libgdiplus
+LIB_DEPENDS=	devel/boehm-gc
 WANTLIB +=	gc
 
 AUTOCONF_VERSION=2.63
