@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2010/10/18 18:36:50 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2010/11/22 08:56:47 jasper Exp $
 
 COMMENT=		gnutella client with an easy to use interface
 
 DISTNAME=		mutella-0.4.5
+REVISION=		0
 CATEGORIES=		net
 
 HOMEPAGE=		http://mutella.sourceforge.net/
-
-MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,6 +20,6 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=mutella/}
 SEPARATE_BUILD=		simple
 
 CONFIGURE_STYLE=	gnu
-USE_GROFF =	Yes
+USE_GROFF =		Yes
 
 .include <bsd.port.mk>

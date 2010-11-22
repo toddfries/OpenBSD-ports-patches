@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2010/11/11 14:00:45 espie Exp $
+# $OpenBSD: Makefile,v 1.19 2010/11/22 09:30:38 espie Exp $
 
 COMMENT=	simple network library
 
@@ -18,7 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 MODULES=	devel/gettext \
 		x11/gnome
 
-LIB_DEPENDS=	::devel/glib2
+LIB_DEPENDS=	devel/glib2
 
 WANTLIB=	pcre glib-2.0 gthread-2.0
 
@@ -31,6 +31,6 @@ REGRESS_FLAGS=	CFLAGS="${CFLAGS} -D_internal_test" LIBTOOL=${LIBTOOL} \
 		CHECK_CFLAGS="-I${LOCALBASE}/include" \
 		CHECK_LIBS="-L${LOCALBASE}/lib -lcheck" \
 		SUBDIRS_CHECK=check
-REGRESS_DEPENDS=::devel/check
+REGRESS_DEPENDS=devel/check
 
 .include <bsd.port.mk>

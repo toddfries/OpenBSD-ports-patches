@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.76 2010/11/11 19:56:19 espie Exp $
+# $OpenBSD: Makefile,v 1.78 2010/11/22 10:16:08 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -18,11 +18,11 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c crypto lua.>=5.1 m pcre ssl z
+WANTLIB=		c crypto lua>=5.1 m pcre ssl z
 
-LIB_DEPENDS+=	::devel/pcre \
-		::lang/lua
-RUN_DEPENDS+=	:spawn-fcgi-*:www/spawn-fcgi
+LIB_DEPENDS+=	devel/pcre \
+		lang/lua
+RUN_DEPENDS+=	www/spawn-fcgi
 
 USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
@@ -42,14 +42,14 @@ FLAVOR?=
 
 .if ${FLAVOR:L:Mldap}
 CONFIGURE_ARGS+= --with-ldap
-LIB_DEPENDS+=	::databases/openldap
+LIB_DEPENDS+=	databases/openldap
 WANTLIB+=	sasl2 asn1 com_err gssapi krb5 lber ldap
 .endif
 
 .if ${FLAVOR:L:Mmysql}
 CONFIGURE_ARGS+= --with-mysql
-LIB_DEPENDS+=	::databases/mysql
-WANTLIB +=	mysqlclient.>=10
+LIB_DEPENDS+=	databases/mysql
+WANTLIB +=	mysqlclient>=10
 .endif
 
 post-extract:

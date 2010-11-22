@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/12 11:58:36 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.9 2010/11/22 09:34:10 espie Exp $
 
 COMMENT = 	gnu privacy guard - a free PGP replacement
 
@@ -35,26 +35,26 @@ MODULES = 		devel/gettext
 FLAVORS = 		ldap
 FLAVOR ?=
 
-LIB_DEPENDS = 		::devel/libusb \
-			::archivers/bzip2 \
-			::security/libassuan \
-			::security/libgcrypt \
-			::security/libksba \
-			::net/curl \
-			::devel/pth
+LIB_DEPENDS = 		devel/libusb \
+			archivers/bzip2 \
+			security/libassuan \
+			security/libgcrypt \
+			security/libksba \
+			net/curl \
+			devel/pth
 
 .if ${FLAVOR:L:Mldap}
 CONFIGURE_ARGS +=	--enable-ldap
 WANTLIB +=		ldap
-LIB_DEPENDS +=		::databases/openldap
+LIB_DEPENDS +=		databases/openldap
 .else
 CONFIGURE_ARGS +=	--disable-ldap
 .endif
 
-RUN_DEPENDS = 		::security/pinentry
+RUN_DEPENDS = 		security/pinentry
 
 # gpg-agent must be installed to run the regress tests
-REGRESS_DEPENDS = 	:${PKGNAME}:${BUILD_PKGPATH}
+REGRESS_DEPENDS = 	${PKGNAME}:${BUILD_PKGPATH}
 
 USE_GMAKE = 		Yes
 USE_GROFF =		Yes

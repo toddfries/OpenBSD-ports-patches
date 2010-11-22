@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.49 2010/11/11 11:54:09 espie Exp $
+# $OpenBSD: Makefile,v 1.51 2010/11/22 09:30:38 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -20,11 +20,11 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB += c crypto form menu ncurses panel pcap pthread ssl z
-WANTLIB += lib/libnet-1.1/net.=11 ltdl pcre
+WANTLIB += lib/libnet-1.1/net=11 ltdl pcre
 
-LIB_DEPENDS=	:libnet->=1.1,<1.2:net/libnet/1.1 \
-		::devel/libtool,-ltdl \
-		::devel/pcre
+LIB_DEPENDS=	libnet->=1.1,<1.2:net/libnet/1.1 \
+		devel/libtool,-ltdl \
+		devel/pcre
 
 FLAVORS=	no_x11
 FLAVOR?=
@@ -43,7 +43,7 @@ CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 CONFIGURE_ARGS+= --enable-gtk=no
 .else
 MODULES =	devel/gettext
-LIB_DEPENDS +=	::x11/gtk+2
+LIB_DEPENDS +=	x11/gtk+2
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0

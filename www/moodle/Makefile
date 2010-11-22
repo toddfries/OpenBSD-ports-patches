@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2009/12/30 10:01:31 kevlo Exp $
+# $OpenBSD: Makefile,v 1.14 2010/11/22 09:40:48 espie Exp $
 
 COMMENT=	learning management system
 
@@ -25,11 +25,11 @@ PREFIX=		/var/www
 INSTDIR=	${PREFIX}/moodle
 SUBST_VARS=	INSTDIR
 
-RUN_DEPENDS=	:php5-curl-*:www/php5/extensions,-curl \
-		:php5-gd-*:www/php5/extensions,-gd \
-		:php5-mbstring-*:www/php5/extensions,-mbstring \
-		:php5-xmlrpc-*:www/php5/extensions,-xmlrpc
-RUN_DEPENDS+=	:php5-mysql-*|php5-pgsql-*:www/php5/extensions,-mysql
+RUN_DEPENDS=	www/php5/extensions,-curl \
+		www/php5/extensions,-gd \
+		www/php5/extensions,-mbstring \
+		www/php5/extensions,-xmlrpc
+RUN_DEPENDS+=	php5-mysql-*|php5-pgsql-*:www/php5/extensions,-mysql
 
 do-install:
 	@cd ${PREFIX} && tar zxf ${FULLDISTDIR}/${DISTNAME}${EXTRACT_SUFX}

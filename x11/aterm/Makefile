@@ -1,7 +1,11 @@
-# $OpenBSD: Makefile,v 1.45 2010/10/24 21:15:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.47 2010/11/22 08:56:47 jasper Exp $
+
+COMMENT=	color vt102 terminal emulator with transparency support
 
 DISTNAME=	aterm-0.4.2
-REVISION=	2
+REVISION=	3
+
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 CATEGORIES=	x11
 
@@ -13,22 +17,25 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		ICE SM X11 Xpm c util
 
-COMMENT=	color vt102 terminal emulator with transparency support
 HOMEPAGE=	http://aterm.sourceforge.net/
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=aterm/}
 
 USE_GROFF =	Yes
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS=	--enable-xgetdefault --enable-ttygid --enable-utmp \
-		--with-xpm --enable-transparency \
-		--enable-background-image --enable-fading
+CONFIGURE_ARGS=	--enable-xgetdefault \
+		--enable-ttygid \
+		--enable-utmp \
+		--with-xpm \
+		--enable-transparency \
+		--enable-background-image \
+		--enable-fading
 CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include" LIBS="-lutil"
 
 FLAVORS=	big5
 FLAVOR?=
 
 .if ${FLAVOR:L:Mbig5}
-RUN_DEPENDS=	::chinese/taipeifonts
+RUN_DEPENDS=	chinese/taipeifonts
 PATCH_LIST=	patch-* big5-patch-src_Makefile_in
 
 CONFIGURE_ARGS+= --enable-big5

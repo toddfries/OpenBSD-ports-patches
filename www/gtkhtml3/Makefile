@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.43 2010/11/15 18:21:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2010/11/22 14:28:14 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,6 +9,9 @@ GNOME_VERSION=		3.32.1
 API_VERSION=		3.14
 
 PKGNAME=		gtkhtml3-${VERSION}
+REVISION=		0
+
+HOMEPAGE=		http://www.gnome.org/
 
 SHARED_LIBS +=  gtkhtml-3.14         3.1      # 20.1
 SHARED_LIBS +=  gtkhtml-editor-3.14  0.0      # unknown
@@ -36,12 +39,12 @@ WANTLIB += drm xcb-shm
 MODULES=		devel/gettext \
 			x11/gnome
 
-LIB_DEPENDS=		::devel/gconf2 \
-			::textproc/enchant
+LIB_DEPENDS=		devel/gconf2 \
+			textproc/enchant
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		::devel/iso-codes \
-			:gnome-icon-theme-*:x11/gnome/icon-theme
+RUN_DEPENDS=		devel/iso-codes \
+			x11/gnome/icon-theme
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=        ${CONFIGURE_SHARED}

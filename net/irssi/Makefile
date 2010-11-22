@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2010/11/11 14:00:45 espie Exp $
+# $OpenBSD: Makefile,v 1.48 2010/11/22 09:34:10 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -23,7 +23,7 @@ WANTLIB=	c crypto m ncurses perl ssl util pcre glib-2.0 gmodule-2.0
 
 MODULES=	devel/gettext
 
-LIB_DEPENDS=	::devel/glib2
+LIB_DEPENDS=	devel/glib2
 
 USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
@@ -42,7 +42,7 @@ FLAVOR?=
 
 .if ${FLAVOR:L:Msocks}
 CONFIGURE_ARGS+=	--with-socks
-BUILD_DEPENDS+=		::security/dante
+BUILD_DEPENDS+=		security/dante
 .endif
 
 MAKE_FLAGS=	scriptdir="${SYSCONFDIR}/irssi/scripts" \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2010/11/06 23:49:20 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2010/11/22 10:16:08 espie Exp $
 
 COMMENT=	gui for ogle
 CATEGORIES=	x11
@@ -31,10 +31,10 @@ WANTLIB=	GL GLU X11 Xext Xcursor Xrandr bz2 c jpeg \
 		Xrender expat fontconfig freetype \
 		pthread-stubs xcb
 
-LIB_DEPENDS=	::devel/fox \
-		::x11/ogle
+LIB_DEPENDS=	devel/fox \
+		x11/ogle
 	
-WANTLIB +=	FOX-1.6.>=1 dvdcontrol msgevents
+WANTLIB +=	FOX-1.6>=1 dvdcontrol msgevents
 		
 
 MAKE_FLAGS=	-f ${WRKCONF}/conf.mk 

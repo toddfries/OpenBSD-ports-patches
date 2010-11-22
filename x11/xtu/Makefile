@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2010/10/24 21:15:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2010/11/22 08:56:47 jasper Exp $
 
 COMMENT=	configurable analog clock for X11
 DISTNAME=	xtu-1.3
-REVISION=	2
+REVISION=	3
 CATEGORIES=	x11 sysutils
-
-MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # BSD license
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,7 +22,7 @@ FLAVORS=	imlib
 FLAVOR?=
 
 .if ${FLAVOR:L:Mimlib}
-LIB_DEPENDS=	::graphics/imlib
+LIB_DEPENDS=	graphics/imlib
 WANTLIB+=	ICE SM m z jpeg png tiff ungif Imlib
 XTUFLAGS=	"-DUSE_IMLIB ${CFLAGS} `imlib-config --cflags`"
 MAKE_FLAGS+=	LOCAL_LIBRARIES="`imlib-config --libs`"

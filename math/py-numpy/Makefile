@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2010/11/07 20:33:59 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2010/11/22 09:30:38 espie Exp $
 
 COMMENT=		fast array and numeric programming library for Python
 
@@ -28,12 +28,12 @@ MODULES=		lang/python \
 MODPY_SETUPTOOLS=	Yes
 MODPY_SETUP=		setupegg.py
 
-REGRESS_DEPENDS=	::devel/py-nose
+REGRESS_DEPENDS=	devel/py-nose
 
 MODFORTRAN_COMPILER =	g77
 
 BUILD_DEPENDS = ${MODFORTRAN_BUILD_DEPENDS}
-LIB_DEPENDS=            ::math/lapack \
+LIB_DEPENDS=            math/lapack \
 			${MODFORTRAN_LIB_DEPENDS}
 
 # XXX Segmentation fault on powerpc when building py-scipy:

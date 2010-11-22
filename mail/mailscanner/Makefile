@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.33 2010/11/16 09:17:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2010/11/22 09:28:34 espie Exp $
 
 COMMENT=	virus/spam scanning framework
 
 V=		4.81
 Vs=		4
 Vss=		${Vs}-1
-REVISION=	1
+REVISION=	2
 CATEGORIES=	mail
 MASTER_SITES=	http://mailscanner.info/files/4/tar/
 DISTNAME=	mailscanner-${V}.${Vss}
@@ -17,24 +17,24 @@ HOMEPAGE=	http://www.mailscanner.info/
 
 MAINTAINER=	Brad Smith <brad@comstyle.com>
 
-RUN_DEPENDS+=	::archivers/lha \
-		:p5-Archive-Zip->=1.30p0:archivers/p5-Archive-Zip \
-		::archivers/unzip \
-		::archivers/zoo \
-		::converters/p5-Convert-BinHex \
-		::converters/p5-Convert-TNEF \
-		::databases/p5-DBD-SQLite \
-		::databases/p5-DBI \
-		::devel/p5-OLE-Storage_Lite \
-		::devel/p5-Sys-SigAction \
-		::mail/p5-MIME-tools \
-		:tnef->=1.4.7:mail/tnef \
-		::net/p5-Net-CIDR \
-		::net/p5-Sys-Hostname-Long \
-		::net/wget \
-		::sysutils/p5-Filesys-Df \
-		::textproc/antiword \
-		::www/p5-HTML-Parser
+RUN_DEPENDS+=	archivers/lha \
+		archivers/p5-Archive-Zip>=1.30p0 \
+		archivers/unzip \
+		archivers/zoo \
+		converters/p5-Convert-BinHex \
+		converters/p5-Convert-TNEF \
+		databases/p5-DBD-SQLite \
+		databases/p5-DBI \
+		devel/p5-OLE-Storage_Lite \
+		devel/p5-Sys-SigAction \
+		mail/p5-MIME-tools \
+		mail/tnef>=1.4.7 \
+		net/p5-Net-CIDR \
+		net/p5-Sys-Hostname-Long \
+		net/wget \
+		sysutils/p5-Filesys-Df \
+		textproc/antiword \
+		www/p5-HTML-Parser
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
