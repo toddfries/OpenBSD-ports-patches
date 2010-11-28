@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2010/11/18 12:03:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.47 2010/11/26 07:07:56 espie Exp $
 
 CATEGORIES =	audio x11 x11/kde
 COMMENT =	music player for KDE
@@ -7,7 +7,7 @@ HOMEPAGE =	http://amarok.kde.org/
 V =		1.4.10
 MASTER_SITES =	${MASTER_SITE_KDE:=stable/amarok/$V/src/}
 DISTNAME =	amarok-$V
-REVISION =	10
+REVISION =	11
 EXTRACT_SUFX =	.tar.bz2
 
 # GPLv2/LGPLv2/GFDL
@@ -31,7 +31,7 @@ RUN_DEPENDS =	devel/desktop-file-utils
 LIB_DEPENDS +=	x11/kde/libs3 \
 		x11/kde/base3 \
 		x11/gtk+2 \
-		taglib->=1.4:audio/taglib \
+		audio/taglib>=1.4 \
 		multimedia/xine-lib \
 		databases/sqlite3 \
 		audio/libgpod \

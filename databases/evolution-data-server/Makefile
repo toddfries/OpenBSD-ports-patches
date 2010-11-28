@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.75 2010/11/15 18:34:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.77 2010/11/26 14:50:10 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -50,9 +50,9 @@ MODULES=		devel/gettext \
 
 BUILD_DEPENDS=		devel/bison \
 			devel/gperf
-LIB_DEPENDS= 		db->=4,<5:databases/db/v4 \
+LIB_DEPENDS= 		databases/db/v4 \
 			databases/openldap \
-			nss->=3.11.4p1:security/nss \
+			security/nss>=3.11.4p1 \
 			textproc/libical \
 			x11/gnome/libgweather \
 			devel/libgdata \

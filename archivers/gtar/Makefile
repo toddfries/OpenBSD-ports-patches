@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.60 2010/11/15 00:22:45 espie Exp $
+# $OpenBSD: Makefile,v 1.62 2010/11/27 21:02:54 naddy Exp $
 
 COMMENT=	GNU version of the traditional tape archiver
 
 DISTNAME=	tar-1.25
 PKGNAME=	g${DISTNAME}
+REVISION=	0
 CATEGORIES=	archivers
 HOMEPAGE=	http://www.gnu.org/software/tar/
 
@@ -44,7 +45,7 @@ FLAVOR?=
 .if ${FLAVOR:L:Mstatic}
 LDSTATIC=	-static
 MODULES=
-BUILD_DEPENDS+=	gettext->=0.17:devel/gettext
+BUILD_DEPENDS+=	devel/gettext>=0.17
 CONFIGURE_ENV+=	SHLIBEXT=""
 .else
 LDSTATIC=

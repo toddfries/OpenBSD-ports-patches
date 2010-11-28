@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# $OpenBSD: mksqlitedb,v 1.27 2010/10/24 20:44:50 ajacoutot Exp $
+# $OpenBSD: mksqlitedb,v 1.29 2010/11/26 20:32:38 espie Exp $
 #
 # Copyright (c) 2006-2010 Marc Espie <espie@openbsd.org>
 #
@@ -31,15 +31,16 @@ use Inserter;
 use DBI;
 
 
-our ($opt_v);
+our ($opt_v, $opt_q);
 
-getopts('v');
+getopts('vq:');
 my $dbname;
 if (@ARGV > 0) {
 	$dbname = shift;
 } else {
 	$dbname = 'sqlports';
 }
+
 my $inserter = InserterList->new;
 
 my $db = DBI->connect("dbi:SQLite:dbname=$dbname", '', '', {AutoCommit => 0});
@@ -93,6 +94,7 @@ my $vars = {
     PERMIT_PACKAGE_CDROM => 'YesKeyVar',
     PERMIT_PACKAGE_FTP=> 'YesKeyVar',
     PKGNAME => 'AnyVar',
+    PKGSPEC => 'AnyVar',
     PKG_ARCH => 'ArchKeyVar',
     PSEUDO_FLAVORS => 'PseudoFlavorsVar',
     REGRESS_DEPENDS => 'RegressDependsVar',
@@ -108,7 +110,7 @@ my $vars = {
     USE_GMAKE => 'YesNoVar',
     USE_GROFF => 'YesNoVar',
     USE_LIBTOOL => 'YesNoGnuVar',
-    USE_MOTIF => 'YesNoVar',
+    USE_MOTIF => 'MotifVar',
     WANTLIB => 'WantlibVar',
 };
 
@@ -150,4 +152,11 @@ $inserter->commit_to_db;
 
 while (my ($k, $v) = each %$unknown) {
 	print STDERR "Unknown variable $k in $v\n";
+}
+
+if (defined $opt_q) {
+	open(my $log, ">", $opt_q) or die $!;
+	$inserter->write_log($log);
+} else {
+	$inserter->write_log(\*STDERR);
 }

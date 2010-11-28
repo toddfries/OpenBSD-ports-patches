@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.83 2010/11/15 19:46:09 espie Exp $
+# $OpenBSD: Makefile,v 1.86 2010/11/26 07:19:01 espie Exp $
 
 COMMENT-main=		subversion revision control system
 COMMENT-perl=		perl interface to subversion
@@ -6,7 +6,7 @@ COMMENT-python=		python interface to subversion
 COMMENT-ruby=		ruby interface to subversion
 COMMENT-ap2=		apache2 subversion modules
 
-VERSION=		1.6.13
+VERSION=		1.6.15
 DISTNAME=		subversion-${VERSION}
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-perl=	p5-SVN-${VERSION}
@@ -60,7 +60,7 @@ MULTI_PACKAGES=	-main
 
 MAINSPEC =	${PKGNAME}:devel/subversion,-main
 LIB_DEPENDS-main = ${LIB_DEPENDS} \
-		neon->=0.26.2:net/neon \
+		net/neon>=0.26.2 \
 		devel/apr \
 		devel/apr-util \
 		security/cyrus-sasl2 \
@@ -138,7 +138,7 @@ WANTLIB-ruby +=	${_lib}>=${SO_VERSION}
 .  endfor
 
 MODULES+=	lang/ruby
-BUILD_DEPENDS+=	swig->=1.3.36:devel/swig
+BUILD_DEPENDS+=	devel/swig>=1.3.36
 .endif
 
 .if ${FLAVOR:L:Mgnome_keyring}

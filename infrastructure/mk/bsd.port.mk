@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1062 2010/11/20 19:57:59 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1064 2010/11/25 18:06:37 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -96,7 +96,7 @@ _ALL_VARIABLES = BUILD_DEPENDS IGNORE IS_INTERACTIVE \
 	SUBPACKAGE MULTI_PACKAGES
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS \
-	PKG_ARCH EPOCH REVISION PKGSPEC
+	PKG_ARCH EPOCH REVISION
 _ALL_VARIABLES_PER_ARCH =
 
 .if ${DPB:L:Mfetch}
@@ -117,7 +117,7 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
-	ONLY_FOR_ARCHS NOT_FOR_ARCHS \
+	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC \
 	PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM WANTLIB CATEGORIES DESCR
 .endif
 # special purpose user settings
@@ -1432,6 +1432,9 @@ _CHECK_DEPENDS +:= ${${_v}_DEPENDS}
 _CHECK_DEPENDS +:= ${${_v}_DEPENDS${_s}}
 .  endfor
 .endfor
+.if ${_CHECK_DEPENDS:M\:*}
+ERRORS += "Fatal: old style depends ${_CHECK_DEPENDS:M\:*}"
+.endif
 
 # normalization of depends to remove extra :
 
@@ -1441,6 +1444,9 @@ _CHECK_DEPENDS +:= ${${_v}_DEPENDS${_s}}
 
 .for _v in BUILD LIB RUN REGRESS
 ${_v}_DEPENDS := ${${_v}_DEPENDS:S/^://:S/^://:C,^([^:]+/[^:<=>]+)([<=>][^:]+)$,STEM-\2:\1,}
+.endfor
+.for _v in BUILD REGRESS
+${_v}_DEPENDS := ${${_v}_DEPENDS:C,^([^:]+/[^:<=>]+)([<=>][^:]+)(:patch|:configure|:build)$,STEM-\2:\1\3,}
 .endfor
 .for _s in ${MULTI_PACKAGES}
 .  for _v in RUN LIB
@@ -1854,7 +1860,7 @@ _internal-prepare: _internal-build-depends _internal-buildlib-depends \
 # and the rules for the actual dependencies
 
 _print-pkgspec:
-	@echo ${PKGSPEC${SUBPACKAGE}}
+	@echo '${PKGSPEC${SUBPACKAGE}}'
 
 _print-packagename:
 .if ${_FULL_PACKAGE_NAME:L} == "yes"
