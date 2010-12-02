@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.856 2010/11/23 20:11:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.860 2010/12/01 14:29:39 millert Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -297,8 +297,8 @@
      SUBDIR += monotone
      SUBDIR += mowgli
      SUBDIR += mpfr
+     SUBDIR += msp430
      SUBDIR += mysql++
-     SUBDIR += mysql-gui-common
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
@@ -480,6 +480,7 @@
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Device-USB
      SUBDIR += p5-Directory-Scratch
+     SUBDIR += p5-EV
      SUBDIR += p5-Env-PS1
      SUBDIR += p5-Error
      SUBDIR += p5-Event
@@ -851,6 +852,7 @@
      SUBDIR += py-asn1
      SUBDIR += py-babel
      SUBDIR += py-buildbot
+     SUBDIR += py-buildslave
      SUBDIR += py-bytecodeassembler
      SUBDIR += py-cheetah
      SUBDIR += py-configobj

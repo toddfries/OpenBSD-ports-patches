@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/25 13:19:35 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.8 2010/12/01 09:22:49 dcoppa Exp $
 
 COMMENT =	clone of rxvt with Unicode and Xft support
 
 DISTNAME =	rxvt-unicode-9.09
+REVISION =	0
 CATEGORIES =	x11
 
 EXTRACT_SUFX =	.tar.bz2
@@ -21,8 +22,7 @@ PERMIT_DISTFILES_FTP =	Yes
 WANTLIB =	X11 Xau Xdmcp Xft Xrender c expat fontconfig \
 		freetype m perl pthread-stubs util xcb z
 
-CONFIGURE_STYLE =	autoconf
-AUTOCONF_VERSION =	2.61
+CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--enable-256-color \
 			--enable-perl \
 			--with-term=rxvt-256color \

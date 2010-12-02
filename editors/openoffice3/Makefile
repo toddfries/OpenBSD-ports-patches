@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.65 2010/11/26 14:50:10 espie Exp $
+# $OpenBSD: Makefile,v 1.69 2010/11/30 18:19:33 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,19 +7,24 @@ COMMENT-kde=	optional integration of OpenOffice to the KDE environment
 COMMENT-java=	optional integration of OpenOffice java features
 
 MR=		3.3
-VERSION=	${MR}.0rc6_20101120
+VERSION=	${MR}.0rc7_20101126
 DISTNAME=	OOo_${VERSION}
-WRKDIST=	${WRKDIR}/OOO330_m16
+WRKDIST=	${WRKDIR}/OOO330_m17
 PKGNAME=	openoffice-${VERSION}
 PKGNAME-main=	openoffice-${VERSION}
 PKGNAME-kde=	openoffice-kde-${VERSION}
 PKGNAME-java=	openoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 
+REVISION-main=	1
+REVISION-kde=	0
+REVISION-java=	0
+
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 HOMEPAGE=	http://www.openoffice.org/
-MASTER_SITES=	http://vlaai.snt.utwente.nl/pub/software/openoffice/extended/3.3.0rc6/ \
+MASTER_SITES=	http://www.bsd.hu/~robert/ooo/ \
+		http://vlaai.snt.utwente.nl/pub/software/openoffice/extended/3.3.0rc7/ \
 		http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSION}/ \
 		http://ftp.linux.cz/pub/localization/OpenOffice.org/devel/build/Sources/ \
 		http://humppa.hu/ooo/ \
@@ -102,7 +107,7 @@ FLAVORS=	debug no_java
 FLAVOR?=
 
 .if ${FLAVOR:L:Mparallel}
-DISTFILES+=	nbcat-0.1.tar.gz:0
+EDISTFILES+=	nbcat-0.1.tar.gz:0
 .else
 SUPDISTFILES+=	nbcat-0.1.tar.gz:0
 .endif
@@ -122,6 +127,7 @@ COMMENT-i18n-$l=	$l language pack for OpenOffice.Org
 RUN_DEPENDS-i18n-$l=	editors/openoffice3
 WANTLIB-i18n-$l=
 LIB_DEPENDS-i18n-$l=
+REVISION-i18n-$l=	0
 .endfor
 .endif
 
@@ -281,7 +287,7 @@ JAVAFIX=	export LD_LIBRARY_PATH=${JAVA_HOME}/jre/lib/${ARCH}:${JAVA_HOME}/jre/li
 JAVAFIX=	true
 .endif
 
-.if ${FLAVOR:L:Mpparallel}
+.if ${FLAVOR:L:Mparallel}
 NCPU!=		echo $$((`sysctl -n hw.ncpu`+1))
 NCPUFLAG=	-P ${NCPU}
 .endif
@@ -346,7 +352,7 @@ do-install:
                 ${PREFIX}/bin/soffice \
 
 	cd ${PREFIX}/bin && \
-	for app in sbase scalc sdraw simpress smath setofficelang spadmin swriter; do \
+	for app in sbase scalc sdraw simpress smath setofficelang spadmin swriter openoffice3; do \
 		ln -sf soffice $$app ; done
 
 .include <bsd.port.mk>

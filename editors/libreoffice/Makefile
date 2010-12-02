@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/18 19:17:33 robert Exp $
+# $OpenBSD: Makefile,v 1.6 2010/12/01 14:32:49 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -15,6 +15,8 @@ PKGNAME-main=	libreoffice-${VERSION}
 PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
 CATEGORIES=	editors productivity
+
+REVISION-main=	0
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
@@ -89,7 +91,7 @@ FLAVORS=	debug no_java
 FLAVOR?=
 
 .if ${FLAVOR:L:Mparallel}
-DISTFILES+=	nbcat-0.1.tar.gz
+EDISTFILES+=	nbcat-0.1.tar.gz
 .else
 SUPDISTFILES+=	nbcat-0.1.tar.gz
 .endif
@@ -139,6 +141,8 @@ LIB_DEPENDS-main=x11/gtk+2 \
 		textproc/redland \
 		textproc/hunspell \
 		devel/cppunit \
+		print/poppler \
+		x11/gnome/vfs2 \
 		${MODGCONF2_LIB_DEPENDS}
 WANTLIB-main=	gdk-x11-2.0>=400.14 gtk-x11-2.0>=400.14 \
 		db>=4 xslt>=3 curl>=7 neon>=24 \
@@ -210,6 +214,11 @@ CONFIGURE_ARGS+=--with-java \
 		--with-db-jar=${LOCALBASE}/lib/db4/db.jar
 .else
 CONFIGURE_ARGS+=--without-java
+.endif
+
+.if ${FLAVOR:L:Mparallel}
+NCPU!=		echo $$((`sysctl -n hw.ncpu`+1))
+CONFIGURE_ARGS+=--with-num-cpus=${NCPU}
 .endif
 
 .if ${FLAVOR:L:Mdebug}
