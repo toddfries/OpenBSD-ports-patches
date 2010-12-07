@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.42 2010/12/01 19:57:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.49 2010/12/05 22:20:37 ajacoutot Exp $
+
+BROKEN=		talk to ajacoutot@ for details
 
 COMMENT-main=	Cyrus IMAP server
 COMMENT-perl=	perl utils for the Cyrus IMAP server
@@ -9,7 +11,8 @@ PKGNAME-main=	${DISTNAME}
 FULLPKGNAME-perl=cyrus-imapd-perl-${V}
 FULLPKGPATH-perl=mail/cyrus-imapd,-perl
 
-REVISION=	0
+REVISION-main=	5
+REVISION-perl=	0
 
 CATEGORIES=	mail
 
@@ -23,7 +26,8 @@ PERMIT_PACKAGE_FTP=	yes
 PERMIT_DISTFILES_CDROM=	yes
 PERMIT_DISTFILES_FTP=	yes
 
-MASTER_SITES=	ftp://ftp.cyrusimap.org/cyrus-imapd/
+MASTER_SITES=	ftp://ftp.cyrusimap.org/cyrus-imapd/ \
+		ftp://ftp.cyrusimap.org/cyrus-imapd/OLD-VERSIONS/
 
 WANTLIB +=	crypto ssl z sasl2 lib/db4/db>=4
 
@@ -94,6 +98,7 @@ SIEVEREF=	lib/imapoptions man/imapd.conf.5 \
 		tools/upgradesieve doc/text/install-upgrade
 
 pre-configure:
+	${SUBST_CMD} ${WRKSRC}/{lib/imapoptions,man/imapd.conf.5}
 .for i in ${MAN8}
 	@perl -pi -e "s,${i}\(8\),cyrus-${i}\(8\),g" ${WRKSRC}/man/*.[0-9]
 .endfor

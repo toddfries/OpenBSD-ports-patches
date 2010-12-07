@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2010/11/19 09:02:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.47 2010/12/06 19:15:55 ajacoutot Exp $
 
 COMMENT-main =		bad elements for GStreamer
 COMMENT-neon =		neon element for GStreamer (plugins-bad)
@@ -10,7 +10,10 @@ DISTNAME =		gst-plugins-bad-${V}
 PKGNAME-main =		gstreamer-plugins-bad-${V}
 PKGNAME-neon =		gstreamer-neon-${V}
 PKGNAME-mjpeg =		gstreamer-mjpeg-${V}
-REVISION-main =		3
+
+REVISION-main =		7
+REVISION-neon =		1
+REVISION-mjpeg =	1
 
 MULTI_PACKAGES =	-main -neon -mjpeg
 
@@ -22,7 +25,7 @@ MASTER_SITES =		${MASTER_SITE_GST:=gst-plugins-bad/}
 MODULES =		devel/gettext
 
 WANTLIB =		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 xml2 \
-			z m pcre gstreamer-0.10
+			z m pcre gstreamer-0.10 util
 
 .for i in ${MULTI_PACKAGES}
 REGRESS_DEPENDS +=	${BASE_PKGPATH},${i}
@@ -32,7 +35,7 @@ LIB_DEPENDS =		${P}/core>=0.10
 RUN_DEPENDS =		${BUILD_PKGPATH}
 BUILD_DEPENDS +=        audio/ladspa
 
-WANTLIB-main =		${WANTLIB} xcb-render xcb-render-util \
+WANTLIB-main =		${WANTLIB} xcb-render \
 			X11 Xau Xdmcp Xrender bz2 pthread-stubs \
 			sndio usbhid xcb gstbase-0.10 gstcontroller-0.10 \
 			cairo croco-0.6 expat fontconfig freetype stdc++ \
@@ -42,7 +45,8 @@ WANTLIB-main =		${WANTLIB} xcb-render xcb-render-util \
 			gstriff-0.10 gstpbutils-0.10 gstrtp-0.10 gstsdp-0.10 \
 			gsttag-0.10 sndfile mpcdec faac faad dca exif xvidcore \
 			SDL mms gsm rsvg-2 schroedinger-1.0>=2.0 cdaudio BPM \
-			SoundTouch dvdnav jasper
+			SoundTouch dvdnav jasper GL Xdamage Xext Xfixes Xxf86vm \
+			drm xcb-shm vpx
 LIB_DEPENDS-main = 	${LIB_DEPENDS} \
 			${P}/plugins-base \
 			audio/faac \
@@ -57,6 +61,7 @@ LIB_DEPENDS-main = 	${LIB_DEPENDS} \
 			graphics/jasper \
 			graphics/libexif \
 			multimedia/libmms \
+			multimedia/libvpx \
 			multimedia/schroedinger>=1.0.10 \
 			multimedia/xvidcore \
 			x11/gnome/librsvg \
@@ -71,7 +76,7 @@ LIB_DEPENDS-neon =	${LIB_DEPENDS} \
 			net/neon
 
 WANTLIB-mjpeg =		${WANTLIB} \
-			gstbase-0.10 mjpegutils mplex2 mpeg2encpp stdc++
+			gstbase-0.10 stdc++ mjpegutils-1.9 mpeg2encpp-1.9 mplex2-1.9
 LIB_DEPENDS-mjpeg =	${LIB_DEPENDS} \
 			multimedia/mjpegtools
 

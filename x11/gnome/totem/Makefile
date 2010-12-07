@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2010/12/01 14:51:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.57 2010/12/03 15:18:28 ajacoutot Exp $
 
 COMMENT=	official media player for GNOME
 

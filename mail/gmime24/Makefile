@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2010/11/25 15:37:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2010/12/06 06:38:34 ajacoutot Exp $
 
 COMMENT-main=	MIME messages creation and parsing library
 COMMENT-mono=	mono bindings for gmime
 
-V=		2.4.20
+V=		2.4.21
 DISTNAME=	gmime-${V}
 
 PKGNAME-main=	${DISTNAME}
@@ -48,6 +48,8 @@ CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 ### mono subpackage
 PSEUDO_FLAVORS=	no_mono
 FLAVOR ?=
+
+MODMONO_DEPS=   No
 
 # keep in sync with lang/mono/mono.port.mk
 ONLY_FOR_ARCHS-mono= i386 amd64

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2010/11/22 08:36:50 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2010/12/06 07:58:50 jasper Exp $
 
 COMMENT=	drop-in object-oriented CGI.pm replacement
 
 MODULES=	cpan
 DISTNAME=	CGI-Simple-1.112
+REVISION=	1
 CATEGORIES=	www
 USE_GROFF =	Yes
 

@@ -1,0 +1,33 @@
+$OpenBSD: patch-Makefile_in,v 1.1 2010/12/03 08:46:03 jasper Exp $
+--- Makefile.in.orig	Mon Sep 30 15:26:38 2002
++++ Makefile.in	Fri Dec  3 09:44:45 2010
+@@ -8,12 +8,12 @@ version = 1.5b
+ 
+ # Where is the default configuration file
+ #
+-etcdir = @etcdir@
++etcdir = /etc
+ DEF_CONFFILE = $(etcdir)/logsurfer.conf
+ 
+ # Where should we dump or status (default location)
+ #
+-DEF_DUMPFILE = /dev/null
++DEF_DUMPFILE = /var/run/logsurfer.dump
+ 
+ # 
+ # You can define CPPFLAGS on the command line.  Aside from system-specific
+@@ -44,11 +44,11 @@ LDFLAGS = @LDFLAGS@
+ LIBS = @LIBS@
+ 
+ # Where to install the logsurfer executable
+-prefix = @prefix@
++prefix = $(PREFIX)
+ exec_prefix = @exec_prefix@
+-bindir = @bindir@
++bindir = $(PREFIX)/sbin
+ # Where to install manual pages
+-mandir = @mandir@
++mandir = $(PREFIX)/man
+ 
+ # Use cp if you don't have install.
+ INSTALL = @INSTALL@
