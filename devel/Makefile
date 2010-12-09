@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.861 2010/12/02 10:36:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.866 2010/12/08 23:25:08 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -149,10 +149,13 @@
      SUBDIR += hs-cereal
      SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
+     SUBDIR += hs-data-default
      SUBDIR += hs-dataenc
      SUBDIR += hs-deepseq
      SUBDIR += hs-directory-tree
      SUBDIR += hs-dlist
+     SUBDIR += hs-enumerator
+     SUBDIR += hs-failure
      SUBDIR += hs-fgl
      SUBDIR += hs-ghc-paths
      SUBDIR += hs-gio
@@ -166,6 +169,7 @@
      SUBDIR += hs-language-c
      SUBDIR += hs-mmap
      SUBDIR += hs-monads-fd
+     SUBDIR += hs-monads-tf
      SUBDIR += hs-murmur-hash
      SUBDIR += hs-network
      SUBDIR += hs-pango
@@ -182,6 +186,7 @@
      SUBDIR += hs-sendfile
      SUBDIR += hs-stm
      SUBDIR += hs-stringtable-atom
+     SUBDIR += hs-tagged
      SUBDIR += hs-tar
      SUBDIR += hs-text
      SUBDIR += hs-transformers
@@ -934,9 +939,11 @@
      SUBDIR += rsvndump
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack
+     SUBDIR += ruby-activemodel
      SUBDIR += ruby-activesupport
      SUBDIR += ruby-assistance
      SUBDIR += ruby-bacon
+     SUBDIR += ruby-bundler
      SUBDIR += ruby-clio
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-columnize
@@ -955,6 +962,7 @@
      SUBDIR += ruby-gettext
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
+     SUBDIR += ruby-i18n
      SUBDIR += ruby-linecache
      SUBDIR += ruby-locale
      SUBDIR += ruby-minitest
@@ -975,6 +983,7 @@
      SUBDIR += ruby-rubyinline
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
+     SUBDIR += ruby-stringex
      SUBDIR += ruby-systemtimer
      SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-tilt
