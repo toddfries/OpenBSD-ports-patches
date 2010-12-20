@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1065 2010/12/07 11:26:37 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1067 2010/12/20 13:05:40 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -102,7 +102,8 @@ _ALL_VARIABLES_PER_ARCH =
 .if ${DPB:L:Mfetch}
 _ALL_VARIABLES += DISTFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
-	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9
+	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
+	CHECKSUM_FILE
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
@@ -391,6 +392,7 @@ LIBTOOL ?= ${DEPBASE}/bin/libtool
 BUILD_DEPENDS += devel/libtool
 .  else
 LIBTOOL ?= ${PORTSDIR}/infrastructure/bin/libtool
+MAKE_ENV += PORTSDIR="${PORTSDIR}"
 .  endif
 CONFIGURE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
@@ -1711,7 +1713,8 @@ ${_PACKAGE_COOKIE${_S}}:
 	@cd ${.CURDIR} && \
 	tmp=${_TMP_REPO}${_PKGFILE${_S}} && \
 	if deps=`SUBPACKAGE=${_S} ${MAKE} _print-package-args` && \
-		${SUDO} ${_PKG_CREATE} $$deps ${PKG_ARGS${_S}} $$tmp && \
+		${SUDO} ${_PKG_CREATE} -DPORTSDIR="${PORTSDIR}" \
+			$$deps ${PKG_ARGS${_S}} $$tmp && \
 		${_check_lib_depends} $$tmp && \
 		${_register_plist} $$tmp && \
 		mv $$tmp ${_PACKAGE_COOKIE${_S}} && \

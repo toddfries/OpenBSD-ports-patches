@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.668 2010/12/05 16:03:02 naddy Exp $
+# $OpenBSD: Makefile,v 1.670 2010/12/15 00:10:48 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -286,8 +286,8 @@
      SUBDIR += p5-Net-IRC
      SUBDIR += p5-Net-Jabber
      SUBDIR += p5-Net-MySQL
-     SUBDIR += p5-Net-Netmask
      SUBDIR += p5-Net-NTP
+     SUBDIR += p5-Net-Netmask
      SUBDIR += p5-Net-OAuth
      SUBDIR += p5-Net-PH
      SUBDIR += p5-Net-ParseWhois
@@ -341,6 +341,7 @@
      SUBDIR += p5-SNMP_Session
      SUBDIR += p5-Socket6
      SUBDIR += p5-Sys-Hostname-Long
+     SUBDIR += p5-Test-TCP
      SUBDIR += p5-Validate-Net
      SUBDIR += p5-flowd
      SUBDIR += packit

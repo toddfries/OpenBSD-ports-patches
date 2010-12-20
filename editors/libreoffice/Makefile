@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2010/12/07 21:53:05 robert Exp $
+# $OpenBSD: Makefile,v 1.14 2010/12/20 09:07:48 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,16 +7,15 @@ COMMENT-kde=	optional integration of LibreOffice to the KDE environment
 COMMENT-java=	optional integration of LibreOffice java features
 
 BV=		3.3
-VERSION=	3.3.0.1
+OV=		${VERSION:C/\.2$/rc2/}
+VERSION=	3.3.0.2
 DISTNAME=	libreoffice-${VERSION}
 WRKDIST=	${WRKDIR}/libreoffice-build-${VERSION}
-PKGNAME=	libreoffice-${VERSION}
-PKGNAME-main=	libreoffice-${VERSION}
-PKGNAME-kde=	libreoffice-kde-${VERSION}
-PKGNAME-java=	libreoffice-java-${VERSION}
+PKGNAME=	libreoffice-${OV}
+PKGNAME-main=	libreoffice-${OV}
+PKGNAME-kde=	libreoffice-kde-${OV}
+PKGNAME-java=	libreoffice-java-${OV}
 CATEGORIES=	editors productivity
-
-REVISION-main=	0
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
@@ -103,7 +102,7 @@ LANGS=			bg ca de es fa fi fr hu it ja ko \
 
 .for l in ${LANGS:L}
 MULTI_PACKAGES+=	-i18n-$l
-PKGNAME-i18n-$l=	libreoffice-i18n-$l-${VERSION}
+PKGNAME-i18n-$l=	libreoffice-i18n-$l-${OV}
 COMMENT-i18n-$l=	$l language pack for LibreOffice
 RUN_DEPENDS-i18n-$l=	editors/libreoffice
 WANTLIB-i18n-$l=
@@ -144,7 +143,7 @@ LIB_DEPENDS-main=x11/gtk+2 \
 WANTLIB-main=	gdk-x11-2.0>=400.14 gtk-x11-2.0>=400.14 \
 		db>=4 xslt>=3 curl>=7 neon>=24 \
 		icuuc>=0 icudata>=0 icui18n icule \
-		raptor>=2 rasqal rdf>=0
+		raptor>=2 rasqal rdf>=0 poppler
 WANTLIB-main+=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		crypto expat fontconfig freetype gio-2.0 glib-2.0 \
@@ -234,19 +233,22 @@ OA=		x86_64
 SUBST_VARS+=	BV OA
 
 pre-patch:
-	@mkdir -p ${WRKSRC}/build/libreoffice
 	@ln -fs /bin/md5 ${WRKDIR}/bin/md5sum
 	@ln -fs /usr/local/bin/gfind ${WRKDIR}/bin/find
 	@ln -fs /usr/local/bin/gcat ${WRKDIR}/bin/cat
+	@mkdir -p ${WRKSRC}/build/libreoffice
+	@mkdir -p ${WRKSRC}/clone
 .for _c in ${COMPONENTS} 
 	@mv ${WRKDIR}/libreoffice-${_c}-${VERSION}/* ${WRKSRC}/build/libreoffice/
 	@rmdir ${WRKDIR}/libreoffice-${_c}-${VERSION}
 .endfor
 	@touch ${WRKSRC}/build/libreoffice/unpack
+	@touch ${WRKSRC}/clone/repos_changed
 
 post-install:
 	cd ${PREFIX}/bin && \
-	for _a in libreoffice soffice soffice${BV}; do \
+	ln -sf ${TRUEPREFIX}/bin/ooffice${BV} libreoffice && \
+	for _a in soffice soffice${BV}; do \
 		ln -sf ${TRUEPREFIX}/lib/libreoffice/program/soffice $$_a; done
 
 .include <bsd.port.mk>

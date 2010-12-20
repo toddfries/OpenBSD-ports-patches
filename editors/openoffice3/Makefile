@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.70 2010/12/02 09:29:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.72 2010/12/17 09:26:03 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,24 +7,21 @@ COMMENT-kde=	optional integration of OpenOffice to the KDE environment
 COMMENT-java=	optional integration of OpenOffice java features
 
 MR=		3.3
-VERSION=	${MR}.0rc7_20101126
+VERSION=	${MR}.0rc8
+RCDATE=		20101214
 DISTNAME=	OOo_${VERSION}
-WRKDIST=	${WRKDIR}/OOO330_m17
+WRKDIST=	${WRKDIR}/OOO330_m18
 PKGNAME=	openoffice-${VERSION}
 PKGNAME-main=	openoffice-${VERSION}
 PKGNAME-kde=	openoffice-kde-${VERSION}
 PKGNAME-java=	openoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 
-REVISION-main=	2
-REVISION-kde=	0
-REVISION-java=	0
-
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 HOMEPAGE=	http://www.openoffice.org/
 MASTER_SITES=	http://www.bsd.hu/~robert/ooo/ \
-		http://vlaai.snt.utwente.nl/pub/software/openoffice/extended/3.3.0rc7/ \
+		http://vlaai.snt.utwente.nl/pub/software/openoffice/extended/${VERSION}/ \
 		http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSION}/ \
 		http://ftp.linux.cz/pub/localization/OpenOffice.org/devel/build/Sources/ \
 		http://humppa.hu/ooo/ \
@@ -41,7 +38,7 @@ MASTER_SITES1=	http://hg.services.openoffice.org/binaries/ \
 
 EDISTFILES=	ooo-desktop-0.2.tar.gz:0
 .for dfile in binfilter core extensions l10n system
-EDISTFILES+=	${DISTNAME}_src_${dfile}.tar.bz2
+EDISTFILES+=	${DISTNAME}_${RCDATE}_src_${dfile}.tar.bz2
 .endfor
 EXTRACT_ONLY=	${EDISTFILES:C/:[0-9]$//}
 
@@ -86,10 +83,6 @@ DISTFILES+=	${EDISTFILES} \
 		599dc4cc65a07ee868cf92a667a913d2-xpdf-3.02.tar.gz:1 \
 		3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz:1
 
-.for dfile in binfilter core extensions l10n system
-DISTFILES+=	${DISTNAME}_src_${dfile}.tar.bz2
-.endfor
-
 DIST_SUBDIR=	openoffice
 
 # See http://www.openoffice.org/about.html#licenses
@@ -105,12 +98,6 @@ MULTI_PACKAGES=		-main -kde
 PSEUDO_FLAVORS=	normal_build parallel no_lang
 FLAVORS=	debug no_java
 FLAVOR?=
-
-.if ${FLAVOR:L:Mparallel}
-EDISTFILES+=	nbcat-0.1.tar.gz:0
-.else
-SUPDISTFILES+=	nbcat-0.1.tar.gz:0
-.endif
 
 .if !${FLAVOR:L:Mno_java}
 MULTI_PACKAGES+=	-java
@@ -139,7 +126,9 @@ BUILD_DEPENDS+=	archivers/zip \
 		archivers/p5-Archive-Zip \
 		print/cups \
 		boost->=1.41.0:devel/boost \
-		misc/fileutils
+		misc/fileutils \
+		misc/findutils \
+		textproc/textutils
 
 MODULES+=	lang/python \
 		devel/gconf2
@@ -275,7 +264,7 @@ CONFIGURE_ARGS+=	--enable-symbols \
 			--enable-debug
 .endif
 
-MAKE_ENV+=	envcflags="${CFLAGS}" LOCALBASE="${LOCALBASE}"
+MAKE_ENV+=	LOCALBASE="${LOCALBASE}"
 MAKE_ENV+=	TMP=${WRKSRC} PYTHON="${MODPY_BIN}"
 
 # kludge
@@ -303,10 +292,9 @@ BUILD_CMD=	cd instsetoo_native && build.pl ${NCPUFLAG} --all --dlv_switch -link 
 SUBST_VARS+=	MR
 
 pre-patch:
-	ln -fs ${LOCALBASE}/bin/gcp ${WRKDIR}/bin/cp
-.if ${FLAVOR:L:Mparallel}
-	ln -fs ${WRKDIR}/cat.${ARCH} ${WRKDIR}/bin/cat
-.endif
+	@ln -fs ${LOCALBASE}/bin/gcat ${WRKDIR}/bin/cat
+	@ln -fs ${LOCALBASE}/bin/gcp ${WRKDIR}/bin/cp
+	@ln -fs ${LOCALBASE}/bin/gfind ${WRKDIR}/bin/find
 
 do-build:
 	@cd ${WRKBUILD} && \

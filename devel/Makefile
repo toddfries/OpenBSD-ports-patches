@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.866 2010/12/08 23:25:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.876 2010/12/16 19:13:36 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -36,6 +36,7 @@
      SUBDIR += boehm-gc
      SUBDIR += boost
      SUBDIR += bouml
+     SUBDIR += bustle
      SUBDIR += bzr
      SUBDIR += c2hs
      SUBDIR += cabal-install
@@ -145,7 +146,9 @@
      SUBDIR += hs-PSQueue
      SUBDIR += hs-QuickCheck
      SUBDIR += hs-atom
+     SUBDIR += hs-base64-bytestring
      SUBDIR += hs-binary
+     SUBDIR += hs-blaze-builder
      SUBDIR += hs-cereal
      SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
@@ -193,6 +196,7 @@
      SUBDIR += hs-uniplate
      SUBDIR += hs-unix-compat
      SUBDIR += hs-vector
+     SUBDIR += hs-vector-algorithms
      SUBDIR += hscolour
      SUBDIR += hudson
      SUBDIR += id-utils
@@ -238,6 +242,7 @@
      SUBDIR += libglademm
      SUBDIR += libgsf
      SUBDIR += libgtop2
+     SUBDIR += libguess
      SUBDIR += libhid
      SUBDIR += libidn
      SUBDIR += libio
@@ -417,6 +422,7 @@
      SUBDIR += p5-Config-Simple
      SUBDIR += p5-Config-Tiny
      SUBDIR += p5-Context-Preserve
+     SUBDIR += p5-Coro
      SUBDIR += p5-Curses
      SUBDIR += p5-Curses-UI
      SUBDIR += p5-Curses-Widgets
@@ -480,6 +486,7 @@
      SUBDIR += p5-Devel-Size
      SUBDIR += p5-Devel-SmallProf
      SUBDIR += p5-Devel-StackTrace
+     SUBDIR += p5-Devel-StackTrace-AsHTML
      SUBDIR += p5-Devel-Symdump
      SUBDIR += p5-Devel-Trace
      SUBDIR += p5-Devel-ebug
@@ -541,9 +548,11 @@
      SUBDIR += p5-Getopt-Simple
      SUBDIR += p5-Glib2
      SUBDIR += p5-Graph
+     SUBDIR += p5-Guard
      SUBDIR += p5-Hash-AutoHash
      SUBDIR += p5-Hash-AutoHash-Args
      SUBDIR += p5-Hash-Merge
+     SUBDIR += p5-Hash-MultiValue
      SUBDIR += p5-Hash-NoRef
      SUBDIR += p5-Hash-Util-FieldHash-Compat
      SUBDIR += p5-Heap
@@ -562,8 +571,8 @@
      SUBDIR += p5-IO-Tty
      SUBDIR += p5-IO-stringy
      SUBDIR += p5-IPC-Run
-     SUBDIR += p5-IPC-Run3
      SUBDIR += p5-IPC-Run-SafeHandles
+     SUBDIR += p5-IPC-Run3
      SUBDIR += p5-IPC-ShareLite
      SUBDIR += p5-IPC-Shareable
      SUBDIR += p5-Inline
@@ -608,14 +617,14 @@
      SUBDIR += p5-MooseX-Getopt
      SUBDIR += p5-MooseX-Has-Sugar
      SUBDIR += p5-MooseX-LazyRequire
-     SUBDIR += p5-MooseX-LogDispatch
      SUBDIR += p5-MooseX-Log-Log4perl
+     SUBDIR += p5-MooseX-LogDispatch
      SUBDIR += p5-MooseX-Meta-TypeConstraint-ForceCoercion
-     SUBDIR += p5-MooseX-MethodAttributes
      SUBDIR += p5-MooseX-Method-Signatures
+     SUBDIR += p5-MooseX-MethodAttributes
      SUBDIR += p5-MooseX-MultiInitArg
-     SUBDIR += p5-MooseX-Params-Validate
      SUBDIR += p5-MooseX-POE
+     SUBDIR += p5-MooseX-Params-Validate
      SUBDIR += p5-MooseX-Role-Parameterized
      SUBDIR += p5-MooseX-Role-WithOverloading
      SUBDIR += p5-MooseX-SemiAffordanceAccessor
@@ -730,8 +739,8 @@
      SUBDIR += p5-Test-Base
      SUBDIR += p5-Test-Class
      SUBDIR += p5-Test-ClassAPI
-     SUBDIR += p5-Test-Corpus-Audio-MPD
      SUBDIR += p5-Test-Cmd
+     SUBDIR += p5-Test-Corpus-Audio-MPD
      SUBDIR += p5-Test-Deep
      SUBDIR += p5-Test-Differences
      SUBDIR += p5-Test-Distribution
@@ -760,7 +769,9 @@
      SUBDIR += p5-Test-Pod
      SUBDIR += p5-Test-Pod-Coverage
      SUBDIR += p5-Test-Reporter
+     SUBDIR += p5-Test-Requires
      SUBDIR += p5-Test-Script
+     SUBDIR += p5-Test-SharedFork
      SUBDIR += p5-Test-Spelling
      SUBDIR += p5-Test-Strict
      SUBDIR += p5-Test-SubCalls
@@ -928,8 +939,8 @@
      SUBDIR += pyrex
      SUBDIR += pyusb
      SUBDIR += qgit
-     SUBDIR += qt4-eventsview
      SUBDIR += qt-creator
+     SUBDIR += qt4-eventsview
      SUBDIR += quirks
      SUBDIR += rapidsvn
      SUBDIR += rats
@@ -944,6 +955,7 @@
      SUBDIR += ruby-assistance
      SUBDIR += ruby-bacon
      SUBDIR += ruby-bundler
+     SUBDIR += ruby-cicphash
      SUBDIR += ruby-clio
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-columnize
@@ -963,6 +975,8 @@
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
      SUBDIR += ruby-i18n
+     SUBDIR += ruby-isolate
+     SUBDIR += ruby-kgio
      SUBDIR += ruby-linecache
      SUBDIR += ruby-locale
      SUBDIR += ruby-minitest

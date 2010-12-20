@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.11 2010/12/03 15:37:31 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.13 2010/12/20 14:39:31 ajacoutot Exp $
 @pkgpath ${BASE_PKGPATH}
 @pkgpath ${BASE_PKGPATH},-main,kerberos
 @newgroup _cyrus:543
@@ -24,7 +24,6 @@ include/cyrus/cyrusdb.h
 include/cyrus/glob.h
 include/cyrus/gmtoff.h
 include/cyrus/hash.h
-include/cyrus/hmac-md5.h
 include/cyrus/imapopts.h
 include/cyrus/imapurl.h
 include/cyrus/imclient.h
@@ -147,6 +146,7 @@ share/doc/cyrus-imapd/COPYRIGHT
 share/doc/cyrus-imapd/text/
 @comment share/doc/cyrus-imapd/text/.cvsignore
 @comment share/doc/cyrus-imapd/text/Makefile
+share/doc/cyrus-imapd/text/ag
 share/doc/cyrus-imapd/text/altnamespace
 share/doc/cyrus-imapd/text/anoncvs
 share/doc/cyrus-imapd/text/bugs
@@ -180,6 +180,7 @@ share/doc/cyrus-imapd/text/readme
 share/doc/cyrus-imapd/text/sieve
 share/doc/cyrus-imapd/text/sieve-protocol
 share/doc/cyrus-imapd/text/specs
+share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/cyrus-imapd/
 share/examples/cyrus-imapd/cmu-backend.conf
 share/examples/cyrus-imapd/cmu-frontend.conf

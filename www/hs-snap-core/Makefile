@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2010/11/22 08:36:48 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2010/12/14 08:57:01 jasper Exp $
 
 COMMENT =		Snap Haskell Web Framework
 
-DISTNAME =		snap-core-0.2.12
-REVISION =		1
+DISTNAME =		snap-core-0.2.16
+REVISION =		0
 CATEGORIES =		www
 HOMEPAGE =		http://snapframework.com/
 
@@ -32,7 +32,8 @@ RUN_DEPENDS +=		archivers/hs-zlib \
 			devel/hs-text \
 			devel/hs-unix-compat \
 			textproc/hs-attoparsec \
-			textproc/hs-bytestring-nums
+			textproc/hs-bytestring-nums \
+			textproc/hs-bytestring-show
 BUILD_DEPENDS +=	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

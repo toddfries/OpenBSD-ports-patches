@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/12/08 21:21:14 ian Exp $
+# $OpenBSD: Makefile,v 1.3 2010/12/13 16:04:28 jasper Exp $
 
 COMMENT =		Lisp-1 dialect for the Java Virtual Machine
 
 V =			1.2.0
 DISTNAME =		clojure-${V}
 EXTRACT_SUFX =		.zip
-PKGNAME =		clojure-${V}
+REVISION =		1
 PKG_ARCH =		*
 
 CATEGORIES =		lang java
@@ -23,10 +23,9 @@ PERMIT_DISTFILES_FTP =	Yes
 MASTER_SITES =		http://github.com/downloads/clojure/clojure/
 
 MODULES =		java
-MODJAVA_VER =		1.7+
+MODJAVA_VER =		1.6+
 MODJAVA_JRERUN = 	Yes
 
-BUILD_DEPENDS =		devel/apache-ant
 RUN_DEPENDS =		java/javaPathHelper
 
 NO_BUILD =		Yes
@@ -34,12 +33,15 @@ NO_REGRESS =		Yes
 
 CLOJURE_HOME =		${PREFIX}/clojure
 
+
 do-install:
-			${INSTALL_DATA_DIR} ${CLOJURE_HOME}
-			${INSTALL_DATA} ${WRKDIST}/clojure.jar ${CLOJURE_HOME}
-			${INSTALL_SCRIPT} ${FILESDIR}/clojure ${PREFIX}/bin
-			cd ${WRKDIST} && tar -cf - src | \
-				tar -C ${CLOJURE_HOME} -xf -
-			${CHOWN} -R ${SHAREOWN}:${SHAREGRP} ${CLOJURE_HOME}/src
+	${INSTALL_DATA_DIR} ${CLOJURE_HOME}
+	${INSTALL_DATA} ${WRKDIST}/clojure.jar ${CLOJURE_HOME}
+	@${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -c \
+		${FILESDIR}/clojure \
+		${PREFIX}/bin/clojure
+	cd ${WRKDIST} && tar -cf - src | \
+		tar -C ${CLOJURE_HOME} -xf -
+	${CHOWN} -R ${SHAREOWN}:${SHAREGRP} ${CLOJURE_HOME}/src
 
 .include <bsd.port.mk>

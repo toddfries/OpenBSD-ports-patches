@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.479 2010/12/08 21:41:15 jeremy Exp $
+# $OpenBSD: Makefile,v 1.482 2010/12/15 00:10:48 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -266,6 +266,8 @@
      SUBDIR += p5-MojoX-Session
      SUBDIR += p5-PHP-Serialization
      SUBDIR += p5-PHP-Session
+     SUBDIR += p5-PSGI
+     SUBDIR += p5-Plack
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
      SUBDIR += p5-RTx-Tags
@@ -395,11 +397,13 @@
      SUBDIR += ruby-rack-test
      SUBDIR += ruby-rails
      SUBDIR += ruby-railties
+     SUBDIR += ruby-rainbows
      SUBDIR += ruby-rest-client
      SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-typo
+     SUBDIR += ruby-unicorn
      SUBDIR += sabredav
      SUBDIR += sarg
      SUBDIR += seamonkey

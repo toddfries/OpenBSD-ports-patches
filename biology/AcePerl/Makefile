@@ -1,10 +1,11 @@
-#	$OpenBSD: Makefile,v 1.11 2010/11/15 00:22:49 espie Exp $
+#	$OpenBSD: Makefile,v 1.13 2010/12/18 00:19:51 jasper Exp $
 
 COMMENT=	perl interface to the ACEDB database
 
-DISTNAME=	AcePerl-1.91
-REVISION=	2
-CATEGORIES=	biology perl5 databases
+DISTNAME=	AcePerl-1.92
+PKGNAME=	${DISTNAME}	# No p5-prefix
+REVISION=	0
+CATEGORIES=	biology databases
 
 FLAVORS=	opt
 FLAVOR?=
@@ -17,11 +18,13 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Ace/}
 
-CONFIGURE_STYLE= perl
 # we patch the Makefile.PL to allow us to set this simply
 CONFIGURE_ENV+=	PERL_MM_USE_DEFAULT=Yes
 USE_GROFF =	Yes
 
+MODULES=	cpan
+MODCPAN_EXAMPLES=	Yes
+MODCPAN_EXAMPLES_DIR=	${PREFIX}/share/examples/AcePerl/
 
 # go through extra indirection to allow both flavors to share most files.
 SUBST_VARS=	P5ACE
@@ -35,7 +38,6 @@ CONFIGURE_ENV+=	CHOICE1=2
 P5ACE=${P5ARCH}
 WANTLIB=c
 .else
-PKG_ARCH=	*
 CONFIGURE_ENV+= CHOICE1=1
 P5ACE=${P5SITE}
 .endif

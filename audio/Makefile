@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.252 2010/12/03 07:41:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.254 2010/12/10 20:50:05 shadchin Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR =
@@ -65,6 +65,7 @@
      SUBDIR += libcdaudio
      SUBDIR += libcddb
      SUBDIR += libcdio
+     SUBDIR += libcue
      SUBDIR += libdca
      SUBDIR += libgpod
      SUBDIR += libid3tag
@@ -170,6 +171,7 @@
      SUBDIR += rsynth
      SUBDIR += rtunes
      SUBDIR += ruby-id3lib
+     SUBDIR += ruby-vorbis_comment
      SUBDIR += scmpc
      SUBDIR += shell-fm
      SUBDIR += shorten

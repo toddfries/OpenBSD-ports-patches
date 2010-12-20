@@ -1,4 +1,4 @@
-$OpenBSD: patch-dbus_Makefile_in,v 1.6 2010/04/20 14:54:21 ajacoutot Exp $
+$OpenBSD: patch-dbus_Makefile_in,v 1.8 2010/12/16 07:13:58 ajacoutot Exp $
 --- dbus/Makefile.in.orig	Tue Mar 23 20:11:23 2010
 +++ dbus/Makefile.in	Tue Apr 20 16:38:22 2010
 @@ -350,7 +350,7 @@ top_builddir = @top_builddir@
