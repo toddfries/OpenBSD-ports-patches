@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.71 2010/12/03 00:10:09 ian Exp $
+# $OpenBSD: Makefile,v 1.74 2010/12/27 14:50:23 ajacoutot Exp $
 
 COMMENT=	multi-router traffic grapher
 
-DISTNAME=	mrtg-2.16.4
-REVISION =	0
+DISTNAME=	mrtg-2.17.0
 CATEGORIES=	net
+
+REVISION=	1
 
 HOMEPAGE=	http://oss.oetiker.ch/mrtg/
 

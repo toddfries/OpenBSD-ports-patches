@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $OpenBSD: mysqld.rc,v 1.7 2010/12/13 16:13:04 ajacoutot Exp $
+# $OpenBSD: mysqld.rc,v 1.10 2011/01/05 16:05:54 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/bin/mysqld_safe"
 
 . /etc/rc.d/rc.subr
 
-daemon="${TRUEPREFIX}/bin/mysqld_safe"
 rc_reload=NO
 
 rc_check() {
@@ -12,8 +13,7 @@ rc_check() {
 }
 
 rc_start() {
-	su -l -c ${daemon_class:-daemon} -s ${daemon_shell:-/bin/sh} \
-		${daemon_user:-root} -c "${daemon} ${daemon_flags}" >/dev/null 2>&1 &
+	${rcexec} -c "${daemon} ${daemon_flags}" >/dev/null 2>&1 &
 }
 
 rc_stop() {

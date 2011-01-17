@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# $OpenBSD: vnstatd.rc,v 1.2 2010/12/13 16:14:38 ajacoutot Exp $
-
-. /etc/rc.d/rc.subr
+# $OpenBSD: vnstatd.rc,v 1.4 2010/12/27 14:50:23 ajacoutot Exp $
 
 daemon="${TRUEPREFIX}/sbin/vnstatd"
 daemon_flags="-d"
 daemon_user="_vnstat"
+
+. /etc/rc.d/rc.subr
 
 rc_pre() {
 	/usr/bin/install -d -o _vnstat /var/run/vnstat

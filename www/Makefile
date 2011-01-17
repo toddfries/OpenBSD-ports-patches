@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.482 2010/12/15 00:10:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.490 2011/01/11 18:01:09 jeremy Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -28,6 +28,7 @@
      SUBDIR += cntlm
      SUBDIR += community-id
      SUBDIR += concrete5
+     SUBDIR += conkeror
      SUBDIR += cronolog
      SUBDIR += cssed
      SUBDIR += dansguardian
@@ -125,6 +126,7 @@
      SUBDIR += netsurf
      SUBDIR += nginx
      SUBDIR += nginx,passenger
+     SUBDIR += node
      SUBDIR += nostromo
      SUBDIR += ntlmaps
      SUBDIR += opera
@@ -247,6 +249,7 @@
      SUBDIR += p5-HTTP-GHTTP
      SUBDIR += p5-HTTP-GetImages
      SUBDIR += p5-HTTP-Lite
+     SUBDIR += p5-HTTP-Parser-XS
      SUBDIR += p5-HTTP-Proxy
      SUBDIR += p5-HTTP-Recorder
      SUBDIR += p5-HTTP-Request-AsCGI
@@ -276,6 +279,8 @@
      SUBDIR += p5-Rose-URI
      SUBDIR += p5-SCGI
      SUBDIR += p5-SOAP-Lite
+     SUBDIR += p5-SOAP-WSDL
+     SUBDIR += p5-Starman
      SUBDIR += p5-Test-HTTP-Server-Simple
      SUBDIR += p5-URI
      SUBDIR += p5-URI-Fetch
@@ -388,6 +393,7 @@
      SUBDIR += ruby-addressable
      SUBDIR += ruby-fcgi
      SUBDIR += ruby-httpclient
+     SUBDIR += ruby-jekyll
      SUBDIR += ruby-mechanize
      SUBDIR += ruby-merb
      SUBDIR += ruby-mongrel
@@ -408,11 +414,13 @@
      SUBDIR += sarg
      SUBDIR += seamonkey
      SUBDIR += snownews
+     SUBDIR += sogo
      SUBDIR += sope
      SUBDIR += spawn-fcgi
      SUBDIR += squid
      SUBDIR += squid,ldap
      SUBDIR += squid,ldap,snmp
+     SUBDIR += squid,ntlm
      SUBDIR += squid,snmp
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
@@ -459,6 +467,7 @@
      SUBDIR += xcache
      SUBDIR += xmhtml
      SUBDIR += xxxterm
+     SUBDIR += yaws
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework

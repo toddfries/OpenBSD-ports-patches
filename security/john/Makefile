@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2010/07/17 22:46:00 benoit Exp $
+# $OpenBSD: Makefile,v 1.42 2011/01/07 16:26:26 benoit Exp $
 
 COMMENT =		extremely fast password cracker
 

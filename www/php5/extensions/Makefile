@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.65 2010/11/22 09:40:48 espie Exp $
+# $OpenBSD: Makefile,v 1.67 2011/01/17 11:47:19 sthen Exp $
 
 FULLPKGNAME-main=	php5-extensions-${V}
 FULLPKGPATH-main=	www/php5/extensions,-main
@@ -128,7 +128,7 @@ COMMENT-imap=		imap, pop3 and nntp extensions for php5
 CONFIGURE_ARGS+=	--with-imap=shared,${LOCALBASE} \
 			--with-kerberos=/usr --with-imap-ssl
 LIB_DEPENDS-imap =	mail/imap-uw,-c-client
-WANTLIB-imap =		c-client>=5 gssapi crypto krb5 ssl
+WANTLIB-imap =		c-client>=5 gssapi crypto krb5 ssl z
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/etc
@@ -325,7 +325,7 @@ MULTI_PACKAGES+=	-snmp
 COMMENT-snmp=		snmp protocol extensions for php5
 CONFIGURE_ARGS+=	--with-snmp=shared,${LOCALBASE} --enable-ucd-snmp-hack
 LIB_DEPENDS-snmp =	net/net-snmp
-WANTLIB-snmp =		netsnmp>=6.2
+WANTLIB-snmp =		crypto netsnmp>=6.2
 .endif
 
 # sqlite

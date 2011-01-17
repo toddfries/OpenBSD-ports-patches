@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2010/11/19 22:31:34 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2010/12/30 08:19:31 jasper Exp $
 
 COMMENT-main =	flexible network host monitoring, client
 COMMENT-server =flexible network host monitoring, server
@@ -7,7 +7,8 @@ V =		1.4.5
 DISTNAME =	munin-$V
 PKGNAME-main =	munin-node-$V
 PKGNAME-server =munin-server-$V
-REVISION-main = 2
+REVISION-main = 5
+REVISION-server = 1
 CATEGORIES =	net
 
 HOMEPAGE =	http://munin-monitoring.org/
@@ -32,7 +33,8 @@ MODULES =		lang/python lang/ruby
 MODPY_BUILDDEP =	No
 MODRUBY_BUILDDEP =	No # not supported yet, but won't need a bump when it is
 
-RUN_DEPENDS-main =	devel/p5-Net-Server \
+RUN_DEPENDS-main =	devel/p5-Log-Log4perl \
+			devel/p5-Net-Server \
 			net/p5-Net-CIDR
 RUN_DEPENDS-server +=	net/rrdtool,-perl \
 			www/p5-HTML-Template \

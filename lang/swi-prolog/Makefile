@@ -1,29 +1,29 @@
-# $OpenBSD: Makefile,v 1.26 2010/11/17 08:05:18 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2011/01/15 01:09:43 naddy Exp $
 
-BROKEN-hppa =		build stalls during bootstrap in packages/chr 
+COMMENT =		Prolog for the real world
 
-CATEGORIES =		lang
-V =			5.6.59
-XV =			6.6.58
-FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}-openbsd${OSREV}
-SUBST_VARS =		V XV FULLARCH
+V =			5.10.2
+XV =			6.6.66
 DISTNAME =		pl-$V
 PKGNAME =		swi-prolog-$V
-REVISION =		5
-MASTER_SITES =		http://gollem.science.uva.nl/cgi-bin/nph-download/SWI-Prolog/
-COMMENT =		Prolog for the real world
+REVISION =		0
+CATEGORIES =		lang
+
+SHARED_LIBS =		pl	3.0
+
 HOMEPAGE =		http://www.swi-prolog.org/
 
-SHARED_LIBS =		pl	2.0
-
-# LGPL
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes 
 PERMIT_DISTFILES_FTP =	Yes
 
+MASTER_SITES =		${HOMEPAGE}/download/stable/src/ \
+			http://distfiles.nl/
+
 CONFIGURE_STYLE =	autoconf
-AUTOCONF_VERSION =	2.60
+AUTOCONF_VERSION =	2.61 # 2.64
 AUTOCONF_DIR =		${WRKSRC}/src ${WRKSRC}/packages/semweb
 MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC}/src \
 				${WRKSRC}/packages/jpl \
@@ -31,24 +31,29 @@ MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC}/src \
 CONFIGURE_ARGS =	--enable-mt \
 			--disable-custom-flags \
 			--with-world \
-			--disable-gmp \
 			--with-jpeg=${LOCALBASE} \
-			--without-sgml \
 			${CONFIGURE_SHARED}
 
 USE_GMAKE =		Yes
-USE_GROFF =	Yes
+USE_GROFF =		Yes
 
 MAKE_FLAGS =		SONAMEOPT= \
 			SHAREDV=libpl.so.${LIBpl_VERSION}
 
 WANTLIB += ICE SM X11 Xau Xdmcp Xext Xft Xinerama Xpm Xrender
-WANTLIB += Xt c expat fontconfig freetype m ncurses pthread pthread-stubs
+WANTLIB += Xt c expat fontconfig freetype m ncursesw pthread pthread-stubs
 WANTLIB += readline xcb z jpeg
 
 LIB_DEPENDS =		graphics/jpeg
-SUBST_VARS +=		BOOT
 
+FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}-openbsd${OSREV}
+SUBST_VARS =		V XV FULLARCH BOOT
+
+post-extract:
+	@rm -fr ${WRKSRC}/packages/{sgml,RDF}
+
+# Don't build sgml (and dependant RDF), as it requires having swprintf()
+# and the like.
 post-install:
 	cd ${PREFIX}/lib && ln -s swipl-$V/lib/${FULLARCH}/libpl.so.${LIBpl_VERSION}
 

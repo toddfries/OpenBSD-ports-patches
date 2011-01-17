@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.72 2010/12/17 09:26:03 robert Exp $
+# $OpenBSD: Makefile,v 1.74 2011/01/15 11:13:49 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,10 +7,11 @@ COMMENT-kde=	optional integration of OpenOffice to the KDE environment
 COMMENT-java=	optional integration of OpenOffice java features
 
 MR=		3.3
-VERSION=	${MR}.0rc8
-RCDATE=		20101214
+VERSION=	${MR}.0rc9
+EPOCH = 	0
+RCDATE=		20110110
 DISTNAME=	OOo_${VERSION}
-WRKDIST=	${WRKDIR}/OOO330_m18
+WRKDIST=	${WRKDIR}/OOO330_m19
 PKGNAME=	openoffice-${VERSION}
 PKGNAME-main=	openoffice-${VERSION}
 PKGNAME-kde=	openoffice-kde-${VERSION}
@@ -23,8 +24,8 @@ HOMEPAGE=	http://www.openoffice.org/
 MASTER_SITES=	http://www.bsd.hu/~robert/ooo/ \
 		http://vlaai.snt.utwente.nl/pub/software/openoffice/extended/${VERSION}/ \
 		http://vlaai.snt.utwente.nl/pub/software/openoffice/stable/${VERSION}/ \
-		http://ftp.linux.cz/pub/localization/OpenOffice.org/devel/build/Sources/ \
 		http://humppa.hu/ooo/ \
+		http://ftp.linux.cz/pub/localization/OpenOffice.org/devel/build/Sources/ \
 		ftp://ftp.ussg.iu.edu/pub/openoffice/stable/${VERSION}/ \
 		ftp://sunsite.informatik.rwth-aachen.de/pub/mirror/OpenOffice/stable/${VERSION}/ \
 		ftp://ftp.tu-chemnitz.de/pub/openoffice/stable/${VERSION}/ \
@@ -114,7 +115,6 @@ COMMENT-i18n-$l=	$l language pack for OpenOffice.Org
 RUN_DEPENDS-i18n-$l=	editors/openoffice3
 WANTLIB-i18n-$l=
 LIB_DEPENDS-i18n-$l=
-REVISION-i18n-$l=	0
 .endfor
 .endif
 

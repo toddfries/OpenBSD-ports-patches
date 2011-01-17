@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.310 2010/12/08 16:23:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.315 2011/01/15 18:51:35 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -195,6 +195,7 @@
      SUBDIR += p5-XML-AutoWriter
      SUBDIR += p5-XML-Checker
      SUBDIR += p5-XML-DOM
+     SUBDIR += p5-XML-DOM-XPath
      SUBDIR += p5-XML-Dumper
      SUBDIR += p5-XML-Elemental
      SUBDIR += p5-XML-Filter-BufferText
@@ -269,23 +270,30 @@
      SUBDIR += rman
      SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
+     SUBDIR += ruby-classifier
      SUBDIR += ruby-erubis
      SUBDIR += ruby-fastercsv
      SUBDIR += ruby-fastri
+     SUBDIR += ruby-fast-stemmer
      SUBDIR += ruby-haml
      SUBDIR += ruby-hpricot
      SUBDIR += ruby-htmlentities
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-icalendar
+     SUBDIR += ruby-liquid
      SUBDIR += ruby-markaby
+     SUBDIR += ruby-maruku
      SUBDIR += ruby-nokogiri
      SUBDIR += ruby-pdf-reader
      SUBDIR += ruby-pdf-writer
      SUBDIR += ruby-prawn
      SUBDIR += ruby-randexp
+     SUBDIR += ruby-rdiscount
      SUBDIR += ruby-redcloth
      SUBDIR += ruby-rss
+     SUBDIR += ruby-rtex
      SUBDIR += ruby-rubigen
+     SUBDIR += ruby-syntax
      SUBDIR += ruby-templater
      SUBDIR += ruby-treetop
      SUBDIR += rxp

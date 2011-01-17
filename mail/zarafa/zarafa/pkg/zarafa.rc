@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $OpenBSD: zarafa.rc,v 1.4 2010/11/17 14:00:04 ajacoutot Exp $
+# $OpenBSD: zarafa.rc,v 1.6 2010/12/27 14:50:23 ajacoutot Exp $
+
+daemon="/bin/true"
 
 . /etc/rc.d/rc.subr
 
-daemon="/bin/true"
 _zarafa_daemons="server spooler monitor gateway ical"
 
 rc_start() {

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.876 2010/12/16 19:13:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.892 2011/01/17 06:54:29 stu Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -38,6 +38,7 @@
      SUBDIR += bouml
      SUBDIR += bustle
      SUBDIR += bzr
+     SUBDIR += bzr-svn
      SUBDIR += c2hs
      SUBDIR += cabal-install
      SUBDIR += catalyst
@@ -257,9 +258,9 @@
      SUBDIR += liboobs
      SUBDIR += liboop
      SUBDIR += libopensync
+     SUBDIR += lpc21isp
      SUBDIR += libproplist
      SUBDIR += libregexp9
-     SUBDIR += libsigc++
      SUBDIR += libsigc++-2
      SUBDIR += libsigsegv
      SUBDIR += libslang
@@ -271,7 +272,6 @@
      SUBDIR += libunicode
      SUBDIR += libunique
      SUBDIR += libusb
-     SUBDIR += libuta
      SUBDIR += libutf
      SUBDIR += libvmime
      SUBDIR += libvstr
@@ -295,6 +295,7 @@
      SUBDIR += m4
      SUBDIR += maven
      SUBDIR += mcs
+     SUBDIR += mentry
      SUBDIR += mercurial
      SUBDIR += metaauto
      SUBDIR += mico
@@ -327,7 +328,7 @@
      SUBDIR += p5-Algorithm-Dependency
      SUBDIR += p5-Algorithm-Diff
      SUBDIR += p5-Algorithm-IncludeExclude
-     SUBDIR += p5-Algorithm-MDiff
+     SUBDIR += p5-Algorithm-Munkres
      SUBDIR += p5-Algorithm-MarkovChain
      SUBDIR += p5-Algorithm-Permute
      SUBDIR += p5-Alien-wxWidgets
@@ -350,6 +351,7 @@
      SUBDIR += p5-B-Utils
      SUBDIR += p5-BFD
      SUBDIR += p5-BSD-Resource
+     SUBDIR += p5-BSD-arc4random
      SUBDIR += p5-BSD-stat
      SUBDIR += p5-Benchmark-Timer
      SUBDIR += p5-Best
@@ -405,6 +407,7 @@
      SUBDIR += p5-Class-ReturnValue
      SUBDIR += p5-Class-Singleton
      SUBDIR += p5-Class-Std
+     SUBDIR += p5-Class-Std-Fast
      SUBDIR += p5-Class-Std-Utils
      SUBDIR += p5-Class-Throwable
      SUBDIR += p5-Class-Trigger
@@ -577,6 +580,8 @@
      SUBDIR += p5-IPC-Shareable
      SUBDIR += p5-Inline
      SUBDIR += p5-Internals
+     SUBDIR += p5-Iterator
+     SUBDIR += p5-Iterator-Util
      SUBDIR += p5-Lchown
      SUBDIR += p5-List-Cycle
      SUBDIR += p5-List-MoreUtils
@@ -589,6 +594,7 @@
      SUBDIR += p5-Locale-gettext
      SUBDIR += p5-LockFile-Simple
      SUBDIR += p5-Log-Agent
+     SUBDIR += p5-Log-Any
      SUBDIR += p5-Log-Dispatch
      SUBDIR += p5-Log-Dispatch-Binlog
      SUBDIR += p5-Log-Dispatch-Config
@@ -778,6 +784,7 @@
      SUBDIR += p5-Test-Taint
      SUBDIR += p5-Test-TempDir
      SUBDIR += p5-Test-Tester
+     SUBDIR += p5-Test-Trap
      SUBDIR += p5-Test-URI
      SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-WWW-Mechanize
@@ -919,7 +926,9 @@
      SUBDIR += py-silc
      SUBDIR += py-simplejson
      SUBDIR += py-sip
+     SUBDIR += py-subvertpy
      SUBDIR += py-symboltype
+     SUBDIR += py-testtools
      SUBDIR += py-tpg
      SUBDIR += py-turbocheetah
      SUBDIR += py-turbojson
@@ -937,6 +946,7 @@
      SUBDIR += pygame
      SUBDIR += pylint
      SUBDIR += pyrex
+     SUBDIR += pysvn
      SUBDIR += pyusb
      SUBDIR += qgit
      SUBDIR += qt-creator
@@ -952,6 +962,7 @@
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activemodel
      SUBDIR += ruby-activesupport
+     SUBDIR += ruby-arrayfields
      SUBDIR += ruby-assistance
      SUBDIR += ruby-bacon
      SUBDIR += ruby-bundler
@@ -968,12 +979,15 @@
      SUBDIR += ruby-extlib
      SUBDIR += ruby-facets
      SUBDIR += ruby-fastthread
+     SUBDIR += ruby-ffi
+     SUBDIR += ruby-ffi-inliner
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin
      SUBDIR += ruby-gems
      SUBDIR += ruby-gettext
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
+     SUBDIR += ruby-home_run
      SUBDIR += ruby-i18n
      SUBDIR += ruby-isolate
      SUBDIR += ruby-kgio
@@ -981,13 +995,18 @@
      SUBDIR += ruby-locale
      SUBDIR += ruby-minitest
      SUBDIR += ruby-mocha
+     SUBDIR += ruby-mspec
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
+     SUBDIR += ruby-ole
      SUBDIR += ruby-open4
+     SUBDIR += ruby-paper_trail
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-polyglot
+     SUBDIR += ruby-prof
      SUBDIR += ruby-rack-test
      SUBDIR += ruby-rake
+     SUBDIR += ruby-rake-compiler
      SUBDIR += ruby-rcov
      SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
@@ -998,6 +1017,7 @@
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-stringex
+     SUBDIR += ruby-subset_sum
      SUBDIR += ruby-systemtimer
      SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-tilt
@@ -1055,6 +1075,7 @@
      SUBDIR += vtcl
      SUBDIR += vte
      SUBDIR += waf
+     SUBDIR += wcb
      SUBDIR += xdg-user-dirs
      SUBDIR += xdg-utils
      SUBDIR += xmake

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.157 2010/11/26 14:44:27 espie Exp $
+# $OpenBSD: Makefile,v 1.159 2011/01/15 10:56:51 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -12,7 +12,7 @@ V_MANAGESIEVE=	0.11.12
 
 PKGNAME=	dovecot-${V_DOVECOT}
 PKGNAME-server=	dovecot-${V_DOVECOT}
-REVISION-server=1
+REVISION-server=2
 FULLPKGNAME-sieve= dovecot-sieve-${V_SIEVE}
 REVISION-sieve=	0
 EPOCH-sieve=	0
@@ -56,7 +56,6 @@ FLAVOR?=
 CFLAGS+=	-I/usr/include/kerberosV -I${LOCALBASE}/include
 
 USE_LIBTOOL=		Yes
-USE_GROFF =	Yes
 # Should be 2.65
 AUTOCONF_VERSION=	2.64
 CONFIGURE_STYLE=	autoconf

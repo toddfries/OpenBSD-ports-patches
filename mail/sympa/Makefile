@@ -1,9 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/19 07:23:09 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2010/12/31 06:50:46 ajacoutot Exp $
 
 COMMENT =	mailing list manager with web interface
 
-DISTNAME =	sympa-6.0.1
-REVISION =	2
+VERSION =	6.1.3
+DISTNAME =	sympa-${VERSION}
+
+REVISION =	0
+
 CATEGORIES =	mail www
 
 HOMEPAGE =	http://www.sympa.org
@@ -21,8 +24,6 @@ MASTER_SITES =		${HOMEPAGE}/distribution/ \
 MODULES =	perl
 USE_GMAKE =	Yes
 
-SYMPA_USER =	_sympa
-SYMPA_GROUP =	_sympa
 SYMPA_HOME =	/var/sympa
 
 SUBST_VARS +=	SYMPA_HOME
@@ -30,17 +31,18 @@ SUBST_VARS +=	SYMPA_HOME
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--with-modulesdir=${PREFIX}/${P5SITE}/Sympa \
 			--with-initdir=${PREFIX}/sbin \
-			--with-user=${SYMPA_USER} \
-			--with-group=${SYMPA_GROUP} \
+			--with-user=_sympa \
+			--with-group=_sympa \
 			--with-sendmail_aliases=${SYMPA_HOME}/sympa_aliases \
 			--with-virtual_aliases=${SYMPA_HOME}/sympa_virtual \
+			--with-confdir=${SYMPA_HOME}/etc/ \
 			--with-cgidir=${PREFIX}/libexec/sympa \
-			--with-libexecdir=${PREFIX}/libexec/sympa \
+			--libexecdir=${PREFIX}/libexec/sympa \
 			--with-defaultdir=${PREFIX}/share/sympa \
-			--with-sbindir=${PREFIX}/sbin \
+			--with-docdir=${PREFIX}/share/examples/sympa \
+			--sbindir=${PREFIX}/sbin \
 			--with-localedir=${PREFIX}/share/locale
 
-MAKE_ENV =	docdir=${PREFIX}/share/examples/sympa
 USE_GROFF =	Yes
 
 # no MODULE, doesn't link with it
@@ -48,6 +50,7 @@ BUILD_DEPENDS =	devel/gettext
 WANTLIB =	c
 
 RUN_DEPENDS =	archivers/p5-Archive-Zip \
+		converters/p5-Unicode-LineBreak \
 		databases/p5-DBI \
 		devel/gettext \
 		devel/p5-IO-stringy \
@@ -63,7 +66,7 @@ RUN_DEPENDS =	archivers/p5-Archive-Zip \
 		security/p5-Crypt-CipherSaber \
 		textproc/p5-Template \
 		textproc/p5-XML-LibXML \
-		www/fcgi \
+		www/spawn-fcgi \
 		www/mod_fastcgi \
 		www/mhonarc \
 		www/p5-libwww \
@@ -77,12 +80,15 @@ pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/lib/confdef.pm
 
 post-install:
+	# taken from Makefile's installconfig target
 	env PERL5LIB=${PREFIX}/${P5SITE}/Sympa \
 		${PREFIX}/sbin/sympa_wizard.pl --create wwsympa.conf \
 		--target ${PREFIX}/share/examples/sympa/wwsympa.conf
 	env PERL5LIB=${PREFIX}/${P5SITE}/Sympa \
 		${PREFIX}/sbin/sympa_wizard.pl --create sympa.conf \
 		--target ${PREFIX}/share/examples/sympa/sympa.conf
+	echo ${VERSION} > ${PREFIX}/share/examples/sympa/data_structure.version
 	mv ${PREFIX}/bin/create_db.* ${PREFIX}/share/examples/sympa/
+	${INSTALL_DATA} ${FILESDIR}/httpd-sympa.conf ${PREFIX}/share/examples/sympa/
 
 .include <bsd.port.mk>

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2010/12/08 21:47:30 jeremy Exp $
+# $OpenBSD: Makefile,v 1.32 2011/01/06 04:24:22 jeremy Exp $
 
 COMMENT =	object relation model implementation for ruby
 
 VERSION =	3.0.3
 DISTNAME =	activerecord-${VERSION}
+REVISION =	0
 CATEGORIES =	databases
 
 # MIT License
@@ -22,9 +23,7 @@ RUN_DEPENDS = 	devel/ruby-activesupport,${MODRUBY_FLAVOR}=${VERSION} \
 
 CONFIGURE_STYLE =	ruby gem
 
-MODRUBY_REGRESS =	rake
-REGRESS_DEPENDS =	databases/ruby-mysql,${MODRUBY_FLAVOR} \
-			databases/ruby-sqlite3,${MODRUBY_FLAVOR} \
-			databases/ruby-pg,${MODRUBY_FLAVOR}
+# Upstream doesn't ship the Rakefile or test files in the gem
+NO_REGRESS =	Yes
 
 .include <bsd.port.mk>

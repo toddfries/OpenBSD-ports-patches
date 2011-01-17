@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.13 2010/12/11 12:57:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2010/12/27 14:50:24 ajacoutot Exp $
 
 COMMENT=	HTTP caching proxy
 
 DISTNAME=	polipo-1.0.4.1
 CATEGORIES=	www
-REVISION=	3
+REVISION=	5
 
 HOMEPAGE=	http://www.pps.jussieu.fr/~jch/software/polipo/
 

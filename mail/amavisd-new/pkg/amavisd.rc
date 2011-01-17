@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $OpenBSD: amavisd.rc,v 1.2 2010/11/23 18:15:18 ajacoutot Exp $
+# $OpenBSD: amavisd.rc,v 1.4 2010/12/27 14:50:23 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/sbin/amavisd"
 
 . /etc/rc.d/rc.subr
 
-daemon="${TRUEPREFIX}/sbin/amavisd"
 pexp="perl: amavisd"
 
 rc_stop() {

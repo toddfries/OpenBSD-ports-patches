@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.105 2010/12/08 21:31:13 ian Exp $
+# $OpenBSD: Makefile,v 1.107 2011/01/15 13:08:30 jasper Exp $
 # $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
 #
 
@@ -10,6 +10,7 @@
      SUBDIR += classpath
      SUBDIR += clisp
      SUBDIR += clojure
+     SUBDIR += eagle
      SUBDIR += ecl
      SUBDIR += eltclsh
      SUBDIR += erlang
@@ -44,8 +45,10 @@
      SUBDIR += mono-basic
      SUBDIR += newlisp
      SUBDIR += nhc98
+     SUBDIR += obc
      SUBDIR += ocaml
      SUBDIR += ocamlduce
+     SUBDIR += oo2c
      SUBDIR += open-cobol
      SUBDIR += otcl
      SUBDIR += parrot

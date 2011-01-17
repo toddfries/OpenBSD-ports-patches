@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $OpenBSD: ddclient.rc,v 1.1 2010/12/01 09:58:43 dcoppa Exp $
+# $OpenBSD: ddclient.rc,v 1.3 2010/12/27 14:50:22 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/sbin/ddclient"
 
 . /etc/rc.d/rc.subr
 
-daemon="${TRUEPREFIX}/sbin/ddclient"
 pexp="perl: ddclient"
 
 rc_cmd $1

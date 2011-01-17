@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.19 2010/10/23 18:26:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.21 2011/01/03 10:44:41 jasper Exp $
 
-VERSION=		2006-05-10
+VERSION=		2010-07-27
 PKGNAME=		xemacs-sumo-21.${VERSION:S/-//g}
-REVISION=		0
 DISTFILES=		xemacs-sumo-${VERSION}.tar.gz
 SUP_mule=		xemacs-mule-sumo-${VERSION}.tar.gz
 SUPDISTFILES=		${SUP_mule}
@@ -19,10 +18,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES= 	ftp://ftp.xemacs.org/pub/xemacs/packages/ \
+MASTER_SITES= 	http://ftp.xemacs.org/pub/xemacs/packages/ \
 		ftp://ftp.oleane.net/pub/xemacs/packages/ \
 		ftp://ftp.pasteur.fr/pub/computing/xemacs/packages/ \
-		ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/ftp.xemacs.org/xemacs/packages/ \
 		ftp://ftp.lab.kdd.co.jp/xemacs/packages/
 
 SEPARATE_BUILD=	concurrent

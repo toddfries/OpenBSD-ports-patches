@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.670 2010/12/15 00:10:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.674 2011/01/05 23:09:44 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -283,6 +283,7 @@
      SUBDIR += p5-Net-IP
      SUBDIR += p5-Net-IPTrie
      SUBDIR += p5-Net-IPv4Addr
+     SUBDIR += p5-Net-IPv6Addr
      SUBDIR += p5-Net-IRC
      SUBDIR += p5-Net-Jabber
      SUBDIR += p5-Net-MySQL
@@ -296,6 +297,7 @@
      SUBDIR += p5-Net-Ping-External
      SUBDIR += p5-Net-Radius
      SUBDIR += p5-Net-RawIP
+     SUBDIR += p5-Net-Server-SS-PreFork
      SUBDIR += p5-Net-SFTP
      SUBDIR += p5-Net-SFTP-Foreign
      SUBDIR += p5-Net-SMTP-SSL
@@ -336,6 +338,7 @@
      SUBDIR += p5-POE-Filter-IRCD
      SUBDIR += p5-PlRPC
      SUBDIR += p5-RPC-XML
+     SUBDIR += p5-Server-Starter
      SUBDIR += p5-SNMP-BridgeQuery
      SUBDIR += p5-SNMP-Info
      SUBDIR += p5-SNMP_Session
@@ -450,6 +453,7 @@
      SUBDIR += ruby-net-ssh-gateway
      SUBDIR += ruby-nmap-parser
      SUBDIR += ruby-pcap
+     SUBDIR += ruby-pcaprub-msf
      SUBDIR += ruby-rrdtool
      SUBDIR += ruby-snmp
      SUBDIR += ruby-stomp

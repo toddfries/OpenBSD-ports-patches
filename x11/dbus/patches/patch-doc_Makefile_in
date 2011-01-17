@@ -1,8 +1,8 @@
-$OpenBSD: patch-doc_Makefile_in,v 1.8 2010/12/16 07:13:58 ajacoutot Exp $
---- doc/Makefile.in.orig	Tue Mar 23 20:11:23 2010
-+++ doc/Makefile.in	Tue Apr 20 16:38:22 2010
-@@ -444,16 +444,16 @@ uninstall-am:
- @DBUS_XML_DOCS_ENABLED_TRUE@all-local: $(HTML_FILES)
+$OpenBSD: patch-doc_Makefile_in,v 1.10 2010/12/21 14:59:49 ajacoutot Exp $
+--- doc/Makefile.in.orig	Mon Dec 20 22:39:49 2010
++++ doc/Makefile.in	Tue Dec 21 15:09:50 2010
+@@ -590,16 +590,16 @@ uninstall-man: uninstall-man1
+ @DBUS_XML_DOCS_ENABLED_TRUE@all-local:: $(HTML_FILES)
  
  @DBUS_XML_DOCS_ENABLED_TRUE@dbus-specification.html: dbus-specification.xml
 -@DBUS_XML_DOCS_ENABLED_TRUE@	$(XMLTO) html-nochunks $<
@@ -20,5 +20,5 @@ $OpenBSD: patch-doc_Makefile_in,v 1.8 2010/12/16 07:13:58 ajacoutot Exp $
 -@DBUS_XML_DOCS_ENABLED_TRUE@	$(XMLTO) html-nochunks $<
 +@DBUS_XML_DOCS_ENABLED_TRUE@	$(XMLTO) html-nochunks $(srcdir)/dbus-faq.xml
  
- maintainer-clean-local:
- 	rm -f $(HTML_FILES)
+ @DBUS_DOXYGEN_DOCS_ENABLED_TRUE@all-local:: $(DOXYGEN_HTML_INDEX)
+ 

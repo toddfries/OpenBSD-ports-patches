@@ -1,6 +1,6 @@
-$OpenBSD: patch-configure_py,v 1.7 2010/11/10 22:12:40 jasper Exp $
+$OpenBSD: patch-configure_py,v 1.9 2011/01/16 17:07:05 jasper Exp $
 --- configure.py.orig	Fri Oct 29 16:43:52 2010
-+++ configure.py	Wed Nov 10 22:50:26 2010
++++ configure.py	Sun Jan 16 16:57:10 2011
 @@ -1083,6 +1083,17 @@ def run_command(cmd):
  
      cmd is the command to run.

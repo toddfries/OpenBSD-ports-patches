@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/24 21:35:15 jeremy Exp $
+# $OpenBSD: Makefile,v 1.9 2011/01/09 17:50:44 naddy Exp $
 
 COMMENT =	HTML entity encoding and decoding for Ruby
 
 DISTNAME =	htmlentities-4.0.0
-REVISION =	2
+EPOCH =		0
+REVISION =	3
 CATEGORIES =	textproc www
 
 HOMEPAGE =	http://htmlentities.rubyforge.org/

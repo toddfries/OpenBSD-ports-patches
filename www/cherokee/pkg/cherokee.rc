@@ -1,11 +1,12 @@
 #!/bin/sh
 #
-# $OpenBSD: cherokee.rc,v 1.1 2010/12/20 07:51:58 ajacoutot Exp $
-
-. /etc/rc.d/rc.subr
+# $OpenBSD: cherokee.rc,v 1.3 2010/12/27 14:50:24 ajacoutot Exp $
 
 daemon="${TRUEPREFIX}/sbin/cherokee"
 daemon_flags="-d"
+
+. /etc/rc.d/rc.subr
+
 pexp="${daemon}[^-]"
 
 rc_cmd $1

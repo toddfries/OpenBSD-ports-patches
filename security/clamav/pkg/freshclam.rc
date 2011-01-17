@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# $OpenBSD: freshclam.rc,v 1.1 2011/01/05 06:06:49 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/bin/freshclam"
+daemon_flags="-d"
+
+. /etc/rc.d/rc.subr
+
+rc_reload=NO
+
+rc_cmd $1

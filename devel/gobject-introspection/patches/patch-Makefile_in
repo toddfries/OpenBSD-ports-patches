@@ -1,16 +1,42 @@
-$OpenBSD: patch-Makefile_in,v 1.1 2010/10/24 13:40:27 jasper Exp $
+$OpenBSD: patch-Makefile_in,v 1.3 2011/01/13 08:08:47 jasper Exp $
 
 Too much libtool abuse going on in tests/ needs to be sorted out
 first before entering again.
 
---- Makefile.in.orig	Wed Oct  6 22:54:28 2010
-+++ Makefile.in	Sun Oct 24 15:03:00 2010
-@@ -305,7 +305,7 @@ top_build_prefix = @top_build_prefix@
- top_builddir = @top_builddir@
- top_srcdir = @top_srcdir@
+--- Makefile.in.orig	Tue Jan 11 19:42:18 2011
++++ Makefile.in	Thu Jan 13 08:49:15 2011
+@@ -538,7 +538,7 @@ oldincludedir = @oldincludedir@
+ pdfdir = @pdfdir@
+ 
+ # Python module
+-pkgpyexecdir = $(pkglibdir)/giscanner
++pkgpyexecdir = @pkgpythondir@/giscanner
+ pkgpythondir = @pkgpythondir@
+ prefix = @prefix@
+ program_transform_name = @program_transform_name@
+@@ -612,7 +612,7 @@ _gir_includes = $(foreach include,$($(_gir_name)_INCLU
+ _gir_export_packages = $(foreach pkg,$($(_gir_name)_EXPORT_PACKAGES),--pkg-export=$(pkg))
+ 
+ # Reuse the LIBTOOL variable from by automake if it's set
+-_gir_libtool = $(if $(LIBTOOL),--libtool="$(LIBTOOL)")
++_gir_libtool = $(if $(LIBTOOL),--libtool="${LIBTOOL}")
+ 
+ # Macros for AM_SILENT_RULES prettiness
+ _gir_verbosity = $(if $(AM_DEFAULT_VERBOSITY),$(AM_DEFAULT_VERBOSITY),1)
+@@ -1003,7 +1003,7 @@ GCOVSOURCES = \
+ 	$(g_ir_generate_SOURCES)
+ 
  ACLOCAL_AMFLAGS = -I m4
--SUBDIRS = girepository giscanner tools gir docs tests examples
-+SUBDIRS = girepository giscanner tools gir docs examples
+-SUBDIRS = . docs tests
++SUBDIRS = . docs #tests
  DIST_SUBDIRS = m4 $(SUBDIRS)
  DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
- man_MANS = \
+ pkgconfigdir = $(libdir)/pkgconfig
+@@ -2700,6 +2700,7 @@ $(1): $$($(_gir_name)_FILES)
+ 	  $(_gir_libtool) \
+ 	  $(_gir_packages) \
+ 	  $(_gir_includes) \
++	  -I${LOCALBASE}/include \
+ 	  $(_gir_export_packages) \
+ 	  $(_gir_program) \
+ 	  $(_gir_libraries) \

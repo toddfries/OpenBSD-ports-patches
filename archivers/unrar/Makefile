@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.49 2010/07/11 15:57:47 espie Exp $
+# $OpenBSD: Makefile,v 1.51 2011/01/11 18:23:12 miod Exp $
 
 COMMENT=	extract, list, and test RAR archives
 
-DISTNAME=	unrarsrc-3.9.7
-PKGNAME=	unrar-3.97
+DISTNAME=	unrarsrc-4.0.2
+PKGNAME=	unrar-4.02
+REVISION=	0
 CATEGORIES=	archivers
 
 HOMEPAGE=	http://www.rarlab.com/
@@ -16,7 +17,6 @@ PERMIT_PACKAGE_FTP=	may not modify
 PERMIT_DISTFILES_CDROM=	no fee
 PERMIT_DISTFILES_FTP=	Yes
 
-REVISION =	0
 WANTLIB=	c m stdc++
 
 MASTER_SITES=	${HOMEPAGE}rar/
@@ -25,11 +25,6 @@ WRKDIST=	${WRKDIR}/unrar
 
 MAKE_FILE=	makefile.unix
 MAKE_FLAGS=	CXX="${CXX}" CXXFLAGS="${CXXFLAGS}"
-
-# gcc 3.3.5 internal compiler error
-.if ${MACHINE_ARCH} == "alpha"
-EXTRA_CFLAGS=	-O0
-.endif
 
 MAKE_FLAGS+=	EXTRA_CFLAGS=${EXTRA_CFLAGS}
 

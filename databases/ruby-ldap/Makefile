@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2010/11/24 21:35:13 jeremy Exp $
+# $OpenBSD: Makefile,v 1.21 2011/01/15 01:09:43 naddy Exp $
 
 COMMENT=	Ruby interface to some common LDAP libraries
 
 PKGNAME=	ldap-0.9.7
 DISTNAME=	ruby-${PKGNAME}
-REVISION=	11
+REVISION=	13
 CATEGORIES=	databases
 
 HOMEPAGE=	http://ruby-ldap.sourceforge.net/
@@ -29,6 +29,7 @@ CONFIGURE_STYLE=	ruby extconf
 
 REGRESS_TARGET=		test
 REGRESS_DEPENDS=	databases/openldap,-server
+REGRESS_IS_INTERACTIVE = Yes
 
 do-regress:
 	cd ${WRKSRC} &&	/bin/sh ./test/test.sh ruby openldap2 \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.219 2010/12/11 09:55:51 landry Exp $
+# $OpenBSD: Makefile,v 1.224 2011/01/06 12:17:07 landry Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR =
@@ -38,6 +38,7 @@
      SUBDIR += diskrescue
      SUBDIR += dmassage
      SUBDIR += dmidecode
+     SUBDIR += downtimed
      SUBDIR += dtpstree
      SUBDIR += duplicity
      SUBDIR += dvd+rw-tools
@@ -105,6 +106,7 @@
      SUBDIR += p5-Parse-DMIDecode
      SUBDIR += p5-Proc-ProcessTable
      SUBDIR += p5-Proc-Queue
+     SUBDIR += p5-Proc-Wait3
      SUBDIR += p5-Quota
      SUBDIR += p5-Schedule-At
      SUBDIR += p5-Set-Crontab
@@ -133,6 +135,7 @@
      SUBDIR += rsyslog
      SUBDIR += rtty
      SUBDIR += ruby-capistrano
+     SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter
      SUBDIR += ruby-mongrel_cluster
      SUBDIR += ruby-puppet
@@ -144,6 +147,7 @@
      SUBDIR += sdd
      SUBDIR += sec
      SUBDIR += setquota
+     SUBDIR += shelldap
      SUBDIR += shmux
      SUBDIR += shunt
      SUBDIR += skill

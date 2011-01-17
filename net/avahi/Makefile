@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2010/12/14 14:55:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.50 2011/01/17 13:18:13 landry Exp $
 
 COMMENT-main=	framework for Multicast DNS Service Discovery
 COMMENT-gtk=	GUI client utilities for avahi
@@ -15,6 +15,9 @@ PKGNAME-gtk=	avahi-gtk-${V}
 PKGNAME-mono=	mono-avahi-${V}
 PKGNAME-qt3=	avahi-qt3-${V}
 PKGNAME-qt4=	avahi-qt4-${V}
+
+REVISION-main=	1
+REVISION-mono=	0
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -149,7 +152,7 @@ USE_LIBTOOL=	Yes
 MODPY_RUNDEP=	No
 MODMONO_DEPS=	No
 
-AUTOCONF_VERSION= 2.65
+AUTOCONF_VERSION= 2.63
 
 CONFIGURE_STYLE=autoconf no-autoheader
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
@@ -216,8 +219,8 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples
 	mv ${WRKINST}${SYSCONFDIR}/dbus-1 ${PREFIX}/share/examples/
 	mv ${WRKINST}${SYSCONFDIR}/avahi ${PREFIX}/share/examples/
-# DLLMAP_FILES won't work here since the files are generated during the build process
+# XXX DLLMAP_FILES won't work here since the files are generated during the build process
 	find ${PREFIX} -name avahi-sharp.dll.config -or -name avahi-ui-sharp.dll.config | \
-		xargs perl -pi -e 's,\.so\.[0-9]+,\.so,g'
+		xargs perl -pi -e 's,\.so(\.[0-9])+,\.so,g'
 
 .include <bsd.port.mk>

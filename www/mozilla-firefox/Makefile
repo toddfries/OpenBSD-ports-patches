@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.162 2010/12/10 10:53:40 landry Exp $
+# $OpenBSD: Makefile,v 1.164 2011/01/14 22:49:47 landry Exp $
 
 COMMENT =	Mozilla web browser
 
@@ -7,12 +7,13 @@ MOZILLA_VERSION =	3.6.13
 MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	mozilla-firefox
 MOZILLA_CODENAME =	browser
+REVISION = 		1
 
-SO_VERSION =	22.1
+SO_VERSION =	22.2
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 MOZILLA_LIBS =	browsercomps browserdirprovider imgicon mozjs \
-		sqlite3 xpcom xul nullplugin unixprintplugin
+		xpcom xul nullplugin unixprintplugin
 
 CATEGORIES =	www
 
@@ -38,8 +39,6 @@ CONFIGURE_STYLE =	autoconf no-autoheader
 CONFIGURE_ARGS +=	--enable-official-branding
 # --with-system-png=${LOCALBASE}
 # no system png : apng support not bundled in
-# --enable-system-sqlite
-# no system sqlite : requires SECURE_DELETE
 
 MOZILLA_DATADIRS =	chrome components defaults dictionaries extensions \
 			greprefs icons modules plugins res searchplugins

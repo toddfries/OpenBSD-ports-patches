@@ -1,30 +1,31 @@
-# $OpenBSD: Makefile,v 1.22 2010/10/18 18:13:15 espie Exp $
+# $OpenBSD: Makefile,v 1.25 2011/01/09 13:52:53 espie Exp $
 
-SHARED_ONLY=	Yes
+SHARED_ONLY =	Yes
 
-COMMENT=	Network Kanji code conversion Filter
+COMMENT =	Network Kanji code conversion Filter
 
-VERSION=	2.05
-DISTNAME=	nkf205
-PKGNAME=	ja-nkf-${VERSION}
-REVISION=	1
-CATEGORIES=	japanese textproc
+VERSION =	2.1.1
+DISTNAME =	nkf-${VERSION}
+PKGNAME =	ja-nkf-${VERSION}
+EPOCH =		0
+REVISION =	0
+CATEGORIES =	japanese textproc
 
-HOMEPAGE=	http://www01.tcp-ip.or.jp/~furukawa/nkf_utf8/
-MASTER_SITES=	${HOMEPAGE}
+HOMEPAGE =	http://sourceforge.jp/projects/nkf/
+MASTER_SITES =	${MASTER_SITE_SOURCEFORGE_JP:=nkf/48945/}
 
-MAINTAINER=	Marc Espie <espie@openbsd.org>
+MAINTAINER =	Marc Espie <espie@openbsd.org>
 
 #		BSD
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
+WANTLIB =		c
 
-WRKSRC=		${WRKDIST}/NKF.mod
-CONFIGURE_STYLE=	perl
-USE_GROFF =	Yes
+WRKSRC =		${WRKDIST}/NKF.mod
+CONFIGURE_STYLE =	perl
+USE_GROFF =		Yes
 
 post-build:
 	cd ${WRKDIST} && ${CC} -o nkf ${CFLAGS} nkf.c utf8tbl.c

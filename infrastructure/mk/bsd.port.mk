@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1067 2010/12/20 13:05:40 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1071 2011/01/16 20:36:49 ajacoutot Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -100,7 +100,7 @@ _ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS \
 _ALL_VARIABLES_PER_ARCH =
 
 .if ${DPB:L:Mfetch}
-_ALL_VARIABLES += DISTFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
+_ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
 	CHECKSUM_FILE
@@ -1941,7 +1941,16 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 				exit 1; \
 			fi; \
 			if $$early_exit; then \
-				break; \
+				list=`eval $$toset exec ${MAKE} show=PKGNAMES`; \
+				if ${PKG_INFO} ${PKGDB_LOCK} -q -r $$pkg $$list; \
+				then \
+						break; \
+				else \
+					: $${msg:= not found}; \
+					${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$what -$$msg"; \
+					${REPORT_PROBLEM}; \
+					exit 1; \
+				fi; \
 			fi; \
 		done; \
 	}
@@ -2782,7 +2791,9 @@ _internal-clean:
 .endif
 .if ${_clean:L:Mplist}
 .  for _d in ${PLIST_DB:S/:/ /}
-	cd ${_d} && rm -f ${PKGNAMES}
+.    for _p in ${PKGNAMES}
+	rm -f ${_d}/${_p}
+.    endfor
 .  endfor
 .endif
 
