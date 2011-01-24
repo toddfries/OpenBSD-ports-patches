@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/01/13 13:30:46 stu Exp $
+# $OpenBSD: Makefile,v 1.4 2011/01/19 23:22:05 stu Exp $
 
 COMMENT =	Tcl implementation for the CLR
 
 V =		1.0
-P =		4010.41132
+P =		4031.13865
 DISTNAME =	eagle-${V}
-PKGNAME =	${DISTNAME}-beta12
+PKGNAME =	${DISTNAME}-beta13
 CATEGORIES =	lang lang/tcl
 HOMEPAGE =	http://eagle.to/
 MAINTAINER =	Stuart Cassoff <stwo@users.sourceforge.net>
@@ -16,7 +16,9 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =	${HOMEPAGE:=releases/${V}.${P}/}
+MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=eagle/} \
+		${HOMEPAGE:=releases/${V}.${P}/} \
+		http://distfiles.nl/
 DISTFILES =	EagleBinaryMonoOnUnix${V}.${P}.rar
 EXTRACT_CASES =	*.rar) ${LOCALBASE}/bin/unrar x -idq ${DISTDIR}/$$archive;;
 
@@ -44,7 +46,7 @@ do-install:
 		bin		*		${EAGLE_BIN_DIR} \
 		lib/Eagle${V}	*		${EAGLE_LIB_DIR} \
 		.		license.terms	${EAGLE_INS_DIR}
-		
+
 	${INSTALL_DATA} ${WRKSRC}/${SRC}/${GLOB} ${DEST}
 .endfor
 	echo '#! /bin/sh' > ${EAGLE_BIN}

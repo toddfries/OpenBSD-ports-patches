@@ -1,3 +1,5 @@
-@comment $OpenBSD: PFRAG.shared,v 1.2 2009/03/08 17:08:16 landry Exp $
-@lib lib/libexo-0.3.so.${LIBexo-0.3_VERSION}
-@lib lib/libexo-hal-0.3.so.${LIBexo-hal-0.3_VERSION}
+@comment $OpenBSD: PFRAG.shared,v 1.4 2011/01/18 21:34:58 ajacoutot Exp $
+lib/gio/modules/libexo-module-1.so
+@lib lib/libexo-1.so.${LIBexo-1_VERSION}
+@exec %D/bin/gio-querymodules %D/lib/gio/modules/
+@unexec-delete %D/bin/gio-querymodules %D/lib/gio/modules/
