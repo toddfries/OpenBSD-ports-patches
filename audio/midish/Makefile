@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/10/30 20:14:54 ratchov Exp $
+# $OpenBSD: Makefile,v 1.14 2011/01/28 10:36:09 ratchov Exp $
  
 COMMENT=		command line MIDI sequencer and filter
 DISTNAME=		midish-1.0.4
