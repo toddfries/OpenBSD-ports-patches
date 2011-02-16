@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.56 2010/10/18 21:41:48 espie Exp $
+# $OpenBSD: Makefile,v 1.60 2011/02/03 08:56:14 pea Exp $
 
 COMMENT=	Z shell, Bourne shell-compatible
 
-V=		4.3.10
+V=		4.3.11
 DISTNAME=	zsh-$V
-REVISION=	3
 CATEGORIES=	shells
+
+REVISION=	1
 
 MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
@@ -23,7 +24,7 @@ WANTLIB=	c m pcre ncursesw
 
 MODULES=	converters/libiconv
 
-LIB_DEPENDS=	::devel/pcre
+LIB_DEPENDS=	devel/pcre
 
 AUTOCONF_VERSION=2.61
 CONFIGURE_STYLE=autoconf
