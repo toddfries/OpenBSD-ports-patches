@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/10/18 21:41:46 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2010/12/03 11:46:47 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	module to implement the Twofish cipher
 
 MODULES=	cpan
 DISTNAME=	Crypt-Twofish-2.13
-REVISION=	0
+REVISION=	1
 CATEGORIES=	security
 USE_GROFF =	Yes
 
@@ -18,6 +18,6 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-REGRESS_DEPENDS=	::security/p5-Crypt-CBC
+REGRESS_DEPENDS=	security/p5-Crypt-CBC
 
 .include <bsd.port.mk>	
