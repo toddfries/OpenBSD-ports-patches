@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2011/02/12 11:25:48 ajacoutot Exp $
-
-# XXX on macppc this port requires a kernel with cranked MAXDSIZ to build
+# $OpenBSD: Makefile,v 1.19 2011/03/03 21:40:39 ajacoutot Exp $
 
 COMMENT =	emulates the Super Nintendo Entertainment System
 
@@ -29,7 +27,6 @@ WANTLIB =	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 MASTER_SITES =	http://sites.google.com/site/bearoso/snes9x/
 EXTRACT_SUFX =	.tar.bz2
 
-BUILD_DEPENDS =	textproc/intltool
 RUN_DEPENDS =	devel/desktop-file-utils
 LIB_DEPENDS =	devel/libglade2 \
 		devel/sdl \
@@ -41,7 +38,10 @@ LIB_DEPENDS =	devel/libglade2 \
 BUILD_DEPENDS =  devel/nasm 
 .endif
 
-MODULES =	devel/gettext
+MODULES =	devel/gettext \
+		textproc/intltool
+
+VMEM_WARNING =	Yes
 
 USE_GMAKE =	Yes
 

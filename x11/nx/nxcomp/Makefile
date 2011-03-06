@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/22 08:37:03 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2011/03/02 08:48:16 jasper Exp $
 
 COMMENT=		library to compress the standard X protocol
 
-DASHVERSION=		4
+DASHVERSION=		7
 DISTNAME=		nxcomp-${MAJOR_VERSION}-${DASHVERSION}
 PKGNAME=		nxcomp-${MAJOR_VERSION}.${DASHVERSION}
-SHARED_LIBS=		Xcomp	0.0
+SHARED_LIBS=		Xcomp	1.0
 
-WANTLIB=		z jpeg png
+WANTLIB += jpeg m png stdc++ z
 
 LIB_DEPENDS=		graphics/jpeg \
 			graphics/png
@@ -21,7 +21,6 @@ CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 			CXXFLAGS="${CXXFLAGS}"
 
 WRKDIST=		${WRKDIR}/nxcomp
-
 
 do-install:
 	${INSTALL_DATA} ${WRKBUILD}/libXcomp.so.${LIBXcomp_VERSION} \

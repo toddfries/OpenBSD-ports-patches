@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.23 2011/02/12 10:42:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2011/03/05 20:12:35 sthen Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 
 COMMENT=		Chromium browser
 
-V=			9.0.597.94
+V=			9.0.597.107
 DISTNAME=		chromium-${V}
+
+REVISION=		1
 
 CATEGORIES=		www
 
@@ -29,20 +31,13 @@ WANTLIB += gtk-x11-2.0 jpeg m nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pixman-1 plc4 plds4 png pthread pthread-stubs xcb xml2
 WANTLIB += z execinfo bz2 nss3 nssutil3 ssl3 smime3 softokn3 gconf-2
 WANTLIB += GL Xxf86vm drm stdc++ xcb-render xcb-shm
-WANTLIB += Xtst event sqlite3 xslt vpx
+WANTLIB += Xtst event sqlite3 xslt vpx kvm
 
 MASTER_SITES=	http://build.chromium.org/buildbot/official/ \
 		ftp://rene-ladan.nl/pub/distfiles/
 
 MODULES=	devel/gettext \
-		lang/python \
-		gcc4
-
-MODGCC4_LANGS = c c++
-MODGCC4_ARCHES = i386 amd64
-
-# XXX cheat
-COMPILER_VERSION = gcc3
+		lang/python
 
 MODPY_RUNDEP=	No
 MODPY_VERSION=	2.5
@@ -66,8 +61,7 @@ LIB_DEPENDS=	devel/libexecinfo \
 
 # Set BUILDTYPE to Debug (or omit it) for a debug build
 BUILDTYPE=	Release
-MAKE_ENV=	BUILDTYPE=${BUILDTYPE} V=1 \
-		LINK=/usr/bin/g++
+MAKE_ENV=	BUILDTYPE=${BUILDTYPE} V=1
 
 USE_GMAKE=	Yes
 
