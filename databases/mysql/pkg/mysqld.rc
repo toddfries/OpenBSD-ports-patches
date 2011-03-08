@@ -1,27 +1,13 @@
 #!/bin/sh
 #
-# $OpenBSD: mysqld.rc,v 1.10 2011/01/05 16:05:54 ajacoutot Exp $
+# $OpenBSD: mysqld.rc,v 1.12 2011/03/08 10:46:31 ajacoutot Exp $
 
 daemon="${TRUEPREFIX}/bin/mysqld_safe"
 
 . /etc/rc.d/rc.subr
 
+pexp="${TRUEPREFIX}/libexec/mysqld"
+rc_bg=YES
 rc_reload=NO
-
-rc_check() {
-	${TRUEPREFIX}/bin/mysqladmin -s ping >/dev/null
-}
-
-rc_start() {
-	${rcexec} -c "${daemon} ${daemon_flags}" >/dev/null 2>&1 &
-}
-
-rc_stop() {
-	${TRUEPREFIX}/bin/mysqladmin -s shutdown
-	if [ $? -gt 0 ]; then
-		pkill -f "^/bin/sh ${daemon}"
-		pkill -U _mysql -f "^${TRUEPREFIX}/libexec/mysqld"
-	fi
-}
 
 rc_cmd $1

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.674 2011/01/05 23:09:44 jasper Exp $
+# $OpenBSD: Makefile,v 1.676 2011/03/07 23:42:55 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -223,7 +223,6 @@
      SUBDIR += nmap
      SUBDIR += no-ip
      SUBDIR += ns
-     SUBDIR += nsd
      SUBDIR += nslint
      SUBDIR += nslint,static
      SUBDIR += nsping
@@ -256,6 +255,7 @@
      SUBDIR += p5-IO-Interface
      SUBDIR += p5-IO-Socket-INET6
      SUBDIR += p5-IO-Socket-Multicast
+     SUBDIR += p5-IO-Socket-Socks
      SUBDIR += p5-IP-Country
      SUBDIR += p5-Net-Amazon
      SUBDIR += p5-Net-BGP

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.892 2011/01/17 06:54:29 stu Exp $
+# $OpenBSD: Makefile,v 1.896 2011/03/08 07:33:11 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -80,6 +80,7 @@
      SUBDIR += ddd
      SUBDIR += dejagnu
      SUBDIR += desktop-file-utils
+     SUBDIR += dfu-programmer
      SUBDIR += dissy
      SUBDIR += doc++
      SUBDIR += dotconf
@@ -200,6 +201,7 @@
      SUBDIR += hs-vector-algorithms
      SUBDIR += hscolour
      SUBDIR += hudson
+     SUBDIR += hyena
      SUBDIR += id-utils
      SUBDIR += idoc
      SUBDIR += intellij
@@ -873,6 +875,7 @@
      SUBDIR += py-Checker
      SUBDIR += py-SOAPpy
      SUBDIR += py-addons
+     SUBDIR += py-altgraph
      SUBDIR += py-asn1
      SUBDIR += py-babel
      SUBDIR += py-buildbot
@@ -900,6 +903,7 @@
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
      SUBDIR += py-minimock
+     SUBDIR += py-modulegraph
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime,python2.4
      SUBDIR += py-mxDateTime,python2.6
@@ -1041,6 +1045,7 @@
      SUBDIR += shapelib
      SUBDIR += shtool
      SUBDIR += silc-toolkit
+     SUBDIR += simulavr
      SUBDIR += slib
      SUBDIR += slib-guile
      SUBDIR += smarty
