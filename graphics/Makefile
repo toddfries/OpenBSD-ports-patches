@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.278 2011/03/07 21:55:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.280 2011/03/09 10:01:20 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -60,6 +60,7 @@
      SUBDIR += fyre
      SUBDIR += gd
      SUBDIR += gdk-pixbuf2
+     SUBDIR += geeqie
      SUBDIR += gegl
      SUBDIR += gfract
      SUBDIR += ggi
@@ -77,7 +78,6 @@
      SUBDIR += goocanvas
      SUBDIR += gphoto2
      SUBDIR += gpicview
-     SUBDIR += gqview
      SUBDIR += gracula
      SUBDIR += grap
      SUBDIR += gthumb
