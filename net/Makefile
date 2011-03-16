@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.676 2011/03/07 23:42:55 sthen Exp $
+# $OpenBSD: Makefile,v 1.679 2011/03/15 10:44:32 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -238,6 +238,7 @@
      SUBDIR += opal
      SUBDIR += openafs
      SUBDIR += openfire
+     SUBDIR += openmdns
      SUBDIR += openvmps
      SUBDIR += openvpn
      SUBDIR += openvpn_bsdauth
@@ -265,6 +266,7 @@
      SUBDIR += p5-Net-DAAP-DMAP
      SUBDIR += p5-Net-DAV-Server
      SUBDIR += p5-Net-DBus
+     SUBDIR += p5-Net-DHCP
      SUBDIR += p5-Net-DNS
      SUBDIR += p5-Net-DNS-DynDNS
      SUBDIR += p5-Net-DNS-SEC
@@ -275,6 +277,7 @@
      SUBDIR += p5-Net-FTP-Recursive
      SUBDIR += p5-Net-FTPSSL
      SUBDIR += p5-Net-FTPServer
+     SUBDIR += p5-Net-Frame
      SUBDIR += p5-Net-GPSD
      SUBDIR += p5-Net-Google
      SUBDIR += p5-Net-ICQ2000

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.896 2011/03/08 07:33:11 jasper Exp $
+# $OpenBSD: Makefile,v 1.902 2011/03/15 13:22:07 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -303,6 +303,7 @@
      SUBDIR += mico
      SUBDIR += mk
      SUBDIR += mm
+     SUBDIR += mm-common
      SUBDIR += mono-addins
      SUBDIR += mono-flickrnet
      SUBDIR += mono-notify
@@ -324,6 +325,7 @@
      SUBDIR += openmpi
      SUBDIR += openocd
      SUBDIR += orc
+     SUBDIR += p5-Acme-Damn
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
      SUBDIR += p5-Algorithm-CurveFit
@@ -392,6 +394,7 @@
      SUBDIR += p5-Class-Factory
      SUBDIR += p5-Class-Factory-Util
      SUBDIR += p5-Class-Generate
+     SUBDIR += p5-Class-Gomor
      SUBDIR += p5-Class-Handle
      SUBDIR += p5-Class-ISA
      SUBDIR += p5-Class-Inner
@@ -745,6 +748,7 @@
      SUBDIR += p5-Term-Shell
      SUBDIR += p5-Test-Assertions
      SUBDIR += p5-Test-Base
+     SUBDIR += p5-Test-CheckManifest
      SUBDIR += p5-Test-Class
      SUBDIR += p5-Test-ClassAPI
      SUBDIR += p5-Test-Cmd
@@ -833,6 +837,7 @@
      SUBDIR += p5-Want
      SUBDIR += p5-WeakRef
      SUBDIR += p5-YAML
+     SUBDIR += p5-YAML-Perl
      SUBDIR += p5-YAML-Shell
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-YAML-Tiny
@@ -984,6 +989,7 @@
      SUBDIR += ruby-facets
      SUBDIR += ruby-fastthread
      SUBDIR += ruby-ffi
+     SUBDIR += ruby-ffi,ruby19
      SUBDIR += ruby-ffi-inliner
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin

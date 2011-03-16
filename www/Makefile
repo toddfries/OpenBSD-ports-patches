@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.491 2011/03/07 23:42:55 sthen Exp $
+# $OpenBSD: Makefile,v 1.494 2011/03/15 19:50:52 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -131,6 +131,7 @@
      SUBDIR += ntlmaps
      SUBDIR += opera
      SUBDIR += opera-flashplugin
+     SUBDIR += p5-Alien-Tidyp
      SUBDIR += p5-Apache-ASP
      SUBDIR += p5-Apache-DB
      SUBDIR += p5-Apache-DBI
@@ -431,7 +432,7 @@
      SUBDIR += swfdec-plugin
      SUBDIR += syweb
      SUBDIR += thttpd
-     SUBDIR += tidy
+     SUBDIR += tidyp
      SUBDIR += tikiwiki
      SUBDIR += timetrex
      SUBDIR += tinyproxy

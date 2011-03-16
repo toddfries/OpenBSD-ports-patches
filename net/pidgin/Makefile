@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.88 2011/03/06 14:13:20 steven Exp $
+# $OpenBSD: Makefile,v 1.90 2011/03/13 17:27:10 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=	multi-protocol instant messaging client
 COMMENT-finch=	multi-protocol instant messaging client, console client
 COMMENT-libpurple= multi-protocol instant messaging library
 
-VERSION=	2.7.10
+VERSION=	2.7.11
 DISTNAME=	pidgin-${VERSION}
 PKGNAME-main=	pidgin-${VERSION}
 PKGNAME-finch=	finch-${VERSION}
@@ -20,8 +20,8 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pidgin/}
 
 SHARED_LIBS=	jabber		0.0 \
 		oscar		0.0 \
-		purple		5.1 \
-		purple-client	5.1 \
+		purple		5.2 \
+		purple-client	5.2 \
 		gnt		6.0 \
 		ymsg		0.0
 
@@ -40,11 +40,10 @@ WANTLIB=	c dbus-1 dbus-glib-1 glib-2.0 gmodule-2.0 gobject-2.0 \
 
 WANTLIB-main=	GL X11 Xau Xdmcp ICE SM Xcomposite Xcursor Xdamage Xext \
 		Xfixes Xi Xinerama Xrandr Xrender Xss Xxf86vm atk-1.0 cairo \
-		drm execinfo expat fontconfig freetype gdk-x11-2.0 \
-		gdk_pixbuf-2.0 gio-2.0 gtk-x11-2.0 pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1 png pthread-stubs stdc++ xcb-atom \
-		startup-notification-1 purple xcb-aux xcb-event xcb-render \
-		xcb-shm xcb ${WANTLIB}
+		drm expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
+		gio-2.0 gtk-x11-2.0 pango-1.0 pangocairo-1.0 pangoft2-1.0 \
+		pixman-1 png pthread-stubs purple stdc++ xcb-atom xcb-aux \
+		xcb-event xcb-render xcb-shm xcb ${WANTLIB}
 
 WANTLIB-libpurple= crypto ssl silc>=7 silcclient>=5 meanwhile gadu>=4 \
 		${WANTLIB}
@@ -58,11 +57,12 @@ MODULES=	devel/gettext \
 		devel/gconf2
 
 BUILD_DEPENDS=		x11/dbus-python
+LIB_DEPENDS=		devel/glib2
 RUN_DEPENDS-main=	x11/dbus-python \
 			x11/py-gtk2 \
 			devel/desktop-file-utils
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			devel/startup-notification>=0.10
+			x11/gtk+2
 RUN_DEPENDS-finch=	# empty
 LIB_DEPENDS-finch=	${LIB_DEPENDS} \
 			${MODPY_LIB_DEPENDS}
@@ -103,17 +103,15 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		ac_cv_lib_db_dbopen=no
 
-MAKE_FLAGS+=	CFLAGS="${CFLAGS}"
-
 FLAVORS=	audio debug gtkspell
 FLAVOR?=
 
 MULTI_PACKAGES= -main -finch -libpurple
 
 .if ${FLAVOR:L:Maudio}
-LIB_DEPENDS+=	gstreamer->=0.10,<=0.11:multimedia/gstreamer-0.10/core \
-		multimedia/gstreamer-0.10/plugins-base
-WANTLIB +=	gstreamer-0.10 gstinterfaces-0.10
+LIB_DEPENDS+=		multimedia/gstreamer-0.10/core>=0.10,<=0.11 \
+			multimedia/gstreamer-0.10/plugins-base
+WANTLIB+=		gstreamer-0.10 gstinterfaces-0.10
 LIB_DEPENDS-main+=	libpurple-${VERSION}-audio:${BUILD_PKGPATH},-libpurple
 LIB_DEPENDS-finch+=	libpurple-${VERSION}-audio:${BUILD_PKGPATH},-libpurple
 .else

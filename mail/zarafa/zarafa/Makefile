@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2011/03/08 13:37:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.68 2011/03/11 09:09:01 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
@@ -7,19 +7,18 @@ PKGNAME=	zarafa-${V}
 PKGNAME-main=	zarafa-${V}
 PKGNAME-web=	zarafa-webaccess-${V}
 
-REVISION-main=	0
-
 CATEGORIES=	mail www productivity
 
-SHARED_LIBS +=  common_util	1.0 # .1.0
-SHARED_LIBS +=  common_mapi	1.0 # .1.0
-SHARED_LIBS +=  common_ssl	1.0 # .1.0
-SHARED_LIBS +=  freebusy	1.0 # .1.0
-SHARED_LIBS +=  mapi		1.0 # .0.0
-SHARED_LIBS +=  zarafaclient	1.0 # .1.0
-SHARED_LIBS +=  icalmapi	1.0 # .1.0
-SHARED_LIBS +=  inetmapi	1.0 # .1.0
-SHARED_LIBS +=  zarafasync	1.0 # .1.0
+SHARED_LIBS +=  common_util          1.0      # 1.0
+SHARED_LIBS +=  common_mapi          1.0      # 1.0
+SHARED_LIBS +=  common_ssl           1.0      # 1.0
+SHARED_LIBS +=  freebusy             1.0      # 1.0
+SHARED_LIBS +=  zarafasync           1.0      # 1.0
+SHARED_LIBS +=  mapi                 1.0      # unknown
+SHARED_LIBS +=  zarafaclient         1.0      # unknown
+SHARED_LIBS +=  icalmapi             1.0      # 1.0
+SHARED_LIBS +=  inetmapi             1.0      # 1.0
+SHARED_LIBS +=  archiver             0.0      # unknown
 
 MULTI_PACKAGES=	-main -web
 
@@ -27,12 +26,13 @@ MODULES=	devel/gettext
 
 BUILD_DEPENDS=	www/php5/core \
 		textproc/xmlto \
-		net/curl
+		net/curl \
+		devel/boost
 
 WANTLIB-main =	${MODGETTEXT_WANTLIB}
 WANTLIB-main += asn1 c com_err crypto gssapi krb5 m ncurses pthread ssl
-WANTLIB-main += sasl2 stdc++ z xml2 mysqlclient lber-2.4 ldap-2.4 uuid execinfo
-WANTLIB-main += vmime-zarafa ical icalss
+WANTLIB-main += sasl2 stdc++ z xml2 mysqlclient uuid execinfo
+WANTLIB-main += vmime-zarafa ical icalss lber-2.4 ldap-2.4
 
 LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		textproc/libxml \
@@ -40,7 +40,7 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		databases/openldap \
 		devel/uuid \
 		devel/libexecinfo \
-		mail/zarafa/libvmime>=0.7.1p8 \
+		mail/zarafa/libvmime>=0.7.1p9 \
 		textproc/libical
 
 WANTLIB-web += ${MODGETTEXT_WANTLIB}
@@ -95,7 +95,7 @@ SUB_SCRIPTS=	createcompany.d/00createpublic groups_common.sh \
 		createuser.d/00createstore companies_common.sh \
 		users_common.sh
 
-WRKDIST=	${WRKDIR}/${DISTNAME}/src
+WRKDIST=	${WRKDIR}/zarafa-${V}/
 
 post-patch:
 	mv ${WRKSRC}/php-webclient-ajax/client/layout/img/login.jpg \

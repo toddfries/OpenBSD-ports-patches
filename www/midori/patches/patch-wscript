@@ -1,8 +1,8 @@
-$OpenBSD: patch-wscript,v 1.12 2010/11/02 09:56:19 landry Exp $
+$OpenBSD: patch-wscript,v 1.14 2011/03/14 18:57:22 landry Exp $
 We don't need those files installed..
---- wscript.orig        Sun Oct 31 23:20:48 2010
-+++ wscript     Mon Nov  1 08:31:47 2010
-@@ -68,7 +68,7 @@
+--- wscript.orig	Sun Mar 13 23:03:35 2011
++++ wscript	Mon Mar 14 10:26:08 2011
+@@ -68,7 +68,7 @@ def rc_file(self, node):
      self.compiled_tasks.append (rctask)
  rc_file = extension ('.rc')(rc_file)
  Task.simple_task_type ('winrc', '${WINRC} -o${TGT} ${SRC}', color='BLUE',
@@ -11,18 +11,12 @@ We don't need those files installed..
  
  def configure (conf):
      def option_checkfatal (option, desc):
-@@ -416,12 +416,8 @@
+@@ -407,7 +407,7 @@ def build (bld):
+             'AUTHORS COPYING ChangeLog EXPAT README data/faq.html data/faq.css')
  
-     bld.add_group ()
- 
--    if bld.env['docs']:
--        bld.install_files ('${DOCDIR}/' + '/', \
--            'AUTHORS COPYING ChangeLog EXPAT README')
--
      # Install default configuration
 -    bld.install_files ('${SYSCONFDIR}/xdg/' + APPNAME + '/', 'data/search')
 +    bld.install_files ('${MDATADIR}/examples/' + APPNAME + '/', 'data/search')
  
-     if bld.env['RST2HTML']:
-         # FIXME: Build only if needed
-
+     if bld.env['INTLTOOL']:
+         obj = bld.new_task_gen ('intltool_po')
