@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.135 2011/03/15 13:49:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.138 2011/03/21 09:40:04 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
+
+REVISION-main=		1
 
 DISTNAME=		samba-3.5.8
 PKGNAME-main=		${DISTNAME}
@@ -154,21 +156,9 @@ post-patch:
 pre-configure:
 	@${SUBST_CMD} ${SAMBA_MANPAGES}/swat.8
 
-# Samba's man pages kill OpenBSD's groff/nroff/man implementation.
-# This workaround will be needed until the new usr.bin/mandoc is
-# finished and enabled.
 post-extract:
 	@cp ${FILESDIR}/krb5-config ${WRKDIR}/bin
 	@chmod a+x ${WRKDIR}/bin/krb5-config
-	@for file in ${SAMBA_MANPAGES}/*; do \
-	 if [ -f $$file ]; then \
-	  cp $$file $$file.crap; \
-	  sed -e 's:\\FC::g' -e 's:\\F\[\]::g' -e 's:\.\\\":\ \\\":g' \
-	   -e 's:SH-xref:Sx:g' -e 's:\\m\[\]::g' -e 's:toupper:tu:g' \
-	   -e 's:\.\.\\\":\\\":g' -e 's:^.tu :\\":g' -e's:\\m\[blue\]::g' \
-	   -e's:\\m\[\]::g' $$file.crap  > $$file; \
-	 fi; \
-	done
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/samba/pdf

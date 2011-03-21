@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2010/12/03 11:44:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2011/03/17 16:00:27 pea Exp $
 
 COMMENT=	client interface to LDAP servers
 
