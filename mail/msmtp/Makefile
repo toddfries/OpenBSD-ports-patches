@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.24 2010/11/19 07:23:07 espie Exp $
+# $OpenBSD: Makefile,v 1.26 2011/03/23 09:48:07 jasper Exp $
 
 COMMENT =		SMTP plugin for MUAs
 
-DISTNAME =		msmtp-1.4.21
+DISTNAME =		msmtp-1.4.23
 CATEGORIES =		mail
 
 HOMEPAGE =		http://msmtp.sourceforge.net/
@@ -28,6 +28,8 @@ CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--with-libgsasl=no \
 			--with-libidn=yes \
 			--with-ssl=openssl
+FAKE_FLAGS =		mandir="${PREFIX}/man" \
+			infodir="${PREFIX}/info"
 USE_GROFF =		Yes
 
 post-install:

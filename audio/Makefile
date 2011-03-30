@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.256 2011/03/17 14:48:57 edd Exp $
+# $OpenBSD: Makefile,v 1.258 2011/03/25 17:02:35 jeremy Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR =
@@ -89,6 +89,7 @@
      SUBDIR += mac
      SUBDIR += madplay
      SUBDIR += mcp-plugins
+     SUBDIR += metronome
      SUBDIR += midish
      SUBDIR += milkytracker
      SUBDIR += mixer.app
@@ -173,6 +174,7 @@
      SUBDIR += rtunes
      SUBDIR += ruby-id3lib
      SUBDIR += ruby-vorbis_comment
+     SUBDIR += ruby-vorbis_comment,ruby19
      SUBDIR += scmpc
      SUBDIR += shell-fm
      SUBDIR += shorten

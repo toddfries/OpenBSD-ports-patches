@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.8 2011/03/16 17:28:54 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.11 2011/03/28 06:20:26 ajacoutot Exp $
 @conflict glib2mm-docs-*
 @pkgpath devel/glib2mm,-main
 @pkgpath devel/glib2mm,-docs
@@ -6,10 +6,7 @@
 include/giomm-${V}/
 include/giomm-${V}/giomm/
 include/giomm-${V}/giomm.h
-include/giomm-${V}/giomm/actiongroup.h
 include/giomm-${V}/giomm/appinfo.h
-include/giomm-${V}/giomm/application.h
-include/giomm-${V}/giomm/applicationcommandline.h
 include/giomm-${V}/giomm/asyncinitable.h
 include/giomm-${V}/giomm/asyncresult.h
 include/giomm-${V}/giomm/bufferedinputstream.h
@@ -24,12 +21,14 @@ include/giomm-${V}/giomm/dbusauthobserver.h
 include/giomm-${V}/giomm/dbusconnection.h
 include/giomm-${V}/giomm/dbuserror.h
 include/giomm-${V}/giomm/dbuserrorutils.h
+include/giomm-${V}/giomm/dbusinterfacevtable.h
 include/giomm-${V}/giomm/dbusintrospection.h
 include/giomm-${V}/giomm/dbusmessage.h
 include/giomm-${V}/giomm/dbusmethodinvocation.h
 include/giomm-${V}/giomm/dbusownname.h
 include/giomm-${V}/giomm/dbusproxy.h
 include/giomm-${V}/giomm/dbusserver.h
+include/giomm-${V}/giomm/dbussubtreevtable.h
 include/giomm-${V}/giomm/dbusutils.h
 include/giomm-${V}/giomm/dbuswatchname.h
 include/giomm-${V}/giomm/desktopappinfo.h
@@ -67,10 +66,7 @@ include/giomm-${V}/giomm/networkaddress.h
 include/giomm-${V}/giomm/networkservice.h
 include/giomm-${V}/giomm/outputstream.h
 include/giomm-${V}/giomm/private/
-include/giomm-${V}/giomm/private/actiongroup_p.h
 include/giomm-${V}/giomm/private/appinfo_p.h
-include/giomm-${V}/giomm/private/application_p.h
-include/giomm-${V}/giomm/private/applicationcommandline_p.h
 include/giomm-${V}/giomm/private/asyncinitable_p.h
 include/giomm-${V}/giomm/private/asyncresult_p.h
 include/giomm-${V}/giomm/private/bufferedinputstream_p.h
@@ -84,12 +80,14 @@ include/giomm-${V}/giomm/private/dbusauthobserver_p.h
 include/giomm-${V}/giomm/private/dbusconnection_p.h
 include/giomm-${V}/giomm/private/dbuserror_p.h
 include/giomm-${V}/giomm/private/dbuserrorutils_p.h
+include/giomm-${V}/giomm/private/dbusinterfacevtable_p.h
 include/giomm-${V}/giomm/private/dbusintrospection_p.h
 include/giomm-${V}/giomm/private/dbusmessage_p.h
 include/giomm-${V}/giomm/private/dbusmethodinvocation_p.h
 include/giomm-${V}/giomm/private/dbusownname_p.h
 include/giomm-${V}/giomm/private/dbusproxy_p.h
 include/giomm-${V}/giomm/private/dbusserver_p.h
+include/giomm-${V}/giomm/private/dbussubtreevtable_p.h
 include/giomm-${V}/giomm/private/dbusutils_p.h
 include/giomm-${V}/giomm/private/dbuswatchname_p.h
 include/giomm-${V}/giomm/private/desktopappinfo_p.h
@@ -131,7 +129,6 @@ include/giomm-${V}/giomm/private/proxyresolver_p.h
 include/giomm-${V}/giomm/private/resolver_p.h
 include/giomm-${V}/giomm/private/seekable_p.h
 include/giomm-${V}/giomm/private/settings_p.h
-include/giomm-${V}/giomm/private/settingsbackend_p.h
 include/giomm-${V}/giomm/private/socket_p.h
 include/giomm-${V}/giomm/private/socketaddress_p.h
 include/giomm-${V}/giomm/private/socketaddressenumerator_p.h
@@ -160,7 +157,6 @@ include/giomm-${V}/giomm/proxyresolver.h
 include/giomm-${V}/giomm/resolver.h
 include/giomm-${V}/giomm/seekable.h
 include/giomm-${V}/giomm/settings.h
-include/giomm-${V}/giomm/settingsbackend.h
 include/giomm-${V}/giomm/socket.h
 include/giomm-${V}/giomm/socketaddress.h
 include/giomm-${V}/giomm/socketaddressenumerator.h
@@ -335,6 +331,7 @@ lib/libglibmm-${V}.a
 lib/libglibmm-${V}.la
 lib/libglibmm_generate_extra_defs-${V}.a
 lib/libglibmm_generate_extra_defs-${V}.la
+lib/pkgconfig/
 lib/pkgconfig/giomm-${V}.pc
 lib/pkgconfig/glibmm-${V}.pc
 share/aclocal/glibmm_check_perl.m4
@@ -352,21 +349,12 @@ share/doc/glibmm-${V}/reference/html/
 share/doc/glibmm-${V}/reference/html/annotated.html
 share/doc/glibmm-${V}/reference/html/bc_s.png
 share/doc/glibmm-${V}/reference/html/classChecksumType.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1ActionGroup-members.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1ActionGroup.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1ActionGroup__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGio_1_1AppInfo-members.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1AppInfo.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1AppInfo__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGio_1_1AppLaunchContext-members.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1AppLaunchContext.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1AppLaunchContext__inherit__graph.png
-share/doc/glibmm-${V}/reference/html/classGio_1_1Application-members.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1Application.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1ApplicationCommandLine-members.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1ApplicationCommandLine.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1ApplicationCommandLine__inherit__graph.png
-share/doc/glibmm-${V}/reference/html/classGio_1_1Application__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGio_1_1AsyncInitable-members.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1AsyncInitable.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1AsyncInitable__inherit__graph.png
@@ -546,9 +534,6 @@ share/doc/glibmm-${V}/reference/html/classGio_1_1Seekable.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1Seekable__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGio_1_1Settings-members.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1Settings.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1SettingsBackend-members.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1SettingsBackend.html
-share/doc/glibmm-${V}/reference/html/classGio_1_1SettingsBackend__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGio_1_1Settings__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGio_1_1Socket-members.html
 share/doc/glibmm-${V}/reference/html/classGio_1_1Socket.html
@@ -950,7 +935,6 @@ share/doc/glibmm-${V}/reference/html/classGlib_1_1VariantType-members.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1VariantType.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01Glib_1_1ustring_01_4-members.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01Glib_1_1ustring_01_4.html
-share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01Glib_1_1ustring_01_4__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01VariantBase_01_4-members.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01VariantBase_01_4.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01VariantBase_01_4__inherit__graph.png
@@ -985,7 +969,6 @@ share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01std_1_1string_01_4
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01std_1_1vector_3_01T_01_4_01_4.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01unsigned_01char_01_4-members.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01unsigned_01char_01_4.html
-share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant_3_01unsigned_01char_01_4__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGlib_1_1Variant__inherit__graph.png
 share/doc/glibmm-${V}/reference/html/classGlib_1_1ustring-members.html
 share/doc/glibmm-${V}/reference/html/classGlib_1_1ustring.html
@@ -1317,5 +1300,3 @@ share/doc/glibmm-${V}/reference/html/tab_s.png
 share/doc/glibmm-${V}/reference/html/tabs.css
 share/doc/glibmm-${V}/reference/html/thread_2dispatcher_8cc-example.html
 share/doc/glibmm-${V}/reference/html/thread_2thread_8cc-example.html
-share/glibmm-${V}/
-share/glibmm-${V}/doctool

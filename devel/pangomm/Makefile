@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2011/03/07 19:23:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/03/30 08:05:05 ajacoutot Exp $
 
 COMMENT =		C++ interface for pango
 
-V =			2.27.1
+V =			2.28.2
 DISTNAME =		pangomm-${V}
 CATEGORIES =		devel x11
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.116 2011/03/12 21:19:13 jakemsr Exp $
+# $OpenBSD: Makefile,v 1.118 2011/03/26 10:05:24 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,7 +7,7 @@ COMMENT-main=	VideoLAN client; multimedia player
 V=		1.0.6
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	17
+REVISION-main=	18
 REVISION-jack=	3
 REVISION-web=	5
 CATEGORIES=	x11
@@ -76,8 +76,7 @@ WANTLIB-main=	FLAC GL GLU ICE lib/qt4/QtGui SM SDL SDL_image X11 Xau \
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= autoconf
-# Should be 2.65
-AUTOCONF_VERSION= 2.64
+AUTOCONF_VERSION= 2.65
 MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC}/autotools
 CONFIGURE_ARGS+=--disable-alsa \
 		--disable-altivec \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.192 2011/01/07 12:50:55 pea Exp $
+# $OpenBSD: Makefile,v 1.195 2011/03/26 08:25:48 dcoppa Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR =
@@ -18,6 +18,7 @@
      SUBDIR += hs-HDBC-mysql
      SUBDIR += hs-HDBC-postgresql
      SUBDIR += hs-HDBC-sqlite3
+     SUBDIR += hs-redis
      SUBDIR += iodbc
      SUBDIR += jxplorer
      SUBDIR += keximdb
@@ -177,16 +178,20 @@
      SUBDIR += ruby-jdbc-sqlite3
      SUBDIR += ruby-kirbybase
      SUBDIR += ruby-ldap
+     SUBDIR += ruby-ldap,ruby19
      SUBDIR += ruby-mysql
      SUBDIR += ruby-mysql,ruby19
      SUBDIR += ruby-mysql,rbx
      SUBDIR += ruby-mysql2
      SUBDIR += ruby-mysql2,ruby19
      SUBDIR += ruby-mysqlplus
+     SUBDIR += ruby-mysqlplus,ruby19
      SUBDIR += ruby-pg
      SUBDIR += ruby-pg,ruby19
      SUBDIR += ruby-pg,rbx
      SUBDIR += ruby-postgres
+     SUBDIR += ruby-redis
+     SUBDIR += ruby-redis,ruby19
      SUBDIR += ruby-sequel
      SUBDIR += ruby-sequel,ruby19
      SUBDIR += ruby-sequel,rbx

@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.39 2011/03/16 17:28:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.43 2011/03/29 10:24:22 ajacoutot Exp $
 
 COMMENT=	C++ interface for glib2
 
 GNOME_PROJECT=	glibmm
-GNOME_VERSION=	2.27.97
+GNOME_VERSION=	2.27.99.2
+
 V=		2.4
-
-REVISION=	0
-
 SUBST_VARS=	V
 
 PKGNAME=	glib2mm-${GNOME_VERSION}
@@ -43,17 +41,5 @@ CONFIGURE_ENV=	M4='m4 -g' \
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-static \
 		--disable-dependency-tracking
-
-# XXX temporary?
-BUILD_DEPENDS += devel/mm-common
-# needed so that dependencies can find MMDOCTOOLDIR/doc-install.pl
-RUN_DEPENDS += devel/mm-common
-
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/glibmm-${V}
-	ln -sf ${LOCALBASE}/share/mm-common/doctool/ \
-		${PREFIX}/share/glibmm-2.4/
-
-# end XXX
 
 .include <bsd.port.mk>

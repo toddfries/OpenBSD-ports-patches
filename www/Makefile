@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.495 2011/03/16 14:24:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.500 2011/03/28 00:21:19 fgsch Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -354,6 +354,7 @@
      SUBDIR += py-cherrypy2
      SUBDIR += py-clientform
      SUBDIR += py-django
+     SUBDIR += py-flask
      SUBDIR += py-flup
      SUBDIR += py-formencode
      SUBDIR += py-genshi
@@ -407,12 +408,14 @@
      SUBDIR += ruby-rails
      SUBDIR += ruby-railties
      SUBDIR += ruby-rainbows
+     SUBDIR += ruby-rainbows,ruby19
      SUBDIR += ruby-rest-client
      SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin
+     SUBDIR += ruby-thin,ruby19
      SUBDIR += ruby-thin_http
-     SUBDIR += ruby-typo
      SUBDIR += ruby-unicorn
+     SUBDIR += ruby-unicorn,ruby19
      SUBDIR += sabredav
      SUBDIR += sarg
      SUBDIR += seamonkey
@@ -457,6 +460,7 @@
      SUBDIR += w3mir
      SUBDIR += wApua
      SUBDIR += wbox
+     SUBDIR += webacula
      SUBDIR += webalizer
      SUBDIR += webcollab
      SUBDIR += webkit

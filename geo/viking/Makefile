@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2011/01/16 23:59:18 landry Exp $
+# $OpenBSD: Makefile,v 1.5 2011/03/27 20:37:59 jasper Exp $
 
 COMMENT =	GPS track manager
 
-DISTNAME =	viking-1.0
+DISTNAME =	viking-1.0.2
 
 CATEGORIES =	geo x11
 
@@ -30,6 +30,7 @@ LIB_DEPENDS =	misc/gpsd \
 		net/curl \
 		devel/libidn \
 		x11/gtk+2
+RUN_DEPENDS =	geo/gpsbabel
 
 WANTLIB = gps curl idn gdk-x11-2.0 gtk-x11-2.0 gdk_pixbuf-2.0
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes

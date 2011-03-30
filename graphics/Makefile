@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.280 2011/03/09 10:01:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.283 2011/03/30 09:28:25 jasper Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
      SUBDIR =
+     SUBDIR += DevIL
      SUBDIR += GraphicsMagick
      SUBDIR += GraphicsMagick,no_x11
      SUBDIR += ImageMagick
@@ -136,6 +137,7 @@
      SUBDIR += mapivi
      SUBDIR += mapnik
      SUBDIR += mhgui
+     SUBDIR += mirage
      SUBDIR += molden
      SUBDIR += mpeg-lib
      SUBDIR += mpeg_encode
@@ -201,6 +203,7 @@
      SUBDIR += ruby-gruff
      SUBDIR += ruby-mini_magick
      SUBDIR += ruby-rmagick
+     SUBDIR += ruby-rmagick,ruby19
      SUBDIR += s10sh
      SUBDIR += sane-backends
      SUBDIR += sane-frontends

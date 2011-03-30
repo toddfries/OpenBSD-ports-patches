@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.8 2011/03/15 19:49:42 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.10 2011/03/26 10:23:13 sthen Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -60,7 +60,7 @@ CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.13
 CONFIGURE_ENV=          CFLAGS="${CFLAGS} -I${LOCALBASE}/include -pthread" \
                         LDFLAGS="-L${LOCALBASE}/lib ${PHP_LDFLAGS} -pthread" \
-			EXTENSION_DIR=${MODULES_DIR}
+			EXTENSION_DIR=${MODULES_DIR} lt_cv_path_SED=/usr/bin/sed
 MAKE_ENV=               ${CONFIGURE_ENV}
 
 CONFIGURE_ARGS+=	--enable-shared \
@@ -311,6 +311,8 @@ WANTLIB-main=		c crypto ssl z pthread gssapi iconv krb5 xml2>=8 \
 			intl m
 WANTLIB-fastcgi=	${WANTLIB-main}
 LIB_DEPENDS-main=	textproc/libxml
+RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
+			mail/femail,-chroot
 LIB_DEPENDS-fastcgi=	${LIB_DEPENDS-main}
 
 .if ${FLAVOR:L:Mno_suhosin}

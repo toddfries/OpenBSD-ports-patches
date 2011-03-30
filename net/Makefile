@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.681 2011/03/19 18:04:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.685 2011/03/28 14:08:32 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -100,6 +100,7 @@
      SUBDIR += ftpsesame
      SUBDIR += gajim
      SUBDIR += gftp
+     SUBDIR += glib2-networking
      SUBDIR += gloox
      SUBDIR += gmudix
      SUBDIR += gnaughty
@@ -123,6 +124,7 @@
      SUBDIR += icecast
      SUBDIR += ices
      SUBDIR += ices2
+     SUBDIR += icinga
      SUBDIR += icmpinfo
      SUBDIR += ifmcstat
      SUBDIR += ifstat
@@ -172,6 +174,7 @@
      SUBDIR += libnids
      SUBDIR += libpcapnav
      SUBDIR += libproxy
+     SUBDIR += libproxy,webkit
      SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
@@ -451,6 +454,7 @@
      SUBDIR += ruby-bunny
      SUBDIR += ruby-errand
      SUBDIR += ruby-eventmachine
+     SUBDIR += ruby-eventmachine,ruby19
      SUBDIR += ruby-minion
      SUBDIR += ruby-net-dns
      SUBDIR += ruby-net-scp

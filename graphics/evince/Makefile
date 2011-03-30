@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.56 2011/01/06 22:55:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.58 2011/03/26 15:05:31 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT-main=	document viewer for multiple document formats
+COMMENT-main=	viewer for multiple document formats
 COMMENT-djvu=	evince document viewer backend for djvu documents
 COMMENT-dvi=	evince document viewer backend for dvi documents
 COMMENT-nautilus= evince plugin for nautilus
@@ -20,7 +20,7 @@ PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
 PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
 PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
-REVISION-main=	0
+REVISION-main=	2
 REVISION-nautilus= 0
 REVISION-dvi=	0
 
@@ -40,7 +40,9 @@ PERMIT_DISTFILES_CDROM=	Yes
 
 MODULES=	devel/gettext \
 		x11/gnome \
-		devel/gconf2
+		devel/gconf2 \
+		devel/dconf
+
 USE_GROFF =	Yes
 
 BUILD_DEPENDS=	x11/gnome/icon-theme
@@ -66,8 +68,7 @@ LIB_DEPENDS-main= print/poppler \
 RUN_DEPENDS-main= ${RUN_DEPENDS} \
 		misc/shared-mime-info \
 		print/ghostscript/gnu \
-		x11/gnome/icon-theme \
-		devel/dconf
+		x11/gnome/icon-theme
 
 WANTLIB-djvu=	${WANTLIB} jpeg evdocument djvulibre
 # port-lib-depends-check misses these ones because the depending lib
@@ -105,7 +106,6 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--disable-introspection \
-		--disable-schemas-compile \
 		--disable-static \
 		--disable-comics \
 		--disable-impress \

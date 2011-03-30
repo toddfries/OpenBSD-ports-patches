@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.903 2011/03/16 14:24:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.908 2011/03/25 17:02:35 jeremy Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -144,6 +144,7 @@
      SUBDIR += hs-ListLike
      SUBDIR += hs-MetaObject
      SUBDIR += hs-MissingH
+     SUBDIR += hs-MonadCatchIO-mtl
      SUBDIR += hs-MonadCatchIO-transformers
      SUBDIR += hs-PSQueue
      SUBDIR += hs-QuickCheck
@@ -502,6 +503,7 @@
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Device-USB
      SUBDIR += p5-Directory-Scratch
+     SUBDIR += p5-Dist-CheckConflicts
      SUBDIR += p5-EV
      SUBDIR += p5-Env-PS1
      SUBDIR += p5-Error
@@ -666,8 +668,10 @@
      SUBDIR += p5-POE-Loop-Tk
      SUBDIR += p5-POE-Test-Loops
      SUBDIR += p5-POE-XS-Queue-Array
+     SUBDIR += p5-Package-DeprecationManager
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-Package-Stash
+     SUBDIR += p5-Package-Stash-XS
      SUBDIR += p5-PadWalker
      SUBDIR += p5-Pango
      SUBDIR += p5-Parallel-ForkManager
@@ -759,6 +763,7 @@
      SUBDIR += p5-Test-Distribution
      SUBDIR += p5-Test-Exception
      SUBDIR += p5-Test-Expect
+     SUBDIR += p5-Test-Fatal
      SUBDIR += p5-Test-File
      SUBDIR += p5-Test-File-Contents
      SUBDIR += p5-Test-Group
@@ -1002,6 +1007,7 @@
      SUBDIR += ruby-i18n
      SUBDIR += ruby-isolate
      SUBDIR += ruby-kgio
+     SUBDIR += ruby-kgio,ruby19
      SUBDIR += ruby-linecache
      SUBDIR += ruby-locale
      SUBDIR += ruby-minitest
@@ -1015,10 +1021,12 @@
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-polyglot
      SUBDIR += ruby-prof
+     SUBDIR += ruby-prof,ruby19
      SUBDIR += ruby-rack-test
      SUBDIR += ruby-rake
      SUBDIR += ruby-rake-compiler
      SUBDIR += ruby-rcov
+     SUBDIR += ruby-rcov,ruby19
      SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
@@ -1029,6 +1037,7 @@
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-stringex
      SUBDIR += ruby-subset_sum
+     SUBDIR += ruby-subset_sum,ruby19
      SUBDIR += ruby-systemtimer
      SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-tilt
