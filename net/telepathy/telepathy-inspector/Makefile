@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.20 2011/01/17 17:58:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2011/04/05 19:53:03 jasper Exp $
 
 COMMENT=	display information about a given connection manager
 
 DISTNAME=	telepathy-inspector-0.5.3
-REVISION=	6
+REVISION=	7
 
-HOMEPAGE=	http://telepathy.freedesktop.org/wiki/TelepathyInspector
+HOMEPAGE=	${HOMEPAGE_TP:=Telepathy Inspector}
 
-MASTER_SITES=	${MASTER_SITES_TELEPATHY:=telepathy-inspector/}
+MASTER_SITES=	${MASTER_SITES_TP:=telepathy-inspector/}
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo dbus-1 dbus-glib-1

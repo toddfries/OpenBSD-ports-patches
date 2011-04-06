@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2011/03/14 22:19:28 jeremy Exp $
+# $OpenBSD: Makefile,v 1.57 2011/04/05 15:28:24 naddy Exp $
 
     SUBDIR =
     SUBDIR += BasiliskII
@@ -9,7 +9,6 @@
     SUBDIR += dynagen
     SUBDIR += dynamips
     SUBDIR += fedora
-    SUBDIR += freebsd_lib
     SUBDIR += frodo
     SUBDIR += fuse
     SUBDIR += fuse-utils
@@ -23,6 +22,7 @@
     SUBDIR += mednafen
     SUBDIR += qemu-old
     SUBDIR += qemu
+    SUBDIR += pcsxr
     SUBDIR += redhat
     SUBDIR += sdlmame
     SUBDIR += sdlmess
@@ -37,6 +37,7 @@
     SUBDIR += x48
     SUBDIR += xcopilot
     SUBDIR += xhomer
+    SUBDIR += yabause
     SUBDIR += zsnes
 
 .include <bsd.port.subdir.mk>

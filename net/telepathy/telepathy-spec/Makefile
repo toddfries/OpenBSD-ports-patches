@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.25 2011/01/17 00:17:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.27 2011/04/05 19:53:03 jasper Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		flexible communications framework, specifications
 
-DISTNAME=		telepathy-spec-0.21.8
+DISTNAME=		telepathy-spec-0.22.1
 CATEGORIES=		books
 
-MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-spec/}
+MASTER_SITES=		${MASTER_SITES_TP:=telepathy-spec/}
 
 BUILD_DEPENDS=		devel/py-cheetah \
 			textproc/libxslt \

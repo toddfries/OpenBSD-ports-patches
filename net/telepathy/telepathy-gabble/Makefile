@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.32 2011/03/02 14:41:18 jasper Exp $
+# $OpenBSD: Makefile,v 1.34 2011/04/05 19:53:03 jasper Exp $
 
 COMMENT=		flexible communications framework, xmpp component
 
-DISTNAME=		telepathy-gabble-0.10.4
-REVISION=		0
+DISTNAME=		telepathy-gabble-0.10.5
 
-MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-gabble/}
+MASTER_SITES=		${MASTER_SITES_TP:=telepathy-gabble/}
 
 WANTLIB += c dbus-1 dbus-glib-1 gcrypt gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gnutls gobject-2.0 gthread-2.0 m pcre pthread tasn1
@@ -24,7 +23,8 @@ LIB_DEPENDS=		devel/libsoup \
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-ca-certificates=/etc/ssl/cert.pem \
-			--disable-gtk-doc
+			--disable-gtk-doc \
+			--enable-plugins
 CONFIGURE_ENV+=		ac_cv_prog_PYTHON="${MODPY_BIN}"
 USE_GROFF=		Yes
 

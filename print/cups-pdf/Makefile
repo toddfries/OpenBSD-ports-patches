@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/20 09:48:39 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2011/03/31 08:32:26 jasper Exp $
 
 COMMENT=		PDF backend for CUPS
 
-DISTNAME=		cups-pdf-2.5.0
+DISTNAME=		cups-pdf-2.5.1
 CATEGORIES=		print
 
-HOMEPAGE=		http://cip.physik.uni-wuerzburg.de/~vrbehr/cups-pdf/
+HOMEPAGE=		http://www.cups-pdf.de/
 MASTER_SITES=		${HOMEPAGE}src/
 DISTFILES=		${DISTNAME:S/pdf-/pdf_/}.tar.gz
 
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -25,7 +25,8 @@ RUN_DEPENDS=		print/cups \
 NO_REGRESS=		Yes
 
 do-build:
-	${CC} ${CFLAGS} -o ${WRKDIR}/bin/cups-pdf ${WRKDIR}/${DISTNAME}/src/cups-pdf.c
+	cd ${WRKDIR} && \
+	${CC} ${CFLAGS} -o bin/cups-pdf ${WRKDIR}/${DISTNAME}/src/cups-pdf.c
 
 pre-install:
 	${SUBST_CMD} ${WRKBUILD}/extra/cups-pdf.conf

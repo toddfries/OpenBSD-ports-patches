@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.908 2011/03/25 17:02:35 jeremy Exp $
+# $OpenBSD: Makefile,v 1.910 2011/04/05 17:37:10 sthen Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -315,6 +315,7 @@
      SUBDIR += msp430
      SUBDIR += mspdebug
      SUBDIR += mysql++
+     SUBDIR += naken430asm
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
@@ -867,6 +868,7 @@
      SUBDIR += pear-Config
      SUBDIR += pear-Console-Table
      SUBDIR += pear-Date
+     SUBDIR += pear-Date-Holidays
      SUBDIR += pear-Log
      SUBDIR += pear-PHPUnit2
      SUBDIR += pear-System-Command

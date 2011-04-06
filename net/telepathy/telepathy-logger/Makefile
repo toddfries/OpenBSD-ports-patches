@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.17 2011/03/25 09:13:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2011/04/05 19:53:03 jasper Exp $
 
 COMMENT=	flexible communications framework, logger component
 
-DISTNAME=	telepathy-logger-0.1.7
-
+DISTNAME=	telepathy-logger-0.2.8
 REVISION=	0
 
-SHARED_LIBS +=  telepathy-logger     1.0      # 1.0
+SHARED_LIBS +=  telepathy-logger     2.0      # 3.0
 
-MASTER_SITES=	${MASTER_SITES_TELEPATHY:=telepathy-logger/}
+HOMEPAGE=	${HOMEPAGE_TP:=Logger}
+
+MASTER_SITES=	${MASTER_SITES_TP:=telepathy-logger/}
 EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	devel/gettext \
@@ -35,7 +36,8 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-silent-rules \
 			--disable-gtk-doc \
-			--enable-shave
+			--disable-introspection
+CONFIGURE_ENV=		ac_cv_prog_PYTHON="${MODPY_BIN}"
 
 REGRESS_IS_INTERACTIVE=x11
 

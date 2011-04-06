@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.24 2011/01/17 17:57:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2011/04/05 19:53:03 jasper Exp $
 
 COMMENT=		flexible communications framework, IRC component
 
-DISTNAME=		telepathy-idle-0.1.6
-REVISION=		3
+DISTNAME=		telepathy-idle-0.1.8
 
-MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-idle/}
+MASTER_SITES=		${MASTER_SITES_TP:=telepathy-idle/}
 
 WANTLIB += c crypto dbus-1 dbus-glib-1 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 pcre pthread ssl telepathy-glib

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.500 2011/03/28 00:21:19 fgsch Exp $
+# $OpenBSD: Makefile,v 1.505 2011/04/05 15:28:24 naddy Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -20,6 +20,7 @@
      SUBDIR += canto
      SUBDIR += cgicc
      SUBDIR += cgiparse
+     SUBDIR += cgit
      SUBDIR += cherokee
      SUBDIR += chromium
      SUBDIR += clearsilver
@@ -45,6 +46,7 @@
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
      SUBDIR += firefox35
+     SUBDIR += firefox36
      SUBDIR += fluxbb
      SUBDIR += flyspray
      SUBDIR += gecko-mediaplayer
@@ -101,7 +103,6 @@
      SUBDIR += mod_dav
      SUBDIR += mod_encoding
      SUBDIR += mod_fastcgi
-     SUBDIR += mod_frontpage
      SUBDIR += mod_geoip
      SUBDIR += mod_gzip
      SUBDIR += mod_jk
@@ -118,6 +119,7 @@
      SUBDIR += mod_text2html
      SUBDIR += moinmoin
      SUBDIR += mollify
+     SUBDIR += mongrel2
      SUBDIR += moodle
      SUBDIR += mozilla-firefox
      SUBDIR += mozplugger
@@ -270,6 +272,7 @@
      SUBDIR += p5-Maypole-Authentication-UserSessionCookie
      SUBDIR += p5-Mojo
      SUBDIR += p5-MojoX-Session
+     SUBDIR += p5-Object-eBay
      SUBDIR += p5-PHP-Serialization
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-PSGI

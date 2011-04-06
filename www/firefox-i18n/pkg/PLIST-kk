@@ -1,6 +1,2 @@
-@comment $OpenBSD: PLIST-kk,v 1.1 2010/04/26 19:57:04 landry Exp $
-mozilla-firefox/extensions/langpack-kk@firefox.mozilla.org/
-mozilla-firefox/extensions/langpack-kk@firefox.mozilla.org/chrome/
-mozilla-firefox/extensions/langpack-kk@firefox.mozilla.org/chrome.manifest
-mozilla-firefox/extensions/langpack-kk@firefox.mozilla.org/chrome/kk.jar
-mozilla-firefox/extensions/langpack-kk@firefox.mozilla.org/install.rdf
+@comment $OpenBSD: PLIST-kk,v 1.3 2011/03/31 07:54:05 landry Exp $
+lib/firefox-4.0/extensions/langpack-kk@firefox.mozilla.org.xpi

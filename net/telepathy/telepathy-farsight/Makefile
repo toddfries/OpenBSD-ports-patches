@@ -1,16 +1,20 @@
-# $OpenBSD: Makefile,v 1.12 2011/01/17 17:58:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2011/04/05 19:53:03 jasper Exp $
 
 COMMENT=		flexible communications framework, farsight2 component
 
-DISTNAME=		telepathy-farsight-0.0.15
+DISTNAME=		telepathy-farsight-0.0.16
+
+REVISION=		0
+
+HOMEPAGE=		${HOMEPAGE_TP:=Telepathy-Farsight}
 
 SHARED_LIBS +=  telepathy-farsight   0.0      # .0.4
 
-MASTER_SITES=		${MASTER_SITES_TELEPATHY:=telepathy-farsight/}
+MASTER_SITES=		${MASTER_SITES_TP:=telepathy-farsight/}
 
 WANTLIB += dbus-1 dbus-glib-1 ffi gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gstbase-0.10 gstreamer-0.10 gthread-2.0
-WANTLIB += m pcre util xml2 z gstfarsight-0.10 telepathy-glib
+WANTLIB += m pcre util xml2 z gstfarsight-0.10 telepathy-glib>=8
 WANTLIB += ${MODPY_WANTLIB}
 
 MODULES=		devel/gettext \
@@ -18,7 +22,7 @@ MODULES=		devel/gettext \
 
 LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			net/farsight2 \
-			net/telepathy/telepathy-glib
+			STEM->=0.14.3:net/telepathy/telepathy-glib
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \

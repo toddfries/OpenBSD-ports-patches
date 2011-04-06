@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2011/03/30 14:00:48 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.9 2011/03/31 07:47:09 dcoppa Exp $
 
 COMMENT =		official Last.fm client
 
 VER =			1.5.4.27091
 DISTNAME =		lastfm-${VER}+dfsg
 PKGNAME =		last.fm-${VER}
+REVISION =		0
 
 SHARED_ONLY =		Yes
 
@@ -18,7 +19,8 @@ MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 
 HOMEPAGE =		http://www.last.fm/
 
-MASTER_SITES =		http://dev.gentoo.org/~hwoarang/distfiles/
+MASTER_SITES =		http://dev.gentoo.org/~hwoarang/distfiles/ \
+			http://ftp.pardus.org.tr/pub/source/corporate2/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -81,13 +83,17 @@ do-install:
 	${INSTALL_DATA_DIR} ${LASTFM_DATADIR}
 	${INSTALL_DATA_DIR} ${LASTFM_DATADIR}/buttons
 	${INSTALL_DATA_DIR} ${LASTFM_DATADIR}/icons
+	${INSTALL_DATA_DIR} ${LASTFM_DATADIR}/i18n
 	${INSTALL_DATA} ${WRKBUILD}/bin/data/*.{gif,mng,png} \
 		${LASTFM_DATADIR}/
 	${INSTALL_DATA} ${WRKBUILD}/bin/data/buttons/*.png \
 		${LASTFM_DATADIR}/buttons/
-	${INSTALL_DATA} ${WRKBUILD}/bin/data/icons/*.{ico,png} \
+	${INSTALL_DATA} ${WRKBUILD}/bin/data/icons/*.png \
 		${LASTFM_DATADIR}/icons/
 	${INSTALL_DATA} ${FILESDIR}/*.png ${LASTFM_DATADIR}/icons/
+	cd ${WRKBUILD}/i18n && ${LOCALBASE}/bin/lrelease4 *.ts
+	${INSTALL_DATA} ${WRKBUILD}/i18n/*.qm \
+		${LASTFM_DATADIR}/i18n/
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} \
 		-c ${FILESDIR}/lastfm.desktop \
