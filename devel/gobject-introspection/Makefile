@@ -1,14 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2011/03/30 17:53:29 jasper Exp $
-
-# Look at cairo-related regression failure.
-# and cairo/cairo.h: No such file or directory during build.
-#
-# Look at re-entering tests/.
+# $OpenBSD: Makefile,v 1.32 2011/04/07 16:16:21 ajacoutot Exp $
 
 COMMENT=		GObject Introspection
 
-GNOME_VERSION=		0.10.6
+GNOME_VERSION=		0.10.7
 GNOME_PROJECT=		gobject-introspection
+REVISION=		4
 CATEGORIES=		devel
 
 SHARED_LIBS +=  girepository-1.0     1.0      # 1.0
@@ -29,15 +25,14 @@ MODULES=		devel/gettext \
 			lang/python \
 			x11/gnome
 
-WANTLIB += X11 Xau Xdmcp Xrender c expat fontconfig freetype
-WANTLIB += m pcre pixman-1 png pthread pthread-stubs xcb xcb-render
-WANTLIB += xcb-render-util z gio-2.0 glib-2.0 gmodule-2.0 ffi
-WANTLIB += gobject-2.0 gthread-2.0 cairo
+WANTLIB += c ffi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
+WANTLIB += m pcre pthread z
 
 LIB_DEPENDS=		devel/glib2 \
-			devel/libffi \
+			devel/libffi
+BUILD_DEPENDS=		devel/bison \
 			graphics/cairo
-BUILD_DEPENDS=		devel/bison
+RUN_DEPENDS=		graphics/cairo
 
 USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
@@ -52,14 +47,11 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 
 CFLAGS+=		-pthread
 
-SUBST_VARS+=		MODPY_SITEPKG LIBTOOL
+SUBST_VARS+=		MODPY_SITEPKG LIBTOOL CC
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/Makefile.in \
-		${WRKSRC}/Makefile.introspection \
-		${WRKSRC}/giscanner/utils.py \
-		${WRKSRC}/tests/scanner/Makefile.in \
-		${WRKSRC}/tests/offsets/Makefile.in \
+	${SUBST_CMD} ${WRKSRC}/giscanner/dumper.py \
+		${WRKSRC}/giscanner/scannermain.py \
 		${WRKSRC}/tools/g-ir-scanner.in
 	perl -pi -e "s,'cc','${CC}'," ${WRKSRC}/giscanner/sourcescanner.py
 

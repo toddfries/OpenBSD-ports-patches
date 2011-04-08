@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2011/04/02 06:59:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2011/04/07 07:45:02 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,12 +6,14 @@ COMMENT-main=	multi-platform graphical toolkit
 COMMENT-docs=	gtk+3 documentation
 COMMENT-cups=	gtk+3 CUPS print backend
 
-V=		3.0.7
+V=		3.0.8
 DISTNAME=	gtk+-${V}
 
 PKGNAME-main=	gtk+3-${V}
 PKGNAME-docs=	gtk+3-docs-${V}
 PKGNAME-cups=	gtk+3-cups-${V}
+
+REVISION-main=	1
 
 CATEGORIES=	x11 devel
 
@@ -44,14 +46,16 @@ MULTI_PACKAGES=	-main -docs -cups
 MODULES=	devel/gettext \
 		devel/dconf
 
+BUILD_DEPENDS=	devel/gobject-introspection
+
 RUN_DEPENDS-main= ${RUN_DEPENDS} \
 		x11/hicolor-icon-theme \
 		misc/shared-mime-info
 
 LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		devel/glib2>=2.28.0 \
-		devel/pango \
-		devel/atk \
+		devel/pango>=1.28.4p0 \
+		devel/atk>=2.0.0p0 \
 		graphics/gdk-pixbuf2
 
 WANTLIB-main += ${WANTLIB}
@@ -81,16 +85,16 @@ CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include/freetype2/ \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
-		--disable-introspection \
 		--disable-silent-rules \
 		--disable-man \
 		--disable-papi \
 		--disable-packagekit \
+		--enable-introspection \
 		--without-xml-catalog
 
 # Do not build gtk-update-icon-cache and other shared tools.
 CONFIGURE_ARGS += --enable-gtk2-dependency
-BUILD_DEPENDS = ${RUN_DEPENDS}
+BUILD_DEPENDS += ${RUN_DEPENDS}
 RUN_DEPENDS +=	x11/gtk+2
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gtk+3

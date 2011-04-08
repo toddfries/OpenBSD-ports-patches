@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.686 2011/04/01 22:30:11 jeremy Exp $
+# $OpenBSD: Makefile,v 1.688 2011/04/07 10:01:13 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -28,7 +28,6 @@
      SUBDIR += avahi,
      SUBDIR += avahi,no_mono
      SUBDIR += axel
-     SUBDIR += axyftp
      SUBDIR += balance
      SUBDIR += bindgraph
      SUBDIR += bing
@@ -282,6 +281,7 @@
      SUBDIR += p5-Net-FTPSSL
      SUBDIR += p5-Net-FTPServer
      SUBDIR += p5-Net-Frame
+     SUBDIR += p5-Net-Frame-Dump
      SUBDIR += p5-Net-Frame-Layer-ICMPv6
      SUBDIR += p5-Net-Frame-Layer-IPv6
      SUBDIR += p5-Net-GPSD

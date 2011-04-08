@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/17 08:05:13 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2011/04/07 13:10:58 ajacoutot Exp $
 
 COMMENT=		clutter GStreamer integration library
 
@@ -21,7 +21,6 @@ WANTLIB += gstvideo-0.10
 LIB_DEPENDS=		graphics/clutter/core \
 			multimedia/gstreamer-0.10/plugins-base
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-introspection=no
+CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
 
 .include <bsd.port.mk>

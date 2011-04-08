@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2011/03/07 19:30:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2011/04/07 09:28:54 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -16,7 +16,7 @@ GNOME_VERSION=		4.2.5
 GDA_MAJOR=		4.0
 
 PKGNAME-main=		${DISTNAME}
-EPOCH-main=		1
+EPOCH-main=		2
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
 PKGNAME-mdb=		libgda-mdb-${GNOME_VERSION}
 EPOCH-mdb=		0
@@ -24,6 +24,9 @@ PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}
 EPOCH-mysql=		0
 PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 EPOCH-pgsql=		0
+
+REVISION-main=		0
+REVISION-ui=		0
 
 CATEGORIES=		databases
 
@@ -62,7 +65,8 @@ LIB_DEPENDS=		devel/glib2 \
 			textproc/libxml
 
 BUILD_DEPENDS=		databases/db/v4 \
-			databases/sqlite3
+			databases/sqlite3 \
+			devel/gobject-introspection
 
 REGRESS_DEPENDS=	devel/check
 
@@ -71,7 +75,7 @@ USE_GROFF =		Yes
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-static \
 			--disable-gtk-doc \
-			--disable-introspection \
+			--enable-introspection \
 			--with-bdb="${LOCALBASE}" \
 			--without-firebird \
 			--without-oracle

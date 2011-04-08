@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.5 2010/10/24 21:21:00 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.7 2011/04/07 12:15:44 jasper Exp $
 
 SHARED_ONLY?=		Yes
 
@@ -13,6 +13,7 @@ PERMIT_DISTFILES_CDROM?=Yes
 PERMIT_DISTFILES_FTP?=  Yes
 
 MASTER_SITES_CLUTTER?=	${HOMEPAGE}/sources/
+MASTER_SITES+=		http://distfiles.nl/clutter/
 DIST_SUBDIR=		clutter
 
 USE_GMAKE?=		Yes
@@ -21,6 +22,7 @@ USE_LIBTOOL?=		Yes
 LIBTOOL_FLAGS?=		--tag=disable-static
 
 CONFIGURE_STYLE?=	gnu
+CONFIGURE_ARGS+=	--disable-shave
 
 API_VERSION?=		0.10
 MAJOR?=			1.0
