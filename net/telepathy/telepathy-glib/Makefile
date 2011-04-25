@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.31 2011/04/07 15:24:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2011/04/20 17:53:44 jasper Exp $
 
 COMMENT=		flexible communications framework, glib bindings
 
-DISTNAME=		telepathy-glib-0.14.3
-REVISION=		0
+DISTNAME=		telepathy-glib-0.14.4
 
 SHARED_LIBS +=	telepathy-glib       8.0      # .54.0
 
@@ -18,6 +17,7 @@ MODULES=		devel/gettext \
 			lang/python
 
 MODPY_RUNDEP=           No
+MODPY_ADJ_FILES=	tests/all-errors-documented.py
 
 BUILD_DEPENDS=		devel/gobject-introspection>=0.10.7p4 \
 			lang/vala \

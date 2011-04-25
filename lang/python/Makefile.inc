@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.73 2010/11/26 14:50:10 espie Exp $
+# $OpenBSD: Makefile.inc,v 1.75 2011/04/24 09:19:01 rpointel Exp $
 
 # IMPORTANT!  If you make any changes to the Python ports, be sure
 # to also update files/CHANGES.OpenBSD for your change.  This is a
@@ -44,7 +44,7 @@ MULTI_PACKAGES=	-main -tests -tools -gdbm -idle -tkinter -bsddb
 
 # Python 2.6 lists BSD db 4.6.x as unstable on most architectures (see
 # setup.py:allow_db_version). XXX revisit if databases/db/v4 is updated to 4.7
-.if ${VERSION} == "2.6"
+.if ${VERSION} == "2.6" || ${VERSION} == "2.7"
 ONLY_FOR_ARCHS-bsddb=	amd64 i386
 .endif
 
@@ -57,7 +57,7 @@ LIB_DEPENDS-main =	archivers/bzip2
 RUN_DEPENDS-main =
 WANTLIB-main =		ssl panelw m crypto c util z readline pthread \
 			ncursesw stdc++ expat ossaudio bz2
-.if ${VERSION} == "2.5" || ${VERSION} == "2.6"
+.if ${VERSION} == "2.5" || ${VERSION} == "2.6" || ${VERSION} == "2.7"
 LIB_DEPENDS-main +=	databases/sqlite3
 WANTLIB-main +=		sqlite3
 .endif
@@ -83,12 +83,12 @@ PKG_ARGS+=	-Dmm=1
 
 # XXX fix ctypes on powerpc for python2.6
 # The ctypes module is not supported on all platforms (in particular, ARM)
-.if ${VERSION} == "2.5" || ${VERSION} == "2.6"
+.if ${VERSION} == "2.5" || ${VERSION} == "2.6" || ${VERSION} == "2.7"
 .  if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64" || \
       ${MACHINE_ARCH} == "sparc" || ${MACHINE_ARCH} == "sparc64" || \
       ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "m68k" || \
       ${MACHINE_ARCH:Mmips64*} || \
-      ( ${MACHINE_ARCH} == "powerpc" && ${VERSION} != "2.6" )
+      ( ${MACHINE_ARCH} == "powerpc" && ( ${VERSION} != "2.6" && ${VERSION} != "2.7" ) )
 PKG_ARGS+=	-Dctypes=1
 .  else
 PKG_ARGS+=	-Dctypes=0
@@ -122,6 +122,11 @@ post-extract:
 
 post-configure:
 	@cd ${WRKSRC} && ${MAKE_PROGRAM} Makefile
+
+post-build:
+	perl -pi -e \
+		's@#! */usr/bin/env +python@#!${PREFIX}/bin/python${VERSION}@' \
+		${WRKSRC}/Tools/scripts/pydoc
 
 post-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/Tools/scripts/pydoc \

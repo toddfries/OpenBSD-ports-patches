@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/19 22:31:37 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2011/04/19 15:17:12 giovanni Exp $
 
 COMMENT=	SMTP support for PHP
 
-DISTNAME=	Net_SMTP-1.4.1
+DISTNAME=	Net_SMTP-1.5.2
 PKGNAME=	pear-${DISTNAME:S/_/-/}
 CATEGORIES=	net
 

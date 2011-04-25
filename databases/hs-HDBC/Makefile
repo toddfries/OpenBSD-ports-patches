@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.12 2010/11/26 07:18:59 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2011/04/23 14:32:50 kili Exp $
 
 COMMENT =		abstraction layer for SQL relational databases
 
 DISTNAME =		HDBC-2.2.6.1
+REVISION =		1
 CATEGORIES =		databases
 HOMEPAGE =		http://software.complete.org/hdbc
 
@@ -18,7 +19,8 @@ MODULES =		lang/ghc
 
 MODGHC_BUILD =		cabal hackage haddock register
 
-RUN_DEPENDS +=		devel/hs-convertible>=1.0.9.1
+RUN_DEPENDS +=		devel/hs-convertible>=1.0.9.1 \
+			devel/hs-mtl
 BUILD_DEPENDS +=	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

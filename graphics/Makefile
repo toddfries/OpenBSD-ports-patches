@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.284 2011/04/06 12:46:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.287 2011/04/25 09:35:49 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -63,6 +63,7 @@
      SUBDIR += gdk-pixbuf2
      SUBDIR += geeqie
      SUBDIR += gegl
+     SUBDIR += geomview
      SUBDIR += gfract
      SUBDIR += ggi
      SUBDIR += gif2png
@@ -207,6 +208,7 @@
      SUBDIR += ruby-rmagick,ruby19
      SUBDIR += s10sh
      SUBDIR += sane-backends
+     SUBDIR += sane-backends,snmp
      SUBDIR += sane-frontends
      SUBDIR += scratch
      SUBDIR += scrot
@@ -230,6 +232,7 @@
      SUBDIR += wmicons
      SUBDIR += wmphoto
      SUBDIR += xanim
+     SUBDIR += xaos
      SUBDIR += xbmbrowser
      SUBDIR += xfig
      SUBDIR += xmedcon

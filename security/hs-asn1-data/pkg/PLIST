@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2010/12/09 13:55:04 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.3 2011/04/12 10:42:07 jasper Exp $
 lib/ghc/${DISTNAME}/
 lib/ghc/${DISTNAME}/Data/
 lib/ghc/${DISTNAME}/Data/ASN1/
@@ -8,6 +8,8 @@ lib/ghc/${DISTNAME}/Data/ASN1/DER.hi
 lib/ghc/${DISTNAME}/Data/ASN1/Internal.hi
 lib/ghc/${DISTNAME}/Data/ASN1/Prim.hi
 lib/ghc/${DISTNAME}/Data/ASN1/Raw.hi
+lib/ghc/${DISTNAME}/Data/ASN1/Stream.hi
+lib/ghc/${DISTNAME}/Data/ASN1/Types.hi
 lib/ghc/${DISTNAME}/HS${DISTNAME}.o
 lib/ghc/${DISTNAME}/libHS${DISTNAME}.a
 lib/ghc/${DISTNAME}/register.sh
@@ -21,20 +23,25 @@ share/doc/hs-${DISTNAME}/html/Data-ASN1-BER.html
 share/doc/hs-${DISTNAME}/html/Data-ASN1-CER.html
 share/doc/hs-${DISTNAME}/html/Data-ASN1-DER.html
 share/doc/hs-${DISTNAME}/html/Data-ASN1-Raw.html
+share/doc/hs-${DISTNAME}/html/Data-ASN1-Stream.html
+share/doc/hs-${DISTNAME}/html/Data-ASN1-Types.html
 share/doc/hs-${DISTNAME}/html/asn1-data.haddock
 share/doc/hs-${DISTNAME}/html/doc-index.html
 share/doc/hs-${DISTNAME}/html/frames.html
 share/doc/hs-${DISTNAME}/html/haddock-util.js
-share/doc/hs-${DISTNAME}/html/haddock.css
-share/doc/hs-${DISTNAME}/html/haskell_icon.gif
+share/doc/hs-${DISTNAME}/html/hslogo-16.png
 share/doc/hs-${DISTNAME}/html/index-frames.html
 share/doc/hs-${DISTNAME}/html/index.html
 share/doc/hs-${DISTNAME}/html/mini_Data-ASN1-BER.html
 share/doc/hs-${DISTNAME}/html/mini_Data-ASN1-CER.html
 share/doc/hs-${DISTNAME}/html/mini_Data-ASN1-DER.html
 share/doc/hs-${DISTNAME}/html/mini_Data-ASN1-Raw.html
+share/doc/hs-${DISTNAME}/html/mini_Data-ASN1-Stream.html
+share/doc/hs-${DISTNAME}/html/mini_Data-ASN1-Types.html
 share/doc/hs-${DISTNAME}/html/minus.gif
+share/doc/hs-${DISTNAME}/html/ocean.css
 share/doc/hs-${DISTNAME}/html/plus.gif
+share/doc/hs-${DISTNAME}/html/synopsis.png
 share/hs-${DISTNAME}/
 share/hs-${DISTNAME}/README
 share/hs-${DISTNAME}/TODO

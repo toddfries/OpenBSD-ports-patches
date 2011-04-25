@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.182 2011/03/29 20:04:41 edd Exp $
+# $OpenBSD: Makefile,v 1.184 2011/04/18 23:39:20 sthen Exp $
 
 # May not be hard to add more.
 ONLY_FOR_ARCHS =	alpha amd64 arm i386 mips64 mips64el powerpc sparc64
@@ -6,13 +6,14 @@ ONLY_FOR_ARCHS =	alpha amd64 arm i386 mips64 mips64el powerpc sparc64
 COMMENT =		movie player supporting many formats
 
 V =			20110309
-FFMPEG_V =              20110306
+FFMPEG_V =		20110408
 
 SUBST_VARS += 		PREFIX CONFDIR
 
 # Distfiles must be hand-rolled, see README
 N =			mplayer
 DISTNAME =		mplayer-${V}
+REVISION =		1
 
 CATEGORIES =		x11 multimedia
 
@@ -29,7 +30,8 @@ WANTLIB =	GL X11 Xext Xinerama Xss Xv Xxf86dga Xxf86vm avcodec avformat \
 		crypto dv faac fontconfig freetype fribidi gsm jpeg lcms \
 		m mng mp3lame ncurses ogg>=5 orc-0.4 png postproc \
 		pthread SDL schroedinger-1.0>=2.0 sndio speex stdc++ \
-		swscale theora ungif util x264>=5 xvidcore z
+		swscale theora theoradec theoraenc ungif util vpx x264>=5 \
+		xvidcore z
 
 # we use a snapshot
 MASTER_SITES =	http://theunixzoo.co.uk/distfiles/
@@ -41,7 +43,7 @@ MODULES +=	converters/libiconv
 LIB_DEPENDS =	graphics/png \
 		graphics/jpeg \
 		graphics/libungif \
-		graphics/ffmpeg>=20110306 \
+		graphics/ffmpeg>=20110408 \
 		audio/cdparanoia>=3.a9.8 \
 		multimedia/libtheora \
 		audio/speex \

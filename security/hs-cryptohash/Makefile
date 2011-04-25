@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/12/08 23:29:04 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2011/04/12 10:43:04 jasper Exp $
 
 COMMENT=		fast, pure, practical collection of crypto hashes
 
-DISTNAME=		cryptohash-0.6.1
+DISTNAME=		cryptohash-0.7.0
 CATEGORIES=		security
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
@@ -20,7 +20,7 @@ MODGHC_BUILD =          cabal hackage haddock register
 MODGHC_SETUP_CONF_ARGS =        -f cryptoapi
 
 RUN_DEPENDS =           devel/hs-tagged \
-			security/hs-crypto-api
+			security/hs-crypto-api>=0.5
 BUILD_DEPENDS = 	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.321 2011/04/05 15:35:39 schwarze Exp $
+# $OpenBSD: Makefile,v 1.323 2011/04/17 18:40:23 phessler Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -9,6 +9,7 @@
      SUBDIR += aspell
      SUBDIR += boust
      SUBDIR += c2html
+     SUBDIR += calibre
      SUBDIR += catdoc
      SUBDIR += catdoc,tk
      SUBDIR += catfish
@@ -127,6 +128,7 @@
      SUBDIR += p5-Number-Format
      SUBDIR += p5-Object-MultiType
      SUBDIR += p5-PDF-API2
+     SUBDIR += p5-PDF-API2-Simple
      SUBDIR += p5-PDF-Reuse
      SUBDIR += p5-PDF-Table
      SUBDIR += p5-POE-Filter-XML

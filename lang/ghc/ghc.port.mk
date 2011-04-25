@@ -1,10 +1,10 @@
-# $OpenBSD: ghc.port.mk,v 1.18 2010/12/15 13:59:54 ajacoutot Exp $
+# $OpenBSD: ghc.port.mk,v 1.22 2011/04/23 20:16:38 kili Exp $
 # Module for Glasgow Haskell Compiler
 
 # Not yet ported to other architectures
 ONLY_FOR_ARCHS =	i386 amd64
 
-MODGHC_VER =		6.12.3
+MODGHC_VER =		7.0.3
 SUBST_VARS +=		MODGHC_VER
 
 MODGHC_BIN =		${LOCALBASE}/bin/ghc
@@ -14,8 +14,8 @@ MODGHC_BIN =		${LOCALBASE}/bin/ghc
 # depending ports using CABAL tend to install into locations as
 # lib/Foo-${FooVersion}/ghc-${MODGHC_VER}, so they need the exact
 # version of ghc. Depending ports thus need full depends specs,
-# i.e. RUN_DEPENDS = :ghc-${MODGHC_VER}:lang/ghc, and not
-# just ::lang/ghc.
+# i.e. RUN_DEPENDS = lang/ghc=${MODGHC_VER}, and not
+# just lang/ghc.
 .if ${PKGPATH} != "lang/ghc"
 BUILD_DEPENDS +=	lang/ghc
 
@@ -42,6 +42,7 @@ MODGHC_HACKAGE_VERSION =	${DISTNAME:C,.*-([0-9.]*)$,\1,}
 HOMEPAGE ?=			http://hackage.haskell.org/package/${MODGHC_HACKAGE_NAME}
 MASTER_SITES =			http://hackage.haskell.org/packages/archive/${MODGHC_HACKAGE_NAME}/${MODGHC_HACKAGE_VERSION}/
 SUBST_VARS +=			DISTNAME MODGHC_HACKAGE_VERSION
+DIST_SUBDIR ?=			ghc
 . endif
 
 . if ${MODGHC_BUILD:L:Mcabal}
@@ -76,7 +77,7 @@ MODCABAL_configure = \
 	done && \
 	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} ${MODGHC_SETUP_CONF_ENV} \
 		${MODGHC_SETUP_PROG} \
-			configure -g -O --prefix=${PREFIX} \
+			configure -v -g -O --prefix=${PREFIX} \
 			${MODGHC_SETUP_CONF_ARGS}
 
 CONFIGURE_STYLE +=		CABAL
@@ -84,7 +85,7 @@ CONFIGURE_STYLE +=		CABAL
 .  if !target(do-build)
 do-build:
 	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
-		${MODGHC_SETUP_PROG} build
+		${MODGHC_SETUP_PROG} build -v
 .   if ${MODGHC_BUILD:L:Mhaddock}
 	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
 		${MODGHC_SETUP_PROG} haddock

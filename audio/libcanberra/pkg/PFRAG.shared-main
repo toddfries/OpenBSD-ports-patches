@@ -1,0 +1,6 @@
+@comment $OpenBSD: PFRAG.shared-main,v 1.1 2011/04/13 06:47:22 ajacoutot Exp $
+lib/libcanberra-${V}/libcanberra-gstreamer.so
+lib/libcanberra-${V}/libcanberra-multi.so
+lib/libcanberra-${V}/libcanberra-null.so
+lib/libcanberra-${V}/libcanberra-sndio.so
+@lib lib/libcanberra.so.${LIBcanberra_VERSION}

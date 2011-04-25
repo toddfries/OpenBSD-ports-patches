@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2011/04/05 06:24:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2011/04/13 06:47:42 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,8 @@ COMMENT=	lightweight window manager
 
 GNOME_PROJECT=	metacity
 GNOME_VERSION=	2.34.0
+
+REVISION=	1
 
 SHARED_LIBS +=  metacity-private     1.0      # .0.0
 
@@ -32,7 +34,7 @@ MODULES=	devel/gettext \
 		devel/gconf2
 
 LIB_DEPENDS=	devel/startup-notification \
-		audio/libcanberra \
+		audio/libcanberra,-gtk \
 		devel/libgtop2
 BUILD_DEPENDS=	${RUN_DEPENDS} \
 		x11/gnome/doc-utils

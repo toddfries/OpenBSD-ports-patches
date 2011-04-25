@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/19 07:23:08 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2011/04/19 14:51:41 jasper Exp $
 
 COMMENT=	automatically fetch hotmail.com email
 
 DISTNAME=	GetLive_0_59
 PKGNAME=	p5-GetLive-0.59
+PKG_ARCH=	*
+REVISION=	0
 CATEGORIES=	mail perl5
 EXTRACT_SUFX=	.tgz
 
@@ -20,8 +22,6 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=getlive/}
 RUN_DEPENDS=	net/curl>=7.15.5 \
 		mail/procmail \
 		www/p5-URI
-
-PKG_ARCH=	*
 
 NO_BUILD=	Yes
 NO_REGRESS=	Yes

@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.15 2011/04/02 16:56:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2011/04/15 19:16:23 ajacoutot Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		Foomatic PPD data
 
-V=			20110101
+V=			20110415
 DISTNAME=		foomatic-db-4.0-${V}
 PKGNAME=		foomatic-db-4.0.${V}
 CATEGORIES=		print
-
-REVISION=		0
 
 HOMEPAGE=		http://www.linux-foundation.org/en/OpenPrinting/Database/Foomatic
 
@@ -27,8 +25,6 @@ MASTER_SITES=		http://distfiles.bsdfrog.org/
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-ppds-to-cups
-
-RUN_DEPENDS=		print/foomatic-db-engine
 
 WRKDIST=		${WRKDIR}/foomatic-db-${V}
 

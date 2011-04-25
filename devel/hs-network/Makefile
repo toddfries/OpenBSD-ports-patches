@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/15 19:45:58 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2011/04/23 14:32:51 kili Exp $
 
 COMMENT =		Haskell networking library
 
-DISTNAME =		network-2.2.1.7
-REVISION =		6
+DISTNAME =		network-2.3.0.2
+REVISION =		0
 CATEGORIES =		devel net
 
 MAINTAINER =		Matthias Kilian <kili@openbsd.org>
@@ -18,7 +18,8 @@ MODULES =		lang/ghc
 
 MODGHC_BUILD =		cabal hackage haddock register
 
-LIB_DEPENDS =		devel/hs-parsec
-RUN_DEPENDS =		${LIB_DEPENDS}
+RUN_DEPENDS =		devel/hs-mtl \
+			devel/hs-parsec
+BUILD_DEPENDS =		${RUN_DEPENDS}
 
 .include <bsd.port.mk>

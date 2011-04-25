@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.37 2010/12/27 12:06:46 rpointel Exp $
+# $OpenBSD: Makefile,v 1.39 2011/04/15 15:47:47 sthen Exp $
 
      SUBDIR =
      SUBDIR += bruce
      SUBDIR += calcurse
+     SUBDIR += deskzilla
      SUBDIR += devtodo
+     SUBDIR += entomologist
      SUBDIR += fet
      SUBDIR += glabels
      SUBDIR += gnucash
@@ -15,6 +17,7 @@
      SUBDIR += ledger
      SUBDIR += osmo
      SUBDIR += qhacc
+     SUBDIR += radicale
      SUBDIR += rednotebook
      SUBDIR += rubrica2
      SUBDIR += siag

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.130 2011/04/06 18:27:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.132 2011/04/17 18:06:55 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -35,6 +35,7 @@
      SUBDIR += gedit-plugins
      SUBDIR += genius
      SUBDIR += ghex
+     SUBDIR += gjs
      SUBDIR += gok
      SUBDIR += gucharmap
      SUBDIR += gvfs
@@ -85,7 +86,6 @@
      SUBDIR += py-gnome
      SUBDIR += py-gnome-desktop
      SUBDIR += py-gnome-extras
-     SUBDIR += py-nautilus
      SUBDIR += screensaver
      SUBDIR += seahorse
      SUBDIR += seahorse-plugins

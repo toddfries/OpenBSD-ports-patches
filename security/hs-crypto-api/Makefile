@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/12/08 23:28:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2011/04/12 10:42:52 jasper Exp $
 
 COMMENT=		generic interface for cryptographic operations
 
-DISTNAME=		crypto-api-0.2.1
+DISTNAME=		crypto-api-0.6.1
 CATEGORIES=		security net
 
 HOMEPAGE=		http://trac.haskell.org/crypto-api/wiki
@@ -20,7 +20,8 @@ MODULES=		lang/ghc
 MODGHC_BUILD =          cabal hackage haddock register
 
 RUN_DEPENDS =		hs-cereal->=0.2,<0.4:devel/hs-cereal \
-			devel/hs-tagged
+			devel/hs-largeword \
+			hs-tagged->=0.1,<0.3:devel/hs-tagged
 BUILD_DEPENDS = 	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

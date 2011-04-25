@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2010/12/07 21:53:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.88 2011/04/21 10:20:27 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +7,7 @@ COMMENT=		GNOME control center
 GNOME_PROJECT=		gnome-control-center
 GNOME_VERSION=		2.32.1
 
-REVISION=		0
+REVISION=		2
 
 SHARED_LIBS +=	gnome-window-settings 3.0      # .1.0
 
@@ -39,7 +39,7 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-LIB_DEPENDS=		audio/libcanberra>=0.10p0 \
+LIB_DEPENDS=		audio/libcanberra,-gtk \
 			databases/evolution-data-server \
 			www/libcroco \
 			x11/gnome/libgnomekbd \
@@ -75,6 +75,8 @@ FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/controlcenter2 \
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/capplets/common/gnome-theme-info.c \
-		${WRKSRC}/capplets/default-applications/gnome-at-commandline.in.in
+		${WRKSRC}/capplets/default-applications/gnome-at-commandline.in.in \
+		${WRKSRC}/capplets/appearance/appearance-desktop.c \
+		${WRKSRC}/libwindow-settings/metacity-window-manager.c
 
 .include <bsd.port.mk>

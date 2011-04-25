@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.51 2011/04/07 07:51:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2011/04/25 11:05:35 ajacoutot Exp $
 
 COMMENT-main=	configuration database system for GNOME
 COMMENT-polkit=	PolicyKit integration for GConf2
 
 GNOME_PROJECT=	GConf
-GNOME_VERSION=	2.32.2
+GNOME_VERSION=	2.32.3
 
 PKGNAME-main=	gconf2-${GNOME_VERSION}
 PKGNAME-polkit=	gconf2-polkit-${GNOME_VERSION}
-
-REVISION-main=	0
 
 SHARED_LIBS +=	gconf-2              6.2      # 5.5
 
@@ -72,6 +70,9 @@ USE_GROFF =	Yes
 
 FAKE_FLAGS=	sysgconfdir=${PREFIX}/share/examples/gconf2 \
 		sysconfdir=${PREFIX}/share/examples/gconf2
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/gsettings/gsettings-data-convert.1
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/schemas/

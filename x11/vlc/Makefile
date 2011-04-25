@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.120 2011/04/04 07:43:22 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.124 2011/04/21 07:07:26 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,7 +7,7 @@ COMMENT-main=	VideoLAN client; multimedia player
 V=		1.0.6
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	20
+REVISION-main=	24
 REVISION-jack=	4
 REVISION-web=	6
 CATEGORIES=	x11
@@ -39,7 +39,7 @@ LIB_DEPENDS-main=${LIB_DEPENDS} \
 		audio/taglib \
 		devel/fribidi \
 		devel/libdvdread \
-		devel/libnotify \
+		devel/libnotify>=0.7.2 \
 		devel/sdl-image \
 		graphics/ffmpeg>=20080620p10 \
 		graphics/libdvbpsi \
@@ -62,11 +62,12 @@ WANTLIB-main=	FLAC GL GLU ICE lib/qt4/QtGui SM SDL SDL_image X11 Xau \
 		dvdread ebml expat faac fontconfig freetype fribidi \
 		gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 \
 		gobject-2.0 gsm gthread-2.0 gtk-x11-2.0 jpeg m matroska \
-		mp3lame mpcdec notify orc-0.4 ogg pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 png postproc proxy pthread-stubs  \
-		pthread stdc++>=46.0 schroedinger-1.0>=2.0 sndio speex \
-		swscale tag tiff theora usbhid vorbis vorbisenc x264 \
-		xcb-keysyms xcb-render xcb-shm xcb xml2 z ${WANTLIB}
+		modman mp3lame mpcdec notify orc-0.4 ogg pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png \
+		postproc proxy pthread-stubs pthread stdc++>=46.0 \
+		schroedinger-1.0>=2.0 sndio speex swscale tag tiff \
+		theora theoradec theoraenc usbhid vorbis vorbisenc vpx \
+		x264 xcb-keysyms xcb-render xcb-shm xcb xml2 z ${WANTLIB}
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes

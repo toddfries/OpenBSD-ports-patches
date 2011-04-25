@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.912 2011/04/07 18:54:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.925 2011/04/23 01:31:42 jeremy Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -135,6 +135,7 @@
      SUBDIR += guilib
      SUBDIR += haddock
      SUBDIR += happy
+     SUBDIR += hasktags
      SUBDIR += help2man
      SUBDIR += hmake
      SUBDIR += hs-ConfigFile
@@ -173,8 +174,10 @@
      SUBDIR += hs-hood
      SUBDIR += hs-hslogger
      SUBDIR += hs-iteratee
+     SUBDIR += hs-largeword
      SUBDIR += hs-language-c
      SUBDIR += hs-mmap
+     SUBDIR += hs-mtl
      SUBDIR += hs-monads-fd
      SUBDIR += hs-monads-tf
      SUBDIR += hs-murmur-hash
@@ -193,6 +196,7 @@
      SUBDIR += hs-sendfile
      SUBDIR += hs-stm
      SUBDIR += hs-stringtable-atom
+     SUBDIR += hs-syb
      SUBDIR += hs-tagged
      SUBDIR += hs-tar
      SUBDIR += hs-text
@@ -205,7 +209,6 @@
      SUBDIR += hudson
      SUBDIR += hyena
      SUBDIR += id-utils
-     SUBDIR += idoc
      SUBDIR += intellij
      SUBDIR += ipython
      SUBDIR += iso-codes
@@ -565,6 +568,7 @@
      SUBDIR += p5-Guard
      SUBDIR += p5-Hash-AutoHash
      SUBDIR += p5-Hash-AutoHash-Args
+     SUBDIR += p5-Hash-Flatten
      SUBDIR += p5-Hash-Merge
      SUBDIR += p5-Hash-MultiValue
      SUBDIR += p5-Hash-NoRef
@@ -648,6 +652,7 @@
      SUBDIR += p5-MooseX-Traits
      SUBDIR += p5-MooseX-Types
      SUBDIR += p5-MooseX-Types-Common
+     SUBDIR += p5-MooseX-Types-DateTime
      SUBDIR += p5-MooseX-Types-Path-Class
      SUBDIR += p5-MooseX-Types-Structured
      SUBDIR += p5-Mouse
@@ -836,6 +841,7 @@
      SUBDIR += p5-Tree-Simple-View
      SUBDIR += p5-Tree-Simple-VisitorFactory
      SUBDIR += p5-Try-Tiny
+     SUBDIR += p5-UUID-Tiny
      SUBDIR += p5-Universal-can
      SUBDIR += p5-Universal-exports
      SUBDIR += p5-Universal-isa
@@ -918,6 +924,7 @@
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
      SUBDIR += py-minimock
+     SUBDIR += py-mock
      SUBDIR += py-modulegraph
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime,python2.4
@@ -930,6 +937,7 @@
      SUBDIR += py-parsing
      SUBDIR += py-peak-rules
      SUBDIR += py-pexpect
+     SUBDIR += py-pip
      SUBDIR += py-prioritized_methods
      SUBDIR += py-progressbar
      SUBDIR += py-protocols
@@ -1026,7 +1034,6 @@
      SUBDIR += ruby-polyglot
      SUBDIR += ruby-prof
      SUBDIR += ruby-prof,ruby19
-     SUBDIR += ruby-rack-test
      SUBDIR += ruby-rake
      SUBDIR += ruby-rake-compiler
      SUBDIR += ruby-rcov

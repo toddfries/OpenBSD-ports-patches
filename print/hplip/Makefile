@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2011/03/02 06:59:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2011/04/17 07:19:44 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,7 +8,7 @@ COMMENT-hpcups=	HP native CUPS driver
 COMMENT-libs=	HPLIP backend libraries
 COMMENT-gui=	HPLIP graphical tools
 
-V=		3.11.1
+V=		3.11.3
 DISTNAME=	hplip-${V}
 
 PKGNAME-main=  ${DISTNAME}
@@ -19,6 +19,8 @@ PKGNAME-gui=	hplip-gui-${V}
 
 SHARED_LIBS +=  hpmud		2.0 # .0.6
 SHARED_LIBS +=  hpip		2.0 # .0.1
+
+SUBST_VARS=	V
 
 CATEGORIES=	print
 
@@ -63,6 +65,7 @@ WANTLIB-hpijs += c jpeg netsnmp stdc++ usb dbus-1 hpmud
 LIB_DEPENDS-hpijs= print/hplip,-libs \
 		graphics/jpeg \
 		x11/dbus
+RUN_DEPENDS-hpijs= print/foomatic-filters
 
 WANTLIB-hpcups += ${cWANTLIB} png tiff z asn1 gssapi krb5 ssl
 WANTLIB-hpcups += c jpeg stdc++ hpip cups cupsimage
@@ -121,6 +124,10 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -pthread"
 
 pre-configure:
+	# We don't patch because it changes at every release
+	perl -pi -e "s,^PACKAGE_NAME=.*,PACKAGE_NAME='HP Linux (& Unix) Imaging and Printing',;" \
+		-e "s,^PACKAGE_STRING=.*,PACKAGE_STRING='HP Linux (& Unix) Imaging and Printing ${V}'," \
+		${WRKSRC}/configure
 	@find ${WRKSRC} -name \*.py | \
 		xargs perl -pi -e 's,/usr/bin/env python,${MODPY_BIN},g'
 	@perl -pi -e 's,/usr/bin/env python,${MODPY_BIN},g' \

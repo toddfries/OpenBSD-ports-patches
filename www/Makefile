@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.505 2011/04/05 15:28:24 naddy Exp $
+# $OpenBSD: Makefile,v 1.510 2011/04/25 13:11:56 todd Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -38,11 +38,12 @@
      SUBDIR += drupal6
      SUBDIR += drush
      SUBDIR += elinks
-     SUBDIR += elinks,js
+#     SUBDIR += elinks,js
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
      SUBDIR += ezpublish
      SUBDIR += fcgi
+     SUBDIR += fennec
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
      SUBDIR += firefox35
@@ -59,7 +60,6 @@
      SUBDIR += hs-html
      SUBDIR += hs-snap-core
      SUBDIR += hs-snap-server
-     SUBDIR += hs-xhtml
      SUBDIR += hs-xhtml-combinators
      SUBDIR += http_load
      SUBDIR += http_ping
@@ -132,7 +132,6 @@
      SUBDIR += nostromo
      SUBDIR += ntlmaps
      SUBDIR += opera
-     SUBDIR += opera-flashplugin
      SUBDIR += p5-Alien-Tidyp
      SUBDIR += p5-Apache-ASP
      SUBDIR += p5-Apache-DB
@@ -302,6 +301,7 @@
      SUBDIR += p5-WWW-Search
      SUBDIR += p5-WWW-Search-Ebay
      SUBDIR += p5-WWW-Tumblr
+     SUBDIR += p5-WWW-YouTube-Download
      SUBDIR += p5-WWW-Wikipedia
      SUBDIR += p5-Weather-Com
      SUBDIR += p5-WebService-Audioscrobbler

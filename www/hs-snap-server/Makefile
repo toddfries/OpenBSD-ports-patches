@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2011/04/05 11:43:17 kili Exp $
+# $OpenBSD: Makefile,v 1.9 2011/04/23 14:32:51 kili Exp $
 
 COMMENT =		Snap Haskell Web Framework Server
 
 DISTNAME =		snap-server-0.2.16.2
-REVISION =		0
+REVISION =		2
 CATEGORIES =		www
 HOMEPAGE =		http://snapframework.com/
 
@@ -26,6 +26,7 @@ RUN_DEPENDS +=		devel/hs-binary \
 			devel/hs-iteratee \
 			devel/hs-murmur-hash \
 			devel/hs-monads-fd \
+			devel/hs-mtl \
 			devel/hs-network \
 			devel/hs-PSQueue \
 			devel/hs-sendfile \
@@ -34,7 +35,6 @@ RUN_DEPENDS +=		devel/hs-binary \
 			devel/hs-unix-compat \
 			devel/hs-vector \
 			devel/hs-vector-algorithms \
-			net/hs-network-bytestring \
 			textproc/hs-attoparsec-iteratee \
 			textproc/hs-bytestring-nums \
 			textproc/hs-bytestring-show \

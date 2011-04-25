@@ -1,4 +1,4 @@
-$OpenBSD: patch-src_hmake_Config_hs,v 1.1 2010/04/22 21:54:16 kili Exp $
+$OpenBSD: patch-src_hmake_Config_hs,v 1.3 2011/04/14 12:15:53 kili Exp $
 --- src/hmake/Config.hs.orig	Fri Nov 23 15:26:05 2007
 +++ src/hmake/Config.hs	Thu Apr  8 14:19:13 2010
 @@ -272,14 +272,14 @@ configure' Ghc ghcpath = do

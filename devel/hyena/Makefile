@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/03/07 21:52:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2011/04/21 11:37:56 jasper Exp $
 
 COMMENT=	GUI and non-GUI C-sharp code library
 
@@ -28,5 +28,11 @@ CONFIGURE_ARGS=	--enable-release
 
 DLLMAP_FILES=	Hyena/Hyena.dll.config \
 		Hyena.Gui/Hyena.Gui.dll.config
+
+pre-configure:
+	@cd ${WRKSRC}/build && \
+		perl -pi -e 's,/usr/bin/env\ bash,/bin/ksh,g' \
+			dll-map-makefile-verifier \
+			private-icon-theme-installer
 
 .include <bsd.port.mk>

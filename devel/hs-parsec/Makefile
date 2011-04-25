@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/03 22:13:39 kili Exp $
+# $OpenBSD: Makefile,v 1.10 2011/04/23 14:32:51 kili Exp $
 
 COMMENT =		Monadic parser combinators
 
-DISTNAME =		parsec-2.1.0.1
-REVISION =		5
+DISTNAME =		parsec-3.1.1
+REVISION =		0
 CATEGORIES =		devel
 HOMEPAGE =		http://www.cs.uu.nl/~daan/parsec.html
 
@@ -18,5 +18,8 @@ PERMIT_DISTFILES_FTP =	Yes
 MODULES =		lang/ghc
 
 MODGHC_BUILD =		cabal hackage haddock register
+
+RUN_DEPENDS =		devel/hs-mtl
+BUILD_DEPENDS =		${RUN_DEPENDS}
 
 .include <bsd.port.mk>

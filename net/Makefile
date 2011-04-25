@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.688 2011/04/07 10:01:13 jasper Exp $
+# $OpenBSD: Makefile,v 1.691 2011/04/25 12:33:12 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -70,7 +70,6 @@
      SUBDIR += dnstracer
      SUBDIR += doc
      SUBDIR += dsocks
-     SUBDIR += dss
      SUBDIR += dxpc
      SUBDIR += dysnomia
      SUBDIR += echoping
@@ -115,7 +114,6 @@
      SUBDIR += hping
      SUBDIR += hpodder
      SUBDIR += hs-HTTP
-     SUBDIR += hs-network-bytestring
      SUBDIR += hs-pb
      SUBDIR += httptunnel
      SUBDIR += icb
@@ -245,6 +243,7 @@
      SUBDIR += openvpn
      SUBDIR += openvpn_bsdauth
      SUBDIR += osrtspproxy
+     SUBDIR += p5-BSD-Socket-Splice
      SUBDIR += p5-Bot-BasicBot
      SUBDIR += p5-Business-PayPal
      SUBDIR += p5-Business-PayPal-API

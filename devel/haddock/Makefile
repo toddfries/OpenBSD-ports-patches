@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.27 2010/11/21 17:52:55 kili Exp $
+# $OpenBSD: Makefile,v 1.31 2011/04/23 21:05:14 kili Exp $
 
 COMMENT-main =	documentation-generation tool for Haskell libraries
 COMMENT-lib =	haddock library
 
-DISTNAME =	haddock-2.7.2
+DISTNAME =	haddock-2.9.2
 PKGNAME-main =	${DISTNAME}
-REVISION-main =	4
 PKGNAME-lib =	hs-${DISTNAME}
-REVISION-lib =	3
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.haskell.org/haddock/
@@ -38,16 +36,13 @@ WANTLIB-lib =
 WANTLIB-main =		${WANTLIB} \
 			c gmp m pthread util
 
-BUILD_DEPENDS +=	devel/alex \
-			devel/happy \
-			devel/hs-ghc-paths \
+BUILD_DEPENDS +=	devel/hs-ghc-paths \
 			lang/ghc,-doc \
 			textproc/docbook \
 			textproc/docbook-xsl \
 			textproc/libxslt \
 			${RUN_DEPENDS}
 
-# Required for building the documentation:
 USE_GMAKE =		Yes
 CONFIGURE_STYLE =	autoconf no-autoheader
 AUTOCONF_VERSION =	2.61
@@ -56,11 +51,22 @@ WRKCONF =		${AUTOCONF_DIR}
 .else
 MASTER_SITES =		http://hackage.haskell.org/packages/archive/${DISTNAME:S,-,/,}/
 
+DIST_SUBDIR =		ghc
+
 do-build:
 	@echo "*** The no_deps FLAVOR is not meant to be built at all, it is"
 	@echo "*** only used by lang/ghc to get a copy of the haddock sources."
 	@false
 .endif
+
+# Move the alex- and happy-generated files into the src dir and
+# rename the corresponding sources so cabal won't try to re-run
+# alex or happy.
+post-extract:
+	cd ${WRKSRC}/src && \
+	find . -name \*.[xy] -print | \
+	sed 's@\(.*\)\.[xy]@mv & &.source \&\& mv ../dist/build/haddock/haddock-tmp/\1.hs \1.hs@' | \
+	sh
 
 post-build:
 	@cd ${WRKBUILD}/doc && exec ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} html

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/22 08:37:06 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2011/04/23 14:32:51 kili Exp $
 
 COMMENT =		minimalistic text based status bar
 
 DISTNAME =		xmobar-0.11.1
+REVISION =		1
 CATEGORIES =		x11
 HOMEPAGE =		http://code.haskell.org/~arossato/xmobar/
 
@@ -21,9 +22,10 @@ MODGHC_BUILD =		cabal hackage nort
 
 LIB_DEPENDS =		devel/gmp
 
-BUILD_DEPENDS =		x11/hs-X11>=1.3.0 \
+BUILD_DEPENDS =		devel/hs-mtl \
 			devel/hs-parsec \
-			devel/hs-stm
+			devel/hs-stm \
+			x11/hs-X11>=1.3.0
 
 
 EXAMPLEDIR =		${PREFIX}/share/examples/xmobar

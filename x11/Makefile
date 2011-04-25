@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.445 2011/04/07 14:54:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.451 2011/04/20 15:09:04 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -98,7 +98,6 @@
      SUBDIR += gtk-engines2
      SUBDIR += gtk-vnc
      SUBDIR += gtk2-aurora-engine
-     SUBDIR += gtk2-clearlooks-engine
      SUBDIR += gtk2-equinox-engine
      SUBDIR += gtk2-murrine-engine
      SUBDIR += gtk2-nodoka-engine
@@ -111,7 +110,9 @@
      SUBDIR += gtkglext
      SUBDIR += gtkhotkey
      SUBDIR += gtksourceview
+     SUBDIR += gtksourceview3
      SUBDIR += gtksourceviewmm
+     SUBDIR += gtksourceviewmm3
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-X11
@@ -120,6 +121,7 @@
      SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme
      SUBDIR += i3
+     SUBDIR += i3bar
      SUBDIR += icewm
      SUBDIR += icon-naming-utils
      SUBDIR += icontool
@@ -141,7 +143,6 @@
      SUBDIR += krusader
      SUBDIR += lablgtk2
      SUBDIR += league-fonts
-     SUBDIR += lesstif
      SUBDIR += libdnd
      SUBDIR += liberation-fonts
      SUBDIR += libgdiplus
@@ -222,6 +223,7 @@
      SUBDIR += ratmen
      SUBDIR += ratpoison
      SUBDIR += rdesktop
+     SUBDIR += remmina
      SUBDIR += rendercheck
      SUBDIR += rep-gtk
      SUBDIR += root-tail

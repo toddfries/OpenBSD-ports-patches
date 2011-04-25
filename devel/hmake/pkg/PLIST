@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.8 2010/04/22 21:54:16 kili Exp $
+@comment $OpenBSD: PLIST,v 1.10 2011/04/14 12:15:53 kili Exp $
 bin/harch
 bin/hi
 bin/hmake

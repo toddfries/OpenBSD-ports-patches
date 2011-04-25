@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.64 2011/04/05 18:58:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.66 2011/04/21 07:07:52 ajacoutot Exp $
 
 COMMENT= 		telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
 GNOME_VERSION=		2.34.0
+
+REVISION=		1
 
 CATEGORIES=		net
 
@@ -40,10 +42,10 @@ WANTLIB += telepathy-logger folks folks-telepathy gcr gp11
 BUILD_DEPENDS=		devel/iso-codes \
 			x11/py-gtk2 \
 			x11/gnome/nautilus-sendto
-LIB_DEPENDS=		audio/libcanberra \
+LIB_DEPENDS=		audio/libcanberra,-gtk \
 			databases/evolution-data-server \
 			devel/json-glib \
-			devel/libnotify \
+			devel/libnotify>=0.7.2 \
 			devel/libtool,-ltdl \
 			devel/libunique \
 			geo/geoclue \

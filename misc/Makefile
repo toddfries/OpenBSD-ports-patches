@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.137 2011/03/17 14:02:37 sebastia Exp $
+# $OpenBSD: Makefile,v 1.139 2011/04/13 07:44:25 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -37,6 +37,7 @@
      SUBDIR += gone
      SUBDIR += gpsd
      SUBDIR += gramps
+     SUBDIR += gtk3mm-documentation
      SUBDIR += gutenpy
      SUBDIR += hfsplus
      SUBDIR += impress
@@ -57,6 +58,7 @@
      SUBDIR += openbabel
      SUBDIR += p5-Acme-LOLCAT
      SUBDIR += p5-CreditCard
+     SUBDIR += p5-File-LibMagic
      SUBDIR += p5-File-MMagic
      SUBDIR += p5-File-MMagic-XS
      SUBDIR += p5-File-Rotate-Backup

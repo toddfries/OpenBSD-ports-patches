@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.258 2011/03/29 12:16:04 pea Exp $
+# $OpenBSD: Makefile,v 1.261 2011/04/15 16:08:36 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -53,7 +53,6 @@
      SUBDIR += gringotts
      SUBDIR += hatchet
      SUBDIR += hlfl
-     SUBDIR += hs-AES
      SUBDIR += hs-asn1-data
      SUBDIR += hs-certificate
      SUBDIR += hs-crypto-api
@@ -83,6 +82,7 @@
      SUBDIR += libident
      SUBDIR += libksba
      SUBDIR += libmcrypt
+     SUBDIR += libnettle
      SUBDIR += libnipper
      SUBDIR += libotr
      SUBDIR += libperseus
@@ -162,6 +162,7 @@
      SUBDIR += p5-IO-Socket-SSL
      SUBDIR += p5-MD5
      SUBDIR += p5-Module-Signature
+     SUBDIR += p5-Net-SSLGlue
      SUBDIR += p5-Net_SSLeay
      SUBDIR += p5-PGP-Sign
      SUBDIR += p5-PGP-Sign,pgp

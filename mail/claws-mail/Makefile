@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.42 2011/03/10 21:37:33 landry Exp $
+# $OpenBSD: Makefile,v 1.44 2011/04/21 13:10:42 landry Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +7,7 @@ COMMENT-bogofilter=	bogofilter plugin
 COMMENT-clamav=		clamav plugin
 COMMENT-spamassassin=	spamassassin plugin
 
-V=			3.7.8
+V=			3.7.9
 DISTNAME=		claws-mail-${V}
 PKGNAME-main=		${DISTNAME}
 PKGNAME-bogofilter=	claws-mail-bogofilter-${V}
@@ -50,7 +50,7 @@ WANTLIB=		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 			gdk-x11-2.0 gtk-x11-2.0 execinfo etpan>=13 sasl2 \
 			GL Xxf86vm drm xcb-render xcb-shm
 
-WANTLIB-main=		${WANTLIB} ICE SM c dbus-1 \
+WANTLIB-main=		${WANTLIB} ICE SM c dbus-1 gmp hogweed nettle \
 			pthread stdc++ tasn1 xcb-atom xcb-aux xcb-event \
 			startup-notification-1 enchant gnutls gpgme dbus-glib-1
 
@@ -59,7 +59,8 @@ WANTLIB-docs=
 LIB_DEPENDS=		x11/gtk+2 \
 			devel/libexecinfo \
 			mail/libetpan \
-			security/cyrus-sasl2
+			security/cyrus-sasl2 \
+			security/libgcrypt
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
 			devel/desktop-file-utils
@@ -81,8 +82,8 @@ USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_STYLE=	autoconf
-# autoconf 2.65 still has some issues with it
-AUTOCONF_VERSION=	2.62
+
+AUTOCONF_VERSION=	2.67
 CONFIGURE_ENV+=		CPPFLAGS="-I${X11BASE}/include" \
 			LDFLAGS="-L${X11BASE}/lib"
 

@@ -1,4 +1,4 @@
-$OpenBSD: patch-script_harch,v 1.2 2010/04/22 21:54:16 kili Exp $
+$OpenBSD: patch-script_harch,v 1.4 2011/04/14 12:15:53 kili Exp $
 
 No harch black magic for OpenBSD, we don't need this.
 

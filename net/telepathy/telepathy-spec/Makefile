@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2011/04/05 19:53:03 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2011/04/20 17:53:44 jasper Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		flexible communications framework, specifications
 
-DISTNAME=		telepathy-spec-0.22.1
+DISTNAME=		telepathy-spec-0.22.2
 CATEGORIES=		books
 
 MASTER_SITES=		${MASTER_SITES_TP:=telepathy-spec/}
@@ -21,9 +21,7 @@ NO_REGRESS=		Yes
 
 USE_LIBTOOL=		No
 CONFIGURE_STYLE=	none
-
-pre-configure:
-	${SUBST_CMD} ${WRKSRC}/Makefile
+MAKE_FLAGS+=		PYTHON=${MODPY_BIN}
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/gtk-doc/html/telepathy-spec/
