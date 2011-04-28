@@ -1,17 +1,18 @@
-# $OpenBSD: Makefile,v 1.2 2010/12/13 22:22:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2011/04/27 17:30:18 jasper Exp $
 
 COMMENT=		GNU Compiler Collection for msp430
 
-V=			4.4.4
-DISTNAME=		gcc-$V
+VERSION=		4.4.4
+DISTNAME=		gcc-${VERSION}
 PKGNAME=		${TARGET}-${DISTNAME}
+REVISION=		0
 
-MASTER_SITES= 		${MASTER_SITE_GCC:=releases/gcc-$(V)/}
-PATCHFILES=		gcc-${V}.patch:0
+MASTER_SITES= 		${MASTER_SITE_GCC:=releases/gcc-$(VERSION)/}
+PATCHFILES=		gcc-${VERSION}.patch:0
 
-DISTFILES=		gcc-core-${V}${EXTRACT_SUFX} \
-			gcc-g++-${V}${EXTRACT_SUFX} \
-			${TARGET}-gcc.tar.gz:0
+DISTFILES=		gcc-core-${VERSION}${EXTRACT_SUFX} \
+			gcc-g++-${VERSION}${EXTRACT_SUFX} \
+			gcc-${VERSION}-config.tar.gz:0
 
 WANTLIB +=		c gmp mpfr
 
@@ -25,6 +26,8 @@ LANGS=			c,c++
 
 SEPARATE_BUILD= 	concurrent
 
+SUBST_VARS+=		VERSION
+
 CONFIGURE_ARGS+= 	--enable-languages=${LANGS} 	\
 			--enable-cpp			\
 			--with-gmp=${LOCALBASE}		\
@@ -34,7 +37,7 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 
 # Move the mspgcc4 config files into place.
 post-extract:
-	cp -r ${WRKDIR}/gcc/ ${WRKSRC}
+	cp -r ${WRKDIR}/gcc-${VERSION}-config/gcc/ ${WRKSRC}
 
 post-install:
 	chown -R ${SHAREOWN}:${SHAREGRP} \

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2011/04/05 19:46:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2011/04/26 19:04:26 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		people aggregation library
 
 GNOME_PROJECT=		folks
-GNOME_VERSION=		0.4.2
+GNOME_VERSION=		0.4.3
 
-SHARED_LIBS +=  folks-telepathy           1.0 # 22.0
-SHARED_LIBS +=  folks                     1.0 # 22.0
+SHARED_LIBS +=  folks-telepathy           1.0 # 22.1
+SHARED_LIBS +=  folks                     1.0 # 22.1
 
 HOMEPAGE=		${HOMEPAGE_TP:=Folks}
 
@@ -25,8 +25,6 @@ LIB_DEPENDS=		devel/libgee \
 			STEM->=0.14.3:net/telepathy/telepathy-glib \
 			textproc/libxml
 REGRESS_DEPENDS=	${FULLPKGNAME}:${BASE_PKGPATH}
-
-FAKE_FLAGS+=		itlocaledir=${PREFIX}/share/locale/
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
