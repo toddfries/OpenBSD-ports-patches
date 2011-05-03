@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.77 2011/03/24 11:41:11 landry Exp $
+# $OpenBSD: Makefile,v 1.79 2011/04/29 08:04:04 landry Exp $
 
 COMMENT-main =		Mozilla application suite
 COMMENT-lightning =	Mozilla Seamonkey calendar extension
 
-MOZILLA_VERSION=	2.0.13
+MOZILLA_VERSION=	2.0.14
 MOZILLA_BRANCH =	1.9.1
 MOZILLA_PROJECT =	seamonkey
 MOZILLA_CODENAME =	suite
@@ -11,8 +11,7 @@ MOZILLA_CODENAME =	suite
 MULTI_PACKAGES =	-main -lightning
 PKGNAME-main =		${PKGNAME}
 PKGNAME-lightning =	lightning-seamonkey-1.0beta1
-REVISION-lightning =	16
-REVISION-main =		0
+REVISION-lightning =	17
 EPOCH-lightning =	0
 
 # must be in sync with SO_VERSION in main/enigmail/seamonkey
@@ -76,8 +75,6 @@ DISTFILES+=	${EXTRACT_ONLY}
 .for language in ${LANGUAGES}
 DISTFILES+=	seamonkey-${MOZILLA_VERSION}.${language}.langpack.xpi:0
 .endfor
-
-DIST_SUBDIR=	seamonkey-${MOZILLA_VERSION}
 
 MODULES=	www/mozilla devel/gettext lang/python
 BUILD_DEPENDS+=	archivers/unzip

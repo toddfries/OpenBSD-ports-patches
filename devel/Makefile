@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.930 2011/04/28 17:35:13 kili Exp $
+# $OpenBSD: Makefile,v 1.934 2011/05/03 16:37:29 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -166,12 +166,14 @@
      SUBDIR += hs-enumerator
      SUBDIR += hs-failure
      SUBDIR += hs-fgl
+     SUBDIR += hs-ghc-mtl
      SUBDIR += hs-ghc-paths
      SUBDIR += hs-gio
      SUBDIR += hs-glade
      SUBDIR += hs-glib
      SUBDIR += hs-hashed-storage
      SUBDIR += hs-haskeline
+     SUBDIR += hs-hint
      SUBDIR += hs-hlint
      SUBDIR += hs-hood
      SUBDIR += hs-hslogger
@@ -204,6 +206,7 @@
      SUBDIR += hs-terminfo
      SUBDIR += hs-text
      SUBDIR += hs-transformers
+     SUBDIR += hs-type-level
      SUBDIR += hs-uniplate
      SUBDIR += hs-unix-compat
      SUBDIR += hs-vector
@@ -288,6 +291,7 @@
      SUBDIR += libvmime
      SUBDIR += libvstr
      SUBDIR += libwnck
+     SUBDIR += libwnck3
      SUBDIR += libyajl
      SUBDIR += libyaml
      SUBDIR += llvm
@@ -316,6 +320,7 @@
      SUBDIR += mm-common
      SUBDIR += mono-addins
      SUBDIR += mono-flickrnet
+     SUBDIR += mono-gdata
      SUBDIR += mono-notify
      SUBDIR += monodevelop
      SUBDIR += monotone

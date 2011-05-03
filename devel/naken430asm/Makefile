@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2011/04/27 15:15:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2011/04/29 06:46:06 jasper Exp $
 
 COMMENT=		assembler/disassembler/simulator for MSP430 MCUs
 
-V=			2011-03-13
-DISTNAME=		naken430asm-2011-03-13
+V=			2011-04-28
+DISTNAME=		naken430asm-$V
 PKGNAME=		naken430asm-${V:S/-//g}
-REVISION=		0
 CATEGORIES=		devel
 
 HOMEPAGE=		http://www.mikekohn.net/micro/naken430asm_msp430_assembler.php
@@ -24,13 +23,14 @@ WANTLIB +=		c
 
 ALL_TARGET=		# This space intentionally left blank.
 
-SUBST_VARS+=		CC CFLAGS LDFLAGS DESTDIR
+MAKE_FLAGS=		CC="${CC}" CFLAGS="${CFLAGS}" \
+			LDFLAGS="${LDFLAGS}"
 
 NO_REGRESS=		Yes
 
-# configure script is broken piece of bash, use our own config.mk instead.
+# prefer our own config.mak over the configure generated one.
 do-configure:
-	${SUBST_CMD} -c ${FILESDIR}/config.mak ${WRKSRC}/config.mak
+	cp ${FILESDIR}/config.mak ${WRKSRC}
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/naken430asm/examples/
