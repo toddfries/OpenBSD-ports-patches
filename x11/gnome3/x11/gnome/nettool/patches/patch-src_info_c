@@ -1,0 +1,100 @@
+$OpenBSD: patch-src_info_c,v 1.2 2011/05/18 13:29:11 jasper Exp $
+
+- Add OpenBSD/FreeBSD specific code
+- g_object_unref() prevents interface name and pixmap from being displayed,
+  and creates a storm of critial gtk warnings, upstream bz: #647896.
+
+--- src/info.c.orig	Thu Dec  2 10:26:14 2010
++++ src/info.c	Wed May 18 15:21:05 2011
+@@ -20,6 +20,10 @@
+ #include <gtk/gtk.h>
+ #include <glib/gi18n.h>
+ #include <glib/gprintf.h>
++#include <sys/types.h>
++#include <string.h>
++#include <errno.h>
++#include <unistd.h>
+ 
+ #ifdef HAVE_CONFIG_H
+ #  include <config.h>
+@@ -37,6 +41,9 @@
+ #include <sys/ioctl.h>
+ #include <stdlib.h>
+ #include <net/if.h>
++#if defined (__FreeBSD__) || defined (__OpenBSD__)
++#include <net/if_media.h>
++#endif
+ 
+ #include <glibtop.h>
+ #include <glibtop/netlist.h>
+@@ -61,6 +68,7 @@ static InfoInterfaceDescription info_iface_desc [] = {
+ 	{ N_("Ethernet Interface"),      INFO_INTERFACE_ETH,     "16_ethernet.xpm", "eth",        NULL },
+ 	{ N_("Wireless Interface"),      INFO_INTERFACE_WLAN,    "wavelan-16.png",  "wlan",       NULL },
+ 	{ N_("Modem Interface"),         INFO_INTERFACE_PPP,     "16_ppp.xpm",      "ppp",        NULL },
++	{ N_("Modem Interface"),         INFO_INTERFACE_PPP,     "16_ppp.xpm",      "tun",        NULL },
+ 	{ N_("Parallel Line Interface"), INFO_INTERFACE_PLIP,    "16_plip.xpm",     "plip",       NULL },
+ 	{ N_("Infrared Interface"),      INFO_INTERFACE_IRLAN,   "irda-16.png",     "irlan",      NULL },
+ 	{ N_("Loopback Interface"),      INFO_INTERFACE_LO,      "16_loopback.xpm", "lo",         NULL },
+@@ -131,9 +139,44 @@ info_get_interface_from_dev_name (const gchar *dev_nam
+ {
+ 	gint i;
+ 	gchar *path;
+-	
++	gchar *dev_type = NULL;
++#if defined (__FreeBSD__) || defined (__OpenBSD__)
++	int s;
++	struct ifmediareq ifmr;
++
++	if ((s = socket (AF_INET, SOCK_DGRAM, 0)) > -1) {
++
++		(void) memset (&ifmr, 0, sizeof (ifmr));
++		(void) strncpy (ifmr.ifm_name, dev_name, sizeof (ifmr.ifm_name));
++
++		if (ioctl (s, SIOCGIFMEDIA, (caddr_t) &ifmr) > -1) {
++			switch (IFM_TYPE (ifmr.ifm_active)) {
++				case IFM_ETHER:
++					dev_type = "eth";
++					break;
++				case IFM_FDDI:
++#ifdef IFM_TOKEN
++				case IFM_TOKEN:
++#endif
++#ifdef IFM_ATM
++				case IFM_ATM:
++#endif
++					dev_type = "other_type";
++					break;
++				case IFM_IEEE80211:
++					dev_type = "wlan";
++					break;
++			}
++		}
++		close (s);
++	}
++#endif /* defined (__FreeBSD__) || defined (__OpenBSD__) */
++
++	if (!dev_type)
++		dev_type = (gchar *) dev_name;
++
+ 	for (i = 0; info_iface_desc[i].name; i++)
+-		if (strstr (dev_name, info_iface_desc[i].prefix) == dev_name) {
++		if (strstr (dev_type, info_iface_desc[i].prefix) == dev_type) {
+ 			(*iface) = g_strdup_printf ("%s (%s)", _(info_iface_desc[i].name), dev_name);
+ 			if (info_iface_desc[i].pixbuf == NULL) {
+ 				path = g_build_filename (PIXMAPS_DIR, info_iface_desc[i].icon, NULL);
+@@ -200,13 +243,13 @@ info_load_iface (Netinfo *info)
+ 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (info->combo), renderer, TRUE);
+ 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (info->combo), renderer,
+ 					"pixbuf", 0, NULL);
+-	g_object_unref (renderer);
++	/* g_object_unref (renderer); */
+ 
+ 	renderer = gtk_cell_renderer_text_new ();
+ 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (info->combo), renderer, TRUE);
+ 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (info->combo), renderer,
+ 					"markup", 1, NULL);
+-	g_object_unref (renderer);
++	/* g_object_unref (renderer); */
+ 
+ 	gtk_combo_box_set_active (GTK_COMBO_BOX (info->combo), 0);
+ }

@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.17 2011/04/28 13:09:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2011/05/22 13:34:19 ajacoutot Exp $
 
 COMMENT=	framework for granting privileged operations to users
 
 DISTNAME=	polkit-0.101
+REVISION=	2
 
 SHARED_LIBS +=  polkit-gobject-1	1.0 # .0.0
 SHARED_LIBS +=  polkit-backend-1	1.0 # .0.0
 SHARED_LIBS +=  polkit-agent-1		1.0 # .0.0
 
-CATEGORIES=	sysutils
+CATEGORIES=	sysutils security
 
 HOMEPAGE=	http://www.freedesktop.org/wiki/Software/PolicyKit
 
@@ -32,8 +33,13 @@ BUILD_DEPENDS=	${MODGNU_AUTOMAKE_DEPENDS} \
 		${MODGNU_AUTOCONF_DEPENDS} \
 		devel/gobject-introspection
 
+RUN_DEPENDS=	x11/dbus
+
+# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
+# instead of the actual library
+USE_LIBTOOL=	gnu
 # needs AM_PROG_LIBTOOL
-BUILD_DEPENDS+=	devel/libtool
+#BUILD_DEPENDS+=	devel/libtool
 
 # We do no want to depends on gtk-doc as it creates a dependency loop:
 # polkit -> gtk-doc -> yelp -> gconf2 -> polkit
@@ -42,7 +48,7 @@ BUILD_DEPENDS+=	textproc/libxslt \
 
 LIB_DEPENDS=	devel/glib2
 
-AUTOCONF_VERSION= 2.64
+AUTOCONF_VERSION= 2.68
 AUTOMAKE_VERSION=1.10
 
 CONFIGURE_STYLE= gnu
@@ -50,6 +56,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
+		--disable-silent-rules \
 		--localstatedir=/var \
 		--mandir=${PREFIX}/man \
 		--enable-introspection \
@@ -61,10 +68,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 
 USE_GMAKE=	Yes
 USE_GROFF=	Yes
-
-# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
-# instead of the actual library
-USE_LIBTOOL=	gnu
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/polkit
 

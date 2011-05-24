@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.692 2011/04/28 10:51:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.696 2011/05/10 16:21:04 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -170,8 +170,7 @@
      SUBDIR += libnice
      SUBDIR += libnids
      SUBDIR += libpcapnav
-     SUBDIR += libproxy
-     SUBDIR += libproxy,webkit
+     SUBDIR += libproxy,mozilla,webkit
      SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
@@ -260,6 +259,7 @@
      SUBDIR += p5-IO-Socket-Multicast
      SUBDIR += p5-IO-Socket-Socks
      SUBDIR += p5-IP-Country
+     SUBDIR += p5-IRC-Utils
      SUBDIR += p5-Net-Amazon
      SUBDIR += p5-Net-BGP
      SUBDIR += p5-Net-CIDR
@@ -351,6 +351,7 @@
      SUBDIR += p5-SNMP-BridgeQuery
      SUBDIR += p5-SNMP-Info
      SUBDIR += p5-SNMP_Session
+     SUBDIR += p5-Socket-GetAddrInfo
      SUBDIR += p5-Socket6
      SUBDIR += p5-Sys-Hostname-Long
      SUBDIR += p5-Test-TCP
@@ -430,6 +431,7 @@
      SUBDIR += py-nmap
      SUBDIR += py-pcapy
      SUBDIR += py-pcs
+     SUBDIR += py-smbc
      SUBDIR += py-snmp
      SUBDIR += py-twitter
      SUBDIR += py-xmpp

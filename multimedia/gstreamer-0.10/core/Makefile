@@ -1,21 +1,19 @@
-# $OpenBSD: Makefile,v 1.21 2011/04/07 12:46:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2011/05/24 09:10:23 ajacoutot Exp $
 
 COMMENT =		multimedia framework
 
-V =			0.10.32
-
-REVISION =		0
+V =			0.10.34
 
 PKGNAME =		gstreamer-${V}
 
 DISTNAME =		gstreamer-${V}
 
-SHARED_LIBS +=  gstreamer-0.10       2.3      # .28.0
-SHARED_LIBS +=  gstbase-0.10         2.3      # .28.0
-SHARED_LIBS +=  gstcontroller-0.10   3.3      # .28.0
-SHARED_LIBS +=  gstdataprotocol-0.10 2.3      # .28.0
-SHARED_LIBS +=  gstcheck-0.10        1.3      # .28.0
-SHARED_LIBS +=  gstnet-0.10          2.3      # .28.0
+SHARED_LIBS +=  gstreamer-0.10       2.4      # .28.0
+SHARED_LIBS +=  gstbase-0.10         2.4      # .28.0
+SHARED_LIBS +=  gstcontroller-0.10   3.4      # .28.0
+SHARED_LIBS +=  gstdataprotocol-0.10 2.4      # .28.0
+SHARED_LIBS +=  gstcheck-0.10        1.4      # .28.0
+SHARED_LIBS +=  gstnet-0.10          2.4      # .28.0
 
 WANTLIB += c m pcre pthread z xml2 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0
@@ -29,6 +27,10 @@ BUILD_DEPENDS =		devel/flex
 LIB_DEPENDS =		textproc/libxml \
 			devel/glib2
 
+# OpenBSD has support for monotonic clock (CLOCK_MONOTONIC), however we
+# we currently don't have most of the _POSIX_* defines in unistd.h (e.g.
+# _POSIX_MONOTONIC_CLOCK 200112L) and the associated sysconf(3)
+# _SC_MONOTONIC_CLOCK variable.
 CPPFLAGS +=		-D_POSIX_MONOTONIC_CLOCK=200112L
 
 REGRESS_DEPENDS =	${BASE_PKGPATH}

@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.49 2011/04/11 17:12:10 kili Exp $
+# $OpenBSD: Quirks.pm,v 1.51 2011/05/23 22:58:35 sthen Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -200,6 +200,8 @@ my $stem_extensions = {
 	'py-BeautifulSoup' => 'py-beautifulsoup',
 	'hs-network-bytestring' => 'hs-network',
 	'hs-xhtml' => 'ghc',
+	'tomboy' => 'gnote',
+	'dovecot-sieve' => 'dovecot-pigeonhole',
 };
 
 # ->is_base_system($handle, $state):

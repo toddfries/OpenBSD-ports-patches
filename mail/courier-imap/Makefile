@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.70 2011/03/20 13:06:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.72 2011/05/11 12:57:47 jasper Exp $
 
 COMMENT-main=		imap server for maildir format mailboxes
 COMMENT-pop3=		pop3 server for maildir format mailboxes
 
-V=			4.8.0
+V=			4.9.1
 DISTNAME=		courier-imap-${V}
 PKGNAME-main=		${DISTNAME}
-REVISION-main=		6
 FULLPKGNAME-pop3=	courier-pop3-${V}
-REVISION-pop3=		6
 FULLPKGPATH-pop3=	mail/courier-imap,-pop3
+
+REVISION-main=		0
+REVISION-pop3=		0
 
 CATEGORIES=		mail
 
@@ -30,6 +31,7 @@ WANTLIB-pop3=		c courierauth courierauthsasl idn ${MODGETTEXT_WANTLIB}
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
+USE_GROFF=		Yes
 CONFIGURE_STYLE=	gnu
 
 CONFIGURE_ENV=		LDFLAGS="-L${LOCALBASE}/lib" \
@@ -61,6 +63,7 @@ CONFIGURE_ARGS=		--sbindir=${PREFIX}/sbin \
 			--with-piddir=${COURIERSTATE} \
 			--with-makedatprog \
 			--with-db=gdbm \
+			--with-certsdir=/etc/ssl/private \
 			--cache-file=${WRKDIR}/courier-imap.cache
 
 CONFIGURE_ENV+=		OPENSSL=/usr/sbin/openssl

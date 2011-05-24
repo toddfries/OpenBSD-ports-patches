@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2011/04/27 12:53:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2011/05/20 13:33:53 ajacoutot Exp $
 
 COMMENT=		GObject Introspection
 
@@ -6,7 +6,7 @@ GNOME_VERSION=		0.10.8
 GNOME_PROJECT=		gobject-introspection
 CATEGORIES=		devel
 
-REVISION=		0
+REVISION=		4
 
 SHARED_LIBS +=  girepository-1.0     1.0      # 1.0
 
@@ -48,7 +48,10 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 
 CFLAGS+=		-pthread
 
-SUBST_VARS+=		MODPY_SITEPKG LIBTOOL CC
+SUBST_VARS+=		MODPY_SITEPKG CC
+
+# XXX ugly
+MAKE_FLAGS=		CAIRO_SHARED_LIBRARY=libcairo-gobject.so.0.0
 
 MODPY_ADJ_FILES=	giscanner/scannermain.py \
 			giscanner/shlibs.py \
@@ -56,9 +59,6 @@ MODPY_ADJ_FILES=	giscanner/scannermain.py \
 			tests/offsets/gen-gitestoffsets
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/giscanner/dumper.py \
-		${WRKSRC}/giscanner/scannermain.py \
-		${WRKSRC}/tools/g-ir-scanner.in
-	perl -pi -e "s,'cc','${CC}'," ${WRKSRC}/giscanner/sourcescanner.py
+	${SUBST_CMD} ${WRKSRC}/giscanner/{dumper,scannermain,sourcescanner}.py
 
 .include <bsd.port.mk>

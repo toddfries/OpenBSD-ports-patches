@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.323 2011/04/17 18:40:23 phessler Exp $
+# $OpenBSD: Makefile,v 1.326 2011/05/20 10:10:19 sthen Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -23,6 +23,7 @@
      SUBDIR += docbook-dsssl
      SUBDIR += docbook-to-man
      SUBDIR += docbook-xsl
+     SUBDIR += docbook2x
      SUBDIR += docx2txt
      SUBDIR += enchant
      SUBDIR += eruby
@@ -239,6 +240,7 @@
      SUBDIR += p5-sdf
      SUBDIR += p5-tkispell
      SUBDIR += par
+     SUBDIR += pdftk
      SUBDIR += pear-File
      SUBDIR += pear-File-Find
      SUBDIR += pear-XML-Parser
@@ -322,6 +324,7 @@
      SUBDIR += txt2tags
      SUBDIR += unrtf
      SUBDIR += urlview
+     SUBDIR += urlview,slang
      SUBDIR += validate
      SUBDIR += vgrind
      SUBDIR += wdg-sgml-lib

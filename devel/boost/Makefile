@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2010/09/19 20:09:41 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2011/05/05 17:08:27 jasper Exp $
 
 COMMENT=	free peer-reviewed portable C++ source libraries
 
 PKGNAME=	boost-${VERSION}
-REVISION=	5
+REVISION=	6
 
 VERSION=	1.42.0
 DISTNAME=	boost_${VERSION:S/./_/g}
@@ -12,22 +12,24 @@ SO_VERSION=	2.0
 BOOST_LIBS=	boost_date_time boost_date_time-mt \
 		boost_filesystem boost_filesystem-mt \
 		boost_graph boost_graph-mt \
+		boost_iostreams boost_iostreams-mt \
 		boost_math_c99 boost_math_c99-mt \
 		boost_math_c99f boost_math_c99f-mt \
 		boost_math_c99l boost_math_c99l-mt \
 		boost_math_tr1 boost_math_tr1-mt \
 		boost_math_tr1f boost_math_tr1f-mt \
 		boost_math_tr1l boost_math_tr1l-mt \
-		boost_iostreams boost_iostreams-mt \
+		boost_prg_exec_monitor-mt boost_prg_exec_monitor \
 		boost_program_options boost_program_options-mt \
 		boost_python boost_python-mt \
 		boost_regex boost_regex-mt \
 		boost_serialization boost_serialization-mt \
-		boost_wserialization boost_wserialization-mt \
 		boost_signals boost_signals-mt \
 		boost_system boost_system-mt \
 		boost_thread-mt \
-		boost_wave boost_wave-mt
+		boost_unit_test_framework boost_unit_test_framework-mt \
+		boost_wave boost_wave-mt \
+		boost_wserialization boost_wserialization-mt
 .for _lib in ${BOOST_LIBS}
 SHARED_LIBS+=	${_lib} ${SO_VERSION}
 .endfor
@@ -55,7 +57,6 @@ BOOTSTRAP_CONFIG=	--without-icu \
 			--with-python=${MODPY_BIN} \
 			--with-python-root=${LOCALBASE} \
 			--with-python-version=${MODPY_VERSION} \
-			--without-libraries=test
 #			--without-libraries=test,thread,serialization,system,date_time,filesystem,graph,math,mpi,program_options,signals,wave
 
 CONFIGURE_ENV=	BJAM_CONFIG="${BJAM_CONFIG}"

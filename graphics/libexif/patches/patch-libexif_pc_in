@@ -1,9 +1,9 @@
-$OpenBSD: patch-libexif_pc_in,v 1.1 2007/06/18 15:32:44 jasper Exp $
---- libexif.pc.in.orig	Thu Mar 17 16:58:18 2005
-+++ libexif.pc.in	Sat Jun 16 00:39:48 2007
-@@ -8,4 +8,4 @@ Description: Library for easy access to EXIF data
- Requires:
+$OpenBSD: patch-libexif_pc_in,v 1.3 2011/05/19 15:41:10 sthen Exp $
+--- libexif.pc.in.orig	Thu May 19 16:34:15 2011
++++ libexif.pc.in	Thu May 19 16:34:23 2011
+@@ -9,4 +9,4 @@ Requires:
  Version: @VERSION@
- Libs: -L${libdir} -lexif -lm
+ Libs: -L${libdir} -lexif
+ Libs.private: -lm
 -Cflags: -I${includedir}
 +Cflags: -I${includedir} -I${includedir}/libexif

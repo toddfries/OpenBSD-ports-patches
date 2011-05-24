@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/26 14:17:17 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2011/05/21 20:28:58 sthen Exp $
 
 COMMENT=	GNU standards-compliant Makefile generator
 
 VERSION=	1.10
 DISTNAME=	automake-${VERSION}.3
-REVISION =	0
-PKGSPEC =	automake->=${VERSION},<1.11
+REVISION=	2
+PKGSPEC=	automake->=${VERSION},<1.11
 
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GNU:=automake/}
@@ -23,8 +23,7 @@ MODULES=		lang/python
 MODPY_BUILDDEP=		No
 MODPY_RUNDEP=		No
 
-AUTOCONF_VERSION=	2.60
-AUTOCONF_REGRESS=	2.65
+AUTOCONF_VERSION=	2.65
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS=		${MODGNU_AUTOCONF_DEPENDS}
@@ -42,7 +41,6 @@ FAKE_FLAGS=		docdir=${PREFIX}/share/doc/automake${SUFFIX}
 
 REGRESS_DEPENDS=	${BASE_PKGPATH} \
 			${MODPY_RUN_DEPENDS} \
-			devel/autoconf/${AUTOCONF_REGRESS} \
 			devel/libtool \
 			devel/gmake \
 			archivers/bzip2 \
@@ -50,7 +48,7 @@ REGRESS_DEPENDS=	${BASE_PKGPATH} \
 			editors/emacs21 \
 			devel/dejagnu
 
-TESTS_ENVIRONMENT=	AUTOCONF_VERSION=${AUTOCONF_REGRESS} \
+TESTS_ENVIRONMENT=	AUTOCONF_VERSION=${AUTOCONF_VERSION} \
 			MAKE=${GMAKE}
 
 do-regress:

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/22 08:37:00 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2011/05/19 14:43:16 ajacoutot Exp $
 
 COMMENT=		Industrial icon theme from OpenSUSE
 
 DISTNAME=		industrial-icon-theme-11.0.5
-REVISION=		1
+REVISION=		4
 
 CATEGORIES=		x11
 
@@ -18,6 +18,9 @@ PERMIT_DISTFILES_FTP=	Yes
 BUILD_DEPENDS=	x11/icon-naming-utils \
 		x11/gnome/librsvg \
 		graphics/ImageMagick
+
+# Add the corresponding "Inherits" theme.
+RUN_DEPENDS +=		x11/tango-icon-theme
 
 NO_REGRESS=		Yes
 USE_GMAKE=		Yes

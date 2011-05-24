@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.11 2009/11/14 18:37:53 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.13 2011/05/19 15:56:12 sthen Exp $
 %%SHARED%%
 include/libexif/
 include/libexif/_stdint.h
@@ -27,6 +27,9 @@ share/doc/libexif/ChangeLog
 share/doc/libexif/NEWS
 share/doc/libexif/README
 share/locale/be/LC_MESSAGES/libexif-12.mo
+share/locale/bs/
+share/locale/bs/LC_MESSAGES/
+share/locale/bs/LC_MESSAGES/libexif-12.mo
 share/locale/cs/LC_MESSAGES/libexif-12.mo
 share/locale/da/LC_MESSAGES/libexif-12.mo
 share/locale/de/LC_MESSAGES/libexif-12.mo
@@ -51,5 +54,6 @@ share/locale/sq/LC_MESSAGES/
 share/locale/sq/LC_MESSAGES/libexif-12.mo
 share/locale/sr/LC_MESSAGES/libexif-12.mo
 share/locale/sv/LC_MESSAGES/libexif-12.mo
+share/locale/tr/LC_MESSAGES/libexif-12.mo
 share/locale/vi/LC_MESSAGES/libexif-12.mo
 share/locale/zh_CN/LC_MESSAGES/libexif-12.mo

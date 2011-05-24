@@ -1,7 +1,10 @@
-# $OpenBSD: Makefile,v 1.20 2010/11/16 11:23:28 espie Exp $
+# $OpenBSD: Makefile,v 1.22 2011/05/15 19:15:38 naddy Exp $
 
 COMMENT =	dungeon explorin', hackin', game.  Hard
 DISTNAME =	se007e7f1
+PKGNAME =	slash-em-3.4.3.7e7f1
+REVISION =	3
+V =		3.4.3.7e7f1
 CATEGORIES =	games
 
 HOMEPAGE =	http://slashem.sourceforge.net
@@ -9,16 +12,12 @@ MASTER_SITES =	http://avrc.city.ac.uk/nethack/slashem/
 
 MAINTAINER =	Marc Espie <espie@openbsd.org>
 
-#		GPL
+# GPL
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 WANTLIB =		c termlib
-
-PKGNAME =		slash-em-3.4.3.7e7f1
-REVISION =		2
-V =			3.4.3.7e7f1
 
 WRKDIST =		${WRKDIR}/slashem-0.0.7E7F1
 

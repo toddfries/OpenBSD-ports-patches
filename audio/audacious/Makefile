@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2011/04/27 11:44:12 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.28 2011/05/12 07:34:54 dcoppa Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		gtk+2 media player based on BMP and XMMS
 
-DISTNAME =		audacious-2.4.4
-
-REVISION =		0
+DISTNAME =		audacious-2.4.5
 
 SHARED_LIBS =		audclient	1.1 	# 2.0
 SHARED_LIBS +=		audcore		0.0 	# 1.0
@@ -55,10 +53,8 @@ MAKE_ENV =		LIBaudclient_VERSION=${LIBaudclient_VERSION} \
 
 USE_GMAKE =		Yes
 
-# Should be 2.68
-AUTOCONF_VERSION =	2.67
-
 CONFIGURE_STYLE =	autoconf
+AUTOCONF_VERSION =	2.68
 
 .if ${MACHINE_ARCH} != "amd64"
 CONFIGURE_ARGS +=	--disable-sse2

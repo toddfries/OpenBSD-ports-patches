@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.133 2011/04/26 18:32:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.144 2011/05/23 19:13:20 landry Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -16,7 +16,6 @@
      SUBDIR += conduit
      SUBDIR += controlcenter2
      SUBDIR += dasher
-     SUBDIR += deskbar-applet
      SUBDIR += desktop
      SUBDIR += devel-docs
      SUBDIR += development-monitor
@@ -26,8 +25,8 @@
      SUBDIR += empathy
      SUBDIR += eog
      SUBDIR += eog-plugins
-     SUBDIR += file-roller
      SUBDIR += f-spot
+     SUBDIR += file-roller
      SUBDIR += games
      SUBDIR += games-extra-data
      SUBDIR += gcalctool
@@ -38,14 +37,17 @@
      SUBDIR += genius
      SUBDIR += ghex
      SUBDIR += gjs
+     SUBDIR += gnote
      SUBDIR += gok
      SUBDIR += gucharmap
+     SUBDIR += gucharmap,gtk2
      SUBDIR += gvfs
      SUBDIR += gyrus
      SUBDIR += hamster-applet
      SUBDIR += icon-theme
      SUBDIR += icon-theme-extras
      SUBDIR += icon-theme-symbolic
+     SUBDIR += js-common
      SUBDIR += keyring
      SUBDIR += krb5-auth-dialog
      SUBDIR += libbonobo
@@ -55,14 +57,14 @@
      SUBDIR += libgdamm
      SUBDIR += libgnome
      SUBDIR += libgnome-keyring
-     SUBDIR += libgnomemm
      SUBDIR += libgnomecanvas
      SUBDIR += libgnomecanvasmm
      SUBDIR += libgnomecups
      SUBDIR += libgnomekbd
-     SUBDIR += libgnomeui
+     SUBDIR += libgnomemm
      SUBDIR += libgnomeprint
      SUBDIR += libgnomeprintui
+     SUBDIR += libgnomeui
      SUBDIR += libgweather
      SUBDIR += librsvg
      SUBDIR += libslab
@@ -85,6 +87,7 @@
      SUBDIR += panel
      SUBDIR += pessulus
      SUBDIR += planner
+     SUBDIR += power-manager
      SUBDIR += py-atspi
      SUBDIR += py-gnome
      SUBDIR += py-gnome-desktop
@@ -92,6 +95,7 @@
      SUBDIR += screensaver
      SUBDIR += seahorse
      SUBDIR += seahorse-plugins
+     SUBDIR += seed
      SUBDIR += session
      SUBDIR += settings-daemon
      SUBDIR += speech
@@ -101,10 +105,11 @@
      SUBDIR += terminal
      SUBDIR += themes
      SUBDIR += themes-extras
-     SUBDIR += tomboy
+     SUBDIR += themes-standard
      SUBDIR += totem
      SUBDIR += totem-pl-parser
      SUBDIR += tracker
+     SUBDIR += tweak-tool
      SUBDIR += user-docs
      SUBDIR += utils
      SUBDIR += vfs2
@@ -112,6 +117,7 @@
      SUBDIR += vinagre
      SUBDIR += vino
      SUBDIR += yelp
+     SUBDIR += yelp-xsl
      SUBDIR += zenity
 
 .include <bsd.port.subdir.mk>

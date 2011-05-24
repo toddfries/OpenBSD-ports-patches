@@ -1,18 +1,19 @@
-# $OpenBSD: Makefile,v 1.70 2011/04/16 12:17:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.76 2011/05/21 08:02:08 ajacoutot Exp $
 
-COMMENT-main=		terminal emulation library
+COMMENT-main=		terminal emulation library (gtk+2)
 COMMENT-python= 	python bindings for vte
+COMMENT-pty-helper=	setuid helper for opening ptys
+COMMENT-gtk3=		terminal emulation library (gtk+3)
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.26.2
+GNOME_VERSION=		0.28.0
 PKGNAME-main=		${DISTNAME}
 PKGNAME-python= 	py-${DISTNAME}
+PKGNAME-pty-helper=	vte-ptyhelper-${GNOME_VERSION}
 
-REVISION-main=		0
+REVISION-main=		2
 
 CATEGORIES=		devel
-
-SHARED_LIBS+=	vte	14.1    # 2609.0
 
 HOMEPAGE=		http://www.gnome.org/
 
@@ -30,7 +31,7 @@ MODULES=		devel/gettext \
 			x11/gnome
 
 MODPY_RUNDEP=		No
-MULTI_PACKAGES= 	-main -python
+MULTI_PACKAGES= 	-main -pty-helper
 # Don't pull in x11/py-gtk2 on these archs; build fails with binutils 2.15
 NOT_FOR_ARCHS-python=	mips64 mips64el
 
@@ -39,18 +40,15 @@ WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png pthread-stubs xcb xcb-render drm xcb-shm
-WANTLIB += z gthread-2.0 gdk_pixbuf-2.0 gdk-x11-2.0 GL Xxf86vm
+WANTLIB += z gthread-2.0 gdk_pixbuf-2.0 GL Xxf86vm
 
-WANTLIB-main=		${WANTLIB} util c pthread
-LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			x11/gtk+2
+WANTLIB-main=		${WANTLIB} c pthread
+
+WANTLIB-pty-helper=	util c
 
 WANTLIB-python= 	${WANTLIB} ffi vte>=14 gtk-x11-2.0
 
 BUILD_DEPENDS=		devel/gobject-introspection
-.if ! ${MACHINE_ARCH:Mmips64*}
-BUILD_DEPENDS+=		x11/py-gtk2
-.endif
 
 LIB_DEPENDS-python=	${LIB_DEPENDS-main} \
 			${BASE_PKGPATH} \
@@ -58,13 +56,38 @@ LIB_DEPENDS-python=	${LIB_DEPENDS-main} \
 RUN_DEPENDS-python=	${MODPY_RUN_DEPENDS} \
 			x11/py-gtk2
 
+PSEUDO_FLAVORS= 	gtk3
+FLAVOR?=
+
+.if ${FLAVOR:L:Mgtk3}
+RUN_DEPENDS-main+=	${BASE_PKGPATH},gtk3,-pty-helper
+LIB_DEPENDS-main+=	${LIB_DEPENDS} \
+			x11/gtk+3
+WANTLIB-main+=		cairo-gobject gdk-3 gtk-3
+CONFIGURE_ARGS+=	--with-gtk=3.0
+PKGNAME-main=		vte3-${GNOME_VERSION}
+SHARED_LIBS +=  vte2_90                   0.0 # 2809.0
+.else
+RUN_DEPENDS-main+=	${BASE_PKGPATH},-pty-helper
+LIB_DEPENDS-main=	${LIB_DEPENDS} \
+			x11/gtk+2
+WANTLIB-main+=		gdk-x11-2.0 gtk-x11-2.0
+CONFIGURE_ARGS+=	--with-gtk=2.0
+MULTI_PACKAGES+=	-python
+PKGNAME-main=		vte-${GNOME_VERSION}
+SHARED_LIBS+=	vte	14.1    # 2609.0
+
+.if ! ${MACHINE_ARCH:Mmips64*}
+BUILD_DEPENDS+=		x11/py-gtk2
+CONFIGURE_ARGS+=	--enable-python
+.endif
+
+.endif
+
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-introspection \
 			--disable-Bsymbolic
-.if ! ${MACHINE_ARCH:Mmips64*}
-CONFIGURE_ARGS+=	--enable-python
-.endif
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

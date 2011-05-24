@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/22 08:36:58 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2011/05/18 15:25:55 jasper Exp $
 
 COMMENT=	GNOME interface for various networking tools
 
 GNOME_PROJECT=	gnome-nettool
 GNOME_VERSION=	2.32.0
-REVISION=	0
+REVISION=	2
 
 CATEGORIES=	net
 
@@ -26,7 +26,8 @@ MODULES=	devel/gettext \
 		x11/gnome
 
 LIB_DEPENDS=	devel/libgtop2 \
-		devel/gconf2
+		devel/gconf2 \
+		x11/gtk+2
 
 MODGNOME_HELP_FILES=	Yes
 DESKTOP_FILES=		Yes

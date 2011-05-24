@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.934 2011/05/03 16:37:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.942 2011/05/22 20:43:35 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -52,6 +52,7 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
+     SUBDIR += coccinelle
      SUBDIR += codeblocks
      SUBDIR += codeworker
      SUBDIR += commoncpp
@@ -88,6 +89,7 @@
      SUBDIR += dtc
      SUBDIR += eclipse
      SUBDIR += ectags
+     SUBDIR += emacs-python
      SUBDIR += ethos
      SUBDIR += fasm
      SUBDIR += ffcall
@@ -100,6 +102,7 @@
      SUBDIR += gal2
      SUBDIR += gconf-editor
      SUBDIR += gconf2
+     SUBDIR += gconf2,gtk2
      SUBDIR += gconfmm
      SUBDIR += geany
      SUBDIR += geotiff
@@ -178,12 +181,12 @@
      SUBDIR += hs-hood
      SUBDIR += hs-hslogger
      SUBDIR += hs-iteratee
-     SUBDIR += hs-largeword
      SUBDIR += hs-language-c
+     SUBDIR += hs-largeword
      SUBDIR += hs-mmap
-     SUBDIR += hs-mtl
      SUBDIR += hs-monads-fd
      SUBDIR += hs-monads-tf
+     SUBDIR += hs-mtl
      SUBDIR += hs-murmur-hash
      SUBDIR += hs-network
      SUBDIR += hs-pango
@@ -245,6 +248,7 @@
      SUBDIR += libev
      SUBDIR += libeventextra
      SUBDIR += libexecinfo
+     SUBDIR += libexude
      SUBDIR += libf2c
      SUBDIR += libf2c-old
      SUBDIR += libffi
@@ -271,7 +275,6 @@
      SUBDIR += liboobs
      SUBDIR += liboop
      SUBDIR += libopensync
-     SUBDIR += lpc21isp
      SUBDIR += libpeas
      SUBDIR += libproplist
      SUBDIR += libregexp9
@@ -295,6 +298,7 @@
      SUBDIR += libyajl
      SUBDIR += libyaml
      SUBDIR += llvm
+     SUBDIR += lpc21isp
      SUBDIR += lpeg
      SUBDIR += luaalarm
      SUBDIR += luabitop
@@ -348,8 +352,8 @@
      SUBDIR += p5-Algorithm-Dependency
      SUBDIR += p5-Algorithm-Diff
      SUBDIR += p5-Algorithm-IncludeExclude
-     SUBDIR += p5-Algorithm-Munkres
      SUBDIR += p5-Algorithm-MarkovChain
+     SUBDIR += p5-Algorithm-Munkres
      SUBDIR += p5-Algorithm-Permute
      SUBDIR += p5-Alien-wxWidgets
      SUBDIR += p5-Any-Moose
@@ -530,6 +534,7 @@
      SUBDIR += p5-Expect-Simple
      SUBDIR += p5-Exporter-Lite
      SUBDIR += p5-Exporter-Tidy
+     SUBDIR += p5-ExtUtils-CChecker
      SUBDIR += p5-ExtUtils-Depends
      SUBDIR += p5-ExtUtils-PkgConfig
      SUBDIR += p5-ExtUtils-XSBuilder
@@ -1115,12 +1120,14 @@
      SUBDIR += vim-taglist
      SUBDIR += vtcl
      SUBDIR += vte
+     SUBDIR += vte,gtk3
      SUBDIR += waf
      SUBDIR += wcb
      SUBDIR += xdg-user-dirs
      SUBDIR += xdg-utils
      SUBDIR += xmake
      SUBDIR += xulrunner
+     SUBDIR += yaml-cpp
      SUBDIR += yasm
 
 .include <bsd.port.subdir.mk>

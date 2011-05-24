@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.228 2011/04/20 20:04:16 landry Exp $
+# $OpenBSD: Makefile,v 1.233 2011/05/23 19:05:29 landry Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR =
      SUBDIR += LPRng
+     SUBDIR += accountsservice
      SUBDIR += acx-firmware
      SUBDIR += anacron
      SUBDIR += apachetop
@@ -27,6 +28,9 @@
      SUBDIR += colorls
      SUBDIR += colortail
      SUBDIR += conky
+     SUBDIR += conky,audacious
+     SUBDIR += conky,audacious,imlib2
+     SUBDIR += conky,imlib2
      SUBDIR += conky,no_x11
      SUBDIR += consolekit
      SUBDIR += contool
@@ -88,6 +92,7 @@
      SUBDIR += modlogan
      SUBDIR += monit
      SUBDIR += monitord
+     SUBDIR += moreutils
      SUBDIR += mtools
      SUBDIR += multitail
      SUBDIR += ncdu
@@ -178,6 +183,7 @@
      SUBDIR += tphdisk
      SUBDIR += tree
      SUBDIR += upgt-firmware
+     SUBDIR += upower
      SUBDIR += upsd
      SUBDIR += usbutil
      SUBDIR += uvideo-firmware
@@ -191,6 +197,7 @@
      SUBDIR += wmmon
      SUBDIR += wmwlmon
      SUBDIR += xbatt
+     SUBDIR += xbattbar
      SUBDIR += xjobs
      SUBDIR += xps
      SUBDIR += xstatbar

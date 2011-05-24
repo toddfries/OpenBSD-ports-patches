@@ -1,24 +1,21 @@
-# $OpenBSD: Makefile,v 1.11 2011/04/26 08:06:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2011/05/17 06:29:25 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		library handling all the details of proxy configuration
-COMMENT-gnome=		plugin for GNOME
-COMMENT-mozilla=	plugin for mozilla-based (gecko) browsers
-COMMENT-webkit=		plugin for webkit-based browsers
+COMMENT-mozilla=	pacrunner libproxy plugin for mozilla-based (gecko) browsers
+COMMENT-webkit=		pacrunner libproxy plugin for webkit-based browsers
 
 VERSION=		0.4.6
 DISTNAME=		libproxy-${VERSION}
 
 PKGNAME-main=		libproxy-${VERSION}
-PKGNAME-gnome=		libproxy-gnome-${VERSION}
 PKGNAME-mozilla=	libproxy-mozilla-${VERSION}
 PKGNAME-webkit=		libproxy-webkit-${VERSION}
 
-REVISION-main=		0
-REVISION-gnome=		0
-REVISION-mozilla=	0
-REVISION-webkit=	0
+REVISION-main=		2
+REVISION-mozilla=	1
+REVISION-webkit=	3
 
 CATEGORIES=		net
 
@@ -41,19 +38,18 @@ MODULES=		devel/cmake \
 			devel/gettext
 
 # do not enable webkit support by default because of cyclic dependency:
-# libproxy,-webkit -> webkit -> libsoup -> libproxy
-PSEUDO_FLAVORS=		webkit
+#     libproxy,-webkit -> webkit -> libsoup -> libproxy
+# do not enable mozilla support by default, xulrunner doesn't build on all arches
+PSEUDO_FLAVORS=		mozilla webkit
 FLAVOR?=
 
-MULTI_PACKAGES=		-main -gnome -mozilla
+MULTI_PACKAGES=		-main
 
-BUILD_DEPENDS=		devel/xulrunner/1.9,-devel>=1.9.1 \
-			lang/vala
+BUILD_DEPENDS=		lang/vala
 
-RUN_DEPENDS-main=	${MODPY_RUN_DEPENDS}
-
-RUN_DEPENDS-gnome=	${MODGETTEXT_RUN_DEPENDS}
-LIB_DEPENDS-gnome=	${BUILD_PKGPATH}>=${VERSION} \
+RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
+			${MODPY_RUN_DEPENDS}
+LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/gconf2
 
 RUN_DEPENDS-mozilla=	# empty
@@ -63,15 +59,13 @@ LIB_DEPENDS-mozilla=	${BUILD_PKGPATH}>=${VERSION} \
 
 RUN_DEPENDS-webkit=	${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-webkit=	STEM->=${VERSION}:${BUILD_PKGPATH}, \
-			www/webkit
+			www/webkit>=1.4.0v0
 
 cWANTLIB += m stdc++
 
-WANTLIB-main += ${cWANTLIB} c perl pthread
-
-WANTLIB-gnome += ${cWANTLIB} ${MODGETTEXT_WANTLIB}
-WANTLIB-gnome += ORBit-2 c gconf-2 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB-gnome += gobject-2.0 gthread-2.0 modman proxy pthread
+WANTLIB-main += ${cWANTLIB} ${MODGETTEXT_WANTLIB} c perl pthread
+WANTLIB-main += c perl pthread gobject-2.0 gthread-2.0 pthread
+WANTLIB-main += ORBit-2 c gconf-2 gio-2.0 glib-2.0 gmodule-2.0
 
 WANTLIB-mozilla += ${cWANTLIB} c modman nspr4 plc4 plds4 proxy
 WANTLIB-mozilla += xulrunner1.9/mozjs
@@ -83,18 +77,25 @@ WANTLIB-webkit += expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
 WANTLIB-webkit += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB-webkit += gtk-x11-2.0 modman pango-1.0 pangocairo-1.0
 WANTLIB-webkit += pangoft2-1.0 pixman-1 png proxy pthread-stubs soup-2.4
-WANTLIB-webkit += webkit-1.0 xcb xcb-render xcb-shm xml2 z
+WANTLIB-webkit += webkitgtk-1.0 xcb xcb-render xcb-shm xml2 z
 
 CONFIGURE_ARGS=		-DCMAKE_C_FLAGS="${CFLAGS} -pthread" \
 			-DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" \
 			-DWITH_PYTHON:BOOL=ON \
 			-DWITH_PERL:BOOL=ON \
 			-DWITH_GNOME:BOOL=ON \
-			-DWITH_MOZJS:BOOL=ON \
 			-DWITH_VALA:BOOL=ON \
 			-DWITH_KDE4:BOOL=OFF \
 			-DWITH_DOTNET:BOOL=OFF \
 			-DWITH_NM:BOOL=OFF
+
+.if ${FLAVOR:L:Mmozilla}
+BUILD_DEPENDS +=	devel/xulrunner/1.9,-devel>=1.9.1
+MULTI_PACKAGES +=	-mozilla
+CONFIGURE_ARGS +=	-DWITH_MOZJS:BOOL=ON
+.else
+CONFIGURE_ARGS +=	-DWITH_MOZJS:BOOL=OFF
+.endif
 
 .if ${FLAVOR:L:Mwebkit}
 MULTI_PACKAGES +=	-webkit

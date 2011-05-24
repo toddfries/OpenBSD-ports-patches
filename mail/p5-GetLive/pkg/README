@@ -1,0 +1,15 @@
+$OpenBSD: README,v 1.1 2011/05/05 13:37:04 gsoares Exp $
+
+Running p5-GetLive on OpenBSD
+=============================
+
+Refer to ${PREFIX}/share/doc/GetLive/Manual for configuration file
+options.
+
+To use GetLive with SMTP as a delivery mechanism, see the scripts in
+${PREFIX}/share/examples/GetLive.
+
+GetLive has been patched to deal with Hotmail changes.  Log into Hotmail
+through a browser and check the box so it never shows the 'changed' page
+again.  Then, add 'Mode=201003' to your config file.  You may also have
+to turn off 'reading panes'.

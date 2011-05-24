@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.7 2011/04/26 18:40:24 ajacoutot Exp $
+$OpenBSD: README,v 1.10 2011/05/23 21:31:56 ajacoutot Exp $
 
 Running GNOME on OpenBSD
 ========================
@@ -19,6 +19,7 @@ install at least the following packages:
 	gnome-keyring \
 	gnome-media \
 	gnome-panel \
+	gnome-power-manager \
 	gnome-screensaver \
 	gnome-terminal \
 	gnome-themes \
@@ -98,12 +99,11 @@ related ports under the x11/gnome category)
  - Office & Productivity
    * abiword - WYSIWYG word processor
    * gcalctool - desktop calculator
-   * deskbar-applet - universal search and navigation applet
    * gnumeric - spreadsheet application
    * hamster-applet - time tracker applet
    * meta-tracker - powerful desktop search tool and indexer
    * planner - project management
-   * tomboy - desktop note-taking
+   * gnote - desktop note-taking
 
  - Utilities
    * alacarte - simple menu editing tool

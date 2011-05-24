@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.453 2011/04/26 18:56:43 shadchin Exp $
+# $OpenBSD: Makefile,v 1.459 2011/05/23 20:37:36 rpointel Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -32,6 +32,7 @@
      SUBDIR += bluetile
      SUBDIR += bricons
      SUBDIR += bwidget
+     SUBDIR += cantarell-fonts
      SUBDIR += chbg
      SUBDIR += compiz
      SUBDIR += ctwm
@@ -84,6 +85,7 @@
      SUBDIR += gigolo
      SUBDIR += gmrun
      SUBDIR += gnome
+     SUBDIR += gnome-colors-icon-theme
      SUBDIR += gnome-mplayer
      SUBDIR += gnustep
      SUBDIR += gob2
@@ -129,6 +131,7 @@
      SUBDIR += inconsolata-font
      SUBDIR += industrial-icon-theme
      SUBDIR += ion
+     SUBDIR += irrlicht
      SUBDIR += isomaster
      SUBDIR += itk
      SUBDIR += iwidgets
@@ -200,7 +203,7 @@
      SUBDIR += piewm
      SUBDIR += pinot
      SUBDIR += podbrowser
-     SUBDIR += polkit-gnome
+     SUBDIR += polkit-gnome,gtk2
      SUBDIR += polkit-qt4
      SUBDIR += ptsans
      SUBDIR += pwm
@@ -230,6 +233,7 @@
      SUBDIR += rox-filer
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
+     SUBDIR += ruby-profligacy
      SUBDIR += rxvt
      SUBDIR += rxvt-unicode
      SUBDIR += sawfish
@@ -249,6 +253,7 @@
      SUBDIR += tango-icon-theme
      SUBDIR += tango-icon-theme-extras
      SUBDIR += tellico
+     SUBDIR += terminator
      SUBDIR += terminus-font
      SUBDIR += thewidgetfactory
      SUBDIR += tilda

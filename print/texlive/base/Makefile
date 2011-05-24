@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.46 2011/03/09 14:43:59 edd Exp $
+# $OpenBSD: Makefile,v 1.48 2011/05/21 17:37:06 espie Exp $
 
 COMMENT =		base binaries for TeXLive typesetting distribution
 
 DISTNAME = 		texlive-${DIST_V}-source
 PKGNAME =		texlive_base-${V}
-REVISION =		0
+REVISION =		1
 
 SHARED_LIBS =		kpathsea	3.0
 SHARED_LIBS +=		ptexenc		0.0
@@ -104,7 +104,7 @@ SUBST_VARS +=		TRUEPREFIX LOCALBASE
 
 # just to silence error - never used
 pre-install:
-	mkdir ${WRKSRC}/inst
+	mkdir -p ${WRKSRC}/inst
 
 post-install:
 	rm -Rf ${WRKSRC}/inst

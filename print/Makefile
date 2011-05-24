@@ -1,4 +1,4 @@
-#	$OpenBSD: Makefile,v 1.85 2011/03/07 21:57:51 ajacoutot Exp $
+#	$OpenBSD: Makefile,v 1.88 2011/05/22 19:37:39 landry Exp $
 
     SUBDIR =
     SUBDIR += a2ps,a4
@@ -12,6 +12,7 @@
     SUBDIR += bibview
     SUBDIR += cups
     SUBDIR += cups-pdf
+    SUBDIR += cups-pk-helper
     SUBDIR += detex
     SUBDIR += dvi2tty
     SUBDIR += enscript
@@ -49,6 +50,7 @@
     SUBDIR += openclipart
     SUBDIR += pdfjam
     SUBDIR += pdflib
+    SUBDIR += pdfshuffler
     SUBDIR += pkfonts
     SUBDIR += poppler
     SUBDIR += poppler-data
@@ -59,6 +61,7 @@
     SUBDIR += psutils,letter
     SUBDIR += ptouch-driver
     SUBDIR += py-cups
+    SUBDIR += py-poppler
     SUBDIR += py-reportlab
     SUBDIR += scribus
     SUBDIR += splix
