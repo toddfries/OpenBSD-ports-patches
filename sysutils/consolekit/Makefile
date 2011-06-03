@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2011/05/18 11:18:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2011/06/02 17:09:32 kili Exp $
 
 COMMENT=	framework for defining and tracking users
 
 DISTNAME=	ConsoleKit-0.4.5
 PKGNAME=	${DISTNAME:L}
-REVISION=	0
+REVISION=	2
 
 CATEGORIES=	sysutils	
 
@@ -39,7 +39,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--localstatedir=/var \
-		--disable-silent-rules \
 		--with-pid-file=/var/run/ConsoleKit/pid \
 		--enable-pam-module=no
 

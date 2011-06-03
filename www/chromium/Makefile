@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.48 2011/05/20 08:35:24 robert Exp $
+# $OpenBSD: Makefile,v 1.52 2011/06/02 07:22:12 robert Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 
 COMMENT=		Chromium browser
 
-V=			11.0.696.68
+V=			11.0.696.71
 DISTNAME=		chromium-${V}
 
-REVISION=		5
+REVISION=		2
 
 CATEGORIES=		www
 
@@ -31,7 +31,8 @@ WANTLIB += gtk-x11-2.0 jpeg m nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pixman-1 plc4 plds4 png pthread pthread-stubs xcb xml2
 WANTLIB += z execinfo bz2 nss3 nssutil3 ssl3 smime3 softokn3 gconf-2
 WANTLIB += GL Xxf86vm drm stdc++ xcb-render xcb-shm
-WANTLIB += Xtst event xslt vpx kvm>=10.0 sndio
+WANTLIB += Xtst event xslt vpx kvm>=10.0 sndio speex
+WANTLIB += cups gcrypt
 
 MASTER_SITES=	http://build.chromium.org/buildbot/official/ \
 		http://blade2k.humppa.hu/distfiles/ \
@@ -44,13 +45,15 @@ MODPY_RUNDEP=	No
 
 RUN_DEPENDS=	sysutils/gamin,-server \
 		devel/xdg-utils \
-		devel/desktop-file-utils
+		devel/desktop-file-utils \
+		x11/gtk+2,-cups
 BUILD_DEPENDS=	archivers/bzip2 \
 		devel/gperf \
 		devel/bison \
 		devel/flex \
 		devel/yasm \
-		shells/bash
+		shells/bash \
+		sysutils/flock
 LIB_DEPENDS=	devel/libexecinfo \
 		archivers/bzip2 \
 		security/nss \
@@ -58,7 +61,9 @@ LIB_DEPENDS=	devel/libexecinfo \
 		multimedia/libvpx \
 		x11/gnome/libgnome-keyring \
 		textproc/libxslt \
-		x11/gtk+2
+		x11/gtk+2 \
+		audio/speex \
+		print/cups
 
 .include <bsd.own.mk>
 
@@ -83,6 +88,7 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Duse_system_libjpeg=1 \
 		-Duse_system_libpng=1 \
 		-Duse_system_libxml=1 \
+		-Duse_system_speex=1 \
 		-Duse_system_sqlite=0 \
 		-Duse_system_vpx=1 \
 		-Duse_system_yasm=1 \

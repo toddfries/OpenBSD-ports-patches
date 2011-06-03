@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PkgPath.pm,v 1.4 2011/05/22 08:21:39 espie Exp $
+# $OpenBSD: PkgPath.pm,v 1.8 2011/06/02 17:09:25 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -48,7 +48,8 @@ sub create
 
 	bless {pkgpath => $pkgpath,
 		# XXX
-		has => 1,
+		has => 5,
+		new => 1,
 		flavors => \%flavors,
 		sawflavor => $sawflavor,
 		multi => $multi}, $class;
@@ -128,19 +129,13 @@ sub simple_lockname
 sub unlock_conditions
 {
 	my ($v, $engine) = @_;
-	return $v->{info} && $engine->{builder}->check($v);
+	return $v->{info} && $engine->{buildable}{builder}->check($v);
 }
 
 sub requeue
 {
 	my ($v, $engine) = @_;
 	$engine->requeue($v);
-}
-
-# for weights, we are ourselves
-sub representative
-{
-	return shift;
 }
 
 # without multi. Used by the SUBDIRs code to make sure we get the right
@@ -248,6 +243,12 @@ sub merge_depends
 			for my $d (values %{$info->{RUN_DEPENDS}}) {
 				$info->{RDEPENDS}{$d} = $d;
 				bless $info->{RDEPENDS}, "AddDepends";
+			}
+		}
+		if (defined $info->{DIST}) {
+			for my $f (values %{$info->{DIST}}) {
+				$info->{FDEPENDS}{$f} = $f;
+				bless $info->{FDEPENDS}, "AddDepends";
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2011/05/17 08:38:32 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.34 2011/05/30 21:42:52 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -17,7 +17,7 @@ CATEGORIES=	x11 devel
 
 HOMEPAGE=	http://www.riverbankcomputing.co.uk/software/pyqt/intro
 
-# GPLv2
+# GPLv2 or v3 with exceptions for use with certain named open-source licenses
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -83,10 +83,10 @@ MODPY_MAJOR=${MODPY_VERSION:C/\..*//}
 # installed and they're selected at runtime. this breaks bytecode
 # compilation for package generation, so just rm the wrong files.
 pre-configure:
-.if ${MODPY_MAJOR} == "2"
+.if ${MODPY_MAJOR:M3}
 	rm -r ${WRKSRC}/pyuic/uic/port_v2
 .else
-	rm -rf ${WRKSRC}/pyuic/uic/port_v3
+	rm -r ${WRKSRC}/pyuic/uic/port_v3
 .endif
 
 post-install:

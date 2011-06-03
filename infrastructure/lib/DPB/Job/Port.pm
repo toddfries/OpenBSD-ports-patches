@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.8 2011/05/22 08:21:39 espie Exp $
+# $OpenBSD: Port.pm,v 1.10 2011/06/02 17:09:25 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -62,11 +62,17 @@ sub run
 	my $sudo = OpenBSD::Paths->sudo;
 	my $shell = $core->{shell};
 	$self->redirect($job->{log});
+	if ($builder->{state}->opt('v')) {
+		print ">>> Running $t in $fullpkgpath\n";
+	}
 	my @args = ($t, "TRUST_PACKAGES=Yes",
 	    "FETCH_PACKAGES=No",
 	    "REPORT_PROBLEM='exit 1'", "BULK=No");
 	if ($job->{special}) {
 		push(@args, "WRKOBJDIR=/tmp/ports");
+	}
+	if ($builder->{fetch}) {
+		push(@args, "NO_CHECKSUM=Yes");
 	}
 	if (defined $shell) {
 		unshift(@args, $shell->make);
@@ -115,6 +121,22 @@ sub finalize
 		$job->{signature_only} = 1;
 	}
 	return 1;
+}
+
+package DPB::Task::Port::Checksum;
+our @ISA = qw(DPB::Task::Port);
+sub run
+{
+	my ($self, $core) = @_;
+	my $job = $core->job;
+	$self->redirect($job->{log});
+	my $exit = 0;
+	for my $dist (values %{$job->{v}{info}{DIST}}) {
+		if (!$dist->checksum($dist->filename)) {
+			$exit = 1;
+		}
+	}
+	exit($exit);
 }
 
 package DPB::Task::Port::Depends;
@@ -271,6 +293,7 @@ sub finalize
 package DPB::Port::TaskFactory;
 my $repo = {
 	default => 'DPB::Task::Port',
+	checksum => 'DPB::Task::Port::Checksum',
 	clean => 'DPB::Task::Port::Clean',
 	prepare => 'DPB::Task::Port::NoTime',
 	fetch => 'DPB::Task::Port::Fetch',
@@ -326,7 +349,13 @@ sub add_normal_tasks
 	if ($builder->{clean}) {
 		push @todo, "clean";
 	}
-	push(@todo, qw(depends prepare fetch patch configure build));
+	push(@todo, qw(depends prepare));
+	if ($builder->{fetch}) {
+		push(@todo, qw(checksum));
+	} else {
+		push(@todo, qw(fetch));
+	}
+	push(@todo, qw(patch configure build));
 	if ($builder->{size}) {
 		push @todo, 'show-size';
 	}

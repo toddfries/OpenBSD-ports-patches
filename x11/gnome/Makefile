@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.144 2011/05/23 19:13:20 landry Exp $
+# $OpenBSD: Makefile,v 1.146 2011/06/01 15:08:02 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -30,6 +30,7 @@
      SUBDIR += games
      SUBDIR += games-extra-data
      SUBDIR += gcalctool
+     SUBDIR += gcalctool,gtk2
      SUBDIR += gdl
      SUBDIR += gdm
      SUBDIR += gedit
@@ -74,6 +75,7 @@
      SUBDIR += media
      SUBDIR += menus
      SUBDIR += metacity
+     SUBDIR += metacity,gtk2
      SUBDIR += mime-data
      SUBDIR += mono-gnome
      SUBDIR += mono-gnome-desktop

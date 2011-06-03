@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.16 2011/05/14 21:29:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2011/06/02 17:09:32 kili Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	intelligent input bus framework
 
 DISTNAME =	ibus-1.3.9
-REVISION =	3
+REVISION =	4
 
 SHARED_LIBS =	ibus	1.0	# 2.0
 
@@ -55,8 +55,7 @@ USE_LIBTOOL =	Yes
 LIBTOOL_FLAGS =	--tag=disable-static
 
 CONFIGURE_STYLE = gnu
-CONFIGURE_ARGS = --disable-silent-rules \
-		 --enable-vala \
+CONFIGURE_ARGS = --enable-vala \
 		 --enable-introspection \
 		 --enable-gtk-doc-html=no
 CONFIGURE_ENV =	CPPFLAGS="${CPPFLAGS} -I${LOCALBASE}/include -I${X11BASE}/include" \

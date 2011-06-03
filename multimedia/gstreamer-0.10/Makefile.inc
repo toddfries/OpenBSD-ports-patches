@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.14 2011/04/28 09:57:01 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.16 2011/06/02 17:35:47 kili Exp $
 
 CATEGORIES ?=	multimedia devel
 
@@ -26,7 +26,7 @@ LIBTOOL_FLAGS ?=	--tag=disable-static
 BUILD_DEPENDS +=	devel/bison \
 			devel/gobject-introspection
 
-AUTOCONF_VERSION ?=	2.67
+AUTOCONF_VERSION ?=	2.68
 CONFIGURE_STYLE ?=	autoconf
 
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
@@ -37,7 +37,6 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--with-default-videosrc=v4l2src \
 			--with-default-visualizer=goom \
 			--enable-introspection \
-			--disable-silent-rules \
 			--disable-gtk-doc \
 			--disable-valgrind \
 			--disable-static

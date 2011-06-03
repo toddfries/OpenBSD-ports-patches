@@ -1,6 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1 2011/05/17 14:05:11 ajacoutot Exp $
-lib/gedit/
-lib/gedit/plugins/
+@comment $OpenBSD: PLIST,v 1.3 2011/05/28 08:15:34 ajacoutot Exp $
 lib/gedit/plugins/bookmarks.plugin
 lib/gedit/plugins/bracketcompletion.plugin
 lib/gedit/plugins/bracketcompletion.py
@@ -149,8 +147,6 @@ lib/gedit/plugins/textsize/signals.py
 lib/gedit/plugins/textsize/signals.pyc
 lib/gedit/plugins/textsize/signals.pyo
 lib/gedit/plugins/wordcompletion.plugin
-share/gedit/
-share/gedit/plugins/
 share/gedit/plugins/bookmarks/
 share/gedit/plugins/bookmarks/bookmark.png
 share/gedit/plugins/commander/
@@ -312,5 +308,5 @@ share/locale/xh/LC_MESSAGES/gedit-plugins.mo
 share/locale/zh_CN/LC_MESSAGES/gedit-plugins.mo
 share/locale/zh_HK/LC_MESSAGES/gedit-plugins.mo
 share/locale/zh_TW/LC_MESSAGES/gedit-plugins.mo
-@exec %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas
-@unexec-delete %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas
+@exec %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null
+@unexec-delete %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null

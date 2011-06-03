@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.141 2011/05/19 20:44:51 gsoares Exp $
+# $OpenBSD: Makefile,v 1.143 2011/06/03 10:21:54 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
 
-REVISION-main=		4
+REVISION-main=		6
 
 DISTNAME=		samba-3.5.8
 PKGNAME-main=		${DISTNAME}

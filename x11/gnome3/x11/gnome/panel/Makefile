@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2011/05/24 05:32:28 ajacoutot Exp $
-
-# XXX: py-gnome may be needed to load the old applets?
+# $OpenBSD: Makefile,v 1.7 2011/06/02 10:39:54 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,6 +6,8 @@ COMMENT=	GNOME panel
 
 GNOME_PROJECT=	gnome-panel
 GNOME_VERSION=	3.0.2
+
+REVISION=	2
 
 SHARED_LIBS=	panel-applet-4            0.0 # 0.0
 
@@ -37,8 +37,12 @@ WANTLIB += xcb-aux xcb-event xcb-render xcb-shm xml2 z
 MODULES=	devel/dconf \
 		devel/gconf2 \
 		devel/gettext \
-		lang/python \
 		x11/gnome
+
+# py-gnome is needed to load the old applets (gnome-panel-add) but we
+# are trying to get away from the bonobo dependency for now.
+MODULES+=	lang/python
+MODPY_RUNDEP=	No
 
 BUILD_DEPENDS=	devel/gobject-introspection
 LIB_DEPENDS=	databases/evolution-data-server \
@@ -49,7 +53,8 @@ LIB_DEPENDS=	databases/evolution-data-server \
 		x11/gnome/menus \
 		x11/gnome/librsvg
 RUN_DEPENDS=	notification-daemon-*|notification-daemon-xfce-*|xfce4-notifyd-*:sysutils/notification-daemon \
-		x11/gnome/icon-theme-symbolic
+		x11/gnome/icon-theme-symbolic \
+		x11/gnome/screensaver # "Lock Screen"
 
 MODGNOME_HELP_FILES= 	Yes
 DESKTOP_FILES=		Yes

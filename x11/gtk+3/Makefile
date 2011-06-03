@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/05/23 06:11:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/06/02 17:09:32 kili Exp $
 
 SHARED_ONLY=	Yes
 
@@ -12,6 +12,8 @@ DISTNAME=	gtk+-${V}
 PKGNAME-main=	gtk+3-${V}
 PKGNAME-docs=	gtk+3-docs-${V}
 PKGNAME-cups=	gtk+3-cups-${V}
+
+REVISION-main=	1
 
 CATEGORIES=	x11 devel
 
@@ -83,7 +85,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include/freetype2/ \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
-		--disable-silent-rules \
 		--disable-man \
 		--disable-papi \
 		--disable-packagekit \

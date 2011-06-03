@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.23 2011/05/22 14:19:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2011/06/02 16:16:23 ajacoutot Exp $
 
 COMMENT=		printer (CUPS) administration tool
 
-DISTNAME=		system-config-printer-1.3.2
-REVISION=		0
+DISTNAME=		system-config-printer-1.3.3
 
 CATEGORIES=		print sysutils
 
@@ -32,12 +31,8 @@ RUN_DEPENDS=		devel/desktop-file-utils \
 			print/py-cups>=1.9.55 \
 			textproc/py-xml \
 			x11/dbus-python \
-			x11/gnome/py-gnome \
+			x11/gnome/py-gnome-desktop \
 			print/cups-pk-helper
-
-BUILD_DEPENDS+=  archivers/xz
-EXTRACT_CASES=  *.tar.xz) \
-	${LOCALBASE}/bin/xz -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
 
 USE_GMAKE=		Yes
 USE_GROFF =		Yes

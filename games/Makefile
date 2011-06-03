@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.222 2011/05/22 15:13:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.225 2011/05/31 17:52:43 kili Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -171,6 +171,7 @@
      SUBDIR += tuxpaint
      SUBDIR += tuxpaint-config
      SUBDIR += tuxpaint-stamps
+     SUBDIR += ufoai
      SUBDIR += uqm
      SUBDIR += vectoroids
      SUBDIR += vitetris
@@ -183,7 +184,7 @@
      SUBDIR += widelands
      SUBDIR += wmminichess
      SUBDIR += wmtictactoe
-     SUBDIR += wormux
+     SUBDIR += warmux
      SUBDIR += wtf
      SUBDIR += xasteroids
      SUBDIR += xbat
@@ -233,6 +234,7 @@
      SUBDIR += xzip
      SUBDIR += zangband
      SUBDIR += zangband,no_x11
+     SUBDIR += zaz
      SUBDIR += zoom
      SUBDIR += ztrack
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2011/05/22 13:34:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2011/06/02 17:09:32 kili Exp $
 
 COMMENT=	framework for granting privileged operations to users
 
 DISTNAME=	polkit-0.101
-REVISION=	2
+REVISION=	4
 
 SHARED_LIBS +=  polkit-gobject-1	1.0 # .0.0
 SHARED_LIBS +=  polkit-backend-1	1.0 # .0.0
@@ -56,7 +56,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
-		--disable-silent-rules \
 		--localstatedir=/var \
 		--mandir=${PREFIX}/man \
 		--enable-introspection \

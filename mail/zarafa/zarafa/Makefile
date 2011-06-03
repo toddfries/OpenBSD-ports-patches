@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.80 2011/05/19 17:18:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.85 2011/06/03 15:52:12 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
@@ -7,22 +7,26 @@ PKGNAME=	zarafa-${V}
 PKGNAME-main=	zarafa-${V}
 PKGNAME-web=	zarafa-webaccess-${V}
 
+REVISION-main=	3
+REVISION-web=	0
+
 CATEGORIES=	mail www productivity
 
-SHARED_LIBS +=  common_util          1.0      # 1.0
-SHARED_LIBS +=  common_mapi          1.0      # 1.0
-SHARED_LIBS +=  common_ssl           1.0      # 1.0
-SHARED_LIBS +=  freebusy             1.0      # 1.0
-SHARED_LIBS +=  zarafasync           1.0      # 1.0
-SHARED_LIBS +=  mapi                 1.0      # unknown
-SHARED_LIBS +=  zarafaclient         1.0      # unknown
-SHARED_LIBS +=  icalmapi             1.0      # 1.0
-SHARED_LIBS +=  inetmapi             1.0      # 1.0
-SHARED_LIBS +=  archiver             0.0      # unknown
+SHARED_LIBS +=  mapi                 2.0      # 0.0
+SHARED_LIBS +=  zarafaclient         2.0      # 0.0
+SHARED_LIBS +=  icalmapi             2.0      # 1.0
+SHARED_LIBS +=  inetmapi             2.0      # 1.0
+SHARED_LIBS +=  archiver             1.0      # 0.0
+SHARED_LIBS +=  common_util          2.0      # 1.0
+SHARED_LIBS +=  common_mapi          2.0      # 1.0
+SHARED_LIBS +=  common_ssl           2.0      # 1.0
+SHARED_LIBS +=  freebusy             2.0      # 1.0
+SHARED_LIBS +=  zarafasync           2.0      # 1.0
 
 MULTI_PACKAGES=	-main -web
 
-MODULES=	devel/gettext
+MODULES=	devel/gettext \
+		lang/python
 
 BUILD_DEPENDS=	www/php5/core \
 		textproc/xmlto \
@@ -30,10 +34,13 @@ BUILD_DEPENDS=	www/php5/core \
 		devel/boost \
 		textproc/clucene
 
-WANTLIB-main =	${MODGETTEXT_WANTLIB}
-WANTLIB-main += asn1 c com_err crypto gssapi krb5 m ncurses pthread ssl
-WANTLIB-main += sasl2 stdc++ z xml2 mysqlclient uuid execinfo
-WANTLIB-main += vmime-zarafa ical icalss lber-2.4 ldap-2.4
+WANTLIB += m pthread stdc++ z ${MODGETTEXT_WANTLIB}
+
+WANTLIB-main += ${WANTLIB}
+WANTLIB-main += asn1 boost_filesystem-mt boost_system-mt c com_err
+WANTLIB-main += crypto execinfo gssapi ical icalss icudata icui18n
+WANTLIB-main += icuuc krb5 lber ldap mysqlclient ncurses python2.6
+WANTLIB-main += sasl2 ssl util uuid vmime-zarafa xml2
 
 LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		textproc/libxml \
@@ -41,22 +48,33 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		databases/openldap \
 		devel/uuid \
 		devel/libexecinfo \
-		mail/zarafa/libvmime>=0.7.1p9 \
-		textproc/libical
+		mail/zarafa/libvmime>=0.9.2 \
+		textproc/libical \
+		textproc/icu4c \
+		devel/boost
 
-WANTLIB-web += ${MODGETTEXT_WANTLIB}
-WANTLIB-web += execinfo ical icalss uuid vmime-zarafa common_mapi
-WANTLIB-web += common_util freebusy icalmapi inetmapi mapi m stdc++ z
+WANTLIB-web += ${WANTLIB}
+WANTLIB-web += boost_filesystem-mt boost_system-mt common_mapi common_util
+WANTLIB-web += execinfo freebusy ical icalmapi icalss icudata icui18n
+WANTLIB-web += icuuc inetmapi mapi uuid vmime-zarafa
 
-LIB_DEPENDS-web= ${MODGETTEXT_LIB_DEPENDS} \
-		mail/zarafa/zarafa,-main
-RUN_DEPENDS-web= www/php5/core
+LIB_DEPENDS-web= ${BASE_PKGPATH}>=7.0.0
+RUN_DEPENDS-web= www/php5/core \
+		${MODGETTEXT_RUN_DEPENDS}
 
-USE_LIBTOOL=	Yes
+# XXX  ../../common/.libs/libcommon_mapi.so.1.0: undefined reference to
+# `MAPILogonEx', `zarafa_dcgettext_wide' (and more)
+# see patch-provider_server_Makefile_in
+#     patch-ECtools_zarafa-cfgchecker_Makefile_in
+#     patch-ECtools_zarafa-cfgchecker_Makefile_in
+USE_LIBTOOL=	gnu
 LIBTOOL_FLAGS=	--tag=disable-static
 
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
+
+MODPY_ADJ_FILES=tools/python-scripts/optimize-imap.py \
+		installer/linux/zarafa7-upgrade
 
 WEBROOT=	/var/www
 
@@ -72,7 +90,8 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 		LDFLAGS="-L${LOCALBASE}/lib -lexecinfo \
 			-L${LOCALBASE}/lib/zarafa" \
 		ZAFARA_LDFLAGS="-L${LOCALBASE}/lib/zarafa" \
-		PHP_SYSCONF_DIR="${PREFIX-web}/conf/php5"
+		PHP_SYSCONF_DIR="${PREFIX-web}/conf/php5" \
+		ac_cv_lib_pam_pam_start=no
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-static \
 		--disable-perl \
@@ -81,11 +100,14 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-dependency-tracking \
 		--enable-release \
 		--enable-oss \
+		--enable-unicode \
+		--enable-python \
 		--with-distro=openbsd \
 		--with-vmime-prefix=${LOCALBASE}/include/zarafa \
 		--with-ical-prefix=${LOCALBASE}/include \
 		--with-clucene-lib-prefix=${LOCALBASE}/lib \
-		--with-clucene-include-prefix=${LOCALBASE}/include
+		--with-clucene-include-prefix=${LOCALBASE}/include \
+		--with-python=${MODPY_BIN}
 
 # XXX in-tree heimdal does not provide krb5_free_unparsed_name()
 CONFIGURE_ARGS+= --with-krb5-config=/usr/bin/true
@@ -104,6 +126,7 @@ WRKDIST=	${WRKDIR}/zarafa-${V}/
 post-patch:
 	mv ${WRKSRC}/php-webclient-ajax/client/layout/img/login.jpg \
 		${WRKSRC}/php-webclient-ajax/client/layout/img/login.jpg.dist
+	ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
 
 pre-configure:
 	cd ${WRKSRC}/installer/linux && \
@@ -124,36 +147,60 @@ pre-configure:
 		${WRKSRC}/installer/indexerscripts/{attachments_parser,zmktemp}
 
 post-install:
-	${SUBST_CMD} ${WRKSRC}/php-webclient-ajax/config.php.dist
-	find ${WRKSRC}/php-webclient-ajax -name \*.orig -or -name \*.bak \
-		-or -name \*.beforesubst | xargs rm
 	${INSTALL_DATA_DIR} ${WRKINST}${INSTDIR}
-	cd ${WRKSRC}/php-webclient-ajax && tar cf - ./ | \
+	${INSTALL_DATA_DIR} ${WRKINST}/${PREFIX-web}/{include,conf/php5.sample}
+
+	${SUBST_CMD} ${WRKBUILD}/php-webclient-ajax/config.php.dist
+	find ${WRKBUILD}/php-webclient-ajax -name \*.orig -or -name \*.bak \
+		-or -name \*.beforesubst | xargs rm
+	cd ${WRKBUILD}/php-webclient-ajax && tar cf - ./ | \
 		tar -xf - -C ${WRKINST}${INSTDIR}
 	${INSTALL_DATA} ${WRKINST}${INSTDIR}/debug.php \
 		${WRKINST}${INSTDIR}/debug.php.disabled
 	${INSTALL_DATA} /dev/null ${WRKINST}${INSTDIR}/debug.txt 
 	${SUBST_CMD} -c ${FILESDIR}/zarafa.conf \
 		${WRKINST}/${INSTDIR}/zarafa.conf.dist
+	find ${PREFIX}/share/php -type f \
+		-exec perl -pi -e 's,\?php\?,\?php,' {} \;
 	for i in ${WRKINST}${INSTDIR}/server/language/* ; do \
 		msgfmt -f -v -o $$i/LC_MESSAGES/zarafa.mo $$i/LC_MESSAGES/zarafa.po ; \
 		rm $$i/LC_MESSAGES/zarafa.po ; \
 	done
-	chown -R ${SHAREOWN}:${SHAREGRP} ${WRKINST}${INSTDIR}
 
 	${SUBST_CMD} -c ${FILESDIR}/zarafa.m4 ${PREFIX}/share/examples/zarafa/zarafa.m4
 	${SUBST_CMD} -c ${FILESDIR}/local_zarafa.m4 ${PREFIX}/share/examples/zarafa/local_zarafa.m4
+
+	# move files where we want them to be
+	mv ${PREFIX}/share/doc/zarafa-gateway/* \
+		${PREFIX}/share/doc/zarafa
+	mv ${PREFIX}/share/doc/zarafa/example-config/* \
+		${PREFIX}/share/examples/zarafa
+	mv ${PREFIX}/share/doc/zarafa/zarafa.schema \
+		${PREFIX}/share/examples/zarafa
+	mv ${PREFIX}/share/examples/zarafa.ini \
+		${PREFIX}/share/examples/zarafa
+	mv ${PREFIX}/share/examples/zarafa/zarafa.ini \
+		${WRKINST}/${PREFIX-web}/conf/php5.sample/${MODULE_NAME}.ini.dist
+	mv ${PREFIX}/share/php ${WRKINST}${PREFIX-web}/include/php
+	rm ${PREFIX}/share/examples/zarafa/unix.cfg
+	rm ${PREFIX}/share/doc/zarafa/ssl-certificates.sh
+	rmdir ${PREFIX}/share/doc/{zarafa/example-config,zarafa-gateway}
+	rm -rf ${PREFIX}/share/examples/{init.d,logrotate.d,zarafa/zarafa-gateway,zarafa/license}
+
+	# part of zarafa-licensed (i.e. commercial edition, linux bin only)
+	cd ${PREFIX} && rm \
+		man/man1/zarafa-licensed.1 \
+		man/man5/zarafa-licensed.cfg.5 \
+		man/man1/zarafa-restore.1 \
+		man/man1/zarafa-backup.1 \
+		man/man1/zarafa-report.1
+	rmdir ${PREFIX}/share/examples/zarafa/{report,report-ca}
+
+	chown -R ${SHAREOWN}:${SHAREGRP} ${WRKINST}${INSTDIR}
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/zarafa
-	chown -R ${BINOWN}:${BINGRP} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
+	chown ${BINOWN}:${BINGRP} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
 		${PREFIX}/share/examples/zarafa/local_zarafa.m4
 	chmod ${SHAREMODE} ${PREFIX}/share/examples/zarafa/zarafa.m4 \
 		${PREFIX}/share/examples/zarafa/local_zarafa.m4
-	${INSTALL_DATA_DIR} ${WRKINST}/${PREFIX-web}/conf/php5.sample
-	${INSTALL_DATA} ${WRKSRC}/php-ext/zarafa.ini \
-		${WRKINST}/${PREFIX-web}/conf/php5.sample/${MODULE_NAME}.ini.dist
-	mv ${PREFIX}/share/doc/zarafa/zarafa.schema \
-		${PREFIX}/share/examples/zarafa/
-	find ${WRKINST}${PREFIX-web}/include/php -type f \
-		-exec perl -pi -e 's,\?php\?,\?php,' {} \;
 
 .include <bsd.port.mk>

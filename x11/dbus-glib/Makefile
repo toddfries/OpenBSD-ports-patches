@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.30 2010/12/13 10:41:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.32 2011/06/03 16:55:16 ajacoutot Exp $
 
 COMMENT=	glib bindings for dbus message system
 
-DISTNAME=	dbus-glib-0.92
+DISTNAME=	dbus-glib-0.94
 
 EPOCH=		0
 
-SHARED_LIBS+=	dbus-glib-1	4.3 # .3.0
+SHARED_LIBS+=	dbus-glib-1	4.3 # .4.0
 
 CATEGORIES=	x11
 
@@ -20,12 +20,13 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB=	expat c pthread pcre dbus-1 glib-2.0 gobject-2.0 gthread-2.0
+WANTLIB += c dbus-1 expat gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 pcre pthread z
 
 MASTER_SITES=	http://dbus.freedesktop.org/releases/dbus-glib/
 
 MODULES=	devel/gettext
-LIB_DEPENDS=	x11/dbus \
+LIB_DEPENDS=	x11/dbus>=1.4.10v0 \
 		devel/glib2
 
 SEPARATE_BUILD=	simple
@@ -37,7 +38,6 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-bash-completion \
 		--enable-gtk-doc=no \
-		--disable-silent-rules \
 		--with-test-socket-dir=${WRKDIR}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

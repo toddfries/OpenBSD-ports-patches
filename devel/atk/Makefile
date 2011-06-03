@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.35 2011/04/07 07:15:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.37 2011/05/30 07:48:49 jasper Exp $
 
 COMMENT=	accessibility toolkit used by gtk+
 
 GNOME_PROJECT=	atk
 GNOME_VERSION=	2.0.0
 
-REVISION=	0
+REVISION=	2
 
 SHARED_LIBS +=	atk-1.0             2800.1   # 9.1
 

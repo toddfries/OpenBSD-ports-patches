@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.22 2011/05/14 09:01:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2011/06/02 17:09:32 kili Exp $
 
 COMMENT=	flexible communications framework, logger component
 
 DISTNAME=	telepathy-logger-0.2.9
+
+REVISION=	0
 
 SHARED_LIBS +=  telepathy-logger     2.0      # 3.1
 
@@ -34,7 +36,6 @@ MODPY_RUNDEP=		No
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-silent-rules \
 			--disable-gtk-doc \
 			--enable-introspection
 CONFIGURE_ENV=		ac_cv_prog_PYTHON="${MODPY_BIN}"
