@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2010/11/15 00:22:53 espie Exp $
+# $OpenBSD: Makefile,v 1.42 2011/06/10 05:47:01 rpointel Exp $
 
 SHARED_ONLY=		Yes
 
@@ -10,12 +10,12 @@ VERSION=		1.1.21
 DISTNAME=		psycopg-${VERSION}
 PKGNAME=		py-${DISTNAME}
 PKGNAME-main=		py-${DISTNAME}
-REVISION-main =		9
+REVISION-main =		11
 FULLPKGNAME-examples=	py-psycopg-examples-${VERSION}
-REVISION-examples =	2
+REVISION-examples =	4
 FULLPKGPATH-examples=	databases/py-psycopg,-examples
 FULLPKGNAME-zope=	py-psycopg-zope-${VERSION}
-REVISION-zope =		4
+REVISION-zope =		5
 FULLPKGPATH-zope=	databases/py-psycopg,-zope,python2.4
 CATEGORIES=		databases
 
@@ -37,12 +37,12 @@ MODULES=	lang/python
 BUILD_DEPENDS=	databases/postgresql,-server
 RUN_DEPENDS=	databases/postgresql
 
-FLAVORS=	python2.4 python2.6
-FLAVOR?=	python2.6
+FLAVORS=	python2.4 python2.7
+FLAVOR?=	python2.7
 
 .if ${FLAVOR:L:Mpython2.4} && !${FLAVOR:L:Npython2.4}
 MULTI_PACKAGES=	-main -examples -zope
-.elif ${FLAVOR:L:Mpython2.6} && !${FLAVOR:L:Npython2.6}
+.elif ${FLAVOR:L:Mpython2.7} && !${FLAVOR:L:Npython2.7}
 MULTI_PACKAGES=	-main -examples
 .else
 ERRORS+=	"Fatal: You must select one version: ${FLAVORS}"

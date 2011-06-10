@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2011/05/18 16:31:07 robert Exp $
+# $OpenBSD: Makefile,v 1.33 2011/06/08 17:34:19 jasper Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -18,7 +18,7 @@ CATEGORIES=	editors productivity
 
 EPOCH=		0
 
-REVISION=	3
+REVISION=	4
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
@@ -94,7 +94,11 @@ MULTI_PACKAGES=		-main -kde
 
 PSEUDO_FLAVORS=	parallel no_lang
 FLAVORS=	debug no_java
+.if ${MACHINE_ARCH} == "amd64"
+FLAVOR?=	no_java
+.else
 FLAVOR?=
+.endif
 
 .if !${FLAVOR:L:Mno_java}
 MULTI_PACKAGES+=	-java
@@ -154,7 +158,7 @@ WANTLIB-main+=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
 		png pthread pthread-stubs ssl xcb xml2 z gdk_pixbuf-2.0 \
 		util ${MODGCONF2_WANTLIB}
-WANTLIB-main+=	GL GLU Xxf86vm drm python2.6 stdc++ xcb-render xcb-shm
+WANTLIB-main+=	GL GLU Xxf86vm drm stdc++ xcb-render xcb-shm
 WANTLIB-main+=	${MODPY_WANTLIB}
 
 RUN_DEPENDS-main=	devel/desktop-file-utils \

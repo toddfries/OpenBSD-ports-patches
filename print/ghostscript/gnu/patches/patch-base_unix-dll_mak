@@ -1,0 +1,138 @@
+$OpenBSD: patch-base_unix-dll_mak,v 1.1 2011/06/08 19:15:48 kili Exp $
+--- base/unix-dll.mak.orig	Fri Jul 23 10:22:43 2010
++++ base/unix-dll.mak	Sun Nov 14 22:05:26 2010
+@@ -23,10 +23,6 @@
+ #  export LD_LIBRARY_PATH=/insert-path-here/sobin
+ #  export GS_LIB=/insert-path-here/lib
+ 
+-# Location for building shared object
+-SOOBJRELDIR=../soobj
+-SOBINRELDIR=../sobin
+-
+ # ------------------- Ghostscript shared object --------------------------- #
+ 
+ # Shared object names
+@@ -34,12 +30,16 @@ SOBINRELDIR=../sobin
+ # simple loader (no support for display device)
+ GSSOC_XENAME=$(GS)c$(XE)
+ GSSOC_XE=$(BINDIR)/$(GSSOC_XENAME)
+-GSSOC=$(BINDIR)/$(SOBINRELDIR)/$(GSSOC_XENAME)
++GSSOC-Yes=
++GSSOC-No=$(BINDIR)/$(GSSOC_XENAME)
++GSSOC=$(GSSOC-$(USE_GTK))
+ 
+ # loader suporting display device using Gtk+
+ GSSOX_XENAME=$(GS)x$(XE)
+ GSSOX_XE=$(BINDIR)/$(GSSOX_XENAME)
+-GSSOX=$(BINDIR)/$(SOBINRELDIR)/$(GSSOX_XENAME)
++GSSOX-Yes=$(BINDIR)/$(GSSOX_XENAME)
++GSSOX-No=
++GSSOX=$(GSSOX-$(USE_GTK))
+ 
+ # shared library
+ GS_SONAME_BASE=lib$(GS)
+@@ -47,9 +47,9 @@ GS_SONAME_BASE=lib$(GS)
+ # GNU/Linux
+ GS_SOEXT=so
+ GS_SONAME=$(GS_SONAME_BASE).$(GS_SOEXT)
+-GS_SONAME_MAJOR=$(GS_SONAME).$(GS_VERSION_MAJOR)
+-GS_SONAME_MAJOR_MINOR=$(GS_SONAME).$(GS_VERSION_MAJOR).$(GS_VERSION_MINOR)
+-LDFLAGS_SO=-shared -Wl,-soname=$(GS_SONAME_MAJOR)
++GS_SONAME_MAJOR=$(GS_SONAME).$(basename $(LIBgs_VERSION))
++GS_SONAME_MAJOR_MINOR=$(GS_SONAME).$(LIBgs_VERSION)
++LDFLAGS_SO=-shared
+ 
+ # MacOS X
+ #GS_SOEXT=dylib
+@@ -77,25 +77,25 @@ $(GS_SO_MAJOR): $(GS_SO_MAJOR_MINOR)
+ 	ln -s $(GS_SONAME_MAJOR_MINOR) $(GS_SO_MAJOR)
+ 
+ # Build the small Ghostscript loaders, with Gtk+ and without
+-$(GSSOC_XE): $(GS_SO) $(PSSRC)$(SOC_LOADER)
+-	$(GLCC) -g -o $(GSSOC_XE) $(PSSRC)dxmainc.c \
+-	$(LDFLAGS) -L$(BINDIR) -l$(GS)
++$(GSSOC_XE): $(GS_SO) $(PSSRC)dxmainc.c
++	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOC_XE) $(PSSRC)dxmainc.c \
++	-L$(BINDIR) $(LDFLAGS) -l$(GS) $(SOC_LIBS)
+ 
+-$(GSSOX_XE): $(GS_SO) $(PSSRC)$(SOC_LOADER)
+-	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOX_XE) $(PSSRC)$(SOC_LOADER) \
+-	$(LDFLAGS) -L$(BINDIR) -l$(GS) $(SOC_LIBS)
++$(GSSOX_XE): $(GS_SO) $(PSSRC)dxmain.c
++	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOX_XE) $(PSSRC)dxmain.c \
++	-L$(BINDIR) $(LDFLAGS) -l$(GS) $(SOC_LIBS)
+ 
+ # ------------------------- Recursive make targets ------------------------- #
+ 
+ SODEFS=\
+- GS_XE=$(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_MAJOR_MINOR)\
++ GS_XE=$(BINDIR)/$(GS_SONAME_MAJOR_MINOR)\
+  STDIO_IMPLEMENTATION=c\
+- DISPLAY_DEV=$(DD)$(SOOBJRELDIR)/display.dev\
+- BINDIR=$(BINDIR)/$(SOBINRELDIR)\
+- GLGENDIR=$(GLGENDIR)/$(SOOBJRELDIR)\
+- GLOBJDIR=$(GLOBJDIR)/$(SOOBJRELDIR)\
+- PSGENDIR=$(PSGENDIR)/$(SOOBJRELDIR)\
+- PSOBJDIR=$(PSOBJDIR)/$(SOOBJRELDIR)
++ DISPLAY_DEV=$(DD)display.dev\
++ BINDIR=$(BINDIR)\
++ GLGENDIR=$(GLGENDIR)\
++ GLOBJDIR=$(GLOBJDIR)\
++ PSGENDIR=$(PSGENDIR)\
++ PSOBJDIR=$(PSOBJDIR)
+ 
+ 
+ # Normal shared object
+@@ -104,8 +104,8 @@ so: SODIRS
+ 	  then echo "Warning: this target requires gmake";\
+ 	fi
+ 	$(MAKE) $(SODEFS) LDFLAGS='$(LDFLAGS)' CFLAGS='$(CFLAGS_STANDARD) $(GCFLAGS) $(XCFLAGS)' prefix=$(prefix) \
+-                $(GLOBJDIR)/$(SOOBJRELDIR)/echogs$(XEAUX) $(GLOBJDIR)/$(SOOBJRELDIR)/genarch$(XEAUX)
+-	$(MAKE) $(SODEFS) LDFLAGS='$(LDFLAGS) $(LDFLAGS_SO)' CFLAGS='$(CFLAGS_STANDARD) $(CFLAGS_SO) $(GCFLAGS) $(XCFLAGS)' \
++                ${ECHOGS_XE} $(GENARCH_XE)
++	$(MAKE) $(SODEFS) LDFLAGS='$(LDFLAGS) $(LDFLAGS_SO)' CFLAGS='$(CFLAGS_STANDARD) $(GCFLAGS) $(XCFLAGS)' \
+                 prefix=$(prefix)
+ 	$(MAKE) $(SODEFS) LDFLAGS='$(LDFLAGS)' CFLAGS='$(CFLAGS_STANDARD) $(GCFLAGS) $(XCFLAGS)' prefix=$(prefix) $(GSSOC) $(GSSOX)
+ 
+@@ -133,13 +133,11 @@ install-so: so
+ 	-mkdir -p $(DESTDIR)$(bindir)
+ 	-mkdir -p $(DESTDIR)$(libdir)
+ 	-mkdir -p $(DESTDIR)$(gsincludedir)
++	[ "$(USE_GTK)" = Yes ] || \
+ 	$(INSTALL_PROGRAM) $(GSSOC) $(DESTDIR)$(bindir)/$(GSSOC_XENAME)
++	[ "$(USE_GTK)" = No ] || \
+ 	$(INSTALL_PROGRAM) $(GSSOX) $(DESTDIR)$(bindir)/$(GSSOX_XENAME)
+-	$(INSTALL_PROGRAM) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR_MINOR)
+-	$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME)
+-	ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME)
+-	$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
+-	ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
++	$(INSTALL_PROGRAM) $(BINDIR)/$(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR_MINOR)
+ 	$(INSTALL_DATA) $(PSSRC)iapi.h $(DESTDIR)$(gsincludedir)iapi.h
+ 	$(INSTALL_DATA) $(PSSRC)ierrors.h $(DESTDIR)$(gsincludedir)ierrors.h
+ 	$(INSTALL_DATA) $(GLSRC)gdevdsp.h $(DESTDIR)$(gsincludedir)gdevdsp.h
+@@ -148,17 +146,17 @@ soinstall: install-so install-scripts install-data $(I
+ 
+ # Make the build directories
+ SODIRS: STDDIRS
+-	@if test ! -d $(BINDIR)/$(SOBINRELDIR); then mkdir -p $(BINDIR)/$(SOBINRELDIR); fi
+-	@if test ! -d $(GLGENDIR)/$(SOOBJRELDIR); then mkdir -p $(GLGENDIR)/$(SOOBJRELDIR); fi
+-	@if test ! -d $(GLOBJDIR)/$(SOOBJRELDIR); then mkdir -p $(GLOBJDIR)/$(SOOBJRELDIR); fi
+-	@if test ! -d $(PSGENDIR)/$(SOOBJRELDIR); then mkdir -p $(PSGENDIR)/$(SOOBJRELDIR); fi
+-	@if test ! -d $(PSOBJDIR)/$(SOOBJRELDIR); then mkdir -p $(PSOBJDIR)/$(SOOBJRELDIR); fi
++	@if test ! -d $(BINDIR); then mkdir -p $(BINDIR); fi
++	@if test ! -d $(GLGENDIR); then mkdir -p $(GLGENDIR); fi
++	@if test ! -d $(GLOBJDIR); then mkdir -p $(GLOBJDIR); fi
++	@if test ! -d $(PSGENDIR); then mkdir -p $(PSGENDIR); fi
++	@if test ! -d $(PSOBJDIR); then mkdir -p $(PSOBJDIR); fi
+ 
+ 
+ soclean: SODIRS
+ 	$(MAKE) $(SODEFS) clean
+-	$(RM_) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME)
+-	$(RM_) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_MAJOR)
++	$(RM_) $(BINDIR)/$(GS_SONAME)
++	$(RM_) $(BINDIR)/$(GS_SONAME_MAJOR)
+ 	$(RM_) $(GSSOC)
+ 	$(RM_) $(GSSOX)
+ 	@-rmdir $(BINDIR)/$(SOBINRELDIR) $(GLGENDIR)/$(SOOBJRELDIR) $(GLOBJDIR)/$(SOOBJRELDIR) $(PSGENDIR)/$(SOOBJRELDIR) $(PSOBJDIR)/$(SOOBJRELDIR) || true 

@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.12 2010/08/30 22:24:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2011/06/08 17:39:25 jasper Exp $
 
-ONLY_FOR_ARCHS = 	i386 
+ONLY_FOR_ARCHS =	i386
 SHARED_ONLY =		Yes
 
 COMMENT =	extension module to speed up the execution of Python code
@@ -8,7 +8,7 @@ COMMENT =	extension module to speed up the execution of Python code
 MODPY_EGG_VERSION =	1.6
 DISTNAME =		psyco-${MODPY_EGG_VERSION}-src
 PKGNAME =		py-psyco-${MODPY_EGG_VERSION}
-REVISION =		2
+REVISION =		3
 
 CATEGORIES =	devel
 
@@ -23,6 +23,7 @@ PERMIT_DISTFILES_FTP =		Yes
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=psyco/}
 
 MODULES =	lang/python
+MODPY_VERSION ?= 2.6 # not ported to python 2.7 yet.
 
 WRKDIST =	${WRKDIR}/psyco-${MODPY_EGG_VERSION}
 

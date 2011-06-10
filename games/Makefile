@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.225 2011/05/31 17:52:43 kili Exp $
+# $OpenBSD: Makefile,v 1.227 2011/06/05 16:31:12 kili Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -25,6 +25,7 @@
      SUBDIR += boswars
      SUBDIR += burgerspace
      SUBDIR += bzflag
+     SUBDIR += capitan-sevilla
      SUBDIR += castle-combat
      SUBDIR += cgoban
      SUBDIR += childsplay
@@ -177,6 +178,7 @@
      SUBDIR += vitetris
      SUBDIR += vodovod
      SUBDIR += wanderer
+     SUBDIR += warmux
      SUBDIR += warzone2100
      SUBDIR += wesnoth
      SUBDIR += wesnoth,lite
@@ -184,7 +186,6 @@
      SUBDIR += widelands
      SUBDIR += wmminichess
      SUBDIR += wmtictactoe
-     SUBDIR += warmux
      SUBDIR += wtf
      SUBDIR += xasteroids
      SUBDIR += xbat

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2011/03/14 09:15:34 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2011/06/09 08:32:08 jasper Exp $
 
 COMMENT=		Natural Language ToolKit
 
 MODPY_EGG_VERSION=	2.0b9
 DISTNAME=		nltk-${MODPY_EGG_VERSION}
 PKGNAME=		py-nltk-${MODPY_EGG_VERSION}
-REVISION=		1
+REVISION=		3
 CATEGORIES=		textproc
 
 HOMEPAGE=		http://www.nltk.org/
@@ -23,6 +23,7 @@ MODULES=		lang/python
 
 BUILD_DEPENDS=		textproc/py-yaml
 RUN_DEPENDS=		graphics/py-matplotlib \
+			math/prover9/p9m4 \
 			textproc/py-yaml
 
 NO_REGRESS=		Yes

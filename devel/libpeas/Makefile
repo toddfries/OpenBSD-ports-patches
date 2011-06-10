@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2011/05/13 12:39:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2011/06/10 09:38:18 ajacoutot Exp $
 
 COMMENT=	gobject-based plugins engine
 
 GNOME_PROJECT=	libpeas
 GNOME_VERSION=	1.0.0
 
-REVISION=	1
+REVISION=	4
 
 CATEGORIES=	devel
 
@@ -31,9 +31,9 @@ WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gstapp-0.10 gstbase-0.10
 WANTLIB += gstinterfaces-0.10 gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10
 WANTLIB += gthread-2.0 gtk-3 icudata icui18n icuuc jpeg m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs python2.6 seed-gtk3 soup-2.4 sqlite3
+WANTLIB += pthread-stubs seed-gtk3 soup-2.4 sqlite3
 WANTLIB += stdc++ util webkitgtk-3.0 xcb xcb-render xcb-shm xml2
-WANTLIB += xslt z
+WANTLIB += xslt z ${MODPY_WANTLIB}
 
 MODULES=	devel/gettext \
 		x11/gnome \
@@ -42,8 +42,7 @@ MODULES=	devel/gettext \
 RUN_DEPENDS=	devel/py-gobject
 
 BUILD_DEPENDS=	lang/vala \
-		devel/py-gobject \
-		devel/glade
+		devel/py-gobject
 
 LIB_DEPENDS=	devel/gobject-introspection \
 		x11/gnome/seed
@@ -54,9 +53,14 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-static \
 		--disable-gtk-doc \
-		--enable-glade-catalog \
 		--enable-seed \
 		--enable-python \
 		--enable-vala \
+
+# XXX
+# glade looks for libpeas-gtk-1.0.so instead of libpeas-gtk-1.0.so.XX
+# "library" should be s/libpeas-gtk-1.0/peas-gtk-1.0/ in the catalog
+#BUILD_DEPENDS+=devel/glade
+CONFIGURE_ARGS+=--disable-glade-catalog
 
 .include <bsd.port.mk>

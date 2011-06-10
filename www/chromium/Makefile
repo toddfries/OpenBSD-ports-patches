@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.52 2011/06/02 07:22:12 robert Exp $
+# $OpenBSD: Makefile,v 1.56 2011/06/10 07:41:24 robert Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 
 COMMENT=		Chromium browser
 
-V=			11.0.696.71
+V=			12.0.742.91
 DISTNAME=		chromium-${V}
-
-REVISION=		2
 
 CATEGORIES=		www
 
@@ -34,8 +32,8 @@ WANTLIB += GL Xxf86vm drm stdc++ xcb-render xcb-shm
 WANTLIB += Xtst event xslt vpx kvm>=10.0 sndio speex
 WANTLIB += cups gcrypt
 
-MASTER_SITES=	http://build.chromium.org/buildbot/official/ \
-		http://blade2k.humppa.hu/distfiles/ \
+MASTER_SITES=	http://blade2k.humppa.hu/distfiles/ \
+		http://build.chromium.org/buildbot/official/ \
 		ftp://rene-ladan.nl/pub/distfiles/
 
 MODULES=	devel/gettext \
