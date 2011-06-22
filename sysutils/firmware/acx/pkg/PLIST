@@ -1,0 +1,9 @@
+@comment $OpenBSD: PLIST,v 1.1 2011/06/12 00:20:51 sthen Exp $
+@pkgpath sysutils/acx-firmware
+firmware/tiacx-info
+firmware/tiacx100
+firmware/tiacx100r0D
+firmware/tiacx100r11
+firmware/tiacx111
+firmware/tiacx111c16
+firmware/tiacx111r16

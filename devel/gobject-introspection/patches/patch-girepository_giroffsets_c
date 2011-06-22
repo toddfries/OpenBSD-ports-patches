@@ -1,6 +1,12 @@
-$OpenBSD: patch-girepository_giroffsets_c,v 1.5 2010/12/23 14:34:49 jasper Exp $
+$OpenBSD: patch-girepository_giroffsets_c,v 1.7 2011/06/21 13:12:05 jasper Exp $
 
-Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
+commit 023a7ed00e33a6a9e5f3fee742d4c210ce108ecd
+Author: Jasper Lievisse Adriaanse <jasper@humppa.nl>
+Date:   Tue Jun 21 13:44:56 2011 +0200
+
+    Rename ALIGN to GI_ALIGN to prevent redefining this macro on some platforms
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=652625
 
 --- girepository/giroffsets.c.orig	Wed Nov 17 15:02:51 2010
 +++ girepository/giroffsets.c	Thu Dec 23 15:21:17 2010
@@ -9,7 +15,7 @@ Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
  }
  
 -#define ALIGN(n, align) (((n) + (align) - 1) & ~((align) - 1))
-+#define G_ALIGN(n, align) (((n) + (align) - 1) & ~((align) - 1))
++#define GI_ALIGN(n, align) (((n) + (align) - 1) & ~((align) - 1))
  
  static gboolean
  compute_struct_field_offsets (GIrTypelibBuild   *build,
@@ -18,7 +24,7 @@ Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
  					    &member_size, &member_alignment))
  		{
 -		  size = ALIGN (size, member_alignment);
-+		  size = G_ALIGN (size, member_alignment);
++		  size = GI_ALIGN (size, member_alignment);
  		  alignment = MAX (alignment, member_alignment);
  		  field->offset = size;
  		  size += member_size;
@@ -27,7 +33,7 @@ Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
        else if (member->type == G_IR_NODE_CALLBACK)
  	{
 -          size = ALIGN (size, ffi_type_pointer.alignment);
-+          size = G_ALIGN (size, ffi_type_pointer.alignment);
++          size = GI_ALIGN (size, ffi_type_pointer.alignment);
            alignment = MAX (alignment, ffi_type_pointer.alignment);
  	  size += ffi_type_pointer.size;
  	}
@@ -35,7 +41,7 @@ Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
  
    /* Structs are tail-padded out to a multiple of their alignment */
 -  size = ALIGN (size, alignment);
-+  size = G_ALIGN (size, alignment);
++  size = GI_ALIGN (size, alignment);
  
    if (!have_error)
      {
@@ -44,7 +50,7 @@ Prevent redefinition of ALIGN in giroffsets.c with /usr/include/machine/param.h
  
    /* Unions are tail-padded out to a multiple of their alignment */
 -  size = ALIGN (size, alignment);
-+  size = G_ALIGN (size, alignment);
++  size = GI_ALIGN (size, alignment);
  
    if (!have_error)
      {

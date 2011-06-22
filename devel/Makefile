@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.943 2011/06/10 05:53:20 rpointel Exp $
+# $OpenBSD: Makefile,v 1.950 2011/06/22 08:32:07 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -17,6 +17,7 @@
      SUBDIR += argp-standalone
      SUBDIR += argtable
      SUBDIR += arm-elf
+     SUBDIR += asm6
      SUBDIR += asp2php
      SUBDIR += asp2php,no_x11
      SUBDIR += astyle
@@ -365,6 +366,7 @@
      SUBDIR += p5-AppConfig-Std
      SUBDIR += p5-Array-Compare
      SUBDIR += p5-Array-Diff
+     SUBDIR += p5-Array-RefElem
      SUBDIR += p5-Array-Window
      SUBDIR += p5-AutoXS-Header
      SUBDIR += p5-B-Deobfuscate
@@ -395,6 +397,7 @@
      SUBDIR += p5-Catalyst-Plugin-C3
      SUBDIR += p5-Catalyst-Plugin-StackTrace
      SUBDIR += p5-Class-Accessor
+     SUBDIR += p5-Class-Accessor-Lite
      SUBDIR += p5-Class-Accessor-Chained
      SUBDIR += p5-Class-Accessor-Grouped
      SUBDIR += p5-Class-AutoClass
@@ -513,6 +516,7 @@
      SUBDIR += p5-Devel-PartialDump
      SUBDIR += p5-Devel-SawAmpersand
      SUBDIR += p5-Devel-Size
+     SUBDIR += p5-Devel-Size-Report
      SUBDIR += p5-Devel-SmallProf
      SUBDIR += p5-Devel-StackTrace
      SUBDIR += p5-Devel-StackTrace-AsHTML
@@ -698,6 +702,7 @@
      SUBDIR += p5-Pango
      SUBDIR += p5-Parallel-ForkManager
      SUBDIR += p5-Parallel-Forker
+     SUBDIR += p5-Parallel-Prefork
      SUBDIR += p5-Params-CallbackRequest
      SUBDIR += p5-Params-Coerce
      SUBDIR += p5-Params-Util
@@ -723,6 +728,7 @@
      SUBDIR += p5-Readonly
      SUBDIR += p5-Readonly-XS
      SUBDIR += p5-Regexp-Copy
+     SUBDIR += p5-Regexp-IPv6
      SUBDIR += p5-Regexp-Shellish
      SUBDIR += p5-Return-Value
      SUBDIR += p5-SDL
@@ -968,6 +974,7 @@
      SUBDIR += py-simplejson
      SUBDIR += py-sip
      SUBDIR += py-subvertpy
+     SUBDIR += py-suds
      SUBDIR += py-symboltype
      SUBDIR += py-testtools
      SUBDIR += py-tpg
@@ -979,6 +986,7 @@
      SUBDIR += py-unit
      SUBDIR += py-unit,no_x11
      SUBDIR += py-urwid
+     SUBDIR += py-virtualenv
      SUBDIR += py-wsgiutils
      SUBDIR += py-xdg
      SUBDIR += py-zopeinterface
@@ -1118,6 +1126,7 @@
      SUBDIR += vanessa
      SUBDIR += varconf
      SUBDIR += vim-taglist
+     SUBDIR += vtags
      SUBDIR += vtcl
      SUBDIR += vte
      SUBDIR += vte,gtk3

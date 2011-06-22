@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.328 2011/06/09 16:41:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.330 2011/06/14 11:14:52 robert Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -126,6 +126,7 @@
      SUBDIR += p5-Lingua-Stem-Snowball-No
      SUBDIR += p5-Lingua-Stem-Snowball-Se
      SUBDIR += p5-Lingua-Treebank
+     SUBDIR += p5-List-UtilsBy
      SUBDIR += p5-MojoX-Renderer-TT
      SUBDIR += p5-Number-Format
      SUBDIR += p5-Object-MultiType
@@ -268,6 +269,7 @@
      SUBDIR += py-pygments
      SUBDIR += py-rtf
      SUBDIR += py-sphinx
+     SUBDIR += py-vatnumber
      SUBDIR += py-vobject
      SUBDIR += py-xml
      SUBDIR += py-xmldiff

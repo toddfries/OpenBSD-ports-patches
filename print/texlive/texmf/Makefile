@@ -1,19 +1,21 @@
-# $OpenBSD: Makefile,v 1.18 2011/03/09 14:43:59 edd Exp $
+# $OpenBSD: Makefile,v 1.20 2011/06/18 10:30:14 edd Exp $
 
 COMMENT-main =		texlive texmf for laTeX/PdfTeX 
 COMMENT-full =		texlive texmf for XeTeX/ConTeXt and extra macros
 COMMENT-docs =		texlive documentation
 
 DISTNAME =		texlive-${DIST_V}-texmf
-MASTER_SITES0 =		http://theunixzoo.co.uk/distfiles/
+MASTER_SITES0 =		http://spacehopper.org/mirrors/ \
+			http://theunixzoo.co.uk/distfiles/
 DISTFILES =		${DISTNAME}${EXTRACT_SUFX} \
-			texmf-var-pregen-2010${EXTRACT_SUFX}:0
+			texmf-var-pregen-2010.1${EXTRACT_SUFX}:0
 
 PKGNAME-main = 		texlive_texmf-minimal-${V}
 PKGNAME-full = 		texlive_texmf-full-${V}
 PKGNAME-docs =	 	texlive_texmf-docs-${V}
 
-REVISION-main =		0
+REVISION-main =		1
+REVISION-full =		0
 
 NO_BUILD =		Yes
 NO_REGRESS =		Yes

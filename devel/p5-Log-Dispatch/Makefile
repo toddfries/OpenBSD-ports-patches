@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2010/12/03 11:44:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2011/06/14 12:44:48 jasper Exp $
 
 COMMENT=	dispatches messages to one or more outputs
 
 MODULES=	cpan
-DISTNAME=	Log-Dispatch-2.21
-REVISION=	1
+DISTNAME=	Log-Dispatch-2.29
 CATEGORIES=	devel
 USE_GROFF =	Yes
 
@@ -18,7 +17,5 @@ BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	devel/p5-Params-Validate
 
 REGRESS_DEPENDS= devel/p5-File-Find-Rule
-
-CONFIGURE_STYLE= modbuild
 
 .include <bsd.port.mk>

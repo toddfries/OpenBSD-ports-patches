@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.697 2011/06/08 09:09:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.701 2011/06/22 08:29:32 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -220,6 +220,7 @@
      SUBDIR += nfsen
      SUBDIR += ngrep
      SUBDIR += nicotine
+     SUBDIR += nload
      SUBDIR += nmap
      SUBDIR += no-ip
      SUBDIR += ns
@@ -347,6 +348,7 @@
      SUBDIR += p5-POE-Filter-IRCD
      SUBDIR += p5-PlRPC
      SUBDIR += p5-RPC-XML
+     SUBDIR += p5-Regexp-Common-net-CIDR
      SUBDIR += p5-Server-Starter
      SUBDIR += p5-SNMP-BridgeQuery
      SUBDIR += p5-SNMP-Info
@@ -438,6 +440,7 @@
      SUBDIR += py-xmpp
      SUBDIR += py-xmpppy
      SUBDIR += py-zsi
+     SUBDIR += qsynergy
      SUBDIR += quagga
      SUBDIR += queryperf
      SUBDIR += queso
@@ -477,6 +480,7 @@
      SUBDIR += samba,cups,ads
      SUBDIR += samba,cups,ldap
      SUBDIR += samba,ldap
+     SUBDIR += scamper
      SUBDIR += scapy
      SUBDIR += scli
      SUBDIR += sendxmpp

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2011/06/02 17:09:32 kili Exp $
+# $OpenBSD: Makefile,v 1.12 2011/06/21 07:26:26 jasper Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	GLib ICE implementation
 
 DISTNAME =	libnice-0.1.0
+REVISION =	0
 SHARED_LIBS +=  nice                 1.1
 CATEGORIES =	net
 
@@ -37,5 +38,9 @@ CONFIGURE_ARGS = 	${CONFIGURE_SHARED} \
 USE_GMAKE =		yes
 USE_LIBTOOL =		yes
 LIBTOOL_FLAGS =		--tag=disable-static
+
+post-configure:
+	perl -pi -e 's,/bin/bash,/bin/sh,' \
+		${WRKSRC}/tests/test-pseudotcp-random.sh
 
 .include <bsd.port.mk>

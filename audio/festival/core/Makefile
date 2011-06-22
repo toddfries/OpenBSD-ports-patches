@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.18 2011/04/25 15:01:28 jolan Exp $
+# $OpenBSD: Makefile,v 1.20 2011/06/14 01:19:10 sthen Exp $
 
 COMMENT=	general multi-lingual speech synthesis system
 V=		1.95
 DISTNAME=	festival-${V}-beta
 PKGNAME=	${DISTNAME:S/-beta/beta/}
-REVISION=	4
+REVISION=	5
 CATEGORIES=	audio
 MASTER_SITES=	http://www.cstr.ed.ac.uk/downloads/festival/${V}/ \
 		http://festvox.org/packed/festival/${V}/
-MASTER_SITES0= 	${MASTER_SITE_BACKUP} 
+MASTER_SITES0=	http://spacehopper.org/mirrors/festival/
 DIST_SUBDIR=	festival
 DISTFILES=	${DISTNAME}.tar.gz speech_tools-1.2.95-beta.tar.gz
 SUPDISTFILES=	OGIresLPC-2.0.9.tar.gz:0

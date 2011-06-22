@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.124 2011/06/08 17:50:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.127 2011/06/22 12:03:30 landry Exp $
 
 COMMENT-main =		Mozilla e-mail, rss and usenet client
 COMMENT-lightning =	Mozilla Thunderbird calendar extension
@@ -6,17 +6,16 @@ COMMENT-lightning =	Mozilla Thunderbird calendar extension
 # Don't forget to bump mail/thunderbird-i18n after updates.
 # Don't forget to update productivity/sunbird if patches changes.
 
-MOZILLA_VERSION =	3.1.10
+MOZILLA_VERSION =	3.1.11
 MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	mozilla-thunderbird
 MOZILLA_CODENAME =	mail
 
 MULTI_PACKAGES =	-main -lightning
 PKGNAME-main =		${PKGNAME}
-REVISION-main =		1
 PKGNAME-lightning =	lightning-1.0beta2
 EPOCH-lightning =	0
-REVISION-lightning =	17
+REVISION-lightning =	19
 
 # need to be in synch with SO_VERSION in mail/enigmail/thunderbird
 SO_VERSION =	17.1
@@ -53,6 +52,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MODULES =	www/mozilla devel/gettext lang/python
+MODPY_RUNDEP =	No
 
 # Regression tests are too hard to adapt to run here
 NO_REGRESS =	Yes

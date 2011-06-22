@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.20 2011/06/07 13:32:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2011/06/21 17:06:53 jasper Exp $
 
      SUBDIR =
      SUBDIR += backgrounds
+     SUBDIR += controlcenter
      SUBDIR += desktop
      SUBDIR += devhelp
      SUBDIR += eog
      SUBDIR += eog-plugins
+     SUBDIR += file-roller
      SUBDIR += gdl
      SUBDIR += gedit
      SUBDIR += gedit-plugins
@@ -17,6 +19,7 @@
      SUBDIR += libgnomekbd
      SUBDIR += libgweather
      SUBDIR += menus
+     SUBDIR += mousetweaks
      SUBDIR += nautilus
      SUBDIR += nautilus-open-terminal
      SUBDIR += nettool
