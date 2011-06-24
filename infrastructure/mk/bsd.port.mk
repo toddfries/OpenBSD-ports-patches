@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1086 2011/06/21 17:11:45 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1090 2011/06/24 14:44:05 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -650,8 +650,6 @@ _CONFIGURE_COOKIE =		${WRKDIR}/.configure_done
 _BUILD_COOKIE =			${WRKDIR}/.build_done
 _REGRESS_COOKIE =		${WRKDIR}/.regress_done
 .endif
-_P_WANTLIB_COOKIE =	${WRKDIR}/.portstree-${FULLPKGNAME${SUBPACKAGE}}
-_I_WANTLIB_COOKIE =	${WRKDIR}/.installed-${FULLPKGNAME${SUBPACKAGE}}
 
 _ALL_COOKIES = ${_EXTRACT_COOKIE} ${_PATCH_COOKIE} ${_CONFIGURE_COOKIE} \
 	${_INSTALL_PRE_COOKIE} ${_BUILD_COOKIE} ${_REGRESS_COOKIE} \
@@ -660,7 +658,6 @@ _ALL_COOKIES = ${_EXTRACT_COOKIE} ${_PATCH_COOKIE} ${_CONFIGURE_COOKIE} \
 	${_WRKDIR_COOKIE} ${_DEPBUILD_COOKIES} \
 	${_DEPRUN_COOKIES} ${_DEPREGRESS_COOKIES} ${_UPDATE_COOKIES} \
 	${_DEPBUILDLIB_COOKIES} ${_DEPRUNLIB_COOKIES} \
-	${_P_WANTLIB_COOKIE} ${_I_WANTLIB_COOKIE} \
 	${_DEPBUILDWANTLIB_COOKIE} ${_DEPRUNWANTLIB_COOKIE} ${_DEPLIBSPECS_COOKIES}
 
 _MAKE_COOKIE = touch
@@ -1350,6 +1347,8 @@ IGNORE += "-- ${FULLPKGNAME${SUBPACKAGE}:C/-[0-9].*//g} comes with OpenBSD as of
 .endif
 
 IGNORE_IS_FATAL ?= "No"
+# XXX even if subpackage is invalid, define this
+IGNORE${SUBPACKAGE} ?= 
 .if !empty(IGNORE${SUBPACKAGE}) && ${IGNORE_IS_FATAL:L} == "yes"
 ERRORS += "Fatal: can't build"
 ERRORS += ${IGNORE${SUBPACKAGE}}
@@ -1374,7 +1373,15 @@ _resolve_lib = LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} \
 .if ${NO_SHARED_LIBS:L} == "yes"
 _resolve_lib += -noshared
 .endif
-_wantlib_args ?= _port-wantlib-args
+
+PKG_CREATE_NO_CHECKS ?= No
+.if ${PKG_CREATE_NO_CHECKS:L} == "yes"
+_pkg_wantlib_args = fake-wantlib-args
+.else
+_pkg_wantlib_args = wantlib-args
+.endif
+wantlib_args ?= port-wantlib-args
+
 
 # fairly good approximation of libraries we want
 # XXX this is ksh, be less perfect with pure sh
@@ -3062,7 +3069,7 @@ print-package-signature:
 _print-package-args: _run-depends-args
 
 .if ${NO_SHARED_LIBS:L} != "yes"
-_print-package-args: _lib-depends-args ${_wantlib_args}
+_print-package-args: _lib-depends-args ${wantlib_args}
 .endif
 
 _run-depends-args:
@@ -3074,8 +3081,12 @@ _run-depends-args:
 	}
 .endfor
 
+.if empty(_DEPRUNLIBS)
+_lib-depends-args wantlib-args port-wantlib-args fake-wantlib-args:
+.else
+
 _lib-depends-args:
-.for _i in ${LIB_DEPENDS${SUBPACKAGE}}
+.  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
 	@echo '${_i}'|{ \
 		${_parse_spec}; \
 		${_complete_pkgspec}; \
@@ -3096,31 +3107,26 @@ _lib-depends-args:
 		exec 2>&3; \
 		if $$needed; then echo "-P $$subdir:$$pkg:$$default"; fi; \
 	}
-.endfor
+.  endfor
 
-_wantlib-args:
-	@${_MAKE} _port-wantlib-args >${_P_WANTLIB_COOKIE}
-	@${_MAKE} _fake-wantlib-args >${_I_WANTLIB_COOKIE}
-	@if cmp -s ${_P_WANTLIB_COOKIE} ${_I_WANTLIB_COOKIE}; \
+wantlib-args:
+	@a=`mktemp /tmp/portstree.XXXXXX`; b=`mktemp /tmp/inst.XXXXXX`; \
+	cd ${.CURDIR} && \
+	${MAKE} _port-wantlib-args >$$a && \
+	${MAKE} _fake-wantlib-args >$$b; \
+	if cmp -s $$a $$b; \
 	then \
-		cat ${_P_WANTLIB_COOKIE}; \
+		cat $$a; \
+		rm -f $$a $$b; \
 	else \
 		echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
 		echo 1>&2 "       and libraries from installed packages don't match"; \
-		diff 1>&2 -u ${_P_WANTLIB_COOKIE} ${_I_WANTLIB_COOKIE}; \
+		diff 1>&2 -u $$a $$b; \
 		exit 1; \
 	fi
 
-_port-wantlib-args:
-	@if found=`{ for i in ${_LIB4${SUBPACKAGE}:QL}; do \
-			echo "$$i"| { \
-				${_parse_spec}; \
-				if ! eval $$toset ${MAKE} print-plist-libs; \
-				then \
-					echo 1>&2 "Problem with dependency $$i"; \
-					exit 1; \
-				fi; }; \
-			done; \
+port-wantlib-args:
+	@if found=`{ \
 		${MAKE} run-dir-depends|${_sort_dependencies}|while read subdir; do \
 			${_flavor_fragment}; \
 			if ! eval $$toset ${MAKE} print-plist-libs; \
@@ -3140,7 +3146,7 @@ _port-wantlib-args:
 			exit 1; \
 		fi
 
-_fake-wantlib-args:
+fake-wantlib-args:
 	@if found=`{ \
 		echo {${WRKINST},}${LOCALBASE}/lib${_lib} /usr/lib${_lib} ${X11BASE}/lib${_lib}; \
 		for d in ${_DEPRUNLIBS:QL}; do \
@@ -3158,6 +3164,9 @@ _fake-wantlib-args:
 		else \
 			exit 1; \
 		fi
+.endif
+
+no-wantlib-args:
 
 _list-port-libs:
 .if defined(_PORT_LIBS_CACHE) && defined(_DEPENDS_CACHE) && \
@@ -3475,8 +3484,8 @@ _all_phony = ${_recursive_depends_targets} \
 	regress-depends run-depends run-depends-list show-required-by \
 	subpackage uninstall mirror-maker-fetch _print-pkgspec \
 	lock unlock _print-plist-with-extra-depends \
-	_run-depends-args _lib-depends-args _wantlib-args \
-	_port-wantlib-args _fake-wantlib-args
+	_run-depends-args _lib-depends-args wantlib-args \
+	port-wantlib-args fake-wantlib-args no-wantlib-args
 
 .if defined(_DEBUG_TARGETS)
 .  for _t in ${_all_phony}
