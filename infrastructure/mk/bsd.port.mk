@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1090 2011/06/24 14:44:05 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1092 2011/07/05 15:11:20 sthen Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -399,6 +399,17 @@ MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_FLAGS += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 .endif
 MAKE_FLAGS += SHARED_LIBS_LOG=${WRKBUILD}/shared_libs.log
+USE_CCACHE ?= No
+NO_CCACHE ?= No
+.if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no"
+CCACHE_DIR ?= ${WRKOBJDIR_${PKGPATH}}/.ccache
+MAKE_ENV += CCACHE_DIR=${CCACHE_DIR}
+.  if defined(CCACHE_ENV)
+MAKE_ENV += ${CCACHE_ENV}
+.  endif
+CONFIGURE_ENV += CCACHE_DIR=${CCACHE_DIR}
+BUILD_DEPENDS += devel/ccache
+.endif
 
 ALL_FAKE_FLAGS=	${MAKE_FLAGS} ${DESTDIRNAME}=${WRKINST} ${FAKE_FLAGS}
 
@@ -892,9 +903,13 @@ _SYSTRACE_CMD ?= /bin/systrace -e -i -a -f ${_SYSTRACE_COOKIE}
 _SYSTRACE_CMD =
 .endif
 SYSTRACE_FILTER ?= ${PORTSDIR}/infrastructure/db/systrace.filter
+SYSTRACE_FILTER_CCACHE ?= ${PORTSDIR}/infrastructure/db/systrace.filter.ccache
 _SYSTRACE_POLICIES += /bin/sh /usr/bin/env /usr/bin/make \
 	/usr/bin/patch ${DEPBASE}/bin/gmake
 SYSTRACE_SUBST_VARS += DISTDIR PKG_TMPDIR PORTSDIR TMPDIR WRKDIR
+.if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no"
+SYSTRACE_SUBST_VARS += CCACHE_DIR
+.endif
 .for _v in ${SYSTRACE_SUBST_VARS}
 _SYSTRACE_SED_SUBST += -e 's,$${${_v}},${${_v}},g'
 .endfor
@@ -1381,6 +1396,7 @@ _pkg_wantlib_args = fake-wantlib-args
 _pkg_wantlib_args = wantlib-args
 .endif
 wantlib_args ?= port-wantlib-args
+lib_depends_args ?= lib-depends-args
 
 
 # fairly good approximation of libraries we want
@@ -1705,8 +1721,8 @@ ${_PACKAGE_COOKIE${_S}}:
 	@${ECHO_MSG} "Create ${_PACKAGE_COOKIE${_S}}"
 	@cd ${.CURDIR} && \
 	tmp=${_TMP_REPO}${_PKGFILE${_S}} && \
-	if deps=`SUBPACKAGE=${_S} _wantlib_args=_wantlib-args \
-			${MAKE} _print-package-args` && \
+	if deps=`SUBPACKAGE=${_S} wantlib_args=${_pkg_wantlib_args} \
+			${MAKE} print-package-args` && \
 		${SUDO} ${_PKG_CREATE} -DPORTSDIR="${PORTSDIR}" \
 			$$deps ${PKG_ARGS${_S}} $$tmp && \
 		${_check_lib_depends} $$tmp && \
@@ -1804,6 +1820,9 @@ ${_SYSTRACE_COOKIE}: ${_WRKDIR_COOKIE}
 		sed ${_SYSTRACE_SED_SUBST} ${.CURDIR}/systrace.filter >> $@; \
 	fi
 	@sed ${_SYSTRACE_SED_SUBST} ${SYSTRACE_FILTER} >> $@
+.  if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no"
+	@sed ${_SYSTRACE_SED_SUBST} ${SYSTRACE_FILTER_CCACHE} >> $@
+.  endif
 .endfor
 	@if [ -f ${.CURDIR}/systrace.policy ]; then \
 		sed ${_SYSTRACE_SED_SUBST} ${.CURDIR}/systrace.policy >> $@; \
@@ -2048,7 +2067,7 @@ ${WRKINST}/.saved_libs: ${_FAKE_COOKIE}
 
 port-lib-depends-check: ${WRKINST}/.saved_libs
 .  for _S in ${MULTI_PACKAGES}
-	@-SUBPACKAGE=${_S} ${MAKE} _print-plist-with-extra-depends | \
+	@-SUBPACKAGE=${_S} ${MAKE} print-plist-with-depends lib_depends_args=all-lib-depends-args| \
 	 ${_CHECK_LIB_DEPENDS} -s ${WRKINST}/.saved_libs
 .  endfor
 
@@ -2276,6 +2295,13 @@ ${_WRKDIR_COOKIE}:
 	@rm -rf ${WRKDIR}
 	@mkdir -p ${WRKDIR} ${WRKDIR}/bin ${DEPDIR}
 #	@ln -s ${LOCALBASE}/bin/pkg-config ${WRKDIR}/bin
+.if ${USE_CCACHE:L} == "yes"
+	@${ECHO_MSG} "===>  Enabling ccache for ${FULLPKGNAME}${_MASTER}"
+	@ln -s ${LOCALBASE}/bin/ccache ${WRKDIR}/bin/gcc
+	@ln -s ${LOCALBASE}/bin/ccache ${WRKDIR}/bin/g++
+	@ln -s ${LOCALBASE}/bin/ccache ${WRKDIR}/bin/cc
+	@ln -s ${LOCALBASE}/bin/ccache ${WRKDIR}/bin/c++
+.endif
 .if !empty(WRKDIR_LINKNAME)
 	@ln -sf ${WRKDIR} ${.CURDIR}/${WRKDIR_LINKNAME}
 .endif
@@ -2627,29 +2653,13 @@ print-plist:
 
 print-plist-with-depends:
 	@${_plist_header}; \
-	if a=`SUBPACKAGE=${SUBPACKAGE} ${MAKE} _print-package-args`; \
+	if a=`SUBPACKAGE=${SUBPACKAGE} ${MAKE} print-package-args`; \
 	then \
 		${_PKG_CREATE} -n -q $$a ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}; \
 	else \
 		exit 1; \
 	fi ; \
 	${_plist_footer}
-
-# XXX this helps for port-lib-depends-check
-# create "extra" depends lines that correspond to LIB_DEPENDS that would
-# be stripped because there is no lib depending on them in WANTLIB
-
-_print-plist-with-extra-depends:
-.if ${NO_SHARED_LIBS:L} != "yes"
-.  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
-	@echo '${_i}'|{ \
-		${_parse_spec}; \
-		${_complete_pkgspec}; \
-		echo "@depend $$subdir:$$pkg:$$default"; \
-	}
-.  endfor
-.endif
-	@${_MAKE} print-plist-with-depends
 
 print-plist-all:
 .for _S in ${MULTI_PACKAGES}
@@ -2661,7 +2671,7 @@ print-plist-all-with-depends:
 .for _S in ${MULTI_PACKAGES}
 	@${ECHO_MSG} "===> ${FULLPKGNAME${_S}}"
 	@${_plist_header}; \
-	if a=`SUBPACKAGE=${_S} ${MAKE} _print-package-args`; \
+	if a=`SUBPACKAGE=${_S} ${MAKE} print-package-args`; \
 	then \
 		${_PKG_CREATE} -n -q $$a ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}}; \
 	else \
@@ -3066,13 +3076,13 @@ print-package-signature:
 	@echo
 
 
-_print-package-args: _run-depends-args
+print-package-args: run-depends-args
 
 .if ${NO_SHARED_LIBS:L} != "yes"
-_print-package-args: _lib-depends-args ${wantlib_args}
+print-package-args: ${lib_depends_args} ${wantlib_args}
 .endif
 
-_run-depends-args:
+run-depends-args:
 .for _i in ${RUN_DEPENDS${SUBPACKAGE}}
 	@echo '${_i}' |{ \
 		${_parse_spec}; \
@@ -3081,11 +3091,23 @@ _run-depends-args:
 	}
 .endfor
 
+# waive checks for WANTLIB when we're running lib-depends-check
+# since we're trying to figure out what's actually needed
+all-lib-depends-args:
+.for _i in ${LIB_DEPENDS${SUBPACKAGE}}
+	@echo '${_i}' |{ \
+		${_parse_spec}; \
+		${_complete_pkgspec}; \
+		echo "-P $$subdir:$$pkg:$$default"; \
+	}
+.endfor
+
+# those are expensive computations, so don't do them if we don't have to
 .if empty(_DEPRUNLIBS)
-_lib-depends-args wantlib-args port-wantlib-args fake-wantlib-args:
+lib-depends-args wantlib-args port-wantlib-args fake-wantlib-args:
 .else
 
-_lib-depends-args:
+lib-depends-args:
 .  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
 	@echo '${_i}'|{ \
 		${_parse_spec}; \
@@ -3112,8 +3134,8 @@ _lib-depends-args:
 wantlib-args:
 	@a=`mktemp /tmp/portstree.XXXXXX`; b=`mktemp /tmp/inst.XXXXXX`; \
 	cd ${.CURDIR} && \
-	${MAKE} _port-wantlib-args >$$a && \
-	${MAKE} _fake-wantlib-args >$$b; \
+	${MAKE} port-wantlib-args >$$a && \
+	${MAKE} fake-wantlib-args >$$b; \
 	if cmp -s $$a $$b; \
 	then \
 		cat $$a; \
@@ -3469,7 +3491,7 @@ _all_phony = ${_recursive_depends_targets} \
 	_internal-runwantlib-depends _internal-subpackage _internal-subupdate \
 	_internal-update _internal-update _internal-update-plist \
 	_internal_install _internal_runlib-depends _license-check \
-	_list-port-libs _print-package-args _print-package-signature-lib \
+	_list-port-libs print-package-args _print-package-signature-lib \
 	_print-package-signature-run _print-packagename _recurse-all-dir-depends \
 	_recurse-regress-dir-depends _recurse-run-dir-depends _refetch addsum \
 	build-depends build-depends-list checkpatch clean clean-depends \
@@ -3483,8 +3505,8 @@ _all_phony = ${_recursive_depends_targets} \
 	print-build-depends print-run-depends readme readmes rebuild \
 	regress-depends run-depends run-depends-list show-required-by \
 	subpackage uninstall mirror-maker-fetch _print-pkgspec \
-	lock unlock _print-plist-with-extra-depends \
-	_run-depends-args _lib-depends-args wantlib-args \
+	lock unlock \
+	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
 	port-wantlib-args fake-wantlib-args no-wantlib-args
 
 .if defined(_DEBUG_TARGETS)

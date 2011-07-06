@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.239 2011/06/13 10:11:05 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.242 2011/07/04 20:06:36 edd Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR =
@@ -39,6 +39,7 @@
      SUBDIR += dcled
      SUBDIR += ddrescue
      SUBDIR += dellflash
+     SUBDIR += detox
      SUBDIR += diskrescue
      SUBDIR += dmassage
      SUBDIR += dmidecode
@@ -68,6 +69,7 @@
      SUBDIR += hcidump
      SUBDIR += heartbeat
      SUBDIR += hot-babe
+     SUBDIR += hotplug-diskmount
      SUBDIR += idled
      SUBDIR += iogen
      SUBDIR += ipmitool
@@ -165,6 +167,7 @@
      SUBDIR += stow
      SUBDIR += stress
      SUBDIR += superscript
+     SUBDIR += supuner
      SUBDIR += symon
      SUBDIR += sysgen
      SUBDIR += syslog-ng

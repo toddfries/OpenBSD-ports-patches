@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.36 2011/06/23 16:38:51 robert Exp $
+# $OpenBSD: Makefile,v 1.39 2011/07/06 18:29:00 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,7 +7,7 @@ COMMENT-kde=	optional integration of LibreOffice to the KDE environment
 COMMENT-java=	optional integration of LibreOffice java features
 
 BV=		3.4
-VERSION=	3.4.0.2
+VERSION=	3.4.1.3
 DISTNAME=	libreoffice-${VERSION}
 WRKDIST=	${WRKDIR}/libreoffice-bootstrap-${VERSION}
 PKGNAME=	libreoffice-${VERSION}
@@ -16,16 +16,11 @@ PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 
+REVISION-main=	0
+
 EPOCH=		0
-REVISION=	2
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
-
-http://hg.services.openoffice.org/binaries
-http://download.go-oo.org/src
-http://download.go-oo.org/extern
-http://www.numbertext.org/linux
-http://ooo.itc.hu/oxygenoffice/download/libreoffice/
 
 HOMEPAGE=	http://www.libreoffice.org/
 MASTER_SITES=	http://download.documentfoundation.org/libreoffice/src/ \
@@ -139,7 +134,9 @@ BUILD_DEPENDS+=	archivers/zip \
 		textproc/textutils
 
 MODULES+=	lang/python \
-		devel/gconf2
+		devel/gconf2 \
+		devel/gettext
+
 MODGCONF2_LIBDEP=No
 LIB_DEPENDS-main=x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
@@ -162,10 +159,10 @@ WANTLIB-main=	gdk-x11-2.0>=400.14 gtk-x11-2.0>=400.14 \
 WANTLIB-main+=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		crypto expat fontconfig freetype gio-2.0 glib-2.0 \
-		gmodule-2.0 gobject-2.0 gthread-2.0 iconv intl \
+		gmodule-2.0 gobject-2.0 gthread-2.0 \
 		jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
 		png pthread pthread-stubs ssl xcb xml2 z gdk_pixbuf-2.0 \
-		util ${MODGCONF2_WANTLIB}
+		util ${MODGCONF2_WANTLIB} ${MODGETTEXT_WANTLIB}
 WANTLIB-main+=	GL GLU Xxf86vm drm stdc++ xcb-render xcb-shm
 WANTLIB-main+=	hunspell-1.2 gdk_pixbuf_xlib-2.0
 WANTLIB-main+=	${MODPY_WANTLIB}
@@ -328,7 +325,7 @@ post-install:
 				${PREFIX}/share/icons \
 				${PREFIX}/share/mime/packages
 
-	for _d in base calc draw impress math printeradmin \
+	for _d in base calc draw impress math \
 		qstart startcenter writer; do \
 		perl -pi -e "s,Icon=libreoffice34-,Icon=libreoffice-,g" \
 			${PREFIX}/lib/libreoffice/share/xdg/$${_d}.desktop && \

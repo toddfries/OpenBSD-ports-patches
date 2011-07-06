@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.701 2011/06/22 08:29:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.706 2011/07/04 15:28:42 jasper Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -57,9 +57,7 @@
      SUBDIR += cvsup,no_x11
      SUBDIR += cvsync
      SUBDIR += darkstat
-     SUBDIR += dc_gui
      SUBDIR += dclib
-     SUBDIR += dctc
      SUBDIR += ddclient
      SUBDIR += dhcping
      SUBDIR += dictd
@@ -107,7 +105,9 @@
      SUBDIR += gopher
      SUBDIR += gotthard
      SUBDIR += gsnmp
+     SUBDIR += gssdp
      SUBDIR += gtk-gnutella
+     SUBDIR += gupnp
      SUBDIR += h323plus
      SUBDIR += haproxy
      SUBDIR += honeyd
@@ -423,6 +423,7 @@
      SUBDIR += py-dns
      SUBDIR += py-dnspython
      SUBDIR += py-dpkt
+     SUBDIR += py-enet
      SUBDIR += py-flowd
      SUBDIR += py-flowtools
      SUBDIR += py-ftpdlib
@@ -526,7 +527,6 @@
      SUBDIR += tcptraceroute
      SUBDIR += telepathy
      SUBDIR += thcrut
-     SUBDIR += tightvnc
      SUBDIR += tintin++
      SUBDIR += tinyfugue
      SUBDIR += tircd

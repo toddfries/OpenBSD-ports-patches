@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.228 2011/06/13 20:33:37 kili Exp $
+# $OpenBSD: Makefile,v 1.230 2011/07/05 07:51:23 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -101,6 +101,7 @@
      SUBDIR += lincity-ng
      SUBDIR += londonlaw
      SUBDIR += lostpixels
+     SUBDIR += love
      SUBDIR += maelstrom
      SUBDIR += micropolis
      SUBDIR += mirrormagic
@@ -123,6 +124,7 @@
      SUBDIR += openarena
      SUBDIR += opensonic
      SUBDIR += openttd
+     SUBDIR += openxcom
      SUBDIR += pathological
      SUBDIR += pingus
      SUBDIR += pioneers

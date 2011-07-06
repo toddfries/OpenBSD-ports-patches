@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.188 2011/06/02 13:41:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.192 2011/07/02 23:10:25 edd Exp $
 
 # May not be hard to add more.
 ONLY_FOR_ARCHS =	alpha amd64 arm i386 mips64 mips64el powerpc sparc64
@@ -13,7 +13,7 @@ SUBST_VARS += 		PREFIX CONFDIR
 # Distfiles must be hand-rolled, see README
 N =			mplayer
 DISTNAME =		mplayer-${V}
-REVISION =		5
+REVISION =		8
 
 CATEGORIES =		x11 multimedia
 
@@ -25,13 +25,13 @@ PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
-WANTLIB =	GL X11 Xext Xinerama Xss Xv Xxf86dga Xxf86vm avcodec avformat \
-		avutil bz2 c cdda_interface cdda_paranoia \
-		crypto dv faac fontconfig freetype fribidi gsm jpeg lcms \
+WANTLIB =	GL X11 Xext Xinerama Xss Xv Xxf86dga Xxf86vm ass avcodec \
+		avformat avutil bz2 c cdda_interface cdda_paranoia \
+		crypto dv enca fontconfig freetype fribidi gsm jpeg lcms \
 		m mng mp3lame ncurses ogg>=5 orc-0.4 png postproc \
 		pthread SDL schroedinger-1.0>=2.0 sndio speex stdc++ \
 		swscale theoradec theoraenc ungif util vpx x264>=5 \
-		xvidcore z
+		z
 
 # we use a snapshot
 MASTER_SITES =	http://theunixzoo.co.uk/distfiles/
@@ -47,7 +47,6 @@ LIB_DEPENDS =	graphics/png \
 		audio/cdparanoia>=3.a9.8 \
 		audio/speex \
 		audio/libogg \
-		multimedia/xvidcore \
 		audio/lame \
 		multimedia/libdv \
 		devel/fribidi \
@@ -55,9 +54,9 @@ LIB_DEPENDS =	graphics/png \
 		graphics/libmng \
 		archivers/bzip2 \
 		multimedia/schroedinger>=1.0.10 \
-		audio/faac \
 		multimedia/x264>=20101023 \
-		devel/sdl>=1.2.5
+		devel/sdl>=1.2.5 \
+		multimedia/libass
 
 BUILD_DEPENDS =	net/livemedia \
 		audio/rtunes>=0.8 \
@@ -97,6 +96,7 @@ CONFIGURE_ARGS += --disable-alsa \
 		--disable-vidix \
 		--disable-select \
 		--disable-libcdio \
+		--disable-libmpeg2-internal
 # seems stable dvdnav does not work with a new mplayer.
 # if they make a release in the future, maybe we can pull that in,
 # but for now we have to use the internal one.
@@ -125,14 +125,21 @@ CONFIGURE_ARGS += --disable-smb \
 		--disable-openal \
 		--disable-libdca \
 		--disable-liba52 \
+		--disable-libmpeg2 \
 		--disable-toolame \
 		--disable-win32dll \
 		--disable-ggi \
+		--disable-libopencore_amrnb \
+		--disable-libopencore_amrwb \
 		--disable-libopenjpeg \
 		--disable-mpg123 \
 		--disable-librtmp \
+		--disable-faac \
+		--disable-faac-lavc \
 		--disable-faad \
-		--disable-theora
+		--disable-theora \
+		--disable-xvid \
+		--disable-xvid-lavc
 
 # internal tremor, external tremor, external libvorbis all conflict
 # we choose libvorbis to enable encoding to vorbis

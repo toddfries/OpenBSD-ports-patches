@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.517 2011/06/14 12:18:33 robert Exp $
+# $OpenBSD: Makefile,v 1.519 2011/07/06 01:15:40 jeremy Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -420,7 +420,10 @@
      SUBDIR += ruby-railties
      SUBDIR += ruby-rainbows
      SUBDIR += ruby-rainbows,ruby19
+     SUBDIR += ruby-raindrops
+     SUBDIR += ruby-raindrops,ruby19
      SUBDIR += ruby-rest-client
+     SUBDIR += ruby-sanitize
      SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin
      SUBDIR += ruby-thin,ruby19
