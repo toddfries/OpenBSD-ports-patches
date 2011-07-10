@@ -1,0 +1,21 @@
+$OpenBSD: patch-io_c,v 1.1 2011/07/08 11:19:35 jasper Exp $
+--- io.c.orig	Sun Aug 30 19:15:26 1992
++++ io.c	Fri Jul  8 13:17:27 2011
+@@ -16,6 +16,8 @@ Please read the file COPYRIGHT for further details.
+ #endif
+ #include <errno.h>
+ #include <stdio.h>
++#include <string.h>
++#include <unistd.h>
+ #include "globals.h"
+ 
+ /* read from from, write to to. select(2) has returned, so input
+@@ -90,7 +92,7 @@ int size, to ;
+ 
+ /* all IO to and from the socket is handled here. The main part is
+  * a loop around select(2). */
+-do_io()
++void do_io()
+ {
+     fd_set readfds ;
+     int fdset_width ;

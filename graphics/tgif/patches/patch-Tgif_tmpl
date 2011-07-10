@@ -1,0 +1,13 @@
+$OpenBSD: patch-Tgif_tmpl,v 1.1 2011/07/08 11:25:47 jasper Exp $
+--- Tgif.tmpl.orig	Fri Jul  8 13:24:38 2011
++++ Tgif.tmpl	Fri Jul  8 13:24:38 2011
+@@ -44,7 +44,8 @@ MISCDEFINES	= -D_BACKGROUND_DONT_FORK -D_USE_XDRAWPOIN
+                   -D_USE_PS_ADOBE_STRING=\"3.0/3.0\" -D_DONT_USE_MKTEMP \@@\
+ 		  -D_DONT_REENCODE=\"FFDingbests:ZapfDingbats\" \@@\
+ 		  -D_NO_NKF -D_NO_CHINPUT -D_NO_XCIN \@@\
+-		  -D_NO_IDNLIB
++		  -D_NO_IDNLIB  -DUSE_XAPPLRESDIR \@@\
++		  -DXAPPLOADDIR_DEF=\"$(LIBDIR)/app-defaults\"
+ MOREDEFINES	=
+ 
+ XCOMM ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

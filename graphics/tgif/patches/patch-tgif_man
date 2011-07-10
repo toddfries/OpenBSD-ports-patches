@@ -1,0 +1,12 @@
+$OpenBSD: patch-tgif_man,v 1.1 2011/07/08 11:25:47 jasper Exp $
+--- tgif.man.orig	Mon May 23 04:58:23 2011
++++ tgif.man	Fri Jul  8 13:24:38 2011
+@@ -8,7 +8,7 @@
+ .\"
+ .\"
+ .\"
+-.TH tgif n "Version 4.2 Patchlevel 3 and Above" "Tgif"
++.TH tgif 1L "Version 4.2 Patchlevel 3 and Above" "Tgif"
+ .\"
+ .SH NAME
+ .\"

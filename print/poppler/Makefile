@@ -1,16 +1,18 @@
-# $OpenBSD: Makefile,v 1.49 2011/06/17 19:20:25 kili Exp $
+# $OpenBSD: Makefile,v 1.53 2011/07/08 21:08:46 kili Exp $
 .include <bsd.own.mk>
 
 COMMENT-main=	PDF rendering library
 COMMENT-qt=	qt interface to PDF rendering library
 COMMENT-qt4=	qt4 interface to PDF rendering library
 
-V=		0.16.6
+V=		0.16.7
 DISTNAME=	poppler-$V
 CATEGORIES=	print
 PKGNAME-main=	poppler-$V
 FULLPKGNAME-qt=	poppler-qt-$V
 FULLPKGNAME-qt4=poppler-qt4-$V
+
+REVISION-main=	0
 
 SHARED_LIBS +=	poppler              10.0
 SHARED_LIBS +=	poppler-glib         8.0
@@ -19,7 +21,7 @@ SHARED_LIBS +=	poppler-qt4          7.0
 
 HOMEPAGE=	http://poppler.freedesktop.org/
 
-MAINTAINER=    Matthias Kilian <kili@openbsd.org>
+MAINTAINER=	Matthias Kilian <kili@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_FTP=	Yes
@@ -55,6 +57,16 @@ MODULES+=	x11/qt4
 CONFIGURE_ARGS+=	--disable-poppler-qt4
 .endif
 
+# XXX g-ir-scanner failure with gcc3
+.if ${COMPILER_VERSION:L:Mgcc4*}
+PKG_ARGS+= 	-DGCC4=1
+BUILD_DEPENDS+=	devel/gobject-introspection
+CONFIGURE_ARGS+=--enable-introspection
+.else
+PKG_ARGS+=	-DGCC4=0
+CONFIGURE_ARGS+=--disable-introspection
+.endif
+
 MODULES+=	devel/gettext converters/libiconv
 
 LIB_DEPENDS-main=${MODGETTEXT_LIB_DEPENDS} \
@@ -85,7 +97,6 @@ WANTLIB-qt4=	${cWANTLIB} ICE QtCore QtGui QtXml SM X11 Xau Xdmcp Xext Xi \
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+= --enable-xpdf-headers \
-		--disable-introspection \
 		--disable-poppler-cpp \
 		--enable-utils \
 		--enable-zlib

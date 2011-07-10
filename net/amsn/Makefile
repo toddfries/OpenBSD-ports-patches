@@ -1,12 +1,15 @@
-#$OpenBSD: Makefile,v 1.16 2011/03/31 16:41:30 ajacoutot Exp $
+#$OpenBSD: Makefile,v 1.18 2011/07/08 20:38:00 naddy Exp $
 
 COMMENT=	open source MSN Messenger clone
 
-V=		0.98.3
+V=		0.98.4
 DISTNAME=	amsn-$V-src
 PKGNAME=	${DISTNAME:S/-src//}
-REVISION=	1
 CATEGORIES=	net
+
+# CxImage requires access to internal png headers.
+# This must be in sync with graphics/png
+PNG_V=		1.5.2
 
 HOMEPAGE=	http://www.amsn-project.net/
 
@@ -18,9 +21,8 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=amsn/${V}/}
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=project/amsn/amsn/${V}/}
 EXTRACT_SUFX=	.tar.bz2
-
 
 WANTLIB=	ICE SM X11 m stdc++ z glib-2.0 gmodule-2.0 gobject-2.0 \
 		gthread-2.0 gstbase-0.10 gstinterfaces-0.10 \
@@ -34,7 +36,8 @@ RUN_DEPENDS+=	${MODTK_RUN_DEPENDS} \
 		x11/bwidget \
 		devel/desktop-file-utils
 BUILD_DEPENDS=	${MODTK_BUILD_DEPENDS} \
-		security/tcltls
+		security/tcltls \
+		graphics/png:configure
 
 MODTK_THREADED= Yes
 MODULES=	devel/gettext \
@@ -43,13 +46,13 @@ MODULES=	devel/gettext \
 USE_GMAKE=	Yes
 MAKE_FLAGS=	verbose=yes
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--with-tcl=${MODTCL_LIBDIR} \
-		--with-tk=${MODTK_LIBDIR} \
-		--enable-debug \
-		--disable-libv4l \
-		--disable-upnp
+CONFIGURE_ARGS+=--disable-libv4l \
+		--disable-upnp \
+		--with-tcl="${MODTCL_LIBDIR}" \
+		--with-tk="${MODTK_LIBDIR}"
 
-CONFIGURE_ENV= 	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include \
+		    -I${WRKDIR}/graphics/png/libpng-${PNG_V}" \
 		LDFLAGS="-lm -L${LOCALBASE}/lib" \
 		TK_INC_SPEC="${MODTK_INCDIR}/generic" \
 		TCLSH="${MODTCL_BIN}"

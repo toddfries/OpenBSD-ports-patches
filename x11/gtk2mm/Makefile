@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.46 2011/04/07 09:58:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2011/07/08 12:18:37 jasper Exp $
 
 COMMENT=	C++ interface for gtk2+
 
 GNOME_PROJECT=	gtkmm
-GNOME_VERSION=	2.24.0
-
-REVISION=	0
+GNOME_VERSION=	2.24.2
 
 PKGNAME=	gtk2mm-${GNOME_VERSION}
 
@@ -34,7 +32,7 @@ WANTLIB += sigc-2.0 atk-1.0 cairo cairomm-1.0 atkmm-1.6
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	devel/mm-common
+EXTRACT_SUFX=	.tar.xz
 
 LIB_DEPENDS=	devel/atk2mm \
 		devel/pangomm>=2.27 \
@@ -46,8 +44,5 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-static \
 		--disable-dependency-tracking
-
-# XXX when updating, check that this is still needed
-CONFIGURE_ENV+=	MMDOCTOOLDIR=`pkg-config --variable=doctooldir mm-common-util`
 
 .include <bsd.port.mk>

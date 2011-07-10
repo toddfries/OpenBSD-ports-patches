@@ -1,0 +1,37 @@
+$OpenBSD: patch-make-target-contrib_sh,v 1.1 2011/07/08 11:42:09 jasper Exp $
+
+Only run the contrib tests if $RUN_CONTRIB_TESTS is not empty.  This
+allows the contribs to be build when USE_SYSTRACE=Yes, and the tests
+to be run later in do-regress.
+
+--- make-target-contrib.sh.orig	Mon May  9 04:49:39 2011
++++ make-target-contrib.sh	Fri Jul  8 13:39:44 2011
+@@ -43,6 +43,7 @@ export SBCL SBCL_BUILDING_CONTRIB
+ # as SB-RT and SB-GROVEL, but FIXME: there's probably a better
+ # solution.  -- CSR, 2003-05-30
+ 
++if [ -z "$RUN_CONTRIB_TESTS" ]; then
+ find contrib/ \( -name '*.fasl' -o \
+                  -name '*.FASL' -o \
+                  -name 'foo.c' -o \
+@@ -57,6 +58,11 @@ find contrib/ \( -name '*.fasl' -o \
+ 
+ find output -name 'building-contrib.*' -print | xargs rm -f
+ 
++make_target=all
++else
++make_target=test
++fi
++
+ # Ignore all source registries.
+ CL_SOURCE_REGISTRY='(:source-registry :ignore-inherited-configuration)'
+ export CL_SOURCE_REGISTRY
+@@ -66,7 +72,7 @@ for i in contrib/*; do
+     # export INSTALL_DIR=$SBCL_HOME/`basename $i `
+     test -f $i/test-passed && rm $i/test-passed
+     # hack to get exit codes right.
+-    if $GNUMAKE -C $i test 2>&1 && touch $i/test-passed ; then
++    if $GNUMAKE -C $i $make_target 2>&1 && touch $i/test-passed ; then
+ 	:
+     else
+ 	exit $?

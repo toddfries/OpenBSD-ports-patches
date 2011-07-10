@@ -1,0 +1,12 @@
+$OpenBSD: patch-setup_c,v 1.1 2011/07/08 11:25:47 jasper Exp $
+--- setup.c.orig	Mon May 23 04:58:23 2011
++++ setup.c	Fri Jul  8 13:24:38 2011
+@@ -237,7 +237,7 @@ char	drawPath[MAXPATHLENGTH]; /* last char is NOT '/' 
+ char	bootDir[MAXPATHLENGTH+2];
+ char	homeDir[MAXPATHLENGTH];
+ char	tgifDir[MAXPATHLENGTH];
+-char	tmpDir[MAXPATHLENGTH];
++char	tmpDir[MAXPATHLENGTH] = "/tmp";
+ 
+ int	symPathNumEntries = INVALID;
+ char	* * symPath=NULL;

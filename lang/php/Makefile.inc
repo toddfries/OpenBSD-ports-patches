@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.12 2011/06/18 19:49:50 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.15 2011/07/09 00:41:44 robert Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -26,7 +26,8 @@ MASTER_SITES=		http://us2.php.net/distributions/ \
 			http://no.php.net/distributions/ \
 			http://uk.php.net/distributions/
 MASTER_SITES0=		http://blade2k.humppa.hu/ \
-			http://download.suhosin.org/
+			http://download.suhosin.org/ \
+			http://didy.avioc.org/FreeBSD/ports/distfiles/
 
 # UPGRADERS: please read BOTH the PHP and Zend licenses
 # and make sure they are safe before an upgrade
@@ -247,7 +248,7 @@ MULTI_PACKAGES+=	-soap
 COMMENT-soap=		SOAP functions for php5
 CONFIGURE_ARGS+=	--enable-soap=shared,${LOCALBASE}
 LIB_DEPENDS-soap=	textproc/libxml
-WANTLIB-soap=		iconv m z xml2>=8
+WANTLIB-soap=		${MODLIBICONV_WANTLIB} m z xml2>=8
 
 # snmp
 MULTI_PACKAGES+=	-snmp
@@ -289,14 +290,14 @@ MULTI_PACKAGES+=	-xmlrpc
 COMMENT-xmlrpc=		XML RPC functions for php5
 CONFIGURE_ARGS+=	--with-xmlrpc=shared
 LIB_DEPENDS-xmlrpc=	textproc/libxml
-WANTLIB-xmlrpc=		iconv m z xml2>=8
+WANTLIB-xmlrpc=		${MODLIBICONV_WANTLIB} m z xml2>=8
 
 # xsl
 MULTI_PACKAGES+=	-xsl
 COMMENT-xsl=		XSL functions for php5
 CONFIGURE_ARGS+=	--with-xsl=shared --enable-dom
 LIB_DEPENDS-xsl=	textproc/libxslt
-WANTLIB-xsl=		iconv m xml2 z xslt>=3 exslt
+WANTLIB-xsl=		${MODLIBICONV_WANTLIB} m xml2 z xslt>=3 exslt
 
 # some variables to substitute
 SUBST_VARS=	PHP_CONFIG_FILE PHP_CONFIG_PATH PV ^MODULE_NAME
@@ -306,10 +307,10 @@ PHP_VERSION=	${V}
 PHPXS_SUBST+= -e 's,${i},${${i}},'
 .endfor
 
-MODULES=		devel/gettext
+MODULES=		converters/libiconv devel/gettext
 
-WANTLIB-main=		c crypto ssl z pthread gssapi iconv krb5 xml2>=8 \
-			intl m
+WANTLIB-main=		c crypto ssl z pthread gssapi krb5 xml2>=8 \
+			m ${MODGETTEXT_WANTLIB}
 WANTLIB-fastcgi=	${WANTLIB-main}
 LIB_DEPENDS-main=	textproc/libxml
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
@@ -359,7 +360,7 @@ post-install:
 	${INSTALL_DATA_DIR} ${WRKINST}/${CHROOT_DIR}/conf/php-${PV}.sample
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/php-${PV}
 	${INSTALL_PROGRAM} ${WRKBUILD}/sapi/cli/php ${PREFIX}/bin/php-${PV}
-	${INSTALL_PROGRAM} ${WRKBUILD}/sapi/cgi/php-cgi ${PREFIX}/bin/php-fastcgi${PV}
+	${INSTALL_PROGRAM} ${WRKBUILD}/sapi/cgi/php-cgi ${PREFIX}/bin/php-fastcgi-${PV}
 	${INSTALL_DATA} ${.CURDIR}/../files/php.conf \
 		${PREFIX}/share/examples/php-${PV}/php.conf
 	@perl -pi -e "s,!!PREFIX!!,${TRUEPREFIX},g;s,!!PV!!,${PV},g" \
