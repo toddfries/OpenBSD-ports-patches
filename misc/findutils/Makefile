@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2010/11/19 07:23:11 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2011/07/15 16:43:29 naddy Exp $
 
 COMMENT=		finds and then operates on files
 
 DISTNAME=		findutils-4.4.2
 CATEGORIES=		misc
+REVISION=		0
 
 HOMEPAGE=		http://www.gnu.org/software/findutils/
 
@@ -23,6 +24,7 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--program-prefix="g"
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+
 MAKE_FLAGS=		localstatedir=/var/db
 USE_GROFF =		Yes
 

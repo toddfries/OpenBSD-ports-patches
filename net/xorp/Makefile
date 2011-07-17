@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/07/11 12:26:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2011/07/12 19:54:12 sthen Exp $
 
 COMMENT-main=	eXtensible Open Router Platform
 
@@ -10,6 +10,7 @@ CATEGORIES=	net
 HOMEPAGE=	http://www.xorp.org/
 
 BROKEN-sparc64=	ICE in route_table_fanout.cc
+BROKEN-arm=	asyncio.cc fails
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -32,15 +33,13 @@ USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-shared
 
 MODULES=	lang/python
-MODPY_BUILDDEP=	no
 MODPY_RUNDEP=	no
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--enable-optimize --disable-debug
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config ${WRKSRC}/cli/libtecla
 
-REGRESS_DEPENDS=	shells/bash \
-			${MODPY_RUN_DEPENDS}
+REGRESS_DEPENDS=	shells/bash
 
 # some regression tests must be run as root
 do-regress:

@@ -1,6 +1,8 @@
-# $OpenBSD: Makefile,v 1.24 2011/07/04 15:12:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2011/07/16 06:29:27 ajacoutot Exp $
 
      SUBDIR =
+     SUBDIR += anjuta
+     SUBDIR += anjuta-extras
      SUBDIR += backgrounds
      SUBDIR += controlcenter
      SUBDIR += desktop
@@ -15,6 +17,7 @@
      SUBDIR += icon-theme-extras
      SUBDIR += icon-theme-symbolic
      SUBDIR += keyring
+     SUBDIR += krb5-auth-dialog
      SUBDIR += libgnome-keyring
      SUBDIR += libgnomekbd
      SUBDIR += libgweather
@@ -22,7 +25,9 @@
      SUBDIR += mousetweaks
      SUBDIR += nautilus
      SUBDIR += nautilus-open-terminal
+     SUBDIR += nautilus-sendto
      SUBDIR += nettool
+     SUBDIR += orca
      SUBDIR += panel
      SUBDIR += power-manager
      SUBDIR += screensaver
@@ -35,6 +40,8 @@
      SUBDIR += user-docs
      SUBDIR += utils
      SUBDIR += video-arcade
+     SUBDIR += vinagre
+     SUBDIR += vino
      SUBDIR += yelp
      SUBDIR += zenity
 

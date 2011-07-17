@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1096 2011/07/11 12:21:53 jasper Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1100 2011/07/15 23:11:00 fgsch Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -1533,6 +1533,7 @@ _RUN_DEP2 = ${RUN_DEPENDS${SUBPACKAGE}:${_mod}}
 _RUN_DEP3 = ${RUN_DEPENDS${SUBPACKAGE}:${_mod}}
 
 _REGRESS_DEP2 = ${REGRESS_DEPENDS:${_mod}}
+_REGRESS_DEP3 = ${_REGRESS_DEP2}
 
 .  if ${NO_SHARED_LIBS:L} != "yes"
 _RUN_DEP2 += ${LIB_DEPENDS${SUBPACKAGE}:${_mod}}
@@ -1647,12 +1648,12 @@ _parse_spec = \
 	esac; unset IFS; ${_flavor_fragment}
 
 _compute_default = \
-	if ! default=`eval $$toset ${MAKE} _print-packagename`; then \
+	if ! default=`eval $$toset exec ${MAKE} _print-packagename`; then \
 		echo 1>&2 "Problem with dependency ${_i}"; \
 		exit 1; \
 	fi
 
-_set_pkg2default= pkg=`eval $$toset ${MAKE} _print-pkgspec`
+_set_pkg2default= pkg=`eval $$toset exec ${MAKE} _print-pkgspec`
 _set_stem2default=stem=`echo $$default|${_version2stem}`; \
 		pkg="$$stem$${pkg\#STEM}"
 
@@ -1912,20 +1913,26 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 			exit 1;; \
 		esac; \
 		toset="$$toset _SOLVING_DEP=Yes"; \
+		${_compute_default}; \
 		case "X$$pkg" in \
 		X) \
-			if ! pkg=`eval $$toset ${MAKE} _print-pkgspec`; \
+			if ! ${_set_pkg2default}; \
 			then \
 				${ECHO_MSG} "===> Error in evaluating dependency ${_i}"; \
 				${REPORT_PROBLEM}; \
 				exit 1; \
 			fi;; \
 		XSTEM*) \
-			if default=`eval $$toset ${MAKE} _print-packagename`; \
-			then \
-				${_set_stem2default}; \
-			fi;; \
+			${_set_stem2default};; \
 		esac; \
+		what=$$pkg; \
+		if ! ${PKG_INFO} ${PKGDB_LOCK} -q -r "$$pkg" $$default; \
+		then \
+			: $${msg:= $$default does not match}; \
+			${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$what -$$msg"; \
+			${REPORT_PROBLEM}; \
+			exit 1; \
+		fi; \
 		for abort in false false true; do \
 			if $$abort; then \
 				${ECHO_MSG} "Dependency check failed"; \
@@ -1933,7 +1940,6 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 				exit 1; \
 			fi; \
 			found=false; \
-			what=$$pkg; \
 			if $$checkinstall; then \
 				$$early_exit || ${_force_update_fragment}; \
 				if ${_PKG_QUERY} "$$pkg" -q; then \
@@ -1953,16 +1959,7 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 				exit 1; \
 			fi; \
 			if $$early_exit; then \
-				list=`eval $$toset exec ${MAKE} show=PKGNAMES`; \
-				if ${PKG_INFO} ${PKGDB_LOCK} -q -r "$$pkg" $$list; \
-				then \
-						break; \
-				else \
-					: $${msg:= not found}; \
-					${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$what -$$msg"; \
-					${REPORT_PROBLEM}; \
-					exit 1; \
-				fi; \
+				break; \
 			fi; \
 		done; \
 	}
@@ -2066,7 +2063,9 @@ ${WRKINST}/.saved_libs: ${_FAKE_COOKIE}
 
 port-lib-depends-check: ${WRKINST}/.saved_libs
 .  for _S in ${MULTI_PACKAGES}
-	@-SUBPACKAGE=${_S} ${MAKE} print-plist-with-depends lib_depends_args=all-lib-depends-args| \
+	@-SUBPACKAGE=${_S} ${MAKE} print-plist-with-depends \
+		lib_depends_args=all-lib-depends-args \
+		wantlib_args=fake-wantlib-args| \
 	 ${_CHECK_LIB_DEPENDS} -s ${WRKINST}/.saved_libs
 .  endfor
 
@@ -2311,8 +2310,7 @@ ${_EXTRACT_COOKIE}: ${_WRKDIR_COOKIE} ${_SYSTRACE_COOKIE}
 	@${ECHO_MSG} "===>  Extracting for ${FULLPKGNAME}${_MASTER}"
 .if ${_USE_XZ:L} != "no"
 	@echo ""; \
-	echo "*** WARNING: this port uses xz distfiles."; \
-	echo "*** It will not build on vax."; \
+	echo "*** WARNING: this port uses xz distfiles: it will not build on vax."; \
 	echo ""
 .endif
 .if target(pre-extract)
@@ -2786,9 +2784,9 @@ _internal-clean:
 .  endif
 .endif
 .if ${_clean:L:Mpackages} || ${_clean:L:Mpackage} && ${_clean:L:Msub}
-	rm -f ${_PACKAGE_COOKIES}
+	rm -f ${_PACKAGE_COOKIES} ${_UPDATE_COOKIES}
 .elif ${_clean:L:Mpackage}
-	rm -f ${_PACKAGE_COOKIES${SUBPACKAGE}}
+	rm -f ${_PACKAGE_COOKIES${SUBPACKAGE}} ${_UPDATE_COOKIE${SUBPACKAGE}}
 .endif
 .if ${_clean:L:Mreadmes}
 	rm -f ${_READMES}
@@ -3048,8 +3046,8 @@ _license-check:
 .  endif
 .endfor
 
-# run-depends-list, build-depends-list, lib-depends-list
-.for _i in RUN BUILD LIB
+# run-depends-list, build-depends-list, lib-depends-list, regress-depends-list
+.for _i in RUN BUILD LIB REGRESS
 ${_i:L}-depends-list:
 .  if !empty(_${_i}_DEP3)
 	@echo -n "This port requires \""
@@ -3501,8 +3499,8 @@ _all_phony = ${_recursive_depends_targets} \
 	post-patch post-regress pre-build pre-configure pre-extract pre-fake \
 	pre-fetch pre-install pre-package pre-patch pre-regress prepare \
 	print-build-depends print-run-depends readme readmes rebuild \
-	regress-depends run-depends run-depends-list show-required-by \
-	subpackage uninstall mirror-maker-fetch _print-pkgspec \
+	regress-depends regress-depends-list run-depends run-depends-list \
+    show-required-by subpackage uninstall mirror-maker-fetch _print-pkgspec \
 	lock unlock \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
 	port-wantlib-args fake-wantlib-args no-wantlib-args

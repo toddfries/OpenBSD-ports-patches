@@ -1,4 +1,4 @@
-$OpenBSD: README-main,v 1.10 2011/07/02 22:33:35 sthen Exp $
+$OpenBSD: README-main,v 1.12 2011/07/14 09:45:13 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -105,25 +105,26 @@ The debugging output will then be available under:
    ${INSTDIR}/debug.txt
 
 You need to enable the PHP mapi module by creating a symbolic link from
-${PREFIX-web}/conf/php5.sample/${MODULE_NAME}.ini to
-${PREFIX-web}/conf/php5/${MODULE_NAME}.ini:
+${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini to
+${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini:
 
-    # ln -fs ${PREFIX-web}/conf/php5.sample/${MODULE_NAME}.ini \
-        ${PREFIX-web}/conf/php5/${MODULE_NAME}.ini
+    # ln -fs ${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini \
+        ${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini
 
 The PHP mapi module and OpenBSD Apache
 --------------------------------------
 When using the OpenBSD Apache server, the runtime loader will need to
 pre-load the pthread shared library. While the php binary is linked with
--pthread, httpd is not and the PHP mapi module needs
-the pthread_mutex_init(3) function.
-To do so, we need to start httpd with LD_PRELOAD set in /etc/rc.local
-(do not set httpd_flags in rc.conf(8)).
-e.g:
+-pthread, httpd is not and the PHP mapi module needs the
+pthread_mutex_init(3) function. LANG will also need to be set to an
+UTF-8 compliant locale.
+To do so, create a login(1) class under /etc/login.conf(5) called after
+the Apache rc.d(8) script, i.e. "httpd":
 
-rm -f /var/www/logs/{ssl_mutex,httpd.lock,accept.lock}.*
-echo 'starting httpd'
-LANG=en_US.UTF-8 LD_PRELOAD=/usr/lib/libpthread.so /usr/sbin/httpd -DSSL
+httpd:\
+	:setenv=LANG=en_US.UTF-8\
+	,LD_PRELOAD=/usr/lib/libpthread.so:\
+	:tc=daemon:
 
 Documentation and help
 ======================

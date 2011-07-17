@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.147 2011/07/04 10:01:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.149 2011/07/14 09:41:08 jasper Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -78,7 +78,6 @@
      SUBDIR += metacity,gtk2
      SUBDIR += mime-data
      SUBDIR += mono-gnome
-     SUBDIR += mono-gnome-desktop
      SUBDIR += mono-keyring
      SUBDIR += moserial
      SUBDIR += mousetweaks
@@ -104,7 +103,6 @@
      SUBDIR += speech
      SUBDIR += ssh-askpass
      SUBDIR += system-monitor
-     SUBDIR += system-tools
      SUBDIR += terminal
      SUBDIR += themes
      SUBDIR += themes-extras

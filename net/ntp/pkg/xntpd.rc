@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# $OpenBSD: xntpd.rc,v 1.1 2011/07/11 17:43:14 landry Exp $
+
+daemon="${TRUEPREFIX}/sbin/ntpd"
+
+. /etc/rc.d/rc.subr
+
+rc_reload=NO
+
+rc_cmd $1

@@ -1,3 +1,4 @@
 Avahi is a free, standards-compliant implementation of the Zeroconf
 protocols Multicast DNS and DNS-SD.
-This package provides the GUI client utilities for avahi.
+
+This package provides the gtk+2 avahi-ui libraries.
