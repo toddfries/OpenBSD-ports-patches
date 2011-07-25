@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.954 2011/07/12 07:40:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.957 2011/07/21 01:37:56 edd Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -53,6 +53,7 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
+     SUBDIR += cmockery
      SUBDIR += coccinelle
      SUBDIR += codeblocks
      SUBDIR += codeworker
@@ -582,6 +583,7 @@
      SUBDIR += p5-Getopt-Euclid
      SUBDIR += p5-Getopt-Long-Descriptive
      SUBDIR += p5-Getopt-Simple
+     SUBDIR += p5-Git-Repository
      SUBDIR += p5-Glib2
      SUBDIR += p5-Graph
      SUBDIR += p5-Guard
@@ -766,6 +768,7 @@
      SUBDIR += p5-Sub-Override
      SUBDIR += p5-Sub-Uplevel
      SUBDIR += p5-Sys-SigAction
+     SUBDIR += p5-System-Command
      SUBDIR += p5-TAP-Parser
      SUBDIR += p5-Taint-Runtime
      SUBDIR += p5-Task-Weaken
@@ -1003,6 +1006,7 @@
      SUBDIR += qt-creator
      SUBDIR += qt4-eventsview
      SUBDIR += quirks
+     SUBDIR += radare2
      SUBDIR += rapidsvn
      SUBDIR += rats
      SUBDIR += re2c

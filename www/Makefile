@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.521 2011/07/12 08:18:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.524 2011/07/23 14:47:38 kili Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -37,6 +37,7 @@
      SUBDIR += dansguardian
      SUBDIR += decss
      SUBDIR += dillo
+     SUBDIR += dokuwiki
      SUBDIR += drupal6
      SUBDIR += drush
      SUBDIR += elinks
@@ -63,6 +64,7 @@
      SUBDIR += hs-html
      SUBDIR += hs-snap-core
      SUBDIR += hs-snap-server
+     SUBDIR += hs-webkit
      SUBDIR += hs-xhtml-combinators
      SUBDIR += http_load
      SUBDIR += http_ping
@@ -123,6 +125,7 @@
      SUBDIR += moinmoin
      SUBDIR += mollify
      SUBDIR += mongrel2
+     SUBDIR += mono-xsp
      SUBDIR += moodle
      SUBDIR += mozilla-firefox
      SUBDIR += mozplugger

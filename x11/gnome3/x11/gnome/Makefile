@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2011/07/16 06:29:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2011/07/23 08:00:41 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += anjuta
@@ -19,6 +19,7 @@
      SUBDIR += keyring
      SUBDIR += krb5-auth-dialog
      SUBDIR += libgnome-keyring
+     SUBDIR += libgnome-media-profiles
      SUBDIR += libgnomekbd
      SUBDIR += libgweather
      SUBDIR += menus
@@ -32,6 +33,7 @@
      SUBDIR += power-manager
      SUBDIR += screensaver
      SUBDIR += seahorse
+     SUBDIR += seahorse-plugins
      SUBDIR += session
      SUBDIR += settings-daemon
      SUBDIR += system-monitor

@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.11 2011/05/05 18:22:35 jeremy Exp $
+# $OpenBSD: Makefile,v 1.14 2011/07/20 22:51:32 jeremy Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT =	Ruby virtual machine and core library
 
-V=		1.2.3
-DISTNAME =	rubinius-${V}-20110315
+V=		1.2.4
+DISTNAME =	rubinius-${V}-20110705
 PKGNAME =	rubinius-$V
-REVISION =	0
 
 CATEGORIES =	lang lang/ruby
 
@@ -38,7 +37,7 @@ MODULES =	lang/ruby
 USE_GMAKE =	Yes
 USE_LIBTOOL=	Yes
 
-RBX_ARCH =	${MACHINE_ARCH}-openbsd${OSREV}
+RBX_ARCH =	${MACHINE_ARCH}-openbsd
 RAKE_VER =	0.8.7
 RAKE_COMPILER_VER = 0.6.0
 RDOC_VER =	2.5.1

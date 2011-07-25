@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2011/07/09 00:42:02 robert Exp $
+# $OpenBSD: Makefile,v 1.30 2011/07/22 10:20:10 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -18,11 +18,11 @@ PKGNAME-mysql =	cherokee-mysql-${VERSION}
 PKGNAME-geoip =	cherokee-geoip-${VERSION}
 PKGNAME-streaming = cherokee-streaming-${VERSION}
 
-REVISION-main =	4
-REVISION-geoip = 1
-REVISION-ldap =	2
-REVISION-mysql = 1
-REVISION-streaming = 4
+REVISION-main =	6
+REVISION-geoip = 2
+REVISION-ldap =	3
+REVISION-mysql = 2
+REVISION-streaming = 5
 
 SHARED_LIBS =	cherokee-base		0.0 \
 		cherokee-client		0.0 \
