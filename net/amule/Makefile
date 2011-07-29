@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2011/06/24 08:42:31 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.25 2011/07/28 11:06:40 dcoppa Exp $
 
 COMMENT-main =	another eDonkey P2P file sharing client
 COMMENT-web =	webserver interface to amuled
@@ -13,8 +13,11 @@ MULTI_PACKAGES =-main -web -daemon
 PKGNAME-main =	amule-$V
 PKGNAME-daemon =amuled-$V
 PKGNAME-web =	amuleweb-$V
+REVISION-main = 3
+REVISION-daemon = 1
+REVISION-web = 1
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
@@ -35,7 +38,7 @@ RUN_DEPENDS =
 BUILD_DEPENDS =		devel/flex \
 			devel/gettext
 
-commonLIB_DEPENDS =	x11/wxWidgets>=2.8.0 \
+commonLIB_DEPENDS =	x11/wxWidgets>=2.8.12 \
 			net/libupnp>=1.6.6
 
 LIB_DEPENDS-main =	${LIB_DEPENDS} ${commonLIB_DEPENDS} \

@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.82 2011/07/24 07:31:57 landry Exp $
+# $OpenBSD: Makefile,v 1.85 2011/07/28 20:48:56 landry Exp $
 
 COMMENT-main =		Mozilla application suite
 COMMENT-lightning =	Mozilla Seamonkey calendar extension
+COMMENT-enigmail =	Mozilla Seamonkey GnuPG extension
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 
 MOZILLA_VERSION=	2.2
@@ -9,16 +10,19 @@ MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	seamonkey
 MOZILLA_CODENAME =	suite
 
-MULTI_PACKAGES =	-main -lightning
+MULTI_PACKAGES =	-main -lightning -enigmail
 PKGNAME-main =		seamonkey-2.2
+REVISION-main =		0
 PKGNAME-lightning =	lightning-seamonkey-1.0beta4
+PKGNAME-enigmail =	enigmail-seamonkey-1.2
+REVISION-enigmail =	0
 EPOCH-lightning =	0
 
 # must be in sync with SO_VERSION in main/enigmail/seamonkey
 SO_VERSION=	18.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
-MOZILLA_LIBS = ldap60 ldif60 mozalloc prldap60 suite xpcom xul calbasecomps
+MOZILLA_LIBS = ldap60 ldif60 mozalloc prldap60 suite xpcom xul calbasecomps enigmime ipc
 
 CATEGORIES=	www mail net news
 
@@ -29,6 +33,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES0=	http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/${MOZILLA_VERSION}/langpack/
+MASTER_SITES1 =	http://www.mozilla-enigmail.org/download/source/
 
 LANGUAGES=	ca \
 		cs \
@@ -52,9 +57,12 @@ LANGUAGES=	ca \
 		sv-SE \
 		tr
 
-EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
+EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX} \
+		enigmail-1.2.tar.gz
+EXTRACT_CASES =	enigmail-*.tar.gz) ${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive | tar -C comm-${MOZILLA_BRANCH}/mailnews/extensions/ -xf -;;
 
-DISTFILES+=	${EXTRACT_ONLY}
+DISTFILES+=	${DISTNAME}${EXTRACT_SUFX} \
+		enigmail-1.2.tar.gz:1
 .for language in ${LANGUAGES}
 DISTFILES+=	seamonkey-${MOZILLA_VERSION}.${language}.langpack.xpi:0
 .endfor
@@ -73,6 +81,10 @@ WANTLIB-lightning =	lib/${MOZILLA_PROJECT}-${MOZILLA_VERSION}/xpcom \
 			lib/${MOZILLA_PROJECT}-${MOZILLA_VERSION}/mozalloc \
 			c m stdc++ nspr4 plc4 plds4
 
+RUN_DEPENDS-enigmail =	security/gnupg
+LIB_DEPENDS-enigmail =	${LIB_DEPENDS-lightning}
+WANTLIB-enigmail =	${WANTLIB-lightning}
+
 CONFIGURE_STYLE =	autoconf no-autoheader
 CONFIGURE_ENV +=	CPPFLAGS=-I${X11BASE}/include
 CONFIGURE_ARGS +=	--enable-calendar
@@ -86,10 +98,22 @@ ALL_TARGET=	default
 MOZILLA_AUTOCONF_DIRS =	ldap/sdks/c-sdk mozilla mozilla/js/src
 MOZILLA_SUBST_FILES +=	configure
 
+ENIGMAIL_DIR =	${WRKSRC}/mailnews/extensions/enigmail
+
+post-build:
+	# build enigmail
+	cd ${ENIGMAIL_DIR} && ./makemake -r
+	cd ${ENIGMAIL_DIR} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM}
+	cd ${MOB}/chrome/enigmail && zip -r ../enigmail.jar .
+	cd ${ENIGMAIL_DIR} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} xpi
+
+GNU_ARCH =	${MACHINE_ARCH:S/amd64/x86_64/}
 # guid for gdata-provider comes from em:id in install.rdf
 GUIDS =	gdata-provider {a62ef8ec-5fdc-40c2-873c-223b8a6925cc} \
 	lightning {e2fda1a4-762b-4020-b5ad-a41df1933103} \
-	calendar-timezones calendar-timezones@mozilla.org
+	calendar-timezones calendar-timezones@mozilla.org \
+	../bin/enigmail-1.2-openbsd-${GNU_ARCH} {847b3a00-7ab1-11d4-8f02-006008948af5}
+
 EXTDIR =	${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VERSION}/extensions/
 
 post-install:
@@ -102,6 +126,8 @@ post-install:
 .for xpi guid in ${GUIDS}
 	${UNZIP} -oq ${MOB}/../xpi-stage/${xpi}.xpi -d ${EXTDIR}/${guid}
 .endfor
+	# enigmail 1.2 works in seamonkey 2.2 so adjust install.rdf
+	perl -pi -e 's|<em:maxVersion>2.1.*</em:maxVersion>|<em:maxVersion>2.2.*</em:maxVersion>|' ${EXTDIR}/{847b3a00-7ab1-11d4-8f02-006008948af5}/install.rdf
 	# install desktop file
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications/ ; \
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/${_MOZ_PROJECT_SHORT}.desktop \
