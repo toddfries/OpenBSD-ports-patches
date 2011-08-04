@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.68 2011/08/02 19:24:38 naddy Exp $
 
 COMMENT =	Mozilla web browser
 
@@ -7,7 +7,7 @@ MOZILLA_BRANCH =	1.9.1
 MOZILLA_PROJECT =	firefox35
 MOZILLA_CODENAME =	browser
 
-REVISION =		1
+REVISION =		2
 
 SO_VERSION =	24.0
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -38,7 +38,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES =	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${MOZILLA_VERSION}/source/
+MASTER_SITES =	ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${MOZILLA_VERSION}/source/
 DISTNAME =	firefox-${MOZILLA_VERSION}.source
 
 MODULES =	www/mozilla devel/gettext lang/python
