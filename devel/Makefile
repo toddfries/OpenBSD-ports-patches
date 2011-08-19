@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.957 2011/07/21 01:37:56 edd Exp $
+# $OpenBSD: Makefile,v 1.960 2011/08/18 15:00:35 mpi Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -905,6 +905,7 @@
      SUBDIR += pear-PHPUnit2
      SUBDIR += pear-System-Command
      SUBDIR += pear-Validate
+     SUBDIR += pep8
      SUBDIR += perltidy
      SUBDIR += physfs
      SUBDIR += pkgconfig
@@ -997,6 +998,7 @@
      SUBDIR += py-zopeinterface
      SUBDIR += py-zopetesting
      SUBDIR += pybugz
+     SUBDIR += pyflakes
      SUBDIR += pygame
      SUBDIR += pylint
      SUBDIR += pyrex
@@ -1041,6 +1043,7 @@
      SUBDIR += ruby-gem_plugin
      SUBDIR += ruby-gems
      SUBDIR += ruby-gettext
+     SUBDIR += ruby-gir_ffi
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
      SUBDIR += ruby-home_run
