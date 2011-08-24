@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.9 2011/08/02 19:24:38 naddy Exp $
+# $OpenBSD: Makefile,v 1.11 2011/08/23 20:33:21 landry Exp $
 
 COMMENT =	Mozilla web browser
 
 # Don't forget to update devel/xulrunner/1.9 if patches changes.
 
-MOZILLA_VERSION =	3.6.18
+MOZILLA_VERSION =	3.6.20
 MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	firefox36
 MOZILLA_CODENAME =	browser
-
-REVISION =	0
 
 SO_VERSION =	22.2
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -25,7 +23,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES =	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${MOZILLA_VERSION}/source/
+MASTER_SITES =	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${MOZILLA_VERSION}/source/ \
+		ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${MOZILLA_VERSION}/source/
 DISTNAME =	firefox-${MOZILLA_VERSION}.source
 
 # needed for convert xpm icon to png

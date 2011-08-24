@@ -1,10 +1,11 @@
-# $OpenBSD: OpenBSD,v 1.74 2011/07/29 14:17:38 mpi Exp $
+# $OpenBSD: OpenBSD,v 1.76 2011/08/21 21:55:24 haesbaert Exp $
 #
 # This is a list of OpenBSD developers and related people.
 #
 
 -37.457132	144.580589	"djm"		# Damien Miller
 -33.81		151.15		"dtucker"	# Darren Tucker
+-30.018701	-51.167282	"haesbaert"	# Christiano F. Haesbaert
 -27.28		153.02		"dlg"		# David Gwynne
 -22.88		-43.28		"pedro"		# Pedro Martelletto
 -12.56		-38.31		"gsoares"	# Gleydson Soares

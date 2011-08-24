@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2011/06/08 17:37:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2011/08/22 08:43:54 sthen Exp $
 
 COMMENT =	simple CalDAV calendar server
 
-MODPY_EGG_VERSION = 0.5
+MODPY_EGG_VERSION = 0.6
 DISTNAME =	Radicale-${MODPY_EGG_VERSION}
 PKGNAME =	${DISTNAME:L}
-CATEGORIES =	productivity net
 REVISION =	1
+CATEGORIES =	productivity net
 
-HOMEPAGE =	http://www.radicale.org/
+HOMEPAGE =	http://radicale.org/
 
 MAINTAINER =	Sergey Bronnikov <estetus@gmail.com>
 
@@ -18,8 +18,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		${HOMEPAGE}src/radicale/ \
-			http://spacehopper.org/mirrors/
+MASTER_SITES =		${MASTER_SITE_PYPI:=R/Radicale/}
 
 MODULES =		lang/python
 MODPY_ADJ_FILES =	radicale.py

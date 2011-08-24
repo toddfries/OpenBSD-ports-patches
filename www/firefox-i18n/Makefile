@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.67 2011/07/22 10:04:15 landry Exp $
+# $OpenBSD: Makefile,v 1.69 2011/08/23 20:16:15 landry Exp $
 
 # keep in sync with working archs.. sigh
 ONLY_FOR_ARCHS=	amd64 i386 powerpc
 
 PKG_ARCH=	*
 
-V=		5.0
+V=		6.0
 NAME=		firefox-i18n
 PKGNAME=	${NAME}-${V}
 
@@ -21,7 +21,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${V}/linux-i686/xpi/
+MASTER_SITES=	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${V}/linux-i686/xpi/ \
+		ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${V}/linux-i686/xpi/
 
 LANGUAGES=	af ar ast be bg bn-BD bn-IN br ca cs cy da de el en-GB en-US en-ZA eo es-AR \
 		es-CL es-ES es-MX et eu fa fi fr fy-NL ga-IE gd gl gu-IN he \
@@ -44,13 +45,11 @@ SUBPACKAGE?=	-en-GB
 .for i in ${LANGUAGES}
 MULTI_PACKAGES+=-$i
 DISTFILES+=	$i.xpi
-REVISION-$i=	1
 PKGNAME-$i=	${NAME}-$i-${V}
 COMMENT-$i=	$i language pack for Firefox
 LPACKDIR-$i=	${PREFIX}/lib/firefox-$V/extensions/langpack-$i@firefox.mozilla.org
 .endfor
 PKGNAME-en-GB=	${NAME}-en-GB-${V}
-REVISION-af=	2
 
 # use the same for all subpackages
 MESSAGE=	${PKGDIR}/MESSAGE
