@@ -8,3 +8,6 @@ obj
 .#*
 pobj
 distfiles
+packages
+plist
+update
