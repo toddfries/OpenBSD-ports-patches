@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.87 2011/08/23 20:25:24 landry Exp $
+# $OpenBSD: Makefile,v 1.89 2011/08/24 17:27:05 landry Exp $
 
 COMMENT-main =		Mozilla application suite
 COMMENT-lightning =	Mozilla Seamonkey calendar extension
 COMMENT-enigmail =	Mozilla Seamonkey GnuPG extension
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 
-MOZILLA_VERSION=	2.3
+MOZILLA_VERSION=	2.3.1
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	seamonkey
 MOZILLA_CODENAME =	suite
@@ -15,6 +15,7 @@ PKGNAME-main =		${PKGNAME}
 PKGNAME-lightning =	lightning-seamonkey-1.0beta5
 PKGNAME-enigmail =	enigmail-seamonkey-1.3
 EPOCH-lightning =	0
+REVISION-lightning =	0
 
 # must be in sync with SO_VERSION in main/enigmail/seamonkey
 SO_VERSION=	19.0
@@ -127,7 +128,7 @@ post-install:
 .endfor
 	# install desktop file
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications/ ; \
-	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/${_MOZ_PROJECT_SHORT}.desktop \
-		${PREFIX}/share/applications/${_MOZ_PROJECT_SHORT}.desktop ; \
+	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/${MOZILLA_PROJECT}.desktop \
+		${PREFIX}/share/applications/${MOZILLA_PROJECT}.desktop ; \
 
 .include <bsd.port.mk>

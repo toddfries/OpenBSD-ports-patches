@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.961 2011/08/19 07:13:00 landry Exp $
+# $OpenBSD: Makefile,v 1.963 2011/08/27 06:47:46 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -124,6 +124,7 @@
      SUBDIR += glog
      SUBDIR += glpk
      SUBDIR += gmake
+     SUBDIR += gmc4cc
      SUBDIR += gmp
      SUBDIR += gobject-introspection
      SUBDIR += goffice
@@ -299,6 +300,7 @@
      SUBDIR += libvstr
      SUBDIR += libwnck
      SUBDIR += libwnck3
+     SUBDIR += libxsvf
      SUBDIR += libyajl
      SUBDIR += libyaml
      SUBDIR += llvm

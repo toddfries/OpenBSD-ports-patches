@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/02 12:29:12 rpointel Exp $
+# $OpenBSD: Makefile,v 1.13 2011/08/26 09:42:42 rpointel Exp $
 
 COMMENT =		lightweight multi-protocol & multi-source download utility
-DISTNAME =		aria2-1.12.0
+DISTNAME =		aria2-1.12.1
 CATEGORIES =		www
 HOMEPAGE =		http://aria2.sourceforge.net/
 
@@ -36,6 +36,11 @@ CONFIGURE_ARGS +=	--with-sqlite3 \
 			--with-libcares \
 			--with-libexpat \
 			--without-libxml2
+
+# Prevent gcc 4.2.1 from running out of memory.
+.if ${MACHINE_ARCH:Mmips64*}
+CFLAGS +=		-O0
+.endif
 
 USE_GROFF =		Yes
 
