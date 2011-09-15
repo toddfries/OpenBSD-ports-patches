@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.115 2011/07/08 18:24:00 robert Exp $
+# $OpenBSD: Makefile,v 1.119 2011/09/11 18:22:38 jasper Exp $
 # $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
 #
 
      SUBDIR =
      SUBDIR += STk
-     SUBDIR += antlr2
+     SUBDIR += antlr3
      SUBDIR += arena
      SUBDIR += chicken
      SUBDIR += classpath
      SUBDIR += clisp
      SUBDIR += clojure
+     SUBDIR += clojure-contrib
      SUBDIR += cython
      SUBDIR += datalog
      SUBDIR += eagle
@@ -68,6 +69,7 @@
      SUBDIR += rubinius
      SUBDIR += ruby
      SUBDIR += sbcl
+     SUBDIR += scala
      SUBDIR += scheme-report
      SUBDIR += scheme48
      SUBDIR += scm

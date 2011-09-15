@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2010/11/22 08:36:57 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2011/09/13 05:44:43 ajacoutot Exp $
 
 COMMENT=		CD/DVD authoring application for GNOME
 

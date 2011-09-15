@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2011/08/17 16:59:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2011/09/13 09:00:40 ajacoutot Exp $
 
-COMMENT=	PolicyKit integration for GNOME/GTK+2
+COMMENT=	PolicyKit integration for GNOME/GTK+
 
 DISTNAME=	polkit-gnome-0.102
+REVISION=	1
 
 CATEGORIES=	x11 sysutils
 
@@ -25,7 +26,7 @@ WANTLIB += Xrandr Xrender atk-1.0 c cairo expat fontconfig freetype
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png polkit-agent-1 polkit-gobject-1 pthread
-WANTLIB += pthread-stubs xcb xcb-render xcb-shm z
+WANTLIB += pthread-stubs xcb xcb-render xcb-shm z cairo-gobject gdk-3 gtk-3
 
 MASTER_SITES=	http://hal.freedesktop.org/releases/
 
@@ -34,7 +35,8 @@ MODULES=	devel/gettext \
 
 BUILD_DEPENDS=	devel/gobject-introspection
 
-LIB_DEPENDS=	sysutils/polkit>=0.102
+LIB_DEPENDS=	sysutils/polkit>=0.102 \
+		x11/gtk+3
 
 # XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
 # instead of the actual library
@@ -48,20 +50,8 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--localstatedir=/var \
 		--enable-introspection \
-		--disable-gtk-doc
-
-FLAVORS=	gtk2
-FLAVOR?=
-
-.if ${FLAVOR:L:Mgtk2}
-CONFIGURE_ARGS+=--with-gtk=2.0
-LIB_DEPENDS+=	x11/gtk+2
-WANTLIB += gdk-x11-2.0 gtk-x11-2.0
-.else
-CONFIGURE_ARGS+=--with-gtk=3.0
-LIB_DEPENDS+=	x11/gtk+3
-WANTLIB += cairo-gobject gdk-3 gtk-3
-.endif
+		--disable-gtk-doc \
+		--with-gtk=3.0
 
 # revert the following commit:
 # ----------------------------------------------------------------------
@@ -81,9 +71,7 @@ post-install:
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} \
 		-c ${FILESDIR}/polkit-gnome-authentication-agent-1.desktop \
 		${PREFIX}/share/examples/polkit-gnome/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
-.if ! ${FLAVOR:L:Mgtk2}
 	echo 'AutostartCondition=GNOME3 if-session gnome-fallback' >> \
 		${PREFIX}/share/examples/polkit-gnome/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
-.endif
 
 .include <bsd.port.mk>

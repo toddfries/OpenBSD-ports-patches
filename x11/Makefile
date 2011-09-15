@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.461 2011/07/19 09:22:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.468 2011/09/12 09:16:36 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -80,6 +80,7 @@
      SUBDIR += gob2
      SUBDIR += goggles
      SUBDIR += golem
+     SUBDIR += gpointing-device-settings
      SUBDIR += gromit
      SUBDIR += gtk+
      SUBDIR += gtk+2
@@ -87,7 +88,6 @@
      SUBDIR += gtk-chtheme
      SUBDIR += gtk-engines2
      SUBDIR += gtk-vnc
-     SUBDIR += gtk-vnc,gtk2
      SUBDIR += gtk2-aurora-engine
      SUBDIR += gtk2-equinox-engine
      SUBDIR += gtk2-murrine-engine
@@ -103,7 +103,6 @@
      SUBDIR += gtkhotkey
      SUBDIR += gtksourceview
      SUBDIR += gtksourceview3
-     SUBDIR += gtksourceviewmm
      SUBDIR += gtksourceviewmm3
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
@@ -165,7 +164,6 @@
      SUBDIR += oroborus
      SUBDIR += osd_clock
      SUBDIR += p5-AnyEvent-I3
-     SUBDIR += p5-Gnome2-Canvas
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
      SUBDIR += p5-Gtk2-Ex-PodViewer
@@ -173,6 +171,7 @@
      SUBDIR += p5-Gtk2-GladeXML
      SUBDIR += p5-Tk
      SUBDIR += p5-Tk-ProgressBar-Mac
+     SUBDIR += p5-Tk-TableMatrix
      SUBDIR += p5-Tk-Splash
      SUBDIR += p5-Tk-Stderr
      SUBDIR += p5-Wx
@@ -188,12 +187,11 @@
      SUBDIR += piewm
      SUBDIR += pinot
      SUBDIR += podbrowser
-     SUBDIR += polkit-gnome,gtk2
+     SUBDIR += polkit-gnome
      SUBDIR += polkit-qt4
      SUBDIR += pwm
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
-     SUBDIR += py-gtksourceview
      SUBDIR += py-kiwi
      SUBDIR += py-osd
      SUBDIR += py-qt3

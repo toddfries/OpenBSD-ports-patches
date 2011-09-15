@@ -1,13 +1,17 @@
-$OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
---- src/daemon.c.orig	Thu May 19 05:39:12 2011
-+++ src/daemon.c	Fri Jun 17 16:25:09 2011
-@@ -50,11 +50,14 @@
+$OpenBSD: patch-src_daemon_c,v 1.8 2011/09/08 13:56:53 ajacoutot Exp $
+--- src/daemon.c.orig	Thu Sep  8 15:52:39 2011
++++ src/daemon.c	Thu Sep  8 15:52:39 2011
+@@ -49,13 +49,17 @@
+ #define PATH_PASSWD "/etc/passwd"
  #define PATH_SHADOW "/etc/shadow"
  #define PATH_LOGIN_DEFS "/etc/login.defs"
+-#define PATH_GDM_CUSTOM "/etc/gdm/custom.conf"
++#define PATH_GDM_CUSTOM "${SYSCONFDIR}/gdm/custom.conf"
  
 +#if defined(__FreeBSD__) || defined(__OpenBSD__)
 +#define FALLBACK_MINIMAL_UID 1000
 +#endif
++
  #ifndef FALLBACK_MINIMAL_UID
  #define FALLBACK_MINIMAL_UID 500
  #endif
@@ -17,7 +21,7 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
  
  static const char *default_excludes[] = {
          "bin",
-@@ -488,22 +491,32 @@ reload_passwd (Daemon *daemon)
+@@ -490,22 +494,32 @@ reload_passwd (Daemon *daemon)
          GSList *old_users;
          GSList *new_users;
          GSList *list;
@@ -50,7 +54,7 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
                  /* Skip users below MINIMAL_UID... */
                  if (daemon_local_user_is_excluded (daemon, pwent->pw_name, pwent->pw_uid)) {
                          g_debug ("skipping user: %s", pwent->pw_name);
-@@ -553,10 +566,14 @@ reload_passwd (Daemon *daemon)
+@@ -555,10 +569,14 @@ reload_passwd (Daemon *daemon)
                  }
          }
  
@@ -65,8 +69,8 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
  
          g_slist_foreach (new_users, (GFunc) g_object_thaw_notify, NULL);
          g_slist_foreach (new_users, (GFunc) g_object_unref, NULL);
-@@ -676,9 +693,16 @@ on_passwd_monitor_changed (GFileMonitor      *monitor,
-         reload_users (daemon);
+@@ -718,9 +736,16 @@ on_gdm_monitor_changed (GFileMonitor      *monitor,
+         queue_reload_autologin (daemon);
  }
  
 +#if defined(__FreeBSD__) || defined(__OpenBSD__)
@@ -82,7 +86,7 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
          GError *error;
          char *contents;
          gboolean contents_loaded;
-@@ -728,6 +752,7 @@ out:
+@@ -770,6 +795,7 @@ out:
          g_free (contents);
          return uid;
  }
@@ -90,12 +94,12 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
  
  static void
  daemon_init (Daemon *daemon)
-@@ -1119,7 +1144,12 @@ daemon_create_user_authorized_cb (Daemon              
+@@ -1183,7 +1209,12 @@ daemon_create_user_authorized_cb (Daemon              
          CreateUserData *cd = data;
          User *user;
          GError *error;
 +#ifndef __OpenBSD__
-         gchar *argv[8];
+         gchar *argv[9];
 +#else
 +        gchar *argv[12];
 +        gchar *gargv[3];
@@ -103,7 +107,7 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
  
          if (getpwnam (cd->user_name) != NULL) {
                  throw_error (context, ERROR_USER_EXISTS, "A user with name '%s' already exists", cd->user_name);
-@@ -1127,6 +1157,23 @@ daemon_create_user_authorized_cb (Daemon              
+@@ -1191,6 +1222,22 @@ daemon_create_user_authorized_cb (Daemon              
                  return;
          }
  
@@ -123,11 +127,10 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
 +        }
 +#endif
 +
-+
          sys_log (context, "create user '%s'", cd->user_name);
  
          argv[0] = "/usr/sbin/useradd";
-@@ -1135,13 +1182,32 @@ daemon_create_user_authorized_cb (Daemon              
+@@ -1199,15 +1246,34 @@ daemon_create_user_authorized_cb (Daemon              
          argv[3] = cd->real_name;
          if (cd->account_type == ACCOUNT_TYPE_ADMINISTRATOR) {
                  argv[4] = "-G";
@@ -141,8 +144,9 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
 +                argv[11] = NULL;
 +#else
                  argv[5] = "wheel";
-                 argv[6] = cd->user_name;
-                 argv[7] = NULL;
+                 argv[6] = "--";
+                 argv[7] = cd->user_name;
+                 argv[8] = NULL;
 +#endif
          }
          else if (cd->account_type == ACCOUNT_TYPE_STANDARD) {
@@ -154,16 +158,18 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
 +                argv[8] = cd->user_name;
 +                argv[9] = NULL;
 +#else
-                 argv[4] = cd->user_name;
-                 argv[5] = NULL;
+                 argv[4] = "--";
+                 argv[5] = cd->user_name;
+                 argv[6] = NULL;
 +#endif
          }
          else {
                  throw_error (context, ERROR_FAILED, "Don't know how to add user of type %d", cd->account_type);
-@@ -1212,6 +1278,23 @@ daemon_delete_user_authorized_cb (Daemon              
+@@ -1277,6 +1343,23 @@ daemon_delete_user_authorized_cb (Daemon              
+ 
                  return;
          }
- 
++
 +#ifdef __OpenBSD__
 +        GError *gerror;
 +        gchar *gargv[2];
@@ -180,25 +186,6 @@ $OpenBSD: patch-src_daemon_c,v 1.6 2011/07/03 20:16:35 ajacoutot Exp $
 +                return;
 +        }
 +#endif
-+
+ 
          sys_log (context, "delete user '%s' (%d)", pwent->pw_name, ud->uid);
  
-         argv[0] = "/usr/sbin/userdel";
-@@ -1381,7 +1464,7 @@ load_autologin (Daemon      *daemon,
-         GError *local_error;
-         gchar *string;
- 
--        filename = "/etc/gdm/custom.conf";
-+        filename = "${SYSCONFDIR}/X11/gdm/custom.conf";
- 
-         keyfile = g_key_file_new ();
-         if (!g_key_file_load_from_file (keyfile,
-@@ -1431,7 +1514,7 @@ save_autologin (Daemon      *daemon,
-         gchar *data;
-         gboolean result;
- 
--        filename = "/etc/gdm/custom.conf";
-+        filename = "${SYSCONFDIR}/X11/gdm/custom.conf";
- 
-         keyfile = g_key_file_new ();
-         if (!g_key_file_load_from_file (keyfile,

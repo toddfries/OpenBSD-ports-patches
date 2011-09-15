@@ -1,11 +1,25 @@
-# $OpenBSD: Makefile,v 1.12 2011/07/04 05:16:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2011/09/08 13:56:53 ajacoutot Exp $
+
+# XXX revert the following commits for now (OpenBSD doesn't have utmpx)
+#
+# From a4e478b9fef287698a3369d4b0d779c8ab949ff3 Mon Sep 17 00:00:00 2001
+# From: Ray Strode <rstrode@redhat.com>
+# Date: Tue, 19 Jul 2011 19:18:11 +0000
+# Subject: daemon: fix up some problems in last commit
+#
+# From 281ac4126636a7a701b95c465ab9de7762e17fdf Mon Sep 17 00:00:00 2001
+# From: Lennart Poettering <lennart@poettering.net>
+# Date: Sun, 17 Jul 2011 01:36:57 +0000
+# Subject: daemon: get login frequency from wtmp instead of ConsoleKit
+PATCHFILES=	accountsservice-daemon_c.patch:0
+MASTER_SITES0=	http://distfiles.bsdfrog.org/
 
 COMMENT=	D-Bus interface for user account query and manipulation
 
-DISTNAME=	accountsservice-0.6.12
-EXTRACT_SUFX=	.tar.bz2
+DISTNAME=	accountsservice-0.6.14
+EXTRACT_SUFX=	.tar.xz
 
-REVISION=	10
+REVISION=	0
 
 SHARED_LIBS +=  accountsservice           0.0 # 0.0
 
@@ -33,6 +47,8 @@ BUILD_DEPENDS=	devel/gobject-introspection
 
 LIB_DEPENDS=	sysutils/polkit \
 		x11/dbus-glib
+
+RUN_DEPENDS=	sysutils/consolekit
 
 USE_GMAKE=	Yes
 

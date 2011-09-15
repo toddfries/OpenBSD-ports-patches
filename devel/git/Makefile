@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.80 2011/07/30 05:08:05 benoit Exp $
+# $OpenBSD: Makefile,v 1.82 2011/09/14 07:11:58 jasper Exp $
 
 COMMENT-main =	GIT - Tree History Storage Tool
 COMMENT-svn =	GIT - subversion interoperability tools
@@ -11,7 +11,7 @@ PKGNAME-svn =	git-svn-${V}
 PKGNAME-x11 =	git-x11-${V}
 CATEGORIES =	devel
 
-REVISION =	0
+REVISION =	1
 
 HOMEPAGE =	http://git-scm.com/
 
@@ -28,7 +28,8 @@ DOC_DISTFILES =		git-manpages-${V}${EXTRACT_SUFX} \
 DISTFILES =		${DISTNAME}${EXTRACT_SUFX} ${DOC_DISTFILES}
 EXTRACT_ONLY =		${DISTNAME}${EXTRACT_SUFX}
 
-MASTER_SITES =		ftp://ftp.kernel.org/pub/software/scm/git/ \
+MASTER_SITES =		http://distfiles.nl/ \
+			ftp://ftp.kernel.org/pub/software/scm/git/ \
 			ftp://ftp.de.kernel.org/pub/software/scm/git/ \
 			ftp://ftp.au.kernel.org/pub/software/scm/git/
 
@@ -67,7 +68,7 @@ WANTLIB-x11 =
 PKG_ARCH-x11 =		*
 
 MAKE_ENV =		prefix=${PREFIX} CC="${CC}" CFLAGS="${CFLAGS}" V=1 \
-			SYSCONFDIR=${SYSCONFDIR} \
+			sysconfdir=${SYSCONFDIR} \
 			TCLTK_PATH=${MODTK_BIN} \
 			TCL_PATH=${MODTCL_BIN} \
 			REGRESS_SHELL=${LOCALBASE}/bin/bash

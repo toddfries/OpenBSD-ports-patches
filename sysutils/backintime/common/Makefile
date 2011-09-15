@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/06/08 17:50:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2011/09/15 09:05:22 ajacoutot Exp $
 
 COMMENT=	simple backup tool -- common files
 
@@ -12,6 +12,9 @@ RUN_DEPENDS=	misc/fileutils \
 		net/rsync
 
 SUBST_FILES=	backintime config.py
-USE_GROFF =	Yes
+
+# XXX
+post-patch:
+	perl -pi -e 's,1.0.7,1.0.8,g' ${WRKSRC}/config.py
 
 .include <bsd.port.mk>

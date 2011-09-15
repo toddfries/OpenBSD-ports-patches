@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/26 14:44:27 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2011/09/14 19:42:02 naddy Exp $
 
 COMMENT=	cross-platform gettext catalogs (PO-files) editor
 
 DISTNAME=	poedit-1.3.7
-REVISION =	3
+REVISION =	4
 CATEGORIES=	devel
 
 HOMEPAGE=	http://www.poedit.net/
@@ -29,17 +29,10 @@ CONFIGURE_STYLE=gnu
 
 CONFIGURE_ARGS=	--disable-spellchecking
 
-PSEUDO_FLAVORS=	no_db
-FLAVOR?=
-
-.if ${FLAVOR:L:Mno_db}
-CONFIGURE_ARGS+=--disable-transmem
-.else
 LIB_DEPENDS +=	databases/db/v4
 WANTLIB +=	db>=4
 
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib/db4" \
 		CPPFLAGS="-I${LOCALBASE}/include/db4"
-.endif
 
 .include <bsd.port.mk>

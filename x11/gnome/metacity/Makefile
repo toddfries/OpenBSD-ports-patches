@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.64 2011/07/19 09:20:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.67 2011/09/13 08:55:28 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	lightweight window manager
 
 GNOME_PROJECT=	metacity
 GNOME_VERSION=	2.34.1
-REVISION=	0
+REVISION=	1
 
 SHARED_LIBS +=  metacity-private     1.0      # .0.0
 
@@ -32,14 +32,14 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
-EXTRACT_SUFX=	.tar.xz
-
 LIB_DEPENDS=	devel/startup-notification \
 		audio/libcanberra,-gtk \
 		devel/libgtop2
 BUILD_DEPENDS=	${RUN_DEPENDS} \
 		x11/gnome/doc-utils
-RUN_DEPENDS=	x11/gnome/zenity
+RUN_DEPENDS=	x11/gnome/zenity \
+		x11/gnome/themes-standard \
+		fonts/cantarell-fonts
 
 SEPARATE_BUILD=	concurrent
 DESKTOP_FILES=	Yes
@@ -49,19 +49,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 USE_GROFF =	Yes
-
-FLAVORS=	gtk2
-FLAVOR?=
-
-.if ${FLAVOR:L:Mgtk2}
-# defaults to the "Clearlooks" theme
-RUN_DEPENDS +=	x11/gnome/themes
-PATCH_LIST +=	patch-* gtk2-patch-src_metacity_schemas_in_in
-.else
-# defaults to the "Adwaita" theme and "Cantarell" font
-RUN_DEPENDS +=	x11/gnome/themes-standard \
-		fonts/cantarell-fonts
-.endif
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/metacity

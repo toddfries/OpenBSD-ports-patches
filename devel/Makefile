@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.963 2011/08/27 06:47:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.967 2011/09/15 15:50:45 sthen Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -58,6 +58,7 @@
      SUBDIR += codeblocks
      SUBDIR += codeworker
      SUBDIR += commoncpp
+     SUBDIR += commons-io
      SUBDIR += cook
      SUBDIR += coxpcall
      SUBDIR += cppcheck
@@ -102,10 +103,8 @@
      SUBDIR += fossil
      SUBDIR += fox
      SUBDIR += fribidi
-     SUBDIR += gal2
      SUBDIR += gconf-editor
      SUBDIR += gconf2
-     SUBDIR += gconf2,gtk2
      SUBDIR += gconfmm
      SUBDIR += geany
      SUBDIR += geotiff
@@ -117,7 +116,6 @@
      SUBDIR += git
      SUBDIR += git-cola
      SUBDIR += glade
-     SUBDIR += glade3
      SUBDIR += glib
      SUBDIR += glib2
      SUBDIR += glib2mm
@@ -345,6 +343,7 @@
      SUBDIR += netbeans
      SUBDIR += nspr
      SUBDIR += ocaml-calendar
+     SUBDIR += ocaml-pcre
      SUBDIR += ode
      SUBDIR += omake
      SUBDIR += opencm

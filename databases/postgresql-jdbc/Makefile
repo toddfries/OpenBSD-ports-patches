@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.10 2010/12/05 18:24:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2011/09/06 19:28:36 kili Exp $
 
 COMMENT-main=		JDBC Driver for PostgreSQL
 COMMENT-docs=		API docs for PostgreSQL JDBC Driver
 
-V=			8.2-505
+V=			9.0-801
 DISTNAME=		postgresql-jdbc-$V
 PKGNAME-main=		postgresql-jdbc-${V:S/-/./}
-REVISION-main=		2
 PKGNAME-docs=		postgresql-jdbc-docs-${V:S/-/./}
 PKG_ARCH-docs=		*
-CATEGORIES=		databases java
+CATEGORIES=		databases
 
 MULTI_PACKAGES=		-main -docs
 
@@ -29,18 +28,16 @@ EXTRACT_SUFX=		.src.tar.gz
 MODULES=		java
 MODJAVA_VER?=		1.5+
 MODJAVA_JRERUN=		yes
+MODJAVA_BUILD=		ant
+MODJAVA_BUILD_TARGET=	all publicapi
 
-BUILD_DEPENDS=		devel/apache-ant
 REGRESS_DEPENDS=	databases/postgresql \
-			java/junit=3.8.2
+			java/junit
 RUN_DEPENDS-docs=
 
-JUNIT_JAR=		${LOCALBASE}/share/java/classes/junit-3.8.2/junit.jar
+JUNIT_JAR=		${LOCALBASE}/share/java/classes/junit/junit.jar
 
 WRKDIST=		${WRKDIR}/${DISTNAME}.src
-
-do-build:
-	cd ${WRKDIST} && JAVA_HOME=${JAVA_HOME} ant all publicapi
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/postgresql/java
@@ -69,7 +66,6 @@ pre-regress:
 	fi
 	${PG} ${LOCALBASE}/bin/initdb -A trust
 	${PG} ${LOCALBASE}/bin/pg_ctl -w start
-	${PG} ${LOCALBASE}/bin/createlang plpgsql template1
 	${PG} ${LOCALBASE}/bin/createuser -SDRli test
 	${PG} ${LOCALBASE}/bin/createdb -O test test
 

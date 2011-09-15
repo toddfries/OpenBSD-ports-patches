@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.709 2011/08/21 16:26:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.711 2011/09/05 07:26:25 giovanni Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -89,6 +89,7 @@
      SUBDIR += flowd
      SUBDIR += flvstreamer
      SUBDIR += fmirror
+     SUBDIR += fpdns
      SUBDIR += fping
      SUBDIR += freeradius
      SUBDIR += freetalk
@@ -456,6 +457,7 @@
      SUBDIR += rrdtool
      SUBDIR += rsnapshot
      SUBDIR += rsync
+     SUBDIR += rsync,iconv
      SUBDIR += rtg
      SUBDIR += rtmpdump
      SUBDIR += rtorrent

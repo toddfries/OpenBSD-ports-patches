@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.47 2011/06/08 17:41:57 rpointel Exp $
+# $OpenBSD: Makefile,v 1.49 2011/09/12 12:04:16 jasper Exp $
+
+BROKEN= 		update needs fixed clutter/Mesa
 
 COMMENT=		collection of games for the GNOME desktop
 
@@ -18,6 +20,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+EXTRACT_SUFX=		.tar.bz2
 
 WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage rsvg-2
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm guile

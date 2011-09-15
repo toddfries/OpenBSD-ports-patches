@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2011/08/16 08:11:51 robert Exp $
+# $OpenBSD: Makefile,v 1.44 2011/09/14 19:12:18 naddy Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -14,6 +14,9 @@ PKGNAME=	libreoffice-${VERSION}
 PKGNAME-main=	libreoffice-${VERSION}
 PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
+REVISION-main=	1
+REVISION-kde=	0
+REVISION-java=	1
 CATEGORIES=	editors productivity
 
 EPOCH=		0
@@ -137,7 +140,7 @@ MODULES+=	lang/python \
 MODGCONF2_LIBDEP=No
 LIB_DEPENDS-main=x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
-		db->=4,<5:databases/db/v4 \
+		databases/db/v4 \
 		textproc/libxslt \
 		net/curl \
 		net/neon \
@@ -181,7 +184,7 @@ MODULES+=		java
 MODJAVA_VER=		1.4+
 MODJAVA_JRERUN=		Yes
 .endif
-LIB_DEPENDS-java=	db-java->=4,<5:databases/db/v4,-java,java \
+LIB_DEPENDS-java=	databases/db/v4,-java,java \
 			devel/apache-ant>=1.8.2
 RUN_DEPENDS-java=	${MODJAVA_RUN_DEPENDS} \
 			editors/libreoffice \

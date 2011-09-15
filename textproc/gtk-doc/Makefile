@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.25 2011/04/05 17:22:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2011/09/14 15:35:40 jasper Exp $
 
 COMMENT=	GTK C code documentation system
 
-GNOME_VERSION=	1.17
+GNOME_VERSION=	1.18
 GNOME_PROJECT=	gtk-doc
 
 CATEGORIES=    	textproc devel
@@ -36,6 +36,8 @@ RUN_DEPENDS=		textproc/openjade \
 			editors/vim,no_x11
 
 REGRESS_DEPENDS=	shells/bash
+
+FAKE_FLAGS=		pkgconfigdir=${PREFIX}/lib/pkgconfig/
 
 post-extract:
 	cp ${LOCALBASE}/share/xml/docbook/catalog.xml \

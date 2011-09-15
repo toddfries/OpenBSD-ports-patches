@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2011/06/08 17:32:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.19 2011/09/12 16:47:21 ajacoutot Exp $
 
 BROKEN-hppa=		linking .libs/python-libpst.o fails
 
@@ -10,7 +10,9 @@ SHARED_LIBS +=  pst                  1.0      # .4.1
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-python=		py-${DISTNAME}
-REVISION-python=	0
+
+REVISION-main=		0
+REVISION-python=	1
 
 CATEGORIES=		converters mail
 
@@ -29,7 +31,7 @@ WANTLIB-main += c expat fontconfig freetype jpeg m png pthread stdc++
 WANTLIB-main += gd>=20 z
 
 WANTLIB-python += ${cWANTLIB}
-WANTLIB-python += pst>=1 boost_python>=1 util
+WANTLIB-python += pst>=1 util boost_python
 
 MASTER_SITES=		${HOMEPAGE}/packages/
 
@@ -39,7 +41,7 @@ MODULES=		converters/libiconv \
 			lang/python
 
 BUILD_DEPENDS=		${RUN_DEPENDS-main}
-RUN_DEPENDS-main=	graphics/ImageMagick
+RUN_DEPENDS-main=	graphics/ImageMagick,no_x11
 LIB_DEPENDS-main=	${MODLIBICONV_LIB_DEPENDS} \
 			graphics/gd
 

@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1101 2011/07/20 08:46:20 sthen Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1104 2011/09/10 08:20:56 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -113,7 +113,7 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	REGRESS_IS_INTERACTIVE \
 	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
-	SHARED_LIBS TARGETS \
+	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
@@ -517,6 +517,7 @@ BUILD_PKGPATH := ${PKGPATH}
 _PKG_ARGS =
 _README_DIR = ${LOCALBASE}/share/doc/pkg-readmes
 
+PSEUDO_FLAVOR =
 # (applies only to PLIST for now)
 .if !empty(FLAVORS)
 .  for _i in ${FLAVORS:L}
@@ -528,6 +529,8 @@ BUILD_PKGPATH := ${BUILD_PKGPATH},${_i}
 .    if empty(PSEUDO_FLAVORS:L:M${_i})
 FLAVOR_EXT := ${FLAVOR_EXT}-${_i}
 BASE_PKGPATH := ${BASE_PKGPATH},${_i}
+.    else
+PSEUDO_FLAVOR := ${PSEUDO_FLAVOR},${_i}
 .    endif
 _PKG_ARGS += -D${_i}=1
 .    endif
@@ -755,6 +758,12 @@ WRKINST ?= ${FAKEOBJDIR_${PKGPATH}}/${PKGNAME}${_FLAVOR_EXT2}
 WRKINST ?= ${WRKDIR}/fake-${ARCH}${_FLAVOR_EXT2}
 .endif
 
+.if ${SEPARATE_BUILD:L:Mflavored}
+OLD_WRKDIR_NAME = w-${PKGNAME}
+.else
+OLD_WRKDIR_NAME = w-${PKGNAME}${_FLAVOR_EXT2}
+.endif
+
 .if !empty(WRKOBJDIR_${PKGPATH})
 .  if ${SEPARATE_BUILD:L:Mflavored}
 WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}
@@ -762,11 +771,7 @@ WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}
 WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}${_FLAVOR_EXT2}
 .  endif
 .else
-.  if ${SEPARATE_BUILD:L:Mflavored}
-WRKDIR ?= ${.CURDIR}/w-${PKGNAME}
-.  else
-WRKDIR ?= ${.CURDIR}/w-${PKGNAME}${_FLAVOR_EXT2}
-.  endif
+WRKDIR ?= ${.CURDIR}/${OLD_WRKDIR_NAME}
 .endif
 
 WRKDIST ?= ${WRKDIR}/${DISTNAME}
@@ -1668,7 +1673,6 @@ _complete_pkgspec = \
 ###
 ### end of variable setup. Only targets now
 ###
-
 check-register:
 .if empty(PLIST_DB)
 	@exit 1

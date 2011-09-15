@@ -1,4 +1,4 @@
-# $OpenBSD: java.port.mk,v 1.21 2011/01/13 22:35:52 kurt Exp $
+# $OpenBSD: java.port.mk,v 1.26 2011/09/01 17:13:51 jasper Exp $
 
 # Set MODJAVA_VER to x.y or x.y+ based on the version
 # of the jdk needed for the port. x.y  means any x.y jdk.
@@ -99,3 +99,35 @@ MODJAVA_JRERUN?=no
 .endif
 
 RUN_DEPENDS+= ${MODJAVA_RUN_DEPENDS}
+
+# Append 'java' to the list of categories.
+CATEGORIES+=	java
+
+# Allow ports to that use devel/apache-ant to set MODJAVA_BUILD=ant
+# In case a non-standard build target, build file or build directory are
+# needed, set MODJAVA_BUILD_TARGET, MODJAVA_BUILD_FILE or MODJAVA_BUILD_DIR
+# respectively.
+.if defined(MODJAVA_BUILD) && ${MODJAVA_BUILD:L} == "ant"
+    BUILD_DEPENDS += devel/apache-ant
+    MODJAVA_BUILD_TARGET ?=
+    MODJAVA_BUILD_FILE ?= build.xml
+    MODJAVA_BUILD_DIR ?= ${WRKSRC}
+    MODJAVA_BUILD_ARGS ?=
+.   if !target(do-build)
+do-build:
+	cd ${MODJAVA_BUILD_DIR} && \
+		${SETENV} ${MAKE_ENV} ${LOCALBASE}/bin/ant \
+		-buildfile ${MODJAVA_BUILD_FILE} ${MODJAVA_BUILD_TARGET} \
+		${MODJAVA_BUILD_ARGS}
+.   endif 
+.endif
+
+# Convenience variables.
+# Ports that install .jar files for public use (ie, in ${MODJAVA_JAR_DIR})
+# please install unversioned .jar files. If a port installs
+# multiple .jar files, use a ${MODJAVA_JAR_DIR}/<project_name>/ prefix.
+# This will help other ports to pickup these classes.
+MODJAVA_SHARE_DIR = ${PREFIX}/share/java/
+MODJAVA_JAR_DIR   = ${MODJAVA_SHARE_DIR}/classes/
+MODJAVA_EXAMPLE_DIR = ${MODJAVA_SHARE_DIR}/examples/
+MODJAVA_DOC_DIR   = ${MODJAVA_SHARE_DIR}/doc/

@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.14 2011/05/30 12:53:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/09/12 15:30:14 ajacoutot Exp $
+
+BROKEN=		does not compile with new libgda
 
 SHARED_ONLY=	Yes
 
@@ -18,6 +20,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+EXTRACT_SUFX=		.tar.bz2
 
 WANTLIB += ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo dbus-1 dbus-glib-1
@@ -41,7 +45,7 @@ LIB_DEPENDS=	x11/gnome/gdl \
 		x11/gnome/utils \
 		x11/gtksourceview \
 		textproc/gtkspell \
-		STEM-*-gtk2:x11/gnome/gucharmap,gtk2 \
+		gtk2:x11/gnome/gucharmap \
 		x11/gnome/libgda \
 		devel/libunique \
 		devel/json-glib

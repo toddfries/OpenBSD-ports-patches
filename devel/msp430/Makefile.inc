@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.3 2011/07/11 19:15:03 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.7 2011/09/05 08:28:42 jasper Exp $
 
 TARGET=			msp430
 
@@ -6,18 +6,30 @@ CATEGORIES+=		devel devel/msp430
 
 MAINTAINER?=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
+# mspgcc4 was forked from mspgcc several years ago due to dormancy of the
+# original project. Currently mspgcc is being developed again and unifying
+# the different msp430 architectures (uniarch).
+# For a list of changes this uniarch approach brings, please refer to:
+# http://sourceforge.net/apps/mediawiki/mspgcc/index.php?title=Devel:Uniarch
 HOMEPAGE?=		http://mspgcc4.sourceforge.net/
 
-# GPLv3
+# binutils/gcc/gdb: GPLv3
+# libc/msp430mcu: BSD3/ISC
 PERMIT_PACKAGE_CDROM?=   Yes
 PERMIT_PACKAGE_FTP?=     Yes
 PERMIT_DISTFILES_CDROM?= Yes
 PERMIT_DISTFILES_FTP?=   Yes
 
-# The patches on http://distfiles.nl/mspgcc/ are taken from
-# git://mspgcc4.git.sourceforge.net/gitroot/mspgcc4/mspgcc4
+MASTER_SITES?=		${MASTER_SITE_SOURCEFORGE:=mspgcc/}
 
+# The patches on http://distfiles.nl/mspgcc/ are taken from
+# git://mspgcc.git.sourceforge.net/gitroot/mspgcc/
+# or from the official release tarballs.
 MASTER_SITES0=		http://distfiles.nl/mspgcc/
+
+# These are the patches intended for the LTS releases.
+MASTER_SITES1= ${MASTER_SITE_SOURCEFORGE:=mspgcc/Patches/LTS/20110716/}
+
 PATCH_DIST_STRIP?=	-p1
 
 EXTRACT_SUFX?=		.tar.bz2
