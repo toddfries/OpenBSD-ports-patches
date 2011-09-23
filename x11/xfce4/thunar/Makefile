@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.36 2011/05/30 18:20:15 landry Exp $
+# $OpenBSD: Makefile,v 1.40 2011/09/20 23:03:09 landry Exp $
 
 COMMENT=	Xfce4 file manager
 
-XFCE_VERSION=	1.2.2
+XFCE_VERSION=	1.2.3
 XFCE_PROJECT=	Thunar
 # :L is here for a reason
 PKGNAME=	${DISTNAME:L}
@@ -16,7 +16,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
 NO_REGRESS=	Yes
 
 CONFIGURE_ENV=	ac_cv_header_sys_ucred_h=yes \
@@ -45,7 +45,7 @@ WANTLIB =	exo-1 xfce4ui-1 xfce4panel-1.0 exif notify \
 		GL Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		Xi Xinerama Xrandr Xrender Xxf86vm drm execinfo expat \
 		fontconfig freetype m pangocairo-1.0 pangoft2-1.0 pixman-1 \
-		png pthread-stubs startup-notification-1 xcb xcb-atom \
-		xcb-aux xcb-event xcb-render xcb-shm z
+		png pthread-stubs startup-notification-1 xcb X11-xcb \
+		xcb-aux xcb-render xcb-shm z stdc++
 
 .include <bsd.port.mk>

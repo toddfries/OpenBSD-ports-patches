@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1 2011/04/20 15:18:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2011/09/23 10:23:27 naddy Exp $
 
 COMMENT=		GTK+2 remote desktop client
 
 DISTNAME=		remmina-0.9.3
+REVISION=		1
 
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 avahi-client
@@ -14,7 +15,7 @@ WANTLIB += pangoft2-1.0 pixman-1 png pthread pthread-stubs unique-1.0
 WANTLIB += vte xcb xcb-render xcb-shm z
 
 LIB_DEPENDS=		devel/libunique \
-			devel/vte \
+			devel/vte,gtk2 \
 			net/avahi,-gtk,no_mono,no_qt3,no_qt4 \
 			security/libgcrypt
 

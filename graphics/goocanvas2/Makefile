@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/09/12 14:07:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT=		canvas widget for GTK+ based on Cairo
 
 GNOME_PROJECT=		goocanvas
 GNOME_VERSION=		2.0.0
 PKGNAME=		goocanvas2-${GNOME_VERSION}
+REVISION=		0
 
 SHARED_LIBS +=  goocanvas-2.0             0.0 # 10.1
 CATEGORIES=		graphics
@@ -32,8 +33,6 @@ MODULES=		devel/gettext \
 LIB_DEPENDS=		x11/gtk+3
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-gtk-doc
 CONFIGURE_ENV=	 	LDFLAGS="-L${LOCALBASE}/lib" \
 			CPPFLAGS="-I${LOCALBASE}/include"
 

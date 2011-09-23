@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2011/09/12 12:50:24 nigel Exp $
+# $OpenBSD: Makefile,v 1.8 2011/09/16 18:05:04 nigel Exp $
 
 COMMENT=	Java Native Access (JNA)
 
 V=		3.2.7
 DISTNAME=	twall-jna-$V-0-g3727f95
 PKGNAME=	jna-$V
-REVISION=	2
+REVISION=	3
 CATEGORIES=	devel
 
 MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
@@ -25,6 +25,7 @@ MODULES=	java
 MODJAVA_VER=	1.6+
 MODJAVA_BUILD=	ant
 MODJAVA_BUILD_DIR=${WRKSRC}/jnalib/
+MAKE_ENV += JAVA_HOME=${JAVA_HOME}
 
 # jnalib/build.xml specifically wants gmake (and ggrep)
 USE_GMAKE=	Yes

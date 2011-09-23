@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2011/07/14 15:02:18 naddy Exp $
+# $OpenBSD: Makefile,v 1.31 2011/09/20 08:01:20 landry Exp $
 
 COMMENT-main=		network backup solution (client)
 COMMENT-server=		network backup solution (server)
@@ -13,9 +13,9 @@ FULLPKGNAME-bat=	bacula-bat-$V
 FULLPKGPATH-bat=	${PKGPATH},-bat
 CATEGORIES=		sysutils
 
-REVISION-main=		2
-REVISION-server=	2
-REVISION-bat=		0
+REVISION-main=		3
+REVISION-server=	3
+REVISION-bat=		1
 
 SHARED_LIBS +=		bac		1.0 # .1.0
 SHARED_LIBS +=		baccfg		1.0 # .1.0
@@ -54,6 +54,9 @@ NO_REGRESS=		yes
 PSEUDO_FLAVORS=		no_bat no_server
 FLAVORS=		pgsql mysql sqlite3
 FLAVOR?=		sqlite3
+.if empty(FLAVOR)
+FLAVOR =		sqlite3
+.endif
 
 CONFIGURE_ARGS=		--enable-smartalloc \
 			--prefix=${PREFIX} \

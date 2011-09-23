@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.34 2011/09/20 21:10:01 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	applications integration into Nautilus
 
 GNOME_PROJECT=	nautilus-sendto
 GNOME_VERSION=	3.0.0
+REVISION=	0
 
 CATEGORIES=	misc net
 
@@ -40,9 +41,7 @@ RUN_DEPENDS=	archivers/zip \
 LIB_DEPENDS=	databases/evolution-data-server \
 		net/gupnp/core
 
-CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--with-gajim=${LOCALBASE}
+CONFIGURE_ARGS+= --with-gajim=${LOCALBASE}
 
 LIBTOOL_FLAGS=	--tag=disable-static
 

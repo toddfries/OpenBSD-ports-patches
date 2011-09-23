@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.14 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2011/09/20 21:17:26 ajacoutot Exp $
+
+# XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
+CFLAGS +=	"-DG_CONST_RETURN=const"
 
 COMMENT =	library for writing single instance GTK+2 applications
 
 GNOME_PROJECT =	libunique
 GNOME_VERSION =	1.1.6
-REVISION=	1
+REVISION=	3
 
 SHARED_LIBS +=  unique-1.0           2.0      # .100.6
 CATEGORIES =	devel
@@ -25,17 +28,14 @@ WANTLIB += dbus-glib-1 drm expat fontconfig freetype gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs xcb xcb-render
-WANTLIB += xcb-shm z
+WANTLIB += xcb-shm z ffi
 
-BUILD_DEPENDS=		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection \
-			--with-x
+CONFIGURE_ARGS =	--with-x
 
 MODULES =	devel/gettext \
 		x11/gnome

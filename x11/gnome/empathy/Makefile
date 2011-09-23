@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.72 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.76 2011/09/20 21:10:00 jasper Exp $
 
 BROKEN=			needs an update (GNOME3)
 
@@ -7,7 +7,7 @@ COMMENT= 		telepathy based messenger for GNOME
 GNOME_PROJECT=		empathy
 GNOME_VERSION=		2.34.0
 
-REVISION=		5
+REVISION=		6
 
 CATEGORIES=		net
 
@@ -68,14 +68,13 @@ RUN_DEPENDS=		devel/iso-codes \
 			net/telepathy/telepathy-salut \
 			x11/gnome/icon-theme>=2.30.3
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_TOOLS= 	yelp
 MODGCONF2_SCHEMAS_DIR=	empathy
 
 AUTOCONF_VERSION=	2.65
 CONFIGURE_STYLE=	autoconf gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-spell=Yes \
+CONFIGURE_ARGS+=	--enable-spell=Yes \
 			--enable-location=Yes \
 			--enable-map=Yes\
 			--enable-webkit=no \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.42 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.46 2011/09/20 21:10:00 jasper Exp $
 
 BROKEN=		needs an update (GNOME3)
 
@@ -7,7 +7,7 @@ COMMENT=	SIP and H.323 compatible conferencing application
 GNOME_PROJECT=	ekiga
 GNOME_VERSION=	3.2.7
 
-REVISION=	5
+REVISION=	6
 
 CATEGORIES=	net multimedia
 
@@ -45,15 +45,14 @@ LIB_DEPENDS=	net/avahi \
 		devel/libsigc++-2 \
 		devel/libnotify>=0.7.2
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES=Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS= yelp
 MODGCONF2_SCHEMAS_DIR= ekiga
 USE_GROFF =	Yes
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib -pthread"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-avahi \
+CONFIGURE_ARGS=	--enable-avahi \
 		--disable-gnome \
 		--with-ldap-dir=${LOCALBASE} \
 		--with-libsasl2-dir=${LOCALBASE}

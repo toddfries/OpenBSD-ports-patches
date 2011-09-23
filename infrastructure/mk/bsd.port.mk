@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1104 2011/09/10 08:20:56 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1109 2011/09/21 09:02:09 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -264,12 +264,6 @@ ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
 NOMANCOMPRESS ?= Yes
 DEF_UMASK ?= 022
 
-.if exists(${.CURDIR}/Makefile.${ARCH})
-.include "${.CURDIR}/Makefile.${ARCH}"
-.elif exists(${.CURDIR}/Makefile.${MACHINE_ARCH})
-.include "${.CURDIR}/Makefile.${MACHINE_ARCH}"
-.endif
-
 # MODULES support
 # reserved name spaces: for module=NAME, modname*, _modname* variables and
 # targets.
@@ -337,31 +331,10 @@ FULLDISTDIR ?= ${DISTDIR}/${DIST_SUBDIR}
 FULLDISTDIR ?= ${DISTDIR}
 .endif
 
-.if exists(${.CURDIR}/patches.${ARCH})
-PATCHDIR ?= ${.CURDIR}/patches.${ARCH}
-.elif exists(${.CURDIR}/patches.${MACHINE_ARCH})
-PATCHDIR ?= ${.CURDIR}/patches.${MACHINE_ARCH}
-.else
 PATCHDIR ?= ${.CURDIR}/patches
-.endif
-
 PATCH_LIST ?= patch-*
-
-.if exists(${.CURDIR}/files.${ARCH})
-FILESDIR ?= ${.CURDIR}/files.${ARCH}
-.elif exists(${.CURDIR}/files.${MACHINE_ARCH})
-FILESDIR ?= ${.CURDIR}/files.${MACHINE_ARCH}
-.else
 FILESDIR ?= ${.CURDIR}/files
-.endif
-
-.if exists(${.CURDIR}/pkg.${ARCH})
-PKGDIR ?= ${.CURDIR}/pkg.${ARCH}
-.elif exists(${.CURDIR}/pkg.${MACHINE_ARCH})
-PKGDIR ?= ${.CURDIR}/pkg.${MACHINE_ARCH}
-.else
 PKGDIR ?= ${.CURDIR}/pkg
-.endif
 
 PREFIX ?= ${LOCALBASE}
 TRUEPREFIX ?= ${PREFIX}
@@ -1653,20 +1626,23 @@ _parse_spec = \
 	esac; unset IFS; ${_flavor_fragment}
 
 _compute_default = \
-	if ! default=`eval $$toset exec ${MAKE} _print-packagename`; then \
-		echo 1>&2 "Problem with dependency ${_i}"; \
+	set -f; \
+	if set -- `eval $$toset exec ${MAKE} _print-metadata`; then \
+		default=$$1; pkgspec=$$2; pkgpath=$$3; \
+	else \
+		echo 1>&2 "Problem with dependency $$d"; \
 		exit 1; \
-	fi
-
-_set_pkg2default= pkg=`eval $$toset exec ${MAKE} _print-pkgspec`
-_set_stem2default=stem=`echo $$default|${_version2stem}`; \
-		pkg="$$stem$${pkg\#STEM}"
+	fi; \
+	set +f
 
 _complete_pkgspec = \
 	${_compute_default}; \
 	case "X$$pkg" in \
-	X) ${_set_pkg2default};; \
-	XSTEM*) ${_set_stem2default};; \
+	X) \
+		pkg=$$pkgspec;; \
+	XSTEM*) \
+		stem=`echo $$default|${_version2stem}`; \
+		pkg="$$stem$${pkg\#STEM}";; \
 	esac
 
 
@@ -1880,8 +1856,8 @@ _internal-prepare: _internal-build-depends _internal-buildlib-depends \
 
 # and the rules for the actual dependencies
 
-_print-pkgspec:
-	@echo '${PKGSPEC${SUBPACKAGE}}'
+_print-metadata:
+	@echo '${FULLPKGNAME${SUBPACKAGE}}' '${PKGSPEC${SUBPACKAGE}}' '${FULLPKGPATH${SUBPACKAGE}}'
 
 _print-packagename:
 .if ${_FULL_PACKAGE_NAME:L} == "yes"
@@ -1894,6 +1870,7 @@ _print-packagename:
 .  if !target(${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g})
 ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g}: ${_WRKDIR_COOKIE}
 	@unset DEPENDS_TARGET _MASTER WRKDIR|| true; \
+	d='${_i}'; \
 	echo '${_i}'|{ \
 		${_parse_spec}; \
 		checkinstall=true; \
@@ -1917,18 +1894,7 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 			exit 1;; \
 		esac; \
 		toset="$$toset _SOLVING_DEP=Yes"; \
-		${_compute_default}; \
-		case "X$$pkg" in \
-		X) \
-			if ! ${_set_pkg2default}; \
-			then \
-				${ECHO_MSG} "===> Error in evaluating dependency ${_i}"; \
-				${REPORT_PROBLEM}; \
-				exit 1; \
-			fi;; \
-		XSTEM*) \
-			${_set_stem2default};; \
-		esac; \
+		${_complete_pkgspec}; \
 		what=$$pkg; \
 		if ! ${PKG_INFO} ${PKGDB_LOCK} -q -r "$$pkg" $$default; \
 		then \
@@ -2312,7 +2278,7 @@ ${_WRKDIR_COOKIE}:
 ${_EXTRACT_COOKIE}: ${_WRKDIR_COOKIE} ${_SYSTRACE_COOKIE}
 	@${_MAKE} _internal-checksum _internal-prepare
 	@${ECHO_MSG} "===>  Extracting for ${FULLPKGNAME}${_MASTER}"
-.if ${_USE_XZ:L} != "no"
+.if ${_USE_XZ:L} != "no" && ${SHARED_ONLY:L} != "yes"
 	@echo ""; \
 	echo "*** WARNING: this port uses xz distfiles: it will not build on vax."; \
 	echo ""
@@ -3084,10 +3050,10 @@ print-package-args: ${lib_depends_args} ${wantlib_args}
 
 run-depends-args:
 .for _i in ${RUN_DEPENDS${SUBPACKAGE}}
-	@echo '${_i}' |{ \
+	@d='${_i}'; echo '${_i}' |{ \
 		${_parse_spec}; \
 		${_complete_pkgspec}; \
-		echo "-P $$subdir:$$pkg:$$default"; \
+		echo "-P $$pkgpath:$$pkg:$$default"; \
 	}
 .endfor
 
@@ -3095,10 +3061,10 @@ run-depends-args:
 # since we're trying to figure out what's actually needed
 all-lib-depends-args:
 .for _i in ${LIB_DEPENDS${SUBPACKAGE}}
-	@echo '${_i}' |{ \
+	@d='${_i}'; echo '${_i}' |{ \
 		${_parse_spec}; \
 		${_complete_pkgspec}; \
-		echo "-P $$subdir:$$pkg:$$default"; \
+		echo "-P $$pkgpath:$$pkg:$$default"; \
 	}
 .endfor
 
@@ -3109,7 +3075,7 @@ lib-depends-args wantlib-args port-wantlib-args fake-wantlib-args:
 
 lib-depends-args:
 .  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
-	@echo '${_i}'|{ \
+	@d='${_i}'; echo '${_i}'|{ \
 		${_parse_spec}; \
 		${_complete_pkgspec}; \
 		libs=`eval $$toset ${MAKE} print-plist-libs`; \
@@ -3127,7 +3093,7 @@ lib-depends-args:
 			esac; \
 		done; \
 		exec 2>&3; \
-		if $$needed; then echo "-P $$subdir:$$pkg:$$default"; fi; \
+		if $$needed; then echo "-P $$pkgpath:$$pkg:$$default"; fi; \
 	}
 .  endfor
 
@@ -3504,7 +3470,7 @@ _all_phony = ${_recursive_depends_targets} \
 	pre-fetch pre-install pre-package pre-patch pre-regress prepare \
 	print-build-depends print-run-depends readme readmes rebuild \
 	regress-depends regress-depends-list run-depends run-depends-list \
-    show-required-by subpackage uninstall mirror-maker-fetch _print-pkgspec \
+    show-required-by subpackage uninstall mirror-maker-fetch _print-metadata \
 	lock unlock \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
 	port-wantlib-args fake-wantlib-args no-wantlib-args

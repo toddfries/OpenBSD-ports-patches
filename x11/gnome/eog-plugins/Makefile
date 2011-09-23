@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.25 2011/09/20 22:54:25 jasper Exp $
 
 COMMENT=		plugins for EOG
 
 GNOME_PROJECT=		eog-plugins
 GNOME_VERSION=		3.0.0
-REVISION=		2
+REVISION=		3
 
 CATEGORIES=		graphics
 
@@ -41,8 +41,7 @@ RUN_DEPENDS=		x11/gnome/eog>=3.0
 PLUGINS=		fit-to-width,exif-display,send-by-mail,postasa
 
 CONFIGURE_STYLE= 	gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-python \
+CONFIGURE_ARGS+=	--enable-python \
 			--with-plugins=${PLUGINS}
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

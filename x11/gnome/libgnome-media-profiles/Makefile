@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/09/20 21:10:00 jasper Exp $
 
 COMMENT=	media profiles management library
 
 GNOME_PROJECT=	libgnome-media-profiles
 GNOME_VERSION=	3.0.0
-REVISION=	0
+REVISION=	1
 
 SHARED_LIBS +=  gnome-media-profiles-3.0  0.0 # 0.0
 
@@ -31,13 +31,13 @@ MODULES=	devel/gconf2 \
 		x11/gnome
 
 MODGCONF2_SCHEMAS_DIR=libgnome-media-profiles
-MODGNOME_HELP_FILES=Yes
+
+MODGNOME_TOOLS= yelp
 
 LIB_DEPENDS=	x11/gtk+3 \
 		multimedia/gstreamer-0.10/core
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 
 .include <bsd.port.mk>

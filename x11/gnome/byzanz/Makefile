@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2011/09/12 14:48:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2011/09/20 22:54:25 jasper Exp $
 
 COMMENT=		simple desktop recording tool
 
 # git clone of b5a46ddca3b2b207f7f6ba444f9e0f02dc23128e
 GNOME_VERSION=		0.2.3.1
 GNOME_PROJECT=		byzanz
+REVISION=	0
 
 CATEGORIES=		multimedia
 
@@ -35,7 +36,6 @@ LIB_DEPENDS=		x11/gnome/panel>=3.0.0 \
 MODGCONF2_SCHEMAS_DIR=	byzanz
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
@@ -47,7 +47,9 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 AUTOCONF_VERSION=	2.68
 AUTOMAKE_VERSION=	1.11
 
-BUILD_DEPENDS+=		devel/libtool \
+BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
+			${MODGNU_AUTOMAKE_DEPENDS} \
+			devel/libtool \
 			x11/gnome/common
 
 pre-configure:

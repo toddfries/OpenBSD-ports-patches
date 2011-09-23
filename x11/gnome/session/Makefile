@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.172 2011/09/15 07:46:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.178 2011/09/21 09:42:25 ajacoutot Exp $
 
 COMMENT=		GNOME session
 
 GNOME_PROJECT=		gnome-session
 GNOME_VERSION=		3.0.2
 
-REVISION=		22
+REVISION=		26
 
 CATEGORIES=		x11
 
@@ -71,10 +71,9 @@ RUN_DEPENDS+=	x11/gnome/at-spi2-atk
 # "gnome" metapackage.
 RUN_DEPENDS+=	devel/gconf2,-polkit
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=		Yes
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-rebuilds \
+CONFIGURE_ARGS=	--disable-rebuilds \
 		--enable-docbook-docs
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

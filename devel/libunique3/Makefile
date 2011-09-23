@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT =	library for writing single instance GTK+3 applications
 
 GNOME_PROJECT =	libunique
 GNOME_VERSION =	3.0.2
+REVISION=		0
 
 PKGNAME=	${GNOME_PROJECT}3-${GNOME_VERSION}
 
@@ -31,7 +32,7 @@ WANTLIB += gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread-stubs xcb xcb-render xcb-shm
 WANTLIB += z
 
-BUILD_DEPENDS=		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 
 LIB_DEPENDS =		x11/dbus-glib \
 			x11/gtk+3
@@ -39,10 +40,7 @@ LIB_DEPENDS =		x11/dbus-glib \
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection \
-			--enable-bacon \
+CONFIGURE_ARGS =	--enable-bacon \
 			--with-x
 
 .include <bsd.port.mk>

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.78 2011/09/12 20:00:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.83 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT=		integrated music management application for GNOME
 
 GNOME_PROJECT=		rhythmbox
-GNOME_VERSION=		2.90.1.1
+GNOME_VERSION=		2.90.1.2
 
 SHARED_LIBS +=  rhythmbox-core       0.0      # .0.0
 
@@ -39,8 +39,7 @@ MODULES=		devel/gettext \
 			lang/python \
 			devel/dconf
 
-BUILD_DEPENDS=		devel/gobject-introspection \
-			audio/libmusicbrainz
+BUILD_DEPENDS=		audio/libmusicbrainz
 
 LIB_DEPENDS=		devel/libpeas \
 			audio/libgpod \
@@ -56,14 +55,13 @@ RUN_DEPENDS=		multimedia/gstreamer-0.10/py-gstreamer \
 # needed for sndio(7) support
 RUN_DEPENDS+=		multimedia/gstreamer-0.10/plugins-good
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_TOOLS= 	goi yelp
 
 CONFIGURE_STYLE= 	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--with-database=tree \
+CONFIGURE_ARGS=		--with-database=tree \
 			--with-gnome-keyring \
 			--with-ipod \
 			--with-mdns=avahi \
@@ -105,9 +103,8 @@ post-install:
 	find ${PREFIX} -type d -name rbzeitgeist | xargs -r rm -rf
 
 ### XXX remove this chunk when updating to a 'real' release ############
+# Sat Sep 17 15:51:41 CEST 2011
 MASTER_SITES=		http://distfiles.bsdfrog.org/
-
-WRKDIST=		${WRKDIR}/rhythmbox
 
 BUILD_DEPENDS +=	x11/gnome/common \
 			devel/autoconf/${AUTOCONF_VERSION} \

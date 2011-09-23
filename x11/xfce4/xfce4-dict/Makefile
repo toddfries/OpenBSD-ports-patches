@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/05/18 21:13:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2011/09/19 07:53:15 ajacoutot Exp $
 
 COMMENT=	Xfce4 dictionary application
 
@@ -13,7 +13,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
 
 LIB_DEPENDS=	x11/xfce4/xfce4-panel \
 		x11/xfce4/libxfcegui4

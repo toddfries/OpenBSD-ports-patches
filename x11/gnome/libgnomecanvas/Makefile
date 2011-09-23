@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.48 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.50 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -33,9 +33,7 @@ MODULES=	devel/gettext \
 LIB_DEPENDS=	devel/libglade2 \
 		graphics/libart
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--enable-glade
+CONFIGURE_ARGS=	--enable-glade
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 

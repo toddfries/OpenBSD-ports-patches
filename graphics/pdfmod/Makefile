@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/09/20 20:51:52 jasper Exp $
 
 COMMENT=	simple application for modifying PDF documents
 
 GNOME_PROJECT=	pdfmod
 GNOME_VERSION=	0.9.1
+REVISION=		0
 
 CATEGORIES=	graphics print
 
@@ -25,8 +26,8 @@ BUILD_DEPENDS=	devel/hyena \
 RUN_DEPENDS=	print/poppler \
 		x11/gnome/mono-gnome
 
-MODGNOME_HELP_FILES= Yes
-DESKTOP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

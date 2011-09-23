@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.25 2010/11/22 08:36:47 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2011/09/23 08:49:41 ajacoutot Exp $
 
 COMMENT=	CSS editor
 
 DISTNAME=	cssed-0.4.0
-REVISION=	9
+REVISION=	11
 CATEGORIES=	www editors
 
 HOMEPAGE=	http://cssed.sourceforge.net/
@@ -24,7 +24,7 @@ WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png
 WANTLIB += pthread pthread-stubs stdc++ xcb z vte xml2
 WANTLIB += xcb-render xcb-render-util
 
-LIB_DEPENDS=	devel/vte \
+LIB_DEPENDS=	devel/vte,gtk2 \
 		textproc/libxml
 
 MODULES=	devel/gettext

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.13 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2011/09/21 08:05:27 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	extra plugins for Anjuta IDE
 
 GNOME_PROJECT=	anjuta-extras
-GNOME_VERSION=	3.1.4
+GNOME_VERSION=	3.1.92
 
 CATEGORIES=	devel
 
@@ -37,8 +37,7 @@ LIB_DEPENDS=	x11/gnome/anjuta>=3.1.4
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static
+CONFIGURE_ARGS=	--disable-static
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

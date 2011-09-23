@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2011/09/12 15:30:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2011/09/20 21:04:25 jasper Exp $
 
 BROKEN=		does not compile with new libgda
 
@@ -9,7 +9,7 @@ COMMENT=	gettext(1) files editor for GNOME
 GNOME_PROJECT=	gtranslator
 GNOME_VERSION=	1.9.13
 
-REVISION=	4
+REVISION=	5
 
 CATEGORIES=	textproc devel
 
@@ -50,13 +50,11 @@ LIB_DEPENDS=	x11/gnome/gdl \
 		devel/libunique \
 		devel/json-glib
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES= Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS= 	yelp
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--with-gtkspell \
+CONFIGURE_ARGS=	--with-gtkspell \
 		--with-dictionary
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 			-I${LOCALBASE}/include/db4" \

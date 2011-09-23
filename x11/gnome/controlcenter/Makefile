@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2011/09/13 06:39:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -64,15 +64,14 @@ RUN_DEPENDS+=		x11/gnome/screensaver
 RUN_DEPENDS+=		sysutils/accountsservice \
 			security/apg
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 
 # Language code is synced with gdm but gnome-control-center does not
 # provide a --with-incomplete-locales configure switch.
 CFLAGS +=       -DWITH_INCOMPLETE_LOCALES
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-update-mimedb \
+CONFIGURE_ARGS=	--disable-update-mimedb \
 		--without-cheese \
 		--enable-cups
 

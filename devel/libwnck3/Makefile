@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT=		window navigator construction kit
 
 GNOME_PROJECT=		libwnck
 GNOME_VERSION=		3.0.2
 PKGNAME=		${GNOME_PROJECT}3-${GNOME_VERSION}
+REVISION=		0
 
 SHARED_LIBS +=  wnck-3               0.0      # 0.0
 
@@ -33,15 +34,12 @@ WANTLIB += xcb-render xcb-shm z
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 LIB_DEPENDS=		x11/gtk+3 \
 			devel/startup-notification
 
 CONFIGURE_STYLE= 	gnu
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-startup-notification \
-			--enable-introspection \
+CONFIGURE_ARGS+= 	--enable-startup-notification \
 			--program-suffix=3
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

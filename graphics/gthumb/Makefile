@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.42 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.46 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT=	image viewer and browser for GNOME
 
 GNOME_PROJECT=	gthumb
 GNOME_VERSION=	2.12.3
+REVISION=		0
 
 CATEGORIES=	graphics
 
@@ -45,15 +46,14 @@ LIB_DEPENDS=	devel/json-glib \
 		databases/sqlite3
 RUN_DEPENDS=	misc/shared-mime-info
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	gthumb
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-libopenraw \
+CONFIGURE_ARGS=	--disable-libopenraw \
 		--disable-libbrasero \
 		--enable-libsoup \
 		--enable-gnome-keyring \

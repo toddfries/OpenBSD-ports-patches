@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		desktop note-taking application written in C++
 
 GNOME_PROJECT=		gnote
 GNOME_VERSION=		0.7.5
+REVISION=	0
 
 SUBST_VARS=		GNOME_VERSION
 
@@ -37,8 +38,8 @@ LIB_DEPENDS=		sysutils/e2fsprogs>=1.41.4p5 \
 			textproc/libxslt \
 			x11/gtk2mm
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	gnote
 
 LIBTOOL_FLAGS+= 	--tag=disable-static
@@ -46,8 +47,7 @@ LIBTOOL_FLAGS+= 	--tag=disable-static
 AUTOCONF_VERSION=	2.68
 
 CONFIGURE_STYLE=	autoconf gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-static
+CONFIGURE_ARGS+=	--disable-static
 # needs libpanelappletmm and dbus-c++
 CONFIGURE_ARGS+=	--disable-applet \
 			--disable-dbus

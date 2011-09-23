@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.16 2011/04/21 07:05:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2011/09/20 21:04:25 jasper Exp $
 
 COMMENT=		Gtk-based GUI client for Twitter
 
 GNOME_PROJECT=		twitux
 GNOME_VERSION=		0.69
-REVISION=		8
+REVISION=		1
+EPOCH=			0
 
 CATEGORIES=     	net
 
@@ -45,16 +46,15 @@ MODULES=	devel/gconf2 \
 
 MODGCONF2_SCHEMAS_DIR=	twitux
 
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
 
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-dbus=yes \
+CONFIGURE_ARGS=	--enable-dbus=yes \
 		--enable-gnome-keyring=yes \
 		--enable-spell=yes
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 .include <bsd.port.mk>

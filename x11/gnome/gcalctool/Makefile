@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.49 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.52 2011/09/20 20:52:46 jasper Exp $
 
 COMMENT=		GTK desktop calculator
 
 GNOME_PROJECT=		gcalctool
 GNOME_VERSION=		6.0.2
 
-REVISION=		4
+REVISION=		5
 
 CATEGORIES=		math
 
@@ -35,8 +35,8 @@ YACC=			bison
 # needed to download IMF/ECB rates (Financial mode)
 RUN_DEPENDS=		x11/gnome/gvfs
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 
 CONFIGURE_ARGS+=	--with-gtk=3.0
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.50 2011/09/20 20:52:46 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		implementation of the FreeDesktop Desktop Menu Spec
 
 GNOME_PROJECT=		gnome-menus
 GNOME_VERSION=		3.0.1
-REVISION=		2
+REVISION=		4
 
 SHARED_LIBS +=	gnome-menu           5.2      # .6.13
 
@@ -25,14 +25,13 @@ MODULES=		devel/gettext \
 			lang/python \
 			x11/gnome
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=		Yes
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		devel/gobject-introspection
 LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			devel/glib2
 
-CONFIGURE_ARGS+=	--enable-introspection
+MODGNOME_TOOLS= 	goi
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

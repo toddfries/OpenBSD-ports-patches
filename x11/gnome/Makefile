@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.161 2011/09/13 13:01:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.163 2011/09/20 21:15:49 jasper Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -44,6 +44,7 @@
      SUBDIR += krb5-auth-dialog
      SUBDIR += libbonobo
      SUBDIR += libbonoboui
+     SUBDIR += libcryptui
      SUBDIR += libgda
      SUBDIR += libgdamm
      SUBDIR += libgnome
@@ -73,6 +74,7 @@
      SUBDIR += power-manager
      SUBDIR += py-atspi
      SUBDIR += py-gnome
+     SUBDIR += rygel
      SUBDIR += screensaver
      SUBDIR += seahorse
      SUBDIR += seahorse-plugins

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2011/09/14 21:24:10 robert Exp $
+# $OpenBSD: Makefile,v 1.59 2011/09/18 20:51:46 espie Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
@@ -12,6 +12,9 @@ PKGNAME-server =	zabbix-server-${VERSION}
 FULLPKGNAME-web =	zabbix-web-${VERSION}
 FULLPKGPATH-web =	net/zabbix,-web
 CATEGORIES =		net
+REVISION-main =		0
+REVISION-server =	0
+REVISION-web =		0
 
 MAJV =			${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 
@@ -73,6 +76,9 @@ WANTLIB-web =
 ZABBIX_WEB =		${PREFIX-web}/zabbix
 
 FLAVOR ?=		no_server
+.if empty(FLAVOR)
+FLAVOR =		sqlite3
+.endif
 
 #if non-backend-related flavors are added, add them to
 #the following line as ":L:Nflavor1:Nflavor2" so that

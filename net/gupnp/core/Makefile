@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2011/08/30 08:07:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2011/09/20 21:04:25 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		framework for creating UPnP devices and control points
 
 GNOME_PROJECT=		gupnp
 GNOME_VERSION=		0.18.0
-REVISION=		0
+REVISION=		1
 
 SHARED_LIBS +=  gupnp-1.0            1.0      # 4.0
 
@@ -19,15 +19,12 @@ WANTLIB += gssdp-1.0 gthread-2.0 m pcre soup-2.4 xml2 z
 
 LIBTOOL_FLAGS+= 	--tag=disable-static
 
-BUILD_DEPENDS=		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 LIB_DEPENDS=		net/gssdp>=0.12.0 \
 			sysutils/e2fsprogs>=1.41.4p5
 
 MODPY_ADJ_FILES=	tools/gupnp-binding-tool
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection \
-			--with-context-manager=unix
+CONFIGURE_ARGS+=	--with-context-manager=unix
 
 .include <bsd.port.mk>

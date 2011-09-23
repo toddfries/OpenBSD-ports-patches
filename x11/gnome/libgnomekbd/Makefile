@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.39 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	keyboard configuration library
 
 GNOME_PROJECT=	libgnomekbd
 GNOME_VERSION=	3.0.0.1
-REVISION=	1
+REVISION=	2
 
 SHARED_LIBS +=  gnomekbd             5.0      # 7.0
 SHARED_LIBS +=  gnomekbdui           5.0      # 7.0
@@ -33,14 +33,13 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
-BUILD_DEPENDS=	devel/gobject-introspection
+MODGNOME_TOOLS= goi
+
 LIB_DEPENDS=	x11/gnome/libxklavier \
 		x11/gtk+3
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-introspection
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

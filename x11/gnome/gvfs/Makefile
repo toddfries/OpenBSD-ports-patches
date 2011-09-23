@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.58 2011/09/20 21:10:00 jasper Exp $
 
 COMMENT-main=	GNOME virtual file system
 COMMENT-smb=	samba module for GVFS
@@ -9,8 +9,8 @@ GNOME_VERSION=	1.8.2
 PKGNAME-main=	${DISTNAME}
 PKGNAME-smb=	${GNOME_PROJECT}-smb-${GNOME_VERSION}
 
-REVISION-main=	7
-REVISION-smb=	0
+REVISION-main=	8
+REVISION-smb=	1
 
 SHARED_LIBS +=  gvfscommon           3.0      # .0.0
 SHARED_LIBS +=  gvfscommon-dnssd     1.0      # .0.0
@@ -38,7 +38,7 @@ WANTLIB-main += bz2 lzma m soup-2.4 sqlite3
 WANTLIB-main += xml2 archive soup-gnome-2.4>=1
 WANTLIB-main += avahi-client avahi-common avahi-glib
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		archivers/libarchive \
@@ -56,9 +56,7 @@ LIB_DEPENDS-smb= ${LIB_DEPENDS} \
 AUTOCONF_VERSION=2.68
 CONFIGURE_STYLE=autoconf
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--disable-cdda \
+CONFIGURE_ARGS=	--disable-cdda \
 		--disable-fuse \
 		--disable-hal \
 		--disable-afc \

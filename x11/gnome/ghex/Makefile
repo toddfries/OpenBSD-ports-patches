@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		binary editor
 
 GNOME_PROJECT=		ghex
 GNOME_VERSION=		2.90.2
+REVISION=	0
 
 SHARED_LIBS +=  gtkhex-3                  0.0 # 0.0
 
@@ -31,10 +32,9 @@ MODULES=		devel/dconf \
 
 LIB_DEPENDS=		x11/gtk+3
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 
-CONFIGURE_ARGS+=	${ENABLE_SHARED}
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

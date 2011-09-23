@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/09/20 21:10:00 jasper Exp $
 
 COMMENT=	service interface for assistive technologies
 
 GNOME_PROJECT=	at-spi2-core
 GNOME_VERSION=	2.0.2
+REVISION=	0
 
 SHARED_LIBS +=  atspi                     0.0 # 0.1
 
@@ -24,17 +25,14 @@ WANTLIB += pthread-stubs xcb z
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	devel/gobject-introspection
-
 LIB_DEPENDS=	x11/dbus \
 		devel/glib2
 
+MODGNOME_TOOLS= goi
+
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS= ${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--disable-xevie \
-		--enable-introspection
+CONFIGURE_ARGS= --disable-xevie
 
 # connects to DBus
 REGRESS_IS_INTERACTIVE=	x11

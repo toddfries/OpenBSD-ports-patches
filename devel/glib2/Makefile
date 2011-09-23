@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.129 2011/08/22 15:26:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.134 2011/09/21 13:10:18 ajacoutot Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
 
-VERSION=		2.28.8
+VERSION=		2.29.92
 DISTNAME=		glib-${VERSION}
+EXTRACT_SUFX=		.tar.xz
+
 PKGNAME-main=		glib2-${VERSION}
 PKGNAME-docs=		glib2-docs-${VERSION}
 
-REVISION-main=		3
+REVISION-main=		1
 
 CATEGORIES=		devel
 
@@ -16,11 +18,11 @@ HOMEPAGE=		http://www.gtk.org/
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  glib-2.0             2800.0   # 2800.7
-SHARED_LIBS +=  gmodule-2.0          2800.0   # 2800.7
-SHARED_LIBS +=  gthread-2.0          2800.0   # 2800.7
-SHARED_LIBS +=  gobject-2.0          2800.0   # 2800.7
-SHARED_LIBS +=  gio-2.0              2800.0   # 2800.7
+SHARED_LIBS +=  glib-2.0             2992.0   # 2992.0
+SHARED_LIBS +=  gmodule-2.0          2992.0   # 2992.0
+SHARED_LIBS +=  gthread-2.0          2992.0   # 2992.0
+SHARED_LIBS +=  gobject-2.0          2992.0   # 2992.0
+SHARED_LIBS +=  gio-2.0              2992.0   # 2992.0
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -29,26 +31,22 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/glib/${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/}
-EXTRACT_SUFX=		.tar.bz2
 
 MULTI_PACKAGES=		-main -docs
 
 MODULES=		devel/gettext \
 			lang/python
 
-# Although gtester-report(1) is a python script we do not want to force
-# a dependency on python.
-MODPY_RUNDEP=		No
-# Python is needed for the regress tests.
-MODPY_BUILDDEP=		Yes
 MODPY_ADJ_FILES=	glib/gtester-report \
+			gio/gdbus-2.0/codegen/gdbus-codegen.in \
 			gio/tests/gdbus-testserver.py
 
-WANTLIB-main=		${WANTLIB} c pthread z pcre fam
+WANTLIB-main += ${WANTLIB} c pthread z pcre fam ffi
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			devel/pcre>=8.12 \
-			sysutils/gamin,no_server,no_python
+			devel/pcre>=8.13 \
+			sysutils/gamin,no_server,no_python \
+			devel/libffi
 
 PKG_ARCH-docs=		*
 WANTLIB-docs=
@@ -65,7 +63,6 @@ REGRESS_DEPENDS=	devel/desktop-file-utils \
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
-USE_GROFF=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
@@ -75,12 +72,19 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-gtk-doc \
 			--disable-Bsymbolic \
 			--disable-selinux \
+			--disable-systemtap \
 			--disable-xattr
+
+# XXX tries to run automake-1.11 if installed
+# (check again when updating to a stable release)
+CONFIGURE_ARGS +=	--disable-maintainer-mode
 
 # OpenBSD has support for monotonic clock (CLOCK_MONOTONIC), however we
 # currently don't have most of the _POSIX_* defines in unistd.h (e.g.
 # _POSIX_MONOTONIC_CLOCK 200112L) and the associated sysconf(3)
 # _SC_MONOTONIC_CLOCK variable.
+# (see also: patches/patch-glib_gmain_c
+#            patches/patch-gthread_gthread-posix_c)
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
 				-D_POSIX_MONOTONIC_CLOCK=200112L" \
 			LDFLAGS="-L${LOCALBASE}/lib -pthread"

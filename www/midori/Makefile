@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.39 2011/08/16 07:49:16 landry Exp $
+# $OpenBSD: Makefile,v 1.42 2011/09/19 08:23:05 ajacoutot Exp $
 
 COMMENT =	lightweight web browser
 
 XFCE_VERSION =	0.4.0
 XFCE_GOODIE =	midori
+REVISION=	0
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 CATEGORIES =	www
@@ -16,7 +17,7 @@ PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =	x11/xfce4 devel/waf
 
-DESKTOP_FILES =	Yes
+MODXFCE_DESKTOP_FILE =	Yes
 NO_REGRESS =	Yes
 
 LIB_DEPENDS =	www/webkit>=1.4.0v0 \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.50 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +7,7 @@ COMMENT=		personal photo management application for GNOME
 GNOME_VERSION=		0.8.2
 GNOME_PROJECT=		f-spot
 
-REVISION=		0
+REVISION=		1
 
 CATEGORIES=		graphics
 
@@ -40,8 +40,8 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_TOOLS= 	yelp
 
 BUILD_DEPENDS=		${RUN_DEPENDS} \
 			shells/bash \
@@ -58,8 +58,7 @@ MODGCONF2_SCHEMAS_DIR=	f-spot
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-shave=no \
+CONFIGURE_ARGS+=	--enable-shave=no \
 			--disable-static
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.61 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.65 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT-main=	configuration database system for GNOME
 COMMENT-polkit=	PolicyKit integration for GConf2
@@ -6,14 +6,15 @@ COMMENT-gtk=	GConf2 configuration checker
 
 GNOME_PROJECT=	GConf
 GNOME_VERSION=	2.32.4
+PKGNAME=	gconf2-${GNOME_VERSION}
 
 PKGNAME-main=	gconf2-${GNOME_VERSION}
 PKGNAME-polkit=	gconf2-polkit-${GNOME_VERSION}
 PKGNAME-gtk=	gconf2-sanity-check-${GNOME_VERSION}
 
-REVISION-main=	0
-REVISION-gtk=	1
-REVISION-polkit=0
+REVISION-main=	2
+REVISION-gtk=	3
+REVISION-polkit=2
 
 SHARED_LIBS +=	gconf-2              6.2      # 5.5
 
@@ -55,9 +56,13 @@ WANTLIB-gtk += xcb-shm xml2 cairo-gobject gdk-3 gtk-3
 MODULES=	devel/gettext \
 		x11/gnome
 
-MULTI_PACKAGES=	-main -polkit -gtk
+# needed for gsettings-schema-convert(1)
+MODULES+=	lang/python
+MODPY_BUILDDEP=	No
+MODPY_RUNDEP=	No
+MODPY_ADJ_FILES=gsettings/gsettings-schema-convert
 
-BUILD_DEPENDS=	devel/gobject-introspection
+MULTI_PACKAGES=	-main -polkit -gtk
 
 RUN_DEPENDS-main= ${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-main= ${LIB_DEPENDS} \
@@ -75,13 +80,12 @@ LIB_DEPENDS-gtk= ${LIB_DEPENDS} \
 		devel/gconf2 \
 		x11/gtk+3
 
+MODGNOME_TOOLS= 	goi
+
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV= 	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--without-openldap \
-		--enable-introspection \
+CONFIGURE_ARGS=	--without-openldap \
 		--enable-defaults-service \
 		--with-gtk=3.0
 

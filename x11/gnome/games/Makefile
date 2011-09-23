@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.49 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.54 2011/09/20 21:10:00 jasper Exp $
 
 BROKEN= 		update needs fixed clutter/Mesa
 
@@ -7,7 +7,7 @@ COMMENT=		collection of games for the GNOME desktop
 GNOME_PROJECT=		gnome-games
 GNOME_VERSION=		2.32.1
 
-REVISION=		4
+REVISION=		5
 
 SHARED_LIBS +=  games-support-gi          0.0 # 0.0
 
@@ -38,28 +38,27 @@ MODULES=		devel/gconf2 \
 			lang/python \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/gobject-introspection \
-			x11/gnome/py-gnome-desktop
+BUILD_DEPENDS=		devel/gobject-introspection
+#			x11/gnome/py-gnome-desktop
 LIB_DEPENDS=		graphics/clutter/clutter-gtk \
 			lang/guile \
 			x11/gnome/librsvg \
 			audio/libcanberra,-gtk
-RUN_DEPENDS=		x11/gnome/py-gnome-desktop \
-			multimedia/gstreamer-0.10/plugins-good
+RUN_DEPENDS=		multimedia/gstreamer-0.10/plugins-good
+#			x11/gnome/py-gnome-desktop
 REGRESS_DEPENDS=	devel/check
 
 # XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
 # instead of the actual library
 USE_LIBTOOL=    	gnu
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	goi yelp
+
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	gnome-games
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--localstatedir="/var" \
-			--with-scores-group="games" \
-			--enable-introspection
+CONFIGURE_ARGS+= 	--localstatedir="/var" \
+			--with-scores-group="games"
 
 # XXX
 # lightsoff and swell-foop need seed

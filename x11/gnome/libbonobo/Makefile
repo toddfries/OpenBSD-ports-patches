@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.49 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.52 2011/09/20 21:10:00 jasper Exp $
 
 COMMENT=	GNOME component and compound document system
 
 GNOME_PROJECT=	libbonobo
 GNOME_VERSION=	2.32.1
 
-REVISION=	0
+REVISION=	1
 
 SHARED_LIBS +=	bonobo-activation    6.0      # .4.0
 SHARED_LIBS +=	bonobo-2             2.0      # .0.0
@@ -37,8 +37,6 @@ USE_GROFF =	Yes
 # from some libbonobo header and might still be used inside libbonobo
 RUN_DEPENDS=   devel/popt
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.77 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.81 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT=	technical diagrams drawing tool
 
 GNOME_PROJECT=	dia
 GNOME_VERSION=	0.97.1
-REVISION=	7
+REVISION=	8
 
 CATEGORIES=	graphics
 
@@ -37,14 +37,13 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		lang/python
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng \
 		-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--with-cairo \
+CONFIGURE_ARGS=	--with-cairo \
 		--enable-db2html=no \
 		--with-hardbooks=no
 USE_GROFF =	Yes
@@ -64,7 +63,7 @@ WANTLIB += bonoboui-2 crypto dbus-1 dbus-glib-1 gconf-2 gailutil
 WANTLIB += gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 popt ssl
 WANTLIB += util canberra gcrypt gpg-error ltdl ogg vorbis vorbisfile
 WANTLIB += ${MODPY_WANTLIB} gnomeui-2
-MODGNOME_HELP_FILES= Yes
+MODGNOME_TOOLS= 	yelp
 .else
 # help is only installed and usable with yelp
 PATCH_LIST=	patch-* no_gnome-patch-*

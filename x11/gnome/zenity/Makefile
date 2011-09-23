@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.46 2011/09/12 12:04:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.48 2011/09/20 20:52:47 jasper Exp $
 
 COMMENT=		dialogs for GNOME
 
 GNOME_PROJECT=		zenity
 GNOME_VERSION=		3.0.0
 
-REVISION=		2
+REVISION=		3
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -29,7 +29,7 @@ WANTLIB += z
 LIB_DEPENDS=		devel/libnotify>=0.7.2 \
 			x11/gtk+3
 
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
 USE_LIBTOOL=		No
 CONFIGURE_ARGS= 	--enable-libnotify
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \

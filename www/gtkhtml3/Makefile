@@ -1,4 +1,7 @@
-# $OpenBSD: Makefile,v 1.49 2011/09/12 12:07:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.51 2011/09/21 08:08:56 ajacoutot Exp $
+
+# XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
+CFLAGS +=	"-DG_CONST_RETURN=const"
 
 SHARED_ONLY=		Yes
 
@@ -10,7 +13,7 @@ API_VERSION=		3.14
 
 PKGNAME=		gtkhtml3-${VERSION}
 
-REVISION=		1
+REVISION=		2
 
 HOMEPAGE=		http://www.gnome.org/
 

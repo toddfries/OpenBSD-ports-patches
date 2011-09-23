@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.37 2011/05/17 18:08:39 landry Exp $
+# $OpenBSD: Makefile,v 1.40 2011/09/19 07:53:16 ajacoutot Exp $
 
 COMMENT=	Xfce4 desktop manager
 
 XFCE_PROJECT=	xfdesktop
-XFCE_VERSION=	4.8.2
+XFCE_VERSION=	4.8.3
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes
@@ -12,7 +12,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
 
 CONFIGURE_ARGS=	--enable-thunarx \
 		--enable-exo
@@ -32,7 +32,7 @@ WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0 \
 		pangoft2-1.0 pcre pixman-1 png pthread xcb-render \
 		startup-notification-1 wnck-1 xfce4util z notify thunarx-2 \
-		pthread-stubs xcb execinfo xcb-atom xcb-aux xcb-event \
+		pthread-stubs xcb execinfo xcb-aux X11-xcb \
 		garcon-1 xfce4ui-1 xfconf-0 GL Xxf86vm drm xcb-shm
 
 FAKE_FLAGS=	menudir=${PREFIX}/share/examples/xfdesktop

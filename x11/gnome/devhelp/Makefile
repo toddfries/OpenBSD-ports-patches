@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.53 2011/09/20 22:54:25 jasper Exp $
 
 COMMENT=	API documentation browser for GNOME
 
 GNOME_PROJECT=	devhelp
 GNOME_VERSION=	3.0.0
-REVISION=	1
+REVISION=	2
 
 SHARED_LIBS +=  devhelp-3                 0.0 # 0.0
 
@@ -39,10 +39,9 @@ MODULES=	devel/gettext \
 BUILD_DEPENDS=	x11/gnome/doc-utils
 LIB_DEPENDS=	www/webkit,gtk3
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 MODGCONF2_SCHEMAS_DIR=	devhelp
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

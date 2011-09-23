@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.36 2011/09/15 08:06:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.38 2011/09/19 07:44:58 ajacoutot Exp $
 
 COMMENT=		easy GNOME menu editing tool
 
 GNOME_PROJECT=		alacarte
 GNOME_VERSION=		0.12.4
-REVISION=		9
+REVISION=		10
 
 CATEGORIES=		x11
 
@@ -28,7 +28,7 @@ RUN_DEPENDS=		devel/gettext \
 # can use exo instead for XFCE users
 BUILD_DEPENDS+=		x11/gnome/menus
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=		Yes
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

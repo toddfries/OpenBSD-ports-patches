@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.468 2011/09/12 09:16:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.472 2011/09/23 14:46:03 zinke Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -132,6 +132,7 @@
      SUBDIR += kountdown
      SUBDIR += krusader
      SUBDIR += lablgtk2
+     SUBDIR += libdesktop-agnostic
      SUBDIR += libdnd
      SUBDIR += libgdiplus
      SUBDIR += libsexy
@@ -177,6 +178,7 @@
      SUBDIR += p5-Wx
      SUBDIR += p5-X-Osd
      SUBDIR += p5-X11-Protocol
+     SUBDIR += parcellite
      SUBDIR += partiwm
      SUBDIR += pbrowser
      SUBDIR += pcmanfm
@@ -222,12 +224,14 @@
      SUBDIR += sclock
      SUBDIR += scrotwm
      SUBDIR += sisctrl
+     SUBDIR += sis-gnome
      SUBDIR += skippy
      SUBDIR += sliderule
      SUBDIR += slim
      SUBDIR += slim-themes
      SUBDIR += slock
      SUBDIR += smplayer
+     SUBDIR += st
      SUBDIR += stalonetray
      SUBDIR += swisswatch
      SUBDIR += tangerine-icon-theme

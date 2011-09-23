@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.34 2011/09/12 12:07:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.37 2011/09/20 21:04:25 jasper Exp $
 
 COMMENT=		collection of extensions for Epiphany
 
 GNOME_PROJECT=		epiphany-extensions
 GNOME_VERSION=		3.0.0
-REVISION=		7
+REVISION=		8
 
 # sync with www/epiphany
 M=		${GNOME_VERSION:R}
@@ -46,13 +46,12 @@ LIB_DEPENDS=	www/webkit,gtk3
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= yelp
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
+CONFIGURE_ARGS=	--disable-static \
 		--enable-opensp=no
 
 # prevents implicit declarations by not setting *_DISABLE_DEPRECATED

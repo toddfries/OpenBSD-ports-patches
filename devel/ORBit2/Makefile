@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.44 2011/09/12 12:07:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.47 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT=		high-performance CORBA Object Request Broker
 
 GNOME_PROJECT=		ORBit2
 GNOME_VERSION=		2.14.19
-REVISION=		0
+REVISION=		1
 
 SHARED_LIBS +=  ORBit-2              3.0      # .1.0
 SHARED_LIBS +=  ORBitCosNaming-2     3.0      # .1.0
@@ -35,8 +35,6 @@ REGRESS_DEPENDS =	${FULLPKGNAME}:${BUILD_PKGPATH}
 
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.67
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

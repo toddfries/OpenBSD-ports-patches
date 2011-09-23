@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2011/09/20 22:54:25 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +7,7 @@ COMMENT=		git repository viewer for gtk+/GNOME
 GNOME_PROJECT=		gitg
 GNOME_VERSION=		0.2.4
 SHARED_LIBS +=  gitg-1.0                  0.0 # 0.0
-REVISION=		0
+REVISION=		1
 
 CATEGORIES=		devel
 
@@ -38,9 +38,8 @@ BUILD_DEPENDS=		devel/gsettings-desktop-schemas
 RUN_DEPENDS=		devel/git \
 			devel/gsettings-desktop-schemas
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=		Yes
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-compile-warnings=no
+CONFIGURE_ARGS+=	--enable-compile-warnings=no
 
 .include <bsd.port.mk>

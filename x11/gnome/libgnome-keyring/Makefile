@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2011/09/20 21:10:00 jasper Exp $
 
 COMMENT=	library for gnome keyring integration
 
 GNOME_PROJECT=	libgnome-keyring
-GNOME_VERSION=	3.0.3
+GNOME_VERSION=	3.1.92
 
 SHARED_LIBS +=  gnome-keyring        6.0      # 1.1
 
@@ -22,8 +22,6 @@ LIB_DEPENDS=	security/libgcrypt \
 		x11/dbus \
 		devel/glib2
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

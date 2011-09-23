@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.34 2011/09/13 11:07:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2011/09/23 08:49:41 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.1.91
+GNOME_VERSION=		3.1.92
 REVISION=		2
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
@@ -28,22 +28,22 @@ MODULES=		devel/dconf \
 WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm
 WANTLIB += apr-1 aprutil-1 asn1 atk-1.0 c cairo cairo-gobject
-WANTLIB += crypto db devhelp-3 drm enchant expat fontconfig freetype
-WANTLIB += gailutil-3 gconf-2 gdk-3 gdk_pixbuf-2.0 gdl-3 gio-2.0
-WANTLIB += gladeui-2 glib-2.0 gmodule-2.0 gobject-2.0 gssapi gstapp-0.10
-WANTLIB += gstbase-0.10 gstinterfaces-0.10 gstpbutils-0.10 gstreamer-0.10
-WANTLIB += gstvideo-0.10 gthread-2.0 gtk-3 gtksourceview-3.0 jpeg
-WANTLIB += krb5 m ncurses neon pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png pthread pthread-stubs sasl2 soup-2.4
-WANTLIB += sqlite3 ssl stdc++ svn_client-1 svn_delta-1 svn_diff-1
-WANTLIB += svn_fs-1 svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1 svn_ra-1
-WANTLIB += svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1 svn_repos-1
-WANTLIB += svn_subr-1 svn_wc-1 util vala-0.14 vte2_90 webkitgtk-3.0
-WANTLIB += xcb xcb-render xcb-shm xml2 xslt z icudata icui18n icuuc
+WANTLIB += crypto db devhelp-3 drm enchant expat ffi fontconfig
+WANTLIB += freetype gailutil-3 gconf-2 gdk-3 gdk_pixbuf-2.0 gdl-3
+WANTLIB += gio-2.0 gladeui-2 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += gssapi gstapp-0.10 gstbase-0.10 gstinterfaces-0.10
+WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
+WANTLIB += gtk-3 gtksourceview-3.0 icudata icui18n icuuc jpeg
+WANTLIB += krb5 kvm m ncurses neon pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs sasl2
+WANTLIB += soup-2.4 sqlite3 ssl stdc++ svn_client-1 svn_delta-1
+WANTLIB += svn_diff-1 svn_fs-1 svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1
+WANTLIB += svn_ra-1 svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1
+WANTLIB += svn_repos-1 svn_subr-1 svn_wc-1 util vala-0.14 vte2_90
+WANTLIB += webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt z
 WANTLIB += ${MODPY_WANTLIB}
 
-BUILD_DEPENDS=		devel/autogen>=5.6.5 \
-			devel/gobject-introspection
+BUILD_DEPENDS=		devel/autogen>=5.6.5
 # libgda is needed by the symbol-db plugin, which we don't build on OpenBSD.
 # though GDA_CFLAGS is used in various Makefile's. So instead of changing
 # dozens of files, we just drop the LIB_DEPENDS and keep the BUILD_DEPENDS.
@@ -52,7 +52,7 @@ RUN_DEPENDS=		misc/shared-mime-info
 LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			devel/glade \
 			devel/subversion,gnome_keyring \
-			devel/vte,gtk3 \
+			devel/vte \
 			lang/vala>=0.13.4 \
 			textproc/icu4c \
 			x11/gnome/devhelp \
@@ -63,17 +63,14 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 BUILD_DEPENDS+=		devel/bison
 
 LIBTOOL_FLAGS=		--tag=disable-static
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+
+MODGNOME_TOOLS= 	goi vala yelp
 
 AUTOCONF_VERSION=	2.68
 
 CONFIGURE_STYLE=	autoconf gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-plugin-subversion \
-			--enable-gtk-doc=no \
-			--enable-introspection \
-			--enable-vala
+CONFIGURE_ARGS+=	--enable-plugin-subversion
 
 # adds dependency on libgnomeui
 CONFIGURE_ARGS+=	--disable-graphviz

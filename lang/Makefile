@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.119 2011/09/11 18:22:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.124 2011/09/21 14:39:06 fgsch Exp $
 # $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
 #
 
@@ -21,6 +21,7 @@
      SUBDIR += expect,no_tk
      SUBDIR += ezm3
      SUBDIR += feldspar
+     SUBDIR += freehdl
      SUBDIR += gawk
      SUBDIR += g77
      SUBDIR += g77-old
@@ -39,6 +40,7 @@
      SUBDIR += iverilog
      SUBDIR += jamvm
      SUBDIR += jikes
+     SUBDIR += jimtcl
      SUBDIR += jruby
      SUBDIR += kaffe
      SUBDIR += librep
@@ -47,6 +49,7 @@
      SUBDIR += mawk
      SUBDIR += mono
      SUBDIR += mono-basic
+     SUBDIR += myhdl
      SUBDIR += nbfc
      SUBDIR += newlisp
      SUBDIR += nhc98

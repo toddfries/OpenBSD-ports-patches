@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.70 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		lightweight GNOME text editor
 
 GNOME_PROJECT=		gedit
 GNOME_VERSION=		3.0.6
+REVISION=		1
 
 CATEGORIES=		editors
 
@@ -38,17 +39,14 @@ BUILD_DEPENDS=		${RUN_DEPENDS} \
 LIB_DEPENDS=		devel/libpeas \
 			textproc/enchant \
 			x11/gtksourceview3
-RUN_DEPENDS=		devel/gobject-introspection \
-			devel/gsettings-desktop-schemas
+RUN_DEPENDS=		devel/gsettings-desktop-schemas
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	goi yelp
+MODGNOME_DESKTOP_FILE=		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--enable-python \
+CONFIGURE_ARGS=		--enable-python \
 			--disable-updater \
-			--enable-introspection \
 			--enable-gvfs-metadata
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

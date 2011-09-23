@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.30 2011/06/08 18:00:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2011/09/22 13:23:09 landry Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	utility to create virtual hosts on a network
 DISTNAME=	honeyd-1.5c
-REVISION=	6
+REVISION=	8
 CATEGORIES=	net
 MASTER_SITES=	http://www.citi.umich.edu/u/provos/honeyd/ \
 		http://niels.xtdnet.nl/honeyd/
 
 HOMEPAGE=	http://www.honeyd.org/
-
-MAINTAINER=     Rui Reis <rui@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

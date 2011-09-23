@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2011/09/12 12:04:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=	MAME front-end for GNOME
 
 GNOME_PROJECT=	gnome-video-arcade
 GNOME_VERSION=	0.8.0
-REVISION=	3
+REVISION=	4
 
 CATEGORIES=	emulators games
 
@@ -40,14 +40,12 @@ LIB_DEPENDS=	databases/sqlite3 \
 		devel/libwnck3 \
 		multimedia/gstreamer-0.10/core
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_TOOLS= yelp
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--with-glade-catalog \
+CONFIGURE_ARGS=	--with-glade-catalog \
 		--with-wnck \
 		--with-history-file="${LOCALBASE}/share/sdlmame/history.dat"
 

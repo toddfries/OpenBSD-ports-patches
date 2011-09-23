@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.49 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.53 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -8,7 +8,7 @@ GNOME_PROJECT=		gucharmap
 GNOME_VERSION=		3.0.1
 
 SHARED_LIBS +=  gucharmap_2_90            0.0 # 7.0
-REVISION=		4
+REVISION=		5
 
 HOMEPAGE=		http://live.gnome.org/Gucharmap
 
@@ -32,21 +32,17 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-BUILD_DEPENDS=		devel/gobject-introspection
-
 # XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
 # instead of the actual library
 USE_LIBTOOL=		gnu
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	goi yelp
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	gucharmap
 
 LIB_DEPENDS+=		x11/gtk+3,-main
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-introspection \
-			--with-gtk=3.0
+CONFIGURE_ARGS+=	--with-gtk=3.0
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

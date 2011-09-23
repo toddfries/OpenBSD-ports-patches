@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2011/09/12 18:23:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2011/09/19 08:23:05 ajacoutot Exp $
 
 COMMENT =	lightweight mail user agent
 
 # git clone of 0d21f7a7c5d8281ae5302756433956bca0522660
 XFCE_VERSION =	0.1.1.1
 XFCE_GOODIE =	postler
+REVISION=		0
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 CATEGORIES =	mail
@@ -20,7 +21,7 @@ MASTER_SITES =	http://distfiles.nl/
 EXTRACT_SUFX =	.tar.gz
 MODULES =	x11/xfce4 devel/waf
 
-DESKTOP_FILES =	Yes
+MODXFCE_DESKTOP_FILE =	Yes
 NO_REGRESS =	Yes
 
 LIB_DEPENDS =	www/webkit>=1.4.0v0 \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.53 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.58 2011/09/22 09:52:55 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -11,7 +11,7 @@ GNOME_VERSION=		3.0.2
 PKGNAME-main=		${DISTNAME}
 PKGNAME-nautilus=	nautilus-${DISTNAME}
 
-REVISION-main=		0
+REVISION-main=		2
 
 CATEGORIES=		archivers
 
@@ -45,18 +45,18 @@ RUN_DEPENDS-main=	archivers/gcpio \
 			archivers/unzip \
 			archivers/xz \
 			archivers/zip \
-			sysutils/cdrtools
+			sysutils/cdrtools \
+			${MODGNOME_RUN_DEPENDS_yelp}
 LIB_DEPENDS-main=	x11/gtk+3
 
 WANTLIB-nautilus=	${WANTLIB} nautilus-extension
 LIB_DEPENDS-nautilus=	x11/gnome/nautilus
 RUN_DEPENDS-nautilus=	x11/gnome/file-roller,-main
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-packagekit
+CONFIGURE_ARGS=		--disable-packagekit
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

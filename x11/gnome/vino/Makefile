@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.29 2011/09/12 12:04:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=	GNOME desktop sharing server
 
 GNOME_PROJECT=	vino
 GNOME_VERSION=	3.0.3
 
-REVISION=	0
+REVISION=	1
 
 CATEGORIES=	net
 
@@ -38,11 +38,10 @@ LIB_DEPENDS=	devel/libnotify \
 		security/gnutls \
 		x11/gnome/libgnome-keyring
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_TOOLS= yelp
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--with-gnome-keyring \
+CONFIGURE_ARGS=	--with-gnome-keyring \
 		--with-avahi \
 		--enable-http-server=no \
 		--with-libnotify \

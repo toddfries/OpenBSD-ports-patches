@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2011/09/12 12:04:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.71 2011/09/22 11:56:51 jasper Exp $
 
 COMMENT-main=		official media player for GNOME
 COMMENT-nautilus=	totem properties plugin for nautilus
@@ -9,7 +9,7 @@ GNOME_VERSION=		3.0.1
 PKGNAME-main=		${DISTNAME}
 PKGNAME-nautilus=	nautilus-${DISTNAME}
 
-REVISION-main=		5
+REVISION-main=		7
 REVISION-nautilus=	3
 
 SHARED_LIBS +=  totem                     0.0 # 0.0
@@ -57,7 +57,8 @@ BUILD_DEPENDS+= 	devel/iso-codes \
 RUN_DEPENDS-main+=	devel/iso-codes \
 			devel/py-xdg \
 			x11/dbus-python \
-			x11/gnome/settings-daemon
+			x11/gnome/settings-daemon \
+			${MODGNOME_RUN_DEPENDS_yelp}
 
 LIB_DEPENDS-main+=	${MODGETTEXT_LIB_DEPENDS} \
 			multimedia/gstreamer-0.10/plugins-base>=0.10.30 \
@@ -77,8 +78,8 @@ RUN_DEPENDS-main+=multimedia/gstreamer-0.10/plugins-good \
 # gst-inspect-0.10 needs to access ${HOME}
 PORTHOME=	${WRKDIR}
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES=Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS= goi yelp
 USE_GROFF=	Yes
 
 # im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles
@@ -93,14 +94,11 @@ CONFIGURE_ENV= 	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		CFLAGS="${CFLAGS} -I${LOCALBASE}/include " \
 		GST_REGISTRY=${WRKDIR}/registry.${MACHINE_ARCH}.bin
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--with-plugins=${TOTEM_PLUGINS} \
+CONFIGURE_ARGS=	--with-plugins=${TOTEM_PLUGINS} \
 		--with-dbus \
 		--enable-nautilus \
 		--enable-python \
 		--enable-vala \
-		--enable-introspection \
 		--disable-easy-codec-installation \
 		--disable-browser-plugins \
 		--disable-gmp-plugin \

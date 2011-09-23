@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT =	Mastermind clone reflexion game
 
 GNOME_PROJECT =	gnome-mastermind
 GNOME_VERSION =	0.3.1
-REVISION=	3
+REVISION=	4
 
 CATEGORIES =	games
 
@@ -22,14 +22,13 @@ EXTRACT_SUFX=		.tar.bz2
 MODULES =	devel/gettext \
 		x11/gnome
 
-DESKTOP_FILES =	Yes
+MODGNOME_DESKTOP_FILE =	Yes
 LIB_DEPENDS =	x11/gtk+2 \
 		devel/gconf2
 RUN_DEPENDS +=	x11/gnome/librsvg
 
-MODGNOME_HELP_FILES =	Yes
+MODGNOME_TOOLS= 	yelp
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	${CONFIGURE_SHARED}
 CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

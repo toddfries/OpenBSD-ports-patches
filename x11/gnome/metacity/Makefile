@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2011/09/13 08:55:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.70 2011/09/20 22:54:25 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	lightweight window manager
 
 GNOME_PROJECT=	metacity
 GNOME_VERSION=	2.34.1
-REVISION=	1
+REVISION=	2
 
 SHARED_LIBS +=  metacity-private     1.0      # .0.0
 
@@ -42,10 +42,9 @@ RUN_DEPENDS=	x11/gnome/zenity \
 		fonts/cantarell-fonts
 
 SEPARATE_BUILD=	concurrent
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 MODGCONF2_SCHEMAS_DIR= metacity
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 USE_GROFF =	Yes

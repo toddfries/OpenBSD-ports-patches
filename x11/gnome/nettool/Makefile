@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.12 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=	GNOME interface for various networking tools
 
 GNOME_PROJECT=	gnome-nettool
 GNOME_VERSION=	3.0.0
-REVISION=	5
+REVISION=	6
 
 CATEGORIES=	net
 
@@ -33,11 +33,10 @@ LIB_DEPENDS=	devel/libgtop2 \
 BUILD_DEPENDS=	devel/gsettings-desktop-schemas
 RUN_DEPENDS=	devel/gsettings-desktop-schemas
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= yelp
+MODGNOME_DESKTOP_FILE=		Yes
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 
 .include <bsd.port.mk>

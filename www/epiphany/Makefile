@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.65 2011/09/12 12:07:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.69 2011/09/20 21:04:25 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,6 +11,7 @@ COMMENT=	GNOME web browser based on webkit
 
 GNOME_PROJECT=	epiphany
 GNOME_VERSION=	3.0.4
+REVISION=	0
 
 M=		${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=	M
@@ -57,14 +58,11 @@ MODULES=	devel/dconf \
 		x11/gnome
 
 LIBTOOL_FLAGS=		--tag=disable-static
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES= 	Yes
+MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_TOOLS= goi yelp
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-introspection \
-		--disable-static \
-		--disable-gtk-doc \
+CONFIGURE_ARGS=	--disable-static \
 		--disable-zeroconf \
 		--with-distributor-name="OpenBSD ports" \
 		--with-ca-file=/etc/ssl/cert.pem \

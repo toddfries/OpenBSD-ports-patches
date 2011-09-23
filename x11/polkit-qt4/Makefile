@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.5 2011/04/28 13:10:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2011/09/19 14:44:43 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	PolicyKit integration for Qt4
+COMMENT=	PolicyKit authentication agent for for Qt4
 
 V=		0.99.0
 DISTNAME=	polkit-qt-1-${V}
 PKGNAME=	polkit-qt4-${V}
+REVISION=	1
 
 SHARED_LIBS +=  polkit-qt-agent-1         1.0 # 0.99
 SHARED_LIBS +=  polkit-qt-core-1          1.0 # 0.99

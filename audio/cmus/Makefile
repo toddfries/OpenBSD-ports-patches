@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2011/09/06 07:19:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2011/09/18 13:27:53 landry Exp $
 
 COMMENT-main=		ncurses-based music player
 COMMENT-flac=		FLAC input plugin for cmus
@@ -10,9 +10,9 @@ PKGNAME-main=		cmus-$(V)
 PKGNAME-flac=		cmus-flac-$(V)
 PKGNAME-wavpack=	cmus-wavpack-$(V)
 
-REVISION-main=		0
-REVISION-flac=		0
-REVISION-wavpack=	0
+REVISION-main=		1
+REVISION-flac=		1
+REVISION-wavpack=	1
 
 CATEGORIES=		audio
 
@@ -63,13 +63,10 @@ CONFIGURE_ARGS=		prefix=${PREFIX} \
 			CONFIG_SNDIO=y
 
 .if ${MACHINE_ARCH} == "arm"
-CONFIGURE_ARGS+=	CONFIG_TREMOR=y \
-			CONFIG_VORBIS=n
+CONFIGURE_ARGS+=	CONFIG_TREMOR=y
 LIB_DEPENDS+=		audio/tremor
 WANTLIB-main+=		vorbisidec>=1
 .else
-CONFIGURE_ARGS+=	CONFIG_TREMOR=n \
-			CONFIG_VORBIS=y
 LIB_DEPENDS+=		audio/libvorbis
 WANTLIB-main+=		ogg vorbis>=0 vorbisfile>=1
 .endif

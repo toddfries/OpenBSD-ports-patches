@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.36 2011/09/07 10:29:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.39 2011/09/22 13:57:29 pea Exp $
 
 SHARED_ONLY=	Yes
 SHARED_LIBS +=  freeradius-radius    4.0      # .0.0
@@ -10,7 +10,7 @@ COMMENT-mysql=	freeradius mysql rlm addon
 COMMENT-pgsql=	freeradius pgsql rlm addon
 COMMENT-ldap=	freeradius ldap rlm addon
 
-V=		2.1.10
+V=		2.1.11
 DISTNAME=	freeradius-server-$V
 EXTRACT_SUFX=	.tar.bz2
 
@@ -19,12 +19,6 @@ PKGNAME-iodbc=	freeradius-iodbc-$V
 PKGNAME-mysql=	freeradius-mysql-$V
 PKGNAME-pgsql=	freeradius-pgsql-$V
 PKGNAME-ldap=	freeradius-ldap-$V
-
-REVISION-main=	4
-REVISION-iodbc= 1
-REVISION-mysql= 1
-REVISION-pgsql= 1
-REVISION-ldap=	1
 
 CATEGORIES=	net security
 
@@ -78,7 +72,10 @@ USE_GMAKE=	Yes
 USE_LIBTOOL=	gnu
 USE_GROFF =	Yes
 
-BUILD_DEPENDS=	net/net-snmp
+TAR=			${LOCALBASE}/bin/gtar
+
+BUILD_DEPENDS=		archivers/gtar \
+			net/net-snmp
 LIB_DEPENDS-main =	databases/gdbm \
 			devel/libtool,-ltdl
 WANTLIB-main=		${WANTLIB} c com_err krb5 pcap pthread readline \

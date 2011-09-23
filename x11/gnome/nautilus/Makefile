@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.85 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.93 2011/09/21 13:38:46 ajacoutot Exp $
 
 COMMENT=		GNOME file manager
 
@@ -14,9 +14,7 @@ COMMENT=		GNOME file manager
 # x11/gnome/tracker
 
 GNOME_PROJECT=		nautilus
-GNOME_VERSION=		3.0.2
-
-REVISION=		3
+GNOME_VERSION=		3.1.92
 
 SHARED_LIBS +=  nautilus-extension   3.0      # 5.0
 
@@ -30,17 +28,15 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-EXTRACT_SUFX=		.tar.bz2
-
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 X11-xcb Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
 WANTLIB += c cairo cairo-gobject drm execinfo exempi exif expat
 WANTLIB += fontconfig freetype gailutil-3 gdk-3 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3 gobject-2.0
 WANTLIB += gthread-2.0 gtk-3 m notify pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += startup-notification-1 xcb xcb-atom xcb-aux xcb-event
-WANTLIB += xcb-render xcb-shm xml2 z X11-xcb
+WANTLIB += startup-notification-1 xcb xcb-aux xcb-render xcb-shm
+WANTLIB += xml2 z ffi kvm
 
 MODULES=		devel/gettext \
 			x11/gnome \
@@ -60,17 +56,20 @@ LIB_DEPENDS=		x11/gnome/desktop \
 			graphics/libexif>=0.6.0 \
 			textproc/exempi
 
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	goi
+MODGNOME_DESKTOP_FILE=		Yes
 
 USE_GROFF=		Yes
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--disable-update-mimedb \
+CONFIGURE_ARGS+= 	--disable-update-mimedb \
 			--disable-packagekit \
 			--enable-libexif \
-			--enable-xmp \
-			--enable-introspection
+			--enable-xmp
+
+# it would introduce a cyclic dependency with x11/gnome/tracker; also it
+# is better to keep the regular search for nautilus so that we can get
+# results from paths not indexed by tracker
+CONFIGURE_ARGS +=	--disable-tracker
 
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"

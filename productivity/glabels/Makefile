@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.16 2011/09/12 15:50:04 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2011/09/20 21:04:25 jasper Exp $
 
 COMMENT =	labels and business card designer
 
 GNOME_PROJECT =	glabels
 GNOME_VERSION =	3.0.0
 
-REVISION =	0
+REVISION =	1
 
 CATEGORIES =	productivity graphics
 
@@ -45,15 +45,13 @@ LIB_DEPENDS =	x11/gtk+3 \
 
 RUN_DEPENDS =	misc/shared-mime-info
 
-MODGNOME_HELP_FILES =	Yes
-DESKTOP_FILES =		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE =		Yes
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		LDFLAGS="-L${LOCALBASE}/lib" \
 			CPPFLAGS="-I${LOCALBASE}/include"
 
-CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
-			--disable-gtk-doc
 USE_GROFF =		Yes
 
 .include <bsd.port.mk>

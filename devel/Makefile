@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.967 2011/09/15 15:50:45 sthen Exp $
+# $OpenBSD: Makefile,v 1.976 2011/09/23 08:51:50 naddy Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -14,6 +14,7 @@
      SUBDIR += apr-util,ldap
      SUBDIR += apr-util,mt
      SUBDIR += apr-util,mt,ldap
+     SUBDIR += arduino
      SUBDIR += argp-standalone
      SUBDIR += argtable
      SUBDIR += arm-elf
@@ -54,6 +55,7 @@
      SUBDIR += cln
      SUBDIR += cmake
      SUBDIR += cmockery
+     SUBDIR += coccigrep
      SUBDIR += coccinelle
      SUBDIR += codeblocks
      SUBDIR += codeworker
@@ -106,6 +108,7 @@
      SUBDIR += gconf-editor
      SUBDIR += gconf2
      SUBDIR += gconfmm
+     SUBDIR += gdb
      SUBDIR += geany
      SUBDIR += geotiff
      SUBDIR += gettext
@@ -233,6 +236,7 @@
      SUBDIR += kdbg
      SUBDIR += kdiff3
      SUBDIR += lam
+     SUBDIR += leiningen
      SUBDIR += libIDL
      SUBDIR += libJudy
      SUBDIR += libast
@@ -249,6 +253,7 @@
      SUBDIR += libdvdread
      SUBDIR += libelf
      SUBDIR += libev
+     SUBDIR += libevent2
      SUBDIR += libeventextra
      SUBDIR += libexecinfo
      SUBDIR += libexude
@@ -569,6 +574,7 @@
      SUBDIR += p5-File-Path-Expand
      SUBDIR += p5-File-ReadBackwards
      SUBDIR += p5-File-Remove
+     SUBDIR += p5-File-RsyncP
      SUBDIR += p5-File-ShareDir
      SUBDIR += p5-File-Slurp
      SUBDIR += p5-File-Sync
@@ -946,6 +952,7 @@
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
      SUBDIR += py-gobject
+     SUBDIR += py-gobject3
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib
      SUBDIR += py-kid
@@ -999,6 +1006,7 @@
      SUBDIR += py-xdg
      SUBDIR += py-zopeinterface
      SUBDIR += py-zopetesting
+     SUBDIR += py3-distribute
      SUBDIR += pybugz
      SUBDIR += pyflakes
      SUBDIR += pygame
@@ -1140,7 +1148,7 @@
      SUBDIR += vtags
      SUBDIR += vtcl
      SUBDIR += vte
-     SUBDIR += vte,gtk3
+     SUBDIR += vte,gtk2
      SUBDIR += waf
      SUBDIR += wcb
      SUBDIR += xdg-user-dirs

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2011/09/20 21:10:00 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	monitor kerberos tickets
 
 GNOME_PROJECT=	krb5-auth-dialog
 GNOME_VERSION=	3.0.1
+REVISION=	0
 
 CATEGORIES=	security
 
@@ -35,8 +36,8 @@ MODULES=	devel/gettext \
 LIB_DEPENDS=	x11/gnome/controlcenter
 
 MODGCONF2_SCHEMAS_DIR= krb5-auth-dialog
-MODGNOME_HELP_FILES= Yes
-DESKTOP_FILES=	Yes
+MODGNOME_TOOLS= yelp
+MODGNOME_DESKTOP_FILE=	Yes
 
 FAKE_FLAGS=	autostartdir=${PREFIX}/share/examples/krb5-auth-dialog/xdg/autostart \
 		smallicondir=${PREFIX}/share/icons/hicolor/22x22/apps
@@ -45,8 +46,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		KRB5_CFLAGS="-I/usr/include/kerberosV" \
 		KRB5_LIBS="-lgssapi -lkrb5 -lasn1 -lcrypto"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
+CONFIGURE_ARGS=	--disable-static \
 		--with-gtk=3.0 \
 		--enable-pkinit \
 		--disable-network-manager \

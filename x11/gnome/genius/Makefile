@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2011/09/14 05:52:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2011/09/23 08:49:41 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	advanced general purpose calculator
 
 GNOME_PROJECT=	genius
 GNOME_VERSION=	1.0.14
-REVISION=	0
+REVISION=	2
 
 HOMEPAGE=	http://www.jirka.org/genius.html
 
@@ -37,15 +37,14 @@ RUN_DEPENDS +=	print/ghostscript/gnu
 LIB_DEPENDS=	x11/gtksourceview \
 		devel/gmp \
 		devel/mpfr \
-		devel/vte
+		devel/vte,gtk2
 
-MODGNOME_HELP_FILES= Yes
-DESKTOP_FILES=	Yes
+MODGNOME_TOOLS= yelp
+MODGNOME_DESKTOP_FILE=	Yes
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -lgmp"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-update-mimedb \
+CONFIGURE_ARGS=	--disable-update-mimedb \
 		--disable-extra-gcc-optimization
 
 .include <bsd.port.mk>

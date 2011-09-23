@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.68 2011/09/12 12:04:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.72 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=		GNOME help browser
 
 GNOME_PROJECT=		yelp
 GNOME_VERSION=		3.0.4
+REVISION=	0
 
 SHARED_LIBS +=  yelp                      0.0 # 0.0
 
@@ -34,11 +35,9 @@ RUN_DEPENDS=		x11/gnome/yelp-xsl
 
 LIB_DEPENDS=		www/webkit,gtk3
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=		Yes
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-lzma \
+CONFIGURE_ARGS+= 	--enable-lzma \
 			--enable-bz2
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

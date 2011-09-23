@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2011/09/12 12:04:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2011/09/20 21:10:00 jasper Exp $
 
 COMMENT=		GNOME Docking Library
 
 GNOME_PROJECT=		gdl
 GNOME_VERSION=		3.0.2
+REVISION=	0
 
 SHARED_LIBS +=  gdl-3                0.0      # 1.0
 
@@ -26,13 +27,11 @@ WANTLIB += z
 MODULES=	devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	devel/gobject-introspection
 LIB_DEPENDS=	textproc/libxml \
 		x11/gtk+3
 
-CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--enable-introspection
+MODGNOME_TOOLS= goi
+
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 

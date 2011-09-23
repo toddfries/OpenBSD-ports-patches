@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.48 2011/06/02 13:41:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.51 2011/09/19 07:53:15 ajacoutot Exp $
 
 COMMENT=	Xfce4 session manager
 
 XFCE_PROJECT=	xfce4-session
-
-REVISION=	2
+XFCE_VERSION= 4.8.2
 
 SHARED_LIBS +=	xfsm-4.6	0.0 # .0.0
 
@@ -15,7 +14,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
 
 CONFIGURE_ARGS=	--disable-linker-opts \
 		--disable-hal \
@@ -36,10 +35,15 @@ WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre \
 		pixman-1 png pthread startup-notification-1 xfce4util z \
-		pthread-stubs xcb execinfo xcb-atom xcb-aux xcb-event \
+		pthread-stubs xcb execinfo xcb-aux X11-xcb \
 		gthread-2.0 xcb-render wnck-1 xfconf-0 GL Xxf86vm drm \
 		xcb-shm xfce4panel-1.0 xfce4ui-1
 
 FAKE_FLAGS=	settingsdir=${PREFIX}/share/examples/xfce4-session
+
+# XXX workaround for pkg_add bug when a symlink to a dir becomes a real dir
+post-install:
+	rm -Rf ${PREFIX}/share/doc/xfce4-session/html/el/images/
+	ln -s ${TRUEPREFIX}/share/doc/xfce4-session/html/C/images ${PREFIX}/share/doc/xfce4-session/html/el/images
 
 .include <bsd.port.mk>

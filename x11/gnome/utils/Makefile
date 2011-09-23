@@ -1,4 +1,8 @@
-# $OpenBSD: Makefile,v 1.62 2011/09/12 12:04:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.68 2011/09/22 10:12:35 ajacoutot Exp $
+
+# XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
+CFLAGS +=	"-DG_CONST_RETURN=const"
+CFLAGS +=	"-DG_UNICODE_COMBINING_MARK=G_UNICODE_SPACING_MARK"
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +11,7 @@ COMMENT=		GNOME utility programs
 GNOME_PROJECT=		gnome-utils
 GNOME_VERSION=		3.0.1
 
-REVISION=		0
+REVISION=		2
 
 SHARED_LIBS +=  gdict-1.0      6.1      # .6.7
 
@@ -42,13 +46,11 @@ MODULES=		devel/dconf \
 			devel/gettext \
 			x11/gnome
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	gnome-utils
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--with-grep="/usr/bin/grep" \
+CONFIGURE_ARGS+=	--with-grep="/usr/bin/grep" \
 			--enable-ipv6
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

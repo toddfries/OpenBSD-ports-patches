@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.42 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.46 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=		project management application
 
 GNOME_PROJECT=		planner
 GNOME_VERSION=		0.14.5
-REVISION=		0
+REVISION=		1
 
 CATEGORIES=		productivity
 
@@ -44,13 +44,11 @@ LIB_DEPENDS=		x11/gnome/libbonoboui \
 			x11/gnome/libgnomeui \
 			${MODPY_LIB_DEPENDS}
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	planner
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-update-mimedb \
-			--enable-gtk-doc=no \
+CONFIGURE_ARGS+= 	--disable-update-mimedb \
 			--enable-python \
 			--enable-python-plugin=yes \
 			--enable-eds=no \

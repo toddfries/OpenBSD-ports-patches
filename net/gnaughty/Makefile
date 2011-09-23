@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2011/07/09 03:35:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/09/19 07:39:05 ajacoutot Exp $
 
 COMMENT=	fast and easy porn downloader
 
 DISTNAME=	gnaughty-1.2.5
 CATEGORIES=	net graphics biology productivity education russian
 
-REVISION=	2
+REVISION=	3
 
 HOMEPAGE=	http://gnaughty.sourceforge.net/
 
@@ -33,7 +33,7 @@ LIB_DEPENDS=		devel/libglade2 \
 			textproc/libxml
 RUN_DEPENDS=		devel/desktop-file-utils
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	gnaughty
 
 CONFIGURE_STYLE=	gnu

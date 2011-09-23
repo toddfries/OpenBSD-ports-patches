@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.17 2011/06/08 17:40:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2011/09/23 08:10:49 ajacoutot Exp $
+
+# XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
+CFLAGS +=      "-DG_CONST_RETURN=const"
 
 COMMENT =	plugin framework library
 
 VERSION =	0.2.2
 DISTNAME =	ethos-${VERSION}
-REVISION =	7
+REVISION =	9
 
 SHARED_LIBS=	ethos-1.0 1.0 \
 		ethos-ui-1.0 0.0

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.62 2011/09/12 12:07:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.65 2011/09/20 21:04:24 jasper Exp $
 
 COMMENT-main =		SOAP implementation in C
 COMMENT-gnome =		GNOME specific libsoup parts
@@ -8,6 +8,8 @@ GNOME_VERSION =		2.34.3
 
 PKGNAME-main =		${DISTNAME}
 PKGNAME-gnome =		${GNOME_PROJECT}-gnome-${GNOME_VERSION}
+REVISION-main =		0
+REVISION-gnome =	0
 
 SHARED_LIBS +=  soup-2.4             3.0      # .4.0
 SHARED_LIBS +=  soup-gnome-2.4       1.1      # .4.0
@@ -34,7 +36,7 @@ WANTLIB += m pcre xml2 z
 
 MULTI_PACKAGES =	-main -gnome
 
-BUILD_DEPENDS =		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 
 RUN_DEPENDS =		net/glib2-networking
 
@@ -55,11 +57,8 @@ MODULES =		devel/gettext \
 
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--disable-more-warnings \
-			--disable-tls-check \
-			--enable-introspection
+CONFIGURE_ARGS +=	--disable-more-warnings \
+			--disable-tls-check
 # checking Apache version... 1.3.29 (Unix) (ignoring)
 # But this prevents needing apache2 for certain regress tests.
 CONFIGURE_ARGS+=	--with-apache-httpd="/usr/sbin/httpd"

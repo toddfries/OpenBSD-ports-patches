@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2011/03/03 21:05:47 landry Exp $
+# $OpenBSD: Makefile,v 1.30 2011/09/19 07:53:15 ajacoutot Exp $
 
 COMMENT=	Xfce4 volume mixer
 
 XFCE_GOODIE=	xfce4-mixer
+REVISION=	0
 HOMEPAGE=	http://www.xfce.org/projects/xfce4-mixer
 
 # GPLv2
@@ -12,7 +13,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
 
 LIB_DEPENDS=	x11/xfce4/libxfce4ui \
 		multimedia/gstreamer-0.10/core \

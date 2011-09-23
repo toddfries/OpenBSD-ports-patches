@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2011/01/18 21:11:15 landry Exp $
+# $OpenBSD: Makefile,v 1.8 2011/09/19 07:53:16 ajacoutot Exp $
 
 COMMENT=	Xfce4 task manager and system monitor
 
 XFCE_VERSION=	1.0.0
 XFCE_GOODIE=	xfce4-taskmanager
-REVISION=	2
+REVISION=	3
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes
@@ -13,7 +13,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
 
 LIB_DEPENDS=	x11/gtk+2 \
 		devel/libwnck

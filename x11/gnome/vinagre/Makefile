@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2011/09/12 12:04:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.45 2011/09/20 21:10:01 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	remote desktop viewer for GNOME
 
 GNOME_VERSION=	3.0.2
 GNOME_PROJECT=	vinagre
-REVISION=	1
+REVISION=	2
 
 CATEGORIES=	net
 
@@ -42,12 +42,10 @@ LIB_DEPENDS=	devel/libpeas \
 		net/telepathy/telepathy-glib \
 		net/avahi,-gtk3,no_mono,no_qt3,no_qt4
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS= goi yelp
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-introspection \
-		--with-avahi \
+CONFIGURE_ARGS=	--with-avahi \
 		--with-telepathy \
 		--without-panelapplet \
 		--disable-spice

@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.37 2011/09/14 13:35:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.40 2011/09/16 20:00:46 jasper Exp $
 
 COMMENT=		flexible communications framework, xmpp component
 
-DISTNAME=		telepathy-gabble-0.12.0
+DISTNAME=		telepathy-gabble-0.12.6
 REVISION=		0
 
 MASTER_SITES=		${MASTER_SITES_TP:=telepathy-gabble/}
 
 WANTLIB += c dbus-1 dbus-glib-1 gio-2.0 glib-2.0 gmodule-2.0 gmp
 WANTLIB += gnutls gobject-2.0 gthread-2.0 hogweed m nettle nice
-WANTLIB += pcre pthread soup-2.4 sqlite3 tasn1 telepathy-glib
+WANTLIB += pcre p11-kit pthread soup-2.4 sqlite3 tasn1 telepathy-glib
 WANTLIB += xml2 z
 
 MODULES=		devel/gettext \

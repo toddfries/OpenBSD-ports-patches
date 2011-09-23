@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2011/09/12 12:04:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=		GNOME power manager
 
 GNOME_PROJECT=		gnome-power-manager
 GNOME_VERSION=		3.0.2
+REVISION=	0
 
 HOMEPAGE=		http://projects.gnome.org/gnome-power-manager/
 
@@ -29,8 +30,8 @@ MODULES=	devel/dconf \
 		devel/gettext \
 		x11/gnome
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= yelp
+MODGNOME_DESKTOP_FILE=		Yes
 
 LIB_DEPENDS=	sysutils/upower \
 		devel/libnotify \
@@ -41,7 +42,6 @@ LIB_DEPENDS=	sysutils/upower \
 FAKE_FLAGS=	autostartdir=${PREFIX}/share/examples/gnome-power-manager/xdg/autostart \
 		script_SCRIPTS=""
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
 		ac_cv_path_DOCBOOK2MAN=no \

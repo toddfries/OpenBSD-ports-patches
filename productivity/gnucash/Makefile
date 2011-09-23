@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.38 2011/09/12 12:07:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.42 2011/09/20 21:04:25 jasper Exp $
 
 SHARED_ONLY =	Yes
 
@@ -8,7 +8,7 @@ GNOME_PROJECT =	gnucash
 GNOME_VERSION =	2.2.9
 DOC_VERSION = 	2.2.0
 
-REVISION=	6
+REVISION=	7
 
 SHARED_LIBS +=	gnc-backend-file-utils	0.0	# .0.0
 SHARED_LIBS +=	gnc-business-ledger	0.0	# .0.0
@@ -54,9 +54,9 @@ MODULES =	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
-DESKTOP_FILES =	Yes
+MODGNOME_DESKTOP_FILE =	Yes
 MODGCONF2_SCHEMAS_DIR = gnucash
-MODGNOME_HELP_FILES =	Yes
+MODGNOME_TOOLS= 	yelp
 
 BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS =	devel/slib \
@@ -68,8 +68,7 @@ LIB_DEPENDS =	devel/goffice \
 
 CONFIGURE_STYLE =	gnu
 # --disable-ofx until libofx/libsp is fixed to work with .so
-CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
-			--disable-doxygen \
+CONFIGURE_ARGS +=	--disable-doxygen \
 			--disable-ofx
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"

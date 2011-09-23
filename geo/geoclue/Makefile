@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2011/06/07 14:19:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2011/09/16 21:01:45 jasper Exp $
 
 COMMENT=		modular geoinformation service on top of D-Bus
 
@@ -6,7 +6,7 @@ DISTNAME=		geoclue-0.12.0
 SHARED_LIBS +=  geoclue              1.0      # .0.0
 CATEGORIES=		geo devel
 
-REVISION=		0
+REVISION=		1
 
 HOMEPAGE=		http://geoclue.freedesktop.org/
 
@@ -16,7 +16,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		http://folks.o-hand.com/jku/geoclue-releases/
+MASTER_SITES=		http://folks.o-hand.com/jku/geoclue-releases/ \
+			http://distfiles.nl/
 
 MODULES=		devel/gettext
 
