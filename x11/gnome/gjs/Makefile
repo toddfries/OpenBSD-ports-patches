@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2011/09/21 15:30:23 robert Exp $
+# $OpenBSD: Makefile,v 1.8 2011/09/28 09:47:47 jasper Exp $
 
 COMMENT=		Javascript bindings for GNOME
 
 GNOME_PROJECT=		gjs
-GNOME_VERSION=		1.29.17
-
-REVISION=		0
+GNOME_VERSION=		1.30.0
 
 SHARED_LIBS +=  gjs                  1.0      # 0.0
 SHARED_LIBS +=  gjs-dbus             1.0      # 0.0
@@ -47,8 +45,6 @@ LIB_DEPENDS=		devel/gobject-introspection>=1.30.0 \
 REGRESS_DEPENDS=	sysutils/e2fsprogs
 
 CONFIGURE_ARGS+=	--with-js-package="mozilla-js"
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 pre-configure:
 	@perl -pi -e 's,%%LOCALBASE%%,${LOCALBASE},' ${WRKSRC}/configure

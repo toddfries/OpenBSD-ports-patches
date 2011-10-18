@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.72 2011/09/20 21:10:01 jasper Exp $
+# $OpenBSD: Makefile,v 1.77 2011/10/17 17:52:25 ajacoutot Exp $
 
 COMMENT=		GNOME help browser
 
 GNOME_PROJECT=		yelp
-GNOME_VERSION=		3.0.4
-REVISION=	0
+GNOME_VERSION=		3.2.1
 
 SHARED_LIBS +=  yelp                      0.0 # 0.0
 
@@ -24,22 +23,20 @@ WANTLIB += gstvideo-0.10 gthread-2.0 gtk-3 icudata icui18n icuuc
 WANTLIB += jpeg lzma m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png pthread pthread-stubs soup-2.4 sqlite3
 WANTLIB += stdc++ webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt
-WANTLIB += z
+WANTLIB += z ffi javascriptcoregtk-3.0
 
 MODULES=		devel/gettext \
 			x11/gnome \
 			devel/dconf
 
-BUILD_DEPENDS=		x11/gnome/yelp-xsl
-RUN_DEPENDS=		x11/gnome/yelp-xsl
+BUILD_DEPENDS=		x11/gnome/yelp-xsl>=3.2.0
+RUN_DEPENDS=		x11/gnome/yelp-xsl>=3.2.0
 
-LIB_DEPENDS=		www/webkit,gtk3
+LIB_DEPENDS=		www/webkit,gtk3>=1.6.1v0
 
-MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 CONFIGURE_ARGS+= 	--enable-lzma \
 			--enable-bz2
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

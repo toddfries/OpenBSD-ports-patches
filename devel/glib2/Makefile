@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.134 2011/09/21 13:10:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.141 2011/10/18 06:46:24 espie Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
 
-VERSION=		2.29.92
+VERSION=		2.30.1
 DISTNAME=		glib-${VERSION}
 EXTRACT_SUFX=		.tar.xz
 
 PKGNAME-main=		glib2-${VERSION}
 PKGNAME-docs=		glib2-docs-${VERSION}
-
-REVISION-main=		1
 
 CATEGORIES=		devel
 
@@ -45,7 +43,7 @@ WANTLIB-main += ${WANTLIB} c pthread z pcre fam ffi
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/pcre>=8.13 \
-			sysutils/gamin,no_server,no_python \
+			sysutils/gamin,no_server,no_python,bootstrap \
 			devel/libffi
 
 PKG_ARCH-docs=		*
@@ -53,7 +51,8 @@ WANTLIB-docs=
 LIB_DEPENDS-docs=
 RUN_DEPENDS-docs=
 
-# need X11 because DBus is used in the GDBus test cases
+# need X11 because DBus is used in the GDBus test cases;
+# also requires bumped limits (nofiles >= 512)
 BUILD_DEPENDS +=	x11/dbus
 REGRESS_IS_INTERACTIVE=	x11
 REGRESS_FLAGS=		GTESTER="${WRKBUILD}/glib/gtester -k"
@@ -83,8 +82,7 @@ CONFIGURE_ARGS +=	--disable-maintainer-mode
 # currently don't have most of the _POSIX_* defines in unistd.h (e.g.
 # _POSIX_MONOTONIC_CLOCK 200112L) and the associated sysconf(3)
 # _SC_MONOTONIC_CLOCK variable.
-# (see also: patches/patch-glib_gmain_c
-#            patches/patch-gthread_gthread-posix_c)
+# (see also: patches/patch-gthread_gthread-posix_c)
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
 				-D_POSIX_MONOTONIC_CLOCK=200112L" \
 			LDFLAGS="-L${LOCALBASE}/lib -pthread"

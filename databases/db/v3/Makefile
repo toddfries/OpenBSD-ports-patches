@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.25 2011/09/16 08:48:02 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2011/10/17 10:10:59 espie Exp $
 
 REV=		3
 DBLIBDIR=	lib/db
 VERSION=	${REV}.1.17
 PKGNAME-main=	${DISTNAME}
 PKGNAME-tcl=	db-tcl-${VERSION}
-REVISION-main=	11
-REVISION-tcl=	9
+EPOCH-main=	0
+EPOCH-tcl=	0
 SHARED_LIBS +=	db                   3.1      # .0.0
 SHARED_LIBS +=	db_cxx               4.0      # .0.0
 SHARED_LIBS +=	db_tcl               4.0      # .0.0
-PKGSPEC-main =	db->=3,<4
-# XXX PKGSPEC-tcl ?
+PKGSPEC-main =	db->=3,<4|db->=3v0,<4v0
+PKGSPEC-tcl =	db-tcl->=3,<4|db-tcl->=3v0,<4v0
 
 CONFIGURE_STYLE=gnu dest
 
@@ -20,7 +20,7 @@ WANTLIB=c
 
 WANTLIB-tcl =		m ${MODTCL_WANTLIB}
 LIB_DEPENDS-tcl =	${MODTCL_LIB_DEPENDS}
-RUN_DEPENDS-tcl =	databases/db/v${REV}
+RUN_DEPENDS-tcl =	${BUILD_PKGPATH}
 
 pre-configure:
 	@${SUBST_CMD} ${WRKSRC}/test/include.tcl

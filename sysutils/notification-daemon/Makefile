@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.22 2011/09/17 14:21:48 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2011/10/17 18:03:21 ajacoutot Exp $
 
 COMMENT=		send small notifications to your desktop
 
-GNOME_VERSION=		0.7.2
+GNOME_VERSION=		0.7.3
 GNOME_PROJECT=		notification-daemon
 
 CATEGORIES=		sysutils net
@@ -22,20 +22,16 @@ WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gthread-2.0 gtk-3 ltdl m ogg pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
 WANTLIB += pthread-stubs vorbis vorbisfile xcb xcb-render xcb-shm
-WANTLIB += z
+WANTLIB += z ffi
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-LIB_DEPENDS=		devel/libnotify>=0.7.2 \
-			devel/libtool,-ltdl \
+LIB_DEPENDS=		devel/libtool,-ltdl \
 			audio/libcanberra,-gtk3
 RUN_DEPENDS=		devel/desktop-file-utils
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--with-dbus-sys="${SYSCONFDIR}/dbus-1/system.d"
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ARGS+=	--with-dbus-sys="${SYSCONFDIR}/dbus-1/system.d"
 
 .include <bsd.port.mk>

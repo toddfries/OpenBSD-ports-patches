@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.163 2011/09/20 21:15:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.169 2011/09/29 17:20:32 jasper Exp $
 
      SUBDIR =
-     SUBDIR += alacarte
      SUBDIR += anjuta
      SUBDIR += anjuta-extras
      SUBDIR += at-spi2-atk
@@ -10,6 +9,7 @@
      SUBDIR += baker
      SUBDIR += byzanz
      SUBDIR += common
+     SUBDIR += contacts
      SUBDIR += controlcenter
      SUBDIR += desktop
      SUBDIR += devel-docs
@@ -28,11 +28,13 @@
      SUBDIR += gdl1
      SUBDIR += gdm
      SUBDIR += gedit
+     SUBDIR += gedit-latex
      SUBDIR += gedit-plugins
      SUBDIR += genius
      SUBDIR += ghex
      SUBDIR += gitg
      SUBDIR += gjs
+     SUBDIR += glom
      SUBDIR += gnote
      SUBDIR += gucharmap
      SUBDIR += gvfs
@@ -68,6 +70,7 @@
      SUBDIR += nautilus-open-terminal
      SUBDIR += nautilus-sendto
      SUBDIR += nettool
+     SUBDIR += online-accounts
      SUBDIR += orca
      SUBDIR += panel
      SUBDIR += planner
@@ -78,6 +81,7 @@
      SUBDIR += screensaver
      SUBDIR += seahorse
      SUBDIR += seahorse-plugins
+     SUBDIR += seahorse-sharing
      SUBDIR += seed
      SUBDIR += session
      SUBDIR += settings-daemon
@@ -95,6 +99,7 @@
      SUBDIR += vinagre
      SUBDIR += vino
      SUBDIR += yelp
+     SUBDIR += yelp-tools
      SUBDIR += yelp-xsl
      SUBDIR += zenity
 

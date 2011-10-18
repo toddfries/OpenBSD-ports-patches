@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2011/09/20 08:32:16 robert Exp $
+# $OpenBSD: Makefile,v 1.49 2011/10/17 10:10:59 espie Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -14,6 +14,7 @@ PKGNAME=	libreoffice-${VERSION}
 PKGNAME-main=	libreoffice-${VERSION}
 PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
+REVISION-java=	0
 CATEGORIES=	editors productivity
 
 EPOCH=		0
@@ -116,7 +117,7 @@ COMMENT-i18n-$l=	$l language pack for LibreOffice
 RUN_DEPENDS-i18n-$l=	editors/libreoffice
 WANTLIB-i18n-$l=
 LIB_DEPENDS-i18n-$l=
-REVISION-i18n-$l =	0
+REVISION-i18n-$l =	1
 .endfor
 .endif
 
@@ -183,7 +184,7 @@ MODULES+=		java
 MODJAVA_VER=		1.4+
 MODJAVA_JRERUN=		Yes
 .endif
-LIB_DEPENDS-java=	databases/db/v4,-java,java \
+LIB_DEPENDS-java=	databases/db/v4,-java \
 			devel/apache-ant>=1.8.2
 RUN_DEPENDS-java=	${MODJAVA_RUN_DEPENDS} \
 			editors/libreoffice \

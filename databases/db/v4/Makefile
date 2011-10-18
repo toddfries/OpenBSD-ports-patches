@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.53 2011/09/16 08:48:02 espie Exp $
+# $OpenBSD: Makefile,v 1.56 2011/10/18 06:46:24 espie Exp $
 
 COMMENT-java=	Java bindings for Berkeley DB, revision ${REV}
 
@@ -14,7 +14,7 @@ PKGNAME-tcl=	db-tcl-${VERSION}
 EPOCH-main=	0
 EPOCH-java=	0
 EPOCH-tcl=	0
-REVISION-java =	0
+REVISION-java =	1
 REVISION-tcl =	0
 DBLIBDIR=	lib/db4
 SHARED_LIBS +=	db                   5.0      # .0.0
@@ -36,25 +36,14 @@ CONFIGURE_STYLE=gnu
 DEST_SUBDIR=	${REV}
 WANTLIB=	c m stdc++
 
-PSEUDO_FLAVORS=	java
-FLAVOR?=
+PSEUDO_FLAVORS=	no_java bootstrap
+FLAVOR?= 
+MULTI_PACKAGES = -java
 
-RUN_DEPENDS-java=	databases/db/v${REV} \
+RUN_DEPENDS-java=	${BUILD_PKGPATH} \
 			${MODJAVA_RUN_DEPENDS}
-RUN_DEPENDS-tcl=	databases/db/v${REV}
+RUN_DEPENDS-tcl=	${BUILD_PKGPATH}
 WANTLIB-java=
-
-.if ${FLAVOR:L:Mjava}
-MULTI_PACKAGES+=-java
-CONFIGURE_ARGS+=--enable-java
-MODULES+=	java
-MODJAVA_VER=	1.4+
-MODJAVA_JRERUN=	Yes
-CONFIGURE_ENV+=	JAVAC=${JAVA_HOME}/bin/javac \
-		JAR=${JAVA_HOME}/bin/jar \
-		JAVA=${JAVA_HOME}/bin/java
-MAKE_FLAGS+=	DBJVERSION=${LIBdb_java_VERSION}
-.endif
 
 SUBST_VARS=	LIBdb_tcl_VERSION
 

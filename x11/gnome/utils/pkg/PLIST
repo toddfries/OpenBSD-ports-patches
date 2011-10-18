@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.27 2011/09/12 07:28:55 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.30 2011/10/18 15:14:08 sthen Exp $
+@conflict gnome-control-center-<3.2.0
 @bin bin/baobab
 @bin bin/gnome-dictionary
 @bin bin/gnome-font-viewer
@@ -62,6 +63,7 @@ share/gnome-screenshot/gnome-screenshot.ui
 share/gnome-utils/
 share/gnome-utils/logview-filter.ui
 share/gnome-utils/logview-toolbar.xml
+share/gnome/help/
 share/gnome/help/baobab/
 share/gnome/help/baobab/C/
 share/gnome/help/baobab/C/baobab.xml
@@ -530,6 +532,10 @@ share/gnome/help/gnome-search-tool/it/
 share/gnome/help/gnome-search-tool/it/figures/
 share/gnome/help/gnome-search-tool/it/figures/gnome-search-tool_window.png
 share/gnome/help/gnome-search-tool/it/gnome-search-tool.xml
+share/gnome/help/gnome-search-tool/ja/
+share/gnome/help/gnome-search-tool/ja/figures/
+share/gnome/help/gnome-search-tool/ja/figures/gnome-search-tool_window.png
+share/gnome/help/gnome-search-tool/ja/gnome-search-tool.xml
 share/gnome/help/gnome-search-tool/ko/
 share/gnome/help/gnome-search-tool/ko/figures/
 share/gnome/help/gnome-search-tool/ko/figures/gnome-search-tool_window.png
@@ -604,6 +610,10 @@ share/gnome/help/gnome-system-log/it/
 share/gnome/help/gnome-system-log/it/figures/
 share/gnome/help/gnome-system-log/it/figures/syslog_window.png
 share/gnome/help/gnome-system-log/it/gnome-system-log.xml
+share/gnome/help/gnome-system-log/ja/
+share/gnome/help/gnome-system-log/ja/figures/
+share/gnome/help/gnome-system-log/ja/figures/syslog_window.png
+share/gnome/help/gnome-system-log/ja/gnome-system-log.xml
 share/gnome/help/gnome-system-log/ko/
 share/gnome/help/gnome-system-log/ko/figures/
 share/gnome/help/gnome-system-log/ko/figures/syslog_window.png
@@ -649,7 +659,6 @@ share/gtk-doc/html/gdict/gdict-Gdict-Utilities.html
 share/gtk-doc/html/gdict/gdict-Gdict-Version-Checking.html
 share/gtk-doc/html/gdict/gdict-GdictContext.html
 share/gtk-doc/html/gdict/gdict-utils.html
-share/gtk-doc/html/gdict/gdict.devhelp
 share/gtk-doc/html/gdict/gdict.devhelp2
 share/gtk-doc/html/gdict/gdict.html
 share/gtk-doc/html/gdict/gdictui.html
@@ -821,6 +830,7 @@ share/omf/gnome-search-tool/gnome-search-tool-eu.omf
 share/omf/gnome-search-tool/gnome-search-tool-fi.omf
 share/omf/gnome-search-tool/gnome-search-tool-fr.omf
 share/omf/gnome-search-tool/gnome-search-tool-it.omf
+share/omf/gnome-search-tool/gnome-search-tool-ja.omf
 share/omf/gnome-search-tool/gnome-search-tool-ko.omf
 share/omf/gnome-search-tool/gnome-search-tool-oc.omf
 share/omf/gnome-search-tool/gnome-search-tool-ru.omf
@@ -840,6 +850,7 @@ share/omf/gnome-system-log/gnome-system-log-eu.omf
 share/omf/gnome-system-log/gnome-system-log-fi.omf
 share/omf/gnome-system-log/gnome-system-log-fr.omf
 share/omf/gnome-system-log/gnome-system-log-it.omf
+share/omf/gnome-system-log/gnome-system-log-ja.omf
 share/omf/gnome-system-log/gnome-system-log-ko.omf
 share/omf/gnome-system-log/gnome-system-log-oc.omf
 share/omf/gnome-system-log/gnome-system-log-ru.omf

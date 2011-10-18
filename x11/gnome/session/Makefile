@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.178 2011/09/21 09:42:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.195 2011/10/16 14:58:27 ajacoutot Exp $
 
 COMMENT=		GNOME session
 
 GNOME_PROJECT=		gnome-session
-GNOME_VERSION=		3.0.2
-
-REVISION=		26
+GNOME_VERSION=		3.2.1
 
 CATEGORIES=		x11
 
@@ -15,33 +13,34 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-EXTRACT_SUFX=		.tar.bz2
-
 WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xtst Xxf86vm
-WANTLIB += atk-1.0 c cairo cairo-gobject croco-0.6 dbus-1 dbus-glib-1
-WANTLIB += drm execinfo expat fontconfig freetype gconf-2 gdk-3
+WANTLIB += atk-1.0 c cairo cairo-gobject dbus-1 dbus-glib-1 drm
+WANTLIB += execinfo expat ffi fontconfig freetype gconf-2 gdk-3
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png pthread pthread-stubs rsvg-2 upower-glib
-WANTLIB += xcb xcb-render xcb-shm xml2 z
+WANTLIB += gthread-2.0 gtk-3 json-glib-1.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
+WANTLIB += upower-glib xcb xcb-render xcb-shm z
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
 BUILD_DEPENDS=	textproc/xmlto \
-		x11/gnome/settings-daemon \
-		devel/gconf2,-gtk
+		x11/gnome/settings-daemon
 LIB_DEPENDS=	devel/libexecinfo \
 		x11/gtk+3 \
 		devel/gconf2 \
 		x11/gnome/librsvg \
-		sysutils/upower
+		sysutils/upower \
+		devel/json-glib
 RUN_DEPENDS=	x11/gnome/settings-daemon \
 		sysutils/consolekit \
-		x11/xdg-user-dirs-gtk>=0.8p6 \
-		devel/gconf2,-gtk
+		x11/xdg-user-dirs-gtk>=0.8p6
+
+# only needed at runtime since the move from gconf to gsettings
+# (see NEWS in the source tarball)
+RUN_DEPENDS+=	devel/gsettings-desktop-schemas
 
 # gnome.session+gnome-fallback.session RequiredComponents.
 RUN_DEPENDS+=	notification-daemon-*|notification-daemon-xfce-*|xfce4-notifyd-*:sysutils/notification-daemon
@@ -73,9 +72,10 @@ RUN_DEPENDS+=	devel/gconf2,-polkit
 
 MODGNOME_DESKTOP_FILE=		Yes
 
+MODGNOME_CPPFLAGS=-I${X11BASE}/include
+MODGNOME_LDFLAGS=-L${X11BASE}/lib
+
 CONFIGURE_ARGS=	--disable-rebuilds \
 		--enable-docbook-docs
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.20 2011/09/16 10:31:21 espie Exp $
+# $OpenBSD: Makefile,v 1.22 2011/10/02 15:27:31 ajacoutot Exp $
+
+ONLY_FOR_ARCHS-mono=	${MONO_ARCHS}
 
 COMMENT-main=	MIME messages creation and parsing library
 COMMENT-mono=	mono bindings for gmime
@@ -32,7 +34,7 @@ WANTLIB-main += gpgme-pthread gthread-2.0 pcre pthread z
 
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gmime/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
 
-MULTI_PACKAGES=	-main
+MULTI_PACKAGES=	-main -mono
 
 MODULES +=	devel/gettext
 
@@ -59,20 +61,9 @@ FLAVOR ?=
 MODMONO_DEPS=   No
 DLLMAP_FILES=	mono/gmime-sharp.dll.config
 
-# keep in sync with lang/mono/mono.port.mk
-ONLY_FOR_ARCHS-mono= i386 amd64
+.include <bsd.port.arch.mk>
 
-BUILD_MONO = No
-.if !${FLAVOR:L:Mno_mono}
-MULTI_PACKAGES+= -mono
-.  for _a in ${MACHINE_ARCH} ${ARCH}
-.    if ${ONLY_FOR_ARCHS-mono:M${_a}}
-BUILD_MONO = Yes
-.    endif
-.  endfor
-.endif
-
-.if ${BUILD_MONO:L} == "yes"
+.if ${BUILD_PACKAGES:M-mono}
 MODULES+=	lang/mono
 BUILD_DEPENDS+= ${MODMONO_BUILD_DEPENDS} \
 		x11/mono-gtk2

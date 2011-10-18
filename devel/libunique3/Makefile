@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/09/20 21:04:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2011/09/28 09:51:36 jasper Exp $
 
 COMMENT =	library for writing single instance GTK+3 applications
 
@@ -19,8 +19,6 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-EXTRACT_SUFX=		.tar.bz2
-
 MODULES =		devel/gettext \
 			x11/gnome
 
@@ -38,8 +36,6 @@ LIB_DEPENDS =		x11/dbus-glib \
 			x11/gtk+3
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS =	--enable-bacon \
 			--with-x
 

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.41 2011/09/23 08:49:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2011/10/17 14:01:54 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.1.92
+GNOME_VERSION=		3.2.0
 REVISION=		2
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
@@ -41,9 +41,11 @@ WANTLIB += svn_diff-1 svn_fs-1 svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1
 WANTLIB += svn_ra-1 svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1
 WANTLIB += svn_repos-1 svn_subr-1 svn_wc-1 util vala-0.14 vte2_90
 WANTLIB += webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt z
+WANTLIB += dbus-1 dbus-glib-1 javascriptcoregtk-3.0 magic
 WANTLIB += ${MODPY_WANTLIB}
 
-BUILD_DEPENDS=		devel/autogen>=5.6.5
+BUILD_DEPENDS=		devel/autogen>=5.6.5 \
+			devel/bison
 # libgda is needed by the symbol-db plugin, which we don't build on OpenBSD.
 # though GDA_CFLAGS is used in various Makefile's. So instead of changing
 # dozens of files, we just drop the LIB_DEPENDS and keep the BUILD_DEPENDS.
@@ -52,15 +54,14 @@ RUN_DEPENDS=		misc/shared-mime-info
 LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			devel/glade \
 			devel/subversion,gnome_keyring \
-			devel/vte \
+			devel/vte3 \
 			lang/vala>=0.13.4 \
 			textproc/icu4c \
 			x11/gnome/devhelp \
 			x11/gnome/gdl \
 			x11/gtksourceview3
 
-# XXX: Remove when updating to a stable release
-BUILD_DEPENDS+=		devel/bison
+BUILD_DEPENDS+=		
 
 LIBTOOL_FLAGS=		--tag=disable-static
 MODGNOME_DESKTOP_FILE=		Yes
@@ -75,9 +76,6 @@ CONFIGURE_ARGS+=	--enable-plugin-subversion
 # adds dependency on libgnomeui
 CONFIGURE_ARGS+=	--disable-graphviz
 
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-
 # The Symbol Browser plugin isn't built on OpenBSD due to the lack of an
 # shm_open() implementation. So remove the "Symbol Browser" as a requirement
 # from these templates. It's just a really-nice-to-have, instead of a must-have.
@@ -90,14 +88,9 @@ post-extract:
 		done
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/plugins/project-wizard/templates/python.wiz.in \
+	${SUBST_CMD} ${WRKSRC}/plugins/project-wizard/templates/pygtk.wiz.in \
+		${WRKSRC}/plugins/project-wizard/templates/python.wiz.in \
 		${WRKSRC}/plugins/project-wizard/templates/pygtk/src/main.py \
 		${WRKSRC}/plugins/project-wizard/templates/python/src/main.py
-
-# XXX cf .patch-manuals_anjuta-manual_Makefile_in
-post-install:
-	rm ${PREFIX}/share/gnome/help/anjuta-manual/C/figures/anjuta_logo.png
-	${INSTALL_DATA} ${WRKSRC}/pixmaps/anjuta_logo.png \
-		${PREFIX}/share/gnome/help/anjuta-manual/C/figures/anjuta_logo.png
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.48 2011/09/20 21:10:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.51 2011/10/11 05:10:25 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -22,7 +22,8 @@ PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
 
 REVISION =		0
-REVISION-main = 	1
+REVISION-main = 	2
+REVISION-ui =		1
 
 EPOCH-main=		2
 EPOCH-ldap=		0
@@ -82,9 +83,9 @@ CONFIGURE_ARGS+=	--disable-static \
 			--without-oracle \
 			--without-mdb \
 			--with-java=no
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/db4/" \
-			LDFLAGS="-L${LOCALBASE}/lib -lm" \
-			LIBCRYPTO_CFLAGS="-I/usr/include/ssl" \
+MODGNOME_CPPFLAGS=	-I${LOCALBASE}/include/db4/
+MODGNOME_LDFLAGS=	-lm
+CONFIGURE_ENV=		LIBCRYPTO_CFLAGS="-I/usr/include/ssl" \
 			LIBCRYPTO_LIBS="-lcrypto" \
 			MYSQL_CONFIG="${LOCALBASE}/bin/mysql_config"
 

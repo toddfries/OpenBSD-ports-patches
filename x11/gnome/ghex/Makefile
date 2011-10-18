@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.33 2011/09/20 21:10:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.36 2011/10/16 19:23:34 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		binary editor
 
 GNOME_PROJECT=		ghex
-GNOME_VERSION=		2.90.2
-REVISION=	0
+GNOME_VERSION=		3.0.0
+REVISION=		0
 
 SHARED_LIBS +=  gtkhex-3                  0.0 # 0.0
 
@@ -24,7 +24,7 @@ WANTLIB += cairo-gobject drm expat fontconfig freetype gailutil-3
 WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
-WANTLIB += xcb-shm z
+WANTLIB += xcb-shm z ffi
 
 MODULES=		devel/dconf \
 			devel/gettext \
@@ -34,8 +34,5 @@ LIB_DEPENDS=		x11/gtk+3
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=		Yes
-
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

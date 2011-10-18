@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.530 2011/09/18 22:44:18 landry Exp $
+# $OpenBSD: Makefile,v 1.532 2011/10/14 16:33:52 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -61,6 +61,7 @@
      SUBDIR += horde
      SUBDIR += hs-cgi
      SUBDIR += hs-html
+     SUBDIR += hs-snap
      SUBDIR += hs-snap-core
      SUBDIR += hs-snap-server
      SUBDIR += hs-webkit
@@ -386,6 +387,7 @@
      SUBDIR += py-pylons
      SUBDIR += py-quixote
      SUBDIR += py-repoze-profile
+     SUBDIR += py-requests
      SUBDIR += py-routes
      SUBDIR += py-tempita
      SUBDIR += py-turbogears

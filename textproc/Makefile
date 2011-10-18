@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.337 2011/09/20 12:58:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.340 2011/10/07 20:35:19 rpointel Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -48,12 +48,15 @@
      SUBDIR += hs-attoparsec
      SUBDIR += hs-attoparsec-enumerator
      SUBDIR += hs-attoparsec-iteratee
+     SUBDIR += hs-attoparsec-text
+     SUBDIR += hs-blaze-html
      SUBDIR += hs-bytestring-nums
      SUBDIR += hs-bytestring-show
      SUBDIR += hs-heist
      SUBDIR += hs-hexpat
      SUBDIR += hs-polyparse
      SUBDIR += hs-xml
+     SUBDIR += hs-xmlhtml
      SUBDIR += html
      SUBDIR += hunspell
      SUBDIR += hyperestraier
@@ -281,6 +284,7 @@
      SUBDIR += rarian
      SUBDIR += redland
      SUBDIR += rman
+     SUBDIR += rubber
      SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
      SUBDIR += ruby-classifier
@@ -331,6 +335,7 @@
      SUBDIR += textutils
      SUBDIR += tre
      SUBDIR += txt2tags
+     SUBDIR += uncrustify
      SUBDIR += unrtf
      SUBDIR += urlview
      SUBDIR += urlview,slang

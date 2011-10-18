@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortInfo.pm,v 1.11 2011/06/15 10:06:22 espie Exp $
+# $OpenBSD: PortInfo.pm,v 1.14 2011/10/10 18:56:50 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -41,6 +41,19 @@ sub quickie
 {
 	return 0;
 }
+
+package AddIgnore;
+our @ISA = qw(AddInfo);
+sub string
+{
+	my $self = shift;
+	my $msg = $$self;
+	$msg =~ s/\\//g;
+	$msg =~ s/\"\s+\"/\; /g;
+	return $msg;
+}
+
+
 
 package AddYesNo;
 our @ISA = qw(AddInfo);
@@ -152,6 +165,7 @@ sub new
 			} else {
 				my $info = DPB::PkgPath->new($_);
 				$info->{parent} //= $parent;
+				$info->{wantbuild} = 1;
 				$r->{$info} = $info;
 			}
 		}
@@ -185,6 +199,7 @@ sub add
 	my ($class, $key, $self, $value, $parent) = @_;
 	$self->{$key} //= bless {}, $class;
 	my $path = DPB::PkgPath->new($value);
+	$path->{wantinfo} = 1;
 	$path->{parent} //= $parent;
 	$self->{$key}{$path} = $path;
 	return $self;
@@ -208,7 +223,8 @@ my %adder = (
 	RDEPENDS => "AddDepends",
 	DIST => "AddDepends",
 	FDEPENDS => "AddDepends",
-	IGNORE => "AddInfo",
+	IGNORE => "AddIgnore",
+	FLAVOR => "AddList",
 	NEEDED_BY => "AddDepends",
 	BNEEDED_BY => "AddDepends",
 	DISTFILES => 'AddList',

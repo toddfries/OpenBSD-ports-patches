@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Engine.pm,v 1.26 2011/09/13 09:46:53 espie Exp $
+# $OpenBSD: Engine.pm,v 1.28 2011/10/10 18:56:50 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -525,6 +525,11 @@ sub new_path
 		}
 		if (defined $v->{info}{IGNORE} && 
 		    !$self->{state}->{fetch_only}) {
+		    	$self->log('!', $v);
+			my $fh = $self->{logger}->open('ignored');
+			print $fh $v->fullpkgpath, ": ", 
+			    $v->{info}{IGNORE}->string, "\n";
+			close $fh;
 			push(@{$self->{ignored}}, $v);
 			return;
 		}
@@ -578,8 +583,8 @@ sub rebuild_info
 	my ($self, $core) = @_;
 	my @l = @{$self->{requeued}};
 	$self->{requeued} = [];
-	my @subdirs = map {$_->fullpkgpath} @l;
-	$self->{state}->grabber->grab_subdirs($core, \@subdirs);
+	my %subdirs = map {($_->pkgpath_and_flavors, 1)} @l;
+	$self->{state}->grabber->grab_subdirs($core, \%subdirs);
 	$core->mark_ready;
 }
 

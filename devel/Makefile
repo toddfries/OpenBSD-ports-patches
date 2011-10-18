@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.976 2011/09/23 08:51:50 naddy Exp $
+# $OpenBSD: Makefile,v 1.985 2011/10/14 22:30:40 bentley Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -30,11 +30,9 @@
      SUBDIR += automake
      SUBDIR += avr
      SUBDIR += avrdude
-     SUBDIR += bakery
      SUBDIR += beediff
      SUBDIR += bison
      SUBDIR += blame
-     SUBDIR += bluetooth-libs
      SUBDIR += boehm-gc
      SUBDIR += boost
      SUBDIR += bouml
@@ -107,7 +105,6 @@
      SUBDIR += fribidi
      SUBDIR += gconf-editor
      SUBDIR += gconf2
-     SUBDIR += gconfmm
      SUBDIR += gdb
      SUBDIR += geany
      SUBDIR += geotiff
@@ -163,6 +160,8 @@
      SUBDIR += hs-bimap
      SUBDIR += hs-binary
      SUBDIR += hs-blaze-builder
+     SUBDIR += hs-blaze-builder-enumerator
+     SUBDIR += hs-case-insensitive
      SUBDIR += hs-cereal
      SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
@@ -355,6 +354,7 @@
      SUBDIR += openmpi
      SUBDIR += openocd
      SUBDIR += orc
+     SUBDIR += ophis
      SUBDIR += p5-Acme-Damn
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
@@ -961,6 +961,7 @@
      SUBDIR += py-minimock
      SUBDIR += py-mock
      SUBDIR += py-modulegraph
+     SUBDIR += py-monthdelta
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime,python2.4
      SUBDIR += py-mxDateTime
@@ -1120,6 +1121,7 @@
      SUBDIR += smpeg
      SUBDIR += spe
      SUBDIR += splint
+     SUBDIR += srecord
      SUBDIR += startup-notification
      SUBDIR += stm32loader
      SUBDIR += stp
@@ -1148,7 +1150,7 @@
      SUBDIR += vtags
      SUBDIR += vtcl
      SUBDIR += vte
-     SUBDIR += vte,gtk2
+     SUBDIR += vte3
      SUBDIR += waf
      SUBDIR += wcb
      SUBDIR += xdg-user-dirs

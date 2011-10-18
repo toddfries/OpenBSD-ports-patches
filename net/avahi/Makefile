@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.67 2011/09/16 11:13:37 espie Exp $
+# $OpenBSD: Makefile,v 1.72 2011/10/17 10:03:51 espie Exp $
+
+ONLY_FOR_ARCHS-mono=	${MONO_ARCHS}
 
 COMMENT-main=	framework for Multicast DNS Service Discovery
 COMMENT-gtk=	gtk+2 avahi-ui libraries
@@ -22,14 +24,14 @@ PKGNAME-qt3=	avahi-qt3-${V}
 PKGNAME-qt4=	avahi-qt4-${V}
 PKGNAME-ui=	avahi-ui-${V}
 
-REVISION-main=	4
-REVISION-gtk=	3
-REVISION-gtk3=	0
-REVISION-gui=	0
-REVISION-mono=	2
-REVISION-qt3=	2
-REVISION-qt4=	2
-REVISION-ui=	0
+REVISION-main=	5
+REVISION-gtk=	4
+REVISION-gtk3=	2
+REVISION-gui=	2
+REVISION-mono=	3
+REVISION-qt3=	3
+REVISION-qt4=	3
+REVISION-ui=	1
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -54,16 +56,19 @@ MASTER_SITES=	${HOMEPAGE}/download/
 PSEUDO_FLAVORS=	no_gui no_mono no_qt3 no_qt4
 FLAVOR?=	no_gui no_mono no_qt3 no_qt4
 
-MULTI_PACKAGES=	-main
+MULTI_PACKAGES=	-main -mono -qt3 -qt4 -gui -gtk -gtk3 -ui
 
 MODULES=	devel/gettext \
 		textproc/intltool
 
+TAR=		${LOCALBASE}/bin/gtar
+
 BUILD_DEPENDS=	converters/xmltoman \
-		devel/gobject-introspection
+		devel/gobject-introspection \
+		archivers/gtar
 
 WANTLIB-main=	c expat glib-2.0 gobject-2.0 pcre pthread \
-		gthread-2.0 gdbm daemon dbus-1 \
+		gthread-2.0 gdbm daemon dbus-1 ffi \
 		${MODGETTEXT_WANTLIB}
 LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		devel/glib2 \
@@ -71,25 +76,19 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		devel/libdaemon>=0.14 \
 		x11/dbus
 
-# keep in sync with lang/mono/mono.port.mk
-ONLY_FOR_ARCHS-mono = i386 amd64
+.include <bsd.port.arch.mk>
 
-BUILD_MONO = No
-.if !${FLAVOR:L:Mno_mono}
-MULTI_PACKAGES+= -mono
-.  for _a in ${MACHINE_ARCH} ${ARCH}
-.    if ${ONLY_FOR_ARCHS-mono:M${_a}}
-BUILD_MONO = Yes
-.    endif
-.  endfor
+.if !${BUILD_PACKAGES:M-gui}
+# all these vanish together
+BUILD_PACKAGES := ${BUILD_PACKAGES:N-mono:N-gtk:N-gtk3:N-ui}
 .endif
 
-.if ${BUILD_MONO:L} == "yes"
+.if ${BUILD_PACKAGES:M-mono}
 MODULES+=	lang/mono
 BUILD_DEPENDS+=	${MODMONO_BUILD_DEPENDS} \
 		x11/mono-gtk2
 RUN_DEPENDS-mono= ${MODMONO_RUN_DEPENDS} \
-		net/avahi,-gtk,no_qt3,no_qt4 \
+		${BUILD_PKGPATH},-gtk \
 		x11/mono-gtk2
 LIB_DEPENDS-mono= # empty
 WANTLIB-mono=	# empty
@@ -98,7 +97,7 @@ CONFIGURE_ARGS+= --disable-mono \
 		--disable-monodoc
 .endif
 
-.if !${FLAVOR:L:Mno_gui} || ${BUILD_MONO:L} == "yes"
+.if ${BUILD_PACKAGES:M-gui}
 ### common
 MODULES+=	lang/python
 BUILD_DEPENDS+=	lang/python/${MODPY_VERSION},-gdbm \
@@ -107,12 +106,11 @@ BUILD_DEPENDS+=	lang/python/${MODPY_VERSION},-gdbm \
 
 ### -gtk
 SHARED_LIBS +=  avahi-ui             0.0      # .1.0
-MULTI_PACKAGES+= -gtk
 LIB_DEPENDS-gtk= ${MODGETTEXT_LIB_DEPENDS} \
 		x11/gtk+2 \
-		net/avahi
+		${BUILD_PKGPATH}
 RUN_DEPENDS-gtk= ${MODGETTEXT_RUN_DEPENDS} \
-		net/avahi,-ui,no_mono,no_qt3,no_qt4
+		${BUILD_PKGPATH},-ui
 WANTLIB-gtk=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		Xi Xinerama Xrandr Xrender atk-1.0 cairo dbus-1 \
 		expat fontconfig freetype gdbm gdk-x11-2.0 gthread-2.0 \
@@ -120,16 +118,15 @@ WANTLIB-gtk=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		gobject-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0 \
 		pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs xcb z \
 		xcb-render avahi-client avahi-common GL Xxf86vm drm xcb-shm \
-		avahi-glib ${MODGETTEXT_WANTLIB}
+		avahi-glib ffi ${MODGETTEXT_WANTLIB}
 
 ### -gtk3
 SHARED_LIBS +=  avahi-ui-gtk3             0.0 # 1.4
-MULTI_PACKAGES+= -gtk3
 LIB_DEPENDS-gtk3= ${MODGETTEXT_LIB_DEPENDS} \
 		x11/gtk+3 \
-		net/avahi
+		${BUILD_PKGPATH}
 RUN_DEPENDS-gtk3= ${MODGETTEXT_RUN_DEPENDS} \
-		net/avahi,-ui,no_mono,no_qt3,no_qt4
+		${BUILD_PKGPATH},-ui
 WANTLIB-gtk3 += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB-gtk3 += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 avahi-client
 WANTLIB-gtk3 += avahi-common avahi-glib cairo cairo-gobject
@@ -137,12 +134,11 @@ WANTLIB-gtk3 += dbus-1 drm expat fontconfig freetype gdbm gdk-3 gdk_pixbuf-2.0
 WANTLIB-gtk3 += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB-gtk3 += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB-gtk3 += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
-WANTLIB-gtk3 += xcb-shm z ${MODGETTEXT_WANTLIB}
+WANTLIB-gtk3 += xcb-shm z ffi ${MODGETTEXT_WANTLIB}
 
 ### -gui
-MULTI_PACKAGES+= -gui
 LIB_DEPENDS-gui= ${MODGETTEXT_LIB_DEPENDS} \
-		net/avahi,-gtk3,no_mono,no_qt3,no_qt4
+		${BUILD_PKGPATH},-gtk3
 RUN_DEPENDS-gui= ${MODGETTEXT_RUN_DEPENDS} \
 		${MODPY_RUN_DEPENDS} \
 		lang/python/${MODPY_VERSION},-gdbm \
@@ -157,13 +153,12 @@ WANTLIB-gui += cairo cairo-gobject dbus-1 drm expat fontconfig freetype
 WANTLIB-gui += gdbm gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB-gui += gobject-2.0 gthread-2.0 gtk-3 m pango-1.0
 WANTLIB-gui += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB-gui += pthread-stubs xcb xcb-render xcb-shm z
+WANTLIB-gui += pthread-stubs xcb xcb-render xcb-shm z ffi
 WANTLIB-gui += ${MODGETTEXT_WANTLIB}
 
 ### -ui
-MULTI_PACKAGES+= -ui
 LIB_DEPENDS-ui= # empty
-RUN_DEPENDS-ui= net/avahi
+RUN_DEPENDS-ui= ${BUILD_PKGPATH}
 WANTLIB-ui= # empty
 .else
 CONFIGURE_ARGS+= --disable-gtk \
@@ -171,31 +166,30 @@ CONFIGURE_ARGS+= --disable-gtk \
 		--disable-python \
 		--disable-pygtk \
 		--disable-python-dbus
+
 .endif
 
-.if !${FLAVOR:L:Mno_qt3}
+.if ${BUILD_PACKAGES:M-qt3}
 SHARED_LIBS +=  avahi-qt3            0.0      # .1.2
-MULTI_PACKAGES+= -qt3
 MODULES+=	x11/qt3
 LIB_DEPENDS-qt3= ${MODGETTEXT_LIB_DEPENDS} \
 		${MODQT3_LIB_DEPENDS} \
-		net/avahi
+		${BUILD_PKGPATH}
 WANTLIB-qt3=	GL ICE SM X11 Xau Xcursor Xdmcp Xext Xfixes Xft Xi \
 		Xinerama Xmu Xrandr Xrender Xt expat fontconfig \
 		freetype jpeg lcms m mng png pthread-stubs xcb z \
 		avahi-common stdc++ ${MODQT3_WANTLIB} ${MODGETTEXT_WANTLIB} \
-		Xdamage Xxf86vm drm
+		Xdamage Xxf86vm drm ffi kvm
 .else
 CONFIGURE_ARGS+= --disable-qt3
 .endif
 
-.if !${FLAVOR:L:Mno_qt4}
+.if ${BUILD_PACKAGES:M-qt4}
 SHARED_LIBS +=  avahi-qt4            0.0      # .1.2
-MULTI_PACKAGES+= -qt4
 MODULES+=	x11/qt4
 LIB_DEPENDS-qt4= ${MODGETTEXT_LIB_DEPENDS} \
 		x11/qt4 \
-		net/avahi
+		${BUILD_PKGPATH}
 WANTLIB-qt4=	QtCore avahi-common m stdc++ ${MODGETTEXT_WANTLIB} \
 		glib-2.0 gthread-2.0 pcre z
 .else
@@ -244,10 +238,6 @@ FAKE_FLAGS=	SYSCONFDIR=${SYSCONFDIR}
 PC_FILES=	avahi-ui.pc avahi-client.pc avahi-compat-howl.pc \
 		avahi-compat-libdns_sd.pc avahi-core.pc avahi-glib.pc \
 		avahi-gobject.pc avahi-qt3.pc avahi-qt4.pc
-
-post-extract:
-	find ${WRKDIR} -type d -name PaxHeaders.\* | \
-		xargs rm -r
 
 pre-configure:
 	find ${WRKSRC} -name Makefile.in -exec \

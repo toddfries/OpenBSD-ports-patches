@@ -1,17 +1,16 @@
-# $OpenBSD: Makefile,v 1.20 2011/09/16 12:00:09 espie Exp $
+# $OpenBSD: Makefile,v 1.23 2011/10/17 11:11:46 dcoppa Exp $
 
 COMMENT-main=	Java servlet 2.4 and Java server pages 2.0 server
 COMMENT-admin=	administration web application
 COMMENT-examples=example applications and documentation
 
-V=		5.5.33
+V=		5.5.34
 DISTNAME=	apache-tomcat-${V}
 PKGNAME=	tomcat-${V}
 PKGNAME-main=	tomcat-${V}
 PKGNAME-admin=	tomcat-admin-${V}
 PKGNAME-examples=tomcat-examples-${V}
-REVISION-main=	2
-REVISION-examples=0
+REVISION-main=	0
 CATEGORIES=	www
 
 DISTFILES=	${DISTNAME}.tar.gz \
@@ -54,7 +53,7 @@ SAMPLEDIR=	${PREFIX}/share/examples/tomcat
 SUBST_VARS+=	CONFDIR CATALINA_BASE
 
 post-extract:
-	rm -rf ${WRKDIST}/webapps/tomcat-docs
+	@rm -rf ${WRKDIST}/webapps/tomcat-docs
 	mv ${WRKDIR}/tomcat-5.5-doc ${WRKDIST}/webapps/tomcat-docs
 
 do-install:
@@ -62,8 +61,11 @@ do-install:
 	cd ${WRKDIST} && \
 		tar cf - bin common server `find * -prune -type f` | \
 		tar -C ${PREFIX}/tomcat -xf -
+	@rm ${PREFIX}/tomcat/server/webapps/host-manager/host-manager.xml
+	@rm ${PREFIX}/tomcat/server/webapps/manager/manager.xml
 	${INSTALL_DATA_DIR} ${SAMPLEDIR}
 	${INSTALL_DATA} `find ${WRKDIST}/conf/* -prune -type f` ${SAMPLEDIR}
+	${SUBST_CMD} ${SAMPLEDIR}/server.xml
 	${INSTALL_DATA} ${WRKDIST}/conf/Catalina/localhost/* \
 		${SAMPLEDIR}
 	${INSTALL_DATA_DIR} ${WRKINST}/${CATALINA_BASE}
@@ -73,7 +75,7 @@ do-install:
 	${INSTALL_DATA_DIR} ${WRKINST}/${CONFDIR}/Catalina/localhost
 	${INSTALL_DATA} ${WRKDIST}/conf/Catalina/localhost/* \
 		${WRKINST}/${CONFDIR}/Catalina/localhost
-	rm -r ${PREFIX}/tomcat/bin/[xi]64
+	@rm -r ${PREFIX}/tomcat/bin/[xi]64
 	find ${WRKINST} \
 		-name \*.beforesubst -or \
 		-name \*.orig -or \

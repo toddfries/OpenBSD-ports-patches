@@ -1,4 +1,4 @@
-# $OpenBSD: gnome.port.mk,v 1.47 2011/09/20 20:59:25 ajacoutot Exp $
+# $OpenBSD: gnome.port.mk,v 1.51 2011/10/03 06:41:43 ajacoutot Exp $
 #
 # Module for GNOME related ports
 #
@@ -15,7 +15,17 @@ CATEGORIES+=		x11/gnome
 USE_LIBTOOL?=		Yes
 MODULES+=		textproc/intltool
 .   if defined(CONFIGURE_STYLE) && ${CONFIGURE_STYLE:Mgnu}
-        CONFIGURE_ARGS+=${CONFIGURE_SHARED}
+        CONFIGURE_ARGS += ${CONFIGURE_SHARED}
+        # If a port needs extra CPPFLAGS, they can just set MODGNOME_CPPFLAGS
+        # to the desired value, like -I${X11BASE}/include
+        _MODGNOME_cppflags ?= CPPFLAGS="-I${LOCALBASE}/include ${MODGNOME_CPPFLAGS}"
+        _MODGNOME_ldflags ?= LDFLAGS="-L${LOCALBASE}/lib ${MODGNOME_LDFLAGS}"
+        CONFIGURE_ENV += ${_MODGNOME_cppflags} \
+                         ${_MODGNOME_ldflags}
+        # Older versions of glib-gettext.m4 used to set DATADIRNAME to
+        # "lib" which resulted in locale files being installed under the
+        # wrong directory.
+        CONFIGURE_ENV += DATADIRNAME=share
 .   endif
 .endif
 
@@ -25,8 +35,6 @@ MODGNOME_RUN_DEPENDS+=	devel/desktop-file-utils
 .endif
 
 USE_GMAKE?=		Yes
-
-FAKE_FLAGS +=	itlocaledir="${PREFIX}/share/locale/"
 
 # Use MODGNOME_TOOLS to indicate certain tools are needed for building bindings
 # or for ensuring documentation is available. If an option is not set, it's
@@ -38,7 +46,8 @@ FAKE_FLAGS +=	itlocaledir="${PREFIX}/share/locale/"
 # * yelp: Use this if there are any files under share/gnome/help/
 #   in the pkg list and it calls gnome_help_display() -- gnome-doc-utils is
 #   here to make sure we have a dependency on rarian (scrollkeeper-*) and
-#   have access to the gnome-doc-* tools (not always needed but easier).
+#   have access to the gnome-doc-* tools (not always needed but easier);
+#   same goes with itstool.
 #
 # Please note that if you're using multi-packages, you have to use the
 # MODGNOME_RUN_DEPENDS_${tool} in your multi package RUN_DEPENDS.
@@ -59,11 +68,12 @@ MODGNOME_CONFIGURE_ARGS_vala=--disable-vala
 .   endif
 
 .   if ${MODGNOME_TOOLS:Mvala}
-        MODGNOME_CONFIGURE_ARGS_vala=--enable-vala
+        MODGNOME_CONFIGURE_ARGS_vala=--enable-vala --enable-vala-bindings
         MODGNOME_BUILD_DEPENDS+=lang/vala
 .   endif
 
 .   if ${MODGNOME_TOOLS:Myelp}
+        MODGNOME_BUILD_DEPENDS+=textproc/itstool
         MODGNOME_BUILD_DEPENDS+=x11/gnome/doc-utils
         _yelp_depend=x11/gnome/yelp
         MODGNOME_RUN_DEPENDS+=${_yelp_depend}

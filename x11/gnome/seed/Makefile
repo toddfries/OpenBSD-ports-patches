@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2011/09/22 08:03:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2011/10/16 19:23:35 ajacoutot Exp $
 
 COMMENT=		GObject JavaScriptCore bridge
 
 GNOME_PROJECT=		seed
 GNOME_VERSION=		3.2.0
+REVISION=		1
 SHARED_LIBS +=  seed-gtk3                 0.0 # 0.0
 
 CATEGORIES=		devel www
@@ -26,17 +27,17 @@ WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 drm enchant
 WANTLIB += expat ffi fontconfig freetype gailutil-3 gdk-3 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 girepository-1.0 glib-2.0 gmodule-2.0 gmp gobject-2.0
 WANTLIB += gstapp-0.10 gstbase-0.10 gstinterfaces-0.10 gstpbutils-0.10
-WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 gtk-3 kvm icudata
+WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 gtk-3 icudata
 WANTLIB += icui18n icuuc jpeg m mpfr pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += readline soup-2.4 sqlite3 stdc++ termcap util webkitgtk-3.0
-WANTLIB += xcb xcb-render xcb-shm xml2 xslt z
+WANTLIB += xcb xcb-render xcb-shm xml2 xslt z javascriptcoregtk-3.0
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		x11/gnome/js-common
 LIB_DEPENDS=		devel/gobject-introspection>=1.30.0 \
 			devel/mpfr>=3.0.1 \
-			www/webkit,gtk3
+			www/webkit,gtk3>=1.6.1v0
 
 CONFIGURE_ARGS+=	--enable-readline-module \
 			--enable-multiprocessing-module \
@@ -50,8 +51,6 @@ CONFIGURE_ARGS+=	--enable-readline-module \
 			--enable-cairo-module \
 			--enable-gettext-module \
 			--enable-mpfr-module
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 REGRESS_IS_INTERACTIVE= x11
 REGRESS_DEPENDS=	${BASE_PKGPATH}

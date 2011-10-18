@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1109 2011/09/21 09:02:09 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1116 2011/10/16 07:51:27 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -93,7 +93,7 @@ _PERLSCRIPT = perl ${PORTSDIR}/infrastructure/bin
 
 # All variables relevant to the port's description
 _ALL_VARIABLES = BUILD_DEPENDS IS_INTERACTIVE \
-	SUBPACKAGE MULTI_PACKAGES
+	SUBPACKAGE MULTI_PACKAGES FLAVOR
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS \
 	PKG_ARCH IGNORE 
@@ -127,27 +127,6 @@ PATCH_CHECK_ONLY ?= No
 REFETCH ?= false
 
 # Constants used by the ports tree
-ARCH ?!= uname -m
-
-ALL_ARCHS = alpha amd64 arm armish arm hppa hppa64 i386 landisk \
-	loongson luna88k m68k m88k mac68k macppc mips64 mips64el \
-	mvme68k mvme88k palm sgi socppc sparc sparc64 vax zaurus
-# not all powerpc have apm(4), hence the use of macppc
-APM_ARCHS = amd64 arm i386 loongson macppc sparc sparc64
-LP64_ARCHS = alpha amd64 hppa64 sparc64 mips64 mips64el
-NO_SHARED_ARCHS = m88k vax
-GCC4_ARCHS = amd64 arm armish beagle gumstix i386 hppa loongson macppc mips64 \
-	mips64el mvmeppc palm powerpc sgi socppc sparc sparc64 zaurus
-GCC3_ARCHS = alpha hppa64 landisk sh
-GCC2_ARCHS = aviion luna88k m68k m88k mac68k mvme68k mvme88k vax
-
-# Set NO_SHARED_LIBS for those machines that don't support shared libraries.
-.for _m in ${MACHINE_ARCH}
-.  if !empty(NO_SHARED_ARCHS:M${_m})
-NO_SHARED_LIBS ?= Yes
-.  endif
-.endfor
-NO_SHARED_LIBS ?= No
 
 # Global path locations.
 PORTSDIR ?= /usr/ports
@@ -205,8 +184,11 @@ _PKG_DELETE += ${PKGDB_LOCK}
 # XXX tends to panic the OS
 PROTECT_MOUNT_POINTS ?=
 
-.if exists(${.CURDIR}/../Makefile.inc)
-.include "${.CURDIR}/../Makefile.inc"
+.if !defined(_MAKEFILE_INC_DONE)
+.  if exists(${.CURDIR}/../Makefile.inc)
+_MAKEFILE_INC_DONE = Yes
+.    include "${.CURDIR}/../Makefile.inc"
+.  endif
 .endif
 
 .if !defined(PERMIT_PACKAGE_CDROM) || !defined(PERMIT_PACKAGE_FTP) || \
@@ -314,12 +296,6 @@ TARGETS += MOD${_m}_${_t}
 .  endfor
 .endfor
 
-.if ${MACHINE_ARCH} != ${ARCH}
-PKG_ARCH ?= ${MACHINE_ARCH},${ARCH}
-.else
-PKG_ARCH ?= ${MACHINE_ARCH}
-.endif
-
 SHARED_ONLY ?= No
 SEPARATE_BUILD ?= No
 
@@ -399,15 +375,16 @@ ALL_FAKE_FLAGS += -j${MAKE_JOBS}
 .  endif
 .endif
 
-.if !defined(MULTI_PACKAGES) || empty(MULTI_PACKAGES)
-# XXX let's cheat so we always have MULTI_PACKAGES
-MULTI_PACKAGES = -
-SUBPACKAGE ?= -
-.else
-SUBPACKAGE ?= -main
+
+.if !defined(_BSD_PORT_ARCH_MK_INCLUDED)
+.  include "${PORTSDIR}/infrastructure/mk/bsd.port.arch.mk"
 .endif
 
-_MULTI_PACKAGES =
+.if ${MACHINE_ARCH} != ${ARCH}
+PKG_ARCH ?= ${MACHINE_ARCH},${ARCH}
+.else
+PKG_ARCH ?= ${MACHINE_ARCH}
+.endif
 
 REVISION ?=
 EPOCH ?=
@@ -415,47 +392,6 @@ EPOCH ?=
 .for _s in ${MULTI_PACKAGES}
 REVISION${_s} ?= ${REVISION}
 EPOCH${_s} ?= ${EPOCH}
-
-# ONLY_FOR_ARCHS/NOT_FOR_ARCHS are special
-.  if defined(ONLY_FOR_ARCHS)
-ONLY_FOR_ARCHS${_s} ?= ${ONLY_FOR_ARCHS}
-.  endif
-.  if defined(NOT_FOR_ARCHS)
-NOT_FOR_ARCHS${_s} ?= ${NOT_FOR_ARCHS}
-.  endif
-
-IGNORE${_s} ?=
-IGNORE${_s} += ${IGNORE}
-
-# compute _ARCH_OK for ignore
-.  if defined(ONLY_FOR_ARCHS${_s})
-_ARCH_OK = 0
-.    for __ARCH in ${MACHINE_ARCH} ${ARCH}
-.      if !empty(ONLY_FOR_ARCHS${_s}:M${__ARCH})
-_ARCH_OK = 1
-.      endif
-.    endfor
-.    if ${_ARCH_OK} == 0
-.      if ${MACHINE_ARCH} == "${ARCH}"
-IGNORE${_s} += "is only for ${ONLY_FOR_ARCHS${_s}}, not ${MACHINE_ARCH}"
-.      else
-IGNORE${_s} += "is only for ${ONLY_FOR_ARCHS${_s}}, not ${MACHINE_ARCH} \(${ARCH}\)"
-.      endif
-.    endif
-.  endif
-.  if defined(NOT_FOR_ARCHS${_s})
-.    for __ARCH in ${MACHINE_ARCH} ${ARCH}
-.      if !empty(NOT_FOR_ARCHS${_s}:M${__ARCH})
-IGNORE${_s} += "is not for ${NOT_FOR_ARCHS${_s}}"
-.      endif
-.    endfor
-.  endif
-
-# allow subpackages to vanish on architectures that don't
-# support them
-.  if empty(IGNORE${_s})
-_MULTI_PACKAGES += ${_s}
-.  endif
 .endfor
 
 FLAVOR ?=
@@ -463,7 +399,7 @@ FLAVORS ?=
 PSEUDO_FLAVORS ?=
 FLAVORS += ${PSEUDO_FLAVORS}
 
-.if !empty(FLAVORS:L:Mregress) && empty(FLAVOR:L:Mregress)
+.if !empty(FLAVORS:Mregress) && empty(FLAVOR:Mregress)
 NO_REGRESS = Yes
 .endif
 
@@ -493,13 +429,13 @@ _README_DIR = ${LOCALBASE}/share/doc/pkg-readmes
 PSEUDO_FLAVOR =
 # (applies only to PLIST for now)
 .if !empty(FLAVORS)
-.  for _i in ${FLAVORS:L}
-.    if empty(FLAVOR:L:M${_i})
+.  for _i in ${FLAVORS}
+.    if empty(FLAVOR:M${_i})
 _PKG_ARGS += -D${_i}=0
 .    else
 _FLAVOR_EXT2 := ${_FLAVOR_EXT2}-${_i}
 BUILD_PKGPATH := ${BUILD_PKGPATH},${_i}
-.    if empty(PSEUDO_FLAVORS:L:M${_i})
+.    if empty(PSEUDO_FLAVORS:M${_i})
 FLAVOR_EXT := ${FLAVOR_EXT}-${_i}
 BASE_PKGPATH := ${BASE_PKGPATH},${_i}
 .    else
@@ -509,6 +445,10 @@ _PKG_ARGS += -D${_i}=1
 .    endif
 .  endfor
 .endif
+.if !${BUILD_PKGPATH:M*,*}
+BUILD_PKGPATH := ${BUILD_PKGPATH},
+.endif
+
 .if ${NO_SHARED_LIBS:L} == "yes"
 _PKG_ARGS += -DSHARED_LIBS=0
 .else
@@ -520,8 +460,8 @@ ERRORS += "Fatal: flavor should never start with a digit"
 
 .if !empty(FLAVOR)
 .  if !empty(FLAVORS)
-.    for _i in ${FLAVOR:L}
-.      if empty(FLAVORS:L:M${_i})
+.    for _i in ${FLAVOR}
+.      if empty(FLAVORS:M${_i})
 ERRORS += "Fatal: Unknown flavor: ${_i}"
 ERRORS += "   (Possible flavors are: ${FLAVORS})."
 .      endif
@@ -614,7 +554,7 @@ _INSTALL_PRE_COOKIE =	${WRKINST}/.install_started
 _UPDATE_COOKIES =
 _FUPDATE_COOKIES =
 _INSTALL_COOKIES =
-.for _S in ${_MULTI_PACKAGES}
+.for _S in ${BUILD_PACKAGES}
 .  if !empty(UPDATE_COOKIES_DIR)
 _UPDATE_COOKIE${_S} =	${UPDATE_COOKIES_DIR}/${FULLPKGNAME${_S}}
 _FUPDATE_COOKIE${_S} =	${UPDATE_COOKIES_DIR}/F${FULLPKGNAME${_S}}
@@ -776,7 +716,7 @@ XAUTHORITY ?= ${HOME}/.Xauthority
 
 _PACKAGE_COOKIE_DEPS=${_FAKE_COOKIE}
 
-.for _s in ${_MULTI_PACKAGES}
+.for _s in ${BUILD_PACKAGES}
 PKGNAMES += ${FULLPKGNAME${_s}}
 .endfor
 
@@ -811,7 +751,7 @@ _PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}
 .  endif
 .endfor
 
-.for _S in ${_MULTI_PACKAGES}
+.for _S in ${BUILD_PACKAGES}
 .  if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
 _PACKAGE_LINKS += ${MACHINE_ARCH}/all/${_PKGFILE${_S}} ${NO_ARCH}/${_PKGFILE${_S}}
 _PACKAGE_COOKIES${_S} += ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/${_PKGFILE${_S}}
@@ -1194,7 +1134,7 @@ _PERL_FIX_SHAR ?= perl -ne 'print if $$s || ($$s = m:^\#(\!\s*/bin/sh\s*| This i
 .if ${_USE_XZ:L} != "no"
 BUILD_DEPENDS += archivers/xz
 EXTRACT_CASES += *.tar.xz) \
-	xzcat ${FULLDISTDIR}/$$archive| tar xf -;;
+	xzcat ${FULLDISTDIR}/$$archive| ${TAR} xf -;;
 .endif
 .if ${_USE_ZIP:L} != "no"
 BUILD_DEPENDS += archivers/unzip
@@ -1425,9 +1365,7 @@ _CHECK_DEPENDS +:= ${${_v}_DEPENDS${_s}}
 ERRORS += "Fatal: old style depends ${_CHECK_DEPENDS:M\:*}"
 .endif
 
-# normalization of depends to remove extra :
-
-# also, the C,...., part basically does this:
+# the C,...., part basically does this:
 # if the depends contains only pkgpath>=something
 # then we rebuild it as STEM->=something:pkgpath
 
@@ -1448,7 +1386,7 @@ _BUILDLIB_DEPENDS = ${LIB_DEPENDS}
 _BUILDWANTLIB = ${WANTLIB}
 # strip inter-multi-packages dependencies during building
 .for _path in ${PKGPATH:S,^mystuff/,,}
-.  for _s in ${_MULTI_PACKAGES}
+.  for _s in ${BUILD_PACKAGES}
 _BUILDLIB_DEPENDS += ${LIB_DEPENDS${_s}:N*\:${_path}:N*\:${_path},*:N${_path}:N${_path},*}
 _BUILDWANTLIB += ${WANTLIB${_s}}
 _LIB4${_s} = ${LIB_DEPENDS${_s}:M*\:${_path}} ${LIB_DEPENDS${_s}:M*\:${_path},*} ${LIB_DEPENDS${_s}:M${_path}} ${LIB_DEPENDS${_s}:M${_path},*}
@@ -1644,6 +1582,32 @@ _complete_pkgspec = \
 		stem=`echo $$default|${_version2stem}`; \
 		pkg="$$stem$${pkg\#STEM}";; \
 	esac
+
+.if empty(PLIST_DB)
+_register_plist =:
+.else
+_register_plist = mkdir -p ${PLIST_DB:S/:/ /g} && ${_PERLSCRIPT}/register-plist ${PLIST_DB}
+.endif
+.if ${CHECK_LIB_DEPENDS:L} == "yes"
+_check_lib_depends = ${_CHECK_LIB_DEPENDS} 
+.else
+_check_lib_depends =:
+.endif
+
+CLEAN_PLIST_OUTPUT?=No
+.if ${CLEAN_PLIST_OUTPUT:L} == "yes"
+_plist_header=echo "@+++ new plist"
+_plist_footer=echo "@--- end plist"
+.else
+_plist_header=:
+_plist_footer=:
+.endif
+
+_CHECK_LIB_DEPENDS = PORTSDIR=${PORTSDIR} ${_PERLSCRIPT}/check-lib-depends
+_CHECK_LIB_DEPENDS += -d ${_PKG_REPO} -B ${WRKINST}
+.  if ${ELF_TOOLCHAIN:L} == "no"
+_CHECK_LIB_DEPENDS += -o
+.  endif
 
 
 ###
@@ -2009,7 +1973,7 @@ _internal-all _internal-build _internal-checksum _internal-configure \
 	_internal-subpackage _internal-subupdate _internal-uninstall \
 	_internal-update _internal-update-or-install \
 	_internal-update-or-install-all _internal-update-plist \
-	port-lib-depends-check update-patches:
+	lib-depends-check port-lib-depends-check update-patches:
 .  if !defined(IGNORE_SILENT)
 	@${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} ${IGNORE${SUBPACKAGE}}."
 .  endif
@@ -2017,12 +1981,6 @@ _internal-all _internal-build _internal-checksum _internal-configure \
 	@echo "${IGNORE${SUBPACKAGE}}" >${_IGNORE_COOKIE}
 .  endif
 .else
-
-_CHECK_LIB_DEPENDS = PORTSDIR=${PORTSDIR} ${_PERLSCRIPT}/check-lib-depends
-_CHECK_LIB_DEPENDS += -d ${_PKG_REPO} -B ${WRKINST}
-.  if ${ELF_TOOLCHAIN:L} == "no"
-_CHECK_LIB_DEPENDS += -o
-.  endif
 
 lib-depends-check:
 	@${_MAKE} package
@@ -2593,26 +2551,6 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	done
 
 	@${SUDO} ${_MAKE_COOKIE} $@
-
-.if empty(PLIST_DB)
-_register_plist =:
-.else
-_register_plist = mkdir -p ${PLIST_DB:S/:/ /g} && ${_PERLSCRIPT}/register-plist ${PLIST_DB}
-.endif
-.if ${CHECK_LIB_DEPENDS:L} == "yes"
-_check_lib_depends = ${_CHECK_LIB_DEPENDS} 
-.else
-_check_lib_depends =:
-.endif
-
-CLEAN_PLIST_OUTPUT?=No
-.if ${CLEAN_PLIST_OUTPUT:L} == "yes"
-_plist_header=echo "@+++ new plist"
-_plist_footer=echo "@--- end plist"
-.else
-_plist_header=:
-_plist_footer=:
-.endif
 
 print-plist:
 	@${_plist_header}; ${_PKG_CREATE} -n -q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}; ${_plist_footer}
@@ -3365,16 +3303,6 @@ uninstall deinstall:
 	@${ECHO_MSG} "===> Deinstalling for ${FULLPKGNAME${SUBPACKAGE}}"
 	@${SUDO} ${_PKG_DELETE} ${FULLPKGNAME${SUBPACKAGE}}
 
-.if defined(ERRORS)
-.BEGIN:
-.  for _m in ${ERRORS}
-	@echo 1>&2 ${_m} "(in ${PKGPATH})"
-.  endfor
-.  if !empty(ERRORS:M"Fatal\:*") || !empty(ERRORS:M'Fatal\:*')
-	@exit 1
-.  endif
-.endif
-
 peek-ftp:
 	@echo "DISTFILES=${DISTFILES}"
 	@mkdir -p ${FULLDISTDIR}; cd ${FULLDISTDIR}; echo "cd ${FULLDISTDIR}"; \
@@ -3481,6 +3409,16 @@ _all_phony = ${_recursive_depends_targets} \
 ERRORS += "Fatal: phony target ${_t} does not exist"
 .    endif
 .  endfor
+.endif
+
+.if defined(ERRORS)
+.BEGIN:
+.  for _m in ${ERRORS}
+	@echo 1>&2 ${_m} "(in ${PKGPATH})"
+.  endfor
+.  if !empty(ERRORS:M"Fatal\:*") || !empty(ERRORS:M'Fatal\:*')
+	@exit 1
+.  endif
 .endif
 
 .PHONY: ${_all_phony}

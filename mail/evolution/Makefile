@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.134 2011/09/22 10:30:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.144 2011/10/16 19:03:34 ajacoutot Exp $
 
 COMMENT-main=		integrated email and PIM software for GNOME
 COMMENT-plugins=	additionnal plugins for evolution
 
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		3.1.92
+GNOME_VERSION=		3.2.1
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-plugins=	evolution-plugins-${GNOME_VERSION}
 
 REVISION-main=		0
+REVISION-plugins=	0
 
 # Only get the first x.y which is needed in the PLIST.
 # NOTE: when major version changes, increment EVO_VERSION accordingly 
@@ -17,8 +18,7 @@ REVISION-main=		0
 # mail/evolution-rss
 # mail/evolution-exchange
 # x11/gnome/tracker
-#R=			${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
-R=			3.2 # XXX
+R=			${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=		R
 
 CATEGORIES=		mail
@@ -45,26 +45,25 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE ORBit-2 SM X11 X11-xcb Xau Xcomposite Xcursor
+WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor
 WANTLIB += Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender
 WANTLIB += Xxf86vm asn1 atk-1.0 c cairo cairo-gobject camel-1.2
 WANTLIB += camel-provider-1.2 canberra com_err crypto
-WANTLIB += db dbus-1 dbus-glib-1 drm ebackend-1.2 ebook-1.2 ecal-1.2
+WANTLIB += db dbus-1 drm ebackend-1.2 ebook-1.2 ecal-1.2
 WANTLIB += edataserver-1.2 edataserverui-3.0 enchant
-WANTLIB += execinfo expat fontconfig freetype gailutil-3
+WANTLIB += expat fontconfig freetype gailutil-3
 WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 gnome-desktop-3 gnome-keyring gobject-2.0
 WANTLIB += gpg-error gssapi gthread-2.0 gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0
-WANTLIB += ical icalss icalvcal krb5
+WANTLIB += ical icalss icalvcal krb5 ffi dbus-glib-1
 WANTLIB += m notify nspr4 nss3 nssutil3 pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread
 WANTLIB += pthread-stubs smime3 softokn3 soup-2.4 sqlite3 ssl3
-WANTLIB += startup-notification-1 stdc++ unique-3.0
-WANTLIB += xcb xcb-aux xcb-render xcb-shm xml2 z
+WANTLIB += xcb xcb-render xcb-shm xml2 z stdc++
 
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += canberra-gtk3 gdata gweather-3 ldap-2.4 ltdl ogg pst
-WANTLIB-main += vorbis vorbisfile
+WANTLIB-main += vorbis vorbisfile goa-1.0
 
 WANTLIB-plugins += ${WANTLIB}
 WANTLIB-plugins += gstreamer-0.10
@@ -92,16 +91,17 @@ MODULES=		devel/gettext \
 BUILD_DEPENDS=		devel/bison \
 			misc/shared-mime-info \
 			x11/gnome/icon-theme \
-			devel/iso-codes
+			devel/iso-codes \
+			devel/gsettings-desktop-schemas
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
 			x11/hicolor-icon-theme \
 			x11/gnome/icon-theme \
-			${MODGNOME_RUN_DEPENDS_yelp}
+			${MODGNOME_RUN_DEPENDS_yelp} \
+			devel/gsettings-desktop-schemas
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			devel/libunique3 \
 			converters/libpst \
-			databases/evolution-data-server>=3.1.91 \
+			databases/evolution-data-server>=3.2.1 \
 			databases/openldap \
 			devel/libnotify>=0.7.2 \
 			security/nss \
@@ -117,7 +117,7 @@ RUN_DEPENDS-plugins=	${MODGCONF2_RUN_DEPENDS} \
 			multimedia/gstreamer-0.10/plugins-good
 
 MODGNOME_TOOLS= 	yelp
-MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
 MODGCONF2_SCHEMAS_DIR=	evolution
 
 YACC=			bison
@@ -125,16 +125,18 @@ YACC=			bison
 AUTOCONF_VERSION=	2.68
 AUTOMAKE_VERSION=	1.9
 CONFIGURE_STYLE=	autoconf
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include \
-				-DBOGOFILTER_BINARY="\\\"${LOCALBASE}/bin/bogofilter\\\""" \
-			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}lib \
-				-Wl,-rpath,${TRUEPREFIX}/lib/evolution/${R}:${TRUEPREFIX}/lib \
-				-Wl,--as-needed"
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include -DBOGOFILTER_BINARY="\\\"${LOCALBASE}/bin/bogofilter\\\""
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib -Wl,-rpath,${TRUEPREFIX}/lib/evolution/${R}:${TRUEPREFIX}/lib \
+				-Wl,--as-needed
 
-CONFIGURE_ARGS+=	--disable-gtk-doc \
-			--enable-plugins=all \
+CONFIGURE_ARGS=		--enable-plugins=all \
 			--disable-nm \
-			--disable-goa \
+			--disable-sens \
+			--disable-connman \
+			--disable-mono \
+			--disable-python \
+			--disable-contact-maps \
+			--without-clutter \
 			--with-openldap="${LOCALBASE}" \
 			--with-sub-version=" OpenBSD/Ports" \
 			--with-krb5=/usr \
@@ -144,6 +146,10 @@ CONFIGURE_ARGS+=	--disable-gtk-doc \
 CONFIGURE_ARGS+=	--disable-image-inline
 
 FAKE_FLAGS=		autostartdir=${PREFIX}/share/examples/evolution/xdg/autostart
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/modules/spamassassin/evolution-spamassassin.c \
+		${WRKSRC}/modules/bogofilter/evolution-bogofilter.c
 
 # needed to prevent lazy bindings failures on pthreads(3) functions
 post-configure:

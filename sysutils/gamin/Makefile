@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2011/09/20 21:17:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2011/10/18 06:46:24 espie Exp $
 
 # XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)	
 CFLAGS +=	"-DG_CONST_RETURN=const"
@@ -16,7 +16,7 @@ PKGNAME-server=	${DISTNAME}
 PKGNAME-python=	py-gamin-${GNOME_VERSION}
 
 REVISION-main=	5
-REVISION-server=16
+REVISION-server=17
 REVISION-python=5
 
 SHARED_LIBS +=  gamin-1              0.0      # .1.10
@@ -36,9 +36,10 @@ PERMIT_DISTFILES_FTP=	Yes
 
 EXTRACT_SUFX=		.tar.bz2
 
-MULTI_PACKAGES=	-main
+MULTI_PACKAGES=	-main -server -python
+NOT_FOR_ARCHS-python =	${NO_SHARED_ARCHS}
 
-PSEUDO_FLAVORS=	no_python no_server
+PSEUDO_FLAVORS=	no_python no_server bootstrap
 FLAVOR?=
 
 MODULES=	x11/gnome
@@ -49,10 +50,11 @@ RUN_DEPENDS-main =
 
 LIB_DEPENDS-server = 	${LIB_DEPENDS} devel/glib2
 
-LIB_DEPENDS-python = 	sysutils/gamin,-main
+LIB_DEPENDS-python = 	${BUILD_PKGPATH},-main
+.include <bsd.port.arch.mk>
 
-.if !${FLAVOR:L:Mno_server}
-MULTI_PACKAGES += 	-server
+
+.if ${BUILD_PACKAGES:M-server}
 MODULES +=		devel/gettext
 CONFIGURE_ARGS += 	--enable-server
 WANTLIB-server = 	${WANTLIB} c pcre glib-2.0>=1800 pthread
@@ -60,8 +62,7 @@ WANTLIB-server = 	${WANTLIB} c pcre glib-2.0>=1800 pthread
 CONFIGURE_ARGS += 	--disable-server
 .endif
 
-.if !${FLAVOR:L:Mno_python}
-MULTI_PACKAGES += 	-python
+.if ${BUILD_PACKAGES:M-python}
 MODULES +=		lang/python
 WANTLIB-python += 	gamin-1
 RUN_DEPENDS-python += 	${MODPY_RUN_DEPENDS}
@@ -73,9 +74,9 @@ MODPY_RUNDEP=	No
 
 USE_LIBTOOL=	Yes
 
-CONFIGURE_STYLE= gnu 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -pthread" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
+CONFIGURE_STYLE= gnu
+MODGNOME_CPPFLAGS=	-pthread
+MODGNOME_LDFLAGS=	-pthread
 CONFIGURE_ARGS+= --disable-docs \
 		--disable-inotify \
 		--disable-dnotify \
@@ -105,7 +106,3 @@ do-regress:
 		Makefile ${MAKE_ARGS} tests)
 
 .include <bsd.port.mk>
-
-.if ${NO_SHARED_LIBS:L} == "yes"
-CONFIGURE_ARGS +=	--without-python
-.endif

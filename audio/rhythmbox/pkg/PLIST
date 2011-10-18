@@ -1,5 +1,6 @@
-@comment $OpenBSD: PLIST,v 1.24 2011/09/17 14:15:32 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.27 2011/10/14 07:19:26 ajacoutot Exp $
 @bin bin/rhythmbox
+@bin bin/rhythmbox-client
 include/rhythmbox/
 include/rhythmbox/backends/
 include/rhythmbox/backends/rb-encoder.h
@@ -185,6 +186,10 @@ lib/rhythmbox/plugins/lyrics/lyrics.plugin
 lib/rhythmbox/plugins/lyrics/lyrics.py
 lib/rhythmbox/plugins/lyrics/lyrics.pyc
 lib/rhythmbox/plugins/lyrics/lyrics.pyo
+lib/rhythmbox/plugins/mmkeys/
+@comment lib/rhythmbox/plugins/mmkeys/libmmkeys.la
+lib/rhythmbox/plugins/mmkeys/libmmkeys.so
+lib/rhythmbox/plugins/mmkeys/mmkeys.plugin
 lib/rhythmbox/plugins/mpris/
 @comment lib/rhythmbox/plugins/mpris/libmpris.la
 lib/rhythmbox/plugins/mpris/libmpris.so
@@ -236,9 +241,11 @@ lib/rhythmbox/plugins/sendto/sendto.py
 lib/rhythmbox/plugins/sendto/sendto.pyc
 lib/rhythmbox/plugins/sendto/sendto.pyo
 @bin libexec/rhythmbox-metadata
+@man man/man1/rhythmbox-client.1
+@man man/man1/rhythmbox.1
 share/applications/rhythmbox-device.desktop
 share/applications/rhythmbox.desktop
-share/dbus-1/services/org.gnome.Rhythmbox.service
+share/dbus-1/services/org.gnome.Rhythmbox3.service
 share/gir-1.0/MPID-3.0.gir
 share/gir-1.0/RB-3.0.gir
 share/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
@@ -634,10 +641,6 @@ share/locale/vi/LC_MESSAGES/rhythmbox.mo
 share/locale/zh_CN/LC_MESSAGES/rhythmbox.mo
 share/locale/zh_HK/LC_MESSAGES/rhythmbox.mo
 share/locale/zh_TW/LC_MESSAGES/rhythmbox.mo
-share/man/
-share/man/man1/
-@man share/man/man1/rhythmbox-client.1
-@man share/man/man1/rhythmbox.1
 share/omf/
 share/omf/rhythmbox/
 share/omf/rhythmbox/rhythmbox-C.omf

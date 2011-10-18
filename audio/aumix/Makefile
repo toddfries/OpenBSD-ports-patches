@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.35 2011/09/16 08:26:10 espie Exp $
+# $OpenBSD: Makefile,v 1.37 2011/10/17 12:40:44 espie Exp $
 
 COMMENT=	full-screen ncurses or GTK-based audio mixer
 
 DISTNAME=	aumix-2.8
-REVISION=	13
+REVISION=	14
 CATEGORIES=	audio
 
 HOMEPAGE=	http://jpj.net/~trevor/aumix.html
@@ -33,25 +33,25 @@ CONFIGURE_ENV=	CPPFLAGS='-I${LOCALBASE}/include' \
 		LDFLAGS='-L${LOCALBASE}/lib'
 USE_GROFF =	Yes
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+= --without-gtk
 .else
 LIB_DEPENDS+=	x11/gtk+2
-WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png z
 WANTLIB += pthread-stubs xcb gdk-x11-2.0>=0.14 gdk_pixbuf-2.0>=0.14
-WANTLIB += gtk-x11-2.0>=0.14 gthread-2.0 pthread xcb-render xcb-render-util
+WANTLIB += gtk-x11-2.0>=0.14 gthread-2.0 pthread xcb-render GL xcb-shm
 .endif
 
-.if ${FLAVOR:L:Mno_curses} 
+.if ${FLAVOR:Mno_curses} 
 CONFIGURE_ARGS+= --without-ncurses
 .else
 WANTLIB+=	ncurses
 .endif
 
-.if ${FLAVOR:L:Mdummy}
+.if ${FLAVOR:Mdummy}
 CONFIGURE_ARGS+= --enable-dummy-mixer
 .endif
 

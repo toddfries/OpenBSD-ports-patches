@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.19 2011/08/27 13:13:13 robert Exp $
+# $OpenBSD: Makefile.inc,v 1.21 2011/10/02 11:16:19 espie Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -51,8 +51,7 @@ MODULES_DIR=		${LOCALBASE}/${MODULES_SUBDIR}
 PHP_LDFLAGS=		-lstdc++ -lm
 .endif
 
-FLAVORS=		ap2
-PSEUDO_FLAVORS+=	no_suhosin
+FLAVORS=		ap2 no_suhosin
 FLAVOR?=
 
 USE_GROFF=		Yes

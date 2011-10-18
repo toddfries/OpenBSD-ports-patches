@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2011/09/08 17:57:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2011/10/16 06:29:30 ajacoutot Exp $
 
 ONLY_FOR_ARCHS =${APM_ARCHS}
 
 COMMENT =	userland power management interface
 
-DISTNAME =	upower-0.9.13
+DISTNAME =	upower-0.9.14
 EXTRACT_SUFX =	.tar.xz
 CATEGORIES =	sysutils
 SHARED_LIBS +=  upower-glib               0.0 # 1.1
@@ -30,8 +30,7 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-FAKE_FLAGS =	sysconfdir=${PREFIX}/share/examples/upower \
-		itlocaledir="${PREFIX}/share/locale/"
+FAKE_FLAGS =	sysconfdir=${PREFIX}/share/examples/upower
 
 USE_GMAKE =	Yes
 USE_LIBTOOL =	Yes

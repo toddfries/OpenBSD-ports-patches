@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2011/07/07 17:31:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/09/27 21:38:42 sthen Exp $
 
 COMMENT=	GNU Binary File Descriptor library
 

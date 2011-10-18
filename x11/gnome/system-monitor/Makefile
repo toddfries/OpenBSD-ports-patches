@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.22 2011/09/20 20:52:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2011/10/18 08:15:21 jasper Exp $
 
 COMMENT=	sytem monitor for GNOME
 
 GNOME_PROJECT=	gnome-system-monitor
-GNOME_VERSION=	3.0.1
-
-REVISION=	3
+GNOME_VERSION=	3.2.1
 
 CATEGORIES=	sysutils
 
@@ -15,18 +13,16 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-EXTRACT_SUFX=		.tar.bz2
-
-WANTLIB += GL ICE SM X11 XRes Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += atkmm-1.6 c cairo cairo-gobject cairomm-1.0 croco-0.6
-WANTLIB += drm execinfo expat fontconfig freetype gdk-3 gdk_pixbuf-2.0
+WANTLIB += GL X11 X11-xcb XRes Xau Xcomposite Xcursor Xdamage
+WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
+WANTLIB += atk-1.0 atkmm-1.6 c cairo cairo-gobject cairomm-1.0
+WANTLIB += croco-0.6 drm expat ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0
 WANTLIB += gdkmm-3.0 gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gmodule-2.0
 WANTLIB += gobject-2.0 gthread-2.0 gtk-3 gtkmm-3.0 gtop-2.0 kvm
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4
 WANTLIB += pcre pixman-1 png pthread pthread-stubs rsvg-2 sigc-2.0
-WANTLIB += startup-notification-1 stdc++ wnck-3 xcb xcb-atom xcb-aux
-WANTLIB += xcb-event xcb-render xcb-shm xml2 z
+WANTLIB += startup-notification-1 stdc++ wnck-3 xcb xcb-aux xcb-render
+WANTLIB += xcb-shm xml2 z
 
 MODULES=	devel/dconf \
 		devel/gettext \
@@ -41,9 +37,5 @@ LIB_DEPENDS=	devel/libgtop2>=2.28.3p23 \
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_TOOLS= yelp
-
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURED_SHARED}
 
 .include <bsd.port.mk>

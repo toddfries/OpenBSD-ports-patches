@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.83 2011/09/21 14:37:28 fgsch Exp $
+# $OpenBSD: Makefile.inc,v 1.86 2011/10/18 06:46:24 espie Exp $
 
 # IMPORTANT!  If you make any changes to the Python ports, be sure
 # to also update files/CHANGES.OpenBSD for your change.  This is a
@@ -15,14 +15,22 @@ COMMENT-tests=	Python test suite
 COMMENT-tkinter=tk GUI module for Python
 COMMENT-tools=	extra tools for Python
 
-DISTNAME=	Python-${VERSION}${PATCHLEVEL}
-PKGNAME-main=	python-${VERSION}${PATCHLEVEL}
-PKGNAME-bsddb=	python-bsddb-${VERSION}${PATCHLEVEL}
-PKGNAME-gdbm=	python-gdbm-${VERSION}${PATCHLEVEL}
-PKGNAME-idle=	python-idle-${VERSION}${PATCHLEVEL}
-PKGNAME-tests=	python-tests-${VERSION}${PATCHLEVEL}
-PKGNAME-tkinter=	python-tkinter-${VERSION}${PATCHLEVEL}
-PKGNAME-tools=	python-tools-${VERSION}${PATCHLEVEL}
+DISTNAME =	Python-${VERSION}${PATCHLEVEL}
+PKGNAME-main =	python-${VERSION}${PATCHLEVEL}
+PKGSPEC-main =	python-${VERSION_SPEC}
+PKGNAME-bsddb =	python-bsddb-${VERSION}${PATCHLEVEL}
+PKGSPEC-bsddb =	python-bsddb-${VERSION_SPEC}
+PKGNAME-gdbm =	python-gdbm-${VERSION}${PATCHLEVEL}
+PKGSPEC-gdbm =	python-gdbm-${VERSION_SPEC}
+PKGNAME-idle =	python-idle-${VERSION}${PATCHLEVEL}
+PKGSPEC-idle =	python-idle-${VERSION_SPEC}
+PKGNAME-tests =	python-tests-${VERSION}${PATCHLEVEL}
+PKGSPEC-tests =	python-tests-${VERSION_SPEC}
+PKGNAME-tkinter = python-tkinter-${VERSION}${PATCHLEVEL}
+PKGSPEC-tkinter = python-tkinter-${VERSION_SPEC}
+PKGNAME-tools =	python-tools-${VERSION}${PATCHLEVEL}
+PKGSPEC-tools =	python-tools-${VERSION_SPEC}
+
 CATEGORIES=	lang
 MASTER_SITES=	http://www.python.org/ftp/${PSUBDIR}/ \
 		http://sunsite.informatik.rwth-aachen.de/python/ftp/${PSUBDIR}/
@@ -48,7 +56,7 @@ LIB_SUFX =	m
 MULTI_PACKAGES=	-main -tests -gdbm -idle -tkinter
 .endif
 
-# Python 2.6 lists BSD db 4.6.x as unstable on most architectures (see
+# Python 2.7 lists BSD db 4.6.x as unstable on most architectures (see
 # setup.py:allow_db_version). XXX revisit if databases/db/v4 is updated to 4.7
 .if ${VERSION} == "2.7"
 ONLY_FOR_ARCHS-bsddb=	amd64 i386
@@ -68,8 +76,14 @@ LIB_DEPENDS-main +=	databases/sqlite3
 WANTLIB-main +=		sqlite3
 .endif
 
-LIB_DEPENDS-bsddb =	databases/db/v4 \
-			lang/python/${VERSION},-main
+LIB_DEPENDS-bsddb =	lang/python/${VERSION},-main
+.if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64"
+# XXX recursion: if we have java, then db/v4 depends on libxml
+LIB_DEPENDS-bsddb +=	databases/db/v4,no_tcl,no_java,bootstrap
+.else
+LIB_DEPENDS-bsddb +=	databases/db/v4
+.endif
+
 WANTLIB-bsddb =		lib/db4/db>=4 python${VERSION}${LIB_SUFX}
 LIB_DEPENDS-gdbm =	databases/gdbm \
 			lang/python/${VERSION},-main

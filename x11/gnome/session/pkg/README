@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.28 2011/09/21 09:42:25 ajacoutot Exp $
+$OpenBSD: README,v 1.40 2011/10/10 09:26:37 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -25,12 +25,13 @@ It is advised to _always_ install the "minimal" set (see also: the
 	gnome-media \
 	gnome-system-monitor \
 	gnome-terminal \
-	gnome-utils
+	gnome-utils \
+	nautilus
 
-"full" GNOME Desktop
---------------------
+"full" GNOME Desktop (additions to the "minimal" set)
+-----------------------------------------------------
     $ sudo pkg_add \
-	alacarte \
+	deja-dup \
     	ekiga \
 	empathy \
 	epiphany-extensions \
@@ -40,10 +41,12 @@ It is advised to _always_ install the "minimal" set (see also: the
 	gedit-plugins \
 	eog-plugins \
 	gcalctool \
+	gnome-contacts \
 	gnome-games-extra-data \
 	gnome-icon-theme-extras \
 	gnome-nettool \
 	gnome-tweak-tool \
+	gnote \
 	nautilus-evince \
 	nautilus-file-roller \
 	nautilus-meta-tracker \
@@ -51,6 +54,7 @@ It is advised to _always_ install the "minimal" set (see also: the
 	nautilus-totem \
 	rhythmbox \
 	seahorse-plugins \
+	seahorse-sharing \
 	simple-scan \
 	vinagre \
 	vino
@@ -69,8 +73,11 @@ in ~/.xsession when using xdm(1) (X Display Manager login)
 mDNS/DNS-SD support
 ===================
 The avahi-daemon(8) daemon provides Zeroconf support (aka. Bonjour /
-Rendezvous) in GNOME. To make use of it, rc.conf.local(5) needs to
-contain the following line:
+Rendezvous) in GNOME. Several applications can optionally benefit from
+it (e.g. the "Network" shortcut in nautilus(1)) while some others
+will not work at all without it (e.g. seahorse-sharing(1)).
+
+To make use of it, rc.conf.local(5) needs to contain the following line:
     multicast_host=YES
 and "avahi_daemon" needs to be added to the "pkg_scripts" variable
 _after_ "dbus_daemon".
@@ -109,10 +116,13 @@ Development
 
     * anjuta (+anjuta-extras) - full blown IDE
     * devhelp - API documentation browser
-    * gedit-plugins - plugins for Gedit
+    * gedit-latex - LaTeX plugin for gedit(1)
+    * gedit-plugins - plugins for gedit(1)
     * ghex - HEX editor
     * glade - user interface builder
+    * glom - database designer and user interface
     * gnome-devel-docs - developer documentation
+    * yelp-tools - create, modify and manage documentation for Yelp and the web
 
 Graphics & Multimedia
 ---------------------
@@ -133,16 +143,18 @@ Office & Productivity
 ---------------------
 
     * abiword - WYSIWYG word processor
+    * dia - technical diagrams drawing tool
     * gcalctool - desktop calculator
+    * gnome-contacts - contacts manager for your different online accounts
+    * gnote - desktop note-taking
     * gnumeric - spreadsheet application
     * meta-tracker - powerful desktop search tool and indexer
     * planner - project management
-    * gnote - desktop note-taking
 
 Utilities
 ---------
 
-    * alacarte - simple menu editing tool
+    * deja-dup - simple (encrypted) backup tool
     * gconf-editor - editor for GConf settings
     * gnome-nettool - interface for various networking tools
     * gnome-tweak-tool - tool to tweak hidden GTK/GNOME settings
@@ -151,7 +163,8 @@ Utilities
     * nautilus-meta-tracker - edit (meta-)tracker-search(1) tags from within Nautilus
     * nautilus-open-terminal - open a terminal under a nautilus folder path
     * nautilus-sendto - integrate applications into Nautilus
-    * seahorse (+seahorse-plugins) - encryption, keys and passwords manager
+    * seahorse (+seahorse-plugins +seahorse-sharing)
+        - encryption, keys and passwords manager
     * vinagre - VNC Client (remote Desktop client)
     * vino - VNC server (allows remote access to your Desktop)
 

@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.38 2011/09/22 16:45:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.42 2011/10/17 15:08:08 jasper Exp $
 
 COMMENT=	user interface builder for the gtk+3 toolkit
 
-GNOME_VERSION=	3.10.0
+GNOME_VERSION=	3.10.2
 GNOME_PROJECT= 	glade
-
-REVISION=	7
+REVISION=	1
 
 CATEGORIES=	devel
 
@@ -22,15 +21,13 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes 
 
-EXTRACT_SUFX=		.tar.bz2
-
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
 WANTLIB += cairo-gobject drm expat ffi fontconfig freetype gdk-3
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs ${MODPY_WANTLIB} util
-WANTLIB += xcb xcb-render xcb-shm xml2 z kvm
+WANTLIB += xcb xcb-render xcb-shm xml2 z
 
 MODULES=	devel/gettext \
 		x11/gnome \
@@ -49,7 +46,7 @@ MODGNOME_DESKTOP_FILE= 	Yes
 MODGNOME_TOOLS= goi yelp
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=	CPPFLAGS="-pthread -I${LOCALBASE}/include"      \
-		LDFLAGS="-pthread -lutil -L${LOCALBASE}/lib"
+MODGNOME_CPPFLAGS=	-pthread
+MODGNOME_LDFLAGS=	-pthread -lutil
 
 .include <bsd.port.mk>

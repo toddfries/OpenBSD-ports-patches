@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.59 2011/09/18 20:51:46 espie Exp $
+# $OpenBSD: Makefile,v 1.61 2011/10/16 15:56:24 ajacoutot Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
 COMMENT-web =		network and application monitoring - web frontend
 
-VERSION =		1.8.7
+VERSION =		1.8.8
 DISTNAME =		zabbix-${VERSION}
 FULLPKGNAME-main =	zabbix-agent-${VERSION}
 FULLPKGPATH-main =	net/zabbix,-main
@@ -12,15 +12,14 @@ PKGNAME-server =	zabbix-server-${VERSION}
 FULLPKGNAME-web =	zabbix-web-${VERSION}
 FULLPKGPATH-web =	net/zabbix,-web
 CATEGORIES =		net
-REVISION-main =		0
-REVISION-server =	0
-REVISION-web =		0
+
+REVISION-web=		0
 
 MAJV =			${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 
 HOMEPAGE =		http://www.zabbix.com/
 
-MAINTAINER =		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER =		Robert Nagy <robert@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -71,7 +70,8 @@ CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 PREFIX-web =		/var/www
 LIB_DEPENDS-web =
 RUN_DEPENDS-web =	${MODPHP_RUN_DEPENDS} \
-			lang/php/${MODPHP_VERSION},-gd
+			lang/php/${MODPHP_VERSION},-gd \
+			php-pgsql-*|php-mysql-*|php-pdo_sqlite-*:lang/php/${MODPHP_VERSION},-pgsql
 WANTLIB-web =
 ZABBIX_WEB =		${PREFIX-web}/zabbix
 

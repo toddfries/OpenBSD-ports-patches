@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.299 2011/09/14 09:54:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.303 2011/10/16 03:52:01 bentley Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -36,7 +36,6 @@
      SUBDIR += dcmtk
      SUBDIR += dcraw
      SUBDIR += dia
-     SUBDIR += dia,gnome
      SUBDIR += digikam
      SUBDIR += digikam-doc
      SUBDIR += discwrapper
@@ -49,6 +48,7 @@
      SUBDIR += enblend-enfuse
      SUBDIR += enjoympeg
      SUBDIR += evince
+     SUBDIR += exiftran
      SUBDIR += exiv2
      SUBDIR += feh
      SUBDIR += ffmpeg
@@ -80,6 +80,7 @@
      SUBDIR += gocr
      SUBDIR += goocanvas
      SUBDIR += goocanvas2
+     SUBDIR += goocanvasmm2
      SUBDIR += gphoto2
      SUBDIR += gpicview
      SUBDIR += gracula
@@ -139,6 +140,7 @@
      SUBDIR += luagd
      SUBDIR += luvcview
      SUBDIR += makehuman
+     SUBDIR += mandelbulber
      SUBDIR += mapivi
      SUBDIR += mapnik
      SUBDIR += mhgui

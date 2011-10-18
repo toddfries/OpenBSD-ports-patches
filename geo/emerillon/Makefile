@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.13 2011/09/20 20:51:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2011/09/28 09:51:36 jasper Exp $
+
+# XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
+CFLAGS +=		"-DG_CONST_RETURN=const"
 
 COMMENT =	map viewer using Openstreetmap data
 
 GNOME_VERSION =	0.1.2
 GNOME_PROJECT =	emerillon
-REVISION=	4
+REVISION=	5
 
 CATEGORIES =	geo x11
 
@@ -29,7 +32,6 @@ MODULES=	devel/gettext \
 AUTOCONF_VERSION=	2.65
 CONFIGURE_STYLE=	autoconf
 MODGCONF2_SCHEMAS_DIR=	emerillon
-CONFIGURE_ENV+= CPPFLAGS="-I${LOCALBASE}/include" LDFLAGS="-L${LOCALBASE}/lib"
 
 MODGNOME_TOOLS= 	goi vala yelp
 

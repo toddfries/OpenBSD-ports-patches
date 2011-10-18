@@ -1,23 +1,20 @@
-# $OpenBSD: Makefile,v 1.55 2011/09/16 12:00:09 espie Exp $
+# $OpenBSD: Makefile,v 1.58 2011/10/17 06:16:58 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
 COMMENT =	open source web browser engine for Gtk+
 
-V =		1.4.2
+V =		1.6.1
 DISTNAME =	webkit-${V}
-REVISION =	2
 EPOCH =		0
 CATEGORIES =	www
+
+REVISION =	0
 
 HOMEPAGE =	http://webkitgtk.org/
 MASTER_SITES =	${HOMEPAGE}
 
 MAINTAINER =	Landry Breuil <gaston@gcu.info>
-
-# XXX should be handled in .if FLAVOR block
-SHARED_LIBS +=  webkitgtk-1.0 0.1                # .7.0
-SHARED_LIBS +=  webkitgtk-3.0 0.1                # .7.0
 
 # LGPLv2 and BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -51,19 +48,25 @@ CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
 
 MAKE_FILE =	GNUmakefile
 
+# Fix incorrect GCC output which was caused by over optimization
+# as it was emitting a fdtox %r8, %r7 call, whose second operatand isn't even and thus invalid.
+.if ${MACHINE_ARCH:Msparc64}
+MAKE_FLAGS=	EXTRA_FLAGS="-O0"
+.endif
+
 RUN_DEPENDS =	multimedia/gstreamer-0.10/plugins-ffmpeg \
 		multimedia/gstreamer-0.10/plugins-bad \
 		multimedia/gstreamer-0.10/plugins-good
 
-WANTLIB =	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
+WANTLIB =	ICE SM X11 Xcomposite Xcursor Xdamage Xext \
 		Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 c xcb-render \
 		expat fontconfig freetype gio-2.0 glib-2.0 gmodule-2.0 \
 		gobject-2.0 gthread-2.0 jpeg m gstinterfaces-0.10 \
 		gdk_pixbuf-2.0 \
 		gstreamer-0.10 gstbase-0.10 gstvideo-0.10 gstapp-0.10 gstpbutils-0.10 \
 		icudata icui18n icuuc sqlite3 xslt enchant soup-2.4 \
-		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pthread GL Xxf86vm drm xcb-shm \
-		z cairo pixman-1 png pthread-stubs xcb xml2 stdc++
+		pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pthread GL xcb-shm \
+		z cairo pixman-1 png pthread-stubs xcb xml2 stdc++ ffi
 
 LIB_DEPENDS =	multimedia/gstreamer-0.10/core \
 		multimedia/gstreamer-0.10/plugins-base \
@@ -86,10 +89,14 @@ FULLPKGNAME =	webkit-gtk3-${V}
 LIB_DEPENDS +=	x11/gtk+3,-main
 WANTLIB +=	cairo-gobject gailutil-3 gdk-3 gtk-3
 CONFIGURE_ARGS += --with-gtk=3.0
+SHARED_LIBS +=  webkitgtk-3.0            2.0      # .11.0
+SHARED_LIBS +=  javascriptcoregtk-3.0    0.0      # 0.0
 .else
 WANTLIB +=	gailutil gdk-x11-2.0 gtk-x11-2.0
 LIB_DEPENDS +=	x11/gtk+2,-main
 CONFIGURE_ARGS += --with-gtk=2.0
+SHARED_LIBS +=  javascriptcoregtk-1.0    0.0      # .0.0
+SHARED_LIBS +=  webkitgtk-1.0            2.0      # .11.0
 .endif
 
 pre-configure:

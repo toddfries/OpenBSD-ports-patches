@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.42 2011/09/16 12:29:14 espie Exp $
+# $OpenBSD: Makefile,v 1.45 2011/10/18 15:17:20 ajacoutot Exp $
 
 COMMENT=	base icon theme for GNOME
 
 GNOME_PROJECT=	gnome-icon-theme
-GNOME_VERSION=	3.0.0
-REVISION=	3
+GNOME_VERSION=	3.2.1
 
 CATEGORIES=	x11
 
@@ -13,8 +12,6 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-
-EXTRACT_SUFX=		.tar.bz2
 
 MODULES=	x11/gnome
 
@@ -33,8 +30,6 @@ RUN_DEPENDS +=	x11/gtk+2 \
 PKG_ARCH=	*
 
 USE_LIBTOOL=	No
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	--enable-icon-mapping \
 		--disable-nls
 

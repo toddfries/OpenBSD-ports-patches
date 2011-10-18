@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2011/09/21 14:03:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.52 2011/09/30 07:47:58 jasper Exp $
 
 COMMENT=		GObject Introspection
 
 GNOME_VERSION=		1.30.0
 GNOME_PROJECT=		gobject-introspection
-REVISION=		0
+REVISION=		1
 CATEGORIES=		devel
 
 SHARED_LIBS +=  girepository-1.0     2.0      # 1.0
@@ -40,8 +40,6 @@ USE_GROFF =		Yes
 YACC=			bison
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 CFLAGS+=		-pthread
 

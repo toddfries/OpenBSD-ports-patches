@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.41 2011/09/23 09:44:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2011/10/17 12:27:06 jasper Exp $
 
 COMMENT=		plugins for Gedit
 
 GNOME_PROJECT=		gedit-plugins
-GNOME_VERSION=		3.0.7
-
-REVISION=		3
+GNOME_VERSION=		3.2.1
 
 CATEGORIES=		editors
 
@@ -23,7 +21,7 @@ WANTLIB += drm expat ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 girepository-1.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 gtk-3 gtksourceview-3.0 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre peas-1.0 peas-gtk-1.0 pixman-1 png
-WANTLIB += pthread-stubs xcb xcb-render xcb-shm xml2 z kvm
+WANTLIB += pthread-stubs xcb xcb-render xcb-shm xml2 z
 
 MODULES=		devel/gettext \
 			lang/python \
@@ -31,18 +29,16 @@ MODULES=		devel/gettext \
 
 BUILD_DEPENDS=		${RUN_DEPENDS} \
 			devel/gsettings-desktop-schemas
-LIB_DEPENDS=		devel/libpeas \
+LIB_DEPENDS=		devel/libpeas>=1.1.4p1 \
 			x11/gtksourceview3
 RUN_DEPENDS=		devel/gsettings-desktop-schemas \
-			devel/vte \
+			devel/vte3 \
 			x11/dbus-python \
-			x11/gnome/gedit>3.0.0 \
+			x11/gnome/gedit>=3.2.1 \
 			x11/gnome/gucharmap
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_ARGS+=	--with-plugins=all
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

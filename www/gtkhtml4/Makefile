@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.8 2011/09/21 16:25:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2011/10/16 18:29:23 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		lightweight HTML rendering/printing/editing engine
 
 GNOME_PROJECT=		gtkhtml
-GNOME_VERSION=		4.1.92
-
-REVISION=		0
+GNOME_VERSION=		4.2.1
 
 API_VERSION=		4.0
 SUBST_VARS=		API_VERSION
@@ -50,8 +48,7 @@ RUN_DEPENDS=		devel/gsettings-desktop-schemas \
 			x11/gnome/icon-theme
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=        ${CONFIGURE_SHARED}
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 
 .include <bsd.port.mk>
