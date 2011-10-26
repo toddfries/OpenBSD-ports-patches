@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2011/10/10 20:14:17 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.4 2011/10/26 11:14:09 jasper Exp $
 @bin bin/glom
 @bin bin/glom_create_from_example
 include/glom-${API_V}/
@@ -56,6 +56,7 @@ include/glom-${API_V}/libglom/document/document.h
 include/glom-${API_V}/libglom/document/view.h
 include/glom-${API_V}/libglom/init.h
 include/glom-${API_V}/libglom/libglom_config.h
+include/glom-${API_V}/libglom/report_builder.h
 include/glom-${API_V}/libglom/sharedptr.h
 include/glom-${API_V}/libglom/standard_table_prefs_fields.h
 include/glom-${API_V}/libglom/utils.h
@@ -225,6 +226,9 @@ share/doc/libglom-${API_V}/reference/html/classGlom_1_1Relationship__coll__graph
 share/doc/libglom-${API_V}/reference/html/classGlom_1_1Relationship__inherit__graph.png
 share/doc/libglom-${API_V}/reference/html/classGlom_1_1Report-members.html
 share/doc/libglom-${API_V}/reference/html/classGlom_1_1Report.html
+share/doc/libglom-${API_V}/reference/html/classGlom_1_1ReportBuilder-members.html
+share/doc/libglom-${API_V}/reference/html/classGlom_1_1ReportBuilder.html
+share/doc/libglom-${API_V}/reference/html/classGlom_1_1ReportBuilder__coll__graph.png
 share/doc/libglom-${API_V}/reference/html/classGlom_1_1Report__coll__graph.png
 share/doc/libglom-${API_V}/reference/html/classGlom_1_1Report__inherit__graph.png
 share/doc/libglom-${API_V}/reference/html/classGlom_1_1SystemPrefs-members.html
@@ -309,6 +313,7 @@ share/doc/libglom-${API_V}/reference/html/inherit_graph_1.png
 share/doc/libglom-${API_V}/reference/html/inherit_graph_10.png
 share/doc/libglom-${API_V}/reference/html/inherit_graph_11.png
 share/doc/libglom-${API_V}/reference/html/inherit_graph_12.png
+share/doc/libglom-${API_V}/reference/html/inherit_graph_13.png
 share/doc/libglom-${API_V}/reference/html/inherit_graph_2.png
 share/doc/libglom-${API_V}/reference/html/inherit_graph_3.png
 share/doc/libglom-${API_V}/reference/html/inherit_graph_4.png
@@ -428,7 +433,6 @@ share/glom/pixmaps/glom-notebook.png
 share/glom/pixmaps/glom-related-records.png
 share/glom/pixmaps/glom-text.png
 share/glom/xslt/
-share/glom/xslt/print_details_to_html.xsl
 share/glom/xslt/print_report_to_html.xsl
 share/gnome/help/glom/
 share/gnome/help/glom/C/

@@ -1,6 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.34 2011/10/07 14:04:19 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.37 2011/10/20 07:23:28 ajacoutot Exp $
 @newgroup _gdm:676
 @newuser _gdm:676:_gdm:daemon:GNOME Display Manager:/var/db/gdm:/sbin/nologin
+@unexec-delete rm -f ${SYSCONFDIR}/dconf/db/gdm
 @extraunexec rm -rf /var/db/gdm/.ICEauthority
 @extraunexec rm -rf /var/db/gdm/.aucat_cookie
 @extraunexec rm -rf /var/db/gdm/.cache
@@ -58,22 +59,30 @@ share/examples/gdm/X11/gdm/
 @sample ${SYSCONFDIR}/X11/gdm/
 share/examples/gdm/X11/gdm/Init/
 @sample ${SYSCONFDIR}/X11/gdm/Init/
+@mode 555
 share/examples/gdm/X11/gdm/Init/Default
 @sample ${SYSCONFDIR}/X11/gdm/Init/Default
+@mode
 share/examples/gdm/X11/gdm/PostLogin/
 @sample ${SYSCONFDIR}/X11/gdm/PostLogin/
+@mode 555
 share/examples/gdm/X11/gdm/PostLogin/Default.sample
 @sample ${SYSCONFDIR}/X11/gdm/PostLogin/Default.sample
+@mode
 share/examples/gdm/X11/gdm/PostSession/
 @sample ${SYSCONFDIR}/X11/gdm/PostSession/
+@mode 555
 share/examples/gdm/X11/gdm/PostSession/Default
 @sample ${SYSCONFDIR}/X11/gdm/PostSession/Default
+@mode
 share/examples/gdm/X11/gdm/PreSession/
 @sample ${SYSCONFDIR}/X11/gdm/PreSession/
+@mode 555
 share/examples/gdm/X11/gdm/PreSession/Default
 @sample ${SYSCONFDIR}/X11/gdm/PreSession/Default
 share/examples/gdm/X11/gdm/Xsession
 @sample ${SYSCONFDIR}/X11/gdm/Xsession
+@mode
 share/examples/gdm/X11/gdm/custom.conf
 @sample ${SYSCONFDIR}/X11/gdm/custom.conf
 share/examples/gdm/db/
@@ -127,12 +136,13 @@ share/examples/gdm/dbus-1/system.d/gdm.conf
 @sample ${SYSCONFDIR}/dbus-1/system.d/gdm.conf
 share/examples/gdm/dconf/
 share/examples/gdm/dconf/db/
-share/examples/gdm/dconf/db/gdm
-@sample ${SYSCONFDIR}/dconf/db/gdm
 share/examples/gdm/dconf/db/gdm.d/
 @sample ${SYSCONFDIR}/dconf/db/gdm.d/
+share/examples/gdm/dconf/db/gdm.d/00-upstream-settings
+@sample ${SYSCONFDIR}/dconf/db/gdm.d/00-upstream-settings
 share/examples/gdm/dconf/db/gdm.d/locks/
 @sample ${SYSCONFDIR}/dconf/db/gdm.d/locks/
+share/examples/gdm/dconf/db/gdm.d/locks/00-upstream-settings-locks
 share/examples/gdm/dconf/profile/
 share/examples/gdm/dconf/profile/gdm
 @sample ${SYSCONFDIR}/dconf/profile/gdm
@@ -343,10 +353,11 @@ ${SCHEMAS_INSTDIR}/gdm-simple-greeter.schemas
 @sample /var/cache/gdm/
 @mode 1770
 @sample /var/gdm/
+@mode
+@group
 @exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
 @exec %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null
 @unexec-delete %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null
-@mode
-@group
+@exec %D/bin/dconf update
 @rcscript ${RCDIR}/gdm
