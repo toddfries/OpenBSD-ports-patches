@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2011/07/07 21:16:44 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2011/11/07 13:55:44 sthen Exp $
 
 ONLY_FOR_ARCHS=	amd64 i386
 
 COMMENT=	3D realtime strategy on a future earth
 
-DISTNAME=	warzone2100-2.3.8
+DISTNAME=	warzone2100-2.3.9
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=warzone2100/}
 
@@ -38,7 +38,8 @@ RUN_DEPENDS=	devel/desktop-file-utils
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.65
-CONFIGURE_ARGS+= --with-distributor="OpenBSD"
+CONFIGURE_ARGS+=--disable-motif \
+		--with-distributor="OpenBSD"
 CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include/libpng \
 		    -I${LOCALBASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \

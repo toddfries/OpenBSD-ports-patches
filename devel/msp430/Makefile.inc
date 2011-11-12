@@ -1,6 +1,8 @@
-# $OpenBSD: Makefile.inc,v 1.9 2011/10/02 18:26:32 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.12 2011/11/11 18:38:17 jasper Exp $
 
 TARGET=			msp430
+
+PKGNAME?=		${TARGET}-${DISTNAME}
 
 CATEGORIES+=		devel devel/msp430
 
@@ -11,7 +13,7 @@ MAINTAINER?=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 # the different msp430 architectures (uniarch).
 # For a list of changes this uniarch approach brings, please refer to:
 # http://sourceforge.net/apps/mediawiki/mspgcc/index.php?title=Devel:Uniarch
-HOMEPAGE?=		http://mspgcc4.sourceforge.net/
+HOMEPAGE?=		http://mspgcc.sourceforge.net/
 
 # binutils/gcc/gdb: GPLv3
 # libc/msp430mcu: BSD3/ISC
@@ -29,6 +31,10 @@ MASTER_SITES0=		http://distfiles.nl/mspgcc/
 
 # These are the patches intended for the LTS releases.
 MASTER_SITES1= ${MASTER_SITE_SOURCEFORGE:=mspgcc/Patches/LTS/20110716/}
+
+.for p in ${LTS_PATCHES}
+PATCHFILES += $p:1
+.endfor
 
 PATCH_DIST_STRIP?=	-p1
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.986 2011/10/20 11:31:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.991 2011/11/12 11:49:50 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -81,6 +81,8 @@
      SUBDIR += cvsweb
      SUBDIR += cxxtools
      SUBDIR += darcs
+     SUBDIR += dbus-sharp
+     SUBDIR += dbus-sharp-glib
      SUBDIR += dconf
      SUBDIR += ddd
      SUBDIR += dejagnu
@@ -93,6 +95,7 @@
      SUBDIR += dtc
      SUBDIR += eclipse
      SUBDIR += ectags
+     SUBDIR += emacs-haskell
      SUBDIR += emacs-python
      SUBDIR += ethos
      SUBDIR += fasm
@@ -241,7 +244,6 @@
      SUBDIR += libast
      SUBDIR += libaudiofile
      SUBDIR += libavl
-     SUBDIR += libbfd
      SUBDIR += libbio
      SUBDIR += libclog
      SUBDIR += libconfig
@@ -298,6 +300,7 @@
      SUBDIR += libunique
      SUBDIR += libunique3
      SUBDIR += libusb
+     SUBDIR += libusb1
      SUBDIR += libutf
      SUBDIR += libvmime
      SUBDIR += libvstr
@@ -659,7 +662,6 @@
      SUBDIR += p5-Module-Starter-Plugin-CGIApp
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Moose
-     SUBDIR += p5-MooseX-Async
      SUBDIR += p5-MooseX-AttributeHelpers
      SUBDIR += p5-MooseX-Clone
      SUBDIR += p5-MooseX-ConfigFromFile

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.105 2011/10/16 19:23:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.107 2011/11/04 09:56:29 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	GNOME panel
 
 GNOME_PROJECT=	gnome-panel
 GNOME_VERSION=	3.2.1
-REVISION=	0
+REVISION=	2
 
 SHARED_LIBS=	panel-applet-4            1.0 # 0.0
 
@@ -18,7 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE ORBit-2 SM X11 XRes Xau Xcomposite Xcursor Xdamage
+WANTLIB += GL ICE SM X11 XRes Xau Xcomposite Xcursor Xdamage
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
 WANTLIB += asn1 atk-1.0 c cairo cairo-gobject camel-1.2 com_err
 WANTLIB += croco-0.6 crypto dbus-1 dbus-glib-1 dconf drm ebook-1.2
@@ -31,7 +31,7 @@ WANTLIB += nss3 nssutil3 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 plc4 plds4 png pthread pthread-stubs
 WANTLIB += rsvg-2 smime3 soup-2.4 soup-gnome-2.4 sqlite3 ssl3
 WANTLIB += startup-notification-1 telepathy-glib wnck-3 xcb
-WANTLIB += xcb-aux xcb-render xcb-shm xml2 z X11-xcb ffi
+WANTLIB += xcb-aux xcb-render xcb-shm xml2 z X11-xcb ffi stdc++
 
 MODULES=	devel/dconf \
 		devel/gconf2 \

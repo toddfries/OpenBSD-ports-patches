@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.21 2011/09/28 09:51:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2011/11/03 22:21:21 jasper Exp $
 
 COMMENT =	labels and business card designer
 
 GNOME_PROJECT =	glabels
 GNOME_VERSION =	3.0.0
 
-REVISION =	1
+REVISION =	3
 
 CATEGORIES =	productivity graphics
 
@@ -22,7 +22,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm asn1
 WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 com_err croco-0.6
 WANTLIB += crypto drm ebook-1.2 edataserver-1.2 expat fontconfig
@@ -32,6 +32,7 @@ WANTLIB += m nspr4 nss3 nssutil3 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 plc4 plds4 png pthread pthread-stubs
 WANTLIB += rsvg-2 smime3 soup-2.4 sqlite3 ssl3 xcb xcb-render
 WANTLIB += xcb-shm xml2 z
+WANTLIB += dbus-1 dbus-glib-1 ffi softokn3 stdc++
 
 MODULES =	devel/gettext \
 		x11/gnome \

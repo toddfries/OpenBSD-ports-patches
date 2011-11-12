@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2011/09/05 08:02:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2011/11/11 18:38:17 jasper Exp $
 
 COMMENT=		GNU debugger for msp430
 
 VERSION=		7.2
 R=			20110103
 DISTNAME=		gdb-${VERSION}
-REVISION=		0
-PKGNAME=		${TARGET}-${DISTNAME}
+REVISION=		1
 
 MASTER_SITES=		${MASTER_SITE_GNU:=gdb/}
 PATCHFILES=		msp430-gdb-${VERSION}-${R}.patch:0

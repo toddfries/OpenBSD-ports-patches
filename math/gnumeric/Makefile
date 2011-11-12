@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.71 2011/09/28 09:51:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.73 2011/11/03 20:28:09 jasper Exp $
 
 COMMENT=		spreadsheet application for GNOME
 
 GNOME_PROJECT=		gnumeric
 GNOME_VERSION=		1.10.17
-REVISION=		0
+REVISION=		2
 
 CATEGORIES=    		math
 
@@ -21,14 +21,14 @@ PERMIT_DISTFILES_FTP=	Yes
 
 EXTRACT_SUFX=		.tar.bz2
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
 WANTLIB += bz2 c cairo drm expat fontconfig freetype gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += goffice-0.8 gsf-1 gthread-2.0 gtk-x11-2.0 m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre perl pixman-1 png
 WANTLIB += pthread pthread-stubs util xcb xcb-render xcb-shm xml2
-WANTLIB += z
+WANTLIB += z dbus-1 dbus-glib-1 ffi stdc++
 
 MODULES=		devel/gconf2 \
 			devel/gettext \

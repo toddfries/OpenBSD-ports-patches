@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2011/09/28 09:51:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.34 2011/11/11 11:39:13 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,7 +11,8 @@ GNOME_VERSION=	0.10.0
 PKGNAME-main=	${DISTNAME}
 PKGNAME-editor=	dconf-editor-${GNOME_VERSION}
 
-REVISION-editor=0
+REVISION-main=0
+REVISION-editor=1
 
 SHARED_LIBS+=	dconf        0.0 # 0.0.0
 SHARED_LIBS+=	dconf-dbus-1 0.0 # 0.0.0
@@ -37,13 +38,13 @@ WANTLIB-main += ${WANTLIB} dbus-1
 WANTLIB-editor += ${WANTLIB} ${MODGETTEXT_WANTLIB}
 WANTLIB-editor += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB-editor += Xi Xinerama Xrandr Xrender atk-1.0 cairo cairo-gobject
-WANTLIB-editor += expat fontconfig freetype gdk-3 gdk_pixbuf-2.0 kvm
+WANTLIB-editor += expat fontconfig freetype gdk-3 gdk_pixbuf-2.0
 WANTLIB-editor += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
 WANTLIB-editor += png pthread-stubs xcb xcb-render xcb-shm xml2 z dconf
 
-MULTI_PACKAGES=	-main
+MULTI_PACKAGES=	-main -editor
 
-PSEUDO_FLAVORS=	no_editor
+PSEUDO_FLAVORS=	no_editor bootstrap
 FLAVOR?=
 
 MODULES=	devel/gettext \
@@ -68,11 +69,12 @@ MODGNOME_LDFLAGS=	-pthread
 
 FAKE_FLAGS=	completiondir=${PREFIX}/share/examples/dconf/bash_completion.d
 
-.if ${FLAVOR:L:Mno_editor}
-CONFIGURE_ARGS +=	--disable-editor
-.else
-MULTI_PACKAGES +=	-editor
+.include <bsd.port.arch.mk>
+
+.if ${BUILD_PACKAGES:M-editor}
 CONFIGURE_ARGS +=	--enable-editor
+.else
+CONFIGURE_ARGS +=	--disable-editor
 .endif
 
 pre-configure:

@@ -1,4 +1,4 @@
-# $OpenBSD: network.conf.template,v 1.165 2011/09/06 08:28:59 landry Exp $
+# $OpenBSD: network.conf.template,v 1.170 2011/11/11 16:58:09 jasper Exp $
 
 #
 # NEVER EDIT THIS FILE DIRECTLY!!!!
@@ -65,13 +65,11 @@ MASTER_SITE_GNU+=	\
 	http://ftp.ibiblio.org/pub/mirrors/gnu/ftp/gnu/ \
 	http://ftp.kddilabs.jp/GNU/ \
 	ftp://ftp.informatik.hu-berlin.de/pub/gnu/ \
-	ftp://ftp.cs.univ-paris8.fr/mirrors/ftp.gnu.org/gnu/ \
 	http://ftp.ist.utl.pt/pub/GNU/gnu/gnu/ \
-	ftp://ftp.digitaltrust.it/pub/gnu/ \
 	ftp://mirror.cict.fr/gnu/ \
 	ftp://ftp.wayne.edu/pub/gnu/ \
-	http://ftp.chg.ru/pub/gnu/ \
-	ftp://ftp.sunet.se/pub/gnu/
+	ftp://ftp.sunet.se/pub/gnu/ \
+	ftp://ftp.nluug.nl/pub/gnu/
 
 MASTER_SITE_GCC+=	\
 	http://ftp.nluug.nl/languages/gcc/ \
@@ -152,7 +150,6 @@ MASTER_SITE_GNOME+=	\
 	http://linorg.usp.br/gnome/ \
 	http://mirror.aarnet.edu.au/pub/GNOME/ \
 	http://ftp.gnome.org/pub/GNOME/ \
-	ftp://ftp.no.gnome.org/pub/GNOME/ \
 	ftp://ftp.cse.buffalo.edu/pub/Gnome/ \
 	ftp://gnome.mirrors.pair.com/ \
 	ftp://ftp.nara.wide.ad.jp/pub/X11/GNOME/ \
@@ -179,7 +176,7 @@ MASTER_SITE_TEX_CTAN+=	\
 	http://ftp.chg.ru/pub/TeX/CTAN/ \
 	http://ftp.dante.de/tex-archive/ \
 	ftp://ftp.uvsq.fr/pub/TeX/CTAN/ \
- 	http://ftp.sunet.se/pub/text-processing/TeX/ \
+	http://ftp.sunet.se/pub/text-processing/TeX/ \
 	http://www.ctan.org/pub/tex-archive/
 
 MASTER_SITE_KDE+=	\
@@ -189,24 +186,22 @@ MASTER_SITE_KDE+=	\
 	http://ftp.tuniv.szczecin.pl/pub/kde/ \
 	http://ftp.kddilabs.jp/X11/kde/ \
 	http://ftp.uvsq.fr/pub/X11/kde/ \
- 	http://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/ \
- 	http://ftp.sunet.se/pub/X11/kde/ \
+	http://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/ \
+	http://ftp.sunet.se/pub/X11/kde/ \
 	http://ftp.chg.ru/pub/X11/kde/ \
 	ftp://ftp.kde.org/pub/kde/ \
- 	ftp://ftp.fu-berlin.de/pub/unix/X11/gui/kde/
+	ftp://ftp.fu-berlin.de/pub/unix/X11/gui/kde/
 
 MASTER_SITE_SAVANNAH+=	\
 	http://download.savannah.nongnu.org/releases/ \
-	http://download.savannah.nongnu.org/releases-noredirect/ \
+	http://download-mirror.savannah.nongnu.org/releases/ \
 	http://ftp.cc.uoc.gr/mirrors/nongnu.org/ \
 	http://ftp.twaren.net/Unix/NonGNU/ \
 	http://mirror.csclub.uwaterloo.ca/nongnu/ \
 	http://mirrors.zerg.biz/nongnu/ \
 	http://nongnu.askapache.com/ \
-	http://piotrkosoft.net/pub/mirrors/savannah.gnu.org/ \
 	http://savannah.c3sl.ufpr.br/ \
-	ftp://savannah.c3sl.ufpr.br/savannah-nongnu/ \
-	http://savannah.inetbridge.net/
+	ftp://savannah.c3sl.ufpr.br/savannah-nongnu/
 
 MASTER_SITE_AFTERSTEP+=	\
 	ftp://ftp.afterstep.org/ \
@@ -253,7 +248,8 @@ MASTER_SITE_APACHE+= \
 
 MASTER_SITE_BERLIOS+=	\
 	http://download.berlios.de/ \
-	http://download2.berlios.de/
+	http://download2.berlios.de/ \
+	http://spacehopper.org/mirrors/berlios/
 
 MASTER_SITE_MYSQL+= \
 	http://mirrors.ukfast.co.uk/sites/ftp.mysql.com/ \

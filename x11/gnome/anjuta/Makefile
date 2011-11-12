@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2011/10/19 12:17:54 jasper Exp $
+# $OpenBSD: Makefile,v 1.49 2011/11/11 10:57:59 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
 GNOME_VERSION=		3.2.1
+REVISION=		1
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
 
@@ -24,7 +25,7 @@ MODULES=		devel/dconf \
 			lang/python \
 			x11/gnome
 
-WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm
 WANTLIB += apr-1 aprutil-1 asn1 atk-1.0 c cairo cairo-gobject
 WANTLIB += crypto db devhelp-3 drm enchant expat ffi fontconfig
@@ -59,6 +60,9 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			x11/gnome/devhelp \
 			x11/gnome/gdl \
 			x11/gtksourceview3
+
+# needed by plugins/class-gen/plugin.c
+RUN_DEPENDS += devel/autogen
 
 LIBTOOL_FLAGS=		--tag=disable-static
 MODGNOME_DESKTOP_FILE=		Yes

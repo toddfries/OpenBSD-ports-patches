@@ -1,20 +1,19 @@
-# $OpenBSD: Makefile,v 1.6 2011/10/02 18:26:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2011/11/11 18:38:17 jasper Exp $
 
 COMMENT=		GNU binutils for msp430
 
 V=			2.21.1
 R=			20110716
 DISTNAME=		binutils-$V
-REVISION=		1
-PKGNAME=		${TARGET}-${DISTNAME}
+REVISION=		2
 
 MASTER_SITES=		${MASTER_SITE_GNU:=binutils/}
-PATCHFILES=		msp430-binutils-${V}-${R}.patch:0 \
-			msp430-binutils-2.21.1-20110716-sf3143071.patch:1 \
-			msp430-binutils-2.21.1-20110716-sf3379341.patch:1 \
-			msp430-binutils-2.21.1-20110716-sf3386145.patch:1 \
-			msp430-binutils-2.21.1-20110716-sf3400711.patch:1 \
-			msp430-binutils-2.21.1-20110716-sf3400750.patch:1
+PATCHFILES=		msp430-binutils-${V}-${R}.patch:0
+LTS_PATCHES=		msp430-binutils-2.21.1-20110716-sf3143071.patch \
+			msp430-binutils-2.21.1-20110716-sf3379341.patch \
+			msp430-binutils-2.21.1-20110716-sf3386145.patch \
+			msp430-binutils-2.21.1-20110716-sf3400711.patch \
+			msp430-binutils-2.21.1-20110716-sf3400750.patch
 
 WANTLIB=		c z
 

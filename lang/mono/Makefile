@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.64 2011/09/16 10:31:21 espie Exp $
+# $OpenBSD: Makefile,v 1.66 2011/11/09 22:13:37 robert Exp $
 
 COMMENT=	cross platform, open source .NET developement framework
 
-DISTNAME=	mono-2.10.5
-REVISION=		0
+DISTNAME=	mono-2.10.6
 
 CATEGORIES=	lang devel
 
@@ -91,6 +90,9 @@ pre-configure:
 	for i in ${BASH_SCRIPTS}; do \
 		perl -pi -e 's,/bin/bash,/bin/sh,' ${WRKSRC}/$${i}; \
 	done
+	perl -pi -e 's,^prefix=.*,prefix=\@prefix\@,g;' \
+		-e 's,^exec_prefix=.*,exec_prefix=\@prefix\@,g' \
+		${WRKSRC}/data/*.pc.in
 
 # Force using the internal mcs compiler
 pre-build:

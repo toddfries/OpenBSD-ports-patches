@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.303 2011/10/16 03:52:01 bentley Exp $
+# $OpenBSD: Makefile,v 1.307 2011/11/06 17:36:44 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -15,6 +15,7 @@
      SUBDIR += amide
      SUBDIR += animorph
      SUBDIR += aqsis
+     SUBDIR += argyll
      SUBDIR += asymptote
      SUBDIR += autopano-sift-c
      SUBDIR += babl
@@ -27,6 +28,7 @@
      SUBDIR += camlimages
      SUBDIR += cfdg
      SUBDIR += clutter
+     SUBDIR += colord
      SUBDIR += colorexplorer
      SUBDIR += comix
      SUBDIR += compface
@@ -218,6 +220,8 @@
      SUBDIR += sane-frontends
      SUBDIR += scratch
      SUBDIR += scrot
+     SUBDIR += shared-color-profiles
+     SUBDIR += shared-color-targets
      SUBDIR += shotwell
      SUBDIR += simple-scan
      SUBDIR += sketch

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.169 2011/09/29 17:20:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.172 2011/11/11 15:51:02 jasper Exp $
 
      SUBDIR =
      SUBDIR += anjuta
@@ -8,6 +8,7 @@
      SUBDIR += backgrounds
      SUBDIR += baker
      SUBDIR += byzanz
+     SUBDIR += color-manager
      SUBDIR += common
      SUBDIR += contacts
      SUBDIR += controlcenter
@@ -36,6 +37,9 @@
      SUBDIR += gjs
      SUBDIR += glom
      SUBDIR += gnote
+     SUBDIR += grilo
+     SUBDIR += grilo-mediaserver2
+     SUBDIR += grilo-plugins
      SUBDIR += gucharmap
      SUBDIR += gvfs
      SUBDIR += icon-theme

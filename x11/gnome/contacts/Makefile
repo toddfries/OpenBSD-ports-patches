@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2011/10/20 20:08:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2011/11/04 09:56:28 jasper Exp $
 
 COMMENT=		contacts manager for GNOME
 
 GNOME_PROJECT=		gnome-contacts
 GNOME_VERSION=		3.2.2
+REVISION=		1
 
 CATEGORIES=		productivity
 
@@ -16,7 +17,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MODULES=		devel/gettext \
 			x11/gnome
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm asn1
 WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 com_err crypto
 WANTLIB += dbus-1 dbus-glib-1 drm ebook-1.2 edataserver-1.2 expat
@@ -27,7 +28,7 @@ WANTLIB += gtk-3 krb5 m notify nspr4 nss3 nssutil3 pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4
 WANTLIB += png pthread pthread-stubs smime3 softokn3 soup-2.4
 WANTLIB += sqlite3 ssl3 telepathy-glib xcb xcb-render xcb-shm
-WANTLIB += xml2 z
+WANTLIB += xml2 z stdc++
 
 LIB_DEPENDS=		net/telepathy/folks>=0.6.3.2p0 \
 			x11/gnome/desktop

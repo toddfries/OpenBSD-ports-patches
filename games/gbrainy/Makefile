@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.21 2011/09/28 09:51:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2011/11/01 07:22:47 ajacoutot Exp $
 
 COMMENT=	brain teaser game
 
-DISTNAME=	gbrainy-2.02
+DISTNAME=	gbrainy-2.05
 
 CATEGORIES=	games
 

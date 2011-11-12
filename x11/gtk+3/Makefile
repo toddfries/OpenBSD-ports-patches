@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2011/10/19 17:41:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2011/11/12 14:40:05 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,16 +6,13 @@ COMMENT-main=	multi-platform graphical toolkit
 COMMENT-docs=	gtk+3 documentation
 COMMENT-cups=	gtk+3 CUPS print backend
 
-V=		3.2.1
+V=		3.2.2
 DISTNAME=	gtk+-${V}
 EXTRACT_SUFX=	.tar.xz
 
 PKGNAME-main=	gtk+3-${V}
 PKGNAME-docs=	gtk+3-docs-${V}
 PKGNAME-cups=	gtk+3-cups-${V}
-
-REVISION-main=	0
-REVISION-cups=	0
 
 # grep ^GTK_BINARY_VERSION ${WRKSRC}/Makefile (after do-configure)
 GTK_BINARY_VERSION=3.0.0
@@ -45,7 +42,7 @@ WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 cairo cairo-gobject
 WANTLIB += drm expat ffi fontconfig freetype gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs
-WANTLIB += xcb xcb-render xcb-shm z
+WANTLIB += xcb xcb-render xcb-shm z stdc++
 
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gtk+/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
 
@@ -77,10 +74,11 @@ PKG_ARCH-docs=	*
 RUN_DEPENDS-cups= # empty
 LIB_DEPENDS-cups= ${LIB_DEPENDS} \
 		print/cups \
+		graphics/colord \
 		STEM->=${V}:${BASE_PKGPATH},-main
 
 WANTLIB-cups += ${WANTLIB}
-WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl
+WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl colord
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
@@ -95,7 +93,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--disable-man \
 		--disable-papi \
-		--disable-colord \
 		--disable-packagekit \
 		--enable-introspection \
 		--without-xml-catalog

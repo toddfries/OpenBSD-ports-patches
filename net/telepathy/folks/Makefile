@@ -1,22 +1,23 @@
-# $OpenBSD: Makefile,v 1.23 2011/10/18 18:05:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2011/11/11 17:07:46 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		people aggregation library
 
 GNOME_PROJECT=		folks
-GNOME_VERSION=		0.6.4.1
+GNOME_VERSION=		0.6.5
+API_V=			29
 
-SHARED_LIBS +=  folks-telepathy           4.0 # 28.0
-SHARED_LIBS +=  folks                     4.0 # 28.0
-SHARED_LIBS +=  folks-eds                 0.0 # 28.0
+SHARED_LIBS +=  folks-telepathy           5.0 # 29.0
+SHARED_LIBS +=  folks                     5.0 # 29.0
+SHARED_LIBS +=  folks-eds                 0.1 # 29.0
 
 HOMEPAGE=		${HOMEPAGE_TP:=Folks}
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-WANTLIB += ORBit-2 asn1 c camel-1.2 com_err crypto dbus-1 dbus-glib-1
+WANTLIB += asn1 c camel-1.2 com_err crypto dbus-1 dbus-glib-1
 WANTLIB += ebook-1.2 edataserver-1.2 ffi gconf-2 gee gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 gssapi gthread-2.0 krb5 m ncurses
 WANTLIB += nspr4 nss3 nssutil3 pcre plc4 plds4 pthread readline
@@ -39,5 +40,7 @@ CONFIGURE_ARGS+=	--enable-import-tool \
 CONFIGURE_ARGS+=	--enable-libsocialweb-backend=no
 # Experimental bindings, but hey, without testing they'll never mature.
 CONFIGURE_ARGS+=	--enable-eds-backend
+
+SUBST_VARS+=		API_V
 
 .include <bsd.port.mk>

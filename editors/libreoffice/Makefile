@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.49 2011/10/17 10:10:59 espie Exp $
+# $OpenBSD: Makefile,v 1.52 2011/11/12 10:51:10 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,14 +7,13 @@ COMMENT-kde=	optional integration of LibreOffice to the KDE environment
 COMMENT-java=	optional integration of LibreOffice java features
 
 BV=		3.4
-VERSION=	3.4.3.2
+VERSION=	3.4.4.2
 DISTNAME=	libreoffice-${VERSION}
 WRKDIST=	${WRKDIR}/libreoffice-bootstrap-${VERSION}
 PKGNAME=	libreoffice-${VERSION}
 PKGNAME-main=	libreoffice-${VERSION}
 PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
-REVISION-java=	0
 CATEGORIES=	editors productivity
 
 EPOCH=		0
@@ -23,7 +22,7 @@ MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 HOMEPAGE=	http://www.libreoffice.org/
 
-MASTER_SITES=	http://download.documentfoundation.org/libreoffice/src/3.4.3/ \
+MASTER_SITES=	http://download.documentfoundation.org/libreoffice/src/3.4.4/ \
 		http://humppa.hu/libreoffice/ \
 		http://download.go-oo.org/src/
 MASTER_SITES0=	http://hg.services.openoffice.org/binaries/ \
@@ -35,9 +34,8 @@ MASTER_SITES0=	http://hg.services.openoffice.org/binaries/ \
 EDISTFILES=	libreoffice-bootstrap-${VERSION}.tar.bz2
 
 COMPONENTS=	artwork base calc components extensions extras \
-		filters help impress translations libs-core libs-extern \
-		libs-extern-sys libs-gui postprocess sdk testing \
-		ure writer
+		filters help impress libs-core libs-extern libs-extern-sys \
+		libs-gui postprocess sdk testing translations ure writer
 
 .for _dfile in ${COMPONENTS}
 EDISTFILES+=	libreoffice-${_dfile}-${VERSION}.tar.bz2
@@ -107,7 +105,7 @@ MULTI_PACKAGES+=	-java
 .endif
 
 .if !${FLAVOR:L:Mno_lang}
-LANGS=			bg ca de es fa fi fr hu it ja ko \
+LANGS=			ar bg ca de es fa fi fr hu it ja ko \
 			lt lv nl pl pt-BR ru sl sv
 
 .for l in ${LANGS:L}
@@ -156,7 +154,7 @@ WANTLIB-main=	gdk-x11-2.0>=400.14 gtk-x11-2.0>=400.14 \
 		db>=4 xslt>=3 curl>=7 neon>=24 \
 		icuuc>=0 icudata>=0 icui18n icule \
 		raptor>=2 rasqal rdf>=0 poppler
-WANTLIB-main+=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
+WANTLIB-main+=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		crypto expat fontconfig freetype gio-2.0 glib-2.0 \
 		gmodule-2.0 gobject-2.0 gthread-2.0 \

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Engine.pm,v 1.28 2011/10/10 18:56:50 espie Exp $
+# $OpenBSD: Engine.pm,v 1.33 2011/11/09 08:28:55 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -171,6 +171,7 @@ sub is_done
 		$self->{engine}{built}{$v}= $v;
 		$self->log('B', $v);
 		delete $self->{engine}{tobuild}{$v};
+		delete $v->{new};
 		return 1;
 	} else {
 		return 0;
@@ -186,7 +187,7 @@ sub get_core
 sub key_for_doing
 {
 	my ($self, $v) = @_;
-	return $v->{pkgpath};
+	return $v->pkgpath;
 }
 
 sub already_done
@@ -400,7 +401,7 @@ sub important
 
 sub adjust
 {
-	my ($self, $v, $kind) = @_;
+	my ($self, $v, $kind, $kind2) = @_;
 	return 0 if !exists $v->{info}{$kind};
 	my $not_yet = 0;
 	for my $d (values %{$v->{info}{$kind}}) {
@@ -409,6 +410,7 @@ sub adjust
 		    (defined $d->{info} &&
 		    $d->fullpkgname eq $v->fullpkgname)) {
 			delete $v->{info}{$kind}{$d};
+			$v->{info}{$kind2}{$d} = $d if defined $kind2;
 		} else {
 			$not_yet++;
 		}
@@ -416,6 +418,16 @@ sub adjust
 	return $not_yet if $not_yet;
 	delete $v->{info}{$kind};
 	return 0;
+}
+
+sub should_ignore
+{
+	my ($self, $v, $kind) = @_;
+	return undef if !exists $v->{info}{$kind};
+	for my $d (values %{$v->{info}{$kind}}) {
+		return $d if (defined $d->{info}) && $d->{info}{IGNORE};
+	}
+	return undef;
 }
 
 sub adjust_extra
@@ -457,20 +469,6 @@ sub adjust_distfiles
 
 my $output = {};
 
-sub log_fetch
-{
-	my ($self, $v) = @_;
-	my $k = $v->{info}{FETCH_MANUALLY}->string;
-	my $fh = $self->{logger}->open('fetch/manually');
-	print $fh $v->fullpkgpath, "\n", "-" x length($v->fullpkgpath), "\n";
-	if (defined $output->{$k}) {
-		print $fh "same as ", $output->{$k}->fullpkgpath, "\n\n";
-	} else {
-		print $fh "$k\n\n";
-		$output->{$k} = $v;
-	}
-}
-
 sub check_buildable
 {
 	my ($self, $quick) = @_;
@@ -485,6 +483,14 @@ sub check_buildable
 					$self->{installable}{$v} = $v;
 					$self->log_no_ts('I', $v);
 					$changes++;
+				} elsif (my $d = $self->should_ignore($v, 
+				    'RDEPENDS')) {
+					delete $self->{built}{$v};
+					$self->log_no_ts('!', $v, 
+					    " because of ".$d->fullpkgpath);
+					$changes++;
+					$v->{info} = DPB::PortInfo->stub;
+					push(@{$self->{ignored}}, $v);
 				}
 			}
 		}
@@ -496,19 +502,27 @@ sub check_buildable
 				$changes++;
 				next;
 			}
-			my $has = $self->adjust($v, 'DEPENDS');
+			my $has = $self->adjust($v, 'DEPENDS', 'BDEPENDS');
 			$has += $self->adjust_extra($v, 'EXTRA');
 
 			my $has2 = $self->adjust_distfiles($v);
 			# buying buildable directly is a priority,
-			# but put the patch/dist/small stuff down the line
-			# as otherwise we will tend to grab patch files first
+			# but put the patch/dist/small stuff down the 
+			# line as otherwise we will tend to grab 
+			# patch files first
 			$v->{has} = 2 * ($has != 0) + ($has2 > 1);
 			if ($has + $has2 == 0) {
 				$self->{buildable}->add($v);
 				$self->log_no_ts('Q', $v);
 				delete $self->{tobuild}{$v};
 				$changes++;
+			} elsif (my $d = $self->should_ignore($v, 'DEPENDS')) {
+				delete $self->{tobuild}{$v};
+				$self->log_no_ts('!', $v, 
+				    " because of ".$d->fullpkgpath);
+				$changes++;
+				$v->{info} = DPB::PortInfo->stub;
+				push(@{$self->{ignored}}, $v);
 			}
 		}
 	} while ($changes);
@@ -519,17 +533,16 @@ sub new_path
 {
 	my ($self, $v) = @_;
 	if (!$self->{buildable}->is_done($v)) {
-		if (defined $v->{info}{FETCH_MANUALLY}) {
-			$self->log_fetch($v);
-			delete $v->{info}{FETCH_MANUALLY};
+		if (defined $v->{info}{FETCH_MANUALLY} &&
+		    defined $v->{info}{IGNORE}) {
+			$self->log('!', $v, " fetch manually");
+			$self->add_fatal($v, "Fetch manually error:", $v->{info}{FETCH_MANUALLY}->string);
+			return;
 		}
 		if (defined $v->{info}{IGNORE} && 
 		    !$self->{state}->{fetch_only}) {
-		    	$self->log('!', $v);
-			my $fh = $self->{logger}->open('ignored');
-			print $fh $v->fullpkgpath, ": ", 
-			    $v->{info}{IGNORE}->string, "\n";
-			close $fh;
+		    	$self->log('!', $v, " ".$v->{info}{IGNORE}->string);
+			$v->{info} = DPB::PortInfo->stub;
 			push(@{$self->{ignored}}, $v);
 			return;
 		}
@@ -573,9 +586,10 @@ sub rescan
 
 sub add_fatal
 {
-	my ($self, $v) = @_;
+	my ($self, $v, @messages) = @_;
 	push(@{$self->{errors}}, $v);
 	$self->{locker}->lock($v);
+	$self->{logger}->log_error($v, @messages);
 }
 
 sub rebuild_info
@@ -620,11 +634,31 @@ sub dump_category
 
 	$k =~ m/^./;
 	my $q = "\u$&: ";
+	my $cache = {};
 	for my $v (sort {$a->fullpkgpath cmp $b->fullpkgpath}
 	    values %{$self->{$k}}) {
 		print $fh $q;
-		$v->quick_dump($fh);
+		if (defined $cache->{$v->{info}}) {
+			print $fh $v->fullpkgpath, " same as ",
+			    $cache->{$v->{info}}, "\n";
+		} else {
+			$v->quick_dump($fh);
+			$cache->{$v->{info}} = $v->fullpkgpath;
+		}
 	}
+}
+
+sub end_dump
+{
+	my ($self, $fh) = @_;
+	$fh //= \*STDOUT;
+	for my $v (values %{$self->{built}}) {
+		$self->adjust($v, 'RDEPENDS');
+	}
+	for my $k (qw(tobuild built)) {
+		$self->dump_category($k, $fh);
+	}
+	print $fh "\n";
 }
 
 sub dump

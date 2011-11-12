@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.714 2011/10/05 17:37:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.718 2011/11/12 12:02:25 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -26,7 +26,6 @@
      SUBDIR += arping
      SUBDIR += arpwatch
      SUBDIR += avahi,
-     SUBDIR += avahi,no_mono
      SUBDIR += axel
      SUBDIR += balance
      SUBDIR += bindgraph
@@ -72,6 +71,7 @@
      SUBDIR += echoping
      SUBDIR += ejabberd
      SUBDIR += ekg
+     SUBDIR += emacs-jabber
      SUBDIR += emesene
      SUBDIR += enet
      SUBDIR += epic4
@@ -428,7 +428,6 @@
      SUBDIR += py-dns
      SUBDIR += py-dnspython
      SUBDIR += py-dpkt
-     SUBDIR += py-enet
      SUBDIR += py-flowd
      SUBDIR += py-flowtools
      SUBDIR += py-ftpdlib
@@ -451,6 +450,7 @@
      SUBDIR += queryperf
      SUBDIR += queso
      SUBDIR += quirc
+     SUBDIR += quvi
      SUBDIR += rabbitmq
      SUBDIR += radiusd-cistron
      SUBDIR += radiusd-lucent
