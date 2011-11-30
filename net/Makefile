@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.718 2011/11/12 12:02:25 sthen Exp $
+# $OpenBSD: Makefile,v 1.720 2011/11/30 06:14:17 rpointel Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -42,6 +42,7 @@
      SUBDIR += cftp
      SUBDIR += charm
      SUBDIR += cjc
+     SUBDIR += climm
      SUBDIR += clive
      SUBDIR += clog
      SUBDIR += cnupm
@@ -444,6 +445,7 @@
      SUBDIR += py-twitter
      SUBDIR += py-xmpp
      SUBDIR += py-xmpppy
+     SUBDIR += py-zmq
      SUBDIR += py-zsi
      SUBDIR += qsynergy
      SUBDIR += quagga

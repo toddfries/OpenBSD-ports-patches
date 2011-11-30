@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2011/09/16 12:00:07 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2011/11/17 12:44:21 robert Exp $
 
 SHARED_ONLY =	Yes
 COMMENT =	PHP interface to swish-e
 
-DISTNAME =	swish-0.3.0
-REVISION =	1
+DISTNAME =	swish-0.4.0
 PKGNAME =	pecl-${DISTNAME}
 CATEGORIES =	www
 EXTRACT_SUFX =	.tgz

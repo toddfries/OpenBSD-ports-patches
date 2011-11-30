@@ -1,4 +1,4 @@
-# $OpenBSD: pkgpath.mk,v 1.36 2011/09/24 07:36:02 espie Exp $
+# $OpenBSD: pkgpath.mk,v 1.42 2011/11/20 15:38:08 espie Exp $
 # ex:ts=4 sw=4 filetype=make:
 #	pkgpath.mk - 2003 Marc Espie
 #	This file is in the public domain.
@@ -11,10 +11,11 @@ READMES_TOP ?= ${PORTSDIR}
 DANGEROUS ?= No
 LOCKDIR ?= ${TMPDIR}/portslocks
 
+_PERLSCRIPT = perl ${PORTSDIR}/infrastructure/bin
 
 .if !defined(PKGPATH)
 PKGPATH != PORTSDIR_PATH=${PORTSDIR_PATH} \
-	perl ${PORTSDIR}/infrastructure/bin/getpkgpath ${.CURDIR}
+	${_PERLSCRIPT}/getpkgpath ${.CURDIR}
 .  if empty(PKGPATH)
 ERRORS += "Fatal: can't figure out PKGPATH"
 PKGPATH =${.CURDIR}
@@ -31,7 +32,7 @@ PKGDEPTH = ${PKGPATH:C|[^./][^/]*|..|g}/
 _pflavor_fragment = \
 	unset FLAVOR SUBPACKAGE || true; \
 	multi=''; flavor=''; space=''; sawflavor=$${_fullpath}; \
-	reported=false; found_dir=false; \
+	reported=false; found_dir=false; sawmulti=false; \
 	case "$$subdir" in \
 	"") \
 		echo 1>&2 ">> Broken dependency: empty directory $$extra_msg"; \
@@ -44,7 +45,11 @@ _pflavor_fragment = \
 			else \
 				case X"$$i" in \
 					X-*) \
-						multi="$$i";; \
+						if $$sawmulti; then \
+							echo 1>&2 ">> Broken dependency: several subpackages in $$subdir $$extra_msg"; \
+							reported=true; \
+						fi; \
+						multi="$$i"; sawmulti=true;; \
 					,) \
 						sawflavor=true;; \
 					*) \
@@ -88,17 +93,26 @@ _flavor_fragment = _fullpath=false; ${_pflavor_fragment}
 
 _depfile_fragment = \
 	case X$${_DEPENDS_FILE} in \
-		X) _DEPENDS_FILE=`mktemp /tmp/depends.XXXXXXXXX|| exit 1`; \
+		X) _DEPENDS_FILE=`mktemp ${TMPDIR}/depends.XXXXXXXXX|| exit 1`; \
 		export _DEPENDS_FILE; \
 		trap "rm -f $${_DEPENDS_FILE}" 0 1 2 3 13 15;; \
 	esac
 
+# the cache may be filled in as root, so try to remove as normal user, THEN
+# sudo only if it fails.
+_cache_fragment = \
+	case X$${_DEPENDS_CACHE} in \
+		X) _DEPENDS_CACHE=`mktemp -d ${TMPDIR}/dep_cache.XXXXXXXXX|| exit 1`; \
+		export _DEPENDS_CACHE; \
+		trap "rm -rf 2>/dev/null $${_DEPENDS_CACHE} || ${SUDO} rm -rf $${_DEPENDS_CACHE}" 0 1 2 3 13 15;; \
+	esac; PKGPATH=${PKGPATH}; export PKGPATH
+
 HTMLIFY =	sed -e 's/&/\&amp;/g' -e 's/>/\&gt;/g' -e 's/</\&lt;/g'
 
-_MAKE = cd ${.CURDIR} && exec ${MAKE}
-_SUDOMAKE = cd ${.CURDIR} && exec ${SUDO} ${MAKE}
-_MAKESYS = cd ${.CURDIR} && exec ${_SYSTRACE_CMD} ${MAKE}
-_SUDOMAKESYS = cd ${.CURDIR} && exec ${SUDO} ${_SYSTRACE_CMD} ${MAKE}
+_MAKE = cd ${.CURDIR} && PKGPATH=${PKGPATH} exec ${MAKE}
+_SUDOMAKE = cd ${.CURDIR} && PKGPATH=${PKGPATH} exec ${SUDO} ${MAKE}
+_MAKESYS = cd ${.CURDIR} && PKGPATH=${PKGPATH} exec ${_SYSTRACE_CMD} ${MAKE}
+_SUDOMAKESYS = cd ${.CURDIR} && PKGPATH=${PKGPATH} exec ${SUDO} ${_SYSTRACE_CMD} ${MAKE}
 
 REPORT_PROBLEM_LOGFILE ?=
 .if !empty(REPORT_PROBLEM_LOGFILE)
@@ -113,12 +127,11 @@ _recursive_targets = \
 	full-regress-depends full-run-depends \
 	install install-all lib-depends-check \
 	license-check link-categories manpages-check package patch \
-	port-lib-depends-check prepare print-package-signature repackage \
-	regress reinstall \
+	prepare repackage regress reinstall \
 	unlink-categories update update-or-install update-or-install-all \
 	describe dump-vars homepage-links print-plist print-plist-all \
-	print-plist-all-with-depends print-plist-contents print-plist-libs \
-	print-plist-with-depends show verbose-show show-size show-fake-size \
+	print-plist-contents print-plist-libs \
+	show verbose-show show-size show-fake-size \
 	check-register check-register-all
 
 _dangerous_recursive_targets = \
@@ -126,4 +139,7 @@ _dangerous_recursive_targets = \
 
 _recursive_depends_targets = \
 	all-dir-depends build-dir-depends regress-dir-depends run-dir-depends
-
+_recursive_cache_targets = \
+	print-plist-with-depends print-plist-libs-with-depends \
+	print-plist-all-with-depends print-package-signature \
+	port-lib-depends-check 

@@ -1,4 +1,4 @@
-.\"	$OpenBSD: dpb.1,v 1.17 2011/11/06 15:42:39 espie Exp $
+.\"	$OpenBSD: dpb.1,v 1.22 2011/11/21 15:02:14 espie Exp $
 .\"
 .\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 .\"
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: November 6 2011 $
+.Dd $Mdocdate: November 21 2011 $
 .Dt DPB 1
 .Os
 .Sh NAME
@@ -23,12 +23,14 @@
 .Sh SYNOPSIS
 .Nm dpb
 .Bk -words
-.Op Fl acCeqrRsuUx
+.Op Fl aceqrRsuUx
 .Op Fl A Ar arch
 .Op Fl b Ar logfile
+.Op Fl C Ar pathlist
 .Op Fl D Ar PARAM Ns = Ns Ar value
 .Op Fl f Ar m
 .Op Fl h Ar hosts
+.Op Fl I Ar subdirlist
 .Op Fl j Ar n
 .Op Fl L Ar logdir
 .Op Fl m Ar threshold
@@ -55,7 +57,9 @@ installations.
 .Nm
 can take
 .Ar pkgpath ...
-to build as parameters.
+to build as parameters, as
+.Xr pkgpath 7
+specifications.
 .Pp
 Options are as follows:
 .Bl -tag -width pkgpathlonger
@@ -72,9 +76,11 @@ Prime the heuristics module with a previous build log, so that packages that
 take a long time to build will happen earlier.
 .It Fl c
 Clean port working directory and log before each build.
-.It Fl C
-Don't clean port working directory after build.
-Warning: requires insane amounts of diskspace for a full build.
+.It Fl C Ar pathlist
+Don't clean port working directories after build.
+Use a list of simple
+.Xr pkgpath 7 ,
+as this does not take subpackages and flavors into account.
 .It Fl D Ar PARAM Ns = Ns Ar value
 Set defined parameter to value.
 Known parameters are as follows:
@@ -151,6 +157,11 @@ file can also define a start-up script, as
 STARTUP=path
 .Ed
 which will be run at start-up on each machine.
+.It Fl I Ar subdirlist
+List of
+.Xr pkgpath 7
+to install, on the local box.
+This will also add them to the list of things to build.
 .It Fl j Ar n
 Number of concurrent local jobs to run (defaults to hw.ncpu if no hosts file).
 .It Fl L Ar logdir
@@ -167,7 +178,9 @@ Avoid for now, as
 has serious race conditions which yield
 random errors under stress conditions such as bulk build.
 .It Fl P Ar subdirlist
-Read list of pkgpaths from file
+Read list of
+.Xr pkgpath 7
+from file.
 .It Fl q
 Don't quit while errors/locks are around.
 .It Fl r
@@ -266,6 +279,8 @@ number of distfiles to fetch, when
 is used.
 .It !=
 number of ignored packages.
+Details in
+.Pa engine.log .
 .It L=
 list of packages that cannot currently be built because of locks.
 .It E=
@@ -289,8 +304,7 @@ since distfiles are checksummed after the fetch anyways.
 When building a package,
 .Nm
 produces a lockfile in the lock directory, whose name is deduced from
-the basic pkgpath with slashes replaced by dots, and a possible second lock
-with the fullpkgpath.
+the basic pkgpath with slashes replaced by dots.
 This lockfile is filled with such info as the build start time or the host.
 .Pp
 The lockfile will also contain the name of a parent pkgpath, for paths that
@@ -299,7 +313,7 @@ This is particularly useful for bogus paths, where it would be hard to
 know where the path came from otherwise.
 .Pp
 At the end of a succesful build, these lockfiles are removed.
-The fullpkgpath lock will stay around in case of errors.
+The lock will stay around in case of errors.
 .Po
 raw
 value from
@@ -340,7 +354,6 @@ same time, even on different machines:
 in some cases, MULTI_PACKAGES and FLAVOR combinations may lead to the
 same package being built simultaneously, and since the package repository
 is shared, this can easily lead to trouble.
-.Pp
 .Sh SHUTTING DOWN GRACEFULLY
 .Nm
 periodically checks for a file named
@@ -468,7 +481,8 @@ Not a logfile at all, but a file created by the user to stop
 creating new jobs.
 .It Pa vars.log
 Logs the directories that were walked in the ports tree for dependency
-information.
+information, including the path to a dependency that triggered this
+particular step.
 .El
 .Sh BUGS AND LIMITATIONS
 .Nm
@@ -482,10 +496,6 @@ file and remove the lock,
 .Nm
 won't pick it up.
 .Pp
-.Nm
-considers all pkgpaths it explores as valid candidates for packages.
-This is not the case for some pkgpath:patch depends.
-It should not try to reach them.
 Note that
 .Nm
 does not manage installed packages in any intelligent way, it will just
@@ -540,10 +550,11 @@ tries really hard to check heterogeneous networks for sanity (checking
 shared libraries and .la files), it is still dependent on the user to
 make sure all the hosts build ports the same way.
 .Pp
-Make sure your NFS setup is consistent (the ports dir itself should be
-exported, including distfiles and packages repository, but the WRKOBJDIR
-should not be in most cases). Pay particular attention to discrepancies
-in
+Make sure your NFS setup is consistent.
+The ports dir itself should be exported, including distfiles and packages
+repository, but the WRKOBJDIR should not be on NFS unless you have
+absolutely no choice, or if you exhibit deep masochistic tendencies.
+Pay particular attention to discrepancies in
 .Pa /etc/mk.conf .
 .Pp
 Also,
@@ -553,6 +564,8 @@ connects to external hosts through
 relying on
 .Xr ssh_config 5
 for any special cases.
+.Sh SEE ALSO
+.Xr pkgpath 7
 .Sh AUTHOR
 Marc Espie
 .Sh HISTORY

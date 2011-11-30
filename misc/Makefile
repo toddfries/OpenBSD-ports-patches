@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.143 2011/09/30 09:03:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.146 2011/11/17 00:45:11 sebastia Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -10,7 +10,6 @@
      SUBDIR += brltty
      SUBDIR += bsdiff
      SUBDIR += buffer
-     SUBDIR += calentool
      SUBDIR += cbb
      SUBDIR += ccze
      SUBDIR += cdrdao
@@ -60,6 +59,7 @@
      SUBDIR += p5-File-MMagic
      SUBDIR += p5-File-MMagic-XS
      SUBDIR += p5-File-Rotate-Backup
+     SUBDIR += p5-Finance-Bank-DE-DTA-Create
      SUBDIR += p5-Finance-IIF
      SUBDIR += p5-Finance-Quote
      SUBDIR += p5-Finance-QuoteHist
@@ -80,6 +80,7 @@
      SUBDIR += redshift
      SUBDIR += remind
      SUBDIR += rlwrap
+     SUBDIR += rocrail
      SUBDIR += rpm
      SUBDIR += ruby-spreadsheet
      SUBDIR += screen

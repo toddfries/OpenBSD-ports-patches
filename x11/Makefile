@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.475 2011/11/12 16:21:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.478 2011/11/17 15:49:27 dcoppa Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -52,6 +52,7 @@
      SUBDIR += eterm,kanji
      SUBDIR += evilwm
      SUBDIR += extace
+     SUBDIR += faenza-icon-theme
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
@@ -159,7 +160,6 @@
      SUBDIR += ogle
      SUBDIR += ogle,altivec
      SUBDIR += ogle_gui
-     SUBDIR += olvwm
      SUBDIR += openbox
      SUBDIR += openmotif
      SUBDIR += oroborus
@@ -217,6 +217,7 @@
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
      SUBDIR += ruby-profligacy
+     SUBDIR += ruby-qt4
      SUBDIR += rxvt
      SUBDIR += rxvt-unicode
      SUBDIR += sawfish
@@ -354,7 +355,6 @@
      SUBDIR += xtoolwait
      SUBDIR += xtraceroute
      SUBDIR += xtu
-     SUBDIR += xview
      SUBDIR += xvkbd
      SUBDIR += xwit
      SUBDIR += xwrits

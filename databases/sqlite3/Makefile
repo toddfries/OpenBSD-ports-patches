@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2011/03/14 14:39:51 landry Exp $
+# $OpenBSD: Makefile,v 1.59 2011/11/18 09:39:09 espie Exp $
 
 COMMENT-main=	embedded SQL implementation
 COMMENT-tcl=	TCL bindings for Sqlite3
@@ -38,16 +38,18 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=${CONFIGURE_SHARED}
 
 PSEUDO_FLAVORS=	no_tcl
-.if ${MACHINE_ARCH} != "m88k" && ${MACHINE_ARCH} != "vax"
-FLAVOR?=
+NOT_FOR_ARCHS-tcl = ${NO_SHARED_ARCHS}
+FLAVOR ?=
+
+MULTI_PACKAGES=-main -lemon -tcl
+
+.include <bsd.port.arch.mk>
+
+.if !${PROPERTIES:Mno_shared}
 CONFIGURE_ARGS +=	--enable-load-extension	
-.else
-FLAVOR=	no_tcl
 .endif
 
-MULTI_PACKAGES=-main -lemon
-.if !${FLAVOR:L:Mno_tcl}
-MULTI_PACKAGES+=-tcl
+.if ${BUILD_PACKAGES:M-tcl}
 MODULES+=	lang/tcl
 
 BUILD_DEPENDS=	${MODTCL_BUILD_DEPENDS}

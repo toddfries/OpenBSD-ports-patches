@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.273 2011/10/04 13:23:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.276 2011/11/30 21:19:13 dhill Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -16,6 +16,7 @@
      SUBDIR += assl
      SUBDIR += bfbtester
      SUBDIR += bounix
+     SUBDIR += botan
      SUBDIR += bsd-airtools
      SUBDIR += bunny
      SUBDIR += ccrypt
@@ -48,6 +49,7 @@
      SUBDIR += gksu-polkit
      SUBDIR += gnomint
      SUBDIR += gnupg
+     SUBDIR += gnupg,card,idea,ldap
      SUBDIR += gnupg2
      SUBDIR += gnutls
      SUBDIR += gpa
@@ -89,6 +91,7 @@
      SUBDIR += libnipper
      SUBDIR += libotr
      SUBDIR += libperseus
+     SUBDIR += libsrtp
      SUBDIR += libssh
      SUBDIR += libssh2
      SUBDIR += libtasn1

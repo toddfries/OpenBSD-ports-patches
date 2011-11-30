@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.59 2011/10/29 08:12:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.61 2011/11/22 15:01:57 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		Unicode character map for the GNOME project
 
 GNOME_PROJECT=		gucharmap
-GNOME_VERSION=		3.2.1
-REVISION=		0
+GNOME_VERSION=		3.2.2
 
 SHARED_LIBS +=  gucharmap_2_90            0.0 # 7.0
 
@@ -29,10 +28,6 @@ WANTLIB += z
 MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
-
-# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
-# instead of the actual library
-USE_LIBTOOL=		gnu
 
 MODGNOME_TOOLS= 	goi yelp
 MODGNOME_DESKTOP_FILE=	Yes

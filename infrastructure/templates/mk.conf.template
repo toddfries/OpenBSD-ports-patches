@@ -1,0 +1,45 @@
+# $OpenBSD: mk.conf.template,v 1.5 2011/11/19 20:22:08 sthen Exp $
+
+# This file contains some mk.conf entries suitable for ports work.
+#
+# It may be copy-and-pasted, or included directly from /etc/mk.conf:
+# .include "/usr/ports/infrastructure/templates/mk.conf.template"
+#
+# Anything present in uncommented form is generally safe to use;
+# there are also some commented-out entries with additional settings
+# you might want to use.
+
+#SUDO=/usr/bin/sudo -E
+#USE_SYSTRACE=Yes
+
+# Set additional warning flags when compiling:
+#WARNINGS=Yes
+#CDIAGFLAGS=-Wall
+
+# Accept Java research license, useful for bulk builds
+#ACCEPT_JRL_LICENSE=Yes
+
+# Common(ish) misspellings:
+.poison BUILD_DEPEND
+.poison DISTFLIES
+.poison LIB_DEPEND
+.poison MASTER_SITE_SOURCEFORGET
+.poison MODGCC3_ARCHES
+.poison MODGCC4_ARCHES
+.poison MODPY_BUILDEP
+.poison MODULE
+.poison NOT_FOR_ARCH
+.poison NOT_FOR_ARCHES
+.poison ONLY_FOR_ARCH
+.poison ONLY_FOR_ARCHES
+.poison REVISON
+.poison REVSION
+.poison RUN_DEPEND
+.poison WABTLIB
+.poison WATNLIB
+.poison WUBLIB
+.poison WKRBUILD
+.poison WKRCONF
+.poison WKRDIST
+.poison WKRINST
+.poison WKRSRC

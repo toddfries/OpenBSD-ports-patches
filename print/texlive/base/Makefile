@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.51 2011/09/16 11:13:41 espie Exp $
+# $OpenBSD: Makefile,v 1.53 2011/11/26 19:50:50 kili Exp $
 
 COMMENT =		base binaries for TeXLive typesetting distribution
 
 DISTNAME = 		texlive-${DIST_V}-source
 PKGNAME =		texlive_base-${V}
-REVISION =		4
+REVISION =		0
 
-SHARED_LIBS =		kpathsea	3.0
-SHARED_LIBS +=		ptexenc		0.0
+SHARED_LIBS =		kpathsea	4.0
+SHARED_LIBS +=		ptexenc		1.0
 
 WANTLIB +=		ICE SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt c expat
 WANTLIB +=		fontconfig freetype gd jpeg lcms m ncurses
@@ -20,21 +20,31 @@ RUN_DEPENDS =		print/ghostscript/gnu \
 			print/ps2eps \
 			print/psutils \
 			print/t1utils \
-			texlive_texmf-minimal-${V}:print/texlive/texmf,-main \
-			print/latex-mk
+			print/latex-mk \
+			texlive_texmf-minimal-${V}:print/texlive/texmf,-main
 			
 LIB_DEPENDS =		devel/t1lib \
 			graphics/png \
 			graphics/gd \
 			print/freetype \
-			print/poppler
+			print/poppler \
+			textproc/libxml
 
 MODULES =		textproc/intltool converters/libiconv
+# These following two modules are just for variable substitution in patches
+# They are not real dependencies of _base, but of _texmf-full
+MODULES +=		lang/ruby lang/python
+MODRUBY_BUILDDEP =	No
+MODRUBY_RUNDEP =	No
+MODPY_BUILDDEP =	No
+MODPY_RUNDEP =		No
+SUBST_VARS +=		MODRUBY_BINREV MODPY_VERSION
 
 # Never set SEPARATE_BUILD
 CONFIGURE_STYLE =	gnu
 
 # Don't put ${PREFIX}/include in CPPFLAGS or system icu .h's are picked up
+# TeX Live uses a modified version of icu.
 CONFIGURE_ENV +=	TL_MAKE=${GMAKE} \
 			CPPFLAGS="-I${TRUEPREFIX}/include/poppler -I${X11BASE}/include"
 			
@@ -52,12 +62,13 @@ CFLAGS +=	-fPIC
 .endif
 
 # clisp limits which arches we can use xindy on
-.if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64"
+.if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64" || \
+	${MACHINE} == "powerpc" || ${MACHINE} == "sparc64"
 BUILD_DEPENDS += 	lang/clisp
-LIB_DEPENDS +=		devel/ffcall	# XXX still needed? try build on fresh sys
+RUN_DEPENDS +=		lang/clisp
 CONFIGURE_ARGS +=	--enable-xindy \
 			--disable-xindy-rules
-PKG_ARGS +=		-Dxindy=1
+PKG_ARGS +=		-Dxindy=1 # Note. texmf-full required for xindy
 .else
 PKG_ARGS +=		-Dxindy=0
 .endif
@@ -102,6 +113,10 @@ CONFIGURE_ARGS +=	--mandir=${PREFIX}/man \
 
 SUBST_VARS +=		TRUEPREFIX LOCALBASE
 
+# substitute ruby and python binary names
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/texk/texlive/context/mtxrun
+
 # just to silence error - never used
 pre-install:
 	mkdir -p ${WRKSRC}/inst
@@ -111,12 +126,11 @@ pre-install:
 # a fully hashed texmf tree and working kpse configuration.
 ALEPH_LN =	lamed 
 LUATEX_LN =	dvilualatex dviluatex lualatex
-MPOST_LN =	metafun mfplain
 PDFTEX_LN =	amstex cslatex csplain eplain etex jadetex latex mex \
 		mllatex mltex pdfcslatex pdfcsplain pdfetex pdfjadetex \
 		pdflatex pdfmex pdfxmltex physe phyzzx texsis utf8mex \
 		xmltex
-PTEX_LN =	platex
+EPTEX_LN =	platex
 XETEX_LN =	xelatex
 
 post-install:
@@ -125,6 +139,7 @@ post-install:
 	# following tradition, texmf is in ${PREFIX}/share
 	mv ${PREFIX}/texmf ${PREFIX}/share/texmf
 	mv ${PREFIX}/texmf-dist ${PREFIX}/share/texmf-dist
+
 	# translate some sylinks from ../texmf* to ../share/texmf*
 	for link in `find ${PREFIX}/bin -type l`; do \
 		dest=`stat -f %Y $${link}`; \
@@ -147,8 +162,8 @@ post-install:
 	for i in ${PDFTEX_LN}; do \
 		ln -s ${TRUEPREFIX}/bin/pdftex ${PREFIX}/bin/$$i; \
 	done
-	for i in ${PTEX_LN}; do \
-		ln -s ${TRUEPREFIX}/bin/ptex ${PREFIX}/bin/$$i; \
+	for i in ${EPTEX_LN}; do \
+		ln -s ${TRUEPREFIX}/bin/eptex ${PREFIX}/bin/$$i; \
 	done
 	for i in ${XETEX_LN}; do \
 		ln -s ${TRUEPREFIX}/bin/xetex ${PREFIX}/bin/$$i; \

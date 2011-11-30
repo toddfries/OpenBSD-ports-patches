@@ -1,12 +1,14 @@
-# $OpenBSD: Makefile,v 1.16 2010/12/04 14:37:19 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2011/11/23 19:20:15 naddy Exp $
 
 COMMENT=		GPL computer algebra system based on DOE Macsyma
 
-VERSION=		5.22.1
+VERSION=		5.25.1
+REVISION =		2
 DISTNAME=		maxima-${VERSION}
 CATEGORIES=		math
 
 HOMEPAGE=		http://maxima.sourceforge.net/
+MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes 
@@ -19,6 +21,7 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=maxima/}
 USE_GMAKE=		yes
 
 LIB_DEPENDS=		lang/ecl
+RUN_DEPENDS =		misc/rlwrap
 WANTLIB +=		c gc gmp m pthread ecl
 
 SUBST_VARS=		VERSION
@@ -31,12 +34,14 @@ FLAVORS=		no_x11
 FLAVOR?=
 
 .if !${FLAVOR:L:Mno_x11}
-MODTK_VERSION=		8.4
 MODULES+=		x11/tk
-RUN_DEPENDS+=		${MODTK_RUN_DEPENDS}
-BUILD_DEPENDS=		${RUN_DEPENDS}
-CONFIGURE_ARGS+=	--with-wish=${MODTCL_BIN}
+RUN_DEPENDS +=		${MODTK_RUN_DEPENDS} \
+			math/gnuplot
+BUILD_DEPENDS +=	${MODTK_RUN_DEPENDS}
+CONFIGURE_ARGS +=	--with-wish=${MODTK_BIN}
 .endif
 
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/configure
 
 .include <bsd.port.mk>

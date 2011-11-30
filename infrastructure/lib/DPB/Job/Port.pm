@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.15 2011/11/12 13:19:26 espie Exp $
+# $OpenBSD: Port.pm,v 1.17 2011/11/22 16:48:01 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -65,6 +65,7 @@ sub run
 	print ">>> Running $t in $fullpkgpath\n";
 	my @args = ($t, "TRUST_PACKAGES=Yes",
 	    "FETCH_PACKAGES=No",
+	    "PREPARE_CHECK_ONLY=Yes",
 	    "REPORT_PROBLEM='exit 1'", "BULK=No");
 	if ($job->{special}) {
 		push(@args, "WRKOBJDIR=/tmp/ports");
@@ -114,7 +115,9 @@ sub finalize
 	$self->SUPER::finalize($core);
 	my $job = $core->job;
 	if ($core->{status} == 0) {
-		$job->add_normal_tasks;
+		my $v = $job->{v};
+		my $builder = $job->{builder};
+		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath});
 	} else {
 		$job->{signature_only} = 1;
 	}
@@ -184,6 +187,39 @@ sub run
 		$ENV{PKG_PATH} = $path;
 		exec{$sudo}($sudo, @cmd, sort keys %$dep);
 	}
+	exit(1);
+}
+
+sub finalize
+{
+	my ($self, $core) = @_;
+	$self->SUPER::finalize($core);
+	$core->{status} = 0;
+	return 1;
+}
+
+package DPB::Task::Port::Install;
+our @ISA=qw(DPB::Task::Port::NoTime);
+
+sub run
+{
+	my ($self, $core) = @_;
+	my $job = $core->job;
+	my $v = $job->{v};
+
+	my $sudo = OpenBSD::Paths->sudo;
+	$self->redirect($job->{log});
+	my @cmd = ('/usr/sbin/pkg_add');
+	if ($job->{builder}->{update}) {
+		push(@cmd, "-rqU", "-Dupdate", "-Dupdatedepends");
+	}
+	if ($job->{builder}->{forceupdate}) {
+		push(@cmd,  "-Dinstalled");
+	}
+	print join(' ', @cmd, $v->fullpkgname, "\n");
+	my $path = $job->{builder}->{fullrepo}.'/';
+	$ENV{PKG_PATH} = $path;
+	exec{$sudo}($sudo, @cmd, $v->fullpkgname);
 	exit(1);
 }
 
@@ -330,14 +366,14 @@ sub new
 		push(@{$job->{tasks}}, 
 		    DPB::Task::Port::Signature->new('signature'));
 	} else {
-		$job->add_normal_tasks;
+		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath});
 	}
 	return $job;
 }
 
 sub add_normal_tasks
 {
-	my $self = shift;
+	my ($self, $dontclean) = @_;
 
 	my @todo;
 	my $builder = $self->{builder};
@@ -358,7 +394,7 @@ sub add_normal_tasks
 	if ($builder->{size}) {
 		push @todo, 'show-fake-size';
 	}
-	if (!$builder->{dontclean}) {
+	if (!$dontclean) {
 		push @todo, 'clean';
 	}
 	$self->add_tasks(map {DPB::Port::TaskFactory->create($_)} @todo);
@@ -485,5 +521,23 @@ sub really_watch
 	}
 	return 0;
 }
+
+package DPB::Job::Port::Install;
+our @ISA = qw(DPB::Job::Port);
+
+sub new
+{
+	my ($class, $log, $v, $builder, $e) = @_;
+	my $job = bless {
+	    tasks => [],
+	    log => $log, v => $v,
+	    builder => $builder, endcode => $e},
+		$class;
+
+	push(@{$job->{tasks}}, 
+		    DPB::Task::Port::Install->new('install'));
+	return $job;
+}
+
 1;
 

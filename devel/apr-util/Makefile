@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2011/11/03 22:13:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.34 2011/11/18 10:11:33 espie Exp $
 
 COMMENT=	companion library to APR
 
@@ -26,7 +26,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${MASTER_SITE_APACHE:=apr/}
 
 WANTLIB=	expat lib/db4/db>=4
-LIB_DEPENDS=	databases/db/v4
+LIB_DEPENDS=	databases/db/v4,no_java,no_tcl
 
 MODULES=	converters/libiconv		
 USE_LIBTOOL=	Yes
@@ -39,7 +39,7 @@ CONFIGURE_ARGS=	--with-apr=${LOCALBASE} \
 		--includedir=${LOCALBASE}/include/apr-1${MT}/ \
 		--with-apr=${LOCALBASE}/bin/apr-1${MT}-config
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 CONFIGURE_ARGS+=	--with-ldap-include=${LOCALBASE}/include \
 			--with-ldap-lib=${LOCALBASE}/lib \
 			--with-ldap
@@ -48,7 +48,7 @@ WANTLIB+=		asn1 com_err crypto gssapi krb5 sasl2 ssl lber-2.4 ldap-2.4
 .endif
 
 MT?=
-.if ${FLAVOR:L:Mmt}
+.if ${FLAVOR:Mmt}
 MT=-mt
 CONFIGURE_ENV+=	APRUTIL_EXPORT_LIBS=-pthread
 LIB_DEPENDS+=	apr-mt-1.2.11:devel/apr,mt

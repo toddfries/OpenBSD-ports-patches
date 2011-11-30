@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1121 2011/11/02 17:16:30 avsm Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1148 2011/11/27 21:04:34 sthen Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -46,12 +46,6 @@ ERRORS += "Fatal: you're not allowed to override $t"
 # is internal to bsd.port.mk, not part of the user's API, and liable to
 # change without notice.
 #
-#
-# Variables to change if you want a special behavior:
-#
-# DEPENDS_TARGET - The target to execute when a port is calling a
-#				  dependency (default: "install").
-#
 
 # Default sequence for "all" is:  fetch checksum extract patch configure build
 #
@@ -88,8 +82,8 @@ BULK_DO ?=
 CHECK_LIB_DEPENDS ?= No
 FORCE_UPDATE ?= No
 DPB ?= All Fetch
+PREPARE_CHECK_ONLY ?= No
 _SHSCRIPT = sh ${PORTSDIR}/infrastructure/bin
-_PERLSCRIPT = perl ${PORTSDIR}/infrastructure/bin
 
 # All variables relevant to the port's description
 _ALL_VARIABLES = BUILD_DEPENDS IS_INTERACTIVE \
@@ -103,7 +97,7 @@ _ALL_VARIABLES_PER_ARCH =
 _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
-	CHECKSUM_FILE FETCH_MANUALLY
+	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
@@ -166,7 +160,6 @@ FETCH_CMD ?= /usr/bin/ftp -V ${_PROGRESS} -k ${FTP_KEEPALIVE}
 
 PKG_TMPDIR ?= /var/tmp
 
-PKGDB_LOCK ?=
 PKG_ADD ?= /usr/sbin/pkg_add
 PKG_INFO ?= /usr/sbin/pkg_info
 PKG_CREATE ?= /usr/sbin/pkg_create
@@ -175,14 +168,6 @@ PKG_DELETE ?= /usr/sbin/pkg_delete
 _PKG_ADD = ${PKG_ADD} ${_PROGRESS}
 _PKG_CREATE = ${PKG_CREATE} ${_PROGRESS}
 _PKG_DELETE = ${PKG_DELETE} ${_PROGRESS}
-_PKG_QUERY = ${PKG_INFO} ${PKGDB_LOCK} -e
-_PKG_ADD += ${PKG_DBLOCK}
-_PKG_CREATE += ${PKGDB_LOCK}
-_PKG_DELETE += ${PKGDB_LOCK}
-
-# remount those mount points ro before fake.
-# XXX tends to panic the OS
-PROTECT_MOUNT_POINTS ?=
 
 .if !defined(_MAKEFILE_INC_DONE)
 .  if exists(${.CURDIR}/../Makefile.inc)
@@ -242,9 +227,6 @@ _okay_words = depends work fake -f flavors dist install sub packages package \
 ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
 .  endif
 .endfor
-
-NOMANCOMPRESS ?= Yes
-DEF_UMASK ?= 022
 
 # MODULES support
 # reserved name spaces: for module=NAME, modname*, _modname* variables and
@@ -321,8 +303,11 @@ MAKE_FLAGS ?=
 FAKE_FLAGS ?=
 LIBTOOL_FLAGS ?=
 
-# where configuration files should go
-SYSCONFDIR ?= /etc
+# User choice, consider read-only from a given port
+BASESYSCONFDIR ?= /etc
+# where configuration files should actually go
+SYSCONFDIR ?= ${BASESYSCONFDIR}
+
 RCDIR ?= /etc/rc.d
 USE_GMAKE ?= No
 .if ${USE_GMAKE:L} == "yes"
@@ -476,8 +461,6 @@ USE_GROFF ?= No
 BUILD_DEPENDS += textproc/groff>=1.21
 _PKG_ARGS += -DUSE_GROFF=1
 .endif
-
-PKG_SUFX ?= .tgz
 
 PKGNAME ?= ${DISTNAME}
 FULLPKGNAME ?= ${PKGNAME}${FLAVOR_EXT}
@@ -707,9 +690,10 @@ REGRESS_FLAGS ?=
 ALL_REGRESS_FLAGS = ${MAKE_FLAGS} ${REGRESS_FLAGS}
 REGRESS_LOGFILE ?= ${WRKDIR}/regress.log
 REGRESS_LOG ?= | tee ${REGRESS_LOGFILE}
-REGRESS_STATUS_IGNORE ?=
+IS_INTERACTIVE ?= No
+REGRESS_IS_INTERACTIVE ?= No
 
-.if defined(REGRESS_IS_INTERACTIVE) && ${REGRESS_IS_INTERACTIVE:L} == "x11"
+.if ${REGRESS_IS_INTERACTIVE:L} == "x11"
 REGRESS_FLAGS += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
 XAUTHORITY ?= ${HOME}/.Xauthority
 .endif
@@ -743,7 +727,7 @@ _CACHE_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cache/
 PKGFILE = ${_PKG_REPO}${_PKGFILE${SUBPACKAGE}}
 
 .for _S in ${MULTI_PACKAGES}
-_PKGFILE${_S} = ${FULLPKGNAME${_S}}${PKG_SUFX}
+_PKGFILE${_S} = ${FULLPKGNAME${_S}}.tgz
 .  if ${PKG_ARCH${_S}} == "*" && ${NO_ARCH} != ${MACHINE_ARCH}/all
 _PACKAGE_COOKIE${_S} = ${PACKAGE_REPOSITORY}/${NO_ARCH}/${_PKGFILE${_S}}
 .  else
@@ -857,6 +841,13 @@ _TERM_ENV = PKG_TMPDIR=${PKG_TMPDIR}
 _TERM_ENV += ${_v}=${${_v}:Q}
 .  endif
 .endfor
+
+# See bsd.lib.mk:162
+.if ${MACHINE_ARCH:Mmips64*}
+_PKG_ARGS += -Dno_mips64=0
+.else
+_PKG_ARGS += -Dno_mips64=1
+.endif
 
 _PKG_ARGS += -DFLAVORS=${FLAVOR_EXT:Q}
 _tmpvars += FLAVORS=${FLAVOR_EXT:Q}
@@ -997,22 +988,19 @@ ECHO_MSG ?= echo
 
 # basic master sites configuration
 
+MASTER_SITE_OVERRIDE ?= No
+
 .if exists(${PORTSDIR}/infrastructure/db/network.conf)
 .include "${PORTSDIR}/infrastructure/db/network.conf"
 .else
 .include "${PORTSDIR}/infrastructure/templates/network.conf.template"
 .endif
 
-# XXX temporary, until people have correct network.conf
-MASTER_SITE_OPENBSD ?= \
-	ftp://ftp.openbsd.org/pub/OpenBSD/distfiles/ \
-	ftp://ftp.usa.openbsd.org/pub/OpenBSD/distfiles/
-
 # Empty declarations to avoid "variable XXX is recursive" errors
 MASTER_SITES ?=
 # I guess we're in the master distribution business! :)  As we gain mirror
 # sites for distfiles, add them to this list.
-.if !defined(MASTER_SITE_OVERRIDE)
+.if ${MASTER_SITE_OVERRIDE:L} == "no"
 MASTER_SITES := ${MASTER_SITES} ${MASTER_SITE_BACKUP}
 .else
 MASTER_SITES := ${MASTER_SITE_OVERRIDE} ${MASTER_SITES}
@@ -1024,7 +1012,7 @@ _SITE_SELECTOR = case $$select in
 
 .for _I in 0 1 2 3 4 5 6 7 8 9
 .  if defined(MASTER_SITES${_I})
-.    if !defined(MASTER_SITE_OVERRIDE)
+.    if ${MASTER_SITE_OVERRIDE:L} == "no"
 MASTER_SITES${_I} := ${MASTER_SITES${_I}} ${MASTER_SITE_BACKUP}
 .    else
 MASTER_SITES${_I} := ${MASTER_SITE_OVERRIDE} ${MASTER_SITES${_I}}
@@ -1211,16 +1199,13 @@ CONFIGURE_SHARED ?= --enable-shared
 .endif
 
 FETCH_MANUALLY ?= No
+MISSING_FILES = 
 .if ${FETCH_MANUALLY:L} != "no"
-_MISSING_FILES = 
 .  for _F in ${CHECKSUMFILES}
 .    if !exists(${DISTDIR}/${_F})
-_MISSING_FILES += ${_F}
+MISSING_FILES += ${_F}
 .    endif
 .  endfor
-.  if !empty(_MISSING_FILES)
-IS_INTERACTIVE = Yes
-.  endif
 .endif
 
 ################################################################
@@ -1241,17 +1226,21 @@ IS_INTERACTIVE = Yes
 ################################################################
 TRY_BROKEN ?= No
 _IGNORE_REGRESS ?=
-.if defined(REGRESS_IS_INTERACTIVE) && defined(BATCH)
+.if ${REGRESS_IS_INTERACTIVE:L} != "no" && defined(BATCH)
 _IGNORE_REGRESS += "has interactive tests"
-.elif !defined(REGRESS_IS_INTERACTIVE) && defined(INTERACTIVE)
+.elif ${REGRESS_IS_INTERACTIVE:L} == "no" && defined(INTERACTIVE)
 _IGNORE_REGRESS += "does not have interactive tests"
 .endif
 
-.if defined(IS_INTERACTIVE) && defined(BATCH)
+.if ${IS_INTERACTIVE:L} != "no" && defined(BATCH)
 IGNORE += "is an interactive port"
-.elif !defined(IS_INTERACTIVE) && defined(INTERACTIVE)
+.elif !(${IS_INTERACTIVE:L} != "no" || !empty(MISSING_FILES)) && defined(INTERACTIVE)
 IGNORE += "is not an interactive port"
 .endif
+.if !empty(MISSING_FILES) && defined(BATCH)
+_EXTRA_IGNORE += "is an interactive port: missing files"
+.endif
+
 .if !exists(${X11BASE})
 IGNORE += "building ports requires X11 but ${X11BASE} not found"
 .endif
@@ -1276,20 +1265,15 @@ IGNORE += "-- ${FULLPKGNAME${SUBPACKAGE}:C/-[0-9].*//g} comes with OpenBSD as of
 .endif
 
 IGNORE_IS_FATAL ?= "No"
-# XXX even if subpackage is invalid, define this
+# XXX even if subpackage is invalid, define this, so that errors come out
+# from ERRORS and not make internals.
 IGNORE${SUBPACKAGE} ?= 
-.if !empty(IGNORE${SUBPACKAGE}) && ${IGNORE_IS_FATAL:L} == "yes"
+.if (!empty(IGNORE${SUBPACKAGE}) || defined(_EXTRA_IGNORE)) && ${IGNORE_IS_FATAL:L} == "yes"
 ERRORS += "Fatal: can't build"
-ERRORS += ${IGNORE${SUBPACKAGE}}
+ERRORS += ${IGNORE${SUBPACKAGE}} ${_EXTRA_IGNORE}
 .endif
 
-.if !defined(DEPENDS_TARGET)
-.  if make(reinstall)
-DEPENDS_TARGET = reinstall
-.  else
-DEPENDS_TARGET = install
-.  endif
-.endif
+_DEPENDS_TARGET ?= install
 
 ################################################################
 # Dependency checking
@@ -1313,23 +1297,14 @@ wantlib_args ?= port-wantlib-args
 lib_depends_args ?= lib-depends-args
 
 
-# fairly good approximation of libraries we want
-# XXX this is ksh, be less perfect with pure sh
-_lib=/lib*.{so.+([0-9]).+([0-9]),a}
-
-_libresolve_fragment = \
-	check=`for _lib in $$libs; do echo $$_lib; done | \
-		${_resolve_lib} $$d` \
-			|| check=Failed
 
 PORT_LD_LIBRARY_PATH = ${LOCALBASE}/lib:${X11BASE}/lib:/usr
-_set_ld_library_path = :
 DEPBASE = ${LOCALBASE}
 DEPDIR =
 
 .if ${FORCE_UPDATE:L} == "yes" || ${FORCE_UPDATE:L} == "hard"
 _force_update_fragment = { \
-		${ECHO_MSG} "===>  Verifying update for $$what in $$dir"; \
+		${ECHO_MSG} "===>  Verifying update for $$pkg in $$dir"; \
 		if ( eval $$toset exec ${MAKE} subupdate ); then \
 			${ECHO_MSG} "===> Returning to build of ${FULLPKGNAME${SUBPACKAGE}}${_MASTER}"; \
 		else \
@@ -1553,12 +1528,16 @@ _version2stem = sed -e 's,-[0-9].*,,'
 _grab_libs_from_plist = sed -n -e '/^@lib /{ s///; p; }' \
 	-e '/^@file .*\/lib\/lib.*\.a$$/{ s/^@file //; p; }'
 
+# used in the following pattern
+# while $(_read_spec); do $(_parse_spec); done
+
+_read_spec = IFS=: read pkg subdir target
 _parse_spec = \
-	IFS=:; read pkg subdir target; \
-	extra_msg="(DEPENDS was $$pkg $$subdir $$target) in ${FULLPKGPATH}"; \
+	d="$$pkg$${subdir:+:}$$subdir$${target:+:}$$target"; \
+	extra_msg="(DEPENDS was $$d) in ${FULLPKGPATH}"; \
 	case "X$$pkg" in \
 	*/*) target="$$subdir"; subdir="$$pkg"; pkg=;; \
-	esac; unset IFS; ${_flavor_fragment}
+	esac; ${_flavor_fragment}
 
 _compute_default = \
 	set -f; \
@@ -1580,6 +1559,54 @@ _complete_pkgspec = \
 		pkg="$$stem$${pkg\#STEM}";; \
 	esac
 
+_emit_lib_depends = for i in ${LIB_DEPENDS${SUBPACKAGE}:QL}; do echo "$$i"; done
+_emit_run_depends = for i in ${RUN_DEPENDS${SUBPACKAGE}:QL}; do echo "$$i"; done
+
+# computing libraries from the ports tree is expensive, so cache as many of
+# these as we can
+
+# XXX assumes it's running under _cache_fragment, either directly, or from
+# a target up there
+
+_libs2cache = \
+	cached_libs=$${_DEPENDS_CACHE}/$$(echo $$subdir|sed -e 's/\//--/g'); \
+	if ! test -f $$cached_libs; then \
+		if ! eval $$toset ${MAKE} print-plist-libs >$$cached_libs; \
+		then \
+			echo 1>&2 "Problem with dependency $$subdir"; \
+			exit 1; \
+		fi; \
+	fi
+
+# is this subdir actually needed as a libs depend ?
+_if_check_needed = \
+	${_parse_spec}; \
+	${_libs2cache}; \
+	if ${_resolve_lib} -needed ${_DEPRUNLIBS:QL} <$$cached_libs
+
+# turn a list of found libraries into parameters for pkg_create,
+# zap .a in the meantime
+_show_found = \
+	for k in $$found; do \
+		case $$k in *.a) ;; \
+		*) echo "-W $$k";; \
+		esac; \
+	done
+
+# fairly good approximation of libraries we want
+# XXX this is ksh, be less perfect with pure sh
+_lib=/lib*.{so.+([0-9]).+([0-9]),a}
+
+_list_system_libs = \
+	for i in /usr/lib${_lib} ${X11BASE}/lib${_lib}; do echo $$i; done
+
+_list_port_libs = \
+	{ ${MAKE} show-run-depends|while read subdir; do \
+		${_flavor_fragment}; \
+		${_libs2cache}; \
+		cat $$cached_libs; \
+ 	done; ${_list_system_libs}; }
+
 .if empty(PLIST_DB)
 _register_plist =:
 .else
@@ -1589,15 +1616,6 @@ _register_plist = mkdir -p ${PLIST_DB:S/:/ /g} && ${_PERLSCRIPT}/register-plist 
 _check_lib_depends = ${_CHECK_LIB_DEPENDS} 
 .else
 _check_lib_depends =:
-.endif
-
-CLEAN_PLIST_OUTPUT?=No
-.if ${CLEAN_PLIST_OUTPUT:L} == "yes"
-_plist_header=echo "@+++ new plist"
-_plist_footer=echo "@--- end plist"
-.else
-_plist_header=:
-_plist_footer=:
 .endif
 
 _CHECK_LIB_DEPENDS = PORTSDIR=${PORTSDIR} ${_PERLSCRIPT}/check-lib-depends
@@ -1614,7 +1632,7 @@ check-register:
 .if empty(PLIST_DB)
 	@exit 1
 .else
-	@if cd ${.CURDIR} && ${MAKE} print-plist-with-depends | ${_PERLSCRIPT}/register-plist -p ${PLIST_DB}; then \
+	@if cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} print-plist-with-depends | ${_PERLSCRIPT}/register-plist -p ${PLIST_DB}; then \
 		echo "${FULLPKGNAME${SUBPACKAGE}} okay"; \
 	else \
 		echo "${FULLPKGNAME${SUBPACKAGE}} BAD"; \
@@ -1623,7 +1641,7 @@ check-register:
 
 check-register-all:
 .for _S in ${MULTI_PACKAGES}
-	@cd ${.CURDIR} && SUBPACKAGE=${_S} ${MAKE} check-register
+	@cd ${.CURDIR} && SUBPACKAGE=${_S} PKGPATH=${PKGPATH} ${MAKE} check-register
 .endfor
 
 .for _S in ${MULTI_PACKAGES}
@@ -1679,12 +1697,12 @@ ${_PACKAGE_COOKIE${_S}}:
 
 ${_INSTALL_COOKIE${_S}}:
 .  if ${FETCH_PACKAGES:L} == "yes"
-	@cd ${.CURDIR} && SUBPACKAGE=${_S} exec ${MAKE} subpackage
+	@cd ${.CURDIR} && SUBPACKAGE=${_S} PKGPATH=${PKGPATH} exec ${MAKE} subpackage
 .  else
 
 	@${_MAKE} package
 .  endif
-	@cd ${.CURDIR} && SUBPACKAGE=${_S} DEPENDS_TARGET=install \
+	@cd ${.CURDIR} && SUBPACKAGE=${_S} _DEPENDS_TARGET=install PKGPATH=${PKGPATH} \
 		exec ${MAKE} _internal-run-depends _internal-runlib-depends \
 		_internal-runwantlib-depends
 	@${ECHO_MSG} "===>  Installing ${FULLPKGNAME${_S}} from ${_PKG_REPO}"
@@ -1696,7 +1714,7 @@ ${_INSTALL_COOKIE${_S}}:
 .    endif
 .  endfor
 .  if ${TRUST_PACKAGES:L} == "yes"
-	@if ${_PKG_QUERY} ${FULLPKGNAME${_S}}; then \
+	@if ${PKG_INFO} -e ${FULLPKGNAME${_S}}; then \
 		echo "Package ${FULLPKGNAME${_S}} is already installed"; \
 	else \
 		${SUDO} ${SETENV} ${_TERM_ENV} PKG_PATH=${_PKG_REPO} ${_PKG_ADD} ${_PKG_ADD_AUTO} ${PKGFILE${_S}}; \
@@ -1710,15 +1728,15 @@ ${_INSTALL_COOKIE${_S}}:
 ${_UPDATE_COOKIE${_S}}:
 	@${_MAKE} _internal-package
 .  if empty(UPDATE_COOKIES_DIR)
-	@exec ${MAKE} ${WRKDIR}
+	@${_MAKE} ${WRKDIR}
 .  else
 	@mkdir -p ${UPDATE_COOKIES_DIR}
 .  endif
 	@${ECHO_MSG} "===> Updating for ${FULLPKGNAME${_S}}"
-	@a=`${_PKG_QUERY} ${FULLPKGPATH${_S}} 2>/dev/null || true`; \
+	@a=`${PKG_INFO} -e ${FULLPKGPATH${_S}} 2>/dev/null || true`; \
 	case $$a in \
 		'') ${ECHO_MSG} "Not installed, no update";; \
-		*) cd ${.CURDIR} && SUBPACKAGE=${_S} DEPENDS_TARGET=package \
+		*) cd ${.CURDIR} && SUBPACKAGE=${_S} _DEPENDS_TARGET=package PKGPATH=${PKGPATH} \
 		     ${MAKE} _internal-run-depends _internal-runlib-depends \
 			   _internal-runwantlib-depends; \
 		   ${ECHO_MSG} "Upgrading from $$a"; \
@@ -1728,11 +1746,11 @@ ${_UPDATE_COOKIE${_S}}:
 
 ${_FUPDATE_COOKIE${_S}}:
 	@${_MAKE} _internal-package
-	@cd ${.CURDIR} && SUBPACKAGE=${_S} DEPENDS_TARGET=package \
+	@cd ${.CURDIR} && SUBPACKAGE=${_S} _DEPENDS_TARGET=package PKGPATH=${PKGPATH} \
 		exec ${MAKE} _internal-run-depends _internal-runlib-depends \
 		_internal-runwantlib-depends
 .  if empty(UPDATE_COOKIES_DIR)
-	@exec ${MAKE} ${WRKDIR}
+	@${_MAKE} ${WRKDIR}
 .  else
 	@mkdir -p ${UPDATE_COOKIES_DIR}
 .  endif
@@ -1820,74 +1838,89 @@ _print-packagename:
 .for _i in ${_DEPLIST}
 .  if !target(${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g})
 ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g}: ${_WRKDIR_COOKIE}
-	@unset DEPENDS_TARGET _MASTER WRKDIR|| true; \
-	d='${_i}'; \
-	echo '${_i}'|{ \
+	@unset _DEPENDS_TARGET _MASTER WRKDIR|| true; \
+	echo '${_i}'| while ${_read_spec}; do \
 		${_parse_spec}; \
-		checkinstall=true; \
 		_ignore_cookie=${@:S/.dep/.ignored/}; \
 		toset="$$toset _IGNORE_COOKIE=$${_ignore_cookie}"; \
-		case "X$$target" in X) target=${DEPENDS_TARGET};; esac; \
+		case "X$$target" in X) target=${_DEPENDS_TARGET};; esac; \
 		case "X$$target" in \
-		Xinstall|Xreinstall) early_exit=false;; \
-		Xpackage|Xfake) early_exit=true;; \
-		Xpatch|Xconfigure|Xlicense-check|Xbuild) \
-			early_exit=true; mkdir -p ${WRKDIR}/$$dir; \
-			toset="$$toset _MASTER='[${FULLPKGNAME${SUBPACKAGE}}]${_MASTER}' WRKDIR=${WRKDIR}/$$dir"; \
-			checkinstall=false;; \
-		Xextract) \
-			${ECHO_MSG} "===> Error: bad dependency ${_i}"; \
-			${REPORT_PROBLEM}; \
-			exit 1;; \
+		Xinstall|Xreinstall) wantsub=false; check_installed=true; try_install=true;; \
+		Xpackage|Xfake) wantsub=false; check_installed=true; try_install=false;; \
+		Xpatch|Xconfigure|Xbuild) \
+			wantsub=true; check_installed=false; try_install=false; \
+			mkdir -p ${WRKDIR}/$$dir; \
+			toset="$$toset _MASTER='[${FULLPKGNAME${SUBPACKAGE}}]${_MASTER}' WRKDIR=${WRKDIR}/$$dir";; \
 		*) \
-			${ECHO_MSG} "===> Error: don't know how to depend on $$target"; \
+			${ECHO_MSG} "===> Error: can't depend on $$target"; \
 			${REPORT_PROBLEM}; \
 			exit 1;; \
 		esac; \
 		toset="$$toset _SOLVING_DEP=Yes"; \
 		${_complete_pkgspec}; \
-		what=$$pkg; \
-		if ! ${PKG_INFO} ${PKGDB_LOCK} -q -r "$$pkg" $$default; \
-		then \
-			: $${msg:= $$default does not match}; \
-			${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$what -$$msg"; \
-			${REPORT_PROBLEM}; \
-			exit 1; \
-		fi; \
-		for abort in false false true; do \
-			if $$abort; then \
+		h="===> ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$pkg -"; \
+		for second_pass in false true; do \
+			if $$check_installed; then \
+				case ${PREPARE_CHECK_ONLY:L} in \
+				yes) \
+						second_pass=true;; \
+				esac; \
+				$$try_install && ${_force_update_fragment}; \
+				if `${PKG_INFO} -e "$$pkg" -r "$$pkg" $$default >$@t`; then \
+					sed -ne '/^inst:/s///p' <$@t| \
+						{ read v || v=found; \
+							echo "$$v" >$@; \
+							${ECHO_MSG} "$$h> $$v"; } ;\
+					rm $@t; \
+					break; \
+				else \
+					r=$$?; \
+					rm $@t; \
+					case $$r in \
+					1|3) \
+							${ECHO_MSG} "$$h not found";; \
+					esac; \
+					case $$r in \
+					2|3) \
+							${ECHO_MSG} "$$h default $$default does not match"; \
+							${REPORT_PROBLEM}; \
+							exit 1;; \
+					esac; \
+				fi; \
+			else \
+				if ! ${PKG_INFO} -q -r "$$pkg" $$default; \
+				then \
+					${ECHO_MSG} "$$h default $$default does not match"; \
+					${REPORT_PROBLEM}; \
+					exit 1; \
+				fi; \
+			fi; \
+			if $$second_pass; then \
 				${ECHO_MSG} "Dependency check failed"; \
 				${REPORT_PROBLEM}; \
 				exit 1; \
 			fi; \
-			found=false; \
-			if $$checkinstall; then \
-				$$early_exit || ${_force_update_fragment}; \
-				if ${_PKG_QUERY} "$$pkg" -q; then \
-					${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$what - found"; \
-					break; \
-				else \
-					: $${msg:= not found}; \
-					${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$what -$$msg"; \
-				fi; \
-			fi; \
-			${ECHO_MSG} "===>  Verifying $$target for $$what in $$dir"; \
+			${ECHO_MSG} "===>  Verifying $$target for $$pkg in $$dir"; \
 			if (eval $$toset exec ${MAKE} $$target) && \
 				! test -e $${_ignore_cookie}; then \
+				if $$wantsub; then \
+					eval $$toset ${MAKE} show-prepare-results >$@; \
+				fi; \
 				${ECHO_MSG} "===> Returning to build of ${FULLPKGNAME${SUBPACKAGE}}${_MASTER}"; \
 			else \
 				${REPORT_PROBLEM}; \
 				exit 1; \
 			fi; \
-			if $$early_exit; then \
-				break; \
-			fi; \
+			$$try_install || break; \
 		done; \
-	}
+	done
 	@mkdir -p ${WRKDIR} ${WRKDIR}/bin
 	@${_MAKE_COOKIE} $@
 .  endif
 .endfor
+
+show-prepare-results: prepare
+	@sort -u ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES}
 
 _internal-build-depends: ${_DEPBUILD_COOKIES}
 _internal-run-depends: ${_DEPRUN_COOKIES}
@@ -1910,12 +1943,15 @@ ${_DEP${_m}WANTLIB_COOKIE}: ${_DEP${_m}LIBSPECS_COOKIES} \
 	${_DEP${_m}LIB_COOKIES} ${_DEPBUILD_COOKIES} ${_WRKDIR_COOKIE}
 .    if !empty(_DEP${_m}LIBS)
 	@${ECHO_MSG} "===>  Verifying specs: ${_DEP${_m}LIBS}"
-	@if found=`{ \
-		for i in ${_LIB4:QL}; do echo "$$i"| { \
-			${_parse_spec}; \
-			eval $$toset ${MAKE} print-plist-libs; \
-			}; \
-		done; echo ${LOCALBASE}/lib${_lib} /usr/lib${_lib} ${X11BASE}/lib${_lib}; \
+	@${_cache_fragment}; if found=`{ \
+		for i in ${_LIB4:QL}; do echo "$$i"; done | \
+			while ${_read_spec}; do \
+				${_parse_spec}; \
+				${_libs2cache}; \
+				cat $$cached_libs; \
+			done; \
+		for i in ${LOCALBASE}/lib${_lib}; do echo $$i; done;  \
+		${_list_system_libs}; \
 		for d in ${_DEP${_m}LIBS:QL}; do \
 			case "$$d" in \
 			/*) echo $${d%/*}${_lib};; \
@@ -1946,7 +1982,7 @@ _internal-fetch-all:
 .    endif
 # End of FETCH
 
-.if !empty(IGNORE${SUBPACKAGE}) && !defined(NO_IGNORE)
+.if (!empty(IGNORE${SUBPACKAGE}) || defined(_EXTRA_IGNORE)) && !defined(NO_IGNORE)
 _internal-all _internal-build _internal-checksum _internal-configure \
 	_internal-deinstall _internal-extract _internal-fake _internal-fetch \
 	_internal-install _internal-install-all _internal-manpages-check \
@@ -1956,27 +1992,27 @@ _internal-all _internal-build _internal-checksum _internal-configure \
 	_internal-update-or-install-all _internal-update-plist \
 	lib-depends-check port-lib-depends-check update-patches:
 .  if !defined(IGNORE_SILENT)
-	@${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} ${IGNORE${SUBPACKAGE}}."
+	@${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} ${IGNORE${SUBPACKAGE}} ${_EXTRA_IGNORE}."
 .  endif
 .  if defined(_IGNORE_COOKIE)
-	@echo "${IGNORE${SUBPACKAGE}}" >${_IGNORE_COOKIE}
+	@echo "${IGNORE${SUBPACKAGE}} ${_EXTRA_IGNORE}" >${_IGNORE_COOKIE}
 .  endif
 .else
 
 lib-depends-check:
-	@${_MAKE} package
-	@${_CHECK_LIB_DEPENDS} ${_PACKAGE_COOKIE}
+	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} package; \
+	${_CHECK_LIB_DEPENDS} ${_PACKAGE_COOKIE}
 
 ${WRKINST}/.saved_libs: ${_FAKE_COOKIE}
-	@${SUDO} ${_CHECK_LIB_DEPENDS} -O $@
+	@${SUDO} ${_CHECK_LIB_DEPENDS} -O $@t && ${SUDO} mv $@t $@
 
 port-lib-depends-check: ${WRKINST}/.saved_libs
-.  for _S in ${MULTI_PACKAGES}
-	@-SUBPACKAGE=${_S} ${MAKE} print-plist-with-depends \
+	@-${_cache_fragment}; for s in ${MULTI_PACKAGES}; do \
+		SUBPACKAGE=$$s ${MAKE} print-plist-with-depends \
 		lib_depends_args=all-lib-depends-args \
 		wantlib_args=fake-wantlib-args| \
-	 ${_CHECK_LIB_DEPENDS} -s ${WRKINST}/.saved_libs
-.  endfor
+			${_CHECK_LIB_DEPENDS} -i -s ${WRKINST}/.saved_libs; \
+	done
 
 _internal-manpages-check: ${_FAKE_COOKIE}
 	@cd ${WRKINST}${TRUEPREFIX}/man && \
@@ -2036,7 +2072,7 @@ _internal-checksum: _internal-fetch
 		set --; \
 		if ! $$OK; then \
 		  if ${REFETCH}; then \
-		  	cd ${.CURDIR} && ${MAKE} _refetch _PROBLEMS="$$list"; \
+		  	cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} _refetch _PROBLEMS="$$list"; \
 		  else \
 			echo "Make sure the Makefile and checksum file (${CHECKSUM_FILE})"; \
 			echo "are up to date.  If you want to fetch a good copy of this"; \
@@ -2101,7 +2137,7 @@ _do_libs_too = NO_SHARED_LIBS=Yes
 _extra_info =
 .  for _s in ${MULTI_PACKAGES}
 _extra_info += PLIST${_s}='${PLIST${_s}}'
-_extra_info += DEPPATHS${_s}="`${SETENV} FLAVOR=${FLAVOR:Q} SUBPACKAGE=${_s} ${MAKE} run-dir-depends ${_do_libs_too}|${_sort_dependencies}`"
+_extra_info += DEPPATHS${_s}="`${SETENV} FLAVOR=${FLAVOR:Q} SUBPACKAGE=${_s} PKGPATH=${PKGPATH} ${MAKE} show-run-depends ${_do_libs_too}`"
 .  endfor
 
 _internal-plist _internal-update-plist: _internal-fake
@@ -2144,7 +2180,7 @@ update-patches:
 	update update-or-install update-or-install-all package install-all
 .  if defined(_LOCK)
 ${_t}:
-	@${_DO_LOCK}; cd ${.CURDIR} && ${MAKE} _internal-${_t}
+	@${_DO_LOCK}; cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} _internal-${_t}
 .  else
 ${_t}: _internal-${_t}
 .  endif
@@ -2161,17 +2197,17 @@ unlock:
 .endfor
 
 subpackage:
-	@${_DO_LOCK}; cd ${.CURDIR} && ${MAKE} _internal-subpackage
+	@${_DO_LOCK}; ${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-subpackage
 
 _internal-package: 
-	@${_MAKE} _internal-package-only
+	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-package-only
 .if ${BULK_${PKGPATH}:L} == "yes"
 	@${_MAKE} ${_BULK_COOKIE}
 .endif
 
 
 ${_BULK_COOKIE}:
-	@${_MAKE} _internal-package-only
+	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-package-only
 	@mkdir -p ${BULK_COOKIES_DIR}
 .for _i in ${BULK_TARGETS_${PKGPATH}}
 	@${ECHO_MSG} "===> Running ${_i}"
@@ -2223,7 +2259,6 @@ ${_EXTRACT_COOKIE}: ${_WRKDIR_COOKIE} ${_SYSTRACE_COOKIE}
 do-extract:
 # What EXTRACT normally does:
 	@PATH=${PORTPATH}; set -e; cd ${WRKDIR}; \
-	${_set_ld_library_path}; \
 	for archive in ${EXTRACT_ONLY}; do \
 		case $$archive in \
 		${EXTRACT_CASES} \
@@ -2423,7 +2458,7 @@ ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 .if ${NO_REGRESS:L} == "no"
 	@${ECHO_MSG} "===>  Regression check for ${FULLPKGNAME}${_MASTER}"
 # When interactive tests need X11
-.  if defined(REGRESS_IS_INTERACTIVE) && ${REGRESS_IS_INTERACTIVE:L} == "x11"
+.  if ${REGRESS_IS_INTERACTIVE:L} == "x11"
 .    if !defined(DISPLAY) || !exists(${XAUTHORITY})
 	@echo 1>&2 "The regression tests require a running instance of X."
 	@echo 1>&2 "You will also need to set the environment variable DISPLAY"
@@ -2436,12 +2471,12 @@ ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 	@${_MAKE} pre-regress
 .  endif
 .  if target(do-regress)
-	@${REGRESS_STATUS_IGNORE}cd ${.CURDIR} && exec 3>&1 && exit `exec 4>&1 1>&3; \
-		(exec; set +e; ${MAKE} do-regress; \
+	@cd ${.CURDIR} && exec 3>&1 && exit `exec 4>&1 1>&3; \
+		(exec; set +e; PKGPATH=${PKGPATH} ${MAKE} do-regress; \
 		echo $$? >&4) 2>&1 ${REGRESS_LOG}`
 .  else
 # What REGRESS normally does:
-	@${REGRESS_STATUS_IGNORE}cd ${WRKBUILD} && exec 3>&1 && exit `exec 4>&1 1>&3; \
+	@cd ${WRKBUILD} && exec 3>&1 && exit `exec 4>&1 1>&3; \
 		(exec; set +e; ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_REGRESS_FLAGS} -f ${MAKE_FILE} ${REGRESS_TARGET}; \
 		echo $$? >&4) 2>&1 ${REGRESS_LOG}`
@@ -2457,16 +2492,13 @@ ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 
 ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	@${ECHO_MSG} "===>  Faking installation for ${FULLPKGNAME}${_MASTER}"
-	@if [ x`${SUDO} /bin/sh -c umask` != x${DEF_UMASK} ]; then \
-		echo >&2 "Error: your umask is \"`/bin/sh -c umask`"\".; \
+	@if [ x`${SUDO} /bin/sh -c umask` != x022 ]; then \
+		echo >&2 "Error: your umask is \"`${SUDO} /bin/sh -c umask`"\".; \
 		exit 1; \
 	fi
 	@${SUDO} install -d -m 755 -o root -g wheel ${WRKINST}
 	@cat ${MTREE_FILE}| \
 		${SUDO} /usr/sbin/mtree -U -e -d -n -p ${WRKINST} >/dev/null
-.for _p in ${PROTECT_MOUNT_POINTS}
-	@${SUDO} mount -u -r ${_p}
-.endfor
 .for _m in ${MODULES:T:U}
 .  if defined(MOD${_m}_pre-fake)
 	@${MOD${_m}_pre-fake}
@@ -2492,9 +2524,6 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 .if target(post-install)
 	@${_SUDOMAKESYS} post-install ${_FAKE_SETUP}
 .endif
-.for _p in ${PROTECT_MOUNT_POINTS}
-	@${SUDO} mount -u -w ${_p}
-.endfor
 .if ${MULTI_PACKAGES} == "-"
 	@if test -e ${PKGDIR}/README; then \
 		r=${WRKINST}${_README_DIR}/${FULLPKGNAME}; \
@@ -2522,42 +2551,46 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	@${SUDO} ${_MAKE_COOKIE} $@
 
 print-plist:
-	@${_plist_header}; ${_PKG_CREATE} -n -q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}; ${_plist_footer}
+	@${_PKG_CREATE} -n -q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}
 
 print-plist-with-depends:
-	@${_plist_header}; \
-	if a=`SUBPACKAGE=${SUBPACKAGE} ${MAKE} print-package-args`; \
+	@if a=`SUBPACKAGE=${SUBPACKAGE} PKGPATH=${PKGPATH} ${MAKE} print-package-args`; \
 	then \
 		${_PKG_CREATE} -n -q $$a ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}; \
 	else \
 		exit 1; \
-	fi ; \
-	${_plist_footer}
+	fi
+
+print-plist-libs-with-depends:
+	@if a=`SUBPACKAGE=${SUBPACKAGE} PKGPATH=${PKGPATH} ${MAKE} print-package-args`; \
+	then \
+		${_PKG_CREATE} -DLIBS_ONLY -n -q $$a ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}; \
+	else \
+		exit 1; \
+	fi
 
 print-plist-all:
 .for _S in ${MULTI_PACKAGES}
 	@${ECHO_MSG} "===> ${FULLPKGNAME${_S}}"
-	@${_plist_header}; ${_PKG_CREATE} -n -q ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}};${_plist_footer}
+	@${_PKG_CREATE} -n -q ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}}
 .endfor
 
 print-plist-all-with-depends:
 .for _S in ${MULTI_PACKAGES}
 	@${ECHO_MSG} "===> ${FULLPKGNAME${_S}}"
-	@${_plist_header}; \
-	if a=`SUBPACKAGE=${_S} ${MAKE} print-package-args`; \
+	@if a=`SUBPACKAGE=${_S} PKGPATH=${PKGPATH} ${MAKE} print-package-args`; \
 	then \
 		${_PKG_CREATE} -n -q $$a ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}}; \
 	else \
 		exit 1; \
-	fi; \
-	${_plist_footer}
+	fi
 .endfor
 
 print-plist-contents:
-	@${_plist_header}; ${_PKG_CREATE} -n -Q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}};${_plist_footer}
+	@${_PKG_CREATE} -n -Q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}
 
 print-plist-libs:
-	@${_plist_header}; ${_PKG_CREATE} -DLIBS_ONLY -n -Q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}|${_grab_libs_from_plist}; ${_plist_footer}
+	@${_PKG_CREATE} -DLIBS_ONLY -n -Q ${PKG_ARGS${SUBPACKAGE}} ${_PACKAGE_COOKIE${SUBPACKAGE}}|${_grab_libs_from_plist}
 
 _internal-package-only: ${_PACKAGE_COOKIES}
 
@@ -2568,8 +2601,8 @@ _internal-subpackage: ${_PACKAGE_COOKIES${SUBPACKAGE}
 .for _F in ${MAKESUMFILES:S@^@${DISTDIR}/@}
 ${_F}:
 .  if ${FETCH_MANUALLY:L} != "no"
-.    if !empty(_MISSING_FILES)
-	@echo "*** You're missing files: ${_MISSING_FILES}"
+.    if !empty(MISSING_FILES)
+	@echo "*** You're missing files: ${MISSING_FILES}"
 .    endif
 .    for _M in ${FETCH_MANUALLY}
 	@echo "*** ${_M}"
@@ -2620,7 +2653,7 @@ ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
 
 _internal-clean:
 .if ${_clean:L:Mdepends} && ${_CLEANDEPENDS:L} == "yes"
-	@${MAKE} all-dir-depends|tsort -r|${_zap_last_line}|while read subdir; do \
+	@PKGPATH=${PKGPATH} ${MAKE} all-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
 		eval $$toset ${MAKE} _CLEANDEPENDS=No clean; \
 	done
@@ -2683,14 +2716,15 @@ _internal-clean:
 fetch-makefile:
 	@mk=`mktemp ${TMPDIR}/mk.XXXXXXX`; \
 	trap "rm -f $$mk" 0 1 2 3 13 15; \
-	if ${MAKE} _fetch-makefile >$$mk; then \
+	if PKGPATH=${PKGPATH} ${MAKE} _fetch-makefile >$$mk; then \
 		cat $$mk >>${_FETCH_MAKEFILE}; \
 	else \
 		echo >&2 "Problem in ${PKGPATH}"; \
 	fi
 
 mirror-maker-fetch:
-	@mk=`mktemp ${TMPDIR}/mk.XXXXXXXX`; ${MAKE} fetch-makefile >$$mk; \
+	@mk=`mktemp ${TMPDIR}/mk.XXXXXXXX`; \
+	PKGPATH=${PKGPATH} ${MAKE} fetch-makefile >$$mk; \
 	echo "Check and remove $$mk"; \
 	cd ${DISTDIR} && \
 		${MAKE} -f $$mk all FETCH=${_SHSCRIPT}/fetch-all
@@ -2708,7 +2742,7 @@ _fetch-makefile:
 # write generic package dependencies
 	@echo ".PHONY: ${_FETCH_MAKEFILE_NAMES}"
 .  if ${RECURSIVE_FETCH_LIST:L} == "yes"
-	@echo "${_FETCH_MAKEFILE_NAMES}: ${MAKESUMFILES} "`_FULL_PACKAGE_NAME=Yes ${MAKE} full-all-depends|fgrep -v ${PKGPATH}/`
+	@echo "${_FETCH_MAKEFILE_NAMES}: ${MAKESUMFILES} "`_FULL_PACKAGE_NAME=Yes PKGPATH=${PKGPATH} ${MAKE} full-all-depends|fgrep -v ${PKGPATH}/`
 .  else
 	@echo "${_FETCH_MAKEFILE_NAMES}: ${MAKESUMFILES}"
 .  endif
@@ -2717,7 +2751,7 @@ _fetch-makefile:
 .  for _F in ${MAKESUMFILES}
 	@: $${_DONE_FILES:=/dev/null}; if ! fgrep -q "|${_F}|" $${_DONE_FILES}; then \
 		echo "|${_F}|" >>$${_DONE_FILES}; \
-		${MAKE} _fetch-onefile _file=${_F}; \
+		PKGPATH=${PKGPATH} ${MAKE} _fetch-onefile _file=${_F}; \
 	fi
 .  endfor
 .endif
@@ -2825,14 +2859,14 @@ describe:
 
 readme:
 	@tmpdir=`mktemp -d ${TMPDIR}/readme.XXXXXX`; \
-	trap 'rm -r $$tmpdir' 0 1 2 3 13 15; \
-	cd ${.CURDIR} && ${MAKE} TMPDIR=$$tmpdir README_NAME=${README_NAME} \
+	trap "rm -r $$tmpdir" 0 1 2 3 13 15; \
+	cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} TMPDIR=$$tmpdir README_NAME=${README_NAME} \
 		${READMES_TOP}/${PKGPATH}/${FULLPKGNAME${SUBPACKAGE}}.html
 
 readmes:
 	@tmpdir=`mktemp -d ${TMPDIR}/readme.XXXXXX`; \
-	trap 'rm -r $$tmpdir' 0 1 2 3 13 15; \
-	cd ${.CURDIR} && ${MAKE} TMPDIR=$$tmpdir README_NAME=${README_NAME} \
+	trap "rm -r $$tmpdir" 0 1 2 3 13 15; \
+	cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} TMPDIR=$$tmpdir README_NAME=${README_NAME} \
 		${_READMES}
 
 .for _S in ${MULTI_PACKAGES}
@@ -2857,7 +2891,7 @@ ${READMES_TOP}/${PKGPATH}/${FULLPKGNAME${_S}}.html:
 .  endif
 .  for _I in build run
 .    if !empty(_${_I:U}_DEP)
-	@cd ${.CURDIR} && SUBPACKAGE=${_S} ${MAKE} full-${_I}-depends _FULL_PACKAGE_NAME=Yes| \
+	@cd ${.CURDIR} && SUBPACKAGE=${_S} PKGPATH=${PKGPATH} ${MAKE} full-${_I}-depends _FULL_PACKAGE_NAME=Yes| \
 		while read n; do \
 			j=`dirname $$n|${HTMLIFY}`; k=`basename $$n|${HTMLIFY}`; \
 			echo "<li><a href=\"${PKGDEPTH}$$j/$$k.html\">$$k</a>"; \
@@ -2881,21 +2915,21 @@ ${READMES_TOP}/${PKGPATH}/${FULLPKGNAME${_S}}.html:
 print-build-depends:
 .if !empty(_BUILD_DEP)
 	@echo -n 'This port requires package(s) "'
-	@${MAKE} full-build-depends| ${_lines2list}
+	@PKGPATH=${PKGPATH} ${MAKE} full-build-depends| ${_lines2list}
 	@echo '" to build.'
 .endif
 
 print-run-depends:
 .if !empty(_RUN_DEP)
 	@echo -n 'This port requires package(s) "'
-	@${MAKE} full-run-depends| ${_lines2list}
+	@PKGPATH=${PKGPATH} ${MAKE} full-run-depends| ${_lines2list}
 	@echo '" to run.'
 .endif
 
 # full-build-depends, full-all-depends, full-run-depends full-regress-depends
 .for _i in build all run regress
 full-${_i}-depends:
-	@${MAKE} ${_i}-dir-depends|${_sort_dependencies}|while read subdir; do \
+	@PKGPATH=${PKGPATH} ${MAKE} ${_i}-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
 		eval $$toset ${MAKE} _print-packagename ; \
 	done
@@ -2905,7 +2939,7 @@ license-check:
 .for _S in ${MULTI_PACKAGES}
 .  if ${PERMIT_PACKAGE_CDROM${_S}:L} == "yes" || \
 	${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
-	@SUBPACKAGE=${_S} ${MAKE} all-dir-depends|${_sort_dependencies}|while read subdir; do \
+	@SUBPACKAGE=${_S} PKGPATH=${PKGPATH} ${MAKE} all-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
 		_MASTER_PERMIT_CDROM=${PERMIT_PACKAGE_CDROM${_S}:Q}; \
 		_MASTER_PERMIT_FTP=${PERMIT_PACKAGE_FTP${_S}:Q}; \
@@ -2938,11 +2972,11 @@ ${_i:L}-depends-list:
 print-package-signature:
 	@echo -n ${FULLPKGNAME${SUBPACKAGE}}
 .if !empty(_DEPRUNLIBS)
-	@cd ${.CURDIR} && LIST_LIBS=`${MAKE} _list-port-libs` ${MAKE} _print-package-signature-lib _print-package-signature-run| \
+	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _print-package-signature-lib _print-package-signature-run| \
 		sort -u| \
 		while read i; do echo -n ",$$i"; done
 .else
-	@cd ${.CURDIR} && ${MAKE} _print-package-signature-run | \
+	@cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} _print-package-signature-run | \
 		sort -u| \
 		while read i; do echo -n ",$$i"; done
 .endif
@@ -2956,24 +2990,20 @@ print-package-args: ${lib_depends_args} ${wantlib_args}
 .endif
 
 run-depends-args:
-.for _i in ${RUN_DEPENDS${SUBPACKAGE}}
-	@d='${_i}'; echo '${_i}' |{ \
+	@${_emit_run_depends} | while ${_read_spec}; do \
 		${_parse_spec}; \
 		${_complete_pkgspec}; \
 		echo "-P $$pkgpath:$$pkg:$$default"; \
-	}
-.endfor
+	done
 
 # waive checks for WANTLIB when we're running lib-depends-check
 # since we're trying to figure out what's actually needed
 all-lib-depends-args:
-.for _i in ${LIB_DEPENDS${SUBPACKAGE}}
-	@d='${_i}'; echo '${_i}' |{ \
+	@${_emit_lib_depends} |while ${_read_spec}; do \
 		${_parse_spec}; \
 		${_complete_pkgspec}; \
 		echo "-P $$pkgpath:$$pkg:$$default"; \
-	}
-.endfor
+	done
 
 # those are expensive computations, so don't do them if we don't have to
 .if empty(_DEPRUNLIBS)
@@ -2981,38 +3011,23 @@ lib-depends-args wantlib-args port-wantlib-args fake-wantlib-args:
 .else
 
 lib-depends-args:
-.  for _i in ${LIB_DEPENDS${SUBPACKAGE}}
-	@d='${_i}'; echo '${_i}'|{ \
-		${_parse_spec}; \
-		${_complete_pkgspec}; \
-		libs=`eval $$toset ${MAKE} print-plist-libs`; \
-		needed=false; \
-		exec 3>&2; \
-		for d in ${_DEPRUNLIBS:QL}; do \
-			if $$needed; then continue; fi; \
-			exec 2>/dev/null; \
-			${_libresolve_fragment}; \
-			case "$$check" in \
-			*.a|Failed) \
-				continue;; \
-			*) \
-				needed=true;; \
-			esac; \
-		done; \
-		exec 2>&3; \
-		if $$needed; then echo "-P $$pkgpath:$$pkg:$$default"; fi; \
-	}
-.  endfor
+	@${_cache_fragment}; ${_emit_lib_depends}| while ${_read_spec}; do \
+		${_if_check_needed}; then \
+			${_complete_pkgspec}; \
+			echo "-P $$pkgpath:$$pkg:$$default"; \
+		fi; \
+	done
 
 wantlib-args:
-	@a=`mktemp /tmp/portstree.XXXXXX`; b=`mktemp /tmp/inst.XXXXXX`; \
+	@${_cache_fragment}; \
+	a=$${_DEPENDS_CACHE}/portstree${SUBPACKAGE}; \
+	b=$${_DEPENDS_CACHE}/inst${SUBPACKAGE}; \
 	cd ${.CURDIR} && \
 	${MAKE} port-wantlib-args >$$a && \
 	${MAKE} fake-wantlib-args >$$b; \
 	if cmp -s $$a $$b; \
 	then \
 		cat $$a; \
-		rm -f $$a $$b; \
 	else \
 		echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
 		echo 1>&2 "       and libraries from installed packages don't match"; \
@@ -3021,25 +3036,13 @@ wantlib-args:
 	fi
 
 port-wantlib-args:
-	@if found=`{ \
-		${MAKE} run-dir-depends|${_sort_dependencies}|while read subdir; do \
-			${_flavor_fragment}; \
-			if ! eval $$toset ${MAKE} print-plist-libs; \
-			then \
-				echo 1>&2 "Problem with dependency $$subdir"; \
-				exit 1; \
-			fi; done; \
-		echo /usr/lib${_lib} ${X11BASE}/lib${_lib}; } | \
-		${_resolve_lib} ${_DEPRUNLIBS:QL}`; \
-		then \
-			for k in $$found; do \
-				case $$k in *.a) ;; \
-				*) echo "-W $$k";; \
-				esac; \
-			done; \
-		else \
-			exit 1; \
-		fi
+	@${_cache_fragment}; \
+	if found=`${_list_port_libs} | ${_resolve_lib} ${_DEPRUNLIBS:QL}`; \
+	then \
+		${_show_found}; \
+	else \
+		exit 1; \
+	fi
 
 fake-wantlib-args:
 	@if found=`{ \
@@ -3051,11 +3054,7 @@ fake-wantlib-args:
 			esac; \
 		done } | perl -pe 's,\Q${WRKINST}\E,,g' | \
 			${_resolve_lib} ${_DEPRUNLIBS:QL}`; then \
-			for k in $$found; do \
-				case $$k in *.a) ;; \
-				*) echo "-W $$k";; \
-				esac; \
-			done; \
+				${_show_found}; \
 		else \
 			exit 1; \
 		fi
@@ -3063,63 +3062,21 @@ fake-wantlib-args:
 
 no-wantlib-args:
 
-_list-port-libs:
-.if defined(_PORT_LIBS_CACHE) && defined(_DEPENDS_CACHE) && \
-	defined(_DEPENDS_FILE)
-	@if ! fgrep -q -e "r|${FULLPKGPATH}|" -e "a|${FULLPKGPATH}" $${_DEPENDS_FILE}; then \
-		${MAKE} run-dir-depends >>${_DEPENDS_CACHE}; \
-	fi
-	@${_PERLSCRIPT}/extract-dependencies ${FULLPKGPATH} <${_DEPENDS_CACHE}|while read subdir; do \
-		fulldir=${_PORT_LIBS_CACHE}/$$subdir; \
-		if test -f $$fulldir; then \
-			cat $$fulldir; \
-		else \
-			mkdir -p $${fulldir%/*}; \
-			${_flavor_fragment}; \
-			eval $$toset ${MAKE} print-plist-libs | tee $$fulldir; \
-		fi; \
-	done
-.else
-	@${MAKE} run-dir-depends|${_sort_dependencies}|while read subdir; do \
-		${_flavor_fragment}; \
-		eval $$toset ${MAKE} print-plist-libs ; \
-	done
-.endif
-	@echo /usr/lib/lib* ${X11BASE}/lib/lib*
-
 _print-package-signature-run:
-.for _i in ${RUN_DEPENDS${SUBPACKAGE}}
-	@echo '${_i}' |{ \
+	@${_emit_run_depends} |while ${_read_spec}; do \
 		${_parse_spec}; \
 		${_compute_default}; \
 		echo "$$default"; \
-	}
-.endfor
+	done
 
 _print-package-signature-lib:
-	@echo $$LIST_LIBS| ${_resolve_lib} ${_DEPRUNLIBS:QL}
-.for _i in ${LIB_DEPENDS${SUBPACKAGE}}
-	@d='${_i}'; echo '${_i}'|{ \
-		${_parse_spec}; \
-		${_complete_pkgspec}; \
-		libs=`eval $$toset ${MAKE} print-plist-libs`; \
-		needed=false; \
-		exec 3>&2; \
-		for d in ${_DEPRUNLIBS:QL}; do \
-			if $$needed; then continue; fi; \
-			exec 2>/dev/null; \
-			${_libresolve_fragment}; \
-			case "$$check" in \
-			*.a|Failed) \
-				continue;; \
-			*) \
-				needed=true;; \
-			esac; \
-		done; \
-		exec 2>&3; \
-		if $$needed; then echo "$$default"; fi; \
-	}
-.endfor
+	@${_list_port_libs}| ${_resolve_lib} ${_DEPRUNLIBS:QL}; \
+	${_emit_lib_depends}| while ${_read_spec}; do \
+		${_if_check_needed}; then \
+			${_complete_pkgspec}; \
+			echo "$$default"; \
+		fi; \
+	done
 
 # recursively build a list of dirs for package running, ready for tsort
 _recurse-run-dir-depends:
@@ -3141,7 +3098,7 @@ run-dir-depends:
 	@${_depfile_fragment}; \
 	if ! fgrep -q -e "r|${FULLPKGPATH}|" -e "a|${FULLPKGPATH}" $${_DEPENDS_FILE}; then \
 		echo "r|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} ${MAKE} _recurse-run-dir-depends; \
+		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-run-dir-depends; \
 	fi
 .else
 	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
@@ -3167,7 +3124,7 @@ regress-dir-depends:
 	@${_depfile_fragment}; \
 	if ! fgrep -q -e "R|${FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
 		echo "R|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} ${MAKE} _recurse-regress-dir-depends; \
+		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-regress-dir-depends; \
 	fi
 .else
 	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
@@ -3209,7 +3166,7 @@ build-dir-depends:
 	@${_depfile_fragment}; \
 	if ! fgrep -q -e "b|${FULLPKGPATH}|" -e "a|${_dir}|" $${_DEPENDS_FILE}; then \
 		echo "b|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} ${MAKE} _build-dir-depends; \
+		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _build-dir-depends; \
 	fi
 .else
 	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
@@ -3220,10 +3177,39 @@ all-dir-depends:
 	@${_depfile_fragment}; \
 	if ! fgrep -q "|${FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
 		echo "|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} ${MAKE} _recurse-all-dir-depends; \
+		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-all-dir-depends; \
 	fi
 .else
 	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+.endif
+
+# simpler list of package depends, no need to tsort, no duplicates
+_recurse-show-run-depends:
+	@for d in ${_RUN_DEP}; do \
+		fgrep -q -e "|$$d|" $${_DEPENDS_FILE} && continue; \
+		echo "$$d"; \
+		echo "|$$d|" >> $${_DEPENDS_FILE}; \
+		subdir=$$d; ${_flavor_fragment}; \
+		if ! eval $$toset ${MAKE} _recurse-show-run-depends; then  \
+			echo 1>&2 "*** Problem checking deps in \"$$dir\"."; \
+			exit 1; \
+		fi; \
+	done
+
+show-run-depends:
+.if !empty(_RUN_DEP)
+	@${_depfile_fragment}; \
+	echo "|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+	for d in ${_RUN_DEP}; do \
+		fgrep -q -e "|$$d|" $${_DEPENDS_FILE} && continue; \
+		echo "$$d"; \
+		echo "|$$d|" >> $${_DEPENDS_FILE}; \
+		subdir=$$d; ${_flavor_fragment}; \
+		if ! eval $$toset ${MAKE} _recurse-show-run-depends; then  \
+			echo 1>&2 "*** Problem checking deps in \"$$dir\"."; \
+			exit 1; \
+		fi; \
+	done
 .endif
 
 link-categories:
@@ -3268,12 +3254,9 @@ clean-depends:
 distclean:
 	@${_MAKE} clean=dist
 
-delete-package:
-	@${_MAKE} clean=package
-
 reinstall:
 	@${_MAKE} clean='install force'
-	@cd ${.CURDIR} && DEPENDS_TARGET=${DEPENDS_TARGET} exec ${MAKE} install
+	@cd ${.CURDIR} && _DEPENDS_TARGET=reinstall PKGPATH=${PKGPATH} exec ${MAKE} install
 
 repackage:
 	@${_MAKE} clean=packages
@@ -3369,7 +3352,7 @@ _all_phony = ${_recursive_depends_targets} \
 	_internal-runwantlib-depends _internal-subpackage _internal-subupdate \
 	_internal-update _internal-update _internal-update-plist \
 	_internal_install _internal_runlib-depends _license-check \
-	_list-port-libs print-package-args _print-package-signature-lib \
+	print-package-args _print-package-signature-lib \
 	_print-package-signature-run _print-packagename _recurse-all-dir-depends \
 	_recurse-regress-dir-depends _recurse-run-dir-depends _refetch addsum \
 	build-depends build-depends-list checkpatch clean clean-depends \
@@ -3385,7 +3368,8 @@ _all_phony = ${_recursive_depends_targets} \
     show-required-by subpackage uninstall mirror-maker-fetch _print-metadata \
 	lock unlock \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
-	port-wantlib-args fake-wantlib-args no-wantlib-args
+	port-wantlib-args fake-wantlib-args no-wantlib-args \
+	_recurse-show-run-depends show-run-depends show-prepare-results
 
 .if defined(_DEBUG_TARGETS)
 .  for _t in ${_all_phony}

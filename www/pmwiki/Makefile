@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.8 2011/09/16 12:00:07 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2011/11/25 12:16:13 jasper Exp $
 
 COMMENT=	wiki-based system for collaborative creation of websites
 
-DISTNAME=	pmwiki-2.2.21
-REVISION=	1
+DISTNAME=	pmwiki-2.2.35
 EXTRACT_SUFX=	.tgz
 
 CATEGORIES=	www

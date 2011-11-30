@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.49 2011/11/11 10:57:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.52 2011/11/21 15:49:41 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.2.1
+GNOME_VERSION=		3.2.2
 REVISION=		1
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
@@ -42,14 +42,10 @@ WANTLIB += svn_ra-1 svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1
 WANTLIB += svn_repos-1 svn_subr-1 svn_wc-1 util vala-0.14 vte2_90
 WANTLIB += webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt z
 WANTLIB += dbus-1 dbus-glib-1 javascriptcoregtk-3.0 magic
-WANTLIB += ${MODPY_WANTLIB}
+WANTLIB += gcrypt gda-5.0 gnome-keyring gpg-error ${MODPY_WANTLIB}
 
 BUILD_DEPENDS=		devel/autogen>=5.6.5 \
 			devel/bison
-# libgda is needed by the symbol-db plugin, which we don't build on OpenBSD.
-# though GDA_CFLAGS is used in various Makefile's. So instead of changing
-# dozens of files, we just drop the LIB_DEPENDS and keep the BUILD_DEPENDS.
-BUILD_DEPENDS+=		x11/gnome/libgda
 RUN_DEPENDS=		misc/shared-mime-info
 LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			devel/glade \
@@ -59,34 +55,25 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			textproc/icu4c \
 			x11/gnome/devhelp \
 			x11/gnome/gdl \
-			x11/gtksourceview3
+			x11/gtksourceview3 \
+			x11/gnome/libgda
 
 # needed by plugins/class-gen/plugin.c
 RUN_DEPENDS += devel/autogen
 
 LIBTOOL_FLAGS=		--tag=disable-static
-MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 MODGNOME_TOOLS= 	goi vala yelp
 
 AUTOCONF_VERSION=	2.68
 
 CONFIGURE_STYLE=	autoconf gnu
-CONFIGURE_ARGS+=	--enable-plugin-subversion
+CONFIGURE_ARGS+=	--enable-plugin-subversion \
+			--with-symbol-db-shm=/tmp
 
 # adds dependency on libgnomeui
 CONFIGURE_ARGS+=	--disable-graphviz
-
-# The Symbol Browser plugin isn't built on OpenBSD due to the lack of an
-# shm_open() implementation. So remove the "Symbol Browser" as a requirement
-# from these templates. It's just a really-nice-to-have, instead of a must-have.
-post-extract:
-	cd ${WRKSRC}/plugins/project-wizard/templates/ && \
-		for t in `find . -type f -name '*.anjuta'`; \
-		do \
-			sed '/<plugin name="Symbol Browser/,/<\/plugin>/d' \
-				$$t > $$t.new && mv $$t.new $$t; \
-		done
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/plugins/project-wizard/templates/pygtk.wiz.in \

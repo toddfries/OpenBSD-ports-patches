@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.145 2011/10/29 08:12:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.150 2011/11/28 12:32:04 ajacoutot Exp $
+
+SHARED_ONLY=		Yes
 
 COMMENT-main=		integrated email and PIM software for GNOME
 COMMENT-plugins=	additionnal plugins for evolution
 
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		3.2.1
+GNOME_VERSION=		3.2.2
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-plugins=	evolution-plugins-${GNOME_VERSION}
@@ -15,8 +17,9 @@ REVISION-plugins=	1
 # Only get the first x.y which is needed in the PLIST.
 # NOTE: when major version changes, increment EVO_VERSION accordingly 
 # and bump:
-# mail/evolution-rss
+# mail/evolution-ews
 # mail/evolution-exchange
+# mail/evolution-rss
 # x11/gnome/tracker
 R=			${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 SUBST_VARS=		R
@@ -62,11 +65,11 @@ WANTLIB += pthread-stubs smime3 softokn3 soup-2.4 sqlite3 ssl3
 WANTLIB += xcb xcb-render xcb-shm xml2 z stdc++
 
 WANTLIB-main += ${WANTLIB}
-WANTLIB-main += canberra-gtk3 gdata gweather-3 ldap-2.4 ltdl ogg pst
+WANTLIB-main += canberra-gtk3 gdata gweather-3 ldap-2.4 ltdl ogg
 WANTLIB-main += vorbis vorbisfile goa-1.0
 
 WANTLIB-plugins += ${WANTLIB}
-WANTLIB-plugins += gstreamer-0.10
+WANTLIB-plugins += gstreamer-0.10 pst
 WANTLIB-plugins += lib/evolution/${R}/eabutil
 WANTLIB-plugins += lib/evolution/${R}/composer
 WANTLIB-plugins += lib/evolution/${R}/emformat
@@ -100,8 +103,7 @@ RUN_DEPENDS-main=	${RUN_DEPENDS} \
 			${MODGNOME_RUN_DEPENDS_yelp} \
 			devel/gsettings-desktop-schemas
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			converters/libpst \
-			databases/evolution-data-server>=3.2.1 \
+			databases/evolution-data-server>=3.2.2 \
 			databases/openldap \
 			devel/libnotify>=0.7.2 \
 			security/nss \
@@ -110,11 +112,14 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			audio/libcanberra,-gtk3
 
 LIB_DEPENDS-plugins=	${LIB_DEPENDS} \
-			mail/evolution,-main>=${GNOME_VERSION} \
+			mail/evolution,-main=${GNOME_VERSION} \
+			converters/libpst \
 			multimedia/gstreamer-0.10/core
 # needed for the audio-inline plugin
 RUN_DEPENDS-plugins=	${MODGCONF2_RUN_DEPENDS} \
 			multimedia/gstreamer-0.10/plugins-good
+
+LIBTOOL_FLAGS=		--tag=disable-static
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=	Yes
@@ -129,7 +134,8 @@ MODGNOME_CPPFLAGS=	-I${X11BASE}/include -DBOGOFILTER_BINARY="\\\"${LOCALBASE}/bi
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib -Wl,-rpath,${TRUEPREFIX}/lib/evolution/${R}:${TRUEPREFIX}/lib \
 				-Wl,--as-needed
 
-CONFIGURE_ARGS=		--enable-plugins=all \
+CONFIGURE_ARGS=		--disable-static \
+			--enable-plugins=all \
 			--disable-nm \
 			--disable-sens \
 			--disable-connman \
@@ -157,6 +163,7 @@ post-configure:
 		${WRKBUILD}/{shell,calendar/gui/alarm-notify,plugins/backup-restore,capplet,capplet/settings}/Makefile
 
 post-install:
+	rm ${PREFIX}/lib/evolution/${R}/{modules,plugins}/*.la
 	find ${PREFIX}/share/evolution/${R}/default -perm 444 -exec chmod 644 {} \;
 # originally designed for MeeGo (https://bugzilla.gnome.org/show_bug.cgi?id=654525)
 	rm ${PREFIX}/share/applications/evolution-settings.desktop

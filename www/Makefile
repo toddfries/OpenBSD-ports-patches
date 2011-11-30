@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.532 2011/10/14 16:33:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.534 2011/11/17 16:17:04 sthen Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -176,7 +176,6 @@
      SUBDIR += p5-Catalyst-Controller-HTML-FormFu
      SUBDIR += p5-Catalyst-Devel
      SUBDIR += p5-Catalyst-Engine-Apache
-     SUBDIR += p5-Catalyst-Engine-HTTP-POE
      SUBDIR += p5-Catalyst-Helper-Controller-Scaffold
      SUBDIR += p5-Catalyst-Log-Log4perl
      SUBDIR += p5-Catalyst-Plugin-Cache
@@ -337,7 +336,6 @@
      SUBDIR += pecl-chroot
      SUBDIR += pecl-geoip
      SUBDIR += pecl-memcache
-     SUBDIR += pecl-pcntl
      SUBDIR += pecl-phar
      SUBDIR += pecl-proctitle
      SUBDIR += pecl-ssh2

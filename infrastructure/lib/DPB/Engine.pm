@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Engine.pm,v 1.33 2011/11/09 08:28:55 espie Exp $
+# $OpenBSD: Engine.pm,v 1.37 2011/11/22 16:46:44 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -78,6 +78,11 @@ sub already_done
 {
 }
 
+sub start_install
+{
+	return 0;
+}
+
 sub start
 {
 	my $self = shift;
@@ -85,6 +90,9 @@ sub start
 	if (@{$self->{engine}{requeued}} > 0) {
 		$self->{engine}->rebuild_info($core);
 		return;
+	}
+	if ($self->start_install($core)) {
+		return $core;
 	}
 	my $o = $self->sorted($core);
 	while (my $v = $o->next) {
@@ -140,7 +148,6 @@ sub end
 		} else {
 			unshift(@{$self->{engine}{errors}}, $v);
 			$v->{host} = $core->host;
-			$self->{engine}{locker}->simple_unlock($v);
 			$self->log('E', $v);
 		}
 	}
@@ -154,7 +161,32 @@ sub new
 	my ($class, $engine, $builder) = @_;
 	my $o = $class->SUPER::new($engine);
 	$o->{builder} = $builder;
+	$o->{toinstall} = [];
 	return $o;
+}
+
+sub will_install
+{
+	my ($self, $v) = @_;
+	push(@{$self->{toinstall}}, $v);
+}
+
+sub start_install
+{
+	my ($self, $core) = @_;
+	return 0 unless $core->is_local;
+	if (my $v = pop @{$self->{toinstall}}) {
+		$self->{builder}->install($v, $core);
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+sub non_empty
+{
+	my $self = shift;
+	return  $self->SUPER::non_empty || @{$self->{toinstall}} > 0;
 }
 
 sub new_queue
@@ -338,6 +370,21 @@ sub errors_string
 	return join(' ', @l);
 }
 
+sub lock_errors_string
+{
+	my ($self, $name) = @_;
+	my @l = ();
+	my $done = {};
+	for my $e (@{$self->{$name}}) {
+		my $s = $e->lockname;
+		if (!defined $done->{$s}) {
+			push(@l, $s);
+			$done->{$s} = 1;
+		}
+	}
+	return join(' ', @l);
+}
+
 sub fetchcount
 {
 	my ($self, $q, $t)= @_;
@@ -373,7 +420,7 @@ sub report
 	return join(" ",
 	    $self->statline,
 	    "!=".$self->count("ignored"))."\n".
-	    "L=".$self->errors_string('locks')."\n".
+	    "L=".$self->lock_errors_string('locks')."\n".
 	    "E=".$self->errors_string('errors')."\n";
 }
 
@@ -481,6 +528,9 @@ sub check_buildable
 				if ($self->adjust($v, 'RDEPENDS') == 0) {
 					delete $self->{built}{$v};
 					$self->{installable}{$v} = $v;
+					if ($v->{wantinstall}) {
+						$self->{buildable}->will_install($v);
+					}
 					$self->log_no_ts('I', $v);
 					$changes++;
 				} elsif (my $d = $self->should_ignore($v, 
@@ -533,17 +583,18 @@ sub new_path
 {
 	my ($self, $v) = @_;
 	if (!$self->{buildable}->is_done($v)) {
-		if (defined $v->{info}{FETCH_MANUALLY} &&
-		    defined $v->{info}{IGNORE}) {
-			$self->log('!', $v, " fetch manually");
-			$self->add_fatal($v, "Fetch manually error:", $v->{info}{FETCH_MANUALLY}->string);
-			return;
-		}
 		if (defined $v->{info}{IGNORE} && 
 		    !$self->{state}->{fetch_only}) {
 		    	$self->log('!', $v, " ".$v->{info}{IGNORE}->string);
 			$v->{info} = DPB::PortInfo->stub;
 			push(@{$self->{ignored}}, $v);
+			return;
+		}
+		if (defined $v->{info}{MISSING_FILES}) {
+			$self->log('!', $v, " fetch manually");
+			$self->add_fatal($v, "Missing distfiles: ".
+			    $v->{info}{MISSING_FILES}->string, 
+			    $v->{info}{FETCH_MANUALLY}->string);
 			return;
 		}
 #		$self->{heuristics}->todo($v);

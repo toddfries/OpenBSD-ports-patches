@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.61 2011/10/16 16:05:50 ajacoutot Exp $
+# $OpenBSD: Quirks.pm,v 1.63 2011/11/17 12:53:49 robert Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -251,7 +251,9 @@ my $stem_extensions = {
 	'ptsans' => 'ru-ptsans',
 	'py-zeya' => 'zeya',
 # 5.1
-	'php5-mapscript' => 'php-mapscript'
+	'php5-mapscript' => 'php-mapscript',
+	'libusb' => 'libusb-compat',
+	'pecl-pcntl' => 'php-pcntl'
 };
 
 # ->is_base_system($handle, $state):

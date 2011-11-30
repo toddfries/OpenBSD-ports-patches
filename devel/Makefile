@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.991 2011/11/12 11:49:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.999 2011/11/17 17:12:52 kili Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -286,6 +286,7 @@
      SUBDIR += liboop
      SUBDIR += libopensync
      SUBDIR += libpeas
+     SUBDIR += libplist
      SUBDIR += libproplist
      SUBDIR += libregexp9
      SUBDIR += libsigc++-2
@@ -299,7 +300,7 @@
      SUBDIR += libunicode
      SUBDIR += libunique
      SUBDIR += libunique3
-     SUBDIR += libusb
+     SUBDIR += libusb-compat
      SUBDIR += libusb1
      SUBDIR += libutf
      SUBDIR += libvmime
@@ -331,6 +332,7 @@
      SUBDIR += mercurial
      SUBDIR += metaauto
      SUBDIR += mico
+     SUBDIR += mingw
      SUBDIR += mk
      SUBDIR += mm
      SUBDIR += mm-common
@@ -662,6 +664,7 @@
      SUBDIR += p5-Module-Starter-Plugin-CGIApp
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Moose
+     SUBDIR += p5-MooseX-Aliases
      SUBDIR += p5-MooseX-AttributeHelpers
      SUBDIR += p5-MooseX-Clone
      SUBDIR += p5-MooseX-ConfigFromFile
@@ -956,6 +959,7 @@
      SUBDIR += py-gdata
      SUBDIR += py-gobject
      SUBDIR += py-gobject3
+     SUBDIR += py-guppy
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib
      SUBDIR += py-kid
@@ -1022,6 +1026,7 @@
      SUBDIR += qt-creator
      SUBDIR += qt4-eventsview
      SUBDIR += quirks
+     SUBDIR += ragel
      SUBDIR += radare2
      SUBDIR += rapidsvn
      SUBDIR += rats
@@ -1034,7 +1039,6 @@
      SUBDIR += ruby-activemodel
      SUBDIR += ruby-activesupport
      SUBDIR += ruby-arrayfields
-     SUBDIR += ruby-assistance
      SUBDIR += ruby-bacon
      SUBDIR += ruby-bundler
      SUBDIR += ruby-cicphash
@@ -1042,6 +1046,7 @@
      SUBDIR += ruby-color-tools
      SUBDIR += ruby-columnize
      SUBDIR += ruby-cucumber
+     SUBDIR += ruby-daemon_controller
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
@@ -1058,11 +1063,13 @@
      SUBDIR += ruby-gems
      SUBDIR += ruby-gettext
      SUBDIR += ruby-gir_ffi
+     SUBDIR += ruby-git
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
      SUBDIR += ruby-home_run
      SUBDIR += ruby-i18n
      SUBDIR += ruby-isolate
+     SUBDIR += ruby-jeweler
      SUBDIR += ruby-kgio
      SUBDIR += ruby-kgio,ruby19
      SUBDIR += ruby-linecache

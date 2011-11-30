@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Vars.pm,v 1.21 2011/11/06 12:21:47 espie Exp $
+# $OpenBSD: Vars.pm,v 1.24 2011/11/22 16:44:53 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -118,7 +118,7 @@ sub grab_list
 	my $subdir;
 	my $category;
 	my $reset = sub {
-			DPB::PkgPath->handle_equivalences($grabber->{state}, $h);
+			$h = DPB::PkgPath->handle_equivalences($grabber->{state}, $h, $subdirs);
 			$grabber->{fetch}->build_distinfo($h, 
 			    $grabber->{state}->{fetch_only});
 			DPB::PkgPath->merge_depends($h);
@@ -143,9 +143,13 @@ sub grab_list
 		}
 		if (m/^\=\=\=\>\s*(.*)/) {
 			@current = ("$_\n");
-			print $log $_, "\n";
 			$core->job->set_status(" at $1");
 			$subdir = DPB::PkgPath->new($1);
+			print $log $_;
+			if (defined $subdir->{parent}) {
+				print $log " (", $subdir->{parent}->fullpkgpath, ")";
+			}
+			print $log "\n";
 			if (defined $category) {
 				$category->{category} = 1;
 			}
@@ -171,7 +175,6 @@ sub grab_list
 		} elsif (m/^\>\>\s*Broken dependency:\s*(.*?)\s*non existent/) {
 			my $dir = DPB::PkgPath->new($1);
 			$dir->{broken} = "broken dependency";
-			$dir->{parent} = $subdir;
 			$h->{$dir} = $dir;
 			print $log $_, "\n";
 			print $log "Broken ", $dir->fullpkgpath, "\n";
