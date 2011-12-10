@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2011/11/21 07:38:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2011/12/05 12:32:34 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -20,6 +20,9 @@ PKGNAME-ldap=		libgda-ldap-${GNOME_VERSION}
 PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}
 PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
+
+REVISION-main=		0
+REVISION-ui=		0
 
 EPOCH-main=		2
 EPOCH-ldap=		0
@@ -49,7 +52,8 @@ WANTLIB += gpg-error ffi
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 
 SUBST_VARS=		GDA_MAJOR
 

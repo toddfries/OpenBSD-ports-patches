@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2011/11/16 23:28:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2011/12/05 09:36:32 espie Exp $
 
 ONLY_FOR_ARCHS=		${GCC4_ARCHS}
 
@@ -75,7 +75,8 @@ USE_LIBTOOL=		Yes
 VMEM_WARNING=		Yes
 
 RUN_DEPENDS-main=	math/py-numpy
-BUILD_DEPENDS=		devel/doxygen
+BUILD_DEPENDS=		devel/doxygen \
+			math/py-numpy
 
 # ATM opencv requires V4L1 compat, ask them to change it,
 # then see WITH_V4L below.
@@ -86,6 +87,7 @@ CONFIGURE_ARGS+=	-DBUILD_EXAMPLES:Bool=Off \
 			-DBUILD_LATEX_DOCS:Bool=Off \
 			-DWITH_GTK:Bool=On \
 			-DWITH_V4L:Bool=Off \
+			-DWITH_EIGEN2:Bool=Off \
 			-DWITH_GSTREAMER:Bool=On \
 			-DWITH_1394:Bool=Off \
 			-DWITH_FFMPEG:Bool=On

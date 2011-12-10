@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.50 2011/10/29 08:12:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.53 2011/12/05 16:08:16 espie Exp $
 
 COMMENT=	image viewer and browser for GNOME
 
 GNOME_PROJECT=	gthumb
-GNOME_VERSION=	2.14.0
-REVISION=	0
+GNOME_VERSION=	2.14.1
 
 CATEGORIES=	graphics
 
@@ -34,6 +33,9 @@ MODULES=	devel/gconf2 \
 		devel/gettext \
 		x11/gnome
 
+# web albums
+BUILD_DEPENDS +=	devel/bison
+
 LIB_DEPENDS=	databases/sqlite3 \
 		devel/libsoup,-gnome \
 		devel/libunique \
@@ -45,6 +47,7 @@ RUN_DEPENDS=	misc/shared-mime-info
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 MODGCONF2_SCHEMAS_DIR=	gthumb
 
 CONFIGURE_STYLE=	gnu

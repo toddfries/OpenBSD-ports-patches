@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2011/09/16 10:31:21 espie Exp $
+# $OpenBSD: Makefile,v 1.49 2011/12/03 20:30:09 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -10,7 +10,7 @@ COMMENT-spamassassin=	spamassassin plugin
 V=			3.7.9
 DISTNAME=		claws-mail-${V}
 PKGNAME-main=		${DISTNAME}
-REVISION-main=		2
+REVISION-main=		3
 PKGNAME-bogofilter=	claws-mail-bogofilter-${V}
 REVISION-bogofilter =	0
 PKGNAME-spamassassin=	claws-mail-spamassassin-${V}
@@ -66,7 +66,8 @@ LIB_DEPENDS=		x11/gtk+2 \
 			security/libgcrypt
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
-			devel/desktop-file-utils
+			devel/desktop-file-utils \
+			x11/gtk+2,-guic
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/startup-notification \
@@ -90,7 +91,7 @@ AUTOCONF_VERSION=	2.67
 CONFIGURE_ENV+=		CPPFLAGS="-I${X11BASE}/include" \
 			LDFLAGS="-L${X11BASE}/lib"
 
-.if ${FLAVOR:L:Mjpilot}
+.if ${FLAVOR:Mjpilot}
 LIB_DEPENDS-main+=	comms/pilot-link 
 WANTLIB-main +=		pisock
 RUN_DEPENDS-main+=	comms/jpilot
@@ -98,7 +99,7 @@ RUN_DEPENDS-main+=	comms/jpilot
 CONFIGURE_ARGS+=	--disable-jpilot
 .endif
 
-.if ${FLAVOR:L:Mcompface}
+.if ${FLAVOR:Mcompface}
 PERMIT_PACKAGE_CDROM=   No Fee
 PERMIT_DISTFILES_CDROM= No Fee
 LIB_DEPENDS-main+=     	mail/faces
@@ -107,14 +108,14 @@ WANTLIB-main +=		compface>=1
 CONFIGURE_ARGS+=       --disable-compface
 .endif
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 WANTLIB-main+=		asn1 com_err gssapi krb5 lber ldap
 LIB_DEPENDS-main+=	databases/openldap
 .else
 CONFIGURE_ARGS+=	--disable-ldap
 .endif
 
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 CFLAGS+=	-O0 -g
 INSTALL_STRIP=
 .endif

@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1148 2011/11/27 21:04:34 sthen Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1152 2011/12/10 11:15:16 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -168,6 +168,11 @@ PKG_DELETE ?= /usr/sbin/pkg_delete
 _PKG_ADD = ${PKG_ADD} ${_PROGRESS}
 _PKG_CREATE = ${PKG_CREATE} ${_PROGRESS}
 _PKG_DELETE = ${PKG_DELETE} ${_PROGRESS}
+
+.if !defined(_ARCH_DEFINES_INCLUDED)
+_ARCH_DEFINES_INCLUDED = Done
+.  include "${PORTSDIR}/infrastructure/mk/arch-defines.mk"
+.endif
 
 .if !defined(_MAKEFILE_INC_DONE)
 .  if exists(${.CURDIR}/../Makefile.inc)
@@ -1920,7 +1925,7 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 .endfor
 
 show-prepare-results: prepare
-	@sort -u ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES}
+	@sort -u ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES} /dev/null
 
 _internal-build-depends: ${_DEPBUILD_COOKIES}
 _internal-run-depends: ${_DEPRUN_COOKIES}
@@ -2394,6 +2399,10 @@ ${_PATCH_COOKIE}: ${_EXTRACT_COOKIE}
 
 ${_CONFIGURE_COOKIE}: ${_PATCH_COOKIE}
 	@${ECHO_MSG} "===>  Configuring for ${FULLPKGNAME}${_MASTER}"
+.if defined(_CONFIG_SITE)
+	@cd ${PORTSDIR}/infrastructure/db && cat ${CONFIG_SITE_LIST} >${_CONFIG_SITE}
+	@echo "Using ${_CONFIG_SITE} (generated)"
+.endif
 	@mkdir -p ${WRKBUILD}
 .if target(pre-configure)
 	@${_MAKESYS} pre-configure
@@ -3369,7 +3378,7 @@ _all_phony = ${_recursive_depends_targets} \
 	lock unlock \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
 	port-wantlib-args fake-wantlib-args no-wantlib-args \
-	_recurse-show-run-depends show-run-depends show-prepare-results
+	_recurse-show-run-depends show-run-depends
 
 .if defined(_DEBUG_TARGETS)
 .  for _t in ${_all_phony}

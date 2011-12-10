@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.18 2011/11/06 16:56:23 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.21 2011/12/04 12:05:41 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -108,7 +108,6 @@ sub check
 {
 	my ($self, $logger) = @_;
 	return $self->checksize($logger, $self->filename);
-
 }
 
 sub checksize
@@ -190,6 +189,14 @@ sub read_checksums
 		}
 	}
 	return $r;
+}
+
+sub forget
+{
+	my $self = shift;
+	delete $self->{size};
+	delete $self->{sha};
+	delete $self->{okay};
 }
 
 sub build_distinfo
@@ -303,6 +310,7 @@ sub finalize
 		print $fh "(", sprintf("%.2f", $sz / $elapsed / 1024), "KB/s)";
 	}
 	print $fh "\n";
+	close $fh;
 	return 1;
 }
 

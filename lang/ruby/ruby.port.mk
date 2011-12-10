@@ -1,4 +1,4 @@
-# $OpenBSD: ruby.port.mk,v 1.48 2011/11/17 15:24:01 jeremy Exp $
+# $OpenBSD: ruby.port.mk,v 1.50 2011/12/09 21:41:43 jeremy Exp $
 
 # ruby module
 
@@ -152,11 +152,21 @@ MODRUBY_BIN_RSPEC =	${LOCALBASE}/bin/rspec${MODRUBY_BINREV}
 .  endif
 .endif
 
-.if defined(MODRUBY_REGRESS) && !${MODRUBY_REGRESS:L:Mrspec} && \
-	!${MODRUBY_REGRESS:L:Mrspec2} && !${MODRUBY_REGRESS:L:Mrake} && \
-	!${MODRUBY_REGRESS:L:Mruby} && !${MODRUBY_REGRESS:L:Mtestrb}
+.if defined(MODRUBY_REGRESS)
+.  if !${MODRUBY_REGRESS:L:Mrspec} && \
+     !${MODRUBY_REGRESS:L:Mrspec2} && !${MODRUBY_REGRESS:L:Mrake} && \
+     !${MODRUBY_REGRESS:L:Mruby} && !${MODRUBY_REGRESS:L:Mtestrb}
 ERRORS += "Fatal: Unsupported MODRUBY_REGRESS value: ${MODRUBY_REGRESS}"
+.  endif
 .else
+.  if ${CONFIGURE_STYLE:L:Mextconf} || ${CONFIGURE_STYLE:L:Mgem} || \
+	${CONFIGURE_STYLE:L:Msetup}
+.    if !target(do-regress)
+# Disable regress for extconf, gem, and setup based ports, since they
+# won't use make check for regress.
+NO_REGRESS =	Yes
+.    endif
+.  endif
 MODRUBY_REGRESS?=
 .endif
 

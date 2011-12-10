@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.720 2011/11/30 06:14:17 rpointel Exp $
+# $OpenBSD: Makefile,v 1.722 2011/12/08 13:56:14 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -242,6 +242,7 @@
      SUBDIR += onioncat
      SUBDIR += opal
      SUBDIR += openafs
+     SUBDIR += openconnect
      SUBDIR += openfire
      SUBDIR += openmdns
      SUBDIR += openvmps
@@ -542,6 +543,7 @@
      SUBDIR += tkirc
      SUBDIR += tn5250
      SUBDIR += tor
+     SUBDIR += torsocks
      SUBDIR += totd
      SUBDIR += trafd
      SUBDIR += trafshow

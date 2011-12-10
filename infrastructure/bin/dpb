@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: dpb,v 1.31 2011/11/26 11:46:15 espie Exp $
+# $OpenBSD: dpb,v 1.38 2011/12/10 14:48:40 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -67,6 +67,7 @@ sub handle_options
 			$state->{logdir} = shift;
 		},
 		r => sub {
+			$state->{random} = 1;
 			$state->heuristics->random;
 		},
 		m => sub {
@@ -114,8 +115,8 @@ sub handle_options
 		},
 	};
 
-	$state->SUPER::handle_options('aceqrRstuUvh:xA:C:f:F:I:j:m:P:b:L:S:',
-    "[-acerRsuUvx] [-A arch] [-C plist] [-f N] [-F N] [-I plist] [-j N]",
+	$state->SUPER::handle_options('aceqrRstuUvh:xA:C:f:F:I:j:J:m:P:b:L:S:',
+    "[-acerRsuUvx] [-A arch] [-C plist] [-f N] [-F N] [-I plist] [-J p] [-j N]",
     "[-P plist] [-h hosts] [-L logdir] [-b log] [-t ctimeout] [-m threshold]",
     "[path ...]");
     	$state->{fullrepo} = join("/", $state->{repo}, $state->arch, "all");
@@ -207,6 +208,16 @@ sub grabber
 sub make
 {
 	return shift->{make};
+}
+
+sub make_args
+{
+	my $self = shift;
+	my @l = ($self->{make});
+	if ($self->{all}) {
+		push(@l, 'BUILD_ONCE=Yes');
+	}
+	return @l;
 }
 
 sub ports
@@ -352,6 +363,12 @@ while (!DPB::Core->avail) {
 }
 my $core = DPB::Core->get;
 #my $dump = DPB::Util->make_hot($state->logger->open('dump'));
+$SIG{INFO} = sub {
+	$state->engine->info_dump($state->logger->open('info'));
+	# perl status may spew some garbage on the display, 
+	# remove it during next refresh
+	$reporter->refresh;
+};
 
 my $keep_going = 1;
 my $last_time = time() - $state->{display_timeout};
@@ -393,16 +410,50 @@ sub handle_non_waiting_jobs
 	return $keep_going;
 }
 
+sub main_loop
+{
+	while (1) {
+		while (1) {
+			handle_non_waiting_jobs(0);
+			if (!DPB::Core->running &&
+			    (!$keep_going || !$state->engine->can_build)) {
+				$state->engine->check_buildable(0);
+				if (!$state->engine->can_build) {
+					last;
+				}
+			}
+			if (DPB::Core->running) {
+				DPB::Core->reap_wait;
+			}
+			if ($state->{fetch_only}) {
+				if (!DPB::Core::Fetcher->running &&
+				    (!$keep_going || !$state->engine->can_fetch)) {
+					$state->engine->check_buildable(0);
+					if (!$state->engine->can_fetch) {
+						last;
+					}
+				}
+			}
+		}
+		if (!$state->opt('q') || !$state->engine->recheck_errors) {
+			last;
+		}
+	}
+}
+
 $state->{grabber} = DPB::Grabber->new($state, 
     sub { handle_non_waiting_jobs(1) });
 
-if ($state->{all}) {
+if ($state->{all} && !$state->{random}) {
 	# when restarting interrupted dpb,
 	# find the most important paths first
 	my $list = $state->engine->find_best($state->logger->logfile("dependencies"), 10);
 	# if we have them, list them before the full ports tree walk.
 	if (@$list > 0) {
-		my $actual = map {($_,1)} @$list;
+		my $actual = {};
+		for my $name (@$list) {
+			DPB::PkgPath->new($name)->add_to_subdirlist($actual);
+		}
 		$state->grabber->grab_subdirs($core, $actual);
 	}
 }
@@ -432,32 +483,13 @@ if ($state->{all}) {
 		DPB::Distfile->dump($state->{logger});
 	}
 }
-#$state->engine->dump($dump);
+
 $state->engine->check_buildable(1);
-#$state->engine->dump($dump);
 
 DPB::Core->start_clock($state->{display_timeout});
-while (1) {
-	while (1) {
-		handle_non_waiting_jobs(0);
-		if (!DPB::Core->running &&
-		    (!$keep_going || !$state->engine->can_build)) {
-			$state->engine->check_buildable(0);
-			if (!$state->engine->can_build) {
-				last;
-			}
-		}
-		if (DPB::Core->running) {
-			DPB::Core->reap_wait;
-		}
-	}
-	if (!$state->opt('q') || !$state->engine->recheck_errors) {
-		last;
-	}
-}
+main_loop();
 
 $reporter->reset;
 DPB::Core->cleanup;
 print $state->engine->report;
 $state->engine->end_dump($state->logger->open('dump'));
-#$state->engine->dump_category('tobuild', $state->logger->open('dump'));

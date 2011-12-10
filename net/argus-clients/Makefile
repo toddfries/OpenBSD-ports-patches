@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/11/16 00:10:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2011/12/06 22:31:04 jasper Exp $
 
 COMMENT =	utilities to read and parse Argus data
 
@@ -7,7 +7,7 @@ REVISION =	0
 CATEGORIES =	net
 
 HOMEPAGE =	http://qosient.com/argus/
-MASTER_SITES =	http://qosient.com/argus/src/
+MASTER_SITES =	${HOMEPAGE}/src/
 
 MAINTAINER =	Steven Mestdagh <steven@openbsd.org>
 
@@ -22,11 +22,15 @@ WANTLIB =	c m ncurses readline
 NO_REGRESS =	Yes
 
 CONFIGURE_STYLE = 	gnu
+CONFIGURE_ARGS +=	--without-mysql \
+			--without-GeoIP \
+			--without-sasl
 MODGNU_CONFIG_GUESS_DIRS = ${WRKSRC}/config
 BUILD_DEPENDS =	devel/bison
 USE_GROFF =	Yes
 
 MAKE_FLAGS =	CCOPT="${CFLAGS}"
+FAKE_FLAGS =	docdir=${PREFIX}/share/doc/argus-clients/
 
 post-extract:
 	@find ${WRKSRC} -name '.gdb_history' -exec rm -f {} \;

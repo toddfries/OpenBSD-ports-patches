@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.86 2011/10/18 06:46:24 espie Exp $
+# $OpenBSD: Makefile.inc,v 1.88 2011/12/08 08:17:28 espie Exp $
 
 # IMPORTANT!  If you make any changes to the Python ports, be sure
 # to also update files/CHANGES.OpenBSD for your change.  This is a
@@ -97,8 +97,7 @@ LIB_DEPENDS-tkinter =	${MODTK_LIB_DEPENDS} \
 WANTLIB-tkinter =	X11 ${MODTK_WANTLIB} python${VERSION}${LIB_SUFX}
 
 .if ${VERSION} < 3.2
-.if ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "amd64" || \
-    ${MACHINE_ARCH} == "sparc64" || ${MACHINE_ARCH:Mmips64*}
+.if ${PROPERTIES:Mlp64}
 PATCH_LIST =		patch-* sup64-*
 PKG_ARGS+=	-Dmm=0
 .else

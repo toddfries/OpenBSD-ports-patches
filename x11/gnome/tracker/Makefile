@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2011/11/25 18:13:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.88 2011/12/05 12:50:24 ajacoutot Exp $
 
 # XXX Binary files patch-src_tracker-control_tracker-control-general_c
 # and patch-src_tracker-control_tracker-control-general_c.new differ
@@ -20,6 +20,8 @@ PKGNAME=	meta-tracker-${VERSION}
 PKGNAME-main=		meta-tracker-${VERSION}
 PKGNAME-evolution=	evolution-meta-tracker-${VERSION}
 PKGNAME-nautilus=	nautilus-meta-tracker-${VERSION}
+
+REVISION-main=	1
 
 MAJ_V=		${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 EVO_VERSION=	3.2
@@ -55,7 +57,7 @@ WANTLIB += z
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += archive assuan atk-1.0 bz2 c cairo cairo-gobject
 WANTLIB-main += dbus-1 dbus-glib-1 e2fs-uuid enca exempi exif gconf-2
-WANTLIB-main += gcrypt gdk-3 gdk-x11-2.0 gdk_pixbuf-2.0 gee gif gmime-2.6
+WANTLIB-main += gcrypt gdk-3 gdk_pixbuf-2.0 gee gif gmime-2.6
 WANTLIB-main += gnome-keyring gpg-error gpgme-pthread gsf-1 gtk-3 icudata
 WANTLIB-main += icui18n icuuc jpeg lcms lzma openjpeg panel-applet-4 cue
 WANTLIB-main += pango-1.0 pangocairo-1.0 pangoft2-1.0 png poppler poppler-glib
@@ -121,6 +123,7 @@ LIBTOOL_FLAGS=	--tag=disable-static
 
 MODGNOME_TOOLS= 	goi vala
 MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 MODPY_BUILDDEP=		No
 MODPY_RUNDEP=		No
 

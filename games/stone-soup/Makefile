@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2011/09/16 09:48:10 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2011/12/06 14:12:53 espie Exp $
 
 COMMENT = 	dungeon crawl stone soup
 CATEGORIES = 	games
@@ -40,11 +40,12 @@ PERMIT_PACKAGE_CDROM = 	No gain
 FLAVORS = 	no_x11
 FLAVOR ?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 WANTLIB +=	ncursesw
 MAKE_FLAGS += 	USE_UNICODE=y UNICODE_LOCALE=y
 .else
 MAKE_FLAGS += 	TILES=y \
+		YACC=yacc \
 		LDFLAGS="-L${LOCALBASE}/lib -lSDL -lSDL_image -lpng -pthread"
 WANTLIB += 	GL GLU SDL SDL_image freetype png pthread z
 LIB_DEPENDS += 	devel/sdl \

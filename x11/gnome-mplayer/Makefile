@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.48 2011/10/17 13:50:34 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.50 2011/12/06 16:05:44 dcoppa Exp $
 
 COMMENT =		GTK+/GNOME frontend for MPlayer
 DISTNAME =		gnome-mplayer-1.0.4
-REVISION =		5
+REVISION =		7
 CATEGORIES =		x11 multimedia
 
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
@@ -36,7 +36,8 @@ LIB_DEPENDS =		devel/libnotify>=0.7.2 \
 			x11/gtk+2
 RUN_DEPENDS =		devel/desktop-file-utils \
 			x11/gnome/icon-theme \
-			x11/mplayer>=20090828
+			x11/mplayer>=20090828 \
+			x11/gtk+2,-guic
 
 USE_LIBTOOL =		Yes
 
