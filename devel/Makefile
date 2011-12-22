@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1001 2011/12/06 21:15:18 kili Exp $
+# $OpenBSD: Makefile,v 1.1007 2011/12/21 19:28:19 jasper Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -947,11 +947,13 @@
      SUBDIR += py-bytecodeassembler
      SUBDIR += py-cheetah
      SUBDIR += py-configobj
+     SUBDIR += py-country
      SUBDIR += py-coverage
      SUBDIR += py-ctypes
      SUBDIR += py-dateutil
      SUBDIR += py-decorator
      SUBDIR += py-decoratortools
+     SUBDIR += py-distribute,python3
      SUBDIR += py-distutils-extra
      SUBDIR += py-dtopt
      SUBDIR += py-dulwich
@@ -973,7 +975,6 @@
      SUBDIR += py-modulegraph
      SUBDIR += py-monthdelta
      SUBDIR += py-mox
-     SUBDIR += py-mxDateTime,python2.4
      SUBDIR += py-mxDateTime
      SUBDIR += py-nose
      SUBDIR += py-notify
@@ -995,6 +996,7 @@
      SUBDIR += py-rcsparse
      SUBDIR += py-ruledispatch
      SUBDIR += py-serial
+     SUBDIR += py-setproctitle
      SUBDIR += py-setuptools
      SUBDIR += py-silc
      SUBDIR += py-simplejson
@@ -1015,9 +1017,9 @@
      SUBDIR += py-virtualenv
      SUBDIR += py-wsgiutils
      SUBDIR += py-xdg
+     SUBDIR += py-xmlrunner
      SUBDIR += py-zopeinterface
      SUBDIR += py-zopetesting
-     SUBDIR += py3-distribute
      SUBDIR += pybugz
      SUBDIR += pyflakes
      SUBDIR += pygame
@@ -1068,6 +1070,7 @@
      SUBDIR += ruby-gir_ffi
      SUBDIR += ruby-git
      SUBDIR += ruby-highline
+     SUBDIR += ruby-hike
      SUBDIR += ruby-hoe
      SUBDIR += ruby-home_run
      SUBDIR += ruby-i18n
@@ -1093,6 +1096,7 @@
      SUBDIR += ruby-rake-compiler
      SUBDIR += ruby-rcov
      SUBDIR += ruby-rcov,ruby19
+     SUBDIR += ruby-rdoc
      SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
@@ -1101,10 +1105,12 @@
      SUBDIR += ruby-rubyinline
      SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
+     SUBDIR += ruby-sprockets
      SUBDIR += ruby-stringex
      SUBDIR += ruby-subset_sum
      SUBDIR += ruby-subset_sum,ruby19
      SUBDIR += ruby-systemtimer
+     SUBDIR += ruby-systemu
      SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-tilt
      SUBDIR += ruby-transaction-simple

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/12/06 14:12:53 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2011/12/16 15:03:00 stsp Exp $
 
 COMMENT = 	dungeon crawl stone soup
 CATEGORIES = 	games
@@ -9,7 +9,7 @@ VERSION = 	0.7.2
 DISTNAME=	stone_soup-${VERSION}-nodeps
 EXTRACT_SUFX=	.tar.bz2
 PKGNAME=	stone-soup-${VERSION}
-REVISION=	1
+REVISION=	2
 
 BROKEN-arm=	tilegen.elf loops burning cpu
 
@@ -17,7 +17,8 @@ WRKDIST = 	${WRKDIR}/stone_soup-${VERSION}
 WRKSRC = 	${WRKDIST}/source
 MAKE_FILE = 	${WRKSRC}/makefile
 USE_GMAKE = 	Yes
-MAKE_FLAGS = 	LUA_INCLUDE_DIR=${LOCALBASE}/include \
+MAKE_FLAGS = 	CC="${CC}" CXX="${CXX}" \
+		LUA_INCLUDE_DIR=${LOCALBASE}/include \
 		LUA_LIB=-llua \
 		SQLITE_INCLUDE_DIR=${LOCALBASE}/include \
 		LDFLAGS=-L${LOCALBASE}/lib \
@@ -29,6 +30,7 @@ MAKE_FLAGS = 	LUA_INCLUDE_DIR=${LOCALBASE}/include \
 MODULES = 	lang/lua
 WANTLIB = 	c m stdc++ lua sqlite3
 
+RUN_DEPENDS =	devel/desktop-file-utils
 LIB_DEPENDS = 	databases/sqlite3
 
 # Almost nethack...
@@ -59,6 +61,14 @@ post-install:
 	chmod 755 ${PREFIX}/bin/crawl-ss
 	${INSTALL_MAN} ${WRKDIST}/docs/crawl.6 ${PREFIX}/man/man6/crawl-ss.6
 	${INSTALL_DATA} ${WRKDIST}/README.txt ${PREFIX}/share/crawl/docs
+.if ! ${FLAVOR:Mno_x11}
+	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps ${PREFIX}/share/applications
+	${INSTALL_DATA} \
+		${PREFIX}/share/crawl/dat/tiles/stone_soup_icon-32x32.png \
+		${PREFIX}/share/pixmaps/stone-soup.png
+	${INSTALL_DATA} ${FILESDIR}/stone-soup.desktop \
+		${PREFIX}/share/applications
+.endif
 
 NO_REGRESS=Yes
 

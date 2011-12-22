@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2011/12/07 12:18:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.22 2011/12/21 09:56:54 sthen Exp $
 
 # XXX:
 # - Needs __ARM_NR_cacheflush (or the like) to work on arm-based ports.
@@ -8,13 +8,15 @@ ONLY_FOR_ARCHS=	amd64 i386
 
 COMMENT=	V8 JavaScript for clients and servers
 
-NODE_VERSION=	v0.6.3
+NODE_VERSION=	v0.6.6
 DISTNAME=	node-${NODE_VERSION}
 PKGNAME=	${DISTNAME:S/v//g}
 
 CATEGORIES=	www devel
 
 HOMEPAGE=	http://nodejs.org/
+
+MAINTAINER=	Aaron Bieber <deftly@gmail.com>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
@@ -28,7 +30,7 @@ MODULES=	lang/python
 
 VMEM_WARNING=	Yes
 
-WANTLIB +=	c crypto execinfo kvm m pthread ssl stdc++ util
+WANTLIB +=	c crypto execinfo kvm m pthread ssl stdc++ util z
 
 LIB_DEPENDS=	devel/libexecinfo
 

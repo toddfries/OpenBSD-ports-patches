@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.44 2011/11/16 15:56:37 robert Exp $
+# $OpenBSD: Makefile,v 1.48 2011/12/14 21:56:56 sthen Exp $
 
 COMMENT =	imap4 webmail client
 
-DISTNAME =	roundcubemail-0.6
+DISTNAME =	roundcubemail-0.7
+REVISION =	2
 CATEGORIES =	mail www
 HOMEPAGE =	http://www.roundcube.net/
-
-REVISION =	0
 
 MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
@@ -17,6 +16,7 @@ PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=roundcubemail/}
+#MASTER_SITES =	http://nightly.roundcube.net/trunk/
 
 NO_BUILD =	Yes
 NO_REGRESS =	Yes
@@ -35,7 +35,7 @@ RUN_DEPENDS =	lang/php/${MODPHP_VERSION},-mcrypt \
 
 do-configure:
 	perl -pi -e '$$. == 1 && s,^#!.*env.*php.*,#!${MODPHP_BIN},;' \
-	    -e 'close ARGV if eof;' ${WRKSRC}/bin/*
+	    -e 'close ARGV if eof;' ${WRKSRC}/bin/* ${WRKSRC}/tests/runtests.sh
 
 do-install:
 	cp -Rp ${WRKDIST} ${INSTDIR}
@@ -46,5 +46,6 @@ do-install:
 	    ${INSTDIR}/roundcubemail.conf.dist; \
 	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}; \
 	find ${INSTDIR} \( -name \*.orig -or -name \*.src \) -exec rm -f {} \;
+	rm -rf ${INSTDIR}/tests # requires simpletest/unit_tester.php
 
 .include <bsd.port.mk>

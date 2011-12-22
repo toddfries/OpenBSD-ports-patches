@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.308 2011/11/14 11:01:54 bentley Exp $
+# $OpenBSD: Makefile,v 1.311 2011/12/22 09:47:19 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -117,6 +117,7 @@
      SUBDIR += lcms
      SUBDIR += lcms2
      SUBDIR += lensfun
+     SUBDIR += leptonica
      SUBDIR += libart
      SUBDIR += libcaca
      SUBDIR += libdivxdecore
@@ -137,6 +138,7 @@
      SUBDIR += libraw
      SUBDIR += libungif
      SUBDIR += libvidcap
+     SUBDIR += libwebp
      SUBDIR += libwmf
      SUBDIR += libxmi
      SUBDIR += lsys
@@ -195,7 +197,6 @@
      SUBDIR += potrace
      SUBDIR += povray
      SUBDIR += pstoedit
-     SUBDIR += py-Imaging,python2.4
      SUBDIR += py-Imaging
      SUBDIR += py-cairo
      SUBDIR += py-dot
