@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.722 2011/12/08 13:56:14 sthen Exp $
+# $OpenBSD: Makefile,v 1.724 2011/12/30 14:24:33 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -185,6 +185,7 @@
      SUBDIR += livemedia
      SUBDIR += loudmouth
      SUBDIR += luasocket
+     SUBDIR += maclookup
      SUBDIR += maradns
      SUBDIR += mbrowse
      SUBDIR += mcabber
@@ -205,6 +206,7 @@
      SUBDIR += mutella
      SUBDIR += nagios
      SUBDIR += nam
+     SUBDIR += natpmpd
      SUBDIR += nbtscan
      SUBDIR += ncftp
      SUBDIR += nemesis

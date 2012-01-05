@@ -1,4 +1,4 @@
-$OpenBSD: README-main,v 1.1.1.1 2011/11/12 16:40:47 ajacoutot Exp $
+$OpenBSD: README-main,v 1.4 2012/01/02 16:07:40 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD

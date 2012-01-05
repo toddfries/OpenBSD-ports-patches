@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/12/06 21:03:43 kili Exp $
+# $OpenBSD: Makefile,v 1.3 2011/12/27 21:31:15 kili Exp $
 
 COMMENT =		Haskell API search engine
 
 DISTNAME =		hoogle-4.2.7
+REVISION =		0
 CATEGORIES =		devel
 HOMEPAGE =		http://www.haskell.org/hoogle/
 
@@ -18,7 +19,7 @@ MODULES =		lang/ghc converters/libiconv
 
 MODGHC_BUILD =		cabal hackage haddock register
 
- WANTLIB =		c gmp m pthread util
+WANTLIB =		c gmp m pthread util
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS =		devel/hs-case-insensitive>=0.2,<0.3 \
@@ -42,6 +43,7 @@ SUBST_VARS =		HOOGLEDB
 
 # Quick hack until I figure how to do this properly with cabal:
 post-install:
+	${INSTALL_DATA_DIR} ${WRKINST}${HOOGLEDB}
 	ln -s ${HOOGLEDB} ${PREFIX}/share/hs-${DISTNAME}/databases
 
 .include <bsd.port.mk>

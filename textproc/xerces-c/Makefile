@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2011/11/03 20:13:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2011/12/27 14:27:23 pascal Exp $
 
 COMMENT=	c++ validating XML parser
 
@@ -28,6 +28,10 @@ WANTLIB=	m stdc++
 
 XERCESCROOT=	${WRKDIR}/${DISTNAME}
 WRKSRC=		${XERCESCROOT}/src/xercesc
+
+# runConfigure is a wrapper around a GNU configure script.  In order to still
+# pick up our config.site defaults, use the gnu MODULE.
+MODULES =	gnu
 
 CONFIGURE_SCRIPT= ${XERCESCROOT}/src/xercesc/runConfigure
 CONFIGURE_STYLE= simple
