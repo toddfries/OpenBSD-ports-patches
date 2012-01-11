@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.152 2011/12/29 09:26:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.154 2012/01/09 18:26:31 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,13 +6,12 @@ COMMENT-main=		integrated email and PIM software for GNOME
 COMMENT-plugins=	additionnal plugins for evolution
 
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		3.2.2
+GNOME_VERSION=		3.2.3
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-plugins=	evolution-plugins-${GNOME_VERSION}
 
-REVISION-main=		3
-REVISION-plugins=	2
+REVISION-plugins=	0
 
 # Only get the first x.y which is needed in the PLIST.
 # NOTE: when major version changes, increment EVO_VERSION accordingly 
@@ -70,8 +69,8 @@ WANTLIB-main += vorbis vorbisfile goa-1.0
 
 WANTLIB-plugins += ${WANTLIB}
 WANTLIB-plugins += gstreamer-0.10 pst
-WANTLIB-plugins += lib/evolution/${R}/eabutil
 WANTLIB-plugins += lib/evolution/${R}/composer
+WANTLIB-plugins += lib/evolution/${R}/eabutil
 WANTLIB-plugins += lib/evolution/${R}/emformat
 WANTLIB-plugins += lib/evolution/${R}/emiscwidgets
 WANTLIB-plugins += lib/evolution/${R}/eshell
@@ -111,7 +110,7 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 
 LIB_DEPENDS-plugins=	${LIB_DEPENDS} \
 			mail/evolution,-main=${GNOME_VERSION} \
-			converters/libpst \
+			converters/libpst>=0.6.54 \
 			multimedia/gstreamer-0.10/core
 # needed for the audio-inline plugin
 RUN_DEPENDS-plugins=	${MODGCONF2_RUN_DEPENDS} \

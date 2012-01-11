@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.23 2012/01/01 18:34:35 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.27 2012/01/10 19:35:36 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -31,6 +31,7 @@ sub create
 
 	my $sz = $distinfo->{size}{$file} // 0;
 	my $sha = $distinfo->{sha}{$file};
+	$repo->known_file($sha, $file);
 	bless {
 		name => $file,
 		short => $short,
@@ -44,8 +45,8 @@ sub create
 
 sub distdir
 {
-	my $self = shift;
-	return $self->{repo}->distdir;
+	my ($self, @rest) = @_;
+	return join('/', $self->{repo}->distdir, @rest);
 }
 
 sub cached
@@ -113,7 +114,7 @@ sub tempfilename
 sub filename
 {
 	my $self = shift;
-	return $self->distdir."/".$self->{name};
+	return $self->distdir($self->{name});
 }
 
 sub check
@@ -133,10 +134,31 @@ sub make_link
 	my $self = shift;
 	my $sha = $self->{sha}->stringize;
 	if ($sha =~ m/^(..)/) {
-		my $result = $self->distdir."/by_cipher/sha256/$1/$sha";
+		my $result = $self->distdir('by_cipher', 'sha256', $1, $sha);
 		File::Path::make_path($result);
-		link $self->filename, "$result/$self->{name}";
+		my $dest = $self->{name};
+		$dest =~ s/^.*\///;
+		link $self->filename, "$result/$dest";
 	}
+}
+
+sub find_copy
+{
+	my ($self, $name) = @_;
+
+	# sha256 must match AND size as well
+	my $alternate = $self->{repo}{reverse}{$self->{sha}->stringize};
+	if (defined $alternate) {
+		my $full = $self->distdir($alternate);
+		if ((stat $full)[7] == $self->{sz}) {
+			unlink($name);
+			if (link($full, $name)) {
+				$self->do_cache;
+				return 1;
+			}
+		}
+	}
+	return 0;
 }
 
 sub checksize
@@ -150,7 +172,7 @@ sub checksize
 	}
 		
 	if (!stat $name) {
-		return 0;
+		return $self->find_copy($name);
 	}
 	if ((stat _)[7] != $self->{sz}) {
 		my $fh = $logger->open('dist/'.$self->{name});
@@ -189,12 +211,16 @@ sub checksum_and_cache
 			return 0;
 		}
 	}
-	if (-f -r $name && OpenBSD::sha->new($name)->equals($self->{sha})) {
-		$self->{okay} = 1;
-		$self->do_cache;
-		return 1;
+	if (-f -r $name) {
+		if (OpenBSD::sha->new($name)->equals($self->{sha})) {
+			$self->{okay} = 1;
+			$self->do_cache;
+			return 1;
+		} else {
+			return 0;
+		}
 	}
-	return 0;
+	return $self->find_copy($name);
 }
 
 sub cache
@@ -259,13 +285,16 @@ package DPB::Fetch;
 sub new
 {
 	my ($class, $distdir, $logger, $fetch_only) = @_;
-	my $o = bless {distdir => $distdir, sha => {}, 
+	my $o = bless {distdir => $distdir, sha => {}, reverse => {},
+	    known_sha => {}, known_files => {},
 	    fetch_only => $fetch_only}, $class;
 	if (open(my $fh, '<', "$distdir/distinfo")) {
 		my $_;
 		while (<$fh>) {
-			if (m/^SHA256 \((.*)\) \= (.*)/) {
+			if (m/^SHA256\s*\((.*)\) \= (.*)/) {
+				next unless -f "$distdir/$1";
 				$o->{sha}{$1} = OpenBSD::sha->fromstring($2);
+				$o->{reverse}{$2} = $1;
 			}
 		}
 	}
@@ -281,6 +310,76 @@ sub new
 	open($o->{log}, ">>", "$distdir/distinfo");
 	DPB::Util->make_hot($o->{log});
 	return $o;
+}
+
+sub known_file
+{
+	my ($self, $sha, $file) = @_;
+	$self->{known_sha}{$sha->stringize}{$file} = 1;
+	$self->{known_file}{$file} = 1;
+}
+
+sub run_expire_old
+{
+	my ($self, $core, $opt_e) = @_;
+	$core->start_job(DPB::Job::Normal->new(
+	    sub {
+		$self->expire_old;
+	    },
+	    sub {
+		# and we will never need this again
+		delete $self->{known_file};
+		delete $self->{known_sha};
+		if (!$opt_e) {
+			$core->mark_ready;
+		}
+		return 0;
+	    }, 
+	    "CLEAN DIST"));
+}
+
+sub expire_old
+{
+	my $self = shift;
+	my $ts = time();
+	my $distdir = $self->distdir;
+	if (open(my $fh, '<', "$distdir/history")) {
+		my $_;
+		while (<$fh>) {
+			if (m/^\d+\s+SHA256\s*\((.*)\) \= (.*)/) {
+				$self->{known_sha}{$2}{$1} = 1;
+				$self->{known_file}{$1} = 1;
+			}
+		}
+		close $fh;
+	}
+	open my $fh, ">>", "$distdir/history" or return;
+	while (my ($sha, $file) = each %{$self->{reverse}}) {
+		next if $self->{known_sha}{$sha}{$file};
+		print $fh "$ts SHA256 ($file) = $sha\n";
+		$self->{known_file}{$file} = 1;
+	}
+	for my $special (qw(Makefile distinfo history)) {
+		$self->{known_file}{$special} = 1;
+	}
+
+	# let's also scan the directory proper
+	require File::Find;
+	File::Find::find(sub {
+		if (-d $_ && $_ eq 'by_cipher') {
+			$File::Find::prune = 1;
+			return;
+		}
+		return unless -f _;
+		return if m/\.part$/;
+		my $actual = $File::Find::name;
+		$actual =~ s/^\Q$distdir\E\/?//;
+		return if $self->{known_file}{$actual};
+		my $ck = OpenBSD::sha->new($_);
+		print $fh "$ts SHA256 ($actual) = ", $ck->stringize, "\n";
+	}, $distdir);
+
+	close $fh;
 }
 
 sub distdir

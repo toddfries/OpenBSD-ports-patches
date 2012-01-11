@@ -1,0 +1,21 @@
+$OpenBSD: patch-generate_unix_Makefile_config,v 1.1 2012/01/11 02:35:14 sthen Exp $
+--- generate/unix/Makefile.config.orig	Wed Nov 23 16:22:31 2011
++++ generate/unix/Makefile.config	Wed Jan 11 00:27:25 2012
+@@ -118,16 +118,10 @@ CWARNINGFLAGS += \
+     -Waddress \
+     -Waggregate-return \
+     -Wchar-subscripts \
+-    -Wempty-body \
+-    -Wlogical-op \
+     -Wmissing-declarations \
+     -Wmissing-field-initializers \
+-    -Wmissing-parameter-type \
+     -Wnested-externs \
+-    -Wold-style-declaration \
+-    -Wold-style-definition \
+-    -Wredundant-decls \
+-    -Wtype-limits
++    -Wold-style-definition
+ 
+ #
+ # Extra warning flags (possible future use)
