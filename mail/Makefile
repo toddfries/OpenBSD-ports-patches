@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.273 2011/12/08 09:39:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.275 2012/01/30 17:23:59 sthen Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
  
@@ -38,6 +38,7 @@
      SUBDIR += dkim-milter
      SUBDIR += dovecot
      SUBDIR += dovecot-pigeonhole
+     SUBDIR += dovecot-antispam
      SUBDIR += drac
      SUBDIR += dspam
      SUBDIR += dspam,hash
@@ -103,6 +104,7 @@
      SUBDIR += mutt
      SUBDIR += nail
      SUBDIR += nmh
+     SUBDIR += nmh,sasl
      SUBDIR += nmzmail
      SUBDIR += offlineimap
      SUBDIR += openwebmail

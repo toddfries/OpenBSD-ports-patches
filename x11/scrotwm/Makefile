@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.33 2011/08/29 13:21:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2012/01/30 11:12:42 sthen Exp $
 
 COMMENT=		small tiling window manager
 
 SHARED_LIBS=		swmhack 0.0
 
-DISTNAME=		scrotwm-0.9.34
+DISTNAME=		scrotwm-0.10.0
+REVISION=		0
 EXTRACT_SUFX=		.tgz
 CATEGORIES=		x11
 
@@ -22,10 +23,8 @@ WANTLIB += c X11 Xrandr Xtst util
 MASTER_SITES=	http://opensource.conformal.com/snapshots/scrotwm/
 
 NO_REGRESS=	Yes
-# nroff is specifically used to format the Russian manpage
-USE_GROFF=	Yes
 
-RUN_DEPENDS=	x11/dmenu>=3.9
+RUN_DEPENDS=	x11/dmenu>=4.4.1
 
 MAKE_FLAGS=	BINDIR="${TRUEPREFIX}/bin" \
 		MANDIR="${TRUEPREFIX}/man/man" \
@@ -42,10 +41,9 @@ post-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/screenshot.sh ${PREFIX}/share/examples/scrotwm
 	${INSTALL_DATA} ${WRKSRC}/scrotwm.conf ${PREFIX}/share/examples/scrotwm
 
-## mans need to be updated
-#.for i in es it pt ru
-#	${INSTALL_DATA_DIR} ${PREFIX}/man/$i/man1
-#	mv ${PREFIX}/man/man1/scrotwm_$i.1 ${PREFIX}/man/$i/man1/scrotwm.1
-#.endfor
+.for i in es cz fr fr_ch se us
+	${INSTALL_DATA_DIR} ${WRKSRC}/scrotwm_$i.conf
+	mv ${WRKSRC}/scrotwm_$i.conf ${PREFIX}/share/examples/scrotwm
+.endfor
 
 .include <bsd.port.mk>

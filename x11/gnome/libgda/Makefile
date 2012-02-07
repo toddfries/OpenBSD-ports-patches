@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.56 2011/12/05 12:32:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.60 2012/01/31 07:58:19 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,7 +9,7 @@ COMMENT-pgsql=		PostreSQL backend for libgda
 COMMENT-ui=		GTK+ extension and tools for libgda
 
 GNOME_PROJECT=		libgda
-GNOME_VERSION=		5.0.2
+GNOME_VERSION=		5.0.3
 
 # NOTE: when major version changes, increment GDA_MAJOR accordingly and
 # bump "x11/gnome/libgdamm"
@@ -21,8 +21,7 @@ PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}
 PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
 
-REVISION-main=		0
-REVISION-ui=		0
+REVISION-ui=		1
 
 EPOCH-main=		2
 EPOCH-ldap=		0
@@ -72,7 +71,9 @@ BUILD_DEPENDS=		databases/db/v4 \
 
 REGRESS_DEPENDS=	devel/check
 
-MODGNOME_TOOLS= 	goi yelp vala
+# XXX check if still necessary when updating to >5.0.3:
+# vala should be added but this tarball misses a few needed files
+MODGNOME_TOOLS= 	goi yelp
 
 LIBTOOL_FLAGS=		--tag=disable-static
 USE_GROFF =		Yes
@@ -156,5 +157,11 @@ WANTLIB-ldap=		${WANTLIB} crypto gda-${GDA_MAJOR} gssapi krb5 lber-2.4 \
 LIB_DEPENDS-ldap=	x11/gnome/libgda \
 			databases/openldap
 CONFIGURE_ARGS+=	--with-ldap
+
+# XXX sync LIBdb_VERSION with databases/db/v4
+LIBdb_VERSION=	5.0
+SUBST_VARS+=	LIBdb_VERSION
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/configure
 
 .include <bsd.port.mk>

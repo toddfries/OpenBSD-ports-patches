@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.725 2012/01/08 14:58:37 matthieu Exp $
+# $OpenBSD: Makefile,v 1.729 2012/01/30 14:17:50 jsing Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -105,6 +105,7 @@
      SUBDIR += gnugk
      SUBDIR += gopher
      SUBDIR += gotthard
+     SUBDIR += grake
      SUBDIR += gsnmp
      SUBDIR += gssdp
      SUBDIR += gtk-gnutella
@@ -192,6 +193,7 @@
      SUBDIR += meanwhile
      SUBDIR += microblog-purple
      SUBDIR += minbif
+     SUBDIR += miniupnp
      SUBDIR += mirmon
      SUBDIR += mirror
      SUBDIR += mldonkey
@@ -249,6 +251,7 @@
      SUBDIR += openmdns
      SUBDIR += openvmps
      SUBDIR += openvpn
+     SUBDIR += openvpn-auth-ldap
      SUBDIR += openvpn_bsdauth
      SUBDIR += osrtspproxy
      SUBDIR += owamp
@@ -309,6 +312,7 @@
      SUBDIR += p5-Net-NTP
      SUBDIR += p5-Net-Netmask
      SUBDIR += p5-Net-OAuth
+     SUBDIR += p5-Net-OpenSSH
      SUBDIR += p5-Net-PH
      SUBDIR += p5-Net-ParseWhois
      SUBDIR += p5-Net-Patricia

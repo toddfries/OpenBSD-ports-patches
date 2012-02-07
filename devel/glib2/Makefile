@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.147 2012/01/01 09:00:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.150 2012/02/02 07:10:17 ajacoutot Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
@@ -10,7 +10,7 @@ EXTRACT_SUFX=		.tar.xz
 PKGNAME-main=		glib2-${VERSION}
 PKGNAME-docs=		glib2-docs-${VERSION}
 
-REVISION-main=		2
+REVISION-main=		5
 
 CATEGORIES=		devel
 
@@ -94,7 +94,7 @@ AUTOCONF_VERSION=	2.68
 BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
 			${MODGNU_AUTOMAKE_DEPENDS}
 MASTER_SITES0=		http://dmitrymatveev.co.uk/files/
-PATCHFILES=		glib-gio-kqueue-2.28.8-v2.patch:0
+PATCHFILES=		glib-gio-kqueue-2.28.8-v3.patch:0
 AUTO_ENV=		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
 			AUTOCONF_VERSION=${AUTOCONF_VERSION}
 post-patch:
@@ -105,7 +105,18 @@ post-patch:
 	cd ${WRKSRC} && ${AUTO_ENV} autoconf
 ### end of kqueue(1) backend ###########################################
 
+.include <bsd.port.arch.mk>
+
 pre-configure:
+# XXX
+# SIGSEGV on LP64_ARCHS at gclosure.c:290: i = closure->n_guards;
+# -> reproduce by adding a meeting in evolution for a passed date and
+#    running /usr/local/libexec/evolution/3.2/evolution-alarm-notify
+.if ${PROPERTIES:Mlp64}
+	perl -pi -e 's,CFLAGS = \@CFLAGS\@,CFLAGS = \@CFLAGS\@ -O0,' \
+		${WRKSRC}/gobject/Makefile.in
+.endif
+
 	perl -pi -e "s,/usr/local,${LOCALBASE},g;" \
 		-e "s,/usr/share/locale,${LOCALBASE}/share/locale,g;" \
 		-e "s,/usr/share/applications,${LOCALBASE}/share/applications,g;" \

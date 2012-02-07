@@ -1,4 +1,4 @@
-.\"	$OpenBSD: dpb.1,v 1.27 2012/01/04 02:08:52 espie Exp $
+.\"	$OpenBSD: dpb.1,v 1.31 2012/01/30 15:15:24 espie Exp $
 .\"
 .\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 .\"
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: January 4 2012 $
+.Dd $Mdocdate: January 30 2012 $
 .Dt DPB 1
 .Os
 .Sh NAME
@@ -96,7 +96,7 @@ is used to specify hosts to use,
 can be as simple as a list of hosts to use, one host per line.
 .Pp
 Options are as follows:
-.Bl -tag -width pkgpathlonger
+.Bl -tag -width pkgpathlong
 .It Fl A Ar arch
 Build packages for given architecture, selecting relevant hosts from the
 cluster.
@@ -118,7 +118,9 @@ as this does not take subpackages and flavors into account.
 .It Fl D Ar PARAM Ns = Ns Ar value
 Set defined parameter to value.
 Known parameters are as follows:
-.Bl -tag -width DISPLAY
+.Bl -tag -width DISP
+.It Ar CDROM_ONLY
+Don't fetch distfiles that are not allowed for cdrom.
 .It Ar CONNECTION_TIMEOUT
 Connection timeout for ssh.
 Defaults to 60 seconds.
@@ -126,6 +128,14 @@ Defaults to 60 seconds.
 Display timeout (in seconds) while waiting for jobs to finish, so that the
 display is updated even if jobs didn't finish.
 Defaults to 10 seconds.
+.It Ar FTP_ONLY
+Don't fetch distfiles that are not allowed for ftp.
+.It Ar HISTORY_ONLY
+Don't fetch or build anything.
+Only run
+.Nm
+to figure out old distfiles and update
+.Pa ${FULLDISTDIR}/history .
 .It Ar STUCK_TIMEOUT
 Timeout (in seconds * speed factor) after which tasks that don't show
 any progress will be killed.
@@ -460,12 +470,65 @@ Apart from producing packages,
 .Nm
 may create temporary files as
 .Pa ${FULLDISTDIR}/${DISTFILE}.part .
-It also uses
-.Pa ${FULLDISTDIR}/distinfo
-as a cache for distfiles that have been checksummed,
-and populates
+.Pp
+In fetch mode
+.Po
+.Fl f
+and
+.Fl F
+.Pc ,
+.Nm
+populates
 .Pa ${FULLDISTDIR}/by_cipher/sha256
 with links.
+It also uses
+.Pa ${FULLDISTDIR}/distinfo
+and
+.Pa ${FULLDISTDIR}/history
+as a
+.Sq permanent log :
+.Bl -tag -width distinfo
+.It distinfo
+cache of distfiles checksum.
+Contains all
+.Xr sha256 1
+checksums of known files under
+.Pa ${FULLDISTDIR} .
+Fetching uses this to avoid re-checksumming known files.
+.It history
+Log of old files under distinfo.
+After succesfully scanning a full ports tree
+.Po
+.Nm Fl a
+.Pc ,
+the fetch engine knows precisely which files are needed by the build
+(and their checksums).
+Anything that is
+.Bl -bullet
+.It
+recorded in distinfo but unneeded
+.It
+recorded in distinfo but with the wrong checksum
+.It
+not recorded in distinfo, but not needed
+.El
+will be entered at the end of history as a line:
+.Pp
+.Li Ar ts SHA256 (file) = value
+.Pp
+with
+.Ar ts
+a timestamp from Unix epoch.
+.Pp
+When cleaning up old files, with a tool such as
+.Xr clean-old-distfiles 1 ,
+it is vital to check both the checksum and
+the file name: since mirroring stores permanent links under
+.Pa by_cipher ,
+files which are still needed will appear in history under their old
+checksums, as an indication the link should be removed, but possibly not
+the file itself.
+.El
 .Pp
 If
 .Pa ${DISTDIR}
@@ -679,6 +742,7 @@ relying on
 .Xr ssh_config 5
 for any special cases.
 .Sh SEE ALSO
+.Xr clean-old-distfiles 1 ,
 .Xr pkgpath 7
 .Sh AUTHOR
 Marc Espie

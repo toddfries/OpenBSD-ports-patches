@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.22 2011/11/16 15:56:37 robert Exp $
+# $OpenBSD: Makefile,v 1.26 2012/02/03 10:14:12 espie Exp $
 
 COMMENT =	powerful content management system
+MAINTAINER =	Marc Espie <espie@openbsd.org>
 
-DISTNAME =	drupal-6.22
+DISTNAME =	drupal-6.24
 DISTFILES =	${DISTNAME}${EXTRACT_SUFX}
-REVISION =	5
 
 MODULES=	lang/php
-RUN_DEPENDS=	php-mysql-*|php-mysqli-*|php-pgsql-*:lang/php/${MODPHP_VERSION},-mysql \
+RUN_DEPENDS=	php-mysql-${MODPHP_VSPEC}|php-mysqli-${MODPHP_VSPEC}|php-pgsql-${MODPHP_VSPEC}:lang/php/${MODPHP_VERSION},-mysql \
 		lang/php/${MODPHP_VERSION},-gd
 
 do-install:

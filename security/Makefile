@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.277 2012/01/04 08:59:57 sebastia Exp $
+# $OpenBSD: Makefile,v 1.281 2012/01/26 09:25:46 sebastia Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -15,8 +15,8 @@
      SUBDIR += arirang
      SUBDIR += assl
      SUBDIR += bfbtester
-     SUBDIR += bounix
      SUBDIR += botan
+     SUBDIR += bounix
      SUBDIR += bsd-airtools
      SUBDIR += bunny
      SUBDIR += ccrypt
@@ -59,10 +59,14 @@
      SUBDIR += hlfl
      SUBDIR += hs-asn1-data
      SUBDIR += hs-certificate
-     SUBDIR += hs-crypto-api
      SUBDIR += hs-crypto
+     SUBDIR += hs-crypto-api
      SUBDIR += hs-cryptocipher
      SUBDIR += hs-cryptohash
+     SUBDIR += hs-entropy
+     SUBDIR += hs-mwc-random
+     SUBDIR += hs-pwstore-fast
+     SUBDIR += hs-skein
      SUBDIR += hs-tls
      SUBDIR += hydra
      SUBDIR += ikeman
@@ -205,6 +209,8 @@
      SUBDIR += py-pykpass
      SUBDIR += py-sslwrapper
      SUBDIR += qca
+     SUBDIR += qca2
+     SUBDIR += qca-ossl
      SUBDIR += qca-tls
      SUBDIR += radiusniff
      SUBDIR += rarcrack

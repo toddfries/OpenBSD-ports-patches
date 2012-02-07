@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.28 2011/11/07 12:31:22 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.30 2012/02/02 06:57:39 jakob Exp $
 @conflict postfix-*
 @newgroup _postfix:507
 @newgroup _postdrop:508

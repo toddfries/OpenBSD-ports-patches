@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Grabber.pm,v 1.21 2012/01/09 17:56:28 espie Exp $
+# $OpenBSD: Grabber.pm,v 1.24 2012/01/30 15:11:04 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -34,11 +34,11 @@ sub new
 		errors => 0,
 		endcode => $endcode
 	    }, $class;
-	if ($state->opt('f')) {
+	if ($state->{want_fetchinfo}) {
 		require DPB::Fetch;
 		$o->{dpb} = "fetch";
 		$o->{fetch} = DPB::Fetch->new($state->distdir, $state->logger,
-		    $state->{fetch_only});
+		    $state);
 	} else {
 		$o->{dpb} = "normal";
 		$o->{fetch} = DPB::FetchDummy->new;
@@ -51,8 +51,7 @@ sub expire_old_distfiles
 	my ($self, $core, $opt_e) = @_;
 	# don't bother if dump-vars wasn't perfectly clean
 	return 0 if $self->{errors};
-	$self->{fetch}->run_expire_old($core, $opt_e);
-	return 1;
+	return $self->{fetch}->run_expire_old($core, $opt_e);
 }
 
 sub finish
@@ -167,6 +166,11 @@ sub new
 
 sub build_distinfo
 {
+}
+
+sub run_expire_old
+{
+	return 0;
 }
 
 1;

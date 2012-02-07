@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1153 2011/12/21 05:16:04 miod Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1158 2012/01/29 11:29:51 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -38,6 +38,13 @@ ERRORS += "Fatal: you're not allowed to override $t"
 .  endif
 .endfor
 
+.for f v in bsd.port.mk _BSD_PORT_MK bsd.port.subdir.mk _BSD_PORT_SUBDIR_MK
+.  if defined($v)
+ERRORS += "Fatal: inclusion of bsd.port.mk from $f"
+.  endif
+.endfor
+
+_BSD_PORT_MK = Done
 
 # The definitive source of documentation to this file's user-visible parts
 # is bsd.port.mk(5).
@@ -97,7 +104,8 @@ _ALL_VARIABLES_PER_ARCH =
 _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
-	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES
+	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES \
+	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
@@ -105,7 +113,6 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	REGRESS_DEPENDS USE_GMAKE USE_GROFF MODULES FLAVORS \
 	NO_BUILD NO_REGRESS SHARED_ONLY PSEUDO_FLAVORS \
 	REGRESS_IS_INTERACTIVE \
-	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
 	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS
@@ -707,6 +714,7 @@ _PACKAGE_COOKIE_DEPS=${_FAKE_COOKIE}
 
 .for _s in ${BUILD_PACKAGES}
 PKGNAMES += ${FULLPKGNAME${_s}}
+PKGFILES += ${PKGFILE${_s}}
 .endfor
 
 .for _s in ${MULTI_PACKAGES}
@@ -1738,7 +1746,8 @@ ${_UPDATE_COOKIE${_S}}:
 	@mkdir -p ${UPDATE_COOKIES_DIR}
 .  endif
 	@${ECHO_MSG} "===> Updating for ${FULLPKGNAME${_S}}"
-	@a=`${PKG_INFO} -e ${FULLPKGPATH${_S}} 2>/dev/null || true`; \
+	@b=`cd ${.CURDIR} && SUBPACKAGE=${_S} ${MAKE} print-plist|sed -ne '/^@pkgpath /s,,-e ,p'`; \
+	a=`${PKG_INFO} -e ${FULLPKGPATH${_S}} $$b 2>/dev/null |sort -u`; \
 	case $$a in \
 		'') ${ECHO_MSG} "Not installed, no update";; \
 		*) cd ${.CURDIR} && SUBPACKAGE=${_S} _DEPENDS_TARGET=package PKGPATH=${PKGPATH} \

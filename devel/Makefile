@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1009 2011/12/29 15:13:13 fgsch Exp $
+# $OpenBSD: Makefile,v 1.1016 2012/01/23 21:08:25 kili Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -158,22 +158,31 @@
      SUBDIR += hs-MonadCatchIO-transformers
      SUBDIR += hs-PSQueue
      SUBDIR += hs-QuickCheck
+     SUBDIR += hs-aeson
      SUBDIR += hs-ansi-terminal
      SUBDIR += hs-atom
+     SUBDIR += hs-base16-bytestring
      SUBDIR += hs-base64-bytestring
      SUBDIR += hs-bimap
      SUBDIR += hs-binary
      SUBDIR += hs-blaze-builder
      SUBDIR += hs-blaze-builder-enumerator
+     SUBDIR += hs-blaze-textual
      SUBDIR += hs-case-insensitive
      SUBDIR += hs-cereal
      SUBDIR += hs-cmdargs
+     SUBDIR += hs-comonad
+     SUBDIR += hs-comonad-transformers
+     SUBDIR += hs-contravariant
      SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
      SUBDIR += hs-data-default
+     SUBDIR += hs-data-lens
+     SUBDIR += hs-data-lens-template
      SUBDIR += hs-dataenc
      SUBDIR += hs-deepseq
      SUBDIR += hs-directory-tree
+     SUBDIR += hs-distributive
      SUBDIR += hs-dlist
      SUBDIR += hs-enumerator
      SUBDIR += hs-failure
@@ -183,6 +192,7 @@
      SUBDIR += hs-gio
      SUBDIR += hs-glade
      SUBDIR += hs-glib
+     SUBDIR += hs-hashable
      SUBDIR += hs-hashed-storage
      SUBDIR += hs-haskeline
      SUBDIR += hs-hint
@@ -193,6 +203,7 @@
      SUBDIR += hs-iteratee
      SUBDIR += hs-language-c
      SUBDIR += hs-largeword
+     SUBDIR += hs-logict
      SUBDIR += hs-mmap
      SUBDIR += hs-monads-fd
      SUBDIR += hs-monads-tf
@@ -211,6 +222,8 @@
      SUBDIR += hs-regex-pcre-builtin
      SUBDIR += hs-regex-posix
      SUBDIR += hs-safe
+     SUBDIR += hs-semigroupoids
+     SUBDIR += hs-semigroups
      SUBDIR += hs-sendfile
      SUBDIR += hs-stm
      SUBDIR += hs-stringtable-atom
@@ -223,6 +236,7 @@
      SUBDIR += hs-type-level
      SUBDIR += hs-uniplate
      SUBDIR += hs-unix-compat
+     SUBDIR += hs-unordered-containers
      SUBDIR += hs-vector
      SUBDIR += hs-vector-algorithms
      SUBDIR += hscolour
@@ -256,7 +270,9 @@
      SUBDIR += libdisorder
      SUBDIR += libdockapp
      SUBDIR += libdvdread
+     SUBDIR += libee
      SUBDIR += libelf
+     SUBDIR += libestr
      SUBDIR += libev
      SUBDIR += libevent2
      SUBDIR += libeventextra
@@ -363,8 +379,8 @@
      SUBDIR += opencm
      SUBDIR += openmpi
      SUBDIR += openocd
-     SUBDIR += orc
      SUBDIR += ophis
+     SUBDIR += orc
      SUBDIR += p5-Acme-Damn
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
@@ -416,9 +432,9 @@
      SUBDIR += p5-Catalyst-Plugin-C3
      SUBDIR += p5-Catalyst-Plugin-StackTrace
      SUBDIR += p5-Class-Accessor
-     SUBDIR += p5-Class-Accessor-Lite
      SUBDIR += p5-Class-Accessor-Chained
      SUBDIR += p5-Class-Accessor-Grouped
+     SUBDIR += p5-Class-Accessor-Lite
      SUBDIR += p5-Class-AutoClass
      SUBDIR += p5-Class-Autouse
      SUBDIR += p5-Class-Base
@@ -598,6 +614,7 @@
      SUBDIR += p5-Fortran-Format
      SUBDIR += p5-FreezeThaw
      SUBDIR += p5-Getargs-Long
+     SUBDIR += p5-Getopt-ArgvFile
      SUBDIR += p5-Getopt-Euclid
      SUBDIR += p5-Getopt-Long-Descriptive
      SUBDIR += p5-Getopt-Simple
@@ -661,6 +678,7 @@
      SUBDIR += p5-MRO-Compat
      SUBDIR += p5-Module-Find
      SUBDIR += p5-Module-Install
+     SUBDIR += p5-Module-Manifest
      SUBDIR += p5-Module-Pluggable-Fast
      SUBDIR += p5-Module-Refresh
      SUBDIR += p5-Module-ScanDeps
@@ -810,6 +828,7 @@
      SUBDIR += p5-Test-Corpus-Audio-MPD
      SUBDIR += p5-Test-Deep
      SUBDIR += p5-Test-Differences
+     SUBDIR += p5-Test-DistManifest
      SUBDIR += p5-Test-Distribution
      SUBDIR += p5-Test-Exception
      SUBDIR += p5-Test-Expect
@@ -1033,8 +1052,8 @@
      SUBDIR += qt-creator
      SUBDIR += qt4-eventsview
      SUBDIR += quirks
-     SUBDIR += ragel
      SUBDIR += radare2
+     SUBDIR += ragel
      SUBDIR += rapidsvn
      SUBDIR += rats
      SUBDIR += re2c

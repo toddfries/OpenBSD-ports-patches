@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.23 2011/11/17 12:52:27 robert Exp $
+# $OpenBSD: Makefile.inc,v 1.26 2012/01/25 11:17:22 sthen Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -18,15 +18,15 @@ CATEGORIES=		lang www
 MAINTAINER=		Robert Nagy <robert@openbsd.org>
 HOMEPAGE=		http://www.php.net/
 
-SUHOSIN_V=		0.9.32.1
+SUHOSIN_V=		0.9.33
 SUHOSIN_PHPV?=		${V}
 
 MASTER_SITES=		http://us2.php.net/distributions/ \
 			http://se.php.net/distributions/ \
 			http://no.php.net/distributions/ \
 			http://uk.php.net/distributions/
-MASTER_SITES0=		http://blade2k.humppa.hu/ \
-			http://download.suhosin.org/ \
+MASTER_SITES0=		http://download.suhosin.org/ \
+			http://blade2k.humppa.hu/ \
 			${_MASTER_SITE_FREEBSD}
 
 # UPGRADERS: please read BOTH the PHP and Zend licenses
@@ -35,6 +35,8 @@ PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
+
+SHARED_ONLY=		Yes
 
 MODPHP_CONFIG_PATH=	/var/www/conf
 
@@ -254,7 +256,7 @@ MULTI_PACKAGES+=	-snmp
 COMMENT-snmp=		snmp protocol extensions for php5
 CONFIGURE_ARGS+=	--with-snmp=shared,${LOCALBASE} --enable-ucd-snmp-hack
 LIB_DEPENDS-snmp=	net/net-snmp
-WANTLIB-snmp=		crypto netsnmp>=6.2
+WANTLIB-snmp=		crypto m netsnmp>=6.2
 
 # sqlite
 MULTI_PACKAGES+=	-sqlite
@@ -317,10 +319,10 @@ RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
 LIB_DEPENDS-fastcgi=	${LIB_DEPENDS-main}
 
 .if ${FLAVOR:L:Mno_suhosin}
-SUPDISTFILES=		suhosin-${SUHOSIN_V}.tar.gz:0 \
+SUPDISTFILES=		suhosin-${SUHOSIN_V}.tgz:0 \
 			suhosin-patch-${SUHOSIN_PHPV}-${SUHOSIN_P_V}.patch.gz:0
 .else
-DISTFILES+=		suhosin-${SUHOSIN_V}.tar.gz:0
+DISTFILES+=		suhosin-${SUHOSIN_V}.tgz:0
 PATCHFILES=		suhosin-patch-${SUHOSIN_PHPV}-${SUHOSIN_P_V}.patch.gz:0
 PATCH_DIST_STRIP=	-p1
 CONFIGURE_ARGS+=	--enable-suhosin

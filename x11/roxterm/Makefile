@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.26 2011/12/07 11:43:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2012/01/30 10:18:19 ajacoutot Exp $
 
 COMMENT=		terminal emulator for X
 
 DISTNAME=		roxterm-2.0.1
-REVISION=		3
+REVISION=		5
 CATEGORIES=		x11
 
 HOMEPAGE=		http://roxterm.sourceforge.net/
@@ -17,18 +17,18 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB+=	GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
-		Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo \
-		dbus-1 dbus-glib-1 drm expat fontconfig freetype \
-		gdk_pixbuf-2.0 gdk-x11-2.0 gio-2.0 glib-2.0 \
-		gmodule-2.0 gobject-2.0 gtk-x11-2.0 gthread-2.0 \
-		m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre \
-		pixman-1 png pthread pthread-stubs vte xcb xcb-render \
-		xcb-shm z
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
+WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 drm expat
+WANTLIB += ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0 gio-2.0
+WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 gtk-3
+WANTLIB += m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread pthread-stubs stdc++ vte2_90 xcb
+WANTLIB += xcb-render xcb-shm z
 
 MODULES=		devel/gettext
 
-LIB_DEPENDS=		devel/vte \
+LIB_DEPENDS=		devel/vte3 \
 			x11/dbus-glib \
 			devel/libglade2 
 

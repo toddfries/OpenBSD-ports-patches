@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.312 2011/12/23 15:08:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.315 2012/01/26 17:19:23 sthen Exp $
 # $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
 #
 
@@ -44,6 +44,8 @@
      SUBDIR += djview4
      SUBDIR += djvulibre
      SUBDIR += djvulibre,no_x11
+# XXX requires ImageMagick-*-!no_x11 which conflicts in bulk
+#    SUBDIR += dmtx-utils
      SUBDIR += dpic
      SUBDIR += dumpmpeg
      SUBDIR += dvdrip
@@ -121,6 +123,7 @@
      SUBDIR += libart
      SUBDIR += libcaca
      SUBDIR += libdivxdecore
+     SUBDIR += libdmtx
      SUBDIR += libdvbpsi
      SUBDIR += libexif
      SUBDIR += libexif-gtk
@@ -183,6 +186,7 @@
      SUBDIR += p5-Image-Imlib2
      SUBDIR += p5-Image-Info
      SUBDIR += p5-Image-MetaData-JPEG
+     SUBDIR += p5-Image-Scale
      SUBDIR += p5-Image-Size
      SUBDIR += p5-Imager
      SUBDIR += p5-Imager-QRCode

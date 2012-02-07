@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-ui,v 1.15 2011/12/03 22:17:16 ajacoutot Exp $
+@comment $OpenBSD: PLIST-ui,v 1.18 2012/01/31 07:58:19 ajacoutot Exp $
 @conflict libgda-<4.2.8p1v2
 @bin bin/gda-browser-${GDA_MAJOR}
 @bin bin/gda-control-center-${GDA_MAJOR}
@@ -34,6 +34,7 @@ include/libgda-${GDA_MAJOR}/libgda-ui/libgda-ui.h
 lib/girepository-1.0/Gdaui-${GDA_MAJOR}.typelib
 lib/libgda-${GDA_MAJOR}/plugins/
 lib/libgda-${GDA_MAJOR}/plugins/gdaui-entry-filesel-spec.xml
+lib/libgda-${GDA_MAJOR}/plugins/gdaui-entry-format-spec.xml
 lib/libgda-${GDA_MAJOR}/plugins/gdaui-entry-password.xml
 lib/libgda-${GDA_MAJOR}/plugins/gdaui-entry-pict-spec.xml
 lib/libgda-${GDA_MAJOR}/plugins/gdaui-entry-pict-spec_string.xml
@@ -386,7 +387,6 @@ share/gnome/help/gda-browser/zh_CN/virtual-connections.page
 share/gtk-doc/html/gda-browser/
 share/gtk-doc/html/gda-browser/BrowserConnection.html
 share/gtk-doc/html/gda-browser/BrowserCore.html
-share/gtk-doc/html/gda-browser/BrowserFavorites.html
 share/gtk-doc/html/gda-browser/BrowserPerspective.html
 share/gtk-doc/html/gda-browser/BrowserWindow.html
 share/gtk-doc/html/gda-browser/CcGrayBar.html
@@ -395,6 +395,7 @@ share/gtk-doc/html/gda-browser/UILayout.png
 share/gtk-doc/html/gda-browser/code_orga.html
 share/gtk-doc/html/gda-browser/core.html
 share/gtk-doc/html/gda-browser/extrawidgets.html
+share/gtk-doc/html/gda-browser/gda-browser-browser-favorites.html
 share/gtk-doc/html/gda-browser/gda-browser-BrowserPage.html
 share/gtk-doc/html/gda-browser/gda-browser-Data-Manager-perspective.html
 share/gtk-doc/html/gda-browser/gda-browser-Query-Exec-perspective.html
@@ -444,7 +445,6 @@ share/libgda-${GDA_MAJOR}/demo/linked_model_param.c
 share/libgda-${GDA_MAJOR}/demo/login.c
 share/libgda-${GDA_MAJOR}/demo/provider_sel.c
 share/libgda-${GDA_MAJOR}/demo/tree.c
-share/libgda-${GDA_MAJOR}/dtd/gdaui-layout.dtd
 share/libgda-${GDA_MAJOR}/icons/
 share/libgda-${GDA_MAJOR}/icons/hicolor/
 share/libgda-${GDA_MAJOR}/icons/hicolor/16x16/

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2010/11/15 09:05:41 stephan Exp $
+# $OpenBSD: Makefile,v 1.4 2012/01/28 11:20:52 espie Exp $
 
 COMMENT =	zap duplicate content through redirects
+MAINTAINER =	Marc Espie <espie@openbsd.org>
 
-DISTNAME = 	globalredirect-6.x-1.2
-PKGNAME =	drupal6-globalredirect-1.2
-REVISION =	0
+DISTNAME = 	globalredirect-6.x-1.4
+PKGNAME =	drupal6-globalredirect-1.4
 
 .include <bsd.port.mk>

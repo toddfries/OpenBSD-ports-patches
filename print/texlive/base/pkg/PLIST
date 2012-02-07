@@ -1,7 +1,9 @@
-@comment $OpenBSD: PLIST,v 1.19 2011/11/23 12:00:45 edd Exp $
+@comment $OpenBSD: PLIST,v 1.21 2012/01/31 14:15:57 sthen Exp $
 @conflict teTeX_base-*
+@conflict pdfjam-*
 @conflict ht-<2
 @pkgpath print/teTeX/base
+@pkgpath print/pdfjam
 @pkgpath print/teTeX/base,-fmt
 %%SHARED%%
 %%xindy%%
@@ -374,3 +376,6 @@ share/doc/pkg-readmes/${FULLPKGNAME}
 @extra share/texmf-dist/ls-R
 @extra share/texmf-var/ls-R
 @extra share/texmf-config/ls-R
+@unexec-delete rm %D/share/texmf/ls-R
+@unexec-delete rm %D/share/texmf-dist/ls-R
+@unexec-delete rm %D/share/texmf-var/ls-R

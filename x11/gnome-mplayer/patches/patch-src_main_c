@@ -1,19 +1,38 @@
-$OpenBSD: patch-src_main_c,v 1.14 2012/01/11 12:45:25 dcoppa Exp $
+$OpenBSD: patch-src_main_c,v 1.16 2012/01/23 16:14:40 dcoppa Exp $
 
 Fix problem with directory vs dvd detection
 (upstream svn revision r2201)
 
+Enable dark theme only when using GTK+3
+(upstream svn revision r2205)
+
 --- src/main.c.orig	Fri Dec 16 20:55:51 2011
-+++ src/main.c	Wed Jan 11 13:39:39 2012
-@@ -659,6 +659,7 @@ int main(int argc, char *argv[])
++++ src/main.c	Mon Jan 23 17:06:45 2012
+@@ -658,7 +658,10 @@ int main(int argc, char *argv[])
+     gdouble volume = 100.0;
      gchar *accelerator_keys;
      gchar **parse;
++#ifdef GTK3_ENABLED
      GtkSettings *gtk_settings;
++#endif
 +    int stat_result;
  
  #ifndef OS_WIN32
      struct sigaction sa;
-@@ -1078,14 +1079,15 @@ int main(int argc, char *argv[])
+@@ -1053,10 +1056,12 @@ int main(int argc, char *argv[])
+                            G_TYPE_FLOAT, G_TYPE_FLOAT, G_TYPE_BOOLEAN);
+ 
+     // only use dark theme if not embedded, otherwise use the default theme                                       
++#ifdef GTK3_ENABLED
+     if (embed_window <= 0) {
+         gtk_settings = gtk_settings_get_default();
+         g_object_set(G_OBJECT(gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+     }
++#endif
+ 
+     create_window(embed_window);
+ 
+@@ -1078,14 +1083,15 @@ int main(int argc, char *argv[])
              g_object_unref(file);
          }
          filename = g_filename_from_uri(uri, NULL, NULL);
@@ -31,7 +50,7 @@ Fix problem with directory vs dvd detection
              printf("is block %i\n", S_ISBLK(buf.st_mode));
              printf("is character %i\n", S_ISCHR(buf.st_mode));
              printf("is reg %i\n", S_ISREG(buf.st_mode));
-@@ -1093,7 +1095,7 @@ int main(int argc, char *argv[])
+@@ -1093,7 +1099,7 @@ int main(int argc, char *argv[])
              printf("playlist %i\n", playlist);
              printf("embedded in window id 0x%x\n", embed_window);
          }
@@ -40,7 +59,7 @@ Fix problem with directory vs dvd detection
              // might have a block device, so could be a DVD
  
  #ifdef HAVE_SYS_MOUNT_H
-@@ -1148,11 +1150,11 @@ int main(int argc, char *argv[])
+@@ -1148,11 +1154,11 @@ int main(int argc, char *argv[])
                      playiter = TRUE;
                  }
              }

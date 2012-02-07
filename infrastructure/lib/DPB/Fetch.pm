@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.27 2012/01/10 19:35:36 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.34 2012/01/31 15:45:19 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -29,8 +29,12 @@ sub create
 {
 	my ($class, $file, $short, $site, $distinfo, $v, $repo) = @_;
 
-	my $sz = $distinfo->{size}{$file} // 0;
+	my $sz = $distinfo->{size}{$file};
 	my $sha = $distinfo->{sha}{$file};
+	if (!defined $sz || !defined $sha) {
+		$v->break("Incomplete info for $file");
+		return;
+	}
 	$repo->known_file($sha, $file);
 	bless {
 		name => $file,
@@ -117,6 +121,12 @@ sub filename
 	return $self->distdir($self->{name});
 }
 
+sub checked_already
+{
+	my $self = shift;
+	return $self->{okay} || $self->{checked};
+}
+
 sub check
 {
 	my ($self, $logger) = @_;
@@ -154,6 +164,7 @@ sub find_copy
 			unlink($name);
 			if (link($full, $name)) {
 				$self->do_cache;
+				$self->{okay} = 1;
 				return 1;
 			}
 		}
@@ -179,6 +190,7 @@ sub checksize
 		print $fh "size does not match\n";
 		return 0;
 	}
+	$self->{checked} = 1;
 	return 1;
 }
 
@@ -284,10 +296,17 @@ package DPB::Fetch;
 
 sub new
 {
-	my ($class, $distdir, $logger, $fetch_only) = @_;
+	my ($class, $distdir, $logger, $state) = @_;
 	my $o = bless {distdir => $distdir, sha => {}, reverse => {},
 	    known_sha => {}, known_files => {},
-	    fetch_only => $fetch_only}, $class;
+	    known_short => {},
+	    fetch_only => $state->{fetch_only}}, $class;
+	if (defined $state->{subst}->value('FTP_ONLY')) {
+		$o->{ftp_only} = 1;
+	}
+	if (defined $state->{subst}->value('CDROM_ONLY')) {
+		$o->{cdrom_only} = 1;
+	}
 	if (open(my $fh, '<', "$distdir/distinfo")) {
 		my $_;
 		while (<$fh>) {
@@ -312,10 +331,38 @@ sub new
 	return $o;
 }
 
+sub mark_sha
+{
+	my ($self, $sha, $file) = @_;
+
+	$self->{known_sha}{$sha}{$file} = 1;
+
+	# next cases are only needed to weed out by_cipher of extra links
+	if ($file =~ m/^.*\/([^\/]+)$/) {
+		$self->{known_short}{$sha}{$1} = 1;
+	}
+
+	# in particular, double / in $sha will vanish thanks to the fs
+	my $do = 0;
+	if ($sha =~ s/\/\//\//g) {
+		$do++;
+	}
+	if ($sha =~ s/^\///) {
+		$do++;
+	}
+	if ($do) {
+		if ($file =~ m/^.*\/([^\/]+)$/) {
+			$self->{known_short}{$sha}{$1} = 1;
+		} else {
+			$self->{known_short}{$sha}{$file} = 1;
+		}
+	}
+}
+
 sub known_file
 {
 	my ($self, $sha, $file) = @_;
-	$self->{known_sha}{$sha->stringize}{$file} = 1;
+	$self->mark_sha($sha->stringize, $file);
 	$self->{known_file}{$file} = 1;
 }
 
@@ -330,12 +377,14 @@ sub run_expire_old
 		# and we will never need this again
 		delete $self->{known_file};
 		delete $self->{known_sha};
+		delete $self->{known_short};
 		if (!$opt_e) {
 			$core->mark_ready;
 		}
 		return 0;
 	    }, 
-	    "CLEAN DIST"));
+	    "UPDATING DISTFILES HISTORY"));
+	return 1;
 }
 
 sub expire_old
@@ -346,9 +395,10 @@ sub expire_old
 	if (open(my $fh, '<', "$distdir/history")) {
 		my $_;
 		while (<$fh>) {
-			if (m/^\d+\s+SHA256\s*\((.*)\) \= (.*)/) {
-				$self->{known_sha}{$2}{$1} = 1;
-				$self->{known_file}{$1} = 1;
+			if (m/^\d+\s+SHA256\s*\((.*)\) \= (.*\=)$/) {
+				my ($file, $sha) = ($1, $2);
+				$self->mark_sha($sha, $file);
+				$self->{known_file}{$file} = 1;
 			}
 		}
 		close $fh;
@@ -375,9 +425,25 @@ sub expire_old
 		my $actual = $File::Find::name;
 		$actual =~ s/^\Q$distdir\E\/?//;
 		return if $self->{known_file}{$actual};
-		my $ck = OpenBSD::sha->new($_);
-		print $fh "$ts SHA256 ($actual) = ", $ck->stringize, "\n";
+		my $sha = OpenBSD::sha->new($_)->stringize;
+		print $fh "$ts SHA256 ($actual) = $sha\n";
+		$self->mark_sha($sha, $actual);
 	}, $distdir);
+
+	my $c = "$distdir/by_cipher/sha256";
+	if (-d $c) {
+		# and scan the ciphers as well !
+		File::Find::find(sub {
+			return unless -f $_;
+			if ($File::Find::dir =~ 
+			    m/^\Q$distdir\E\/by_cipher\/sha256\/..?\/(.*)$/) {
+				my $sha = $1;
+				return if $self->{known_sha}{$sha}{$_};
+				return if $self->{known_short}{$sha}{$_};
+				print $fh "$ts SHA256 ($_) = ", $sha, "\n";
+			}
+		}, $c);
+	}
 
 	close $fh;
 }
@@ -391,7 +457,7 @@ sub distdir
 sub read_checksums
 {
 	my $filename = shift;
-	open my $fh, '<', $filename or die "Can't read distinfo $filename";
+	open my $fh, '<', $filename or return;
 	my $r = { size => {}, sha => {}};
 	my $_;
 	while (<$fh>) {
@@ -401,7 +467,7 @@ sub read_checksums
 		} elsif (m/^SHA256 \((.*)\) \= (.*)$/) {
 			$r->{sha}->{$1} = OpenBSD::sha->fromstring($2);
 		} else {
-			die "Unknown line in $filename: $_";
+			next;
 		}
 	}
 	return $r;
@@ -429,7 +495,8 @@ sub build_distinfo
 		my $checksum_file = $info->{CHECKSUM_FILE};
 
 		if (!defined $checksum_file) {
-			die "No checksum file for ".$v->fullpkgpath;
+			$v->break("No checksum file");
+			next;
 		}
 		$checksum_file = $checksum_file->string;
 		$distinfo->{$checksum_file} //=
@@ -445,7 +512,8 @@ sub build_distinfo
 				$site.= $2;
 			}
 			if (!defined $info->{$site}) {
-				die "Can't find $site for $arg";
+				$v->break("Can't find $site for $arg");
+				return;
 			}
 			return DPB::Distfile->new($arg, $dir,
 			    $info->{$site}, $checksums, $v, $self);
@@ -453,12 +521,12 @@ sub build_distinfo
 
 		for my $d ((keys %{$info->{DISTFILES}}), (keys %{$info->{PATCHFILES}})) {
 			my $file = &$build($d);
-			$files->{$file} = $file;
+			$files->{$file} = $file if defined $file;
 		}
 		for my $d (keys %{$info->{SUPDISTFILES}}) {
 			my $file = &$build($d);
 			if ($fetch_only) {
-				$files->{$file} = $file;
+				$files->{$file} = $file if defined $file;
 			}
 		}
 		for my $k (qw(DIST_SUBDIR CHECKSUM_FILE DISTFILES
@@ -470,6 +538,17 @@ sub build_distinfo
 		}
 		bless $files, "AddDepends";
 		$info->{DIST} = $files;
+		if ($self->{cdrom_only} && 
+		    defined $info->{PERMIT_PACKAGE_CDROM}) {
+			$info->{DISTIGNORE} = 1;
+			$info->{IGNORE} //= AddIgnore->new(
+				"Distfile not allowed for cdrom");
+		} elsif ($self->{ftp_only} &&
+		    defined $info->{PERMIT_PACKAGE_FTP}) {
+			$info->{DISTIGNORE} = 1;
+			$info->{IGNORE} //= AddIgnore->new(
+			    "Distfile not allowed for ftp");
+		}
 	}
 }
 
