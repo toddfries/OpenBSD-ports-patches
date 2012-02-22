@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.81 2012/01/25 14:06:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.84 2012/02/21 15:27:13 ajacoutot Exp $
 
 # XXX ossaudio(3) is only enabled to be used as a mixing device by
 # audio/pulseaudio and x11/xfce4/xfce4-mixer
@@ -8,20 +8,19 @@ COMMENT-aalib =		aalib element for GStreamer (plugins-good)
 COMMENT-dv =		dv element for GStreamer (plugins-good)
 COMMENT-caca =		libcaca element for GStreamer (plugins-good)
 
-V =			0.10.30
+V =			0.10.31
 DISTNAME =		gst-plugins-good-$V
 
 PKGNAME-main =		gstreamer-plugins-good-${V}
 PKGNAME-aalib =		gstreamer-aalib-${V}
 PKGNAME-dv =		gstreamer-dv-${V}
 PKGNAME-caca =		gstreamer-libcaca-${V}
-
-REVISION-main = 	3
-REVISION-aalib = 	2
-REVISION-dv = 		2
-REVISION-caca = 	2
-
 EPOCH-main =		0
+
+REVISION-main =		1
+REVISION-aalib =	1
+REVISION-dv =		1
+REVISION-caca =		1
 
 MULTI_PACKAGES =	-main -aalib \
 			-dv -caca
@@ -45,7 +44,7 @@ REGRESS_DEPENDS +=	${BASE_PKGPATH},${i}
 RUN_DEPENDS =		${BUILD_PKGPATH}
 WANTLIB =		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
 			pcre xml2 m z gstreamer-0.10 gstbase-0.10 ffi
-LIB_DEPENDS =		$P/core>=0.10.30
+LIB_DEPENDS =		$P/core>=0.10.36
 
 WANTLIB-main =		${WANTLIB} ${MODGCONF2_WANTLIB} gdk_pixbuf-2.0 \
 			ICE SM X11 Xdamage Xext Xfixes sndio ossaudio \
@@ -81,7 +80,7 @@ WANTLIB-aalib=		${WANTLIB} \
 LIB_DEPENDS-aalib =	${LIB_DEPENDS} \
 			graphics/aalib
 
-WANTLIB-dv =		${WANTLIB} dv gstaudio-0.10 gstinterfaces-0.10
+WANTLIB-dv =		${WANTLIB} dv gstaudio-0.10 gstinterfaces-0.10 gstpbutils-0.10
 LIB_DEPENDS-dv =	${LIB_DEPENDS} \
 			multimedia/libdv \
 			${P}/plugins-base

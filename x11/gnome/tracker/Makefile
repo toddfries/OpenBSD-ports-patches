@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.95 2012/02/16 22:20:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.98 2012/02/22 14:20:32 ajacoutot Exp $
 
 # XXX Binary files patch-src_tracker-control_tracker-control-general_c
 # and patch-src_tracker-control_tracker-control-general_c.new differ
@@ -21,7 +21,13 @@ PKGNAME-main=		meta-tracker-${VERSION}
 PKGNAME-evolution=	evolution-meta-tracker-${VERSION}
 PKGNAME-nautilus=	nautilus-meta-tracker-${VERSION}
 
+REVISION-main=		1
+
+# Only get the first x.y which is needed in the PLIST.
+# NOTE: when MAJ_V changes, increment TRACKER_VERSION accordingly and bump:
+# net/telepathy/folks
 MAJ_V=		${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
+
 EVO_VERSION=	3.2
 SUBST_VARS=	MAJ_V EVO_VERSION
 
@@ -53,10 +59,10 @@ WANTLIB += kvm m pcre pixman-1 pthread-stubs xcb xcb-render xcb-shm
 WANTLIB += z
 
 WANTLIB-main += ${WANTLIB}
-WANTLIB-main += archive assuan atk-1.0 bz2 c cairo cairo-gobject
+WANTLIB-main += archive atk-1.0 bz2 c cairo cairo-gobject
 WANTLIB-main += dbus-1 dbus-glib-1 e2fs-uuid enca exempi exif gconf-2
 WANTLIB-main += gcrypt gdk-3 gdk_pixbuf-2.0 gee gif gmime-2.6
-WANTLIB-main += gnome-keyring gpg-error gpgme-pthread gsf-1 gtk-3 icudata
+WANTLIB-main += gnome-keyring gpg-error gsf-1 gtk-3 icudata
 WANTLIB-main += icui18n icuuc jpeg lcms lzma openjpeg panel-applet-4 cue
 WANTLIB-main += pango-1.0 pangocairo-1.0 pangoft2-1.0 png poppler poppler-glib
 WANTLIB-main += pthread rest-0.7 soup-2.4 soup-gnome-2.4 sqlite3 stdc++

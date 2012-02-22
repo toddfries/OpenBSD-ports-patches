@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2011/10/14 11:37:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2012/02/20 09:09:32 landry Exp $
 
 COMMENT =	Xfce4 freedesktop.org compliant menu implementation
 
 XFCE_PROJECT =	garcon
 XFCE_VERSION =	0.1.9
-REVISION =	0
+REVISION =	1
 
 SHARED_LIBS +=	garcon-1 0.0
 
@@ -30,5 +30,11 @@ REGRESS_DEPENDS =	x11/xfce4/xfce-utils
 CONFIGURE_ARGS +=	--disable-linker-opts
 
 FAKE_FLAGS =	menudir=${PREFIX}/share/examples/garcon
+
+# http://git.xfce.org/xfce/garcon/commit/?id=6ddc4b984723e902f6903eb644856aae48ab3ed6
+post-install:
+	# fix icon name for education category
+	perl -pi -e "s/applications-education/applications-science/" \
+		${PREFIX}/share/desktop-directories/xfce-education.directory
 
 .include <bsd.port.mk>

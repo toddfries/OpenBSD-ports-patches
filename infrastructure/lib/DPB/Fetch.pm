@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.35 2012/02/17 07:36:09 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.37 2012/02/21 10:37:26 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -91,7 +91,7 @@ sub simple_lockname
 	&lockname;
 }
 
-# should be used for rebuild_info only
+# should be used for rebuild_info and logging only
 
 sub fullpkgpath
 {
@@ -321,6 +321,7 @@ sub new
 	print "zap duplicates...";
 	# rewrite "more or less" the same info, so we flush duplicates,
 	# e.g., keep only most recent checksum seen
+	File::Path::make_path($distdir);
 	open(my $fh, '>', "$distdir/distinfo.new");
 	for my $k (sort keys %{$o->{sha}}) {
 		print $fh "SHA256 ($k) = ", $o->{sha}{$k}->stringize,
@@ -747,6 +748,10 @@ sub new
 		logger => $logger,
 		log => $logger->make_distlogs($file),
 	}, $class;
+	if (open my $fh, '>>', $job->{log}) {
+		print $fh ">>> From ", $file->fullpkgpath, "\n";
+		close $fh;
+	}
 	File::Path::mkpath(File::Basename::dirname($file->filename));
 	$job->{watched} = DPB::Watch->new($file->tempfilename,
 		$file->{sz}, undef, $job->{started});

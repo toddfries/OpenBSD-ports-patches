@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/01/08 19:56:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2012/02/21 08:21:57 ajacoutot Exp $
 
 ONLY_FOR_ARCHS-mono=	${MONO_ARCHS}
 
@@ -6,7 +6,7 @@ COMMENT-main=	MIME messages creation and parsing library
 COMMENT-mono=	mono bindings for gmime
 
 GNOME_PROJECT=	gmime
-GNOME_VERSION=	2.6.4
+GNOME_VERSION=	2.6.6
 
 PKGNAME-main=	${DISTNAME}
 PKGNAME-mono=	gmime-sharp-${GNOME_VERSION}
@@ -24,8 +24,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main += ${MODGETTEXT_WANTLIB}
-WANTLIB-main += assuan c gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gpg-error
-WANTLIB-main += gpgme-pthread gthread-2.0 pcre pthread z ffi
+WANTLIB-main += ffi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
+WANTLIB-main += pcre z
 
 MULTI_PACKAGES=	-main -mono
 
@@ -33,12 +33,10 @@ MODULES +=	devel/gettext \
 		x11/gnome
 
 LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
-		devel/glib2 \
-		security/gpgme>=1.3.1
+		devel/glib2
 
 CONFIGURE_STYLE= gnu
 CONFIGURE_ENV=	DOLT_BASH="/bin/ksh"
-CONFIGURE_ARGS+=--with-gpgme-prefix=${LOCALBASE}
 
 ### mono subpackage
 PSEUDO_FLAVORS=	no_mono
@@ -61,9 +59,5 @@ WANTLIB-mono=	# empty
 CONFIGURE_ARGS+= --disable-mono
 .endif
 ### end of mono subpackage
-
-pre-configure:
-	perl -pi -e 's,.\@GMIME_VERSION\@,,g' \
-		${WRKSRC}/mono/gmime-sharp.dll.config.in
 
 .include <bsd.port.mk>
