@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.198 2012/01/26 20:21:31 ratchov Exp $
+# $OpenBSD: Makefile,v 1.201 2012/02/28 19:48:41 sthen Exp $
 
 # May not be hard to add more.
-ONLY_FOR_ARCHS =	alpha amd64 arm i386 mips64 mips64el powerpc sparc64
+ONLY_FOR_ARCHS =	${GCC4_ARCHS}
 
 COMMENT =		movie player supporting many formats
 
@@ -13,7 +13,7 @@ SUBST_VARS += 		PREFIX CONFDIR
 # Distfiles must be hand-rolled, see README
 N =			mplayer
 DISTNAME =		mplayer-${V}
-REVISION =		12
+REVISION =		13
 
 CATEGORIES =		x11 multimedia
 
@@ -65,7 +65,7 @@ BUILD_DEPENDS =	net/livemedia \
 		textproc/docbook \
 		textproc/docbook-xsl \
 		audio/ladspa
-# mplayer uses non-public interfaces to ffmepg, so we still need
+# mplayer uses non-public interfaces to ffmpeg, so we still need
 # the ffmpeg source in the mplayer tree at build time.
 BUILD_DEPENDS +=graphics/ffmpeg:patch
 

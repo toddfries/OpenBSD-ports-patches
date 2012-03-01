@@ -1,9 +1,13 @@
-# $OpenBSD: Makefile,v 1.12 2012/01/19 10:48:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2012/02/23 09:40:47 ajacoutot Exp $
+
+SHARED_ONLY=		Yes
 
 COMMENT=		home media solution that allows easy media sharing
 
 GNOME_PROJECT=		rygel
 GNOME_VERSION=		0.12.7
+
+REVISION=		1
 
 CATEGORIES=		multimedia
 
@@ -15,37 +19,40 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MODULES=		devel/gettext \
-			x11/gnome
-
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
 WANTLIB += cairo-gobject drm e2fs-uuid expat ffi fontconfig freetype
 WANTLIB += gdk-3 gdk_pixbuf-2.0 gee gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gssdp-1.0 gstapp-0.10 gstbase-0.10 gstpbutils-0.10
 WANTLIB += gstreamer-0.10 gsttag-0.10 gstvideo-0.10 gthread-2.0
-WANTLIB += gtk-3 gupnp-1.0 gupnp-av-1.0 gupnp-dlna-1.0 m pango-1.0
-WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs soup-2.4 sqlite3 xcb xcb-render xcb-shm
-WANTLIB += xml2 z stdc++
+WANTLIB += gtk-3 gupnp-1.0 gupnp-av-1.0 gupnp-dlna-1.0 m orc-0.4
+WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs soup-2.4 sqlite3 stdc++ xcb
+WANTLIB += xcb-render xcb-shm xml2 z
 
+MODULES=		devel/gettext \
+			x11/gnome
+
+BUILD_DEPENDS=		net/gupnp/vala>=0.10.0
+RUN_DEPENDS=		net/gupnp/vala>=0.10.0
 LIB_DEPENDS=		devel/libgee \
 			net/gupnp/av \
 			net/gupnp/dlna \
 			x11/gtk+3
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		net/gupnp/vala>=0.10.0
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 MODGNOME_TOOLS= 	vala
 
-CONFIGURE_ARGS+=	--enable-mpris-plugin \
+LIBTOOL_FLAGS=		--tag=disable-static
+
+CONFIGURE_ARGS+=	--disable-static \
+			--enable-mpris-plugin \
 			--enable-media-export-plugin \
 			--enable-gst-launch-plugin \
 			--enable-external-plugin \
-			--disable-mediathek-plugin \
-			--disable-tracker-plugin
+			--enable-tracker-plugin \
+			--disable-mediathek-plugin
 
 FAKE_FLAGS+=		sysconfdir=${PREFIX}/share/examples/rygel/
 

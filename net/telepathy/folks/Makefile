@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2012/02/18 23:05:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2012/02/26 15:08:07 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,13 +6,11 @@ COMMENT-main=		people aggregation library
 COMMENT-tracker=	(meta-)tracker backend for folks
 
 GNOME_PROJECT=		folks
-GNOME_VERSION=		0.6.6
-API_V=			30
+GNOME_VERSION=		0.6.7
+API_V=			31
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-tracker=	${GNOME_PROJECT}-meta-tracker-${GNOME_VERSION}
-
-REVISION-main=		0
 
 SHARED_LIBS +=  folks-telepathy           5.0 # 29.0
 SHARED_LIBS +=  folks                     5.0 # 29.0
@@ -40,10 +38,12 @@ WANTLIB-main += gssapi krb5 ncurses nspr4 nss3 nssutil3 plc4 plds4
 WANTLIB-main += pthread readline smime3 softokn3 soup-2.4 ssl3 telepathy-glib
 WANTLIB-main += xml2 z
 
-LIB_DEPENDS-main=	databases/evolution-data-server>=3.2.0p2 \
+LIB_DEPENDS-main=	${MODGETTEXT_LIB_DEPENDS} \
+			databases/evolution-data-server>=3.2.0p2 \
 			devel/libgee \
 			net/telepathy/telepathy-glib>=0.14.3
-#RUN_DEPENDS-main=	net/telepathy/telepathy-mission-control
+RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
+			net/telepathy/telepathy-mission-control
 
 REGRESS_DEPENDS=	${FULLPKGNAME}:${BASE_PKGPATH}
 
@@ -63,7 +63,9 @@ CONFIGURE_ARGS +=	--disable-tracker-backend
 MULTI_PACKAGES +=	-tracker
 SHARED_LIBS +=  folks-tracker        0.0     # 30.0
 CONFIGURE_ARGS +=	--enable-tracker-backend
-LIB_DEPENDS-tracker=	${BASE_PKGPATH},-main \
+RUN_DEPENDS-tracker=	${MODGETTEXT_RUN_DEPENDS}
+LIB_DEPENDS-tracker=	${MODGETTEXT_LIB_DEPENDS} \
+			${BASE_PKGPATH},-main \
 			x11/gnome/tracker
 WANTLIB-tracker += ${WANTLIB}
 WANTLIB-tracker += lib/tracker-${TRACKER_VERSION}/tracker-common
