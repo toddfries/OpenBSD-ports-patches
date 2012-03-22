@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2008/10/26 23:15:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2011/12/27 14:27:23 pascal Exp $
 
 COMMENT=	c++ validating XML parser
 
 DISTNAME=	xerces-c-src_2_8_0
 PKGNAME=	xerces-c-2.8.0
+REVISION=	0
 CATEGORIES=	textproc devel
 
 SO_VERSION=	0.0 # .28.0
@@ -23,8 +24,14 @@ MASTER_SITES=	http://apache.mirrors.crysys.hit.bme.hu/dist/xerces/c/2/sources/
 
 USE_GMAKE=	Yes
 
+WANTLIB=	m stdc++
+
 XERCESCROOT=	${WRKDIR}/${DISTNAME}
 WRKSRC=		${XERCESCROOT}/src/xercesc
+
+# runConfigure is a wrapper around a GNU configure script.  In order to still
+# pick up our config.site defaults, use the gnu MODULE.
+MODULES =	gnu
 
 CONFIGURE_SCRIPT= ${XERCESCROOT}/src/xercesc/runConfigure
 CONFIGURE_STYLE= simple

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2011/07/26 15:13:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2012/02/26 15:06:10 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,12 +6,13 @@ COMMENT-main=	configuration backend system
 COMMENT-editor=	editor for the dconf configuration storage system
 
 GNOME_PROJECT=	dconf
-GNOME_VERSION=	0.8.0
+GNOME_VERSION=	0.10.0
 
 PKGNAME-main=	${DISTNAME}
 PKGNAME-editor=	dconf-editor-${GNOME_VERSION}
 
-EXTRACT_SUFX=	.tar.xz
+REVISION-main=0
+REVISION-editor=1
 
 SHARED_LIBS+=	dconf        0.0 # 0.0.0
 SHARED_LIBS+=	dconf-dbus-1 0.0 # 0.0.0
@@ -41,38 +42,39 @@ WANTLIB-editor += expat fontconfig freetype gdk-3 gdk_pixbuf-2.0
 WANTLIB-editor += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
 WANTLIB-editor += png pthread-stubs xcb xcb-render xcb-shm xml2 z dconf
 
-MULTI_PACKAGES=	-main
+MULTI_PACKAGES=	-main -editor
 
-PSEUDO_FLAVORS=	no_editor
+PSEUDO_FLAVORS=	no_editor bootstrap
 FLAVOR?=
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
-BUILD_DEPENDS=	lang/vala>=0.12.0
+MODGNOME_DESKTOP_FILE= Yes
+
+BUILD_DEPENDS=	lang/vala
 
 RUN_DEPENDS-main=	# empty
 LIB_DEPENDS-main=	devel/glib2 \
 			x11/dbus
 
-RUN_DEPENDS-editor=	${MODGETTEXT_RUN_DEPENDS} \
-			${MODDCONF_RUN_DEPENDS} \
+RUN_DEPENDS-editor=	${RUN_DEPENDS} \
 			devel/desktop-file-utils
-LIB_DEPENDS-editor=	x11/gtk+3
+LIB_DEPENDS-editor=	${MODGETTEXT_LIB_DEPENDS} \
+			x11/gtk+3
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
-CONFIGURE_ARGS=	--disable-gtk-doc
+MODGNOME_LDFLAGS=	-pthread
 
 FAKE_FLAGS=	completiondir=${PREFIX}/share/examples/dconf/bash_completion.d
 
-.if ${FLAVOR:L:Mno_editor}
-CONFIGURE_ARGS +=	--disable-editor
-.else
-MULTI_PACKAGES +=	-editor
+.include <bsd.port.arch.mk>
+
+.if ${BUILD_PACKAGES:M-editor}
 CONFIGURE_ARGS +=	--enable-editor
+.else
+CONFIGURE_ARGS +=	--disable-editor
 .endif
 
 pre-configure:

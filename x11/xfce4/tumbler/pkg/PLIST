@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2011/01/18 21:34:58 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.4 2011/12/26 18:40:14 landry Exp $
 %%SHARED%%
 include/tumbler-1/
 include/tumbler-1/tumbler/
@@ -28,12 +28,14 @@ lib/tumbler-1/plugins/
 lib/tumbler-1/plugins/cache/
 @comment lib/tumbler-1/plugins/cache/tumbler-xdg-cache.a
 @comment lib/tumbler-1/plugins/cache/tumbler-xdg-cache.la
-@comment lib/tumbler-1/plugins/tumbler-ffmpeg-thumbnailer.a
-@comment lib/tumbler-1/plugins/tumbler-ffmpeg-thumbnailer.la
 @comment lib/tumbler-1/plugins/tumbler-font-thumbnailer.a
 @comment lib/tumbler-1/plugins/tumbler-font-thumbnailer.la
+@comment lib/tumbler-1/plugins/tumbler-gst-thumbnailer.a
+@comment lib/tumbler-1/plugins/tumbler-gst-thumbnailer.la
 @comment lib/tumbler-1/plugins/tumbler-jpeg-thumbnailer.a
 @comment lib/tumbler-1/plugins/tumbler-jpeg-thumbnailer.la
+@comment lib/tumbler-1/plugins/tumbler-odf-thumbnailer.a
+@comment lib/tumbler-1/plugins/tumbler-odf-thumbnailer.la
 @comment lib/tumbler-1/plugins/tumbler-pixbuf-thumbnailer.a
 @comment lib/tumbler-1/plugins/tumbler-pixbuf-thumbnailer.la
 @comment lib/tumbler-1/plugins/tumbler-poppler-thumbnailer.a
@@ -47,10 +49,6 @@ share/dbus-1/services/org.xfce.Tumbler.Thumbnailer1.service
 share/gtk-doc/
 share/gtk-doc/html/
 share/gtk-doc/html/tumbler/
-share/gtk-doc/html/tumbler/TumblerAbstractThumbnailer.html
-share/gtk-doc/html/tumbler/TumblerCache.html
-share/gtk-doc/html/tumbler/TumblerThumbnail.html
-share/gtk-doc/html/tumbler/TumblerThumbnailerProvider.html
 share/gtk-doc/html/tumbler/api-index-full.html
 share/gtk-doc/html/tumbler/extension-api.html
 share/gtk-doc/html/tumbler/extension-tutorial.html
@@ -65,12 +63,15 @@ share/gtk-doc/html/tumbler/right.png
 share/gtk-doc/html/tumbler/style.css
 share/gtk-doc/html/tumbler/thumbnails.html
 share/gtk-doc/html/tumbler/tumbler-Error-Domain-and-Types.html
+share/gtk-doc/html/tumbler/tumbler-TumblerAbstractThumbnailer.html
+share/gtk-doc/html/tumbler/tumbler-TumblerCache.html
+share/gtk-doc/html/tumbler/tumbler-TumblerThumbnail.html
+share/gtk-doc/html/tumbler/tumbler-TumblerThumbnailerProvider.html
 share/gtk-doc/html/tumbler/tumbler-Various-Enumeration-Types.html
 share/gtk-doc/html/tumbler/tumbler-Version-Information-and-Compatibility-Checks.html
 share/gtk-doc/html/tumbler/tumbler-tumbler-file-info.html
 share/gtk-doc/html/tumbler/tumbler-tumbler-provider-factory.html
 share/gtk-doc/html/tumbler/tumbler-tumbler-provider-plugin.html
-share/gtk-doc/html/tumbler/tumbler.devhelp
 share/gtk-doc/html/tumbler/tumbler.devhelp2
 share/gtk-doc/html/tumbler/up.png
 share/locale/ar/
@@ -90,6 +91,7 @@ share/locale/el/LC_MESSAGES/tumbler.mo
 share/locale/en_GB/
 share/locale/en_GB/LC_MESSAGES/
 share/locale/en_GB/LC_MESSAGES/tumbler.mo
+share/locale/es/LC_MESSAGES/tumbler.mo
 share/locale/eu/LC_MESSAGES/tumbler.mo
 share/locale/fi/LC_MESSAGES/tumbler.mo
 share/locale/fr/LC_MESSAGES/tumbler.mo
@@ -97,13 +99,21 @@ share/locale/gl/LC_MESSAGES/tumbler.mo
 share/locale/he/LC_MESSAGES/tumbler.mo
 share/locale/hu/LC_MESSAGES/tumbler.mo
 share/locale/id/LC_MESSAGES/tumbler.mo
+share/locale/is/
+share/locale/is/LC_MESSAGES/
+share/locale/is/LC_MESSAGES/tumbler.mo
 share/locale/it/LC_MESSAGES/tumbler.mo
 share/locale/ja/LC_MESSAGES/tumbler.mo
 share/locale/kk/
 share/locale/kk/LC_MESSAGES/
 share/locale/kk/LC_MESSAGES/tumbler.mo
+share/locale/ko/LC_MESSAGES/tumbler.mo
 share/locale/lv/LC_MESSAGES/tumbler.mo
+share/locale/ms/
+share/locale/ms/LC_MESSAGES/
+share/locale/ms/LC_MESSAGES/tumbler.mo
 share/locale/nb/LC_MESSAGES/tumbler.mo
+share/locale/nl/LC_MESSAGES/tumbler.mo
 share/locale/pa/
 share/locale/pa/LC_MESSAGES/
 share/locale/pa/LC_MESSAGES/tumbler.mo
@@ -115,7 +125,11 @@ share/locale/ru/LC_MESSAGES/tumbler.mo
 share/locale/si/
 share/locale/si/LC_MESSAGES/
 share/locale/si/LC_MESSAGES/tumbler.mo
+share/locale/sk/LC_MESSAGES/tumbler.mo
 share/locale/sv/LC_MESSAGES/tumbler.mo
+share/locale/te/
+share/locale/te/LC_MESSAGES/
+share/locale/te/LC_MESSAGES/tumbler.mo
 share/locale/tr/LC_MESSAGES/tumbler.mo
 share/locale/ug/
 share/locale/ug/LC_MESSAGES/

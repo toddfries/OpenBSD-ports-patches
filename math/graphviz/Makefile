@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.44 2011/05/11 07:45:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2011/11/03 20:28:09 jasper Exp $
 
 COMMENT-main=	graph drawing software
 
 DISTNAME=	graphviz-2.12
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	14
+REVISION-main=	16
 CATEGORIES=	math devel graphics
 MULTI_PACKAGES=	-main
 
@@ -61,8 +61,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 WANTLIB=	ICE SM X11 Xau Xaw Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xi Xinerama Xmu Xpm Xrandr Xrender Xt \
 		c dbus-1 dbus-glib-1 expat fontconfig freetype m pcre \
-		pthread-stubs util xcb z jpeg tk84 gd \
-		png ltdl pthread stdc++ xcb-render xcb-render-util
+		pthread-stubs util xcb z jpeg tk84 gd ffi \
+		png ltdl pthread stdc++ xcb-render GL Xxf86vm drm xcb-shm
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	graphics/jpeg \

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.5 2011/05/28 08:15:33 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.8 2011/11/17 14:33:53 jasper Exp $
 include/telepathy-logger-0.2/
 include/telepathy-logger-0.2/telepathy-logger/
 include/telepathy-logger-0.2/telepathy-logger/entity.h
@@ -6,29 +6,35 @@ include/telepathy-logger-0.2/telepathy-logger/event.h
 include/telepathy-logger-0.2/telepathy-logger/log-manager.h
 include/telepathy-logger-0.2/telepathy-logger/telepathy-logger.h
 include/telepathy-logger-0.2/telepathy-logger/text-event.h
+include/tpl-extensions/
+include/tpl-extensions/_gen/
+include/tpl-extensions/_gen/cli-misc.h
+include/tpl-extensions/_gen/enums.h
+include/tpl-extensions/_gen/gtypes.h
+include/tpl-extensions/_gen/interfaces.h
+include/tpl-extensions/_gen/svc-misc.h
+include/tpl-extensions/extensions.h
 lib/girepository-1.0/TelepathyLogger-0.2.typelib
 lib/libtelepathy-logger.a
 lib/libtelepathy-logger.la
 @lib lib/libtelepathy-logger.so.${LIBtelepathy-logger_VERSION}
+lib/libtpl-extensions.a
+lib/libtpl-extensions.la
+@lib lib/libtpl-extensions.so.${LIBtpl-extensions_VERSION}
 lib/pkgconfig/telepathy-logger-0.2.pc
+lib/pkgconfig/tpl-extensions.pc
 @bin libexec/telepathy-logger
 share/dbus-1/services/org.freedesktop.Telepathy.Client.Logger.service
 share/dbus-1/services/org.freedesktop.Telepathy.Logger.service
 share/gir-1.0/TelepathyLogger-0.2.gir
 share/glib-2.0/schemas/org.freedesktop.Telepathy.Logger.gschema.xml
 share/gtk-doc/html/telepathy-logger/
-share/gtk-doc/html/telepathy-logger/TplEntity.html
-share/gtk-doc/html/telepathy-logger/TplEvent.html
-share/gtk-doc/html/telepathy-logger/TplLogManager.html
-share/gtk-doc/html/telepathy-logger/TplTextEvent.html
 share/gtk-doc/html/telepathy-logger/ch-public.html
 share/gtk-doc/html/telepathy-logger/home.png
 share/gtk-doc/html/telepathy-logger/index.html
-share/gtk-doc/html/telepathy-logger/index.sgml
 share/gtk-doc/html/telepathy-logger/left.png
 share/gtk-doc/html/telepathy-logger/right.png
 share/gtk-doc/html/telepathy-logger/style.css
-share/gtk-doc/html/telepathy-logger/telepathy-logger.devhelp
 share/gtk-doc/html/telepathy-logger/telepathy-logger.devhelp2
 share/gtk-doc/html/telepathy-logger/up.png
 share/telepathy/

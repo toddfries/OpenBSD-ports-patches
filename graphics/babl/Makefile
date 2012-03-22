@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.10 2011/06/02 17:09:31 kili Exp $
+# $OpenBSD: Makefile,v 1.12 2011/12/10 09:12:19 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	dynamic pixel format conversion library
 
-V=		0.1.4
+V=		0.1.6
 DISTNAME=	babl-${V}
-REVISION=	0
 CATEGORIES=	graphics devel
 
-SHARED_LIBS=	babl-0.1	1.0 # .103.1
+SHARED_LIBS +=  babl-0.1             1.0      # 105.1
 
 EXTRACT_SUFX=	.tar.bz2
 
@@ -27,13 +26,12 @@ MASTER_SITES=	ftp://ftp.gimp.org/pub/babl/${V:R}/ \
 
 WANTLIB=	m
 
-# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
-# instead of the actual library
-USE_LIBTOOL=	gnu
 LIBTOOL_FLAGS=	--tag=disable-static
 
-BUILD_DEPENDS=	devel/gobject-introspection
+BUILD_DEPENDS=	devel/gobject-introspection \
+		lang/vala
 
+USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 
 CONFIGURE_STYLE=gnu

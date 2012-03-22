@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.15 2011/07/04 16:39:33 dhill Exp $
+# $OpenBSD: Makefile,v 1.20 2012/02/28 02:25:30 dhill Exp $
 
 COMMENT=		hide awful SSL API in a sane interface
 
-DISTNAME=		assl-0.10.0
+DISTNAME=		assl-0.12.2
 EPOCH=			0
 CATEGORIES=		security devel
-SHARED_LIBS=		assl 3.2
+SHARED_LIBS=		assl 3.4
 
 HOMEPAGE=		http://opensource.conformal.com/wiki/Assl
 MASTER_SITES=		http://opensource.conformal.com/snapshots/assl/
@@ -23,13 +23,7 @@ EG_DIR=			${PREFIX}/share/examples/assl
 
 .if ${MACHINE_ARCH:Mmips64*}
 EXTRA_CFLAGS=   -D__BUILTIN_HACK
-# See bsd.lib.mk:162
-PKG_ARGS+=	-Dno_mips64=0
-.else
-PKG_ARGS+=	-Dno_mips64=1
 .endif
-
-FAKE_FLAGS=	MANDIR=${PREFIX}/man/man
 
 do-configure:
 	printf "major=${LIBassl_VERSION:R}\nminor=${LIBassl_VERSION:E}\n" \

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.48 2011/07/08 12:18:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.53 2011/09/20 21:10:01 jasper Exp $
 
 COMMENT=	C++ interface for gtk2+
 
 GNOME_PROJECT=	gtkmm
 GNOME_VERSION=	2.24.2
+REVISION=	0
 
 PKGNAME=	gtk2mm-${GNOME_VERSION}
 
@@ -32,8 +33,6 @@ WANTLIB += sigc-2.0 atk-1.0 cairo cairomm-1.0 atkmm-1.6
 MODULES=	devel/gettext \
 		x11/gnome
 
-EXTRACT_SUFX=	.tar.xz
-
 LIB_DEPENDS=	devel/atk2mm \
 		devel/pangomm>=2.27 \
 		x11/gtk+2
@@ -41,8 +40,7 @@ LIB_DEPENDS=	devel/atk2mm \
 SEPARATE_BUILD=	concurrent
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-static \
+CONFIGURE_ARGS=	--enable-static \
 		--disable-dependency-tracking
 
 .include <bsd.port.mk>

@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# $OpenBSD: prosody.rc,v 1.2 2012/01/26 10:32:06 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/sbin/prosodyctl"
+daemon_flags="start"
+daemon_user="_prosody"
+
+. /etc/rc.d/rc.subr
+
+rc_reload=NO
+
+rc_check() {
+	# return 1 is needed: prosodyctl returns a higher error code on failure
+	${TRUEPREFIX}/sbin/prosodyctl status || return 1
+}
+
+rc_stop() {
+	${TRUEPREFIX}/sbin/prosodyctl stop
+}
+
+rc_cmd $1

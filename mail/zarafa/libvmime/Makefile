@@ -1,30 +1,22 @@
-# $OpenBSD: Makefile,v 1.17 2011/08/16 15:01:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2012/02/16 22:18:06 ajacoutot Exp $
 
 COMMENT=	modified libvmime library for Zarafa
 
-VMIME_V=	0.9.1
-DISTNAME=	libvmime-${VMIME_V}
+VMIME_V=	0.9.2
+DISTNAME=	libvmime-${VMIME_V}+svn603
 PKGNAME=	zarafa-libvmime-${VMIME_V}
-EXTRACT_SUFX=	.tar.bz2
-
 EPOCH=		0
+
+EXTRACT_SUFX=	.tar.bz2
 
 WRKDIST=	${WRKDIR}/libvmime-${VMIME_V}
 
 PATCH_DIST_STRIP= -p1
 
 PATCHFILES= \
-	vmime-0.8.1-attachfnamelen.diff:0 \
-	vmime-0.8.1-charset-catch.diff:0 \
-	vmime-0.8.1-header-value-on-next-line.diff:0 \
-	vmime-0.8.1-unicode-1-1-utf-7-charset.diff:0 \
-	vmime-0.9.0-undisclosed-recipients.diff:0 \
-	vmime-0.9.2-infinite-loop.diff:0 \
-	vmime-flush-iconv.diff:0 \
-	vmime-fullname-without-email-address.diff:0 \
-	vmime-highchar-filename.diff:0
+	vmime-0.9.2-header-value-on-next-line.diff:0 \
+	vmime-mixed-qp-in-parameter.diff:0
 
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=vmime/}
 MASTER_SITES0=	${MASTER_SITES_ZARAFA:=/vmime-patches/}
 
 CATEGORIES=	mail devel
@@ -55,5 +47,9 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-platform-posix \
 		--disable-sasl \
 		--disable-tls
+
+pre-configure:
+	perl -pi -e 's,-l\$${ost_cv_thread_library},-\$${ost_cv_thread_library},g;' \
+		-e 's,-lpthread,-pthread,g' ${WRKSRC}/configure
 
 .include <bsd.port.mk>

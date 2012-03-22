@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.17 2011/06/08 18:03:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.19 2011/09/16 19:53:41 jasper Exp $
 
 COMMENT=		flexible communications framework, libpurple component
 
-DISTNAME=		telepathy-haze-0.4.0
-REVISION=		0
+DISTNAME=		telepathy-haze-0.5.0
 
 MASTER_SITES=		${MASTER_SITES_TP:=telepathy-haze/}
 
@@ -24,9 +23,5 @@ MODPY_RUNDEP=		No
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =		Yes
-
-pre-configure:
-	${SUBST_CMD} ${WRKSRC}/configure
 
 .include <bsd.port.mk>

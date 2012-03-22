@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2011/08/18 19:45:49 naddy Exp $
+# $OpenBSD: Makefile,v 1.27 2011/12/03 23:20:53 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		mini programs for your desktop
 
 V=			0.36.3
 DISTNAME=		gdesklets-${V}
-REVISION=		0
+REVISION=		2
 
 EXTRACT_SUFX=		.tar.bz2
 
@@ -44,7 +44,8 @@ BUILD_DEPENDS=		${RUN_DEPENDS} \
 
 RUN_DEPENDS=		devel/desktop-file-utils \
 			misc/shared-mime-info \
-			x11/gnome/py-gnome
+			x11/gnome/py-gnome \
+			x11/gtk+2,-guic
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes

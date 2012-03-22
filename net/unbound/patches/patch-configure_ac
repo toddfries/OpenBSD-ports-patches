@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure_ac,v 1.2 2012/01/26 22:04:03 sthen Exp $
+--- configure.ac.orig	Thu Jan 12 08:52:38 2012
++++ configure.ac	Thu Jan 26 05:11:48 2012
+@@ -206,8 +206,6 @@ AC_DEFINE_UNQUOTED(RSRC_PACKAGE_VERSION, [$wnvs], [ver
+ # Checks for typedefs, structures, and compiler characteristics.
+ AC_C_CONST
+ AC_LANG_C
+-ACX_CHECK_COMPILER_FLAG(g, [CFLAGS="$CFLAGS -g"])
+-ACX_CHECK_COMPILER_FLAG(O2, [CFLAGS="$CFLAGS -O2"])
+ AC_PROG_CC
+ ACX_DEPFLAG
+ ACX_DETERMINE_EXT_FLAGS_UNBOUND

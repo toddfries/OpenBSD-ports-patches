@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/06/20 20:28:44 robert Exp $
+# $OpenBSD: Makefile,v 1.22 2012/02/22 07:43:58 ajacoutot Exp $
 
 COMMENT=	GNU standards-compliant Makefile generator
 
@@ -48,18 +48,16 @@ REGRESS_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
 			print/texlive/base \
 			devel/dejagnu
 
-TESTS_ENVIRONMENT=	AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+REGRESS_ENV=		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
 			MAKE=${GMAKE}
 
 post-patch:
-	touch ${WRKSRC}/aclocal.m4
-	touch ${WRKSRC}/Makefile.in
+	cd ${WRKSRC}; touch aclocal.m4 Makefile.in configure
 
 do-regress:
 	    ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
 	    @cd ${WRKBUILD} && \
-	    	exec ${SETENV} ${MAKE_ENV} \
-		TESTS_ENVIRONMENT='${TESTS_ENVIRONMENT}' \
+	    	exec ${SETENV} ${MAKE_ENV} ${REGRESS_ENV} \
 		    ${MAKE_PROGRAM} ${ALL_REGRESS_FLAGS} -f ${MAKE_FILE} \
 		    ${REGRESS_TARGET}
 

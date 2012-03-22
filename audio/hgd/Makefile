@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/25 23:07:49 edd Exp $
+# $OpenBSD: Makefile,v 1.11 2011/12/04 12:57:08 edd Exp $
 
 COMMENT =		music system for hackathons
-DISTNAME =		hgd-0.4.1
+DISTNAME =		hgd-0.5.2
+REVISION =		0
 
 CATEGORIES =		audio net
 HOMEPAGE =		https://github.com/vext01/hgd/
@@ -29,7 +30,7 @@ LIB_DEPENDS =		databases/sqlite3 \
 			devel/libconfig \
 			audio/taglib
 
-.if ${FLAVOR:L:Mpython}
+.if ${FLAVOR:Mpython}
 LIB_DEPENDS +=		${MODPY_LIB_DEPENDS}
 WANTLIB +=		${MODPY_WANTLIB}
 WANTLIB +=		m pthread util

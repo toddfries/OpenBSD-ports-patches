@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2011/06/14 22:00:13 naddy Exp $
+# $OpenBSD: Makefile,v 1.68 2011/10/17 11:14:11 espie Exp $
 
 COMMENT=	GNU version of the traditional tape archiver
 
@@ -37,7 +37,7 @@ CONFIGURE_ENV+=	gl_cv_func_mknod_works=no
 FLAVORS=	static
 FLAVOR?=
 
-.if ${FLAVOR:L:Mstatic}
+.if ${FLAVOR:Mstatic}
 LDSTATIC=	-static
 MODULES=
 BUILD_DEPENDS+=	devel/gettext>=0.17
@@ -49,7 +49,7 @@ WANTLIB=	c
 
 # Tests 35 56 are known to fail because getcwd(3) fails if the
 # parent directory is unreadable.
-REGRESS_DEPENDS=autoconf-2.63:devel/autoconf/2.63
+REGRESS_DEPENDS=	devel/autoconf/2.63
 REGRESS_FLAGS=	AUTOCONF_VERSION=2.63
 
 .include <bsd.port.mk>

@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.22 2011/08/23 20:07:50 landry Exp $
+# $OpenBSD: Makefile,v 1.27 2012/02/22 20:00:55 landry Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		libraries to support development of security-enabled apps
 
-VERSION=		3.12.11
+VERSION=		3.13.3
 DISTNAME=		nss-${VERSION}
-SO_VERSION=		28.0
+SO_VERSION=		30.0
 .for _lib in freebl3 nss3 nssckbi nssdbm3 nssutil3 smime3 softokn3 ssl3
 SHARED_LIBS+=		${_lib} ${SO_VERSION}
 .endfor
@@ -23,10 +23,11 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB += c pthread z nspr4 plc4 plds4 sqlite3
 
-MASTER_SITES=		http://ftp.eu.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${VERSION:S/./_/g}_RTM/src/ \
-			http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${VERSION:S/./_/g}_RTM/src/
+#for regular releases
+MASTER_SITES=		http://ftp.eu.mozilla.org/pub/mozilla.org/security/nss/releases/${DISTNAME:U:C/[-.]/_/g}_RTM/src/ \
+			http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/${DISTNAME:U:C/[-.]/_/g}_RTM/src/
 
-LIB_DEPENDS=		devel/nspr>=4.8 \
+LIB_DEPENDS=		devel/nspr>=4.9 \
 			databases/sqlite3>=3.6.13
 
 MAKE_ENV=		BUILD_OPT=1 \

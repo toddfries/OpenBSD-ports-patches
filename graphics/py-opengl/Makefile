@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/20 15:45:20 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2011/11/02 11:44:00 jasper Exp $
 
 COMMENT =		Python bindings for OpenGL
 MODPY_EGG_VERSION =	3.0.0
 DISTNAME =		PyOpenGL-${MODPY_EGG_VERSION}
 PKGNAME =		py-opengl-${MODPY_EGG_VERSION}
-REVISION=		2
-WANTLIB =		GL GLU glut>=4
+REVISION=		4
 
 CATEGORIES =		graphics
 HOMEPAGE =		http://pyopengl.sourceforge.net/
@@ -22,7 +21,7 @@ REGRESS_IS_INTERACTIVE = X11
 
 LIB_DEPENDS =		graphics/freeglut
 REGRESS_DEPENDS =	devel/pygame \
-			graphics/py-opengl \
+			${BASE_PKGPATH} \
 			math/py-numpy
 
 do-regress:

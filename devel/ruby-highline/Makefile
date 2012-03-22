@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.9 2011/01/06 04:24:23 jeremy Exp $
+# $OpenBSD: Makefile,v 1.11 2012/01/22 16:46:41 jeremy Exp $
 
 COMMENT =		high-level IO library for Ruby
 
-DISTNAME =		highline-1.5.1
-REVISION =		3
+DISTNAME =		highline-1.6.9
 CATEGORIES =		devel
 
 HOMEPAGE =		http://highline.rubyforge.org/
@@ -19,5 +18,13 @@ MODULES =		lang/ruby
 CONFIGURE_STYLE =	ruby gem
 
 MODRUBY_REGRESS=	rake
+
+REGRESS_DEPENDS =	devel/ruby-rdoc,${MODRUBY_FLAVOR}
+
+post-install:
+	@find ${PREFIX}/${GEM_LIB}/ -type f -name \*.gitignore \
+		-or -name \*.cvsignore -or -name Rakefile \
+		-or -name setup.rb | xargs rm
+	@rmdir ${PREFIX}/${GEM_LIB}/gems/${DISTNAME}/doc
 
 .include <bsd.port.mk>

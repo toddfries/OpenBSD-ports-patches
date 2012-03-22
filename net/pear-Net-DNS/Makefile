@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.12 2011/11/16 18:32:36 robert Exp $
 
 COMMENT=	resolver library used to communicate with a DNS server
 
 DISTNAME=	Net_DNS-1.0.1
 CATEGORIES=	net
 
-REVISION=	1
+REVISION=	3
 
 MODULES=	lang/php www/pear
 
@@ -16,6 +16,5 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 PKG_ARCH=	*
-RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-mhash
 
 .include <bsd.port.mk>

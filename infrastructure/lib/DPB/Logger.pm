@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Logger.pm,v 1.4 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Logger.pm,v 1.7 2011/11/13 10:34:35 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -40,7 +40,7 @@ sub _open
 {
 	my ($self, $mode, $name) = @_;
 	my $log = $self->logfile($name);
-	open my $fh, $mode, $log or die "Can't write to $log: $!\n";
+	CORE::open my $fh, $mode, $log or die "Can't write to $log: $!\n";
 	return $fh;
 }
 
@@ -93,11 +93,13 @@ sub pathlist
 	if ($w ne $v) {
 		push(@l, $w);
 	}
-	for my $m (keys %{$v->{info}->{MULTI_PACKAGES}}) {
-		next if $m eq '-';
-		my $w = DPB::PkgPath->new("$stem,$m");
-		if ($w ne $v) {
-			push(@l, $w);
+	if (defined $v->{info}) {
+		for my $m (keys %{$v->{info}{MULTI_PACKAGES}}) {
+			next if $m eq '-';
+			my $w = DPB::PkgPath->new("$stem,$m");
+			if ($w ne $v) {
+				push(@l, $w);
+			}
 		}
 	}
 	return @l;
@@ -114,6 +116,17 @@ sub make_logs
 		$self->link($log, $self->log_pkgname($w));
 	}
 	return $log;
+}
+
+sub log_error
+{
+	my ($self, $v, @messages) = @_;
+	my $log = $self->make_logs($v);
+	CORE::open my $fh, ">>", $log or die "Can't write to $log: $!\n";
+	for my $msg (@messages) {
+		print $fh $msg, "\n";
+	}
+	$v->print_parent($fh);
 }
 
 sub make_distlogs

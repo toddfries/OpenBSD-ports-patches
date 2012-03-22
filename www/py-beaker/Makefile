@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.6 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.8 2011/12/31 15:10:35 fgsch Exp $
 
 COMMENT =	session and caching library with wsgi middleware
 
-MODPY_EGG_VERSION = 1.5.4
-REVISION =	0
+MODPY_EGG_VERSION = 1.6.2
 DISTNAME =	Beaker-${MODPY_EGG_VERSION}
 PKGNAME =	py-${DISTNAME:L}
 
 CATEGORIES =	www devel
 
-HOMEPAGE =	http://beaker.groovie.org/
+HOMEPAGE =	http://beaker.readthedocs.org/
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -24,6 +23,7 @@ MODULES =	lang/python
 RUN_DEPENDS =	security/py-crypto
 REGRESS_DEPENDS = databases/py-sqlalchemy \
 		  devel/py-coverage \
+		  devel/py-mock \
 		  devel/py-nose \
 		  misc/py-memcached \
 		  www/py-webtest \

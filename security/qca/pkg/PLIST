@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.2 2008/02/04 23:59:02 espie Exp $
+@comment $OpenBSD: PLIST,v 1.4 2012/01/26 09:25:46 sebastia Exp $
+@conflict qca2-<=2.0.3p0
 %%SHARED%%
 include/qca.h
 lib/qt3/

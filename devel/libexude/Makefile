@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2011/07/04 16:40:21 dhill Exp $
+# $OpenBSD: Makefile,v 1.6 2012/01/07 01:49:19 dhill Exp $
 
 COMMENT=	memory allocation debugger library
 
-DISTNAME=	exude-0.3.0
+DISTNAME=	exude-0.6.0
 PKGNAME=	lib${DISTNAME}
 CATEGORIES=    	devel
-SHARED_LIBS=	exude	1.0
+SHARED_LIBS=	exude	3.0
 
 HOMEPAGE=	http://opensource.conformal.com/wiki/Exude	
 MASTER_SITES=	http://opensource.conformal.com/snapshots/exude/
@@ -21,13 +21,6 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 BUILD_DEPENDS=	devel/libclog
-
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=      -Dno_mips64=0
-.else
-PKG_ARGS+=      -Dno_mips64=1
-.endif
 
 FAKE_FLAGS=	MANDIR=${PREFIX}/man/man
 

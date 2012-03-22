@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.24 2011/05/08 13:20:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2012/02/21 08:41:57 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	personal search and metasearch
 
-DISTNAME=	pinot-0.97
-REVISION=	0
+DISTNAME=	pinot-0.98
+REVISION=	1
 
 CATEGORIES=	x11 misc
 
-HOMEPAGE=	http://pinot.berlios.de/
+HOMEPAGE=	http://code.google.com/p/pinot-search/
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,19 +17,18 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo cairomm-1.0
-WANTLIB += crypto dbus-1 expat fontconfig freetype gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4
-WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
+WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender atk-1.0 atkmm-1.6 c cairo cairomm-1.0
+WANTLIB += crypto curl dbus-1 dbus-glib-1 e2fs-uuid exiv2 expat
+WANTLIB += ffi fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gdkmm-2.4 gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gmime-2.6
+WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 gtkmm-2.4
 WANTLIB += idn m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4
-WANTLIB += pcre pixman-1 png pthread pthread-stubs sigc-2.0 ssl
-WANTLIB += stdc++ xcb xml2 z e2fs-uuid xcb-render
-WANTLIB += gtkmm-2.4>=7 gdkmm-2.4 atkmm-1.6 xml++-2.6 gmime-2.4
-WANTLIB += curl>=13 tag>=7 sqlite3>=13 dbus-glib-1>=4 exif>=12
-WANTLIB += textcat xapian GL Xxf86vm drm xcb-shm
+WANTLIB += pcre pixman-1 png pthread pthread-stubs sigc-2.0 sqlite3
+WANTLIB += ssl stdc++ tag textcat xapian xcb xcb-render xcb-shm
+WANTLIB += xml++-2.6 xml2 z
 
-MASTER_SITES=	${MASTER_SITE_BERLIOS:=pinot/}
+MASTER_SITES=	http://pinot-search.googlecode.com/files/
 
 MODULES=	devel/gettext
 
@@ -41,12 +40,12 @@ BUILD_DEPENDS=	devel/boost \
 # XXX catppt - catdvi
 LIB_DEPENDS=	x11/gtk2mm \
 		textproc/libxml++ \
-		gmime->=2.4,<2.6:mail/gmime24 \
+		mail/gmime>=2.6.0 \
 		net/curl \
 		audio/taglib \
 		databases/sqlite3 \
 		x11/dbus-glib \
-		graphics/libexif \
+		graphics/exiv2 \
 		devel/libidn
 
 # port-lib-depends-check misses these ones because the depending lib
@@ -60,7 +59,8 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 		textproc/unrtf \
 		textproc/xpdf,-utils \
 		textproc/antiword \
-		misc/shared-mime-info
+		misc/shared-mime-info \
+		x11/gtk+2,-guic
 
 # libxapianbackend.so: undefined symbol '__dso_handle'
 USE_LIBTOOL=	gnu
@@ -72,11 +72,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		MKDIR_P="mkdir -p --"
 CONFIGURE_ARGS= ${CONFIGURE_SHARED} \
-		--enable-soap=no \
-		--enable-dbus=yes \
-		--enable-mempool=yes \
-		--enable-libarchive=no \
-		--enable-gio=yes \
 		--with-http=curl \
 		--with-ssl=/usr
 

@@ -1,0 +1,12 @@
+$OpenBSD: patch-panels_printers_cc-printers-panel_c,v 1.4 2011/11/09 09:02:00 ajacoutot Exp $
+--- panels/printers/cc-printers-panel.c.orig	Thu Nov  3 18:57:09 2011
++++ panels/printers/cc-printers-panel.c	Wed Nov  9 08:52:05 2011
+@@ -2156,7 +2156,7 @@ test_page_cb (GtkButton *button,
+   if (printer_name)
+     {
+       const gchar  *const dirs[] = { "/usr/share/cups",
+-                                     "/usr/local/share/cups",
++                                     "${LOCALBASE}/share/cups",
+                                      NULL };
+       const gchar  *testprint[] = { "%s/data/testprint",
+                                     "%s/data/testprint.ps",

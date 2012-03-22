@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2011/06/13 20:52:26 landry Exp $
+# $OpenBSD: Makefile,v 1.51 2012/01/23 18:57:33 landry Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,17 +7,14 @@ COMMENT-bogofilter=	bogofilter plugin
 COMMENT-clamav=		clamav plugin
 COMMENT-spamassassin=	spamassassin plugin
 
-V=			3.7.9
+V=			3.8.0
 DISTNAME=		claws-mail-${V}
-REVISION-main=		0
 PKGNAME-main=		${DISTNAME}
 PKGNAME-bogofilter=	claws-mail-bogofilter-${V}
 PKGNAME-spamassassin=	claws-mail-spamassassin-${V}
 CATEGORIES=		mail news
 
 HOMEPAGE=		http://www.claws-mail.org/
-
-MAINTAINER=		Ulrich Kahl <ulrich.kahl@cityweb.de>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
@@ -52,7 +49,7 @@ WANTLIB=		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 			GL Xxf86vm drm xcb-render xcb-shm
 
 WANTLIB-main=		${WANTLIB} ICE SM c dbus-1 gmp hogweed nettle \
-			pthread stdc++ tasn1 xcb-atom xcb-aux xcb-event \
+			pthread stdc++ tasn1 xcb-atom xcb-aux xcb-event assuan \
 			startup-notification-1 enchant gnutls gpgme dbus-glib-1
 
 WANTLIB-docs=
@@ -64,12 +61,13 @@ LIB_DEPENDS=		x11/gtk+2 \
 			security/libgcrypt
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
-			devel/desktop-file-utils
+			devel/desktop-file-utils \
+			x11/gtk+2,-guic
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/startup-notification \
 			textproc/enchant \
-			security/gnutls \
+			security/gnutls>=2.2 \
 			security/gpgme \
 			x11/dbus-glib
 
@@ -84,11 +82,11 @@ USE_GROFF =		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_STYLE=	autoconf
 
-AUTOCONF_VERSION=	2.67
+AUTOCONF_VERSION=	2.68
 CONFIGURE_ENV+=		CPPFLAGS="-I${X11BASE}/include" \
 			LDFLAGS="-L${X11BASE}/lib"
 
-.if ${FLAVOR:L:Mjpilot}
+.if ${FLAVOR:Mjpilot}
 LIB_DEPENDS-main+=	comms/pilot-link 
 WANTLIB-main +=		pisock
 RUN_DEPENDS-main+=	comms/jpilot
@@ -96,7 +94,7 @@ RUN_DEPENDS-main+=	comms/jpilot
 CONFIGURE_ARGS+=	--disable-jpilot
 .endif
 
-.if ${FLAVOR:L:Mcompface}
+.if ${FLAVOR:Mcompface}
 PERMIT_PACKAGE_CDROM=   No Fee
 PERMIT_DISTFILES_CDROM= No Fee
 LIB_DEPENDS-main+=     	mail/faces
@@ -105,14 +103,14 @@ WANTLIB-main +=		compface>=1
 CONFIGURE_ARGS+=       --disable-compface
 .endif
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 WANTLIB-main+=		asn1 com_err gssapi krb5 lber ldap
 LIB_DEPENDS-main+=	databases/openldap
 .else
 CONFIGURE_ARGS+=	--disable-ldap
 .endif
 
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 CFLAGS+=	-O0 -g
 INSTALL_STRIP=
 .endif

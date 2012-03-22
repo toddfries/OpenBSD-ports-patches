@@ -1,0 +1,33 @@
+$OpenBSD: patch-man_feh_pre,v 1.11 2012/02/21 12:27:25 dcoppa Exp $
+
+fix typo
+
+--- man/feh.pre.orig	Thu Feb  2 21:10:57 2012
++++ man/feh.pre	Tue Feb 21 12:38:52 2012
+@@ -177,7 +177,7 @@ the caption will be looked for in
+ Don't display images, print image info according to
+ .Ar format
+ instead.  See
+-.Sx FORMAT SPECIFIEDRS .
++.Sx FORMAT SPECIFIERS .
+ .
+ .It Cm --cycle-once
+ .
+@@ -837,7 +837,7 @@ which
+ defaults to
+ .Pa ~/.config/feh/ .
+ If the files are not found in that directory, it will also try
+-.Pa /etc/feh/ .
++.Pa ${SYSCONFDIR}/feh/ .
+ .Pp
+ All config files treat lines starting with a
+ .Qq #
+@@ -1334,7 +1334,7 @@ order it finds them on the hard disk, which is usually
+ .
+ Show 128x128 pixel thumbnails, limit window width to 1024 pixels.
+ .
+-.It feh -t -Sfilename -E 128 -y 128 -W 1024 -P -C /usr/share/fonts/truetype/ttf-dejavu/ -e DejaVuSans/8 /opt/images
++.It feh -t -Sfilename -E 128 -y 128 -W 1024 -P -C ${X11BASE}/lib/X11/fonts/TTF/ -e DejaVuSans/8 /opt/images
+ .
+ Same as above, but enable thumbnail caching in ~/.thumbnails and use a smaller
+ font.

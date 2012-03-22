@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2011/01/19 23:22:05 stu Exp $
+# $OpenBSD: Makefile,v 1.6 2011/10/24 16:50:07 stu Exp $
 
 COMMENT =	Tcl implementation for the CLR
 
 V =		1.0
-P =		4031.13865
+P =		4312.34328
 DISTNAME =	eagle-${V}
-PKGNAME =	${DISTNAME}-beta13
+PKGNAME =	${DISTNAME}-beta19
 CATEGORIES =	lang lang/tcl
 HOMEPAGE =	http://eagle.to/
 MAINTAINER =	Stuart Cassoff <stwo@users.sourceforge.net>
@@ -51,15 +51,15 @@ do-install:
 .endfor
 	echo '#! /bin/sh' > ${EAGLE_BIN}
 	echo 'exec mono ${TRUEPREFIX}/${EAGLE_DIR}/bin/EagleShell.exe $${1+"$$@"}' >> ${EAGLE_BIN}
-	${CHOWN} ${BINOWN}:${BINGRP} ${EAGLE_BIN}
-	${CHMOD} ${BINMODE} ${EAGLE_BIN}
+	chown ${BINOWN}:${BINGRP} ${EAGLE_BIN}
+	chmod ${BINMODE} ${EAGLE_BIN}
 
 # Some tests are too timing-sensitive to succeed everywhere so don't run them
 do-regress:
 	${SETENV} ${MAKE_ENV} ${ALL_REGRESS_FLAGS} \
 	${LOCALBASE}/bin/mono ${WRKSRC}/bin/EagleShell.exe \
-	-preinit 'set test_log ""' \
-	-file ${WRKSRC}/tests/all.eagle \
+	-preInitialize 'set test_log {}' \
+	-file ${WRKSRC}/Tests/all.eagle \
 	-notFile 'benchmark.eagle delayout.eagle perf*.eagle'
 
 .include <bsd.port.mk>

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.77 2011/07/05 08:18:11 jasper Exp $
+# $OpenBSD: Makefile,v 1.81 2012/01/26 20:09:08 naddy Exp $
 
 COMMENT=	get files from FTP, Gopher, HTTP or HTTPS servers
 
-DISTNAME=	curl-7.21.7
-SHARED_LIBS=	curl                 19.0     # .6.0
+DISTNAME=	curl-7.24.0
+SHARED_LIBS=	curl                 22.0     # .6.0
 CATEGORIES=	net
 MASTER_SITES=	http://curl.haxx.se/download/ \
 		ftp://ftp.sunet.se/pub/www/utilities/curl/
@@ -29,6 +29,12 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-random="/dev/arandom" \
 		--with-libidn=${LOCALBASE} \
 		--without-libssh2
+
+# speed up some time-consuming configure tests
+CONFIGURE_ENV+=curl_cv_func_select_args="int,fd_set *,struct timeval *,int"
+CONFIGURE_ENV+=curl_cv_func_recv_args="int,void *,size_t,int,ssize_t"
+CONFIGURE_ENV+=curl_cv_func_recvfrom_args="int,void *,size_t,int,struct sockaddr *,socklen_t *,ssize_t"
+CONFIGURE_ENV+=curl_cv_func_send_args="int,const void *,size_t,int,ssize_t"
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/emacs/site-lisp

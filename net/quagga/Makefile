@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.20 2011/05/11 12:03:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2012/01/17 17:22:56 sthen Exp $
 
 COMMENT=	multi-threaded routing daemon
 
-DISTNAME=	quagga-0.99.18
-REVISION=	0
-SHARED_LIBS=    ospf	0.0     \
-                zebra	0.0
+DISTNAME=	quagga-0.99.19
+REVISION=	2
+SHARED_LIBS=	ospf		0.0 \
+		ospfapiclient	0.0 \
+		zebra		0.0
 CATEGORIES=	net
 MASTER_SITES=	http://www.quagga.net/download/
 
@@ -20,33 +21,35 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	c curses m readline termcap
 
 STATEDIR?=	/var/quagga
-SUBST_VARS=	CONFDIR STATEDIR
+SUBST_VARS=	STATEDIR
 
 BUILD_DEPENDS=	lang/gawk
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
-CONFDIR=	${SYSCONFDIR}/quagga
+USE_LIBTOOL=	Yes
+SYSCONFDIR=	${BASESYSCONFDIR}/quagga
 SEPARATE_BUILD=	concurrent
-CONFIGURE_STYLE=gnu old
-CONFIGURE_ARGS+=--includedir=${LOCALBASE}/include/quagga \
-		--sysconfdir=${CONFDIR} \
+CONFIGURE_STYLE= gnu
+CONFIGURE_ARGS+= --includedir=${LOCALBASE}/include/quagga \
 		--localstatedir=${STATEDIR} \
 		--enable-user=_quagga \
 		--enable-group=_quagga \
 		--enable-vty-group=_quagga \
-		--enable-vtysh \
-		--mandir=${LOCALBASE}/man \
-		--infodir=${LOCALBASE}/info
+		--enable-vtysh
+.if ${MACHINE_ARCH:Mhppa} || ${MACHINE_ARCH:Marm}
+CONFIGURE_ARGS+= --disable-pie
+.endif
 CONFIGURE_ENV=	LIBS=-lcurses
 
-FAKE_FLAGS=    exampledir='${PREFIX}/share/examples/quagga'
+MAKE_FLAGS=	MAKEINFO="makeinfo --no-split"
+FAKE_FLAGS=	exampledir='${PREFIX}/share/examples/quagga' \
+		${MAKE_FLAGS}
 
-# XXX broken
-#FLAVORS=	snmp
+FLAVORS=	snmp
 FLAVOR?=
 
 .if ${FLAVOR:L:Msnmp}
 LIB_DEPENDS=	net/net-snmp
+WANTLIB+=	crypto netsnmp
 CONFIGURE_ARGS+= --enable-snmp
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

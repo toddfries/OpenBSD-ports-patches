@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.28 2011/05/12 07:34:54 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.31 2011/12/03 18:55:28 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		gtk+2 media player based on BMP and XMMS
 
 DISTNAME =		audacious-2.4.5
+REVISION =		2
 
 SHARED_LIBS =		audclient	1.1 	# 2.0
 SHARED_LIBS +=		audcore		0.0 	# 1.0
@@ -21,9 +22,9 @@ PERMIT_DISTFILES_FTP =	Yes
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += c cairo dbus-1>=6 dbus-glib-1 drm execinfo expat fontconfig
+WANTLIB += GL ICE SM X11 Xcomposite Xcursor Xdamage
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0
+WANTLIB += c cairo dbus-1>=6 dbus-glib-1 execinfo expat fontconfig
 WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 guess
 WANTLIB += m mcs mowgli pango-1.0 pangocairo-1.0 pangoft2-1.0
@@ -37,7 +38,8 @@ EXTRACT_SUFX =		.tgz
 MODULES =		devel/gettext
 
 BUILD_DEPENDS =		textproc/libxml
-RUN_DEPENDS =		devel/desktop-file-utils
+RUN_DEPENDS =		devel/desktop-file-utils \
+			x11/gtk+2,-guic
 LIB_DEPENDS =		devel/libexecinfo \
 			devel/libguess \
 			devel/mcs>=0.7.0 \

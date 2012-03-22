@@ -1,8 +1,8 @@
-#	$OpenBSD: Makefile,v 1.11 2011/07/06 22:44:02 kili Exp $
+#	$OpenBSD: Makefile,v 1.15 2011/11/06 18:57:58 jasper Exp $
 
 COMMENT=	ZBar barcode reader
 DISTNAME=	zbar-0.10
-REVISION=	5
+REVISION=	9
 
 SHARED_LIBS=	zbar	0.0 \
 		zbargtk	0.0
@@ -24,14 +24,15 @@ PERMIT_DISTFILES_FTP=	Yes
 MODULES=	devel/gettext \
 		lang/python
 
-WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 bz2 c
-WANTLIB += cairo expat fontconfig freetype gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 jasper jbig jpeg
-WANTLIB += lcms m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
-WANTLIB += pixman-1 png pthread pthread-stubs tiff wmflite
-WANTLIB += xcb xml2 z gdk_pixbuf-2.0 MagickCore>=1 MagickWand>=1
-WANTLIB += ffi gdk-x11-2.0>=0.11 gtk-x11-2.0>=0.11
+WANTLIB += GL ICE MagickCore MagickWand SM X11 Xau Xcomposite
+WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
+WANTLIB += Xrender Xv Xxf86vm atk-1.0 bz2 c cairo djvulibre drm
+WANTLIB += expat ffi fftw3 fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
+WANTLIB += gtk-x11-2.0 jasper jbig jpeg lcms ltdl lzma m pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs tiff xcb xcb-render xcb-shm z
+WANTLIB += Xt stdc++ xml2
 
 LIB_DEPENDS=	graphics/ImageMagick \
 		devel/libffi \

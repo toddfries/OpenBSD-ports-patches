@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/17 08:05:17 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2011/12/02 14:36:14 espie Exp $
 
 COMMENT=	library for Japanese Input Method Wnn4
 
@@ -8,7 +8,7 @@ COMMENT-wnn4-canna=	library for Japanese Input Method canna or wnn4
 FULLPKGNAME=		ja-onew${FLAVOR_EXT}-2.2.10
 
 DISTNAME=	jvim2.0r+onew2.2.10
-REVISION=	0
+REVISION=	1
 CATEGORIES=	japanese
 
 MASTER_SITES=	ftp://ftp.lab.kdd.co.jp/Japan/onew/ \
@@ -27,11 +27,11 @@ FLAVOR?=canna
 ERRORS+=	"Fatal: You must choose a converter"
 .endif
 
-.if ${FLAVOR:L:Mwnn4}
+.if ${FLAVOR:Mwnn4}
 BUILD_DEPENDS=	japanese/Wnn
 .endif
 
-.if ${FLAVOR:L:Mcanna}
+.if ${FLAVOR:Mcanna}
 PERMIT_PACKAGE_CDROM=	Canna prevents it
 LIB_DEPENDS+=		japanese/canna
 WANTLIB += canna

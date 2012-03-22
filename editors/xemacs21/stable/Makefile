@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.21 2011/07/18 19:06:36 naddy Exp $
+# $OpenBSD: Makefile,v 1.23 2012/01/13 00:55:14 naddy Exp $
 
 BRANCH=		21.4
 VERSION=	22
-REVISION =	4
+REVISION =	5
 
 WANTLIB=	c m ncurses util
 
@@ -35,7 +35,7 @@ FAKE_FLAGS=	prefix='$${WRKINST}$${DESTDIR}${PREFIX}' \
 FLAVORS=	mule canna wnn no_x11
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=--without-x11
 .else
 WANTLIB+=	ICE SM X11 Xau Xaw Xext Xmu Xpm Xt z
@@ -54,16 +54,16 @@ LIB_DEPENDS+=	graphics/jpeg \
 		graphics/tiff
 WANTLIB +=	jpeg>=62 png>=2 tiff>=35
 
-. if ${FLAVOR:L:Mmule}
+. if ${FLAVOR:Mmule}
 CONFIGURE_ARGS+=--with-xim=xlib
 . endif
 .endif
 
-.if ${FLAVOR:L:Mmule}
+.if ${FLAVOR:Mmule}
 MODULES=	devel/gettext
 CONFIGURE_ARGS+=--with-mule
 
-. if ${FLAVOR:L:Mcanna}
+. if ${FLAVOR:Mcanna}
 LIB_DEPENDS+=	japanese/canna
 CONFIGURE_ARGS+=--with-canna
 WANTLIB +=	canna>=1 RKC>=1
@@ -71,7 +71,7 @@ WANTLIB +=	canna>=1 RKC>=1
 CONFIGURE_ARGS+=--with-canna=no
 . endif
 
-. if ${FLAVOR:L:Mwnn}
+. if ${FLAVOR:Mwnn}
 BUILD_DEPENDS+= japanese/Wnn
 CONFIGURE_ARGS+=--with-wnn
 . else
@@ -80,7 +80,7 @@ CONFIGURE_ARGS+=--with-wnn=no
 
 .else
 
-. if ${FLAVOR:L:Mcanna} || ${FLAVOR:L:Mwnn}
+. if ${FLAVOR:Mcanna} || ${FLAVOR:Mwnn}
 ERRORS+= "Fatal: You cannot use MULE-dependant flavors without MULE support"
 . endif
 

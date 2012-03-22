@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2011/11/16 15:56:37 robert Exp $
 
 COMMENT =	free open-source SQL full-text search engine
 
 DISTNAME =	sphinx-0.9.8.1
-REVISION =	2
+REVISION =	4
 CATEGORIES =	textproc
 
 HOMEPAGE =	http://www.sphinxsearch.com/

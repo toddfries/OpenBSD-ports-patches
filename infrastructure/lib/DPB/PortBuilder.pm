@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortBuilder.pm,v 1.11 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: PortBuilder.pm,v 1.19 2011/12/05 21:27:53 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -31,13 +31,12 @@ sub new
 	my $self = bless {
 	    state => $state,
 	    clean => $state->opt('c'),
+	    dontclean => $state->{dontclean},
 	    fetch => $state->opt('f'),
 	    size => $state->opt('s'),
+	    junk => $state->opt('J'),
 	    rebuild => $state->opt('R'),
 	    fullrepo => $state->fullrepo,
-	    logger => $state->logger,
-	    ports => $state->ports,
-	    make => $state->make,
 	    heuristics => $state->heuristics}, $class;
 	if ($state->opt('u') || $state->opt('U')) {
 		$self->{update} = 1;
@@ -49,11 +48,41 @@ sub new
 	return $self;
 }
 
+sub ports
+{
+	my $self = shift;
+	return $self->{state}->ports;
+}
+
+sub logger
+{
+	my $self = shift;
+	return $self->{state}->logger;
+}
+
+sub locker
+{
+	my $self = shift;
+	return $self->{state}->locker;
+}
+
+sub make
+{
+	my $self = shift;
+	return $self->{state}->make;
+}
+
+sub make_args
+{
+	my $self = shift;
+	return $self->{state}->make_args;
+}
+
 sub init
 {
 	my $self = shift;
 	File::Path::make_path($self->{fullrepo});
-	$self->{global} = $self->{logger}->open("build");
+	$self->{global} = $self->logger->open("build");
 	if ($self->{rebuild}) {
 		require OpenBSD::PackageRepository;
 		$self->{repository} = OpenBSD::PackageRepository->new(
@@ -61,7 +90,7 @@ sub init
 		# this is just a dummy core, for running quick pipes
 		$self->{core} = DPB::Core->new_noreg('localhost');
 		$self->{logrebuild} = DPB::Util->make_hot(
-		    $self->{logger}->open('rebuild'));
+		    $self->logger->open('rebuild'));
 	}
 }
 
@@ -126,7 +155,7 @@ sub report
 	my $pkgpath = $v->fullpkgpath;
 	my $host = $core->fullhostname;
 	my $log = $self->{global};
-	my $sz = (stat $self->{logger}->log_pkgpath($v))[7];
+	my $sz = (stat $self->logger->log_pkgpath($v))[7];
 	if (defined $job->{offset}) {
 		$sz -= $job->{offset};
 	}
@@ -161,21 +190,32 @@ sub build
 {
 	my ($self, $v, $core, $special, $lock, $final_sub) = @_;
 	my $start = time();
-	my $log = $self->{logger}->make_logs($v);
-	if ($self->{state}->opt('v')) {
-		open my $fh, ">>", $log;
-		print $fh ">>> Building under ";
-		$v->quick_dump($fh);
-		close($fh);
-	}
+	my $log = $self->logger->make_logs($v);
+
+	open my $fh, ">>", $log;
+	print $fh ">>> Building under ";
+	$v->quick_dump($fh);
+	close($fh);
+
 	my $job;
 	$job = DPB::Job::Port->new($log, $v, $self, $special,
 	    sub {$self->end_lock($lock, $core, $job); $self->report($v, $job, $core); &$final_sub;});
+	$job->{lock} = $lock;
 	$core->start_job($job, $v);
-	print $lock "host=", $core->hostname, "\n";
-	print $lock "pid=$core->{pid}\n";
-	print $lock "start=$start (", DPB::Util->time2string($start), ")\n";
-	$job->set_watch($self->{logger}, $v);
+	print $lock "host=", $core->hostname, "\n",
+	    "pid=$core->{pid}\n",
+	    "start=$start (", DPB::Util->time2string($start), ")\n";
+	$job->set_watch($self->logger, $v);
+	return $core;
+}
+
+sub install
+{
+	my ($self, $v, $core) = @_;
+	my $log = $self->logger->make_logs($v);
+	my $job = DPB::Job::Port::Install->new($log, $v, $self, 
+	    sub {$core->mark_ready; });
+	$core->start_job($job, $v);
 	return $core;
 }
 

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.21 2011/01/14 08:13:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2012/02/16 22:09:37 ajacoutot Exp $
 
 COMMENT=		internationalization tools
 
-V=			0.41.1
+V=			0.50.1
 DISTNAME=		intltool-${V}
 CATEGORIES=		textproc
 

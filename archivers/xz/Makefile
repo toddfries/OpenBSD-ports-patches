@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/27 19:06:45 naddy Exp $
+# $OpenBSD: Makefile,v 1.12 2011/12/18 09:01:19 ajacoutot Exp $
+
+NOT_FOR_ARCHS=	${GCC2_ARCHS}
 
 COMMENT=	LZMA compression and decompression tools
 
@@ -24,7 +26,6 @@ MODULES=	devel/gettext
 WANTLIB=	c
 
 USE_LIBTOOL=	Yes
-USE_GROFF=	Yes
 SEPARATE_BUILD=	simple
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \

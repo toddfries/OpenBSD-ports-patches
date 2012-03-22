@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.527 2011/08/18 11:48:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.547 2012/02/29 20:58:28 landry Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -19,6 +19,7 @@
      SUBDIR += bricolage
      SUBDIR += calamaris
      SUBDIR += canto
+     SUBDIR += cclive
      SUBDIR += cgicc
      SUBDIR += cgiparse
      SUBDIR += cgit
@@ -26,10 +27,8 @@
      SUBDIR += chive
      SUBDIR += chromium
      SUBDIR += clearsilver
-     SUBDIR += clearsilver,python
      SUBDIR += cms-ms
      SUBDIR += cntlm
-     SUBDIR += community-id
      SUBDIR += concrete5
      SUBDIR += conkeror
      SUBDIR += cronolog
@@ -62,17 +61,21 @@
      SUBDIR += horde
      SUBDIR += hs-cgi
      SUBDIR += hs-html
+     SUBDIR += hs-http-types
+     SUBDIR += hs-snap
      SUBDIR += hs-snap-core
      SUBDIR += hs-snap-server
      SUBDIR += hs-webkit
+     SUBDIR += hs-wai
+     SUBDIR += hs-warp
      SUBDIR += hs-xhtml-combinators
      SUBDIR += http_load
      SUBDIR += http_ping
+     SUBDIR += icedtea-web
      SUBDIR += igal
      SUBDIR += japana
      SUBDIR += jesred
      SUBDIR += junkbuster
-     SUBDIR += kazehakase
      SUBDIR += ktdms
      SUBDIR += larbin
      SUBDIR += libcroco
@@ -136,7 +139,6 @@
      SUBDIR += nginx,passenger
      SUBDIR += node
      SUBDIR += nostromo
-     SUBDIR += ntlmaps
      SUBDIR += opera
      SUBDIR += p5-Alien-Tidyp
      SUBDIR += p5-Apache-ASP
@@ -177,7 +179,6 @@
      SUBDIR += p5-Catalyst-Controller-HTML-FormFu
      SUBDIR += p5-Catalyst-Devel
      SUBDIR += p5-Catalyst-Engine-Apache
-     SUBDIR += p5-Catalyst-Engine-HTTP-POE
      SUBDIR += p5-Catalyst-Helper-Controller-Scaffold
      SUBDIR += p5-Catalyst-Log-Log4perl
      SUBDIR += p5-Catalyst-Plugin-Cache
@@ -338,13 +339,13 @@
      SUBDIR += pecl-chroot
      SUBDIR += pecl-geoip
      SUBDIR += pecl-memcache
-     SUBDIR += pecl-pcntl
      SUBDIR += pecl-phar
      SUBDIR += pecl-proctitle
      SUBDIR += pecl-ssh2
      SUBDIR += pecl-swish
      SUBDIR += pecl-uploadprogress
      SUBDIR += perlbal
+     SUBDIR += photoshow
      SUBDIR += php-markdown
      SUBDIR += php-openid
      SUBDIR += php-predis
@@ -355,10 +356,6 @@
      SUBDIR += phppgadmin
      SUBDIR += piwik
      SUBDIR += plans
-     SUBDIR += plone
-     SUBDIR += plone-formgen
-     SUBDIR += plone-ldap
-     SUBDIR += plone-massloader
      SUBDIR += pmwiki
      SUBDIR += polipo
      SUBDIR += pound
@@ -388,8 +385,10 @@
      SUBDIR += py-pylons
      SUBDIR += py-quixote
      SUBDIR += py-repoze-profile
+     SUBDIR += py-requests
      SUBDIR += py-routes
      SUBDIR += py-tempita
+     SUBDIR += py-tornado
      SUBDIR += py-turbogears
      SUBDIR += py-weberror
      SUBDIR += py-webhelpers
@@ -419,10 +418,14 @@
      SUBDIR += ruby-merb
      SUBDIR += ruby-mongrel
      SUBDIR += ruby-passenger
+     SUBDIR += ruby-passenger,ruby19
      SUBDIR += ruby-rack
+     SUBDIR += ruby-rack-cache
      SUBDIR += ruby-rack-mount
+     SUBDIR += ruby-rack-ssl
      SUBDIR += ruby-rack-test
      SUBDIR += ruby-rails
+     SUBDIR += ruby-rails,ruby19
      SUBDIR += ruby-railties
      SUBDIR += ruby-rainbows
      SUBDIR += ruby-rainbows,ruby19
@@ -439,10 +442,12 @@
      SUBDIR += sabredav
      SUBDIR += sarg
      SUBDIR += seamonkey
+     SUBDIR += seamonkey-i18n
      SUBDIR += snownews
      SUBDIR += sogo
      SUBDIR += sope
      SUBDIR += spawn-fcgi
+     SUBDIR += sqtop
      SUBDIR += squid
      SUBDIR += squid,ldap
      SUBDIR += squid,ldap,snmp
@@ -465,7 +470,6 @@
      SUBDIR += trac
      SUBDIR += trac-ldapplugin
      SUBDIR += tracnav
-     SUBDIR += transproxy
      SUBDIR += tt-rss
      SUBDIR += twiki
      SUBDIR += twill
@@ -499,28 +503,5 @@
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework
-     SUBDIR += zope
-     SUBDIR += zope-cmf
-     SUBDIR += zope-cmfquickinstaller
-     SUBDIR += zope-coreblog
-     SUBDIR += zope-externaleditor
-     SUBDIR += zope-formulator
-     SUBDIR += zope-fortune
-     SUBDIR += zope-fscounter
-     SUBDIR += zope-genericsetup
-     SUBDIR += zope-groupuserfolder
-     SUBDIR += zope-jtracker
-     SUBDIR += zope-ldapmultiplugins
-     SUBDIR += zope-ldapuserfolder
-     SUBDIR += zope-logger
-     SUBDIR += zope-placelesstranslationservice
-     SUBDIR += zope-pluggableauthservice
-     SUBDIR += zope-pluginregistry
-     SUBDIR += zope-rdfsummary
-     SUBDIR += zope-xmlmethods
-     SUBDIR += zope-zippy
-     SUBDIR += zope-zsyncer
-     SUBDIR += zope-zwiki
-     SUBDIR += zopeedit
 
 .include <bsd.port.subdir.mk>

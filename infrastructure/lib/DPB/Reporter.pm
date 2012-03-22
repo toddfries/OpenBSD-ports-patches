@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Reporter.pm,v 1.6 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Reporter.pm,v 1.8 2012/02/27 15:37:36 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -71,6 +71,10 @@ sub set_sig_handlers
 		DPB::Clock->restart;
 		$self->handle_window;
 	};
+}
+
+sub refresh
+{
 }
 
 sub handle_window
@@ -153,12 +157,18 @@ sub term_send
 	$self->{terminal}->Tputs($seq, 1, \*STDOUT);
 }
 
+sub refresh
+{
+	my $self = shift;
+	$self->{write} = 'go_write_home';
+}
+
 sub handle_window
 {
 	my $self = shift;
 	$self->set_cursor;
 	$self->find_window_size;
-	$self->{write} = 'go_write_home';
+	$self->refresh;
 }
 
 sub set_sig_handlers
@@ -170,9 +180,6 @@ sub set_sig_handlers
 	};
 	OpenBSD::Handler->register(sub {
 		$self->reset_cursor; });
-	$SIG{'__DIE__'} = sub {
-		$self->reset_cursor;
-	};
 }
 
 sub new
@@ -335,6 +342,7 @@ sub myprint
 {
 	my $self = shift;
 	for my $string (@_) {
+		$string =~ s/^\t/       /gm; # XXX dirty hack for warn
 		$extra .= $string;
 	}
 }

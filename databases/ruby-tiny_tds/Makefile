@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2011/04/15 16:13:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2011/09/16 08:48:05 espie Exp $
 
 COMMENT =	simple and fast ruby binding to FreeTDS
 
-DISTNAME =	tiny_tds-0.4.3
+DISTNAME =	tiny_tds-0.4.5
 CATEGORIES =	databases
-
 REVISION =	0
 
 HOMEPAGE =	https://github.com/rails-sqlserver/tiny_tds

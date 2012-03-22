@@ -1,32 +1,56 @@
-$OpenBSD: patch-src_libtracker-miner_tracker-monitor_c,v 1.1 2010/04/09 09:00:31 ajacoutot Exp $
+$OpenBSD: patch-src_libtracker-miner_tracker-monitor_c,v 1.5 2012/02/22 14:20:32 ajacoutot Exp $
 
-Fix a segfault where there is no monitor running.
+Recognize the gio-kqueue monitoring backend.
+(not to be pushed upstream before the glib changes are there first)
 
---- src/libtracker-miner/tracker-monitor.c.orig	Fri Apr  2 17:18:49 2010
-+++ src/libtracker-miner/tracker-monitor.c	Fri Apr  2 17:21:10 2010
-@@ -227,6 +227,7 @@ tracker_monitor_init (TrackerMonitor *object)
- 	GFile                 *file;
- 	GFileMonitor          *monitor;
+--- src/libtracker-miner/tracker-monitor.c.orig	Wed Feb 15 11:41:48 2012
++++ src/libtracker-miner/tracker-monitor.c	Wed Feb 22 15:14:08 2012
+@@ -23,6 +23,13 @@
+ #include <string.h>
+ #include <gio/gio.h>
+ 
++/* getrlimit(2) */
++#if defined (__OpenBSD__)
++#include <sys/types.h>
++#include <sys/time.h>
++#include <sys/resource.h>
++#endif
++
+ #include "tracker-monitor.h"
+ #include "tracker-marshal.h"
+ 
+@@ -222,6 +229,9 @@ tracker_monitor_init (TrackerMonitor *object)
  	const gchar           *name;
-+	GError                *error = NULL;
- #endif /* HAVE_LIBINOTIFY */
+ 	GError                *error = NULL;
  
- 	object->private = TRACKER_MONITOR_GET_PRIVATE (object);
-@@ -280,7 +281,16 @@ tracker_monitor_init (TrackerMonitor *object)
- 	monitor = g_file_monitor_directory (file,
- 	                                    G_FILE_MONITOR_WATCH_MOUNTS,
- 	                                    NULL,
--	                                    NULL);
-+	                                    &error);
-+
-+	/* Directory monitoring is missing, error out, don't crash. */
-+	if (error) {
-+		g_critical ("Could not obtain monitor: %s", error->message);
-+		g_error_free (error);
-+
-+		exit (EXIT_FAILURE);
-+		return FALSE;
-+	}
++#if defined (__OpenBSD__)
++	struct rlimit rl;
++#endif
+ 	object->priv = TRACKER_MONITOR_GET_PRIVATE (object);
  
- 	priv->monitor_backend = G_OBJECT_TYPE (monitor);
- 
+ 	priv = object->priv;
+@@ -294,6 +304,24 @@ tracker_monitor_init (TrackerMonitor *object)
+ 			 */
+ 			priv->monitor_limit = MAX (priv->monitor_limit, 0);
+ 		}
++#if defined (__OpenBSD__)
++		else if (strcmp (name, "GKqueueDirectoryMonitor") == 0) {
++			/* Using kqueue(2) */
++			g_message ("Monitor backend is kqueue(2)");
++			if (getrlimit (RLIMIT_NOFILE, &rl) == 0) {
++				rl.rlim_cur = rl.rlim_max;
++				(void)setrlimit(RLIMIT_NOFILE , &rl);
++				priv->monitor_limit = (rl.rlim_cur*90)/100;
++			} else {
++				priv->monitor_limit = 128;
++			}
++			/*  Prevent from opening an insame amount of FDs
++			 *  (kqueue(2) opens one file descriptor per monitor).
++			 */
++			if (priv->monitor_limit > 2048)
++				priv->monitor_limit = 2048;
++		}
++#endif
+ 		else if (strcmp (name, "GFamDirectoryMonitor") == 0) {
+ 			/* Using Fam */
+ 			g_message ("Monitor backend is Fam");

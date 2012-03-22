@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/15 19:45:56 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2011/11/11 18:33:03 jasper Exp $
 
 COMMENT=	gdb for arm-elf cross-development
 
 DISTNAME=	gdb-7.1
+REVISION=	0
 
 HOMEPAGE=	http://www.gnu.org/software/gdb/
 
 WANTLIB=	c expat m ncurses z
 
 MASTER_SITES=	${MASTER_SITE_GNU:=gdb/}
+DIST_SUBDIR=	gdb
 
 USE_GMAKE=	Yes
 

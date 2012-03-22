@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.34 2011/04/10 18:01:13 jasper Exp $
+# $OpenBSD: Makefile,v 1.38 2012/01/28 11:40:34 espie Exp $
 
 CATEGORIES =		databases
-V =			1.17
+V =			1.19
+REVISION =		0
 DISTNAME =		sqlports-$V
 DISTFILES =
 COMMENT =		sqlite database of ports
@@ -22,7 +23,10 @@ DBNAME =		${WRKBUILD}/sqlports
 
 do-build:
 	@cd ${PORTSDIR} && perl ${FILESDIR}/mksqlitedb -v ${DBNAME} -p ${WRKBUILD}/ouch
-	@if test -e ${WRKBUILD}/ouch; then exit 1; fi
+	@if test -s ${WRKBUILD}/ouch; then \
+		cat ${WRKBUILD}/ouch; \
+		exit 1; \
+	fi
 
 do-install:
 	${INSTALL_DATA} ${DBNAME} ${PREFIX}/share

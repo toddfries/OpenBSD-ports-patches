@@ -1,15 +1,11 @@
-$OpenBSD: patch-chrome_chrome_gyp,v 1.7 2011/08/16 08:17:44 robert Exp $
---- chrome/chrome.gyp.orig	Tue Aug  2 20:29:43 2011
-+++ chrome/chrome.gyp	Wed Aug  3 11:13:06 2011
-@@ -473,6 +473,11 @@
-             '../build/linux/system.gyp:gtk',
-           ],
-         }],
-+        ['OS=="openbsd"', {
-+          'include_dirs': [
-+            '/usr/local/include',
-+          ],
-+        }],
-       ],
-     },
+$OpenBSD: patch-chrome_chrome_gyp,v 1.11 2012/02/17 10:19:50 robert Exp $
+--- chrome/chrome.gyp.orig	Fri Jan 27 09:03:02 2012
++++ chrome/chrome.gyp	Thu Feb  9 09:31:06 2012
+@@ -129,7 +129,6 @@
+     'chrome_renderer.gypi',
+     'chrome_tests.gypi',
+     'common_constants.gypi',
+-    'nacl.gypi',
+   ],
+   'targets': [
      {

@@ -1,0 +1,17 @@
+$OpenBSD: patch-third_party_iccjpeg_iccjpeg_gyp,v 1.2 2012/02/17 10:19:51 robert Exp $
+--- third_party/iccjpeg/iccjpeg.gyp.orig	Fri Jan 27 09:02:02 2012
++++ third_party/iccjpeg/iccjpeg.gyp	Thu Feb  9 09:31:06 2012
+@@ -21,6 +21,13 @@
+           ],
+         }],
+       ],
++      'conditions': [
++        ['OS=="openbsd" and use_system_libjpeg==1', {
++          'include_dirs': [
++            '/usr/local/include',
++          ],
++        }],
++      ],
+       'direct_dependent_settings': {
+         'include_dirs': [
+           '.',

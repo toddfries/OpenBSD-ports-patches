@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.115 2011/07/08 18:24:00 robert Exp $
+# $OpenBSD: Makefile,v 1.130 2011/12/19 22:37:49 jeremy Exp $
 # $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
 #
 
      SUBDIR =
      SUBDIR += STk
-     SUBDIR += antlr2
+     SUBDIR += antlr3
      SUBDIR += arena
+     SUBDIR += boo
      SUBDIR += chicken
      SUBDIR += classpath
      SUBDIR += clisp
      SUBDIR += clojure
+     SUBDIR += coffeescript
      SUBDIR += cython
      SUBDIR += datalog
      SUBDIR += eagle
@@ -20,6 +22,7 @@
      SUBDIR += expect,no_tk
      SUBDIR += ezm3
      SUBDIR += feldspar
+     SUBDIR += freehdl
      SUBDIR += gawk
      SUBDIR += g77
      SUBDIR += g77-old
@@ -38,14 +41,14 @@
      SUBDIR += iverilog
      SUBDIR += jamvm
      SUBDIR += jikes
+     SUBDIR += jimtcl
      SUBDIR += jruby
-     SUBDIR += kaffe
      SUBDIR += librep
-     SUBDIR += llvm-gcc4
      SUBDIR += lua
      SUBDIR += mawk
      SUBDIR += mono
      SUBDIR += mono-basic
+     SUBDIR += myhdl
      SUBDIR += nbfc
      SUBDIR += newlisp
      SUBDIR += nhc98
@@ -68,6 +71,7 @@
      SUBDIR += rubinius
      SUBDIR += ruby
      SUBDIR += sbcl
+     SUBDIR += scala
      SUBDIR += scheme-report
      SUBDIR += scheme48
      SUBDIR += scm
@@ -81,5 +85,6 @@
      SUBDIR += ucblogo
      SUBDIR += unicon
      SUBDIR += vala
+     SUBDIR += verilator
 
 .include <bsd.port.subdir.mk>

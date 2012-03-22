@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.56 2011/08/21 09:21:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.68 2012/01/20 10:40:42 ajacoutot Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
 COMMENT-web =		network and application monitoring - web frontend
 
-VERSION =		1.8.6
+VERSION =		1.8.10
 DISTNAME =		zabbix-${VERSION}
 FULLPKGNAME-main =	zabbix-agent-${VERSION}
 FULLPKGPATH-main =	net/zabbix,-main
@@ -13,11 +13,15 @@ FULLPKGNAME-web =	zabbix-web-${VERSION}
 FULLPKGPATH-web =	net/zabbix,-web
 CATEGORIES =		net
 
+REVISION-main =		0
+REVISION-server =	0
+REVISION-web =		0
+
 MAJV =			${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 
 HOMEPAGE =		http://www.zabbix.com/
 
-MAINTAINER =		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER =		Robert Nagy <robert@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -68,11 +72,15 @@ CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 PREFIX-web =		/var/www
 LIB_DEPENDS-web =
 RUN_DEPENDS-web =	${MODPHP_RUN_DEPENDS} \
-			lang/php/${MODPHP_VERSION},-gd
+			lang/php/${MODPHP_VERSION},-gd \
+			php-pgsql-${MODPHP_VSPEC}|php-mysql-${MODPHP_VSPEC}|php-pdo_sqlite-${MODPHP_VSPEC}:lang/php/${MODPHP_VERSION},-pgsql
 WANTLIB-web =
 ZABBIX_WEB =		${PREFIX-web}/zabbix
 
 FLAVOR ?=		no_server
+.if empty(FLAVOR)
+FLAVOR =		sqlite3
+.endif
 
 #if non-backend-related flavors are added, add them to
 #the following line as ":L:Nflavor1:Nflavor2" so that

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2011/04/11 14:58:20 kili Exp $
+# $OpenBSD: Makefile,v 1.7 2011/12/31 22:19:45 kili Exp $
 
 COMMENT=		bindings for GHC to Xft, Freetype and Xrender
 
 DISTNAME=		X11-xft-0.3
-REVISION=		2
+REVISION=		4
 CATEGORIES=		x11 devel
 
 HOMEPAGE=		http://hackage.haskell.org/package/X11-xft

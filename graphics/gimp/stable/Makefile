@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.73 2011/08/19 08:57:07 jasper Exp $
+# $OpenBSD: Makefile,v 1.77 2012/02/27 10:11:38 giovanni Exp $
 
 COMMENT=	GNU Image Manipulation Program
 
-DISTNAME=	gimp-2.6.11
-REVISION=	2
+DISTNAME=	gimp-2.6.12
 
 SHARED_LIBS=	gimp-2.0	271.0	\
 		gimpbase-2.0	271.0	\
@@ -28,7 +27,8 @@ HOMEPAGE=	http://www.gimp.org/
 EXTRACT_SUFX=	.tar.bz2
 
 BUILD_DEPENDS=	textproc/libxslt
-RUN_DEPENDS=	devel/desktop-file-utils
+RUN_DEPENDS=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 LIB_DEPENDS=	x11/gtk+2 \
 		graphics/aalib \
 		x11/dbus-glib \
@@ -64,7 +64,7 @@ WANTLIB=	ICE SM X11 Xext Xmu Xpm Xrender Xt atk-1.0 c \
 		gtk-x11-2.0 tiff>=35 aa>=1.3 dbus-glib-1 \
 		exif mng poppler>=3 wmf-0.2 wmflite-0.2 \
 		poppler-glib>=3 gegl-0.1 openjpeg>=4 curl \
-		GL Xxf86vm drm xcb-shm
+		GL Xxf86vm drm xcb-shm ffi stdc++
 
 MODULES=	devel/gettext \
 		textproc/intltool \
@@ -72,7 +72,7 @@ MODULES=	devel/gettext \
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
-AUTOCONF_VERSION= 2.67
+AUTOCONF_VERSION= 2.68
 CONFIGURE_STYLE= autoconf
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 CONFIGURE_ARGS+=--without-gvfs \

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.18 2011/08/22 09:49:22 stsp Exp $
+# $OpenBSD: Makefile,v 1.26 2012/02/17 17:22:08 ajacoutot Exp $
 
 COMMENT=		OSS replacement for Nomachine's nxclient
 
-DISTNAME=		opennx-0.16
-REVISION=		9
+DISTNAME=		opennx-0.16.0.658
+REVISION=		4
 
 CATEGORIES=		sysutils
 
@@ -14,49 +14,40 @@ USE_LIBTOOL=		Yes
 
 WANTLIB += GL ICE SDL SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm
-WANTLIB += atk-1.0 c cairo drm expat fontconfig freetype gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-x11-2.0 jpeg m mspack pango-1.0
-WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs sndio stdc++ tiff usbhid wx_base wx_base_net
-WANTLIB += wx_base_xml wx_gtk2_adv wx_gtk2_core wx_gtk2_html wx_gtk2_qa
-WANTLIB += wx_gtk2_richtext wx_gtk2_xrc xcb xcb-render xcb-shm
-WANTLIB += z
+WANTLIB += atk-1.0 c cairo crypto curl drm expat ffi fontconfig
+WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 idn
+WANTLIB += jpeg m mspack pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs sndio ssl stdc++
+WANTLIB += tiff usbhid wx_base wx_base_net wx_base_xml wx_gtk2_adv
+WANTLIB += wx_gtk2_core wx_gtk2_html wx_gtk2_qa wx_gtk2_richtext
+WANTLIB += wx_gtk2_xrc xcb xcb-render xcb-shm z
 
 MODULES=		devel/gettext
 
-LIB_DEPENDS=		x11/wxWidgets
+LIB_DEPENDS=		x11/wxWidgets \
+			net/curl
 BUILD_DEPENDS=		archivers/zip \
 			devel/bison \
 			net/samba \
-			print/cups \
-			security/opensc
+			print/cups
 RUN_DEPENDS=		devel/desktop-file-utils \
-			print/cups \
-			security/opensc \
+			x11/nx/nxproxy \
 			x11/nx/nxssh
 
+WRKDIST =		${WRKDIR}/opennx-0.16
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV+= 	LDFLAGS="-L${LOCALBASE}/lib" \
-			CPPFLAGS="-I${LOCALBASE}/include"
-
-DOT_DESKTOP=		opennx-admin-gnome.desktop \
-			opennx-wizard-gnome.desktop \
-			opennx-gnome.desktop
+			CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include"
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/opennxApp.cpp
-
-post-build:
-	cd ${WRKSRC}/share/applnk/network-gnome && \
-		${SUBST_CMD} ${DOT_DESKTOP}
+	${SUBST_CMD} ${WRKSRC}/opennxApp.cpp \
+			${WRKSRC}/Makefile.in
+	perl -pi -e 's,/usr/NX,${PREFIX}/NX,g' \
+		${WRKSRC}/extres/xdg/innovidata-opennx*.desktop
 
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/applications
-.for file in ${DOT_DESKTOP}
-	${INSTALL_DATA} ${WRKSRC}/share/applnk/network-gnome/${file} \
-		${PREFIX}/share/applications
-.endfor
 	ln -s ${TRUEPREFIX}/NX/bin/opennx ${PREFIX}/bin/opennx
+	rm ${PREFIX}/share/applications/innovidata-opennx.directory
 
 .include <bsd.port.mk>

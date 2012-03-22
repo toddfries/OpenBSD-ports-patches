@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.9 2011/04/23 14:32:51 kili Exp $
+# $OpenBSD: Makefile,v 1.12 2012/01/21 12:04:59 kili Exp $
 
 COMMENT =		Snap Haskell Web Framework Server
 
-DISTNAME =		snap-server-0.2.16.2
-REVISION =		2
+DISTNAME =		snap-server-0.5.3.1
+REVISION =		0
 CATEGORIES =		www
 HOMEPAGE =		http://snapframework.com/
 
-MAINTAINER =		Jim Razmus II <jim@openbsd.org>
+MAINTAINER =		Jim Razmus II <jim@openbsd.org>, \
+			Matthias Kilian <kili@openbsd.org>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
@@ -20,12 +21,13 @@ MODULES =		lang/ghc
 MODGHC_BUILD =		cabal hackage haddock register
 
 RUN_DEPENDS +=		devel/hs-binary \
-			devel/hs-cereal \
+			devel/hs-blaze-builder \
+			devel/hs-blaze-builder-enumerator \
+			devel/hs-case-insensitive \
 			devel/hs-directory-tree \
-			devel/hs-dlist \
-			devel/hs-iteratee \
+			devel/hs-enumerator \
+			devel/hs-MonadCatchIO-transformers \
 			devel/hs-murmur-hash \
-			devel/hs-monads-fd \
 			devel/hs-mtl \
 			devel/hs-network \
 			devel/hs-PSQueue \
@@ -35,9 +37,8 @@ RUN_DEPENDS +=		devel/hs-binary \
 			devel/hs-unix-compat \
 			devel/hs-vector \
 			devel/hs-vector-algorithms \
-			textproc/hs-attoparsec-iteratee \
+			textproc/hs-attoparsec-enumerator \
 			textproc/hs-bytestring-nums \
-			textproc/hs-bytestring-show \
 			www/hs-snap-core
 BUILD_DEPENDS +=	${RUN_DEPENDS}
 

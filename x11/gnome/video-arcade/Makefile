@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.23 2011/04/05 16:37:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.37 2012/02/16 22:46:39 ajacoutot Exp $
 
 COMMENT=	MAME front-end for GNOME
 
 GNOME_PROJECT=	gnome-video-arcade
-GNOME_VERSION=	0.6.8
-REVISION=	3
+GNOME_VERSION=	0.8.3
 
 CATEGORIES=	emulators games
 
@@ -16,37 +15,40 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 SM X11 XRes Xau Xcomposite Xcursor Xdamage
-WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0
-WANTLIB += c cairo dbus-1 dbus-glib-1 execinfo expat fontconfig
-WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
-WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB += png pthread pthread-stubs sqlite3 startup-notification-1
-WANTLIB += xcb xcb-atom xcb-aux xcb-event z
-WANTLIB += xcb-render xcb-render-util sqlite3 wnck-1
+WANTLIB += GL X11 X11-xcb XRes Xau Xcomposite Xcursor Xdamage
+WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
+WANTLIB += atk-1.0 c cairo cairo-gobject drm expat ffi fontconfig
+WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gstreamer-0.10 gthread-2.0 gtk-3 m pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs soup-2.4 sqlite3 startup-notification-1
+WANTLIB += stdc++ wnck-3 xcb xcb-aux xcb-render xcb-shm xml2 z
 
 MODULES=	devel/gettext \
 		x11/gnome \
-		devel/gconf2
+		devel/dconf
 
 BUILD_DEPENDS=	${RUN_DEPENDS} \
-		x11/gnome/icon-theme
-RUN_DEPENDS=	emulators/sdlmame,-main>=0.132p2
+		devel/glade
+RUN_DEPENDS=	emulators/sdlmame,-main>=0.132p2 \
+		x11/gnome/icon-theme \
+		devel/gsettings-desktop-schemas
 LIB_DEPENDS=	databases/sqlite3 \
-		devel/libwnck
+		devel/libsoup \
+		devel/libwnck3 \
+		multimedia/gstreamer-0.10/core
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
-MODGCONF2_SCHEMAS_DIR=  gnome-video-arcade
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--with-gnome \
+# XXX configure should do the right thing
+MODGNOME_CPPFLAGS=	$$(pkg-config --cflags libsoup-2.4)
+
+CONFIGURE_ARGS=	--with-glade-catalog \
 		--with-wnck \
 		--with-history-file="${LOCALBASE}/share/sdlmame/history.dat"
-USE_GROFF =	Yes
+
+USE_GROFF=	Yes
 
 .include <bsd.port.mk>

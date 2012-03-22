@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2011/04/28 13:10:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2011/12/16 08:18:23 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	PolicyKit integration for Qt4
+COMMENT=	PolicyKit authentication agent for for Qt4
 
-V=		0.99.0
+V=		0.103.0
 DISTNAME=	polkit-qt-1-${V}
 PKGNAME=	polkit-qt4-${V}
 
@@ -43,5 +43,8 @@ CONFIGURE_ARGS=	-DCMAKE_REQUIRED_FLAGS:STRING="-L${LOCALBASE}/lib" \
 		-DCMAKE_INCLUDE_PATH:STRING="${LOCALBASE}/include" \
 		-DCMAKE_EXE_LINKER_FLAGS:STRING="-L${LOCALBASE}/lib" \
 		-DCMAKE_SHARED_LINKER_FLAGS:STRING="-L${LOCALBASE}/lib"
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/PolkitQt-1Config.cmake.in
 
 .include <bsd.port.mk>

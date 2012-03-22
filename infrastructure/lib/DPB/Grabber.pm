@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Grabber.pm,v 1.13 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Grabber.pm,v 1.24 2012/01/30 15:11:04 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -26,23 +26,32 @@ sub new
 {
 	my ($class, $state, $endcode) = @_;
 
-	my $o = bless { ports => $state->ports, make => $state->make,
+	my $o = bless { 
 		loglist => DPB::Util->make_hot($state->logger->open("vars")),
-		logger => $state->logger,
 		engine => $state->engine,
 		state => $state,
 		keep_going => 1,
+		errors => 0,
 		endcode => $endcode
 	    }, $class;
-	if ($state->opt('f')) {
+	if ($state->{want_fetchinfo}) {
 		require DPB::Fetch;
 		$o->{dpb} = "fetch";
-		$o->{fetch} = DPB::Fetch->new($state->distdir);
+		$o->{fetch} = DPB::Fetch->new($state->distdir, $state->logger,
+		    $state);
 	} else {
 		$o->{dpb} = "normal";
 		$o->{fetch} = DPB::FetchDummy->new;
 	}
 	return $o;
+}
+
+sub expire_old_distfiles
+{
+	my ($self, $core, $opt_e) = @_;
+	# don't bother if dump-vars wasn't perfectly clean
+	return 0 if $self->{errors};
+	return $self->{fetch}->run_expire_old($core, $opt_e);
 }
 
 sub finish
@@ -51,9 +60,10 @@ sub finish
 	for my $v (values %$h) {
 		if ($v->{broken}) {
 			delete $v->{info};
+			$self->{engine}->add_fatal($v, $v->{broken});
 			delete $v->{broken};
-			$self->{engine}->add_fatal($v);
-		} else {
+		} elsif ($v->{wantbuild}) {
+			delete $v->{wantbuild};
 			$self->{engine}->new_path($v);
 		}
 	}
@@ -63,19 +73,25 @@ sub finish
 sub ports
 {
 	my $self = shift;
-	return $self->{ports};
+	return $self->{state}->ports;
 }
 
 sub make
 {
 	my $self = shift;
-	return $self->{make};
+	return $self->{state}->make;
+}
+
+sub make_args
+{
+	my $self = shift;
+	return $self->{state}->make_args;
 }
 
 sub logger
 {
 	my $self = shift;
-	return $self->{logger};
+	return $self->{state}->logger;
 }
 
 sub grab_subdirs
@@ -84,7 +100,11 @@ sub grab_subdirs
 	DPB::Vars->grab_list($core, $self, $list,
 	    $self->{loglist}, $self->{dpb},
 	    sub {
-		$self->finish(shift);
+	    	my $h = shift;
+		for my $v (values %$h) {
+			$v->{wantbuild} = 1;
+		}
+		$self->finish($h);
 	});
 }
 
@@ -105,20 +125,35 @@ sub complete_subdirs
 	my ($self, $core) = @_;
 	# more passes if necessary
 	while ($self->{keep_going}) {
-		my @subdirlist = ();
+		my $subdirlist = {};
 		for my $v (DPB::PkgPath->seen) {
-			next if defined $v->{info};
+			if (defined $v->{info}) {
+				delete $v->{tried};
+				delete $v->{wantinfo};
+				if (defined $v->{wantbuild}) {
+					delete $v->{wantbuild};
+					$self->{engine}->new_path($v);
+				}
+				next;
+			}
 			next if defined $v->{category};
 			if (defined $v->{tried}) {
-				$self->{engine}->add_fatal($v);
-			} else {
-				$v->add_to_subdirlist(\@subdirlist);
+				$self->{engine}->add_fatal($v, "tried and didn't get it") 
+				    if !defined $v->{errored};
+				$v->{errored} = 1;
+				$self->{errors}++;
+			} elsif ($v->{wantinfo} || $v->{wantbuild}) {
+				$v->add_to_subdirlist($subdirlist);
 				$v->{tried} = 1;
 			}
 		}
-		last if @subdirlist == 0;
+		last if (keys %$subdirlist) == 0;
 
-		$self->grab_subdirs($core, \@subdirlist);
+		DPB::Vars->grab_list($core, $self, $subdirlist,
+		    $self->{loglist}, $self->{dpb},
+		    sub {
+			$self->finish(shift);
+		    });
 	}
 }
 
@@ -131,6 +166,11 @@ sub new
 
 sub build_distinfo
 {
+}
+
+sub run_expire_old
+{
+	return 0;
 }
 
 1;

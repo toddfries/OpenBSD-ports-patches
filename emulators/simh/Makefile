@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.69 2011/04/20 05:16:33 form Exp $
+# $OpenBSD: Makefile,v 1.72 2011/12/24 12:57:10 sthen Exp $
 # $NetBSD: Makefile,v 1.2 1998/08/23 20:48:03 frueauf Exp $
 
 COMMENT=		PDP, IBM 1401, Nova and other CPUs simulator
 
-DISTNAME=		simh-3.8.1
-REVISION=		3
+PKGNAME=		simh-3.8.1
+DISTNAME=		simhv38-1
+REVISION=		6
 CATEGORIES=		emulators
 MASTER_SITES=		${HOMEPAGE}/sources/
-DISTFILES=		simhv38-1.zip
-
-MAINTAINER=		Oleg Safiullin <form@openbsd.org>
 
 HOMEPAGE=		http://simh.trailing-edge.com/
 
@@ -22,6 +20,10 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m pcap
 
 WRKDIST=		${WRKDIR}
+EXTRACT_SUFX=		.zip
+MASTER_SITES0=		http://spacehopper.org/mirrors/
+# Files from http://simh.trailing-edge.com/interim.html repackaged as a diff
+PATCHFILES=		simh-3.8.1-interim.diff:0
 
 UNZIP=			unzip -a -o
 
@@ -29,6 +31,7 @@ COPTS+=		-DPATH_KA655X_BIN=\"${PREFIX}/lib/simh/vax/ka655x.bin\" \
 		-DPATH_VMB_EXE=\"${PREFIX}/lib/simh/vax/vmb.exe\"
 
 MAKE_FILE=		makefile
+MAKE_FLAGS=		CC="${CC}"
 
 NO_REGRESS=		Yes
 VMEM_WARNING=		Yes

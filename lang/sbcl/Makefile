@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2011/07/28 20:54:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2012/01/03 02:01:25 krw Exp $
 
 # not yet ported to other arches
 ONLY_FOR_ARCHS =	amd64 i386 powerpc
 
 COMMENT=		compiler and runtime system for ANSI Common Lisp
 
-V =			1.0.50
+V =			1.0.54
 DISTNAME=		sbcl-${V}-source
 PKGNAME=		sbcl-${V}
 WRKDIST=		${WRKDIR}/sbcl-${V}
@@ -32,7 +32,7 @@ FLAVOR?=
 
 USE_GROFF =		Yes
 
-.if ${FLAVOR:L:Mnative_bootstrap}
+.if ${FLAVOR:Mnative_bootstrap}
 BUILD_DEPENDS+=		lang/sbcl
 BOOTSTRAP_CMD=		${LOCALBASE}/bin/sbcl \
 			--disable-debugger --no-sysinit --no-userinit
@@ -78,7 +78,7 @@ do-install:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} /bin/sh install.sh
 
 post-install:
-	${CHOWN} -R 0:0 ${PREFIX}/lib/sbcl
+	chown -R 0:0 ${PREFIX}/lib/sbcl
 
 do-regress:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} RUN_CONTRIB_TESTS=1 \

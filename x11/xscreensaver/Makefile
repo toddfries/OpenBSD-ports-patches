@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.70 2011/01/14 18:58:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.73 2012/01/08 15:36:26 dcoppa Exp $
 
 COMMENT-main=		screen saver and locker for the X Window System
 COMMENT-data=		graphical demos (savers) for screensavers
 COMMENT-gle=		OpenGL Extrusion library support for screensaver-data
 
-V=			5.12
+V=			5.15
 DISTNAME=		xscreensaver-${V}
 PKGNAME-main=		${DISTNAME}
 PKGNAME-data=		xscreensaver-data-${V}
 PKGNAME-gle=		xscreensaver-gle-${V}
-
-REVISION-data=		0
 
 CATEGORIES=		x11
 
@@ -22,7 +20,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MULTI_PACKAGES=	-main -data
+MULTI_PACKAGES=	-main -data -gle
 
 WANTLIB=	GL GLU ICE SM X11 Xext Xmu Xpm Xt Xxf86vm c glib-2.0 \
 		gmodule-2.0 gobject-2.0 m pthread gthread-2.0
@@ -73,13 +71,15 @@ CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 PSEUDO_FLAVORS=		no_gle
 FLAVOR?=		no_gle
 
-.if !${FLAVOR:L:Mno_gle}
-MULTI_PACKAGES+=	-gle
+.include <bsd.port.arch.mk>
+
 LIB_DEPENDS-gle=	${MODGETTEXT_LIB_DEPENDS} \
 			graphics/gle \
 			x11/gtk+2
-RUN_DEPENDS-gle=	x11/xscreensaver,-data
+RUN_DEPENDS-gle=	${BUILD_PKGPATH},-data
 WANTLIB-gle=		${WANTLIB} gle gdk_pixbuf-2.0 gdk_pixbuf_xlib-2.0
+
+.if ${BUILD_PACKAGES:M-gle}
 CONFIGURE_ARGS+=	--with-gle
 .else
 CONFIGURE_ARGS+=	--without-gle

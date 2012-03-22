@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2011/03/24 22:01:08 landry Exp $
+# $OpenBSD: Makefile,v 1.13 2011/12/03 20:30:09 ajacoutot Exp $
 
 COMMENT =	Openstreetmap editor for handheld devices
 
 VERSION =	0.7.22
 DISTNAME =	osm2go_${VERSION}-maemo1
 PKGNAME =	osm2go-${VERSION}
-REVISION=	3
+REVISION=	6
 
 WRKDIST =	${WRKDIR}/osm2go-${VERSION}
 CATEGORIES =	geo x11
@@ -30,16 +30,17 @@ LIB_DEPENDS =	x11/gnome/libgnome \
 		net/curl \
 		graphics/goocanvas
 
-RUN_DEPENDS =	devel/desktop-file-utils
+RUN_DEPENDS =	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 
-WANTLIB += ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender atk-1.0 bonobo-2
-WANTLIB += bonobo-activation c cairo expat fontconfig freetype
-WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gnutls gobject-2.0 gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pixman-1 png popt pthread pthread-stubs
-WANTLIB += xcb xml2 z gnomevfs-2 xcb-render GL Xxf86vm canberra drm xcb-shm
-WANTLIB += gnome-2 soup-2.4 curl goocanvas
+WANTLIB += GL ORBit-2 X11 Xcomposite Xcursor Xdamage Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 bonobo-2 bonobo-activation
+WANTLIB += c cairo curl expat fontconfig freetype gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gnome-2
+WANTLIB += gnomevfs-2 gobject-2.0 goocanvas gthread-2.0 gtk-x11-2.0
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png
+WANTLIB += popt pthread pthread-stubs soup-2.4 xcb xcb-render
+WANTLIB += xcb-shm xml2 z
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/data/osm2go-ubuntu.desktop

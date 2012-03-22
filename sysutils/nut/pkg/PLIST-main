@@ -1,13 +1,16 @@
-@comment $OpenBSD: PLIST-main,v 1.10 2011/06/02 10:37:08 sthen Exp $
+@comment $OpenBSD: PLIST-main,v 1.16 2012/01/26 08:03:57 ajacoutot Exp $
+@conflict nut-<2.6.2p0
+@conflict nut-scanner-*
 @conflict upsd-*
 @pkgpath sysutils/nut
+@pkgpath sysutils/nut,-scanner
 @pkgpath sysutils/nut,no_cgi
 @pkgpath sysutils/nut,snmp
 @pkgpath sysutils/nut,no_cgi,snmp
 @newgroup ${NUT_USER}:${NUT_ID}
-@newuser ${NUT_USER}:${NUT_ID}:${NUT_ID}::UPS User:/var/empty:/sbin/nologin
-%%SHARED%%
+@newuser ${NUT_USER}:${NUT_ID}:${NUT_ID}:daemon:UPS User:/var/empty:/sbin/nologin
 @bin bin/apcsmart
+@bin bin/apcsmart-old
 @bin bin/bcmxcp
 @bin bin/bcmxcp_usb
 @bin bin/belkin
@@ -35,6 +38,7 @@
 @bin bin/mge-utalk
 @bin bin/microdowell
 @bin bin/newmge-shut
+@bin bin/nut-scanner
 @bin bin/oneac
 @bin bin/optiups
 @bin bin/powercom
@@ -61,9 +65,12 @@ bin/upssched-cmd
 @comment html/header.html
 @comment html/index.html
 html/nut-banner.png
+lib/libnutscan.a
+lib/libnutscan.la
+@lib lib/libnutscan.so.${LIBnutscan_VERSION}
 lib/libupsclient.a
 lib/libupsclient.la
-lib/pkgconfig/
+@lib lib/libupsclient.so.${LIBupsclient_VERSION}
 @man man/man5/hosts.conf.5
 @man man/man5/nut.conf.5
 @man man/man5/ups.conf.5
@@ -73,6 +80,7 @@ lib/pkgconfig/
 @man man/man5/upssched.conf.5
 @man man/man5/upsset.conf.5
 @man man/man5/upsstats.html.5
+@man man/man8/apcsmart-old.8
 @man man/man8/apcsmart.8
 @man man/man8/bcmxcp.8
 @man man/man8/bcmxcp_usb.8
@@ -98,6 +106,7 @@ lib/pkgconfig/
 @man man/man8/mge-shut.8
 @man man/man8/mge-utalk.8
 @man man/man8/microdowell.8
+@man man/man8/nut-scanner.8
 @man man/man8/nutupsdrv.8
 @man man/man8/oneac.8
 @man man/man8/optiups.8
@@ -168,38 +177,46 @@ share/doc/nut/images/cables/mge-db9-rj12.jpg
 share/doc/nut/images/cables/mge-db9-rj45.jpg
 share/doc/nut/images/eaton-logo.png
 share/doc/nut/images/note.png
+share/doc/nut/images/nut-logo.png
 share/doc/nut/images/nut_layering.png
 share/doc/nut/images/old-cgi.png
 share/doc/nut/images/simple.png
 share/doc/nut/images/warning.png
 share/doc/nut/packager-guide.html
 share/doc/nut/user-manual.html
+share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/nut/
-@sample ${SYSCONFDIR}/nut/
+@sample ${SYSCONFDIR}/
 @comment share/examples/nut/hosts.conf.sample
 @owner ${NUT_USER}
 share/examples/nut/nut.conf.sample
-@sample ${SYSCONFDIR}/nut/nut.conf
+@sample ${SYSCONFDIR}/nut.conf
+@owner
+share/examples/nut/nut.service
+@sample ${BASESYSCONFDIR}/avahi/
+@sample ${BASESYSCONFDIR}/avahi/services/
+@sample ${BASESYSCONFDIR}/avahi/services/nut.service
+@owner ${NUT_USER}
 share/examples/nut/ups.conf.sample
 @mode 600
-@sample ${SYSCONFDIR}/nut/ups.conf
+@sample ${SYSCONFDIR}/ups.conf
 @mode
 share/examples/nut/upsd.conf.sample
 @mode 600
-@sample ${SYSCONFDIR}/nut/upsd.conf
+@sample ${SYSCONFDIR}/upsd.conf
 @mode
 share/examples/nut/upsd.users.sample
 @mode 600
-@sample ${SYSCONFDIR}/nut/upsd.users
+@sample ${SYSCONFDIR}/upsd.users
 @mode
 share/examples/nut/upsmon.conf.sample
 @mode 600
-@sample ${SYSCONFDIR}/nut/upsmon.conf
+@sample ${SYSCONFDIR}/upsmon.conf
 @mode
 share/examples/nut/upssched.conf.sample
-@sample ${SYSCONFDIR}/nut/upssched.conf
+@sample ${SYSCONFDIR}/upssched.conf
 share/examples/nut/upsset.conf.sample
-@sample ${SYSCONFDIR}/nut/upsset.conf
+@sample ${SYSCONFDIR}/upsset.conf
 @mode 700
 @sample /var/db/nut/
 @comment share/examples/nut/upsstats-single.html.sample
@@ -209,3 +226,5 @@ share/examples/nut/upsset.conf.sample
 share/ups/
 share/ups/cmdvartab
 share/ups/driver.list
+@rcscript ${RCDIR}/upsd
+@rcscript ${RCDIR}/upsmon

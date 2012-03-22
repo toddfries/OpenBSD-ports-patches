@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.29 2011/02/12 21:06:57 pea Exp $
+# $OpenBSD: Makefile,v 1.35 2012/02/21 16:21:41 ajacoutot Exp $
 
 COMMENT=	companion library to APR
 
 V=		1.2.10
 DISTNAME=	apr-util-$V
 FULLPKGNAME=	apr-util${MT}-$V${FLAVOR_EXT:S/-mt//}
-REVISION =	5
+REVISION =	8
 SHARED_LIBS +=	aprutil-1${MT}          2.11     # .2.11
 
 CATEGORIES=	devel
@@ -26,11 +26,11 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${MASTER_SITE_APACHE:=apr/}
 
 WANTLIB=	expat lib/db4/db>=4
-LIB_DEPENDS=	databases/db/v4
+LIB_DEPENDS=	databases/db/v4,no_java,no_tcl
 
 MODULES=	converters/libiconv		
 USE_LIBTOOL=	Yes
-CONFIGURE_STYLE=gnu autoconf
+CONFIGURE_STYLE=autoconf
 AUTOCONF_VERSION=2.59
 CONFIGURE_ARGS=	--with-apr=${LOCALBASE} \
 		--with-dbm=db4 \
@@ -39,16 +39,16 @@ CONFIGURE_ARGS=	--with-apr=${LOCALBASE} \
 		--includedir=${LOCALBASE}/include/apr-1${MT}/ \
 		--with-apr=${LOCALBASE}/bin/apr-1${MT}-config
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 CONFIGURE_ARGS+=	--with-ldap-include=${LOCALBASE}/include \
 			--with-ldap-lib=${LOCALBASE}/lib \
 			--with-ldap
 LIB_DEPENDS+=		databases/openldap
-WANTLIB+=		asn1 com_err crypto gssapi krb5 sasl2 ssl lber ldap
+WANTLIB+=		asn1 com_err crypto gssapi krb5 sasl2 ssl lber-2.4 ldap-2.4
 .endif
 
 MT?=
-.if ${FLAVOR:L:Mmt}
+.if ${FLAVOR:Mmt}
 MT=-mt
 CONFIGURE_ENV+=	APRUTIL_EXPORT_LIBS=-pthread
 LIB_DEPENDS+=	apr-mt-1.2.11:devel/apr,mt

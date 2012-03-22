@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.21 2011/04/10 18:00:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2011/11/14 11:05:08 sthen Exp $
+
+BROKEN-sparc64=	illegal operands building draw_symbols.c
 
 COMMENT=	X amateur station tracking and info reporting
 
 DISTNAME=	xastir-1.8.2
-REVISION=	12
+REVISION=	16
 CATEGORIES=    	comms hamradio geo
 
 HOMEPAGE=	http://www.xastir.org/
@@ -39,7 +41,9 @@ CONFIGURE_ARGS=		--with-shapelib					\
 
 WANTLIB += ICE SM c pthread freetype Xt Xpm Xext m X11 z proj
 WANTLIB += tiff curl shp geotiff MagickCore>=1
-WANTLIB += MagickWand>=1 lib/db4/db>=4 pcre Xm
+WANTLIB += lib/db4/db>=4 pcre Xm
+WANTLIB += bz2 djvulibre expat fftw3 fontconfig jasper jbig jpeg
+WANTLIB += lcms2 ltdl lzma png xml2
 
 MODULES=	devel/gettext
 

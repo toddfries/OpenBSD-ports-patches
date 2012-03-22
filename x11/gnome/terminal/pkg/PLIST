@@ -1,6 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.31 2010/11/13 18:47:23 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.34 2011/10/17 11:53:46 jasper Exp $
 @bin bin/gnome-terminal
 share/applications/gnome-terminal.desktop
+share/gnome/
 share/gnome-terminal/
 share/gnome-terminal/encodings-dialog.ui
 share/gnome-terminal/find-dialog.ui
@@ -8,9 +9,9 @@ share/gnome-terminal/keybinding-editor.ui
 share/gnome-terminal/profile-manager.ui
 share/gnome-terminal/profile-new-dialog.ui
 share/gnome-terminal/profile-preferences.ui
-share/gnome-terminal/skey-challenge.ui
 share/gnome-terminal/terminal.about
 share/gnome-terminal/terminal.xml
+share/gnome/help/
 share/gnome/help/gnome-terminal/
 share/gnome/help/gnome-terminal/C/
 share/gnome/help/gnome-terminal/C/figures/
@@ -64,6 +65,11 @@ share/gnome/help/gnome-terminal/fr/figures/
 share/gnome/help/gnome-terminal/fr/figures/gnome-terminal-default.png
 share/gnome/help/gnome-terminal/fr/figures/gnome-terminal-tabbed.png
 share/gnome/help/gnome-terminal/fr/gnome-terminal.xml
+share/gnome/help/gnome-terminal/gl/
+share/gnome/help/gnome-terminal/gl/figures/
+share/gnome/help/gnome-terminal/gl/figures/gnome-terminal-default.png
+share/gnome/help/gnome-terminal/gl/figures/gnome-terminal-tabbed.png
+share/gnome/help/gnome-terminal/gl/gnome-terminal.xml
 share/gnome/help/gnome-terminal/it/
 share/gnome/help/gnome-terminal/it/figures/
 share/gnome/help/gnome-terminal/it/figures/gnome-terminal-default.png
@@ -101,6 +107,11 @@ share/gnome/help/gnome-terminal/ru/figures/
 share/gnome/help/gnome-terminal/ru/figures/gnome-terminal-default.png
 share/gnome/help/gnome-terminal/ru/figures/gnome-terminal-tabbed.png
 share/gnome/help/gnome-terminal/ru/gnome-terminal.xml
+share/gnome/help/gnome-terminal/sl/
+share/gnome/help/gnome-terminal/sl/figures/
+share/gnome/help/gnome-terminal/sl/figures/gnome-terminal-default.png
+share/gnome/help/gnome-terminal/sl/figures/gnome-terminal-tabbed.png
+share/gnome/help/gnome-terminal/sl/gnome-terminal.xml
 share/gnome/help/gnome-terminal/sv/
 share/gnome/help/gnome-terminal/sv/figures/
 share/gnome/help/gnome-terminal/sv/figures/gnome-terminal-default.png
@@ -212,6 +223,7 @@ share/locale/xh/LC_MESSAGES/gnome-terminal.mo
 share/locale/zh_CN/LC_MESSAGES/gnome-terminal.mo
 share/locale/zh_HK/LC_MESSAGES/gnome-terminal.mo
 share/locale/zh_TW/LC_MESSAGES/gnome-terminal.mo
+share/omf/
 share/omf/gnome-terminal/
 share/omf/gnome-terminal/gnome-terminal-C.omf
 share/omf/gnome-terminal/gnome-terminal-bg.omf
@@ -223,6 +235,7 @@ share/omf/gnome-terminal/gnome-terminal-el.omf
 share/omf/gnome-terminal/gnome-terminal-en_GB.omf
 share/omf/gnome-terminal/gnome-terminal-es.omf
 share/omf/gnome-terminal/gnome-terminal-fr.omf
+share/omf/gnome-terminal/gnome-terminal-gl.omf
 share/omf/gnome-terminal/gnome-terminal-it.omf
 share/omf/gnome-terminal/gnome-terminal-ja.omf
 share/omf/gnome-terminal/gnome-terminal-ko.omf
@@ -230,6 +243,7 @@ share/omf/gnome-terminal/gnome-terminal-oc.omf
 share/omf/gnome-terminal/gnome-terminal-pt_BR.omf
 share/omf/gnome-terminal/gnome-terminal-ro.omf
 share/omf/gnome-terminal/gnome-terminal-ru.omf
+share/omf/gnome-terminal/gnome-terminal-sl.omf
 share/omf/gnome-terminal/gnome-terminal-sv.omf
 share/omf/gnome-terminal/gnome-terminal-uk.omf
 share/omf/gnome-terminal/gnome-terminal-zh_CN.omf

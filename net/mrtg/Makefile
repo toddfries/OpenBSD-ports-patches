@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.77 2011/03/20 06:43:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.81 2012/01/12 10:44:59 sthen Exp $
 
 COMMENT=	multi-router traffic grapher
 
-DISTNAME=	mrtg-2.17.1
-REVISION=	1
+DISTNAME=	mrtg-2.17.4
 CATEGORIES=	net
 
 HOMEPAGE=	http://oss.oetiker.ch/mrtg/
 
 MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
-# GPLv2
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -30,7 +29,7 @@ LIB_DEPENDS=	graphics/gd
 USE_GROFF =	Yes
 
 CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.63
+AUTOCONF_VERSION= 2.67
 CONFIGURE_ARGS+=--with-gd-inc="${LOCALBASE}/include" \
 		--with-gd-lib="${LOCALBASE}/lib" \
 		--with-png-inc="${LOCALBASE}/include" \

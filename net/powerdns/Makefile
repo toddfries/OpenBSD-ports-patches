@@ -1,27 +1,25 @@
-# $OpenBSD: Makefile,v 1.14 2011/05/11 12:03:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2012/01/28 08:07:26 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		modern authoritative nameserver
-COMMENT-mysql=		mysql database access module for powerdns
-COMMENT-pgsql=		pgsql database access module for powerdns
-COMMENT-sqlite=		sqlite database access module for powerdns
-COMMENT-sqlite3=	sqlite3 database access module for powerdns
-COMMENT-ldap=		ldap module for powerdns
+COMMENT-mysql=		MySQL database access module for PowerDNS
+COMMENT-pgsql=		PGSQL database access module for PowerDNS
+COMMENT-sqlite=		SQLite database access module for PowerDNS
+COMMENT-sqlite3=	SQLite3 database access module for PowerDNS
+COMMENT-ldap=		LDAP module for PowerDNS
 
-V=			2.9.22
+V=			2.9.22.6
 DISTNAME=		pdns-${V}
 PKGNAME=		powerdns-${V}
 PKGNAME-main=		powerdns-${V}
 PKGNAME-mysql=		powerdns-mysql-${V}
 PKGNAME-pgsql=		powerdns-pgsql-${V}
-PKGNAME-sqlite= 	powerdns-sqlite-${V}
+PKGNAME-sqlite=		powerdns-sqlite-${V}
 PKGNAME-sqlite3=	powerdns-sqlite3-${V}
 PKGNAME-ldap=		powerdns-ldap-${V}
 CATEGORIES=		net
 HOMEPAGE=		http://www.powerdns.com/
-
-REVISION-main=		0
 
 MULTI_PACKAGES=		-main
 
@@ -31,11 +29,11 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB-main=		c m pthread stdc++ z
+WANTLIB=		m stdc++
+WANTLIB-main=		c pthread z ${WANTLIB}
 
 MASTER_SITES=		http://downloads.powerdns.com/releases/
 
-USE_GROFF =		Yes
 NO_REGRESS=		Yes
 
 BUILD_DEPENDS=		devel/boost
@@ -53,7 +51,7 @@ MULTI_PACKAGES+=	-mysql
 CONFIGURE_ARGS+=	--with-mysql=${LOCALBASE}
 LIB_DEPENDS-mysql=	databases/mysql
 RUN_DEPENDS-mysql=	${FULLPKGNAME-main}:net/powerdns
-WANTLIB-mysql+= 	crypto m ssl z lib/mysql/mysqlclient>=10
+WANTLIB-mysql+=		crypto lib/mysql/mysqlclient>=10 ssl z ${WANTLIB}
 BACKENDS+=		gmysql
 .endif
 
@@ -66,7 +64,7 @@ CONFIGURE_ARGS+=	--with-pgsql=${LOCALBASE} \
 			--with-pgsql-includes=${LOCALBASE}/include/postgresql
 LIB_DEPENDS-pgsql=	databases/postgresql,-main
 RUN_DEPENDS-pgsql=	${FULLPKGNAME-main}:net/powerdns
-WANTLIB-pgsql=		crypto ssl z pq>=2
+WANTLIB-pgsql=		com_err crypto pq>=2 ssl z ${WANTLIB}
 BACKENDS+=		gpgsql
 .endif
 
@@ -79,7 +77,7 @@ CONFIGURE_ARGS+=	--with-sqlite=${LOCALBASE} \
 			--with-sqlite-includes=${LOCALBASE}/include
 LIB_DEPENDS-sqlite=	databases/sqlite
 RUN_DEPENDS-sqlite=	${FULLPKGNAME-main}:net/powerdns
-WANTLIB-sqlite+=	z sqlite>=8 
+WANTLIB-sqlite+=	sqlite>=8 z ${WANTLIB}
 BACKENDS+=		gsqlite
 .endif
 
@@ -92,7 +90,7 @@ CONFIGURE_ARGS+=	--with-sqlite3=${LOCALBASE} \
 			--with-sqlite3-includes=${LOCALBASE}/include
 LIB_DEPENDS-sqlite3=	databases/sqlite3
 RUN_DEPENDS-sqlite3=	${FULLPKGNAME-main}:net/powerdns
-WANTLIB-sqlite3+=	z sqlite3>=8
+WANTLIB-sqlite3+=	sqlite3>=8 z ${WANTLIB}
 BACKENDS+=		gsqlite3
 .endif
 
@@ -105,26 +103,26 @@ LIB_DEPENDS-ldap=	databases/openldap
 RUN_DEPENDS-ldap=	${FULLPKGNAME-main}:net/powerdns
 CONFIGURE_ARGS+=	--with-ldap=${LOCALBASE} \
 			--with-ldap-includes=${LOCALBASE}/include
-WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 sasl2 ssl z lber ldap_r
+WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 lber-2.4 ldap_r-2.4 sasl2 ssl z ${WANTLIB}
 BACKENDS+=		ldap
 .endif
 
+BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS}
+
+SYSCONFDIR=		${BASESYSCONFDIR}/pdns
+
 USE_LIBTOOL=		Yes
-
-BUILD_DEPENDS+=          ${MODGNU_AUTOCONF_DEPENDS}
-
-AUTOCONF_VERSION=	2.61
-
-CONFIGURE_STYLE=	gnu autoconf
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS+=	--enable-shared=no \
+CONFIGURE_STYLE=	autoconf
+AUTOCONF_VERSION=	2.65
+CONFIGURE_ARGS+=	--disable-shared \
 			--libdir="${PREFIX}/lib/powerdns" \
 			--with-modules="geo" \
 			--with-dynmodules="${BACKENDS}" \
 			--disable-recursor # OpenBSD lacks ucontext.h, see PR 5099
+CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
 
-EXAMPLE_TABLES= 	tables-mysql.sql \
+EXAMPLE_TABLES=		tables-mysql.sql \
 			tables-pgsql.sql \
 			tables-sqlite.sql
 EXAMPLE_DIR=		${PREFIX}/share/examples/powerdns/
@@ -138,5 +136,3 @@ post-install:
 	${INSTALL_DATA} ${FILESDIR}/pdns.conf ${EXAMPLE_DIR}
 
 .include <bsd.port.mk>
-
-CONFIGURE_ARGS+=	--sysconfdir="${SYSCONFDIR}/pdns" \

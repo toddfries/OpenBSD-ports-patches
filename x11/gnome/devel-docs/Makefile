@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2011/05/24 05:47:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2011/10/17 16:45:54 jasper Exp $
 
 COMMENT=		developer documentation for GNOME
 
 GNOME_PROJECT=		gnome-devel-docs
-GNOME_VERSION=		3.0.3
+GNOME_VERSION=		3.2.1
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -13,7 +13,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		x11/gnome
 
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
 
 PKG_ARCH=		*
 USE_LIBTOOL=		No

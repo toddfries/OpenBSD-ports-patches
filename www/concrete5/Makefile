@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.6 2011/11/16 15:56:37 robert Exp $
 
 COMMENT=	building material for websites
 
 V=		5.0.0
 DISTNAME=	concrete${V}_2
 PKGNAME=	concrete5-${V}
-REVISION=	1
+REVISION=	3
 EXTRACT_SUFX=	.zip
 CATEGORIES=	www
 HOMEPAGE=	http://www.concrete5.org/

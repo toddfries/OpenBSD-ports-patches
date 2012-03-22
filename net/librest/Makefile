@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.8 2011/04/28 13:58:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2011/11/10 19:41:08 jasper Exp $
 
 COMMENT =	access web services that claim to be RESTful
 
-GNOME_VERSION =	0.7.10
+GNOME_VERSION =	0.7.12
 GNOME_PROJECT =	rest
 PKGNAME =	lib${DISTNAME}
 
 CATEGORIES =	net devel
 
-SHARED_LIBS +=	rest-0.7  	0.1
+SHARED_LIBS +=	rest-0.7  	0.2
 SHARED_LIBS +=	rest-extras-0.7 0.0
 
 HOMEPAGE =	http://moblin.org/projects/librest
@@ -24,18 +24,17 @@ PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += dbus-1 gcrypt gio-2.0 glib-2.0 gmodule-2.0 gnome-keyring
 WANTLIB += gobject-2.0 gpg-error gthread-2.0 m pcre soup-2.4 soup-gnome-2.4
-WANTLIB += sqlite3 xml2 z
+WANTLIB += sqlite3 xml2 z ffi
 
 MODULES =		devel/gettext \
 			x11/gnome
-BUILD_DEPENDS = 	devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
+
 LIB_DEPENDS =		devel/libsoup,-gnome
 
 CONFIGURE_STYLE =	gnu
 
-CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--with-gnome \
-			--enable-introspection
+CONFIGURE_ARGS =	--with-gnome \
+			--with-ca-certificates=/etc/ssl/cert.pem
 
 .include <bsd.port.mk>

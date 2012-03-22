@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.8 2011/06/08 17:35:13 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2012/01/22 08:40:47 benoit Exp $
 
 COMMENT =		Pyrex generated python interface to PROJ.4 library
 
-MODPY_EGG_VERSION =	1.8.9
+MODPY_EGG_VERSION =	1.9.0
 DISTNAME =		pyproj-${MODPY_EGG_VERSION}
 PKGNAME =		${DISTNAME:S/py/py-/}
-REVISION =		0
 
 CATEGORIES =		geo
 
@@ -19,15 +18,15 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += proj
+WANTLIB += ${MODPY_WANTLIB}
 
 MASTER_SITES =		http://pyproj.googlecode.com/files/
 
 MODULES =		lang/python
 
 BUILD_DEPENDS +=	${RUN_DEPENDS}
-LIB_DEPENDS +=		devel/proj
-RUN_DEPENDS +=		math/py-numpy
+RUN_DEPENDS +=		devel/proj \
+			math/py-numpy
 
 do-regress: fake
 	cd ${WRKSRC}/test && ${MAKE_ENV} \

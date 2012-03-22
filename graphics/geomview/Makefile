@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/04/11 07:43:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2011/11/02 08:46:37 jasper Exp $
 
 COMMENT =		geometry viewer for OOGL file formats
 
-DISTNAME =		geomview-1.9.4
+V =			1.9.4
+DISTNAME =		geomview-$V
+REVISION=		1
 CATEGORIES =		graphics
 
 HOMEPAGE =		http://www.geomview.org
@@ -23,12 +25,14 @@ RUN_DEPENDS =		graphics/netpbm \
 
 LIB_DEPENDS =		x11/openmotif
 
-WANTLIB += ICE SM X11 Xau Xdmcp Xext Xft Xm Xmu Xrender Xt c expat
-WANTLIB += fontconfig freetype jpeg m png pthread-stubs
+WANTLIB += ICE SM X11 Xext Xft Xm Xmu Xrender Xt c expat
+WANTLIB += fontconfig freetype jpeg m png
 WANTLIB += stdc++ xcb z
 
 USE_GMAKE =	Yes
 USE_LIBTOOL = 	Yes
+
+SUBST_VARS +=	V
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS = --without-opengl
@@ -52,6 +56,6 @@ post-install:
 .for i in ${MAN5_PAGES}
 	mv ${PREFIX}/man/man5/${i}gv ${PREFIX}/man/man5/${i}
 .endfor
-	${CHOWN} -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/geomview/html/
+	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/geomview/html/
 
 .include <bsd.port.mk>

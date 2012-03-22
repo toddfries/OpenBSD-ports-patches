@@ -1,0 +1,7 @@
+@comment $OpenBSD: PLIST,v 1.2 2011/11/07 12:16:22 edd Exp $
+@bin bin/2gnash
+@bin bin/gfourier
+@bin bin/glrs
+@bin bin/gredund
+@bin bin/lrsbuffer
+@bin bin/lrsgnash

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.30 2011/06/08 17:40:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2012/01/06 07:39:55 ajacoutot Exp $
 
 COMMENT=	free peer-reviewed portable C++ source libraries
 
 PKGNAME=	boost-${VERSION}
-REVISION=	7
+REVISION=	12
 
 VERSION=	1.42.0
 DISTNAME=	boost_${VERSION:S/./_/g}
 
-SO_VERSION=	2.0
+SO_VERSION=	4.0
 BOOST_LIBS=	boost_date_time boost_date_time-mt \
 		boost_filesystem boost_filesystem-mt \
 		boost_graph boost_graph-mt \
@@ -36,6 +36,8 @@ SHARED_LIBS+=	${_lib} ${SO_VERSION}
 
 CATEGORIES=	devel
 
+MAINTAINER=	Brad Smith <brad@comstyle.com>
+
 HOMEPAGE=	http://www.boost.org/
 
 # MIT-like
@@ -50,6 +52,7 @@ MAKE_ENV=	GCC="${CC}" GXX="${CXX}"
 
 BJAM_CONFIG=	-sNO_BZIP2=1 \
 		-d+2 -q \
+		-j ${MAKE_JOBS} \
 		cflags='${CFLAGS}' cxxflags='${CXXFLAGS}' \
 		variant=release link=static,shared threading=single,multi 
 

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.31 2011/08/16 15:01:17 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.36 2012/02/16 22:18:36 ajacoutot Exp $
 @newgroup _zarafa:627
 @newuser _zarafa:627:_zarafa:daemon:Zarafa Account:/var/empty:/sbin/nologin
 @bin bin/zarafa-admin
@@ -10,6 +10,7 @@ bin/zarafa-autorespond
 @bin bin/zarafa-ical
 @bin bin/zarafa-indexer
 @bin bin/zarafa-monitor
+bin/zarafa-mr-accept
 @bin bin/zarafa-passwd
 @bin bin/zarafa-server
 @bin bin/zarafa-spooler
@@ -77,6 +78,7 @@ include/mapi4linux/mapiutil.h
 include/mapi4linux/mapix.h
 include/zarafa/CommonUtil.h
 include/zarafa/ECABEntryID.h
+include/zarafa/ECACL.h
 include/zarafa/ECCache.h
 include/zarafa/ECChannel.h
 include/zarafa/ECConfig.h
@@ -92,6 +94,7 @@ include/zarafa/ECGuid.h
 include/zarafa/ECIConv.h
 include/zarafa/ECInterfaceDefs.h
 include/zarafa/ECInvariantChecker.h
+include/zarafa/ECIterators.h
 include/zarafa/ECKeyTable.h
 include/zarafa/ECLogger.h
 include/zarafa/ECMemStream.h
@@ -100,8 +103,10 @@ include/zarafa/ECRestriction.h
 include/zarafa/ECScheduler.h
 include/zarafa/ECSerializer.h
 include/zarafa/ECTags.h
+include/zarafa/ECThreadPool.h
 include/zarafa/ECUnknown.h
 include/zarafa/EMSAbTag.h
+include/zarafa/HrException.h
 include/zarafa/HtmlEntity.h
 include/zarafa/HtmlToTextParser.h
 include/zarafa/IECChangeAdviseSink.h
@@ -120,6 +125,7 @@ include/zarafa/IECStatsCollector.h
 include/zarafa/IECTestProtocol.h
 include/zarafa/IECUnknown.h
 include/zarafa/IMAPIOffline.h
+include/zarafa/MAPINotifSink.h
 include/zarafa/RecurrenceState.h
 include/zarafa/SSLUtil.h
 include/zarafa/SymmetricCrypt.h
@@ -130,20 +136,23 @@ include/zarafa/Util.h
 include/zarafa/ZarafaCode.h
 include/zarafa/auto_free.h
 include/zarafa/base64.h
-include/zarafa/checked.h
+include/zarafa/charset/
+include/zarafa/charset/convert.h
+include/zarafa/charset/convstring.h
+include/zarafa/charset/localeutil.h
+include/zarafa/charset/traits.h
+include/zarafa/charset/utf16string.h
+include/zarafa/charset/utf32string.h
+include/zarafa/charset/utf8string.h
 include/zarafa/codepage.h
-include/zarafa/convert.h
-include/zarafa/convstring.h
-include/zarafa/core.h
 include/zarafa/edkguid.h
 include/zarafa/favoritesutil.h
-include/zarafa/itercomp.h
-include/zarafa/localeutil.h
-include/zarafa/mapi_array_ptr.h
-include/zarafa/mapi_memory_ptr.h
-include/zarafa/mapi_object_ptr.h
+include/zarafa/mapi_ptr/
 include/zarafa/mapi_ptr.h
-include/zarafa/mapi_rowset_ptr.h
+include/zarafa/mapi_ptr/mapi_array_ptr.h
+include/zarafa/mapi_ptr/mapi_memory_ptr.h
+include/zarafa/mapi_ptr/mapi_object_ptr.h
+include/zarafa/mapi_ptr/mapi_rowset_ptr.h
 include/zarafa/mapicontact.h
 include/zarafa/mapiext.h
 include/zarafa/mapiguidext.h
@@ -152,22 +161,24 @@ include/zarafa/my_getopt.h
 include/zarafa/namedprops.h
 include/zarafa/platform.h
 include/zarafa/platform.linux.h
+include/zarafa/pthreadutil.h
 include/zarafa/restrictionutil.h
 include/zarafa/rtfutil.h
 include/zarafa/stringutil.h
 include/zarafa/threadutil.h
-include/zarafa/traits.h
 include/zarafa/tstring.h
-include/zarafa/unchecked.h
 include/zarafa/userutil.h
+include/zarafa/ustringutil/
 include/zarafa/ustringutil.h
-include/zarafa/utf16string.h
-include/zarafa/utf32iter.h
-include/zarafa/utf32string.h
+include/zarafa/ustringutil/itercomp.h
+include/zarafa/ustringutil/utf32iter.h
+include/zarafa/ustringutil/utf8iter.h
+include/zarafa/ustringutil/utfutil.h
+include/zarafa/utf8/
 include/zarafa/utf8.h
-include/zarafa/utf8iter.h
-include/zarafa/utf8string.h
-include/zarafa/utfutil.h
+include/zarafa/utf8/checked.h
+include/zarafa/utf8/core.h
+include/zarafa/utf8/unchecked.h
 lib/libarchiver.la
 @lib lib/libarchiver.so.${LIBarchiver_VERSION}
 @comment lib/libcommon_mapi.la
@@ -186,6 +197,8 @@ lib/libmapi.la
 @lib lib/libmapi.so.${LIBmapi_VERSION}
 lib/libzarafaclient.la
 @lib lib/libzarafaclient.so.${LIBzarafaclient_VERSION}
+@comment lib/libzarafacontacts.la
+@lib lib/libzarafacontacts.so.${LIBzarafacontacts_VERSION}
 @comment lib/libzarafasync.la
 @lib lib/libzarafasync.so.${LIBzarafasync_VERSION}
 lib/pkgconfig/zarafa.pc
@@ -200,6 +213,8 @@ lib/python${MODPY_VERSION}/site-packages/MAPI/Tags.pyc
 lib/python${MODPY_VERSION}/site-packages/MAPI/Time.py
 lib/python${MODPY_VERSION}/site-packages/MAPI/Time.pyc
 lib/python${MODPY_VERSION}/site-packages/MAPI/Util/
+lib/python${MODPY_VERSION}/site-packages/MAPI/Util/AddressBook.py
+lib/python${MODPY_VERSION}/site-packages/MAPI/Util/AddressBook.pyc
 lib/python${MODPY_VERSION}/site-packages/MAPI/Util/Generators.py
 lib/python${MODPY_VERSION}/site-packages/MAPI/Util/Generators.pyc
 lib/python${MODPY_VERSION}/site-packages/MAPI/Util/Iterators.py
@@ -252,6 +267,7 @@ lib/zarafa/ldapplugin.so
 share/doc/pkg-readmes/${FULLPKGNAME}
 share/doc/zarafa/
 share/doc/zarafa/AGPL-3
+@mode 0555
 share/doc/zarafa/audit-parse.pl
 share/doc/zarafa/createuser.dotforward
 share/doc/zarafa/db-calc-storesize
@@ -260,11 +276,15 @@ share/doc/zarafa/db-convert-4.20-to-4.21
 share/doc/zarafa/db-convert-4.20-to-innodb.sql
 share/doc/zarafa/db-convert-4.2x-to-5.00
 share/doc/zarafa/db-convert-attachments-to-files
+share/doc/zarafa/db-remove-orphaned-attachments
 share/doc/zarafa/db-upgrade-objectsid-to-objectguid.pl
+@mode
 share/doc/zarafa/eula.txt
+@mode 0555
 share/doc/zarafa/ldap-switch-sendas.pl
 share/doc/zarafa/optimize-imap.py
 share/doc/zarafa/zarafa7-upgrade
+@mode
 share/examples/zarafa/
 @sample ${SYSCONFDIR}/zarafa/
 @mode 750
@@ -316,6 +336,12 @@ share/examples/zarafa/local_zarafa.m4
 @mode 0444
 @sample /usr/share/sendmail/feature/local_zarafa.m4
 @mode
+share/examples/zarafa/mapi/
+@sample ${SYSCONFDIR}/mapi/
+share/examples/zarafa/mapi/zarafa.inf
+@sample ${SYSCONFDIR}/mapi/zarafa.inf
+share/examples/zarafa/mapi/zcontacts.inf
+@sample ${SYSCONFDIR}/mapi/zcontacts.inf
 share/examples/zarafa/monitor.cfg
 @sample ${SYSCONFDIR}/zarafa/monitor.cfg
 share/examples/zarafa/quotamail/
@@ -380,6 +406,8 @@ share/examples/zarafa/userscripts/groups_common.sh
 @sample ${SYSCONFDIR}/zarafa/userscripts/groups_common.sh
 share/examples/zarafa/userscripts/users_common.sh
 @sample ${SYSCONFDIR}/zarafa/userscripts/users_common.sh
+@mode 555
+share/examples/zarafa/zarafa-client-update
 @mode
 share/examples/zarafa/zarafa.m4
 @mode 0444
@@ -409,3 +437,4 @@ share/locale/sv/LC_MESSAGES/zarafa.mo
 @sample /var/db/zarafa/client/
 @sample /var/db/zarafa/index/
 @sample /var/log/zarafa/
+@sample /var/log/zarafa/autoupdate/

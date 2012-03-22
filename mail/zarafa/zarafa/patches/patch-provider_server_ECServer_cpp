@@ -1,6 +1,6 @@
-$OpenBSD: patch-provider_server_ECServer_cpp,v 1.15 2011/08/16 15:01:17 ajacoutot Exp $
---- provider/server/ECServer.cpp.orig	Tue Aug  2 15:02:47 2011
-+++ provider/server/ECServer.cpp	Sun Aug 14 04:45:52 2011
+$OpenBSD: patch-provider_server_ECServer_cpp,v 1.20 2012/02/27 19:01:34 ajacoutot Exp $
+--- provider/server/ECServer.cpp.orig	Wed Feb  1 22:09:33 2012
++++ provider/server/ECServer.cpp	Thu Feb  2 12:28:17 2012
 @@ -86,6 +86,10 @@
  #include "unicode/uclean.h"
  #endif
@@ -12,7 +12,7 @@ $OpenBSD: patch-provider_server_ECServer_cpp,v 1.15 2011/08/16 15:01:17 ajacouto
  #ifdef _DEBUG
  #define new DEBUG_NEW
  #undef THIS_FILE
-@@ -676,7 +680,7 @@ int running_server(char *szName, char *szConfig)
+@@ -797,7 +801,7 @@ int running_server(char *szName, const char *szConfig)
  		{ "mysql_config_file",			"/etc/zarafa/my.cnf" },
  #endif
  		{ "attachment_storage",			"database" },
@@ -21,12 +21,27 @@ $OpenBSD: patch-provider_server_ECServer_cpp,v 1.15 2011/08/16 15:01:17 ajacouto
  		{ "attachment_compression",		"6" },
  
  		// Log options
-@@ -747,7 +751,7 @@ int running_server(char *szName, char *szConfig)
- 		{ "cache_sortkey_size",		"0", CONFIGSETTING_UNUSED }, // Option not support, only for backward compatibility of all configurations under the 6.20
+@@ -869,7 +873,7 @@ int running_server(char *szName, const char *szConfig)
  
  		{ "client_update_enabled",	"no" },
+ 		{ "client_update_log_level", "1", CONFIGSETTING_RELOADABLE },
 -		{ "client_update_path",		"/var/lib/zarafa/client", CONFIGSETTING_RELOADABLE },
 +		{ "client_update_path",		"/var/db/zarafa/client", CONFIGSETTING_RELOADABLE },
+ 		{ "client_update_log_path",	"/var/log/zarafa/autoupdate", CONFIGSETTING_RELOADABLE },
          { "index_services_enabled", "no", CONFIGSETTING_RELOADABLE }, 
          { "index_services_path",    "file:///var/run/zarafa-indexer", CONFIGSETTING_RELOADABLE },        
- 		{ "index_services_search_timeout", "10", CONFIGSETTING_RELOADABLE },
+@@ -891,10 +895,14 @@ int running_server(char *szName, const char *szConfig)
+ 		{ NULL, NULL },
+ 	};
+ 
++#if defined(__linux__)
+ 	char buffer[256];
+ 	confstr(_CS_GNU_LIBPTHREAD_VERSION, buffer, sizeof(buffer));
+ 	if (strncmp(buffer, "linuxthreads", strlen("linuxthreads")) == 0)
+ 		m_bNPTL = false;
++#elif defined(__OpenBSD__)
++	m_bNPTL = true;
++#endif
+ 
+ 	// Init random generator
+ 	rand_init();

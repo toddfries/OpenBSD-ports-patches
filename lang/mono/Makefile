@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.62 2011/08/24 10:01:21 espie Exp $
+# $OpenBSD: Makefile,v 1.68 2012/01/08 20:05:45 robert Exp $
 
 COMMENT=	cross platform, open source .NET developement framework
 
-DISTNAME=	mono-2.10.2
+DISTNAME=	mono-2.10.6
+
 REVISION=	0
 
 CATEGORIES=	lang devel
@@ -26,7 +27,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB=	c m pthread z stdc++
 
-MASTER_SITES=	http://ftp.novell.com/pub/mono/sources/mono/
+MASTER_SITES=	http://download.mono-project.com/sources/mono/ \
+		http://ftp.novell.com/pub/mono/sources/mono/
 EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	lang/mono \
@@ -90,10 +92,20 @@ pre-configure:
 	for i in ${BASH_SCRIPTS}; do \
 		perl -pi -e 's,/bin/bash,/bin/sh,' ${WRKSRC}/$${i}; \
 	done
+	perl -pi -e 's,^prefix=.*,prefix=\@prefix\@,g;' \
+		-e 's,^exec_prefix=.*,exec_prefix=\@prefix\@,g' \
+		${WRKSRC}/data/*.pc.in
 
 # Force using the internal mcs compiler
 pre-build:
 	@mkdir -p ${WRKSRC}/mcs/build/deps
 	@touch ${WRKSRC}/mcs/build/deps/use-monolite
+
+# XXX stop mono failing the first time
+# make _tmpinst more available
+post-build:
+	for i in ${WRKBUILD}/runtime/_tmpinst/bin/*; do \
+		ln -s $$i ${WRKDIR}/bin; \
+	done
 
 .include <bsd.port.mk>

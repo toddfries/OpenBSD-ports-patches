@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2010/12/27 14:50:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2011/11/16 00:10:31 sthen Exp $
 
 COMMENT =	Audit Record Generation and Utilization System
 
 DISTNAME =	argus-3.0.2
-REVISION =	4
+REVISION =	5
 CATEGORIES =	net
 
 HOMEPAGE =	http://qosient.com/argus/
@@ -27,7 +27,6 @@ MODGNU_CONFIG_GUESS_DIRS = ${WRKSRC}/config
 BUILD_DEPENDS =		devel/bison
 
 MAKE_FLAGS =		CCOPT=
-CFLAGS +=		-DSYSCONFDIR=\\\"${SYSCONFDIR}\\\"
 INSTALL_TARGET =	install
 
 post-install:

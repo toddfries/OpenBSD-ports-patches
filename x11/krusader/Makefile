@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/22 08:37:03 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2011/12/03 23:20:53 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	twin panel file manager for KDE
 
 DISTNAME=	krusader-1.80.0
-REVISION=	3
+REVISION=	5
 
 CATEGORIES=	x11 x11/kde
 
@@ -34,7 +34,8 @@ USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 LIBTOOL_FLAGS+=	--tag=disable-static
 
-RUN_DEPENDS=	devel/desktop-file-utils
+RUN_DEPENDS=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 LIB_DEPENDS=	x11/kde/libs3 \
 		x11/kde/base3 \
 		x11/kde/bindings3 \

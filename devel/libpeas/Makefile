@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2011/06/10 09:38:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2011/12/03 19:38:09 ajacoutot Exp $
 
 COMMENT=	gobject-based plugins engine
 
 GNOME_PROJECT=	libpeas
-GNOME_VERSION=	1.0.0
-
-REVISION=	4
+GNOME_VERSION=	1.2.0
+REVISION=	1
 
 CATEGORIES=	devel
 
@@ -31,31 +30,32 @@ WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gstapp-0.10 gstbase-0.10
 WANTLIB += gstinterfaces-0.10 gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10
 WANTLIB += gthread-2.0 gtk-3 icudata icui18n icuuc jpeg m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs seed-gtk3 soup-2.4 sqlite3
+WANTLIB += pthread-stubs seed-gtk3 soup-2.4 sqlite3 javascriptcoregtk-3.0
 WANTLIB += stdc++ util webkitgtk-3.0 xcb xcb-render xcb-shm xml2
-WANTLIB += xslt z ${MODPY_WANTLIB}
+WANTLIB += xslt z gjs mozjs ncurses nspr4 plc4 plds4 
+WANTLIB += ${MODPY_WANTLIB}
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		lang/python
 
-RUN_DEPENDS=	devel/py-gobject
+RUN_DEPENDS=	devel/py-gobject3
+BUILD_DEPENDS=	devel/py-gobject3
 
-BUILD_DEPENDS=	lang/vala \
-		devel/py-gobject
+MODGNOME_TOOLS= vala
+MODGNOME_ICON_CACHE=	Yes
 
 LIB_DEPENDS=	devel/gobject-introspection \
-		x11/gnome/seed
+		x11/gnome/seed \
+		x11/gnome/gjs
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
-		--disable-gtk-doc \
+CONFIGURE_ARGS=	--disable-static \
+		--enable-gjs \
 		--enable-seed \
-		--enable-python \
-		--enable-vala \
+		--enable-python
 
 # XXX
 # glade looks for libpeas-gtk-1.0.so instead of libpeas-gtk-1.0.so.XX

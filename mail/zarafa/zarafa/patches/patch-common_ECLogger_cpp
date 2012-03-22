@@ -1,9 +1,9 @@
-$OpenBSD: patch-common_ECLogger_cpp,v 1.10 2011/06/02 12:46:37 ajacoutot Exp $
+$OpenBSD: patch-common_ECLogger_cpp,v 1.13 2012/02/27 19:01:34 ajacoutot Exp $
 
 Needs newlocale(3).
 
---- common/ECLogger.cpp.orig	Wed Apr 20 19:51:45 2011
-+++ common/ECLogger.cpp	Thu Jun  2 11:07:53 2011
+--- common/ECLogger.cpp.orig	Thu Dec 22 01:02:33 2011
++++ common/ECLogger.cpp	Thu Dec 22 12:14:19 2011
 @@ -55,6 +55,10 @@
  #include <assert.h>
  #include "stringutil.h"
@@ -47,7 +47,7 @@ Needs newlocale(3).
  		strftime(timestring, _LOG_TSSIZE, "%c", &local);
  
  	return timestring;
-@@ -222,7 +232,7 @@ void ECLogger_File::DoPrefix() {
+@@ -224,7 +234,7 @@ void ECLogger_File::DoPrefix() {
  	if (timestamp)
  		fnPrintf(log, "%s: ", MakeTimestamp());
  	if (prefix == LP_TID)
@@ -56,7 +56,7 @@ Needs newlocale(3).
  	else if (prefix == LP_PID)
  		fnPrintf(log, "[%5d] ", getpid());
  }
-@@ -473,7 +483,7 @@ void ECLogger_Pipe::Log(int loglevel, const std::strin
+@@ -475,7 +485,7 @@ void ECLogger_Pipe::Log(int loglevel, const std::strin
  	off += 1;
  
  	if (prefix == LP_TID)
@@ -65,7 +65,7 @@ Needs newlocale(3).
  	else if (prefix == LP_PID)
  		len = snprintf(msgbuffer+off, _LOG_BUFSIZE -off, "[%5d] ", getpid());
  	off += len;
-@@ -507,7 +517,7 @@ void ECLogger_Pipe::LogVA(int loglevel, const char *fo
+@@ -509,7 +519,7 @@ void ECLogger_Pipe::LogVA(int loglevel, const char *fo
  	off += 1;
  
  	if (prefix == LP_TID)
@@ -74,3 +74,17 @@ Needs newlocale(3).
  	else if (prefix == LP_PID)
  		len = snprintf(msgbuffer+off, _LOG_BUFSIZE -off, "[%5d] ", getpid());
  	off += len;
+@@ -586,9 +596,13 @@ namespace PrivatePipe {
+ 		int l;
+ 		bool bNPTL = true;
+ 
++#if defined(__linux__)
+ 		confstr(_CS_GNU_LIBPTHREAD_VERSION, buffer, sizeof(buffer));
+ 		if (strncmp(buffer, "linuxthreads", strlen("linuxthreads")) == 0)
+ 			bNPTL = false;
++#elif defined(__OpenBSD__)
++		bNPTL = true;
++#endif
+ 		
+ 		m_lpConfig = lpConfig;
+ 		m_lpFileLogger = lpFileLogger;

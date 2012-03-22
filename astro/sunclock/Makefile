@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/03/07 18:54:50 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2011/12/18 09:01:45 ajacoutot Exp $
 
 COMMENT-main=		display the phase of the Sun on a map of the Earth
 COMMENT-maps=		additional maps of the Earth for sunclock
@@ -20,17 +20,14 @@ SUPDISTFILES=		big_images_270804.tar.bz2:0 \
 EXTRACT_SUFX=		.tar.bz2
 
 FAKE=			lib
-USE_GROFF =		Yes
 CONFIGURE_STYLE=	imake
 NO_REGRESS=		Yes
 
 PSEUDO_FLAVORS=	no_maps
 FLAVOR?=	no_maps
+MULTI_PACKAGES=	 -main -maps
 
-MULTI_PACKAGES=	 -main
-.if !${FLAVOR:L:Mno_maps}
-MULTI_PACKAGES+= -maps
-.endif
+.include <bsd.port.arch.mk>
 
 PERMIT_PACKAGE_CDROM-maps=	no license for additional maps
 PERMIT_PACKAGE_FTP-maps=	no license for additional maps
@@ -52,9 +49,11 @@ DIST_SUBDIR=		sunclock
 LIB_DEPENDS-main=	graphics/jpeg \
 			graphics/png
 
-.if ${MULTI_PACKAGES:M-maps} # with maps
-DISTFILES=	${DISTNAME}${EXTRACT_SUFX} ${SUPDISTFILES}
+DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
+
+.if ${BUILD_PACKAGES:M-maps} # with maps
+DISTFILES+=	${SUPDISTFILES}
 
 post-extract:
 	${BZIP2} -dkc ${FULLDISTDIR}/medium_images_270804.tar.bz2 | tar -xf - \
@@ -63,9 +62,6 @@ post-extract:
 		-C ${WRKSRC}/vmf -s '#images/big#.#'
 	cp ${FULLDISTDIR}/e43_color1_sh_16k.jpg ${WRKSRC}/vmf/
 	cp ${FULLDISTDIR}/huge.jpg ${WRKSRC}/vmf/
-
-.else # no maps
-DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 .endif
 
 do-install:
@@ -78,7 +74,7 @@ do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/sunclock/i18n
 	${INSTALL_DATA_DIR} ${PREFIX}/share/sunclock/wm_icons/
 	${INSTALL_DATA} ${WRKSRC}/wm_icons/* ${PREFIX}/share/sunclock/wm_icons/
-.if ${MULTI_PACKAGES:M-maps}
+.if ${BUILD_PACKAGES:M-maps}
 	${INSTALL_DATA} ${WRKSRC}/vmf/*jpg ${PREFIX}/share/sunclock/earthmaps/
 	${INSTALL_DATA} ${WRKSRC}/vmf/*png ${PREFIX}/share/sunclock/earthmaps/
 .endif

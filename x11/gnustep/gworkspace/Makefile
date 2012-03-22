@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2011/06/24 10:54:51 sebastia Exp $
+# $OpenBSD: Makefile,v 1.17 2011/10/15 08:10:47 sebastia Exp $
 
 COMMENT=	GNUstep workspace manager
 
-DISTNAME=	gworkspace-0.8.8
-REVISION =	9
+DISTNAME =	gworkspace-0.9.0
 
 CATEGORIES=	x11
 

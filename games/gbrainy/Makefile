@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2011/08/16 14:59:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2012/02/16 22:24:15 ajacoutot Exp $
 
 COMMENT=	brain teaser game
 
-DISTNAME=	gbrainy-2.01
+DISTNAME=	gbrainy-2.1.1
+EPOCH=		0
 
 CATEGORIES=	games
 
@@ -17,6 +18,7 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 
 MASTER_SITES=	http://gent.softcatala.org/jmas/gbrainy/
+EXTRACT_SUFX=	.tar.gz
 
 MODULES=	textproc/intltool \
 		lang/mono \
@@ -28,14 +30,12 @@ RUN_DEPENDS=	devel/mono-addins \
 		x11/gnome/librsvg \
 		x11/gnome/mono-gnome
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES= Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-tests
+CONFIGURE_ARGS=	--disable-tests
 
 DLLMAP_FILES=	src/Clients/Classical/gbrainy.exe.config.in \
 		src/Core/gbrainy.Core.dll.config.in

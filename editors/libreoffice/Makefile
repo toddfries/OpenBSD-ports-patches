@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2011/08/16 08:11:51 robert Exp $
+# $OpenBSD: Makefile,v 1.58 2012/02/18 22:22:41 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,7 +7,7 @@ COMMENT-kde=	optional integration of LibreOffice to the KDE environment
 COMMENT-java=	optional integration of LibreOffice java features
 
 BV=		3.4
-VERSION=	3.4.2.3
+VERSION=	3.4.5.2
 DISTNAME=	libreoffice-${VERSION}
 WRKDIST=	${WRKDIR}/libreoffice-bootstrap-${VERSION}
 PKGNAME=	libreoffice-${VERSION}
@@ -21,21 +21,22 @@ EPOCH=		0
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 HOMEPAGE=	http://www.libreoffice.org/
-MASTER_SITES=	http://download.documentfoundation.org/libreoffice/src/ \
+
+MASTER_SITES=	http://download.documentfoundation.org/libreoffice/src/3.4.5/ \
 		http://humppa.hu/libreoffice/ \
 		http://download.go-oo.org/src/
 MASTER_SITES0=	http://hg.services.openoffice.org/binaries/ \
 		http://download.go-oo.org/src/ \
 		http://download.go-oo.org/extern/ \
 		http://www.numbertext.org/linux/ \
-		http://ooo.itc.hu/oxygenoffice/download/libreoffice/
+		http://ooo.itc.hu/oxygenoffice/download/libreoffice/ \
+		http://dev-www.libreoffice.org/src/
 
 EDISTFILES=	libreoffice-bootstrap-${VERSION}.tar.bz2
 
 COMPONENTS=	artwork base calc components extensions extras \
-		filters help impress translations libs-core libs-extern \
-		libs-extern-sys libs-gui postprocess sdk testing \
-		ure writer
+		filters help impress libs-core libs-extern libs-extern-sys \
+		libs-gui postprocess sdk testing translations ure writer
 
 .for _dfile in ${COMPONENTS}
 EDISTFILES+=	libreoffice-${_dfile}-${VERSION}.tar.bz2
@@ -53,7 +54,7 @@ DISTFILES+=	${EDISTFILES} \
 		2c9b0f83ed5890af02c0df1c1776f39b-commons-httpclient-3.1-src.tar.gz:0 \
 		35c94d2df8893241173de1d16b6034c0-swingExSrc.zip:0 \
 		35efabc239af896dfb79be7ebdd6e6b9-gentiumbasic-fonts-1.10.zip:0 \
-		37282537d0ed1a087b1c8f050dc812d9-dejavu-fonts-ttf-2.32.zip:0 \
+		f872f4ac066433d8ff92f5e316b36ff9-dejavu-fonts-ttf-2.33.zip:0 \
 		39bb3fcea1514f1369fcfc87542390fd-sacjava-1.3.zip:0 \
 		3c219630e4302863a9a83d0efde889db-commons-logging-1.1.1-src.tar.gz:0 \
 		48d8169acc35f97e05d8dcdfd45be7f2-lucene-2.3.2.tar.gz:0 \
@@ -69,7 +70,7 @@ DISTFILES+=	${EDISTFILES} \
 		ada24d37d8d638b3d8a9985e80bc2978-source-9.0.0.7-bj.zip:0 \
 		af3c3acf618de6108d65fcdc92b492e1-commons-codec-1.3-src.tar.gz:0 \
 		881af2b7dca9b8259abbca00bbbc004d-LinLibertineG-20110101.zip:0 \
-		ca4870d899fd7e943ffc310a5421ad4d-liberation-fonts-ttf-1.06.0.20100721.tar.gz:0 \
+		0be45d54cc5e1c2e3102e32b8c190346-liberation-fonts-ttf-1.07.1.tar.gz:0 \
 		0ff7d225d087793c8c2c680d77aac3e7-mdds_0.5.3.tar.bz2:0 \
 		48a9f787f43a09c0a9b7b00cd1fddbbf-hyphen-2.7.1.tar.gz:0 \
 		3404ab6b1792ae5f16bbd603bd1e1d03-libformula-1.1.7.zip:0 \
@@ -100,12 +101,12 @@ PSEUDO_FLAVORS=	parallel no_lang
 FLAVORS=	debug no_java
 FLAVOR?=
 
-.if !${FLAVOR:L:Mno_java}
+.if !${FLAVOR:Mno_java}
 MULTI_PACKAGES+=	-java
 .endif
 
-.if !${FLAVOR:L:Mno_lang}
-LANGS=			bg ca de es fa fi fr hu it ja ko \
+.if !${FLAVOR:Mno_lang}
+LANGS=			ar bg ca de es fa fi fr hu it ja ko \
 			lt lv nl pl pt-BR ru sl sv
 
 .for l in ${LANGS:L}
@@ -115,6 +116,7 @@ COMMENT-i18n-$l=	$l language pack for LibreOffice
 RUN_DEPENDS-i18n-$l=	editors/libreoffice
 WANTLIB-i18n-$l=
 LIB_DEPENDS-i18n-$l=
+REVISION-i18n-$l =	1
 .endfor
 .endif
 
@@ -131,13 +133,11 @@ BUILD_DEPENDS+=	archivers/zip \
 		textproc/textutils
 
 MODULES+=	lang/python \
-		devel/gconf2 \
 		devel/gettext
 
-MODGCONF2_LIBDEP=No
 LIB_DEPENDS-main=x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
-		db->=4,<5:databases/db/v4 \
+		databases/db/v4 \
 		textproc/libxslt \
 		net/curl \
 		net/neon \
@@ -147,25 +147,25 @@ LIB_DEPENDS-main=x11/gtk+2 \
 		textproc/redland \
 		textproc/hunspell \
 		devel/cppunit \
-		print/poppler \
-		${MODGCONF2_LIB_DEPENDS}
+		print/poppler
 WANTLIB-main=	gdk-x11-2.0>=400.14 gtk-x11-2.0>=400.14 \
 		db>=4 xslt>=3 curl>=7 neon>=24 \
 		icuuc>=0 icudata>=0 icui18n icule \
 		raptor>=2 rasqal rdf>=0 poppler
-WANTLIB-main+=	ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
+WANTLIB-main+=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp \
 		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		crypto expat fontconfig freetype gio-2.0 glib-2.0 \
 		gmodule-2.0 gobject-2.0 gthread-2.0 \
 		jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 \
 		png pthread pthread-stubs ssl xcb xml2 z gdk_pixbuf-2.0 \
-		util ${MODGCONF2_WANTLIB} ${MODGETTEXT_WANTLIB}
+		util ${MODGETTEXT_WANTLIB}
 WANTLIB-main+=	GL GLU Xxf86vm drm stdc++ xcb-render xcb-shm
 WANTLIB-main+=	hunspell-1.2 gdk_pixbuf_xlib-2.0
 WANTLIB-main+=	${MODPY_WANTLIB}
 
 RUN_DEPENDS-main=	devel/desktop-file-utils \
-			misc/shared-mime-info
+			misc/shared-mime-info \
+			x11/gtk+2,-guic
 
 MODULES+=		x11/qt3
 RUN_DEPENDS-kde=	editors/libreoffice
@@ -176,12 +176,12 @@ WANTLIB-kde=		${MODQT_WANTLIB} \
 			lib/kde3/kabc lib/kde3/kdecore \
 			lib/kde3/kdeui lib/kde3/kio
 
-.if !${FLAVOR:L:Mno_java}
+.if !${FLAVOR:Mno_java}
 MODULES+=		java
-MODJAVA_VER=		1.4+
+MODJAVA_VER=		1.6
 MODJAVA_JRERUN=		Yes
 .endif
-LIB_DEPENDS-java=	db-java->=4,<5:databases/db/v4,-java,java \
+LIB_DEPENDS-java=	databases/db/v4,-java \
 			devel/apache-ant>=1.8.2
 RUN_DEPENDS-java=	${MODJAVA_RUN_DEPENDS} \
 			editors/libreoffice \
@@ -206,9 +206,11 @@ CONFIGURE_ARGS=	--disable-build-mozilla \
 		--disable-dbus \
 		--disable-epm \
 		--disable-fetch-external \
+		--disable-gconf \
 		--disable-gnome-vfs \
 		--disable-kde4 \
 		--disable-mozilla \
+		--disable-lockdown \
 		--disable-nss-module \
 		--disable-odk \
 		--disable-opengl \
@@ -218,9 +220,9 @@ CONFIGURE_ARGS=	--disable-build-mozilla \
 		--disable-xrender-link \
 		--enable-binfilter \
 		--enable-cairo \
+		--enable-gio \
 		--enable-gstreamer \
 		--enable-kde \
-		--enable-lockdown \
 		--enable-ext-presenter-minimizer \
 		--enable-ext-pdfimport \
 		--enable-ext-presenter-console \
@@ -265,7 +267,7 @@ CONFIGURE_ARGS=	--disable-build-mozilla \
 		--without-system-mozilla \
 		--without-unix-wrapper
 
-.if !${FLAVOR:L:Mno_java}
+.if !${FLAVOR:Mno_java}
 CONFIGURE_ARGS+=--enable-ext-wiki-publisher \
 		--with-java \
 		--with-java-target-version=1.5 \
@@ -276,14 +278,14 @@ CONFIGURE_ARGS+=--enable-ext-wiki-publisher \
 CONFIGURE_ARGS+=--without-java
 .endif
 
-.if ${FLAVOR:L:Mparallel}
+.if ${FLAVOR:Mparallel}
 NCPU!=		echo $$((`sysctl -n hw.ncpu`+1))
 .else
-NCPU=		1
+NCPU=		0
 .endif
 CONFIGURE_ARGS+=--with-num-cpus=${NCPU}
 
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 CONFIGURE_ARGS+=--enable-symbols \
 		--enable-debug
 .endif

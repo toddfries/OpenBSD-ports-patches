@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.4 2011/07/07 00:44:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2012/02/17 22:10:57 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Sieve mail filtering for Dovecot
 
-V_SIEVE=	0.2.3
+V_SIEVE=	0.2.6
 V_DOVECOT=	2.0
+V_DOVECOT_FULL=	2.0.18
 
 DISTNAME=	dovecot-${V_DOVECOT}-pigeonhole-${V_SIEVE}
-REVISION=	0
 EPOCH=		0
 CATEGORIES=	mail
-PKGNAME= 	dovecot-pigeonhole-${V_SIEVE}
+PKGNAME=	dovecot-pigeonhole-${V_SIEVE}
 MASTER_SITES=	http://www.rename-it.nl/dovecot/${V_DOVECOT}/
 
 SHARED_LIBS=	dovecot-sieve	0.1
@@ -31,7 +31,7 @@ WANTLIB=	${MODLIBICONV_WANTLIB} c crypto ssl \
 		lib/dovecot/dovecot-storage lib/dovecot/dovecot
 
 MODULES=	converters/libiconv
-LIB_DEPENDS=	mail/dovecot>=2.0
+LIB_DEPENDS=	mail/dovecot=${V_DOVECOT_FULL}
 
 USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu

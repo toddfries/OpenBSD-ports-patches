@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.29 2011/01/06 04:24:25 jeremy Exp $
+# $OpenBSD: Makefile,v 1.31 2011/12/13 18:00:49 jeremy Exp $
 
 COMMENT=	ruby MVC web application framework
 
-VERSION=	3.0.3
+VERSION=	3.1.3
 DISTNAME=	rails-${VERSION}
-REVISION =	0
 CATEGORIES=	www
 
 # MIT License

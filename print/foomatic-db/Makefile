@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2011/07/08 23:28:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2012/02/17 15:41:40 ajacoutot Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		Foomatic PPD data
 
-V=			20110708
+V=			20120112
 DISTNAME=		foomatic-db-4.0-${V}
 PKGNAME=		foomatic-db-4.0.${V}
 CATEGORIES=		print
@@ -20,7 +20,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 # tarballs are only available for a 24 hour period
-#MASTER_SITES=		http://www.openprinting.org/download/foomatic/
+#MASTER_SITES=		http://www.openprinting.org/download/foomatic/ \
+#			http://www.openprinting.org/download/foomatic/oldstuff/
 MASTER_SITES=		http://distfiles.bsdfrog.org/
 
 CONFIGURE_STYLE=	gnu
@@ -42,6 +43,7 @@ pre-configure:
 	rm -f ${WRKSRC}/db/source/driver/foo2${x}.xml \
 		${WRKSRC}/db/source/opt/foo2${x}-*
 .endfor
+	rm ${WRKSRC}/db/source/printer/KONICA_MINOLTA-magicolor_2430_DL.xml
 .for i in Xerox-Phaser_6110 Samsung-CLP-300 Samsung-CLP-310 Samsung-CLP-315
 	mv ${WRKSRC}/db/source/printer/${i}.xml \
 		${WRKSRC}/db/source/printer/${i}-splix.xml

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2011/06/08 17:31:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2011/10/12 12:54:30 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,7 +7,7 @@ COMMENT=	Python wrapper for the Ogg libraries
 MODPY_EGG_VERSION=1.3
 DISTNAME=	pyogg-${MODPY_EGG_VERSION}
 PKGNAME=	${DISTNAME:S/py/py-/}
-REVISION =	7
+REVISION =	9
 CATEGORIES=	audio
 HOMEPAGE=	http://ekyo.nerim.net/software/pyogg/
 
@@ -21,7 +21,7 @@ MASTER_SITES=	${HOMEPAGE}
 
 MODULES=	lang/python
 
-WANTLIB += ogg
+WANTLIB += ogg ${MODPY_WANTLIB}
 LIB_DEPENDS=	audio/libogg
 
 MODPY_ADJ_FILES =	test/oggtail.py

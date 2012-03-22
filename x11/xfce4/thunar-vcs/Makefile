@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.15 2011/03/20 20:27:00 landry Exp $
+# $OpenBSD: Makefile,v 1.19 2011/12/03 22:39:12 ajacoutot Exp $
 
 COMMENT =	Thunar vcs integration plugin
 
 XFCE_VERSION =	0.1.4
 THUNAR_PLUGIN =	thunar-vcs-plugin
+REVISION=	2
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -17,6 +18,8 @@ MODULES =	x11/xfce4
 CONFIGURE_ARGS +=	--disable-linker-opts
 # correctly find bindtextdomain
 CONFIGURE_ENV +=	LIBS='-liconv'
+
+MODXFCE_ICON_CACHE=	Yes
 
 RUN_DEPENDS =	x11/xfce4/thunar \
 		devel/git
@@ -32,7 +35,7 @@ WANTLIB += fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gssapi gthread-2.0
 WANTLIB += gtk-x11-2.0 krb5 m neon pcre pixman-1 png pthread
 WANTLIB += pthread-stubs sasl2 sqlite3 ssl
-WANTLIB += xcb xfce4util z xcb-render
+WANTLIB += xcb xfce4util z xcb-render ffi
 WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += svn_client-1 svn_delta-1 svn_diff-1 svn_fs-1 svn_fs_base-1
 WANTLIB += svn_fs_fs-1 svn_fs_util-1 svn_ra-1 svn_ra_local-1 svn_ra_neon-1

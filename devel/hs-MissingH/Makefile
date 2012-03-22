@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2011/04/19 19:01:21 kili Exp $
+# $OpenBSD: Makefile,v 1.15 2011/12/31 22:19:45 kili Exp $
 
 COMMENT =		large library of utility functions
 
-DISTNAME =		MissingH-1.1.0.3
-REVISION =		9
+DISTNAME =		MissingH-1.1.1.0
+REVISION =		0
 CATEGORIES =		devel
-HOMEPAGE =		http://software.complete.org/missingh
+HOMEPAGE =		https://github.com/jgoerzen/missingh/wiki
 
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 

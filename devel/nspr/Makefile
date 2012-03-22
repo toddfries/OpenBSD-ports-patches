@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2011/08/23 20:07:08 landry Exp $
+# $OpenBSD: Makefile,v 1.39 2012/02/20 09:17:00 landry Exp $
 # $FreeBSD: /repoman/r/pcvs/ports/devel/nspr/Makefile,v 1.13 2003/12/13 21:30:19 peter Exp $
 
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 mips64 mips64el powerpc sparc sparc64 hppa
@@ -6,7 +6,7 @@ ONLY_FOR_ARCHS=	alpha amd64 arm i386 mips64 mips64el powerpc sparc sparc64 hppa
 COMMENT-main=		Netscape Portable Runtime
 COMMENT-docs=		HTML Documentation for NSPR
 
-VER=			4.8.9
+VER=			4.9
 DISTNAME=		nspr-${VER}
 PKGNAME-main=		${DISTNAME}
 PKGNAME-docs=		nspr-docs-${VER}
@@ -22,7 +22,7 @@ CATEGORIES=		devel
 
 HOMEPAGE=		http://www.mozilla.org/projects/nspr/index.html
 
-MAINTAINER=		Martynas Venckus <martynas@openbsd.org>
+MAINTAINER=		Landry Breuil <landry@openbsd.org>
 
 WANTLIB-main=		c
 

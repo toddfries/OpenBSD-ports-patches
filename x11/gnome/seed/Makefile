@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/26 15:36:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/02 19:48:26 jasper Exp $
+
+BROKEN-sparc64= 	bus error webkit's JSC::Lexer::lex()
 
 COMMENT=		GObject JavaScriptCore bridge
 
 GNOME_PROJECT=		seed
-GNOME_VERSION=		3.0.0
-REVISION=		5
+GNOME_VERSION=		3.2.0
+REVISION=		2
 SHARED_LIBS +=  seed-gtk3                 0.0 # 0.0
 
 CATEGORIES=		devel www
@@ -31,16 +33,15 @@ WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 gtk-3 icudata
 WANTLIB += icui18n icuuc jpeg m mpfr pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += readline soup-2.4 sqlite3 stdc++ termcap util webkitgtk-3.0
-WANTLIB += xcb xcb-render xcb-shm xml2 xslt z
+WANTLIB += xcb xcb-render xcb-shm xml2 xslt z javascriptcoregtk-3.0
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		x11/gnome/js-common
-LIB_DEPENDS=		devel/gobject-introspection \
+LIB_DEPENDS=		devel/gobject-introspection>=1.30.0 \
 			devel/mpfr>=3.0.1 \
-			www/webkit,gtk3
+			www/webkit,gtk3>=1.6.1v0
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-readline-module \
+CONFIGURE_ARGS+=	--enable-readline-module \
 			--enable-multiprocessing-module \
 			--enable-sqlite-module \
 			--enable-example-module \
@@ -52,8 +53,6 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-cairo-module \
 			--enable-gettext-module \
 			--enable-mpfr-module
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 REGRESS_IS_INTERACTIVE= x11
 REGRESS_DEPENDS=	${BASE_PKGPATH}

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/22 10:20:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2011/11/16 15:56:38 robert Exp $
 
 COMMENT=		webbased rss reader with standalone look and feel
 
 DISTNAME=		tt-rss-1.3.3
-REVISION=		1
+REVISION=		3
 CATEGORIES=		www
 
 HOMEPAGE=		http://tt-rss.org/

@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2011/04/08 18:20:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2012/02/21 16:21:42 ajacoutot Exp $
 
 COMMENT=		library to compress the standard X protocol
 
-DASHVERSION=		7
+DASHVERSION=		2
 DISTNAME=		nxcomp-${MAJOR_VERSION}-${DASHVERSION}
 PKGNAME=		nxcomp-${MAJOR_VERSION}.${DASHVERSION}
-REVISION=		0
 SHARED_LIBS=		Xcomp	1.0
 
 WANTLIB += jpeg m png stdc++ z
@@ -14,7 +13,7 @@ LIB_DEPENDS=		graphics/jpeg \
 			graphics/png
 
 AUTOCONF_VERSION=	2.59
-CONFIGURE_STYLE=	gnu autoconf
+CONFIGURE_STYLE=	autoconf
 CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
 			LIBXcomp_VERSION=${LIBXcomp_VERSION} \

@@ -1,24 +1,23 @@
-# $OpenBSD: Makefile,v 1.153 2011/06/06 08:43:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.160 2012/01/24 09:20:17 sthen Exp $
 
 COMMENT-main=	PostgreSQL RDBMS (client)
 COMMENT-server=	PostgreSQL RDBMS (server)
 COMMENT-docs=	PostgreSQL RDBMS documentation
 COMMENT-contrib=PostgreSQL RDBMS contributions
 
-VERSION=	9.0.4
+VERSION=	9.1.2
+REVISION-server=0
 DISTNAME=	postgresql-${VERSION}
 PKGNAME-main=	postgresql-client-${VERSION}
 PKGNAME-server=	postgresql-server-${VERSION}
 PKGNAME-docs=	postgresql-docs-${VERSION}
 PKGNAME-contrib=postgresql-contrib-${VERSION}
 
-REVISION-server=1
-
 CATEGORIES=	databases
-SHARED_LIBS=	ecpg		7.2 \
-		ecpg_compat	4.2 \
-		pgtypes		4.1 \
-		pq		5.3
+SHARED_LIBS=	ecpg		7.3 \
+		ecpg_compat	4.3 \
+		pgtypes		4.2 \
+		pq		5.4
 
 HOMEPAGE=	http://www.postgresql.org/
 
@@ -52,8 +51,6 @@ USE_GMAKE=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 
-.include <bsd.own.mk>
-
 INCLUDES=	${LOCALBASE}/include /usr/include/kerberosV
 CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-perl \
@@ -63,6 +60,7 @@ CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--docdir="${PREFIX}/share/doc/postgresql" \
 		--with-includes="${INCLUDES}" \
 		--with-libraries="${LOCALBASE}/lib" \
+		--with-system-tzdata="/usr/share/zoneinfo" \
 		--with-openssl \
 		--with-ossp-uuid \
 		--with-libxml \
@@ -79,6 +77,7 @@ CONFIGURE_ARGS+=--disable-spinlocks
 
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config
 
+ALL_TARGET=	world
 INSTALL_TARGET=	install-world
 
 LIB_DEPENDS-main= textproc/libxml
@@ -122,17 +121,10 @@ NO_REGRESS=	Yes
 
 DOCS=	${WRKSRC}/COPYRIGHT ${WRKSRC}/HISTORY \
 	${WRKSRC}/INSTALL ${WRKSRC}/README \
-	${WRKSRC}/doc/README.mb.big5 ${WRKSRC}/doc/README.mb.jp \
 	${WRKSRC}/doc/TODO
-
-post-build:
-	cd ${WRKBUILD}/contrib && exec ${SETENV} ${MAKE_ENV} \
-	    ${MAKE_PROGRAM} ${MAKE_FLAGS} ${ALL_TARGET}
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/postgresql
 	${INSTALL_DATA} ${DOCS} ${PREFIX}/share/doc/postgresql
-	cd ${WRKBUILD}/contrib && exec ${SETENV} ${MAKE_ENV} DESTDIR=${WRKINST} \
-		${MAKE_PROGRAM} ${MAKE_FLAGS} ${INSTALL_TARGET}
 
 .include <bsd.port.mk>

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.8 2010/12/27 14:50:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2011/12/17 22:01:13 sthen Exp $
 
 COMMENT=	UPnP A/V media server
 
 DISTNAME=	ushare-1.1a
-REVISION=	3
+REVISION=	5
 EXTRACT_SUFX=	.tar.bz2
 
 CATEGORIES=	net multimedia

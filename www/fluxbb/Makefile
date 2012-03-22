@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2011/11/16 15:56:37 robert Exp $
 
 COMMENT =	fast, light, user-friendly web forum
 
 V=		1.4.2
 DISTNAME =	fluxbb-${V}
 CATEGORIES =	www
-REVISION=	2
+REVISION=	4
 
 HOMEPAGE =	http://fluxbb.org/
 

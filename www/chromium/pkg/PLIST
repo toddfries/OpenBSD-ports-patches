@@ -1,9 +1,8 @@
-@comment $OpenBSD: PLIST,v 1.10 2011/08/16 08:17:44 robert Exp $
+@comment $OpenBSD: PLIST,v 1.15 2012/02/17 10:19:51 robert Exp $
 bin/chrome
 chrome/
 @bin chrome/chrome
 chrome/chrome.pak
-chrome/ffmpegsumo_nolink
 chrome/libffmpegsumo.so
 chrome/locales/
 chrome/locales/am.pak
@@ -109,6 +108,8 @@ chrome/resources/inspector/Images/localStorage.png
 chrome/resources/inspector/Images/paneAddButtons.png
 chrome/resources/inspector/Images/paneBottomGrow.png
 chrome/resources/inspector/Images/paneBottomGrowActive.png
+chrome/resources/inspector/Images/paneElementStateButtons.png
+chrome/resources/inspector/Images/paneFilterButtons.png
 chrome/resources/inspector/Images/paneGrowHandleLine.png
 chrome/resources/inspector/Images/paneRefreshButtons.png
 chrome/resources/inspector/Images/paneSettingsButtons.png
@@ -146,6 +147,10 @@ chrome/resources/inspector/Images/segmentSelectedEnd.png
 chrome/resources/inspector/Images/segmentSelectedEndChromium.png
 chrome/resources/inspector/Images/sessionStorage.png
 chrome/resources/inspector/Images/spinner.gif
+chrome/resources/inspector/Images/spinnerActive.gif
+chrome/resources/inspector/Images/spinnerActiveSelected.gif
+chrome/resources/inspector/Images/spinnerInactive.gif
+chrome/resources/inspector/Images/spinnerInactiveSelected.gif
 chrome/resources/inspector/Images/splitviewDimple.png
 chrome/resources/inspector/Images/splitviewDividerBackground.png
 chrome/resources/inspector/Images/statusbarBackground.png
@@ -210,8 +215,25 @@ chrome/resources/inspector/Images/warningMediumIcon.png
 chrome/resources/inspector/Images/warningOrangeDot.png
 chrome/resources/inspector/Images/warningsErrors.png
 chrome/resources/inspector/ScriptFormatterWorker.js
+chrome/resources/inspector/auditsPanel.css
+chrome/resources/inspector/dataGrid.css
 chrome/resources/inspector/devTools.css
 chrome/resources/inspector/devtools.html
+chrome/resources/inspector/devtools_extension_api.js
+chrome/resources/inspector/elementsPanel.css
+chrome/resources/inspector/heapProfiler.css
+chrome/resources/inspector/inspectorCommon.css
+chrome/resources/inspector/networkLogView.css
+chrome/resources/inspector/networkPanel.css
+chrome/resources/inspector/panelEnablerView.css
+chrome/resources/inspector/profilesPanel.css
+chrome/resources/inspector/resourceView.css
+chrome/resources/inspector/resourcesPanel.css
+chrome/resources/inspector/scriptsPanel.css
+chrome/resources/inspector/splitView.css
+chrome/resources/inspector/textPrompt.css
+chrome/resources/inspector/textViewer.css
+chrome/resources/inspector/timelinePanel.css
 @man man/man1/chrome.1
 share/applications/chrome.desktop
 share/icons/hicolor/128x128/apps/chrome.png
@@ -224,5 +246,5 @@ share/icons/hicolor/48x48/apps/chrome.png
 share/icons/hicolor/64x64/apps/chrome.png
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q %D/share/icons/hicolor 2>/dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q %D/share/icons/hicolor 2>/dev/null || true

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/04/26 18:21:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2011/12/03 18:35:11 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		collection of theme engines for GTK+3
 
 GNOME_PROJECT=		gtk-engines
 GNOME_VERSION=		2.91.1
+REVISION=		1
 
 # warning: PKGNAME does not default to ${DISTNAME}
 PKGNAME=		gtk3-engines-${GNOME_VERSION}
@@ -20,6 +21,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+EXTRACT_SUFX=		.tar.bz2
+
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 cairo cairo-gobject
 WANTLIB += drm expat fontconfig freetype gdk-3 gdk_pixbuf-2.0
@@ -28,7 +31,6 @@ WANTLIB += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png pthread-stubs xcb xcb-render xcb-shm z
 
 LIB_DEPENDS=	x11/gtk+3
-RUN_DEPENDS=	x11/hicolor-icon-theme
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -36,11 +38,8 @@ MODULES=		devel/gettext \
 LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_STYLE= 	gnu
-CONFIGURE_ARGS= 	${CONFIGURE_SHARED} \
-			--disable-static \
+CONFIGURE_ARGS= 	--disable-static \
 			--enable-animation
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 # nm: unknown option -- D
 NO_REGRESS=		Yes

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2011/06/08 18:00:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2011/12/25 23:59:07 fgsch Exp $
 
 COMMENT =	Python interface to Amazon Web Services
 
 MODPY_EGG_VERSION = 1.7a
 DISTNAME =	boto-${MODPY_EGG_VERSION}
 PKGNAME = 	py-${DISTNAME}
-REVISION =	1
+REVISION =	3
 CATEGORIES =	net
 
 HOMEPAGE =	http://code.google.com/p/boto/
@@ -27,8 +27,8 @@ MODPY_SETUPTOOLS =	Yes
 NO_REGRESS = 		Yes
 
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/boto
-	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/boto
-	${INSTALL_DATA} ${WRKSRC}/doc/*.txt ${PREFIX}/share/doc/boto
+	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-boto
+	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/py-boto
+	${INSTALL_DATA} ${WRKSRC}/doc/*.txt ${PREFIX}/share/doc/py-boto
 
 .include <bsd.port.mk>

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.55 2011/05/28 08:15:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.70 2011/12/03 22:17:16 ajacoutot Exp $
 
-COMMENT=		password agent for the GNOME project
+COMMENT=	password agent for the GNOME project
 
-GNOME_PROJECT=		gnome-keyring
-GNOME_VERSION=		2.32.1
+GNOME_PROJECT=	gnome-keyring
+GNOME_VERSION=	3.2.2
 
-SHARED_LIBS +=  gp11                 1.0      # .0.0
-SHARED_LIBS +=  gcr                  1.0      # .0.0
+REVISION=	0
 
-REVISION=	3
+SHARED_LIBS +=  gck-1                0.0      # 0.0
+SHARED_LIBS +=  gcr-3                1.0      # 1.0
 
 # GPLv2/LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -16,30 +16,44 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
-WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 dbus-1
-WANTLIB += gmodule-2.0 gobject-2.0 gpg-error gthread-2.0
-WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 gcrypt
-WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
-WANTLIB += z GL Xxf86vm drm xcb-shm
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
+WANTLIB += cairo-gobject dbus-1 drm expat fontconfig freetype
+WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gpg-error gthread-2.0 gtk-3 m p11-kit pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs xcb xcb-render xcb-shm z ffi stdc++
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+
+# only required during build for parsing ASN.1 files
+BUILD_DEPENDS=	security/libtasn1
+
+RUN_DEPENDS=	misc/shared-mime-info
+
 LIB_DEPENDS=	security/libgcrypt \
-		security/libtasn1 \
 		x11/dbus \
-		x11/gtk+2
+		x11/gtk+3 \
+		security/p11-kit>=0.6
 
 CONFIGURE_ARGS=	--with-root-certs=/etc/ssl \
 		--disable-pam \
+		--disable-selinux \
 		--disable-tests \
-		--disable-gtk-doc
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
+		--without-libcap-ng
 
-FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples
+FAKE_FLAGS=	configdir=${PREFIX}/share/examples/gnome-keyring/pkcs11/modules
+
+pre-configure:
+	perl -pi -e 's,make --version,${MAKE_PROGRAM} --version,' \
+		${WRKSRC}/configure
+
+post-install:
+	mv ${WRKINST}/etc/xdg ${PREFIX}/share/examples/gnome-keyring
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2011/07/08 22:32:29 robert Exp $
+# $OpenBSD: Makefile,v 1.6 2011/11/16 15:56:37 robert Exp $
 
 SHARED_ONLY =		Yes
 
@@ -9,7 +9,7 @@ PKGNAME =		pecl-${DISTNAME:L}
 CATEGORIES =		sysutils
 MAINTAINER =		Johan Huldtgren <jhuldtgren@gmail.com>
 
-REVISION =		0
+REVISION =		2
 
 HOMEPAGE =		http://pecl.php.net/package/fileinfo/
 

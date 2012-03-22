@@ -1,4 +1,4 @@
-$OpenBSD: README-main,v 1.12 2011/07/14 09:45:13 ajacoutot Exp $
+$OpenBSD: README-main,v 1.16 2012/02/27 19:01:34 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -54,8 +54,14 @@ Anyway, here are the 3 ways of integrating Zarafa with sendmail(8).
 
 First, install the procmail package and configure ${SYSCONFDIR}/procmailrc
 the following way:
- 
-:0 w
+
+# optional: deliver mail tagged as SPAM into the Junk mail folder
+:0w
+* ^X-Spam-Status: Yes
+| ${TRUEPREFIX}/bin/zarafa-dagent -j $LOGNAME
+EXITCODE=$?
+
+:0w
 | ${TRUEPREFIX}/bin/zarafa-dagent $LOGNAME
 EXITCODE=$?
 
@@ -105,8 +111,7 @@ The debugging output will then be available under:
    ${INSTDIR}/debug.txt
 
 You need to enable the PHP mapi module by creating a symbolic link from
-${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini to
-${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini:
+${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini to ${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini:
 
     # ln -fs ${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini \
         ${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini
@@ -125,6 +130,14 @@ httpd:\
 	:setenv=LANG=en_US.UTF-8\
 	,LD_PRELOAD=/usr/lib/libpthread.so:\
 	:tc=daemon:
+
+Clients (Outlook) auto-update
+=============================
+
+When using the auto-update feature for Microsoft Outlook (TM) clients,
+it is advised to clean-up old update logs by running the following
+script from cron(8) once per day:
+    ${TRUEPREFIX}/share/examples/zarafa/zarafa-client-update
 
 Documentation and help
 ======================

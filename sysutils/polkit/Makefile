@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.26 2011/08/17 16:59:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2012/02/16 22:28:23 ajacoutot Exp $
 
 COMMENT=	framework for granting privileged operations to users
 
-DISTNAME=	polkit-0.102
+DISTNAME=	polkit-0.104
 
 SHARED_LIBS +=  polkit-gobject-1	1.0 # .0.0
 SHARED_LIBS +=  polkit-backend-1	1.0 # .0.0
@@ -20,8 +20,8 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB += c expat gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += pcre pthread z
+WANTLIB += c expat ffi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 pcre pthread z
 
 MASTER_SITES=	http://hal.freedesktop.org/releases/
 
@@ -34,11 +34,9 @@ BUILD_DEPENDS=	${MODGNU_AUTOMAKE_DEPENDS} \
 
 RUN_DEPENDS=	x11/dbus
 
-# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
-# instead of the actual library
-USE_LIBTOOL=	gnu
+USE_LIBTOOL=	Yes
 # needs AM_PROG_LIBTOOL
-#BUILD_DEPENDS+=	devel/libtool
+BUILD_DEPENDS+=	devel/libtool
 
 # We do no want to depends on gtk-doc as it creates a dependency loop:
 # polkit -> gtk-doc -> yelp -> gconf2 -> polkit
@@ -55,6 +53,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
+		--disable-systemd \
 		--localstatedir=/var \
 		--mandir=${PREFIX}/man \
 		--enable-introspection \
@@ -73,16 +72,24 @@ pre-configure:
 	${SUBST_CMD} ${WRKSRC}/docs/man/pkexec.xml \
 		${WRKSRC}/actions/org.freedesktop.policykit.policy.in \
 		${WRKSRC}/src/examples/org.freedesktop.policykit.examples.pkexec.policy.in
+	perl -pi -e 's,lib/polkit-1,db/polkit-1,g' \
+		${WRKSRC}/configure.ac \
+		${WRKSRC}/docs/man/pklocalauthority.xml \
+		${WRKSRC}/docs/polkit/html/PolkitBackendLocalAuthority.html \
+		${WRKSRC}/docs/polkit/html/pklocalauthority.8.html \
+		${WRKSRC}/src/polkitbackend/polkitbackendlocalauthority.c \
+		${WRKSRC}/test/polkitbackend/polkitbackendlocalauthoritytest.c
 	cd ${WRKSRC} && \
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
 		${LOCALBASE}/bin/autoreconf
 
 post-install:
-	${INSTALL_DATA_DIR} \
-		${PREFIX}/share/examples/polkit/var/db/polkit-1/localauthority/10-vendor.d
 	${INSTALL_DATA} ${FILESDIR}/60-desktop-policy.conf \
 		${PREFIX}/share/examples/polkit/polkit-1/localauthority.conf.d/
+	# @sample'd under /var/db/polkit-1
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/polkit/var/
+	mv ${WRKINST}/var/lib ${PREFIX}/share/examples/polkit/var/db
 	${INSTALL_DATA} ${FILESDIR}/10-desktop-policy.pkla \
 		${PREFIX}/share/examples/polkit/var/db/polkit-1/localauthority/10-vendor.d/
 

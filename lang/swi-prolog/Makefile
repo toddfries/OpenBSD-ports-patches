@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.36 2011/08/18 10:51:08 edd Exp $
+# $OpenBSD: Makefile,v 1.39 2012/01/13 00:55:14 naddy Exp $
 
 COMMENT =		Prolog for the real world
 
-V =			5.10.4
+V =			5.10.5
 XV =			6.6.66
 DISTNAME =		pl-$V
 PKGNAME =		swi-prolog-$V
-REVISION =		3
+REVISION =		0
 CATEGORIES =		lang
 
 SHARED_LIBS =		pl	3.0
@@ -45,10 +45,11 @@ MAKE_FLAGS =		SONAMEOPT= \
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS =		graphics/jpeg
-LIB_DEPENDS =		devel/gmp
+LIB_DEPENDS =		devel/gmp \
+			devel/libexecinfo
 
-WANTLIB +=	ICE SM X11 Xext Xft Xinerama Xpm Xt c crypto gmp jpeg m
-WANTLIB +=	ncursesw pthread readline ssl z
+WANTLIB +=	ICE SM X11 Xext Xft Xinerama Xpm Xt c crypto execinfo gmp 
+WANTLIB +=	jpeg m ncursesw pthread readline ssl z
 
 FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}-openbsd${OSREV}
 SUBST_VARS =		V XV FULLARCH BOOT
@@ -62,7 +63,16 @@ pre-patch:
 	done
 
 post-install:
-	cd ${PREFIX}/lib && ln -s swipl-$V/lib/${FULLARCH}/libpl.so.${LIBpl_VERSION}
+	cd ${PREFIX}/lib && \
+		ln -s swipl-$V/lib/${FULLARCH}/libpl.so.${LIBpl_VERSION}
+	mv ${PREFIX}/lib/swipl-${V}/xpce-${XV}/man/xpce-client.1 \
+		${PREFIX}/man/man1/
+
+# XXX figure out why these tests fail
+######pre-regress:
+######	rm ${WRKBUILD}/src/Tests/thread/agc.pl
+######	rm ${WRKBUILD}/src/Tests/thread/agc2.pl
+
 
 .include <bsd.port.mk>
 

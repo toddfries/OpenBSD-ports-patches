@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.64 2011/07/19 09:20:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.76 2011/11/04 09:56:29 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	lightweight window manager
 
 GNOME_PROJECT=	metacity
 GNOME_VERSION=	2.34.1
-REVISION=	0
+REVISION=	7
 
 SHARED_LIBS +=  metacity-private     1.0      # .0.0
 
@@ -18,50 +18,35 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo
-WANTLIB += execinfo expat fontconfig freetype
-WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gthread-2.0 gtk-x11-2.0 kvm ltdl m ogg
-WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB += png pthread pthread-stubs vorbis vorbisfile xcb X11-xcb
-WANTLIB += xcb-aux xcb-render z GL Xxf86vm drm xcb-shm
-WANTLIB += startup-notification-1 canberra-gtk canberra gtop-2.0
+WANTLIB += GL ICE SM X11 X11-xcb Xau Xcomposite Xcursor
+WANTLIB += Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender
+WANTLIB += Xxf86vm atk-1.0 c cairo canberra canberra-gtk dbus-1
+WANTLIB += dbus-glib-1 drm expat ffi fontconfig freetype gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 gtk-x11-2.0 gtop-2.0 kvm ltdl m ogg pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs startup-notification-1 vorbis vorbisfile
+WANTLIB += xcb xcb-aux xcb-render xcb-shm z stdc++
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
-EXTRACT_SUFX=	.tar.xz
-
 LIB_DEPENDS=	devel/startup-notification \
 		audio/libcanberra,-gtk \
 		devel/libgtop2
-BUILD_DEPENDS=	${RUN_DEPENDS} \
-		x11/gnome/doc-utils
-RUN_DEPENDS=	x11/gnome/zenity
+BUILD_DEPENDS=	${RUN_DEPENDS}
+RUN_DEPENDS=	x11/gnome/zenity \
+		x11/gnome/themes-standard \
+		fonts/cantarell-fonts
 
+MODGNOME_TOOLS= yelp
 SEPARATE_BUILD=	concurrent
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 MODGCONF2_SCHEMAS_DIR= metacity
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
-CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 USE_GROFF =	Yes
-
-FLAVORS=	gtk2
-FLAVOR?=
-
-.if ${FLAVOR:L:Mgtk2}
-# defaults to the "Clearlooks" theme
-RUN_DEPENDS +=	x11/gnome/themes
-PATCH_LIST +=	patch-* gtk2-patch-src_metacity_schemas_in_in
-.else
-# defaults to the "Adwaita" theme and "Cantarell" font
-RUN_DEPENDS +=	x11/gnome/themes-standard \
-		fonts/cantarell-fonts
-.endif
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/metacity

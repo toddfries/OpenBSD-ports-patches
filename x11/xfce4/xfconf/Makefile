@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2011/01/18 20:41:08 landry Exp $
+# $OpenBSD: Makefile,v 1.8 2011/12/26 18:39:11 landry Exp $
 
 COMMENT=	Xfce4 settings daemon
 
 XFCE_PROJECT=	xfconf
+XFCE_VERSION=	4.8.1
 SHARED_LIBS =	xfconf-0 0.0
 
 # GPLv2
@@ -17,7 +18,7 @@ LIB_DEPENDS=	x11/xfce4/libxfce4util>=4.8.0 \
 
 CONFIGURE_ARGS=	--disable-perl-bindings --disable-linker-opts
 
-WANTLIB=	c dbus-1 glib-2.0 gobject-2.0 gthread-2.0 pcre pthread \
-		xfce4util dbus-glib-1
+WANTLIB += c dbus-1 dbus-glib-1 ffi gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gthread-2.0 pcre pthread xfce4util z
 
 .include <bsd.port.mk>

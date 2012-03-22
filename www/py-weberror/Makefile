@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.7 2011/12/31 15:09:49 fgsch Exp $
 
 COMMENT =	web error handling and exception catching
 
-MODPY_EGG_VERSION = 0.10.1
+MODPY_EGG_VERSION = 0.10.3
 DISTNAME =	WebError-${MODPY_EGG_VERSION}
 PKGNAME =	py-${DISTNAME:L}
-REVISION =	1
 
 CATEGORIES =	www devel
 
@@ -19,11 +18,11 @@ MASTER_SITES =	${MASTER_SITE_PYPI:=W/WebError/}
 
 MODULES =	lang/python
 
-RUN_DEPENDS =	devel/py-simplejson \
-		textproc/py-pygments \
+RUN_DEPENDS =	textproc/py-pygments \
 		www/py-paste \
 		www/py-tempita \
-		www/py-webob
+		www/py-webob \
+		${MODPY_JSON}
 REGRESS_DEPENDS = ${RUN_DEPENDS} \
 		  devel/py-nose \
 		  www/py-webtest
@@ -31,7 +30,7 @@ REGRESS_DEPENDS = ${RUN_DEPENDS} \
 MODPY_SETUPTOOLS =	Yes
 
 pre-build:
-	${CHMOD} 644 ${WRKSRC}/WebError.egg-info/*
+	chmod 644 ${WRKSRC}/WebError.egg-info/*
 
 do-regress:
 	cd ${WRKSRC} && ${LOCALBASE}/bin/nosetests lib tests

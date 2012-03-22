@@ -1,10 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/20 16:04:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2011/11/02 14:29:38 ajacoutot Exp $
 
-MODPY_EGG_VERSION = 	2.0.0
 TRYTOND_MODULE =	party
-REVISION =		0
 
-RUN_DEPENDS =		productivity/tryton/country \
+RUN_DEPENDS =		productivity/tryton/country>=2.2.0 \
 			textproc/py-vatnumber
 
 .include <bsd.port.mk>

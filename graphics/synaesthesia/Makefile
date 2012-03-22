@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2010/11/17 08:05:16 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2011/12/02 14:36:14 espie Exp $
 
 COMMENT=		visual sound representation
 
 DISTNAME=		synaesthesia-2.1
-REVISION =		0
+REVISION =		1
 CATEGORIES=     	graphics x11
 
 HOMEPAGE=		http://yoyo.cc.monash.edu.au/~pfh/synaesthesia.html
@@ -13,8 +13,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		ICE SM X11 Xext c m ossaudio pthread pthread-stubs \
-			stdc++ usbhid xcb SDL
+
+WANTLIB=		ICE SM X11 c m ossaudio pthread stdc++ SDL
 
 MASTER_SITES=		http://yoyo.cc.monash.edu.au/~pfh/
 
@@ -28,7 +28,7 @@ SEPARATE_BUILD=		concurrent
 USE_GMAKE=		Yes
 CONFIGURE_STYLE=	gnu
 
-.if ${FLAVOR:L:Mesd}
+.if ${FLAVOR:Mesd}
 LIB_DEPENDS+=		audio/esound
 CONFIGURE_ARGS+=	--with-esound
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include"

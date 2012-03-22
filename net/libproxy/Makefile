@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2011/06/08 18:00:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2011/12/05 10:38:42 sthen Exp $
 
 SHARED_ONLY=		Yes
 
@@ -13,9 +13,9 @@ PKGNAME-main=		libproxy-${VERSION}
 PKGNAME-mozilla=	libproxy-mozilla-${VERSION}
 PKGNAME-webkit=		libproxy-webkit-${VERSION}
 
-REVISION-main=		4
-REVISION-mozilla=	2
-REVISION-webkit=	4
+REVISION-main=		7
+REVISION-mozilla=	4
+REVISION-webkit=	6
 
 CATEGORIES=		net
 
@@ -63,9 +63,8 @@ LIB_DEPENDS-webkit=	STEM->=${VERSION}:${BUILD_PKGPATH}, \
 
 cWANTLIB += m stdc++
 
-WANTLIB-main += ${cWANTLIB} ${MODGETTEXT_WANTLIB} c perl pthread
-WANTLIB-main += c perl pthread gobject-2.0 gthread-2.0 pthread
-WANTLIB-main += ORBit-2 c gconf-2 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB-main += ${cWANTLIB} ${MODGETTEXT_WANTLIB}
+WANTLIB-main += c gconf-2 glib-2.0 gobject-2.0 gthread-2.0 perl pthread
 
 WANTLIB-mozilla += ${cWANTLIB} c modman nspr4 plc4 plds4 proxy
 WANTLIB-mozilla += xulrunner1.9/mozjs

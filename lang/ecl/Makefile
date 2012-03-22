@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2011/06/13 21:04:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2011/12/02 14:36:14 espie Exp $
 
 COMMENT = 	embeddable common-lisp
 CATEGORIES = 	lang
 
 V =		11.1.1
 DISTNAME = 	ecl-$V
+REVISION=		0
 SHARED_LIBS +=	ecl	2.0
 
 HOMEPAGE = 	http://ecls.sourceforge.net/
@@ -35,7 +36,7 @@ CONFIGURE_ARGS += 	--enable-boehm=system \
 # generating the tags. so override it for now untill etags is fixed.
 CONFIGURE_ENV +=	ETAGS=/usr/bin/true
 
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 CONFIGURE_ARGS +=	--with-debug-cflags=-g
 .endif
 

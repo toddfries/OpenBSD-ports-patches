@@ -1,4 +1,4 @@
-.\"	$OpenBSD: dpb.1,v 1.13 2011/07/14 10:48:32 espie Exp $
+.\"	$OpenBSD: dpb.1,v 1.34 2012/02/27 20:42:39 espie Exp $
 .\"
 .\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 .\"
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: July 14 2011 $
+.Dd $Mdocdate: February 27 2012 $
 .Dt DPB 1
 .Os
 .Sh NAME
@@ -26,15 +26,19 @@
 .Op Fl aceqrRsuUx
 .Op Fl A Ar arch
 .Op Fl b Ar logfile
+.Op Fl C Ar pathlist
 .Op Fl D Ar PARAM Ns = Ns Ar value
 .Op Fl f Ar m
+.Op Fl F Ar m
 .Op Fl h Ar hosts
+.Op Fl I Ar pathlist
+.Op Fl J Ar p
 .Op Fl j Ar n
 .Op Fl L Ar logdir
 .Op Fl m Ar threshold
-.Op Fl P Ar subdirlist
+.Op Fl P Ar pathlist
 .Op Fl S Ar sizefile
-.Op Ar pkgpath ...
+.Op Ar pathlist ...
 .Ek
 .Sh DESCRIPTION
 .Nm
@@ -43,28 +47,120 @@ with several cores.
 Its name is an acronym for
 .Sq distributed ports builder .
 .Nm
-walks ports to figure out dependencies, and starts building ports
+walks the ports tree to figure out dependencies, and starts building
 as soon as it can.
-It can take
-.Ar pkgpath ...
+.Pp
+On a clean machine,
+.Nm
+will run with sensible defaults if used without options.
+Note, however, that it will produce logs, lock files, packages, and package
+installations.
+.Pp
+The file
+.Pa build.log
+.Po
+normally under
+.Pa ${PORTSDIR}/log/${ARCH}
+.Pc
+is of particular interest, as it contains build time summaries.
+After a full run of
+.Nm ,
+back-up or remove other logs, but keep the old
+.Pa build.log
+accessible, so that the next build can be primed with
+.Fl b Pa build.log
+in order to get a more efficient build that will focus on large ports first.
+.Pp
+.Nm
+can be restricted to a subset of the tree by giving it
+.Ar pathlist ...
 to build as parameters.
+.Pp
+A
+.Ar pathlist
+is either a
+.Xr pkgpath 7
+to build, or a filename that contains pkgpaths (one per line).
+.Ar pathlist
+parameters can also take the form
+.Li filename*scale
+in order to multiply the weights of all
+.Xr pkgpath 7
+in a file by a given
+.Ar scale ,
+or
+.Li pkgpath=value ,
+in order to set the weight of a given
+.Xr pkgpath 7
+to a specific value.
+.Pp
+.Nm
+supports
+.Sq hot-fixes :
+if a particular port errors out, it is possible to fix the problem, remove
+the corresponding lockfile, and
+.Nm
+will pick it up without needing to be stopped and restarted.
+.Pp
+In order to build on a cluster, the ports tree itself should be shared
+through NFS, including distfiles and built packages, but the WRKOBJDIR
+should be local to each machine.
+Option
+.Fl h Ar file
+is used to specify hosts to use,
+.Ar file
+can be as simple as a list of hosts to use, one host per line.
+.Pp
+As
+.Nm
+tends to be run on shared clusters, most filenames will go through some
+control sequence expansions.
+For instance, the default logdir location can be specified as
+.Pa %p/logs/%a .
+The following sequences are recognized:
+.Bl -tag -offset aaaa -width %aa
+.It Cm %a
+architecture being used.
+.It Cm %d
+date at start of
+.Nm ,
+GMtime, formatted as yyyy-mm-dd@hh:mm:ss.
+.It Cm %h
+hostname running
+.Nm .
+.It Cm %p
+portsdir location.
+.It Cm %t
+timestamp (number of seconds since January 1 1970) at start of
+.Nm .
+.El
+.Pp
 Options are as follows:
-.Bl -tag -width pkgpathlonger
+.Bl -tag -width pkgpathlong
 .It Fl A Ar arch
 Build packages for given architecture, selecting relevant hosts from the
 cluster.
 By default, the current host's architecture will be used.
 .It Fl a
-Walk the whole tree and builds all packages (default if no pkgpath is given).
+Walk the whole tree and builds all packages (default if no
+.Ar pathlist
+is given).
 .It Fl b Ar logfile
 Prime the heuristics module with a previous build log, so that packages that
 take a long time to build will happen earlier.
 .It Fl c
 Clean port working directory and log before each build.
+.It Fl C Ar pathlist
+Don't clean port working directories after build.
+Use a list of simple
+.Xr pkgpath 7 ,
+as this does not take subpackages and flavors into account.
 .It Fl D Ar PARAM Ns = Ns Ar value
 Set defined parameter to value.
 Known parameters are as follows:
-.Bl -tag -width DISPLAY
+.Bl -tag -width DISP
+.It Ar CDROM_ONLY
+Don't fetch distfiles that are not allowed for cdrom.
 .It Ar CONNECTION_TIMEOUT
 Connection timeout for ssh.
 Defaults to 60 seconds.
@@ -72,6 +168,34 @@ Defaults to 60 seconds.
 Display timeout (in seconds) while waiting for jobs to finish, so that the
 display is updated even if jobs didn't finish.
 Defaults to 10 seconds.
+.It Ar DONT_BUILD_ONCE
+By default,
+.Nm
+will use the
+.Ev BUILD_ONCE
+optimization if run with
+.Fl a :
+pseudo-flavors that disable subpackages and are not necessary for bootstrap
+will be disabled, so that the same port is built once, as far as possible.
+This flag disables that optimization, which might be desireable if you want
+to build a small subset of packages which would pull in the kitchen sink
+otherwise.
+.It Ar DONT_CLEAN_LOCKS
+By default,
+.Nm
+will clean old locks from dpb running on the same host that no longer exist,
+provided they didn't end in error.
+This is usually the right thing to do after a crash, or after killing dpb
+abruptly.
+Sometimes, one may want manual control over which locks to remove.
+.It Ar FTP_ONLY
+Don't fetch distfiles that are not allowed for ftp.
+.It Ar HISTORY_ONLY
+Don't fetch or build anything.
+Only run
+.Nm
+to figure out old distfiles and update
+.Pa ${FULLDISTDIR}/history .
 .It Ar STUCK_TIMEOUT
 Timeout (in seconds * speed factor) after which tasks that don't show
 any progress will be killed.
@@ -90,7 +214,17 @@ jobs for fetching files.
 Those are separate from the build jobs, since they don't consume cpu, and they
 run on the localhost.
 Defaults to 2.
-Can be set to 0 to bypass fetching jobs entirely.
+Can be set to 0 to bypass fetching jobs entirely,
+and reduce
+.Nm
+memory footprint by a lot.
+.It Fl F Ar m
+Fetch-only mode, for mirroring hosts.
+Do not build any package but fetch everything, disregarding
+.Ev BROKEN
+and
+.Ev ONLY_FOR_ARCHS
+information.
 .It Fl h Ar hosts
 File with hosts to use for building.
 One host per line, plus properties, such as:
@@ -134,6 +268,48 @@ file can also define a start-up script, as
 STARTUP=path
 .Ed
 which will be run at start-up on each machine.
+There are no fine-grained options to control
+.Xr ssh 1
+options, as those can be specified through virtual host declarations in
+.Xr ssh_config 5 .
+.It Fl I Ar pathlist
+List of
+.Xr pkgpath 7
+to install, on the local box.
+This will also add them to the list of things to build.
+.It Fl J Ar p
+Delete unneeded installed packages during the build.
+Each
+.Ar prepare
+stage is followed by a
+.Ar show-prepare-results
+stage.
+Every
+.Ar p
+build, it will be followed by a
+.Ar junk
+stage which uses
+.Xr pkg_delete 1
+with the
+.Fl aX
+options to delete automatically installed packages that are currently
+not needed.
+.Pp
+.Nm
+keeps track of list of dependencies on a given host, by storing each
+dependency list in the lockfile corresponding to the package being built.
+.Pp
+There is a potential race condition between the
+.Ar depends
+and
+.Ar junk
+stage, which
+.Nm
+solves by preventing more than one job on a given host to be in the
+.Ar depends
+\&...
+.Ar junk
+stages at one time, by using a per-host lock.
 .It Fl j Ar n
 Number of concurrent local jobs to run (defaults to hw.ncpu if no hosts file).
 .It Fl L Ar logdir
@@ -149,8 +325,10 @@ Avoid for now, as
 .Xr mfs 8
 has serious race conditions which yield
 random errors under stress conditions such as bulk build.
-.It Fl P Ar subdirlist
-Read list of pkgpaths from file
+.It Fl P Ar pathlist
+Read list of
+.Xr pkgpath 7
+from file.
 .It Fl q
 Don't quit while errors/locks are around.
 .It Fl r
@@ -161,6 +339,13 @@ Useful to try to find missing build dependencies.
 Rebuild existing packages based on discrepancies between the package
 signature and what the port says it should be.
 Concretely, use to run a partial bulk build after some library change.
+.Pp
+Note that
+.Fl R
+won't always work, as rebuilding a package when another version is already
+installed is not supported.
+It will go into an infinite loop with always-update packages such as sqlports
+or pkglocatedb.
 .It Fl s
 Compute workdir sizes before cleaning up, and stash them in log file
 .Pa ${LOGDIR}/size.log .
@@ -212,7 +397,7 @@ the log file doesn't change for long periods.
 .Pp
 And fetch jobs look like this:
 .Bd -literal -offset indent
->dist-3.0.tgz(#1) [4321] 25%
+<dist-3.0.tgz(#1) [4321] 25%
 .Ed
 .Pp
 This contains:
@@ -249,6 +434,8 @@ number of distfiles to fetch, when
 is used.
 .It !=
 number of ignored packages.
+Details in
+.Pa engine.log .
 .It L=
 list of packages that cannot currently be built because of locks.
 .It E=
@@ -272,14 +459,17 @@ since distfiles are checksummed after the fetch anyways.
 When building a package,
 .Nm
 produces a lockfile in the lock directory, whose name is deduced from
-the basic pkgpath with slashes replaced by dots, and a possible second lock
-with the fullpkgpath.
-This lockfile is filled with such info as the build start time or the host.
+the basic pkgpath with slashes replaced by dots.
+This lockfile is filled with such info as the build start time or the host,
+or the needed dependencies for this pkgpath.
+.Pp
+The lockfile will also contain the name of a parent pkgpath, for paths that
+were discovered as dependencies.
+This is particularly useful for bogus paths, where it would be hard to
+know where the path came from otherwise.
 .Pp
 At the end of a succesful build, these lockfiles are removed.
-The fullpkgpath lock will stay around in case of errors.
-.Pp
-In this case, it contains the status of the last task that was run
+The lock will stay around in case of errors.
 .Po
 raw
 value from
@@ -320,7 +510,6 @@ same time, even on different machines:
 in some cases, MULTI_PACKAGES and FLAVOR combinations may lead to the
 same package being built simultaneously, and since the package repository
 is shared, this can easily lead to trouble.
-.Pp
 .Sh SHUTTING DOWN GRACEFULLY
 .Nm
 periodically checks for a file named
@@ -339,8 +528,77 @@ the corresponding machine.
 .Sh FILES
 Apart from producing packages,
 .Nm
-creates temporary files as
+may create temporary files as
 .Pa ${FULLDISTDIR}/${DISTFILE}.part .
+.Pp
+In fetch mode
+.Po
+.Fl f
+and
+.Fl F
+.Pc ,
+.Nm
+populates
+.Pa ${FULLDISTDIR}/by_cipher/sha256
+with links.
+It also uses
+.Pa ${FULLDISTDIR}/distinfo
+and
+.Pa ${FULLDISTDIR}/history
+as a
+.Sq permanent log :
+.Bl -tag -width distinfo
+.It distinfo
+cache of distfiles checksum.
+Contains all
+.Xr sha256 1
+checksums of known files under
+.Pa ${FULLDISTDIR} .
+Fetching uses this to avoid re-checksumming known files.
+.It history
+Log of old files under distinfo.
+After succesfully scanning a full ports tree
+.Po
+.Nm Fl a
+.Pc ,
+the fetch engine knows precisely which files are needed by the build
+(and their checksums).
+Anything that is
+.Bl -bullet
+.It
+recorded in distinfo but unneeded
+.It
+recorded in distinfo but with the wrong checksum
+.It
+not recorded in distinfo, but not needed
+.El
+will be entered at the end of history as a line:
+.Pp
+.Li ts SHA256 (file) = value
+.Pp
+with
+.Ar ts
+a timestamp from Unix epoch.
+.Pp
+When cleaning up old files, with a tool such as
+.Xr clean-old-distfiles 1 ,
+it is vital to check both the checksum and
+the file name: since mirroring stores permanent links under
+.Pa by_cipher ,
+files which are still needed will appear in history under their old
+checksums, as an indication the link should be removed, but possibly not
+the file itself.
+.El
+.Pp
+If
+.Pa ${DISTDIR}
+ever becomes corrupted,
+removing
+.Pa ${DISTDIR}/distinfo
+will force
+.Nm
+into checking all files again.
+.Pp
 .Nm
 will also create a large number of log files under
 .Pa ${PORTSDIR}/logs/{$ARCH} :
@@ -380,6 +638,10 @@ plus a timestamp of the log entry.
 .Bl -tag -width BB:
 .It ^
 pkgpath temporarily put aside, because a job is running in the same directory.
+.It !
+pkgpath ignored, either directly, or indirectly because a dependency was
+ignored.
+End of the line states reason why ignored.
 .It B
 pkgpath built.
 .It I
@@ -402,6 +664,8 @@ pkgpath to build.
 pkgpath put back in the buildable queue, after job that was running in
 the same directory returned.
 .El
+.It Pa equiv.log
+Lists of equivalent pkgpaths for the build, when default flavors and default subpackages have been resolved.
 .It Pa fetch/bad.log
 List of URLs that did not lead to a correct distfile, either because
 they were not responding, or because of incorrect checksums.
@@ -422,6 +686,10 @@ Directory where locks are created.
 The slash in a pkgpath is replaced with a dot like so:
 .Pa locks/devel.make
 to flatten the structure.
+.It Pa needed.log
+list of needed dependencies at each point in time for each host when the
+.Fl J
+option has been used.
 .It Pa packages/pkgname.log
 one file or symlink per pkgname.
 .It Pa paths/some/path.log
@@ -444,7 +712,8 @@ Not a logfile at all, but a file created by the user to stop
 creating new jobs.
 .It Pa vars.log
 Logs the directories that were walked in the ports tree for dependency
-information.
+information, including the path to a dependency that triggered this
+particular step.
 .El
 .Sh BUGS AND LIMITATIONS
 .Nm
@@ -458,10 +727,6 @@ file and remove the lock,
 .Nm
 won't pick it up.
 .Pp
-.Nm
-considers all pkgpaths it explores as valid candidates for packages.
-This is not the case for some pkgpath:patch depends.
-It should not try to reach them.
 Note that
 .Nm
 does not manage installed packages in any intelligent way, it will just
@@ -481,6 +746,12 @@ ensure the machine is clean of possibly older packages first, or run
 .Nm
 with
 .Fl U .
+.Pp
+In particular
+.Fl R
+and
+.Fl J
+together may lead to strange issues.
 .Pp
 On heterogeneous networks, calibration of build info and choice of speed
 factors is not perfect, and somewhat a dark art.
@@ -516,10 +787,11 @@ tries really hard to check heterogeneous networks for sanity (checking
 shared libraries and .la files), it is still dependent on the user to
 make sure all the hosts build ports the same way.
 .Pp
-Make sure your NFS setup is consistent (the ports dir itself should be
-exported, including distfiles and packages repository, but the WRKOBJDIR
-should not be in most cases). Pay particular attention to discrepancies
-in
+Make sure your NFS setup is consistent.
+The ports dir itself should be exported, including distfiles and packages
+repository, but the WRKOBJDIR should not be on NFS unless you have
+absolutely no choice, or if you exhibit deep masochistic tendencies.
+Pay particular attention to discrepancies in
 .Pa /etc/mk.conf .
 .Pp
 Also,
@@ -529,6 +801,9 @@ connects to external hosts through
 relying on
 .Xr ssh_config 5
 for any special cases.
+.Sh SEE ALSO
+.Xr clean-old-distfiles 1 ,
+.Xr pkgpath 7
 .Sh AUTHOR
 Marc Espie
 .Sh HISTORY

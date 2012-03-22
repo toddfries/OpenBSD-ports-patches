@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.13 2010/12/12 06:04:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/12/15 07:59:08 ajacoutot Exp $
+
+ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
 COMMENT=	isometric RPG game
 
-M_V=		0.14
-DISTNAME=	freedroidrpg-${M_V}.1
+M_V=		0.15
+DISTNAME=	freedroidrpg-${M_V}rc2
 CATEGORIES=	games x11
 
 HOMEPAGE=	http://freedroid.sourceforge.net/
@@ -16,21 +18,16 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
+WANTLIB += GL SDL SDL_gfx SDL_image SDL_mixer X11 c execinfo jpeg
+WANTLIB += lua m ogg png pthread vorbis z
+
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=freedroid/freedroidRPG/freedroidRPG-${M_V}/}
 
-WANTLIB=	GL SDL X11 c jpeg m ogg png pthread vorbis z \
-		SDL_image>=2 SDL_mixer>=3 execinfo
-
-
-LIB_DEPENDS=	devel/sdl-image \
+LIB_DEPENDS=	devel/libexecinfo \
+		devel/sdl-gfx \
+		devel/sdl-image \
 		devel/sdl-mixer \
-		devel/libexecinfo
-
-# needed to avoid a SIGSEGV
-# (int i corruption in enemy.c line 2056:
-# should be "0" or "1" instead of a nonsense negative value)
-MODULES+=	gcc4
-MODGCC4_ARCHES=	*
+		lang/lua
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \

@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.22 2011/06/08 18:03:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2011/10/21 10:58:29 jasper Exp $
+
+BROKEN= 		Unable to connect to network due to tp-b or papyon bugs
 
 COMMENT=		flexible communications framework, MSN component
 
 DISTNAME=		telepathy-butterfly-0.5.15
-REVISION=		0
+REVISION=		1
 
 MASTER_SITES=		${MASTER_SITES_TP:=telepathy-butterfly/}
 

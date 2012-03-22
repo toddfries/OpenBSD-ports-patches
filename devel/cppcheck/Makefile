@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2011/05/01 21:08:49 gsoares Exp $
+# $OpenBSD: Makefile,v 1.10 2012/01/12 14:04:25 gsoares Exp $
 
 COMMENT =		C/C++ static checker
 
-DISTNAME =		cppcheck-1.48
+DISTNAME =		cppcheck-1.52
 
 CATEGORIES =		devel
 
 HOMEPAGE =		http://cppcheck.sourceforge.net/
 
-MAINTAINER =		Igor Zinovik <zinovik.igor@gmail.com>
+MAINTAINER =		Gleydson Soares <gsoares@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes
@@ -27,8 +27,10 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=cppcheck/}
 
 ALL_TARGET =		cppcheck
 REGRESS_TARGET = 	test
-MAKE_FLAGS =		BIN=${PREFIX}/bin CXX="${CXX}" \
-			CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -L${PREFIX}/lib"
+MAKE_FLAGS =		BIN=${PREFIX}/bin \
+			CXX="${CXX}" CXXFLAGS="${CXXFLAGS}" \
+			CPPFLAGS="-DHAVE_RULES -I${PREFIX}/include" \
+			LDFLAGS="-L${PREFIX}/lib -lpcre"
 
 USE_GMAKE =		Yes
 

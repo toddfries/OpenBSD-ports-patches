@@ -1,17 +1,23 @@
-# $OpenBSD: Makefile,v 1.58 2011/08/24 18:31:39 kili Exp $
+# $OpenBSD: Makefile,v 1.64 2012/02/19 20:38:53 kili Exp $
 
 COMMENT-main =		compiler for the functional language Haskell
 COMMENT-doc =		documentation for GHC
 
 DISTNAME =		ghc-${MODGHC_VER}
 PKGNAME-main =		ghc-${MODGHC_VER}
-REVISION-main =		0
+REVISION-main =		4
 PKGNAME-doc =		ghc-doc-${MODGHC_VER}
+REVISION-doc =		0
 CATEGORIES =		lang devel
 HOMEPAGE =		http://www.haskell.org/ghc/
 
 # Version of the precompiled binaries
-BIN_VER =		6.12.3.20101121
+BIN_VER =		7.0.4.20111023
+
+# xhtml replacement version (for meta/haskell-platform)
+XHTML_VER =		3000.2.0.4
+
+SUBST_VARS +=		XHTML_VER
 
 # Pull in lang/ghc to get MODGHC_VER and ONLY_FOR_ARCHS, which is maintained
 # in ghc.port.mk. lang/python needed for regress.
@@ -44,6 +50,7 @@ WANTLIB-doc =
 MASTER_SITES =		${HOMEPAGE}dist/${MODGHC_VER}/ \
 			${HOMEPAGE}dist/stable/dist/
 MASTER_SITES0 =		http://openbsd.dead-parrot.de/distfiles/
+MASTER_SITES1 =		http://hackage.haskell.org/packages/archive/xhtml/${XHTML_VER}/
 
 DIST_SUBDIR =		ghc
 
@@ -53,6 +60,7 @@ BINDISTFILE =		${BINDISTFILE-${MACHINE_ARCH}}
 
 DISTFILES =		ghc-${MODGHC_VER}-src.tar.bz2 \
 			testsuite-${MODGHC_VER}.tar.bz2 \
+			xhtml-${XHTML_VER}.tar.gz:1 \
 			${BINDISTFILE}
 
 .for m in amd64 i386
@@ -71,7 +79,8 @@ CONFIGURE_ARGS +=	--with-gmp-includes=${LOCALBASE}/include \
 
 MAKE_FLAGS +=		StripLibraries=YES \
 			INSTALL_BIN_OPTS=-s \
-			HSCOLOUR_SRCS=NO
+			HSCOLOUR_SRCS=NO \
+			GhcThreaded=NO
 
 # Thank god that they're only building compilers and no nuclear
 # power plants.
@@ -91,7 +100,8 @@ PORTHOME =		${WRKDIR}
 
 BUILD_DEPENDS +=	devel/haddock,no_deps:patch
 
-REGRESS_DEPENDS =	print/ghostscript/gnu
+REGRESS_DEPENDS =	print/ghostscript/gnu \
+			shells/bash
 
 post-extract:
 # - Install a precompiled binary.
@@ -105,9 +115,15 @@ post-extract:
 . for f in ghc.mk doc/ghc.mk haddock.wrapper
 	cp -p ${WRKSRC}/utils/haddock{-ghcdist,}/$f
 . endfor
+# - Replace libraries/xhtml.
+	cp ${WRKSRC}/libraries/xhtml/ghc.mk ${WRKDIR}/xhtml-${XHTML_VER} 
+	cp ${WRKSRC}/libraries/xhtml/GNUmakefile ${WRKDIR}/xhtml-${XHTML_VER} 
+	mv ${WRKSRC}/libraries/xhtml{,-ghcdist}
+	mv ${WRKDIR}/xhtml-${XHTML_VER} ${WRKSRC}/libraries/xhtml
 
 post-patch:
-	${SUBST_CMD} ${WRKSRC}/docs/index.html
+	${SUBST_CMD} ${WRKSRC}/docs/index.html \
+		${WRKSRC}/libraries/process/tests/process007.hs
 
 post-install:
 	cd ${PREFIX}/lib/ghc && \
@@ -145,13 +161,17 @@ do-regress:
 # It doesn't matter wether this is the actual date of the bootstrapper
 # build. It's just used to get different distfiles whenever new
 # bootstrappers have to be built.
-BOOTSTRAP_DATE =	20110824
+BOOTSTRAP_DATE =	20111023
 
 # Create a bootstrapper. This compiles a stripped-down version of
 # ghc and creates a `bindist', i.e. a tarball with binaries that
 # can be used for bootstrapping.
 # You have to install gtar in order to run this target!
 bootstrap: patch
+	@if [ ! -x ${LOCALBASE}/bin/gtar ]; then \
+		echo Please pkg_add gtar.; \
+		false; \
+	fi
 	cd ${WRKDIR} && rm -rf bin
 
 	echo HSCOLOUR_SRCS=NO > ${WRKSRC}/mk/build.mk

@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.32 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.39 2011/10/13 06:58:37 jasper Exp $
 
 COMMENT=		collection of extensions for Epiphany
 
 GNOME_PROJECT=		epiphany-extensions
-GNOME_VERSION=		2.32.0
-
-REVISION=		4
+GNOME_VERSION=		3.2.0
 
 # sync with www/epiphany
-API_V=		2.29
-M=		${GNOME_VERSION:R}
-SUBST_VARS=	M API_V
+M=			${GNOME_VERSION:R}
+SUBST_VARS=		M
 
 CATEGORIES=		www
 
@@ -25,36 +22,31 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 cairo
-WANTLIB += enchant expat fontconfig freetype gailutil gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gstapp-0.10 gstbase-0.10 gstpbutils-0.10
-WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 gtk-x11-2.0
-WANTLIB += icudata icui18n icuuc jpeg m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs soup-2.4
-WANTLIB += sqlite3 stdc++ webkitgtk-1.0 xcb xcb-render
-WANTLIB += xml2 xslt z GL Xxf86vm drm xcb-shm
-WANTLIB += gstinterfaces-0.10
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm atk-1.0
+WANTLIB += cairo cairo-gobject drm enchant expat ffi fontconfig
+WANTLIB += freetype gailutil-3 gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gstapp-0.10 gstbase-0.10 gstinterfaces-0.10
+WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
+WANTLIB += gtk-3 icudata icui18n icuuc javascriptcoregtk-3.0 jpeg
+WANTLIB += kvm m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread-stubs soup-2.4 sqlite3 stdc++ webkitgtk-3.0
+WANTLIB += xcb xcb-render xcb-shm xml2 xslt z
 
-MODULES=	devel/gettext \
-		lang/python \
+MODULES=	devel/dconf \
+		devel/gettext \
 		x11/gnome
 
 BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	www/epiphany>=2.30.2
-LIB_DEPENDS=	security/libgpg-error
+RUN_DEPENDS=	www/epiphany>=3.2.0
+LIB_DEPENDS=	www/webkit,gtk3>=1.6.1v0
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
-MODGNOME_HELP_FILES=	Yes
-
-FAKE_FLAGS+=	PYTHON="${MODPY_BIN}"
+MODGNOME_TOOLS= yelp
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
-		--disable-schemas-install \
+CONFIGURE_ARGS=	--disable-static \
 		--enable-opensp=no
 
 .include <bsd.port.mk>

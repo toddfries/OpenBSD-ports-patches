@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2011/07/29 18:04:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2011/12/03 22:17:15 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,8 +6,7 @@ COMMENT=	advanced general purpose calculator
 
 GNOME_PROJECT=	genius
 GNOME_VERSION=	1.0.14
-
-EXTRACT_SUFX=	.tar.xz
+REVISION=	5
 
 HOMEPAGE=	http://www.jirka.org/genius.html
 
@@ -26,7 +25,7 @@ WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB += gtk-x11-2.0 m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread readline pthread-stubs xcb
-WANTLIB += termcap xml2 z
+WANTLIB += termcap xml2 z ffi stdc++
 WANTLIB += gtksourceview-2.0 gmp mpfr vte
 
 MODULES=	devel/gettext \
@@ -40,13 +39,12 @@ LIB_DEPENDS=	x11/gtksourceview \
 		devel/mpfr \
 		devel/vte
 
-MODGNOME_HELP_FILES= Yes
-DESKTOP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -lgmp"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-update-mimedb \
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib -lgmp
+CONFIGURE_ARGS=	--disable-update-mimedb \
 		--disable-extra-gcc-optimization
 
 .include <bsd.port.mk>

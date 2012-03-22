@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2011/07/18 19:05:53 naddy Exp $
+# $OpenBSD: Makefile,v 1.25 2012/01/13 00:55:14 naddy Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self-documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -8,8 +8,8 @@ DISTNAME=		emacs-${VERSION}
 PKGNAME-main=		emacs-${VERSION}
 FULLPKGNAME-el=		emacs-el-${VERSION}
 FULLPKGPATH-el=		editors/emacs22,-el
-REVISION-main=		10
-REVISION-el=		2
+REVISION-main=		12
+REVISION-el=		3
 
 CATEGORIES=		editors
 
@@ -52,13 +52,13 @@ WANTLIB-main=		c m ncurses ossaudio
 WANTLIB-el=
 LIB_DEPENDS-el=
 
-.if ${FLAVOR:L:Mno_x11}
-.  if ${FLAVOR:L:Mgtk}
+.if ${FLAVOR:Mno_x11}
+.  if ${FLAVOR:Mgtk}
 ERRORS=			"Fatal: gtk and no_x11 flavors are mutually exclusive"
 .  endif
 CONFIGURE_ARGS+=	--without-x
 
-.elif ${FLAVOR:L:Mgtk}
+.elif ${FLAVOR:Mgtk}
 MODULES +=		devel/gettext
 CONFIGURE_ARGS+=	--with-gtk
 LIB_DEPENDS-main+=	x11/gtk+2 \

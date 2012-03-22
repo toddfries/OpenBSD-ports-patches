@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2011/07/20 20:56:00 gsoares Exp $
+# $OpenBSD: Makefile,v 1.32 2011/11/22 15:34:10 jasper Exp $
 
 COMMENT-main=	XML security library
 COMMENT-docs=	XML security library documentation
@@ -7,6 +7,7 @@ VERSION=	1.2.18
 DISTNAME=	xmlsec1-${VERSION}
 PKGNAME-main=	xmlsec-${VERSION}
 PKGNAME-docs=	xmlsec-docs-${VERSION}
+REVISION-main =	2
 CATEGORIES=	security
 SHARED_LIBS=	xmlsec1-gnutls	5.0 \
 		xmlsec1-openssl	4.0 \
@@ -22,7 +23,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c crypto gcrypt gmp gnutls gpg-error hogweed ltdl m
-WANTLIB += nettle ssl tasn1 xml2 xslt z
+WANTLIB += nettle ssl tasn1 xml2 xslt z p11-kit
 
 MASTER_SITES=	${HOMEPAGE}/download/ \
 		ftp://ftp.aleksey.com/pub/xmlsec/releases/ \
@@ -41,8 +42,7 @@ LIB_DEPENDS=		devel/libtool,-ltdl \
 			textproc/libxslt \
 			security/gnutls
 
-# depends on libltdl
-USE_LIBTOOL=		gnu
+USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 
 CONFIGURE_STYLE=	gnu

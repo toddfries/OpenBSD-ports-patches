@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.97 2010/11/27 11:54:53 espie Exp $
+# $OpenBSD: Makefile,v 1.101 2011/10/02 07:03:11 espie Exp $
 # $FreeBSD: Makefile,v 1.33 1999/02/27 03:09:57 andreas Exp $
 
 COMMENT-main=		C++ X11 GUI toolkit
@@ -17,11 +17,12 @@ FULLPKGNAME-html=	qt3-html-${VERSION}
 FULLPKGPATH-html=	x11/qt3,-html
 PKGNAME-sqlite2=	qt3-sqlite2-${VERSION}
 
-REVISION-mysql= 	2
-REVISION-postgresql= 	2
-REVISION-main= 		5
+REVISION-mysql= 	4
+REVISION-postgresql= 	4
+REVISION-main= 		6
 REVISION-html= 		1
-REVISION-sqlite2= 	2
+REVISION-examples=	1
+REVISION-sqlite2= 	4
 
 # the qt-mt library version number is used in a directory name.
 # when bumping, be sure to also bump MODQT3_PLUGINS in qt3.port.mk
@@ -95,21 +96,21 @@ CONFIGURE_ARGS=	-qt-gif -system-libmng -system-libpng -system-libjpeg -system-zl
 		-L${WRKSRC}/lib \
 		-L${LOCALBASE}/lib
 
-MULTI_PACKAGES+=-main -html
+MULTI_PACKAGES+=-main -html -examples -mysql -postgresql -sqlite2
 
 .if ${FLAVOR:L:Mdebug}
 CONFIGURE_ARGS+=-debug
 PKGDEBUG=-debug
+FLAVOR += no_examples
 .else
 PKGDEBUG=
 .endif
 
 CONFIGURE_ARGS+=-thread
 
+.include <bsd.port.arch.mk>
 
-.if !${FLAVOR:L:Mdebug} && !${FLAVOR:L:Mno_examples}
-MULTI_PACKAGES+=	-examples
-.else
+.if !${BUILD_PACKAGES:M-examples}
 ALL_TARGET=sub-src sub-tools
 .endif
 
@@ -122,30 +123,28 @@ CONFIGURE_ENV=	QTDIR="${WRKSRC}"
 LIB_DEPENDS=
 BUILD_DEPENDS=print/cups
 
-.if !empty(FLAVOR:L:Mno_mysql)
-CONFIGURE_ARGS+=-no-sql-mysql
-.else
-MULTI_PACKAGES+=	-mysql
+.if ${BUILD_PACKAGES:M-mysql}
 CONFIGURE_ARGS+= -I${LOCALBASE}/include/mysql -L${LOCALBASE}/lib/mysql \
 	-plugin-sql-mysql
+.else
+CONFIGURE_ARGS+=-no-sql-mysql
 .endif
 
 
-.if !empty(FLAVOR:L:Mno_postgresql)
-CONFIGURE_ARGS+=-no-sql-psql
-.else
-MULTI_PACKAGES+=	-postgresql
+.if ${BUILD_PACKAGES:M-postgresql}
 BUILD_DEPENDS+=databases/postgresql,-server
 CONFIGURE_ARGS+= -I${LOCALBASE}/include/postgresql \
 	    -I${LOCALBASE}/include/postgresql/server \
 	    -L${LOCALBASE}/lib \
 	    -I${LOCALBASE}/include -plugin-sql-psql
-.endif
-.if !empty(FLAVOR:L:Mno_sqlite2)
-CONFIGURE_ARGS+=-no-sql-sqlite
 .else
-MULTI_PACKAGES+=	-sqlite2
+CONFIGURE_ARGS+=-no-sql-psql
+.endif
+
+.if ${BUILD_PACKAGES:M-sqlite2}
 CONFIGURE_ARGS+= -plugin-sql-sqlite
+.else
+CONFIGURE_ARGS+=-no-sql-sqlite
 .endif
 
 
@@ -153,16 +152,16 @@ LIB_DEPENDS=		graphics/png \
 			graphics/libmng
 WANTLIB=		GL GLU ICE SM X11>=10 Xcursor Xext Xft Xi Xinerama \
 			Xmu png mng \
-			Xrandr Xrender fontconfig freetype jpeg lcms m z
+			Xrandr Xrender fontconfig freetype jpeg lcms m stdc++ z
 
 
-WANTLIB-main=		${WANTLIB} pthread stdc++ c
+WANTLIB-main=		${WANTLIB} pthread c
 
 
 LIB_DEPENDS-mysql=	${LIB_DEPENDS} \
 			${BUILD_PKGPATH} \
 			databases/mysql
-WABTLIB-mysql=		${WANTLIB} qt-mt mysqlclient
+WANTLIB-mysql=		${WANTLIB} qt-mt mysqlclient
 
 LIB_DEPENDS-postgresql=	${LIB_DEPENDS} \
 			${BUILD_PKGPATH} \
@@ -172,7 +171,7 @@ WANTLIB-postgresql=	${WANTLIB} pq qt-mt
 LIB_DEPENDS-sqlite2=	${LIB_DEPENDS} \
 			${BUILD_PKGPATH} \
 			databases/sqlite
-WABTLIB-sqlite2=	${WANTLIB} qt-mt sqlite
+WANTLIB-sqlite2=	${WANTLIB} qt-mt sqlite
 
 LIB_DEPENDS-examples=	${LIB_DEPENDS} \
 			${BUILD_PKGPATH}
@@ -302,15 +301,15 @@ do-install:
 		${QT_PLUGINSDIR}/sqldrivers ${QT_PLUGINSDIR}/styles \
 		${QT_PLUGINSDIR}/inputmethods
 
-.if empty(FLAVOR:L:Mno_postgresql)
+.if ${BUILD_PACKAGES:M-postgresql}
 	${INSTALL_DATA} ${WRKBUILD}/plugins/sqldrivers/libqsqlpsql.so \
 	    ${QT_PLUGINSDIR}/sqldrivers
 .endif
-.if empty(FLAVOR:L:Mno_mysql)
+.if ${BUILD_PACKAGES:M-mysql}
 	${INSTALL_DATA} ${WRKBUILD}/plugins/sqldrivers/libqsqlmysql.so \
 	    ${QT_PLUGINSDIR}/sqldrivers
 .endif
-.if empty(FLAVOR:L:Mno_sqlite2)
+.if ${BUILD_PACKAGES:M-sqlite2}
 	${INSTALL_DATA} ${WRKBUILD}/plugins/sqldrivers/libqsqlite.so \
 	    ${QT_PLUGINSDIR}/sqldrivers
 .endif

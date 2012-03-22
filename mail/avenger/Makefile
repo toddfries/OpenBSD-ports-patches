@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2011/03/29 12:03:53 pea Exp $
+# $OpenBSD: Makefile,v 1.18 2011/12/02 14:36:15 espie Exp $
 
 COMMENT=		anti-spam SMTP server
 DISTNAME=		avenger-0.8.1
+REVISION=		1
 CATEGORIES=		mail
 
 HOMEPAGE=		http://www.mailavenger.org/
@@ -33,7 +34,7 @@ MAKE_FLAGS+=		CFLAGS+=-DHAVE_GETPEEREID \
 FLAVORS=                sasl2
 FLAVOR?=
 
-.if ${FLAVOR:L:Msasl2}
+.if ${FLAVOR:Msasl2}
 CONFIGURE_ARGS +=        --enable-sasl
 LIB_DEPENDS +=		security/cyrus-sasl2
 WANTLIB +=		sasl2

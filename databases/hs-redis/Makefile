@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2011/06/03 09:19:25 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.8 2012/03/01 09:27:32 dcoppa Exp $
 
 COMMENT =		Haskell driver for Redis
 
-DISTNAME =		redis-0.11
+DISTNAME =		redis-0.12
 CATEGORIES =		databases
 
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>

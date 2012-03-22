@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.17 2010/11/22 08:36:56 espie Exp $
+# $OpenBSD: Makefile,v 1.19 2011/09/21 07:49:16 giovanni Exp $
 
 COMMENT =		GTK+2 file manager
 
 DISTNAME =		emelfm2-0.7.3
+REVISION=		1
 
 CATEGORIES =		x11
 HOMEPAGE =		http://emelfm2.net/
-
-MAINTAINER =		Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes

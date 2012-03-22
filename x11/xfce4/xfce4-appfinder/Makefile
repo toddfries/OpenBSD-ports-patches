@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.29 2011/01/18 20:28:24 landry Exp $
+# $OpenBSD: Makefile,v 1.34 2011/12/03 22:39:12 ajacoutot Exp $
 
 COMMENT=	Xfce4 application finder
 
 XFCE_PROJECT=	xfce4-appfinder
+REVISION =      1
 
 # GPLv2
 PERMIT_DISTFILES_CDROM=	Yes
@@ -11,7 +12,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
+MODXFCE_ICON_CACHE=	Yes
 
 CONFIGURE_ARGS= --disable-linker-opts
 LIB_DEPENDS=	x11/xfce4/garcon \
@@ -25,8 +27,8 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		pangocairo-1.0 pangoft2-1.0 pixman-1 png xfce4util z \
 		ICE SM dbus-1 dbus-glib-1 gio-2.0 gthread-2.0 \
 		pcre pthread startup-notification-1 xfce4ui-1 \
-		pthread-stubs xcb execinfo xcb-atom \
-		xcb-aux xcb-event gthread-2.0 xcb-render xcb-shm \
+		pthread-stubs xcb X11-xcb ffi \
+		xcb-aux gthread-2.0 xcb-render xcb-shm \
 		xfconf-0 gdk-x11-2.0 GL Xxf86vm drm garcon-1 \
 		gdk_pixbuf-2.0 gtk-x11-2.0
 

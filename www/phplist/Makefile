@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2011/12/15 10:14:05 sthen Exp $
 
 COMMENT=		web-based double opt-in newsletter manager
 
-DISTNAME=		phplist-2.10.14
-REVISION=		1
+DISTNAME=		phplist-2.10.17
+REVISION=		2
 
 CATEGORIES=		www
 

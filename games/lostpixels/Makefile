@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.6 2011/03/14 09:17:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2011/11/14 10:41:30 sthen Exp $
+
+BROKEN-sparc64 =	Illegal operands error building SDL_gfxPrimitives.cpp
 
 COMMENT =		blinkensisters - hunt for the lost pixels
 
@@ -31,6 +33,8 @@ USE_GMAKE =		Yes
 MODULES +=		devel/cmake
 CONFIGURE_STYLE =	cmake
 WRKDIST =		${WRKDIR}/blinkensisters/lostpixels/game/software/
+
+SEPARATE_BUILD =	No
 
 NO_REGRESS =		Yes
 

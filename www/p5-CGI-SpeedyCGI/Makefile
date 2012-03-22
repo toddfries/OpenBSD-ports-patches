@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/09/24 15:37:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2011/09/17 18:05:00 jakob Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,12 +8,10 @@ MODULES=	cpan
 VERSION=	2.22
 DISTNAME=	CGI-SpeedyCGI-${VERSION}
 PKGNAME=	p5-CGI-SpeedyCGI-${VERSION}
-REVISION=	2
+REVISION=	3
 CATEGORIES=	www
 
 HOMEPAGE=	http://daemoninc.com/SpeedyCGI/
-
-MAINTAINER=     Jakob Schlyter <jakob@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

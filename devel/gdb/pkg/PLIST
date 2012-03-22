@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.6 2011/07/07 17:31:14 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.9 2011/11/11 23:01:23 jasper Exp $
 @conflict libbfd-*
 @bin bin/egdb
 @bin bin/egdbtui
@@ -9,24 +9,12 @@ include/dis-asm.h
 include/symcat.h
 @info info/annotate.info
 @info info/bfd.info
-@info info/configure.info
 @info info/gdb.info
 @info info/gdbint.info
 @info info/stabs.info
-@info info/standards.info
 lib/libbfd.a
 lib/libbfd.la
-lib/libiberty.a
 lib/libopcodes.a
 lib/libopcodes.la
 @man man/man1/egdb.1
 @man man/man1/egdbtui.1
-share/gdb/
-share/gdb/syscalls/
-share/gdb/syscalls/gdb-syscalls.dtd
-share/gdb/syscalls/i386-linux.xml
-share/gdb/syscalls/amd64-linux.xml
-share/gdb/syscalls/ppc-linux.xml
-share/gdb/syscalls/ppc64-linux.xml
-share/gdb/syscalls/sparc-linux.xml
-share/gdb/syscalls/sparc64-linux.xml

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/09 00:04:11 robert Exp $
+# $OpenBSD: Makefile,v 1.5 2011/11/16 15:56:38 robert Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	PHP support for setproctitle
 
 DISTNAME=	proctitle-0.1.1
-REVISION=	0
+REVISION=	2
 PKGNAME=	pecl-${DISTNAME}
 CATEGORIES=	www
 

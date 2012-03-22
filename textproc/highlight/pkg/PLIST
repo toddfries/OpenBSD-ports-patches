@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.7 2011/04/09 08:02:39 benoit Exp $
+@comment $OpenBSD: PLIST,v 1.9 2012/01/08 07:46:23 benoit Exp $
 @bin bin/highlight
 @man man/man1/highlight.1
 share/doc/highlight/
@@ -35,12 +35,14 @@ share/highlight/langDefs/bat.lang
 share/highlight/langDefs/bbcode.lang
 share/highlight/langDefs/bcpl.lang
 share/highlight/langDefs/bibtex.lang
+share/highlight/langDefs/biferno.lang
 share/highlight/langDefs/bison.lang
 share/highlight/langDefs/blitzbasic.lang
 share/highlight/langDefs/bms.lang
 share/highlight/langDefs/bnf.lang
 share/highlight/langDefs/boo.lang
 share/highlight/langDefs/c.lang
+share/highlight/langDefs/ceylon.lang
 share/highlight/langDefs/charmm.lang
 share/highlight/langDefs/chill.lang
 share/highlight/langDefs/clean.lang
@@ -108,9 +110,11 @@ share/highlight/langDefs/miranda.lang
 share/highlight/langDefs/mod2.lang
 share/highlight/langDefs/mod3.lang
 share/highlight/langDefs/modelica.lang
+share/highlight/langDefs/moon.lang
 share/highlight/langDefs/ms.lang
 share/highlight/langDefs/mssql.lang
 share/highlight/langDefs/mxml.lang
+share/highlight/langDefs/n3.lang
 share/highlight/langDefs/nasal.lang
 share/highlight/langDefs/nbc.lang
 share/highlight/langDefs/nemerle.lang
@@ -151,6 +155,7 @@ share/highlight/langDefs/rebol.lang
 share/highlight/langDefs/rexx.lang
 share/highlight/langDefs/rnc.lang
 share/highlight/langDefs/rpg.lang
+share/highlight/langDefs/rpl.lang
 share/highlight/langDefs/ruby.lang
 share/highlight/langDefs/s.lang
 share/highlight/langDefs/sas.lang
@@ -174,6 +179,7 @@ share/highlight/langDefs/tex.lang
 share/highlight/langDefs/tsql.lang
 share/highlight/langDefs/ttcn3.lang
 share/highlight/langDefs/txt.lang
+share/highlight/langDefs/upc.lang
 share/highlight/langDefs/vala.lang
 share/highlight/langDefs/vb.lang
 share/highlight/langDefs/verilog.lang
@@ -206,7 +212,6 @@ share/highlight/themes/darkness.theme
 share/highlight/themes/darkslategray.theme
 share/highlight/themes/darkspectrum.theme
 share/highlight/themes/denim.theme
-share/highlight/themes/desertEx.theme
 share/highlight/themes/dusk.theme
 share/highlight/themes/earendel.theme
 share/highlight/themes/easter.theme
@@ -254,7 +259,8 @@ share/highlight/themes/rdark.theme
 share/highlight/themes/relaxedgreen.theme
 share/highlight/themes/rootwater.theme
 share/highlight/themes/seashell.theme
-share/highlight/themes/sienna.theme
+share/highlight/themes/solarized-dark.theme
+share/highlight/themes/solarized-light.theme
 share/highlight/themes/tabula.theme
 share/highlight/themes/tcsoft.theme
 share/highlight/themes/vampire.theme

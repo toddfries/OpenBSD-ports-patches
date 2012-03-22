@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.20 2011/03/23 19:52:22 sthen Exp $
+# $OpenBSD: Makefile,v 1.24 2011/09/17 18:05:00 jakob Exp $
 
 COMMENT=		Berkeley DB module
 SHARED_ONLY=		Yes
 
 DISTNAME=		BerkeleyDB-0.43
+REVISION=		2
 CATEGORIES=		databases
 MODULES=		cpan
-
-MAINTAINER=		Jakob Schlyter <jakob@openbsd.org>
 
 # Perl
 PERMIT_PACKAGE_CDROM=	Yes

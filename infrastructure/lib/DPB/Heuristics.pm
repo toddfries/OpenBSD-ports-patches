@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Heuristics.pm,v 1.9 2011/07/14 11:03:13 espie Exp $
+# $OpenBSD: Heuristics.pm,v 1.12 2012/02/17 07:35:42 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -64,7 +64,19 @@ sub finished_parsing
 sub intrinsic_weight
 {
 	my ($self, $v) = @_;
-	$weight{$v} //= $default;
+	$weight{$v} // $default;
+}
+
+sub equates
+{
+	my ($class, $h) = @_;
+	for my $v (values %$h) {
+		next unless defined $weight{$v};
+		for my $w (values %$h) {
+			$weight{$w} //= $weight{$v};
+		}
+		return;
+	}
 }
 
 my $threshold;
@@ -114,7 +126,12 @@ sub finish_special
 sub set_weight
 {
 	my ($self, $v, $w) = @_;
-	$weight{$v} //= $w + 0;
+	if (ref $v && $v->{scaled}) {
+		$weight{$v} //= $w * $v->{scaled};
+		delete $v->{scaled};
+	} else {
+		$weight{$v} //= $w + 0;
+	}
 }
 
 my $cache;
@@ -498,6 +515,11 @@ sub set_h2
 	bless shift, "DPB::Heuristics::FetchQueue2";
 }
 
+sub set_fetchonly
+{
+	bless shift, "DPB::Heuristics::FetchOnlyQueue";
+}
+
 sub sorted
 {
 	my $self = shift;
@@ -544,6 +566,16 @@ sub sorted_values
 	return [sort
 	    {$h->measure($a->{path}) <=> $h->measure($b->{path})}
 	    @l];
+}
+
+package DPB::Heuristics::FetchOnlyQueue;
+our @ISA = qw(DPB::Heuristics::FetchQueue);
+
+# for fetch-only, grab all files, largest ones first.
+sub sorted_values
+{
+	my $self = shift;
+	return [sort {$a->{sz} <=> $b->{sz}} values %{$self->{o}}];
 }
 
 1;

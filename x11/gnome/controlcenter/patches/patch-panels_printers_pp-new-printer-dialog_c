@@ -1,0 +1,22 @@
+$OpenBSD: patch-panels_printers_pp-new-printer-dialog_c,v 1.6 2011/10/17 15:33:28 ajacoutot Exp $
+
+No PackageKit on OpenBSD.
+
+--- panels/printers/pp-new-printer-dialog.c.orig	Mon Oct 17 16:24:20 2011
++++ panels/printers/pp-new-printer-dialog.c	Mon Oct 17 17:07:22 2011
+@@ -1554,6 +1554,7 @@ new_printer_add_button_cb (GtkButton *button,
+                        pp->devices[device_id].device_make_and_model,
+                        pp->devices[device_id].device_uri);
+ 
++#ifndef __OpenBSD__
+           if (ppd_name == NULL || ppd_name->ppd_match_level < PPD_EXACT_MATCH)
+             {
+               /* Try PackageKit to install printer driver */
+@@ -1608,6 +1609,7 @@ new_printer_add_button_cb (GtkButton *button,
+                   g_free (device_ids);
+                 }
+             }
++#endif
+ 
+           /* Add the new printer */
+           if (ppd_name && ppd_name->ppd_name)

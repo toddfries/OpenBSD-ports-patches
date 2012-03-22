@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2011/03/02 15:00:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2011/12/03 22:17:15 ajacoutot Exp $
 
 COMMENT=		simple desktop recording tool
 
-GNOME_VERSION=		0.2.3
+# git clone of b5a46ddca3b2b207f7f6ba444f9e0f02dc23128e
+GNOME_VERSION=		0.2.3.1
 GNOME_PROJECT=		byzanz
+REVISION=		3
 
 CATEGORIES=		multimedia
 
@@ -13,31 +15,43 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
+MASTER_SITES=		http://distfiles.nl/
+
 MODULES=		devel/gconf2 \
 			devel/gettext \
 			x11/gnome
 
-WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
-WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
-WANTLIB += Xrender art_lgpl_2 atk-1.0 GL Xxf86vm canberra drm
-WANTLIB += bonobo-2 bonobo-activation bonoboui-2 c gnome-2 ltdl ogg
-WANTLIB += cairo crypto dbus-1 dbus-glib-1 expat fontconfig freetype
-WANTLIB += gailutil gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gnomecanvas-2 gnomevfs-2 gobject-2.0
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
+WANTLIB += c cairo cairo-gobject drm expat fontconfig freetype
+WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gstapp-0.10 gstbase-0.10 gstreamer-0.10 gthread-2.0
-WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png popt pthread pthread-stubs ssl util
-WANTLIB += xcb xcb-render xml2 z panel-applet-2
-WANTLIB += xcb-shm vorbis vorbisfile
+WANTLIB += gtk-3 m panel-applet-4 pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
+WANTLIB += xcb-shm xml2 z dbus-1 dbus-glib-1 ffi stdc++
 
-LIB_DEPENDS=		x11/gnome/panel \
+LIB_DEPENDS=		x11/gnome/panel>=3.0.0 \
 			multimedia/gstreamer-0.10/plugins-base
 
 MODGCONF2_SCHEMAS_DIR=	byzanz
+MODGNOME_ICON_CACHE=	Yes
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =		Yes
+#
+# Remove this and patch-configure_ac when updating to
+# a real release:
+#
+
+AUTOCONF_VERSION=	2.68
+AUTOMAKE_VERSION=	1.11
+
+BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
+			${MODGNU_AUTOMAKE_DEPENDS} \
+			devel/libtool \
+			x11/gnome/common
+
+pre-configure:
+	cd ${WRKSRC} && ${SETENV} ${CONFIGURE_ENV} \
+		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} ./autogen.sh
 
 .include <bsd.port.mk>

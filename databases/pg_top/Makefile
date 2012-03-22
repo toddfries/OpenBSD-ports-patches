@@ -1,12 +1,14 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/15 00:22:53 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/01/08 20:56:03 naddy Exp $
 
 COMMENT =	top for monitoring PostgreSQL processes
 
 DISTNAME =	pg_top-3.6.2
 CATEGORIES =	databases sysutils
+REVISION =	1
 
 HOMEPAGE =	http://ptop.projects.postgresql.org/
 MASTER_SITES =	http://pgfoundry.org/frs/download.php/1781/
+
 
 MAINTAINER=	Okan Demirmen <okan@openbsd.org>
 

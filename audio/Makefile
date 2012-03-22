@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.267 2011/07/30 06:48:09 fgsch Exp $
+# $OpenBSD: Makefile,v 1.274 2012/02/28 11:17:04 bentley Exp $
 # $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
 
      SUBDIR =
      SUBDIR += abcde
+     SUBDIR += abcde,lame
      SUBDIR += ac3dec
      SUBDIR += akode
+     SUBDIR += alac_decoder
      SUBDIR += amarok
      SUBDIR += aqualung
      SUBDIR += ascd
@@ -21,6 +23,7 @@
      SUBDIR += celt
      SUBDIR += cmixer
      SUBDIR += cmt
+     SUBDIR += cmus
      SUBDIR += cmu-sphinx3
      SUBDIR += cmu-sphinxbase
      SUBDIR += cplay
@@ -156,6 +159,7 @@
      SUBDIR += picard
      SUBDIR += pms
      SUBDIR += portaudio-svn
+     SUBDIR += pulseaudio
      SUBDIR += py-audio
      SUBDIR += py-ao
      SUBDIR += py-cddb
@@ -191,6 +195,7 @@
      SUBDIR += soundtouch
      SUBDIR += soundtracker
      SUBDIR += sox
+     SUBDIR += speech-dispatcher
      SUBDIR += speex
      SUBDIR += squeezecenter
      SUBDIR += streamripper
@@ -205,6 +210,7 @@
      SUBDIR += tracker
      SUBDIR += tremor
      SUBDIR += tremor-tools
+     SUBDIR += twolame
      SUBDIR += umurmur
      SUBDIR += vagalume
      SUBDIR += vamp-plugin-sdk
@@ -218,7 +224,6 @@
      SUBDIR += wmmp3
      SUBDIR += wmtune
      SUBDIR += wmtune,zoltrix
-     SUBDIR += workman
      SUBDIR += xcd
      SUBDIR += xcdplayer
      SUBDIR += xhippo

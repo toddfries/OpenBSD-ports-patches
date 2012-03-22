@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/23 14:06:50 naddy Exp $
+# $OpenBSD: Makefile,v 1.14 2012/01/30 17:25:53 sthen Exp $
 
 COMMENT-main =		GNU editor: extensible, customizable, self-documenting
 COMMENT-el =		elisp sources for those who want to read/modify them
 
-VERSION =		23.3
+VERSION =		23.4
+WRKDIST =		${WRKDIR}/emacs-23.4
 DISTNAME =		emacs-${VERSION}
 PKGNAME-main =		emacs-${VERSION}
 FULLPKGNAME-el =	emacs-el-${VERSION}
 FULLPKGPATH-el =	editors/emacs23,-el
-
-REVISION-main =		2
-REVISION-el =		1
 
 CATEGORIES =		editors
 
@@ -51,13 +49,13 @@ LIB_DEPENDS-main =	x11/dbus
 WANTLIB-el =
 LIB_DEPENDS-el =
 
-.if ${FLAVOR:L:Mno_x11}
-.if ${FLAVOR:L:Mathena}
+.if ${FLAVOR:Mno_x11}
+.  if ${FLAVOR:Mathena}
 ERRORS =		"Fatal: athena and no_x11 flavors are mutually exclusive"
-.endif
+.  endif
 CONFIGURE_ARGS +=	--without-x
 
-.elif ${FLAVOR:L:Mathena}
+.elif ${FLAVOR:Mathena}
 CONFIGURE_ARGS +=	--with-x-toolkit=athena --without-toolkit-scroll-bars
 LIB_DEPENDS-main +=	graphics/png \
 			graphics/tiff \
@@ -69,10 +67,9 @@ MODULES +=		devel/gettext
 CONFIGURE_ARGS +=	--with-x-toolkit=gtk
 LIB_DEPENDS-main +=	x11/gtk+2 \
 			graphics/libungif \
-			devel/ORBit2 \
 			devel/gconf2 \
 			x11/gnome/librsvg
-WANTLIB-main +=		GL ICE ORBit-2 SM X11 Xdmcp Xext Xft Xpm Xrender \
+WANTLIB-main +=		GL ICE SM X11 Xdmcp Xext Xft Xpm Xrender \
 			Xau Xcomposite Xcursor Xdamage Xfixes Xi Xinerama \
 			Xrandr Xxf86vm jpeg png tiff gthread-2.0 pthread-stubs xcb \
 			atk-1.0 cairo drm expat fontconfig freetype \

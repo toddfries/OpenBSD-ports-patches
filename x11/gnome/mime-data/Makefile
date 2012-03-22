@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2011/01/18 20:08:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2011/09/28 09:47:47 jasper Exp $
 
 COMMENT=		MIME and application database for GNOME
 
@@ -13,12 +13,12 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+EXTRACT_SUFX=		.tar.bz2
+
 MODULES=		x11/gnome
 
 USE_LIBTOOL=		No
 CONFIGURE_STYLE= 	gnu old
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 FAKE_FLAGS=		pkgconfigdir=${PREFIX}/lib/pkgconfig/ \
 			sysconfdir=${PREFIX}/share/examples/gnome-mime-data/

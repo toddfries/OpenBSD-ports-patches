@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.232 2011/07/11 16:34:07 jasper Exp $
+# $OpenBSD: Makefile,v 1.238 2012/02/27 22:11:10 schwarze Exp $
 # $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
 #
 
@@ -14,15 +14,18 @@
      SUBDIR += an
      SUBDIR += angband
      SUBDIR += angband,no_x11
+     SUBDIR += angband,sdl
      SUBDIR += angrydd
      SUBDIR += atomix
      SUBDIR += barrage
      SUBDIR += bass
      SUBDIR += batrachians
      SUBDIR += belooted
+     SUBDIR += beret
      SUBDIR += blobwars
      SUBDIR += bomberclone
      SUBDIR += boswars
+     SUBDIR += braincurses
      SUBDIR += burgerspace
      SUBDIR += bzflag
      SUBDIR += capitan-sevilla
@@ -49,12 +52,14 @@
      SUBDIR += doomdata
      SUBDIR += dopewars
      SUBDIR += dopewars,no_x11
+     SUBDIR += dungeon
      SUBDIR += dungeon-crawl
      SUBDIR += eboard
      SUBDIR += eboard-extras
      SUBDIR += egoboo
      SUBDIR += einstein
      SUBDIR += enigma
+     SUBDIR += extremetuxracer
      SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
@@ -112,6 +117,7 @@
      SUBDIR += moonlander
      SUBDIR += moonlander,no_sound
      SUBDIR += moria
+     SUBDIR += naev
      SUBDIR += nethack
      SUBDIR += nethack,no_x11
      SUBDIR += nethack,qt

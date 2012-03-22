@@ -1,19 +1,19 @@
-# $OpenBSD: Makefile,v 1.148 2011/08/22 10:03:24 giovanni Exp $
+# $OpenBSD: Makefile,v 1.155 2012/02/16 21:36:08 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
 
-DISTNAME=		samba-3.5.11
+DISTNAME=		samba-3.6.3
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-docs=	${DISTNAME:S/-/-docs-/}
 FULLPKGPATH-docs=	net/samba,-docs
 
-SHARED_LIBS=		smbclient	2.0 \
-			smbsharemodes	0.0 \
-			netapi		0.0 \
-			wbclient	0.0
+SHARED_LIBS=		smbclient	3.0 \
+			smbsharemodes	1.0 \
+			netapi		1.0 \
+			wbclient	1.0
 
 CATEGORIES=		net
 
@@ -27,7 +27,7 @@ PERMIT_PACKAGE_FTP=		Yes
 PERMIT_DISTFILES_CDROM=		Yes
 PERMIT_DISTFILES_FTP=		Yes
 
-WANTLIB=	c execinfo ncurses popt pthread readline talloc tdb z
+WANTLIB=	c execinfo ncurses popt pthread readline talloc tdb>=3.0 z
 
 MASTER_SITES=	http://download.samba.org/samba/ftp/ \
 		http://us2.samba.org/samba/ftp/ \
@@ -36,17 +36,17 @@ MASTER_SITES=	http://download.samba.org/samba/ftp/ \
 MODULES=	converters/libiconv
 
 BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS}
-LIB_DEPENDS=	databases/tdb>=1.2 \
+LIB_DEPENDS=	databases/tdb>=1.2.7 \
 		devel/popt \
 		devel/libexecinfo \
 		devel/libtalloc
 
-MAKE_FLAGS+=	PASSWD_PROGRAM="/usr/bin/passwd"  \
-		LIBSMBCLIENT_SOVER="${LIBsmbclient_VERSION}" \
-		LIBSMBSHAREMODES_SOVER="${LIBsmbsharemodes_VERSION}" \
-		LIBNETAPI_SOVER="${LIBnetapi_VERSION}" \
-		LIBADDNS_SOVER="${LIBaddns_VERSION}" \
-		LIBWBCLIENT_SOVER="${LIBwbclient_VERSION}"
+MAKE_FLAGS+=	PASSWD_PROGRAM="/usr/bin/passwd" \
+		LIBSMBCLIENT_SHARED_TARGET_SONAME="bin/libsmbclient.so.${LIBsmbclient_VERSION}" \
+		LIBSMBSHAREMODES_SHARED_TARGET_SONAME="bin/libsmbsharemodes.so.${LIBsmbsharemodes_VERSION}" \
+		LIBNETAPI_SHARED_TARGET_SONAME="bin/libnetapi.so.${LIBnetapi_VERSION}" \
+		LIBADDNS_SHARED_TARGET_SONAME="bin/libaddns.so.${LIBaddns_VERSION}" \
+		LIBWBCLIENT_SHARED_TARGET_SONAME="bin/libwbclient.so.${LIBwbclient_VERSION}"
 
 CONFDIR=		${SYSCONFDIR}/samba
 SAMBA_LOGDIR=		/var/log/samba
@@ -54,7 +54,7 @@ SUBST_VARS=		CONFDIR
 
 USE_GMAKE=		Yes
 USE_GROFF=		Yes
-SEPARATE_BUILD=		simple
+#SEPARATE_BUILD=		simple
 CONFIGURE_STYLE=	gnu
 AUTOCONF_VERSION=	2.63
 
@@ -73,11 +73,11 @@ CONFIGURE_ARGS=		--disable-fam \
 			--with-syslog \
 			--with-utmp \
 			--with-winbind \
-			--with-pthreads \
 			--with-wbclient \
 			--enable-avahi=no \
 			--enable-external-libtdb=yes \
-			--enable-external-libtalloc=yes
+			--enable-external-libtalloc=yes \
+			--enable-pthreadpool
 
 # Uncomment to enable debugging symbols.
 #CONFIGURE_ARGS+=	--enable-debug
@@ -85,14 +85,14 @@ CONFIGURE_ARGS=		--disable-fam \
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-FLAVORS=	  	cups ldap ads
+FLAVORS=		cups ldap ads
 FLAVOR?=
 
 MULTI_PACKAGES=		-main -docs
 
 .if ${FLAVOR:L:Mcups}
 LIB_DEPENDS+=		print/cups
-WANTLIB+= 		asn1 crypto gssapi krb5 m ssl z cups
+WANTLIB+=		asn1 crypto gssapi krb5 m ssl z cups
 .else
 CONFIGURE_ARGS+= --disable-cups
 .endif
@@ -105,11 +105,11 @@ ERRORS+= "Fatal: ldap and ads flavors conflict"
 LIB_DEPENDS+=	databases/openldap
 WANTLIB +=	ldap lber
 .else
-CONFIGURE_ARGS+= 	--without-ldap
+CONFIGURE_ARGS+=	--without-ldap
 .endif
 
 .if ${FLAVOR:L:Mads}
-CONFIGURE_ARGS+= 	--with-krb5="${WRKDIR}/usr"
+CONFIGURE_ARGS+=	--with-krb5="${WRKDIR}/usr"
 
 # Merged build cruft needs loads of work. Disable until ready.
 #SEPERATE_BUILD=	simple
@@ -133,14 +133,14 @@ NO_REGRESS=		Yes
 #REGRESS_TARGET=	test
 #.ifmake regress
 #CONFIGURE_ARGS+=	--enable-socket-wrapper \
-#			--enable-nss-wrapper 
+#			--enable-nss-wrapper
 #.endif
 
 WRKDIST=	${WRKDIR}/${DISTNAME}/source3
 
 SAMBA_DOCS=	${WRKSRC}/../README \
-        	${WRKSRC}/../docs/history \
-        	${WRKSRC}/../docs/registry/*.reg
+		${WRKSRC}/../docs/history \
+		${WRKSRC}/../docs/registry/*.reg
 
 SAMPLE_CONFIG=	${PREFIX}/share/examples/samba/smb.conf.default
 

@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.12 2011/07/24 11:11:58 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.18 2011/12/13 09:28:37 dcoppa Exp $
 
 COMMENT-main=	Java servlet 2.5 and Java server pages 2.1 server
 COMMENT-examples=example applications and full documentation
 
-V=		6.0.32
+V=		6.0.35
 DISTNAME=	apache-tomcat-${V}
 PKGNAME=	tomcat-${V}
 PKGNAME-main=	tomcat-${V}
 PKGNAME-examples=tomcat-examples-${V}
-REVISION-main=	0
 CATEGORIES=	www
 
 DISTFILES=	${DISTNAME}.tar.gz \
@@ -49,7 +48,7 @@ SAMPLEDIR=	${PREFIX}/share/examples/tomcat
 SUBST_VARS+=	CONFDIR CATALINA_BASE
 
 post-extract:
-	rm -rf ${WRKDIST}/webapps/docs
+	@rm -rf ${WRKDIST}/webapps/docs
 	mv ${WRKDIR}/tomcat-6.0-doc ${WRKDIST}/webapps/docs
 
 do-install:
@@ -65,14 +64,22 @@ do-install:
 		tar cf - host-manager manager | \
 		tar -C ${PREFIX}/tomcat/webapps -xf -
 	${INSTALL_DATA} `find ${WRKDIST}/conf/* -prune -type f` ${SAMPLEDIR}
+	${SUBST_CMD} ${SAMPLEDIR}/server.xml
 	${INSTALL_DATA} ${WRKDIST}/webapps/host-manager/manager.xml \
 		${SAMPLEDIR}
+	${INSTALL_DATA} ${WRKDIST}/webapps/host-manager/manager.xml \
+		${SAMPLEDIR}/host-manager.xml
+	@perl -pi -e 's/manager/host-manager/' ${SAMPLEDIR}/host-manager.xml
 	cd ${WRKDIST}/webapps && \
 		tar cf - ROOT docs examples | \
 		tar -C ${WRKINST}/${CATALINA_BASE}/webapps -xf -
 	${INSTALL_DATA_DIR} ${WRKINST}/${CONFDIR}/Catalina/localhost
 	${INSTALL_DATA} ${WRKDIST}/webapps/host-manager/manager.xml \
 		${WRKINST}/${CONFDIR}/Catalina/localhost
+	${INSTALL_DATA} ${WRKDIST}/webapps/host-manager/manager.xml \
+		${WRKINST}/${CONFDIR}/Catalina/localhost/host-manager.xml
+	@perl -pi -e 's/manager/host-manager/' \
+		${WRKINST}/${CONFDIR}/Catalina/localhost/host-manager.xml
 	find ${WRKINST} \
 		-name \*.beforesubst -or \
 		-name \*.orig -or \

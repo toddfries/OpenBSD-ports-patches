@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.13 2011/06/08 17:35:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2011/10/21 17:43:30 espie Exp $
 
 COMMENT =	platform game featuring buggers equipped with weapons
 
 V =		0.5.2
 DISTNAME =	teeworlds-${V}-src
 PKGNAME =	teeworlds-${V}
-REVISION =	2
+REVISION =	3
 CATEGORIES =	games
 
 MAINTAINER =	Jonathan Armani <armani@openbsd.org>
@@ -49,7 +49,7 @@ pre-configure:
 
 # build bam executable - teeworlds own build system
 pre-build:
-	cd ${BAM_WRKSRC} && ${SH} -v make_unix.sh
+	cd ${BAM_WRKSRC} && /bin/sh -v make_unix.sh
 
 do-build:
 	cd ${WRKSRC} && CC=${CC} ${BAM_WRKSRC}/src/bam -v ${BAM_TARGET}

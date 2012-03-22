@@ -1,24 +1,25 @@
-$OpenBSD: patch-configure,v 1.5 2011/07/28 06:51:17 ajacoutot Exp $
+$OpenBSD: patch-configure,v 1.9 2011/10/17 17:08:06 ajacoutot Exp $
 
-./configure[23737]: ${INTROSPECTION_GIRDIR/$datadir/\$(datadir)}: bad substitution
+From d987a01d80126ee351727d1603a599c4edb66eca Mon Sep 17 00:00:00 2001
+From: Antoine Jacoutot <ajacoutot@openbsd.org>
+Date: Sat, 15 Oct 2011 09:27:47 +0000
+Subject: GMountOperation on OpenBSD: remove the need for kvm(3)
 
 Do not force enable_man to yes.
 
---- configure.orig	Thu Jul 28 04:06:35 2011
-+++ configure	Thu Jul 28 08:25:58 2011
-@@ -23732,9 +23732,9 @@ $as_echo "$found_introspection" >&6; }
-        INTROSPECTION_COMPILER=`$PKG_CONFIG --variable=g_ir_compiler gobject-introspection-1.0`
-        INTROSPECTION_GENERATE=`$PKG_CONFIG --variable=g_ir_generate gobject-introspection-1.0`
-        INTROSPECTION_GIRDIR=`$PKG_CONFIG --variable=girdir gobject-introspection-1.0`
--       INTROSPECTION_GIRDIR=${INTROSPECTION_GIRDIR/$datadir/\$(datadir)}
-+       INTROSPECTION_GIRDIR=`echo ${INTROSPECTION_GIRDIR} | sed -e "s|${datadir}|\\\$(datadir)|"`
-        INTROSPECTION_TYPELIBDIR="$($PKG_CONFIG --variable=typelibdir gobject-introspection-1.0)"
--       INTROSPECTION_TYPELIBDIR=${INTROSPECTION_TYPELIBDIR/$libdir/\$(libdir)}
-+       INTROSPECTION_TYPELIBDIR=`echo ${INTROSPECTION_TYPELIBDIR} | sed -e "s|${libdir}|\\\$(libdir)|"`
-        INTROSPECTION_CFLAGS=`$PKG_CONFIG --cflags gobject-introspection-1.0`
-        INTROSPECTION_LIBS=`$PKG_CONFIG --libs gobject-introspection-1.0`
-        INTROSPECTION_MAKEFILE=`$PKG_CONFIG --variable=datadir gobject-introspection-1.0`/gobject-introspection-1.0/Makefile.introspection
-@@ -24161,7 +24161,7 @@ fi
+--- configure.orig	Fri Oct 14 18:38:50 2011
++++ configure	Sat Oct 15 08:30:40 2011
+@@ -23153,9 +23153,6 @@ if test "x$enable_x11_backend" = xyes; then
+   GTK_PACKAGES="$GTK_PACKAGES pangoft2"
+ fi
+ GTK_EXTRA_LIBS=
+-if test x"$os_openbsd" = xyes; then
+-  GTK_EXTRA_LIBS="$GTK_EXTRA_LIBS -lkvm"
+-fi
+ 
+ GTK_EXTRA_CFLAGS=
+ GTK_DEP_LIBS="$GDK_EXTRA_LIBS $GTK_DEP_LIBS_FOR_X `$PKG_CONFIG --libs $PANGO_PACKAGES $GTK_PACKAGES_FOR_X $GTK_PACKAGES` $GTK_EXTRA_LIBS $MATH_LIB"
+@@ -24599,7 +24596,7 @@ fi
  
  # Check whether --enable-man was given.
  if test "${enable_man+set}" = set; then :

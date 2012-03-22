@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.33 2010/11/15 19:45:59 espie Exp $
+# $OpenBSD: Makefile,v 1.36 2011/09/28 09:51:35 jasper Exp $
 
 COMMENT=		IDL parsing library
 
 GNOME_PROJECT=		libIDL
 GNOME_VERSION=		0.8.14
+REVISION=		0
 
 SHARED_LIBS +=	IDL-2                0.1      # .0.0
 
@@ -20,6 +21,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+EXTRACT_SUFX=		.tar.bz2
+
 MODULES=		devel/gettext \
 			x11/gnome
 
@@ -28,9 +31,6 @@ LIB_DEPENDS=		devel/glib2
 
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 pre-build:
 # Info files shipped in the official distfile aren't correctly 

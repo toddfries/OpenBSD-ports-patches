@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.189 2011/08/24 06:19:51 landry Exp $
+# $OpenBSD: Makefile,v 1.196 2012/02/20 20:15:04 landry Exp $
 
 COMMENT =	Mozilla web browser
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
@@ -6,15 +6,12 @@ BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 # Don't forget to bump www/firefox-i18n after updates.
 # Don't forget to update devel/xulrunner/2.0 if patches changes.
 
-MOZILLA_VERSION =	6.0
+MOZILLA_VERSION =	10.0.2
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	firefox
 MOZILLA_CODENAME =	browser
 
-# url for beta releases
-# MASTER_SITES=  ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/releases/${MOZILLA_VERSION}/source/
-
-SO_VERSION =	25.0
+SO_VERSION =	29.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 MOZILLA_LIBS =	browsercomps mozalloc \
@@ -58,8 +55,6 @@ LIB_DEPENDS =	graphics/cairo>=1.10.2p0
 MOZILLA_AUTOCONF_DIRS +=	js/src
 MOZILLA_SUBST_FILES +=		config/autoconf.mk.in services/crypto/modules/WeaveCrypto.js
 
-SUBST_VARS +=	MOZILLA_VERSION NSS_SO_VERSION
-
 post-install:
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/mozilla-firefox.1 \
 		${PREFIX}/man/man1/mozilla-firefox.1
@@ -71,6 +66,6 @@ post-install:
 		${PREFIX}/share/applications/${MOZILLA_PROJECT}.desktop
 
 	# link default48.png to default.png to be used by default by non-icccm compliant wm
-	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION}/chrome/icons/default/default{48,}.png
+	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/chrome/icons/default/default{48,}.png
 
 .include <bsd.port.mk>

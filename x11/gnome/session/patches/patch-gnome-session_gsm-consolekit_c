@@ -1,7 +1,7 @@
-$OpenBSD: patch-gnome-session_gsm-consolekit_c,v 1.5 2011/04/06 18:33:03 ajacoutot Exp $
---- gnome-session/gsm-consolekit.c.orig	Tue Feb  9 14:22:01 2010
-+++ gnome-session/gsm-consolekit.c	Wed Apr  6 20:28:51 2011
-@@ -728,6 +728,12 @@ gsm_consolekit_can_switch_user (GsmConsolekit *manager
+$OpenBSD: patch-gnome-session_gsm-consolekit_c,v 1.7 2011/09/26 10:19:21 ajacoutot Exp $
+--- gnome-session/gsm-consolekit.c.orig	Mon Sep 19 23:35:48 2011
++++ gnome-session/gsm-consolekit.c	Mon Sep 26 11:33:41 2011
+@@ -717,6 +717,12 @@ gsm_consolekit_can_switch_user (GsmConsolekit *manager
  
          error = NULL;
  

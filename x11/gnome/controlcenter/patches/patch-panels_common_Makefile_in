@@ -1,0 +1,12 @@
+$OpenBSD: patch-panels_common_Makefile_in,v 1.2 2011/09/27 12:15:23 ajacoutot Exp $
+--- panels/common/Makefile.in.orig	Mon Sep 19 22:26:43 2011
++++ panels/common/Makefile.in	Mon Sep 26 14:01:58 2011
+@@ -356,7 +356,7 @@ AM_CPPFLAGS = \
+ 	$(LIBLANGUAGE_CFLAGS)				\
+ 	-DDATADIR=\""$(datadir)"\"			\
+ 	-DUIDIR=\""$(pkgdatadir)/ui"\"			\
+-	-DLIBLOCALEDIR=\""$(prefix)/lib/locale"\"       \
++	-DLIBLOCALEDIR=\""/usr/share/locale"\"          \
+ 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"        \
+ 	-DUM_PIXMAP_DIR=\""$(pkgdatadir)/pixmaps"\"
+ 

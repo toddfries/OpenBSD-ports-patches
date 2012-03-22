@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/01 11:16:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/01 19:04:12 jasper Exp $
 
 COMMENT=		text widget that extends GTK3's GtkTextView widget
 
 GNOME_PROJECT=		gtksourceview
-GNOME_VERSION=		3.0.5
+GNOME_VERSION=		3.2.3
 PKGNAME=		${GNOME_PROJECT}3-${GNOME_VERSION}
 
 SHARED_LIBS +=	gtksourceview-3.0    0.0      # .0.0
@@ -26,27 +26,21 @@ PERMIT_DISTFILES_FTP=	Yes
 MODULES=		devel/gettext \
 			x11/gnome
 
-EXTRACT_SUFX=		.tar.xz
-
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 cairo cairo-gobject
 WANTLIB += drm expat fontconfig freetype gdk-3 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png pthread-stubs xcb xcb-render xcb-shm xml2
-WANTLIB += z
+WANTLIB += z ffi
 
-BUILD_DEPENDS=		devel/gobject-introspection \
-			textproc/gsed
+BUILD_DEPENDS=		textproc/gsed
 LIB_DEPENDS=		textproc/libxml \
 			x11/gtk+3
 
+MODGNOME_TOOLS= 	goi
+
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 REGRESS_IS_INTERACTIVE=	x11
 

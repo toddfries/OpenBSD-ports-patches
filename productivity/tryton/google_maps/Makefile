@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/20 16:04:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2012/01/24 10:16:10 ajacoutot Exp $
 
-MODPY_EGG_VERSION =	2.0.0
+MODPY_EGG_VERSION =	2.2.0
 TRYTOND_MODULE =	google_maps
-REVISION =		0
 
-RUN_DEPENDS =		productivity/tryton/party
+RUN_DEPENDS =		productivity/tryton/party>=2.2.0
 
 .include <bsd.port.mk>

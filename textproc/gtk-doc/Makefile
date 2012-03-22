@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2011/04/05 17:22:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2011/09/20 21:04:25 jasper Exp $
 
 COMMENT=	GTK C code documentation system
 
-GNOME_VERSION=	1.17
+GNOME_VERSION=	1.18
 GNOME_PROJECT=	gtk-doc
+REVISION=	0
 
 CATEGORIES=    	textproc devel
 
@@ -19,11 +20,10 @@ MODULES=		x11/gnome \
 			lang/python
 
 MODPY_RUNDEP=		No
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--with-xml-catalog=${WRKDIR}/catalog.xml
+CONFIGURE_ARGS=		--with-xml-catalog=${WRKDIR}/catalog.xml
 
 # only files under tests/ are compiled but not installed
 PKG_ARCH=		*
@@ -36,6 +36,8 @@ RUN_DEPENDS=		textproc/openjade \
 			editors/vim,no_x11
 
 REGRESS_DEPENDS=	shells/bash
+
+FAKE_FLAGS=		pkgconfigdir=${PREFIX}/lib/pkgconfig/
 
 post-extract:
 	cp ${LOCALBASE}/share/xml/docbook/catalog.xml \

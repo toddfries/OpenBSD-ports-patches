@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/28 08:35:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2012/02/16 21:21:58 sthen Exp $
 
 MULTI_PACKAGES=	-utils -main -php -perl
 SHARED_ONLY=	Yes
@@ -8,11 +8,11 @@ COMMENT-utils=	mapserver utilities
 COMMENT-php=	PHP Mapscript extension
 COMMENT-perl=	Perl Mapscript binding
 
-V =		6.0.1
+V =		6.0.2
 DISTNAME=	mapserver-${V}
 PKGNAME-main=	${DISTNAME}
 PKGNAME-utils=	mapserver-utils-${V}
-PKGNAME-php=	php5-mapscript-${V}
+PKGNAME-php=	php-mapscript-${V}
 PKGNAME-perl=	p5-mapscript-${V}
 
 CATEGORIES=	geo www
@@ -37,14 +37,15 @@ LIB_DEPENDS=	devel/proj \
 		graphics/cairo \
 		geo/gdal \
 		geo/geos \
-		graphics/gd
+		graphics/gd \
+		www/fcgi
 
 RUN_DEPENDS-php=	${MODPHP_RUN_DEPENDS}
 
 WANTLIB += crypto curl expat freetype idn jpeg m png pq ssl xml2 z proj
-WANTLIB += gdal geos_c gd stdc++
-WANTLIB += GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm
-WANTLIB += cairo drm fontconfig glib-2.0 gobject-2.0 gthread-2.0
+WANTLIB += gdal geos_c gd stdc++ fcgi
+WANTLIB += GL X11
+WANTLIB += cairo Xrender fontconfig glib-2.0 gobject-2.0 gthread-2.0
 WANTLIB += pixman-1 pthread-stubs xcb xcb-render xcb-shm
 
 WANTLIB-main=	${WANTLIB} pthread c gif
@@ -57,6 +58,7 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--with-proj=${LOCALBASE} \
 		--with-png=${LOCALBASE} \
 		--with-agg=${LOCALBASE} \
+		--with-fastcgi=${LOCALBASE} \
 		--without-pdf \
 		--with-freetype=${X11BASE}/bin \
 		--with-gdal=${LOCALBASE}/bin/gdal-config \
@@ -84,7 +86,7 @@ UTILS=	shp2img legend shptree shptreevis shptreetst scalebar \
 
 PREFIX-main=	/var/www
 
-SUBST_VARS+=	PREFIX-php PREFIX-main
+SUBST_VARS+=	PREFIX-main
 
 post-build:
 	cd ${WRKSRC}/mapscript/perl && perl Makefile.PL && ${MAKE}

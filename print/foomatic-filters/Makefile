@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.30 2011/08/25 10:39:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2012/02/17 15:44:16 ajacoutot Exp $
 
 COMMENT=		Foomatic PPD print filters
 
-DISTNAME=		foomatic-filters-4.0.9
+DISTNAME=		foomatic-filters-4.0.12
 CATEGORIES=		print
 
 HOMEPAGE=		http://www.linuxfoundation.org/en/OpenPrinting/Database/Foomatic
@@ -15,20 +15,21 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB+=		c m
+WANTLIB += c dbus-1 m pthread
 
-MASTER_SITES=		http://www.linuxprinting.org/download/foomatic/ \
-			http://www.openprinting.org/download/foomatic/ \
-			http://www.linuxprinting.org/download/foomatic/oldstuff/ \
+MASTER_SITES=		http://www.openprinting.org/download/foomatic/ \
 			http://www.openprinting.org/download/foomatic/oldstuff/
+
+LIB_DEPENDS=		x11/dbus
 
 BUILD_DEPENDS=		${MODGNU_AUTOMAKE_DEPENDS}
 
 RUN_DEPENDS=		print/ghostscript/gnu \
-			print/a2ps
+			print/a2ps \
+			print/gstoraster
 
 AUTOMAKE_VERSION=1.10
-AUTOCONF_VERSION=2.61
+AUTOCONF_VERSION=2.65
 
 INSTALL_TARGET=		install-main install-cups
 
@@ -48,7 +49,7 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			MPAGE="${LOCALBASE}/bin/mpage"
 
 CONFIGURE_ARGS=		--enable-file-converter-check=no \
-			--enable-dbus=no # only useful for colord which we don't have yet
+			--with-file-converter=a2ps
 
 MAKE_ENV=		${CONFIGURE_ENV}
 

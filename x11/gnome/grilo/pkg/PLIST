@@ -1,0 +1,48 @@
+@comment $OpenBSD: PLIST,v 1.2 2012/02/26 15:06:35 ajacoutot Exp $
+%%SHARED%%
+@bin bin/grilo-simple-playlist
+@bin bin/grilo-test-ui
+@bin bin/grl-inspect
+include/grilo-0.1/
+include/grilo-0.1/grilo.h
+include/grilo-0.1/grl-config.h
+include/grilo-0.1/grl-data.h
+include/grilo-0.1/grl-definitions.h
+include/grilo-0.1/grl-error.h
+include/grilo-0.1/grl-log.h
+include/grilo-0.1/grl-media-audio.h
+include/grilo-0.1/grl-media-box.h
+include/grilo-0.1/grl-media-image.h
+include/grilo-0.1/grl-media-plugin.h
+include/grilo-0.1/grl-media-source.h
+include/grilo-0.1/grl-media-video.h
+include/grilo-0.1/grl-media.h
+include/grilo-0.1/grl-metadata-key.h
+include/grilo-0.1/grl-metadata-source.h
+include/grilo-0.1/grl-multiple.h
+include/grilo-0.1/grl-operation.h
+include/grilo-0.1/grl-plugin-registry.h
+include/grilo-0.1/grl-related-keys.h
+include/grilo-0.1/grl-util.h
+include/grilo-0.1/net/
+include/grilo-0.1/net/grl-net-wc.h
+include/grilo-0.1/net/grl-net.h
+lib/girepository-1.0/
+lib/girepository-1.0/Grl-0.1.typelib
+lib/girepository-1.0/GrlNet-0.1.typelib
+lib/libgrilo-0.1.a
+lib/libgrilo-0.1.la
+lib/libgrlnet-0.1.a
+lib/libgrlnet-0.1.la
+lib/pkgconfig/
+lib/pkgconfig/grilo-0.1.pc
+lib/pkgconfig/grilo-net-0.1.pc
+share/gir-1.0/
+share/gir-1.0/Grl-0.1.gir
+share/gir-1.0/GrlNet-0.1.gir
+share/vala-0.16/
+share/vala-0.16/vapi/
+share/vala-0.16/vapi/grilo-0.1.deps
+share/vala-0.16/vapi/grilo-0.1.vapi
+share/vala-0.16/vapi/grilo-net-0.1.deps
+share/vala-0.16/vapi/grilo-net-0.1.vapi

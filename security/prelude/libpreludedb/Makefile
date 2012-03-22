@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2011/06/08 17:45:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2011/11/04 08:43:32 jasper Exp $
 
 COMMENT-main=	Prelude framework database-access library
 COMMENT-pgsql=	PostgreSQL module for libpreludedb
@@ -13,10 +13,10 @@ PKGNAME-pgsql=	prelude-libpreludedb-pgsql-${VERSION}
 PKGNAME-mysql=	prelude-libpreludedb-mysql-${VERSION}
 PKGNAME-sqlite=	prelude-libpreludedb-sqlite-${VERSION}
 
-REVISION-main=	7
-REVISION-pgsql=	4
-REVISION-mysql=	4
-REVISION-sqlite=4
+REVISION-main=	10
+REVISION-pgsql=	7	
+REVISION-mysql=	7
+REVISION-sqlite=7
 
 MODPY_EGG_VERSION=0.0.0
 
@@ -28,8 +28,9 @@ USE_GROFF =	Yes
 
 SHARED_LIBS=	preludedb	4.9
 
-WANTLIB=	tasn1 z gcrypt gnutls prelude gmp gpg-error hogweed nettle
-WANTLIB-main=	${WANTLIB} c
+WANTLIB=	tasn1 z gcrypt gnutls prelude gmp gpg-error hogweed nettle \
+		p11-kit
+WANTLIB-main=	${WANTLIB} c pthread ${MODPY_WANTLIB}
 WANTLIB-mysql=	${WANTLIB} preludedb lib/mysql/mysqlclient crypto m ssl
 WANTLIB-pgsql=	${WANTLIB} preludedb pq
 WANTLIB-sqlite=	${WANTLIB} preludedb sqlite3

@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/07/19 09:16:06 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2011/10/18 13:31:05 ajacoutot Exp $
 
 COMMENT=	humanist sans-serif font family
 
-GNOME_VERSION=	0.0.6
+GNOME_VERSION=	0.0.7
 GNOME_PROJECT=	cantarell-fonts
-REVISION=	0
 
 CATEGORIES=	fonts x11
 
@@ -15,6 +14,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+EXTRACT_SUFX=		.tar.bz2
 
 MODULES=	x11/gnome
 

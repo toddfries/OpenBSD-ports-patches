@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.47 2011/06/08 17:41:57 rpointel Exp $
+# $OpenBSD: Makefile,v 1.58 2011/12/03 22:17:15 ajacoutot Exp $
+
+BROKEN= 		update needs fixed clutter/Mesa
 
 COMMENT=		collection of games for the GNOME desktop
 
 GNOME_PROJECT=		gnome-games
 GNOME_VERSION=		2.32.1
 
-REVISION=		4
+REVISION=		7
 
 SHARED_LIBS +=  games-support-gi          0.0 # 0.0
 
@@ -19,7 +21,9 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage rsvg-2
+EXTRACT_SUFX=		.tar.bz2
+
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage rsvg-2
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm guile
 WANTLIB += atk-1.0 c cairo canberra canberra-gtk clutter-glx-1.0
 WANTLIB += croco-0.6 xcb-shm drm expat fontconfig freetype
@@ -34,35 +38,29 @@ MODULES=		devel/gconf2 \
 			lang/python \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/gobject-introspection \
-			x11/gnome/py-gnome-desktop
+BUILD_DEPENDS=		devel/gobject-introspection
+#			x11/gnome/py-gnome-desktop
 LIB_DEPENDS=		graphics/clutter/clutter-gtk \
 			lang/guile \
 			x11/gnome/librsvg \
 			audio/libcanberra,-gtk
-RUN_DEPENDS=		x11/gnome/py-gnome-desktop \
-			multimedia/gstreamer-0.10/plugins-good
+RUN_DEPENDS=		multimedia/gstreamer-0.10/plugins-good
+#			x11/gnome/py-gnome-desktop
 REGRESS_DEPENDS=	devel/check
 
-# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
-# instead of the actual library
-USE_LIBTOOL=    	gnu
+MODGNOME_TOOLS= 	goi yelp
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 MODGCONF2_SCHEMAS_DIR=	gnome-games
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--localstatedir="/var" \
-			--with-scores-group="games" \
-			--enable-introspection
+CONFIGURE_ARGS+= 	--localstatedir="/var" \
+			--with-scores-group="games"
 
 # XXX
 # lightsoff and swell-foop need seed
 CONFIGURE_ARGS+=	--enable-omitgames=lightsoff,swell-foop
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 USE_GROFF =		Yes
 
 REGRESS_IS_INTERACTIVE= x11

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.66 2011/07/31 20:51:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.74 2011/12/03 20:30:09 ajacoutot Exp $
 
 COMMENT=		spreadsheet application for GNOME
 
 GNOME_PROJECT=		gnumeric
 GNOME_VERSION=		1.10.17
+REVISION=		3
 
 CATEGORIES=    		math
 
@@ -18,14 +19,16 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+EXTRACT_SUFX=		.tar.bz2
+
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
 WANTLIB += bz2 c cairo drm expat fontconfig freetype gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += goffice-0.8 gsf-1 gthread-2.0 gtk-x11-2.0 m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre perl pixman-1 png
 WANTLIB += pthread pthread-stubs util xcb xcb-render xcb-shm xml2
-WANTLIB += z
+WANTLIB += z dbus-1 dbus-glib-1 ffi stdc++
 
 MODULES=		devel/gconf2 \
 			devel/gettext \
@@ -35,8 +38,9 @@ LIB_DEPENDS=		goffice->=0.8.17,<0.8.18:devel/goffice \
 			devel/libgsf \
 			x11/gtk+2
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 MODGCONF2_SCHEMAS_DIR=	gnumeric
 
 USE_LIBTOOL=		Yes
@@ -48,8 +52,6 @@ CONFIGURE_ARGS=		--without-gnome \
 			--without-paradox \
 			--without-long-double \
 			--without-python
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 SUBST_VARS=		VERSION API_VERSION
 

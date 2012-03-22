@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.29 2011/04/16 21:13:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.31 2011/09/25 14:42:51 naddy Exp $
 
 COMMENT=		small and efficient HTTP crawler
 
 DISTNAME=		crawl-0.4
-REVISION=		3
+REVISION=		5
 CATEGORIES=		net
 
 HOMEPAGE=		http://www.monkey.org/~provos/crawl/

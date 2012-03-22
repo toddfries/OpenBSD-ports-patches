@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/07 00:22:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2012/01/25 11:03:14 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
@@ -15,7 +15,9 @@ PKGNAME-mysql =		rsyslog-mysql-$V
 PKGNAME-pgsql =		rsyslog-pgsql-$V
 CATEGORIES =		sysutils
 
-REVISION-main =		1
+REVISION-main =		4
+REVISION-mysql =	1
+REVISION-pgsql =	1
 
 HOMEPAGE =		http://www.rsyslog.com/
 
@@ -35,9 +37,9 @@ WANTLIB-pgsql +=	crypto com_err pq ssl
 LIB_DEPENDS-main =	security/gnutls \
 			sysutils/librelp
 LIB_DEPENDS-mysql =	databases/mysql
-RUN_DEPENDS-mysql =	${FULLPKGNAME-main}:${BASE_PKGPATH},-main
+RUN_DEPENDS-mysql =	${PKGNAME-main}:${PKGPATH},-main
 LIB_DEPENDS-pgsql =	databases/postgresql
-RUN_DEPENDS-pgsql =	${FULLPKGNAME-main}:${BASE_PKGPATH},-main
+RUN_DEPENDS-pgsql =	${PKGNAME-main}:${PKGPATH},-main
 
 MASTER_SITES =		http://www.rsyslog.com/files/download/rsyslog/ \
 			http://download.rsyslog.com/rsyslog/
@@ -53,9 +55,7 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--enable-mail \
 			--enable-gnutls \
 			--enable-relp
-CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include \
-			  -DSYSLOGD_PIDNAME=\\\"rsyslogd.pid\\\" \
-			  -DCONFIGFILE=\\\"${SYSCONFDIR}/rsyslog.conf\\\""
+CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include"
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/rsyslog

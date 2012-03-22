@@ -1,19 +1,23 @@
-# $OpenBSD: Makefile,v 1.15 2011/07/19 17:08:54 jeremy Exp $
+# $OpenBSD: Makefile,v 1.23 2012/02/28 00:20:41 jeremy Exp $
 
 COMMENT-main =		object oriented script language with threads
-COMMENT-gdbm =		gdbm interface for Ruby
-COMMENT-dbm =		Berkley DB interface for Ruby
-COMMENT-tk=		tk interface for ruby
+COMMENT-gdbm =		gdbm interface for ruby
+COMMENT-dbm =		Berkley DB interface for ruby
+COMMENT-tk =		tk interface for ruby
+COMMENT-ri_docs =	ri documentation files for ruby
 
-VERSION =		1.9.2
-PATCHLEVEL =		290
+VERSION =		1.9.3
+PATCHLEVEL =		125
 RUBYLIBREV =		1.9.1
 
-SHARED_LIBS =		ruby19 0.0
+SHARED_LIBS =		ruby19 1.0
 PKGNAME-main =		ruby-${VERSION}.${PATCHLEVEL}
 PKGNAME-gdbm =		ruby-gdbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-dbm =		ruby-dbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-tk =		ruby-tk-${VERSION}.${PATCHLEVEL}
+PKGNAME-ri_docs =	ruby-ri_docs-${VERSION}.${PATCHLEVEL}
+
+PKG_ARCH-ri_docs=	*
 
 PKGSPEC-main =		ruby->=1.9,<1.10
 
@@ -23,7 +27,12 @@ CONFIGURE_ARGS =	--program-suffix=19 \
 			--enable-ipv6 \
 			--disable-option-checking
 
-CONFIGURE_ENV =		LIBruby19_VERSION=${LIBruby19_VERSION}
+CONFIGURE_ENV =		LIBruby19_VERSION=${LIBruby19_VERSION} \
+			ac_cv_prog_DOXYGEN="" \
+			ac_cv_prog_DOT=""
+
+ALL_TARGET =		V=1 main
+INSTALL_TARGET =	V=1 install-nodoc
 
 MODULES =		converters/libiconv
 USE_GROFF =		Yes
@@ -35,38 +44,41 @@ LIB_DEPENDS-main =	${MODLIBICONV_LIB_DEPENDS} \
 			devel/libffi
 RUN_DEPENDS-main =	${MODLIBICONV_RUN_DEPENDS}
 
-PSEUDO_FLAVORS=		no_x11
+PSEUDO_FLAVORS=		no_x11 no_ri_docs
 FLAVOR?=
 
 MULTI_PACKAGES =	-main -gdbm -dbm
 
 WANTLIB-gdbm =		c m gdbm ruby19
 LIB_DEPENDS-gdbm =	databases/gdbm \
-			lang/ruby/${REV},-main
+			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL}
 RUN_DEPENDS-gdbm =	
 
 WANTLIB-dbm =		c m db ruby19
 LIB_DEPENDS-dbm =	databases/db/v4 \
-			lang/ruby/${REV},-main
+			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL}
 RUN_DEPENDS-dbm =	
  
-.if !${FLAVOR:L:Mno_x11}
+.if !${FLAVOR:Mno_x11}
 MULTI_PACKAGES+=	-tk
 CONFIGURE_ARGS+=	--with-tcl-include=${PREFIX}/include/tcl8.5 \
 			--with-tk-include=${PREFIX}/include/tk8.5 \
 			--with-X11-dir=${X11BASE}
 WANTLIB-tk =		X11 c m ruby19 tcl85 tk85
 LIB_DEPENDS-tk =	tk->=8.5,<8.6:x11/tk/8.5 \
-			lang/ruby/${REV},-main
+			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL}
 RUN_DEPENDS-tk =	
+.endif
+
+.if !${FLAVOR:Mno_ri_docs}
+MULTI_PACKAGES +=	-ri_docs
+ALL_TARGET +=		rdoc
+INSTALL_TARGET +=	install-doc
+VMEM_WARNING =		Yes
 .endif
 
 SUBST_VARS +=		RUBYLIBREV
 
-# Known threading bootstraptest failures on i386 and macppc
-# Occassional threading bootstrap failure on amd64
-# Known endian issues in fiddle/dl on sparc64
-# Known encoding related failure in one REXML test
 REGRESS_DEPENDS =	${FULLPKGNAME-main}:${BUILD_PKGPATH}
 
 do-regress:

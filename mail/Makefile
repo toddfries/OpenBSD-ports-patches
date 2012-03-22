@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.267 2011/07/28 20:36:56 landry Exp $
+# $OpenBSD: Makefile,v 1.275 2012/01/30 17:23:59 sthen Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
  
@@ -38,6 +38,7 @@
      SUBDIR += dkim-milter
      SUBDIR += dovecot
      SUBDIR += dovecot-pigeonhole
+     SUBDIR += dovecot-antispam
      SUBDIR += drac
      SUBDIR += dspam
      SUBDIR += dspam,hash
@@ -47,6 +48,7 @@
      SUBDIR += dspam,pgsql
      SUBDIR += elm
      SUBDIR += evolution
+     SUBDIR += evolution-ews
      SUBDIR += evolution-exchange
      SUBDIR += evolution-rss
      SUBDIR += exim
@@ -61,7 +63,7 @@
      SUBDIR += femail
      SUBDIR += fetchmail
      SUBDIR += getmail
-     SUBDIR += gmime24
+     SUBDIR += gmime
      SUBDIR += grepmail
      SUBDIR += greyscanner
      SUBDIR += hashcash
@@ -77,7 +79,6 @@
      SUBDIR += ldapvacation
      SUBDIR += libetpan
      SUBDIR += libspf2
-     SUBDIR += mail-notification
      SUBDIR += mailcrypt
      SUBDIR += maildrop
      SUBDIR += mailgraph
@@ -103,6 +104,7 @@
      SUBDIR += mutt
      SUBDIR += nail
      SUBDIR += nmh
+     SUBDIR += nmh,sasl
      SUBDIR += nmzmail
      SUBDIR += offlineimap
      SUBDIR += openwebmail
@@ -149,8 +151,10 @@
      SUBDIR += p5-Mail-IMAPTalk
      SUBDIR += p5-Mail-Mbox-MessageParser
      SUBDIR += p5-Mail-POP3Client
+     SUBDIR += p5-Mail-SPF
      SUBDIR += p5-Mail-SPF-Iterator
      SUBDIR += p5-Mail-SPF-Query
+     SUBDIR += p5-Mail-SPF-Test
      SUBDIR += p5-Mail-Sender
      SUBDIR += p5-Mail-SpamAssassin
      SUBDIR += p5-Mail-Tools
@@ -178,6 +182,7 @@
      SUBDIR += py-spf
      SUBDIR += pyzor
      SUBDIR += razor-agents
+     SUBDIR += rcube-sieverules
      SUBDIR += relaydb
      SUBDIR += roundcubemail
      SUBDIR += ruby-actionmailer

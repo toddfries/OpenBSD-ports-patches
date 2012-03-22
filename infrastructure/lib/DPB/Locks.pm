@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Locks.pm,v 1.7 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Locks.pm,v 1.14 2012/02/28 14:23:27 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -25,10 +25,56 @@ use Fcntl;
 
 sub new
 {
-	my ($class, $lockdir) = @_;
+	my ($class, $state, $lockdir) = @_;
 
 	File::Path::make_path($lockdir);
-	bless {lockdir => $lockdir}, $class;
+	my $o = bless {lockdir => $lockdir, 
+		dpb_pid => $$, 
+		dpb_host => DPB::Core::Local->hostname}, $class;
+	if (!$state->defines("DONT_CLEAN_LOCKS")) {
+		$o->clean_old_locks($state);
+	}
+	return $o;
+}
+
+sub clean_old_locks
+{
+	my $self = shift;
+	my $locks = {};
+	opendir(my $dir, $self->{lockdir});
+	DIR: while (my $e = readdir($dir)) {
+		my $f = "$self->{lockdir}/$e";
+		next if -d $f;
+		open my $fh, '<', $f or next;
+		my ($pid, $host);
+		while(<$fh>) {
+			if (m/^dpb\=(\d+)\s+on\s+(\S+)$/) {
+				($pid, $host) = ($1, $2);
+				next DIR unless $host eq $self->{dpb_host};
+			}
+			if (m/^(?:error|status|todo)\=/) {
+				next DIR;
+			}
+		}
+		push(@{$locks->{$pid}}, $f) if defined $pid;
+	}
+	return if keys %$locks == 0;
+
+	open(my $ps, "-|", "ps", "-axww", "-o", "pid args");
+	my $junk = <$ps>;
+	while (<$ps>) {
+		if (m/^(\d+)\s+(.*)$/) {
+			my ($pid, $cmd) = @_;
+			if ($locks->{$pid} && $cmd =~ m/\bdpb\b/) {
+				delete $locks->{$pid};
+			}
+		}
+	}
+	for my $list (values %$locks) {
+		for my $l (@$list) {
+			unlink($l);
+		}
+	}
 }
 
 sub build_lockname
@@ -36,12 +82,6 @@ sub build_lockname
 	my ($self, $f) = @_;
 	$f =~ tr|/|.|;
 	return "$self->{lockdir}/$f";
-}
-
-sub simple_lockname
-{
-	my ($self, $v) = @_;
-	return $self->build_lockname($v->simple_lockname);
 }
 
 sub lockname
@@ -54,10 +94,11 @@ sub dolock
 {
 	my ($self, $name, $v) = @_;
 	if (sysopen my $fh, $name, O_CREAT|O_EXCL|O_WRONLY, 0666) {
-		print $fh "fullpkgpath=", $v->lockname, "\n";
-		if (defined $v->{parent}) {
-			print $fh "parent=", $v->{parent}->lockname, "\n";
-		}
+		DPB::Util->make_hot($fh);
+		print $fh "locked=", $v->logname, "\n";
+		print $fh "dpb=", $self->{dpb_pid}, " on ", 
+		    $self->{dpb_host}, "\n";
+		$v->print_parent($fh);
 		return $fh;
 	} else {
 		return 0;
@@ -67,19 +108,10 @@ sub dolock
 sub lock
 {
 	my ($self, $v) = @_;
-	my $simple = $self->simple_lockname($v);
-	my $fh = $self->dolock($simple, $v);
+	my $lock = $self->lockname($v);
+	my $fh = $self->dolock($lock, $v);
 	if ($fh) {
-		my $lk = $self->lockname($v);
-		if ($simple eq $lk) {
-			return $fh;
-		}
-		my $fh2 = $self->dolock($lk, $v);
-		if ($fh2) {
-			return $fh2;
-		} else {
-			$self->simple_unlock($v);
-		}
+		return $fh;
 	}
 	return undef;
 }
@@ -88,22 +120,12 @@ sub unlock
 {
 	my ($self, $v) = @_;
 	unlink($self->lockname($v));
-	$self->simple_unlock($v);
-}
-
-sub simple_unlock
-{
-	my ($self, $v) = @_;
-	my $simple = $self->simple_lockname($v);
-	if ($self->lockname($v) ne $simple) {
-		unlink($simple);
-	}
 }
 
 sub locked
 {
 	my ($self, $v) = @_;
-	return -e $self->lockname($v) || -e $self->simple_lockname($v);
+	return -e $self->lockname($v);
 }
 
 sub recheck_errors
@@ -116,6 +138,8 @@ sub recheck_errors
 		while (my $v = shift @$e) {
 			if ($v->unlock_conditions($engine)) {
 				$self->unlock($v);
+				$v->requeue($engine);
+				next;
 			}
 			if ($self->locked($v)) {
 				push(@{$engine->{$name}}, $v);
@@ -130,5 +154,32 @@ sub recheck_errors
 	}
 }
 
+sub find_dependencies
+{
+	my ($self, $hostname) = @_;
+	opendir(my $dir, $self->{lockdir});
+	my $h = {};
+	while (my $name = readdir($dir)) {
+		my $fullname = $self->{lockdir}."/".$name;
+		next if -d $fullname;
+		next if $name =~ m/^host:/;
+		open(my $f, '<', $fullname);
+		my $host;
+		my @d;
+		while (<$f>) {
+			if (m/^host=(.*)/) {
+				$host = $1;
+			} elsif (m/^needed=(.*)/) {
+				@d = split(/\s/, $1);
+			}
+		}
+		if (defined $host && $host eq $hostname) {
+			for my $k (@d) {
+				$h->{$k} = 1;
+			}
+		}
+	}
+	return sort keys %$h;
+}
 
 1;

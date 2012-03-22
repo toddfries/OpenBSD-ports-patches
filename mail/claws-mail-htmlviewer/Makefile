@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2011/04/21 13:13:59 landry Exp $
+# $OpenBSD: Makefile,v 1.27 2012/01/23 18:57:33 landry Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	HTML renderer plugin for Claws Mail
 
-VERSION=	0.30
+VERSION=	0.32
 DISTNAME=	gtkhtml2_viewer-${VERSION}
 PKGNAME=	claws-mail-htmlviewer-${VERSION}
 MASTER_SITES=	http://www.claws-mail.org/downloads/plugins/
@@ -24,7 +24,7 @@ LIBTOOL_FLAGS=	--tag=disable-static
 
 MODULES=	devel/gettext
 
-RUN_DEPENDS=	mail/claws-mail
+RUN_DEPENDS=	mail/claws-mail>=3.8.0
 BUILD_DEPENDS=	${RUN_DEPENDS}
 LIB_DEPENDS=	textproc/libxml \
 		net/curl \

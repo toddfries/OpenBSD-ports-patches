@@ -1,0 +1,431 @@
+$OpenBSD: README.internals,v 1.9 2011/11/25 15:05:56 espie Exp $
+Copyright (C) 2011 Marc Espie <espie@openbsd.org>
+
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+This file is *not* user documentation of the *mk files. The full user
+documentation is available as manpages such as bsd.port.mk(5)
+
+There are comments in bsd.port.mk but this file is already too long,
+so I finally decided to put the design notes in a separate file.
+
+Most of this is not for the faint of heart.
+
+"Imagination could conceive almost anything in connexion with this place."
+(H.P. Lovecraft, At the Mountains of Madness)
+
+Some design principles
+----------------------
+- all variables and targets prefixed with _  are for internal use.
+It may be that some other tools reuse them, but that's generally following
+the same guidelines: no user serviceable parts inside (and you should always
+ask ME about it, since I'm liable to change these with very little notice).
+This is an attempt to avoid exposing too many knobs, and a clear distinction
+between "supported" stuff, and "you're on your own, if you abuse this, bad
+things will happen".
+
+- most variables will always be defined, even with an empty value.  This avoids
+stupid .if defined(TESTS).
+
+- bsd.port.mk has a strict separation between variable definitions (at top)
+and target definitions (right after the
+	    ###
+	    ### end of variable setup. Only targets now
+	    ###
+comment). This is because of make's "lazy" way to evaluate things:
+constructs in shell-lines get evaluated very very late. But all
+targets (such as ${_WRKDIR_COOKIE}) get evaluated when they're
+encountered. There was some significant effort in the early days
+when I took bsd.port.mk over to achieve that separation.  Be very
+careful with Makefile.inc and modules, since those get included at
+a very specific location in the Makefile.  They should mostly define
+variables. Makefile.inc is included very early so that it can
+override about anything it should be able to (but then, nothing is
+already defined except for read-only variables / global user-tweakable
+defaults). Modules is included a little bit later...
+
+- a lot of the code is done through shell fragments. All of these are
+internal and prefixed with _.  This is done for speed and compactness (forking
+an external shell would be very slow, and a total nightmare with respect
+to parameter passing).  These often communicate through internal shell
+variables with well-defined names.
+
+- the infrastructure tries very hard to have real files (as far as possible)
+attached to most targets: "make package" points to the actual pkgfile(s)
+being generated. There's a whole section of the makefile devoted to
+targets generated from the distfiles devoted to fetch and fetch-all
+(see the section around _EVERYTHING for variable definition, and the
+    # Separate target for each file fetch-all will retrieve
+for the actual targets). Apart from that, once a port starts building,
+targets "without" an actual file will generate a cookie under WRKDIR or
+some subdir of it (see all the _COOKIE* definitions). Of particular interest
+are dependencies, where the cookie file is generated depending on the
+name of the dependency: that's the infamous
+.for _i in ${_DEPLIST}
+${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g}: ${_WRKDIR_COOKIE}
+loop.  The reason for that complexity is that this avoids rechecking
+dependencies while working on a port, since only the new stuff will need
+evaluation...
+In general, make works really bad when you write
+phony-target1: phony-target2
+	@do_some_shit
+as phony targets are always out-of-date, and thus you will always do_some_shit.
+
+- a lot of computations are very expensive, so there are shortcuts all over
+the place whenever a variable is empty, especially for dependency computation.
+
+Introspection
+-------------
+There's a lot of stuff in the infrastructure which is there only for
+introspection purposes: show, show-all, print-plist-*, dump-vars,
+*-dir-depends, print-package-signature (ill-named, since it actually only
+asks the ports tree for information).
+They allow external tools to interrogate the ports tree and get most
+information from it. dpb and sqlports rely very heavily on it.
+
+Significant work has been done to achieve better MI. The MULTI_PACKAGES
+code now assumes you will define MULTI_PACKAGES *independently of the
+architecture*, annotate subpackage with ONLY_FOR_ARCHS-sub if appropriate,
+then .include <bsd.port.arch.mk> (which was split off the main file
+specifically for that purpose), and rely on BUILD_PACKAGES for building.
+
+Shell tricks and constructs
+---------------------------
+- IFS is your friend: echo "a:b:c"| while IFS=: read a b c
+will split things along any character without requiring external commands
+such as cut.
+
+- don't run test for checking variable values. Rather:
+case "$$subdir" in *,*)  ... ;; *) ... ;; esac
+is entirely internal
+
+- the shell has booleans. Set variables to true/false to achieve boolean
+conditions. Note that those are usually built-ins, and hence even faster
+than you would think.
+
+- () forks a subshell.  If you need to syntactally keep a list of commands
+together, "{ cmd1; cmd2; }"   is the way to do it.
+
+- use trap to clean up at the end of a command. That's mostly used for
+caching stuff (depfile and cache), but also for the locking mechanism.
+
+- exec is often used for tail recursion: it replaces the shell with the
+executed command. BUT beware of pending traps, as you will lose them.
+
+- all of make commands are executed under -e. Thus, it's deadly to fail
+without a test around it. In the end, you might end up with:
+    if ( eval $$toset exec ${MAKE} subupdate ); then
+this forks a subshell to avoid the unpleasantness of -e, then execs the
+resulting command to avoid piling up an extra process.
+
+Make vs. Shell
+--------------
+There are at least *4* kind of variables in those files:
+- internal shell variables
+- environment variables
+- make variables set on the command line
+- make variables set within a makefile
+
+Note that make variables set on the command line ARE set in stone: it's very
+difficult to change them from within the Makefile, and they will override
+mostly anything you can do. They also appear in the environment.
+
+Thus, a lot of make thingies, such as FLAVOR and SUBPACKAGE must be set in
+the environment because make will run into subdirs and requires them to
+be changeable.
+
+Also, note that stuff set within Makefiles is not exported to the environment,
+you have to be explicit and set them when you run a command.
+
+When things get ambiguous, This document uses $$var for a shell variable,
+${VAR} for a variable set in make, and VAR for an environment variables.
+
+pkgpath.mk
+----------
+Named that way because it mostly deals with pkgpath parsing, but in reality,
+it's mostly a lift-up from the common parts between bsd.port.mk and
+bsd.port.subdir.mk (no reason for a name change so late in the game)
+
+fragments and common shell variables
+------------------------------------
+_pflavor_fragment (in pkgpath.mk)
+	takes $$subdir as a pkgpath parameter.
+	will parse it into a $$dir and $$toset variables, perform a cd $$dir
+	so that eval $$toset ${MAKE}   gets you into that
+	dependency (this will set PKGPATH, FLAVOR, SUBPACKAGE accordingly)
+
+	depending on $$_fullpath (true/false), will consider the absence
+	of flavor to be an empty flavor (e.g. $$toset contains FLAVOR='' )
+	or to be the default flavor (e.g. unset FLAVOR)
+
+	takes ${PORTSDIR_PATH} into account
+
+	succeeds if the dependency is correct and the directory is found.
+	Otherwise will emit an error message that ends with $$extra_msg.
+
+_flavor_fragment (in pkgpath.mk)
+	calls ${_pflavor_fragment} after imposing $$_fullpath=false. e.g., for
+	actual dependencies.
+
+_depfile_fragment (in pkgpath.mk)
+	sets _DEPENDS_FILE to a temporary file in the environment if it's
+	not already set. Set a trap to remove it on end.
+	_DEPENDS_FILE is used by the *dir-depends and show-run-depends targets
+	to not go thru the same directory twice. Beware of setting it
+	"too globally", since it prevents directory walking from happening
+	twice.
+
+_cache_fragment (in pkgpath.mk)
+	sets _DEPENDS_CACHE to a temporary directory in the environment
+	if it's not already set. Set a trap to remove it on end.
+	_DEPENDS_CACHE is used to store library lists in _libs2cache.
+	pkg_create(1) also knows about it and use it to store plists.
+	the ${SUDO} part in the trap is because some of the caching happens
+	during ${SUDO} pkg_create.
+	XXX also sets PKGPATH, as it reduces drastically the number of
+	PKGPATH=... needed in bsd.port.mk
+
+_read_spec/_parse_spec (in bsd.port.mk)
+	normally used in a pattern like:
+	${_emit_run_depends}|while ${_read_spec}; do
+		${_parse_spec};
+		...
+	done
+	takes specs, one per line, sets $$pkg $$subdir $$target,
+	and calls ${_flavor_fragment} to cd to the correct dir
+	and set $$toset.  Note that this takes "processed" specs:
+	transformation of pkgpath>=0.0 -> STEM->=0.0:pkgpath must have
+	already happened upfront (which happens in place for all
+	*DEPENDS variables).
+	This sets $$d to the spec being processed, which is probably a
+	bad variable name...
+
+_emit_run_depends/_emit_lib_depends (in bsd.port.mk)
+	writes out lists of specs suitable for ${_parse_spec}/${_read_spec}.
+
+_compute_default (in bsd.port.mk)
+	comes after ${_pflavor_fragment}, and obtains information from
+	the dependent port: sets $$default to the default pkgname,
+	$$pkgspec to the default pkgspec (see PKGSPEC), and $$pkgpath
+	to the actual pkgpath, when default flavors and subpackages are
+	taken into account (hence suitable for FULLPATH=Yes/$$_fullpath=true
+	Used alone when we only need $$default, as ${_complete_pkgspec} is
+	slightly more expensive.
+
+_complete_pkgspec (in bsd.port.mk)
+	comes after ${_pflavor_fragment}, obtains information from
+	the dependent port through ${_compute_default}, then make sure
+	$$pkg has the correct value.
+
+_libs2cache (in bsd.port.mk)
+	requires properly set dependency information obtained through
+	${_flavor_fragment} (often through ${_parse_spec}).
+	assumes ${_depcache_fragment} has been called, either directly,
+	or from an upper level target.
+	If not already available, secure the library list from the
+	dependency and store it in a file under _DEPENDS_CACHE.
+	Sets $$cached_libs to the file name.
+
+Locking
+-------
+Done thru _DO_LOCK and _SIMPLE_LOCK mostly. Most user-visible targets
+redirect through
+	${_DO_LOCK}; make _internal-$@
+as soon as locking is used (which is the default these days).
+The locking mechanism carefully maintains the _LOCK_HELD environment variable
+so that dependencies can relock themselves (yeah, it looks strange, but this
+happens !).
+
+_SIMPLE_LOCK only exists to provide separate locking targets for fetch: it
+assumes $$lock has been set to an appropriate lock file name.
+
+
+Internal targets are:
+_internal-clean _internal-package-only _internal-run-depends
+_internal-runlib-depends _internal-runwantlib-depends _internal-package
+_internal-build-depends _internal-buildlib-depends
+_internal-buildwantlib-depends _internal-regress-depends
+_internal-prepare _internal-depends _internal-fetch-all
+_internal-fetch _internal-all _internal-build _internal-checksum
+_internal-configure _internal-deinstall _internal-extract _internal-fake
+_internal-patch _internal-plist _internal-regress _internal-subpackage
+_internal-subupdate _internal-uninstall _internal-update
+_internal-update-or-install _internal-update-or-install-all
+_internal-update-plist _internal-distpatch
+(yeah, that's a lot).
+
+So, if you type "make", it will do
+make build -> lock && make _internal-all
+
+then make _internal-all will normally run thru
+_internal-fetch _internal-extract _internal-patch _internal-build
+without ever releasing the lock, thus preventing anything else to sneak
+in and break the build.
+
+The difference between _internal-package and _internal-package-only is only
+due to BULK=Yes, which has to happen exactly once after a user-level target
+that involves packaging is finished.
+
+Misc
+----
+- Modules inclusion is done through a separate modules.port.mk to handle
+recursion: modules may trigger the inclusion of other modules, thus
+modules.port.mk will re-include itself until the whole list is done.
+
+- MULTI_PACKAGES and SUBPACKAGE always get set to a non-empty value:
+if MULTI_PACKAGES is not set, it ends up as MULTI_PACKAGES=- and
+SUBPACKAGE=-. This does make loops over all subpackages simpler, e.g.,
+.for _s in ${MULTI_PACKAGES}  since make doesn't do anything if the list
+is empty...
+As a result, most subpackage-dependent variables end up being used as their
+"true" VAR-  form  in the case of a port without multi-packages.
+Exception: FULLPKGNAME needs some specific code for the !multi-packages case.
+There's also a special case for the PKGDIR stuff, which isn't suffixed with '-'
+in the non multi-package case.
+Also, dump-vars distinguishes the !multi case.
+
+Note that there are a few checks for empty SUBPACKAGE, these allow the whole
+bsd.port.mk file to parse, so that we end up with an actual user error
+message instead of some weird internal error.
+
+Dependency variables
+--------------------
+Old legacy dependency styles are gone, so the compat code went away.
+The code has to deal with BUILD_DEPENDS, LIB_DEPENDS, RUN_DEPENDS,
+REGRESS_DEPENDS, WANTLIB and RUN_DEPENDS-* LIB_DEPENDS-*, WANTLIB-*
+
+There is obviously completely different treatment for WANTLIB* and
+*DEPENDS*. Also, BUILD* stuff gets to inherit from LIB_DEPENDS* stripped
+of inter-dependencies, and RUN-s stuff must have LIB_DEPENDS* from
+inter-dependencies.
+
+
+First, the framework substitutes in place constructs like
+pkgpath>=version  into STEM->=version:pkgpath
+
+Then it accumulates dependency into build-time dependencies:
+- collect LIB_DEPENDS and LIB_DEPENDS-* as _BUILDLIB_DEPENDS
+- collect WANTLIB and WANTLIB-* as _BUILDWANTLIB
+(strip any interdependencies)
+
+Symetrically:
+- define _LIB4-* as the interdependencies in LIB_DEPENDS-*
+- define _LIB4 as the full list of all _LIB4-*
+
+- define _BUILD_DEPLIST, _RUN_DEPLIST, _REGRESS_DEPLIST, _BUILDLIB_DEPLIST,
+_RUNLIB_DEPLIST as the dependency lists relevant to the SUBPACKAGE being
+built (not set if NO_DEPENDS is Yes !)
+
+This accumulates as _DEPLIST, which is the full list of all specs in every
+dependency.
+
+*2 and *3 have the :configure/:patch/:build modifiers stripped:
+_BUILD_DEP2: BUILD_DEPENDS + _BUILDLIB_DEPENDS
+_BUILD_DEP3: BUILD_DEPENDS
+_BUILD_DEP3-*: _BUILD_DEP3
+
+_RUN_DEP2: RUN_DEPENDS (+LIB_DEPENDS-s if shared)
+_RUN_DEP3: RUN_DEPEND
+_RUN_DEP3-*: RUN_DEPENDS-* (+LIB_DEPENDS-* if shared)
+
+_LIB_DEP3: (LIB_DEPENDS-s if shared)
+_LIB_DEP3-*: (LIB_DEPENDS-* if shared)
+
+_REGRESS_DEP2: REGRESS_DEPENDS
+_REGRESS_DEP3: REGRESS_DEPENDS
+
+_DEPBUILDLIBS: _BUILDWANTLIB
+_DEPRUNLIBS: WANTLIB-s
+
+_BUILD_DEP is the _BUILD_DEP2 paths, without the specs
+_RUN_DEP is the _RUN_DEP2 paths, without the specs
+_REGRESS_DEP is the _REGRESS_DEP2 paths, without the specs
+
+e.g., *2 is "all the shit relevant to the port at hand", *3 is
+"only the shit directly relevant to the port with subpackages,
+or everything pertinent to THAT given subpackage".
+
+This gets converted into cookies relevant to each dependency
+_DEPBUILDLIBS -> _DEPBUILDLIBSPECS_COOKIES as .spec-$i
+_DEPRUNLIBS -> _DEPRUNLIBSPECS_COOKIES as .spec-$i
+_DEPBUILDWANTLIB_COOKIE as .buildwantlibs
+_DEPRUNWANTLIB_COOKIE as .runwantlibs-s
+
+Then there are rules for each dependency: a loop over _DEPLIST
+for each spec, and code to build both _DEP*WANTLIB_COOKIEs
+
+There's also some dependency in handling in
+*wantlib-args, lib-depends-args and run-depends-args.
+
+_DEPENDS_TARGET: used to be DEPENDS_TARGET, and visible, but not documented
+for years, and it can be set internally. Ports normally install their
+dependencies, with the exception of "make reinstall", and "make update".
+
+_FETCH_MAKEFILE: where to put the output of "fetch-makefile", by default
+stdout, but overridden from the main Makefile.
+
+_SHSCRIPT: prepend to a shell script in the infrastructure, e.g.,
+    ${_SHSCRIPT}/update-patches
+
+_PERLSCRIPT: likewise for perl scripts.
+
+_ALL_VARIABLES _ALL_VARIABLES_INDEXED _ALL_VARIABLES_PER_ARCH:
+	stuff to dump in dump-vars. First is "simple" variable, second one
+	will depend on the subpackage, and for last one, must iterate
+	over arches to get all relevant information.
+
+_BAD_LICENSING:
+note that the PERMIT_* variables are defined for subpackages as soon as
+the main variables are defined, so it's enough to check the normal variables.
+
+_lt_libs:
+	derived from SHARED_LIBRARIES explicitly for libtool
+
+_FLAVOR_EXT2: FLAVOR_EXT with pseudo-flavors included
+
+_PKG_ARGS: list of stuff to append to base PKG_ARGS-sub based on a lot of
+internal choices.
+
+_README_DIR: location for the pkg-readmes, no user serviceable parts inside.
+
+_MASTER: dependencies may be confusing, so set _MASTER to know where we come
+from when patching/configuring only.
+
+_SOLVING_DEP: pkg_add -a to avoid manually installed packages.
+
+_CHECK_DEPENDS: save all depends prior to tweaking them, just in case.
+
+
+_PERL_FIX_SHAR make visible ?
+TODO document:
+	MAKE_JOBS
+	PARALLEL_BUILD
+	PARALLEL_INSTALL
+	XAUTHORITY for interactive regress
+fishy: FLAVORS regress ?
+fishy: REGRESS_STATUS_IGNORE
+
+fishy:
+	GUNZIP_CMD
+	GZCAT
+	GZIP
+	GZIP_CMD
+	M4
+	STRIP
+
+uninstall ? deinstall
+
+Todo: kill PORT_LD_LIBRARY_PATH, DEPBASE, DEPDIR
+
+Document: all recursive targets

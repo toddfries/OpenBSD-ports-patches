@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2011/05/11 12:03:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2011/12/17 22:01:13 sthen Exp $
 
 COMMENT=		threaded DNS daemon, optimized for caching
 
 DISTNAME=		pdnsd-1.2.8-par
 PKGNAME=		${DISTNAME:S/-par//}
-REVISION=		0
-CATEGORIES=     	net
+REVISION=		3
+CATEGORIES=		net
 MASTER_SITES=		${HOMEPAGE}/releases/
 
 HOMEPAGE=		http://www.phys.uu.nl/~rombouts/pdnsd/
@@ -17,9 +17,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c pthread
 
-NO_REGRESS=		Yes
+WANTLIB += c pthread
 
 USE_GMAKE=		yes
 USE_GROFF=		Yes

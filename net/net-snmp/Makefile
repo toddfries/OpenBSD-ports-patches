@@ -1,21 +1,20 @@
-# $OpenBSD: Makefile,v 1.58 2011/07/19 21:32:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.63 2012/02/21 22:10:20 sthen Exp $
 
 COMMENT-main=	extendable SNMP implementation
 COMMENT-perl=	SNMP modules for Perl
 COMMENT-tkmib=	graphical SNMP MIB browser
 
-V=		5.7
+V=		5.7.1
 DISTNAME=	net-snmp-$V
-REVISION-main=	1
-REVISION-perl=	1
-REVISION-tkmib=	0
 
 MULTI_PACKAGES=	-main -perl -tkmib
 PKGNAME-main=	${DISTNAME}
+REVISION-main=	2
+REVISION-perl=	0
 PKGNAME-perl=	p5-SNMP-$V
 PKGNAME-tkmib=	net-snmp-tkmib-$V
 
-LIBV=		12.0
+LIBV=		12.1
 .for i in netsnmp netsnmpagent netsnmphelpers netsnmpmibs netsnmptrapd
 SHARED_LIBS +=	$i ${LIBV}
 .endfor
@@ -47,7 +46,7 @@ NET_SNMP_MIB_LIST=	smux mibII/mta_sendmail
 # - this is checked in pre-configure as we don't want it to get out of sync
 DEFAULT_MIBS=		IP-MIB:IF-MIB:TCP-MIB:UDP-MIB:SNMPv2-MIB:RFC1213-MIB
 # - base OpenBSD mibs (/usr/share/snmp/mibs)
-OPENBSD_MIBS=		OPENBSD-BASE-MIB:OPENBSD-MEM-MIB:OPENBSD-SENSORS-MIB:OPENBSD-SNMPD-CONF
+OPENBSD_MIBS=		OPENBSD-BASE-MIB:OPENBSD-CARP-MIB:OPENBSD-MEM-MIB:OPENBSD-SENSORS-MIB:OPENBSD-SNMPD-CONF
 
 USE_GROFF=	Yes
 USE_LIBTOOL=	Yes
@@ -86,5 +85,6 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/net-snmp
 	${INSTALL_DATA} ${WRKBUILD}/EXAMPLE.conf \
 	    ${PREFIX}/share/examples/net-snmp
+	${INSTALL_DATA} ${FILESDIR}/OPENBSD-PF-MIB.txt ${PREFIX}/share/snmp/mibs
 
 .include <bsd.port.mk>

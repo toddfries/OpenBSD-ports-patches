@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2011/06/08 17:31:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2011/10/12 12:54:30 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,7 +7,7 @@ COMMENT=	Python wrapper module for the ao library
 MODPY_EGG_VERSION=0.82
 DISTNAME=	pyao-${MODPY_EGG_VERSION}
 PKGNAME=	${DISTNAME:S/py/py-/}
-REVISION =	7
+REVISION =	9
 CATEGORIES=	audio
 HOMEPAGE=	http://ekyo.nerim.net/software/pyogg/
 
@@ -17,7 +17,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ao
+WANTLIB += ao ${MODPY_WANTLIB}
 
 MASTER_SITES=	${HOMEPAGE}
 

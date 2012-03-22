@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2011/01/06 04:24:24 jeremy Exp $
+# $OpenBSD: Makefile,v 1.8 2011/11/17 16:08:00 jeremy Exp $
 
 COMMENT =	another synchronous Ruby amqp client
 
 DISTNAME =	bunny-0.6.0
-REVISION =	3
+REVISION =	4
 CATEGORIES =	net
 
 # MIT
@@ -20,6 +20,6 @@ CONFIGURE_STYLE = ruby gem
 REGRESS_IS_INTERACTIVE = Yes
 
 MODRUBY_REGRESS = rake rspec
-RSPEC_REGRESS_TARGET = all
+MODRUBY_REGRESS_TARGET = all
 
 .include <bsd.port.mk>

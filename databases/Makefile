@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.199 2011/08/19 06:44:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.205 2012/02/27 10:22:39 giovanni Exp $
 # $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
 #
      SUBDIR =
@@ -10,7 +10,6 @@
      SUBDIR += directoryassistant
      SUBDIR += evolution-data-server
      SUBDIR += freetds
-     SUBDIR += freetds,msdblib
      SUBDIR += gdbm
      SUBDIR += gnats
      SUBDIR += gq
@@ -29,7 +28,6 @@
      SUBDIR += libpqxx
      SUBDIR += luasqlite3
      SUBDIR += luma
-     SUBDIR += maatkit
      SUBDIR += mdbtools/snapshot
      SUBDIR += mongodb
      SUBDIR += mysql
@@ -118,12 +116,14 @@
      SUBDIR += pear-MDB2-mysql
      SUBDIR += pear-MDB2-mysqli
      SUBDIR += pear-MDB2-sqlite
+     SUBDIR += percona-toolkit
      SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3
      SUBDIR += pgbouncer
      SUBDIR += pgfouine
      SUBDIR += pgloader
+     SUBDIR += pgpool
      SUBDIR += pgtcl
      SUBDIR += pgworksheet
      SUBDIR += pkglocatedb
@@ -135,17 +135,16 @@
      SUBDIR += py-cdb
      SUBDIR += py-couchdb
      SUBDIR += py-elixir
-     SUBDIR += py-ldap,python2.4
      SUBDIR += py-ldap
      SUBDIR += py-mysql
      SUBDIR += py-odbc
      SUBDIR += py-pgsql
-     SUBDIR += py-psycopg,python2.4
      SUBDIR += py-psycopg
      SUBDIR += py-psycopg2
      SUBDIR += py-pygresql
      SUBDIR += py-redis
      SUBDIR += py-sqlalchemy
+     SUBDIR += py-sqlalchemy-migrate
      SUBDIR += py-sqlite
      SUBDIR += py-sqlite2
      SUBDIR += py-sqlobject
@@ -203,6 +202,7 @@
      SUBDIR += ruby-sqlite3
      SUBDIR += ruby-sqlite3,ruby19
      SUBDIR += ruby-sqlite3,rbx
+     SUBDIR += ruby-sqlite3,jruby
      SUBDIR += ruby-swift
      SUBDIR += ruby-tiny_tds
      SUBDIR += ruby-tiny_tds,ruby19

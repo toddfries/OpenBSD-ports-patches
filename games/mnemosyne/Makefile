@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2011/06/08 17:35:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2011/12/20 18:55:08 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	flash-card tool which optimises your learning process
 
 MODPY_EGG_VERSION=1.2.2
 DISTNAME=	mnemosyne-${MODPY_EGG_VERSION}
-REVISION =	1
+REVISION =	4
 CATEGORIES=	games education
 
 EXTRACT_SUFX=	.tgz
@@ -28,6 +28,7 @@ MODPY_SETUPTOOLS=yes
 RUN_DEPENDS=	x11/py-qt3 \
 		devel/pygame \
 		textproc/py-xml \
+		graphics/py-Imaging \
 		devel/desktop-file-utils
 
 NO_REGRESS=	Yes

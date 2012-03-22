@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.3 2011/07/19 17:28:48 jeremy Exp $
+# $OpenBSD: Makefile.inc,v 1.5 2011/11/17 11:47:12 jeremy Exp $
 
 SHARED_ONLY ?=	Yes
 
@@ -26,10 +26,6 @@ CONFIGURE_ENV +=	PREFIX="${PREFIX}" \
 			CPPFLAGS="-DOPENSSL_NO_STATIC_ENGINE -I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-INSTALL_TARGET ?=	install install-doc
 REV ?=			${VERSION:R}
 SUB ?=			${MACHINE_ARCH:S/amd64/x86_64/}-openbsd
 SUBST_VARS +=		SUB REV
-
-# Building the ruby documentation consumes lots of memory.
-VMEM_WARNING = Yes

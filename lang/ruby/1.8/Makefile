@@ -1,24 +1,22 @@
-# $OpenBSD: Makefile,v 1.15 2011/07/19 17:06:39 jeremy Exp $
+# $OpenBSD: Makefile,v 1.21 2012/02/28 00:17:17 jeremy Exp $
 
 COMMENT-main=		object oriented script language with threads
 COMMENT-iconv=		libiconv interface for ruby
 COMMENT-gdbm=		gdbm interface for ruby
 COMMENT-tk=		tk interface for ruby
+COMMENT-ri_docs=	ri documentation files ruby
 
 VERSION=		1.8.7
-PATCHLEVEL=		352
+PATCHLEVEL=		358
 
 SHARED_LIBS=		ruby18 0.0
 PKGNAME-main=		ruby-${VERSION}.${PATCHLEVEL}
 PKGNAME-iconv=		ruby-iconv-${VERSION}.${PATCHLEVEL}
 PKGNAME-gdbm=		ruby-gdbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-tk=		ruby-tk-${VERSION}.${PATCHLEVEL}
+PKGNAME-ri_docs=	ruby-ri_docs-${VERSION}.${PATCHLEVEL}
 
-REVISION-main=		1
-REVISION-iconv=		1
-REVISION-gdbm=		1
-REVISION-tk=		1
-
+PKG_ARCH-ri_docs=	*
 PKGSPEC-main=		ruby->=1.8,<1.9
 
 CONFIGURE_ARGS=		--program-suffix=18 \
@@ -36,7 +34,7 @@ WANTLIB-main= 		c m readline termcap util crypto ncurses ssl z
 LIB_DEPENDS-main=
 RUN_DEPENDS-main=
 
-PSEUDO_FLAVORS= 	no_x11
+PSEUDO_FLAVORS= 	no_x11 no_ri_docs
 FLAVOR?=
 
 MULTI_PACKAGES=		-main -iconv -gdbm
@@ -51,7 +49,7 @@ LIB_DEPENDS-gdbm =	databases/gdbm \
 			lang/ruby/${REV},-main
 RUN_DEPENDS-gdbm =       
 
-.if !${FLAVOR:L:Mno_x11}
+.if !${FLAVOR:Mno_x11}
 MULTI_PACKAGES+=	-tk
 CONFIGURE_ARGS+=	--with-tcl-include=${PREFIX}/include/tcl8.5 \
 			--with-tk-include=${PREFIX}/include/tk8.5 \
@@ -60,6 +58,13 @@ WANTLIB-tk =		X11 c m ruby18 tcl85 tk85
 LIB_DEPENDS-tk =		tk->=8.5,<8.6:x11/tk/8.5 \
 			lang/ruby/${REV},-main
 RUN_DEPENDS-tk =		
+.endif
+
+.if !${FLAVOR:Mno_ri_docs}
+MULTI_PACKAGES +=	-ri_docs
+ALL_TARGET =		all rdoc
+INSTALL_TARGET =	install install-doc
+VMEM_WARNING =		Yes
 .endif
 
 # Known regression failures in OpenSSL extension on sparc64

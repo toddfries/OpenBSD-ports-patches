@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2011/08/27 08:19:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2011/12/17 21:20:45 ajacoutot Exp $
 
 COMMENT=	graphic library for GTK+2
 
-V=		2.24.0
+V=		2.24.1
 DISTNAME=	gdk-pixbuf-${V}
 
 EXTRACT_SUFX=	.tar.xz
@@ -23,7 +23,7 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 c gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += jasper jpeg m pcre png pthread tiff xcb z
+WANTLIB += jasper jpeg m pcre png pthread tiff xcb z ffi
 
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gdk-pixbuf/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
 
@@ -47,6 +47,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--disable-Bsymbolic \
 		--enable-introspection \
-		--with-libjasper
+		--with-libjasper \
+		--with-x11
 
 .include <bsd.port.mk>

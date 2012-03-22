@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2011/05/09 17:03:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2011/09/28 09:51:37 jasper Exp $
 
 COMMENT=	integration of xdg-user-dirs into GNOME/gtk+
 
 GNOME_PROJECT=	xdg-user-dirs-gtk
 GNOME_VERSION=	0.8
-REVISION=	7
+REVISION=	8
 
 CATEGORIES=	x11 devel
 
@@ -15,6 +15,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+EXTRACT_SUFX=		.tar.bz2
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
@@ -31,8 +33,7 @@ RUN_DEPENDS=	devel/xdg-user-dirs>=0.13p0
 LIB_DEPENDS=	x11/gtk+2
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
+MODGNOME_LDFLAGS=-pthread
 
 CFLAGS+=	-pthread
 

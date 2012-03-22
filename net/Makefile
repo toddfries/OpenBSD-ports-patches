@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.709 2011/08/21 16:26:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.732 2012/02/28 19:30:13 nigel Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -26,7 +26,6 @@
      SUBDIR += arping
      SUBDIR += arpwatch
      SUBDIR += avahi,
-     SUBDIR += avahi,no_mono
      SUBDIR += axel
      SUBDIR += balance
      SUBDIR += bindgraph
@@ -34,7 +33,6 @@
      SUBDIR += bird
      SUBDIR += bird,v6
      SUBDIR += bitlbee
-     SUBDIR += bluetooth-tools
      SUBDIR += bnc
      SUBDIR += bro
      SUBDIR += btpd
@@ -44,6 +42,7 @@
      SUBDIR += cftp
      SUBDIR += charm
      SUBDIR += cjc
+     SUBDIR += climm
      SUBDIR += clive
      SUBDIR += clog
      SUBDIR += cnupm
@@ -73,6 +72,7 @@
      SUBDIR += echoping
      SUBDIR += ejabberd
      SUBDIR += ekg
+     SUBDIR += emacs-jabber
      SUBDIR += emesene
      SUBDIR += enet
      SUBDIR += epic4
@@ -89,6 +89,7 @@
      SUBDIR += flowd
      SUBDIR += flvstreamer
      SUBDIR += fmirror
+     SUBDIR += fpdns
      SUBDIR += fping
      SUBDIR += freeradius
      SUBDIR += freetalk
@@ -104,6 +105,7 @@
      SUBDIR += gnugk
      SUBDIR += gopher
      SUBDIR += gotthard
+     SUBDIR += grake
      SUBDIR += gsnmp
      SUBDIR += gssdp
      SUBDIR += gtk-gnutella
@@ -161,10 +163,10 @@
      SUBDIR += ldns
      SUBDIR += lftp
      SUBDIR += libbgpdump
-     SUBDIR += libbind
      SUBDIR += libcares
      SUBDIR += libdnet
      SUBDIR += libdnsres
+     SUBDIR += libepc
      SUBDIR += libgadu
      SUBDIR += libnet
      SUBDIR += libnetdude
@@ -176,6 +178,7 @@
      SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
+     SUBDIR += libsmi
      SUBDIR += libsocialweb
      SUBDIR += libst
      SUBDIR += libtorrent
@@ -183,12 +186,14 @@
      SUBDIR += livemedia
      SUBDIR += loudmouth
      SUBDIR += luasocket
+     SUBDIR += maclookup
      SUBDIR += maradns
      SUBDIR += mbrowse
      SUBDIR += mcabber
      SUBDIR += meanwhile
      SUBDIR += microblog-purple
      SUBDIR += minbif
+     SUBDIR += miniupnp
      SUBDIR += mirmon
      SUBDIR += mirror
      SUBDIR += mldonkey
@@ -203,8 +208,10 @@
      SUBDIR += mutella
      SUBDIR += nagios
      SUBDIR += nam
+     SUBDIR += natpmpd
      SUBDIR += nbtscan
      SUBDIR += ncftp
+     SUBDIR += nedi
      SUBDIR += nemesis
      SUBDIR += neon
      SUBDIR += nepenthes
@@ -240,10 +247,12 @@
      SUBDIR += onioncat
      SUBDIR += opal
      SUBDIR += openafs
+     SUBDIR += openconnect
      SUBDIR += openfire
      SUBDIR += openmdns
      SUBDIR += openvmps
      SUBDIR += openvpn
+     SUBDIR += openvpn-auth-ldap
      SUBDIR += openvpn_bsdauth
      SUBDIR += osrtspproxy
      SUBDIR += owamp
@@ -275,6 +284,7 @@
      SUBDIR += p5-Net-DHCP
      SUBDIR += p5-Net-DNS
      SUBDIR += p5-Net-DNS-DynDNS
+     SUBDIR += p5-Net-DNS-Resolver-Programmable
      SUBDIR += p5-Net-DNS-SEC
      SUBDIR += p5-Net-Daemon
      SUBDIR += p5-Net-Dict
@@ -303,6 +313,7 @@
      SUBDIR += p5-Net-NTP
      SUBDIR += p5-Net-Netmask
      SUBDIR += p5-Net-OAuth
+     SUBDIR += p5-Net-OpenSSH
      SUBDIR += p5-Net-PH
      SUBDIR += p5-Net-ParseWhois
      SUBDIR += p5-Net-Patricia
@@ -426,7 +437,6 @@
      SUBDIR += py-dns
      SUBDIR += py-dnspython
      SUBDIR += py-dpkt
-     SUBDIR += py-enet
      SUBDIR += py-flowd
      SUBDIR += py-flowtools
      SUBDIR += py-ftpdlib
@@ -443,12 +453,14 @@
      SUBDIR += py-twitter
      SUBDIR += py-xmpp
      SUBDIR += py-xmpppy
+     SUBDIR += py-zmq
      SUBDIR += py-zsi
      SUBDIR += qsynergy
      SUBDIR += quagga
      SUBDIR += queryperf
      SUBDIR += queso
      SUBDIR += quirc
+     SUBDIR += quvi
      SUBDIR += rabbitmq
      SUBDIR += radiusd-cistron
      SUBDIR += radiusd-lucent
@@ -456,6 +468,7 @@
      SUBDIR += rrdtool
      SUBDIR += rsnapshot
      SUBDIR += rsync
+     SUBDIR += rsync,iconv
      SUBDIR += rtg
      SUBDIR += rtmpdump
      SUBDIR += rtorrent
@@ -516,6 +529,7 @@
      SUBDIR += supybot
      SUBDIR += synergy
      SUBDIR += tacacs+
+     SUBDIR += tcl-snmptools
      SUBDIR += tclcurl
      SUBDIR += tcludp
      SUBDIR += tcpcat
@@ -537,6 +551,7 @@
      SUBDIR += tkirc
      SUBDIR += tn5250
      SUBDIR += tor
+     SUBDIR += torsocks
      SUBDIR += totd
      SUBDIR += trafd
      SUBDIR += trafshow

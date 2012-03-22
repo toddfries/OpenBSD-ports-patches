@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.98 2011/08/16 15:01:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.116 2012/02/27 19:01:34 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
@@ -6,6 +6,9 @@ COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
 PKGNAME=	zarafa-${V}
 PKGNAME-main=	zarafa-${V}
 PKGNAME-web=	zarafa-webaccess-${V}
+
+REVISION-main=	0
+REVISION-web=	0
 
 CATEGORIES=	mail www productivity
 
@@ -19,6 +22,7 @@ SHARED_LIBS +=  common_mapi          2.0      # 1.0
 SHARED_LIBS +=  common_ssl           2.0      # 1.0
 SHARED_LIBS +=  freebusy             2.0      # 1.0
 SHARED_LIBS +=  zarafasync           2.0      # 1.0
+SHARED_LIBS +=  zarafacontacts       0.0      # 0.0
 
 MULTI_PACKAGES=	-main -web
 
@@ -39,13 +43,16 @@ WANTLIB-main += crypto execinfo gssapi ical icalss icudata icui18n
 WANTLIB-main += icuuc krb5 lber ldap mysqlclient ncurses
 WANTLIB-main += sasl2 ssl util uuid vmime-zarafa xml2
 
+RUN_DEPENDS-main=${MODGETTEXT_RUN_DEPENDS} \
+		${MODPY_RUN_DEPENDS} \
+		textproc/catdoc
 LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		textproc/libxml \
 		databases/mysql \
 		databases/openldap \
 		devel/uuid \
 		devel/libexecinfo \
-		mail/zarafa/libvmime>=0.9.2 \
+		mail/zarafa/libvmime>=0.9.2v0 \
 		textproc/libical \
 		textproc/icu4c \
 		devel/boost
@@ -92,6 +99,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-static \
 		--disable-perl \
+		--with-mapi-configdir=${SYSCONFDIR}/mapi \
 		--with-userscript-prefix=${SYSCONFDIR}/zarafa/userscripts \
 		--with-quotatemplate-prefix=${SYSCONFDIR}/zarafa/quotamail \
 		--enable-dependency-tracking \
@@ -113,7 +121,8 @@ CONFIGURE_ARGS+= --with-krb5-config=/usr/bin/true
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples \
 		USERSCRIPTDIR=${PREFIX}/share/examples/zarafa/userscripts \
 		QUOTATEMPLATEDIR=${PREFIX}/share/examples/zarafa/quotamail \
-		INDEXERSCRIPTSDIR=${PREFIX}/share/examples/zarafa/indexerscripts
+		INDEXERSCRIPTSDIR=${PREFIX}/share/examples/zarafa/indexerscripts \
+		MAPICONFIGDIR=${PREFIX}/share/examples/zarafa/mapi
 
 SUB_SCRIPTS=	createcompany.d/00createpublic groups_common.sh \
 		createuser.d/00createstore companies_common.sh \
@@ -134,7 +143,8 @@ pre-configure:
 	for i in ${SUB_SCRIPTS}; do \
 		${SUBST_CMD} ${WRKSRC}/installer/userscripts/$$i; done
 	${SUBST_CMD} ${WRKSRC}/php-ext/Makefile.in \
-		${WRKSRC}/spooler/DAgent.cpp
+		${WRKSRC}/spooler/DAgent.cpp \
+		${WRKSRC}/installer/linux/zarafa-client-update.cron
 	perl -pi -e 's,/usr/share/zarafa,${PREFIX}/share/examples/zarafa,g;' \
 		-e 's,/etc/zarafa,${SYSCONFDIR}/zarafa,g;' \
 		-e 's,/usr/bin,${PREFIX}/bin,g;' \
@@ -154,7 +164,7 @@ post-install:
 		-or -name \*.beforesubst | xargs rm
 	cd ${WRKBUILD}/php-webclient-ajax && tar cf - ./ | \
 		tar -xf - -C ${WRKINST}${INSTDIR}
-	${INSTALL_DATA} ${WRKINST}${INSTDIR}/debug.php \
+	mv ${WRKINST}${INSTDIR}/debug.php \
 		${WRKINST}${INSTDIR}/debug.php.disabled
 	${INSTALL_DATA} /dev/null ${WRKINST}${INSTDIR}/debug.txt
 	${SUBST_CMD} -c ${FILESDIR}/zarafa.conf \
@@ -181,10 +191,12 @@ post-install:
 	mv ${PREFIX}/share/examples/zarafa/zarafa.ini \
 		${PREFIX}/share/examples/php-${MODPHP_VERSION}/${MODULE_NAME}.ini
 	mv ${PREFIX}/share/php ${WRKINST}${PREFIX-web}/include/php
+	mv ${PREFIX}/share/examples/cron.daily/zarafa-client-update \
+		${PREFIX}/share/examples/zarafa/
 	rm ${PREFIX}/share/examples/zarafa/unix.cfg
 	rm ${PREFIX}/share/doc/zarafa/ssl-certificates.sh
 	rmdir ${PREFIX}/share/doc/{zarafa/example-config,zarafa-gateway}
-	rm -rf ${PREFIX}/share/examples/{init.d,logrotate.d,zarafa/zarafa-gateway,zarafa/license}
+	rm -rf ${PREFIX}/share/examples/{cron.daily,init.d,logrotate.d,sysconfig,zarafa/zarafa-gateway,zarafa/license}
 
 	# part of zarafa-licensed (i.e. commercial edition, linux bin only)
 	cd ${PREFIX} && rm \
@@ -195,8 +207,13 @@ post-install:
 		man/man1/zarafa-report.1 \
 		man/man1/za-aclsync.1 \
 		man/man1/zarafa-msr.1 \
-		man/man5/zarafa-msr.cfg.5
-	rmdir ${PREFIX}/share/examples/zarafa/{report,report-ca}
+		man/man5/zarafa-msr.cfg.5 \
+		man/man5/zarafa-backup.cfg.5
+	rmdir ${PREFIX}/share/examples/zarafa/report-ca
+	rmdir ${PREFIX}/var/lib/zarafa/report
+	rmdir ${PREFIX}/var/lib/zarafa/
+	rmdir ${PREFIX}/var/lib/
+	rmdir ${PREFIX}/var/
 
 	chown -R ${SHAREOWN}:${SHAREGRP} ${WRKINST}${INSTDIR}
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/zarafa

@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/21 09:33:56 landry Exp $
+# $OpenBSD: Makefile,v 1.11 2011/09/21 14:13:32 pea Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	geographic objects support for PostgreSQL
-DISTNAME=	postgis-1.5.2
+DISTNAME=	postgis-1.5.3
 CATEGORIES=	geo databases
-REVISION=	0
 
 HOMEPAGE=	http://www.postgis.org/
 

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2011/07/03 18:49:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2011/12/18 09:01:45 ajacoutot Exp $
 
 COMMENT=	free open source planetarium
 
 DISTNAME=	stellarium-0.11.0
+REVISION=	1
 
 CATEGORIES=	astro x11
 
@@ -32,8 +33,6 @@ RUN_DEPENDS=	net/curl \
 CONFIGURE_STYLE=cmake
 CONFIGURE_ENV=	HOME=${WRKDIR}
 CONFIGURE_ARGS=	-Wno-dev
-
-USE_GROFF=	Yes
 
 PORTHOME=	${WRKDIR}
 

@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile.inc,v 1.4 2011/03/03 13:49:27 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.6 2011/09/15 09:05:22 ajacoutot Exp $
 
-V=		1.0.6
+V=		1.0.8
 BASENAME=	backintime-${V}
 DISTNAME=	${BASENAME}_src
 
@@ -40,6 +40,6 @@ pre-configure:
 post-install:
 	mv ${PREFIX}/share/man/* ${PREFIX}/man
 	gunzip ${PREFIX}/man/man[1-9]/*.gz
-	rm -rf ${PREFIX}/share/{doc/backintime-*,man}
+	rm -rf ${PREFIX}/share/{doc/backintime-*,gnome,man,omf}
 	rm -f ${PREFIX}/share/doc/backintime/{CHANGES,README,VERSION}
 	rm -f ${PREFIX}/share/applications/backintime-gnome-root.desktop

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.32 2011/07/14 09:23:04 jakob Exp $
+# $OpenBSD: Makefile,v 1.39 2012/02/02 13:42:13 sthen Exp $
 
 COMMENT=	validating DNS resolver
 
-DISTNAME=	unbound-1.4.12
+DISTNAME=	unbound-1.4.15
+REVISION=	0
 CATEGORIES=	net
 
 MASTER_SITES=	http://www.unbound.net/downloads/
@@ -17,15 +18,15 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 SEPARATE_BUILD=		concurrent
-CONFIGURE_STYLE=	gnu
+CONFIGURE_STYLE=	autoconf
+AUTOCONF_VERSION=	2.68
 USE_LIBTOOL=		Yes
-USE_GMAKE=		Yes
 NO_REGRESS=		Yes
 
-SHARED_LIBS+=		unbound 2.8
+SHARED_LIBS+=		unbound 3.2
 
-WANTLIB=		c crypto event expat ldns>=4.7 ssl
-LIB_DEPENDS+=		net/ldns/libldns>=1.6.9
+WANTLIB=		c crypto event expat ldns>=4.10 ssl
+LIB_DEPENDS+=		net/ldns/libldns>=1.6.12
 
 CONFIGURE_ARGS+=	--enable-allsymbols \
 			--with-ssl=/usr \
@@ -37,7 +38,6 @@ CONFIGURE_ARGS+=	--enable-allsymbols \
 			--with-pidfile=/var/unbound/var/run/unbound.pid \
 			--with-conf-file=/var/unbound/etc/unbound.conf \
 			--with-username=_unbound
-USE_GROFF =	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/unbound

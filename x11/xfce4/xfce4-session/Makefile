@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.48 2011/06/02 13:41:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.55 2011/12/03 22:39:12 ajacoutot Exp $
 
 COMMENT=	Xfce4 session manager
 
 XFCE_PROJECT=	xfce4-session
-
+XFCE_VERSION=	4.8.2
 REVISION=	2
 
 SHARED_LIBS +=	xfsm-4.6	0.0 # .0.0
@@ -15,7 +15,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
-DESKTOP_FILES=	Yes
+MODXFCE_DESKTOP_FILE=	Yes
+MODXFCE_ICON_CACHE=	Yes
 
 CONFIGURE_ARGS=	--disable-linker-opts \
 		--disable-hal \
@@ -30,16 +31,21 @@ LIB_DEPENDS=	x11/xfce4/libxfce4ui>=4.8.0\
 		x11/xfce4/xfconf>=4.8.0 \
 		devel/libwnck
 
-WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
-		Xfixes Xi Xinerama Xrandr Xrender XRes atk-1.0 c cairo dbus-1 \
-		dbus-glib-1 expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
-		gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 \
-		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre \
-		pixman-1 png pthread startup-notification-1 xfce4util z \
-		pthread-stubs xcb execinfo xcb-atom xcb-aux xcb-event \
-		gthread-2.0 xcb-render wnck-1 xfconf-0 GL Xxf86vm drm \
-		xcb-shm xfce4panel-1.0 xfce4ui-1
+WANTLIB += GL ICE SM X11 X11-xcb XRes Xau Xcomposite Xcursor Xdamage
+WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
+WANTLIB += atk-1.0 c cairo dbus-1 dbus-glib-1 drm expat ffi fontconfig
+WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 m pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs startup-notification-1 wnck-1 xcb xcb-aux
+WANTLIB += xcb-render xcb-shm xfce4panel-1.0 xfce4ui-1 xfce4util
+WANTLIB += xfconf-0 z
 
 FAKE_FLAGS=	settingsdir=${PREFIX}/share/examples/xfce4-session
+
+# XXX workaround for pkg_add bug when a symlink to a dir becomes a real dir
+post-install:
+	rm -Rf ${PREFIX}/share/doc/xfce4-session/html/el/images/
+	ln -s ${TRUEPREFIX}/share/doc/xfce4-session/html/C/images ${PREFIX}/share/doc/xfce4-session/html/el/images
 
 .include <bsd.port.mk>

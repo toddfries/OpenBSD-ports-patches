@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.17 2011/08/25 10:40:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2012/02/16 22:26:22 ajacoutot Exp $
 
 COMMENT=		Foomatic PPD generator
 
 DISTNAME=		foomatic-db-engine-4.0.8
+REVISION=		0
 CATEGORIES=		print
 
 HOMEPAGE=		http://www.linux-foundation.org/en/OpenPrinting/Database/Foomatic
@@ -15,9 +16,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		http://www.linuxprinting.org/download/foomatic/ \
-			http://www.openprinting.org/download/foomatic/ \
-			http://www.linuxprinting.org/download/foomatic/oldstuff/ \
+MASTER_SITES=		http://www.openprinting.org/download/foomatic/ \
 			http://www.openprinting.org/download/foomatic/oldstuff/
 
 MODULES=		converters/libiconv

@@ -1,22 +1,23 @@
-$OpenBSD: patch-config-scripts_cups-pdf_m4,v 1.2 2010/03/31 16:20:02 ajacoutot Exp $
+$OpenBSD: patch-config-scripts_cups-pdf_m4,v 1.4 2012/02/17 07:45:10 ajacoutot Exp $
 
-Security fix for CVE-2009-3608, CVE-2009-3609.
-CUPS "pdftops" Filter Data Handling Integer Overflow Vulnerabilities
+CUPS check for the ghostscript binary; we cannot depend on
+print/ghostscript/gnu because of a cyclic dependency but we know our
+gs supports the ps2write device.
 
-Patch from Ubuntu: poppler-based-pdftops-fixes.dpatch
-
---- config-scripts/cups-pdf.m4.orig	Sat Aug  8 00:30:30 2009
-+++ config-scripts/cups-pdf.m4	Thu Dec 10 15:28:50 2009
-@@ -79,6 +79,12 @@ case "x$with_pdftops" in
- 	;;
- esac
+--- config-scripts/cups-pdf.m4.orig	Fri Feb 17 08:35:39 2012
++++ config-scripts/cups-pdf.m4	Fri Feb 17 08:35:59 2012
+@@ -91,12 +91,8 @@ if test "x$CUPS_PDFTOPS" != x; then
+ 	DEFAULT_PDFTOPS=""
+ elif test "x$CUPS_GHOSTSCRIPT" != x; then
+ 	AC_MSG_CHECKING(whether gs supports the ps2write device)
+-	if ($CUPS_GHOSTSCRIPT -h 2>&1 | grep -q ps2write); then
+-		AC_MSG_RESULT(yes)
+-		AC_DEFINE(HAVE_GHOSTSCRIPT_PS2WRITE)
+-	else
+-		AC_MSG_RESULT(no)
+-	fi
++	AC_MSG_RESULT(yes)
++	AC_DEFINE(HAVE_GHOSTSCRIPT_PS2WRITE)
  
-+if test "x$CUPS_PDFTOPS" != x; then
-+	if `$CUPS_PDFTOPS -h 2>&1 | grep -q -- -origpagesizes 2>/dev/null`; then
-+		AC_DEFINE(HAVE_PDFTOPS_WITH_ORIGPAGESIZES)
-+	fi
-+fi
-+
- AC_DEFINE_UNQUOTED(CUPS_PDFTOPS, "$CUPS_PDFTOPS")
- AC_DEFINE_UNQUOTED(CUPS_GHOSTSCRIPT, "$CUPS_GHOSTSCRIPT")
- AC_SUBST(PDFTOPS)
+ 	DEFAULT_PDFTOPS=""
+ else

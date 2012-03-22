@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2011/05/02 17:02:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2011/12/12 10:26:48 jasper Exp $
 
-COMMENT=	VNC server for remote acces to your GNOME desktop
+COMMENT=	GNOME desktop sharing server
 
 GNOME_PROJECT=	vino
-GNOME_VERSION=	2.32.2
+GNOME_VERSION=	3.2.2
+REVISION=	0
 
 CATEGORIES=	net
 
@@ -13,43 +14,41 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xtst atk-1.0
-WANTLIB += c cairo dbus-1 dbus-glib-1 expat fontconfig freetype
-WANTLIB += gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gpg-error gthread-2.0
-WANTLIB += gtk-x11-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png pthread pthread-stubs tasn1 xcb xml2
-WANTLIB += z xcb-render notify unique-1.0 gmp hogweed nettle
-WANTLIB += gnutls telepathy-glib soup-2.4 gnome-keyring>=6 avahi-client
-WANTLIB += avahi-common avahi-glib GL Xxf86vm drm xcb-shm
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xtst Xxf86vm
+WANTLIB += atk-1.0 avahi-client avahi-common avahi-glib c cairo
+WANTLIB += cairo-gobject dbus-1 dbus-glib-1 drm expat ffi fontconfig
+WANTLIB += freetype gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gmp gnome-keyring gnutls gobject-2.0 gpg-error
+WANTLIB += gthread-2.0 gtk-3 hogweed jpeg m nettle notify p11-kit
+WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs soup-2.4 stdc++ tasn1 telepathy-glib
+WANTLIB += xcb xcb-render xcb-shm xml2 z
 
-MODULES=	devel/gettext \
-		x11/gnome \
-		devel/gconf2
+MODULES=	devel/dconf \
+		devel/gettext \
+		x11/gnome
 
 LIB_DEPENDS=	devel/libnotify \
-		devel/libunique \
-		security/gnutls \
-		net/telepathy/telepathy-glib \
 		devel/libsoup \
+		net/avahi \
+		net/telepathy/telepathy-glib \
+		security/gnutls \
 		x11/gnome/libgnome-keyring \
-		net/avahi
+		x11/gtk+3
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES=	Yes
-MODGCONF2_SCHEMAS_DIR=	vino
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS= yelp
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-gnome-keyring \
-		--enable-avahi \
+CONFIGURE_ARGS=	--with-gnome-keyring \
+		--with-avahi \
 		--enable-http-server=no \
-		--enable-libnotify \
-		--enable-libunique \
-		--enable-telepathy \
+		--with-libnotify \
+		--with-telepathy \
 		--disable-ipv6
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
+
+
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/vino
 

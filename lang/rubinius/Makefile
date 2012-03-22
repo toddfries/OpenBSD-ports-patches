@@ -1,12 +1,15 @@
-# $OpenBSD: Makefile,v 1.14 2011/07/20 22:51:32 jeremy Exp $
+# $OpenBSD: Makefile,v 1.20 2011/12/30 10:42:20 sthen Exp $
 
 SHARED_ONLY=	Yes
+
+BROKEN-sparc64 = vm segfaults when building openssl extension
 
 COMMENT =	Ruby virtual machine and core library
 
 V=		1.2.4
 DISTNAME =	rubinius-${V}-20110705
 PKGNAME =	rubinius-$V
+REVISION =	3
 
 CATEGORIES =	lang lang/ruby
 
@@ -28,7 +31,7 @@ MASTER_SITES =	http://asset.rubini.us/
 BUILD_DEPENDS =	devel/bison \
 		devel/ruby-rake \
 		devel/libffi \
-		devel/llvm>=2.9
+		devel/llvm>=3.0
 LIB_DEPENDS =	databases/gdbm \
 		databases/db/v4 \
 		${MODRUBY_LIB_DEPENDS}
@@ -69,10 +72,11 @@ do-install:
 		${PREFIX}/lib/rubinius/bin/rbx -rrbconfig -e \
 		"puts RbConfig::CONFIG['$$dir']"`; done
 
-# Some failures and likely infinite loop in mspec ci
+# 45/56 failures in mspec on i386/amd64, most of which are due to lacking
+# Fiber support
 do-regress:
-	cd ${WRKSRC} && ${RAKE} vm:test
-	cd ${WRKSRC} && RUBY=${RUBY} ${RUBY} mspec/bin/mspec ci --background --agent
+	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${RAKE} vm:test
+	cd ${WRKSRC} && RUBY=${RUBY} ${RUBY} mspec/bin/mspec ci -f s
 
 REGRESS_DEPENDS = ${FULLPKGNAME}:${BUILD_PKGPATH}
 

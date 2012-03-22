@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/17 19:41:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2011/11/02 09:57:23 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,7 +7,7 @@ COMMENT=	XMMS visualization plugin, to display Kjofol skins
 VERSION=	0.95
 DISTNAME=	kint_xmms-${VERSION}
 PKGNAME=	xmms-kj-${VERSION}
-REVISION =	1
+REVISION =	3
 CATEGORIES=	graphics
 HOMEPAGE=	http://www.csse.monash.edu.au/~timf/
 
@@ -19,7 +19,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		X11 Xext Xi gdk glib gmodule gtk  m \
-			pthread-stubs xcb z xmms>=2 png>=3
+			z xmms>=2 png>=3
 
 MASTER_SITES=	${HOMEPAGE} \
 		http://mirror.csoft.org/xmms-kj/

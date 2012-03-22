@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.11 2011/05/23 14:20:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2011/12/21 19:01:50 ajacoutot Exp $
 
 COMMENT=	XDG sound theme
 
 DISTNAME=	sound-theme-freedesktop-0.7
 CATEGORIES=	audio
 
-REVISION=	0
+REVISION=	1
 
 EXTRACT_SUFX=	.tar.bz2
 
@@ -24,8 +24,8 @@ MASTER_SITES=	http://cgit.freedesktop.org/sound-theme-freedesktop/snapshot/
 
 MODULES=	textproc/intltool
 
-BUILD_DEPENDS=	devel/autoconf/${AUTOCONF_VERSION} \
-		devel/automake/${AUTOMAKE_VERSION}
+BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
+		${MODGNU_AUTOMAKE_DEPENDS}
 
 # XXX needed for autoreconf:
 # aclocal:configure.ac:17: warning: macro `AM_GLIB_GNU_GETTEXT' not found in library
@@ -37,11 +37,13 @@ NO_REGRESS=	Yes
 AUTOMAKE_VERSION=1.9
 AUTOCONF_VERSION=2.62
 
+CONFIGURE_STYLE=gnu
+
 do-configure:
 	cd ${WRKSRC} && \
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		./autogen.sh
+		./autogen.sh ${CONFIGURE_ARGS}
 
 post-install:
 	cd ${PREFIX}/share/sounds/freedesktop/stereo && \

@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.20 2011/05/31 17:40:49 jakob Exp $
+# $OpenBSD: Makefile,v 1.22 2012/01/20 09:53:31 sthen Exp $
 
 COMMENT=	DNS debugger
 
 PKGNAME=	drill-${VERSION}
 
-WANTLIB=	c crypto ldns>=4.8
-LIB_DEPENDS+=	net/ldns/libldns>=1.6.10
+WANTLIB=	c crypto ldns>=4.10
+LIB_DEPENDS+=	net/ldns/libldns>=1.6.11
 
 WRKSRC=		${WRKDIST}/drill
 
-CONFIGURE_ARGS+=	--with-ldns=${LOCALBASE}
-USE_GROFF =	Yes
+USE_GMAKE=	Yes
+CONFIGURE_ARGS+=--with-ldns=${LOCALBASE}
 
 .include <bsd.port.mk>

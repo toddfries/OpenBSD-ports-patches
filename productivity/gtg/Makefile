@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2011/06/08 17:37:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2011/12/03 23:04:37 ajacoutot Exp $
 
 COMMENT=		GTD organizer for GNOME
 
 GNOME_PROJECT=		gtg
 GNOME_VERSION=		0.2.4
-REVISION=		0
+REVISION=		3
 
 CATEGORIES=		productivity
 
@@ -26,15 +26,16 @@ RUN_DEPENDS=		devel/py-configobj \
 			devel/py-simplejson \
 			devel/py-xdg \
 			x11/dbus-python \
-			x11/gnome/py-gnome
+			x11/py-gtk2
 BUILD_DEPENDS=		x11/py-gtk2
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 
-USE_GROFF =		Yes
+USE_GROFF=		Yes
 NO_REGRESS=		Yes
 
-SUBST_VARS+=		VERSION
+SUBST_VARS=		VERSION
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/gtg \

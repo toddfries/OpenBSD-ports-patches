@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/06 01:18:27 jeremy Exp $
+# $OpenBSD: Makefile,v 1.7 2011/11/18 00:05:43 jeremy Exp $
 
 COMMENT =	ruby-rack HTTP server for Unix and fast clients
 
-DISTNAME =	unicorn-4.0.1
+DISTNAME =	unicorn-4.1.1
 CATEGORIES =	www
 
 HOMEPAGE =	http://unicorn.bogomips.org/
@@ -34,6 +34,6 @@ REGRESS_DEPENDS = devel/gmake \
 		  devel/ruby-isolate,${MODRUBY_FLAVOR}
 do-regress:
 	cd ${WRKSRC} && RUBYOPT=-rubygems RUBY=${RUBY} MRI=${RUBY} \
-		MAKE='gmake -e' gmake -e test
+		MAKE='gmake -ek' gmake -ek test-integration test
 
 .include <bsd.port.mk>

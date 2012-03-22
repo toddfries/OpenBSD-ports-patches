@@ -1,23 +1,24 @@
-# $OpenBSD: Makefile,v 1.53 2011/07/08 21:08:46 kili Exp $
-.include <bsd.own.mk>
+# $OpenBSD: Makefile,v 1.60 2012/02/27 18:53:58 kili Exp $
 
 COMMENT-main=	PDF rendering library
 COMMENT-qt=	qt interface to PDF rendering library
 COMMENT-qt4=	qt4 interface to PDF rendering library
 
-V=		0.16.7
+V=		0.18.2
 DISTNAME=	poppler-$V
 CATEGORIES=	print
 PKGNAME-main=	poppler-$V
+REVISION-main=	0
 FULLPKGNAME-qt=	poppler-qt-$V
 FULLPKGNAME-qt4=poppler-qt4-$V
+OLDSHIT = poppler-0.16.7
 
-REVISION-main=	0
-
-SHARED_LIBS +=	poppler              10.0
-SHARED_LIBS +=	poppler-glib         8.0
+SHARED_LIBS +=	poppler              11.0
+SHARED_LIBS +=  poppler-cpp          1.0
+SHARED_LIBS +=	poppler-glib         9.0
 SHARED_LIBS +=	poppler-qt           8.0
-SHARED_LIBS +=	poppler-qt4          7.0
+SHARED_LIBS +=	poppler-qt4          8.0
+DISTFILES = ${DISTNAME}${EXTRACT_SUFX} ${OLDSHIT}${EXTRACT_SUFX}
 
 HOMEPAGE=	http://poppler.freedesktop.org/
 
@@ -34,24 +35,23 @@ MASTER_SITES=	${HOMEPAGE}
 PSEUDO_FLAVORS=no_qt no_qt4
 FLAVOR?=
 
-MULTI_PACKAGES=-main
+NOT_FOR_ARCHS-qt4 = arm
 
-cWANTLIB=	expat freetype fontconfig jpeg m z stdc++
+MULTI_PACKAGES=-main -qt -qt4
+
+.include <bsd.port.arch.mk>
 
 
-.if empty(FLAVOR:L:Mno_qt)
-MULTI_PACKAGES+=-qt
+cWANTLIB=	expat freetype fontconfig jpeg m tiff z stdc++
+
+.if ${BUILD_PACKAGES:M-qt}
 MODULES+=	x11/qt3
 .else
 CONFIGURE_ARGS+=	--disable-poppler-qt
 .endif
 
-NOT_FOR_ARCHS-qt4 = arm
-.if empty(FLAVOR:L:Mno_qt4)
-MULTI_PACKAGES+=-qt4
-.endif
 
-.if ${MULTI_PACKAGES:L:M-qt4} && ${MACHINE_ARCH} != "arm"
+.if ${BUILD_PACKAGES:M-qt4}
 MODULES+=	x11/qt4
 .else
 CONFIGURE_ARGS+=	--disable-poppler-qt4
@@ -71,40 +71,58 @@ MODULES+=	devel/gettext converters/libiconv
 
 LIB_DEPENDS-main=${MODGETTEXT_LIB_DEPENDS} \
 		${MODLIBICONV_LIB_DEPENDS} \
-		x11/gtk+2 \
+		devel/glib2 \
+		devel/libffi \
+		graphics/cairo \
 		graphics/lcms \
 		graphics/openjpeg \
-		textproc/libxml
+		graphics/png \
+		graphics/tiff
+
 LIB_DEPENDS-qt=	${MODQT3_LIB_DEPENDS} \
 		${MODLIBICONV_LIB_DEPENDS} \
-		print/poppler
+		print/poppler \
+		graphics/png \
+		graphics/tiff
+
 LIB_DEPENDS-qt4=x11/qt4 \
 		${MODGETTEXT_LIB_DEPENDS} \
 		print/poppler
 
-WANTLIB-main=	${cWANTLIB} Xcursor Xext Xfixes Xi Xinerama Xrandr c gio-2.0 \
-		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 pango-1.0 xml2 \
-		pangocairo-1.0 pangoft2-1.0 pixman-1 gdk_pixbuf-2.0 openjpeg \
-		X11 Xau Xcomposite Xdamage Xdmcp Xrender cairo pcre png \
-		pthread pthread-stubs xcb xcb-render gdk-x11-2.0 lcms GL Xxf86vm \
+WANTLIB-main=	${cWANTLIB} Xext Xfixes c ffi \
+		glib-2.0 gobject-2.0 gthread-2.0 \
+		pixman-1 openjpeg \
+		X11 Xau Xdamage Xdmcp Xrender cairo pcre png \
+		pthread pthread-stubs xcb xcb-render lcms GL Xxf86vm \
 		drm xcb-shm ${MODGETTEXT_WANTLIB}
-WANTLIB-qt=	${cWANTLIB} lcms openjpeg xml2 poppler png ${MODQT3_WANTLIB} \
+WANTLIB-qt=	${cWANTLIB} lcms openjpeg poppler png ${MODQT3_WANTLIB} \
 		${MODLIBICONV_WANTLIB}
-WANTLIB-qt4=	${cWANTLIB} ICE QtCore QtGui QtXml SM X11 Xau Xdmcp Xext Xi \
-                Xinerama Xrender glib-2.0 gobject-2.0 gthread-2.0 lcms \
-		openjpeg pcre png poppler pthread-stubs xcb xml2 \
-		QtCore QtGui QtXml ${MODGETTEXT_WANTLIB}
+WANTLIB-qt4=	${cWANTLIB} ICE QtCore QtGui QtXml SM X11 Xext Xi \
+                Xinerama Xrender lcms \
+		openjpeg png poppler \
+		QtCore QtGui QtXml
 
-CONFIGURE_STYLE=gnu
+CONFIGURE_STYLE=autoconf
+AUTOCONF_VERSION=2.68
 CONFIGURE_ARGS+= --enable-xpdf-headers \
-		--disable-poppler-cpp \
+		--enable-poppler-cpp \
 		--enable-utils \
-		--enable-zlib
+		--enable-zlib \
+		--disable-gtk-test
 
-CONFIGURE_ENV+= CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV+= CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
+
+post-extract:
+	cd ${WRKDIST} && \
+	    for i in poppler-qt-uninstalled.pc.in poppler-qt.pc.cmake \
+		poppler-qt.pc.in; do  \
+			ln -sf ../${OLDSHIT}/$$i $$i; \
+	    done; \
+	    ln -sf ../../${OLDSHIT}/m4/qt.m4 m4/qt.m4
+	cd ${WRKDIST} && cp -R ../${OLDSHIT}/qt qt
 
 .include <bsd.port.mk>

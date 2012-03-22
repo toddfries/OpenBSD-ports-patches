@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.19 2011/01/18 21:34:59 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.21 2011/12/03 22:32:22 ajacoutot Exp $
 @conflict xfce4-toys-*
 %%SHARED%%
 @bin bin/xfce4-session
@@ -64,10 +64,16 @@ share/doc/xfce4-session/html/ru/index.html
 share/doc/xfce4-session/html/sv/
 share/doc/xfce4-session/html/sv/images
 share/doc/xfce4-session/html/sv/index.html
+share/doc/xfce4-session/html/tr/
+share/doc/xfce4-session/html/tr/images
+share/doc/xfce4-session/html/tr/index.html
 share/doc/xfce4-session/html/ug/
 share/doc/xfce4-session/html/ug/images
 share/doc/xfce4-session/html/ug/index.html
 share/doc/xfce4-session/html/xfce4-session.css
+share/doc/xfce4-session/html/zh_CN/
+share/doc/xfce4-session/html/zh_CN/images
+share/doc/xfce4-session/html/zh_CN/index.html
 share/examples/xfce4-session/
 @sample ${SYSCONFDIR}/xdg/
 @sample ${SYSCONFDIR}/xdg/xfce4/xfconf/
@@ -199,6 +205,9 @@ share/locale/sv/LC_MESSAGES/xfce4-session.mo
 share/locale/ta/
 share/locale/ta/LC_MESSAGES/
 share/locale/ta/LC_MESSAGES/xfce4-session.mo
+share/locale/te/
+share/locale/te/LC_MESSAGES/
+share/locale/te/LC_MESSAGES/xfce4-session.mo
 share/locale/tr/LC_MESSAGES/xfce4-session.mo
 share/locale/ug/
 share/locale/ug/LC_MESSAGES/
@@ -223,7 +232,7 @@ share/xfce4/panel-plugins/
 share/xfce4/panel-plugins/xfsm-logout-plugin.desktop
 share/xfce4/tips/
 share/xfce4/tips/tips
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q %D/share/icons/hicolor 2>/dev/null || true
+@unexec-delete %D/bin/gtk-update-icon-cache -q %D/share/icons/hicolor 2>/dev/null || true
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2010/11/15 00:22:50 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2011/11/04 08:21:59 jasper Exp $
 
 COMMENT=	GNOME multimode HF terminal
 
 GNOME_PROJECT=	gmfsk
 GNOME_VERSION=	0.6
-REVISION=	16
+REVISION=	18
 CATEGORIES=    	comms hamradio
 
 HOMEPAGE=	http://gmfsk.connect.fi/
@@ -18,22 +18,21 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender art_lgpl_2 atk-1.0
-WANTLIB += bonobo-2 bonobo-activation bonoboui-2 c cairo dbus-1
-WANTLIB += expat fontconfig freetype gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2
-WANTLIB += gnomevfs-2 gobject-2.0 gthread-2.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pixman-1 png popt pthread pthread-stubs sndio
-WANTLIB += stdc++ xcb xcb-render xcb-render-util xml2 z
-WANTLIB += fftw>=2 gailutil gtk-x11-2.0 gdk_pixbuf-2.0 gdk-x11-2.0
-WANTLIB += hamlib>=2 gnomeui-2
+WANTLIB += GL ICE ORBit-2 SM X11 Xcomposite Xcursor Xdamage Xext
+WANTLIB += Xfixes Xi Xinerama Xrandr Xrender art_lgpl_2 atk-1.0
+WANTLIB += bonobo-2 bonobo-activation bonoboui-2 c cairo expat
+WANTLIB += fftw fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gnome-2 gnomecanvas-2
+WANTLIB += gnomeui-2 gnomevfs-2 gobject-2.0 gthread-2.0 gtk-x11-2.0
+WANTLIB += hamlib m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
+WANTLIB += png popt pthread pthread-stubs sndio stdc++ xcb xcb-render
+WANTLIB += xcb-shm z
 
 MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
 USE_GMAKE=		No
 MODGCONF2_SCHEMAS_DIR=	gmfsk
 
@@ -45,8 +44,6 @@ LIB_DEPENDS=		comms/hamlib \
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--enable-hamlib
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			LIBS="-lsndio"
+CONFIGURE_ENV=		LIBS="-lsndio"
 
 .include <bsd.port.mk>

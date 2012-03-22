@@ -1,0 +1,11 @@
+$OpenBSD: patch-libev_ev_c,v 1.2 2012/01/23 08:10:41 dcoppa Exp $
+--- libev/ev.c.orig	Thu Jan 19 18:55:00 2012
++++ libev/ev.c	Sun Jan 22 18:04:25 2012
+@@ -921,7 +921,6 @@ ecb_function_ ecb_bool ecb_little_endian (void) { retu
+  * alternatively, you can remove this #error and link against libpthread,
+  * which will then provide the memory fences.
+  */
+-# error "memory fences not defined for your architecture, please report"
+ #endif
+ 
+ #ifndef ECB_MEMORY_FENCE

@@ -33,6 +33,7 @@ holds all the information retrieved through various variables, e.g.,:
     PKGNAME 
     PKGSPEC
     PKG_ARCH 
+    PSEUDO_FLAVOR
     PSEUDO_FLAVORS 
     REGRESS_IS_INTERACTIVE 
     REVISION
@@ -49,8 +50,9 @@ with 1/0. Variables not present in a given port are left undefined.
 
 Note that USE_LIBTOOL is 3-valued: 2 is gnu, 1 is yes, undef is no.
 
-The FULLPKGPATH is complete, including flavors markers. For each port with
-MULTI_PACKAGES setting, another entry is written with the correct SUBPACKAGE.  
+The FULLPKGPATH is complete, including flavors markers (but not pseudo 
+flavors, tack on PSEUDO_FLAVOR for that). For every port with MULTI_PACKAGES 
+settings, one entry is written for each SUBPACKAGE.
 
 - Paths (FULLPKGPATH, PKGPATH)
 PKGPATH is the stripped down version or FULLPKGPATH, without flavors 
@@ -69,14 +71,15 @@ All of these variable values are actually lists. These lists are taken apart
 and result in many entries in these secondary tables (or none if the list
 is completely empty)
 
-- Depends(FULLPKGPATH, FULLDEPENDS, DEPENDSPATH, TYPE)
+- Depends(FULLPKGPATH, FULLDEPENDS, PKGSPEC, REST, DEPENDSPATH, TYPE)
 All depends are stored in a single table, including the type:
 R -> run
 L -> lib
 B -> build
 Regress -> regress
-with FULLDEPENDS the full text of the dependency, and DEPENDSPATH the PKGPATH
-we depend upon.
+with FULLDEPENDS the full text of the dependency, DEPENDSPATH the PKGPATH
+we depend upon, PKGSPEC the spec we depend upon (if explicit), and REST
+the rest.
 - Wantlib(FULLPKGPATH, VALUE)
 All the libraries the FULLPKGPATH depends upon, with and without version number,
 coming from either the WANTLIB variable or various LIB_DEPENDS.

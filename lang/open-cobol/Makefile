@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/26 14:50:10 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2012/02/21 16:21:42 ajacoutot Exp $
 
 COMMENT=	open source COBOL compiler
 
 DISTNAME=	open-cobol-1.0
-REVISION=	0
+REVISION=	2
 SHARED_LIBS +=	cob                  3.0      # .2.0
 CATEGORIES=	lang
 
@@ -27,7 +27,7 @@ USE_LIBTOOL=	Yes
 WANTLIB=	c db gmp m ncurses
 
 AUTOCONF_VERSION=	2.59
-CONFIGURE_STYLE=gnu autoconf
+CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=  LDFLAGS="-L${LOCALBASE}/lib" \
 		CFLAGS="-I${LOCALBASE}/include" \
 		CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/db4"

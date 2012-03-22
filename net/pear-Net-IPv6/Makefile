@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.6 2011/06/04 11:41:08 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2011/12/20 15:25:11 giovanni Exp $
 
 COMMENT=	IPv6 address handling tools for PHP
 
-DISTNAME=	Net_IPv6-1.1.0b2
-REVISION=	0
+DISTNAME=	Net_IPv6-1.2.1
 CATEGORIES=	net
 
 MODULES=	www/pear

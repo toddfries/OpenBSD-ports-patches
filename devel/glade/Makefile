@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.31 2011/06/08 17:40:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.44 2011/12/03 19:38:09 ajacoutot Exp $
 
 COMMENT=	user interface builder for the gtk+3 toolkit
 
-GNOME_VERSION=	3.10.0
+GNOME_VERSION=	3.10.2
 GNOME_PROJECT= 	glade
-
-REVISION=	4
+REVISION=	3
 
 CATEGORIES=	devel
 
@@ -28,29 +27,26 @@ WANTLIB += cairo-gobject drm expat ffi fontconfig freetype gdk-3
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs ${MODPY_WANTLIB} util
-WANTLIB += xcb xcb-render xcb-shm xml2 z
+WANTLIB += xcb xcb-render xcb-shm xml2 z stdc++
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		lang/python
 
-BUILD_DEPENDS=	devel/gobject-introspection \
-		devel/py-gobject
+BUILD_DEPENDS=	devel/py-gobject3
 
 LIB_DEPENDS=	x11/gtk+3 \
 		devel/libffi
 
 RUN_DEPENDS=	x11/gnome/devhelp \
-		devel/py-gobject
+		devel/py-gobject3
 
-DESKTOP_FILES= 	Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE= 	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= goi yelp
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--enable-introspection
-CONFIGURE_ENV=	CPPFLAGS="-pthread -I${LOCALBASE}/include"      \
-		LDFLAGS="-pthread -lutil -L${LOCALBASE}/lib"
+MODGNOME_CPPFLAGS=	-pthread
+MODGNOME_LDFLAGS=	-pthread -lutil
 
 .include <bsd.port.mk>

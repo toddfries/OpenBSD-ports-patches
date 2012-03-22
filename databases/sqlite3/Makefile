@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.57 2011/03/14 14:39:51 landry Exp $
+# $OpenBSD: Makefile,v 1.62 2012/01/07 14:50:18 sthen Exp $
 
 COMMENT-main=	embedded SQL implementation
 COMMENT-tcl=	TCL bindings for Sqlite3
 COMMENT-lemon=	LEMON LALR(1) parser generator
-V=		3.7.5
-DISTNAME=	sqlite-src-3070500
+V=		3.7.9
+REVISION=	0
+DISTNAME=	sqlite-src-3070900
 EXTRACT_SUFX =	.zip
 PKGNAME-main=	sqlite3-${V}
 PKGNAME-tcl=	sqlite3-tcl-${V}
 PKGNAME-lemon=	lemon-${V}
 CATEGORIES=	databases
-SHARED_LIBS +=	sqlite3              15.1      # .8.6
+SHARED_LIBS +=	sqlite3              16.0      # .8.6
 
 MASTER_SITES=	${HOMEPAGE}
 
@@ -38,16 +39,18 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=${CONFIGURE_SHARED}
 
 PSEUDO_FLAVORS=	no_tcl
-.if ${MACHINE_ARCH} != "m88k" && ${MACHINE_ARCH} != "vax"
-FLAVOR?=
-CONFIGURE_ARGS +=	--enable-load-extension	
-.else
-FLAVOR=	no_tcl
+NOT_FOR_ARCHS-tcl = ${NO_SHARED_ARCHS}
+FLAVOR ?=
+
+MULTI_PACKAGES=-main -lemon -tcl
+
+.include <bsd.port.arch.mk>
+
+.if !${PROPERTIES:Mno_shared}
+CONFIGURE_ARGS +=	--enable-load-extension
 .endif
 
-MULTI_PACKAGES=-main -lemon
-.if !${FLAVOR:L:Mno_tcl}
-MULTI_PACKAGES+=-tcl
+.if ${BUILD_PACKAGES:M-tcl}
 MODULES+=	lang/tcl
 
 BUILD_DEPENDS=	${MODTCL_BUILD_DEPENDS}
@@ -76,5 +79,6 @@ post-install:
 	${INSTALL_DATA} ${WRKBUILD}/lempar.c ${PREFIX}/share/lemon
 	${INSTALL_PROGRAM} ${WRKBUILD}/lemon ${PREFIX}/bin
 	${INSTALL_MAN} ${WRKBUILD}/sqlite3.1 ${PREFIX}/man/man1
+	@if objdump -p ${WRKINST}/${TRUEPREFIX}/lib/libsqlite3.so.${LIBsqlite3_VERSION} | grep NEEDED.*pthread; then echo "libsqlite seems to be linked with -lpthread; problem with patch-configure?"; exit 1; fi
 
 .include <bsd.port.mk>

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortInfo.pm,v 1.11 2011/06/15 10:06:22 espie Exp $
+# $OpenBSD: PortInfo.pm,v 1.18 2012/01/14 12:26:21 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -42,6 +42,19 @@ sub quickie
 	return 0;
 }
 
+package AddIgnore;
+our @ISA = qw(AddInfo);
+sub string
+{
+	my $self = shift;
+	my $msg = $$self;
+	$msg =~ s/\\//g;
+	$msg =~ s/\"\s+\"/\; /g;
+	return $msg;
+}
+
+
+
 package AddYesNo;
 our @ISA = qw(AddInfo);
 
@@ -56,6 +69,26 @@ sub new
 {
 	my ($class, $value) = @_;
 	my $a = 1;
+	bless \$a, $class;
+}
+
+# micro-optimisation: to save space and time, we only create value if
+# PERMIT_DISTFILES* is != yes.
+
+package AddNegative;
+our @ISA = qw(AddInfo);
+
+sub add
+{
+	my ($class, $var, $o, $value, $parent) = @_;
+	return if $value =~ m/^yes$/i;
+	$o->{$var} = $class->new($value, $o, $parent);
+}
+
+sub new
+{
+	my ($class, $value) = @_;
+	my $a = 0;
 	bless \$a, $class;
 }
 
@@ -109,7 +142,7 @@ our @ISA = qw(AddOrderedList);
 sub add
 {
 	my ($class, $var, $o, $value, $parent) = @_;
-	return if $value =~ /no/i;
+	return if $value =~ /^\s*no\*$/i;
 	$class->SUPER::add($var, $o, $value, $parent);
 }
 
@@ -152,6 +185,7 @@ sub new
 			} else {
 				my $info = DPB::PkgPath->new($_);
 				$info->{parent} //= $parent;
+				$info->{wantbuild} = 1;
 				$r->{$info} = $info;
 			}
 		}
@@ -185,6 +219,7 @@ sub add
 	my ($class, $key, $self, $value, $parent) = @_;
 	$self->{$key} //= bless {}, $class;
 	my $path = DPB::PkgPath->new($value);
+	$path->{wantinfo} = 1;
 	$path->{parent} //= $parent;
 	$self->{$key}{$path} = $path;
 	return $self;
@@ -203,12 +238,14 @@ my %adder = (
 	MULTI_PACKAGES => "AddList",
 	EXTRA => "Extra",
 	EXTRA2 => "Extra",
+	BEXTRA => "Extra",
 	DEPENDS => "AddDepends",
 	BDEPENDS => "AddDepends",
 	RDEPENDS => "AddDepends",
 	DIST => "AddDepends",
 	FDEPENDS => "AddDepends",
-	IGNORE => "AddInfo",
+	IGNORE => "AddIgnore",
+	FLAVOR => "AddList",
 	NEEDED_BY => "AddDepends",
 	BNEEDED_BY => "AddDepends",
 	DISTFILES => 'AddList',
@@ -217,6 +254,7 @@ my %adder = (
 	DIST_SUBDIR => 'AddInfo',
 	CHECKSUM_FILE => 'AddInfo',
 	FETCH_MANUALLY => 'FetchManually',
+	MISSING_FILES => 'AddList',
 	MASTER_SITES => 'AddOrderedList',
 	MASTER_SITES0 => 'AddOrderedList',
 	MASTER_SITES1 => 'AddOrderedList',
@@ -228,6 +266,8 @@ my %adder = (
 	MASTER_SITES7 => 'AddOrderedList',
 	MASTER_SITES8 => 'AddOrderedList',
 	MASTER_SITES9 => 'AddOrderedList',
+	PERMIT_DISTFILES_FTP => 'AddNegative',
+	PERMIT_DISTFILES_CDROM => 'AddNegative',
 );
 
 sub wanted
@@ -255,6 +295,16 @@ sub dump
 		print $fh "\t $k = ", $self->{$k}->string, "\n"
 		    if defined $self->{$k};
 	}
+}
+
+my $string = "ignored already";
+my $s2 = "stub name";
+my $stub_info = bless { IGNORE => bless(\$string, "AddIgnore"),
+		FULLPKGNAME => bless(\$s2, "AddInfoShow")}, __PACKAGE__;
+
+sub stub
+{
+	return $stub_info;
 }
 
 use Data::Dumper;

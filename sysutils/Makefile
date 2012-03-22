@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.245 2011/08/23 14:22:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.252 2011/11/15 21:40:43 jasper Exp $
 # $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
 
      SUBDIR =
@@ -11,11 +11,11 @@
      SUBDIR += apcd
      SUBDIR += autossh
      SUBDIR += backintime
+     SUBDIR += backuppc
      SUBDIR += bacula,mysql
      SUBDIR += bacula,pgsql
      SUBDIR += bacula,sqlite3
      SUBDIR += bchunk
-     SUBDIR += bubblemon
      SUBDIR += bubblemon-dockapp
      SUBDIR += cdrtools
      SUBDIR += cfengine
@@ -31,13 +31,13 @@
      SUBDIR += conky,no_x11
      SUBDIR += conky,xmms2
      SUBDIR += consolekit
-     SUBDIR += contool
      SUBDIR += crashme
      SUBDIR += cyphertite
      SUBDIR += d-feet
      SUBDIR += dcfldd
      SUBDIR += dcled
      SUBDIR += ddrescue
+     SUBDIR += deja-dup
      SUBDIR += dellflash
      SUBDIR += detox
      SUBDIR += diskrescue
@@ -64,10 +64,10 @@
      SUBDIR += gkrellm
      SUBDIR += glastree
      SUBDIR += god
+     SUBDIR += gource
      SUBDIR += gpioflicker
      SUBDIR += grub
      SUBDIR += gsmartcontrol
-     SUBDIR += hcidump
      SUBDIR += heartbeat
      SUBDIR += hot-babe
      SUBDIR += hotplug-diskmount
@@ -85,6 +85,7 @@
      SUBDIR += login_ldap
      SUBDIR += login_oath
      SUBDIR += logpp
+     SUBDIR += logstalgia
      SUBDIR += lsof
      SUBDIR += luastatgrab
      SUBDIR += mac-robber
@@ -125,8 +126,6 @@
      SUBDIR += p5-Unix-Statgrab
      SUBDIR += p5-Unix-Syslog
      SUBDIR += pecl-fileinfo
-     SUBDIR += py-daemon
-     SUBDIR += py-lockfile
      SUBDIR += pciutils
      SUBDIR += pftop
      SUBDIR += pkg_mgr
@@ -134,6 +133,8 @@
      SUBDIR += pscpug
      SUBDIR += pstree
      SUBDIR += pv
+     SUBDIR += py-daemon
+     SUBDIR += py-lockfile
      SUBDIR += radiusreport
      SUBDIR += radmind
      SUBDIR += rancid

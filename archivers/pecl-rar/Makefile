@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2011/08/01 02:13:45 jolan Exp $
+# $OpenBSD: Makefile,v 1.8 2011/11/16 15:56:36 robert Exp $
 
 SHARED_ONLY=	Yes
 
@@ -9,7 +9,7 @@ EXTRACT_SUFX=	.tgz
 MASTER_SITES=	http://pecl.php.net/get/
 CATEGORIES=	archivers www
 
-REVISION=	1
+REVISION=	4
 
 HOMEPAGE=	http://pecl.php.net/package/rar/
 
@@ -26,7 +26,7 @@ MODULES=	lang/php
 BUILD_DEPENDS=	www/pear \
 		${MODGNU_AUTOCONF_DEPENDS} \
 		${MODGNU_AUTOMAKE_DEPENDS}
-WANTLIB=	stdc++
+WANTLIB=	m stdc++
 
 CONFIGURE_STYLE=gnu
 DESTDIRNAME=	INSTALL_ROOT

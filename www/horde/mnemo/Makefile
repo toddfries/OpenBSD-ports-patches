@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2011/11/16 15:56:37 robert Exp $
 
 COMMENT=	memo application, for Horde
 
 HORDE_NAME=	Mnemo
 
 # Horde (BSD-like with some restrictions, see LICENSE)
-DISTNAME=	mnemo-h3-2.2.4
+DISTNAME=	mnemo-h3-2.2.5
 REVISION=	1
 CATEGORIES=	databases
 

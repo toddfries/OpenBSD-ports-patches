@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.12 2010/11/15 00:22:50 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2011/11/06 18:30:08 jasper Exp $
 
 COMMENT=	rpm2cpio converter in Perl
 
 DISTNAME=	rpm2cpio-1.3
 CATEGORIES=	converters archivers
 
-REVISION=	0
+REVISION=	2
+
+HOMEPAGE=	http://www.freebsd.org/cgi/cvsweb.cgi/ports/archivers/rpm2cpio/
 
 # BSD
 PERMIT_DISTFILES_CDROM=	Yes

@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2011/06/08 17:36:01 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/15 14:45:46 rpointel Exp $
 
 COMMENT=		maths, science and engineering modules for Python
 
-MODPY_EGG_VERSION=	0.9.0
+MODPY_EGG_VERSION=	0.10.0
 DISTNAME=		scipy-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION=		1
 CATEGORIES=		math devel
 
 MAINTAINER=		Eric Faurot <eric@openbsd.org>

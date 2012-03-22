@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.52 2010/11/15 19:46:00 espie Exp $
+# $OpenBSD: Makefile,v 1.54 2011/11/18 10:29:37 espie Exp $
 
 COMMENT=	stack-based interpreter for terminal applications
 
-DISTNAME=	slang-2.2.2
+DISTNAME=	slang-2.2.4
 PKGNAME=	lib${DISTNAME}
-SHARED_LIBS=	slang 15.0
+SHARED_LIBS=	slang 16.0
 
 CATEGORIES=	devel
 MASTER_SITES=	ftp://space.mit.edu/pub/davis/slang/v2.2/ \
@@ -18,9 +18,10 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c m onig pcre termcap z
+WANTLIB += c m onig pcre png termcap z
 
 LIB_DEPENDS=		devel/pcre \
+			graphics/png \
 			textproc/oniguruma
 MODULES=		converters/libiconv
 
@@ -28,8 +29,10 @@ AUTOCONF_VERSION=	2.61
 CONFIGURE_STYLE=	autoconf no-autoheader
 AUTOCONF_DIR=		${WRKSRC}/autoconf
 MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC}/autoconf
-USE_GROFF =		Yes
+USE_GROFF=		Yes
 
+CONFIGURE_ARGS=		--with-pnginc=${LOCALBASE}/include/libpng \
+			--with-pnglib=${LOCALBASE}/lib
 REGRESS_TARGET=		runtests
 REGRESS_FLAGS=		TCAPLIB="-ltermlib"
 
@@ -41,7 +44,7 @@ pre-configure:
 
 .include <bsd.port.mk>
 
-.if !(defined(NO_SHARED_LIBS) && ${NO_SHARED_LIBS:L} == "yes")
+.if !${PROPERTIES:Mno_shared}
 ALL_TARGET= all elf
 INSTALL_TARGET= install-elf
 .endif

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.40 2011/07/20 18:37:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.42 2011/12/02 14:36:14 espie Exp $
 
 COMMENT=	fantasy turn-based strategy game
 
 DISTNAME=	wesnoth-1.8.6
-REVISION=	0
+REVISION=	1
 
 CATEGORIES=	games x11
 
@@ -71,11 +71,11 @@ USE_GROFF =	Yes
 FLAVORS=	lite tinygui
 FLAVOR?=
 
-.if ${FLAVOR:L:Mlite}
+.if ${FLAVOR:Mlite}
 CONFIGURE_ARGS+=--enable-lowmem
 .endif
 
-.if ${FLAVOR:L:Mtinygui}
+.if ${FLAVOR:Mtinygui}
 BUILD_DEPENDS+=graphics/ImageMagick
 CONFIGURE_ARGS+=--enable-tinygui
 .endif

@@ -1,16 +1,18 @@
-# $OpenBSD: Makefile,v 1.61 2011/07/28 18:07:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.69 2012/02/16 22:16:02 ajacoutot Exp $
 
 COMMENT-main =		SOAP implementation in C
 COMMENT-gnome =		GNOME specific libsoup parts
 
 GNOME_PROJECT =		libsoup
-GNOME_VERSION =		2.34.3
+GNOME_VERSION =		2.36.1
+
+REVISION-main =		0
 
 PKGNAME-main =		${DISTNAME}
 PKGNAME-gnome =		${GNOME_PROJECT}-gnome-${GNOME_VERSION}
 
-SHARED_LIBS +=  soup-2.4             3.0      # .4.0
-SHARED_LIBS +=  soup-gnome-2.4       1.1      # .4.0
+SHARED_LIBS +=  soup-2.4             3.1      # .5.0
+SHARED_LIBS +=  soup-gnome-2.4       1.2      # .5.0
 
 API_VERSION =		2.4
 
@@ -28,13 +30,13 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += m pcre xml2 z
+WANTLIB += m pcre xml2 z ffi
 
 MULTI_PACKAGES =	-main -gnome
 
-BUILD_DEPENDS =		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 
-RUN_DEPENDS =		net/glib2-networking
+RUN_DEPENDS =		net/glib2-networking>=2.30.0
 
 LIB_DEPENDS =		devel/glib2>=2.22.2 \
 			textproc/libxml
@@ -53,16 +55,11 @@ MODULES =		devel/gettext \
 
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--disable-more-warnings \
-			--disable-tls-check \
-			--enable-introspection
+CONFIGURE_ARGS +=	--disable-more-warnings \
+			--disable-tls-check
 # checking Apache version... 1.3.29 (Unix) (ignoring)
 # But this prevents needing apache2 for certain regress tests.
 CONFIGURE_ARGS+=	--with-apache-httpd="/usr/sbin/httpd"
-CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 SUBST_VARS =		API_VERSION
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2010/11/15 00:22:46 espie Exp $
+# $OpenBSD: Makefile,v 1.39 2012/01/03 07:03:54 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -14,9 +14,9 @@ PKGNAME-vorbis=	bmp-vorbis-$V
 CATEGORIES=	audio
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=beepmp/}
 
-REVISION-main=	0
-REVISION-mp3=	0
-REVISION-vorbis=	0
+REVISION-main=	3
+REVISION-mp3=	3
+REVISION-vorbis=	3
 
 SHARED_LIBS=	beep	2.1
 
@@ -33,26 +33,28 @@ WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xi \
 		Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig \
 		freetype gio-2.0 gmodule-2.0 gobject-2.0 m pango-1.0 \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs \
-                xcb xcb-render xcb-render-util z gdk_pixbuf-2.0>=400.3 \
+                xcb xcb-render z gdk_pixbuf-2.0>=400.3 \
                 gdk-x11-2.0>=400.3 gtk-x11-2.0>=0.5 glib-2.0>=400.2 \
-                gthread-2.0>=400.2
+                gthread-2.0>=400.2 GL Xxf86vm drm ffi xcb-shm stdc++
 
 MODULES=	devel/gettext
-USE_GROFF =	Yes
 
 LIB_DEPENDS=	x11/gtk+2 \
 		devel/glib2
 
-MULTI_PACKAGES=-main
-PSEUDO_FLAVORS=	no_mp3 no_vorbis
-FLAVOR?=
+MULTI_PACKAGES =	-main -mp3 -vorbis
 
-.if !${FLAVOR:L:Mno_mp3}
-MULTI_PACKAGES+=-mp3
+PSEUDO_FLAVORS =	no_mp3 no_vorbis
+FLAVOR ?=
+
+.include <bsd.port.arch.mk>
+.if !${BUILD_PACKAGES:M-mp3}
+CONFIGURE_ARGS += --disable-mp3
 .endif
-.if !${FLAVOR:L:Mno_vorbis}
-MULTI_PACKAGES+=-vorbis
+.if !${BUILD_PACKAGES:M-vorbis}
+CONFIGURE_ARGS += --disable-vorbis
 .endif
+
 
 RUN_DEPENDS-main=${RUN_DEPENDS} \
 		devel/desktop-file-utils
@@ -78,5 +80,6 @@ LIBTOOL_FLAGS=	--tag=disable-static
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+=--disable-alsa \
 		--disable-oss
+
 
 .include <bsd.port.mk>

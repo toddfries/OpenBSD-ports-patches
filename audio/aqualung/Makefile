@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.25 2011/06/27 13:38:30 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2012/01/03 07:03:54 ajacoutot Exp $
 
 COMMENT=	advanced music player
 
 DISTNAME=	aqualung-0.9beta11
-REVISION=	4
+REVISION=	6
 EPOCH=		0
 CATEGORIES=	audio
 
@@ -26,6 +26,7 @@ WANTLIB += vorbis vorbisenc vorbisfile z gtk-x11-2.0 gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 xml2 lua mac mad mpcdec FLAC avcodec
 WANTLIB += avformat avutil jack wavpack lrdf oggz speex cddb cdio
 WANTLIB += cdio_cdda cdio_paranoia modplug
+WANTLIB += GL pixman-1 png pthread-stubs xcb xcb-render xcb-shm
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=aqualung/}
 
@@ -50,7 +51,6 @@ LIB_DEPENDS=	audio/flac \
 
 RUN_DEPENDS=	devel/desktop-file-utils
 
-USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	LDFLAGS="-pthread -L${LOCALBASE}/lib -L${X11BASE}/lib" \
 		CFLAGS="${CFLAGS} -DOSS_DEVICE='\"/dev/audio\"'  \

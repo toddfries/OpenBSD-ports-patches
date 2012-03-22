@@ -1,11 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2011/07/18 19:56:18 fgsch Exp $
+# $OpenBSD: Makefile,v 1.7 2012/02/16 21:22:42 landry Exp $
+
+#atomic_int.h: error "unsupported compiler or platform" on other archs
+ONLY_FOR_ARCHS =	i386 amd64
 
 COMMENT =	scalable, high-performance document-oriented database
 
-DISTNAME =	mongodb-src-r1.8.2
+DISTNAME =	mongodb-src-r2.0.1
 PKGNAME =	${DISTNAME:S/src-r//}
 
-SHARED_LIBS =	mongoclient	0.0
+SHARED_LIBS =	mongoclient	1.0
 
 CATEGORIES =	databases
 
@@ -19,25 +22,29 @@ PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	boost_filesystem-mt boost_program_options-mt boost_system-mt \
 		boost_thread-mt c execinfo mozjs m pcap pcre pcrecpp pthread \
-		readline stdc++ termcap
+		stdc++
 
 MASTER_SITES =	http://downloads.mongodb.org/src/
 
 MODULES =	devel/scons
 MODSCONS_FLAGS = --prefix="${PREFIX}" \
 		 --cpppath="${LOCALBASE}/include/nspr" \
+		 --extralib="mozjs,pcrecpp" \
 		 --usesm \
 		 --sharedclient \
 		 --full 
 
 MAKE_ENV +=	HOME="${HOME}" \
 		TERM="${TERM}" \
-		CXXFLAGS="$(CXXFLAGS) -DXULRUNNER" \
+		CXXFLAGS="$(CXXFLAGS) -DXULRUNNER -I${LOCALBASE}/include/js" \
 		LIBmongoclient_VERSION="${LIBmongoclient_VERSION}"
 LIB_DEPENDS =	devel/boost \
 		devel/libexecinfo \
 		devel/pcre \
 		lang/spidermonkey
+
+pre-configure:
+	rm -f ${WRKSRC}/third_party/{pcre,sm}.py
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mongodb

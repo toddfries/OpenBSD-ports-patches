@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/11/26 14:44:27 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/03 07:40:20 jasper Exp $
 
 COMMENT-main =		mature and flexible open source SIP server
 
@@ -7,15 +7,22 @@ SHARED_ONLY =		Yes
 VERSION =		1.5.4
 DISTNAME =		kamailio-${VERSION}-tls_src
 PKGNAME-main =		kamailio-${VERSION}
-REVISION-main =		0
+REVISION-main =		2
 PKGNAME-mysql =		kamailio-mysql-${VERSION}
+REVISION-mysql =	0
 PKGNAME-postgresql =	kamailio-postgresql-${VERSION}
+REVISION-postgresql =	0
 #PKGNAME-radius =	kamailio-radius-${VERSION}		TODO
 PKGNAME-ldap =		kamailio-ldap-${VERSION}
+REVISION-ldap =		0
 PKGNAME-xmlrpc =	kamailio-xmlrpc-${VERSION}
+REVISION-xmlrpc =	0
 PKGNAME-carrierroute =	kamailio-carrierroute-${VERSION}
+REVISION-carrierroute =	1
 PKGNAME-snmpstats =	kamailio-snmpstats-${VERSION}
+REVISION-snmpstats =	1
 PKGNAME-perl =		kamailio-perl-${VERSION}
+REVISION-perl =		1
 
 CATEGORIES =		telephony
 MAINTAINER =		Don Jackson <port-pkg-maint@clark-communications.com>
@@ -114,7 +121,7 @@ PSEUDO_FLAVORS +=	no_snmpstats
 MULTI_PACKAGES +=	-snmpstats
 COMMENT-snmpstats =	kamailio snmpstats module
 KAMAILIO_MODULES +=	snmpstats
-WANTLIB-snmpstats =	netsnmp netsnmpagent netsnmphelpers netsnmpmibs
+WANTLIB-snmpstats =	netsnmp netsnmpagent netsnmpmibs
 LIB_DEPENDS-snmpstats =	net/net-snmp
 .endif
 
@@ -123,9 +130,8 @@ PSEUDO_FLAVORS +=	no_carrierroute
 MULTI_PACKAGES +=	-carrierroute
 COMMENT-carrierroute =	kamailio carrierroute module
 KAMAILIO_MODULES +=	carrierroute
-WANTLIB-carrierroute =	${MODGETTEXT_WANTLIB} confuse
-LIB_DEPENDS-carrierroute = devel/libconfuse \
-			   ${MODGETTEXT_LIB_DEPENDS}
+WANTLIB-carrierroute =	confuse
+LIB_DEPENDS-carrierroute = devel/libconfuse
 RUN_DEPENDS-carrierroute = ${MODGETTEXT_RUN_DEPENDS}
 .endif
 

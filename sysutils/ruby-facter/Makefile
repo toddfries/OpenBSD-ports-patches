@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2011/07/28 08:37:43 robert Exp $
+# $OpenBSD: Makefile,v 1.21 2011/12/06 14:39:01 robert Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,6 +7,7 @@ COMMENT=	Ruby library for retrieving facts from operating systems
 VERSION=	1.6.0
 DISTNAME=	facter-${VERSION}
 PKGNAME=	ruby-${DISTNAME}
+REVISION=	1
 CATEGORIES=	sysutils
 
 HOMEPAGE=	http://reductivelabs.com/projects/facter/
@@ -33,9 +34,7 @@ do-install:
 	${INSTALL_DATA} ${WRKSRC}/etc/facter.conf \
 			${MODRUBY_EXAMPLEDIR}/facter 
 
-MODRUBY_REGRESS= rake rspec
-do-regress:
-	@cd ${WRKSRC}/spec && ${RAKE} all
+MODRUBY_REGRESS = rake rspec2
 
 
 .include <bsd.port.mk>

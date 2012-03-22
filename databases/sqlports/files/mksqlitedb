@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# $OpenBSD: mksqlitedb,v 1.32 2011/04/10 18:01:13 jasper Exp $
+# $OpenBSD: mksqlitedb,v 1.35 2012/02/17 07:31:26 espie Exp $
 #
 # Copyright (c) 2006-2010 Marc Espie <espie@openbsd.org>
 #
@@ -89,9 +89,11 @@ sub dump_dirs
 			$ENV{'SUBDIR'} = join(' ', keys %$todo);
 		}
 		if ($opt_p) {
-			$ENV{'REPORT_PROBLEM'}= "touch $opt_p; exit 1";
+			$ENV{'REPORT_PROBLEM_LOGFILE'}= $opt_p;
 		}
 		$ENV{'NO_IGNORE'} = 'Yes';
+		delete $ENV{'SUBPACKAGE'};
+		delete $ENV{'FLAVOR'};
 		exec {'make'} ("make", "dump-vars");
 		die $!;
 	}
@@ -161,6 +163,7 @@ my $vars = {
     PKGNAME => 'AnyVar',
     PKGSPEC => 'AnyVar',
     PKG_ARCH => 'ArchKeyVar',
+    PSEUDO_FLAVOR => 'AnyVar',
     PSEUDO_FLAVORS => 'PseudoFlavorsVar',
     REGRESS_DEPENDS => 'RegressDependsVar',
     REGRESS_IS_INTERACTIVE => 'AnyVar',
@@ -184,6 +187,7 @@ my $unknown = {};
 
 dump_dirs($inserter, $vars, $unknown, undef);
 
+my $i = 1;
 while (1) {
 	my $todo = {};
 	my $stuff = 0;
@@ -195,7 +199,8 @@ while (1) {
 	}
 	last if !$stuff;
 	$normal->{todo} = {};
-	print "Next pass\n";
+	$i++;
+	print "pass #$i\n";
 	dump_dirs($inserter, $vars, $unknown, $todo);
 	for my $v (keys %$todo) {
 		if (!$normal->{done}{$v}) {

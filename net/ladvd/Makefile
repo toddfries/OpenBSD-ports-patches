@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2011/04/23 17:40:34 weerd Exp $
+# $OpenBSD: Makefile,v 1.13 2012/02/22 08:41:54 weerd Exp $
 
 COMMENT =		link advertisement (LLDP/CDP etc) daemon
 
-DISTNAME =		ladvd-0.9.2
-REVISION =		0
+DISTNAME =		ladvd-1.0.4
 CATEGORIES =		net
 
 HOMEPAGE =		http://blinkenlights.nl/software/ladvd/
@@ -18,12 +17,11 @@ PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${HOMEPAGE}
 
-AUTOCONF_VERSION =	2.64
-CONFIGURE_STYLE =	gnu autoconf
+AUTOCONF_VERSION =	2.65
+CONFIGURE_STYLE =	autoconf
 CONFIGURE_ARGS +=	--with-user=_ladvd --with-chroot-dir=/var/empty
-USE_GROFF =		Yes
 
-WANTLIB =		c event
+WANTLIB =		c event pcap
 
 # enables regression tests;  GNU configure script enables them
 # only if devel/check is available at build time

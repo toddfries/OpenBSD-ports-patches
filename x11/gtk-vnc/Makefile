@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.30 2011/07/15 07:06:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.37 2011/11/10 17:01:10 ajacoutot Exp $
 
 COMMENT=		VNC viewer widget for GTK
 
 GNOME_PROJECT=		gtk-vnc
-GNOME_VERSION=		0.4.3
+GNOME_VERSION=		0.4.4
 
 PKGNAME=		${DISTNAME}
 
-REVISION=		3
-
+SHARED_LIBS +=  gtk-vnc-2.0               0.0 # 0.2
 SHARED_LIBS +=  gvnc-1.0             0.0 # 0.1
 
 CATEGORIES=		x11 net
@@ -27,45 +26,29 @@ WANTLIB += drm expat fontconfig freetype gcrypt gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gmp gnutls gobject-2.0
 WANTLIB += gpg-error gthread-2.0 hogweed m nettle pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += sasl2 tasn1 xcb xcb-render xcb-shm z
+WANTLIB += sasl2 tasn1 xcb xcb-render xcb-shm z p11-kit
+WANTLIB += cairo-gobject gdk-3 gtk-3 ffi stdc++
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		${RUN_DEPENDS} \
-			devel/gobject-introspection
+BUILD_DEPENDS=		${RUN_DEPENDS}
 
 LIB_DEPENDS=		security/gnutls \
 			security/cyrus-sasl2 \
-			security/libgcrypt
+			security/libgcrypt \
+			x11/gtk+3
+
+MODGNOME_TOOLS= 	goi vala
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--enable-introspection \
-			--without-examples \
+CONFIGURE_ARGS=		--without-examples \
 			--with-sasl \
-			--without-libview
+			--without-libview \
+			--with-gtk=3.0
 
 # mozilla plugin and python bindings are gtk+2 only
 CONFIGURE_ARGS +=	--disable-plugin \
 			--without-python
-
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-
-FLAVORS=	gtk2
-FLAVOR?=
-
-.if ${FLAVOR:L:Mgtk2}
-SHARED_LIBS +=	gtk-vnc-1.0               2.0 # 0.1
-CONFIGURE_ARGS +=	--with-gtk=2.0
-LIB_DEPENDS +=		x11/gtk+2
-WANTLIB +=		gdk-x11-2.0 gtk-x11-2.0
-.else
-SHARED_LIBS +=  gtk-vnc-2.0               0.0 # 0.2
-CONFIGURE_ARGS +=	--with-gtk=3.0
-LIB_DEPENDS +=		x11/gtk+3
-WANTLIB += cairo-gobject gdk-3 gtk-3
-.endif
 
 .include <bsd.port.mk>

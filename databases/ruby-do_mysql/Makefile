@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2011/01/06 04:24:22 jeremy Exp $
+# $OpenBSD: Makefile,v 1.6 2011/11/09 00:05:40 jeremy Exp $
 
 COMMENT=		ruby-data_objects driver for MySQL
 
-DISTNAME=		do_mysql-0.10.2
-REVISION =		0
+DISTNAME=		do_mysql-0.10.7
 CATEGORIES=		databases
 
 # MIT
@@ -19,7 +18,7 @@ CONFIGURE_STYLE=	ruby gem ext
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		databases/ruby-data_objects,${MODRUBY_FLAVOR}
 
-WANTLIB=		mysqlclient
+WANTLIB=		mysqlclient crypto ssl z
 LIB_DEPENDS=		databases/mysql
 
 # Requires running MySQL database

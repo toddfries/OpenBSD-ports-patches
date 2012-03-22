@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2011/07/18 19:06:36 naddy Exp $
+# $OpenBSD: Makefile,v 1.58 2012/01/13 00:55:14 naddy Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -11,9 +11,9 @@ FULLPKGNAME-el=		emacs-el-${VERSION}
 FULLPKGPATH-el=		editors/emacs21,-el
 FULLPKGNAME-leim=	emacs-leim-${VERSION}
 FULLPKGPATH-leim=	editors/emacs21,-leim
-REVISION-main=		16
-REVISION-el=		3
-REVISION-leim=		3
+REVISION-main=		17
+REVISION-el=		4
+REVISION-leim=		4
 
 CATEGORIES=		editors
 
@@ -38,6 +38,8 @@ FLAVOR?=
 
 GCCARCH=		${MACHINE_ARCH}-unknown-openbsd${OSREV}
 
+MODGNU_EMACS_YOURE_WEIRD = Oh yes
+
 CONFIGURE_STYLE=	gnu dest
 CONFIGURE_ARGS=		${GCCARCH} --with-pop
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
@@ -51,7 +53,7 @@ SUBST_VARS=		GCCARCH VERSION
 
 WANTLIB-main=		c m ncurses ossaudio
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=	--with-x=no
 .else
 LIB_DEPENDS-main=	graphics/libungif \

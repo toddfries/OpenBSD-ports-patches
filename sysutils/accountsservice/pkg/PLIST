@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2011/05/22 10:57:32 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.3 2011/10/29 11:00:39 ajacoutot Exp $
 @unexec-delete rm -rf /var/db/AccountsService/icons/*
 @unexec-delete rm -rf /var/db/AccountsService/users/*
 %%SHARED%%
@@ -11,14 +11,10 @@ lib/girepository-1.0/
 lib/girepository-1.0/AccountsService-1.0.typelib
 lib/libaccountsservice.a
 lib/libaccountsservice.la
-lib/pkgconfig/
 lib/pkgconfig/accountsservice.pc
 @bin libexec/accounts-daemon
-share/dbus-1/
-share/dbus-1/interfaces/
 share/dbus-1/interfaces/org.freedesktop.Accounts.User.xml
 share/dbus-1/interfaces/org.freedesktop.Accounts.xml
-share/dbus-1/system-services/
 share/dbus-1/system-services/org.freedesktop.Accounts.service
 share/examples/accountsservice/
 share/examples/accountsservice/dbus-1/
@@ -45,6 +41,8 @@ share/locale/ca@valencia/LC_MESSAGES/accounts-service.mo
 share/locale/cs/LC_MESSAGES/accounts-service.mo
 share/locale/de/LC_MESSAGES/accounts-service.mo
 share/locale/el/LC_MESSAGES/accounts-service.mo
+share/locale/eo/LC_MESSAGES/accounts-service.mo
+share/locale/es/LC_MESSAGES/accounts-service.mo
 share/locale/fa_IR/
 share/locale/fa_IR/LC_MESSAGES/
 share/locale/fa_IR/LC_MESSAGES/accounts-service.mo
@@ -74,13 +72,12 @@ share/locale/sr@latin/LC_MESSAGES/accounts-service.mo
 share/locale/sv/LC_MESSAGES/accounts-service.mo
 share/locale/tr/LC_MESSAGES/accounts-service.mo
 share/locale/uk/LC_MESSAGES/accounts-service.mo
+share/locale/vi/LC_MESSAGES/accounts-service.mo
 share/locale/wa/
 share/locale/wa/LC_MESSAGES/
 share/locale/wa/LC_MESSAGES/accounts-service.mo
 share/locale/zh_CN/LC_MESSAGES/accounts-service.mo
 share/locale/zh_TW/LC_MESSAGES/accounts-service.mo
-share/polkit-1/
-share/polkit-1/actions/
 share/polkit-1/actions/org.freedesktop.accounts.policy
 @sample /var/db/AccountsService/
 @sample /var/db/AccountsService/icons/

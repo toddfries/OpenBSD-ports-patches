@@ -1,7 +1,7 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
 #	from: @(#)bsd.subdir.mk	5.9 (Berkeley) 2/1/91
-#	$OpenBSD: bsd.port.subdir.mk,v 1.99 2011/03/20 19:28:07 espie Exp $
+#	$OpenBSD: bsd.port.subdir.mk,v 1.106 2012/02/17 07:41:22 espie Exp $
 #	FreeBSD Id: bsd.port.subdir.mk,v 1.20 1997/08/22 11:16:15 asami Exp
 #
 # The include file <bsd.port.subdir.mk> contains the default targets
@@ -34,10 +34,20 @@
 #	tags
 #
 
-# recent /usr/share/mk/* should include bsd.own.mk, guard for older versions
-.if !defined(BSD_OWN_MK)
-.  include <bsd.own.mk>
+.if defined(FLAVOR)
+ERRORS += "Fatal: can't flavor a SUBDIR"
 .endif
+.if defined(SUBPACKAGE)
+ERRORS += "Fatal: can't subpackage a SUBDIR"
+.endif
+
+.for f v in bsd.port.mk _BSD_PORT_MK bsd.port.subdir.mk _BSD_PORT_SUBDIR_MK
+.  if defined($v)
+ERRORS += "Fatal: inclusion of bsd.port.subdir.mk from $f"
+.  endif
+.endfor
+
+_BSD_PORT_SUBDIR_MK = Done
 
 .if defined(verbose-show)
 .MAIN: verbose-show
@@ -58,6 +68,13 @@ ARCH ?!= uname -m
 .include "${PORTSDIR}/infrastructure/mk/pkgpath.mk"
 
 ECHO_MSG ?= echo
+
+FULLPATH ?= No
+.if ${FULLPATH:L} == "yes"
+_FULLPATH = true
+.else
+_FULLPATH = false
+.endif
 
 # create a full list of SUBDIRS...
 .if empty(PKGPATH)
@@ -103,6 +120,7 @@ _subdir_fragment = \
 	_STARTDIR_SEEN=${_STARTDIR_SEEN}; \
 	unset SUBDIR SUBDIRLIST || true; \
 	export _STARTDIR_SEEN; \
+	_fullpath=${_FULLPATH}; \
 	for subdir in ${_FULLSUBDIR:QL}; do \
 		if ! $${_STARTDIR_SEEN}; then \
 			case "${STARTDIR}" in \
@@ -115,7 +133,7 @@ _subdir_fragment = \
 			esac; \
 		fi; \
 		${_SKIP_STUFF}; \
-		if ${_flavor_fragment}; then \
+		if ${_pflavor_fragment}; then \
 			eval $${echo_msg} "===\> $$subdir"; \
 			if ! (eval $$toset exec ${MAKE} $$target); then \
 				eval $${echo_msg} "===\> Exiting $$subdir with an error"; \
@@ -149,6 +167,12 @@ ${_dangerous_recursive_targets}:
 
 ${__target}: 
 	@${_depfile_fragment}; echo_msg=:; ${_subdir_fragment}
+.endfor
+
+.for __target in ${_recursive_cache_targets}
+
+${__target}: 
+	@${_cache_fragment}; ${_subdir_fragment}
 .endfor
 
 clean:
@@ -192,6 +216,16 @@ ${READMES_TOP}/${PKGPATH}/README.html:
 		-e '/%%SUBDIR%%/r${TMPDIR}/subdirs' -e '//d' \
 		${README} > $@
 	@rm ${TMPDIR}/subdirs
+
+.if defined(ERRORS)
+.BEGIN:
+.  for _m in ${ERRORS}
+	@echo 1>&2 ${_m} "(in ${PKGPATH})"
+.  endfor
+.  if !empty(ERRORS:M"Fatal\:*") || !empty(ERRORS:M'Fatal\:*')
+	@exit 1
+.  endif
+.endif
 
 .PHONY: ${_recursive_targets} \
 	${_recursive_depends_targets} clean readmes

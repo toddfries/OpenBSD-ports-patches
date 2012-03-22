@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2011/04/17 20:10:43 ian Exp $
+# $OpenBSD: Makefile,v 1.8 2011/09/16 09:24:49 espie Exp $
 
 COMMENT=		Eclipse plugin for Java program checker (bytecode analyzer)
 
 V=			1.2.0
-REVISION =		0
+REVISION =		1
 DISTNAME=		edu.umd.cs.findbugs.plugin.eclipse_${V}.20070425
 EXTRACT_SUFX=           .zip
 PKGNAME=		eclipse-plugin-findbugs-${V}
@@ -24,7 +24,6 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=findbugs/}
 
 RUN_DEPENDS=		devel/eclipse/sdk>=3.2
 
-USE_ZIP=		Yes
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
 

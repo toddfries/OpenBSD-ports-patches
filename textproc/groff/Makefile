@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/07 05:27:15 schwarze Exp $
+# $OpenBSD: Makefile,v 1.17 2012/02/26 22:28:34 schwarze Exp $
 
 COMMENT =		GNU troff typesetter
 DISTNAME =		groff-1.21
-REVISION =		4
+REVISION =		7
 
 CATEGORIES =		textproc
 HOMEPAGE =		http://www.gnu.org/software/groff/
@@ -19,10 +19,12 @@ WANTLIB =		c m stdc++
 MASTER_SITES =		${MASTER_SITE_GNU:=groff/}
 
 MAKE_FLAGS +=		docdir=${PREFIX}/share/doc/groff \
-			exampledir=${PREFIX}/share/examples/groff
+			exampledir=${PREFIX}/share/examples/groff \
+			ac_cv_path_mkdir=/bin/mkdir
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS +=	--without-libiconv-prefix --without-gs --without-x
+CONFIGURE_ARGS +=	--without-libiconv-prefix --without-gs --without-x \
+			--with-awk=awk
 
 MODGNU_CONFIG_GUESS_DIRS = ${WRKSRC} ${WRKSRC}/src/libs/gnulib/build-aux
 

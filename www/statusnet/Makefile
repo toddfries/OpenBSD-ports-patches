@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.16 2011/07/22 10:20:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2012/01/11 22:27:26 sthen Exp $
 
 COMMENT=		open source micro messaging platform
 
 DISTNAME=		statusnet-0.8.3
-REVISION=		7
+REVISION=		11
 
 CATEGORIES=		www net
 
@@ -34,7 +34,8 @@ RUN_DEPENDS=		databases/pear-DB \
 			www/php-markdown \
 			lang/php/${MODPHP_VERSION},-curl \
 			lang/php/${MODPHP_VERSION},-gd \
-			lang/php/${MODPHP_VERSION},-tidy
+			lang/php/${MODPHP_VERSION},-tidy \
+			php-mysql-${MODPHP_VSPEC}|php-pgsql-${MODPHP_VSPEC}:lang/php/${MODPHP_VERSION},-mysql
 
 NO_BUILD=		Yes
 NO_REGRESS=		Yes

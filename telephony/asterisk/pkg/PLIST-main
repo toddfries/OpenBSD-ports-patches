@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.38 2011/07/12 19:54:39 sthen Exp $
+@comment $OpenBSD: PLIST-main,v 1.41 2012/01/19 21:49:56 sthen Exp $
 @conflict asterisk-sounds-<=1.2.1p2
 @conflict asterisk-curl-*
 @conflict asterisk-fax-*
@@ -340,6 +340,7 @@ lib/asterisk/modules/res_rtp_multicast.so
 lib/asterisk/modules/res_security_log.so
 lib/asterisk/modules/res_smdi.so
 lib/asterisk/modules/res_speech.so
+lib/asterisk/modules/res_srtp.so
 lib/asterisk/modules/res_stun_monitor.so
 lib/asterisk/modules/res_timing_pthread.so
 @man man/man8/asterisk.8
@@ -382,8 +383,8 @@ share/asterisk/phoneprov/polycom.xml
 share/asterisk/phoneprov/polycom_line.xml
 share/asterisk/phoneprov/snom-mac.xml
 share/asterisk/sounds/
-share/asterisk/sounds/.${SOUNDS_CORE}
 share/asterisk/sounds/en/
+share/asterisk/sounds/en/.${SOUNDS_CORE}
 share/asterisk/sounds/en/CHANGES-asterisk-core-en-${SVER_CORE}
 share/asterisk/sounds/en/CREDITS-asterisk-core-en-${SVER_CORE}
 share/asterisk/sounds/en/LICENSE-asterisk-core-en-${SVER_CORE}
@@ -847,10 +848,6 @@ share/asterisk/sounds/en/vm-undeleted.gsm
 share/asterisk/sounds/en/vm-unknown-caller.gsm
 share/asterisk/sounds/en/vm-whichbox.gsm
 share/asterisk/sounds/en/vm-youhave.gsm
-share/asterisk/sounds/en_AU/
-share/asterisk/sounds/es/
-share/asterisk/sounds/fr/
-share/asterisk/sounds/ru/
 share/asterisk/static-http/
 share/asterisk/static-http/ajamdemo.html
 share/asterisk/static-http/astman.css
@@ -859,8 +856,7 @@ share/asterisk/static-http/core-en_US.xml
 share/asterisk/static-http/mantest.html
 share/asterisk/static-http/prototype.js
 share/doc/asterisk/
-share/doc/asterisk/AST.pdf
-share/doc/asterisk/AST.txt
+share/doc/asterisk/Asterisk-Admin-Guide.pdf
 share/doc/asterisk/BUGS
 share/doc/asterisk/CHANGES
 share/doc/asterisk/COPYING

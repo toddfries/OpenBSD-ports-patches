@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.32 2011/06/30 21:39:10 kili Exp $
+# $OpenBSD: Makefile,v 1.36 2012/01/12 20:20:05 kili Exp $
 
 COMMENT-main =	documentation-generation tool for Haskell libraries
 COMMENT-lib =	haddock library
 
 DISTNAME =	haddock-2.9.2
 PKGNAME-main =	${DISTNAME}
-REVISION-main =	0
+REVISION-main =	2
 PKGNAME-lib =	hs-${DISTNAME}
-REVISION-lib =	0
+REVISION-lib =	2
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.haskell.org/haddock/
@@ -20,13 +20,13 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-# This pseudo flavor is needed to let ghc extract the haddock sources
+# This flavor is needed to let ghc extract the haddock sources
 # without pulling in haddocks own build dependencies (which would
 # include ghc).
-PSEUDO_FLAVORS =	no_deps
+FLAVORS =	no_deps
 FLAVOR ?=
 
-.if ! ${FLAVOR:L:Mno_deps}
+.if ! ${FLAVOR:Mno_deps}
 MODULES =		lang/ghc converters/libiconv
 MODGHC_BUILD =		cabal hackage register
 

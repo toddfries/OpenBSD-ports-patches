@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2011/06/29 18:22:46 naddy Exp $
+# $OpenBSD: Makefile,v 1.9 2011/10/12 12:54:30 jasper Exp $
 
 COMMENT=		curses based frontend for mpd
 
 DISTNAME=		pms-0.42
 EXTRACT_SUFX = 		.tar.bz2
 CATEGORIES=		audio
+REVISION =		1
 
 HOMEPAGE=		http://pms.sourceforge.net/
 
@@ -14,7 +15,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c glib-2.0 m ncurses stdc++
+WANTLIB=		c glib-2.0 m ncursesw stdc++
 LIB_DEPENDS=		devel/glib2
 
 MODULES=		devel/gettext \

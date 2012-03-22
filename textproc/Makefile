@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.335 2011/08/22 07:15:18 jasper Exp $
+# $OpenBSD: Makefile,v 1.349 2012/01/24 01:09:05 nigel Exp $
 # $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
 
      SUBDIR =
@@ -26,6 +26,7 @@
      SUBDIR += docbook-xsl
      SUBDIR += docbook2x
      SUBDIR += docx2txt
+     SUBDIR += ebook-tools
      SUBDIR += enchant
      SUBDIR += eruby
      SUBDIR += exempi
@@ -48,12 +49,16 @@
      SUBDIR += hs-attoparsec
      SUBDIR += hs-attoparsec-enumerator
      SUBDIR += hs-attoparsec-iteratee
+     SUBDIR += hs-attoparsec-text
+     SUBDIR += hs-blaze-html
      SUBDIR += hs-bytestring-nums
      SUBDIR += hs-bytestring-show
      SUBDIR += hs-heist
      SUBDIR += hs-hexpat
      SUBDIR += hs-polyparse
+     SUBDIR += hs-tagsoup
      SUBDIR += hs-xml
+     SUBDIR += hs-xmlhtml
      SUBDIR += html
      SUBDIR += hunspell
      SUBDIR += hyperestraier
@@ -66,6 +71,7 @@
      SUBDIR += iso12083
      SUBDIR += iso8879
      SUBDIR += ispell
+     SUBDIR += itstool
      SUBDIR += latex2html
      SUBDIR += lgrind
      SUBDIR += libebml
@@ -73,6 +79,8 @@
      SUBDIR += liblrdf
      SUBDIR += libnxml
      SUBDIR += libtextcat
+     SUBDIR += libtranslate
+     SUBDIR += libwbxml
      SUBDIR += libwpd
      SUBDIR += libxml
      SUBDIR += libxml++
@@ -233,6 +241,7 @@
      SUBDIR += p5-XML-Simple
      SUBDIR += p5-XML-Smart
      SUBDIR += p5-XML-Stream
+     SUBDIR += p5-XML-TreePP
      SUBDIR += p5-XML-Twig
      SUBDIR += p5-XML-Validator-Schema
      SUBDIR += p5-XML-Writer
@@ -255,7 +264,6 @@
      SUBDIR += pilot_makedoc
      SUBDIR += pinfo
      SUBDIR += py-Chart
-     SUBDIR += py-ElementTree
      SUBDIR += py-HappyDoc
      SUBDIR += py-MarkupSafe
      SUBDIR += py-chardet
@@ -268,6 +276,7 @@
      SUBDIR += py-lxml
      SUBDIR += py-nltk
      SUBDIR += py-pdf
+     SUBDIR += py-polib
      SUBDIR += py-pygments
      SUBDIR += py-rtf
      SUBDIR += py-sphinx
@@ -280,6 +289,7 @@
      SUBDIR += rarian
      SUBDIR += redland
      SUBDIR += rman
+     SUBDIR += rubber
      SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
      SUBDIR += ruby-classifier
@@ -298,6 +308,7 @@
      SUBDIR += ruby-liquid
      SUBDIR += ruby-markaby
      SUBDIR += ruby-maruku
+     SUBDIR += ruby-mustache
      SUBDIR += ruby-nokogiri
      SUBDIR += ruby-nokogiri,ruby19
      SUBDIR += ruby-pdf-reader
@@ -306,8 +317,11 @@
      SUBDIR += ruby-randexp
      SUBDIR += ruby-rdiscount
      SUBDIR += ruby-rdiscount,ruby19
+     SUBDIR += ruby-redcarpet
+     SUBDIR += ruby-redcarpet,ruby19
      SUBDIR += ruby-redcloth
      SUBDIR += ruby-redcloth,ruby19
+     SUBDIR += ruby-ronn
      SUBDIR += ruby-rss
      SUBDIR += ruby-rtex
      SUBDIR += ruby-rubigen
@@ -323,12 +337,14 @@
      SUBDIR += sphinx
      SUBDIR += sphinx,pgsql
      SUBDIR += spiff
+     SUBDIR += stringtemplate
      SUBDIR += swish-e
      SUBDIR += tcpdf
      SUBDIR += texi2html
      SUBDIR += textutils
      SUBDIR += tre
      SUBDIR += txt2tags
+     SUBDIR += uncrustify
      SUBDIR += unrtf
      SUBDIR += urlview
      SUBDIR += urlview,slang

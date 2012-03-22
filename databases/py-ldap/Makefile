@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2011/06/12 09:02:32 rpointel Exp $
+# $OpenBSD: Makefile,v 1.34 2011/12/20 11:39:23 sthen Exp $
 
 SHARED_ONLY=		Yes
 
@@ -8,9 +8,9 @@ COMMENT-examples=	example programs for the LDAP client API for Python
 V=			2.3.1
 DISTNAME=		python-ldap-${V}
 PKGNAME-main=		py-ldap-${V}
-REVISION-main =		8
+REVISION-main =		11
 FULLPKGNAME-examples=	py-ldap-examples-${V}
-REVISION-examples =	8
+REVISION-examples =	10
 FULLPKGPATH-examples=	databases/py-ldap,-examples
 
 CATEGORIES=		databases
@@ -28,22 +28,12 @@ WANTLIB-main=		crypto ssl ${MODPY_WANTLIB}
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=python-ldap/}
 
 MODULES=		lang/python
-MODPY_VERSION=		${FLAVOR:S/python//}
 
 LIB_DEPENDS-main=	databases/openldap \
 			security/cyrus-sasl2
 WANTLIB-main +=		ldap_r>=7 lber>=7 sasl2>=2
 
-FLAVORS=		python2.4 python2.7
-FLAVOR?=		python2.7
-
-.if ${FLAVOR:L:Mpython2.4} && !${FLAVOR:L:Npython2.4}
-MULTI_PACKAGES= -main
-.elif ${FLAVOR:L:Mpython2.7} && !${FLAVOR:L:Npython2.7}
 MULTI_PACKAGES= -main -examples
-.else
-ERRORS+=	"Fatal: You must select one version: ${FLAVORS}"
-.endif
 
 EXAMPLESDIR=		${PREFIX}/share/examples/py-ldap
 
@@ -55,6 +45,6 @@ post-install:
 do-regress: fake
 	@cd ${WRKSRC}/Tests/Lib && ${MAKE_ENV} \
 		PYTHONPATH=${WRKINST}${MODPY_SITEPKG} \
-		${MODPY_BIN} ./test_ldapurl.py 
+		${MODPY_BIN} ./test_ldapurl.py
 
 .include <bsd.port.mk>

@@ -1,67 +1,55 @@
-# $OpenBSD: Makefile,v 1.51 2011/05/14 21:29:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.67 2011/12/03 22:17:16 ajacoutot Exp $
 
-SHARED_ONLY=		Yes
-
-COMMENT=		manage encryption keys
+COMMENT=		GNOME encryption interface
 
 GNOME_PROJECT=		seahorse
-GNOME_VERSION=		2.32.0
-REVISION=		6
-
-SHARED_LIBS +=	cryptui              1.0      # .0.0
+GNOME_VERSION=		3.2.2
+REVISION=		0
 
 CATEGORIES=		security
 
 HOMEPAGE=		http://projects.gnome.org/seahorse/
 
-# GPLv2/LGPLv2/GFDLv1.1
+# GPLv2/GFDLv1.1
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender asn1 atk-1.0
-WANTLIB += c cairo com_err crypto dbus-1 dbus-glib-1 expat fontconfig
-WANTLIB += freetype gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
-WANTLIB += glib-2.0 gmodule-2.0 gnutls gobject-2.0 gpg-error
-WANTLIB += gssapi gthread-2.0 gtk-x11-2.0 krb5 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += sasl2 ssl tasn1 xcb xml2 z xcb-render xcb-render-util
-WANTLIB += lber-2.4 ldap-2.4 notify soup-2.4 gpgme gnome-keyring>=6 gcr>=1
-WANTLIB += gp11 avahi-client avahi-common avahi-glib
-
-BUILD_DEPENDS=		devel/gobject-introspection
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm asn1 assuan atk-1.0
+WANTLIB += avahi-client avahi-common avahi-glib c cairo cairo-gobject
+WANTLIB += com_err crypto dbus-1 drm expat ffi fontconfig freetype
+WANTLIB += gck-1 gcr-3 gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gnome-keyring gobject-2.0 gpg-error gpgme
+WANTLIB += gssapi gthread-2.0 gtk-3 krb5 lber-2.4 ldap-2.4
+WANTLIB += m p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread pthread-stubs sasl2 soup-2.4 ssl
+WANTLIB += tasn1 xcb xcb-render xcb-shm xml2 z stdc++
 
 LIB_DEPENDS=		databases/openldap \
-			devel/libnotify>=0.7.2 \
+			x11/gnome/libgnome-keyring>=3.1.92 \
+			x11/gnome/keyring>=3.2.0 \
 			devel/libsoup \
 			security/gpgme \
-			x11/gnome/libgnome-keyring \
-			x11/gnome/keyring>=2.30.0 \
-			net/avahi \
-			x11/gtk+2
+			net/avahi
 
 MODULES=		devel/gettext \
 			x11/gnome \
-			devel/gconf2
+			devel/dconf
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
-MODGCONF2_SCHEMAS_DIR=	seahorse
+MODGNOME_TOOLS= 	yelp
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection \
-			--enable-hkp \
+CONFIGURE_ARGS=		--enable-hkp \
 			--enable-ldap \
+			--enable-pkcs11 \
 			--enable-pgp \
+			--enable-ssh \
 			--enable-sharing \
 			--disable-update-mime-database
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =	Yes
 
-FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/seahorse
+FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/seahorse
 
 .include <bsd.port.mk>

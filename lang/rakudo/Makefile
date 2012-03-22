@@ -1,4 +1,7 @@
-# $OpenBSD: Makefile,v 1.7 2011/08/20 16:47:54 landry Exp $
+# $OpenBSD: Makefile,v 1.10 2011/11/13 16:07:09 pirofti Exp $
+
+# Memory hog, stuck for days on the same file during build.
+NOT_FOR_ARCHS =		sh
 
 COMMENT =		Rakudo Perl 6 compiler
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/26 07:19:00 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2011/09/16 09:24:49 espie Exp $
 
 COMMENT=		Eclipse Modeling Framework (EMF)
 
@@ -6,6 +6,7 @@ V=			2.2.3
 DISTNAME=		emf-sdo-xsd-SDK-${V}
 PKGNAME=		eclipse-plugin-emf-sdk-${V}
 CATEGORIES=		devel/eclipse/plugins java
+REVISION =		0
 
 HOMEPAGE=		http://www.eclipse.org/emf/
 
@@ -23,7 +24,6 @@ MASTER_SITES=		http://download.eclipse.org/modeling/emf/emf/downloads/drops/${V}
 
 RUN_DEPENDS=		devel/eclipse/sdk>=3.2
 
-USE_ZIP=		Yes
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
 
