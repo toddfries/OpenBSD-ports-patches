@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.732 2012/02/28 19:30:13 nigel Exp $
+# $OpenBSD: Makefile,v 1.735 2012/03/21 16:18:32 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -41,6 +41,7 @@
      SUBDIR += castget
      SUBDIR += cftp
      SUBDIR += charm
+     SUBDIR += centerim
      SUBDIR += cjc
      SUBDIR += climm
      SUBDIR += clive
@@ -155,6 +156,7 @@
      SUBDIR += jabberd,mysql
      SUBDIR += jabberd,mysql,ldap
      SUBDIR += jftpgw
+     SUBDIR += jnettop
      SUBDIR += kismet
      SUBDIR += kissd
      SUBDIR += ktorrent
@@ -188,6 +190,7 @@
      SUBDIR += luasocket
      SUBDIR += maclookup
      SUBDIR += maradns
+     SUBDIR += maradns-deadwood
      SUBDIR += mbrowse
      SUBDIR += mcabber
      SUBDIR += meanwhile
