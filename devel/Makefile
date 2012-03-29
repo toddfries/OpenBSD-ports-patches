@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1018 2012/03/18 14:28:18 pascal Exp $
+# $OpenBSD: Makefile,v 1.1023 2012/03/29 07:25:48 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -285,6 +285,7 @@
      SUBDIR += libftdi
      SUBDIR += libgdata
      SUBDIR += libgee
+     SUBDIR += libgee06
      SUBDIR += libgit2
      SUBDIR += libglade2
      SUBDIR += libglademm
@@ -331,6 +332,7 @@
      SUBDIR += libyajl
      SUBDIR += libyaml
      SUBDIR += llvm
+     SUBDIR += log4cplus
      SUBDIR += lpc21isp
      SUBDIR += lpeg
      SUBDIR += luaalarm
@@ -992,6 +994,7 @@
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib
+     SUBDIR += py-iniparse
      SUBDIR += py-kid
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
@@ -1029,6 +1032,7 @@
      SUBDIR += py-subvertpy
      SUBDIR += py-suds
      SUBDIR += py-symboltype
+     SUBDIR += py-test
      SUBDIR += py-testtools
      SUBDIR += py-tpg
      SUBDIR += py-turbocheetah
@@ -1183,6 +1187,7 @@
      SUBDIR += tklib
      SUBDIR += tla
      SUBDIR += tmake
+     SUBDIR += tortoisehg
      SUBDIR += ucpp
      SUBDIR += udis86
      SUBDIR += uisp

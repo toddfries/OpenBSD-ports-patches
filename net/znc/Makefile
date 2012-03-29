@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.12 2011/11/06 20:27:14 kili Exp $
+# $OpenBSD: Makefile,v 1.14 2012/03/29 13:38:49 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	advanced IRC bouncer
 
-DISTNAME=	znc-0.202
+DISTNAME=	znc-0.204
 CATEGORIES=	net
 MASTER_SITES=	${HOMEPAGE}releases/
 
@@ -24,7 +24,7 @@ LIB_DEPENDS=	net/libcares
 
 MAKE_FLAGS=	VERBOSE=1
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS= --disable-optimization
