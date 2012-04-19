@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2012/03/28 13:03:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2012/04/08 20:54:34 landry Exp $
 
 COMMENT =	collection of puzzles games
 
 DISTNAME =	puzzles-r9411
 PKGNAME =	${DISTNAME:S/-r/-/}
-REVISION =	0
+REVISION =	2
 CATEGORIES =	games
 
 HOMEPAGE =	http://www.chiark.greenend.org.uk/~sgtatham/puzzles/

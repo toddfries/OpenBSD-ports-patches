@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2012/03/29 07:22:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/04/02 08:38:47 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	extra plugins for Anjuta IDE
 
 GNOME_PROJECT=	anjuta-extras
 GNOME_VERSION=	3.4.0
+REVISION=	0
 
 CATEGORIES=	devel
 
@@ -28,6 +29,8 @@ WANTLIB += xcb-shm xml2 z ffi
 MODULES=	devel/dconf \
 		devel/gettext \
 		x11/gnome
+
+MODGNOME_TOOLS=	yelp
 
 # plugins/scintilla/{FilePath.cxx,aneditor-priv.h,aneditor.cxx}
 # https://bugzilla.gnome.org/show_bug.cgi?id=631157

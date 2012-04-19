@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.736 2012/03/29 19:04:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.743 2012/04/18 09:50:44 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -82,7 +82,7 @@
      SUBDIR += ettercap,no_x11
      SUBDIR += ez-ipupdate
      SUBDIR += ezstream
-     SUBDIR += farsight2
+     SUBDIR += farstream
      SUBDIR += filezilla
      SUBDIR += firewalk
      SUBDIR += flickcurl
@@ -125,6 +125,8 @@
      SUBDIR += ices
      SUBDIR += ices2
      SUBDIR += icinga
+     SUBDIR += icli
+     SUBDIR += icli,nagios
      SUBDIR += icmpinfo
      SUBDIR += ifmcstat
      SUBDIR += ifstat
@@ -199,6 +201,7 @@
      SUBDIR += miniupnp
      SUBDIR += mirmon
      SUBDIR += mirror
+     SUBDIR += mktorrent
      SUBDIR += mldonkey
      SUBDIR += mon
      SUBDIR += mono-zeroconf
@@ -321,6 +324,7 @@
      SUBDIR += p5-Net-ParseWhois
      SUBDIR += p5-Net-Patricia
      SUBDIR += p5-Net-Pcap
+     SUBDIR += p5-Net-Pcap-Reassemble
      SUBDIR += p5-Net-Ping-External
      SUBDIR += p5-Net-Radius
      SUBDIR += p5-Net-RawIP
@@ -375,6 +379,7 @@
      SUBDIR += p5-Sys-Hostname-Long
      SUBDIR += p5-Test-TCP
      SUBDIR += p5-Validate-Net
+     SUBDIR += p5-XML-RPC
      SUBDIR += p5-flowd
      SUBDIR += packit
      SUBDIR += papyon
@@ -447,7 +452,6 @@
      SUBDIR += py-irclib
      SUBDIR += py-libpcap
      SUBDIR += py-medusa
-     SUBDIR += py-msnp
      SUBDIR += py-nmap
      SUBDIR += py-pcapy
      SUBDIR += py-pcs
@@ -527,6 +531,7 @@
      SUBDIR += spectrum
      SUBDIR += spectrum-tools
      SUBDIR += ssldump
+     SUBDIR += sslh
      SUBDIR += sslsniffer
      SUBDIR += ssvnc
      SUBDIR += supybot

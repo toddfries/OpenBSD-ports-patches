@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.113 2012/03/29 06:53:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.117 2012/04/18 08:25:59 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GNOME panel
 
 GNOME_PROJECT=	gnome-panel
-GNOME_VERSION=	3.4.0
+GNOME_VERSION=	3.4.1
 
 SHARED_LIBS=	panel-applet-4            1.0 # 0.0
 
 CATEGORIES=	x11
+
+HOMEPAGE=	https://live.gnome.org/GnomePanel
 
 # GPLv2/LGPLv2/GFDLv1.1
 PERMIT_PACKAGE_CDROM=	Yes
@@ -46,6 +48,7 @@ BUILD_DEPENDS=	devel/gobject-introspection
 LIB_DEPENDS=	databases/evolution-data-server \
 		devel/libwnck3 \
 		net/telepathy/telepathy-glib \
+		sysutils/polkit \
 		x11/gnome/desktop \
 		x11/gnome/libgweather \
 		x11/gnome/menus>=3.2.0 \

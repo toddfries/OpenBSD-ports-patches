@@ -1,13 +1,15 @@
-# $OpenBSD: Makefile,v 1.73 2012/03/29 06:32:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.75 2012/04/16 23:36:07 ajacoutot Exp $
 
 COMMENT=	SAX-based render library for SVG files
 
 GNOME_PROJECT=	librsvg
-GNOME_VERSION=	2.36.0
+GNOME_VERSION=	2.36.1
 
 SHARED_LIBS +=	rsvg-2         38.0           # .38.0
 
 CATEGORIES=	devel
+
+HOMEPAGE=	https://live.gnome.org/LibRsvg
 
 # GPLv2/LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes

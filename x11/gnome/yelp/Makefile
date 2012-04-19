@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.78 2012/03/29 06:41:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.81 2012/04/17 08:27:08 jasper Exp $
 
 COMMENT=		GNOME help browser
 
 GNOME_PROJECT=		yelp
-GNOME_VERSION=		3.4.0
+GNOME_VERSION=		3.4.1
 
 SHARED_LIBS +=  yelp                      0.0 # 0.0
+
+HOMEPAGE=		https://projects.gnome.org/yelp/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -29,7 +31,8 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/dconf
 
-BUILD_DEPENDS=		x11/gnome/yelp-xsl>=3.2.0
+BUILD_DEPENDS=		x11/gnome/yelp-xsl>=3.2.0 \
+			textproc/itstool
 RUN_DEPENDS=		x11/gnome/yelp-xsl>=3.2.0
 
 LIB_DEPENDS=		www/webkit,gtk3>=1.6.1v0

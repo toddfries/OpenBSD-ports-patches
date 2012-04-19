@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.35 2012/01/06 07:39:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.37 2012/04/13 06:22:02 ajacoutot Exp $
 
 COMMENT=	free peer-reviewed portable C++ source libraries
 
 PKGNAME=	boost-${VERSION}
-REVISION=	12
+REVISION=	13
 
 VERSION=	1.42.0
 DISTNAME=	boost_${VERSION:S/./_/g}
@@ -39,6 +39,7 @@ CATEGORIES=	devel
 MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 HOMEPAGE=	http://www.boost.org/
+VMEM_WARNING =	Yes
 
 # MIT-like
 PERMIT_PACKAGE_CDROM=	Yes

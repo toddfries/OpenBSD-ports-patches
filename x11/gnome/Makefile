@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.175 2012/03/29 08:11:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.180 2012/04/17 13:15:30 jasper Exp $
 
      SUBDIR =
      SUBDIR += anjuta
@@ -8,7 +8,6 @@
      SUBDIR += backgrounds
      SUBDIR += baker
      SUBDIR += baobab
-     SUBDIR += byzanz
      SUBDIR += color-manager
      SUBDIR += common
      SUBDIR += contacts
@@ -31,6 +30,7 @@
      SUBDIR += gcr
      SUBDIR += gdl
      SUBDIR += gdl1
+     SUBDIR += gdlmm
      SUBDIR += gdm
      SUBDIR += gedit
      SUBDIR += gedit-latex
@@ -52,6 +52,7 @@
      SUBDIR += js-common
      SUBDIR += keyring
      SUBDIR += krb5-auth-dialog
+     SUBDIR += latexila
      SUBDIR += libbonobo
      SUBDIR += libbonoboui
      SUBDIR += libcryptui
@@ -65,6 +66,7 @@
      SUBDIR += libgnomeui
      SUBDIR += libgweather
      SUBDIR += librsvg
+     SUBDIR += libsecret
      SUBDIR += libxklavier
      SUBDIR += media
      SUBDIR += menus
@@ -106,6 +108,7 @@
      SUBDIR += user-docs
      SUBDIR += vfs2
      SUBDIR += video-arcade
+     SUBDIR += video-effects
      SUBDIR += vinagre
      SUBDIR += vino
      SUBDIR += yelp

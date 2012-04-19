@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1161 2012/03/22 14:08:50 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1163 2012/04/17 09:31:47 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -255,6 +255,12 @@ INSTALL_TARGET ?= install
 	${CONFIGURE_STYLE:L:Mautoupdate}
 .  if !${CONFIGURE_STYLE:L:Mgnu}
 CONFIGURE_STYLE += gnu
+.  endif
+.endif
+
+.if ${CONFIGURE_STYLE:L:Mmodbuild}
+.  if !${CONFIGURE_STYLE:L:Mperl}
+CONFIGURE_STYLE += perl
 .  endif
 .endif
 
@@ -2758,7 +2764,7 @@ describe:
 .  endif
 	@echo -n ${_COMMENT${_S}:S/^"//:S/"$//:S/^'//:S/'$//:Q}"|"; \
 	if [ -f ${DESCR${_S}} ]; then \
-		echo -n "${DESCR${_S}:S,^${PORTSDIR}/,,}|"; \
+		echo -n `PORTSDIR_PATH=${PORTSDIR_PATH} ${_PERLSCRIPT}/getpkgpath ${DESCR${_S}}`'|';  \
 	else \
 		echo -n "/dev/null|"; \
 	fi; \

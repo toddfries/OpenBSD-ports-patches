@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.71 2012/03/29 06:51:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.76 2012/04/17 12:34:46 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	password agent for the GNOME project
 
 GNOME_PROJECT=	gnome-keyring
-GNOME_VERSION=	3.4.0
+GNOME_VERSION=	3.4.1
+
+HOMEPAGE=	https://live.gnome.org/GnomeKeyring
 
 # GPLv2/LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -27,14 +29,14 @@ MODULES=	devel/gettext \
 		devel/dconf
 
 # only required during build for parsing ASN.1 files
-BUILD_DEPENDS=	security/libtasn1
+BUILD_DEPENDS += security/libtasn1
 
 LIB_DEPENDS=	x11/gnome/gcr
 
 LIBTOOL_ARGS=	--tag=disable-static
 
 CONFIGURE_ARGS=	--disable-static \
-		--with-ca-certificates=/etc/ssl \
+		--with-root-certs=/etc/ssl \
 		--disable-pam \
 		--disable-selinux \
 		--without-libcap-ng

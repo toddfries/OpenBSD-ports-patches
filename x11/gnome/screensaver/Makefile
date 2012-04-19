@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.45 2012/03/29 06:53:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2012/04/14 20:19:39 ajacoutot Exp $
 
 COMMENT=	screen saver and locker for GNOME
 
 GNOME_PROJECT=	gnome-screensaver
-GNOME_VERSION=	3.4.0
+GNOME_VERSION=	3.4.1
+
+HOMEPAGE=	https://live.gnome.org/GnomeScreensaver
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -33,7 +35,6 @@ LIB_DEPENDS=	x11/gnome/desktop>=3.2.0p0 \
 RUN_DEPENDS=	devel/gsettings-desktop-schemas \
 		sysutils/consolekit # src/gs-listener-dbus.c
 
-CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--localstatedir=/var \
 		--enable-docbook-docs \
 		--enable-locking \
