@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.143 2012/02/20 20:17:49 landry Exp $
+# $OpenBSD: Makefile,v 1.145 2012/03/16 21:35:25 landry Exp $
 
 COMMENT-main =		Mozilla e-mail, rss and usenet client
 COMMENT-lightning =	Mozilla Thunderbird calendar extension
@@ -8,15 +8,15 @@ BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 # Don't forget to bump mail/thunderbird-i18n after updates.
 # Don't forget to update productivity/sunbird if patches changes.
 
-MOZILLA_VERSION =	10.0.2
+MOZILLA_VERSION =	11.0
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	thunderbird
 MOZILLA_CODENAME =	mail
 
 MULTI_PACKAGES =	-main -lightning -enigmail
 PKGNAME-main =		${PKGNAME}
-PKGNAME-lightning =	lightning-1.2beta1
-ENIG_V =		1.3.5
+PKGNAME-lightning =	lightning-1.3beta1
+ENIG_V =		1.4
 PKGNAME-enigmail =	enigmail-${ENIG_V}
 EPOCH-lightning =	0
 
@@ -26,7 +26,7 @@ DISTFILES +=	${MOZILLA_PROJECT}-${MOZILLA_VERSION}.source.tar.bz2 \
 		enigmail-${ENIG_V}.tar.gz:0
 EXTRACT_CASES =	enigmail-*.tar.gz) ${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive | tar -C comm-${MOZILLA_BRANCH}/mailnews/extensions/ -xf -;;
 
-SO_VERSION =	22.0
+SO_VERSION =	23.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 

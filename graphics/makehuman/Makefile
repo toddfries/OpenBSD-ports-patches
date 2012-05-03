@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.12 2011/10/23 11:06:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2012/03/20 16:36:16 naddy Exp $
 
 COMMENT=	parametrical modeling of 3D humanoid characters
 
 DISTNAME=	makehuman-0.9.1-rc1a
 PKGNAME=	makehuman-0.9.1rc1
 CATEGORIES=	graphics
+REVISION=	0
 
 HOMEPAGE=	http://www.dedalo-3d.com/
-
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2 / MIT
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,7 +23,7 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=makehuman/}
 # gtar(1), PaxHeaders
 # gcp(1), see pre-configure
 TAR=		${LOCALBASE}/bin/gtar
-BUILD_DEPENDS=	misc/fileutils \
+BUILD_DEPENDS=	sysutils/coreutils \
 		archivers/gtar
 
 

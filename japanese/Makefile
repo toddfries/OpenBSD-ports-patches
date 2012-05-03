@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.25 2011/07/19 09:22:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.27 2012/03/20 23:47:17 fgsch Exp $
 
      SUBDIR =
      SUBDIR += Wnn
      SUBDIR += canna
      SUBDIR += groff
+     SUBDIR += gwaei
      SUBDIR += jvim
      SUBDIR += jvim,canna
      SUBDIR += jvim,wnn
@@ -21,6 +22,7 @@
      SUBDIR += kterm,xaw3d
      SUBDIR += less
      SUBDIR += nkf
+     SUBDIR += mecab
      SUBDIR += onew,canna
      SUBDIR += onew,wnn4
      SUBDIR += onew,wnn4,canna

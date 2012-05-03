@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.14 2011/06/02 13:41:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2012/03/19 07:31:11 landry Exp $
 
 
 COMMENT=		mod_perl Apache gallery handler
 
 MODULES=		cpan
-DISTNAME=		Apache-Gallery-1.0RC3
-REVISION=		2
+DISTNAME=		Apache-Gallery-1.0.2
+EPOCH =	0
+REVISION =	0
 CATEGORIES=		www
 USE_GROFF =		Yes
-
 HOMEPAGE=		http://www.apachegallery.dk/
+MASTER_SITES =		${HOMEPAGE}/download/
 
 # Artistic
 PERMIT_PACKAGE_CDROM=	Yes
@@ -35,9 +36,10 @@ DOCSDIR=        ${PREFIX}/share/doc/Apache-Gallery
 
 post-install:
 	${INSTALL_DATA_DIR} ${TEMPLATESDIR}
-.for i in new default
+.for i in bright new default
 	${INSTALL_DATA_DIR} ${TEMPLATESDIR}/${i}
 	${INSTALL_DATA} ${WRKSRC}/templates/${i}/*.tpl ${TEMPLATESDIR}/${i}
+	${INSTALL_DATA} ${WRKSRC}/templates/bright/navdirectory.tpl ${TEMPLATESDIR}/${i}
 	${INSTALL_DATA} ${WRKSRC}/templates/${i}/gallery.css \
 		${TEMPLATESDIR}/${i}
 .endfor
@@ -45,5 +47,9 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/htdocs/*.png ${ICONSDIR}
 	${INSTALL_DATA_DIR} ${DOCSDIR}
 	${INSTALL_DATA} ${WRKSRC}/{README,INSTALL} ${DOCSDIR}
+
+	${SUBST_CMD} -c ${FILESDIR}/apache-gallery.conf \
+		${DOCSDIR}/apache-gallery.conf.dist
+	chown ${SHAREOWN}:${SHAREGRP} ${DOCSDIR}/apache-gallery.conf.dist
 
 .include <bsd.port.mk>

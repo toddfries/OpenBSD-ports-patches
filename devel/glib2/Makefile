@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.153 2012/02/21 09:22:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.157 2012/03/23 14:36:37 ajacoutot Exp $
 
 COMMENT-main=		general-purpose utility library
 COMMENT-docs=		glib2 documentation
 
-VERSION=		2.30.2
+VERSION=		2.31.22
 DISTNAME=		glib-${VERSION}
 EXTRACT_SUFX=		.tar.xz
 
 PKGNAME-main=		glib2-${VERSION}
 PKGNAME-docs=		glib2-docs-${VERSION}
-
-REVISION-main=		6
 
 CATEGORIES=		devel
 
@@ -18,11 +16,11 @@ HOMEPAGE=		http://www.gtk.org/
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  glib-2.0             2992.0   # 2992.0
-SHARED_LIBS +=  gmodule-2.0          2992.0   # 2992.0
-SHARED_LIBS +=  gthread-2.0          2992.0   # 2992.0
-SHARED_LIBS +=  gobject-2.0          2992.0   # 2992.0
-SHARED_LIBS +=  gio-2.0              2992.0   # 2992.0
+SHARED_LIBS +=  glib-2.0             3200.0   # 3122.0
+SHARED_LIBS +=  gmodule-2.0          3200.0   # 3122.0
+SHARED_LIBS +=  gthread-2.0          3200.0   # 3122.0
+SHARED_LIBS +=  gobject-2.0          3200.0   # 3122.0
+SHARED_LIBS +=  gio-2.0              3200.0   # 3122.0
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -79,14 +77,8 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 # (check again when updating to a stable release)
 CONFIGURE_ARGS +=	--disable-maintainer-mode
 
-# OpenBSD has support for monotonic clock (CLOCK_MONOTONIC), however we
-# currently don't have most of the _POSIX_* defines in unistd.h (e.g.
-# _POSIX_MONOTONIC_CLOCK 200112L) and the associated sysconf(3)
-# _SC_MONOTONIC_CLOCK variable.
-# (see also: patches/patch-gthread_gthread-posix_c)
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-				-D_POSIX_MONOTONIC_CLOCK=200112L" \
-			LDFLAGS="-L${LOCALBASE}/lib -pthread"
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
 
 ### kqueue(1) backend ##################################################
 AUTOMAKE_VERSION=	1.11
@@ -94,8 +86,10 @@ AUTOCONF_VERSION=	2.68
 BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
 			${MODGNU_AUTOMAKE_DEPENDS} \
 			devel/libtool
-MASTER_SITES0=		http://dmitrymatveev.co.uk/files/
-PATCHFILES=		glib-gio-kqueue-2.28.8-v3.patch:0
+#MASTER_SITES0=		http://dmitrymatveev.co.uk/files/
+MASTER_SITES0=		http://distfiles.bsdfrog.org/
+PATCH_DIST_STRIP=	-p2
+PATCHFILES=		glib-gio-kqueue-2.28.8-v3.1.patch:0
 AUTO_ENV=		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
 			AUTOCONF_VERSION=${AUTOCONF_VERSION}
 post-patch:
