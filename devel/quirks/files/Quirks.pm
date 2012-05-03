@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.73 2012/03/29 08:12:58 ajacoutot Exp $
+# $OpenBSD: Quirks.pm,v 1.76 2012/04/30 13:03:18 landry Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -92,6 +92,8 @@ my $base_exceptions = {
 # 4.9
 	'video' => "/usr/X11R6/bin/video",
 	'nsd' => "/usr/sbin/nsd",
+# 5.2
+	'sqlite3' => '/usr/bin/sqlite3',
 };
 
 my $stem_extensions = {
@@ -289,7 +291,10 @@ my $stem_extensions = {
 	'fileutils' => 'coreutils',
 	'textutils' => 'coreutils',
 	'gnome-utils' => 'gnome-search-tool',
-	'seahorse-plugins' => 'seahorse-nautilus'
+	'seahorse-plugins' => 'seahorse-nautilus',
+	'apr-mt' => 'apr',
+	'apr-util-mt' => 'apr-util',
+	'xfce-utils' => 'xfce4-session',
 };
 
 # ->is_base_system($handle, $state):

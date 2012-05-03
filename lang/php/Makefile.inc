@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.26 2012/01/25 11:17:22 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.28 2012/04/28 08:34:56 sthen Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -220,7 +220,7 @@ WANTLIB-pdo_pgsql=	pq>=2
 MULTI_PACKAGES+=	-pdo_sqlite
 COMMENT-pdo_sqlite=	PDO sqlite database access extensions for php5
 CONFIGURE_ARGS+=	--with-pdo-sqlite=shared,${LOCALBASE} --enable-sqlite-utf8
-LIB_DEPENDS-pdo_sqlite=	databases/sqlite3
+LIB_DEPENDS-pdo_sqlite=	
 WANTLIB-pdo_sqlite=	sqlite3>=8
 
 # pgsql
@@ -338,7 +338,8 @@ DESTDIRNAME=	INSTALL_ROOT
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/main/php_ini.c
-	@perl -pi -e "s,OPENBSD_PEAR_ROOT,'${CHROOT_DIR}/pear',g" \
+	@perl -pi -e "s,OPENBSD_PEAR_ROOT,'${CHROOT_DIR}/pear',g;" \
+		-e "s,OPENBSD_PREFIX,${TRUEPREFIX},;" \
 		${WRKSRC}/scripts/phpize.in \
 		${WRKSRC}/scripts/php-config.in
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2012/04/04 22:49:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.34 2012/04/30 13:12:15 espie Exp $
 
 COMMENT =		simple distributed software configuration management
 
@@ -6,6 +6,7 @@ DISTNAME =		fossil-src-20120317175325
 PKGNAME =		fossil-1.22
 EPOCH =			0
 CATEGORIES =		devel www
+REVISION =		0
 
 MAINTAINER =		James Turner <james@calminferno.net>
 
@@ -25,7 +26,6 @@ WANTLIB =		c crypto ssl sqlite3 z
 
 MODULES =		lang/tcl
 
-LIB_DEPENDS =		databases/sqlite3
 BUILD_DEPENDS =		${MODTCL_BUILD_DEPENDS}
 
 CONFIGURE_STYLE =	simple
@@ -36,8 +36,7 @@ CONFIGURE_ENV =		CFLAGS="-I${LOCALBASE}/include -L${LOCALBASE}/lib"
 CONFIGURE_ARGS +=	--static --with-openssl=none
 .endif
 
-REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS} \
-			databases/sqlite3
+REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS}
 
 do-regress:
 	@cd ${WRKSRC} && ${MODTCL_BIN} test/tester.tcl fossil

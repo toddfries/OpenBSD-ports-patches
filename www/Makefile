@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.554 2012/04/11 14:05:29 sthen Exp $
+# $OpenBSD: Makefile,v 1.559 2012/05/01 12:22:17 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -11,6 +11,7 @@
      SUBDIR += apache-httpd
      SUBDIR += aria2
      SUBDIR += arora
+     SUBDIR += asql
      SUBDIR += august
      SUBDIR += awl
      SUBDIR += bk2site
@@ -64,6 +65,7 @@
      SUBDIR += hiawatha
      SUBDIR += horde
      SUBDIR += hs-cgi
+     SUBDIR += hs-clientsession
      SUBDIR += hs-html
      SUBDIR += hs-http-types
      SUBDIR += hs-snap
@@ -77,6 +79,7 @@
      SUBDIR += http_ping
      SUBDIR += icedtea-web
      SUBDIR += igal
+     SUBDIR += igal2
      SUBDIR += japana
      SUBDIR += jesred
      SUBDIR += junkbuster
@@ -379,6 +382,7 @@
      SUBDIR += py-flup
      SUBDIR += py-formencode
      SUBDIR += py-genshi
+     SUBDIR += py-gunicorn
      SUBDIR += py-htmltmpl
      SUBDIR += py-httplib2
      SUBDIR += py-jinja2
@@ -392,6 +396,7 @@
      SUBDIR += py-paste-script
      SUBDIR += py-pylons
      SUBDIR += py-quixote
+     SUBDIR += py-repoze-lru
      SUBDIR += py-repoze-profile
      SUBDIR += py-requests
      SUBDIR += py-routes

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.48 2012/04/16 21:10:06 landry Exp $
+# $OpenBSD: Makefile,v 1.50 2012/04/24 19:05:55 naddy Exp $
 
 COMMENT =	lightweight web browser
 
 XFCE_VERSION =	0.4.5
 XFCE_GOODIE =	midori
-REVISION =	0
+REVISION =	1
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 CATEGORIES =	www
@@ -23,7 +23,6 @@ NO_REGRESS =	Yes
 
 LIB_DEPENDS =	www/webkit>=1.6.1v0 \
 		devel/libnotify \
-		databases/sqlite3 \
 		devel/libunique \
 		devel/libsoup>=2.28.0
 

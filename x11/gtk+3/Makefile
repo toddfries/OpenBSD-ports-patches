@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2012/04/14 07:48:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2012/05/03 05:59:58 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=	multi-platform graphical toolkit
 COMMENT-docs=	gtk+3 documentation
 COMMENT-cups=	gtk+3 CUPS print backend
 
-V=		3.4.1
+V=		3.4.2
 DISTNAME=	gtk+-${V}
 EXTRACT_SUFX=	.tar.xz
 
@@ -90,7 +90,6 @@ CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include/freetype2/ \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
-		--disable-man \
 		--disable-papi \
 		--disable-packagekit \
 		--enable-introspection \

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.44 2012/04/08 15:54:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2012/04/28 10:52:08 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	educational game for children
 
 DISTNAME=	gcompris-12.01
+REVISION =	0
 
 CATEGORIES=	games education
 
@@ -40,7 +41,6 @@ BUILD_DEPENDS=	textproc/texi2html \
 		archivers/gtar
 LIB_DEPENDS=	${MODPY_LIB_DEPENDS} \
 		net/gnet \
-		databases/sqlite3 \
 		gstreamer->=0.10,<0.11:multimedia/gstreamer-0.10/core \
 		x11/gnome/librsvg \
 		x11/gtk+2
@@ -67,7 +67,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-nsbundle \
 		--disable-sdlmixer \
 		--disable-sugar \
-		--localstatedir=/var \
 		--enable-sqlite \
 		--enable-gnet \
 		--enable-py-build-only \
