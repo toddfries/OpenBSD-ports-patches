@@ -1,14 +1,11 @@
-# $OpenBSD: Makefile,v 1.55 2012/02/26 15:06:56 ajacoutot Exp $
-
-# XXX remove the post-patch chunk on update
+# $OpenBSD: Makefile,v 1.62 2012/04/30 11:28:27 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.2.2
-REVISION=		3
+GNOME_VERSION=		3.4.1
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
 
@@ -27,7 +24,7 @@ MODULES=		devel/dconf \
 			lang/python \
 			x11/gnome
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage orc-0.4
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm
 WANTLIB += apr-1 aprutil-1 asn1 atk-1.0 c cairo cairo-gobject
 WANTLIB += crypto db devhelp-3 drm enchant expat ffi fontconfig
@@ -51,7 +48,7 @@ BUILD_DEPENDS=		devel/autogen>=5.6.5 \
 RUN_DEPENDS=		misc/shared-mime-info
 LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			devel/glade \
-			devel/subversion,gnome_keyring \
+			devel/subversion \
 			devel/vte3 \
 			lang/vala>=0.15.2 \
 			textproc/icu4c \
@@ -63,25 +60,22 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 # needed by plugins/class-gen/plugin.c
 RUN_DEPENDS += devel/autogen
 
+# we already depend on libgnome-keyring so it's cheap
+RUN_DEPENDS += devel/subversion,-gnome-keyring
+
 LIBTOOL_FLAGS=		--tag=disable-static
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 
 MODGNOME_TOOLS= 	goi vala yelp
 
-AUTOCONF_VERSION=	2.68
+YACC=			bison -y
 
-CONFIGURE_STYLE=	autoconf
 CONFIGURE_ARGS+=	--enable-plugin-subversion \
 			--with-symbol-db-shm=/tmp
 
 # adds dependency on libgnomeui
 CONFIGURE_ARGS+=	--disable-graphviz
-
-post-patch:
-# fix build with vala>=0.15 by regenerating c files
-	rm ${WRKSRC}/plugins/language-support-vala/{locator,plugin,provider,report}.c
-	rm ${WRKSRC}/plugins/symbol-db/anjuta-tags/ctags-visitor.c
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/plugins/project-wizard/templates/pygtk.wiz.in \

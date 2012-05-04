@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.31 2011/12/16 11:32:22 sthen Exp $
+# $OpenBSD: Makefile,v 1.34 2012/04/30 13:12:15 espie Exp $
 
 COMMENT =		simple distributed software configuration management
 
-DISTNAME =		fossil-src-20111213135356
-PKGNAME =		fossil-1.21
+DISTNAME =		fossil-src-20120317175325
+PKGNAME =		fossil-1.22
 EPOCH =			0
 CATEGORIES =		devel www
+REVISION =		0
 
 MAINTAINER =		James Turner <james@calminferno.net>
 
@@ -21,21 +22,21 @@ PERMIT_DISTFILES_FTP =	Yes
 FLAVORS=		static
 FLAVOR?=
 
-.if ${FLAVOR} == "static"
-MAKE_FLAGS =		LDFLAGS="-static" TCC="${CC} -Wall -DUSE_PREAD"
-.else
-MAKE_FLAGS =		TCC="${CC} -Wall -DFOSSIL_ENABLE_SSL -DUSE_PREAD"
-.endif
-
-WANTLIB =		c crypto ssl z
+WANTLIB =		c crypto ssl sqlite3 z
 
 MODULES =		lang/tcl
 
-REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS} \
-			databases/sqlite3
+BUILD_DEPENDS =		${MODTCL_BUILD_DEPENDS}
 
-MAKE_FILE =		Makefile.classic
-MAKE_FLAGS +=		BCC="${CC}"
+CONFIGURE_STYLE =	simple
+CONFIGURE_ARGS =	--disable-internal-sqlite --disable-lineedit
+CONFIGURE_ENV =		CFLAGS="-I${LOCALBASE}/include -L${LOCALBASE}/lib"
+
+.if ${FLAVOR} == "static"
+CONFIGURE_ARGS +=	--static --with-openssl=none
+.endif
+
+REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS}
 
 do-regress:
 	@cd ${WRKSRC} && ${MODTCL_BIN} test/tester.tcl fossil

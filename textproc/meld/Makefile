@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.20 2012/01/27 09:44:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/04/28 08:13:06 ajacoutot Exp $
 
 COMMENT=	graphical diff and merge tool
 
-GNOME_VERSION=	1.5.3
+GNOME_VERSION=	1.6.0
 GNOME_PROJECT=	meld
 
 CATEGORIES=	textproc x11
@@ -34,5 +34,8 @@ MODPY_ADJ_FILES=bin/meld
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/INSTALL
+
+post-install:
+	rmdir ${PREFIX}/share/pixmaps
 
 .include <bsd.port.mk>

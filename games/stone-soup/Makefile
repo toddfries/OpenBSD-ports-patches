@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2012/01/02 11:26:18 stsp Exp $
+# $OpenBSD: Makefile,v 1.11 2012/04/25 14:39:17 espie Exp $
 
 COMMENT = 	dungeon crawl stone soup
 CATEGORIES = 	games
@@ -9,6 +9,7 @@ VERSION = 	0.9.1
 DISTNAME=	stone_soup-${VERSION}-nodeps
 EXTRACT_SUFX=	.tar.bz2
 PKGNAME=	stone-soup-${VERSION}
+REVISION =	0
 
 BROKEN-arm=	tilegen.elf loops burning cpu
 
@@ -19,7 +20,7 @@ USE_GMAKE = 	Yes
 MAKE_FLAGS = 	CC="${CC}" CXX="${CXX}" \
 		LUA_INCLUDE_DIR=${LOCALBASE}/include \
 		LUA_LIB=-llua \
-		SQLITE_INCLUDE_DIR=${LOCALBASE}/include \
+		SQLITE_INCLUDE_DIR=/usr/include \
 		LDFLAGS=-L${LOCALBASE}/lib \
 		INSTALL_UGRP=root:wheel \
 		prefix=${PREFIX} \
@@ -31,7 +32,6 @@ WANTLIB = 	c m stdc++ lua sqlite3
 
 BUILD_DEPENDS = graphics/pngcrush
 RUN_DEPENDS =	devel/desktop-file-utils
-LIB_DEPENDS = 	databases/sqlite3
 
 # Almost nethack...
 PERMIT_DISTFILES_FTP = 	Yes

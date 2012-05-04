@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.29 2012/03/06 13:39:29 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.31 2012/04/10 13:31:31 dcoppa Exp $
 
 COMMENT =		gnome-mplayer browser media plugin
-V =			1.0.5
+V =			1.0.6
 DISTNAME =		gecko-mediaplayer-${V}
-REVISION =		2
 CATEGORIES =		www
 
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
@@ -40,8 +39,7 @@ CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include \
 			-I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 
-CONFIGURE_ARGS =	--enable-new-libxul \
-			--with-libcurl \
+CONFIGURE_ARGS =	--with-libcurl \
 			--with-xulrunner-sdk=${LOCALBASE}/xulrunner1.9 \
 			--with-plugin-dir=${LOCALBASE}/lib/mozilla/plugins
 

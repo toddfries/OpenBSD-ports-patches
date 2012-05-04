@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2012/01/30 17:25:53 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT-main =		GNU editor: extensible, customizable, self-documenting
 COMMENT-el =		elisp sources for those who want to read/modify them
@@ -9,6 +9,8 @@ DISTNAME =		emacs-${VERSION}
 PKGNAME-main =		emacs-${VERSION}
 FULLPKGNAME-el =	emacs-el-${VERSION}
 FULLPKGPATH-el =	editors/emacs23,-el
+
+REVISION-main =		0
 
 CATEGORIES =		editors
 
@@ -33,7 +35,7 @@ GCCARCH =		${MACHINE_ARCH}-unknown-openbsd${OSREV}
 
 AUTOCONF_VERSION =	2.67
 CONFIGURE_STYLE =	autoconf
-CONFIGURE_ARGS =	${GCCARCH} --localstatedir=/var
+CONFIGURE_ARGS =	${GCCARCH}
 
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include \
 				  -I${LOCALBASE}/include/libpng" \

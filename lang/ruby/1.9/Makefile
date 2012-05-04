@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2012/03/08 12:13:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2012/04/27 18:40:02 jeremy Exp $
 
 COMMENT-main =		object oriented script language with threads
 COMMENT-gdbm =		gdbm interface for ruby
@@ -7,7 +7,7 @@ COMMENT-tk =		tk interface for ruby
 COMMENT-ri_docs =	ri documentation files for ruby
 
 VERSION =		1.9.3
-PATCHLEVEL =		125
+PATCHLEVEL =		194
 RUBYLIBREV =		1.9.1
 
 SHARED_LIBS =		ruby19 1.0
@@ -16,8 +16,6 @@ PKGNAME-gdbm =		ruby-gdbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-dbm =		ruby-dbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-tk =		ruby-tk-${VERSION}.${PATCHLEVEL}
 PKGNAME-ri_docs =	ruby-ri_docs-${VERSION}.${PATCHLEVEL}
-
-REVISION-main =		0
 
 PKG_ARCH-ri_docs=	*
 
@@ -47,7 +45,12 @@ LIB_DEPENDS-main =	${MODLIBICONV_LIB_DEPENDS} \
 RUN_DEPENDS-main =	${MODLIBICONV_RUN_DEPENDS}
 
 PSEUDO_FLAVORS=		no_x11 no_ri_docs
+# Do not build the RI docs on slow arches
+.if ${MACHINE_ARCH:Marm} || ${MACHINE_ARCH:Msparc} || ${MACHINE_ARCH:Mvax}
+FLAVOR?=		no_ri_docs
+.else
 FLAVOR?=
+.endif
 
 MULTI_PACKAGES =	-main -gdbm -dbm
 

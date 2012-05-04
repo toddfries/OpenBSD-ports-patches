@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2011/12/12 12:07:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2012/04/26 06:33:15 espie Exp $
 
 COMMENT=	IP accounting software
 
 DISTNAME=	pmacct-0.12.5
-REVISION=	0
+REVISION=	1
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.pmacct.net/
@@ -18,14 +18,12 @@ WANTLIB=	c m pcap z sqlite3>=8
 
 MASTER_SITES=	${HOMEPAGE}
 
-LIB_DEPENDS+=	databases/sqlite3
-
 NO_REGRESS=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS= --enable-64bit \
 		--enable-ipv6 \
 		--enable-sqlite3 \
-		--with-sqlite3-includes="${LOCALBASE}/include" \
+		--with-sqlite3-includes="/usr/include" \
 		ac_cv_prog_MAKE="/usr/bin/make"
 .ifdef DEBUG
 MAKE_ARGS+=	DEBUG=1
@@ -34,7 +32,7 @@ MAKE_ARGS+=	DEBUG=1
 FLAVORS=	mysql postgresql threads
 FLAVOR?=
 
-.if ${FLAVOR:L:Mpostgresql}
+.if ${FLAVOR:Mpostgresql}
 LIB_DEPENDS+=	databases/postgresql
 WANTLIB +=	pq>=2
 CONFIGURE_ARGS+= --enable-pgsql \
@@ -43,7 +41,7 @@ CONFIGURE_ARGS+= --enable-pgsql \
 CONFIGURE_ARGS+= --disable-pgsql
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 LIB_DEPENDS+=	databases/mysql
 WANTLIB +=	lib/mysql/mysqlclient>=10
 CONFIGURE_ARGS+= --enable-mysql
@@ -51,7 +49,7 @@ CONFIGURE_ARGS+= --enable-mysql
 CONFIGURE_ARGS+= --disable-mysql
 .endif
 
-.if ${FLAVOR:L:Mthreads}
+.if ${FLAVOR:Mthreads}
 WANTLIB += pthread
 CONFIGURE_ARGS+= --enable-threads
 .else

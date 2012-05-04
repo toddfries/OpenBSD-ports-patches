@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2011/09/16 11:13:38 espie Exp $
+# $OpenBSD: Makefile,v 1.49 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT=	server for streaming various media formats
 
@@ -22,7 +22,7 @@ MASTER_SITES=	http://downloads.xiph.org/releases/icecast/
 MODULES=	devel/gettext
 
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS+= --localstatedir=/var --with-theora=${LOCALBASE}
+CONFIGURE_ARGS+= --with-theora=${LOCALBASE}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
@@ -33,6 +33,6 @@ LIB_DEPENDS =	net/curl \
 		audio/speex \
 		multimedia/libtheora
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 
 .include <bsd.port.mk>

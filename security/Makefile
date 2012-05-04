@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.282 2012/03/19 17:20:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.286 2012/04/28 19:45:39 kili Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -58,6 +58,7 @@
      SUBDIR += hlfl
      SUBDIR += hs-asn1-data
      SUBDIR += hs-certificate
+     SUBDIR += hs-cprng-aes
      SUBDIR += hs-crypto
      SUBDIR += hs-crypto-api
      SUBDIR += hs-cryptocipher
@@ -75,6 +76,7 @@
      SUBDIR += its4
      SUBDIR += jailkit
      SUBDIR += john
+     SUBDIR += kc
      SUBDIR += kedpm
      SUBDIR += keepassx
      SUBDIR += keychain
@@ -110,6 +112,7 @@
      SUBDIR += nfsshell
      SUBDIR += nikto
      SUBDIR += nipper
+     SUBDIR += node-bcrypt
      SUBDIR += nss
      SUBDIR += oath-toolkit
      SUBDIR += onesixtyone
@@ -149,6 +152,7 @@
      SUBDIR += p5-Crypt-PasswdMD5
      SUBDIR += p5-Crypt-Primes
      SUBDIR += p5-Crypt-RC4
+     SUBDIR += p5-Crypt-RC5
      SUBDIR += p5-Crypt-RSA
      SUBDIR += p5-Crypt-Random
      SUBDIR += p5-Crypt-Rijndael

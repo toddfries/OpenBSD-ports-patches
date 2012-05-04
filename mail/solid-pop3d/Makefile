@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.23 2011/05/11 12:57:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.25 2012/04/28 10:51:44 ajacoutot Exp $
 
 COMMENT=	flexible POP3 server
 
@@ -19,10 +19,11 @@ WANTLIB=		c
 FLAVORS=	apop 
 FLAVOR?=
 
-SEPARATE_BUILD= concurrent
+LOCALSTATEDIR=	${BASELOCALSTATEDIR}/spool/spop3d
+
+SEPARATE_BUILD= Yes
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS+= --localstatedir="/var/spool/spop3d" \
-		 --mandir="${PREFIX}/man" \
+CONFIGURE_ARGS+= --mandir="${PREFIX}/man" \
 		 --enable-last --enable-bulletins --enable-nonip \
 		 --enable-ipv6 --enable-resolve --enable-connect \
 		 --enable-logextend --enable-statistics 

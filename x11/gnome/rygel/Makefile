@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2012/02/23 09:40:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2012/04/29 15:26:21 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		home media solution that allows easy media sharing
 
 GNOME_PROJECT=		rygel
-GNOME_VERSION=		0.12.7
-
-REVISION=		1
+GNOME_VERSION=		0.14.1
 
 CATEGORIES=		multimedia
 
@@ -35,7 +33,7 @@ MODULES=		devel/gettext \
 
 BUILD_DEPENDS=		net/gupnp/vala>=0.10.0
 RUN_DEPENDS=		net/gupnp/vala>=0.10.0
-LIB_DEPENDS=		devel/libgee \
+LIB_DEPENDS=		devel/libgee06 \
 			net/gupnp/av \
 			net/gupnp/dlna \
 			x11/gtk+3

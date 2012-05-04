@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.62 2012/03/08 12:13:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.64 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT=	SSL encryption wrapper for standard network daemons
 
@@ -22,12 +22,11 @@ MASTER_SITES=	http://ftp.nluug.nl/pub/networking/stunnel/archive/4.x/ \
 		http://mirror.bit.nl/stunnel/archive/4.x/ \
 		ftp://ftp.stunnel.org/stunnel/archive/4.x/
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-ssl=/usr \
-			--with-threads=fork \
-			--localstatedir=/var
+			--with-threads=fork
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/auto
 NO_REGRESS=		Yes
 USE_GMAKE=		Yes

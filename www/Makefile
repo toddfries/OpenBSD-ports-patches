@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.550 2012/03/15 16:51:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.559 2012/05/01 12:22:17 jasper Exp $
 # $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
 
      SUBDIR =
@@ -11,6 +11,7 @@
      SUBDIR += apache-httpd
      SUBDIR += aria2
      SUBDIR += arora
+     SUBDIR += asql
      SUBDIR += august
      SUBDIR += awl
      SUBDIR += bk2site
@@ -39,6 +40,7 @@
      SUBDIR += dillo
      SUBDIR += dokuwiki
      SUBDIR += drupal6
+     SUBDIR += drupal7
      SUBDIR += drush
      SUBDIR += elinks
 #     SUBDIR += elinks,js
@@ -46,6 +48,7 @@
      SUBDIR += epiphany-extensions
      SUBDIR += ezpublish
      SUBDIR += fcgi
+     SUBDIR += fcgi-cgi
      SUBDIR += fennec
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
@@ -62,6 +65,7 @@
      SUBDIR += hiawatha
      SUBDIR += horde
      SUBDIR += hs-cgi
+     SUBDIR += hs-clientsession
      SUBDIR += hs-html
      SUBDIR += hs-http-types
      SUBDIR += hs-snap
@@ -75,6 +79,7 @@
      SUBDIR += http_ping
      SUBDIR += icedtea-web
      SUBDIR += igal
+     SUBDIR += igal2
      SUBDIR += japana
      SUBDIR += jesred
      SUBDIR += junkbuster
@@ -211,6 +216,7 @@
      SUBDIR += p5-Catalyst-Plugin-XMLRPC
      SUBDIR += p5-Catalyst-Runtime
      SUBDIR += p5-Catalyst-View-Mason
+     SUBDIR += p5-CatalystX-Component-Traits
      SUBDIR += p5-Config-ApacheFormat
      SUBDIR += p5-Data-URIEncode
      SUBDIR += p5-Drupal-Admin
@@ -290,6 +296,8 @@
      SUBDIR += p5-PHP-Session
      SUBDIR += p5-PSGI
      SUBDIR += p5-Plack
+     SUBDIR += p5-Plack-Middleware-ReverseProxy
+     SUBDIR += p5-Plack-Test-ExternalServer
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
      SUBDIR += p5-RTx-Tags
@@ -374,6 +382,7 @@
      SUBDIR += py-flup
      SUBDIR += py-formencode
      SUBDIR += py-genshi
+     SUBDIR += py-gunicorn
      SUBDIR += py-htmltmpl
      SUBDIR += py-httplib2
      SUBDIR += py-jinja2
@@ -387,6 +396,7 @@
      SUBDIR += py-paste-script
      SUBDIR += py-pylons
      SUBDIR += py-quixote
+     SUBDIR += py-repoze-lru
      SUBDIR += py-repoze-profile
      SUBDIR += py-requests
      SUBDIR += py-routes
@@ -446,6 +456,7 @@
      SUBDIR += sarg
      SUBDIR += seamonkey
      SUBDIR += seamonkey-i18n
+     SUBDIR += slowhttptest
      SUBDIR += snownews
      SUBDIR += sogo
      SUBDIR += sope

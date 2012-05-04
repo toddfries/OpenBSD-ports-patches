@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1018 2012/03/18 14:28:18 pascal Exp $
+# $OpenBSD: Makefile,v 1.1040 2012/04/28 19:41:14 kili Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -9,11 +9,8 @@
      SUBDIR += alex
      SUBDIR += apache-ant
      SUBDIR += apr
-     SUBDIR += apr,mt
      SUBDIR += apr-util
      SUBDIR += apr-util,ldap
-     SUBDIR += apr-util,mt
-     SUBDIR += apr-util,mt,ldap
      SUBDIR += arduino
      SUBDIR += argp-standalone
      SUBDIR += argtable
@@ -161,6 +158,7 @@
      SUBDIR += hs-aeson
      SUBDIR += hs-ansi-terminal
      SUBDIR += hs-atom
+     SUBDIR += hs-base-unicode-symbols
      SUBDIR += hs-base16-bytestring
      SUBDIR += hs-base64-bytestring
      SUBDIR += hs-bimap
@@ -173,6 +171,8 @@
      SUBDIR += hs-cmdargs
      SUBDIR += hs-comonad
      SUBDIR += hs-comonad-transformers
+     SUBDIR += hs-concurrent-extra
+     SUBDIR += hs-configurator
      SUBDIR += hs-contravariant
      SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
@@ -234,6 +234,7 @@
      SUBDIR += hs-text
      SUBDIR += hs-transformers
      SUBDIR += hs-type-level
+     SUBDIR += hs-unbounded-delays
      SUBDIR += hs-uniplate
      SUBDIR += hs-unix-compat
      SUBDIR += hs-unordered-containers
@@ -285,6 +286,7 @@
      SUBDIR += libftdi
      SUBDIR += libgdata
      SUBDIR += libgee
+     SUBDIR += libgee06
      SUBDIR += libgit2
      SUBDIR += libglade2
      SUBDIR += libglademm
@@ -330,9 +332,12 @@
      SUBDIR += libxsvf
      SUBDIR += libyajl
      SUBDIR += libyaml
+     SUBDIR += libyubikey
      SUBDIR += llvm
+     SUBDIR += log4cplus
      SUBDIR += lpc21isp
      SUBDIR += lpeg
+     SUBDIR += lua-lgi
      SUBDIR += luaalarm
      SUBDIR += luabitop
      SUBDIR += luacopas
@@ -371,6 +376,8 @@
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
+     SUBDIR += node-fibers
+     SUBDIR += node-generic-pool
      SUBDIR += nspr
      SUBDIR += ocaml-calendar
      SUBDIR += ocaml-pcre
@@ -459,12 +466,12 @@
      SUBDIR += p5-Class-Inner
      SUBDIR += p5-Class-InsideOut
      SUBDIR += p5-Class-Inspector
+     SUBDIR += p5-Class-Load
      SUBDIR += p5-Class-Loader
      SUBDIR += p5-Class-MOP
      SUBDIR += p5-Class-MakeMethods
      SUBDIR += p5-Class-Meta
      SUBDIR += p5-Class-Meta-Express
-     SUBDIR += p5-Class-Method-Modifiers
      SUBDIR += p5-Class-MethodMaker
      SUBDIR += p5-Class-MethodMapper
      SUBDIR += p5-Class-Multimethods
@@ -475,6 +482,7 @@
      SUBDIR += p5-Class-Std-Utils
      SUBDIR += p5-Class-Throwable
      SUBDIR += p5-Class-Trigger
+     SUBDIR += p5-Class-Unload
      SUBDIR += p5-Class-Virtual
      SUBDIR += p5-Class-WhiteHole
      SUBDIR += p5-Class-XPath
@@ -495,8 +503,10 @@
      SUBDIR += p5-Curses-Widgets
      SUBDIR += p5-Data-Alias
      SUBDIR += p5-Data-Buffer
+     SUBDIR += p5-Data-Compare
      SUBDIR += p5-Data-Dump
      SUBDIR += p5-Data-Dump-Streamer
+     SUBDIR += p5-Data-Dumper-Concise
      SUBDIR += p5-Data-Dumper-Simple
      SUBDIR += p5-Data-Flow
      SUBDIR += p5-Data-FormValidator
@@ -534,6 +544,7 @@
      SUBDIR += p5-DateTime-Format-MySQL
      SUBDIR += p5-DateTime-Format-Natural
      SUBDIR += p5-DateTime-Format-Pg
+     SUBDIR += p5-DateTime-Format-SQLite
      SUBDIR += p5-DateTime-Format-Strptime
      SUBDIR += p5-DateTime-Format-W3CDTF
      SUBDIR += p5-DateTime-Locale
@@ -607,6 +618,7 @@
      SUBDIR += p5-File-Sync
      SUBDIR += p5-File-Tail
      SUBDIR += p5-File-Tempdir
+     SUBDIR += p5-File-Touch
      SUBDIR += p5-File-Type
      SUBDIR += p5-File-chdir
      SUBDIR += p5-FileHandle-Unget
@@ -678,20 +690,24 @@
      SUBDIR += p5-MLDBM
      SUBDIR += p5-MLDBM-Sync
      SUBDIR += p5-MRO-Compat
+     SUBDIR += p5-Memoize-ExpireLRU
      SUBDIR += p5-Module-Find
      SUBDIR += p5-Module-Install
      SUBDIR += p5-Module-Manifest
      SUBDIR += p5-Module-Pluggable-Fast
      SUBDIR += p5-Module-Refresh
+     SUBDIR += p5-Module-Runtime
      SUBDIR += p5-Module-ScanDeps
      SUBDIR += p5-Module-Starter
      SUBDIR += p5-Module-Starter-Plugin-CGIApp
      SUBDIR += p5-Module-Versions-Report
+     SUBDIR += p5-Module-Which
      SUBDIR += p5-Moose
      SUBDIR += p5-MooseX-Aliases
      SUBDIR += p5-MooseX-AttributeHelpers
      SUBDIR += p5-MooseX-Clone
      SUBDIR += p5-MooseX-ConfigFromFile
+     SUBDIR += p5-MooseX-Daemonize
      SUBDIR += p5-MooseX-Declare
      SUBDIR += p5-MooseX-Emulate-Class-Accessor-Fast
      SUBDIR += p5-MooseX-Getopt
@@ -699,22 +715,27 @@
      SUBDIR += p5-MooseX-LazyRequire
      SUBDIR += p5-MooseX-Log-Log4perl
      SUBDIR += p5-MooseX-LogDispatch
+     SUBDIR += p5-MooseX-MarkAsMethods
      SUBDIR += p5-MooseX-Meta-TypeConstraint-ForceCoercion
      SUBDIR += p5-MooseX-Method-Signatures
      SUBDIR += p5-MooseX-MethodAttributes
      SUBDIR += p5-MooseX-MultiInitArg
+     SUBDIR += p5-MooseX-NonMoose
      SUBDIR += p5-MooseX-POE
      SUBDIR += p5-MooseX-Params-Validate
      SUBDIR += p5-MooseX-Role-Parameterized
      SUBDIR += p5-MooseX-Role-WithOverloading
      SUBDIR += p5-MooseX-SemiAffordanceAccessor
      SUBDIR += p5-MooseX-Traits
+     SUBDIR += p5-MooseX-Traits-Pluggable
      SUBDIR += p5-MooseX-Types
      SUBDIR += p5-MooseX-Types-Common
      SUBDIR += p5-MooseX-Types-DateTime
+     SUBDIR += p5-MooseX-Types-LoadableClass
      SUBDIR += p5-MooseX-Types-Path-Class
      SUBDIR += p5-MooseX-Types-Structured
      SUBDIR += p5-Mouse
+     SUBDIR += p5-MouseX-Types
      SUBDIR += p5-Net-Server
      SUBDIR += p5-Number-Compare
      SUBDIR += p5-Number-Compare-Date
@@ -745,6 +766,7 @@
      SUBDIR += p5-Parallel-Forker
      SUBDIR += p5-Parallel-Prefork
      SUBDIR += p5-Params-CallbackRequest
+     SUBDIR += p5-Params-Classify
      SUBDIR += p5-Params-Coerce
      SUBDIR += p5-Params-Util
      SUBDIR += p5-Params-Validate
@@ -798,6 +820,7 @@
      SUBDIR += p5-String-CRC32
      SUBDIR += p5-String-Format
      SUBDIR += p5-String-Scanf
+     SUBDIR += p5-String-Truncate
      SUBDIR += p5-Sub-Exporter
      SUBDIR += p5-Sub-Identify
      SUBDIR += p5-Sub-Install
@@ -823,6 +846,7 @@
      SUBDIR += p5-Term-Screen
      SUBDIR += p5-Term-ScreenColor
      SUBDIR += p5-Term-Shell
+     SUBDIR += p5-Term-Size
      SUBDIR += p5-Test-Assertions
      SUBDIR += p5-Test-Base
      SUBDIR += p5-Test-CheckManifest
@@ -900,6 +924,7 @@
      SUBDIR += p5-Time-Piece-MySQL
      SUBDIR += p5-Time-Progress
      SUBDIR += p5-Time-TimeDate
+     SUBDIR += p5-Time-Warp
      SUBDIR += p5-Time-modules
      SUBDIR += p5-Tree-DAG_Node
      SUBDIR += p5-Tree-Simple
@@ -992,6 +1017,7 @@
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib
+     SUBDIR += py-iniparse
      SUBDIR += py-kid
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
@@ -1029,6 +1055,7 @@
      SUBDIR += py-subvertpy
      SUBDIR += py-suds
      SUBDIR += py-symboltype
+     SUBDIR += py-test
      SUBDIR += py-testtools
      SUBDIR += py-tpg
      SUBDIR += py-turbocheetah
@@ -1040,6 +1067,7 @@
      SUBDIR += py-unit,no_x11
      SUBDIR += py-urwid
      SUBDIR += py-virtualenv
+     SUBDIR += py-wbem
      SUBDIR += py-wsgiutils
      SUBDIR += py-xdg
      SUBDIR += py-xmlrunner
@@ -1164,13 +1192,13 @@
      SUBDIR += smarty
      SUBDIR += smpeg
      SUBDIR += spe
+     SUBDIR += spidermonkey
      SUBDIR += splint
      SUBDIR += srecord
      SUBDIR += startup-notification
      SUBDIR += stm32loader
      SUBDIR += stp
      SUBDIR += subversion
-     SUBDIR += subversion,gnome_keyring
      SUBDIR += svk
      SUBDIR += swig
      SUBDIR += t1lib
@@ -1183,6 +1211,7 @@
      SUBDIR += tklib
      SUBDIR += tla
      SUBDIR += tmake
+     SUBDIR += tortoisehg
      SUBDIR += ucpp
      SUBDIR += udis86
      SUBDIR += uisp

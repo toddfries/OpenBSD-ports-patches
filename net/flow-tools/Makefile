@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2011/11/28 10:52:03 sthen Exp $
+# $OpenBSD: Makefile,v 1.27 2012/04/28 10:51:44 ajacoutot Exp $
 
 SHARED_LIBS +=  ft                   0.0      # .0.0
 
@@ -28,10 +28,11 @@ WANTLIB=		c z
 
 MODULES=		lang/python
 
+LOCALSTATEDIR=		${BASELOCALSTATEDIR}/flow-tools
+
 CONFIGURE_STYLE=	gnu
-SEPARATE_BUILD=		simple
+SEPARATE_BUILD=		Yes
 SYSCONFDIR=		${BASESYSCONFDIR}/flow-tools
-CONFIGURE_ARGS+=	--localstatedir=/var/flow-tools
 
 .if !${FLAVOR:L:Mpgsql}
 CONFIGURE_ARGS+=	--without-postgresql

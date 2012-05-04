@@ -1,13 +1,17 @@
-# $OpenBSD: Makefile,v 1.39 2012/01/16 11:01:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2012/05/01 06:04:48 ajacoutot Exp $
 
 COMMENT=	SGI audiofile library clone
 
-V=		0.3.3
+V=		0.3.4
 SUBST_VARS=	V
+
 DISTNAME=	audiofile-${V}
 PKGNAME=	lib${DISTNAME}
-SHARED_LIBS +=	audiofile 1.0
+
+SHARED_LIBS +=  audiofile            1.0      # 1.0
+
 CATEGORIES=	devel audio
+
 MASTER_SITES=	${HOMEPAGE}
 
 HOMEPAGE=	http://www.68k.org/~michael/audiofile/
@@ -22,7 +26,7 @@ WANTLIB += c m stdc++
 
 USE_LIBTOOL=	Yes
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 
 CONFIGURE_STYLE= gnu
 CONFIGURE_ENV=	ac_cv_path_ASCIIDOC=no

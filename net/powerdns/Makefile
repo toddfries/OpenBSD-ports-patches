@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2012/01/28 08:07:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.22 2012/04/25 23:03:09 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -86,12 +86,13 @@ BACKENDS+=		gsqlite
 CONFIGURE_ARGS+=	--without-sqlite3
 .else
 MULTI_PACKAGES+=	-sqlite3
-CONFIGURE_ARGS+=	--with-sqlite3=${LOCALBASE} \
-			--with-sqlite3-includes=${LOCALBASE}/include
-LIB_DEPENDS-sqlite3=	databases/sqlite3
+CONFIGURE_ARGS+=	--with-sqlite3=/usr \
+			--with-sqlite3-includes=/usr/include
+LIB_DEPENDS-sqlite3=	
 RUN_DEPENDS-sqlite3=	${FULLPKGNAME-main}:net/powerdns
 WANTLIB-sqlite3+=	sqlite3>=8 z ${WANTLIB}
 BACKENDS+=		gsqlite3
+REVISION-sqlite3 =		0
 .endif
 
 # LDAP

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.484 2012/03/19 06:38:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.488 2012/05/02 07:38:14 jasper Exp $
 # $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
 
      SUBDIR =
@@ -13,8 +13,6 @@
      SUBDIR += asclock
      SUBDIR += asfiles
      SUBDIR += astime
-     SUBDIR += aterm
-     SUBDIR += aterm,big5
      SUBDIR += autocutsel
      SUBDIR += awesome
      SUBDIR += awn
@@ -62,6 +60,7 @@
      SUBDIR += flvw
      SUBDIR += flwm
      SUBDIR += freerdp
+     SUBDIR += freerdp,no_cups
      SUBDIR += fsv
      SUBDIR += fvwm2
      SUBDIR += fvwm95
@@ -114,6 +113,7 @@
      SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme
      SUBDIR += i3
+     SUBDIR += i3status
      SUBDIR += icewm
      SUBDIR += icon-naming-utils
      SUBDIR += icontool
@@ -346,6 +346,7 @@
      SUBDIR += xscreensaver,
      SUBDIR += xscribble
      SUBDIR += xsel
+     SUBDIR += xsettingsd
      SUBDIR += xsnow
      SUBDIR += xtacy
      SUBDIR += xtattr

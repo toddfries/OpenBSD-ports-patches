@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.61 2012/02/18 18:40:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.63 2012/04/25 06:23:16 espie Exp $
 
 SHARED_ONLY=		Yes
 
@@ -21,7 +21,8 @@ PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}
 PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
 
-REVISION-ui=		1
+REVISION =		0
+REVISION-ui=		2
 
 EPOCH-main=		2
 EPOCH-ldap=		0
@@ -66,8 +67,7 @@ MULTI_PACKAGES=		-main
 LIB_DEPENDS=		devel/glib2 \
 			textproc/libxml
 
-BUILD_DEPENDS=		databases/db/v4 \
-			databases/sqlite3
+BUILD_DEPENDS=		databases/db/v4
 
 REGRESS_DEPENDS=	devel/check
 
