@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.747 2012/05/03 18:01:50 pascal Exp $
+# $OpenBSD: Makefile,v 1.754 2012/06/18 08:52:20 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -52,6 +52,7 @@
      SUBDIR += courtney
      SUBDIR += crawl
      SUBDIR += csup
+     SUBDIR += csync
      SUBDIR += ctrace
      SUBDIR += curl
      SUBDIR += cvsup
@@ -98,7 +99,6 @@
      SUBDIR += ftpcopy
      SUBDIR += ftpsesame
      SUBDIR += gajim
-     SUBDIR += gftp
      SUBDIR += glib2-networking
      SUBDIR += gloox
      SUBDIR += gmudix
@@ -119,7 +119,7 @@
      SUBDIR += hping
      SUBDIR += hpodder
      SUBDIR += hs-HTTP
-     SUBDIR += hs-pb
+     SUBDIR += hs-hostname
      SUBDIR += httptunnel
      SUBDIR += icb
      SUBDIR += icbirc
@@ -210,7 +210,7 @@
      SUBDIR += mrtd
      SUBDIR += mrtg
      SUBDIR += mtr
-     SUBDIR += mtr,no_x11
+     SUBDIR += mtr,gtk
      SUBDIR += mudix
      SUBDIR += munin
      SUBDIR += mutella
@@ -417,6 +417,7 @@
      SUBDIR += pidgin,gtkspell
      SUBDIR += pidgin-facebookchat
      SUBDIR += pidgin-icb
+     SUBDIR += pidgin-sipe
      SUBDIR += pidgin-tlen
      SUBDIR += pktstat
      SUBDIR += plushs
@@ -512,7 +513,6 @@
      SUBDIR += scapy
      SUBDIR += scli
      SUBDIR += sendxmpp
-     SUBDIR += ser
      SUBDIR += sharity-light
      SUBDIR += si
      SUBDIR += silc-client

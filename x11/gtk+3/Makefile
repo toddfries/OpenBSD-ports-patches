@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.39 2012/05/03 05:59:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2012/05/28 16:38:35 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,13 +6,15 @@ COMMENT-main=	multi-platform graphical toolkit
 COMMENT-docs=	gtk+3 documentation
 COMMENT-cups=	gtk+3 CUPS print backend
 
-V=		3.4.2
+V=		3.4.3
 DISTNAME=	gtk+-${V}
 EXTRACT_SUFX=	.tar.xz
 
 PKGNAME-main=	gtk+3-${V}
 PKGNAME-docs=	gtk+3-docs-${V}
 PKGNAME-cups=	gtk+3-cups-${V}
+
+REVISION-main=	0
 
 # grep ^GTK_BINARY_VERSION ${WRKSRC}/Makefile (after do-configure)
 GTK_BINARY_VERSION=3.0.0
@@ -73,7 +75,7 @@ PKG_ARCH-docs=	*
 RUN_DEPENDS-cups= # empty
 LIB_DEPENDS-cups= ${LIB_DEPENDS} \
 		print/cups \
-		graphics/colord \
+		graphics/colord,no_gtk,bootstrap \
 		STEM->=${V}:${BASE_PKGPATH},-main
 
 WANTLIB-cups += ${WANTLIB}

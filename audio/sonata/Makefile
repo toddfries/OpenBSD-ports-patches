@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.33 2011/11/14 08:47:16 mpi Exp $
+# $OpenBSD: Makefile,v 1.36 2012/05/09 14:28:54 ajacoutot Exp $
 
 COMMENT=	elegant music player for MPD
 
 MODPY_EGG_VERSION=1.6.2.1
 DISTNAME=	sonata-${MODPY_EGG_VERSION}
-REVISION =	9
+REVISION =	12
 CATEGORIES=	audio
 
 HOMEPAGE=	http://sonata.berlios.de/

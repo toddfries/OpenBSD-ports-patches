@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.55 2011/12/13 17:42:14 jeremy Exp $
+# $OpenBSD: Makefile,v 1.57 2012/06/14 17:31:38 pascal Exp $
 #
 
     SUBDIR =
     SUBDIR += base64
     SUBDIR += btoa
+    SUBDIR += dos2unix
     SUBDIR += enca
     SUBDIR += html2text
     SUBDIR += html2wml
@@ -12,6 +13,7 @@
     SUBDIR += libdvdcss
     SUBDIR += libiconv
     SUBDIR += libpst
+    SUBDIR += libunistring
     SUBDIR += mimepp
     SUBDIR += mpack
     SUBDIR += p5-Calendar-Simple

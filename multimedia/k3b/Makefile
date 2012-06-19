@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2011/12/03 18:35:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2012/06/15 08:32:17 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		CD/DVD creator
 DISTNAME =		k3b-1.0.4
-REVISION=		9
+REVISION=		12
 
 SHARED_LIBS =		k3b	0.0	# 3.0
 SHARED_LIBS +=		k3bdevice	0.0	# 5.0
@@ -44,10 +44,10 @@ RUN_DEPENDS =		sysutils/cdrtools \
 LIB_DEPENDS =		audio/flac \
 			audio/lame \
 			audio/libmad \
-			audio/libmpcdec \
 			audio/libsamplerate \
 			audio/libsndfile \
 			audio/libvorbis \
+			audio/musepack \
 			audio/taglib \
 			devel/libdvdread \
 			graphics/ffmpeg>=20100512 \
@@ -69,5 +69,8 @@ CONFIGURE_ARGS +=	--with-qt-dir=${MODQT_QTDIR} \
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			PTHREAD_LIBS="-pthread"
+
+# For QSettings to write its setup
+PORTHOME=		${WRKDIST}
 
 .include <bsd.port.mk>

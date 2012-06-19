@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.135 2012/04/20 10:48:03 jasper Exp $
+# $OpenBSD: Makefile,v 1.137 2012/06/02 12:25:11 jasper Exp $
 # $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
 #
 
@@ -16,6 +16,7 @@
      SUBDIR += datalog
      SUBDIR += eagle
      SUBDIR += ecl
+     SUBDIR += elixir
      SUBDIR += eltclsh
      SUBDIR += erlang
      SUBDIR += expect
@@ -54,6 +55,7 @@
      SUBDIR += nbfc
      SUBDIR += newlisp
      SUBDIR += nhc98
+     SUBDIR += node
      SUBDIR += nqp
      SUBDIR += obc
      SUBDIR += ocaml

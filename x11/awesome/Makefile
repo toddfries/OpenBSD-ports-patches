@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.45 2012/02/18 11:24:44 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.48 2012/06/19 11:18:53 dcoppa Exp $
 
-COMMENT=		fast, small, dynamic and awesome window manager
+COMMENT=		highly configurable framework window manager
 
-DISTNAME=		awesome-3.4.11
-REVISION=		1
+DISTNAME=		awesome-3.4.12
 EXTRACT_SUFX=		.tar.xz
 CATEGORIES=		x11
 
@@ -21,7 +20,7 @@ WANTLIB+=		GL Imlib2 X11 Xau Xdamage Xdmcp Xext Xfixes
 WANTLIB+=		Xrender Xxf86vm c cairo dbus-1 drm ev
 WANTLIB+=		execinfo expat fontconfig freetype glib-2.0
 WANTLIB+=		gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB+=		lua m pango-1.0 pangocairo-1.0
+WANTLIB+=		${MODLUA_WANTLIB} m pango-1.0 pangocairo-1.0
 WANTLIB+=		pangoft2-1.0 pixman-1 png pthread
 WANTLIB+=		pthread-stubs startup-notification-1 xcb
 WANTLIB+=		xcb-atom xcb-aux xcb-event xcb-icccm
@@ -36,7 +35,7 @@ LIB_DEPENDS=		devel/libexecinfo \
 			devel/libev \
 			devel/startup-notification \
 			graphics/imlib2 \
-			lang/lua \
+			${MODLUA_LIB_DEPENDS} \
 			x11/dbus \
 			x11/libxdg-basedir
 
@@ -52,7 +51,8 @@ RUN_DEPENDS=		graphics/feh \
 			shells/bash
 
 MODULES=		devel/cmake \
-			devel/gettext
+			devel/gettext \
+			lang/lua
 
 CONFIGURE_ARGS=		-DCOMPRESS_MANPAGES=off
 

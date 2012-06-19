@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2012/04/28 08:34:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.27 2012/06/17 06:49:07 ajacoutot Exp $
 
 # doesn't set USE_LIBTOOL but use the bundled one because it needs some
 # specific options we don't have.
@@ -8,12 +8,17 @@ V=		5.2.17
 SUHOSIN_PHPV=	5.2.16
 SUHOSIN_P_V=	0.9.7
 
-REVISION=		5
-REVISION-main=		9
-REVISION-fastcgi=	9
-REVISION-snmp=		6
-REVISION-gd=		6
-REVISION-pdo_sqlite =	6
+REVISION=		6
+REVISION-main=		10
+REVISION-curl=		8
+REVISION-fastcgi=	10
+REVISION-snmp=		7
+REVISION-gd=		7
+REVISION-pdo_sqlite =	7
+REVISION-dbase=		7
+REVISION-mhash=		7
+REVISION-ncurses=	7
+REVISION-sybase_ct=	7
 
 INI_TEMPLATES=	dist recommended
 

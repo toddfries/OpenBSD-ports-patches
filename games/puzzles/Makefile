@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2012/04/08 20:54:34 landry Exp $
+# $OpenBSD: Makefile,v 1.6 2012/06/15 08:32:15 ajacoutot Exp $
 
 COMMENT =	collection of puzzles games
 
-DISTNAME =	puzzles-r9411
+DISTNAME =	puzzles-r9534
 PKGNAME =	${DISTNAME:S/-r/-/}
-REVISION =	2
+REVISION =	0
 CATEGORIES =	games
 
 HOMEPAGE =	http://www.chiark.greenend.org.uk/~sgtatham/puzzles/
@@ -24,8 +24,8 @@ RUN_DEPENDS =	devel/desktop-file-utils devel/xdg-utils \
 		x11/gtk+2,-guic
 MAKE_FLAGS =	CC="${CC}"
 
-WANTLIB += atk-1.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gthread-2.0 pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += atk-1.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gobject-2.0 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
 WANTLIB += Xrandr Xrender c cairo expat fontconfig freetype gdk-x11-2.0
 WANTLIB += gtk-x11-2.0 m pixman-1 png pthread pthread-stubs

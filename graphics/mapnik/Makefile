@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2012/05/03 08:48:26 landry Exp $
+# $OpenBSD: Makefile,v 1.7 2012/05/05 07:05:16 landry Exp $
 
 COMMENT =	toolkit for developing mapping applications
 

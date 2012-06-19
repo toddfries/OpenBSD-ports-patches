@@ -1,13 +1,16 @@
-# $OpenBSD: Makefile,v 1.18 2012/04/16 22:37:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/05/28 16:38:35 ajacoutot Exp $
 
 COMMENT-main=	GNOME desktop meta-package (base installation)
 COMMENT-extra=	GNOME desktop meta-package (full installation)
 
-V=		3.4.1
+V=		3.4.2
 PKGNAME=	gnome-${V}
 
 PKGNAME-main=	gnome-${V}
 PKGNAME-extra=	gnome-extra-${V}
+
+REVISION-main=	1
+REVISION-extra=	0
 
 MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 		Antoine Jacoutot <ajacoutot@openbsd.org>
@@ -33,6 +36,9 @@ RUN_DEPENDS-main += \
 # gconf2 and polkit are already dependencies and we want to be able to
 # handle system-wide gconf entries.
 RUN_DEPENDS-main += devel/gconf2,-polkit
+
+# colord and gtk+3 are already dependencies (obviously)
+RUN_DEPENDS-main += graphics/colord,-gtk
 
 # Install accessibility components -- daemons will start only if
 # accessibility is enabled by the user.
@@ -61,7 +67,6 @@ RUN_DEPENDS-main += \
 RUN_DEPENDS-extra += \
 		STEM-=${V}:${BASE_PKGPATH},-main \
 		audio/rhythmbox \
-		devel/dconf,-editor \
 		graphics/simple-scan \
 		mail/evolution,-plugins \
 		mail/evolution-rss \

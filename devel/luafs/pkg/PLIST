@@ -1,10 +1,10 @@
-@comment $OpenBSD: PLIST,v 1.4 2006/07/30 04:38:39 pedro Exp $
-%%SHARED%%
-share/doc/luafs/
-share/doc/luafs/examples.html
-share/doc/luafs/index.html
-share/doc/luafs/license.html
-share/doc/luafs/luafilesystem.png
-share/doc/luafs/manual.html
-share/examples/luafs/
-share/examples/luafs/test.lua
+@comment $OpenBSD: PLIST,v 1.6 2012/05/15 20:45:12 jasper Exp $
+lib/lua/${MODLUA_VERSION}/lfs.so
+share/doc/${FULLPKGNAME}/
+share/doc/${FULLPKGNAME}/examples.html
+share/doc/${FULLPKGNAME}/index.html
+share/doc/${FULLPKGNAME}/license.html
+share/doc/${FULLPKGNAME}/luafilesystem.png
+share/doc/${FULLPKGNAME}/manual.html
+share/examples/${FULLPKGNAME}/
+share/examples/${FULLPKGNAME}/test.lua

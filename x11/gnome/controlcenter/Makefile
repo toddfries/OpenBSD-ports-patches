@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.62 2012/04/17 11:02:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.68 2012/06/18 11:30:50 ajacoutot Exp $
 
 # XXX Binary files patch-panels_info_hostnames-test_txt and
 # patch-panels_info_hostnames-test_txt.new differ
@@ -9,7 +9,8 @@ SHARED_ONLY=		Yes
 COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
-GNOME_VERSION=		3.4.1
+GNOME_VERSION=		3.4.2
+REVISION=		3
 
 CATEGORIES=		x11
 
@@ -36,7 +37,7 @@ WANTLIB += pixman-1 png polkit-gobject-1 pthread pthread-stubs
 WANTLIB += pulse pulse-mainloop-glib rest-0.7 sndfile soup-2.4
 WANTLIB += soup-gnome-2.4 sqlite3 ssl stdc++ upower-glib vorbis
 WANTLIB += vorbisfile webkitgtk-3.0 xcb xcb-render xcb-shm xkbfile
-WANTLIB += xklavier xml2 xslt z
+WANTLIB += xklavier xml2 xslt z lcms2
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -52,10 +53,10 @@ LIB_DEPENDS=		x11/gnome/desktop \
 			audio/libcanberra,-gtk3 \
 			graphics/colord
 
-BUILD_DEPENDS=		x11/gnome/settings-daemon>=3.2.0p1 \
-			devel/gsettings-desktop-schemas>=3.0.2
-RUN_DEPENDS=		x11/gnome/settings-daemon>=3.2.0p1 \
-			devel/gsettings-desktop-schemas>=3.0.2
+BUILD_DEPENDS=		x11/gnome/settings-daemon>=3.4.2 \
+			devel/gsettings-desktop-schemas
+RUN_DEPENDS=		x11/gnome/settings-daemon>=3.4.2 \
+			devel/gsettings-desktop-schemas
 
 # NOTE that a11y dependencies (e.g. mousetweaks, caribou...) are not
 # enforced on purpose.
@@ -103,11 +104,22 @@ CONFIGURE_ARGS=	--disable-static \
 CONFIGURE_ARGS+=--without-libsocialweb
 
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include
-MODGNOME_LDFLAGS=	-L${X11BASE}/lib
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib -Wl,-rpath,${LOCALBASE}/lib/pulseaudio
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gnome-control-center
 
+AUTOCONF_VERSION=	2.68
+AUTOMAKE_VERSION=	1.11
+BUILD_DEPENDS +=devel/autoconf/${AUTOCONF_VERSION} \
+		devel/automake/${AUTOMAKE_VERSION} \
+		devel/libtool \
+		x11/gnome/common
+
 pre-configure:
+	@cd ${WRKSRC} && \
+		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+		autoreconf -i
 	${SUBST_CMD} ${WRKSRC}/panels/printers/cc-printers-panel.c
 
 .include <bsd.port.mk>

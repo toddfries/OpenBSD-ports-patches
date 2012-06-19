@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.14 2011/11/16 15:56:38 robert Exp $
+# $OpenBSD: Makefile,v 1.16 2012/06/18 07:56:13 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	fast and stable PHP opcode cacher
 
-VERSION=	1.3.2
-REVISION=	3
+VERSION=	2.0.0
 DISTNAME=	xcache-${VERSION}
+REVISION=	0
 CATEGORIES=	www
 MASTER_SITES=	http://xcache.lighttpd.net/pub/Releases/${VERSION}/
 
@@ -25,7 +25,8 @@ AUTOCONF_VERSION=	2.59
 MODULES=		lang/php
 
 BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
-			devel/re2c>=0.13.4
+			devel/re2c>=0.13.4 \
+			devel/gindent
 
 WEBROOT=		/var/www
 SUBST_VARS=		WEBROOT
@@ -50,6 +51,9 @@ CONFIGURE_ARGS+=	--enable-xcache-coverager
 MODPHP_DO_PHPIZE=	Yes
 MODPHP_DO_SAMPLE=	xcache
 MESSAGE=		${PKGDIR}/MESSAGE
+
+post-extract:
+	@ln -sf ${LOCALBASE}/bin/gindent ${WRKDIR}/bin/indent
 
 post-install:
 	${INSTALL_DATA_DIR} ${WRKINST}/${WEBROOT}/xcache

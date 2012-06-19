@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.286 2012/04/28 19:45:39 kili Exp $
+# $OpenBSD: Makefile,v 1.289 2012/06/13 15:14:31 jasper Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -95,6 +95,7 @@
      SUBDIR += libnipper
      SUBDIR += libotr
      SUBDIR += libperseus
+     SUBDIR += libpwquality
      SUBDIR += libsrtp
      SUBDIR += libssh
      SUBDIR += libssh2
@@ -186,6 +187,7 @@
      SUBDIR += p5-Tie-EncryptedHash
      SUBDIR += parse
      SUBDIR += passwdqc
+     SUBDIR += password-gorilla
      SUBDIR += pcsc-lite
      SUBDIR += pdfcrack
      SUBDIR += pear-Auth
@@ -225,6 +227,9 @@
      SUBDIR += ruby-openid
      SUBDIR += ruby-yadis
      SUBDIR += samdump2
+     SUBDIR += samhain
+     SUBDIR += samhain,mysql
+     SUBDIR += samhain,postgresql
      SUBDIR += scanlogd
      SUBDIR += scanssh
      SUBDIR += scrypt
