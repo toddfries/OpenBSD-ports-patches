@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.754 2012/06/18 08:52:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.757 2012/06/29 00:16:28 bluhm Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -344,6 +344,7 @@
      SUBDIR += p5-Net-Server-SS-PreFork
      SUBDIR += p5-Net-Snort-Parser
      SUBDIR += p5-Net-Subnets
+     SUBDIR += p5-Net-TCLink
      SUBDIR += p5-Net-TFTP
      SUBDIR += p5-Net-Telnet
      SUBDIR += p5-Net-Telnet-Cisco
@@ -362,6 +363,7 @@
      SUBDIR += p5-NetPacket
      SUBDIR += p5-Nmap-Parser
      SUBDIR += p5-Nmap-Scanner
+     SUBDIR += p5-OSPF-LSDB
      SUBDIR += p5-POE-Component-Client-DNS
      SUBDIR += p5-POE-Component-Client-HTTP
      SUBDIR += p5-POE-Component-Client-Keepalive
@@ -586,6 +588,7 @@
      SUBDIR += vnstat
      SUBDIR += vsftpd
      SUBDIR += walker
+     SUBDIR += weechat
      SUBDIR += weex
      SUBDIR += wget
      SUBDIR += wide-dhcp
