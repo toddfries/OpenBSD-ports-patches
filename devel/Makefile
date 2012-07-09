@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1050 2012/06/27 09:03:02 sthen Exp $
+# $OpenBSD: Makefile,v 1.1052 2012/07/09 09:30:36 edd Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -1022,6 +1022,7 @@
      SUBDIR += py-dtopt
      SUBDIR += py-dulwich
      SUBDIR += py-editdist
+     SUBDIR += py-elftools
      SUBDIR += py-epsilon
      SUBDIR += py-extremes
      SUBDIR += py-fpconst
@@ -1106,6 +1107,7 @@
      SUBDIR += rats
      SUBDIR += re2c
      SUBDIR += readline
+     SUBDIR += rebar
      SUBDIR += remake
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack

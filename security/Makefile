@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.289 2012/06/13 15:14:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.291 2012/07/09 09:05:42 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
 #
 
@@ -201,7 +201,6 @@
      SUBDIR += portscanner
      SUBDIR += portsentry
      SUBDIR += ppgen
-     SUBDIR += prelude
      SUBDIR += pwgen
      SUBDIR += pwsafe
      SUBDIR += py-Rijndael
@@ -253,7 +252,6 @@
      SUBDIR += swatch
      SUBDIR += tcltls
      SUBDIR += tempwatch
-     SUBDIR += tinyca
      SUBDIR += towitoko
      SUBDIR += vomit
      SUBDIR += vpnc

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.757 2012/06/29 00:16:28 bluhm Exp $
+# $OpenBSD: Makefile,v 1.760 2012/07/09 13:00:24 sthen Exp $
 # $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
 #
 
@@ -224,7 +224,6 @@
      SUBDIR += nemesis
      SUBDIR += neon
      SUBDIR += nepenthes
-     SUBDIR += nepenthes,prelude
      SUBDIR += nepim
      SUBDIR += net-snmp
      SUBDIR += netatalk
@@ -334,7 +333,7 @@
      SUBDIR += p5-Net-SFTP
      SUBDIR += p5-Net-SFTP-Foreign
      SUBDIR += p5-Net-SMTP-SSL
-     SUBDIR += p5-Net-SMTP-TLS
+     SUBDIR += p5-Net-SMTP-TLS-ButMaintained
      SUBDIR += p5-Net-SMTP_auth
      SUBDIR += p5-Net-SNMP
      SUBDIR += p5-Net-SNPP
@@ -531,7 +530,6 @@
      SUBDIR += snort
      SUBDIR += snort,mysql
      SUBDIR += snort,postgresql
-     SUBDIR += snort,prelude
      SUBDIR += socat
      SUBDIR += softflowd
      SUBDIR += spectrum
