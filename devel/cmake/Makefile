@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.59 2012/07/03 07:48:54 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.62 2012/07/12 16:26:13 dcoppa Exp $
 
 VMEM_WARNING =	Yes
 BROKEN-arm =	build fails since move to gcc4
@@ -7,7 +7,7 @@ HOMEPAGE =	http://www.cmake.org/
 CATEGORIES =	devel
 COMMENT =	portable build system
 DISTNAME =	cmake-2.8.8
-REVISION =	6
+REVISION =	9
 MASTER_SITES =	${HOMEPAGE}files/v2.8/
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>
@@ -44,6 +44,7 @@ pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Modules/CMakeDetermineJavaCompiler.cmake \
 		${WRKSRC}/Modules/FindJNI.cmake \
 		${WRKSRC}/Modules/FindJava.cmake \
+		${WRKSRC}/Modules/FindLuaLibs.cmake \
 		${WRKSRC}/Modules/FindMPEG.cmake \
 		${WRKSRC}/Modules/FindMPEG2.cmake \
 		${WRKSRC}/Modules/FindQt.cmake \
