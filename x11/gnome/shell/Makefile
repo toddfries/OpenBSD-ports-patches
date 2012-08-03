@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2012/07/13 08:03:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2012/07/13 16:35:26 ajacoutot Exp $
 
 COMMENT=		next generation GNOME shell
 
 GNOME_PROJECT=		gnome-shell
 GNOME_VERSION=		3.4.1
-REVISION=		3
+REVISION=		4
 
 HOMEPAGE=		http://live.gnome.org/GnomeShell
 
@@ -63,7 +63,8 @@ LIBTOOL_FLAGS= 		--tag=disable-static
 
 AUTOCONF_VERSION=	2.68
 CONFIGURE_STYLE=	autoconf
-CONFIGURE_ARGS=		--with-ca-certificates=/etc/ssl/cert.pem \
+CONFIGURE_ARGS=		--disable-static \
+			--with-ca-certificates=/etc/ssl/cert.pem \
 			--without-systemd
 
 .include <bsd.port.mk>

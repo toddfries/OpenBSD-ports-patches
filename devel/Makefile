@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1053 2012/07/13 08:46:56 edd Exp $
+# $OpenBSD: Makefile,v 1.1058 2012/07/17 19:34:09 landry Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -390,11 +390,14 @@
      SUBIDR += node-expresso
      SUBDIR += node-fibers
      SUBDIR += node-generic-pool
+     SUBDIR += node-gir
      SUBDIR += node-mnm
      SUBDIR += nspr
      SUBDIR += ocaml-batteries
      SUBDIR += ocaml-calendar
      SUBDIR += ocaml-camomile
+     SUBDIR += ocaml-mlgmp
+     SUBDIR += ocaml-net
      SUBDIR += ocaml-pcre
      SUBDIR += ode
      SUBDIR += ois
@@ -803,6 +806,7 @@
      SUBDIR += p5-Probe-Perl
      SUBDIR += p5-Proc-Background
      SUBDIR += p5-Proc-Daemon
+     SUBDIR += p5-Proc-PID-File
      SUBDIR += p5-Proc-Simple
      SUBDIR += p5-Rcs
      SUBDIR += p5-Readonly
@@ -1030,8 +1034,10 @@
      SUBDIR += py-extremes
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
+     SUBDIR += py-gevent
      SUBDIR += py-gobject
      SUBDIR += py-gobject3
+     SUBDIR += py-greenlet
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib

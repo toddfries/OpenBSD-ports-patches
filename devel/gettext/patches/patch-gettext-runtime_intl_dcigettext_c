@@ -1,4 +1,4 @@
-$OpenBSD: patch-gettext-runtime_intl_dcigettext_c,v 1.2 2010/07/03 03:23:22 naddy Exp $
+$OpenBSD: patch-gettext-runtime_intl_dcigettext_c,v 1.4 2012/07/30 15:37:10 naddy Exp $
 --- gettext-runtime/intl/dcigettext.c.orig	Mon Jun 28 20:23:14 2010
 +++ gettext-runtime/intl/dcigettext.c	Mon Jun 28 20:25:07 2010
 @@ -769,13 +769,17 @@ DCIGETTEXT (const char *domainname, const char *msgid1
