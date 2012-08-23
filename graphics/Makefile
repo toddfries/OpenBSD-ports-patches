@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.329 2012/07/09 15:57:34 edd Exp $
-# $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.334 2012/08/19 16:31:58 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -22,10 +20,11 @@
      SUBDIR += cairo
      SUBDIR += cairomm
      SUBDIR += cal3d
-     SUBDIR += camlimages
+     SUBDIR += ocaml-camlimages
      SUBDIR += cfdg
      SUBDIR += clutter
      SUBDIR += colord
+     SUBDIR += colord-gtk
      SUBDIR += colorexplorer
      SUBDIR += comix
      SUBDIR += compface
@@ -65,11 +64,9 @@
      SUBDIR += gegl
      SUBDIR += geomview
      SUBDIR += gfract
-     SUBDIR += ggi
      SUBDIR += gif2png
      SUBDIR += gifsicle
      SUBDIR += giftrans
-     SUBDIR += gii
      SUBDIR += gimp
      SUBDIR += gle
      SUBDIR += glew
@@ -243,6 +240,7 @@
      SUBDIR += vcdimager
      SUBDIR += vid
      SUBDIR += videod
+     SUBDIR += viewnior
      SUBDIR += wmgrabimage
      SUBDIR += wmicons
      SUBDIR += wmphoto

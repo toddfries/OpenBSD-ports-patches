@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.244 2012/07/19 07:20:28 jasper Exp $
-# $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.247 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -82,7 +80,6 @@
      SUBDIR += gbrainy
      SUBDIR += gcompris
      SUBDIR += gemdropx
-     SUBDIR += ggz
      SUBDIR += glsfcave
      SUBDIR += glutton
      SUBDIR += gnome-mastermind
@@ -115,6 +112,7 @@
      SUBDIR += manaplus
      SUBDIR += meandmyshadow
      SUBDIR += micropolis
+     SUBDIR += minetest
      SUBDIR += mirrormagic
      SUBDIR += mnemosyne
      SUBDIR += monadius

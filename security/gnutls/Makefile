@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.54 2012/07/09 13:29:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.57 2012/08/19 13:31:39 ajacoutot Exp $
 
 COMMENT=	GNU Transport Layer Security library
 
-DISTNAME=	gnutls-3.0.21
+DISTNAME=	gnutls-3.0.22
 EXTRACT_SUFX=	.tar.xz
-REVISION=	0
+REVISION=	1
 
 CATEGORIES=	security
 
@@ -50,10 +50,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -pthread"
-
-pre-configure:
-	perl -pi -e 's,-lpthread,-pthread,g' \
-		${WRKSRC}/tests/suite/Makefile.in
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/gnutls

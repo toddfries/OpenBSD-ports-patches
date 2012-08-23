@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.765 2012/07/19 08:37:02 sthen Exp $
-# $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
-#
+# $OpenBSD: Makefile,v 1.767 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -505,9 +503,6 @@
      SUBDIR += ruby-xmpp4r
      SUBDIR += samba
      SUBDIR += samba,ads
-     SUBDIR += samba,cups
-     SUBDIR += samba,cups,ads
-     SUBDIR += samba,cups,ldap
      SUBDIR += samba,ldap
      SUBDIR += scamper
      SUBDIR += scapy

@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.293 2012/07/12 20:57:51 naddy Exp $
-# $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
-#
+# $OpenBSD: Makefile,v 1.296 2012/08/18 22:41:58 avsm Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -19,6 +17,7 @@
      SUBDIR += bounix
      SUBDIR += bsd-airtools
      SUBDIR += bunny
+     SUBDIR += ccid
      SUBDIR += ccrypt
      SUBDIR += cfs
      SUBDIR += cgichk
@@ -30,7 +29,7 @@
      SUBDIR += corkscrew
      SUBDIR += cracklib
      SUBDIR += cryptcat
-     SUBDIR += cryptokit
+     SUBDIR += ocaml-cryptokit
      SUBDIR += ctunnel
      SUBDIR += cyrus-sasl2
      SUBDIR += cyrus-sasl2,db4
@@ -115,6 +114,7 @@
      SUBDIR += node-bcrypt
      SUBDIR += nss
      SUBDIR += oath-toolkit
+     SUBDIR += ocaml-ssl
      SUBDIR += onesixtyone
      SUBDIR += opencdk
      SUBDIR += openct

@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.566 2012/07/17 19:34:09 landry Exp $
-# $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
+# $OpenBSD: Makefile,v 1.569 2012/08/20 18:02:31 bluhm Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -222,6 +221,7 @@
      SUBDIR += p5-Drupal-Admin
      SUBDIR += p5-FCGI-ProcManager
      SUBDIR += p5-Feed-Find
+     SUBDIR += p5-Gravatar-URL
      SUBDIR += p5-HTML-Base
      SUBDIR += p5-HTML-CGIChecker
      SUBDIR += p5-HTML-Calendar-Month-Simple
@@ -522,5 +522,6 @@
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework
+     SUBDIR += zurmo
 
 .include <bsd.port.subdir.mk>

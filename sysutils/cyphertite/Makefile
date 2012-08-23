@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.17 2012/07/04 15:47:45 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2012/08/19 06:08:51 ajacoutot Exp $
 
 COMMENT =		tar-like secure remote deduplicating archiver
 
-DISTNAME =		cyphertite-1.2.2
-REVISION =		0
+DISTNAME =		cyphertite-1.3.4
 CATEGORIES =		sysutils archivers security
 
 HOMEPAGE =		https://www.cyphertite.com/
@@ -15,9 +14,9 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		assl>=4 c clog crypto curl edit event_core expat \
+WANTLIB =		assl>=5 c clog crypto curl edit event_core expat \
 			exude>=2 ncurses pthread shrink>=2 sqlite3 ssl util \
-			xmlsd>=2
+			xmlsd>=3
 
 MASTER_SITES =		https://opensource.conformal.com/snapshots/cyphertite/
 
@@ -26,9 +25,7 @@ LIB_DEPENDS =		archivers/libshrink>=0.5.0	\
 			devel/libevent2			\
 			devel/libexude>=0.7.0		\
 			net/curl			\
-			security/assl>=1.0.0		\
-			textproc/libxmlsd>=0.8.0
-
-NO_REGRESS =		Yes
+			security/assl>=1.1.0		\
+			textproc/libxmlsd>=0.9.0
 
 .include <bsd.port.mk>

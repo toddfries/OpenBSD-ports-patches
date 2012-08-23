@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.359 2012/07/11 13:29:09 zinke Exp $
-# $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
+# $OpenBSD: Makefile,v 1.362 2012/08/18 22:52:31 avsm Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -101,7 +100,9 @@
      SUBDIR += mxml
      SUBDIR += namazu
      SUBDIR += ocaml-rss
+     SUBDIR += ocaml-text
      SUBDIR += ocaml-xml-light
+     SUBDIR += ocaml-xmlm
      SUBDIR += odt2txt
      SUBDIR += oniguruma
      SUBDIR += openjade
@@ -287,6 +288,7 @@
      SUBDIR += py-nltk
      SUBDIR += py-pdf
      SUBDIR += py-polib
+     SUBDIR += py-prettytable
      SUBDIR += py-pygments
      SUBDIR += py-rtf
      SUBDIR += py-sphinx

@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.1058 2012/07/17 19:34:09 landry Exp $
-# $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
+# $OpenBSD: Makefile,v 1.1063 2012/08/19 00:28:31 avsm Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -383,6 +382,7 @@
      SUBDIR += msp430
      SUBDIR += mspdebug
      SUBDIR += mysql++
+     SUBDIR += nagelfar
      SUBDIR += naken430asm
      SUBDIR += nant
      SUBDIR += nasm
@@ -396,9 +396,14 @@
      SUBDIR += ocaml-batteries
      SUBDIR += ocaml-calendar
      SUBDIR += ocaml-camomile
+     SUBDIR += ocaml-lwt
      SUBDIR += ocaml-mlgmp
      SUBDIR += ocaml-net
+     SUBDIR += ocaml-net,pcre
      SUBDIR += ocaml-pcre
+     SUBDIR += ocaml-react
+     SUBDIR += ocaml-lambda-term
+     SUBDIR += ocaml-zed
      SUBDIR += ode
      SUBDIR += ois
      SUBDIR += omake
@@ -997,7 +1002,6 @@
      SUBDIR += physfs
      SUBDIR += pkgconfig
      SUBDIR += plib
-     SUBDIR += pmk
      SUBDIR += poedit
      SUBDIR += popt
      SUBDIR += proj

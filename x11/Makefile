@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.492 2012/07/10 12:32:16 zinke Exp $
-# $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
+# $OpenBSD: Makefile,v 1.496 2012/08/18 07:25:26 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -27,12 +26,15 @@
      SUBDIR += bluetile
      SUBDIR += bricons
      SUBDIR += bwidget
+     SUBDIR += byzi
      SUBDIR += chbg
      SUBDIR += compiz
      SUBDIR += ctwm
      SUBDIR += dbus
      SUBDIR += dbus-glib
+     SUBDIR += dbus-intf
      SUBDIR += dbus-python
+     SUBDIR += dbus-tcl
      SUBDIR += dclock
      SUBDIR += devilspie
      SUBDIR += dmenu
@@ -60,7 +62,6 @@
      SUBDIR += flvw
      SUBDIR += flwm
      SUBDIR += freerdp
-     SUBDIR += freerdp,no_cups
      SUBDIR += fsv
      SUBDIR += fvwm2
      SUBDIR += fvwm95
@@ -141,7 +142,6 @@
      SUBDIR += libxdg-basedir
      SUBDIR += lupe
      SUBDIR += lxrandr
-     SUBDIR += matchbox
      SUBDIR += mlterm
      SUBDIR += mono-gtk2
      SUBDIR += mouseclock
