@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2012/08/23 19:19:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.33 2012/08/29 20:53:32 sthen Exp $
 
 ONLY_FOR_ARCHS = amd64 i386 powerpc sparc sparc64
 
@@ -17,15 +17,9 @@ PKGNAME-java =  gcj-${FULL_PKGVERSION}
 PKGNAME-objc =  gobjc-${FULL_PKGVERSION}
 PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 PKGNAME-go =	gccgo-${FULL_PKGVERSION}
+PKGSPEC-main = gcc->=4.6,<4.7
 
-REVISION-main = 4
-REVISION-c++ = 7
-REVISION-estdc = 4
-REVISION-f95 = 4
-REVISION-java = 5
-REVISION-objc = 4
-REVISION-ada = 4
-REVISION-go = 5
+REVISION = 9
 
 SHARED_LIBS =	estdc++		14.0 \
 		gfortran	3.0 \
@@ -178,17 +172,17 @@ PKG_ARGS += -DI386=0
 .endif
 
 RUN_DEPENDS =		${BUILD_PKGPATH},-main
-WANTLIB =		c gmp mpc mpfr z
+WANTLIB =		c gmp m mpc mpfr z
 
 RUN_DEPENDS-main =
 RUN_DEPENDS-estdc =
 
 RUN_DEPENDS-c++ =	${RUN_DEPENDS} \
 			${BUILD_PKGPATH},-estdc>=4.6,<4.7
-WANTLIB-estdc =		c m
-WANTLIB-f95 =		${WANTLIB} m
-WANTLIB-java =		${WANTLIB} m pthread
-WANTLIB-go =		${WANTLIB} m pthread
+WANTLIB-estdc =		m
+WANTLIB-f95 =		${WANTLIB}
+WANTLIB-java =		${WANTLIB} pthread
+WANTLIB-go =		${WANTLIB} pthread
 
 LIB_DEPENDS +=		devel/gmp>=4.2 \
 			devel/mpfr \
