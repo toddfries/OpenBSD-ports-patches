@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.150 2012/04/13 13:47:03 naddy Exp $
+# $OpenBSD: Makefile,v 1.152 2012/06/11 04:24:46 bentley Exp $
 # $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
 #
 
@@ -14,6 +14,7 @@
      SUBDIR += ccze
      SUBDIR += cdrdao
      SUBDIR += clex
+     SUBDIR += cmdpack
      SUBDIR += deco
      SUBDIR += delay
      SUBDIR += dialog
@@ -23,6 +24,7 @@
      SUBDIR += dtcltiny
      SUBDIR += dvtm
      SUBDIR += ent
+     SUBDIR += fasd
      SUBDIR += figlet
      SUBDIR += findutils
      SUBDIR += ftdi-eeprom

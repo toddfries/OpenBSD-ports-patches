@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1040 2012/04/28 19:41:14 kili Exp $
+# $OpenBSD: Makefile,v 1.1049 2012/06/16 09:49:32 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
 
      SUBDIR =
@@ -117,6 +117,7 @@
      SUBDIR += git
      SUBDIR += git-cola
      SUBDIR += glade
+     SUBDIR += glade3
      SUBDIR += glib
      SUBDIR += glib2
      SUBDIR += glib2mm
@@ -157,6 +158,7 @@
      SUBDIR += hs-QuickCheck
      SUBDIR += hs-aeson
      SUBDIR += hs-ansi-terminal
+     SUBDIR += hs-ansi-wl-pprint
      SUBDIR += hs-atom
      SUBDIR += hs-base-unicode-symbols
      SUBDIR += hs-base16-bytestring
@@ -169,6 +171,7 @@
      SUBDIR += hs-case-insensitive
      SUBDIR += hs-cereal
      SUBDIR += hs-cmdargs
+     SUBDIR += hs-cmdlib
      SUBDIR += hs-comonad
      SUBDIR += hs-comonad-transformers
      SUBDIR += hs-concurrent-extra
@@ -225,12 +228,18 @@
      SUBDIR += hs-semigroupoids
      SUBDIR += hs-semigroups
      SUBDIR += hs-sendfile
+     SUBDIR += hs-shellish
+     SUBDIR += hs-split
      SUBDIR += hs-stm
+     SUBDIR += hs-strict
      SUBDIR += hs-stringtable-atom
      SUBDIR += hs-syb
      SUBDIR += hs-tagged
      SUBDIR += hs-tar
      SUBDIR += hs-terminfo
+     SUBDIR += hs-test-framework
+     SUBDIR += hs-test-framework-hunit
+     SUBDIR += hs-test-framework-quickcheck2
      SUBDIR += hs-text
      SUBDIR += hs-transformers
      SUBDIR += hs-type-level
@@ -244,6 +253,7 @@
      SUBDIR += hudson
      SUBDIR += hyena
      SUBDIR += id-utils
+     SUBDIR += iniparser
      SUBDIR += intellij
      SUBDIR += ipython
      SUBDIR += iso-codes
@@ -334,6 +344,7 @@
      SUBDIR += libyaml
      SUBDIR += libyubikey
      SUBDIR += llvm
+     SUBDIR += log4c
      SUBDIR += log4cplus
      SUBDIR += lpc21isp
      SUBDIR += lpeg
@@ -376,8 +387,10 @@
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
+     SUBIDR += node-expresso
      SUBDIR += node-fibers
      SUBDIR += node-generic-pool
+     SUBDIR += node-mnm
      SUBDIR += nspr
      SUBDIR += ocaml-calendar
      SUBDIR += ocaml-pcre
@@ -1019,6 +1032,8 @@
      SUBDIR += py-html5lib
      SUBDIR += py-iniparse
      SUBDIR += py-kid
+     SUBDIR += py-liblarch
+     SUBDIR += py-liblarch_gtk
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
      SUBDIR += py-minimock
@@ -1091,7 +1106,6 @@
      SUBDIR += re2c
      SUBDIR += readline
      SUBDIR += remake
-     SUBDIR += rsvndump
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack
      SUBDIR += ruby-activemodel

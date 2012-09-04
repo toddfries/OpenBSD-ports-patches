@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2012/04/24 19:05:55 naddy Exp $
+# $OpenBSD: Makefile,v 1.52 2012/06/15 08:32:18 ajacoutot Exp $
 
 COMMENT =	lightweight web browser
 
-XFCE_VERSION =	0.4.5
+XFCE_VERSION =	0.4.6
 XFCE_GOODIE =	midori
-REVISION =	1
+REVISION=	0
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 CATEGORIES =	www
@@ -27,9 +27,6 @@ LIB_DEPENDS =	www/webkit>=1.6.1v0 \
 		devel/libsoup>=2.28.0
 
 RUN_DEPENDS =	xfce4-icon-theme-*|tango-icon-theme-*|gnome-icon-theme-*:x11/tango-icon-theme
-
-# pickup sqlite
-CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include"
 
 BUILD_DEPENDS =	textproc/py-docutils \
 		lang/vala \

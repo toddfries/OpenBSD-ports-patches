@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.276 2012/04/20 10:57:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.279 2012/05/30 16:47:35 ajacoutot Exp $
 # $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
 #
  
@@ -7,6 +7,7 @@
      SUBDIR += adcomplain
      SUBDIR += akpop3d
      SUBDIR += alpine
+     SUBDIR += altermime
      SUBDIR += amavisd-new
      SUBDIR += archivemail
      SUBDIR += archiveopteryx
@@ -121,9 +122,7 @@
      SUBDIR += p5-Email-MIME
      SUBDIR += p5-Email-MIME-Attachment-Stripper
      SUBDIR += p5-Email-MIME-ContentType
-     SUBDIR += p5-Email-MIME-Creator
      SUBDIR += p5-Email-MIME-Encodings
-     SUBDIR += p5-Email-MIME-Modifier
      SUBDIR += p5-Email-MessageID
      SUBDIR += p5-Email-Reply
      SUBDIR += p5-Email-Send
@@ -177,6 +176,7 @@
      SUBDIR += postler
      SUBDIR += prepop
      SUBDIR += procmail
+     SUBDIR += py-authres
      SUBDIR += py-milter
      SUBDIR += py-policyd-spf
      SUBDIR += py-spf

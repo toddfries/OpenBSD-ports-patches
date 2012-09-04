@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.11 2011/12/20 11:25:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2012/06/15 08:32:17 ajacoutot Exp $
 
 COMMENT =		ebook management application
+BROKEN =		fake step gets stuck
 
 DISTNAME =		calibre-0.8.20
 CATEGORIES =		textproc
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=calibre/}
-REVISION =		1
+REVISION =		2
 
 HOMEPAGE =		http://calibre-ebook.com/
 

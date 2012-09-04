@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.160 2012/04/23 06:59:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.163 2012/06/18 11:46:40 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=		integrated email and PIM software for GNOME
 COMMENT-plugins=	additionnal plugins for evolution
 
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		3.4.1
+GNOME_VERSION=		3.4.3
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-plugins=	evolution-plugins-${GNOME_VERSION}
@@ -96,7 +96,7 @@ BUILD_DEPENDS=		devel/bison \
 			devel/iso-codes \
 			devel/gsettings-desktop-schemas
 
-LIB_DEPENDS=		databases/evolution-data-server>=3.2.2 \
+LIB_DEPENDS=		databases/evolution-data-server>=3.4.3 \
 			devel/libnotify>=0.7.2 \
 			security/nss \
 			x11/gnome/desktop \

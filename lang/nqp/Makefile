@@ -1,13 +1,16 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/03/08 14:57:25 pascal Exp $
+# $OpenBSD: Makefile,v 1.6 2012/06/12 08:21:54 pascal Exp $
 
 SHARED_ONLY =		Yes
 
+VMEM_WARNING =		Yes
+
 COMMENT =		Not Quite Perl
 
-V =			2012.02
+V =			2012.04.1
 DISTNAME =		nqp-${V}
+REVISION =		0
 
-PARROT_VERSION =	4.1.0
+PARROT_VERSION =	4.3.0
 SUBST_VARS +=		PARROT_VERSION
 
 CATEGORIES =		lang
@@ -33,6 +36,8 @@ USE_GMAKE =		Yes
 CONFIGURE_STYLE =	simple
 CONFIGURE_SCRIPT =	/usr/bin/perl Configure.pl
 CONFIGURE_ARGS =	--with-parrot="${LOCALBASE}/bin/parrot"
+
+MAKE_ENV +=		CC="${CC}"
 
 REGRESS_TARGET =	test
 

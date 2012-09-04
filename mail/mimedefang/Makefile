@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2011/06/02 13:41:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2012/06/01 15:39:22 ajacoutot Exp $
 
 COMMENT=	mailfilter to identify and mark spam
 
-DISTNAME=	mimedefang-2.71
-REVISION=	5
+DISTNAME=	mimedefang-2.73
+REVISION=	1
 CATEGORIES=	mail
 
 HOMEPAGE=	http://www.mimedefang.org/
@@ -11,7 +11,7 @@ MASTER_SITES=	${HOMEPAGE}static/
 
 MAINTAINER=	Okan Demirmen <okan@openbsd.org>
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -28,17 +28,28 @@ BUILD_DEPENDS=	${RUN_DEPENDS}
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--with-user=_mdefang \
+		--with-ipheader \
 		--disable-anti-virus \
 		--enable-poll
 
 USE_GROFF =	Yes
 NO_REGRESS=	Yes
 
+FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/mimedefang
+
+post-extract:
+	cp ${WRKSRC}/examples/suggested-minimum-filter-for-windows-clients \
+		${WRKSRC}/examples/mimedefang-filter-openbsd-ports
+
+pre-configure:
+	perl -pi -e 's,/var/lib,/var/db,g' ${WRKSRC}/mimedefang.pl.in
+
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mimedefang
-	${INSTALL_DATA} ${WRKSRC}/examples/suggested-minimum-filter-for-windows-clients \
-		${PREFIX}/share/examples/mimedefang/mimedefang-filter
 	${INSTALL_DATA} ${WRKSRC}/SpamAssassin/spamassassin.cf \
-		${PREFIX}/share/examples/mimedefang/sa-mimedefang.cf
+		${PREFIX}/share/examples/mimedefang/mail/sa-mimedefang.cf
+	${INSTALL_DATA} ${WRKSRC}/examples/mimedefang-filter-openbsd-ports \
+		${PREFIX}/share/examples/mimedefang/mail
+	${INSTALL_SCRIPT} ${WRKSRC}/gen-ip-validator.pl \
+		${PREFIX}/share/examples
 
 .include <bsd.port.mk>

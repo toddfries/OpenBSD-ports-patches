@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2010/11/15 19:46:00 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2012/05/15 20:45:12 jasper Exp $
 
 SHARED_ONLY=	Yes
 COMMENT=	lua binding of posix and pcre regex libraries
 DISTNAME=	lrexlib-2.4.0
 PKGNAME=	luarexlib-2.4.0
-REVISION=	1
+REVISION=	3
 CATEGORIES=	devel
 
 MASTER_SITES=	http://luaforge.net/frs/download.php/3599/
@@ -23,19 +23,18 @@ MAKE_ENV+=	MAKE_PROGRAM=${MAKE_PROGRAM} \
 		LIB_LUA="-L${LOCALBASE}/lib -llua"
 MODULES=	lang/lua
 LIB_DEPENDS=	devel/pcre \
-		lang/lua \
+		${MODLUA_LIB_DEPENDS} \
 		textproc/oniguruma
-WANTLIB =	pcre>=1.0 lua onig
+WANTLIB =	pcre>=1.0 ${MODLUA_WANTLIB} onig
 REGRESS_DEPENDS+=devel/luarexlib
 
 do-install:
-	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR}
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/luarexlib
+	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR} ${MODLUA_DOCDIR}
 	${INSTALL_DATA} ${WRKSRC}/src/oniguruma/*.so \
 		${WRKSRC}/src/pcre/*.so \
 		${WRKSRC}/src/posix/*.so \
 		${MODLUA_LIBDIR}
-	${INSTALL_DATA} ${WRKSRC}/doc/* ${PREFIX}/share/doc/luarexlib
+	${INSTALL_DATA} ${WRKSRC}/doc/* ${MODLUA_DOCDIR}
 
 do-regress:
 	cd ${WRKDIST}/test && lua runtest.lua -v onig

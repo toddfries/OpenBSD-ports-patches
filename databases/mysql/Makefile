@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.204 2012/04/28 11:06:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.207 2012/05/23 21:33:04 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,17 +6,15 @@ COMMENT-main=	multithreaded SQL database (client)
 COMMENT-server=	multithreaded SQL database (server)
 COMMENT-tests=	multithreaded SQL database (regression test suite/benchmark)
 
-VERSION=	5.1.62
+VERSION=	5.1.63
 DISTNAME=	mysql-${VERSION}
 PKGNAME-main=	mysql-client-${VERSION}
 PKGNAME-server=	mysql-server-${VERSION}
+REVISION-server= 0
 PKGNAME-tests= 	mysql-tests-${VERSION}
 CATEGORIES=	databases
 V=		MySQL-5.1
 MASTER_SITES=	${MASTER_SITE_MYSQL:=Downloads/$V/}
-
-REVISION-main=	0
-REVISION-server=0
 
 SHARED_LIBS=	mysqlclient_r	21.0 \
 		mysqlclient	21.0
@@ -34,7 +32,7 @@ WANTLIB=		c m pthread
 
 LOCALSTATEDIR=	${BASELOCALSTATEDIR}/mysql
 SOCKET_DIR=	/var/run/mysql
-SUBST_VARS=	LOCALSTATEDIR SOCKET_DIR VERSION
+SUBST_VARS=	SOCKET_DIR
 
 MULTI_PACKAGES=		-main -server -tests
 

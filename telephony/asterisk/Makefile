@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.146 2012/05/03 11:25:27 sthen Exp $
+# $OpenBSD: Makefile,v 1.150 2012/06/07 10:39:25 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			1.8.12.0
+VER=			1.8.13.0
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
 
@@ -52,7 +52,7 @@ LIB_DEPENDS-main=	audio/gsm \
 			textproc/libxml \
 			${MODGETTEXT_LIB_DEPENDS}
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS}
-BUILD_DEPENDS-main=	security/libsrtp>=1.4.4 # statically linked
+BUILD_DEPENDS=		security/libsrtp>=1.4.4 # statically linked
 
 MASTER_SITES=	http://downloads.digium.com/pub/telephony/asterisk/releases/ \
 		http://downloads.digium.com/pub/telephony/asterisk/old-releases/
@@ -145,7 +145,7 @@ CONFIGURE_ARGS+=	--with-imap=no
 # calendar
 COMMENT-calendar=	calendar support for Asterisk
 WANTLIB-calendar=	${MODGETTEXT_WANTLIB} asn1 crypto expat gssapi \
-			ical iksemel krb5 m neon ssl xml2 z
+			ical iksemel krb5 m neon proxy ssl xml2 z
 LIB_DEPENDS-calendar=	net/neon \
 			textproc/libical \
 			${MODGETTEXT_LIB_DEPENDS}

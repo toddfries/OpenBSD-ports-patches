@@ -1,19 +1,20 @@
-# $OpenBSD: Makefile,v 1.18 2012/03/08 14:56:25 pascal Exp $
+# $OpenBSD: Makefile,v 1.22 2012/06/04 15:59:36 pascal Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT=	virtual machine designed for interpreted languages
 
-V=		4.1.0
+V=		4.3.0
+REVISION=	0
 DISTNAME=	parrot-$V
 CATEGORIES=	lang perl6
-SHARED_LIBS=	parrot	4.0
+SHARED_LIBS=	parrot	5.0
 
 HOMEPAGE=	http://www.parrot.org/
 
 MAINTAINER =	Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
-MASTER_SITES=	ftp://ftp.parrot.org/pub/parrot/releases/devel/$V/
+MASTER_SITES=	ftp://ftp.parrot.org/pub/parrot/releases/supported/$V/
 
 # Artistic2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,7 +25,8 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB += GL GLU c glut gmp icudata icuuc m ncurses pthread
 WANTLIB += readline stdc++ util z
 
-BUILD_DEPENDS=		graphics/glew
+BUILD_DEPENDS=		graphics/glew \
+			devel/pcre
 LIB_DEPENDS=		textproc/icu4c \
 			devel/gmp \
 			graphics/freeglut
@@ -44,12 +46,6 @@ CONFIGURE_ARGS+= \
 	--ldflags="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
 	--parrot_is_shared \
 	--icu-config="${LOCALBASE}/bin/icu-config"
-
-# XXX The default (gms) garbage collector has issues on powerpc. Until
-# XXX it's fixed, use the old one (ms2).
-.if ${MACHINE_ARCH:Mpowerpc}
-CONFIGURE_ARGS+=	--gc=ms2
-.endif
 
 CONFIGURE_ENV =		LIBparrot_VERSION=${LIBparrot_VERSION}
 

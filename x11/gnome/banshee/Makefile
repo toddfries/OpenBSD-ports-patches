@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/04/30 14:55:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.3 2012/06/15 08:30:19 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	music management and playback application for GNOME
 
-GNOME_VERSION=	2.4.0
+GNOME_VERSION=	2.4.1
 GNOME_PROJECT=	banshee
+REVISION=	0
 
 CATEGORIES=	audio
 

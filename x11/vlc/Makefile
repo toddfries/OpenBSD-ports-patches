@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.147 2012/05/03 06:51:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.151 2012/06/15 08:30:24 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,8 +8,9 @@ COMMENT-jack=	JACK audio output module for VLC
 V=		2.0.1
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	0
+REVISION-main=	3
 PKGNAME-jack=	vlc-jack-${V}
+REVISION-jack=	0
 CATEGORIES=	x11
 MASTER_SITES=	http://download.videolan.org/pub/videolan/vlc/${V}/
 EXTRACT_SUFX=	.tar.xz
@@ -28,17 +29,17 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-common=	dbus-1 m ${MODGETTEXT_WANTLIB}
-WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 Xau \
-		Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama \
-		Xpm Xrandr Xrender Xxf86vm ass atk-1.0 avcodec avformat \
-		avutil bluray bz2 c cairo cddb drm dvbpsi dvdnav dvdread \
-		ebml enca stdc++ expat ffi fontconfig freetype fribidi gcrypt \
+WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 \
+		Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama \
+		Xpm Xrandr Xrender ass atk-1.0 avcodec avformat \
+		avutil bluray bz2 c cairo cddb dvbpsi dvdnav dvdread \
+		ebml stdc++ expat ffi fontconfig freetype fribidi gcrypt \
 		gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 \
 		gmp gnutls gobject-2.0 gpg-error gsm gthread-2.0 gtk-x11-2.0 \
 		hogweed jpeg matroska mp3lame nettle notify orc-0.4 ogg \
 		p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
-		png portaudio postproc proxy pthread-stubs pthread samplerate \
-		sndio schroedinger-1.0>=2.0 sndio speex speexdsp swscale tag \
+		png portaudio postproc pthread-stubs pthread samplerate \
+		schroedinger-1.0>=2.0 sndio speex speexdsp sqlite3 swscale tag \
 		tar tasn1 tiff theoradec theoraenc usbhid vorbis vorbisenc \
 		vpx webp x264 xcb-composite xcb-keysyms xcb-randr xcb-render \
 		xcb-shape xcb-shm xcb-xfixes xcb-xv xcb xml2 xvidcore z \
@@ -54,8 +55,8 @@ MODULES=	devel/gettext \
 MODGCC4_VERSION= 4.6
 MODGCC4_ARCHS=	amd64 i386
 MODGCC4_LANGS=	c
-LIB_DEPENDS+=	x11/dbus
-LIB_DEPENDS-main= ${LIB_DEPENDS} \
+LIB_DEPENDS-main= ${MODQT4_LIB_DEPENDS} \
+		${MODGETTEXT_LIB_DEPENDS} \
 		archivers/libtar \
 		audio/libcddb \
 		audio/libsamplerate \
@@ -77,17 +78,17 @@ LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		multimedia/libmatroska \
 		multimedia/schroedinger>=1.0.10 \
 		multimedia/x264 \
-		net/libproxy \
 		security/gnutls \
 		security/libgcrypt \
 		textproc/libebml \
 		textproc/libxml \
-		x11/gtk+2 \
-		x11/qt4
-LIB_DEPENDS-jack= ${LIB_DEPENDS} \
+		x11/dbus \
+		x11/gtk+2
+LIB_DEPENDS-jack= ${MODGETTEXT_LIB_DEPENDS} \
 		${BUILD_PKGPATH} \
 		audio/jack
-BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
+BUILD_DEPENDS=	net/livemedia>=20120204p0 \
+		${MODGNU_AUTOCONF_DEPENDS} \
 		${MODGNU_AUTOMAKE_DEPENDS} \
 		devel/libtool
 RUN_DEPENDS-main= devel/desktop-file-utils \
@@ -99,7 +100,8 @@ MAKE_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSI
 CPPFLAGS=	-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
+# Fails to link _pic libs properly resulting in undefined symbols in the live555 plugin
+USE_LIBTOOL=	gnu
 LIBTOOL_FLAGS=	--tag=disable-static
 CONFIGURE_STYLE= gnu
 MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC}/autotools
@@ -121,9 +123,9 @@ CONFIGURE_ARGS+=--disable-a52 \
 		--disable-goom \
 		--disable-kate \
 		--disable-libmpeg2 \
+		--disable-libproxy \
 		--disable-libva \
 		--disable-linsys \
-		--disable-live555 \
 		--disable-lua \
 		--disable-mad \
 		--disable-mod \
@@ -135,7 +137,6 @@ CONFIGURE_ARGS+=--disable-a52 \
 		--disable-shout \
 		--disable-sid \
 		--disable-smb \
-		--disable-sqlite \
 		--disable-svg \
 		--disable-theora \
 		--disable-tiger \
@@ -144,12 +145,16 @@ CONFIGURE_ARGS+=--disable-a52 \
 		--disable-upnp \
 		--disable-v4l2 \
 		--disable-zvbi \
+		--enable-media-library \
 		--enable-real \
 		--enable-realrtsp \
 		--without-contrib \
 		--without-tuning
 CONFIGURE_ENV+=	CPPFLAGS="${CPPFLAGS}" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
+		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -L${LOCALBASE}/live/liveMedia \
+		    -L${LOCALBASE}/live/groupsock -L${LOCALBASE}/live/BasicUsageEnvironment \
+		    -L${LOCALBASE}/live/UsageEnvironment" \
+		LOCALBASE="${LOCALBASE}" \
 		PKG_CONFIG_PATH="${LOCALBASE}/lib/qt4/pkgconfig"
 
 PSEUDO_FLAVORS=	no_jack

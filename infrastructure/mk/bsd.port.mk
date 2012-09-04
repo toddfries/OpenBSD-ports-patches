@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1165 2012/04/28 10:50:35 ajacoutot Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1178 2012/06/18 12:15:52 espie Exp $
 #	$FreeBSD: bsd.port.mk,v 1.264 1996/12/25 02:27:44 imp Exp $
 #	$NetBSD: bsd.port.mk,v 1.62 1998/04/09 12:47:02 hubertf Exp $
 #
@@ -122,7 +122,7 @@ _ALL_VARIABLES_PER_ARCH += BROKEN
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
 	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC \
 	PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM WANTLIB CATEGORIES DESCR \
-	EPOCH REVISION
+	EPOCH REVISION STATIC_PLIST
 .endif
 # special purpose user settings
 PATCH_CHECK_ONLY ?= No
@@ -137,7 +137,6 @@ X11BASE ?= /usr/X11R6
 DISTDIR ?= ${PORTSDIR}/distfiles
 BULK_COOKIES_DIR ?= ${PORTSDIR}/bulk/${MACHINE_ARCH}
 UPDATE_COOKIES_DIR ?= ${PORTSDIR}/update/${MACHINE_ARCH}
-TEMPLATES ?= ${PORTSDIR}/infrastructure/templates
 PLIST_DB ?= ${PORTSDIR}/plist/${MACHINE_ARCH}
 
 PACKAGE_REPOSITORY ?= ${PORTSDIR}/packages
@@ -234,7 +233,7 @@ _clean += -f
 .endif
 # check that clean is clean
 _okay_words = depends work fake -f flavors dist install sub packages package \
-	readmes bulk force plist build all
+	bulk force plist build all
 .for _w in ${_clean:L}
 .  if !${_okay_words:M${_w}}
 ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
@@ -358,7 +357,7 @@ MAKE_FLAGS += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
 MAKE_FLAGS += SHARED_LIBS_LOG=${WRKBUILD}/shared_libs.log
 USE_CCACHE ?= No
 NO_CCACHE ?= No
-.if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no"
+.if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no" && ${NO_BUILD:L} == "no"
 CCACHE_DIR ?= ${WRKOBJDIR_${PKGPATH}}/.ccache
 MAKE_ENV += CCACHE_DIR=${CCACHE_DIR}
 .  if defined(CCACHE_ENV)
@@ -492,8 +491,6 @@ FULLPKGNAME ?= ${PKGNAME}${FLAVOR_EXT}
 _MASTER ?=
 _SOLVING_DEP ?= No
 
-_READMES =
-
 .if ${MULTI_PACKAGES} == "-"
 # XXX "parse" FULLPKGNAME: is there a flavor after the version number
 .    if ${FULLPKGNAME:M*-[0-9]*-*}
@@ -515,7 +512,6 @@ FULLPKGNAME := ${FULLPKGNAME}v${EPOCH}
 PKGSPEC ?= ${FULLPKGNAME:C/-[0-9].*/-*/}
 PKGSPEC- = ${PKGSPEC}
 FULLPKGNAME- = ${FULLPKGNAME}
-_READMES += ${READMES_TOP}/${PKGPATH}/${FULLPKGNAME}.html
 .else
 .  for _s in ${MULTI_PACKAGES}
 .    if defined(FULLPKGNAME${_s})
@@ -546,7 +542,6 @@ FULLPKGNAME${_s} := ${FULLPKGNAME${_s}}v${EPOCH${_s}}
 .      endif
 .    endif
 PKGSPEC${_s} ?= ${FULLPKGNAME${_s}:C/-[0-9].*/-*/}
-_READMES += ${READMES_TOP}/${PKGPATH}/${FULLPKGNAME${_s}}.html
 .  endfor
 .endif
 
@@ -730,9 +725,10 @@ PKGNAMES += ${FULLPKGNAME${_s}}
 PKGFILES += ${PKGFILE${_s}}
 .endfor
 
+STATIC_PLIST ?= Yes
 .for _s in ${MULTI_PACKAGES}
 .  for _v in PKG_ARCH PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM \
-	RUN_DEPENDS WANTLIB LIB_DEPENDS PREFIX CATEGORIES
+	RUN_DEPENDS WANTLIB LIB_DEPENDS PREFIX CATEGORIES STATIC_PLIST
 ${_v}${_s} ?= ${${_v}}
 .  endfor
 .endfor
@@ -1497,8 +1493,6 @@ _BUILD_DEP = ${_BUILD_DEP2:C,^[^:/]*:,,}
 _RUN_DEP = ${_RUN_DEP2:C,^[^:/]*:,,}
 _REGRESS_DEP = ${_REGRESS_DEP2:C,^[^:/]*:,,}
 
-README_NAME ?= ${TEMPLATES}/README.port
-
 REORDER_DEPENDENCIES ?=
 ECHO_REORDER ?= :
 
@@ -1533,11 +1527,38 @@ _DO_LOCK = \
 .  endfor
 
 _SIMPLE_LOCK = \
-	${_LOCK}; locked=true; trap 'if $$locked; then ${_UNLOCK}; locked=false; fi' 0 1 2 3 13 15
+	${_LOCK}; locked=true; \
+	trap 'if $$locked; then ${_UNLOCK}; locked=false; fi' 0; \
+	trap 'exit 1' 1 2 3 13 15
 
 .endif
 _SIMPLE_LOCK ?= :
 _DO_LOCK ?= :
+
+CHECKSUM_PACKAGES ?= No
+_PACKAGE_CHECKSUM_DIR = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cksums
+
+_do_checksum_package = \
+	mkdir -p ${_PACKAGE_CHECKSUM_DIR} && \
+	cd ${_TMP_REPO} && \
+	cksum -b -a sha256 $$pkgname \
+		>${_PACKAGE_CHECKSUM_DIR}/`basename $$pkgname .tgz`.sha256
+
+.if ${CHECKSUM_PACKAGES:L} == "yes"
+_checksum_package = ${_do_checksum_package}
+.elif ${CHECKSUM_PACKAGES:L} == "ftp"
+_checksum_package = \
+	case $${permit_ftp} in yes) \
+		${_do_checksum_package};; \
+	esac
+.elif ${CHECKSUM_PACKAGES:L} == "cdrom"
+_checksum_package = \
+	case $${permit_cdrom} in yes) \
+		${_do_checksum_package};; \
+	esac
+.else
+_checksum_package = :
+.endif
 
 _size_fragment = wc -c $$file 2>/dev/null| \
 	awk '{print "SIZE (" $$2 ") = " $$1}'
@@ -1637,7 +1658,7 @@ _list_port_libs = \
 		${_flavor_fragment}; \
 		${_libs2cache}; \
 		cat $$cached_libs; \
- 	done; ${_list_system_libs}; }
+	done; ${_list_system_libs}; }
 
 .if empty(PLIST_DB)
 _register_plist =:
@@ -1656,6 +1677,13 @@ _CHECK_LIB_DEPENDS += -d ${_PKG_REPO} -B ${WRKINST}
 _CHECK_LIB_DEPENDS += -o
 .  endif
 
+.for _s in ${MULTI_PACKAGES}
+.  if ${STATIC_PLIST${_s}:L} == "no"
+_register_plist${_s} = :
+.  else
+_register_plist${_s} = ${_register_plist}
+.  endif
+.endfor
 
 ###
 ### end of variable setup. Only targets now
@@ -1705,13 +1733,14 @@ ${_PACKAGE_COOKIE${_S}}:
 	@${ECHO_MSG} "===>  Building package for ${FULLPKGNAME${_S}}"
 	@${ECHO_MSG} "Create ${_PACKAGE_COOKIE${_S}}"
 	@cd ${.CURDIR} && \
-	tmp=${_TMP_REPO}${_PKGFILE${_S}} && \
+	tmp=${_TMP_REPO}${_PKGFILE${_S}} pkgname=${_PKGFILE${_S}} permit_ftp=${PERMIT_PACKAGE_FTP${_S}:L:Q} permit_cdrom=${PERMIT_PACKAGE_CDROM${_S}:L:Q} && \
 	if deps=`SUBPACKAGE=${_S} wantlib_args=${_pkg_wantlib_args} \
 			${MAKE} print-package-args` && \
 		${SUDO} ${_PKG_CREATE} -DPORTSDIR="${PORTSDIR}" \
 			$$deps ${PKG_ARGS${_S}} $$tmp && \
 		${_check_lib_depends} $$tmp && \
-		${_register_plist} $$tmp && \
+		${_register_plist${_S}} $$tmp && \
+		${_checksum_package} && \
 		mv $$tmp ${_PACKAGE_COOKIE${_S}} && \
 		mode=`id -u`:`id -g` && \
 		${SUDO} chown $${mode} ${_PACKAGE_COOKIE${_S}}; then \
@@ -2739,9 +2768,6 @@ _internal-clean:
 .elif ${_clean:L:Mpackage}
 	rm -f ${_PACKAGE_COOKIES${SUBPACKAGE}} ${_UPDATE_COOKIE${SUBPACKAGE}}
 .endif
-.if ${_clean:L:Mreadmes}
-	rm -f ${_READMES}
-.endif
 .if ${_clean:L:Mbulk}
 	rm -f ${_BULK_COOKIE}
 .endif
@@ -2810,61 +2836,6 @@ describe:
 	@echo "n"
 .    endif
 .  endif
-.endfor
-
-readme:
-	@tmpdir=`mktemp -d ${TMPDIR}/readme.XXXXXX`; \
-	trap "rm -r $$tmpdir" 0 1 2 3 13 15; \
-	cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} TMPDIR=$$tmpdir README_NAME=${README_NAME} \
-		${READMES_TOP}/${PKGPATH}/${FULLPKGNAME${SUBPACKAGE}}.html
-
-readmes:
-	@tmpdir=`mktemp -d ${TMPDIR}/readme.XXXXXX`; \
-	trap "rm -r $$tmpdir" 0 1 2 3 13 15; \
-	cd ${.CURDIR} && PKGPATH=${PKGPATH} ${MAKE} TMPDIR=$$tmpdir README_NAME=${README_NAME} \
-		${_READMES}
-
-.for _S in ${MULTI_PACKAGES}
-${READMES_TOP}/${PKGPATH}/${FULLPKGNAME${_S}}.html:
-	@mkdir -p ${@D}
-	@echo ${_COMMENT${_S}:Q} | ${HTMLIFY} >${TMPDIR}/comment${_S}
-	@echo ${FULLPKGNAME${_S}} | ${HTMLIFY} > ${TMPDIR}/pkgname${_S}
-.  if defined(HOMEPAGE)
-	@echo 'See <a href="${HOMEPAGE}">${HOMEPAGE}</a> for details.' >${TMPDIR}/home${_S}
-.  else
-	@echo "" >${TMPDIR}/home${_S}
-.  endif
-.  if ${MULTI_PACKAGES} != "-"
-	@echo "<h2>Part of a Multi-Package set</h2>" >${TMPDIR}/subpackages${_S}
-	@echo "<ul>" >>${TMPDIR}/subpackages${_S}
-.    for _T in ${MULTI_PACKAGES}
-	@echo "<li><a href=\"${FULLPKGNAME${_T}}.html\">${FULLPKGNAME${_T}}</a>" >>${TMPDIR}/subpackages${_S}
-.    endfor
-	@echo "</ul>" >>${TMPDIR}/subpackages${_S}
-.  else
-	@>${TMPDIR}/subpackages${_S}
-.  endif
-.  for _I in build run
-.    if !empty(_${_I:U}_DEP)
-	@cd ${.CURDIR} && SUBPACKAGE=${_S} PKGPATH=${PKGPATH} ${MAKE} full-${_I}-depends _FULL_PACKAGE_NAME=Yes| \
-		while read n; do \
-			j=`dirname $$n|${HTMLIFY}`; k=`basename $$n|${HTMLIFY}`; \
-			echo "<li><a href=\"${PKGDEPTH}$$j/$$k.html\">$$k</a>"; \
-		 done  >${TMPDIR}/${_I}${_S}
-.    else
-	@echo "<li>none" >${TMPDIR}/${_I}${_S}
-.    endif
-.  endfor
-	@sed -e 's|%%PORT%%|'"`echo ${FULLPKGPATH${_S}}  | ${HTMLIFY}`"'|g' \
-		-e '/%%PKG%%/r${TMPDIR}/pkgname${_S}' -e '//d' \
-		-e '/%%COMMENT%%/r${TMPDIR}/comment${_S}' -e '//d' \
-		-e '/%%DESCR%%/r${DESCR${_S}}' -e '//d' \
-		-e '/%%HOMEPAGE%%/r${TMPDIR}/home${_S}' -e '//d' \
-		-e '/%%BUILD_DEPENDS%%/r${TMPDIR}/build${_S}' -e '//d' \
-		-e '/%%RUN_DEPENDS%%/r${TMPDIR}/run${_S}' -e '//d' \
-		-e '/%%SUBPACKAGES%%/r${TMPDIR}/subpackages${_S}' -e '//d' \
-		${README_NAME} > $@
-	@rm -f ${TMPDIR}/*${_S}
 .endfor
 
 print-build-depends:
@@ -2960,6 +2931,12 @@ all-lib-depends-args:
 		echo "-P $$pkgpath:$$pkg:$$default"; \
 	done
 
+# - remove lib-depends-args if we're only scanning for common dirs in 
+# update-plist and we're not shared only
+# - zap wantlib-args when we're only solving for @depends in pkg_create(1).
+no-lib-depends-args no-wantlib-args:
+	@:
+
 # those are expensive computations, so don't do them if we don't have to
 .if empty(_DEPRUNLIBS)
 lib-depends-args wantlib-args port-wantlib-args fake-wantlib-args:
@@ -3017,13 +2994,11 @@ fake-wantlib-args:
 		fi
 .endif
 
-no-wantlib-args:
-
 _print-package-signature-run:
 	@${_emit_run_depends} |while ${_read_spec}; do \
 		${_parse_spec}; \
 		${_compute_default}; \
-		echo "$$default"; \
+		echo "@$$default"; \
 	done
 
 _print-package-signature-lib:
@@ -3031,7 +3006,7 @@ _print-package-signature-lib:
 	${_emit_lib_depends}| while ${_read_spec}; do \
 		${_if_check_needed}; then \
 			${_complete_pkgspec}; \
-			echo "$$default"; \
+			echo "@$$default"; \
 		fi; \
 	done
 
@@ -3320,12 +3295,12 @@ _all_phony = ${_recursive_depends_targets} \
 	post-distpatch post-extract post-install \
 	post-patch post-regress pre-build pre-configure pre-extract pre-fake \
 	pre-install pre-patch pre-regress prepare \
-	print-build-depends print-run-depends readme readmes rebuild \
+	print-build-depends print-run-depends rebuild \
 	regress-depends regress-depends-list run-depends run-depends-list \
     show-required-by subpackage uninstall _print-metadata \
 	lock unlock \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
-	port-wantlib-args fake-wantlib-args no-wantlib-args \
+	port-wantlib-args fake-wantlib-args no-wantlib-args no-lib-depends-args \
 	_recurse-show-run-depends show-run-depends
 
 .if defined(_DEBUG_TARGETS)

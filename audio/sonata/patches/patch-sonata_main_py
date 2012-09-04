@@ -1,0 +1,14 @@
+$OpenBSD: patch-sonata_main_py,v 1.4 2012/06/04 07:54:36 ajacoutot Exp $
+
+http://codingteam.net/project/sonata/bugs/show/2870
+(committed upstream)
+
+--- sonata/main.py.orig	Wed May  9 16:24:23 2012
++++ sonata/main.py	Wed May  9 16:24:16 2012
+@@ -3400,4 +3400,6 @@ class Base(object):
+ 		self.on_currsong_notify(force_popup=True)
+ 	
+ 	def main(self):
++		gtk.gdk.threads_enter()
+ 		gtk.main()
++		gtk.gdk.threads_leave()
