@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.68 2012/09/01 14:36:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.71 2012/09/06 12:38:35 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
@@ -9,7 +9,7 @@ DISTNAME =	webkit-${V}
 EPOCH =		0
 CATEGORIES =	www
 EXTRACT_SUFX=	.tar.xz
-REVISION=	0
+REVISION=	2
 
 HOMEPAGE =	http://webkitgtk.org/
 MASTER_SITES =	${HOMEPAGE}/releases/
@@ -57,7 +57,6 @@ MAKE_FLAGS=	EXTRA_FLAGS="-O0"
 .endif
 
 RUN_DEPENDS =	multimedia/gstreamer-0.10/plugins-ffmpeg \
-		multimedia/gstreamer-0.10/plugins-bad \
 		multimedia/gstreamer-0.10/plugins-good
 
 WANTLIB =	ICE SM X11 Xcomposite Xcursor Xdamage Xext \
