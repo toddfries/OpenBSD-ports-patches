@@ -1,0 +1,56 @@
+$OpenBSD: patch-skia_skia_gyp,v 1.4 2012/08/26 18:47:01 robert Exp $
+--- skia/skia.gyp.orig	Tue Aug 14 09:01:31 2012
++++ skia/skia.gyp	Wed Aug 15 23:14:35 2012
+@@ -863,7 +863,7 @@
+             '__ARM_HAVE_NEON',
+           ],
+         }],
+-        [ 'target_arch == "arm"', {
++        [ 'target_arch == "arm" or disable_sse2 == 1', {
+           'sources!': [
+             '../third_party/skia/src/opts/opts_check_SSE2.cpp'
+           ],
+@@ -1137,7 +1137,7 @@
+             'SK_BUILD_FOR_ANDROID_NDK',
+           ],
+         }],
+-        [ 'target_arch != "arm"', {
++        [ 'target_arch != "arm" and disable_sse2 != 1', {
+           'sources': [
+             '../third_party/skia/src/opts/SkBitmapProcState_opts_SSE2.cpp',
+             '../third_party/skia/src/opts/SkBlitRect_opts_SSE2.cpp',
+@@ -1152,8 +1152,14 @@
+               ],
+             }],
+           ],
+-        },
+-        {  # arm
++        },{ #disable_sse2 == 1
++          'sources': [
++            '../third_party/skia/src/opts/SkBitmapProcState_opts_none.cpp',
++            '../third_party/skia/src/opts/SkBlitRow_opts_none.cpp',
++            '../third_party/skia/src/opts/SkUtils_opts_none.cpp',
++          ],
++        }],
++        [ 'target_arch == "arm"', {
+           'conditions': [
+             ['order_profiling != 0', {
+               'target_conditions' : [
+@@ -1235,7 +1241,7 @@
+         '../third_party/skia/src/core',
+       ],
+       'conditions': [
+-        [ 'OS in ["linux", "freebsd", "openbsd", "solaris"]', {
++        [ 'OS in ["linux", "freebsd", "solaris"]', {
+           'cflags': [
+             '-mssse3',
+           ],
+@@ -1262,7 +1268,7 @@
+             ],
+           },
+         }],
+-        [ 'target_arch != "arm"', {
++        [ 'target_arch != "arm" and OS != "openbsd"', {
+           'sources': [
+             '../third_party/skia/src/opts/SkBitmapProcState_opts_SSSE3.cpp',
+           ],

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/23 22:50:26 naddy Exp $
+# $OpenBSD: Makefile,v 1.4 2012/08/19 09:55:19 espie Exp $
 
 COMMENT = 	simple metronome
 CATEGORIES =	audio
-DISTNAME = 	metronome-0
+DISTNAME = 	metronome-1
 MAINTAINER = 	Marc Espie <espie@openbsd.org>
 MASTER_SITES = 	ftp://quatramaran.ens.fr/pub/espie/
 

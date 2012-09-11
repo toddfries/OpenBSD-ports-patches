@@ -1,40 +1,25 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/06/07 12:06:47 jasper Exp $
-
-COMMENT=	GNU standards-compliant Makefile generator
+# $OpenBSD: Makefile,v 1.6 2012/08/26 07:21:16 ajacoutot Exp $
 
 VERSION=	1.12
-DISTNAME=	automake-${VERSION}
+DISTNAME=	automake-${VERSION}.3
 PKGSPEC=	automake->=${VERSION},<1.13
-
-CATEGORIES=	devel
-MASTER_SITES=	${MASTER_SITE_GNU:=automake/}
-
-HOMEPAGE=	http://www.gnu.org/software/automake/
-
-# GPLv2
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		lang/python
 
 MODPY_BUILDDEP=		No
 MODPY_RUNDEP=		No
 
-AUTOCONF_VERSION=	2.68
+AUTOCONF_VERSION=	2.69
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS=		${MODGNU_AUTOCONF_DEPENDS}
 
-SUFFIX=			-${VERSION}
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--infodir=${PREFIX}/info
 CONFIGURE_ENV +=	AUTOCONF_VERSION=${AUTOCONF_VERSION}
 
 MAKE_FLAGS+=		pkgvdatadir=${PREFIX}/share/automake${SUFFIX} \
 			APIVERSION=${VERSION}
-SUBST_VARS=		SUFFIX
 
 FAKE_FLAGS=		docdir=${PREFIX}/share/doc/automake${SUFFIX}
 

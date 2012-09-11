@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2012/06/11 15:34:37 landry Exp $
+# $OpenBSD: Makefile,v 1.26 2012/09/01 14:35:06 landry Exp $
 
 COMMENT =	Mozilla mobile web browser
 
@@ -7,6 +7,7 @@ MOZILLA_BRANCH =	esr10
 MOZILLA_PROJECT =	fennec
 MOZILLA_CODENAME =	mobile
 PKGNAME =	${MOZILLA_PROJECT}-${MOZILLA_VERSION:S/esr//}
+REVISION =	0
 
 SO_VERSION =	6.0
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -31,7 +32,6 @@ MODULES =	www/mozilla devel/gettext lang/python
 
 MODPY_RUNDEP =	No
 
-USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
 NO_REGRESS =	Yes
 

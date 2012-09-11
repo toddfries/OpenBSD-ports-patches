@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.58 2012/04/14 20:24:02 naddy Exp $
+# $OpenBSD: Makefile,v 1.60 2012/08/04 21:17:40 naddy Exp $
 
 COMMENT=	toolkit for converting images between different formats
 
-DISTNAME=	netpbm-10.35.84
+DISTNAME=	netpbm-10.35.86
 SHARED_LIBS=	netpbm	2.0
 CATEGORIES=	graphics
 HOMEPAGE=	http://netpbm.sourceforge.net/

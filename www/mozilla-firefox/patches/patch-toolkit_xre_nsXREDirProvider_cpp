@@ -1,8 +1,8 @@
-$OpenBSD: patch-toolkit_xre_nsXREDirProvider_cpp,v 1.12 2012/06/11 15:29:56 landry Exp $
+$OpenBSD: patch-toolkit_xre_nsXREDirProvider_cpp,v 1.14 2012/09/01 13:56:45 landry Exp $
 Look for extensions in LOCALBASE
---- toolkit/xre/nsXREDirProvider.cpp.orig	Wed May  2 05:17:15 2012
-+++ toolkit/xre/nsXREDirProvider.cpp	Wed May  9 23:06:35 2012
-@@ -1168,11 +1168,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
+--- toolkit/xre/nsXREDirProvider.cpp.orig	Wed Aug 15 07:48:34 2012
++++ toolkit/xre/nsXREDirProvider.cpp	Sun Aug 19 13:50:39 2012
+@@ -1177,11 +1177,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
    NS_ENSURE_SUCCESS(rv, rv);
  #elif defined(XP_UNIX)
    static const char *const sysSExtDir = 

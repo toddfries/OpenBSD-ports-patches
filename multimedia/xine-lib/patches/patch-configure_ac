@@ -1,6 +1,6 @@
-$OpenBSD: patch-configure_ac,v 1.13 2012/06/10 07:35:30 ajacoutot Exp $
---- configure.ac.orig	Sun Jan  1 12:30:52 2012
-+++ configure.ac	Sat Apr  7 13:58:35 2012
+$OpenBSD: patch-configure_ac,v 1.15 2012/08/28 05:54:05 ajacoutot Exp $
+--- configure.ac.orig	Sat Jun  9 12:40:10 2012
++++ configure.ac	Sat Jun 30 22:43:15 2012
 @@ -558,9 +558,9 @@ t q
  b
  :q

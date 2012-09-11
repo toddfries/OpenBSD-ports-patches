@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.96 2012/06/15 08:32:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.104 2012/09/05 14:18:28 robert Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 
 COMMENT=		Chromium browser
 
-V=			18.0.1025.168
+V=			21.0.1180.89
 DISTNAME=		chromium-${V}
-
-REVISION=		1
 
 CATEGORIES=		www
 
@@ -23,8 +21,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://blade2k.humppa.hu/distfiles/ \
-		http://commondatastorage.googleapis.com/chromium-browser-official/
+MASTER_SITES=	http://commondatastorage.googleapis.com/chromium-browser-official/
 
 MODULES=	gcc4 lang/python
 
@@ -36,14 +33,14 @@ MODPY_RUNDEP=	No
 
 WANTLIB += X11 Xext Xfixes Xrender Xss bz2 c cairo cups dbus-1 event
 WANTLIB += execinfo expat fontconfig freetype gconf-2 gcrypt gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 glib-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 glib-2.0 gobject-2.0 gtk-x11-2.0
 WANTLIB += jpeg m nspr4 nss3 nssutil3 pango-1.0 pangocairo-1.0
 WANTLIB += plc4 png pthread pthread-stubs smime3 speex estdc++
 WANTLIB += xml2 xslt
+WANTLIB += Xcomposite atk-1.0 usb usb-1.0
 
 RUN_DEPENDS=	devel/xdg-utils \
 		devel/desktop-file-utils \
-		x11/gtk+2,-cups \
 		x11/gnome/icon-theme \
 		x11/gnome/libgnome-keyring \
 		x11/gtk+2,-guic
@@ -56,12 +53,13 @@ BUILD_DEPENDS=	archivers/bzip2 \
 		x11/gnome/libgnome-keyring
 LIB_DEPENDS=	devel/libexecinfo \
 		archivers/bzip2 \
+		devel/libusb-compat \
 		security/nss \
 		devel/gconf2 \
 		textproc/libxslt \
 		x11/gtk+2 \
 		audio/speex \
-		print/cups>=1.5.0
+		print/cups,-libs
 
 .include <bsd.own.mk>
 
@@ -85,6 +83,7 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Duse_system_libevent=1 \
 		-Duse_system_libjpeg=1 \
 		-Duse_system_libpng=1 \
+		-Duse_system_libusb=1 \
 		-Duse_system_libxml=1 \
 		-Duse_system_speex=1 \
 		-Duse_system_sqlite=0 \
@@ -96,11 +95,17 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Dlinux_use_tcmalloc=0 \
 		-Dlinux_strip_binary=1 \
 		-Denable_webrtc=0 \
+		-Denable_one_click_signin=1 \
 		-Duse_kerberos=0 \
 		-DOS=openbsd
 
 pre-configure:
+	${SUBST_CMD} ${WRKSRC}/webkit/plugins/npapi/plugin_list_posix.cc
 	@ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
+.for _arch in x64 ia32
+	@cp -pR ${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/linux/${_arch}/libavcodec \
+		${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/openbsd/${_arch}/libavcodec
+.endfor
 	@cp -R ${WRKSRC}/third_party/libvpx/source/config/linux \
 		${WRKSRC}/third_party/libvpx/source/config/openbsd
 
@@ -118,8 +123,9 @@ do-install:
 		${FILESDIR}/chrome ${PREFIX}/bin/chrome
 	chmod ${BINMODE} ${PREFIX}/bin/chrome
 	${INSTALL_MAN} ${BUILDDIR}/chrome.1 ${PREFIX}/man/man1
-	${INSTALL_DATA} ${BUILDDIR}/chrome.pak ${PREFIX}/chrome
-	${INSTALL_DATA} ${BUILDDIR}/resources.pak ${PREFIX}/chrome
+.for p in chrome content_resources resources theme_resources_standard ui_resources_standard
+	${INSTALL_DATA} ${BUILDDIR}/${p}.pak ${PREFIX}/chrome
+.endfor
 	${INSTALL_DATA_DIR} ${PREFIX}/chrome/locales
 	${INSTALL_DATA} ${BUILDDIR}/locales/* ${PREFIX}/chrome/locales
 	${INSTALL_DATA} ${BUILDDIR}/*.png ${PREFIX}/chrome
@@ -129,7 +135,7 @@ do-install:
 .for f in libffmpegsumo.so mksnapshot protoc
 	${INSTALL_DATA} ${BUILDDIR}/${f} ${PREFIX}/chrome
 .endfor
-.for s in 16 22 24 32 48 64 128 256
+.for s in 22 24 48 64 128 256
 	${INSTALL_DATA_DIR} ${PREFIX}/share/icons/hicolor/${s}x${s}/apps
 	${INSTALL_DATA} ${WRKSRC}/chrome/app/theme/chromium/product_logo_${s}.png \
 		${PREFIX}/share/icons/hicolor/${s}x${s}/apps/chrome.png

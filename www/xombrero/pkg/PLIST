@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2012/06/07 14:18:14 gonzalo Exp $
+@comment $OpenBSD: PLIST,v 1.3 2012/09/04 12:06:01 gonzalo Exp $
 @conflict xxxterm-*
 @pkgpath www/xxxterm
 @bin bin/xombrero
@@ -9,8 +9,10 @@ share/examples/xombrero/favorites
 share/examples/xombrero/playflash.sh
 share/examples/xombrero/xombrero.conf
 share/xombrero/
+share/xombrero/hsts-preload
 share/xombrero/style.css
 share/xombrero/tld-rules
+share/xombrero/xombrero.css
 share/xombrero/xombreroicon.png
 share/xombrero/xombreroicon128.png
 share/xombrero/xombreroicon16.png

@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.3 2012/04/16 12:00:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2012/09/05 14:15:41 jasper Exp $
 
 COMMENT=	library for storing and retrieving passwords and secrets
 
 GNOME_PROJECT=	libsecret
-GNOME_VERSION=	0.2
+GNOME_VERSION=	0.8
+REVISION=	0
 
-SHARED_LIBS +=  secret-0                  0.0 # 0.0
+SHARED_LIBS +=  secret-1             0.0      # unknown
 
 HOMEPAGE=	https://live.gnome.org/Libsecret
 
@@ -22,19 +23,20 @@ MODULES=	devel/gettext \
 		lang/python \
 		x11/gnome
 
-MODGNOME_TOOLS=	goi
+MODGNOME_TOOLS=	goi # vala XXX: Enable when updating to next release.
 MODPY_BUILDDEP=	No
 MODPY_RUNDEP=	No
 
 LIB_DEPENDS=	devel/glib2 \
 		security/libgcrypt
 
-# Unable to autolaunch a dbus-daemon without a $DISPLAY for X11
+# unable to autolaunch a dbus-daemon without a $DISPLAY for X11
 REGRESS_IS_INTERACTIVE=	X11
-REGRESS_DEPENDS=	${MODPY_RUN_DEPENDS}
+REGRESS_DEPENDS=	${MODPY_RUN_DEPENDS} \
+			x11/dbus-python
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/library/tests/mock-service.c \
-		${WRKSRC}/library/tests/Makefile.in
+	${SUBST_CMD} ${WRKSRC}/libsecret/tests/Makefile.in \
+		${WRKSRC}/libsecret/tests/mock-service.c
 
 .include <bsd.port.mk>

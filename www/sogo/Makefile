@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.18 2012/03/31 17:02:23 sebastia Exp $
+# $OpenBSD: Makefile,v 1.21 2012/08/22 07:16:37 sebastia Exp $
 
 COMMENT = 	web based groupware server
 
-VERSION =	1.3.14
+VERSION =	1.3.17
+REVISION =	0
 DISTNAME =	SOGo-${VERSION}
 PKGNAME =	sogo-${VERSION}
 
 SHARED_LIBS +=	GDLContentStore 1.1
 SHARED_LIBS +=	NGCards		1.1
 SHARED_LIBS +=	OGoContentStore	1.1
-SHARED_LIBS +=	SOGo		1.2
+SHARED_LIBS +=	SOGo		1.3
 SHARED_LIBS +=	SOGoUI		1.1
 
 CATEGORIES =	www
@@ -45,6 +46,9 @@ MAKE_FLAGS +=		libGDLContentStore_INTERFACE_VERSION=${LIBGDLContentStore_VERSION
 			libSOGoUI_INTERFACE_VERSION=${LIBSOGoUI_VERSION} \
 			SOGo_INTERFACE_VERSION=${LIBSOGo_VERSION}
 
+SOGOLIBDIR =	lib/GNUstep/Frameworks/SOGo.framework/Versions/${LIBSOGo_VERSION}
+SUBST_VARS +=	SOGOLIBDIR
+
 pre-configure:
 .for f in SOGo_Installation_Guide SOGo_Mobile_Devices_Configuration \
     SOGo_Mozilla_Thunderbird_Configuration SOGo_Native_Microsoft_Outlook_Configuration
@@ -63,5 +67,11 @@ post-install:
 	${INSTALL_SCRIPT} -c -o ${SHAREOWN} -g ${SHAREGRP} \
 		${WRKSRC}/Scripts/sql-update-1.3.11_to_1.3.12-mysql.sh \
 		${PREFIX}/share/doc/sogo/sql-update-1.3.11_to_1.3.12-mysql.sh
+	${INSTALL_SCRIPT} -c -o ${SHAREOWN} -g ${SHAREGRP} \
+		${WRKSRC}/Scripts/sql-update-1.3.16_to_1.3.17.sh \
+		${PREFIX}/share/doc/sogo/sql-update-1.3.16_to_1.3.17-postgres.sh
+	${INSTALL_SCRIPT} -c -o ${SHAREOWN} -g ${SHAREGRP} \
+		${WRKSRC}/Scripts/sql-update-1.3.16_to_1.3.17-mysql.sh \
+		${PREFIX}/share/doc/sogo/sql-update-1.3.16_to_1.3.17-mysql.sh
 
 .include <bsd.port.mk>

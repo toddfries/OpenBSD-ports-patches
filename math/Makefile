@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.109 2012/06/07 10:20:34 edd Exp $
-#
+# $OpenBSD: Makefile,v 1.111 2012/08/21 07:18:45 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += R
@@ -26,6 +25,7 @@
      SUBDIR += fftw3,float
      SUBDIR += freemat
      SUBDIR += galculator
+     SUBDIR += geogebra
      SUBDIR += ginac
      SUBDIR += gnumeric
      SUBDIR += gnuplot

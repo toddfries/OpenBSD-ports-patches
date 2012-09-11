@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.260 2012/06/01 13:02:24 landry Exp $
-# $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
+# $OpenBSD: Makefile,v 1.269 2012/09/05 15:07:18 jasper Exp $
 
      SUBDIR =
      SUBDIR += LPRng
@@ -46,6 +45,7 @@
      SUBDIR += dmassage
      SUBDIR += dmidecode
      SUBDIR += downtimed
+     SUBDIR += dsh
      SUBDIR += dtpstree
      SUBDIR += duplicity
      SUBDIR += dvd+rw-tools
@@ -71,7 +71,6 @@
      SUBDIR += gpioflicker
      SUBDIR += grub
      SUBDIR += gsmartcontrol
-     SUBDIR += heartbeat
      SUBDIR += hot-babe
      SUBDIR += hotplug-diskmount
      SUBDIR += idled
@@ -84,6 +83,7 @@
      SUBDIR += libretto-config
      SUBDIR += librelp
      SUBDIR += libstatgrab
+     SUBDIR += libvirt
      SUBDIR += logfmon
      SUBDIR += login_fingerprint
      SUBDIR += login_ldap
@@ -107,6 +107,7 @@
      SUBDIR += ndesk-dbus
      SUBDIR += ndesk-dbus-glib
      SUBDIR += notification-daemon
+     SUBDIR += node-always
      SUBDIR += node-daemon
      SUBDIR += node-syslog
      SUBDIR += ns4
@@ -128,6 +129,7 @@
      SUBDIR += p5-Schedule-At
      SUBDIR += p5-Set-Crontab
      SUBDIR += p5-Sys-Syscall
+     SUBDIR += p5-Sys-Virt
      SUBDIR += p5-UPS-Nut
      SUBDIR += p5-Unix-PID
      SUBDIR += p5-Unix-Statgrab
@@ -140,11 +142,14 @@
      SUBDIR += pscpug
      SUBDIR += pstree
      SUBDIR += pv
+     SUBDIR += py-cef
      SUBDIR += py-daemon
      SUBDIR += py-lockfile
+     SUBDIR += py-metlog
      SUBDIR += radiusreport
      SUBDIR += radmind
      SUBDIR += rancid
+     SUBDIR += ranger
      SUBDIR += rdiff-backup
      SUBDIR += resmon
      SUBDIR += rpl
@@ -211,6 +216,7 @@
      SUBDIR += xps
      SUBDIR += xstatbar
      SUBDIR += xuvmstat
+     SUBDIR += ykpers
      SUBDIR += zap
 
 .include <bsd.port.subdir.mk>

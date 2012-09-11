@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2012/06/02 12:09:55 sthen Exp $
-# $FreeBSD: Makefile,v 1.27 1997/11/22 14:56:56 peter Exp $
+# $OpenBSD: Makefile,v 1.56 2012/09/02 15:54:30 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += amtterm
@@ -18,10 +17,8 @@
      SUBDIR += hylafax
      SUBDIR += hylafax,a4
      SUBDIR += jpilot
-     SUBDIR += jpilot-syncmal
      SUBDIR += kermit
      SUBDIR += lcdproc
-     SUBDIR += libmal
      SUBDIR += lrzsz
      SUBDIR += mgetty+sendfax
      SUBDIR += minicom
@@ -32,6 +29,7 @@
      SUBDIR += p5-Device-Modem
      SUBDIR += p5-Device-SerialPort
      SUBDIR += p5-SendPage
+     SUBDIR += picocom
      SUBDIR += pilot-link
      SUBDIR += qpage
      SUBDIR += scmxx

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2012/04/28 10:52:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/30 20:54:59 pascal Exp $
 
 COMMENT-main =		GNU editor: extensible, customizable, self-documenting
 COMMENT-el =		elisp sources for those who want to read/modify them
@@ -10,7 +10,8 @@ PKGNAME-main =		emacs-${VERSION}
 FULLPKGNAME-el =	emacs-el-${VERSION}
 FULLPKGPATH-el =	editors/emacs23,-el
 
-REVISION-main =		0
+REVISION-main =		4
+REVISION-el =		4
 
 CATEGORIES =		editors
 
@@ -35,11 +36,12 @@ GCCARCH =		${MACHINE_ARCH}-unknown-openbsd${OSREV}
 
 AUTOCONF_VERSION =	2.67
 CONFIGURE_STYLE =	autoconf
-CONFIGURE_ARGS =	${GCCARCH}
+CONFIGURE_ARGS =	${GCCARCH} --with-system-malloc
 
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include \
 				  -I${LOCALBASE}/include/libpng" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib -nopie"
+CFLAGS +=		-fno-pie
 
 MAKE_ENV =		INSTALL_EMACS="${INSTALL_SCRIPT}" \
 			LOGNAME="${SHAREOWN}"
@@ -83,6 +85,8 @@ WANTLIB-main +=		GL ICE SM X11 Xdmcp Xext Xft Xpm Xrender \
 
 RUN_DEPENDS-el =	emacs-${VERSION}:${PKGPATH}
 PKG_ARCH-el =		*
+
+NO_REGRESS =		Yes
 
 post-install:
 	chmod -t ${PREFIX}/bin/emacs

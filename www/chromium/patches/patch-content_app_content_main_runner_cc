@@ -1,0 +1,39 @@
+$OpenBSD: patch-content_app_content_main_runner_cc,v 1.2 2012/08/26 18:47:01 robert Exp $
+--- content/app/content_main_runner.cc.orig	Wed Aug 15 23:17:36 2012
++++ content/app/content_main_runner.cc	Thu Aug 16 10:40:04 2012
+@@ -84,7 +84,7 @@ extern int PpapiBrokerMain(const content::MainFunction
+ extern int RendererMain(const content::MainFunctionParams&);
+ extern int WorkerMain(const content::MainFunctionParams&);
+ extern int UtilityMain(const content::MainFunctionParams&);
+-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
++#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_BSD)
+ namespace content {
+ extern int ZygoteMain(const MainFunctionParams&,
+                       ZygoteForkDelegate* forkdelegate);
+@@ -268,7 +268,7 @@ struct MainFunction {
+   int (*function)(const MainFunctionParams&);
+ };
+ 
+-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
++#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_BSD)
+ // On platforms that use the zygote, we have a special subset of
+ // subprocesses that are launched via the zygote.  This function
+ // fills in some process-launching bits around ZygoteMain().
+@@ -372,7 +372,7 @@ int RunNamedProcessTypeMain(
+     }
+   }
+ 
+-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
++#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_BSD)
+   // Zygote startup is special -- see RunZygote comments above
+   // for why we don't use ZygoteMain directly.
+   if (process_type == switches::kZygoteProcess)
+@@ -462,7 +462,7 @@ static void ReleaseFreeMemoryThunk() {
+                kPrimaryIPCChannel + base::GlobalDescriptors::kBaseDescriptor);
+ #endif
+ 
+-#if defined(OS_LINUX) || defined(OS_OPENBSD)
++#if defined(OS_LINUX)
+     g_fds->Set(kCrashDumpSignal,
+                kCrashDumpSignal + base::GlobalDescriptors::kBaseDescriptor);
+ #endif

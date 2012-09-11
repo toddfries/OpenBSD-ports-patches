@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-server,v 1.31 2012/06/08 22:04:10 sthen Exp $
+@comment $OpenBSD: PLIST-server,v 1.34 2012/08/05 09:15:51 sthen Exp $
 @conflict dovecot-sqlite-*
 @pkgpath mail/dovecot
 @pkgpath mail/dovecot,-server,bdb
@@ -63,11 +63,13 @@ include/dovecot/config-parser-private.h
 include/dovecot/config-parser.h
 include/dovecot/config-request.h
 include/dovecot/config.h
+include/dovecot/connection.h
 include/dovecot/crc32.h
 include/dovecot/cydir-storage.h
 include/dovecot/cydir-sync.h
 include/dovecot/data-stack.h
 include/dovecot/db-checkpassword.h
+include/dovecot/db-dict.h
 include/dovecot/db-ldap.h
 include/dovecot/db-passwd-file.h
 include/dovecot/db-sql.h
@@ -183,6 +185,7 @@ include/dovecot/istream-rawlog.h
 include/dovecot/istream-seekable.h
 include/dovecot/istream-tee.h
 include/dovecot/istream.h
+include/dovecot/json-parser.h
 include/dovecot/lda-settings.h
 include/dovecot/lib-signals.h
 include/dovecot/lib.h
@@ -485,6 +488,7 @@ share/doc/dovecot/documentation.txt
 @sample ${SYSCONFDIR}/dovecot/
 @sample ${SYSCONFDIR}/dovecot/conf.d/
 share/doc/dovecot/securecoding.txt
+share/doc/dovecot/solr-schema.xml
 share/doc/dovecot/thread-refs.txt
 share/doc/dovecot/wiki/
 share/doc/dovecot/wiki/ACL.txt
@@ -556,7 +560,6 @@ share/doc/dovecot/wiki/Errors.ChgrpNoPerm.txt
 share/doc/dovecot/wiki/FindMailLocation.txt
 share/doc/dovecot/wiki/FinishBasicConfiguration.txt
 share/doc/dovecot/wiki/HowTo.EximAndDovecotSASL.txt
-share/doc/dovecot/wiki/HowTo.F5SLBTLSOffload.txt
 share/doc/dovecot/wiki/HowTo.ImapcProxy.txt
 share/doc/dovecot/wiki/HowTo.PopBSMTPAndDovecot.txt
 share/doc/dovecot/wiki/HowTo.PopRelay.txt
@@ -605,6 +608,7 @@ share/doc/dovecot/wiki/Migration.UW.txt
 share/doc/dovecot/wiki/Migration.Vm-pop3d.txt
 share/doc/dovecot/wiki/Migration.txt
 share/doc/dovecot/wiki/MissingMailboxes.txt
+share/doc/dovecot/wiki/Mountpoints.txt
 share/doc/dovecot/wiki/NFS.txt
 share/doc/dovecot/wiki/Namespaces.txt
 share/doc/dovecot/wiki/OSCompatibility.txt
@@ -634,6 +638,7 @@ share/doc/dovecot/wiki/Pigeonhole.Sieve.Extensions.SpamtestVirustest.txt
 share/doc/dovecot/wiki/Pigeonhole.Sieve.Extensions.Vacation.txt
 share/doc/dovecot/wiki/Pigeonhole.Sieve.Extensions.txt
 share/doc/dovecot/wiki/Pigeonhole.Sieve.Plugins.Extdata.txt
+share/doc/dovecot/wiki/Pigeonhole.Sieve.Plugins.Extprograms.txt
 share/doc/dovecot/wiki/Pigeonhole.Sieve.Plugins.Pipe.txt
 share/doc/dovecot/wiki/Pigeonhole.Sieve.Plugins.txt
 share/doc/dovecot/wiki/Pigeonhole.Sieve.Troubleshooting.txt
@@ -702,6 +707,7 @@ share/doc/dovecot/wiki/WhyDoesItNotWork.txt
 share/doc/dovecot/wiki/maildrop.txt
 share/doc/dovecot/wiki/mutt.txt
 share/doc/dovecot/wiki/uw2dovecot.sh.txt
+share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/dovecot/
 share/examples/dovecot/dovecot-openssl.cnf
 @sample /etc/ssl/dovecot-openssl.cnf

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.25 2012/03/23 13:28:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2012/08/26 07:19:26 ajacoutot Exp $
 
 COMMENT=	SVG vector drawing application
 
 DISTNAME=	inkscape-0.48.2
-REVISION=	1
+REVISION=	3
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=inkscape/}
 
@@ -25,7 +25,7 @@ WANTLIB=	GL Magick++ MagickCore X11 Xcomposite Xcursor Xdamage \
 		Xext Xfixes Xi Xinerama Xrandr Xrender \
 		aspell atk-1.0 atkmm-1.6 c cairo cairomm-1.0 expat \
 		fontconfig freetype gc gdk-x11-2.0 gdk_pixbuf-2.0 gdkmm-2.4 \
-		gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gmodule-2.0 gobject-2.0 \
+		gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gobject-2.0 \
 		gsl gslcblas gthread-2.0 gtk-x11-2.0 gtkmm-2.4 gtkspell \
 		lcms m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4 \
 		pixman-1 png poppler poppler-glib popt pthread pthread-stubs \
@@ -55,7 +55,7 @@ USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 USE_GROFF=	Yes
 CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.67
+AUTOCONF_VERSION= 2.68
 CONFIGURE_ARGS=	--without-gnome-vfs
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/ImageMagick \
 			  -I${LOCALBASE}/include -I${X11BASE}/include" \

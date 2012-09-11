@@ -1,6 +1,9 @@
-@comment $OpenBSD: PLIST-main,v 1.20 2012/04/10 22:37:02 sthen Exp $
+@comment $OpenBSD: PLIST-main,v 1.22 2012/08/04 14:45:34 ajacoutot Exp $
 @conflict samba-docs-<3.6.0
 @pkgpath ${BASE_PKGPATH}
+@pkgpath ${BASE_PKGPATH},cups
+@pkgpath ${BASE_PKGPATH},cups,ads
+@pkgpath ${BASE_PKGPATH},cups,ldap
 @bin bin/eventlogadm
 bin/findsmb
 bin/mksmbpasswd
@@ -148,6 +151,7 @@ lib/samba/vfs/xattr_tdb.so
 @man man/man8/vfs_acl_tdb.8
 @man man/man8/vfs_acl_xattr.8
 @man man/man8/vfs_aio_fork.8
+@man man/man8/vfs_aio_pthread.8
 @man man/man8/vfs_audit.8
 @man man/man8/vfs_cacheprime.8
 @man man/man8/vfs_cap.8

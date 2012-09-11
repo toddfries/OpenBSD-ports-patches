@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2012/05/20 16:32:51 jsing Exp $
+# $OpenBSD: Makefile,v 1.5 2012/07/30 15:49:55 espie Exp $
 
 ONLY_FOR_ARCHS =	amd64 i386
 
 COMMENT =		Go programming language
 
-VERSION =		1.0.1
+VERSION =		1.0.2
 EXTRACT_SUFX =		.src.tar.gz
 DISTNAME = 		go${VERSION}
 PKGNAME = 		go-${VERSION}
@@ -47,7 +47,10 @@ GOARCH =		386
 EXEPREFIX =		8
 PKG_ARGS +=		-Damd64=0
 PKG_ARGS +=		-Di386=1
+.else
+PKG_ARGS += 		-Damd64=0 -Di386=0
 .endif
+
 GOCFG =			/${GOOS}_${GOARCH}
 GOEXE =			${GOCFG}/${EXEPREFIX}
 

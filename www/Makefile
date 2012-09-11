@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.564 2012/06/07 14:22:02 gonzalo Exp $
-# $FreeBSD: Makefile,v 1.65 1997/11/17 06:31:39 fenner Exp $
+# $OpenBSD: Makefile,v 1.571 2012/09/03 15:12:56 jasper Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -14,6 +13,7 @@
      SUBDIR += asql
      SUBDIR += august
      SUBDIR += awl
+     SUBDIR += bacula-web
      SUBDIR += bk2site
      SUBDIR += blogsum
      SUBDIR += bluefish
@@ -138,6 +138,7 @@
      SUBDIR += mono-xsp
      SUBDIR += moodle
      SUBDIR += mozilla-firefox
+     SUBDIR += mozilla-sync
      SUBDIR += mozplugger
      SUBDIR += mycalendar
      SUBDIR += myreview
@@ -221,6 +222,7 @@
      SUBDIR += p5-Drupal-Admin
      SUBDIR += p5-FCGI-ProcManager
      SUBDIR += p5-Feed-Find
+     SUBDIR += p5-Gravatar-URL
      SUBDIR += p5-HTML-Base
      SUBDIR += p5-HTML-CGIChecker
      SUBDIR += p5-HTML-Calendar-Month-Simple
@@ -397,13 +399,16 @@
      SUBDIR += py-paste-script
      SUBDIR += py-pylons
      SUBDIR += py-quixote
+     SUBDIR += py-recaptcha-client
      SUBDIR += py-repoze-lru
      SUBDIR += py-repoze-profile
+     SUBDIR += py-repoze-who
      SUBDIR += py-requests
      SUBDIR += py-routes
      SUBDIR += py-tempita
      SUBDIR += py-tornado
      SUBDIR += py-turbogears
+     SUBDIR += py-urlgrabber
      SUBDIR += py-weberror
      SUBDIR += py-webhelpers
      SUBDIR += py-webkitgtk
@@ -519,5 +524,6 @@
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework
+     SUBDIR += zurmo
 
 .include <bsd.port.subdir.mk>

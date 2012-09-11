@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.59 2011/11/04 22:51:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.61 2012/08/08 23:17:28 sthen Exp $
 
 COMMENT =		download/stream programmes from BBC iPlayer
 
-DISTNAME =		get_iplayer-2.80
-REVISION =		1
+DISTNAME =		get_iplayer-2.82
+REVISION =		0
 CATEGORIES =		multimedia
 
 # http://git.infradead.org/get_iplayer.git

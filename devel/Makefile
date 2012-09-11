@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.1049 2012/06/16 09:49:32 ajacoutot Exp $
-# $FreeBSD: Makefile,v 1.85 1997/11/20 05:22:14 asami Exp $
+# $OpenBSD: Makefile,v 1.1067 2012/09/05 07:34:32 jasper Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -166,8 +165,10 @@
      SUBDIR += hs-bimap
      SUBDIR += hs-binary
      SUBDIR += hs-blaze-builder
+     SUBDIR += hs-blaze-builder-conduit
      SUBDIR += hs-blaze-builder-enumerator
      SUBDIR += hs-blaze-textual
+     SUBDIR += hs-bytestring-mmap
      SUBDIR += hs-case-insensitive
      SUBDIR += hs-cereal
      SUBDIR += hs-cmdargs
@@ -175,6 +176,7 @@
      SUBDIR += hs-comonad
      SUBDIR += hs-comonad-transformers
      SUBDIR += hs-concurrent-extra
+     SUBDIR += hs-conduit
      SUBDIR += hs-configurator
      SUBDIR += hs-contravariant
      SUBDIR += hs-control-timeout
@@ -183,7 +185,6 @@
      SUBDIR += hs-data-lens
      SUBDIR += hs-data-lens-template
      SUBDIR += hs-dataenc
-     SUBDIR += hs-deepseq
      SUBDIR += hs-directory-tree
      SUBDIR += hs-distributive
      SUBDIR += hs-dlist
@@ -206,24 +207,29 @@
      SUBDIR += hs-iteratee
      SUBDIR += hs-language-c
      SUBDIR += hs-largeword
+     SUBDIR += hs-lifted-base
      SUBDIR += hs-logict
      SUBDIR += hs-mmap
+     SUBDIR += hs-monad-control
      SUBDIR += hs-monads-fd
      SUBDIR += hs-monads-tf
      SUBDIR += hs-mtl
      SUBDIR += hs-murmur-hash
      SUBDIR += hs-network
+     SUBDIR += hs-network-conduit
      SUBDIR += hs-pango
      SUBDIR += hs-parallel
      SUBDIR += hs-parsec
      SUBDIR += hs-primitive
      SUBDIR += hs-pugs-DrIFT
      SUBDIR += hs-pugs-compat
+     SUBDIR += hs-random
      SUBDIR += hs-readline
      SUBDIR += hs-regex-base
      SUBDIR += hs-regex-compat
      SUBDIR += hs-regex-pcre-builtin
      SUBDIR += hs-regex-posix
+     SUBDIR += hs-resourcet
      SUBDIR += hs-safe
      SUBDIR += hs-semigroupoids
      SUBDIR += hs-semigroups
@@ -242,13 +248,16 @@
      SUBDIR += hs-test-framework-quickcheck2
      SUBDIR += hs-text
      SUBDIR += hs-transformers
+     SUBDIR += hs-transformers-base
      SUBDIR += hs-type-level
      SUBDIR += hs-unbounded-delays
      SUBDIR += hs-uniplate
      SUBDIR += hs-unix-compat
      SUBDIR += hs-unordered-containers
+     SUBDIR += hs-vault
      SUBDIR += hs-vector
      SUBDIR += hs-vector-algorithms
+     SUBDIR += hs-void
      SUBDIR += hscolour
      SUBDIR += hudson
      SUBDIR += hyena
@@ -280,6 +289,7 @@
      SUBDIR += libdaemon
      SUBDIR += libdisorder
      SUBDIR += libdockapp
+     SUBDIR += libdshconfig
      SUBDIR += libdvdread
      SUBDIR += libee
      SUBDIR += libelf
@@ -383,17 +393,29 @@
      SUBDIR += msp430
      SUBDIR += mspdebug
      SUBDIR += mysql++
+     SUBDIR += nagelfar
      SUBDIR += naken430asm
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
      SUBIDR += node-expresso
+     SUBDIR += newt
      SUBDIR += node-fibers
      SUBDIR += node-generic-pool
+     SUBDIR += node-gir
      SUBDIR += node-mnm
      SUBDIR += nspr
+     SUBDIR += ocaml-batteries
      SUBDIR += ocaml-calendar
+     SUBDIR += ocaml-camomile
+     SUBDIR += ocaml-lwt
+     SUBDIR += ocaml-mlgmp
+     SUBDIR += ocaml-net
+     SUBDIR += ocaml-net,pcre
      SUBDIR += ocaml-pcre
+     SUBDIR += ocaml-react
+     SUBDIR += ocaml-lambda-term
+     SUBDIR += ocaml-zed
      SUBDIR += ode
      SUBDIR += ois
      SUBDIR += omake
@@ -402,6 +424,7 @@
      SUBDIR += openocd
      SUBDIR += ophis
      SUBDIR += orc
+     SUBDIR += ounit
      SUBDIR += p5-Acme-Damn
      SUBDIR += p5-Algorithm-Annotate
      SUBDIR += p5-Algorithm-C3
@@ -508,6 +531,7 @@
      SUBDIR += p5-Config-IniFiles
      SUBDIR += p5-Config-Options
      SUBDIR += p5-Config-Simple
+     SUBDIR += p5-Config-Std
      SUBDIR += p5-Config-Tiny
      SUBDIR += p5-Context-Preserve
      SUBDIR += p5-Coro
@@ -582,6 +606,7 @@
      SUBDIR += p5-Devel-StackTrace-AsHTML
      SUBDIR += p5-Devel-Symdump
      SUBDIR += p5-Devel-Trace
+     SUBDIR += p5-Devel-TraceUse
      SUBDIR += p5-Devel-ebug
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Device-USB
@@ -799,6 +824,7 @@
      SUBDIR += p5-Probe-Perl
      SUBDIR += p5-Proc-Background
      SUBDIR += p5-Proc-Daemon
+     SUBDIR += p5-Proc-PID-File
      SUBDIR += p5-Proc-Simple
      SUBDIR += p5-Rcs
      SUBDIR += p5-Readonly
@@ -989,7 +1015,6 @@
      SUBDIR += physfs
      SUBDIR += pkgconfig
      SUBDIR += plib
-     SUBDIR += pmk
      SUBDIR += poedit
      SUBDIR += popt
      SUBDIR += proj
@@ -1021,12 +1046,15 @@
      SUBDIR += py-dtopt
      SUBDIR += py-dulwich
      SUBDIR += py-editdist
+     SUBDIR += py-elftools
      SUBDIR += py-epsilon
      SUBDIR += py-extremes
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
+     SUBDIR += py-gevent
      SUBDIR += py-gobject
      SUBDIR += py-gobject3
+     SUBDIR += py-greenlet
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib
@@ -1042,6 +1070,7 @@
      SUBDIR += py-monthdelta
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime
+     SUBDIR += py-newt-syrup
      SUBDIR += py-nose
      SUBDIR += py-notify
      SUBDIR += py-openbsd
@@ -1105,6 +1134,7 @@
      SUBDIR += rats
      SUBDIR += re2c
      SUBDIR += readline
+     SUBDIR += rebar
      SUBDIR += remake
      SUBDIR += ruby-abstract
      SUBDIR += ruby-actionpack

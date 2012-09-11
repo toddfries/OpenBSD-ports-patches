@@ -1,8 +1,4 @@
-# $OpenBSD: Makefile,v 1.68 2012/06/18 11:30:50 ajacoutot Exp $
-
-# XXX Binary files patch-panels_info_hostnames-test_txt and
-# patch-panels_info_hostnames-test_txt.new differ
-DIFF_ARGS=	-a
+# $OpenBSD: Makefile,v 1.71 2012/08/04 15:35:09 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -10,7 +6,7 @@ COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
 GNOME_VERSION=		3.4.2
-REVISION=		3
+REVISION=		6
 
 CATEGORIES=		x11
 
@@ -48,14 +44,16 @@ LIB_DEPENDS=		x11/gnome/desktop \
 			x11/gnome/online-accounts \
 			sysutils/upower \
 			devel/libgtop2 \
-			print/cups \
+			print/cups,-libs \
 			audio/pulseaudio \
 			audio/libcanberra,-gtk3 \
 			graphics/colord
 
 BUILD_DEPENDS=		x11/gnome/settings-daemon>=3.4.2 \
+			devel/iso-codes \
 			devel/gsettings-desktop-schemas
 RUN_DEPENDS=		x11/gnome/settings-daemon>=3.4.2 \
+			devel/iso-codes \
 			devel/gsettings-desktop-schemas
 
 # NOTE that a11y dependencies (e.g. mousetweaks, caribou...) are not

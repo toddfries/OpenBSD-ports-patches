@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.58 2012/01/13 00:55:14 naddy Exp $
+# $OpenBSD: Makefile,v 1.61 2012/08/30 20:54:59 pascal Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -11,15 +11,13 @@ FULLPKGNAME-el=		emacs-el-${VERSION}
 FULLPKGPATH-el=		editors/emacs21,-el
 FULLPKGNAME-leim=	emacs-leim-${VERSION}
 FULLPKGPATH-leim=	editors/emacs21,-leim
-REVISION-main=		17
-REVISION-el=		4
-REVISION-leim=		4
+REVISION-main=		19
+REVISION-el=		6
+REVISION-leim=		6
 
 CATEGORIES=		editors
 
 HOMEPAGE=		http://www.gnu.org/software/emacs/
-
-MAINTAINER=		Rich Cannings <cannings@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -41,11 +39,12 @@ GCCARCH=		${MACHINE_ARCH}-unknown-openbsd${OSREV}
 MODGNU_EMACS_YOURE_WEIRD = Oh yes
 
 CONFIGURE_STYLE=	gnu dest
-CONFIGURE_ARGS=		${GCCARCH} --with-pop
+CONFIGURE_ARGS=		${GCCARCH} --with-pop --with-system-malloc
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
 				  -I${LOCALBASE}/include/libpng" \
 			LDFLAGS="${ELF_TOOLCHAIN:L:S/yes/-Z/:S/no//} \
-				 -L${LOCALBASE}/lib"
+				 -L${LOCALBASE}/lib -nopie"
+CFLAGS +=		-fno-pie
 
 MAKE_ENV=		INSTALL_EMACS="${INSTALL_SCRIPT}"
 
@@ -67,5 +66,7 @@ RUN_DEPENDS=		emacs-${VERSION}:${PKGPATH}
 RUN_DEPENDS-main=
 
 PKG_ARCH-el=		*
+
+NO_REGRESS=		Yes
 
 .include <bsd.port.mk>

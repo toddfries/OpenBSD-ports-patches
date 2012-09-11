@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.490 2012/05/30 20:48:03 edd Exp $
-# $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
+# $OpenBSD: Makefile,v 1.499 2012/09/04 19:03:36 jasper Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -15,7 +14,6 @@
      SUBDIR += astime
      SUBDIR += autocutsel
      SUBDIR += awesome
-     SUBDIR += awn
      SUBDIR += bbdate
      SUBDIR += bbkeys
      SUBDIR += bbpager
@@ -27,12 +25,15 @@
      SUBDIR += bluetile
      SUBDIR += bricons
      SUBDIR += bwidget
+     SUBDIR += byzi
      SUBDIR += chbg
      SUBDIR += compiz
      SUBDIR += ctwm
      SUBDIR += dbus
      SUBDIR += dbus-glib
+     SUBDIR += dbus-intf
      SUBDIR += dbus-python
+     SUBDIR += dbus-tcl
      SUBDIR += dclock
      SUBDIR += devilspie
      SUBDIR += dmenu
@@ -60,7 +61,6 @@
      SUBDIR += flvw
      SUBDIR += flwm
      SUBDIR += freerdp
-     SUBDIR += freerdp,no_cups
      SUBDIR += fsv
      SUBDIR += fvwm2
      SUBDIR += fvwm95
@@ -134,14 +134,12 @@
      SUBDIR += kountdown
      SUBDIR += krusader
      SUBDIR += lablgtk2
-     SUBDIR += libdesktop-agnostic
      SUBDIR += libdnd
      SUBDIR += libgdiplus
      SUBDIR += libsexy
      SUBDIR += libxdg-basedir
      SUBDIR += lupe
      SUBDIR += lxrandr
-     SUBDIR += matchbox
      SUBDIR += mlterm
      SUBDIR += mono-gtk2
      SUBDIR += mouseclock
@@ -233,9 +231,11 @@
      SUBDIR += slock
      SUBDIR += smplayer
      SUBDIR += spectrwm
+     SUBDIR += sselp
      SUBDIR += st
      SUBDIR += stalonetray
      SUBDIR += swisswatch
+     SUBDIR += tabbed
      SUBDIR += tangerine-icon-theme
      SUBDIR += tango-icon-theme
      SUBDIR += tango-icon-theme-extras
@@ -345,7 +345,8 @@
      SUBDIR += xprompt
      SUBDIR += xrestop
      SUBDIR += xrootconsole
-     SUBDIR += xscreensaver,
+     SUBDIR += xruskb
+     SUBDIR += xscreensaver
      SUBDIR += xscribble
      SUBDIR += xsel
      SUBDIR += xsettingsd

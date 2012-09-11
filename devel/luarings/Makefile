@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2012/05/15 15:16:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/08/12 17:25:31 jasper Exp $
 
 COMMENT =	multiple states library for the lua language
 SHARED_ONLY =	Yes
 
 DISTNAME =	rings-1.2.3
 PKGNAME =	lua${DISTNAME}
-REVISION =	1
+REVISION =	2
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.keplerproject.org/rings/
@@ -20,9 +20,11 @@ MASTER_SITES =	http://github.com/downloads/keplerproject/rings/
 
 MODULES =	lang/lua
 
-CFLAGS +=	-I${LOCALBASE}/include
-COMPILE =	${CC} ${CFLAGS} -fPIC -I${LOCALBASE}/include -c
+CFLAGS +=	-I${MODLUA_INCL_DIR}
+COMPILE =	${CC} ${CFLAGS} -fPIC ${CFLAGS} -c
 LINK =		${CC} ${CFLAGS} -fPIC -shared -L${LOCALBASE}/lib -o
+
+REGRESS_FILES =	sample sample_state test
 
 do-build:
 	cd ${WRKDIST}/src && ${COMPILE} rings.c
@@ -37,8 +39,8 @@ do-install:
 do-regress:
 	cp ${WRKDIST}/src/*.so ${WRKDIST}/tests
 	cp ${WRKDIST}/src/*.lua ${WRKDIST}/tests
-	cd ${WRKDIST}/tests && lua sample.lua
-	cd ${WRKDIST}/tests && lua sample_state.lua
-	cd ${WRKDIST}/tests && lua test.lua
+.for r in ${REGRESS_FILES}
+	cd ${WRKDIST}/tests && ${MODLUA_BIN} $r.lua
+.endfor
 
 .include <bsd.port.mk>

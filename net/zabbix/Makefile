@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.72 2012/05/12 17:55:44 robert Exp $
+# $OpenBSD: Makefile,v 1.75 2012/09/03 16:14:59 robert Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
 COMMENT-web =		network and application monitoring - web frontend
 
-VERSION =		1.8.13
+VERSION =		1.8.15
 DISTNAME =		zabbix-${VERSION}
 FULLPKGNAME-main =	zabbix-agent-${VERSION}
 FULLPKGPATH-main =	net/zabbix,-main
@@ -68,8 +68,7 @@ CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 PREFIX-web =		/var/www
 LIB_DEPENDS-web =
 RUN_DEPENDS-web =	${MODPHP_RUN_DEPENDS} \
-			lang/php/${MODPHP_VERSION},-gd \
-			php-pgsql-${MODPHP_VSPEC}|php-mysql-${MODPHP_VSPEC}|php-pdo_sqlite-${MODPHP_VSPEC}:lang/php/${MODPHP_VERSION},-pgsql
+			lang/php/${MODPHP_VERSION},-gd
 WANTLIB-web =
 ZABBIX_WEB =		${PREFIX-web}/zabbix
 

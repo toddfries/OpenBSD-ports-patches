@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.48 2012/05/26 09:08:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.52 2012/09/06 00:57:54 matthew Exp $
 
 COMMENT=	real-time, concurrent and distributed functional language
+BROKEN-sparc=	Requires v9|v9a|v9b; requested architecture is sparclite.
 
 V=		R15B01
 DISTNAME=	otp_src_${V}
 PKGNAME=	erlang-15b.01
 EPOCH=		0
+REVISION=	1
 CATEGORIES=	lang
 
 # Erlang Public License
@@ -37,13 +39,17 @@ CONFIGURE_ARGS=	--disable-jinterface	\
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=autoconf no-autoheader
-CONFIGURE_ENV=	LDFLAGS="-pthread"
+CONFIGURE_ENV=	LDFLAGS="${LDFLAGS} -pthread"
 AUTOCONF_VERSION=2.59
+AUTOCONF_DIR=	${WRKSRC} ${WRKSRC}/erts
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/erts/autoconf \
 				${WRKSRC}/lib/erl_interface/src/auxdir
 
 .if ${MACHINE_ARCH} == i386
 CONFIGURE_ARGS+=	--enable-ethread-pre-pentium4-compatibility
+.elif ${MACHINE_ARCH} == sparc64
+CFLAGS+=		-fno-pie
+LDFLAGS+=		-nopie
 .endif
 
 MAKE_ENV+=	DESTDIR=$(DESTDIR)

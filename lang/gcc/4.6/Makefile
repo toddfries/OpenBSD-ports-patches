@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/05/14 23:39:39 pascal Exp $
+# $OpenBSD: Makefile,v 1.35 2012/09/03 13:24:58 pascal Exp $
 
 ONLY_FOR_ARCHS = amd64 i386 powerpc sparc sparc64
 
@@ -17,15 +17,16 @@ PKGNAME-java =  gcj-${FULL_PKGVERSION}
 PKGNAME-objc =  gobjc-${FULL_PKGVERSION}
 PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 PKGNAME-go =	gccgo-${FULL_PKGVERSION}
+PKGSPEC-main = gcc->=4.6,<4.7
 
-REVISION-main = 2
-REVISION-c++ = 4
-REVISION-estdc = 2
-REVISION-f95 = 2
-REVISION-java = 3
-REVISION-objc = 2
-REVISION-ada = 2
-REVISION-go = 2
+REVISION-main = 11
+REVISION-c++ = 11
+REVISION-estdc = 9
+REVISION-f95 = 11
+REVISION-java = 11
+REVISION-objc = 11
+REVISION-ada = 11
+REVISION-go = 11
 
 SHARED_LIBS =	estdc++		14.0 \
 		gfortran	3.0 \
@@ -62,7 +63,8 @@ EXTRACT_ONLY =	${DISTNAME}.tar.bz2
 
 USE_LIBTOOL =	Yes
 
-BUILD_DEPENDS +=	devel/bison
+BUILD_DEPENDS +=	devel/bison \
+			devel/libexecinfo
 
 REGRESS_DEPENDS = 	devel/dejagnu \
 			devel/autogen
@@ -107,6 +109,7 @@ MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC} ${WRKSRC}/gcc
 
 EXTRA_ENV += am_cv_func_iconv=no JAR=no
 EXTRA_ENV += ac_cv_prog_M4=/usr/bin/m4
+EXTRA_ENV += ac_cv_header_magic_h=no
 MAKE_FLAGS +=	 ac_cv_path_mkdir=/bin/mkdir
 
 CONFIGURE_ENV += ${EXTRA_ENV}
@@ -132,6 +135,7 @@ CONFIGURE_ARGS += \
 	--enable-threads=posix \
 	--enable-wchar_t \
 	--with-gmp="${LOCALBASE}" \
+	--disable-libstdcxx-pch \
 	--enable-languages=${LANGS}
 
 # This is needed, as internal cpp is no longer compatible with the
@@ -176,7 +180,7 @@ PKG_ARGS += -DI386=0
 .endif
 
 RUN_DEPENDS =		${BUILD_PKGPATH},-main
-WANTLIB =		c gmp mpc mpfr z
+WANTLIB =		c gmp m mpc mpfr z
 
 RUN_DEPENDS-main =
 RUN_DEPENDS-estdc =
@@ -184,9 +188,9 @@ RUN_DEPENDS-estdc =
 RUN_DEPENDS-c++ =	${RUN_DEPENDS} \
 			${BUILD_PKGPATH},-estdc>=4.6,<4.7
 WANTLIB-estdc =		m
-WANTLIB-f95 =		${WANTLIB} m
-WANTLIB-java =		${WANTLIB} m pthread
-WANTLIB-go =		${WANTLIB} m
+WANTLIB-f95 =		${WANTLIB}
+WANTLIB-java =		${WANTLIB} pthread
+WANTLIB-go =		${WANTLIB} pthread
 
 LIB_DEPENDS +=		devel/gmp>=4.2 \
 			devel/mpfr \

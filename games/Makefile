@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.242 2012/04/07 15:26:31 espie Exp $
-# $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.248 2012/09/04 09:30:20 landry Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -53,10 +51,12 @@
      SUBDIR += doomdata
      SUBDIR += dopewars
      SUBDIR += dopewars,no_x11
+     SUBDIR += duke3ddata
      SUBDIR += dungeon
      SUBDIR += dungeon-crawl
      SUBDIR += eboard
      SUBDIR += eboard-extras
+     SUBDIR += eduke32
      SUBDIR += eliot
      SUBDIR += egoboo
      SUBDIR += einstein
@@ -80,13 +80,13 @@
      SUBDIR += gbrainy
      SUBDIR += gcompris
      SUBDIR += gemdropx
-     SUBDIR += ggz
      SUBDIR += glsfcave
      SUBDIR += glutton
      SUBDIR += gnome-mastermind
      SUBDIR += gnuchess
      SUBDIR += gnugo
      SUBDIR += gnushogi
+     SUBDIR += gottcode
      SUBDIR += grhino
      SUBDIR += gtetrinet
      SUBDIR += gtkballs
@@ -113,6 +113,7 @@
      SUBDIR += manaplus
      SUBDIR += meandmyshadow
      SUBDIR += micropolis
+     SUBDIR += minetest
      SUBDIR += mirrormagic
      SUBDIR += mnemosyne
      SUBDIR += monadius

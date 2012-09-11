@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2012/06/15 08:30:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2012/09/01 14:36:59 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		git repository viewer for gtk+/GNOME
 
 GNOME_PROJECT=		gitg
 GNOME_VERSION=		0.2.5
-REVISION=		4
+REVISION=		5
 
 SHARED_LIBS +=  gitg-1.0                  0.0 # 0.0
 
@@ -42,7 +42,8 @@ RUN_DEPENDS=		devel/git \
 MODGNOME_DESKTOP_FILE=	Yes
 
 # XXX remove --disable-maintainer-mode after updating to a new release
-CONFIGURE_ARGS=		--enable-compile-warnings=no \
+CONFIGURE_ARGS=		--disable-static \
+			--disable-compile-warnings \
 			--disable-maintainer-mode # -Werror
 
 .include <bsd.port.mk>

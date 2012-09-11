@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.356 2012/04/28 19:48:00 kili Exp $
-# $FreeBSD: Makefile,v 1.15 1997/11/22 00:31:24 jseger Exp $
+# $OpenBSD: Makefile,v 1.366 2012/09/04 07:11:51 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -8,6 +7,7 @@
      SUBDIR += arabica
      SUBDIR += asciidoc
      SUBDIR += aspell
+     SUBDIR += bibelot
      SUBDIR += boust
      SUBDIR += c2html
      SUBDIR += calibre
@@ -16,6 +16,7 @@
      SUBDIR += catfish
      SUBDIR += chmsee
      SUBDIR += clo++
+     SUBDIR += cloc
      SUBDIR += clucene
      SUBDIR += dblatex
      SUBDIR += diction
@@ -40,7 +41,6 @@
      SUBDIR += groff
      SUBDIR += gsed
      SUBDIR += gtk-doc
-     SUBDIR += gtkaml
      SUBDIR += gtkspell
      SUBDIR += gtkspell3
      SUBDIR += gtranslator
@@ -52,6 +52,7 @@
      SUBDIR += hs-attoparsec-enumerator
      SUBDIR += hs-attoparsec-iteratee
      SUBDIR += hs-blaze-html
+     SUBDIR += hs-blaze-markup
      SUBDIR += hs-bytestring-nums
      SUBDIR += hs-bytestring-show
      SUBDIR += hs-heist
@@ -100,7 +101,9 @@
      SUBDIR += mxml
      SUBDIR += namazu
      SUBDIR += ocaml-rss
+     SUBDIR += ocaml-text
      SUBDIR += ocaml-xml-light
+     SUBDIR += ocaml-xmlm
      SUBDIR += odt2txt
      SUBDIR += oniguruma
      SUBDIR += openjade
@@ -120,6 +123,8 @@
      SUBDIR += p5-Font-AFM
      SUBDIR += p5-Font-TTF
      SUBDIR += p5-HTML-Summary
+     SUBDIR += p5-LaTeX-Driver
+     SUBDIR += p5-LaTeX-Encode
      SUBDIR += p5-LaTeX-Pod
      SUBDIR += p5-LaTeX-TOM
      SUBDIR += p5-LibXML-Common
@@ -259,6 +264,7 @@
      SUBDIR += p5-ack
      SUBDIR += p5-sdf
      SUBDIR += p5-tkispell
+     SUBDIR += palm-bookmarks
      SUBDIR += par
      SUBDIR += pdftk
      SUBDIR += pear-File
@@ -284,6 +290,7 @@
      SUBDIR += py-nltk
      SUBDIR += py-pdf
      SUBDIR += py-polib
+     SUBDIR += py-prettytable
      SUBDIR += py-pygments
      SUBDIR += py-rtf
      SUBDIR += py-sphinx

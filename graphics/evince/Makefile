@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.79 2012/06/15 08:32:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.82 2012/09/01 14:36:57 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -20,7 +20,10 @@ PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
 PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
 PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
-REVISION-main=	0
+REVISION-main=	2
+REVISION-djvu=	1
+REVISION-dvi=	0
+REVISION-nautilus=0
 
 SHARED_LIBS +=  evdocument3               0.0 # 3.0
 SHARED_LIBS +=  evview3                   0.0 # 3.0
@@ -58,7 +61,7 @@ LIB_DEPENDS=	x11/gtk+3
 
 WANTLIB-main=	${WANTLIB} ICE SM c dbus-1 gailutil-3 \
 		gnome-keyring gs gcrypt gpg-error \
-		jpeg pthread tiff xml2 lcms openjpeg \
+		jpeg pthread tiff xml2 lcms2 openjpeg \
 		poppler poppler-glib spectre gnome-keyring
 LIB_DEPENDS-main= print/poppler \
 		print/libspectre \
@@ -74,10 +77,9 @@ RUN_DEPENDS-main= ${RUN_DEPENDS} \
 WANTLIB-djvu=	${WANTLIB} jpeg evdocument3 djvulibre
 # port-lib-depends-check misses these ones because the depending lib
 # is under lib/evince/3/backends/
-# we don't need qt3 support in djvulibre, hence no_x11
 LIB_DEPENDS-djvu= ${LIB_DEPENDS} \
 		${BASE_PKGPATH} \
-		graphics/djvulibre,no_x11
+		graphics/djvulibre
 
 WANTLIB-dvi=	${WANTLIB} gs evdocument3 kpathsea spectre ICE SM \
 		jpeg

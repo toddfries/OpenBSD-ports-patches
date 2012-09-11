@@ -1,0 +1,23 @@
+$OpenBSD: patch-src_config_mak,v 1.2 2012/08/18 18:57:38 edd Exp $
+--- src/config.mak.orig	Sun Jan 15 07:19:25 2012
++++ src/config.mak	Fri Aug 10 06:52:53 2012
+@@ -51,8 +51,8 @@ ifneq "$(luatest)" ""
+   LUA_CFLAGS  ?= $(shell pkg-config --cflags lua)
+   LUA_LIBS    ?= $(shell pkg-config --libs lua)
+ else
+-  LUA_CFLAGS  ?= $(shell pkg-config --cflags lua5.1)
+-  LUA_LIBS    ?= $(shell pkg-config --libs lua5.1)
++  LUA_CFLAGS  ?= $(shell pkg-config --cflags lua51)
++  LUA_LIBS    ?= $(shell pkg-config --libs lua51)
+ endif
+ GTK_CFLAGS    ?= $(shell pkg-config --cflags gtk+-2.0)
+ GTK_LIBS      ?= $(shell pkg-config --libs gtk+-2.0)
+@@ -101,7 +101,7 @@ CXX = g++
+ # position independent code
+ # (it doesn't hurt much on 32bit Linux, although you could comment it
+ # out for slightly faster code)
+-DLL_CFLAGS = -fpic
++DLL_CFLAGS = -fPIC
+ #
+ # --------------------------------------------------------------------
+ #

@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2012/05/11 06:59:28 espie Exp $
+# $OpenBSD: Makefile,v 1.4 2012/08/23 13:50:54 espie Exp $
 
 COMMENT =	date cck and api for drupal
 MAINTAINER =	Marc Espie <espie@openbsd.org>
 
-DISTNAME = 	date-7.x-2.5
-PKGNAME =	drupal7-date-2.5
-
-RUN_DEPENDS =	www/drupal6/cck
+DISTNAME = 	date-7.x-2.6
+PKGNAME =	drupal7-date-2.6
 
 .include <bsd.port.mk>

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.40 2012/04/10 16:50:33 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.43 2012/08/15 09:02:52 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -127,15 +127,17 @@ sub checked_already
 	return $self->{okay} || $self->{checked};
 }
 
+# this is the entry point from the Engine, this is run as soon as the path
+# has been scanned. For performance reasons, we cannot run a sha at that point.
 sub check
 {
 	my ($self, $logger) = @_;
 	# XXX in fetch_only mode, we won't build anything, so this is
 	# the only place we can check the file is okay
 	if ($self->{repo}->{fetch_only}) {
-		return $self->checksum_and_cache($self->filename);
+		return $self->checksum_and_cache($logger, $self->filename);
 	} else {
-		return $self->checksize($logger, $self->filename);
+		return $self->checkcache_or_size($logger, $self->filename);
 	}
 }
 
@@ -172,6 +174,17 @@ sub find_copy
 	return 0;
 }
 
+sub checkcache_or_size
+{
+	my ($self, $logger, $name) = @_;
+	# XXX if we matched once, then we match "forever"
+	return 1 if $self->{okay};
+	if (defined $self->cached->{$self->{name}}) {
+		return $self->checkcached($logger, $name);
+	}
+	return $self->checksize($logger, $name);
+}
+
 sub checksize
 {
 	my ($self, $logger, $name) = @_;
@@ -194,6 +207,31 @@ sub checksize
 	return 1;
 }
 
+sub checkcached
+{
+	my ($self, $logger, $name) = @_;
+	if (!defined $self->{sha}) {
+		my $fh = $logger->open('dist/'.$self->{name});
+		print $fh "incomplete distinfo: no sha\n";
+		return 0;
+	}
+	if ($self->cached->{$self->{name}}->equals($self->{sha})) {
+		$self->{okay} = 1;
+		return 1;
+	} else {
+		delete $self->cached->{$self->{name}};
+		my $fh = $logger->open('dist/'.$self->{name});
+		print $fh "sha cache info does not match,";
+		if ($self->caches_okay($name)) {
+			print $fh "but actual file had the right sha\n";
+			return 1;
+		} else {
+			print $fh "and actual file was wrong, deleted\n";
+			return 0;
+		}
+	}
+}
+
 sub do_cache
 {
 	my $self = shift;
@@ -207,30 +245,35 @@ sub do_cache
 	$self->cached->{$self->{name}} = $self->{sha};
 }
 
-sub checksum_and_cache
+# this is where we actually enter new files in the cache, when they do match.
+sub caches_okay
 {
 	my ($self, $name) = @_;
-	# XXX if we matched once, then we match "forever"
-	return 1 if $self->{okay};
-	if (!defined $self->{sha}) {
-		return 0;
-	}
-	if (defined $self->cached->{$self->{name}}) {
-		if ($self->cached->{$self->{name}}->equals($self->{sha})) {
-			$self->{okay} = 1;
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 	if (-f -r $name) {
 		if (OpenBSD::sha->new($name)->equals($self->{sha})) {
 			$self->{okay} = 1;
 			$self->do_cache;
 			return 1;
 		} else {
-			return 0;
+			unlink($name);
 		}
+	}
+	return 0;
+}
+
+sub checksum_and_cache
+{
+	my ($self, $logger, $name) = @_;
+	# XXX if we matched once, then we match "forever"
+	return 1 if $self->{okay};
+	if (!defined $self->{sha}) {
+		return 0;
+	}
+	if (defined $self->cached->{$self->{name}}) {
+		return $self->checkcached($logger, $name);
+	}
+	if ($self->caches_okay($name)) {
+		return 1;
 	}
 	return $self->find_copy($name);
 }
@@ -265,13 +308,9 @@ sub checksum
 			print "OK (cached)\n";
 			$self->{okay} = 1;
 			return 1;
-		} else {
-			print "BAD\n";
-			return 0;
 		}
 	}
-	if (-f -r $name && OpenBSD::sha->new($name)->equals($self->{sha})) {
-		$self->{okay} = 1;
+	if ($self->caches_okay($name)) {
 		print "OK\n";
 		return 1;
 	}
@@ -656,20 +695,17 @@ sub run
 	}
 	my $ftp = OpenBSD::Paths->ftp;
 	$self->redirect($job->{log});
-	my @cmd = ($ftp, '-C', '-o', $job->{file}->tempfilename, '-v',
+	my @cmd = ('-C', '-o', $job->{file}->tempfilename, '-v',
 	    $site.$job->{file}->{short});
+	if ($ftp =~ /\s/) {
+		unshift @cmd, split(/\s+/, $ftp);
+	} else {
+		unshift @cmd, $ftp;
+	}
 	print STDERR "===> Trying $site\n";
 	print STDERR join(' ', @cmd), "\n";
 	# run ftp;
-	if (defined $shell) {
-		$shell->run(join(' ', @cmd));
-	} else {
-		if ($ftp =~ /\s/) {
-			exec join(' ', @cmd);
-		} else {
-			exec{$ftp} @cmd;
-		}
-	}
+	$core->shell->exec(@cmd);
 }
 
 sub finalize

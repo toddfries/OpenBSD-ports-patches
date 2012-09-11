@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.43 2011/08/18 08:27:33 jsg Exp $
+# $OpenBSD: Makefile,v 1.45 2012/08/06 09:47:20 sthen Exp $
 
 COMMENT=	fetch YouTube and Google videos
 
 PKGNAME=	yt-19
+REVISION=	1
 CATEGORIES=	net www
 DISTFILES=
 
@@ -21,6 +22,8 @@ NO_REGRESS=		Yes
 RUN_DEPENDS+=		devel/luastdlib \
 			graphics/ffmpeg \
 			net/luasocket
+MODLUA_SA=		Yes
+SUBST_VARS=		MODLUA_BIN
 
 do-install:
 	${INSTALL_SCRIPT} ${FILESDIR}/yt.lua ${PREFIX}/bin/yt

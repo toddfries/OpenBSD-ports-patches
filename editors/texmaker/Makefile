@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/05/30 18:48:59 shadchin Exp $
-# $FreeBSD: ports/editors/texmaker/Makefile,v 1.2 2004/01/09 09:16:33 krion Exp $
+# $OpenBSD: Makefile,v 1.19 2012/08/28 19:13:12 espie Exp $
 
 COMMENT=		LaTeX development environment
 DISTNAME=		texmaker-3.3.4
@@ -28,7 +27,7 @@ RUN_DEPENDS=		print/texlive/base \
 			devel/desktop-file-utils
 
 LIB_DEPENDS=		textproc/hunspell \
-			print/poppler,-qt4
+			print/poppler,,-qt4
 
 NO_REGRESS=		Yes
 VMEM_WARNING=		Yes

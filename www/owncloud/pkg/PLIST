@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.5 2012/06/16 11:18:29 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.9 2012/08/27 10:39:42 robert Exp $
 @extra owncloud/config/config.php
 owncloud/
 owncloud/.htaccess.dist
@@ -582,6 +582,8 @@ owncloud/3rdparty/simpletest/url.php
 owncloud/3rdparty/simpletest/user_agent.php
 owncloud/3rdparty/simpletest/web_tester.php
 owncloud/3rdparty/simpletest/xml.php
+owncloud/3rdparty/smb4php/
+owncloud/3rdparty/smb4php/smb.php
 owncloud/3rdparty/timepicker/
 owncloud/3rdparty/timepicker/GPL-LICENSE.txt
 owncloud/3rdparty/timepicker/MIT-LICENSE.txt
@@ -639,7 +641,6 @@ owncloud/3rdparty/when/When.php
 owncloud/AUTHORS
 owncloud/COPYING-AGPL
 owncloud/COPYING-README
-owncloud/Changelog
 owncloud/README
 @owner www
 owncloud/apps/
@@ -865,6 +866,7 @@ owncloud/apps/contacts/ajax/loadphoto.php
 owncloud/apps/contacts/ajax/oc_photo.php
 owncloud/apps/contacts/ajax/savecrop.php
 owncloud/apps/contacts/ajax/saveproperty.php
+owncloud/apps/contacts/ajax/selectaddressbook.php
 owncloud/apps/contacts/ajax/updateaddressbook.php
 owncloud/apps/contacts/ajax/uploadimport.php
 owncloud/apps/contacts/ajax/uploadphoto.php
@@ -974,6 +976,7 @@ owncloud/apps/contacts/templates/part.editaddressbook.php
 owncloud/apps/contacts/templates/part.import.php
 owncloud/apps/contacts/templates/part.importaddressbook.php
 owncloud/apps/contacts/templates/part.no_contacts.php
+owncloud/apps/contacts/templates/part.selectaddressbook.php
 owncloud/apps/contacts/templates/settings.php
 owncloud/apps/contacts/thumbnail.php
 owncloud/apps/external/
@@ -1114,9 +1117,11 @@ owncloud/apps/files_encryption/settings.php
 owncloud/apps/files_encryption/templates/
 owncloud/apps/files_encryption/templates/settings.php
 owncloud/apps/files_encryption/tests/
+owncloud/apps/files_encryption/tests/binary
 owncloud/apps/files_encryption/tests/encryption.php
 owncloud/apps/files_encryption/tests/proxy.php
 owncloud/apps/files_encryption/tests/stream.php
+owncloud/apps/files_encryption/tests/zeros
 owncloud/apps/files_external/
 owncloud/apps/files_external/appinfo/
 owncloud/apps/files_external/appinfo/app.php
@@ -1125,12 +1130,15 @@ owncloud/apps/files_external/appinfo/version
 owncloud/apps/files_external/lib/
 owncloud/apps/files_external/lib/ftp.php
 owncloud/apps/files_external/lib/google.php
+owncloud/apps/files_external/lib/smb.php
+owncloud/apps/files_external/lib/streamwrapper.php
 owncloud/apps/files_external/lib/swift.php
 owncloud/apps/files_external/lib/webdav.php
 owncloud/apps/files_external/tests/
 owncloud/apps/files_external/tests/config.php
 owncloud/apps/files_external/tests/ftp.php
 owncloud/apps/files_external/tests/google.php
+owncloud/apps/files_external/tests/smb.php
 owncloud/apps/files_external/tests/swift.php
 owncloud/apps/files_external/tests/webdav.php
 owncloud/apps/files_imageviewer/
@@ -1571,12 +1579,14 @@ owncloud/apps/files_sharing/ajax/getstatuses.php
 owncloud/apps/files_sharing/ajax/setpermissions.php
 owncloud/apps/files_sharing/ajax/share.php
 owncloud/apps/files_sharing/ajax/toggleresharing.php
+owncloud/apps/files_sharing/ajax/togglesharewitheveryone.php
 owncloud/apps/files_sharing/ajax/unshare.php
 owncloud/apps/files_sharing/ajax/userautocomplete.php
 owncloud/apps/files_sharing/appinfo/
 owncloud/apps/files_sharing/appinfo/app.php
 owncloud/apps/files_sharing/appinfo/database.xml
 owncloud/apps/files_sharing/appinfo/info.xml
+owncloud/apps/files_sharing/appinfo/update.php
 owncloud/apps/files_sharing/appinfo/version
 owncloud/apps/files_sharing/css/
 owncloud/apps/files_sharing/css/sharing.css
@@ -1954,7 +1964,6 @@ owncloud/apps/user_ldap/tests/
 owncloud/apps/user_ldap/tests/group_ldap.php
 owncloud/apps/user_ldap/user_ldap.php
 owncloud/apps/user_migrate/
-owncloud/apps/user_migrate/admin.php
 owncloud/apps/user_migrate/ajax/
 owncloud/apps/user_migrate/ajax/export.php
 owncloud/apps/user_migrate/appinfo/
@@ -1965,7 +1974,6 @@ owncloud/apps/user_migrate/js/
 owncloud/apps/user_migrate/js/export.js
 owncloud/apps/user_migrate/settings.php
 owncloud/apps/user_migrate/templates/
-owncloud/apps/user_migrate/templates/admin.php
 owncloud/apps/user_migrate/templates/settings.php
 owncloud/apps/user_openid/
 owncloud/apps/user_openid/appinfo/
@@ -1989,6 +1997,19 @@ owncloud/apps/user_webfinger/appinfo/info.xml
 owncloud/apps/user_webfinger/appinfo/version
 owncloud/apps/user_webfinger/host-meta.php
 owncloud/apps/user_webfinger/webfinger.php
+owncloud/apps/user_yubikey/
+owncloud/apps/user_yubikey/Yubikey.php
+owncloud/apps/user_yubikey/admin_settings.php
+owncloud/apps/user_yubikey/ajax/
+owncloud/apps/user_yubikey/ajax/changeprefix.php
+owncloud/apps/user_yubikey/appinfo/
+owncloud/apps/user_yubikey/appinfo/app.php
+owncloud/apps/user_yubikey/appinfo/info.xml
+owncloud/apps/user_yubikey/settings.php
+owncloud/apps/user_yubikey/templates/
+owncloud/apps/user_yubikey/templates/admin_settings.php
+owncloud/apps/user_yubikey/templates/settings.php
+owncloud/apps/user_yubikey/user_yubikey.php
 @mode 0700
 @owner www
 owncloud/config/
@@ -1998,10 +2019,7 @@ owncloud/config/config.sample.php
 owncloud/core/
 owncloud/core/ajax/
 owncloud/core/ajax/appconfig.php
-owncloud/core/ajax/grouplist.php
 owncloud/core/ajax/translations.php
-owncloud/core/ajax/userlist.php
-owncloud/core/ajax/validateuser.php
 owncloud/core/ajax/vcategories/
 owncloud/core/ajax/vcategories/add.php
 owncloud/core/ajax/vcategories/delete.php

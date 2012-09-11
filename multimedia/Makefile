@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.60 2012/03/30 13:17:28 phessler Exp $
+# $OpenBSD: Makefile,v 1.62 2012/09/06 13:05:01 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += atomicparsley
@@ -17,6 +17,7 @@
      SUBDIR += get_flash_videos
      SUBDIR += get_iplayer
      SUBDIR += gstreamer-0.10
+     SUBDIR += gstreamer1
      SUBDIR += hdhomerun
      SUBDIR += k3b
      SUBDIR += kaffeine
@@ -44,6 +45,7 @@
      SUBDIR += mpgtx
      SUBDIR += oggconvert
      SUBDIR += oggz
+     SUBDIR += ogmrip
      SUBDIR += ogmtools
      SUBDIR += p5-AMF-Connection
      SUBDIR += p5-Data-AMF

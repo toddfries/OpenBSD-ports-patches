@@ -1,10 +1,15 @@
-# $OpenBSD: Makefile,v 1.18 2012/05/29 06:18:37 bentley Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/05 08:05:38 sthen Exp $
 
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
+SHARED_ONLY=	Yes # XXX lua.port.mk bug
+# The lua module marks packages PKG_ARCH=* unless they are SHARED_ONLY.
+# To be fixed in lua, but marking this SHARED_ONLY as a temporary workaround
+# and doesn't hurt anyway as freedroidrpg is gcc4-only.
 
 COMMENT=	isometric RPG game
 
 DISTNAME =	freedroidRPG-0.15.1
+REVISION =	1
 PKGNAME =	${DISTNAME:L}
 CATEGORIES=	games x11
 
@@ -26,6 +31,7 @@ MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=freedroid/}
 WRKDIST =	${WRKDIR}/${DISTNAME:L}
 
 MODULES=	lang/lua
+MODLUA_SA =	Yes
 
 LIB_DEPENDS=	devel/libexecinfo \
 		devel/sdl-gfx \

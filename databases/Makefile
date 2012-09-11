@@ -1,6 +1,5 @@
-# $OpenBSD: Makefile,v 1.214 2012/05/28 09:38:04 espie Exp $
-# $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
-#
+# $OpenBSD: Makefile,v 1.220 2012/09/04 07:02:57 ajacoutot Exp $
+
      SUBDIR =
      SUBDIR += apache-couchdb
      SUBDIR += architect
@@ -21,11 +20,13 @@
      SUBDIR += iodbc
      SUBDIR += jxplorer
      SUBDIR += keximdb
+     SUBDIR += kyotocabinet
      SUBDIR += lbdb
      SUBDIR += leveldb
      SUBDIR += libdbi
      SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
+     SUBDIR += luadbi
      SUBDIR += luasqlite3
      SUBDIR += luma
      SUBDIR += mdbtools/snapshot
@@ -100,6 +101,7 @@
      SUBDIR += p5-GDBM_File
      SUBDIR += p5-Ima-DBI
      SUBDIR += p5-Jifty-DBI
+     SUBDIR += p5-Palm
      SUBDIR += p5-Redis
      SUBDIR += p5-Rose-DB
      SUBDIR += p5-Rose-DB-Object
@@ -149,7 +151,6 @@
      SUBDIR += py-mysql
      SUBDIR += py-odbc
      SUBDIR += py-pgsql
-     SUBDIR += py-psycopg
      SUBDIR += py-psycopg2
      SUBDIR += py-pygresql
      SUBDIR += py-redis
@@ -208,11 +209,9 @@
      SUBDIR += ruby-sequel,rbx
      SUBDIR += ruby-sequel_pg
      SUBDIR += ruby-sequel_pg,ruby19
-     SUBDIR += ruby-sequel_pg,rbx
      SUBDIR += ruby-sqlite3
      SUBDIR += ruby-sqlite3,ruby19
      SUBDIR += ruby-sqlite3,rbx
-     SUBDIR += ruby-sqlite3,jruby
      SUBDIR += ruby-swift
      SUBDIR += ruby-tiny_tds
      SUBDIR += ruby-tiny_tds,ruby19

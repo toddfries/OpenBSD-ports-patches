@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.137 2012/06/02 12:25:11 jasper Exp $
-# $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.139 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -89,6 +87,7 @@
      SUBDIR += swi-prolog
      SUBDIR += tcl
      SUBDIR += tcltutor
+     SUBDIR += tinyscheme
      SUBDIR += ucblogo
      SUBDIR += unicon
      SUBDIR += vala

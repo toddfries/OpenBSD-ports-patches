@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2012/05/14 17:45:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/09/01 14:36:56 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		cross-platform networked sound server
 
 VERSION=		2.0
 DISTNAME=		pulseaudio-${VERSION}
+REVISION=		1
 
 SHARED_LIBS +=  pulse                1.1      # .14.2
 SHARED_LIBS +=  pulse-simple         0.0      # .0.3
@@ -47,7 +48,7 @@ LIB_DEPENDS=		audio/speex \
 			devel/glib2 \
 			audio/libsndfile
 
-AUTOCONF_VERSION=	2.68
+AUTOCONF_VERSION=	2.69
 CONFIGURE_STYLE=	autoconf
 
 # We only enable the strict minimum for basic volume control support.
@@ -89,8 +90,7 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-orc
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib \
-				-Wl,-rpath,${TRUEPREFIX}/lib/pulse-${VERSION}/modules/" \
-			PTHREAD_LIBS="-pthread"
+				-Wl,-rpath,${TRUEPREFIX}/lib/pulse-${VERSION}/modules/"
 
 FAKE_FLAGS=		pulseconfdir="${PREFIX}/share/examples/pulseaudio/pulse/"
 

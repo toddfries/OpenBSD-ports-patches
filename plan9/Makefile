@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2011/08/18 08:04:21 jasper Exp $
-# $FreeBSD: Makefile,v 1.4 1997/11/17 11:55:01 tg Exp $
+# $OpenBSD: Makefile,v 1.17 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += 9libs
@@ -7,6 +6,7 @@
      SUBDIR += 9wm
      SUBDIR += drawterm
      SUBDIR += larswm
+     SUBDIR += plan9port
      SUBDIR += rc
      SUBDIR += rc,editline
      SUBDIR += rc,readline

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/06/28 23:12:29 sthen Exp $
+# $OpenBSD: Makefile,v 1.3 2012/08/05 13:47:04 naddy Exp $
 
 COMMENT =	color management library
 
-DISTNAME =	lcms2-2.2
-SHARED_LIBS =	lcms2	0.0
+DISTNAME =	lcms2-2.3
+SHARED_LIBS =	lcms2	0.1
 CATEGORIES =	graphics
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=lcms/}
 
@@ -21,7 +21,6 @@ PERMIT_DISTFILES_FTP =	Yes
 WANTLIB =		c m z jpeg tiff
 
 USE_LIBTOOL =		Yes
-USE_GROFF =		Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED}
 CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \

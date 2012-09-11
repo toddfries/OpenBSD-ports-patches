@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.65 2012/06/15 08:30:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.69 2012/09/01 14:36:58 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.4.3
-REVISION=		0
+GNOME_VERSION=		3.4.4
+REVISION=		1
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
 
@@ -39,10 +39,12 @@ WANTLIB += pcre pixman-1 png pthread pthread-stubs sasl2
 WANTLIB += soup-2.4 sqlite3 ssl stdc++ svn_client-1 svn_delta-1
 WANTLIB += svn_diff-1 svn_fs-1 svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1
 WANTLIB += svn_ra-1 svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1
-WANTLIB += svn_repos-1 svn_subr-1 svn_wc-1 util vala-0.16 vte2_90
+WANTLIB += svn_repos-1 svn_subr-1 svn_wc-1 util vala-0.18 vte2_90
 WANTLIB += webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt z
 WANTLIB += dbus-1 dbus-glib-1 javascriptcoregtk-3.0 magic
-WANTLIB += gcrypt gda-5.0 gnome-keyring gpg-error ${MODPY_WANTLIB}
+WANTLIB += gcrypt gda-5.0 gnome-keyring gpg-error
+WANTLIB += geoclue gstaudio-0.10 gstfft-0.10 proxy
+WANTLIB += ${MODPY_WANTLIB}
 
 BUILD_DEPENDS=		devel/autogen>=5.6.5 \
 			devel/bison
@@ -72,11 +74,17 @@ MODGNOME_TOOLS= 	goi vala yelp
 
 YACC=			bison -y
 
-CONFIGURE_ARGS+=	--enable-plugin-subversion \
+CONFIGURE_ARGS+=	--disable-static \
+			--enable-plugin-subversion \
 			--with-symbol-db-shm=/tmp
 
 # adds dependency on libgnomeui
 CONFIGURE_ARGS+=	--disable-graphviz
+
+# XXX: Remove when updating to the next release
+AUTOCONF_VERSION=	2.68
+CONFIGURE_STYLE=	autoconf
+######
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/plugins/project-wizard/templates/pygtk.wiz.in \

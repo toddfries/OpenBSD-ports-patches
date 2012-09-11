@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.754 2012/06/18 08:52:20 ajacoutot Exp $
-# $FreeBSD: Makefile,v 1.129 1997/11/20 13:47:40 itojun Exp $
-#
+# $OpenBSD: Makefile,v 1.767 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -103,13 +101,11 @@
      SUBDIR += gloox
      SUBDIR += gmudix
      SUBDIR += gnaughty
-     SUBDIR += gnet
      SUBDIR += gnugk
      SUBDIR += gopher
      SUBDIR += gotthard
      SUBDIR += gpodder
      SUBDIR += grake
-     SUBDIR += gsnmp
      SUBDIR += gssdp
      SUBDIR += gtk-gnutella
      SUBDIR += gupnp
@@ -156,6 +152,7 @@
      SUBDIR += irssi,socks
      SUBDIR += irssi-icb
      SUBDIR += irssi-silc
+     SUBDIR += isc-bind
      SUBDIR += isc-dhcp
      SUBDIR += jabberd,mysql
      SUBDIR += jabberd,mysql,ldap
@@ -224,7 +221,6 @@
      SUBDIR += nemesis
      SUBDIR += neon
      SUBDIR += nepenthes
-     SUBDIR += nepenthes,prelude
      SUBDIR += nepim
      SUBDIR += net-snmp
      SUBDIR += netatalk
@@ -334,7 +330,7 @@
      SUBDIR += p5-Net-SFTP
      SUBDIR += p5-Net-SFTP-Foreign
      SUBDIR += p5-Net-SMTP-SSL
-     SUBDIR += p5-Net-SMTP-TLS
+     SUBDIR += p5-Net-SMTP-TLS-ButMaintained
      SUBDIR += p5-Net-SMTP_auth
      SUBDIR += p5-Net-SNMP
      SUBDIR += p5-Net-SNPP
@@ -344,6 +340,7 @@
      SUBDIR += p5-Net-Server-SS-PreFork
      SUBDIR += p5-Net-Snort-Parser
      SUBDIR += p5-Net-Subnets
+     SUBDIR += p5-Net-TCLink
      SUBDIR += p5-Net-TFTP
      SUBDIR += p5-Net-Telnet
      SUBDIR += p5-Net-Telnet-Cisco
@@ -362,6 +359,7 @@
      SUBDIR += p5-NetPacket
      SUBDIR += p5-Nmap-Parser
      SUBDIR += p5-Nmap-Scanner
+     SUBDIR += p5-OSPF-LSDB
      SUBDIR += p5-POE-Component-Client-DNS
      SUBDIR += p5-POE-Component-Client-HTTP
      SUBDIR += p5-POE-Component-Client-Keepalive
@@ -505,16 +503,13 @@
      SUBDIR += ruby-xmpp4r
      SUBDIR += samba
      SUBDIR += samba,ads
-     SUBDIR += samba,cups
-     SUBDIR += samba,cups,ads
-     SUBDIR += samba,cups,ldap
      SUBDIR += samba,ldap
      SUBDIR += scamper
      SUBDIR += scapy
-     SUBDIR += scli
      SUBDIR += sendxmpp
      SUBDIR += sharity-light
      SUBDIR += si
+     SUBDIR += sic
      SUBDIR += silc-client
      SUBDIR += silc-server
      SUBDIR += silc-server,operops
@@ -529,7 +524,6 @@
      SUBDIR += snort
      SUBDIR += snort,mysql
      SUBDIR += snort,postgresql
-     SUBDIR += snort,prelude
      SUBDIR += socat
      SUBDIR += softflowd
      SUBDIR += spectrum
@@ -570,6 +564,7 @@
      SUBDIR += transmission
      SUBDIR += trickle
      SUBDIR += ttcp
+     SUBDIR += ttg
      SUBDIR += twirssi
      SUBDIR += twitux
      SUBDIR += ucspi-unix
@@ -586,6 +581,7 @@
      SUBDIR += vnstat
      SUBDIR += vsftpd
      SUBDIR += walker
+     SUBDIR += weechat
      SUBDIR += weex
      SUBDIR += wget
      SUBDIR += wide-dhcp

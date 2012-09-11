@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.22 2012/04/11 16:16:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2012/09/01 21:47:29 ajacoutot Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		Foomatic PPD data
 
-V=			20120411
+V=			20120901
 DISTNAME=		foomatic-db-4.0-${V}
 PKGNAME=		foomatic-db-4.0.${V}
 CATEGORIES=		print
@@ -28,6 +28,9 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-ppds-to-cups
 
 WRKDIST=		${WRKDIR}/foomatic-db-${V}
+
+# share/foomatic/db/source/*/*.xml
+RUN_DEPENDS +=		print/foomatic-db-engine
 
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
@@ -54,7 +57,7 @@ pre-configure:
 # is spooler independant, so don't display it as an valid driver --
 # MAJOR_V is set in the gutenprint port.
 	rm ${WRKSRC}/db/source/driver/gutenprint.xml
-	find ${WRKSRC}/db/source/printer -name '*.xml' | xargs grep -l "<driver>gutenprint" | \
-		xargs perl -pi -e 's,<driver>gutenprint</driver>,<driver>gutenprint-ijs.5.2</driver>,g'
+	find ${WRKSRC}/db/source/printer -name '*.xml' | xargs grep -l '>gutenprint<' | \
+		xargs perl -pi -e 's,>gutenprint<,>gutenprint-ijs-simplified.5.2<,g'
 
 .include <bsd.port.mk>

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.26 2012/06/12 15:11:35 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.29 2012/08/20 08:24:42 dcoppa Exp $
 
 COMMENT=		lightweight sip client
 
-VERSION=		2.0
+VERSION=		2.0.1
 DISTNAME=		pjproject-${VERSION}
 PKGNAME=		pjsua-${VERSION}
 REVISION=		0
@@ -19,15 +19,16 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB =		c crypto gsm>=1.0 m portaudio pthread \
-			sndio speex speexdsp ssl
+WANTLIB =		c crypto gsm>=1.0 m opencore-amrnb portaudio \
+			pthread speex speexdsp ssl
 
 LIB_DEPENDS=		audio/gsm \
+			audio/opencore-amr \
 			audio/portaudio-svn \
 			audio/speex
 
 CONFIGURE_STYLE=	autoconf no-autoheader
-AUTOCONF_VERSION=	2.61
+AUTOCONF_VERSION=	2.69
 CONFIGURE_ARGS=		--disable-oss \
 			--disable-video \
 			--with-external-gsm \
@@ -41,7 +42,7 @@ CONFIGURE_ENV+=		CFLAGS="-I${LOCALBASE}/include" \
 USE_GMAKE=		Yes
 NO_REGRESS=		Yes
 
-post-extract:
+post-patch:
 	rm -f ${WRKSRC}/configure
 	ln -s ${WRKSRC}/aconfigure.ac ${WRKSRC}/configure.ac
 

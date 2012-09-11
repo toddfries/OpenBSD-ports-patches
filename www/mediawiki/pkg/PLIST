@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.17 2012/05/07 13:35:47 okan Exp $
+@comment $OpenBSD: PLIST,v 1.19 2012/09/01 11:10:45 sthen Exp $
 @pkgpath www/mediawiki
 mediawiki/
 mediawiki/COPYING
@@ -42,7 +42,6 @@ mediawiki/docs/export-demo.xml
 mediawiki/docs/globals.txt
 mediawiki/docs/hooks.txt
 mediawiki/docs/html/
-mediawiki/docs/html/.gitignore
 mediawiki/docs/html/README
 mediawiki/docs/language.txt
 mediawiki/docs/linkcache.txt
@@ -65,7 +64,6 @@ mediawiki/docs/uidesign/monospace.html
 mediawiki/docs/uidesign/table-layout.html
 mediawiki/docs/upload.txt
 mediawiki/extensions/
-mediawiki/extensions/.gitignore
 mediawiki/extensions/ConfirmEdit/
 mediawiki/extensions/ConfirmEdit/.gitreview
 mediawiki/extensions/ConfirmEdit/Asirra.class.php
@@ -1712,8 +1710,10 @@ mediawiki/maintenance/oracle/archives/patch-job_timestamp_field.sql
 mediawiki/maintenance/oracle/archives/patch-job_timestamp_index.sql
 mediawiki/maintenance/oracle/archives/patch-logging_type_action_index.sql
 mediawiki/maintenance/oracle/archives/patch-page_redirect_namespace_len.sql
+mediawiki/maintenance/oracle/archives/patch-page_restrictions_pkuk_fix.sql
 mediawiki/maintenance/oracle/archives/patch-rev_sha1_field.sql
 mediawiki/maintenance/oracle/archives/patch-testrun.sql
+mediawiki/maintenance/oracle/archives/patch-ufg_group-length-increase.sql
 mediawiki/maintenance/oracle/archives/patch-ug_group-length-increase.sql
 mediawiki/maintenance/oracle/archives/patch-up_property.sql
 mediawiki/maintenance/oracle/archives/patch-uploadstash.sql

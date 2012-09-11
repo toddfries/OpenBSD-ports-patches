@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.289 2012/06/13 15:14:31 jasper Exp $
-# $FreeBSD: Makefile,v 1.23 1997/11/09 10:17:02 asami Exp $
-#
+# $OpenBSD: Makefile,v 1.297 2012/08/31 20:44:52 sthen Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -19,6 +17,7 @@
      SUBDIR += bounix
      SUBDIR += bsd-airtools
      SUBDIR += bunny
+     SUBDIR += ccid
      SUBDIR += ccrypt
      SUBDIR += cfs
      SUBDIR += cgichk
@@ -30,7 +29,7 @@
      SUBDIR += corkscrew
      SUBDIR += cracklib
      SUBDIR += cryptcat
-     SUBDIR += cryptokit
+     SUBDIR += ocaml-cryptokit
      SUBDIR += ctunnel
      SUBDIR += cyrus-sasl2
      SUBDIR += cyrus-sasl2,db4
@@ -46,9 +45,8 @@
      SUBDIR += fragroute
      SUBDIR += fragrouter
      SUBDIR += fwbuilder
-     SUBDIR += gnomint
      SUBDIR += gnupg
-     SUBDIR += gnupg,card,idea,ldap
+     SUBDIR += gnupg,card,ldap
      SUBDIR += gnupg2
      SUBDIR += gnutls
      SUBDIR += gpa
@@ -116,6 +114,7 @@
      SUBDIR += node-bcrypt
      SUBDIR += nss
      SUBDIR += oath-toolkit
+     SUBDIR += ocaml-ssl
      SUBDIR += onesixtyone
      SUBDIR += opencdk
      SUBDIR += openct
@@ -201,7 +200,6 @@
      SUBDIR += portscanner
      SUBDIR += portsentry
      SUBDIR += ppgen
-     SUBDIR += prelude
      SUBDIR += pwgen
      SUBDIR += pwsafe
      SUBDIR += py-Rijndael
@@ -253,12 +251,12 @@
      SUBDIR += swatch
      SUBDIR += tcltls
      SUBDIR += tempwatch
-     SUBDIR += tinyca
      SUBDIR += towitoko
      SUBDIR += vomit
      SUBDIR += vpnc
      SUBDIR += wpa_supplicant
      SUBDIR += xmlsec
+     SUBDIR += yubiserve
      SUBDIR += zebedee
      SUBDIR += zkt
 
