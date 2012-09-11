@@ -1,32 +1,32 @@
-$OpenBSD: patch-ext_Makefile_am,v 1.6 2011/03/07 19:44:35 ajacoutot Exp $
---- ext/Makefile.am.orig	Sun Jan  2 16:27:42 2011
-+++ ext/Makefile.am	Tue Jan 25 18:18:05 2011
-@@ -82,6 +82,12 @@ else
- LIBPNG_DIR =
+$OpenBSD: patch-ext_Makefile_am,v 1.8 2012/09/06 14:30:59 ajacoutot Exp $
+--- ext/Makefile.am.orig	Sun Dec 11 19:48:10 2011
++++ ext/Makefile.am	Thu Sep  6 15:31:25 2012
+@@ -107,6 +107,12 @@ else
+ SHOUT2_DIR =
  endif
  
-+if USE_LIBSNDIO
-+LIBSNDIO_DIR = libsndio
++if USE_SNDIO
++SNDIO_DIR = sndio
 +else
-+LIBSNDIO_DIR =
++SNDIO_DIR =
 +endif
 +
- # if USE_MIKMOD
- # MIKMOD_DIR = mikmod
- # else
-@@ -147,6 +153,7 @@ SUBDIRS = \
- 	$(LIBDV_DIR) \
- 	$(LIBMNG_DIR) \
- 	$(LIBPNG_DIR) \
-+	$(LIBSNDIO_DIR) \
+ if USE_SOUP
+ SOUP_DIR=soup
+ else
+@@ -150,6 +156,7 @@ SUBDIRS = \
  	$(MIKMOD_DIR) \
  	$(PULSE_DIR) \
  	$(SHOUT2_DIR) \
-@@ -169,6 +176,7 @@ DIST_SUBDIRS = \
- 	jpeg \
- 	libcaca \
- 	libpng \
-+	libsndio \
++	$(SNDIO_DIR) \
+ 	$(SOUP_DIR) \
+ 	$(SPEEX_DIR) \
+ 	$(TAGLIB_DIR) \
+@@ -172,6 +179,7 @@ DIST_SUBDIRS = \
  	pulse \
  	raw1394 \
  	shout2 \
++	sndio \
+ 	soup \
+ 	speex \
+ 	taglib \

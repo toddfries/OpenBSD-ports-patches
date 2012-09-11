@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2010/12/03 11:44:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.8 2012/08/23 14:54:31 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	interface to bzip2 compression library
 
 DISTNAME=	Compress-Bzip2-2.09
-REVISION=	1
+REVISION=	2
 CATEGORIES=	archivers
 
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
@@ -18,8 +18,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	cpan
 LIB_DEPENDS =	archivers/bzip2
-WANTLIB =	bz2>=10
-USE_GROFF =	Yes
+WANTLIB =	bz2>=10 c
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/config.in

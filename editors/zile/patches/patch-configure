@@ -1,0 +1,12 @@
+$OpenBSD: patch-configure,v 1.4 2012/03/27 22:01:50 ajacoutot Exp $
+--- configure.orig	Tue Mar 20 16:43:43 2012
++++ configure	Sun Mar 25 13:45:47 2012
+@@ -30805,7 +30805,7 @@ else
+   gc_ok=no
+ fi
+ 
+-    gc_libs="-lpthread"
++    gc_libs="-pthread"
+     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GC_malloc in -lgc" >&5
+ $as_echo_n "checking for GC_malloc in -lgc... " >&6; }
+ if ${ac_cv_lib_gc_GC_malloc+:} false; then :

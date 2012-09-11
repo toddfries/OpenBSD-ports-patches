@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.2 2011/06/02 13:41:42 ajacoutot Exp $
+$OpenBSD: README,v 1.4 2012/03/15 12:48:05 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -10,12 +10,7 @@ You should point this to the DocumentRoot of your web-server:
  # ln -s ../timetrex /var/www/htdocs/timetrex
 (make sure you use a relative symlink since Apache is chrooted)
 
-Depending on the database you wish to access, you'll need the
-corresponding PHP module.  e.g:
-    for MySQL you'll need to install php5-mysql
-    for PostreSQL you'll need to install php5-pgsql
-
-If using LDAP authentication, you will also need to install php5-ldap.
+If using LDAP authentication, you will need to install php-ldap.
 
 The administrator Guide is available as a PDF here:
     ${TRUEPREFIX}/timetrex/documentation/Administrator_Guide_Standard_Edition_en.pdf
@@ -40,7 +35,7 @@ Installation
 
     $ ${LOCALBASE}/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -p -u root mysql
 
-* Configuring your /var/www/conf/php.ini for TimeTrex:
+* Configuring ${SYSCONFDIR}/php-${MODPHP_VERSION}.ini for TimeTrex:
   - memory_limit needs to be set to at least 512M
 
 * Configuring maintenance jobs
@@ -49,12 +44,12 @@ Installation
   jobs running TimeTrex will fail to operate correctly.
   Add the following line to root's crontab:
 
-    * * * * * sudo -u www ${LOCALBASE}/bin/php ${TRUEPREFIX}/timetrex/maint/cron.php > /dev/null 2>&1
+    * * * * * sudo -u www ${MODPHP_BIN} ${TRUEPREFIX}/timetrex/maint/cron.php > /dev/null 2>&1
 
   If the php binary cannot access the default MySQL socket using the
   same path that the PHP module uses (because the module run in a
   chrooted installation), as root:
-      # cp /var/www/conf/php.ini /var/www/conf/php-cli.ini
+      # cp ${SYSCONFDIR}/php-${MODPHP_VERSION}.ini ${SYSCONFDIR}/php-cli-${MODPHP_VERSION}.ini
   then edit the mysql.default_socket path in /var/www/conf/php-cli.ini
 
 * Finishing the installation.

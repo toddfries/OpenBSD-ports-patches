@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2011/06/04 11:41:08 sthen Exp $
+# $OpenBSD: Makefile,v 1.15 2011/12/29 08:48:30 giovanni Exp $
 
 COMMENT=	database abstraction layer for PHP
 
-DISTNAME=	DB-1.7.6
-REVISION =	2
+DISTNAME=	DB-1.7.14
 CATEGORIES=	net databases
 
 MODULES=	www/pear

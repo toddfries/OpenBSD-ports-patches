@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.13 2011/06/08 17:39:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2012/04/14 09:52:40 landry Exp $
 
 COMMENT =	system to automate the compile/test cycle
 
-MODPY_EGG_VERSION =	0.8.3p1
+MODPY_EGG_VERSION =	0.8.6p1
 DISTNAME =	buildbot-${MODPY_EGG_VERSION}
-PKGNAME =	py-${DISTNAME:S/p/./}
-
-REVISION =	1
+PKGNAME =	py-${DISTNAME:S/p1/pl1/}
 
 CATEGORIES =	devel
 
@@ -27,7 +25,9 @@ MODULES =	lang/python
 MODPY_SETUPTOOLS = Yes
 MODPY_BADEGGS =	buildbot
 
-RUN_DEPENDS =	devel/py-twisted/core \
+RUN_DEPENDS =	databases/py-sqlalchemy \
+		databases/py-sqlalchemy-migrate \
+		devel/py-twisted/core \
 		devel/py-twisted/conch \
 		devel/py-twisted/mail \
 		devel/py-twisted/web \
@@ -42,20 +42,14 @@ HOMEDIR =		/var/buildbot
 
 SUBST_VARS +=		HOMEDIR
 
-post-configure:
-	@cd ${WRKSRC}/docs && makeinfo --no-split --html buildbot
-
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-buildbot/images
+	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-buildbot
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/py-buildbot
 	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/py-buildbot
 	${INSTALL_DATA} ${WRKSRC}/docs/examples/*.cfg \
 	    ${PREFIX}/share/examples/py-buildbot
-	cd ${WRKSRC}/docs && ${INSTALL_DATA} buildbot.html *.png \
-	    ${PREFIX}/share/doc/py-buildbot
-	cd ${WRKSRC}/docs/images && ${INSTALL_DATA} *.png \
-	    ${PREFIX}/share/doc/py-buildbot/images
 	cd ${WRKSRC} && pax -rw contrib ${PREFIX}/share/doc/py-buildbot
+	${INSTALL_MAN} ${WRKSRC}/docs/buildbot.1 ${PREFIX}/man/man1
 
 do-regress:
 	@${MAKE_ENV} PYTHONPATH=${WRKSRC} \

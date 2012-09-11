@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.14 2011/07/07 01:06:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2012/07/10 15:22:45 jasper Exp $
+
+SHARED_ONLY=	Yes
 
 COMMENT=	gd binding for the lua language
 
 V=		2.0.33r2
 PKGNAME=	luagd-$(V)
 DISTNAME=	lua-gd-$(V)
-REVISION=	5
+REVISION=	8
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://lua-gd.luaforge.net/
@@ -24,18 +26,17 @@ LIB_DEPENDS=	graphics/jpeg graphics/png graphics/gd
 NO_REGRESS=	Yes
 
 do-build:
-	$(CC) $(CFLAGS) -DGD_JPEG -DGD_FONTCONFIG -DGD_FREETYPE -DGD_PNG\
-	-DGD_GIF -fPIC -I$(LOCALBASE)/include -shared -L$(LOCALBASE)/lib\
-	-L$(X11BASE)/lib $(WRKDIST)/luagd.c -o ${WRKDIST}/core.so -ljpeg\
-	-lfontconfig -lfreetype -lpng -lz -liconv -lgd
+	$(CC) $(CFLAGS) -DGD_JPEG -DGD_FONTCONFIG -DGD_FREETYPE -DGD_PNG \
+	-DGD_GIF -fPIC -I$(LOCALBASE)/include -shared -I${MODLUA_INCL_DIR} \
+	-L$(LOCALBASE)/lib -L$(X11BASE)/lib $(WRKDIST)/luagd.c \
+	-o ${WRKDIST}/core.so -ljpeg -lfontconfig -lfreetype -lpng -lz -liconv -lgd
 
 do-install:
 	${INSTALL_DATA_DIR} ${MODLUA_DATADIR} ${MODLUA_LIBDIR}/gd
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/luagd
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/luagd
+	${INSTALL_DATA_DIR} ${MODLUA_DOCDIR} ${MODLUA_EXAMPLEDIR}
 	${INSTALL_DATA} ${FILESDIR}/gd.lua ${MODLUA_DATADIR}
 	${INSTALL_DATA} ${WRKSRC}/core.so ${MODLUA_LIBDIR}/gd
-	${INSTALL_DATA} ${WRKSRC}/doc/* ${PREFIX}/share/doc/luagd
-	${INSTALL_DATA} ${WRKSRC}/demos/* ${PREFIX}/share/examples/luagd
+	${INSTALL_DATA} ${WRKSRC}/doc/* ${MODLUA_DOCDIR}
+	${INSTALL_DATA} ${WRKSRC}/demos/* ${MODLUA_EXAMPLEDIR}
 
 .include <bsd.port.mk>

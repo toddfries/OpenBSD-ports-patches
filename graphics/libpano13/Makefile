@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2011/05/05 06:52:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2012/03/29 13:38:39 sthen Exp $
 
 COMMENT =		library for processing panoramic images
 DISTNAME =		libpano13-2.9.18
@@ -27,7 +27,7 @@ USE_LIBTOOL =		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE =	automake
 # builds work with SEPARATE_BUILD, but tests don't.
-#SEPARATE_BUILD =	simple
+#SEPARATE_BUILD =	Yes
 AUTOCONF_VERSION =	2.59
 AUTOMAKE_VERSION =	1.9
 
@@ -49,6 +49,6 @@ CONFIGURE_ARGS +=	CPPFLAGS="${CPPFLAGS}" \
 
 pre-configure:
 	cd ${WRKSRC}; AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-	    AUTOCONF_VERSION=${AUTOCONF_VERSION} ${SH} ./bootstrap
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} /bin/sh ./bootstrap
 
 .include <bsd.port.mk>

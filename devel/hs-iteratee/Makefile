@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.6 2011/04/23 14:32:51 kili Exp $
+# $OpenBSD: Makefile,v 1.9 2012/09/02 21:35:59 kili Exp $
 
 COMMENT =		Iteratee monad provides strict, safe, and functional I/O
 
-DISTNAME =		iteratee-0.3.5
-REVISION =		3
+DISTNAME =		iteratee-0.8.8.2
 CATEGORIES =		devel
 
-MAINTAINER =		Jim Razmus II <jim@openbsd.org>
+MAINTAINER =		Jim Razmus II <jim@openbsd.org>, \
+			Matthias Kilian <kili@openbsd.org>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
@@ -18,9 +18,10 @@ MODULES =		lang/ghc
 
 MODGHC_BUILD =		cabal hackage haddock register
 
-RUN_DEPENDS +=		devel/hs-ListLike \
-			devel/hs-mtl \
-			devel/hs-transformers
+RUN_DEPENDS +=		devel/hs-ListLike>=1.0,<4 \
+			devel/hs-MonadCatchIO-transformers>0.2,<0.4 \
+			devel/hs-parallel>=2,<4 \
+			devel/hs-transformers>=0.2,<0.4
 BUILD_DEPENDS +=	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

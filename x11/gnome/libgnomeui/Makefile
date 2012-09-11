@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2011/07/26 15:36:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.55 2011/10/29 08:12:32 ajacoutot Exp $
 
 COMMENT=		user interface components for GNOME
 
 GNOME_PROJECT=		libgnomeui
 GNOME_VERSION=		2.24.5
-REVISION=		1
+REVISION=		2
 
 SHARED_LIBS +=	gnomeui-2      2400.0         # .2400.2
 
@@ -13,6 +13,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+EXTRACT_SUFX=		.tar.bz2
 
 WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
 WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
@@ -24,7 +26,7 @@ WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png popt pthread-stubs ssl util xcb xml2
 WANTLIB += gcrypt gpg-error xcb-render GL Xxf86vm drm xcb-shm
 WANTLIB += gnome-keyring>=6 gnome-2 gnomecanvas-2 bonoboui-2
-WANTLIB += canberra ltdl ogg vorbis vorbisfile z
+WANTLIB += canberra ltdl ogg vorbis vorbisfile z ffi stdc++
 
 MODULES=	devel/gettext \
 		x11/gnome
@@ -34,9 +36,6 @@ LIB_DEPENDS=	x11/gnome/libgnome-keyring \
 		x11/gnome/libgnomecanvas \
 		x11/gnome/libbonoboui
 
-CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
-		--disable-gtk-doc
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 
 .include <bsd.port.mk>

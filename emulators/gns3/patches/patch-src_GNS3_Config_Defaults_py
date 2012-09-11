@@ -1,12 +1,54 @@
-$OpenBSD: patch-src_GNS3_Config_Defaults_py,v 1.1 2011/03/03 16:29:29 sthen Exp $
---- src/GNS3/Config/Defaults.py.orig	Sat Jan 29 12:17:20 2011
-+++ src/GNS3/Config/Defaults.py	Sat Jan 29 12:17:32 2011
-@@ -19,7 +19,7 @@
- # code@gns3.net
- #
+$OpenBSD: patch-src_GNS3_Config_Defaults_py,v 1.3 2012/08/13 14:18:15 gsoares Exp $
+--- src/GNS3/Config/Defaults.py.orig	Fri Jul 13 00:23:30 2012
++++ src/GNS3/Config/Defaults.py	Fri Aug 10 16:57:07 2012
+@@ -30,6 +30,8 @@ elif sys.platform.startswith('darwin'):
+         DYNAMIPS_DEFAULT_PATH = os.getcwdu() + os.sep + '../Resources/dynamips-0.2.8-RC3-community-OSX.intel64.bin'
+     else:
+         DYNAMIPS_DEFAULT_PATH = os.getcwdu() + os.sep + 'dynamips-0.2.8-RC3-community-OSX.intel64.bin'
++elif sys.platform.startswith('openbsd'):
++    DYNAMIPS_DEFAULT_PATH = unicode('${LOCALBASE}/bin/dynamips')
+ else:
+     DYNAMIPS_DEFAULT_PATH = unicode('dynamips')
  
--SysConfigDir = "/etc/gns3"
-+SysConfigDir = "${SYSCONFDIR}/gns3"
- UsrConfigDir = "~/.gns3"
+@@ -46,6 +48,8 @@ if sys.platform.startswith('win'):
+     QEMUWRAPPER_DEFAULT_PATH = unicode('qemuwrapper.exe')
+ elif sys.platform.startswith('darwin') and hasattr(sys, "frozen"):
+     QEMUWRAPPER_DEFAULT_PATH = os.getcwdu() + os.sep + '../Resources/qemuwrapper.py'
++elif sys.platform.startswith('openbsd'):
++    QEMUWRAPPER_DEFAULT_PATH = unicode('${LOCALBASE}/libexec/gns3/qemuwrapper.py')
+ else:
+     # look for qemuwrapper in the current working directory
+     qemuwrapper_path = os.getcwdu() + os.sep + 'qemuwrapper/qemuwrapper.py'
+@@ -69,18 +73,20 @@ if sys.platform.startswith('win'):
+     QEMU_DEFAULT_PATH = unicode('qemu')
+     QEMU_IMG_DEFAULT_PATH = unicode('qemu-img')
+ else:
+-    QEMU_DEFAULT_PATH = unicode('qemu-system-i386')
+-    QEMU_IMG_DEFAULT_PATH = unicode('qemu-img')
++    QEMU_DEFAULT_PATH = unicode('${LOCALBASE}/bin/qemu-system-i386')
++    QEMU_IMG_DEFAULT_PATH = unicode('${LOCALBASE}/bin/qemu-img')
  
- conf_library_defaults = {
+ # Default path to vboxwrapper
+ if sys.platform.startswith('win'):
+     VBOXWRAPPER_DEFAULT_PATH = unicode('vboxwrapper.exe')
+ elif sys.platform.startswith('darwin') and hasattr(sys, "frozen"):
+     VBOXWRAPPER_DEFAULT_PATH = os.getcwdu() + os.sep + '../Resources/VBoxWrapper/Contents/MacOS/VBoxWrapper'
++elif sys.platform.startswith('openbsd'):
++    VBOXWRAPPER_DEFAULT_PATH = unicode('${LOCALBASE}/libexec/gns3/vboxwrapper.py')
+ else:
+     # look for vboxwrapper in the current working directory
+     vboxwrapper_path = os.getcwdu() + os.sep + 'vboxwrapper/vboxwrapper.py'
+-    if os.path.exists(qemuwrapper_path):
++    if os.path.exists(vboxwrapper_path):
+         VBOXWRAPPER_DEFAULT_PATH = vboxwrapper_path
+     elif platform.system() == 'Linux':
+         QEMUWRAPPER_DEFAULT_PATH = unicode("/usr/lib/gns3/vboxwrapper.py")
+@@ -170,7 +176,7 @@ if platform.system() == 'Linux' or platform.system()._
+                             'xterm (Linux/BSD)': 'xterm -T %d -e \'telnet %h %p\' >/dev/null 2>&1 &',
+                             'Putty (Linux/BSD)': 'putty -telnet %h %p',
+                             'Gnome Terminal (Linux/BSD)': 'gnome-terminal -t %d -e \'telnet %h %p\' >/dev/null 2>&1 &',
+-                            'KDE Konsole (Linux/BSD)': '/usr/bin/konsole --new-tab -p tabtitle=%d -e telnet %h %p >/dev/null 2>&1 &'
++                            'KDE Konsole (Linux/BSD)': 'konsole --new-tab -p tabtitle=%d -e telnet %h %p >/dev/null 2>&1 &'
+                             }
+ elif platform.system() == 'Windows'  and os.path.exists("C:\Program Files (x86)\\"):
+     TERMINAL_PRESET_CMDS = {

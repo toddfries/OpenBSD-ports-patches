@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.10 2011/08/19 07:58:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/06/14 09:47:23 landry Exp $
 
 COMMENT=	interactive electronics designing software
 
-V=		0.6.3
-DISTNAME=	fritzing.$V.source
+V=		0.7.4
+DISTNAME=	fritzing-$Vb.source
 PKGNAME=	fritzing-$V
 CATEGORIES=	cad
+REVISION=	0
 
 HOMEPAGE=	http://fritzing.org/
 
@@ -18,19 +19,17 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES=	${HOMEPAGE}/download/$Vb/source-tarball/
+MASTER_SITES=	${HOMEPAGE}download/$Vb/source-tarball/
 EXTRACT_SUFX=	.tar.bz2
 
-WANTLIB +=	QtGui QtNetwork QtSql QtSvg QtXml c m pthread stdc++ z
+WANTLIB += QtGui QtNetwork QtSql QtSvg QtXml c m pthread stdc++ z
+WANTLIB += ICE SM X11 Xext Xi Xinerama Xrender fontconfig freetype
 
 MODULES=        x11/qt4
 NO_REGRESS=	Yes
 
 BUILD_DEPENDS=	devel/boost
-RUN_DEPENDS=	devel/desktop-file-utils \
-		x11/qt4,-sqlite
-
-WRKDIST= 	${WRKDIR}/fritzing.2011.08.18.source/
+RUN_DEPENDS=	devel/desktop-file-utils
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/phoenix.pro ${WRKSRC}/src/fapplication.cpp

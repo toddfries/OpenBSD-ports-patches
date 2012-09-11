@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.7 2012/04/22 09:21:18 jasper Exp $
 
 COMMENT =	aggregate profiling for wsgi requests
 
-MODPY_EGG_VERSION = 1.1
+MODPY_EGG_VERSION = 1.4
 DISTNAME =	repoze.profile-${MODPY_EGG_VERSION}
 PKGNAME =	py-${DISTNAME:S/./-/}
-REVISION =	1
 
 CATEGORIES =	www devel
 

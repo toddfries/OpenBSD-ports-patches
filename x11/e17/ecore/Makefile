@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.17 2011/03/15 19:39:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2012/09/01 14:36:58 ajacoutot Exp $
 
 COMMENT =		core event/X abstraction layer
 DISTNAME =		ecore-1.0.0
+REVISION =		2
 
 EPOCH =			2
 
@@ -23,12 +24,13 @@ MODULES =		devel/gettext
 
 USE_LIBTOOL =		Yes
 
-WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xss Xtst cares crypto curl
-WANTLIB += eet eina evas expat fontconfig freetype glib-2.0 idn
-WANTLIB += jpeg m pcre pthread-stubs ssl xcb z
+WANTLIB += eet eina evas expat fontconfig freetype fribidi glib-2.0 idn
+WANTLIB += jpeg m pcre ssl xcb z
 
 LIB_DEPENDS =		devel/glib2 \
+			devel/fribidi \
 			net/curl \
 			net/libcares \
 			x11/e17/evas>=1.0

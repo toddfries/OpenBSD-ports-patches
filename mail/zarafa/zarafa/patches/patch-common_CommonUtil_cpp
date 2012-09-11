@@ -1,7 +1,7 @@
-$OpenBSD: patch-common_CommonUtil_cpp,v 1.2 2011/06/02 12:46:37 ajacoutot Exp $
---- common/CommonUtil.cpp.orig	Wed Apr 20 19:51:45 2011
-+++ common/CommonUtil.cpp	Mon May  2 12:47:51 2011
-@@ -83,6 +83,7 @@
+$OpenBSD: patch-common_CommonUtil_cpp,v 1.4 2011/12/22 17:10:04 ajacoutot Exp $
+--- common/CommonUtil.cpp.orig	Thu Dec 22 01:02:33 2011
++++ common/CommonUtil.cpp	Thu Dec 22 12:14:19 2011
+@@ -85,6 +85,7 @@
  
  #include <sys/types.h>
  #include <sys/socket.h>

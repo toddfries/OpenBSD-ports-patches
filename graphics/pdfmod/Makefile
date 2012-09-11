@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2011/03/07 21:55:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2012/06/15 08:32:16 ajacoutot Exp $
 
 COMMENT=	simple application for modifying PDF documents
 
 GNOME_PROJECT=	pdfmod
 GNOME_VERSION=	0.9.1
+REVISION=	2
 
 CATEGORIES=	graphics print
 
@@ -15,6 +16,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+EXTRACT_SUFX=		.tar.bz2
+
 MODULES=	lang/mono \
 		x11/gnome
 
@@ -23,12 +26,11 @@ BUILD_DEPENDS=	devel/hyena \
 RUN_DEPENDS=	print/poppler \
 		x11/gnome/mono-gnome
 
-MODGNOME_HELP_FILES= Yes
-DESKTOP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	--enable-release \
 		--disable-external-poppler-sharp
 

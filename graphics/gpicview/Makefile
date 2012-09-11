@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2011/08/17 23:13:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2012/08/19 15:14:25 ajacoutot Exp $
 
 COMMENT =	simple and fast image viewer for X
 
 DISTNAME =	gpicview-0.2.2
+REVISION=	1
 
 CATEGORIES =	graphics x11
 
@@ -14,7 +15,7 @@ WANTLIB += drm expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB += gtk-x11-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
-WANTLIB += xcb-shm z
+WANTLIB += xcb-shm z ffi stdc++
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =		Yes
@@ -24,11 +25,11 @@ PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=lxde/}
 
-MODULES =	devel/gettext
+MODULES =	devel/gettext \
+		textproc/intltool
 
 LIB_DEPENDS =	x11/gtk+2
 RUN_DEPENDS =	devel/desktop-file-utils
-MODULES +=      textproc/intltool
 
 USE_GMAKE =	yes
 USE_LIBTOOL =	yes

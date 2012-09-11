@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.28 2011/07/06 18:57:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2012/07/09 21:59:51 sthen Exp $
 SHARED_ONLY=	Yes
 
 COMMENT=	determine the malware activity on a network
 
 DISTNAME=	nepenthes-0.2.2 
-REVISION=	3
+EPOCH=		1
+REVISION=	1
+
 CATEGORIES=	net
 
 HOMEPAGE=	http://nepenthes.mwcollect.org/
-
-MAINTAINER=	Rui Reis <rui@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -36,6 +36,8 @@ WANTLIB=	c crypto idn m ssl stdc++ pcap z \
 FAKE_FLAGS+=	localstatedir='/var/nepenthes' \
 		sysconfdir='${PREFIX}/share/examples'
 
+LOCALSTATEDIR=	${BASELOCALSTATEDIR}/nepenthes
+
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include \
 		-I${LOCALBASE}/include/postgresql"
@@ -43,24 +45,10 @@ CONFIGURE_ARGS+=--enable-debug-logging \
 		--disable-mysql \
 		--enable-postgre \
 		--disable-capabilities \
-		--localstatedir='/var/nepenthes' \
 		--with-curl-lib=${PREFIX}/lib
 
-FLAVORS=        prelude
-FLAVOR?=
-
-.if ${FLAVOR:L:Mprelude}
-LIB_DEPENDS+=   security/prelude/libprelude
-CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include  \
-                -I${LOCALBASE}/include/libprelude/" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
-WANTLIB+=	gcrypt gnutls gpg-error pthread tasn1 prelude>=8
-CONFIGURE_ARGS+=--enable-prelude
-MESSAGE=        ${PKGDIR}/MESSAGE-prelude
-.else
 LIB_DEPENDS+=	databases/postgresql
 WANTLIB +=	pq>=4
-.endif
 
 pre-configure:
 	@perl -pi -e "s,%%SYSCONFDIR%%,${SYSCONFDIR}," \

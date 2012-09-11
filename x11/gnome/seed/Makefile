@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/26 15:36:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2012/05/28 13:04:27 jasper Exp $
 
 COMMENT=		GObject JavaScriptCore bridge
 
 GNOME_PROJECT=		seed
-GNOME_VERSION=		3.0.0
-REVISION=		5
+GNOME_VERSION=		3.2.0
+REVISION=		3
+
 SHARED_LIBS +=  seed-gtk3                 0.0 # 0.0
 
 CATEGORIES=		devel www
@@ -31,16 +32,19 @@ WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 gtk-3 icudata
 WANTLIB += icui18n icuuc jpeg m mpfr pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += readline soup-2.4 sqlite3 stdc++ termcap util webkitgtk-3.0
-WANTLIB += xcb xcb-render xcb-shm xml2 xslt z
+WANTLIB += xcb xcb-render xcb-shm xml2 xslt z javascriptcoregtk-3.0
+WANTLIB += geoclue gstaudio-0.10 gstfft-0.10 orc-0.4
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		x11/gnome/js-common
-LIB_DEPENDS=		devel/gobject-introspection \
+LIB_DEPENDS=		devel/gobject-introspection>=1.30.0 \
 			devel/mpfr>=3.0.1 \
-			www/webkit,gtk3
+			www/webkit,gtk3>=1.6.1v0
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-readline-module \
+# warning: libXxf86vm.so.5.0, needed by /usr/local/lib/libwebkitgtk-3.0.so.3.0, not found
+MODGNOME_LDFLAGS=	-pthread -L${X11BASE}/lib
+
+CONFIGURE_ARGS+=	--enable-readline-module \
 			--enable-multiprocessing-module \
 			--enable-sqlite-module \
 			--enable-example-module \
@@ -52,8 +56,6 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-cairo-module \
 			--enable-gettext-module \
 			--enable-mpfr-module
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 REGRESS_IS_INTERACTIVE= x11
 REGRESS_DEPENDS=	${BASE_PKGPATH}

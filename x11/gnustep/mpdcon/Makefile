@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.3 2011/06/24 10:55:54 sebastia Exp $
+# $OpenBSD: Makefile,v 1.5 2012/08/22 07:15:52 sebastia Exp $
 
 COMMENT =	GNUstep client for Music Player Daemon
 
-DISTNAME =	MPDCon-1.1.99
+DISTNAME =	MPDCon-1.2
 REVISION =	0
 
-HOMEPAGE =	http://sourceforge.net/projects/mpdcon/
-MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=mpdcon/}
+HOMEPAGE =	http://gap.nongnu.org/mpdcon/
+MASTER_SITES =	${MASTER_SITE_SAVANNAH:=gap/}
 
 MODULES =	x11/gnustep
-WANTLIB += 	c m pthread
+LIB_DEPENDS =	audio/libmpdclient
+WANTLIB += 	c m pthread mpdclient
 
 .include <bsd.port.mk>

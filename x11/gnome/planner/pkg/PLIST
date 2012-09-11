@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.12 2011/07/26 15:36:27 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.15 2012/06/15 08:30:20 ajacoutot Exp $
 @bin bin/planner
 include/planner-1.0/
 include/planner-1.0/libplanner/
@@ -180,6 +180,7 @@ share/locale/dz/LC_MESSAGES/planner.mo
 share/locale/el/LC_MESSAGES/planner.mo
 share/locale/en_CA/LC_MESSAGES/planner.mo
 share/locale/en_GB/LC_MESSAGES/planner.mo
+share/locale/eo/LC_MESSAGES/planner.mo
 share/locale/es/LC_MESSAGES/planner.mo
 share/locale/et/LC_MESSAGES/planner.mo
 share/locale/eu/LC_MESSAGES/planner.mo
@@ -308,8 +309,8 @@ share/planner/ui/xml-planner-plugin.ui
 ${SCHEMAS_INSTDIR}/
 ${SCHEMAS_INSTDIR}/planner.schemas
 @exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-mime-database %D/share/mime
 @unexec-delete %D/bin/update-mime-database %D/share/mime
 @exec %D/bin/update-desktop-database

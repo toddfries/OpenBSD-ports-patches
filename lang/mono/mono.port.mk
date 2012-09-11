@@ -1,7 +1,8 @@
-# $OpenBSD: mono.port.mk,v 1.17 2011/05/03 10:40:59 ajacoutot Exp $
+# $OpenBSD: mono.port.mk,v 1.21 2012/03/09 10:59:11 espie Exp $
 
-MODMONO_ONLY_FOR_ARCHS=	i386 amd64 # XXX arm powerpc (no support for sigcontext)
-ONLY_FOR_ARCHS?=	${MODMONO_ONLY_FOR_ARCHS}
+# XXX list in infrastructure/mk/arch-defines.mk
+# XXX arm powerpc (no support for sigcontext)
+ONLY_FOR_ARCHS?=	${MONO_ARCHS}
 
 CATEGORIES+=		lang/mono
 
@@ -22,20 +23,24 @@ RUN_DEPENDS+=		${MODMONO_RUN_DEPENDS}
 # version from library names. 
 DLLMAP_FILES?=
 
-.if defined(USE_NANT)
+.if defined(MODMONO_NANT) && ${MODMONO_NANT:L} == "yes"
 NANT?=		nant
 NANT_FLAGS?=
 
 BUILD_DEPENDS+= devel/nant
 
+MODMONO_BUILD_TARGET=	@cd ${WRKSRC} && ${MAKE_FLAGS} ${NANT} ${NANT_FLAGS}
+MODMONO_INSTALL_TARGET=	@cd ${WRKSRC} && ${MAKE_FLAGS} ${NANT} ${NANT_FLAGS} \
+	-D:prefix="${PREFIX}" install
+
 .  if !target(do-build)
 do-build:
-	@cd ${WRKSRC} && ${MAKE_FLAGS} ${NANT} ${NANT_FLAGS}
+	${MODMONO_BUILD_TARGET}
 .  endif
 
 .  if !target(do-install)
 do-install:
-	@cd ${WRKSRC} && ${MAKE_FLAGS} ${NANT} ${NANT_FLAGS} -D:prefix="${PREFIX}" install
+	${MODMONO_INSTALL_TARGET}
 .  endif
 
 .endif

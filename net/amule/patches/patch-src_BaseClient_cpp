@@ -1,29 +1,16 @@
-$OpenBSD: patch-src_BaseClient_cpp,v 1.1 2011/06/24 08:42:31 dcoppa Exp $
+$OpenBSD: patch-src_BaseClient_cpp,v 1.3 2012/02/22 07:54:26 dcoppa Exp $
 
-Backport a bugfix from upstream git: work around a crash when doubly
-deleting a client.
+Fix showing of shared files to other clients
+(upstream git commit 4e40aecb160baac72aa28a8a4c7aaf19261e051f)
 
---- src/BaseClient.cpp.orig	Wed Sep  9 22:46:31 2009
-+++ src/BaseClient.cpp	Fri Dec  3 10:37:13 2010
-@@ -336,6 +336,9 @@ CUpDownClient::~CUpDownClient()
- 		delete m_pReqFileAICHHash;
- 		m_pReqFileAICHHash = NULL;
- 	}
-+
-+	// Allow detection of deleted clients that didn't go through Safe_Delete
-+ 	m_clientState = CS_DYING;
- }
+--- src/BaseClient.cpp.orig	Wed Oct  5 21:02:32 2011
++++ src/BaseClient.cpp	Tue Feb 21 15:56:05 2012
+@@ -2857,7 +2857,7 @@ void CUpDownClient::SendSharedDirectories()
+ 		
+ 		// Build packet
+ 		CMemFile tempfile(80);
+-		tempfile.WriteUInt32(foldersToSend.size());
++		tempfile.WriteUInt32(foldersToSend.size() + 1);	// + 1 for the incomplete files
  
- void CUpDownClient::ClearHelloProperties()
-@@ -1210,6 +1213,11 @@ void CUpDownClient::ClearDownloadBlockRequests()
- bool CUpDownClient::Disconnected(const wxString& strReason, bool bFromSocket)
- {
- 	//wxASSERT(theApp->clientlist->IsValidClient(this));
-+
-+	if (HasBeenDeleted()) {
-+		AddDebugLogLineM( false, logClient, wxT("Disconnected() called for already deleted client on ip ") + Uint32toStringIP(GetConnectIP()));
-+		return false;
-+	}
- 	
- 	// was this a direct callback?
- 	if (m_dwDirectCallbackTimeout != 0) {
+ 		PathList::iterator it = foldersToSend.begin();
+ 		for (; it != foldersToSend.end(); ++it) {

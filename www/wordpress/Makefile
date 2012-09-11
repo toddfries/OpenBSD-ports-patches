@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.34 2011/07/22 10:20:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.40 2012/07/02 13:26:38 gonzalo Exp $
 
 COMMENT =	standard compliant weblog
 
-DISTNAME =	wordpress-3.1.2
-REVISION =	1
+DISTNAME =	wordpress-3.4.1
 CATEGORIES =	www
 
 HOMEPAGE =	http://wordpress.org/
@@ -12,7 +11,7 @@ MAINTAINER =	Michael Erdely <merdely@openbsd.org>
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =	Yes
+PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	${HOMEPAGE}

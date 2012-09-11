@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2011/07/18 19:04:20 naddy Exp $
+# $OpenBSD: Makefile,v 1.42 2012/06/21 13:54:14 sthen Exp $
 
 ONLY_FOR_ARCHS=		i386
 
@@ -6,7 +6,7 @@ COMMENT=		OpenAFS distributed filesystem
 
 VERSION=		1.4.7
 DISTNAME=		openafs-${VERSION}
-REVISION=		17
+REVISION=		20
 
 CATEGORIES=		net
 
@@ -36,7 +36,6 @@ CONFIGURE_STYLE=	automake autoconf
 CONFIGURE_ENV+=		KRB5CFLAGS="-I/usr/include/kerberosV -DUSING_HEIMDAL" \
 			KRB5LIBS="-lkrb5"
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--localstatedir=/var \
 			--disable-transarc-paths \
 			--enable-namei-fileserver \
 			--enable-largefile-fileserver \
@@ -69,13 +68,9 @@ CONFIGURE_ARGS+=	--enable-debug
 CONFIGURE_ARGS+=	--enable-debug-lwp
 .endif
 
-.if ${MACHINE} == "alpha" || \
-	${MACHINE} == "amd64" || \
-	${MACHINE} == "arm" || \
-	${MACHINE} == "i386" || \
-	${MACHINE} == "mips64" || \
-	${MACHINE} == "sh" || \
-	${MACHINE} == "vax"
+.include <bsd.port.arch.mk>
+
+.if ${PROPERTIES:Mle}
 CONFIGURE_ARGS+=	--enable-littleendian
 .else
 CONFIGURE_ARGS+=	--enable-bigendian

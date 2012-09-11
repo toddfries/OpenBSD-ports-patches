@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2011/01/20 18:55:44 naddy Exp $
+# $OpenBSD: Makefile,v 1.17 2012/05/16 12:18:29 sthen Exp $
 
 COMMENT =	allows deniable private conversations using Pidgin
 
-DISTNAME =	pidgin-otr-3.2.0
+DISTNAME =	pidgin-otr-3.2.1
 CATEGORIES =	security net
 EPOCH =		0
-REVISION =	0
 
 HOMEPAGE =	http://www.cypherpunks.ca/otr/
 
@@ -35,7 +34,7 @@ CONFIGURE_STYLE = gnu
 CONFIGURE_ENV =	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="${LDFLAGS} -L${LOCALBASE}/lib "
 
-AUTOCONF_VERSION = 2.59
+AUTOCONF_VERSION = 2.60
 AUTOMAKE_VERSION = 1.9
 BUILD_DEPENDS += ${MODGNU_AUTOCONF_DEPENDS} \
 		 ${MODGNU_AUTOMAKE_DEPENDS}

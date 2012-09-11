@@ -1,7 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.5 2011/03/03 21:17:11 landry Exp $
-%%SHARED%%
+@comment $OpenBSD: PLIST,v 1.8 2012/06/15 08:30:25 ajacoutot Exp $
 @comment lib/thunarx-2/thunar-archive-plugin.a
 @comment lib/thunarx-2/thunar-archive-plugin.la
+lib/thunarx-2/thunar-archive-plugin.so
 libexec/thunar-archive-plugin/ark.tap
 libexec/thunar-archive-plugin/file-roller.tap
 libexec/thunar-archive-plugin/gnome-file-roller.tap
@@ -48,5 +48,5 @@ share/locale/ur/LC_MESSAGES/thunar-archive-plugin.mo
 share/locale/ur_PK/LC_MESSAGES/thunar-archive-plugin.mo
 share/locale/zh_CN/LC_MESSAGES/thunar-archive-plugin.mo
 share/locale/zh_TW/LC_MESSAGES/thunar-archive-plugin.mo
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor

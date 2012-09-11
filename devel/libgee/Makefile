@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.10 2011/04/07 07:56:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/09/01 14:36:57 ajacoutot Exp $
 
 COMMENT=	GObject based collection library 
 
 GNOME_PROJECT=	libgee
-GNOME_VERSION=	0.6.1
-
+GNOME_VERSION=	0.7.90
 REVISION=	0
 
-SHARED_LIBS +=  gee 1.0 # .2.0
+SHARED_LIBS +=  gee-0.8                   1.0 # 1.0
 
 CATEGORIES=	devel
 
@@ -22,20 +21,18 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += pcre glib-2.0 gobject-2.0 gthread-2.0
+WANTLIB += ffi glib-2.0 gobject-2.0 gthread-2.0 pcre pthread
 
-BUILD_DEPENDS=	lang/vala \
-		devel/gobject-introspection
+BUILD_DEPENDS=	lang/vala>=0.17.5
 
 LIB_DEPENDS=	devel/glib2
 
 MODULES=	devel/gettext \
 		x11/gnome
 
+MODGNOME_TOOLS= goi
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-introspection \
-		--disable-doc
+CONFIGURE_ARGS=	--disable-doc
 
 .include <bsd.port.mk>

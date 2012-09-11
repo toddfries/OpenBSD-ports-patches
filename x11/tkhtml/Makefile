@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2011/01/05 17:50:48 sebastia Exp $
+# $OpenBSD: Makefile,v 1.7 2012/03/29 13:39:01 sthen Exp $
 
 SHARED_ONLY =	Yes
 
@@ -26,7 +26,7 @@ WANTLIB +=		X11
 
 WRKDIST =		${WRKDIR}/htmlwidget
 USE_GMAKE =		Yes
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--libdir=${MODTCL_TCLDIR} \
@@ -37,6 +37,7 @@ CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--datadir=${PREFIX}/share/examples \
 			LIBTkhtml30_VERSION=${LIBTkhtml30_VERSION}
 FAKE_FLAGS =		PKG_DIR=tkhtml
-NO_REGRESS =		Yes
+REGRESS_TARGET =	test
+REGRESS_IS_INTERACTIVE = X11
 
 .include <bsd.port.mk>

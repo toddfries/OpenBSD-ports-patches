@@ -1,9 +1,10 @@
-@comment $OpenBSD: PLIST,v 1.7 2011/06/28 05:35:22 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.10 2012/08/06 17:56:06 ajacoutot Exp $
 @conflict gtk+2-<2.22
 @conflict gtk+2-docs-<2.22
 @unexec-delete rm -f %D/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 %%SHARED%%
 @bin bin/gdk-pixbuf-csource
+@bin bin/gdk-pixbuf-pixdata
 @bin bin/gdk-pixbuf-query-loaders
 include/gdk-pixbuf-2.0/
 include/gdk-pixbuf-2.0/gdk-pixbuf/
@@ -80,6 +81,7 @@ share/gtk-doc/html/gdk-pixbuf/api-index-2-10.html
 share/gtk-doc/html/gdk-pixbuf/api-index-2-12.html
 share/gtk-doc/html/gdk-pixbuf/api-index-2-14.html
 share/gtk-doc/html/gdk-pixbuf/api-index-2-2.html
+share/gtk-doc/html/gdk-pixbuf/api-index-2-26.html
 share/gtk-doc/html/gdk-pixbuf/api-index-2-4.html
 share/gtk-doc/html/gdk-pixbuf/api-index-2-6.html
 share/gtk-doc/html/gdk-pixbuf/api-index-2-8.html
@@ -155,6 +157,9 @@ share/locale/crh/
 share/locale/crh/LC_MESSAGES/
 share/locale/crh/LC_MESSAGES/gdk-pixbuf.mo
 share/locale/cs/LC_MESSAGES/gdk-pixbuf.mo
+share/locale/csb/
+share/locale/csb/LC_MESSAGES/
+share/locale/csb/LC_MESSAGES/gdk-pixbuf.mo
 share/locale/cy/
 share/locale/cy/LC_MESSAGES/
 share/locale/cy/LC_MESSAGES/gdk-pixbuf.mo
@@ -211,6 +216,9 @@ share/locale/ja/LC_MESSAGES/gdk-pixbuf.mo
 share/locale/ka/
 share/locale/ka/LC_MESSAGES/
 share/locale/ka/LC_MESSAGES/gdk-pixbuf.mo
+share/locale/km/
+share/locale/km/LC_MESSAGES/
+share/locale/km/LC_MESSAGES/gdk-pixbuf.mo
 share/locale/kn/
 share/locale/kn/LC_MESSAGES/
 share/locale/kn/LC_MESSAGES/gdk-pixbuf.mo

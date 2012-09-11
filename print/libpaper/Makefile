@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/20 09:48:39 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/04/30 19:22:08 jasper Exp $
 
 COMMENT=	library for handling paper characteristics
 
-V=		1.1.21
+V=		1.1.24
 DISTNAME=	libpaper_${V}
 PKGNAME=	libpaper-${V}
-REVISION =	0
 SHARED_LIBS+=	paper 0.0	# .2.2
 CATEGORIES=	print
 
@@ -17,8 +16,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://ftp.debian.org/debian/pool/main/libp/libpaper/ \
-		http://ftp.fr.debian.org/debian/pool/main/libp/libpaper/
+MASTER_SITES=	${MASTER_SITE_DEBIAN:=main/libp/libpaper/}
 
 WRKDIST=	${WRKDIR}/libpaper-${V}
 

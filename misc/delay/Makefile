@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2010/11/05 08:24:50 sthen Exp $
-# $FreeBSD: Makefile,v 1.1.1.1 1999/03/05 17:07:28 nectar Exp $
+# $OpenBSD: Makefile,v 1.21 2012/08/18 12:41:38 ajacoutot Exp $
 
 COMMENT=	delay program with feedback to the user
 
@@ -18,7 +17,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c curses
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 USE_GROFF =	Yes
 

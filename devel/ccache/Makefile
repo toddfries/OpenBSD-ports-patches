@@ -1,9 +1,17 @@
-# $OpenBSD: Makefile,v 1.18 2011/08/22 13:24:53 sthen Exp $
+# $OpenBSD: Makefile,v 1.22 2012/08/14 11:38:01 sthen Exp $
 
 COMMENT =	compiler cache
 
-DISTNAME =	ccache-3.1.6
+DISTNAME =	ccache-3.1.8
 CATEGORIES =	devel
+
+# The ccache(1) manual page causes ERRORs with mandoc(1),
+# so normally this port would require USE_GROFF.
+# However, the actual formatting issues are not very serious,
+# and USE_GROFF would cause a circular dependency
+# because the textproc/groff port can use ccache.
+# When updating, please check that mandoc(1) still
+# does not drop any content from the ccache(1) manual.
 
 HOMEPAGE =	http://ccache.samba.org/
 
@@ -15,12 +23,11 @@ PERMIT_PACKAGE_FTP =	 Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	 Yes
 
-WANTLIB += c
+WANTLIB += c m z
 
 MASTER_SITES =	http://samba.org/ftp/ccache/
 
 CONFIGURE_STYLE =	gnu
-USE_GROFF =		Yes
 
 NO_CCACHE =		Yes
 

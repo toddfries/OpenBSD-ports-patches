@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2011/06/02 13:41:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/12/02 08:29:45 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,13 +7,11 @@ COMMENT=		IntelliJ Java IDE
 V=			9.0.4
 DISTNAME=		ideaIC-${V}
 PKGNAME=		intellij-${V}
-CATEGORIES=		java devel
+CATEGORIES=		devel
 
-REVISION=		0
+REVISION=		3
 
 HOMEPAGE=		http://www.jetbrains.com/idea/
-
-MAINTAINER=		Daniel Dickman <didickman@gmail.com>
 
 # Apache v2.0
 PERMIT_PACKAGE_CDROM=	Yes
@@ -31,6 +29,7 @@ BUILD_DEPENDS=		${MODJAVA_RUN_DEPENDS}
 RUN_DEPENDS=		devel/desktop-file-utils
 
 NO_REGRESS=		Yes
+
 SUBST_VARS+=		JAVA_HOME
 
 WRKDIST=		${WRKDIR}/idea-IC-95.627

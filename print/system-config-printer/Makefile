@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.30 2011/08/23 06:41:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2012/08/28 19:16:19 ajacoutot Exp $
 
 COMMENT=		printer (CUPS) administration tool
 
-DISTNAME=		system-config-printer-1.3.6
+DISTNAME=		system-config-printer-1.3.11
 
 CATEGORIES=		print sysutils
 
@@ -27,12 +27,16 @@ BUILD_DEPENDS=		${RUN_DEPENDS} \
 RUN_DEPENDS=		devel/desktop-file-utils \
 			devel/gettext \
 			devel/py-notify \
-			net/py-smbc>=1.0.11 \
-			print/py-cups>=1.9.58 \
+			net/py-curl \
+			net/py-smbc \
+			print/py-cups>=1.9.62 \
 			textproc/py-xml \
 			x11/dbus-python \
 			x11/py-gtk2 \
 			print/cups-pk-helper
+
+# package is only useful if cups is installed
+RUN_DEPENDS +=	print/cups
 
 USE_GMAKE=		Yes
 USE_GROFF =		Yes
@@ -45,6 +49,7 @@ SUBST_FILES=		applet.py cupshelpers/cupshelpers.py \
 			probe_printer.py newprinter.py \
 			udev/udev-configure-printer.c \
 			troubleshoot/CheckSELinux.py \
+			troubleshoot/SchedulerNotRunning.py \
 			cupshelpers/xmldriverprefs.py \
 			dbus/org.fedoraproject.Config.Printing.service \
 			check-device-ids.py

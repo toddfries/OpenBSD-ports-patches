@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.76 2011/08/22 07:57:25 giovanni Exp $
+# $OpenBSD: Makefile,v 1.84 2012/04/28 11:06:12 ajacoutot Exp $
 
 COMMENT-main=		imap server for maildir format mailboxes
 COMMENT-pop3=		pop3 server for maildir format mailboxes
 
-V=			4.9.3
+V=			4.10.0
 DISTNAME=		courier-imap-${V}
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-pop3=	courier-pop3-${V}
 FULLPKGPATH-pop3=	mail/courier-imap,-pop3
 
-REVISION-main=		1
-REVISION-pop3=		0
+REVISION-main=		3
+REVISION-pop3=		2
 
 CATEGORIES=		mail
 
@@ -41,29 +41,27 @@ CONFIGURE_ENV=		LDFLAGS="-L${LOCALBASE}/lib" \
 LIB_DEPENDS=		mail/courier-authlib \
 			devel/libidn
 
-COURIERSTATE=           /var/run/courier
+LOCALSTATEDIR=		${BASELOCALSTATEDIR}/run/courier
 EXAMPLE_DIR=		${PREFIX}/share/examples/courier
-SUBST_VARS=		COURIERSTATE
+SUBST_VARS=		LOCALSTATEDIR
 SYSCONFDIR=		/etc/courier
 
 CONFIGURE_ARGS=		--sbindir=${PREFIX}/sbin \
 			--datadir=${PREFIX}/sbin \
-			--localstatedir=${COURIERSTATE} \
 			--prefix=${PREFIX} \
 			--bindir=${PREFIX}/bin \
 			--mandir=${PREFIX}/man \
 			--enable-static \
 			--disable-root-check \
 			--with-dirsync \
-			--with-random=/dev/arandom \
 			--enable-mimecharset=iso-8859-1 \
 			--enable-unicode \
 			--with-locking-method=fcntl \
 			--with-mailuser=_courier \
-			--with-piddir=${COURIERSTATE} \
+			--with-piddir=${LOCALSTATEDIR} \
 			--with-makedatprog \
 			--with-db=gdbm \
-			--with-certsdir=/etc/ssl/private \
+			--with-certsdir=/etc/ssl \
 			--cache-file=${WRKDIR}/courier-imap.cache
 
 CONFIGURE_ENV+=		OPENSSL=/usr/sbin/openssl
@@ -80,13 +78,13 @@ DOCS=			AUTHORS INSTALL \
 FLAVORS=		no_trashquota imap_bugs
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_trashquota}
+.if ${FLAVOR:Mno_trashquota}
 CONFIGURE_ARGS+=	--without-trashquota
 .else
 CONFIGURE_ARGS+=	--with-trashquota
 .endif
 
-.if ${FLAVOR:L:Mimap_bugs}
+.if ${FLAVOR:Mimap_bugs}
 CONFIGURE_ARGS+=	--enable-workarounds-for-imap-client-bugs
 .else
 CONFIGURE_ARGS+=	--disable-workarounds-for-imap-client-bugs
@@ -115,9 +113,9 @@ CNFFILES=		etc/courier/imapd-ssl.dist etc/courier/imapd.dist \
 NO_REGRESS=		Yes
 
 post-extract:
-	@perl -pi -e 's,\@datadir\@\/imapd.rand,\/dev\/arandom,g' \
+	@perl -pi -e 's,\@datadir\@\/imapd.rand,\/dev\/urandom,g' \
 	    ${WRKSRC}/imap/imapd.cnf.openssl.in
-	@perl -pi -e 's,\@datadir\@\/imapd.rand,\/dev\/arandom,g' \
+	@perl -pi -e 's,\@datadir\@\/imapd.rand,\/dev\/urandom,g' \
 	    ${WRKSRC}/imap/pop3d.cnf.openssl.in
 
 post-install:

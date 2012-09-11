@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.21 2011/06/02 17:09:32 kili Exp $
+# $OpenBSD: Makefile,v 1.25 2012/08/17 14:08:25 ajacoutot Exp $
 
 COMMENT=	framework for defining and tracking users
 
 DISTNAME=	ConsoleKit-0.4.5
 PKGNAME=	${DISTNAME:L}
-REVISION=	2
+REVISION=	5
 
 CATEGORIES=	sysutils	
 
@@ -22,9 +22,9 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB += X11 Xau Xdmcp c dbus-1 dbus-glib-1 gio-2.0
-WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 kvm pcre
-WANTLIB += pthread pthread-stubs xcb z polkit-gobject-1
+WANTLIB += X11 c dbus-1 dbus-glib-1 ffi gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gthread-2.0 kvm pcre polkit-gobject-1 pthread
+WANTLIB += xcb z
 
 MASTER_SITES=	http://www.freedesktop.org/software/ConsoleKit/dist/
 
@@ -38,7 +38,6 @@ CONFIGURE_STYLE= autoconf
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--localstatedir=/var \
 		--with-pid-file=/var/run/ConsoleKit/pid \
 		--enable-pam-module=no
 

@@ -1,20 +1,20 @@
-# $OpenBSD: Makefile,v 1.18 2011/07/18 15:04:08 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.44 2012/07/06 08:32:13 dcoppa Exp $
+
+SHARED_ONLY =	Yes
 
 COMMENT =	console client for pandora
 
-DISTNAME =	pianobar-2011.07.09
-REVISION =	1
+DISTNAME =	pianobar-2012.06.24
+REVISION =	0
 EXTRACT_SUFX =	.tar.bz2
 CATEGORIES =	audio
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>
 
-HOMEPAGE =	http://6xq.net/html/00/17.html
-MASTER_SITES =	http://6xq.net/media/00/16/
+HOMEPAGE =	http://6xq.net/projects/pianobar/
+MASTER_SITES =	${HOMEPAGE}
 
-SHARED_ONLY =	Yes
-
-SHARED_LIBS =	piano	0.0	# 0.0.0
+SHARED_LIBS =	piano	2.0	# 0.0.0
 
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
@@ -22,35 +22,40 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =	ao c faad m mad pthread
+WANTLIB =	ao c faad gcrypt gnutls json m mad pthread
 
-LIB_DEPENDS =	audio/libao \
-		audio/faad \
-		audio/libmad
-
-CFLAGS +=	-I${LOCALBASE}/include
+LIB_DEPENDS =	audio/faad>=2.7 \
+		audio/libao \
+		audio/libmad \
+		devel/json-c \
+		security/gnutls>=2.10.0 \
+		security/libgcrypt
 
 .if !defined(DEBUG)
 CFLAGS +=	-DNDEBUG
 .endif
 
 MAKE_FLAGS =	DYNLINK=1 \
-		LDFLAGS="-L${LOCALBASE}/lib" \
-		LIBpiano_VERSION="${LIBpiano_VERSION}" \
-		MANDIR="${PREFIX}/man"
+		CC=${CC} \
+		LIBGCRYPT_CFLAGS="-I${LOCALBASE}/include" \
+		LIBpiano_VERSION="${LIBpiano_VERSION}"
 
 FAKE_FLAGS =	PREFIX="${PREFIX}" \
 		INSTALL_DATA="${INSTALL_DATA}" \
 		INSTALL_MAN="${INSTALL_MAN}" \
-		INSTALL_PROGRAM="${INSTALL_PROGRAM}"
+		INSTALL_PROGRAM="${INSTALL_PROGRAM}" \
+		MANDIR="${PREFIX}/man"
 
 USE_GMAKE =	Yes
 
-NO_REGRESS =	Yes
+REGRESS_TARGET = test
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/pianobar
 	${INSTALL_DATA} ${WRKSRC}/contrib/config-example \
 		${PREFIX}/share/examples/pianobar/config
+
+pre-regress:
+	@touch ${WRKSRC}/src/libwaitress/waitress.c
 
 .include <bsd.port.mk>

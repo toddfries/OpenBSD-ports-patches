@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2011/05/28 08:15:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2012/09/01 14:36:58 ajacoutot Exp $
 
 COMMENT =	labels and business card designer
 
 GNOME_PROJECT =	glabels
 GNOME_VERSION =	3.0.0
 
-REVISION =	0
+REVISION =	6
 
 CATEGORIES =	productivity graphics
 
@@ -22,7 +22,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm asn1
 WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 com_err croco-0.6
 WANTLIB += crypto drm ebook-1.2 edataserver-1.2 expat fontconfig
@@ -32,6 +32,7 @@ WANTLIB += m nspr4 nss3 nssutil3 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 plc4 plds4 png pthread pthread-stubs
 WANTLIB += rsvg-2 smime3 soup-2.4 sqlite3 ssl3 xcb xcb-render
 WANTLIB += xcb-shm xml2 z
+WANTLIB += dbus-1 dbus-glib-1 ffi softokn3 stdc++
 
 MODULES =	devel/gettext \
 		x11/gnome \
@@ -45,15 +46,12 @@ LIB_DEPENDS =	x11/gtk+3 \
 
 RUN_DEPENDS =	misc/shared-mime-info
 
-MODGNOME_HELP_FILES =	Yes
-DESKTOP_FILES =		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE =	Yes
+MODGNOME_ICON_CACHE=	Yes
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ENV =		LDFLAGS="-L${LOCALBASE}/lib" \
-			CPPFLAGS="-I${LOCALBASE}/include"
 
-CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
-			--disable-gtk-doc
 USE_GROFF =		Yes
 
 .include <bsd.port.mk>

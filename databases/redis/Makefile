@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/28 08:57:32 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.32 2012/08/08 11:24:05 dcoppa Exp $
 
 COMMENT =		persistent key-value database
-DISTNAME =		redis-2.2.12
+DISTNAME =		redis-2.4.16
 CATEGORIES =		databases
 HOMEPAGE =		http://redis.io/
 
@@ -13,33 +13,40 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
+WANTLIB += 		c execinfo m pthread
+
 MASTER_SITES =		http://redis.googlecode.com/files/
 
 MODULES =		lang/tcl
 
-USE_GMAKE =		Yes
+LIB_DEPENDS =		devel/libexecinfo
 
-FAKE_FLAGS =		INSTALL_TOP=${WRKINST}${PREFIX}
-
-# Replace cp/mkdir with our install commands
-# Enable verbose compilation
-MAKE_FLAGS =		INSTALL="${INSTALL_PROGRAM}" \
-			INSTALL_DIR="${INSTALL_DATA_DIR}" \
+MAKE_FLAGS =		CC=${CC} \
+			DEBUG="" \
+			OPTIMIZATION="" \
 			V=1
 
-WANTLIB += 		c m pthread
+FAKE_FLAGS =		INSTALL="${INSTALL_PROGRAM}" \
+			INSTALL_DIR="${INSTALL_DATA_DIR}" \
+			INSTALL_TOP="${WRKINST}${PREFIX}"
 
-# Warning: executing the test suite can take a long time and will
+USE_GMAKE =		Yes
+
+CFLAGS +=		-I${LOCALBASE}/include
+
+# Warning: running the test suite can take a long time and will
 # consume a lot of cpu cycles
 REGRESS_DEPENDS =       ${MODTCL_BUILD_DEPENDS}
 REGRESS_FLAGS =		TCL_BIN="${MODTCL_BIN}"
 REGRESS_TARGET =	test
 
+DBDIR =			/var/redis
+SUBST_VARS +=		DBDIR
+
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/redis
-	${INSTALL_DATA} ${WRKSRC}/redis.conf \
-		${PREFIX}/share/examples/redis/
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/redis
-	${INSTALL_DATA} ${WRKBUILD}/doc/* ${PREFIX}/share/doc/redis/
+	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c \
+		${WRKSRC}/redis.conf \
+			${PREFIX}/share/examples/redis/redis.conf
 
 .include <bsd.port.mk>

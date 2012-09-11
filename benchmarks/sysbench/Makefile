@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2010/11/15 00:22:49 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2011/10/17 12:57:39 espie Exp $
 
-COMMENT =	A modular, cross-platform and multi-threaded benchmark tool
+COMMENT =	modular, cross-platform and multi-threaded benchmark tool
 DISTNAME =	sysbench-0.4.8
-REVISION=	0
+REVISION=	2
 CATEGORIES =	benchmarks 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=sysbench/}
 
@@ -30,7 +30,7 @@ USE_LIBTOOL =		yes
 FLAVORS =		mysql pgsql
 FLAVOR ?=
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 CONFIGURE_ARGS +=	--with-mysql
 LIB_DEPENDS +=		databases/mysql
 WANTLIB +=		crypto ssl z lib/mysql/mysqlclient_r
@@ -38,10 +38,10 @@ WANTLIB +=		crypto ssl z lib/mysql/mysqlclient_r
 CONFIGURE_ARGS +=	--with-mysql=no
 .endif
 
-.if ${FLAVOR:L:Mpgsql}
+.if ${FLAVOR:Mpgsql}
 CONFIGURE_ARGS +=	--with-pgsql
 LIB_DEPENDS +=		databases/postgresql
-WANTLIB +=		pq
+WANTLIB +=		pq com_err crypto ssl
 #crypto ssl
 .else
 CONFIGURE_ARGS +=	--with-pgsql=no

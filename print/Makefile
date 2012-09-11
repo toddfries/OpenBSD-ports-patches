@@ -1,8 +1,8 @@
-#	$OpenBSD: Makefile,v 1.93 2011/07/19 09:22:50 jasper Exp $
+# $OpenBSD: Makefile,v 1.102 2012/08/28 19:13:11 espie Exp $
 
     SUBDIR =
+    SUBDIR += a2ps
     SUBDIR += a2ps,a4
-    SUBDIR += a2ps,letter
     SUBDIR += acroread
     SUBDIR += afm
     SUBDIR += apsfilter
@@ -10,6 +10,7 @@
     SUBDIR += auctex
     SUBDIR += bibview
     SUBDIR += cups
+    SUBDIR += cups-filters
     SUBDIR += cups-pdf
     SUBDIR += cups-pk-helper
     SUBDIR += detex
@@ -17,7 +18,6 @@
     SUBDIR += enscript
     SUBDIR += enscript,a4
     SUBDIR += epdfview
-    SUBDIR += epdfview,cups
     SUBDIR += foiltex
     SUBDIR += fontforge
     SUBDIR += foo2zjs
@@ -27,7 +27,6 @@
     SUBDIR += freetype
     SUBDIR += ghostscript
     SUBDIR += ghostview
-    SUBDIR += gstoraster
     SUBDIR += gtklp
     SUBDIR += gutenprint
     SUBDIR += gv
@@ -42,25 +41,25 @@
     SUBDIR += lout
     SUBDIR += lss
     SUBDIR += lyx
+    SUBDIR += mpage
     SUBDIR += mpage,a4
-    SUBDIR += mpage,legal
-    SUBDIR += mpage,letter
     SUBDIR += openclipart
-    SUBDIR += pdfjam
+    SUBDIR += p5-PostScript-MailLabels
     SUBDIR += pdflib
     SUBDIR += pdfshuffler
-    SUBDIR += poppler
+    SUBDIR += poppler,
     SUBDIR += poppler-data
     SUBDIR += ps2eps
     SUBDIR += pscal
     SUBDIR += psdim
+    SUBDIR += psutils
     SUBDIR += psutils,a4
-    SUBDIR += psutils,letter
     SUBDIR += ptouch-driver
     SUBDIR += py-cups
     SUBDIR += py-poppler
     SUBDIR += py-relatorio
     SUBDIR += py-reportlab
+    SUBDIR += qpdf
     SUBDIR += scribus
     SUBDIR += splix
     SUBDIR += system-config-printer

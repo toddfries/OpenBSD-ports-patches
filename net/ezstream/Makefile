@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2011/07/07 01:06:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2012/03/29 13:38:48 sthen Exp $
 
 COMMENT=	streaming source client that uses external en-/decoders
 
 DISTNAME=	ezstream-0.5.6
-REVISION=	0
+REVISION=	1
 CATEGORIES=	net multimedia
 
 HOMEPAGE=	http://www.icecast.org/ezstream.php
@@ -26,7 +26,7 @@ LIB_DEPENDS=	net/libshout \
 		textproc/libxml \
 		audio/taglib
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= --with-taglib="${LOCALBASE}"

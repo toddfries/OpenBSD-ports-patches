@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2011/06/08 17:35:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2012/05/10 07:43:17 ajacoutot Exp $
 
 COMMENT =	fast and simple GTK+ image viewer
 
 MODPY_EGG_VERSION = 0.9.5.2
 DISTNAME =	mirage-${MODPY_EGG_VERSION}
-REVISION =	0
+REVISION =	3
 
 CATEGORIES =	graphics
 
@@ -16,7 +16,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += X11
+WANTLIB += X11 ${MODPY_WANTLIB}
 
 MASTER_SITES =	${MASTER_SITE_BERLIOS:=mirageiv/}
 

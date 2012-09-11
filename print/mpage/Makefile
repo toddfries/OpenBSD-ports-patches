@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2010/10/18 21:25:09 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2012/02/18 09:08:16 ajacoutot Exp $
 
 COMMENT=	print multiple pages per sheet on PostScript printer
 
 DISTNAME=	mpage-2.5.6
 CATEGORIES=	print
+REVISION=	1
 
 MAINTAINER=	Ian McWilliam <kaosagnt@tpg.com.au>
 
@@ -17,21 +18,17 @@ MASTER_SITES=	ftp://ftp.mesa.nl/pub/mpage/ \
 		ftp://ftp.mesa.nl/pub/mpage/old/
 EXTRACT_SUFX=	.tgz
 
-FLAVORS=	letter legal a4
-FLAVOR?=	a4
+FLAVORS=	a4
+FLAVOR?=
 
 ALL_TARGET=	default
 MAKE_FLAGS=	CC='${CC}' CFLAGS='${CFLAGS} $${DEFS}' PREFIX='${PREFIX}'
 USE_GROFF =	Yes
 
-.if   ${FLAVOR:L} == "letter"
-MAKE_FLAGS+=	PAGESIZE=Letter
-.elif ${FLAVOR:L} == "legal"
-MAKE_FLAGS+=	PAGESIZE=Legal
-.elif ${FLAVOR:L} == "a4"
+.if ${FLAVOR:L} == "a4"
 MAKE_FLAGS+=	PAGESIZE=A4
 .else
-ERRORS+=	"Fatal: You must set exactly ONE flavor: ${FLAVORS}"
+MAKE_FLAGS+=	PAGESIZE=Letter
 .endif
 
 NO_REGRESS=	Yes

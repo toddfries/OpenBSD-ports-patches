@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2011/06/08 17:31:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2012/01/03 07:03:54 ajacoutot Exp $
 
 COMMENT=		curses front-end for various audio players
 
 DISTNAME=		cplay-1.49
-REVISION =		6
+REVISION =		7
 CATEGORIES=		audio
 
 HOMEPAGE=		http://mask.tf.hut.fi/~flu/hacks/cplay/
@@ -23,7 +23,6 @@ MODULES=		lang/python
 
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
-USE_GROFF =		Yes
 PKG_ARCH=		*
 
 do-configure:

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.18 2011/05/17 11:49:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2012/03/29 13:38:30 sthen Exp $
 
 COMMENT=	Qt4 poker game with online capabilities
 
 V=		0.8.3
 DISTNAME=	PokerTH-${V}-src
 PKGNAME=	pokerth-${V}
+REVISION=		0
 CATEGORIES=	games x11
 
 HOMEPAGE=	http://www.pokerth.net/
@@ -42,7 +43,7 @@ MAKE_FLAGS=	QMAKE_CXX=${CXX} \
 
 FAKE_FLAGS=	INSTALL_ROOT=${DESTDIR}
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 
 VMEM_WARNING=	Yes
 NO_REGRESS=	Yes

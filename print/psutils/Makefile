@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.31 2010/11/20 09:48:39 espie Exp $
+# $OpenBSD: Makefile,v 1.35 2012/04/28 12:16:29 espie Exp $
 
 COMMENT=	utilities for manipulating PostScript documents
 
 MINV=		17
 DISTNAME=	psutils-p${MINV}
 PKGNAME=	psutils-1.${MINV}
-REVISION =	0
+REVISION =	4
 
 CATEGORIES=	print
 
@@ -27,24 +27,13 @@ WANTLIB +=	c
 WRKDIST=	${WRKDIR}/psutils
 USE_GROFF =	Yes
 
-FLAVORS=	a3 a4 a5 b5 b4 letter legal ledger tabloid statement \
-		executive folio quarto s10x14
-FLAVOR?=letter
+FLAVORS=	a4
+FLAVOR?=
 
-.for i in ${FLAVORS}
-.  if ${FLAVOR:L} == $i
-OK=Yes
-.  endif
-.endfor
-OK?=No
-.if ${OK} == "No"
-ERRORS+="Fatal: Invalid flavor ${FLAVOR}"
-.endif
-
-.if ${FLAVOR:L} == s10x14
-PAPERSIZE=	10x14
+.if ${FLAVOR:L} == a4
+PAPERSIZE=	a4
 .else
-PAPERSIZE=	${FLAVOR:L}
+PAPERSIZE=	letter
 .endif
 
 MAKE_FLAGS=	PAPER=${PAPERSIZE}

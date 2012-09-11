@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2011/05/11 09:01:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2012/08/25 13:19:37 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	H.323 gatekeeper
 
-DISTNAME=	gnugk-2.3.2
-REVISION=	0
+DISTNAME=	gnugk-3.1
 
 CATEGORIES=	net telephony
 
@@ -19,55 +18,46 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+WANTLIB += SDL c crypto expat h323 kvm lber ldap ldap_r m netsnmp
+WANTLIB += netsnmpagent netsnmpmibs pt pthread sasl2 ssh ssl stdc++
+WANTLIB += wrap
+
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=openh323gk/}
 
-WANTLIB=	SDL avutil c crypto expat lber ldap ldap_r m \
-		pt pthread sasl2 ssl stdc++ h323>=3 sqlite3>=12
+BUILD_DEPENDS=	databases/mysql \
+		databases/postgresql
 
-LIB_DEPENDS=	net/h323plus \
-		databases/sqlite3
+LIB_DEPENDS=	net/h323plus>=1.24.0p0 \
+		net/net-snmp \
+		security/libssh
 
 USE_GMAKE=	Yes
-USE_GROFF=	Yes
-ALL_TARGET=	optshared addpasswd
+ALL_TARGET=	optshared # XXX gkdefault
 NO_REGRESS=	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--enable-radius \
-		--enable-sqlite \
-		--enable-h46023 \
-		--disable-h46018 \
-		--disable-firebird \
-		--disable-unixodbc
-
-MAKE_ENV+=	CC=${CC} CPLUS=${CXX} \
-		STDCCFLAGS="${STDCCFLAGS} -I${LOCALBASE}/include/openh323" \
-		SYSLIBDIR=`ptlib-config --libdir`
-
-FLAVORS=	mysql pgsql
-FLAVOR?=
-
-.if ${FLAVOR:L:Mmysql}
-WANTLIB+=	z mysqlclient>=18
-LIB_DEPENDS+=	databases/mysql
-CONFIGURE_ARGS+=--enable-mysql
-.else
-CONFIGURE_ARGS+=--disable-mysql
-.endif
-
-.if ${FLAVOR:L:Mpgsql}
-WANTLIB +=	pq>=5
-LIB_DEPENDS+=	databases/postgresql
-CONFIGURE_ARGS+=--enable-pgsql \
-		--with-pgsql-lib-dir=${LOCALBASE}/lib \
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		PTLIBDIR=`ptlib-config --ptlibdir`
+CONFIGURE_ARGS=	--disable-firebird \
+		--disable-unixodbc \
 		--with-pgsql-include-dir=${LOCALBASE}/include/postgresql
-.else
-CONFIGURE_ARGS+=--disable-pgsql
-.endif
+
+# patented
+CONFIGURE_ARGS += --disable-h46018
+
+MAKE_ENV=	CC=${CC} CPLUS=${CXX} \
+		STDCCFLAGS="${STDCCFLAGS} -I${LOCALBASE}/include/openh323" \
+		INSTALLBIN_DIR=${WRKINST}${TRUEPREFIX}/bin
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/docs/gnugk.1
-	perl -pi -e "s,!!LOCALBASE!!,${LOCALBASE},g" ${WRKSRC}/configure
+	${SUBST_CMD} ${WRKSRC}/docs/gnugk.1 ${WRKSRC}/configure
+
+post-build:
+	cd ${WRKSRC}/addpasswd && \
+		OBJDIR=. \
+		SYSLIBDIR=`ptlib-config --libdir` \
+		PTLIBDIR=`ptlib-config --ptlibdir` ${MAKE_PROGRAM}
 
 post-install:
 	${INSTALL_MAN_DIR} ${PREFIX}/man/man1/
@@ -76,5 +66,7 @@ post-install:
 	${INSTALL_MAN} ${WRKSRC}/docs/gnugk.1 ${PREFIX}/man/man1/
 	${INSTALL_DATA} ${WRKSRC}/docs/*.txt ${PREFIX}/share/doc/gnugk/
 	cp ${WRKSRC}/etc/* ${PREFIX}/share/examples/gnugk/
+	${INSTALL_PROGRAM} ${WRKSRC}/addpasswd/addpasswd \
+		${PREFIX}/bin/addpasswd
 
 .include <bsd.port.mk>

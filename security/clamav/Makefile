@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.70 2011/07/26 14:23:45 sthen Exp $
+# $OpenBSD: Makefile,v 1.78 2012/07/08 21:24:58 giovanni Exp $
 
 COMMENT=		virus scanner
-DISTNAME=		clamav-0.97.2
+DISTNAME=		clamav-0.97.5
+REVISION=		0
 
 CATEGORIES=		security
-SHARED_LIBS=		clamav 18.1 \
+SHARED_LIBS=		clamav 19.0 \
 			clamunrar 2.0 \
 			clamunrar_iface 2.0
 
@@ -20,7 +21,8 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		bz2 c ltdl m milter ncurses pthread stdc++ z
 
-BUILD_DEPENDS=		devel/check
+BUILD_DEPENDS=		devel/check \
+			devel/libexecinfo
 
 LIB_DEPENDS=		archivers/bzip2 \
 			devel/libtool,-ltdl
@@ -28,7 +30,7 @@ LIB_DEPENDS=		archivers/bzip2 \
 RUN_DEPENDS=		archivers/lha \
 			archivers/zoo \
 			archivers/arc \
-			archivers/unzip 
+			archivers/unzip
 
 USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
@@ -58,6 +60,14 @@ LDFLAGS+=	-pthread -L/usr/lib \
 		-L${LOCALBASE}/lib
 CONFIGURE_ENV+=	LDFLAGS="${LDFLAGS}" \
 		CPPFLAGS="${CPPFLAGS}"
+
+.include <bsd.port.arch.mk>
+.if ${PROPERTIES:Mllvm}
+BUILD_DEPENDS+=		devel/llvm
+
+pre-configure:
+	rm -rf ${WRKSRC}/libclamav/c++/llvm
+.endif
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/clamav \

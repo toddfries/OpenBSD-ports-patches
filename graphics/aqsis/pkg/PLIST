@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.3 2010/09/22 12:52:36 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.6 2012/06/15 08:32:16 ajacoutot Exp $
 @bin bin/aqsis
 @bin bin/aqsl
 @bin bin/aqsltell
@@ -243,18 +243,12 @@ share/aqsis/shaders/volume/fog.slx
 share/examples/aqsis/
 share/examples/aqsis/aqsisrc
 @sample ${SYSCONFDIR}/aqsisrc
-share/icons/
-share/icons/hicolor/
-share/icons/hicolor/192x192/
-share/icons/hicolor/192x192/mimetypes/
 share/icons/hicolor/192x192/mimetypes/aqsis-doc.png
-share/mime/
-share/mime/packages/
 share/mime/packages/aqsis.xml
 share/pixmaps/
 share/pixmaps/aqsis.png
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-mime-database %D/share/mime
 @unexec-delete %D/bin/update-mime-database %D/share/mime
 @exec %D/bin/update-desktop-database

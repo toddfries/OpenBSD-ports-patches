@@ -1,4 +1,8 @@
-# $OpenBSD: Makefile,v 1.16 2010/11/15 19:45:57 espie Exp $
+# $OpenBSD: Makefile,v 1.25 2012/08/27 13:50:15 sthen Exp $
+
+# Memory hog, stuck for days on the same file during build.
+# XXX check with different optimizer level? see doc/install.doc
+NOT_FOR_ARCHS=	sh
 
 COMMENT-main=	source code documentation generator tool
 COMMENT-gui=	GUI front-end for doxygen
@@ -7,7 +11,8 @@ VERSION=	1.7.2
 DISTNAME=	doxygen-${VERSION}.src
 PKGNAME-main=	doxygen-${VERSION}
 FULLPKGNAME-gui=doxygen-gui-${VERSION}
-CATEGORIES=	devel textproc 
+REVISION-main=	3
+CATEGORIES=	devel textproc
 
 HOMEPAGE=	http://www.doxygen.org/
 
@@ -17,29 +22,31 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	ftp://ftp.stack.nl/pub/users/dimitri/
+MASTER_SITES=	http://ftp.stack.nl/pub/users/dimitri/ \
+		ftp://ftp.stack.nl/pub/users/dimitri/
 
-PSEUDO_FLAVORS=	gui
-FLAVOR?=
+PSEUDO_FLAVORS=	no_gui bootstrap
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
 MODULES=	converters/libiconv
-
 
 CONFIGURE_STYLE=simple
 CONFIGURE_ARGS=	--prefix ${WRKINST}${LOCALBASE} \
 		--install /usr/bin/install \
 		--dot ${LOCALBASE}/bin/dot
 
-MULTI_PACKAGES=	-main
-.if ${FLAVOR:Mgui}
+MULTI_PACKAGES=	-main -gui
+
+.include <bsd.port.arch.mk>
+.if ${BUILD_PACKAGES:M-gui}
 CONFIGURE_ARGS+=--with-doxywizard
 CONFIGURE_ENV=	QTDIR=${LOCALBASE}
 
 MODULES+=	x11/qt4
-
-MULTI_PACKAGES+=-gui
+.endif
+.if ${MACHINE_ARCH} == "mips64" || ${MACHINE_ARCH} == "mips64el"
+# ld(1) fails
+CONFIGURE_ARGS+= --english-only
 .endif
 
 BUILD_DEPENDS +=	devel/bison
@@ -51,7 +58,7 @@ LIB_DEPENDS-main = ${COMMON_LIB_DEPENDS}
 
 WANTLIB-gui=	${COMMON_WANTLIB} ${MODQT_WANTLIB} QtGui QtXml
 LIB_DEPENDS-gui=${COMMON_LIB_DEPENDS} ${MODQT_LIB_DEPENDS}
-RUN_DEPENDS-gui=:doxygen-${VERSION}:${BASE_PKGPATH}
+RUN_DEPENDS-gui=doxygen-${VERSION}:${BUILD_PKGPATH}
 
 
 MAKE_FLAGS+=	CXX=${CXX} CC=${CC} \

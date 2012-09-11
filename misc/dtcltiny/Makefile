@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/03/17 14:00:56 sebastia Exp $
+# $OpenBSD: Makefile,v 1.3 2012/03/29 13:38:40 sthen Exp $
 
 COMMENT =		small SRCP client to control digital model trains
 
 DISTNAME =		dtcltiny-0.8.4
+REVISION=		0
 CATEGORIES =		misc x11
 
 HOMEPAGE =		http://dtcltiny.sourceforge.net/
@@ -19,7 +20,7 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=dtcltiny/}
 MODULES =		x11/qt3
 WANTLIB += 		ICE SM X11 Xext c jpeg m pthread stdc++ z
 
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 USE_GMAKE =		Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		LDFLAGS=-L${LOCALBASE}/lib CFLAGS=-I${LOCALBASE}/include \

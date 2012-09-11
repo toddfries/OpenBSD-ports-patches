@@ -1,0 +1,23 @@
+@comment $OpenBSD: PLIST,v 1.3 2012/09/04 12:06:01 gonzalo Exp $
+@conflict xxxterm-*
+@pkgpath www/xxxterm
+@bin bin/xombrero
+@man man/man1/xombrero.1
+share/applications/xombrero.desktop
+share/examples/xombrero/
+share/examples/xombrero/favorites
+share/examples/xombrero/playflash.sh
+share/examples/xombrero/xombrero.conf
+share/xombrero/
+share/xombrero/hsts-preload
+share/xombrero/style.css
+share/xombrero/tld-rules
+share/xombrero/xombrero.css
+share/xombrero/xombreroicon.png
+share/xombrero/xombreroicon128.png
+share/xombrero/xombreroicon16.png
+share/xombrero/xombreroicon32.png
+share/xombrero/xombreroicon48.png
+share/xombrero/xombreroicon64.png
+@exec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

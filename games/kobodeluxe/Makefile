@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2011/05/11 06:56:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2011/12/02 14:36:14 espie Exp $
 
 COMMENT=	sdl port of xkobo
 DISTNAME=	KoboDeluxe-0.5.1
@@ -13,7 +13,7 @@ HOMEPAGE=	http://olofson.net/kobodl/
 FLAVORS=	harder
 FLAVOR?=
 
-.if ${FLAVOR:L:Mharder}
+.if ${FLAVOR:Mharder}
 PATCH_LIST=patch-* extra-hard
 .endif
 
@@ -31,7 +31,7 @@ LIB_DEPENDS=	devel/sdl-image
 FAKE=		all
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV+=	sdlconf_args=--prefix=${DEPBASE}
+CONFIGURE_ENV+=	sdlconf_args=--prefix=${LOCALBASE}
 
 pre-configure:
 	@cp ${FILESDIR}/missile* ${WRKSRC}/data/gfx/

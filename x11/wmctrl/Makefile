@@ -1,24 +1,23 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/22 08:37:05 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2012/09/01 14:37:00 ajacoutot Exp $
 
 COMMENT=	interact with an EWMH/NetWM window manager
 DISTNAME=	wmctrl-1.07
-REVISION=	0
+REVISION=	3
 
 CATEGORIES=	x11
-MASTER_SITES=	${HOMEPAGE}dist/
+MASTER_SITES=	${HOMEPAGE}/dist/
 
-HOMEPAGE=	http://sweb.cz/tripie/utils/wmctrl/
+HOMEPAGE=	http://tomas.styblo.name/wmctrl/
 
-# GPL
+# GPLv2
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB=		ICE SM X11 Xmu c glib-2.0
+WANTLIB=	ICE SM X11 Xmu c glib-2.0
 
-MODULES=		devel/gettext
-
+MODULES=	devel/gettext
 
 LIB_DEPENDS=	devel/glib2
 

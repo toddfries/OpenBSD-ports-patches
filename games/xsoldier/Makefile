@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/16 11:23:29 espie Exp $
+# $OpenBSD: Makefile,v 1.30 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT =	space-based shoot'em up game for X11
 
-DISTNAME =	xsoldier-1.5
+DISTNAME =	xsoldier-1.8
 CATEGORIES =	games x11
 
 HOMEPAGE =	http://www.interq.or.jp/libra/oohara/xsoldier/
@@ -20,11 +20,8 @@ WANTLIB =		ICE SM X11 Xpm c
 MASTER_SITES =		${HOMEPAGE}
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	--localstatedir=/var
 
 MAKE_FLAGS =		CC_OPTIMIZE="${CFLAGS}"
-
-USE_GROFF =		Yes
 
 NO_REGRESS =		Yes
 

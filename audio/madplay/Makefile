@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2010/11/15 00:22:47 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/06 12:21:05 naddy Exp $
 
 COMMENT=	command-line MPEG audio decoder and player
 
@@ -24,8 +24,7 @@ LIB_DEPENDS=	audio/libid3tag \
 WANTLIB=	c id3tag>=3 m mad>=2 sndio z
 
 USE_LIBTOOL=	Yes
-USE_GROFF =	Yes
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 AUTOCONF_VERSION=2.59
 CONFIGURE_STYLE= autoconf
 CONFIGURE_ARGS=	--without-esd

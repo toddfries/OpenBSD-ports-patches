@@ -1,0 +1,20 @@
+$OpenBSD: patch-argus_Makefile_in,v 1.2 2012/07/08 19:20:58 steven Exp $
+--- argus/Makefile.in.orig	Wed Jan  4 01:15:19 2012
++++ argus/Makefile.in	Wed Jun 27 22:27:06 2012
+@@ -19,6 +19,7 @@
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+ datarootdir = @datarootdir@
++sysconfdir = @sysconfdir@
+ 
+ # Pathname of directory to install the system binaries
+ SBINDIR = @sbindir@
+@@ -46,7 +47,7 @@ SASLLIBS = @LIB_SASL@
+ CC = @CC@
+ CCOPT = @V_CCOPT@
+ INCLS = -I$(srcdir) @V_INCLS@ -I$(srcdir)/../include 
+-DEFS = @DEFS@
++DEFS = @DEFS@ -DSYSCONFDIR=\"$(sysconfdir)\"
+ #DEFS = -DARGUSPERFMETRICS=1 @DEFS@
+ 
+ 

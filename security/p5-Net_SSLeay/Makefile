@@ -1,36 +1,35 @@
-# $OpenBSD: Makefile,v 1.34 2010/11/20 17:22:44 espie Exp $
+# $OpenBSD: Makefile,v 1.39 2012/08/23 15:52:47 sthen Exp $
 
-SHARED_ONLY=		Yes
+SHARED_ONLY =		Yes
 
-COMMENT=		perl module for using OpenSSL
+COMMENT =		perl module for using OpenSSL
 
-DISTNAME=		Net-SSLeay-1.36
-REVISION=		0
+DISTNAME =		Net-SSLeay-1.48
+REVISION =		0
 
-CATEGORIES=		security
+CATEGORIES =		security
 
-MAINTAINER=		Alexander Bluhm <bluhm@openbsd.org>
+HOMEPAGE =		http://alioth.debian.org/projects/net-ssleay
 
-HOMEPAGE=		http://alioth.debian.org/projects/net-ssleay
+MAINTAINER =		Alexander Bluhm <bluhm@openbsd.org>
 
 # same terms as OpenSSL
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
+PERMIT_DISTFILES_CDROM =Yes
+PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB=		crypto ssl z
+WANTLIB =		c crypto ssl z
 
-MODULES=		cpan
-USE_GROFF =		Yes
-REGRESS_DEPENDS=	devel/p5-Test-Exception \
+MODULES =		cpan
+REGRESS_DEPENDS =	devel/p5-Test-Exception \
 			devel/p5-Test-Warn \
 			devel/p5-Test-NoWarnings \
 			devel/p5-Test-Pod \
 			devel/p5-Test-Pod-Coverage
 
-MODCPAN_EXAMPLES=	Yes
-SRCDIR= 		${WRKSRC}/${MODCPAN_EXAMPLES_DIST}
+MODCPAN_EXAMPLES =	Yes
+SRCDIR = 		${WRKSRC}/${MODCPAN_EXAMPLES_DIST}
 
 post-install:
 	${MODCPAN_POST_INSTALL}

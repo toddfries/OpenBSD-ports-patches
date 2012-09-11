@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/17 08:05:12 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/04 18:08:21 pascal Exp $
 
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
@@ -8,7 +8,7 @@ COMMENT=	photorealistic 3D rendering solution
 
 V=		1.6.0
 DISTNAME=	aqsis-${V}
-REVISION=	0
+REVISION=	5
 CATEGORIES=	graphics
 
 SO_VERSION=	0.0 # 1.6
@@ -34,7 +34,9 @@ WANTLIB += boost_system-mt boost_thread-mt boost_wave-mt tiffxx
 
 MODULES=	devel/cmake
 
-RUN_DEPENDS=	devel/desktop-file-utils
+RUN_DEPENDS=	devel/desktop-file-utils \
+		misc/shared-mime-info \
+		x11/gtk+2,-guic
 BUILD_DEPENDS=	textproc/libxslt \
 		devel/bison
 LIB_DEPENDS=	x11/fltk>=1.1.7p2 \
@@ -44,10 +46,10 @@ LIB_DEPENDS=	x11/fltk>=1.1.7p2 \
 
 NO_REGRESS=	Yes
 MODCMAKE_WANTCOLOR=No
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 MAKE_FLAGS=	VERBOSE=1
 
-CFLAGS+=	-pthread
+CFLAGS+=	-pthread -I${X11BASE}/include
 
 CONFIGURE_ARGS=	-DAQSIS_BOOST_FILESYSTEM_LIBRARY_NAME=boost_filesystem-mt \
 		-DAQSIS_BOOST_REGEX_LIBRARY_NAME=boost_regex-mt \

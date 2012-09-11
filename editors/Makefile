@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.82 2011/03/28 15:19:58 jasper Exp $
-# $FreeBSD: Makefile,v 1.44 1997/09/13 20:19:28 chuckr Exp $
-#
+# $OpenBSD: Makefile,v 1.88 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += abiword
@@ -22,6 +20,7 @@
      SUBDIR += emacs23
      SUBDIR += emacs23,no_x11
      SUBDIR += fte
+     SUBDIR += ged
      SUBDIR += gummi
      SUBDIR += hexcurse
      SUBDIR += hexedit
@@ -39,8 +38,10 @@
      SUBDIR += libreoffice
      SUBDIR += nano
      SUBDIR += nedit
+     SUBDIR += nvi
      SUBDIR += nvi-m17n
      SUBDIR += nvi-m17n,canna
+     SUBDIR += py-qscintilla
      SUBDIR += qscintilla
      SUBDIR += scintilla
      SUBDIR += scite
@@ -50,56 +51,10 @@
      SUBDIR += ted
      SUBDIR += texmaker
      SUBDIR += texworks
-     SUBDIR += textedit
      SUBDIR += uemacs
      SUBDIR += vim
      SUBDIR += vim,no_x11
-     SUBDIR += vim-spell,af
-     SUBDIR += vim-spell,am
-     SUBDIR += vim-spell,bg
-     SUBDIR += vim-spell,ca
-     SUBDIR += vim-spell,cs
-     SUBDIR += vim-spell,cy
-     SUBDIR += vim-spell,da
-     SUBDIR += vim-spell,de
-     SUBDIR += vim-spell,el
-     SUBDIR += vim-spell,eo
-     SUBDIR += vim-spell,es
-     SUBDIR += vim-spell,fo
-     SUBDIR += vim-spell,fr
-     SUBDIR += vim-spell,ga
-     SUBDIR += vim-spell,gd
-     SUBDIR += vim-spell,gl
-     SUBDIR += vim-spell,he
-     SUBDIR += vim-spell,hr
-     SUBDIR += vim-spell,hu
-     SUBDIR += vim-spell,id
-     SUBDIR += vim-spell,it
-     SUBDIR += vim-spell,ku
-     SUBDIR += vim-spell,la
-     SUBDIR += vim-spell,lt
-     SUBDIR += vim-spell,lv
-     SUBDIR += vim-spell,mg
-     SUBDIR += vim-spell,mi
-     SUBDIR += vim-spell,ms
-     SUBDIR += vim-spell,nb
-     SUBDIR += vim-spell,nl
-     SUBDIR += vim-spell,nn
-     SUBDIR += vim-spell,ny
-     SUBDIR += vim-spell,pl
-     SUBDIR += vim-spell,pt
-     SUBDIR += vim-spell,ru
-     SUBDIR += vim-spell,rw
-     SUBDIR += vim-spell,sk
-     SUBDIR += vim-spell,sl
-     SUBDIR += vim-spell,sv
-     SUBDIR += vim-spell,sw
-     SUBDIR += vim-spell,tet
-     SUBDIR += vim-spell,tl
-     SUBDIR += vim-spell,tn
-     SUBDIR += vim-spell,uk
-     SUBDIR += vim-spell,yi
-     SUBDIR += vim-spell,zu
+     SUBDIR += vim-spell
      SUBDIR += xemacs21
      SUBDIR += xemacs21-sumo
      SUBDIR += xemacs21-sumo,mule

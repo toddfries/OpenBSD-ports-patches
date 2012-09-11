@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.70 2011/01/15 19:09:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.76 2012/08/28 19:13:12 espie Exp $
 
 COMMENT=		office suite for KDE
 
 VERSION=		1.6.3
-REVISION =		19
+REVISION =		24
 CATEGORIES=		x11 x11/kde productivity
 VMEM_WARNING=		Yes
 MASTER_SITES?=		${MASTER_SITE_KDE:S@$@stable/koffice-${VERSION}/src/@}
@@ -78,7 +78,8 @@ AUTOCONF_VERSION=2.61
 
 MODULES =	x11/kde devel/gettext lang/ruby
 
-RUN_DEPENDS+=	devel/desktop-file-utils
+RUN_DEPENDS+=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 LIB_DEPENDS=	x11/kde/libs3 \
 		python->=2.5,<2.6:lang/python/2.5 \
 		graphics/libart \
@@ -87,8 +88,7 @@ LIB_DEPENDS=	x11/kde/libs3 \
 		graphics/jbigkit \
 		databases/mysql \
 		graphics/libexif \
-		print/libpaper \
-		print/poppler,-qt \
+		print/poppler,,-qt \
 		graphics/GraphicsMagick \
 		textproc/libwpd \
 		databases/libpqxx \
@@ -96,7 +96,7 @@ LIB_DEPENDS=	x11/kde/libs3 \
 		${MODRUBY_LIB_DEPENDS}
 
 WANTLIB= GL GLU GraphicsMagick>=1 Half ICE Iex IlmImf IlmThread Imath \
-	MagickCore>=1 MagickWand>=1 SM X11 Xau Xcursor Xdamage Xdmcp Xext \
+	MagickCore>=1 SM X11 Xcursor Xdamage Xext \
 	Xfixes Xft Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2>=5 \
 	artsflow artsflow_idl audiofile bz2 c crypto drm exif>=12 expat \
 	fontconfig freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gsf-1 \
@@ -106,14 +106,19 @@ WANTLIB= GL GLU GraphicsMagick>=1 Half ICE Iex IlmImf IlmThread Imath \
 	lib/kde3/kio lib/kde3/kjs lib/kde3/kmdi lib/kde3/knewstuff \
 	lib/kde3/kparts lib/kde3/kresources lib/kde3/kspell lib/kde3/kspell2 \
 	lib/kde3/ktexteditor lib/kde3/kutils lib/kde3/kwalletclient \
-	lib/kde3/vcard m mad mcop mng mysqlclient ogg openjpeg paper pcre \
-	pcreposix png poppler poppler-qt pq pqxx pthread pthread-stubs \
+	lib/kde3/vcard m mad mcop mng mysqlclient ogg openjpeg pcre \
+	pcreposix png poppler poppler-qt pq pqxx pthread \
 	python2.5 qtmcop readline sndio soundserver_idl ssl stdc++ \
-	termcap tiff util vorbis vorbisenc vorbisfile wmflite-0.2 wpd-0.8 \
-	wv2 xcb xml2 xslt z ${MODRUBY_WANTLIB}
+	termcap tiff util vorbis vorbisenc vorbisfile wpd-0.8 \
+	wv2 xcb xml2 xslt z djvulibre ffi fftw3 lcms2 lzma wmf-0.2 wmflite-0.2 \
+	${MODRUBY_WANTLIB}
 
 
 CONFIGURE_ARGS+= --with-pgsqlincdir=${LOCALBASE}/include/postgresql
+
+# no need to depend on libpaper
+CONFIGURE_ENV +=	ac_cv_header_paper_h=no \
+			ac_cv_lib_paper_paperinit=no
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/HTML/en/common

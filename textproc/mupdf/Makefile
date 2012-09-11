@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.27 2011/08/23 19:05:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2012/08/23 01:21:04 lteo Exp $
 
 COMMENT =	graphic library, pdf parser, viewer and utilities
 
-V =		0.8.165
+V =		1.1
+REVISION =	0
 DISTNAME =	mupdf-$V-source
-PKGNAME =	mupdf-$V
-WRKDIST =	${WRKDIR}/mupdf-$V
+PKGNAME =	mupdf-${V:S/-rc/rc/}
 
 CATEGORIES =	textproc x11
 
@@ -28,16 +28,14 @@ MASTER_SITES =	${HOMEPAGE}download/ \
 RUN_DEPENDS =	devel/desktop-file-utils
 LIB_DEPENDS =	graphics/jbig2dec \
 		graphics/jpeg \
-		graphics/openjpeg
+		graphics/openjpeg>=1.5.0
 
 USE_GMAKE =	Yes
-USE_GROFF =	Yes
-
-VMEM_WARNING =	Yes
-
 NO_REGRESS =	Yes
 
-MAKE_ENV +=     CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CC=${CC} CXX=${CXX} \
+# -I flags prepend mupdf's own, to allow building with previous ver installed
+MAKE_ENV +=	CFLAGS="${CFLAGS} -I$(WRKSRC)/fitz -I$(WRKSRC)/pdf -I$(WRKSRC)/xps" \
+		LDFLAGS="${LDFLAGS}" CC=${CC} CXX=${CXX} \
 		MANDIR="${WRKINST}${PREFIX}/man/man1" build= verbose=1
 
 FAKE_FLAGS =	prefix=${WRKINST}${PREFIX} mandir=${WRKINST}${PREFIX}/man
@@ -46,8 +44,6 @@ pre-configure:
 	${SUBST_CMD} ${WRKSRC}/debian/mupdf.pc
 
 post-install:
-	# don't conflict with xpdf's pdfinfo
-	mv ${PREFIX}/bin/pdfinfo ${PREFIX}/bin/pdfinfo_mupdf
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications/ \
 	    ${PREFIX}/share/application-registry/ ${PREFIX}/share/pixmaps \
 	    ${PREFIX}/lib/pkgconfig/

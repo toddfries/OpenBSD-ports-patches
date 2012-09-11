@@ -1,11 +1,11 @@
-$OpenBSD: patch-configure,v 1.2 2011/06/06 14:07:40 naddy Exp $
---- configure.orig	Thu Dec 23 22:20:13 2010
-+++ configure	Mon Jun  6 15:55:38 2011
+$OpenBSD: patch-configure,v 1.4 2012/02/26 15:08:36 ajacoutot Exp $
+--- configure.orig	Mon Feb 13 22:09:13 2012
++++ configure	Sun Feb 26 15:11:03 2012
 @@ -1,4 +1,4 @@
 -#! /bin/bash
 +#!/bin/sh
  #
- # Copyright 2010 Yorba Foundation
+ # Copyright 2011-2012 Yorba Foundation
  #
 @@ -30,7 +30,8 @@ abort() {
  while [ $# != 0 ]

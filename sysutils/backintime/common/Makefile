@@ -1,17 +1,16 @@
-# $OpenBSD: Makefile,v 1.6 2011/06/08 17:50:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2012/05/29 10:21:56 ajacoutot Exp $
 
 COMMENT=	simple backup tool -- common files
 
 PKGNAME=	backintime-common-${V}
-REVISION=	0
+REVISION=	3
 
 WRKSRC=		${WRKDIST}/common
 
 BUILD_DEPENDS=	devel/gettext
-RUN_DEPENDS=	misc/fileutils \
+RUN_DEPENDS=	sysutils/coreutils \
 		net/rsync
 
 SUBST_FILES=	backintime config.py
-USE_GROFF =	Yes
 
 .include <bsd.port.mk>

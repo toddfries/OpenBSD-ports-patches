@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.27 2011/05/01 12:32:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.29 2012/03/29 13:39:00 sthen Exp $
 
 PKG_ARCH=	*
 
 COMMENT=	technical documentation XML/SGML definitions
 
 DISTNAME=	docbook-4.5
+REVISION=	0
 DIST_SUBDIR=	docbook
 CATEGORIES=	textproc
 
@@ -34,7 +35,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 NO_BUILD=       Yes
 NO_REGRESS=	Yes
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 
 SGML_VERSIONS=		2.4.1 3.0 3.1 4.0 4.1
 XML_VERSIONS_OLD=	4.1 4.1.2

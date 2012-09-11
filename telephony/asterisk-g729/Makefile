@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/06/04 17:14:58 jolan Exp $
+# $OpenBSD: Makefile,v 1.4 2012/08/23 17:42:27 sthen Exp $
 
 SHARED_ONLY=	Yes
 COMMENT=	G.729a voice codec for Asterisk
 DISTNAME=	asterisk-g72x-1.1-beta2
+REVISION=	2
 PKGNAME=	asterisk-g729-1.1beta2
 EXTRACT_SUFX=	.tar.bz2
 CATEGORIES=	telephony
@@ -15,6 +16,8 @@ PERMIT_DISTFILES_CDROM=	contains non-compiled proprietary Intel code
 PERMIT_DISTFILES_FTP=	contains non-compiled proprietary Intel code
 PERMIT_PACKAGE_CDROM=	patents	
 PERMIT_PACKAGE_FTP=	Yes
+
+WANTLIB += c
 
 NO_REGRESS=	Yes
 

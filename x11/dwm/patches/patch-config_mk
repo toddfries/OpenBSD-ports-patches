@@ -1,7 +1,7 @@
-$OpenBSD: patch-config_mk,v 1.7 2010/06/27 01:03:55 jim Exp $
---- config.mk.orig	Fri Jun  4 06:39:15 2010
-+++ config.mk	Sat Jun 26 20:29:33 2010
-@@ -4,25 +4,25 @@ VERSION = 5.8.2
+$OpenBSD: patch-config_mk,v 1.9 2012/07/09 16:33:40 zinke Exp $
+--- config.mk.orig	Mon Dec 19 16:02:46 2011
++++ config.mk	Sat Jul  7 22:28:18 2012
+@@ -4,30 +4,30 @@ VERSION = 6.0
  # Customize below to fit your system
  
  # paths
@@ -27,16 +27,16 @@ $OpenBSD: patch-config_mk,v 1.7 2010/06/27 01:03:55 jim Exp $
  
  # flags
 -CPPFLAGS = -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
--CFLAGS = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
 +CPPFLAGS += -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
-+CFLAGS += -std=c99 -pedantic -Wall ${INCS} ${CPPFLAGS}
- #CFLAGS = -std=c99 -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
--LDFLAGS = -g ${LIBS}
+ #CFLAGS = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
+-CFLAGS = -std=c99 -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
++CFLAGS += -std=c99 -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
+ #LDFLAGS = -g ${LIBS}
+-LDFLAGS = -s ${LIBS}
 +LDFLAGS += ${LIBS}
- #LDFLAGS = -s ${LIBS}
  
  # Solaris
-@@ -30,4 +30,4 @@ LDFLAGS = -g ${LIBS}
+ #CFLAGS = -fast ${INCS} -DVERSION=\"${VERSION}\"
  #LDFLAGS = ${LIBS}
  
  # compiler and linker

@@ -1,12 +1,8 @@
-# $OpenBSD: Makefile,v 1.66 2011/07/19 09:28:52 jasper Exp $
-# $FreeBSD: Makefile,v 1.36 1997/10/04 15:54:31 jkh Exp $
-#
+# $OpenBSD: Makefile,v 1.72 2012/09/04 19:05:45 jasper Exp $
 
 PKGPATH =
 MIRROR_MK ?= ${.CURDIR}/distfiles/Makefile
-PORTSTOP ?= yes
 DISTFILES_DB ?= ${.CURDIR}/infrastructure/db/locate.database
-
 
 .if defined(SUBDIR)
 # nothing to do
@@ -56,15 +52,14 @@ SUBDIR += korean
 SUBDIR += lang
 SUBDIR += mail
 SUBDIR += math
+SUBDIR += meta
 SUBDIR += misc
 SUBDIR += multimedia
 SUBDIR += net
 SUBDIR += news
-SUBDIR += palm
 SUBDIR += plan9
 SUBDIR += print
 SUBDIR += productivity
-SUBDIR += russian
 SUBDIR += security
 SUBDIR += shells
 SUBDIR += sysutils
@@ -104,31 +99,6 @@ search:	${.CURDIR}/INDEX
 .  endif
 .endif
 
-mirror-maker:
-	@mkdir -p ${MIRROR_MK:H}
-.if !empty(LOCKDIR)
-	@echo "EXEC = " >${MIRROR_MK}
-	@echo 'LOCKDIR = ${LOCKDIR}' >>${MIRROR_MK}
-	@echo 'PORTSDIR = ${PORTSDIR}' >>${MIRROR_MK}
-	@echo 'LOCK_CMD = perl $${PORTSDIR}/infrastructure/bin/dolock' >>${MIRROR_MK}
-	@echo 'UNLOCK_CMD = rm -f' >>${MIRROR_MK}
-	@echo 'SIMPLE_LOCK = $${LOCK_CMD} $${LOCKDIR}/$$$$lock.lock; trap "$${UNLOCK_CMD} $${LOCKDIR}/$$$$lock.lock" 0 1 2 3 13 15' >>${MIRROR_MK}
-.else
-	@echo "EXEC = exec" >${MIRROR_MK}
-	@echo 'SIMPLE_LOCK = :' >>${MIRROR_MK}
-.endif
-
-	@echo '' >>${MIRROR_MK}
-	@echo "default:: ftp cdrom" >>${MIRROR_MK}
-	@echo ".PHONY: default all ftp cdrom .FORCE" >>${MIRROR_MK}
-	@echo ".FORCE:" >>${MIRROR_MK}
-	@_DONE_FILES=`mktemp /tmp/depends.XXXXXXXXX|| exit 1`; \
-	export _DONE_FILES; \
-	trap "rm -f $${_DONE_FILES}" 0 1 2 3 13 15; \
-	${_MAKE} fetch-makefile \
-		ECHO_MSG='echo >&2' \
-		_FETCH_MAKEFILE=${MIRROR_MK}
-
 homepages.html:
 	@echo '<html><ul>' >$@
 	@${_MAKE} homepage-links ECHO_MSG='echo >&2' >>$@
@@ -141,5 +111,5 @@ pkglocatedb:
 	@pkg_mklocatedb -a -d ${.CURDIR}/packages/${MACHINE_ARCH}/all/ \
 	    >${.CURDIR}/packages/${MACHINE_ARCH}/ftp/pkglocatedb
 
-.PHONY: mirror-maker index search distfiles-update-locatedb \
+.PHONY: index search distfiles-update-locatedb \
 	pkglocatedb print-licenses print-index

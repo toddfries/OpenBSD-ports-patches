@@ -1,4 +1,4 @@
-$OpenBSD: README-main,v 1.12 2011/07/14 09:45:13 ajacoutot Exp $
+$OpenBSD: README-main,v 1.22 2012/08/30 14:28:22 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -54,8 +54,14 @@ Anyway, here are the 3 ways of integrating Zarafa with sendmail(8).
 
 First, install the procmail package and configure ${SYSCONFDIR}/procmailrc
 the following way:
- 
-:0 w
+
+# optional: deliver mail tagged as SPAM into the Junk mail folder
+:0w
+* ^X-Spam-Status: Yes
+| ${TRUEPREFIX}/bin/zarafa-dagent -j $LOGNAME
+EXITCODE=$?
+
+:0w
 | ${TRUEPREFIX}/bin/zarafa-dagent $LOGNAME
 EXITCODE=$?
 
@@ -89,13 +95,12 @@ Zarafa webaccess
 Zarafa webaccess is installed under
     ${INSTDIR}
 
-You need to edit the config.php file installed under
-${INSTDIR} for regular web client access.
+Configuration is done in the file
+    ${INSTDIR}/config.php
 
 With Apache, AllowOverride settings are required on the ${INSTDIR}
 directory. You can configure this as follows:
-    # ln -s ${PREFIX-web}/conf/modules.sample/zarafa.conf \
-        /var/www/conf/modules
+    # ln -sf ${PREFIX-web}/conf/modules.sample/zarafa.conf /var/www/conf/modules
 
 If you want to debug the webaccess, copy the following file
    ${INSTDIR}/debug.php.disabled
@@ -104,26 +109,17 @@ to
 The debugging output will then be available under:
    ${INSTDIR}/debug.txt
 
-You need to enable the PHP mapi module by creating a symbolic link from
-${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini to
-${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini:
+The Zarafa webaccess will be accessible from
+    http://<hostname>/webaccess/
 
-    # ln -fs ${SYSCONFDIR}/php-${MODPHP_VERSION}.sample/${MODULE_NAME}.ini \
-        ${SYSCONFDIR}/php-${MODPHP_VERSION}/${MODULE_NAME}.ini
-
-The PHP mapi module and OpenBSD Apache
---------------------------------------
-When using the OpenBSD Apache server, the runtime loader will need to
-pre-load the pthread shared library. While the php binary is linked with
--pthread, httpd is not and the PHP mapi module needs the
-pthread_mutex_init(3) function. LANG will also need to be set to an
-UTF-8 compliant locale.
-To do so, create a login(1) class under /etc/login.conf(5) called after
-the Apache rc.d(8) script, i.e. "httpd":
+HTTP server locale
+------------------
+LANG needs to be set to an UTF-8 compliant locale on the Web server.
+When using httpd(8), create a login(1) class under /etc/login.conf(5)
+called after the Apache rc.d(8) script, i.e. "httpd":
 
 httpd:\
-	:setenv=LANG=en_US.UTF-8\
-	,LD_PRELOAD=/usr/lib/libpthread.so:\
+	:setenv=LANG=en_US.UTF-8:\
 	:tc=daemon:
 
 Documentation and help

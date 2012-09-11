@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.10 2011/04/25 15:01:28 jolan Exp $
+# $OpenBSD: Makefile,v 1.12 2012/07/10 15:22:44 jasper Exp $
 
 COMMENT=	library for packing and unpacking binary data
 DISTNAME=	luapack-20061124
-REVISION =	0
+REVISION =	2
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_BACKUP}
 
@@ -19,16 +19,14 @@ SHARED_ONLY=	Yes
 REGRESS_DEPENDS=${BUILD_PKGPATH}
 
 do-build:
-	${CC} ${CFLAGS} -fPIC -I${LOCALBASE}/include -shared \
+	${CC} ${CFLAGS} -fPIC -I${MODLUA_INCL_DIR} -shared \
 		${WRKSRC}/lpack.c -o ${WRKDIST}/pack.so
 
 do-install:
-	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR}
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/luapack
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/luapack
+	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR} ${MODLUA_DOCDIR} ${MODLUA_EXAMPLEDIR}
 	${INSTALL_DATA} ${WRKBUILD}/pack.so ${MODLUA_LIBDIR}
-	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/luapack
-	${INSTALL_DATA} ${WRKSRC}/test.lua ${PREFIX}/share/examples/luapack
+	${INSTALL_DATA} ${WRKSRC}/README ${MODLUA_DOCDIR}
+	${INSTALL_DATA} ${WRKSRC}/test.lua ${MODLUA_EXAMPLEDIR}
 
 do-regress:
 	lua ${WRKSRC}/test.lua

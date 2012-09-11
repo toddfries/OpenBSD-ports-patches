@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.40 2011/06/14 21:31:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.42 2012/03/29 13:38:13 sthen Exp $
 
 COMMENT=	character set conversion library
 
-DISTNAME=	libiconv-1.13
-REVISION=	2
+DISTNAME=	libiconv-1.14
 CATEGORIES=	converters devel
 MASTER_SITES=	${MASTER_SITE_GNU:=libiconv/}
 
@@ -26,7 +25,7 @@ BUILD_DEPENDS=	devel/gperf
 MAKE_FLAGS=	INSTALL_DATA=cp
 
 USE_LIBTOOL=	Yes
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC}/build-aux ${WRKSRC}/libcharset/build-aux
 CONFIGURE_ARGS= ${CONFIGURE_SHARED} \

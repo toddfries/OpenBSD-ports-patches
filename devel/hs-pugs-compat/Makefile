@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.8 2011/04/23 14:32:51 kili Exp $
+# $OpenBSD: Makefile,v 1.10 2012/09/02 20:04:19 kili Exp $
 
 COMMENT =		portable Haskell/POSIX layer for Pugs
 
-DISTNAME =		pugs-compat-0.0.6.1
-REVISION =		4
+DISTNAME =		pugs-compat-0.0.6.20120229.163800
 CATEGORIES =		devel
 
 # BSD3
@@ -18,6 +17,7 @@ MODGHC_BUILD =		cabal hackage haddock register
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS =		devel/hs-mtl \
 			devel/hs-network \
+			devel/hs-random \
 			devel/hs-regex-base \
 			devel/hs-regex-pcre-builtin \
 			devel/hs-stm \

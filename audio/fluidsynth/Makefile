@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2011/01/16 10:31:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/01/03 07:03:54 ajacoutot Exp $
 
 COMMENT =		SoundFont2 software synthesizer
 DISTNAME =		fluidsynth-1.0.9
@@ -32,13 +32,13 @@ BUILD_DEPENDS +=	${MODGNU_AUTOCONF_DEPENDS} \
 BUILD_DEPENDS +=        devel/libtool
 
 USE_LIBTOOL =		Yes
-USE_GROFF =	Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--disable-lash \
 			--disable-ladcca \
 			--disable-oss-support \
-			--disable-portaudio-support
+			--disable-portaudio-support \
+			--disable-pulse-support
 
 post-patch:
 	cp ${FILESDIR}/fluid_sndio.c ${WRKSRC}/src/

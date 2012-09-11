@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2011/06/08 18:09:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2012/08/28 19:13:12 espie Exp $
 
 COMMENT =		ebook management application
 
-# 0.7.46 and higher have problems repainting their windows..
-DISTNAME =		calibre-0.7.45
-REVISION =		2
+DISTNAME =		calibre-0.8.20
 CATEGORIES =		textproc
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=calibre/}
+REVISION =		3
 
 HOMEPAGE =		http://calibre-ebook.com/
 
@@ -19,24 +18,33 @@ PERMIT_DISTFILES_FTP =	Yes
 MODULES =		lang/python \
 			x11/qt4
 
+WANTLIB +=		ICE MagickCore MagickWand QtGui SM X11 Xext
+WANTLIB +=		Xi Xinerama Xrender c chm fontconfig freetype
+WANTLIB +=		icudata icui18n icuio icuuc m png poppler
+WANTLIB +=		stdc++
+WANTLIB +=		${MODPY_WANTLIB}
+
 LIB_DEPENDS=		devel/chmlib \
 			graphics/ImageMagick \
-			graphics/libwmf \
-			print/poppler,-qt4 \
+			graphics/png \
+			print/poppler, \
 			textproc/icu4c
 RUN_DEPENDS =		devel/py-dateutil \
 			devel/xdg-utils \
 			graphics/ImageMagick \
-			py-Imaging-*-python${MODPY_VERSION}:graphics/py-Imaging,python${MODPY_VERSION} \
+			graphics/libwmf \
+			graphics/py-Imaging \
 			net/py-dnspython \
+			print/poppler,,-qt4 \
 			textproc/py-cssutils>=0.9.7 \
 			textproc/py-lxml>=2.2.8 \
 			textproc/py-pdf \
 			www/py-beautifulsoup \
-			www/py-cherrypy2 \
+			www/py-CherryPy \
 			www/py-mechanize \
 			x11/py-qt4>=4.8.2p1 \
-			www/py-mechanize
+			www/py-mechanize \
+			x11/gtk+2,-guic
 BUILD_DEPENDS =		${RUN_DEPENDS}
 
 CFLAGS +=		"-I${LOCALBASE}/include"
@@ -65,11 +73,21 @@ MODPY_DISTUTILS_INSTALL =	install --prefix=${LOCALBASE} \
 # Remove bundled cherrypy and pyPdf so it uses the system versions
 pre-configure:
 	cd ${WRKSRC} && (rm -rf src/cherrypy src/pyPdf ; \
-	    find . -name '*.py' -exec \
-	    perl -pi -e 's,#!/usr/bin/env python,#!${MODPY_BIN},' {} \; )
+		find . -name '*.py' -print0 | xargs -0 perl -pi -e \
+		's,#!/usr/bin/env python(2)?,#!${MODPY_BIN},' )
 
 do-install:
 	${_MODPY_CMD} ${MODPY_DISTUTILS_INSTALL} ${MODPY_DISTUTILS_INSTALLARGS}
-	${CHMOD} 755 ${PREFIX}/bin/calibre-mount-helper
+	chmod 755 ${PREFIX}/bin/calibre-mount-helper
+	${INSTALL_DATA_DIR} ${PREFIX}/share/calibre/recipes
+	cd ${WRKSRC}/recipes && find . -type f -exec \
+	    ${INSTALL_DATA} {} ${PREFIX}/share/calibre/recipes/ \;
+
+post-install:
+	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \
+		${PREFIX}/lib/calibre
+	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \
+		${PREFIX}/share/calibre
+
 
 .include <bsd.port.mk>

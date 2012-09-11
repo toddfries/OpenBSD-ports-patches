@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.28 2011/05/11 08:24:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2012/06/29 08:33:20 jasper Exp $
 
 COMMENT=	network security scanner
 DISTNAME=	nessus-core-${V}
-REVISION=	8
+REVISION=	11
 
 FLAVORS=	no_x11
 FLAVOR?=
@@ -15,12 +15,13 @@ USE_GROFF =	Yes
 
 .if empty(FLAVOR:L:Mno_x11)
 MODULES=	devel/gettext
-WANTLIB += 	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += 	X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += 	Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
 WANTLIB += 	freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += 	gdk-x11-2.0 gdk_pixbuf-2.0 gtk-x11-2.0 gthread-2.0
 WANTLIB += 	pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png
-WANTLIB += 	pthread pthread-stubs xcb xcb-render xcb-render-util z
+WANTLIB += 	pthread pthread-stubs xcb xcb-render z
+WANTLIB +=	GL xcb-shm
 LIB_DEPENDS+=	x11/gtk+2
 CONFIGURE_ARGS+=--enable-gtk
 .else

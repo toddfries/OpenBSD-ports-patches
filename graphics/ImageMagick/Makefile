@@ -1,18 +1,18 @@
-# $OpenBSD: Makefile,v 1.113 2011/07/07 01:06:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.125 2012/08/28 15:20:21 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		image processing tools
 
-VER=			6.6.6
-DASHVER=		10
+VER=			6.7.7
+DASHVER=		7
+REVISION=		2
 DISTNAME=		ImageMagick-${VER}-${DASHVER}
 PKGNAME=		ImageMagick-${VER}.${DASHVER}
-REVISION=		0
 
-SHARED_LIBS +=		Magick++	14.0	# .1.0
-SHARED_LIBS +=		MagickCore	2.0	# .1.0
-SHARED_LIBS +=		MagickWand	2.0	# .1.0
+SHARED_LIBS +=		Magick++	15.0	# .1.0
+SHARED_LIBS +=		MagickCore	3.0	# .1.0
+SHARED_LIBS +=		MagickWand	3.0	# .1.0
 
 CATEGORIES=		graphics
 
@@ -32,8 +32,11 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB =		c bz2>=10 djvulibre fftw3 jasper>=1 jbig>=1.2 jpeg \
-			lcms>=1 lzma ltdl m perl png>=4 pthread stdc++ \
-			tiff>=36 z
+			lcms2 lzma ltdl m perl png>=4 pthread stdc++ \
+			tiff>=36 z ICE SM X11 Xext Xt expat fontconfig \
+			freetype wmflite-0.2 wmf-0.2 xcb xml2>=9
+
+MODULES =		converters/libiconv
 
 LIB_DEPENDS =		archivers/bzip2 \
 			archivers/xz \
@@ -42,29 +45,35 @@ LIB_DEPENDS =		archivers/bzip2 \
 			graphics/jbigkit \
 			graphics/png \
 			graphics/tiff \
-			graphics/lcms \
+			graphics/lcms2 \
+			graphics/libwmf \
 			graphics/jasper \
-			math/fftw3
+			math/fftw3 \
+			textproc/libxml
 
-RUN_DEPENDS=		graphics/netpbm
-BUILD_DEPENDS=		graphics/netpbm
+RUN_DEPENDS =		graphics/netpbm \
+			print/ghostscript/gnu \
+			print/transfig
+BUILD_DEPENDS =		${RUN_DEPENDS}
 
 ALL_TARGET=		all perl-build
 
-# using libltdl stuff
-USE_LIBTOOL=		gnu
+USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
 CONFIGURE_ARGS+=	--with-quantum-depth=16 \
+			--with-wmf \
 			--without-dps \
 			--without-fpx \
 			--without-gvc \
 			--without-lqr \
 			--without-modules \
 			--without-openexr \
-			--with-perl=/usr/bin/perl \
+			--without-pango \
+			--with-perl \
 			--without-rsvg \
+			--without-webp \
 			--with-ltdl-include=${LOCALBASE}/include \
 			--with-ltdl-lib=${LOCALBASE}/lib \
 			--disable-ltdl-install
@@ -72,38 +81,19 @@ CONFIGURE_ARGS+=	--with-quantum-depth=16 \
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
 			LDFLAGS="-L${WRKBUILD}/magick/.libs -L${WRKBUILD}/wand/.libs -L${LOCALBASE}/lib" \
 			PTHREAD_CFLAGS="-pthread" PTHREAD_LIBS="-pthread" \
-			ac_cv_path_LaunchDelegate=no
+			ac_cv_path_LaunchDelegate=no \
+			ac_cv_lib_wmflite_wmf_lite_create=no
 
-FLAVORS=		no_x11
-FLAVOR?=
-
-.if ${FLAVOR:L:Mno_x11}
-RUN_DEPENDS +=		print/ghostscript/gnu,no_x11
-BUILD_DEPENDS +=	print/ghostscript/gnu,no_x11
-CONFIGURE_ENV +=	ac_cv_path_FIGDecodeDelegate=no
-CONFIGURE_ARGS +=	--without-x \
-			--without-freetype \
-			--without-wmf
-.else
-MODULES +=		converters/libiconv
-WANTLIB +=		ICE SM X11 Xau Xdmcp Xext Xt expat fontconfig \
-			freetype pthread-stubs xcb wmf wmflite>=7 \
-			xml2>=9
-LIB_DEPENDS +=		graphics/libwmf \
-			textproc/libxml
-RUN_DEPENDS +=		print/ghostscript/gnu
-RUN_DEPENDS +=		print/transfig
-BUILD_DEPENDS +=	print/ghostscript/gnu
-BUILD_DEPENDS +=	print/transfig
-CONFIGURE_ARGS +=	--with-wmf
-.endif
+pre-configure:
+	cd ${WRKSRC}; ${SUBST_CMD} $$(find . -name '*.pc.in')
 
 post-install:
-	@perl -pi -e s,'-L${WRKBUILD}/(magick|wand)/.libs','',g \
-		${PREFIX}/bin/Magick-config
-.for f in Magick++ MagickCore MagickWand
-	@perl -pi -e s,'-L${WRKBUILD}/(magick|wand)/.libs','',g \
-		${PREFIX}/lib/lib${f}.la
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/ImageMagick
+.for i in coder.xml colors.xml delegates.xml log.xml magic.xml \
+	mime.xml policy.xml quantization-table.xml \
+	thresholds.xml type-dejavu.xml type-ghostscript.xml \
+	type-windows.xml type.xml
+	${INSTALL_DATA} ${WRKSRC}/config/$i ${PREFIX}/share/examples/ImageMagick
 .endfor
 
 .include <bsd.port.mk>

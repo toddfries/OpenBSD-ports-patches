@@ -1,19 +1,13 @@
-# $OpenBSD: Makefile,v 1.69 2011/06/15 16:26:07 ajacoutot Exp $
-
-# OpenBSD has support for monotonic clock (CLOCK_MONOTONIC), however we
-# currently don't have most of the _POSIX_* defines in unistd.h (e.g.
-# _POSIX_MONOTONIC_CLOCK 200112L) and the associated sysconf(3)
-# _SC_MONOTONIC_CLOCK variable.
-#
-# for dbus, we will not force monotonic clock support because we miss
-# pthread_condattr_setclock(3).
+# $OpenBSD: Makefile,v 1.86 2012/09/04 06:32:52 ajacoutot Exp $
 
 COMMENT=	message bus system
 
-DISTNAME=	dbus-1.4.12
+DISTNAME=	dbus-1.6.4
+REVISION=	0
 EPOCH=		0
 
-SHARED_LIBS +=	dbus-1	9.1 # .8.6
+SHARED_LIBS +=  dbus-1               10.2     # 10.2
+
 CATEGORIES=	x11
 
 HOMEPAGE=	http://dbus.freedesktop.org/
@@ -26,31 +20,42 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB=	ICE X11 Xau Xdmcp SM c expat pthread pthread-stubs xcb
+WANTLIB += ICE SM X11 c expat pthread xcb
 
 MASTER_SITES=	${HOMEPAGE}/releases/dbus/
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 
+USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 
-CONFIGURE_STYLE= gnu
+CONFIGURE_STYLE= autoconf
+AUTOCONF_VERSION= 2.69
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
-CONFIGURE_ARGS=	--localstatedir=/var \
-		--with-dbus-user=_dbus \
+		LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ARGS=	--with-dbus-user=_dbus \
 		--with-xml=expat \
+		--with-x \
 		--enable-kqueue \
 		--disable-xml-docs \
 		--disable-doxygen-docs \
 		--disable-abstract-sockets \
+		--disable-launchd \
 		--disable-selinux \
 		--disable-libaudit \
 		--disable-dnotify \
-		--disable-inotify
+		--disable-inotify \
+		--disable-systemd
 
-# Tests are disabled as they change the final dbus binaries
-#CONFIGURE_ARGS+=	--enable-tests
+# gives no chance of picking up devel/libexecinfo
+CONFIGURE_ENV+=	ac_cv_header_execinfo_h=no \
+		ac_cv_func_backtrace=no
+
+# Full test coverage is disabled:
+# * changes the final dbus binaries
+# * requires glib2 and dbus-python (which creates 2 dependency loops)
+# * requires the python MODULE
+#CONFIGURE_ARGS+=	--enable-tests=yes
 #CONFIGURE_ARGS+=	--enable-verbose-mode
 
 FAKE_FLAGS=	sysconfdir=${TRUEPREFIX}/share/examples/dbus

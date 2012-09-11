@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2011/07/06 23:56:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.53 2011/12/05 22:36:54 espie Exp $
 
 COMMENT =	command-driven interactive function plotting program
 
 V =		4.4
 PATCHLEVEL =	3
-REVISION =	1
+REVISION =	3
 DISTNAME =	gnuplot-${V}.${PATCHLEVEL}
 CATEGORIES =	math graphics
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=gnuplot/}
@@ -29,7 +29,7 @@ CONFIGURE_ARGS =	--without-linux-vga \
 			--with-readline \
 			--with-lasergnu \
 			--disable-wxwidgets \
-			--disable-lua \
+			--without-lua \
 			--without-lisp-files \
 			--without-pdf
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include/libpng" \
@@ -41,7 +41,7 @@ REGRESS_IS_INTERACTIVE =	x11
 
 SUBST_VARS =	V
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS += --without-x \
 		  --without-gd
 .else
@@ -52,13 +52,13 @@ WANTLIB +=	X11 fontconfig freetype ${MODLIBICONV_WANTLIB} jpeg png gd>=20
 CONFIGURE_ARGS += --with-x
 .endif
 
-.if ${FLAVOR:L:Mno_cairo} || ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_cairo} || ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS += --without-cairo
 .else
 MODULES +=	devel/gettext
 LIB_DEPENDS +=	devel/pango	\
 		graphics/cairo
-WANTLIB +=	GL Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm drm \
+WANTLIB +=	GL Xrender \
 		expat gmodule-2.0 gobject-2.0 gthread-2.0 pixman-1 \
 		pthread pthread-stubs xcb xcb-render xcb-shm \
 		pangocairo-1.0 cairo glib-2.0 pango-1.0 pangoft2-1.0

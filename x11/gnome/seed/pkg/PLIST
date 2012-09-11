@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.4 2011/07/26 15:36:27 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.6 2011/09/22 08:03:12 ajacoutot Exp $
 %%SHARED%%
 @bin bin/seed
 include/seed-gtk3/
@@ -113,7 +113,6 @@ share/gtk-doc/html/seed/seed-building.html
 share/gtk-doc/html/seed/seed-contact.html
 share/gtk-doc/html/seed/seed-importer.html
 share/gtk-doc/html/seed/seed-introduction.html
-share/gtk-doc/html/seed/seed.devhelp
 share/gtk-doc/html/seed/seed.devhelp2
 share/gtk-doc/html/seed/seed.html
 share/gtk-doc/html/seed/sqlite-module.html

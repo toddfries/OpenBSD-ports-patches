@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.13 2011/08/26 09:42:42 rpointel Exp $
+# $OpenBSD: Makefile,v 1.19 2012/09/04 11:25:37 gonzalo Exp $
 
 COMMENT =		lightweight multi-protocol & multi-source download utility
-DISTNAME =		aria2-1.12.1
+DISTNAME =		aria2-1.15.2
 CATEGORIES =		www
 HOMEPAGE =		http://aria2.sourceforge.net/
 
@@ -17,13 +17,11 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=aria2/}
 
 MODULES =		devel/gettext
 
-LIB_DEPENDS =		databases/sqlite3 \
-			net/libcares
+LIB_DEPENDS =		net/libcares
 
 REGRESS_DEPENDS +=	devel/cppunit
 
-WANTLIB += 		crypto expat ssl cares \
-			sqlite3 c m stdc++ z
+WANTLIB += c cares crypto expat m sqlite3 ssl stdc++ z
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
@@ -41,8 +39,6 @@ CONFIGURE_ARGS +=	--with-sqlite3 \
 .if ${MACHINE_ARCH:Mmips64*}
 CFLAGS +=		-O0
 .endif
-
-USE_GROFF =		Yes
 
 REGRESS_FLAGS +=	LDFLAGS="-lcppunit"
 

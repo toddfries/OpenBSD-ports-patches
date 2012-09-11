@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2011/05/12 09:50:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2012/07/16 12:59:47 ajacoutot Exp $
 
 COMMENT=	documentation for gtk3mm
 
 GNOME_PROJECT=	gtkmm-documentation
-GNOME_VERSION=	3.0.3
+GNOME_VERSION=	3.4.1
 
 PKGNAME=	gtk3mm-documentation-${GNOME_VERSION}
 
@@ -22,7 +22,7 @@ MODULES=	x11/gnome
 PKG_ARCH=	*
 
 USE_LIBTOOL=	No
-MODGNOME_HELP_FILES= Yes
+MODGNOME_TOOLS=	yelp
 
 BUILD_DEPENDS=	x11/gtk3mm
 

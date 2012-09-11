@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/18 19:06:36 naddy Exp $
+# $OpenBSD: Makefile,v 1.16 2012/09/01 12:02:27 naddy Exp $
 
 V =		3.3.5
 CONFIG = 	${MACHINE_ARCH}-unknown-openbsd${OSREV}
 SUBST_VARS += 	CONFIG V
 PKGNAME =	libf2c-$V
-REVISION =	6
+REVISION =	9
 DISTFILES = 	libf2c-openbsd.tgz
 MASTER_SITES =	http://spacehopper.org/mirrors/
 
-NOT_FOR_ARCHES =	${GCC2_ARCHS}
+NOT_FOR_ARCHS =	${GCC2_ARCHS}
 COMMENT =	GNU fortran 77 libraries
 CATEGORIES =	devel math
 PERMIT_DISTFILES_CDROM = Yes
@@ -23,13 +23,6 @@ SHARED_LIBS=	g2c	${MAJOR}.${MINOR}
 WRKDIST =	${WRKDIR}/libf2c
 MAKE_FILE = ${WRKDIST}/Makefile.bsd-wrapper
 
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=	-Dno_mips64=0
-.else
-PKG_ARGS+=	-Dno_mips64=1
-.endif
-
 do-configure:
 	cd ${WRKDIST} && ${MAKE} -f ${MAKE_FILE} ${MAKE_FLAGS} obj
 	cd ${WRKDIST} && ${MAKE} -f ${MAKE_FILE} ${MAKE_FLAGS} depend
@@ -40,7 +33,8 @@ MAKE_FLAGS = MANDIR=${TRUEPREFIX}/man/cat \
 	USE_COLLECT2= \
 	LANGUAGES=f77 \
 	LIBDIR=${TRUEPREFIX}/lib \
-	major=${MAJOR} minor=${MINOR}
+	major=${MAJOR} minor=${MINOR} \
+	libf2c_cv_has_g77_builtin_types=yes
 
 post-install:
 	cd ${WRKBUILD}/obj && ${INSTALL_DATA} g2c.h ${PREFIX}/include
@@ -53,6 +47,3 @@ post-install:
 .endfor
 
 .include <bsd.port.mk>
-.if ${COMPILER_VERSION:L:Mgcc4*}
-MAKE_FLAGS += libf2c_cv_has_g77_builtin_types=yes
-.endif

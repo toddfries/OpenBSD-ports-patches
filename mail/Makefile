@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.267 2011/07/28 20:36:56 landry Exp $
-# $FreeBSD: Makefile,v 1.51 1997/11/14 22:56:43 hoek Exp $
-#
+# $OpenBSD: Makefile,v 1.283 2012/09/05 02:34:57 lteo Exp $
  
      SUBDIR =
      SUBDIR += abook
      SUBDIR += adcomplain
      SUBDIR += akpop3d
      SUBDIR += alpine
+     SUBDIR += altermime
      SUBDIR += amavisd-new
      SUBDIR += archivemail
      SUBDIR += archiveopteryx
@@ -37,6 +36,7 @@
      SUBDIR += cyrus-imapd,drac
      SUBDIR += dkim-milter
      SUBDIR += dovecot
+     SUBDIR += dovecot-antispam
      SUBDIR += dovecot-pigeonhole
      SUBDIR += drac
      SUBDIR += dspam
@@ -47,6 +47,7 @@
      SUBDIR += dspam,pgsql
      SUBDIR += elm
      SUBDIR += evolution
+     SUBDIR += evolution-ews
      SUBDIR += evolution-exchange
      SUBDIR += evolution-rss
      SUBDIR += exim
@@ -60,8 +61,9 @@
      SUBDIR += fdm
      SUBDIR += femail
      SUBDIR += fetchmail
+     SUBDIR += geary
      SUBDIR += getmail
-     SUBDIR += gmime24
+     SUBDIR += gmime,
      SUBDIR += grepmail
      SUBDIR += greyscanner
      SUBDIR += hashcash
@@ -77,7 +79,6 @@
      SUBDIR += ldapvacation
      SUBDIR += libetpan
      SUBDIR += libspf2
-     SUBDIR += mail-notification
      SUBDIR += mailcrypt
      SUBDIR += maildrop
      SUBDIR += mailgraph
@@ -103,6 +104,7 @@
      SUBDIR += mutt
      SUBDIR += nail
      SUBDIR += nmh
+     SUBDIR += nmh,sasl
      SUBDIR += nmzmail
      SUBDIR += offlineimap
      SUBDIR += openwebmail
@@ -119,9 +121,7 @@
      SUBDIR += p5-Email-MIME
      SUBDIR += p5-Email-MIME-Attachment-Stripper
      SUBDIR += p5-Email-MIME-ContentType
-     SUBDIR += p5-Email-MIME-Creator
      SUBDIR += p5-Email-MIME-Encodings
-     SUBDIR += p5-Email-MIME-Modifier
      SUBDIR += p5-Email-MessageID
      SUBDIR += p5-Email-Reply
      SUBDIR += p5-Email-Send
@@ -149,8 +149,10 @@
      SUBDIR += p5-Mail-IMAPTalk
      SUBDIR += p5-Mail-Mbox-MessageParser
      SUBDIR += p5-Mail-POP3Client
+     SUBDIR += p5-Mail-SPF
      SUBDIR += p5-Mail-SPF-Iterator
      SUBDIR += p5-Mail-SPF-Query
+     SUBDIR += p5-Mail-SPF-Test
      SUBDIR += p5-Mail-Sender
      SUBDIR += p5-Mail-SpamAssassin
      SUBDIR += p5-Mail-Tools
@@ -169,15 +171,16 @@
      SUBDIR += poppassd
      SUBDIR += poppy
      SUBDIR += postfix
-     SUBDIR += postler
      SUBDIR += postgrey
      SUBDIR += prepop
      SUBDIR += procmail
+     SUBDIR += py-authres
      SUBDIR += py-milter
      SUBDIR += py-policyd-spf
      SUBDIR += py-spf
      SUBDIR += pyzor
      SUBDIR += razor-agents
+     SUBDIR += rcube-sieverules
      SUBDIR += relaydb
      SUBDIR += roundcubemail
      SUBDIR += ruby-actionmailer
@@ -185,7 +188,6 @@
      SUBDIR += ruby-mailfactory
      SUBDIR += ruby-mime
      SUBDIR += ruby-mime-types
-     SUBDIR += ruby-rmail
      SUBDIR += sieve-connect
      SUBDIR += signify
      SUBDIR += sma

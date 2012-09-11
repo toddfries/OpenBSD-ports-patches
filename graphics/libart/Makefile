@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2010/10/19 15:21:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2011/09/28 09:51:36 jasper Exp $
 
 COMMENT=		high-performance 2D graphics library
 
@@ -18,11 +18,12 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+EXTRACT_SUFX=		.tar.bz2
+
 WANTLIB=		m
 
 MODULES=		x11/gnome
 
 CONFIGURE_STYLE= 	gnu
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED}
 
 .include <bsd.port.mk>

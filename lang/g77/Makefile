@@ -1,22 +1,16 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/18 19:06:36 naddy Exp $
+# $OpenBSD: Makefile,v 1.18 2012/09/01 00:00:32 pascal Exp $
 
-.include <bsd.own.mk>
-.  if ${COMPILER_VERSION:L:Mgcc4*}
-SYSV=			4.2.1
-.  else
-SYSV=			3.3.5
-.  endif
-
-NOT_FOR_ARCHES =	${GCC2_ARCHS}
+NOT_FOR_ARCHS =		${GCC2_ARCHS}
 
 V =			3.3.5
 PKGNAME =		g77-$V
-REVISION =		2
+REVISION =		5
 EPOCH =			0
 DISTFILES = 		g77-openbsd.tgz
 
 CONFIG = 		${MACHINE_ARCH}-unknown-openbsd${OSREV}
 SUBST_VARS += 		CONFIG V
+SYSV =			4.2.1
 
 COMMENT =		GNU fortran 77 compiler
 CATEGORIES =		lang math
@@ -28,9 +22,6 @@ PERMIT_DISTFILES_FTP =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 
 WRKDIST =		${WRKDIR}/g77
-.if ${COMPILER_VERSION:L:Mgcc4*}
-PATCH_LIST=		gcc4-* patch-*
-.endif
 CONFIGURE_SCRIPT =	${WRKDIST}/gcc/configure
 
 SEPARATE_BUILD = 	Yes

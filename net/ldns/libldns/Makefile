@@ -1,12 +1,14 @@
-# $OpenBSD: Makefile,v 1.18 2011/05/31 17:40:49 jakob Exp $
+# $OpenBSD: Makefile,v 1.24 2012/07/10 22:53:57 espie Exp $
 
 COMMENT=	DNS library modelled after Net::DNS
 
 PKGNAME=	libldns-${VERSION}
+REVISION =	0
 
-SHARED_LIBS +=	ldns 4.8
+SHARED_LIBS +=	ldns 4.11
 
 WANTLIB=	crypto
-USE_GROFF =	Yes
+
+USE_GROFF=	Yes
 
 .include <bsd.port.mk>

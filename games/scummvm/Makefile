@@ -1,9 +1,7 @@
-# $OpenBSD: Makefile,v 1.47 2011/07/18 15:30:29 jsg Exp $
-
-BROKEN-hppa=	gcc bug
+# $OpenBSD: Makefile,v 1.53 2012/08/04 15:58:37 jsg Exp $
 
 COMMENT=	graphical adventure game interpreter
-DISTNAME=	scummvm-1.3.1
+DISTNAME=	scummvm-1.5.0
 CATEGORIES=	games x11 emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scummvm/}
 
@@ -17,7 +15,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	FLAC>=5 SDL c m mad>=2 pthread stdc++ theoradec z
+WANTLIB=	FLAC>=5 SDL c faad m mad>=2 pthread sndio stdc++ theoradec z
 
 .if ${MACHINE_ARCH} == "i386"
 BUILD_DEPENDS=	devel/nasm
@@ -26,11 +24,12 @@ BUILD_DEPENDS=	devel/nasm
 RUN_DEPENDS=	devel/desktop-file-utils
 LIB_DEPENDS=	audio/libmad \
 		audio/flac \
+		audio/faad>=2.7 \
 		devel/sdl \
 		multimedia/libtheora
 
 CONFIGURE_STYLE=simple
-CONFIGURE_ARGS+=--disable-alsa --disable-debug
+CONFIGURE_ARGS+=--disable-alsa --disable-debug --disable-seq-midi --enable-sndio
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 USE_GROFF =	Yes

@@ -1,7 +1,7 @@
-$OpenBSD: patch-config_configure_in,v 1.14 2010/12/15 15:40:21 dcoppa Exp $
---- config/configure.in.orig	Mon Nov 15 20:08:17 2010
-+++ config/configure.in	Wed Dec 15 15:00:12 2010
-@@ -911,7 +911,7 @@ if test "$GD" != "no"; then
+$OpenBSD: patch-config_configure_in,v 1.18 2012/08/18 23:47:27 avsm Exp $
+--- config/configure.in.orig	Sun Aug  5 17:49:02 2012
++++ config/configure.in	Tue Aug  7 07:59:48 2012
+@@ -974,7 +974,7 @@ if test "$GD" != "no"; then
        PNG_LDFLAGS=`$PNGLIBCONFIG --ldflags`
        LDFLAGS="$LDFLAGS $PNG_LDFLAGS"
      fi
@@ -10,7 +10,7 @@ $OpenBSD: patch-config_configure_in,v 1.14 2010/12/15 15:40:21 dcoppa Exp $
  # restore variables
      LIBS=$SAVE_LIBS_PNG
      CFLAGS=$SAVE_CFLAGS_PNG
-@@ -939,7 +939,7 @@ if test "$GD" != "no"; then
+@@ -1002,7 +1002,7 @@ if test "$GD" != "no"; then
          GD=yes
  	GD_PNG=yes
          AC_MSG_RESULT(yes)
@@ -19,3 +19,22 @@ $OpenBSD: patch-config_configure_in,v 1.14 2010/12/15 15:40:21 dcoppa Exp $
          AC_DEFINE(HAVE_GD_PNG, 1, [Define to 1 if you have png support in libgd.])
        else
          AC_MSG_RESULT(no)
+@@ -1453,7 +1454,7 @@ else
+   MORE_TARGETS="$MORE_TARGETS $GUIS"
+   AC_MSG_CHECKING(GToolbox.popup_menu args)
+   GTOOLBOX="$OCAMLLIB/$LABLGTK_NAME/gToolbox.mli"
+-  grep popup $GTOOLBOX | grep -i button 2> /dev/null && GTOOLBOX_ARGS=new
++  grep popup $GTOOLBOX | grep -i button >/dev/null 2>&1 && GTOOLBOX_ARGS=new
+   if test "$GTOOLBOX_ARGS" = "new"; then
+     GTOOLBOX_POPUPMENU=' ~button: button ~time: time '
+     AC_MSG_RESULT(new)
+@@ -1753,7 +1756,8 @@ if test "x$CXX" != "x"; then
+   echo " - $CXX version       $CXX_VERSION"
+ fi
+ echo ""
+-echo "\nNow execute '$GNU_MAKE' to start compiling. Good luck!"
++echo ""
++echo "Now execute '$GNU_MAKE' to start compiling. Good luck!"
+ 
+ echo ""
+ echo "To compile a static code execute:     $GNU_MAKE mlnet$COMPILE_TARGET.static"

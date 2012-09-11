@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/22 10:16:08 espie Exp $
+# $OpenBSD: Makefile,v 1.17 2012/06/15 08:32:15 ajacoutot Exp $
 
 COMMENT =	Mastermind clone reflexion game
 
 GNOME_PROJECT =	gnome-mastermind
 GNOME_VERSION =	0.3.1
-REVISION=	3
+REVISION=	7
 
 CATEGORIES =	games
 
@@ -17,22 +17,22 @@ PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://download.gna.org/gnome-mastermind/
+EXTRACT_SUFX=		.tar.bz2
 
 MODULES =	devel/gettext \
 		x11/gnome
 
-DESKTOP_FILES =	Yes
 LIB_DEPENDS =	x11/gtk+2 \
 		devel/gconf2
 RUN_DEPENDS +=	x11/gnome/librsvg
 
-MODGNOME_HELP_FILES =	Yes
-CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	${CONFIGURE_SHARED}
-CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+MODGNOME_TOOLS= 	yelp
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_DESKTOP_FILE =	Yes
 
-WANTLIB += ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+CONFIGURE_STYLE =	gnu
+
+WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
 WANTLIB += Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo dbus-1
 WANTLIB += dbus-glib-1 expat fontconfig freetype gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 m pango-1.0

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2010/11/17 08:05:13 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2012/03/29 13:38:31 sthen Exp $
 
 COMMENT=	dump frames from mpeg-1 movies
 
 VERSION=	0.6
 DISTNAME=	dumpmpeg-${VERSION}
-REVISION =	0
+REVISION =	1
 CATEGORIES=	graphics x11
 
 HOMEPAGE=	http://sourceforge.net/projects/dumpmpeg/
@@ -20,11 +20,11 @@ PERMIT_DISTFILES_FTP=   Yes
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dumpmpeg/}
 
 LIB_DEPENDS =	devel/smpeg
-WANTLIB =	SDL X11 Xext c m pthread pthread-stubs usbhid xcb smpeg>=1.3
+WANTLIB =	SDL c pthread smpeg>=1.3
 
 USE_GROFF =	Yes
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 
 .include <bsd.port.mk>

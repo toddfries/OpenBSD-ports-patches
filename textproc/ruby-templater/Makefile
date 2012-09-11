@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.8 2011/01/06 04:24:24 jeremy Exp $
+# $OpenBSD: Makefile,v 1.10 2011/12/09 21:42:52 jeremy Exp $
 
 COMMENT =	system for generating files
 
 DISTNAME =	templater-1.0.0
-REVISION =	0
+REVISION =	1
 CATEGORIES =	textproc
 
 HOMEPAGE =	http://templater.rubyforge.org/
@@ -23,6 +23,7 @@ RUN_DEPENDS =		devel/ruby-highline,${MODRUBY_FLAVOR}>=1.4.0 \
 
 CONFIGURE_STYLE =	ruby gem
 
-MODRUBY_REGRESS =	rake rspec
+MODRUBY_REGRESS =	rspec
+MODRUBY_REGRESS_TARGET = spec/*_spec.rb
 
 .include <bsd.port.mk>

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.28 2011/07/06 18:57:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2012/07/15 10:20:07 dcoppa Exp $
 
 COMMENT=		ncurses BitTorrent client based on libTorrent
 
-DISTNAME=		rtorrent-0.8.6
-REVISION=		2
+DISTNAME=		rtorrent-0.8.9
+EPOCH=			0
 CATEGORIES=		net
 
 HOMEPAGE=		http://libtorrent.rakshasa.no/
 
-MAINTAINER=		Christian Weisgerber <naddy@openbsd.org>
+MAINTAINER=		David Coppa <dcoppa@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -16,19 +16,27 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c crypto idn m ncurses sigc-2.0 ssl \
-			stdc++ z torrent>=17 curl>=14
+WANTLIB=		c crypto curl>=14 idn m ncursesw \
+			pthread sigc-2.0 ssl stdc++ \
+			torrent>=20 z
 
 MASTER_SITES=		${HOMEPAGE}downloads/
 
-MODULES=		devel/gettext
+MODULES=		gcc4 devel/gettext
 
-LIB_DEPENDS=		net/libtorrent \
+# SIGBUS during startup on sparc64 when built using gcc 4.2.1
+# https://github.com/rakshasa/rtorrent/issues/28
+MODGCC4_ARCHS=		sparc64
+MODGCC4_LANGS=		c++
+MODGCC4_VERSION=	4.6
+
+BUILD_DEPENDS=		devel/cppunit
+LIB_DEPENDS=		net/libtorrent>=0.12.9 \
 			net/curl
 
 USE_LIBTOOL=		Yes
-USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
+CONFIGURE_ENV +=	LDFLAGS=-pthread
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-debug
 
@@ -37,5 +45,7 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/rtorrent
 	${INSTALL_DATA} ${WRKSRC}/doc/rtorrent.rc \
 		${PREFIX}/share/examples/rtorrent/rtorrent.rc
+	${INSTALL_MAN} ${WRKSRC}/doc/rtorrent.1 \
+		${PREFIX}/man/man1/rtorrent.1
 
 .include <bsd.port.mk>

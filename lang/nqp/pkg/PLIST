@@ -1,0 +1,17 @@
+@comment $OpenBSD: PLIST,v 1.2 2012/07/13 09:46:41 pascal Exp $
+@bin bin/nqp
+lib/parrot/${PARROT_VERSION}/dynext/nqp_bigint_ops.so
+lib/parrot/${PARROT_VERSION}/dynext/nqp_dyncall_ops.so
+lib/parrot/${PARROT_VERSION}/dynext/nqp_group.so
+lib/parrot/${PARROT_VERSION}/dynext/nqp_ops.so
+lib/parrot/${PARROT_VERSION}/languages/nqp/
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/NQPCORE.setting.pbc
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/NQPHLL.pbc
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/NQPP6QRegex.pbc
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/QAST.pbc
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/QRegex.pbc
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/nqp.pbc
+lib/parrot/${PARROT_VERSION}/languages/nqp/lib/nqpmo.pbc
+lib/parrot/${PARROT_VERSION}/library/ModuleLoader.pbc
+lib/parrot/${PARROT_VERSION}/library/PASTRegex.pbc

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2011/08/25 12:50:28 naddy Exp $
+# $OpenBSD: Makefile,v 1.8 2012/03/29 13:38:13 sthen Exp $
 
 COMMENT-main =	Tcl/Tk snack sound toolkit
 COMMENT-python = Python bindings for Tcl/Tk snack sound toolkit
@@ -9,8 +9,8 @@ PKGNAME-main =  snack-${MODPY_EGG_VERSION}
 PKGNAME-python = py-snack-${MODPY_EGG_VERSION}
 CATEGORIES =	audio
 
-REVISION-main = 1
-REVISION-python =0
+REVISION-main = 3
+REVISION-python =1
 
 HOMEPAGE = 	http://www.speech.kth.se/snack
 MASTER_SITES =	${HOMEPAGE}/dist/
@@ -22,9 +22,8 @@ PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
-WANTLIB-main += 	c sndio ossaudio ogg vorbis vorbisenc z
-WANTLIB-main += 	X11 Xau Xdmcp Xext Xft Xrender Xss expat
-WANTLIB-main += 	freetype m pthread-stubs xcb fontconfig 
+WANTLIB-main += 	c sndio ossaudio ogg vorbis vorbisenc
+WANTLIB-main += 	X11 Xext Xft Xss m
 
 LIB_DEPENDS-main =	audio/libvorbis
 
@@ -37,7 +36,7 @@ RUN_DEPENDS-main =	${MODTK_RUN_DEPENDS}
 RUN_DEPENDS-python =	${BASE_PKGPATH} \
 			lang/python/${MODPY_VERSION},-tkinter
 
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 CONFIGURE_SCRIPT =	unix/configure
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--with-tcl=${MODTCL_LIBDIR} \
@@ -45,6 +44,8 @@ CONFIGURE_ARGS =	--with-tcl=${MODTCL_LIBDIR} \
 			--with-ogg-include=${LOCALBASE}/include \
 			--with-ogg-lib=${LOCALBASE}/lib
 MAKE_FLAGS +=		SNACK_INSTALL_PATH=${MODTCL_TCLDIR} 	
+
+REGRESS_TARGET =	test
 
 pre-configure:
 	cp ${FILESDIR}/jkAudIO_sndio.c ${WRKSRC}/unix/

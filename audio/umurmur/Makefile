@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/07/08 09:09:43 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.4 2012/04/12 10:03:19 dcoppa Exp $
 
 COMMENT =		minimalistic Mumble server 
 
-DISTNAME =		umurmur-0.2.7
+DISTNAME =		umurmur-0.2.10
 
 CATEGORIES =		audio
 
@@ -23,8 +23,7 @@ WANTLIB = 		c config crypto protobuf-c ssl
 LIB_DEPENDS =		devel/libconfig \
 			devel/protobuf-c
 
-CONFIGURE_STYLE =	autoconf
-AUTOCONF_VERSION =	2.63
+CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS =	--with-ssl=openssl

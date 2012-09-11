@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.31 2011/07/19 18:04:21 jeremy Exp $
+# $OpenBSD: Makefile,v 1.33 2011/12/02 19:34:42 jeremy Exp $
 
 COMMENT=		Ruby interface to ncurses
 
 VERSION=		1.1
 DISTNAME=		ncurses-ruby-${VERSION}
 PKGNAME=		ncurses-${VERSION}
-REVISION=		12
+REVISION=		13
 CATEGORIES=		devel
 
 HOMEPAGE=		http://ncurses-ruby.berlios.de/
@@ -25,8 +25,6 @@ MODULES=		lang/ruby
 CONFIGURE_STYLE=	ruby extconf
 
 INSTALL_TARGET=		site-install
-
-NO_REGRESS=		Yes
 
 DOC_DIR=		${MODRUBY_DOCDIR}/ncurses
 SAMPLE_DIR=		${MODRUBY_EXAMPLEDIR}/ncurses

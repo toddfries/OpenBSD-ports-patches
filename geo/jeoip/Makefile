@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2011/03/14 09:17:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2011/12/15 21:33:19 kili Exp $
 
 COMMENT=		Java interface to GeoIP database
 DISTNAME=		jeoip-0.5
-REVISION=		5
+REVISION=		10
 CATEGORIES=		geo net
 PKG_ARCH=		*
 
@@ -21,25 +21,21 @@ MASTER_SITES=		http://www.darwinsys.com/freeware/
 MODULES=		java
 MODJAVA_VER=		1.5+
 MODJAVA_JRERUN=		Yes
-BUILD_DEPENDS=		devel/apache-ant>=1.6.1 \
-			java/junit=3.8.2
+MODJAVA_BUILD=		ant
+MODJAVA_BUILD_TARGET=	jar docs
+
+BUILD_DEPENDS=		java/junit
 REGRESS_DEPENDS=	net/GeoIP \
-			java/junit=3.8.2
+			java/junit
 RUN_DEPENDS=		net/GeoIP\
  			java/javaPathHelper
-MAKE_ENV=		JAVA_HOME=${JAVA_HOME} \
-			CLASSPATH=${LOCALBASE}/share/java/classes/junit-3.8.2/junit.jar
+MAKE_ENV=		CLASSPATH=${LOCALBASE}/share/java/classes/junit/junit.jar
 
 WRKDIST=		${WRKDIR}/jeoip
 
-INSTALLDIR=		jeoip
-
-do-build:
-	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ant jar docs
-
 do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/java/${INSTALLDIR}
-	${INSTALL_DATA} ${WRKDIST}/jeoip.jar ${PREFIX}/share/java/${INSTALLDIR}
+	${INSTALL_DATA_DIR} ${MODJAVA_JAR_DIR}
+	${INSTALL_DATA} ${WRKDIST}/jeoip.jar ${MODJAVA_JAR_DIR}
 	${INSTALL_SCRIPT} ${WRKDIST}/unix/jeoip ${PREFIX}/bin
 
 do-regress:

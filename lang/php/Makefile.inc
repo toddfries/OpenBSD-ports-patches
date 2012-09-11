@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.19 2011/08/27 13:13:13 robert Exp $
+# $OpenBSD: Makefile.inc,v 1.32 2012/08/23 19:19:17 sthen Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -18,16 +18,16 @@ CATEGORIES=		lang www
 MAINTAINER=		Robert Nagy <robert@openbsd.org>
 HOMEPAGE=		http://www.php.net/
 
-SUHOSIN_V=		0.9.32.1
+SUHOSIN_V=		0.9.33
 SUHOSIN_PHPV?=		${V}
 
-MASTER_SITES=		http://us2.php.net/distributions/ \
-			http://se.php.net/distributions/ \
+MASTER_SITES=		http://se.php.net/distributions/ \
+			http://us.php.net/distributions/ \
 			http://no.php.net/distributions/ \
 			http://uk.php.net/distributions/
-MASTER_SITES0=		http://blade2k.humppa.hu/ \
-			http://download.suhosin.org/ \
-			http://didy.avioc.org/FreeBSD/ports/distfiles/
+MASTER_SITES0=		http://download.suhosin.org/ \
+			http://blade2k.humppa.hu/ \
+			${_MASTER_SITE_FREEBSD}
 
 # UPGRADERS: please read BOTH the PHP and Zend licenses
 # and make sure they are safe before an upgrade
@@ -35,6 +35,8 @@ PERMIT_PACKAGE_CDROM=   Yes
 PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
+
+SHARED_ONLY=		Yes
 
 MODPHP_CONFIG_PATH=	/var/www/conf
 
@@ -47,12 +49,7 @@ CHROOT_DIR?=		/var/www
 MODULES_SUBDIR=		lib/php-${PV}/modules
 MODULES_DIR=		${LOCALBASE}/${MODULES_SUBDIR}
 
-.if ${COMPILER_VERSION:L:Mgcc3}
-PHP_LDFLAGS=		-lstdc++ -lm
-.endif
-
-FLAVORS=		ap2
-PSEUDO_FLAVORS+=	no_suhosin
+FLAVORS=		ap2 no_suhosin
 FLAVOR?=
 
 USE_GROFF=		Yes
@@ -60,7 +57,7 @@ PATCHORIG=		.orig.port
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.13
 CONFIGURE_ENV=          CFLAGS="${CFLAGS} -I${LOCALBASE}/include -pthread" \
-                        LDFLAGS="-L${LOCALBASE}/lib ${PHP_LDFLAGS} -pthread" \
+                        LDFLAGS="-L${LOCALBASE}/lib -pthread" \
 			EXTENSION_DIR=${MODULES_DIR} lt_cv_path_SED=/usr/bin/sed
 MAKE_ENV=               ${CONFIGURE_ENV}
 
@@ -72,7 +69,9 @@ CONFIGURE_ARGS+=	--enable-shared \
 			--with-pic \
 			--with-pear=${LOCALBASE}/share/php-${PV} \
 			--with-config-file-scan-dir=${SYSCONFDIR}/php-${PV} \
-			--program-suffix=-${PV}
+			--program-suffix=-${PV} \
+			--with-pdo-sqlite \
+			--enable-sqlite-utf8
 
 .if ${FLAVOR:L:Map2}
 CONFIGURE_ARGS+=	--with-apxs2=${LOCALBASE}/sbin/apxs2
@@ -118,21 +117,21 @@ MULTI_PACKAGES+=	-bz2
 COMMENT-bz2=		bzip2 compression extensions for php5
 CONFIGURE_ARGS+=	--with-bz2=shared,${LOCALBASE}
 LIB_DEPENDS-bz2=	archivers/bzip2
-WANTLIB-bz2=		bz2>=10
+WANTLIB-bz2=		bz2>=10 c pthread
 
 # curl
 MULTI_PACKAGES+=	-curl
 COMMENT-curl=		curl URL library extensions for php5
 CONFIGURE_ARGS+=	--with-curl=shared,${LOCALBASE}
 LIB_DEPENDS-curl=	net/curl
-WANTLIB-curl=		crypto idn ssl z curl>=2
+WANTLIB-curl=		c pthread crypto idn ssl z curl>=2 ${MODGETTEXT_WANTLIB}
 
 # dba
 MULTI_PACKAGES+=	-dba
 COMMENT-dba=		dba GDBM access extensions for php5
 CONFIGURE_ARGS+=	--enable-dba=shared --with-gdbm=${LOCALBASE}
 LIB_DEPENDS-dba=	databases/gdbm
-WANTLIB-dba=		gdbm>=2
+WANTLIB-dba=		c gdbm>=2 pthread
 
 # gd
 MULTI_PACKAGES+=	-gd
@@ -140,23 +139,22 @@ COMMENT-gd=		image manipulation extensions for php5
 LIB_DEPENDS-gd=		graphics/jpeg \
 			graphics/png \
 			devel/t1lib
-WANTLIB-gd=		z jpeg>=62 png>=3 t1>=5
+WANTLIB-gd=		z jpeg>=62 png>=3 t1>=5 c pthread X11 Xpm freetype
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng"
 CONFIGURE_ARGS+=	--with-gd=shared \
 			--with-jpeg-dir=${LOCALBASE} \
 			--with-png-dir=${LOCALBASE} \
 			--with-zlib-dir=/usr \
 			--with-t1lib=${LOCALBASE} \
-			--with-freetype-dir=${X11BASE}
-CONFIGURE_ARGS+=	--with-xpm-dir=${X11BASE}
-WANTLIB-gd+=		X11 Xpm freetype
+			--with-freetype-dir=${X11BASE} \
+			--with-xpm-dir=${X11BASE}
 
 # gmp
 MULTI_PACKAGES+=	-gmp
 COMMENT-gmp=		gmp math library support for php5
 CONFIGURE_ARGS+=	--with-gmp=shared,${LOCALBASE}
 LIB_DEPENDS-gmp=	devel/gmp
-WANTLIB-gmp=		gmp>=4
+WANTLIB-gmp=		c gmp>=4 pthread
 
 # imap
 MULTI_PACKAGES+=	-imap
@@ -164,140 +162,140 @@ COMMENT-imap=		imap, pop3 and nntp extensions for php5
 CONFIGURE_ARGS+=	--with-imap=shared,${LOCALBASE} \
 			--with-kerberos=/usr --with-imap-ssl
 LIB_DEPENDS-imap=	mail/imap-uw,-c-client
-WANTLIB-imap=		crypto gssapi krb5 ssl c-client>=5
+WANTLIB-imap=		c pthread crypto gssapi krb5 ssl c-client>=5
 
 # ldap
 MULTI_PACKAGES+=	-ldap
 COMMENT-ldap=		ldap protocol extensions for php5
 CONFIGURE_ARGS+=	--with-ldap=shared,${LOCALBASE}
 LIB_DEPENDS-ldap=	databases/openldap
-WANTLIB-ldap=		ldap>=2 lber
+WANTLIB-ldap=		c pthread ldap>=2 lber
 
 # mcrypt
 MULTI_PACKAGES+=	-mcrypt
 COMMENT-mcrypt=		mcrypt encryption/decryption extensions for php5
 CONFIGURE_ARGS+=	--with-mcrypt=shared,${LOCALBASE}
 LIB_DEPENDS-mcrypt=	security/libmcrypt devel/libtool,-ltdl
-WANTLIB-mcrypt=		mcrypt ltdl>=1
+WANTLIB-mcrypt=		c mcrypt ltdl>=1 pthread
 
 # mysql
 MULTI_PACKAGES+=	-mysql
 COMMENT-mysql=		mysql database access extensions for php5
 CONFIGURE_ARGS+=	--with-mysql=shared,${LOCALBASE}
 LIB_DEPENDS-mysql=	databases/mysql
-WANTLIB-mysql=		lib/mysql/mysqlclient>=10
+WANTLIB-mysql=		c pthread lib/mysql/mysqlclient>=10
 
 # mysqli
 MULTI_PACKAGES+=	-mysqli
 COMMENT-mysqli=		mysql database access extensions for php5
 CONFIGURE_ARGS+=	--with-mysqli=shared,${LOCALBASE}/bin/mysql_config
 LIB_DEPENDS-mysqli=	databases/mysql
-WANTLIB-mysqli=		crypto m ssl z lib/mysql/mysqlclient>=10
+WANTLIB-mysqli=		c crypto m pthread ssl z lib/mysql/mysqlclient>=10
 
 # odbc
 MULTI_PACKAGES+=	-odbc
 COMMENT-odbc=		odbc database access extensions for php5
 CONFIGURE_ARGS+=        --with-iodbc=shared,${LOCALBASE}
 LIB_DEPENDS-odbc=	databases/iodbc
-WANTLIB-odbc=		iodbc>=2
+WANTLIB-odbc=		c iodbc>=2 pthread
 
 # pdo-mysql
 MULTI_PACKAGES+=	-pdo_mysql
 COMMENT-pdo_mysql=	PDO mysql database access extensions for php5
 CONFIGURE_ARGS+=	--with-pdo-mysql=shared,${LOCALBASE}
 LIB_DEPENDS-pdo_mysql=	databases/mysql
-WANTLIB-pdo_mysql=	crypto m ssl z lib/mysql/mysqlclient>=10
+WANTLIB-pdo_mysql=	c crypto m pthread ssl z lib/mysql/mysqlclient>=10
 
 # pdo-pgsql
 MULTI_PACKAGES+=	-pdo_pgsql
 COMMENT-pdo_pgsql=	PDO database access extensions for php5
 CONFIGURE_ARGS+=        --with-pdo-pgsql=shared,${LOCALBASE}
 LIB_DEPENDS-pdo_pgsql=	databases/postgresql
-WANTLIB-pdo_pgsql=	pq>=2
-
-# pdo-sqlite
-MULTI_PACKAGES+=	-pdo_sqlite
-COMMENT-pdo_sqlite=	PDO sqlite database access extensions for php5
-CONFIGURE_ARGS+=	--with-pdo-sqlite=shared,${LOCALBASE} --enable-sqlite-utf8
-LIB_DEPENDS-pdo_sqlite=	databases/sqlite3
-WANTLIB-pdo_sqlite=	sqlite3>=8
+WANTLIB-pdo_pgsql=	c pq>=2 pthread
 
 # pgsql
 MULTI_PACKAGES+=	-pgsql
 COMMENT-pgsql=		pgsql database access extensions for php5
 CONFIGURE_ARGS+=	--with-pgsql=shared,${LOCALBASE}
 LIB_DEPENDS-pgsql=	databases/postgresql
-WANTLIB-pgsql=		pq>=2
+WANTLIB-pgsql=		c pq>=2 pthread
 
 # pspell
 MULTI_PACKAGES+=	-pspell
 COMMENT-pspell=		pspell library extensions for php5
 CONFIGURE_ARGS+=	--with-pspell=shared,${LOCALBASE}
 LIB_DEPENDS-pspell=	textproc/aspell/core
-WANTLIB-pspell=		aspell>=16 pspell>=16
+WANTLIB-pspell=		aspell>=16 c pspell>=16 pthread
 
 # shmop
 MULTI_PACKAGES+=	-shmop
 COMMENT-shmop=		shared memory extensions for php5
 CONFIGURE_ARGS+=	--enable-shmop=shared,${LOCALBASE}
 LIB_DEPENDS-shmop=
-WANTLIB-shmop=
+WANTLIB-shmop=		c pthread
 
 # soap
 MULTI_PACKAGES+=	-soap
 COMMENT-soap=		SOAP functions for php5
 CONFIGURE_ARGS+=	--enable-soap=shared,${LOCALBASE}
 LIB_DEPENDS-soap=	textproc/libxml
-WANTLIB-soap=		${MODLIBICONV_WANTLIB} m z xml2>=8
+WANTLIB-soap=		${MODLIBICONV_WANTLIB} c m pthread z xml2>=8
 
 # snmp
 MULTI_PACKAGES+=	-snmp
 COMMENT-snmp=		snmp protocol extensions for php5
 CONFIGURE_ARGS+=	--with-snmp=shared,${LOCALBASE} --enable-ucd-snmp-hack
 LIB_DEPENDS-snmp=	net/net-snmp
-WANTLIB-snmp=		crypto netsnmp>=6.2
+WANTLIB-snmp=		c crypto m netsnmp>=6.2 pthread
 
 # sqlite
 MULTI_PACKAGES+=	-sqlite
 COMMENT-sqlite=		sqlite database access extensions for php5
 CONFIGURE_ARGS+=	--with-sqlite=shared,${LOCALBASE} --enable-sqlite-utf8
 LIB_DEPENDS-sqlite=	databases/sqlite
-WANTLIB-sqlite=		sqlite>=8
+WANTLIB-sqlite=		sqlite>=8 c pthread
 
 # pdo-dblib
 MULTI_PACKAGES+=	-pdo_dblib
 COMMENT-pdo_dblib=	PDO DB-LIB support for php5
 CONFIGURE_ARGS+=        --with-pdo-dblib=shared,${LOCALBASE}
 LIB_DEPENDS-pdo_dblib=	databases/freetds
-WANTLIB-pdo_dblib=	sybdb>=6
+WANTLIB-pdo_dblib=	sybdb>=6 c pthread
 
 # mssql
 MULTI_PACKAGES+=	-mssql
 COMMENT-mssql=		microsoft sql access extensions for php5
 CONFIGURE_ARGS+=        --with-mssql=shared,${LOCALBASE}
 LIB_DEPENDS-mssql=	databases/freetds
-WANTLIB-mssql=		sybdb>=6
+WANTLIB-mssql=		sybdb>=6 c pthread
 
 # tidy
 MULTI_PACKAGES+=	-tidy
 COMMENT-tidy=		tidy HTML cleaner bindings
 CONFIGURE_ARGS+=	--with-tidy=shared,${LOCALBASE}
 LIB_DEPENDS-tidy=	www/tidyp
-WANTLIB-tidy=		tidyp
+WANTLIB-tidy=		tidyp c pthread
 
 # xml-rpc
 MULTI_PACKAGES+=	-xmlrpc
 COMMENT-xmlrpc=		XML RPC functions for php5
 CONFIGURE_ARGS+=	--with-xmlrpc=shared
 LIB_DEPENDS-xmlrpc=	textproc/libxml
-WANTLIB-xmlrpc=		${MODLIBICONV_WANTLIB} m z xml2>=8
+WANTLIB-xmlrpc=		${MODLIBICONV_WANTLIB} m z xml2>=8 c pthread
 
 # xsl
 MULTI_PACKAGES+=	-xsl
 COMMENT-xsl=		XSL functions for php5
 CONFIGURE_ARGS+=	--with-xsl=shared --enable-dom
 LIB_DEPENDS-xsl=	textproc/libxslt
-WANTLIB-xsl=		${MODLIBICONV_WANTLIB} m xml2 z xslt>=3 exslt
+WANTLIB-xsl=		${MODLIBICONV_WANTLIB} m xml2 z xslt>=3 exslt c pthread
+
+# zip
+MULTI_PACKAGES+=	-zip
+COMMENT-zip=		zip functions for php5
+CONFIGURE_ARGS+=	--enable-zip=shared,${LOCALBASE}
+LIB_DEPENDS-zip=
+WANTLIB-zip=		z c pthread
 
 # some variables to substitute
 SUBST_VARS=	MODPHP_CONFIG_PATH PV ^MODULE_NAME
@@ -318,10 +316,10 @@ RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
 LIB_DEPENDS-fastcgi=	${LIB_DEPENDS-main}
 
 .if ${FLAVOR:L:Mno_suhosin}
-SUPDISTFILES=		suhosin-${SUHOSIN_V}.tar.gz:0 \
+SUPDISTFILES=		suhosin-${SUHOSIN_V}.tgz:0 \
 			suhosin-patch-${SUHOSIN_PHPV}-${SUHOSIN_P_V}.patch.gz:0
 .else
-DISTFILES+=		suhosin-${SUHOSIN_V}.tar.gz:0
+DISTFILES+=		suhosin-${SUHOSIN_V}.tgz:0
 PATCHFILES=		suhosin-patch-${SUHOSIN_PHPV}-${SUHOSIN_P_V}.patch.gz:0
 PATCH_DIST_STRIP=	-p1
 CONFIGURE_ARGS+=	--enable-suhosin
@@ -337,11 +335,12 @@ DESTDIRNAME=	INSTALL_ROOT
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/main/php_ini.c
-	@perl -pi -e "s,OPENBSD_PEAR_ROOT,'${CHROOT_DIR}/pear',g" \
+	@perl -pi -e "s,OPENBSD_PEAR_ROOT,'${CHROOT_DIR}/pear',g;" \
+		-e "s,OPENBSD_PREFIX,${TRUEPREFIX},;" \
 		${WRKSRC}/scripts/phpize.in \
 		${WRKSRC}/scripts/php-config.in
 
-.for i in ${MULTI_PACKAGES:N-main:N-fastcgi:N-fpm:S/-//g}
+.for i in ${MULTI_PACKAGES:N-main:N-fastcgi:N-fpm:N-pcntl:S/-//g}
 MODULE_NAME-${i}=	${i}
 DESCR-${i}=		${.CURDIR}/../files/DESCR-${i}
 MESSAGE-${i}=		${.CURDIR}/../files/MESSAGE-ext

@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.21 2011/06/08 17:50:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.25 2012/08/15 13:09:58 gonzalo Exp $
 
 COMMENT=	powerful IMAP/Maildir synchronization and reader support
 
-MODPY_EGG_VERSION= 6.3.2
-DISTNAME=	offlineimap_${MODPY_EGG_VERSION}.orig
+MODPY_EGG_VERSION= 6.5.4
+DISTNAME=	offlineimap-${MODPY_EGG_VERSION}
 CATEGORIES=	mail
-PKGNAME=	offlineimap-${MODPY_EGG_VERSION}
-REVISION=	0
 
 HOMEPAGE=	http://offlineimap.org/
 
@@ -18,7 +16,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://github.com/nicolas33/offlineimap/tarball/v${MODPY_EGG_VERSION}/
+MASTER_SITES=	https://github.com/spaetz/offlineimap/tarball/v${MODPY_EGG_VERSION}/
 
 NO_REGRESS=	Yes
 
@@ -26,7 +24,7 @@ MODULES=	lang/python
 
 BUILD_DEPENDS=	textproc/py-docutils
 
-WRKDIST=	${WRKDIR}/nicolas33-offlineimap-b49802f
+WRKDIST=	${WRKDIR}/spaetz-offlineimap-c9e9690
 
 EXAMPLESDIR=	${PREFIX}/share/examples/offlineimap
 

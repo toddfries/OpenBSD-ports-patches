@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.113 2011/05/19 14:43:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.120 2012/08/04 14:51:38 ajacoutot Exp $
 
 COMMENT-main =		K Desktop Environment, libraries
 COMMENT-cups =		K Desktop Environment, cups support
@@ -54,8 +54,9 @@ FLAVORS =	debug
 VMEM_WARNING =	Yes
 
 
-MULTI_PACKAGES =	-main -cups
-CONFIGURE_ARGS += 	--enable-cups
+MULTI_PACKAGES =	-main # -cups
+# broken with cups>=1.6.0
+CONFIGURE_ARGS += 	--disable-cups
 
 MODULES =	x11/kde devel/gettext
 
@@ -83,18 +84,18 @@ WANTLIB-main = ${WANTLIB}
 
 RUN_DEPENDS-main = \
 	${RUN_DEPENDS} \
-	x11/hicolor-icon-theme \
+	x11/gtk+2,-guic \
 	devel/desktop-file-utils
 
 LIB_DEPENDS-cups = \
 	${LIB_DEPENDS} \
 	x11/kde/libs3 \
-	print/cups
+	print/cups,-libs
 
 WANTLIB-cups = ${WANTLIB}
 
-REVISION-main = 13
-REVISION-cups = 6
+REVISION-main = 18
+REVISION-cups = 10
 WANTLIB-main += Half Iex IlmImf>=4 IlmThread Imath artsflow>=1 \
 	artsflow_idl aspell audiofile bz2 glib-2.0 gmodule-2.0 gthread-2.0 \
 	jasper kmedia2_idl mad mcop ogg pcre pcreposix qtmcop sndio \

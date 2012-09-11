@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.31 2011/06/07 17:28:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.42 2012/09/01 14:36:59 ajacoutot Exp $
 
 COMMENT=		utility library for XKB
 
 GNOME_PROJECT=		libxklavier
-GNOME_VERSION=		5.1
-
-REVISION=		1
+GNOME_VERSION=		5.2.1
+REVISION=	0
 
 SHARED_LIBS +=  xklavier             17.0     # .17.0
 
@@ -17,23 +16,22 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += X11 Xau Xdmcp Xext Xi m pcre xkbfile z
-WANTLIB += pthread-stubs xcb glib-2.0 gthread-2.0 gobject-2.0 xml2
+WANTLIB += X11 Xext Xi ffi glib-2.0 gobject-2.0 gthread-2.0 m
+WANTLIB += pcre xcb xkbfile xml2 z
 
 MODULES=		devel/gettext \
 			x11/gnome
+
+MODGNOME_TOOLS=		goi
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		devel/iso-codes
 LIB_DEPENDS=		devel/glib2 \
 			textproc/libxml
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--with-xkb-base="${X11BASE}/share/X11/xkb/" \
+CONFIGURE_ARGS+=	--with-xkb-base="${X11BASE}/share/X11/xkb/" \
 			--with-xkb-bin-base="${X11BASE}/bin/" \
 			--with-xmodmap-base="/usr/share/xmodmap"
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 
 .include <bsd.port.mk>

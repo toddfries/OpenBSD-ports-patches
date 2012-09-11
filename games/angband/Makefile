@@ -1,49 +1,73 @@
-# $OpenBSD: Makefile,v 1.21 2011/05/11 06:56:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2012/04/11 16:16:33 edd Exp $
 # Original from: Robert Ruehlmann
 
 COMMENT=		rogue-like game with X11 support
 COMMENT-no_x11=		rogue-like game
 
-DISTNAME=		angband-3.0.6
-REVISION =		2
+V =			3.3.2
+V_DLDIR =		${V:C/\.[0-9]$//}
+DISTNAME=		angband-v${V}
+PKGNAME=		angband-${V}
 CATEGORIES=     	games
 
-HOMEPAGE=		http://www.thangorodrim.net/angband.html
+HOMEPAGE=		http://rephial.org
 
-MAINTAINER=		Niall O Higgins <niallo@openbsd.org>
+MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
+# Multi license, including GPLv2, angband license, CC, freeware...
+# The angband license contains the line "other copyrights may also apply"
 PERMIT_PACKAGE_CDROM=	unclear license
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= unclear license
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c ncurses
 
-MASTER_SITES=		ftp://ftp.thangorodrim.net/pub/angband/Source/ \
-			ftp://clockwork.dementia.org/angband/Source/ \
-			ftp://ftp.sunet.se/pub/games/Angband/Source/
+WANTLIB=		c m ncurses
+
+MASTER_SITES =		${HOMEPAGE}/downloads/${V_DLDIR}/
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=	--with-setgid=games
-CONFIGURE_ENV=          TRUEPREFIX="${TRUEPREFIX}"
+CONFIGURE_ENV +=	"LDFLAGS=-L${LOCALBASE}/lib"
+CONFIGURE_ARGS +=	--with-setgid=games \
+			--with-varpath=/var/games/angband \
+			--with-configpath=${PREFIX}/share/angband \
+			--bindir=${PREFIX}/bin
 
-FLAVORS=		no_x11
+CONFIGURE_ENV=          TRUEPREFIX="${TRUEPREFIX}"
+USE_GMAKE =		Yes
+
+FLAVORS=		no_x11 sdl
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=	--without-x
 .else
 CONFIGURE_ARGS+=	--with-x
-WANTLIB+=		ICE SM X11 Xaw Xext Xmu Xt pthread-stubs xcb
+WANTLIB+=		ICE SM X11
 .endif
 
-do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/angband
-	(cd ${WRKDIST}/lib && tar -cf - * ) | \
-	   (cd ${PREFIX}/share/angband && tar -xf - )
-	@chown -R ${SHAREOWN}:games ${PREFIX}/share/angband
-	@find ${PREFIX} \( -name Makefile\* -o -name delete.me \) \
-           -exec rm "{}" \;
-	${INSTALL} -s -o ${BINOWN} -g games -m 2555 ${WRKSRC}/src/angband \
-	   ${PREFIX}/bin
+.if ${FLAVOR:Msdl}	# funky graphical mode and sounds
+CONFIGURE_ARGS +=	--enable-sdl \
+			--enable-sdl-mixer
+PKG_ARGS +=		-Dsdl=1
+LIB_DEPENDS +=		devel/sdl-mixer \
+			devel/sdl-image \
+			devel/sdl-ttf
+RUN_DEPENDS +=		devel/desktop-file-utils
+WANTLIB +=		SDL SDL_image SDL_mixer SDL_ttf pthread	
+.else
+CONFIGURE_ARGS +=	--disable-sdl-mixer	# defaults to ON
+PKG_ARGS +=		-Dsdl=0
+.endif
+
+NO_REGRESS =		Yes
+
+pre-configure:
+	@perl -pi -e "s,/usr/share,${TRUEPREFIX}/share," \
+		${WRKSRC}/lib/xtra/icon/angband*.desktop
+
+post-install:
+	${INSTALL_DATA_DIR} ${PREFIX}/share/applications
+	mv ${PREFIX}/share/angband/xtra/icon/*.desktop \
+		${PREFIX}/share/applications
 
 .include <bsd.port.mk>

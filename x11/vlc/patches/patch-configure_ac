@@ -1,90 +1,82 @@
-$OpenBSD: patch-configure_ac,v 1.19 2011/07/01 11:10:53 sthen Exp $
---- configure.ac.orig	Sun Apr 18 09:03:54 2010
-+++ configure.ac	Thu Jun 30 20:32:15 2011
-@@ -193,9 +193,9 @@ case "${host_os}" in
+$OpenBSD: patch-configure_ac,v 1.24 2012/08/26 07:16:54 ajacoutot Exp $
+--- configure.ac.orig	Tue Jul  3 18:55:34 2012
++++ configure.ac	Thu Aug 16 14:24:29 2012
+@@ -122,10 +122,6 @@ case "${host_os}" in
      ;;
-   *bsd*)
-     SYS="${host_os}"
--    CFLAGS_save="${CFLAGS_save} -pthread"; CFLAGS="${CFLAGS_save}"
-     case "${host_os}" in
-       freebsd*)
-+        CFLAGS_save="${CFLAGS_save} -pthread"; CFLAGS="${CFLAGS_save}"
-         CPPFLAGS_save="${CPPFLAGS_save} -I/usr/local/include"
-         CPPFLAGS="${CPPFLAGS_save}"
-         LDFLAGS_save="${LDFLAGS_save} -L/usr/local/lib"
-@@ -826,6 +826,20 @@ if test "${SYS}" != "mingw32" -a "${SYS}" != "mingwce"
- dnl Check for pthreads - borrowed from XMMS
- THREAD_LIB=error
- if test "${THREAD_LIB}" = "error"; then
-+  AC_MSG_CHECKING(for pthread_create in -pthread)
-+  save_LDFLAGS="${LDFLAGS}"
-+  LDFLAGS="${LDFLAGS} -pthread"
-+  AC_LINK_IFELSE(
-+    [AC_LANG_PROGRAM(
-+      [[#include <pthread.h>
-+      pthread_t thr;]],
-+      [pthread_create(&thr, NULL, NULL, NULL);])],
-+    [THREAD_LIB="-pthread"
-+     AC_MSG_RESULT(yes)],
-+     [AC_MSG_RESULT(no)])
-+  LDFLAGS="${save_LDFLAGS}"
-+fi
-+if test "${THREAD_LIB}" = "error"; then
-   AC_CHECK_LIB(pthread,main,THREAD_LIB="-lpthread")
- fi
- if test "${THREAD_LIB}" = "error"; then
-@@ -872,13 +886,17 @@ AC_EGREP_HEADER(strncasecmp,strings.h,[
+   openbsd*)
+     SYS=openbsd
+-    CPPFLAGS_save="${CPPFLAGS_save} -I/usr/local/include -I/usr/X11R6/include"
+-    CPPFLAGS="${CPPFLAGS_save}"
+-    LDFLAGS_save="${LDFLAGS_save} -L/usr/local/lib -L/usr/X11R6/lib/"
+-    LDFLAGS="${LDFLAGS_save}"
+     ;;
+   netbsd*)
+     SYS=netbsd
+@@ -964,33 +960,6 @@ dnl Check for various optimization flags
+ AS_IF([test "${enable_optimizations}" != "no"], [
  
- dnl Check for headers
- AC_CHECK_HEADERS(getopt.h strings.h locale.h xlocale.h)
--AC_CHECK_HEADERS(fcntl.h sys/types.h sys/time.h sys/times.h sys/ioctl.h sys/stat.h sys/mount.h)
-+AC_CHECK_HEADERS(fcntl.h sys/types.h sys/time.h sys/times.h sys/ioctl.h sys/stat.h)
- AC_CHECK_HEADERS([arpa/inet.h netinet/in.h netinet/udplite.h sys/eventfd.h])
- AC_CHECK_HEADERS([net/if.h], [], [],
-   [
-     #include <sys/types.h>
-     #include <sys/socket.h>
+   C_O=""
+-  dnl -O4 and -O3 only in production builds
+-  AS_IF([test "{enable_debug}" = "no"], [
+-    AC_CACHE_CHECK([if $CC accepts -O4], [ac_cv_c_o4], [
+-      CFLAGS="${CFLAGS_save} -O4"
+-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], [
+-        ac_cv_c_o4=yes
+-      ], [
+-        ac_cv_c_o4=no
+-      ])
+-    ])
+-    AS_IF([test "${ac_cv_c_o4}" != "no"], [
+-      C_O="-O4"
+-    ], [
+-      AC_CACHE_CHECK([if $CC accepts -O3],  [ac_cv_c_o3], [
+-        CFLAGS="${CFLAGS_save} -O3"
+-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], [
+-          ac_cv_c_o3=yes
+-        ], [
+-          ac_cv_c_o3=no
+-        ])
+-      ])
+-      AS_IF([test "${ac_cv_c_o3}" != "no"], [
+-        C_O="-O3"
+-      ])
+-    ])
+-  ])
+-
+   VLC_RESTORE_FLAGS
+   CFLAGS="${CFLAGS} ${C_O}"
+   CXXFLAGS="${CXXFLAGS} ${C_O}"
+@@ -1736,7 +1705,7 @@ AS_IF([test "${enable_live555}" != "no" -a -n "${CXX}"
+   AC_LANG_PUSH(C++)
+   CPPFLAGS_save="${CPPFLAGS}"
+   AS_IF([test -z "${CONTRIB_DIR}"], [
+-    CPPFLAGS_live555="-I/usr/include/liveMedia -I/usr/include/groupsock -I/usr/include/BasicUsageEnvironment -I/usr/include/UsageEnvironment"
++    CPPFLAGS_live555="-I${LOCALBASE}/live/liveMedia/include -I${LOCALBASE}/live/groupsock/include -I${LOCALBASE}/live/BasicUsageEnvironment/include -I${LOCALBASE}/live/UsageEnvironment/include"
+   ], [
+     CPPFLAGS_live555="-I${CONTRIB_DIR}/include/liveMedia -I${CONTRIB_DIR}/include/groupsock -I${CONTRIB_DIR}/include/BasicUsageEnvironment -I${CONTRIB_DIR}/include/UsageEnvironment"
    ])
-+AC_CHECK_HEADERS([sys/mount.h], [], [],
-+  [
-+    #include <sys/param.h>
+@@ -3509,6 +3478,24 @@ AS_IF([test "$enable_oss" != "no"], [
+ ])
+ AC_SUBST(OSS_LIBS)
+ AM_CONDITIONAL([HAVE_OSS], [test "${have_oss}" = "yes"])
++
++dnl
++dnl  OpenBSD sndio module
++dnl
++AC_ARG_ENABLE([sndio],
++  [AS_HELP_STRING([--disable-sndio],
++    [support the OpenBSD sndio (default auto)])],, [
++  AS_IF([test "$SYS" = "opensd"], [
++    enable_sndio="yes"
 +  ])
- if test "${SYS}" != "mingw32" -a "${SYS}" != "mingwce"; then
- AC_CHECK_HEADERS(machine/param.h sys/shm.h)
- AC_CHECK_HEADERS([linux/version.h linux/dccp.h])
-@@ -2525,7 +2543,7 @@ then
-   fi
++])
++have_sndio="no"
++AS_IF([test "$enable_sndio" != "no"], [
++  AC_CHECK_HEADER([sndio.h], [
++    have_sndio="yes"
++  ])
++])
++AM_CONDITIONAL([HAVE_SNDIO], [test "${have_sndio}" = "yes"])
  
-   CPPFLAGS="${CPPFLAGS_save} ${CPPFLAGS_v4l2}"
--  AC_CHECK_HEADERS(linux/videodev2.h, [
-+  AC_CHECK_HEADERS(linux/videodev2.h sys/videoio.h, [
-     VLC_ADD_PLUGIN([v4l2])
-   ],[])
-   CPPFLAGS="${CPPFLAGS_save}"
-@@ -3753,14 +3771,14 @@ AC_ARG_ENABLE(png,
-   [  --enable-png            PNG support (default enabled)])
- if test "${enable_png}" != "no"; then
- AC_CHECK_HEADERS(png.h, [
--  LDFLAGS="${LDFLAGS_save} -lz"
-+  LDFLAGS="${LDFLAGS_save} -lm -lz"
-   AC_CHECK_LIB(png, png_set_rows, [
--    VLC_ADD_LIBS([png],[-lpng -lz])
-+    VLC_ADD_LIBS([png],[-lpng -lm -lz])
-     VLC_ADD_PLUGIN([png])
-     VLC_ADD_PLUGIN([osdmenu])
-     VLC_ADD_PLUGIN([osd_parser])
-     AC_DEFINE(HAVE_LIBPNG, 1, [Define if you have the PNG library: libpng])],
--    [],[-lz])
-+    [],[-lm -lz])
-     LDFLAGS="${LDFLAGS_save}"
-   ])
- fi
-@@ -5746,7 +5764,7 @@ then
-     PLUGINS_BINDINGS="${PLUGINS_BINDINGS} mozilla"
-     VLC_ADD_CPPFLAGS([mozilla],[-DXPCOM_GLUE -DHAVE_CPP_MODERN_SPECIALIZE_TEMPLATE_SYNTAX -I${real_mozilla_sdk} -I${real_mozilla_sdk}/include -I${real_mozilla_sdk}/embedstring/include -I${real_mozilla_sdk}/xpcom/include -I${real_mozilla_sdk}/nspr/include -I${real_mozilla_sdk}/string/include -I${real_mozilla_sdk}/plugin/include -I${real_mozilla_sdk}/java/include])
-     if ${need_xpcom_libs}; then
--       VLC_ADD_LIBS([mozilla],[-L${real_mozilla_sdk}/embedstring/bin -L${real_mozilla_sdk}/xpcom/bin -L${real_mozilla_sdk}/nspr/bin -L${real_mozilla_sdk}/string/bin -L${real_mozilla_sdk}/lib -lnspr4 -lplds4 -lplc4 -lxpcomglue])
-+       VLC_ADD_LIBS([mozilla],[-L${real_mozilla_sdk}/embedstring/bin -L${real_mozilla_sdk}/xpcom/bin -L${real_mozilla_sdk}/nspr/bin -L${real_mozilla_sdk}/string/bin -L${real_mozilla_sdk}/lib -lnspr4 -lplds4 -lplc4 ${LOCALBASE}/xulrunner1.9/libxpcomglue.a -L${X11BASE}/lib -lXt -lX11 -lSM -lICE -lXpm])
-       if test "${SYS}" = "mingw32"; then
-         dnl latest gecko sdk does not have embedstring
-         if test -d "${real_mozilla_sdk}/embedstring/bin"
+ dnl
+ dnl  Portaudio module

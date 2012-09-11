@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2011/05/20 08:06:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2012/05/05 14:42:39 sthen Exp $
 
 COMMENT=	Open source LDAP software (server)
 
 DISTNAME=	openldap-2.3.43
 PKGNAME=	${DISTNAME:S/-/-server-/}
-REVISION=	8
+REVISION=	10
 
 CATEGORIES=	databases net
 
@@ -26,12 +26,11 @@ MASTER_SITES=	http://mirror.switch.ch/ftp/mirror/OpenLDAP/openldap-release/ \
 
 EXTRACT_SUFX=		.tgz
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 CONFIGURE_STYLE=	gnu
 USE_GROFF=		Yes
 
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--localstatedir="/var" \
 			--enable-ipv6
 
 # slapd options

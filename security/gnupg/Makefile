@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.78 2010/11/26 07:50:07 espie Exp $
+# $OpenBSD: Makefile,v 1.81 2012/07/12 16:32:47 naddy Exp $
 
 COMMENT=	GNU privacy guard - a free PGP replacement
 
 DISTNAME=	gnupg-1.4.11
 CATEGORIES=	security
+REVISION=	2
 
 # restrict, not compatible with gnupg-2.
 PKGSPEC =	gnupg-<2
@@ -17,7 +18,9 @@ MASTER_SITES=	ftp://ftp.gnupg.org/gcrypt/gnupg/ \
 		ftp://pgp.iijlab.net/pub/pgp/gnupg/ \
 		ftp://ring.aist.go.jp/pub/net/gnupg/gnupg/
 
-MASTER_SITES0=	ftp://ftp.gnupg.dk/pub/contrib-dk/
+MASTER_SITES0=	ftp://ftp.gnupg.dk/contrib-dk/
+
+DISTFILES=	${DISTNAME}${EXTRACT_SUFX} idea.c.gz:0
 
 HOMEPAGE=	http://www.gnupg.org/
 
@@ -45,23 +48,12 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 MAKE_FLAGS=	LIBINTL="-L${LOCALBASE}/lib -lintl -liconv" \
 		LIBICONV="-L${LOCALBASE}/lib -liconv"
 
-FLAVORS=	idea card ldap
+FLAVORS=	card ldap
 FLAVOR?=
 
-.if ${FLAVOR:L:Midea}
-PERMIT_PACKAGE_CDROM=	a patented algorithm
-PERMIT_DISTFILES_CDROM=	a patented algorithm
-DISTFILES=		${DISTNAME}${EXTRACT_SUFX} idea.c.gz:0
-
-post-extract:
-	ln -s ${WRKDIR}/idea.c ${WRKSRC}/cipher/idea.c
-.else
-SUPDISTFILES=	idea.c.gz:0
-.endif
-
 .if ${FLAVOR:L:Mcard}
-LIB_DEPENDS+=		devel/libusb
-WANTLIB +=		usb
+LIB_DEPENDS+=		devel/libusb-compat
+WANTLIB +=		usb pthread
 .else
 CONFIGURE_ARGS+=	--disable-card-support --without-libusb
 .endif
@@ -77,6 +69,9 @@ CONFIGURE_ARGS+=	--disable-ldap
 
 GNUPGDOCFILES=	README AUTHORS COPYING THANKS TODO BUGS \
 		doc/DETAILS doc/FAQ doc/OpenPGP doc/HACKING
+
+post-extract:
+	ln -s ${WRKDIR}/idea.c ${WRKSRC}/cipher/idea.c
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/gnupg

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.39 2010/11/19 22:31:34 espie Exp $
+# $OpenBSD: Makefile,v 1.43 2012/08/24 07:24:12 jasper Exp $
 
 COMMENT=		jabber server
 DISTNAME=		jabberd-2.0s11
-REVISION=		5
+EPOCH=			1
 CATEGORIES=		net
-HOMEPAGE=		http://jabberd2.xiaoka.com/
+HOMEPAGE=		http://codex.xiaoka.com/wiki/jabberd2:start
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -35,8 +35,7 @@ FLAVOR?=		mysql
 USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		--localstatedir=/var \
-			--enable-debug \
+CONFIGURE_ARGS=		--enable-debug \
 			--enable-ssl \
 			--disable-idn \
 			--with-extra-include-path="${EXTRA_INCLUDE_PATH}" \

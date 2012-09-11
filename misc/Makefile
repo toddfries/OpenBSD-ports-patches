@@ -1,22 +1,19 @@
-# $OpenBSD: Makefile,v 1.141 2011/07/17 20:14:30 sthen Exp $
-# $FreeBSD: Makefile,v 1.121 1997/11/17 10:14:33 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.154 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += WordGenerator
      SUBDIR += amanda
      SUBDIR += astrolog
+     SUBDIR += bible-kjv
      SUBDIR += brltty
-     SUBDIR += brs
      SUBDIR += bsdiff
      SUBDIR += buffer
-     SUBDIR += calentool
      SUBDIR += cbb
      SUBDIR += ccze
      SUBDIR += cdrdao
+     SUBDIR += cdrdao,audio
      SUBDIR += clex
-     SUBDIR += contacts
-     SUBDIR += dates
+     SUBDIR += cmdpack
      SUBDIR += deco
      SUBDIR += delay
      SUBDIR += dialog
@@ -26,8 +23,8 @@
      SUBDIR += dtcltiny
      SUBDIR += dvtm
      SUBDIR += ent
+     SUBDIR += fasd
      SUBDIR += figlet
-     SUBDIR += fileutils
      SUBDIR += findutils
      SUBDIR += ftdi-eeprom
      SUBDIR += garmin-utils
@@ -62,6 +59,7 @@
      SUBDIR += p5-File-MMagic
      SUBDIR += p5-File-MMagic-XS
      SUBDIR += p5-File-Rotate-Backup
+     SUBDIR += p5-Finance-Bank-DE-DTA-Create
      SUBDIR += p5-Finance-IIF
      SUBDIR += p5-Finance-Quote
      SUBDIR += p5-Finance-QuoteHist
@@ -70,6 +68,7 @@
      SUBDIR += p5-Spreadsheet-ParseExcel
      SUBDIR += p5-Spreadsheet-WriteExcel
      SUBDIR += p5-Term-Animation
+     SUBDIR += p5-Umph-Prompt
      SUBDIR += p5-User
      SUBDIR += p5-User-Identity
      SUBDIR += pdmenu
@@ -82,12 +81,11 @@
      SUBDIR += redshift
      SUBDIR += remind
      SUBDIR += rlwrap
+     SUBDIR += rocrail
      SUBDIR += rpm
      SUBDIR += ruby-spreadsheet
      SUBDIR += screen
      SUBDIR += screen,shm
-     SUBDIR += screen,static
-     SUBDIR += sh-utils
      SUBDIR += shared-desktop-ontologies
      SUBDIR += shared-mime-info
      SUBDIR += spdrs60

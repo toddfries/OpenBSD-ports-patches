@@ -1,6 +1,6 @@
-# $OpenBSD: gcc4.port.mk,v 1.13 2011/05/20 08:12:53 sthen Exp $
+# $OpenBSD: gcc4.port.mk,v 1.15 2011/11/17 18:03:43 sthen Exp $
 
-MODGCC4_ARCHES?=
+MODGCC4_ARCHS?=
 MODGCC4_LANGS?=
 
 
@@ -19,8 +19,8 @@ ERRORS += "Fatal: unknown language ${_l}"
 
 _MODGCC4_ARCH_USES = No
 
-.if ${MODGCC4_ARCHES:L} != ""
-.  for _i in ${MODGCC4_ARCHES}
+.if ${MODGCC4_ARCHS:L} != ""
+.  for _i in ${MODGCC4_ARCHS}
 .    if !empty(MACHINE_ARCH:M${_i})
 _MODGCC4_ARCH_USES = Yes
 .    endif
@@ -58,9 +58,9 @@ _MODGCC4_LINKS += egfortran gfortran
 .  endif
 
 .  if ${MODGCC4_LANGS:L:Mjava}
-BUILD_DEPENDS += gcj->=4.2,<4.3|gcj->=4.2v0,<4.3v0:lang/gcc/4.2,-java,java
+BUILD_DEPENDS += gcj->=4.2,<4.3|gcj->=4.2v0,<4.3v0:lang/gcc/4.2,-java
 MODGCC4_GCJWANTLIB = gcj
-MODGCC4_GCJLIBDEP = gcj->=4.2,<4.3|gcj->=4.2v0,<4.3v0:lang/gcc/4.2,-java,java
+MODGCC4_GCJLIBDEP = gcj->=4.2,<4.3|gcj->=4.2v0,<4.3v0:lang/gcc/4.2,-java
 _MODGCC4_LINKS += egcj gcj egcjh gcjh ejar gjar egij gij
 .  endif
 

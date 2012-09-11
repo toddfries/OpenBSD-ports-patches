@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.27 2011/07/18 16:50:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.34 2012/04/30 13:12:15 espie Exp $
 
 COMMENT =		simple distributed software configuration management
 
-VERSION =		20110713230341
-DISTNAME =		fossil-src-${VERSION}
-PKGNAME =		fossil-${VERSION}
+DISTNAME =		fossil-src-20120317175325
+PKGNAME =		fossil-1.22
+EPOCH =			0
 CATEGORIES =		devel www
+REVISION =		0
 
 MAINTAINER =		James Turner <james@calminferno.net>
 
 HOMEPAGE =		http://fossil-scm.org/
-MASTER_SITES =		${HOMEPAGE}download/ \
-			http://bsdgroup.org/fossil/
+MASTER_SITES =		${HOMEPAGE}download/
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -22,19 +22,21 @@ PERMIT_DISTFILES_FTP =	Yes
 FLAVORS=		static
 FLAVOR?=
 
-.if ${FLAVOR:L} == "static"
-MAKE_FLAGS =		LDFLAGS="-static" TCC="${CC} -Wall -DUSE_PREAD"
-.else
-MAKE_FLAGS =		TCC="${CC} -Wall -DFOSSIL_ENABLE_SSL -DUSE_PREAD"
-.endif
-
-WANTLIB =		c crypto ssl z
+WANTLIB =		c crypto ssl sqlite3 z
 
 MODULES =		lang/tcl
 
-REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS}
+BUILD_DEPENDS =		${MODTCL_BUILD_DEPENDS}
 
-MAKE_FLAGS +=		BCC="${CC}"
+CONFIGURE_STYLE =	simple
+CONFIGURE_ARGS =	--disable-internal-sqlite --disable-lineedit
+CONFIGURE_ENV =		CFLAGS="-I${LOCALBASE}/include -L${LOCALBASE}/lib"
+
+.if ${FLAVOR} == "static"
+CONFIGURE_ARGS +=	--static --with-openssl=none
+.endif
+
+REGRESS_DEPENDS =	${MODTCL_RUN_DEPENDS}
 
 do-regress:
 	@cd ${WRKSRC} && ${MODTCL_BIN} test/tester.tcl fossil

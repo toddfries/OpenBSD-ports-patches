@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.60 2011/07/20 07:59:28 dcoppa Exp $
+# $OpenBSD: Quirks.pm,v 1.82 2012/09/01 18:17:21 landry Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -92,6 +92,8 @@ my $base_exceptions = {
 # 4.9
 	'video' => "/usr/X11R6/bin/video",
 	'nsd' => "/usr/sbin/nsd",
+# 5.2
+	'sqlite3' => '/usr/bin/sqlite3',
 };
 
 my $stem_extensions = {
@@ -249,7 +251,59 @@ my $stem_extensions = {
 	'wqy-zenhei-ttf' => 'zh-wqy-zenhei-ttf',
 	'wqy-bitmapfont' => 'zh-wqy-bitmapfont',
 	'ptsans' => 'ru-ptsans',
-	'py-zeya' => 'zeya'
+	'py-zeya' => 'zeya',
+# 5.1
+	'php5-mapscript' => 'php-mapscript',
+	'libusb' => 'libusb-compat',
+	'pecl-pcntl' => 'php-pcntl',
+	'distribute' => 'py3-distribute',
+	'aspell6-ar' => 'aspell-ar',
+	'aspell6-bg' => 'aspell-bg',
+	'aspell6-ca' => 'aspell-ca',
+	'aspell6-cs' => 'aspell-cs',
+	'aspell5-da' => 'aspell-da',
+	'aspell6-de' => 'aspell-de',
+	'aspell6-eo' => 'aspell-eo',
+	'aspell6-es' => 'aspell-es',
+	'aspell6-fa' => 'aspell-fa',
+	'aspell5-fo' => 'aspell-fo',
+	'aspell5-ga' => 'aspell-ga',
+	'aspell6-gl' => 'aspell-gl',
+	'aspell6-he' => 'aspell-he',
+	'aspell5-id' => 'aspell-id',
+	'aspell6-it' => 'aspell-it',
+	'aspell6-lt' => 'aspell-lt',
+	'aspell6-pl' => 'aspell-pl',
+	'aspell5-ro' => 'aspell-ro',
+	'aspell6-ru' => 'aspell-ru',
+	'aspell6-sk' => 'aspell-sk',
+	'aspell6-sr' => 'aspell-sr',
+	'aspell5-tn' => 'aspell-tn',
+	'aspell6-uk' => 'aspell-uk',
+	'vte-ptyhelper' => 'vte',
+# 5.2
+	'gpsbabel-gui' => 'gpsbabel-tk',
+	'gnome-extras' => 'gnome-extra',
+	'maatkit' => 'percona-toolkit',
+	'scrotwm' => 'spectrwm',
+	'gnuls' => 'coreutils',
+	'sh-utils' => 'coreutils',
+	'fileutils' => 'coreutils',
+	'textutils' => 'coreutils',
+	'gnome-utils' => 'gnome-search-tool',
+	'seahorse-plugins' => 'seahorse-nautilus',
+	'apr-mt' => 'apr',
+	'apr-util-mt' => 'apr-util',
+	'xfce-utils' => 'xfce4-session',
+	'p5-Email-MIME-Creator' => 'p5-Email-MIME',
+	'p5-Email-MIME-Modifier' => 'p5-Email-MIME',
+	'libmpcdec' => 'musepack',
+	'mppenc' => 'musepack',
+	'xxxterm' => 'xombrero',
+	'pecl-zip' => 'php-zip',
+	'XML-Sablotron' => 'p5-XML-Sablotron',
+# 5.3
+	'postler' => 'geary'
 };
 
 # ->is_base_system($handle, $state):

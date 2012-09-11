@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2010/11/15 19:45:58 espie Exp $
+# $OpenBSD: Makefile,v 1.65 2012/08/10 20:11:41 naddy Exp $
 # Uses pthreads
 
 COMMENT=	useful routines for C programming
@@ -20,14 +20,13 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		pthread
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --enable-static
 
 NO_REGRESS=	Yes
 USE_LIBTOOL=	Yes
-USE_GROFF =	Yes
 
 post-extract:
 	@rm -f ${WRKSRC}/docs/glib.info*

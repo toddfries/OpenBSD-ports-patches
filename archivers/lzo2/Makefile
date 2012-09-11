@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2011/06/02 17:09:31 kili Exp $
+# $OpenBSD: Makefile,v 1.6 2012/03/29 13:38:12 sthen Exp $
 
 COMMENT=	portable speedy lossless data compression library
 
-DISTNAME=	lzo-2.05
+DISTNAME=	lzo-2.06
 PKGNAME=	${DISTNAME:S/lzo/lzo2/}
 CATEGORIES=	archivers devel
 MASTER_SITES=	${HOMEPAGE}download/
@@ -16,16 +16,14 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
-CONFIGURE_ARGS+= --enable-static
+CONFIGURE_ARGS+= --enable-static \
+		--docdir=${PREFIX}/share/doc/lzo2/
 
 REGRESS_TARGET=	test
 
 USE_LIBTOOL=	Yes
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/lzo2
-	${INSTALL_DATA}	${WRKSRC}/doc/* ${PREFIX}/share/doc/lzo2
 
 .include <bsd.port.mk>

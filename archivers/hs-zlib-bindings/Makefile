@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2011/04/11 14:33:07 kili Exp $
+# $OpenBSD: Makefile,v 1.6 2012/09/02 21:09:16 kili Exp $
 
 COMMENT=		low-level bindings to the zlib package
 
-DISTNAME=		zlib-bindings-0.0.0
+DISTNAME=		zlib-bindings-0.1.0.1
 CATEGORIES=		archivers
-
-REVISION=		1
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes

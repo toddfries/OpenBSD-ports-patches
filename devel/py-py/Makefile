@@ -1,19 +1,19 @@
-# $OpenBSD: Makefile,v 1.12 2011/06/08 17:39:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2012/06/27 19:09:50 rpointel Exp $
 
-ONLY_FOR_ARCHS=		i386 amd64 powerpc
+COMMENT=		cross-python path, ini-parsing, io, code, log facilities
 
-COMMENT=		agile development and test support library
-
-MODPY_EGG_VERSION=	0.9.1
+MODPY_EGG_VERSION=	1.4.7
 DISTNAME=		py-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION =		4
+REVISION =		0
+
+EXTRACT_SUFX=		.zip
 
 CATEGORIES=		devel
 
-HOMEPAGE=		http://codespeak.net/pypy/
+HOMEPAGE=		http://doc.pylib.org/en/latest/
 
-MAINTAINER=		Martynas Venckus <martynas@openbsd.org>
+MAINTAINER=		Eric Faurot <eric@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,20 +21,17 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		http://codespeak.net/download/py/
-
-MODULES=		lang/python
-
-NO_REGRESS=		Yes
+MASTER_SITES=		${MASTER_SITE_PYPI:=p/py/}
 
 WANTLIB +=		${MODPY_WANTLIB}
 
-MODPY_BADEGGS=		py
-MODPY_DISTUTILS_INSTALL=	install --prefix=${LOCALBASE} \
-					--root=${DESTDIR}
+MODULES=		lang/python
 
-post-install:
-	rm -fr ${DESTDIR}${MODPY_SITEPKG}/py/c-extension/greenlet/build
-	rm -f ${DESTDIR}${MODPY_SITEPKG}/py/c-extension/greenlet/slp_platformselect.h.orig
+MODPY_SETUPTOOLS=	Yes
+
+FLAVORS=		python3
+FLAVOR?=
+
+NO_REGRESS=		Yes
 
 .include <bsd.port.mk>

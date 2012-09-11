@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.64 2011/05/11 06:56:43 ajacoutot Exp $
-# $FreeBSD: Makefile,v 1.45 1999/03/09 01:08:57 nectar Exp $
+# $OpenBSD: Makefile,v 1.67 2012/08/18 12:41:38 ajacoutot Exp $
 
 COMMENT=	image manipulation library for X11
 
 V=		1.9.14
 DISTNAME=	imlib-${V}
-REVISION =	9
+REVISION =	10
 SHARED_LIBS=	Imlib		19.14	\
 		gdk_imlib	19.14
 CATEGORIES=	graphics devel
@@ -18,8 +17,8 @@ LIB_DEPENDS= 	x11/gtk+ \
 		graphics/png \
 		graphics/tiff
 
-WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xi c glib gmodule m \
-		pthread-stubs xcb z gtk>=1.2 gdk>=1.2 jpeg>=62 \
+WANTLIB=	ICE SM X11 Xext Xi c glib gmodule m \
+		xcb z gtk>=1.2 gdk>=1.2 jpeg>=62 \
 		ungif>=5 png>=2 tiff>=35
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -30,7 +29,7 @@ PERMIT_DISTFILES_FTP=	Yes
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --disable-modules

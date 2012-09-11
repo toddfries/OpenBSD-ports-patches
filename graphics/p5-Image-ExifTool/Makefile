@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.22 2011/04/07 16:59:43 giovanni Exp $
+# $OpenBSD: Makefile,v 1.26 2012/05/24 14:27:19 okan Exp $
 
 COMMENT=	read and write meta information in image/audio/video files
 
-DISTNAME=	Image-ExifTool-8.50
+DISTNAME=	Image-ExifTool-8.90
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://owl.phy.queensu.ca/~phil/exiftool/
@@ -19,6 +19,5 @@ MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Image/} \
 		${HOMEPAGE}
 
 MODULES=	cpan
-USE_GROFF =	Yes
 
 .include <bsd.port.mk>

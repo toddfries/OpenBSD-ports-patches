@@ -1,19 +1,18 @@
-$OpenBSD: patch-i3-msg_Makefile,v 1.2 2010/09/14 08:54:18 dcoppa Exp $
---- i3-msg/Makefile.orig	Wed Jun  9 09:58:15 2010
-+++ i3-msg/Makefile	Mon Jul 19 17:08:57 2010
-@@ -11,17 +11,14 @@ HEADERS=$(wildcard *.h)
+$OpenBSD: patch-i3-msg_Makefile,v 1.5 2012/05/09 11:56:49 dcoppa Exp $
+--- i3-msg/Makefile.orig	Wed Apr 25 23:21:25 2012
++++ i3-msg/Makefile	Wed May  9 09:42:29 2012
+@@ -3,8 +3,6 @@ TOPDIR=..
  
- # Depend on the specific file (.c for each .o) and on all headers
- %.o: %.c ${HEADERS}
--	echo "CC $<"
- 	$(CC) $(CFLAGS) -c -o $@ $<
+ include $(TOPDIR)/common.mk
  
- all: ${FILES}
--	echo "LINK i3-msg"
- 	$(CC) -o i3-msg ${FILES} $(LDFLAGS)
- 
+-CFLAGS += -I$(TOPDIR)/include
+-
+ # Depend on the object files of all source-files in src/*.c and on all header files
+ FILES=$(patsubst %.c,%.o,$(wildcard *.c))
+ HEADERS=$(wildcard *.h)
+@@ -23,7 +21,7 @@ i3-msg: ${FILES}
  install: all
--	echo "INSTALL"
+ 	echo "[i3-msg] INSTALL"
  	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)/bin
 -	$(INSTALL) -m 0755 i3-msg $(DESTDIR)$(PREFIX)/bin/
 +	${INSTALL_PROGRAM} i3-msg $(DESTDIR)$(PREFIX)/bin/

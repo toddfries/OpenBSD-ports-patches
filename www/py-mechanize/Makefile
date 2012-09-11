@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.6 2012/05/08 17:07:30 espie Exp $
 
 COMMENT=		stateful programmatic web browsing module
 
 MODPY_EGG_VERSION=	0.2.4
 DISTNAME=		mechanize-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION=		1
+REVISION=		2
 
 CATEGORIES=		www
 
@@ -22,7 +22,7 @@ MODPY_SETUPTOOLS=	Yes
 
 MASTER_SITES=		${HOMEPAGE}/src/
 
-REGRESS_DEPENDS=	devel/py-twisted/web2/
+REGRESS_DEPENDS=	devel/py-twisted/web2
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/py-mechanize

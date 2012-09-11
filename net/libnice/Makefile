@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2011/06/21 07:26:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2012/04/30 09:38:13 ajacoutot Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	GLib ICE implementation
 
-DISTNAME =	libnice-0.1.0
-REVISION =	0
-SHARED_LIBS +=  nice                 1.1
+DISTNAME =	libnice-0.1.2
+SHARED_LIBS +=  nice                 1.1      # 10.2
 CATEGORIES =	net
 
 HOMEPAGE =	http://nice.freedesktop.org/
@@ -19,28 +18,33 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		${HOMEPAGE}/releases/
+WANTLIB += c e2fs-uuid ffi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += gssdp-1.0 gstbase-0.10 gstreamer-0.10 gthread-2.0 gupnp-1.0
+WANTLIB += gupnp-igd-1.0 m pcre soup-2.4 xml2 z
 
-WANTLIB += c glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 m pcre
-WANTLIB += xml2 z gstbase-0.10 gstreamer-0.10
+MASTER_SITES =		${HOMEPAGE}/releases/
 
 MODULES =		devel/gettext
 
-LIB_DEPENDS =		multimedia/gstreamer-0.10/core
-BUILD_DEPENDS =		textproc/gsed
+LIB_DEPENDS =		multimedia/gstreamer-0.10/core \
+			net/gupnp/igd
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS = 	${CONFIGURE_SHARED} \
 			--disable-static \
-			--disable-gupnp \
 			--with-gstreamer
 
-USE_GMAKE =		yes
-USE_LIBTOOL =		yes
+USE_GMAKE =		Yes
+USE_LIBTOOL =		Yes
 LIBTOOL_FLAGS =		--tag=disable-static
 
-post-configure:
-	perl -pi -e 's,/bin/bash,/bin/sh,' \
-		${WRKSRC}/tests/test-pseudotcp-random.sh
+pre-configure:
+	perl -pi -e 's,-Wextra,,g;' \
+		-e 's,-Wno-missing-field-initializers,,g;' \
+	${WRKSRC}/Makefile.in ${WRKSRC}/agent/Makefile.in \
+	${WRKSRC}/nice/Makefile.in ${WRKSRC}/random/Makefile.in \
+	${WRKSRC}/socket/Makefile.in ${WRKSRC}/stun/Makefile.in \
+	${WRKSRC}/stun/tests/Makefile.in ${WRKSRC}/stun/tools/Makefile.in \
+	${WRKSRC}/tests/Makefile.in
 
 .include <bsd.port.mk>

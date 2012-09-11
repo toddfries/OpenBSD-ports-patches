@@ -1,0 +1,21 @@
+$OpenBSD: patch-lib_Crypto_Hash___init___py,v 1.5 2012/05/25 12:13:01 jasper Exp $
+
+(Patch with reduced context as otherwise $Id: patch-lib_Crypto_Hash___init___py,v 1.5 2012/05/25 12:13:01 jasper Exp $ would get expanded.)
+
+*** lib/Crypto/Hash/__init__.py.orig	Thu May 24 14:55:30 2012
+--- lib/Crypto/Hash/__init__.py	Fri May 25 14:09:50 2012
+*************** The hashing modules here all support the interface des
+*** 48,53 ****
+  
+! :undocumented: _MD2, _MD4, _RIPEMD160, _SHA224, _SHA256, _SHA384, _SHA512
+  """
+  
+! __all__ = ['HMAC', 'MD2', 'MD4', 'MD5', 'RIPEMD', 'SHA',
+             'SHA224', 'SHA256', 'SHA384', 'SHA512']
+--- 48,53 ----
+  
+! :undocumented: _MD4, _RIPEMD160, _SHA224, _SHA256, _SHA384, _SHA512
+  """
+  
+! __all__ = ['HMAC', 'MD4', 'MD5', 'RIPEMD', 'SHA',
+             'SHA224', 'SHA256', 'SHA384', 'SHA512']

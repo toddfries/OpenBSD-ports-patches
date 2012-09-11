@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2011/06/03 21:38:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.42 2012/04/28 10:52:08 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 SHARED_LIBS +=  freeradius-radius    4.0      # .0.0
@@ -10,7 +10,7 @@ COMMENT-mysql=	freeradius mysql rlm addon
 COMMENT-pgsql=	freeradius pgsql rlm addon
 COMMENT-ldap=	freeradius ldap rlm addon
 
-V=		2.1.10
+V=		2.1.12
 DISTNAME=	freeradius-server-$V
 EXTRACT_SUFX=	.tar.bz2
 
@@ -20,12 +20,6 @@ PKGNAME-mysql=	freeradius-mysql-$V
 PKGNAME-pgsql=	freeradius-pgsql-$V
 PKGNAME-ldap=	freeradius-ldap-$V
 
-REVISION-main=	3
-REVISION-iodbc= 0
-REVISION-mysql= 0
-REVISION-pgsql= 0
-REVISION-ldap=	0
-
 CATEGORIES=	net security
 
 MASTER_SITES=	ftp://ftp.freeradius.org/pub/radius/ \
@@ -33,7 +27,7 @@ MASTER_SITES=	ftp://ftp.freeradius.org/pub/radius/ \
 
 HOMEPAGE=	http://www.freeradius.org/
 
-MAINTAINER=	Rui Reis <rui@openbsd.org>
+MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # GPLv2 - LGPLv2 - OpenSSL exemption
 PERMIT_PACKAGE_CDROM=	Yes
@@ -52,7 +46,6 @@ LDFLAGS+=	-L${LOCALBASE}/lib
 CONFIGURE_ENV=	LDFLAGS="${LDFLAGS}"
 
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--localstatedir='$${DESTDIR}/var' \
 		--with-large-files \
 		--with-snmp \
 		--with-pic \
@@ -74,11 +67,14 @@ MULTI_PACKAGES=	-main
 SUBST_VARS+=	V
 
 USE_GMAKE=	Yes
-# depends on libltdl
+# undefined reference to `lt__PROGRAM__LTX_preloaded_symbols'
 USE_LIBTOOL=	gnu
 USE_GROFF =	Yes
 
-BUILD_DEPENDS=	net/net-snmp
+TAR=			${LOCALBASE}/bin/gtar
+
+BUILD_DEPENDS=		archivers/gtar \
+			net/net-snmp
 LIB_DEPENDS-main =	databases/gdbm \
 			devel/libtool,-ltdl
 WANTLIB-main=		${WANTLIB} c com_err krb5 pcap pthread readline \

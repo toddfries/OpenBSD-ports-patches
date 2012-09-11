@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2011/06/22 08:19:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2012/05/02 06:57:01 ajacoutot Exp $
 
 COMMENT=		server of the Tryton application platform
 
 DISTNAME=		trytond-${MODPY_EGG_VERSION}
-REVISION=		0
 
 CATEGORIES=		www
 
@@ -14,6 +13,7 @@ RUN_DEPENDS=		textproc/py-lxml \
 			devel/py-tz \
 			print/py-relatorio \
 			security/py-openssl \
+			textproc/py-polib \
 			www/py-webdav
 
 pre-configure:

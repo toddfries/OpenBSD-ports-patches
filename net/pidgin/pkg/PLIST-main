@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.14 2011/08/22 07:35:34 jasper Exp $
+@comment $OpenBSD: PLIST-main,v 1.17 2012/07/18 13:31:49 jasper Exp $
 @conflict gaim-*
 @conflict pidgin-facebookchat-<1.68p0
 @pkgpath net/pidgin
@@ -124,8 +124,6 @@ share/locale/id/LC_MESSAGES/pidgin.mo
 share/locale/it/LC_MESSAGES/pidgin.mo
 share/locale/ja/LC_MESSAGES/pidgin.mo
 share/locale/ka/LC_MESSAGES/pidgin.mo
-share/locale/km/
-share/locale/km/LC_MESSAGES/
 share/locale/km/LC_MESSAGES/pidgin.mo
 share/locale/kn/LC_MESSAGES/pidgin.mo
 share/locale/ko/LC_MESSAGES/pidgin.mo
@@ -812,7 +810,7 @@ share/pixmaps/pidgin/tray/hicolor/48x48/status/pidgin-tray-offline.png
 share/pixmaps/pidgin/tray/hicolor/48x48/status/pidgin-tray-pending.png
 share/pixmaps/pidgin/tray/hicolor/48x48/status/pidgin-tray-xa.png
 share/pixmaps/pidgin/tray/hicolor/index.theme
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

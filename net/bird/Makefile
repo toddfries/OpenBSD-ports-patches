@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.16 2011/07/12 10:59:14 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2012/08/17 09:34:56 sthen Exp $
 
-COMMENT-main=	bird internet routing daemon
-COMMENT-doc=	bird internet routing daemon (documentation)
+COMMENT-main=	BIRD internet routing daemon
+COMMENT-doc=	BIRD internet routing daemon (documentation)
 
-V=		1.3.2
+V=		1.3.8
 DISTNAME=	bird-$V
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
 		${DISTNAME:S/-/-doc-/}${EXTRACT_SUFX}
@@ -46,7 +46,6 @@ FAKE_FLAGS=	sysconfdir=${TRUEPREFIX}/share/examples/bird
 
 USE_GMAKE=	Yes
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--localstatedir=/var
 
 .if ${FLAVOR:L:Mv6}
 CONFIGURE_ARGS+=--enable-ipv6

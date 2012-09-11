@@ -1,5 +1,6 @@
-@comment $OpenBSD: PLIST,v 1.58 2011/07/15 18:10:18 robert Exp $
+@comment $OpenBSD: PLIST,v 1.62 2012/05/16 14:40:08 sthen Exp $
 @conflict postfix-*
+@pkgpath mail/postfix/snapshot,sqlite
 @newgroup _postfix:507
 @newgroup _postdrop:508
 @newuser _postfix:507:507:daemon:Postfix Daemon:/var/empty:/sbin/nologin
@@ -70,6 +71,7 @@ libexec/postfix/postmulti-script
 @man man/man5/header_checks.5
 @man man/man5/ldap_table.5
 @man man/man5/master.5
+@man man/man5/memcache_table.5
 @man man/man5/mysql_table.5
 @man man/man5/nisplus_table.5
 @man man/man5/pcre_table.5
@@ -116,7 +118,11 @@ sbin/newaliases
 @bin sbin/postalias
 @bin sbin/postcat
 @bin sbin/postconf
+@mode 2755
+@group _postdrop
 @bin sbin/postdrop
+@mode
+@group
 @bin sbin/postfix
 sbin/postfix-disable
 sbin/postfix-enable
@@ -126,7 +132,11 @@ sbin/postfix-install
 @bin sbin/postlog
 @bin sbin/postmap
 @bin sbin/postmulti
+@mode 2755
+@group _postdrop
 @bin sbin/postqueue
+@mode
+@group
 @bin sbin/postsuper
 sbin/qshape
 @bin sbin/sendmail
@@ -202,6 +212,7 @@ share/doc/postfix/html/local.8.html
 share/doc/postfix/html/mailq.1.html
 share/doc/postfix/html/master.5.html
 share/doc/postfix/html/master.8.html
+share/doc/postfix/html/memcache_table.5.html
 share/doc/postfix/html/mysql_table.5.html
 share/doc/postfix/html/newaliases.1.html
 share/doc/postfix/html/nisplus_table.5.html
@@ -274,6 +285,7 @@ share/doc/postfix/readme/LDAP_README
 share/doc/postfix/readme/LINUX_README
 share/doc/postfix/readme/LOCAL_RECIPIENT_README
 share/doc/postfix/readme/MAILDROP_README
+share/doc/postfix/readme/MEMCACHE_README
 share/doc/postfix/readme/MILTER_README
 share/doc/postfix/readme/MULTI_INSTANCE_README
 share/doc/postfix/readme/MYSQL_README

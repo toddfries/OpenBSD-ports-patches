@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.23 2011/07/20 14:46:20 giovanni Exp $
+# $OpenBSD: Makefile,v 1.28 2012/07/07 19:09:36 giovanni Exp $
 
 COMMENT=		interface between mailer MTA and content checkers
 
-DISTNAME=		amavisd-new-2.7.0
+DISTNAME=		amavisd-new-2.8.0
 CATEGORIES=		mail security
 
 HOMEPAGE=		http://www.amavis.org/
@@ -23,7 +23,6 @@ MASTER_SITES=		${HOMEPAGE} \
 RUN_DEPENDS=		archivers/arc \
 			archivers/bzip2 \
 			archivers/cabextract \
-			archivers/lha \
 			archivers/lzop \
 			archivers/p5-Archive-Zip>=1.14 \
 			archivers/p7zip,-rar \
@@ -73,7 +72,8 @@ do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/AAAREADME.first \
 			${PREFIX}/share/doc/amavisd-new
-	${INSTALL_DATA} ${WRKSRC}/AMAVIS-MIB.txt ${PREFIX}/share/doc/amavisd-new
+	${INSTALL_DATA_DIR} ${PREFIX}/share/snmp/mibs
+	${INSTALL_DATA} ${WRKSRC}/AMAVIS-MIB.txt ${PREFIX}/share/snmp/mibs
 	${INSTALL_DATA} ${WRKSRC}/INSTALL ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/LDAP.schema ${PREFIX}/share/doc/amavisd-new
 	${INSTALL_DATA} ${WRKSRC}/LDAP.ldif ${PREFIX}/share/doc/amavisd-new

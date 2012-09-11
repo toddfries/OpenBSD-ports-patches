@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/31 07:27:29 benoit Exp $
+# $OpenBSD: Makefile,v 1.7 2012/08/23 15:52:47 sthen Exp $
 
 COMMENT =	interface to the Skein digest algorithm
 
 DISTNAME =	Digest-Skein-0.05
 CATEGORIES =	security
 
-REVISION =	0
+REVISION =	1
 
 HOMEPAGE =	http://www.skein-hash.info/
 
@@ -17,11 +17,13 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
+WANTLIB += c
+
 MODULES =	cpan
 
-BYTEORDER !=	sysctl -n hw.byteorder
+.include <bsd.port.arch.mk>
 
-.if ${BYTEORDER} == "1234"
+.if ${PROPERTIES:Mle}
 BO=	LITTLE
 .else
 BO=	BIG

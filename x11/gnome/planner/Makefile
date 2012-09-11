@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.41 2011/07/26 15:36:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.51 2012/06/15 08:30:20 ajacoutot Exp $
 
 COMMENT=		project management application
 
 GNOME_PROJECT=		planner
-GNOME_VERSION=		0.14.5
+GNOME_VERSION=		0.14.6
 REVISION=		0
 
 CATEGORIES=		productivity
@@ -18,8 +18,6 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-EXTRACT_SUFX=		.tar.xz
-
 WANTLIB += GL ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
 WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
 WANTLIB += Xrender Xxf86vm art_lgpl_2 atk-1.0 bonobo-2 bonobo-activation
@@ -30,7 +28,7 @@ WANTLIB += gmodule-2.0 gnome-2 gnome-keyring gnomecanvas-2 gnomeui-2
 WANTLIB += gnomevfs-2 gobject-2.0 gpg-error gthread-2.0 gtk-x11-2.0
 WANTLIB += ltdl m ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png popt pthread pthread-stubs ssl util vorbis
-WANTLIB += vorbisfile xcb xcb-render xcb-shm xml2 xslt z
+WANTLIB += vorbisfile xcb xcb-render xcb-shm xml2 xslt z ffi stdc++
 WANTLIB += ${MODPY_WANTLIB}
 
 MODULES=		devel/gettext \
@@ -46,21 +44,18 @@ LIB_DEPENDS=		x11/gnome/libbonoboui \
 			x11/gnome/libgnomeui \
 			${MODPY_LIB_DEPENDS}
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
 MODGCONF2_SCHEMAS_DIR=	planner
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-update-mimedb \
-			--enable-gtk-doc=no \
+CONFIGURE_ARGS+= 	--disable-update-mimedb \
 			--enable-python \
 			--enable-python-plugin=yes \
 			--enable-eds=no \
 			--enable-eds-backend=no \
 			--with-database=no
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			UPDATE_DESKTOP_DATABASE="/usr/bin/false"
+CONFIGURE_ENV=		UPDATE_DESKTOP_DATABASE="/usr/bin/false"
 
 .include <bsd.port.mk>

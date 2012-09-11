@@ -1,22 +1,22 @@
-# $OpenBSD: Makefile,v 1.7 2011/05/01 21:08:49 gsoares Exp $
+# $OpenBSD: Makefile,v 1.13 2012/07/13 02:26:03 gsoares Exp $
 
 COMMENT =		C/C++ static checker
 
-DISTNAME =		cppcheck-1.48
+DISTNAME =		cppcheck-1.55
 
 CATEGORIES =		devel
 
 HOMEPAGE =		http://cppcheck.sourceforge.net/
 
-MAINTAINER =		Igor Zinovik <zinovik.igor@gmail.com>
+MAINTAINER =		Gleydson Soares <gsoares@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		c m pcre stdc++ 
+WANTLIB =		c m pcre stdc++
 
 BUILD_DEPENDS =		textproc/docbook-xsl \
 			textproc/libxslt
@@ -27,8 +27,10 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=cppcheck/}
 
 ALL_TARGET =		cppcheck
 REGRESS_TARGET = 	test
-MAKE_FLAGS =		BIN=${PREFIX}/bin CXX="${CXX}" \
-			CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -L${PREFIX}/lib"
+MAKE_FLAGS =		BIN=${PREFIX}/bin \
+			CXX="${CXX}" CXXFLAGS="${CXXFLAGS}" \
+			CPPFLAGS="-DHAVE_RULES -I${PREFIX}/include" \
+			LDFLAGS="-L${PREFIX}/lib -lpcre"
 
 USE_GMAKE =		Yes
 

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2011/04/28 10:48:38 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.4 2012/08/15 10:58:25 jasper Exp $
 %%SHARED%%
 include/rest-0.7/
 include/rest-0.7/rest/
@@ -12,8 +12,10 @@ include/rest-0.7/rest/oauth-proxy-call.h
 include/rest-0.7/rest/oauth-proxy.h
 include/rest-0.7/rest/oauth2-proxy-call.h
 include/rest-0.7/rest/oauth2-proxy.h
+include/rest-0.7/rest/rest-enum-types.h
 include/rest-0.7/rest/rest-param.h
 include/rest-0.7/rest/rest-params.h
+include/rest-0.7/rest/rest-proxy-auth.h
 include/rest-0.7/rest/rest-proxy-call.h
 include/rest-0.7/rest/rest-proxy.h
 include/rest-0.7/rest/rest-xml-node.h
@@ -53,7 +55,6 @@ share/gtk-doc/html/rest-0.7/home.png
 share/gtk-doc/html/rest-0.7/index.html
 share/gtk-doc/html/rest-0.7/index.sgml
 share/gtk-doc/html/rest-0.7/left.png
-share/gtk-doc/html/rest-0.7/rest-0.7.devhelp
 share/gtk-doc/html/rest-0.7/rest-0.7.devhelp2
 share/gtk-doc/html/rest-0.7/rest-RestParam.html
 share/gtk-doc/html/rest-0.7/rest-RestParams.html

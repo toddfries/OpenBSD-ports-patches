@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.6 2011/07/17 06:22:36 benoit Exp $
+# $OpenBSD: Makefile,v 1.10 2012/06/27 19:09:14 rpointel Exp $
 
 COMMENT =		Python easy_install replacement
 
-MODPY_EGG_VERSION =	1.0.2
+MODPY_EGG_VERSION =	1.1
 DISTNAME =		pip-${MODPY_EGG_VERSION}
 PKGNAME =		py-${DISTNAME}
 CATEGORIES =		devel
+REVISION =		0
 
 MAINTAINER =		Wen Heping <wenheping@gmail.com>
 
@@ -22,5 +23,8 @@ MASTER_SITES =		${MASTER_SITE_PYPI:=p/pip/}
 MODULES =		lang/python
 MODPY_SETUPTOOLS =	Yes
 NO_REGRESS =		Yes
+
+FLAVORS =		python3
+FLAVOR ?=
 
 .include <bsd.port.mk>

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/15 19:45:59 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/09/01 12:02:26 naddy Exp $
 
 COMMENT =	libevent extra features
 
 VERSION =	1.4.13
 DISTNAME =	libevent-${VERSION}-stable
 PKGNAME =	libeventextra-${VERSION}
-REVISION =	0
+REVISION =	1
 
 SHARED_LIBS =    eventextra 1.0
 
@@ -24,13 +24,6 @@ PERMIT_DISTFILES_FTP =	Yes
 MASTER_SITES =	${HOMEPAGE}
 
 MAKE_ENV +=	CC="${CC}"
-
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=	-Dno_mips64=0
-.else
-PKG_ARGS+=	-Dno_mips64=1
-.endif
 
 pre-build:
 	@printf "major=${LIBeventextra_VERSION:R}\nminor=${LIBeventextra_VERSION:E}\n" >${WRKBUILD}/shlib_version

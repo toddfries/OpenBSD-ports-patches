@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.70 2011/06/08 17:41:57 rpointel Exp $
+# $OpenBSD: Makefile,v 1.99 2012/09/01 14:36:59 ajacoutot Exp $
 
-COMMENT= 		telepathy based messenger for GNOME
+COMMENT= 		Telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
-GNOME_VERSION=		2.34.0
-
-REVISION=		5
+GNOME_VERSION=		3.4.2
+REVISION=		2
 
 CATEGORIES=		net
 
@@ -17,82 +16,74 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MODULES=		devel/gettext \
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm asn1
+WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 canberra canberra-gtk3
+WANTLIB += com_err crypto dbus-1 dbus-glib-1 drm ebook-1.2 edataserver-1.2
+WANTLIB += enchant execinfo expat ffi folks folks-telepathy fontconfig
+WANTLIB += freetype gailutil-3 gck-1 gconf-2 gcr-3 gcr-base-3
+WANTLIB += gcrypt gdbm gdk-3 gdk_pixbuf-2.0 gee geoclue gio-2.0
+WANTLIB += glib-2.0 gmodule-2.0 gmp gnome-keyring gnutls goa-1.0
+WANTLIB += gobject-2.0 gpg-error gssapi gstapp-0.10 gstaudio-0.10
+WANTLIB += gstbase-0.10 gstfft-0.10 gstinterfaces-0.10
+WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
+WANTLIB += gtk-3 hogweed icudata icui18n icuuc javascriptcoregtk-3.0
+WANTLIB += jpeg json krb5 ltdl m mission-control-plugins nettle
+WANTLIB += notify nspr4 nss3 ogg orc-0.4 p11-kit pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
+WANTLIB += pulse pulse-mainloop-glib smime3 sndfile softokn3 soup-2.4
+WANTLIB += sqlite3 ssl3 stdc++ tasn1 telepathy-farstream telepathy-glib
+WANTLIB += telepathy-logger vorbis vorbisfile webkitgtk-3.0 xcb
+WANTLIB += xcb-render xcb-shm xml2 xslt z farstream-0.1
+WANTLIB += champlain-0.12 champlain-gtk-0.12 clutter-1.0 clutter-gst-1.0
+WANTLIB += clutter-gtk-1.0 cogl cogl-pango gstbasevideo-0.10 gsttag-0.10
+WANTLIB += json-glib-1.0 soup-gnome-2.4
+
+MODULES=		devel/dconf \
+			devel/gettext \
 			lang/python \
-			x11/gnome \
-			devel/dconf
+			x11/gnome
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm asn1
-WANTLIB += atk-1.0 c cairo clutter-glx-1.0 com_err crypto dbus-1
-WANTLIB += dbus-glib-1 drm expat fontconfig freetype gmp hogweed nettle
-WANTLIB += gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 unique-1.0
-WANTLIB += gmodule-2.0 gnome-keyring gnutls gobject-2.0
-WANTLIB += gpg-error gssapi gstbase-0.10 gstfarsight-0.10 gstinterfaces-0.10
-WANTLIB += gstreamer-0.10 gthread-2.0 gtk-x11-2.0 krb5 m nspr4 geoclue
-WANTLIB += nss3 ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre enchant
-WANTLIB += pixman-1 plc4 plds4 png proxy pthread pthread-stubs
-WANTLIB += smime3 soup-2.4 soup-gnome-2.4 sqlite3 ssl3 stdc++ notify
-WANTLIB += tasn1 telepathy-glib vorbis vorbisfile xcb xcb-render ltdl
-WANTLIB += gconf-2 gee xcb-shm xml2 z canberra canberra-gtk camel-1.2
-WANTLIB += ebook-1.2 edataserver-1.2 json-glib-1.0 champlain-0.8
-WANTLIB += champlain-gtk-0.8 clutter-gtk-0.10 telepathy-farsight
-WANTLIB += telepathy-logger folks folks-telepathy gcr gp11
-
-BUILD_DEPENDS=		devel/iso-codes \
-			x11/py-gtk2
-#XXX see below		x11/gnome/nautilus-sendto
-LIB_DEPENDS=		audio/libcanberra,-gtk \
-			databases/evolution-data-server \
-			devel/json-glib \
-			devel/libnotify>=0.7.2 \
-			devel/libtool,-ltdl \
-			devel/libunique \
+BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/iso-codes \
+			x11/gnome/nautilus-sendto
+LIB_DEPENDS=		audio/libcanberra,-gtk3 \
+			audio/pulseaudio>=2.0 \
 			geo/geoclue \
-			geo/libchamplain/core \
-			graphics/clutter/clutter-gtk \
-			net/telepathy/telepathy-farsight \
-			net/telepathy/telepathy-logger>=0.2.8 \
+			geo/libchamplain>=0.12.2 \
+			graphics/clutter/clutter-gst>=1.6.0 \
+			net/telepathy/folks \
+			net/telepathy/telepathy-farstream \
+			net/telepathy/telepathy-logger \
 			textproc/enchant \
-			net/telepathy/folks>=0.4.0 \
-			x11/gnome/keyring
-RUN_DEPENDS=		devel/iso-codes \
+			x11/gnome/gcr \
+			x11/gnome/online-accounts
+RUN_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/iso-codes \
 			net/telepathy/telepathy-mission-control \
-			net/telepathy/telepathy-butterfly \
 			net/telepathy/telepathy-gabble \
 			net/telepathy/telepathy-idle \
 			net/telepathy/telepathy-salut \
-			x11/gnome/icon-theme>=2.30.3
+			x11/gnome/contacts \
+			x11/gnome/icon-theme
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
-MODGCONF2_SCHEMAS_DIR=	empathy
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 
-AUTOCONF_VERSION=	2.65
-CONFIGURE_STYLE=	autoconf gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-spell=Yes \
-			--enable-location=Yes \
-			--enable-map=Yes\
-			--enable-webkit=no \
-			--enable-control-center-embedding=no \
-			--with-connectivity=no \
-			--with-eds \
-			--with-ca-file=/etc/ssl/cert.pem \
+MODGNOME_LDFLAGS=	-Wl,-rpath,${LOCALBASE}/lib/pulseaudio
+
+CONFIGURE_ARGS+=	--disable-gudev \
 			--disable-Werror \
-			--enable-call=no
-# XXX lots of 'libnstempathy.so: undefined symbol' at runtime
-# revisit when telepathy-yell is moved out from empathy(?)
-CONFIGURE_ARGS+=	--disable-nautilus-sendto \
+			--with-eds \
+			--without-cheese
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =		Yes
+# XXX needs geocode-glib
+CONFIGURE_ARGS +=	--disable-geocode
 
-FAKE_FLAGS+=		pkgdatadir=${PREFIX}/share/
+# needs connman or network-manager
+CONFIGURE_ARGS+=	--without-connectivity
 
-pre-configure:
-	@ln -sf ${LOCALBASE}/bin/python${MODPY_VERSION}-config \
-		${WRKDIR}/bin/python-config
+USE_GROFF=		Yes
 
 .include <bsd.port.mk>

@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.20 2011/04/06 11:13:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2012/09/01 14:36:56 ajacoutot Exp $
 
 COMMENT=		curses based frontend for mpd
 
-DISTNAME=		ncmpc-0.18
+DISTNAME=		ncmpc-0.20
 EPOCH=			0
 CATEGORIES=		audio
+REVISION=	0
 
 HOMEPAGE=		http://mpd.wikia.com/wiki/Client:Ncmpc
 
-MAINTAINER=		Tobias Ulmer <tobiasu@tmux.org>
+MAINTAINER=		David Coppa <dcoppa@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,7 +25,8 @@ MODULES=		devel/gettext
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=musicpd/}
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		CPPFLAGS=-I${LOCALBASE}/include \
+CONFIGURE_ENV=		CPP=${CPP} \
+			CPPFLAGS=-I${LOCALBASE}/include \
 			LDFLAGS=-L${LOCALBASE}/lib
 
 post-install:

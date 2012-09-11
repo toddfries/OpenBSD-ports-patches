@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.24 2011/05/08 13:20:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2012/08/28 05:50:57 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	personal search and metasearch
 
-DISTNAME=	pinot-0.97
-REVISION=	0
+DISTNAME=	pinot-1.01
+
+SHARED_LIBS +=  xapianbackend             0.0 # 1.0
 
 CATEGORIES=	x11 misc
 
-HOMEPAGE=	http://pinot.berlios.de/
+HOMEPAGE=	http://code.google.com/p/pinot-search/
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,19 +18,18 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo cairomm-1.0
-WANTLIB += crypto dbus-1 expat fontconfig freetype gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4
-WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
-WANTLIB += idn m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4
-WANTLIB += pcre pixman-1 png pthread pthread-stubs sigc-2.0 ssl
-WANTLIB += stdc++ xcb xml2 z e2fs-uuid xcb-render
-WANTLIB += gtkmm-2.4>=7 gdkmm-2.4 atkmm-1.6 xml++-2.6 gmime-2.4
-WANTLIB += curl>=13 tag>=7 sqlite3>=13 dbus-glib-1>=4 exif>=12
-WANTLIB += textcat xapian GL Xxf86vm drm xcb-shm
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 atkmm-1.6
+WANTLIB += c cairo cairo-gobject cairomm-1.0 crypto curl dbus-1
+WANTLIB += dbus-glib-1 drm e2fs-uuid exiv2 expat ffi fontconfig
+WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gdkmm-3.0 gio-2.0 giomm-2.4
+WANTLIB += glib-2.0 glibmm-2.4 gmime-2.6 gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 gtk-3 gtkmm-3.0 idn m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pangomm-1.4 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs sigc-2.0 sqlite3 ssl stdc++ tag textcat
+WANTLIB += xapian xcb xcb-render xcb-shm xml++-2.6 xml2 z
 
-MASTER_SITES=	${MASTER_SITE_BERLIOS:=pinot/}
+MASTER_SITES=	http://pinot-search.googlecode.com/files/
 
 MODULES=	devel/gettext
 
@@ -39,14 +39,13 @@ BUILD_DEPENDS=	devel/boost \
 		devel/libexecinfo
 
 # XXX catppt - catdvi
-LIB_DEPENDS=	x11/gtk2mm \
+LIB_DEPENDS=	x11/gtk3mm \
 		textproc/libxml++ \
-		gmime->=2.4,<2.6:mail/gmime24 \
+		mail/gmime>=2.6.0 \
 		net/curl \
 		audio/taglib \
-		databases/sqlite3 \
 		x11/dbus-glib \
-		graphics/libexif \
+		graphics/exiv2 \
 		devel/libidn
 
 # port-lib-depends-check misses these ones because the depending lib
@@ -58,13 +57,14 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 		devel/xdg-utils \
 		archivers/unzip \
 		textproc/unrtf \
-		textproc/xpdf,-utils \
 		textproc/antiword \
-		misc/shared-mime-info
+		misc/shared-mime-info \
+		x11/gtk+2,-guic
 
-# libxapianbackend.so: undefined symbol '__dso_handle'
-USE_LIBTOOL=	gnu
+# pdftotext(1)
+RUN_DEPENDS +=	print/poppler,-utils
 
+USE_LIBTOOL=	yes
 USE_GROFF=	Yes
 
 CONFIGURE_STYLE= gnu
@@ -72,13 +72,12 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		MKDIR_P="mkdir -p --"
 CONFIGURE_ARGS= ${CONFIGURE_SHARED} \
-		--enable-soap=no \
-		--enable-dbus=yes \
-		--enable-mempool=yes \
-		--enable-libarchive=no \
-		--enable-gio=yes \
 		--with-http=curl \
-		--with-ssl=/usr
+		--with-ssl=/usr \
+		--enable-gtkmm3
+
+# needs boost >= 1.48
+#CONFIGURE_ARGS += --disable-mempool
 
 .ifdef DEBUG
 CONFIGURE_ARGS+= --enable-debug
@@ -89,13 +88,16 @@ FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/pinot
 BASH_SCRIPTS=pinot-enum-index.sh pinot-cd.sh pinot-check-file.sh
 
 pre-configure:
+	perl -pi -e 's,/usr/share,${LOCALBASE}/share,g' \
+		${WRKSRC}/textcat3*_conf.txt
 	${SUBST_CMD} \
-		${WRKSRC}/{Makefile.in,README,textcat_conf.txt,textcat3_conf.txt,Core/pinot-search.1,Utils/xdgmime/xdgmime.c}
+		${WRKSRC}/{Makefile.in,README,textcat_conf.txt,Core/pinot-search.1,Utils/xdgmime/xdgmime.c}
 	for i in ${BASH_SCRIPTS}; \
 		do perl -pi -e 's,/bin/bash/,/bin/sh,g' ${WRKSRC}/scripts/bash/$${i}; done
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/pinot
 	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/pinot/
+	rm ${PREFIX}/lib/pinot/*.{a,la}
 
 .include <bsd.port.mk>

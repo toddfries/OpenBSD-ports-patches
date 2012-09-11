@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2011/06/02 17:09:32 kili Exp $
+# $OpenBSD: Makefile,v 1.51 2012/06/15 08:32:18 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,12 +6,13 @@ ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
 COMMENT=	SWF player with Firefox browser plugin
 
-VER=		0.8.9
+VER=		0.8.10
 DISTNAME=	gnash-${VER}
-REVISION=	1
+REVISION=	0
 EPOCH=		0
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_GNU:=gnash/${VER}/}
+EXTRACT_SUFX=	.tar.bz2
 
 HOMEPAGE=	http://gnashdev.org
 
@@ -22,15 +23,17 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=	SDL X11 agg avcodec avformat avutil boost_program_options-mt \
-		boost_thread-mt c curl freetype fontconfig gdk_pixbuf-2.0 \
-		gdk-x11-2.0 gif glib-2.0 gobject-2.0 gtk-x11-2.0 jpeg ltdl m \
-		glib-2.0 gobject-2.0 gtk-x11-2.0 png pthread speex speexdsp \
-		stdc++ swscale z
+
+WANTLIB=	SDL X11 agg avcodec avformat avutil boost_iostreams \
+		boost_program_options-mt boost_thread-mt c curl fontconfig \
+		freetype gdk-x11-2.0 gdk_pixbuf-2.0 gif glib-2.0 gobject-2.0 \
+		gtk-x11-2.0 jpeg ltdl m png pthread speex speexdsp \
+		stdc++ swscale z \
 
 MODULES=	devel/gettext
 BUILD_DEPENDS=	devel/xulrunner/1.9,-devel
-RUN_DEPENDS=	devel/desktop-file-utils
+RUN_DEPENDS=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 LIB_DEPENDS=	audio/speex \
 		devel/boost \
 		devel/libtool,-ltdl \
@@ -46,13 +49,13 @@ LIB_DEPENDS=	audio/speex \
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS+=	--tag=disable-static
-CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.67
+CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--disable-cygnal \
 		--disable-jemalloc \
 		--enable-renderer=agg \
 		--enable-gui=gtk \
 		--enable-media=ffmpeg \
+		--without-gconf \
 		--with-npapi-plugindir=${LOCALBASE}/lib/mozilla/plugins
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"

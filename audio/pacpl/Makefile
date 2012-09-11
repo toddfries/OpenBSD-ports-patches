@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/15 00:22:48 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2012/06/18 11:49:33 espie Exp $
 
 PKG_ARCH=		*
 
@@ -6,18 +6,17 @@ COMMENT-main=		PAC (Perl Audio Converter)
 COMMENT-konqueror=	PAC Konqueror service menu & mime types
 COMMENT-amarok=		PAC Amarok plugin
 
-V=			4.0.3
+V=			4.0.4
 DISTNAME=		pacpl-${V}
 PKGNAME-main=		pacpl-${V}
-REVISION-main=		0
 PKGNAME-konqueror=	pacpl-konqueror-${V}
-REVISION-konqueror=	0
 PKGNAME-amarok=		pacpl-amarok-${V}
 CATEGORIES=		audio converters perl5
 
-HOMEPAGE=		http://pacpl.sourceforge.net/
+REVISION-main =		1
+REVISION =		0
 
-MAINTAINER=		Andreas Bihlmaier <andreas.bihlmaier@gmx.de>
+HOMEPAGE=		http://pacpl.sourceforge.net/
 
 # GPLv3
 PERMIT_PACKAGE_FTP=	Yes
@@ -27,18 +26,16 @@ PERMIT_DISTFILES_CDROM=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=pacpl/}
 
-USE_GMAKE =		Yes
-USE_GROFF =		Yes
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
 
 MULTI_PACKAGES=		-main -konqueror -amarok
 
 RUN_DEPENDS=		audio/bonk \
-			audio/faac \
 			audio/lame \
-			audio/mpg321 \
+			audio/musepack \
 			audio/sox \
+			audio/speex \
 			audio/vorbis-tools \
 			audio/p5-Audio-FLAC-Header \
 			audio/p5-Audio-Musepack \
@@ -48,6 +45,7 @@ RUN_DEPENDS=		audio/bonk \
 			audio/p5-MP3-Tag \
 			audio/p5-MP4-Info \
 			audio/p5-Ogg-Vorbis-Header \
+			audio/wavpack \
 			graphics/ffmpeg \
 			x11/mplayer
 
@@ -58,6 +56,7 @@ RUN_DEPENDS-konqueror=	${BUILD_PKGPATH} \
 RUN_DEPENDS-amarok=	${BUILD_PKGPATH} \
 			audio/amarok
 
+USE_GMAKE=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-konq \
 			--with-amarok

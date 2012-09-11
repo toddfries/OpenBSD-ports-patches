@@ -1,7 +1,7 @@
-$OpenBSD: patch-configure,v 1.5 2011/07/07 13:14:29 jasper Exp $
---- configure.orig	Sun Dec  5 04:23:14 2010
-+++ configure	Tue Jun 21 11:02:27 2011
-@@ -2271,8 +2271,8 @@ case `uname -s` in
+$OpenBSD: patch-configure,v 1.7 2012/08/12 17:33:04 jasper Exp $
+--- configure.orig	Wed May 23 22:28:25 2012
++++ configure	Sun Jul  8 18:18:32 2012
+@@ -2305,8 +2305,8 @@ case `uname -s` in
  	OpenBSD | FreeBSD | NetBSD)
  		# *BSD has important stuff (from ports)
  		# in /usr/local ...
@@ -12,8 +12,8 @@ $OpenBSD: patch-configure,v 1.5 2011/07/07 13:14:29 jasper Exp $
  		FOUND_OS="bsd"
  		;;
  	Darwin)
-@@ -2395,7 +2395,7 @@ $as_echo X"$prefix" |
- fi
+@@ -2336,7 +2336,7 @@ $as_echo "maybe" >&6; }
+ esac
  
  
 -TCLSH=`which tclsh`
@@ -21,63 +21,69 @@ $OpenBSD: patch-configure,v 1.5 2011/07/07 13:14:29 jasper Exp $
  VERSION=`echo "puts $::tcl_version ; exit" | ${TCLSH}`
  # Check whether --enable-version-check was given.
  if test "${enable_version_check+set}" = set; then :
-@@ -3095,17 +3095,9 @@ $as_echo "$ac_cv_prog_cc_g" >&6; }
+@@ -3036,17 +3036,9 @@ $as_echo "$ac_cv_prog_cc_g" >&6; }
  if test "$ac_test_CFLAGS" = set; then
    CFLAGS=$ac_save_CFLAGS
  elif test $ac_cv_prog_cc_g = yes; then
 -  if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
 -  else
-     CFLAGS="-g"
+-    CFLAGS="-g"
 -  fi
++  CFLAGS="-g"
  else
 -  if test "$GCC" = yes; then
 -    CFLAGS="-O2"
 -  else
-     CFLAGS=
+-    CFLAGS=
 -  fi
++  CFLAGS=
  fi
  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CC option to accept ISO C89" >&5
  $as_echo_n "checking for $CC option to accept ISO C89... " >&6; }
-@@ -3449,17 +3441,9 @@ $as_echo "$ac_cv_prog_cxx_g" >&6; }
+@@ -3389,18 +3381,11 @@ $as_echo "$ac_cv_prog_cxx_g" >&6; }
  if test "$ac_test_CXXFLAGS" = set; then
    CXXFLAGS=$ac_save_CXXFLAGS
  elif test $ac_cv_prog_cxx_g = yes; then
 -  if test "$GXX" = yes; then
 -    CXXFLAGS="-g -O2"
 -  else
-     CXXFLAGS="-g"
+-    CXXFLAGS="-g"
 -  fi
++  CXXFLAGS="-g"
  else
 -  if test "$GXX" = yes; then
 -    CXXFLAGS="-O2"
 -  else
-     CXXFLAGS=
+-    CXXFLAGS=
 -  fi
++  CXXFLAGS=
  fi
++
  ac_ext=c
  ac_cpp='$CPP $CPPFLAGS'
-@@ -3508,7 +3492,7 @@ $as_echo_n "checking tcl build dir... " >&6; }
+ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+@@ -3445,8 +3430,7 @@ $as_echo_n "checking tcl build dir... " >&6; }
+ 		/usr/local/lib64 \
  		/usr/lib64 \
  		/usr/lib64/tcl8.* \
- 		/usr/local/lib64/tcl8.* \
+-		/usr/local/lib64/tcl8.* \
 -		`locate tclConfig.sh`"
-+		"
++		/usr/local/lib64/tcl8.*"
  
  	for i in $dirs ; do
  
-@@ -3633,9 +3617,8 @@ $as_echo_n "checking tk build dir... " >&6; }
+@@ -3570,8 +3554,7 @@ $as_echo_n "checking tk build dir... " >&6; }
+ 		/usr/local/lib64 \
  		/usr/lib64 \
  		/usr/lib64/tk8.* \
- 		/usr/local/lib64/tk8.* \
+-		/usr/local/lib64/tk8.* \
 -		`locate tkConfig.sh`"
-+		"
++		/usr/local/lib64/tk8.*"
  
--
+ 
  		for i in $dirs ; do
- 
- 		if test -f "$i"; then
-@@ -5008,13 +4991,13 @@ fi
+@@ -4946,13 +4929,13 @@ fi
  done
  
  
@@ -85,7 +91,7 @@ $OpenBSD: patch-configure,v 1.5 2011/07/07 13:14:29 jasper Exp $
 -$as_echo_n "checking for pthread_create in -lpthread... " >&6; }
 +{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_create in -pthread" >&5
 +$as_echo_n "checking for pthread_create in -pthread... " >&6; }
- if test "${ac_cv_lib_pthread_pthread_create+set}" = set; then :
+ if ${ac_cv_lib_pthread_pthread_create+:} false; then :
    $as_echo_n "(cached) " >&6
  else
    ac_check_lib_save_LIBS=$LIBS
@@ -94,10 +100,10 @@ $OpenBSD: patch-configure,v 1.5 2011/07/07 13:14:29 jasper Exp $
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  
-@@ -5045,7 +5028,7 @@ fi
+@@ -4983,7 +4966,7 @@ fi
  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_create" >&5
  $as_echo "$ac_cv_lib_pthread_pthread_create" >&6; }
- if test "x$ac_cv_lib_pthread_pthread_create" = x""yes; then :
+ if test "x$ac_cv_lib_pthread_pthread_create" = xyes; then :
 -  LIBPTHREAD="-lpthread"
 +  LIBPTHREAD="-pthread"
  fi

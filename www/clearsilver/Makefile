@@ -1,17 +1,26 @@
-# $OpenBSD: Makefile,v 1.22 2011/06/15 23:33:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.25 2012/06/20 14:45:23 sthen Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	fast, powerful, and language-neutral HTML template system
+COMMENT-main=	fast, powerful, and language-neutral HTML template system
+COMMENT-perl=	perl bindings for clearsilver
+COMMENT-python=	python bindings for clearsilver
 
-DISTNAME=	clearsilver-0.10.4
+V=		0.10.4
+DISTNAME=	clearsilver-${V}
 EPOCH=		0
-REVISION=	5
+REVISION=	7
+REVISION-perl=	8
+PKGNAME-main=	${DISTNAME}
+PKGNAME-perl=	clearsilver-perl-${V}
+PKGNAME-python=	clearsilver-python-${V}
+
 CATEGORIES=	www net
 
 HOMEPAGE=       http://www.clearsilver.net/
+MASTER_SITES=   ${HOMEPAGE}/downloads/
 
-MAINTAINER=	Markus Friedl <markus@openbsd.org>
+MAINTAINER=	Okan Demirmen <okan@openbsd.org>
 
 # Apache 1
 PERMIT_PACKAGE_CDROM=	Yes
@@ -19,9 +28,17 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	c pthread z
+MULTI_PACKAGES=	-main -perl -python
+MODULES=	lang/python
 
-MASTER_SITES=   ${HOMEPAGE}/downloads/
+WANTLIB-main=	c pthread z
+RUN_DEPENDS-main=
+
+WANTLIB-perl=	pthread z
+RUN_DEPENDS-perl= ${PKGPATH} 
+
+WANTLIB-python=	${MODPY_WANTLIB} pthread z
+RUN_DEPENDS-python= ${MODPY_RUN_DEPENDS} ${PKGPATH}
 
 USE_GMAKE=	Yes
 
@@ -29,19 +46,8 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS= --disable-csharp \
 		--disable-java \
 		--disable-ruby \
+		--with-python=${MODPY_BIN} \
 		LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =	Yes
-
-FLAVORS+=	python
-FLAVOR?=
-
-.if ${FLAVOR:L:Mpython}
-MODULES=		lang/python
-CONFIGURE_ARGS+=	--with-python=${MODPY_BIN}
-WANTLIB+=		${MODPY_WANTLIB}
-.else
-CONFIGURE_ARGS+=	--disable-python
-.endif
 
 pre-configure:
 	@perl -pi -e 's|%%WRKSRC%%|${WRKSRC}|g' ${WRKSRC}/python/setup.py

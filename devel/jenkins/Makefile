@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.6 2011/07/08 02:14:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2012/07/02 13:42:34 gonzalo Exp $
 
 COMMENT =		continuous integration server
 
-VERSION =		1.401
-REVISION =		4
+VERSION =		1.472
 DISTNAME =		jenkins
 PKGNAME =		jenkins-${VERSION}
 DIST_SUBDIR =		jenkins-${VERSION}
@@ -12,7 +11,7 @@ CATEGORIES =		devel
 
 HOMEPAGE =		http://jenkins-ci.org/
 
-MAINTAINER=		Ian Darwin <ian@openbsd.org>
+MAINTAINER =		Ian Darwin <ian@openbsd.org>
 
 # Code under MIT license, Artwork under Creative Commons
 PERMIT_PACKAGE_CDROM =	Yes

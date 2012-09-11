@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/17 08:05:17 espie Exp $
-# $FreeBSD: Makefile,v 1.1.1.1 1998/07/10 14:05:19 kuriyama Exp $
+# $OpenBSD: Makefile,v 1.31 2012/08/18 12:41:38 ajacoutot Exp $
 
 COMMENT=	Japanized Vim
 COMMENT-canna=	Japanized Vim, canna input method
@@ -7,7 +6,7 @@ COMMENT-wnn=	Japanized Vim, wnn input method
 COMMENT-wnn-canna=Japanized Vim, canna or wnn input method
 DISTNAME=	jvim2.0r+onew2.2.10
 PKGNAME=	ja-jvim-2.0r
-REVISION=	1
+REVISION=	2
 CATEGORIES=	japanese editors
 
 MASTER_SITES=	ftp://ftp.lab.kdd.co.jp/Japan/onew/ \
@@ -27,7 +26,7 @@ FLAVOR?=
 
 USE_GROFF =	Yes
 
-.if ${FLAVOR:L:Mwnn}
+.if ${FLAVOR:Mwnn}
 CHOICE=wnn4
 INPUT_METHOD=wnn4
 BUILD_DEPENDS+=	japanese/Wnn
@@ -35,8 +34,8 @@ JPDEF+=		-DWNN_ISDIR
 JPLIB+=		-ljd 
 .endif
 
-.if ${FLAVOR:L:Mcanna}
-.  if ${FLAVOR:L:Mwnn}
+.if ${FLAVOR:Mcanna}
+.  if ${FLAVOR:Mwnn}
 INPUT_METHOD=	wnn4-canna
 CHOICE=wnn4,canna
 .  else

@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.61 2011/06/22 21:16:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.69 2012/09/03 19:37:39 ajacoutot Exp $
 
 COMMENT=		GNOME Structured File library
 
 GNOME_PROJECT=		libgsf
-GNOME_VERSION=		1.14.21
-
-REVISION=		0
+GNOME_VERSION=		1.14.24
 
 CATEGORIES=		devel
 
@@ -22,32 +20,21 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += bz2 c gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 m pcre png pthread xml2 z
+WANTLIB += bz2 c ffi gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gthread-2.0 m pcre png pthread xml2 z
 
 MODULES=		devel/gettext \
-			x11/gnome \
-			devel/gconf2
+			x11/gnome
+
+MODGNOME_TOOLS=		goi
 
 LIB_DEPENDS=		archivers/bzip2 \
-			devel/glib2 \
 			graphics/gdk-pixbuf2 \
 			textproc/libxml
 
-MODGCONF2_LIBDEP=	No
-MODGCONF2_SCHEMAS_DIR=	libgsf
-
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--without-bonobo \
-			--without-gnome-vfs \
-			--without-python \
+CONFIGURE_ARGS=		--without-python \
 			--with-bz2 \
 			--with-gio
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-
-USE_GROFF=		Yes
 
 .include <bsd.port.mk>

@@ -1,30 +1,21 @@
-# $OpenBSD: Makefile,v 1.2 2011/05/09 09:02:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2012/07/06 16:41:21 jasper Exp $
 
-COMMENT=		GNU libc for msp430
+COMMENT=		libc for ${TARGET}
 
-V=			ti_20110213
-DISTNAME=		${TARGET}-libc-$V
-PKGNAME=		${TARGET}-libc-${V:S/ti_//}
+TOOL=			${TARGET}-libc
+TOOL_V= 		20120224
 
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=mspgcc4/}
-
-RUN_DEPENDS=		devel/msp430/gcc>=4.4.5
-BUILD_DEPENDS=		archivers/gtar \
-			${RUN_DEPENDS}
-
-MAKE_ENV=		PREFIX=${PREFIX}
-
-TAR=			${LOCALBASE}/bin/gtar
-
-WRKDIST=		${WRKDIR}/${DISTNAME}/src/
+LTS_PATCHES=		msp430-libc-20120224-sf3522752.patch
 
 CONFIGURE_STYLE=	# This space intentionally left blank.
 
-NO_REGRESS=		Yes
+RUN_DEPENDS=		devel/msp430/gcc>=4.6.3
+BUILD_DEPENDS=		${RUN_DEPENDS}
 
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/msp430-libc/
-	${INSTALL_DATA} ${WRKSRC}/../doc/devheaders.txt \
-		${PREFIX}/share/doc/msp430-libc/
+MAKE_ENV=		PREFIX=${PREFIX}
+
+WRKSRC= 		${WRKDIST}/src/
+
+SEPARATE_BUILD= 	No
 
 .include <bsd.port.mk>

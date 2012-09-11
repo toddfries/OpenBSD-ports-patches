@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/07 00:22:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT-main =		system metrics collection engine
 COMMENT-mysql =		collectd mysql plugin
@@ -15,7 +15,11 @@ PKGNAME-rrdtool =	collectd-rrdtool-$V
 PKGNAME-snmp =		collectd-snmp-$V
 CATEGORIES =		sysutils
 
-REVISION-main=		0
+REVISION-main=		2
+REVISION-mysql =	0
+REVISION-pgsql =	0
+REVISION-rrtool =	0
+REVISION-snmp =		0
 
 HOMEPAGE =		http://www.collectd.org/
 SHARED_LIBS +=		collectdclient 0.0
@@ -67,7 +71,6 @@ CONFIGURE_ARGS +=--with-ltdl-include=${LOCALBASE}/include \
 		--with-librrd=${LOCALBASE} \
 		--with-libstatgrab=${LOCALBASE} \
 		--with-libnetsnmp=${LOCALBASE}/bin/net-snmp-config \
-		--localstatedir=/var \
 		--without-python \
 		--enable-all-plugins=no
 

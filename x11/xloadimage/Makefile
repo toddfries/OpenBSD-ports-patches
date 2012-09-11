@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.43 2011/06/23 12:55:30 naddy Exp $
+# $OpenBSD: Makefile,v 1.47 2012/08/06 12:21:05 naddy Exp $
 
 COMMENT=	graphics file viewer for X11
 
 VERSION=	4.1
-REV=		16.2	# Debian
+REV=		17	# Debian
 
 DISTNAME=	xloadimage.${VERSION}
 PKGNAME=	xloadimage-${VERSION}.${REV}
@@ -19,25 +19,25 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_R5CONTRIB}
-MASTER_SITES0=	ftp://ftp.debian.org/debian/pool/main/x/xloadimage/ \
-		ftp://ftp.de.debian.org/debian/pool/main/x/xloadimage/
+MASTER_SITES0=	${MASTER_SITE_DEBIAN:=main/x/xloadimage/}
 
-PATCHFILES=	xloadimage_${VERSION}-${REV}.diff.gz:0
-PATCH_DIST_STRIP= -p1
+DISTFILES=	${DISTNAME}.tar.gz \
+		xloadimage_${VERSION}-${REV}.debian.tar.gz:0
 
 LIB_DEPENDS=	graphics/png \
 		graphics/tiff
 WANTLIB=	X11 c jpeg m png tiff z
 
-USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng \
 		    -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 NO_REGRESS=	Yes
 
-post-distpatch:
-	@for p in ${WRKDIST}/debian/patches/*.dpatch; do \
+PATCH_DIST_STRIP= -p1
+
+do-distpatch:
+	@for p in ${WRKDIR}/debian/patches/*.dpatch; do \
 		${PATCH} ${PATCH_DIST_ARGS} < $$p; \
 	done
 

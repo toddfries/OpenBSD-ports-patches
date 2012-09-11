@@ -1,7 +1,16 @@
-$OpenBSD: patch-configure,v 1.21 2011/04/03 13:35:31 dcoppa Exp $
---- configure.orig	Tue Feb 22 13:02:53 2011
-+++ configure	Tue Mar 29 14:02:17 2011
-@@ -2168,7 +2168,7 @@ while [ "$#" -gt 0 ]; do
+$OpenBSD: patch-configure,v 1.24 2012/06/14 09:38:35 espie Exp $
+--- configure.orig	Thu Apr 26 21:46:24 2012
++++ configure	Sun Jun 10 13:25:08 2012
+@@ -890,7 +890,7 @@ CFG_SILENT=no
+ CFG_GRAPHICS_SYSTEM=default
+ CFG_RUNTIME_SYSTEM=
+ CFG_ALSA=auto
+-CFG_PULSEAUDIO=auto
++CFG_PULSEAUDIO=no
+ CFG_COREWLAN=auto
+ CFG_ICD=auto
+ CFG_NOPROCESS=no
+@@ -2347,7 +2347,7 @@ while [ "$#" -gt 0 ]; do
      v|verbose)
          if [ "$VAL" = "yes" ]; then
              if [ "$OPT_VERBOSE" = "$VAL" ]; then            # takes two verboses to turn on qmake debugs
@@ -10,7 +19,7 @@ $OpenBSD: patch-configure,v 1.21 2011/04/03 13:35:31 dcoppa Exp $
              else
                  OPT_VERBOSE=yes
              fi
-@@ -4651,7 +4651,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -4897,7 +4897,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          EXTRA_OBJS=
          EXTRA_SRCS=
          EXTRA_CFLAGS="\$(QMAKE_CFLAGS)"
@@ -19,7 +28,7 @@ $OpenBSD: patch-configure,v 1.21 2011/04/03 13:35:31 dcoppa Exp $
          EXTRA_LFLAGS="\$(QMAKE_LFLAGS)"
  
          if [ "$PLATFORM" = "irix-cc" ] || [ "$PLATFORM" = "irix-cc-64" ]; then
-@@ -4755,7 +4755,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -4997,7 +4997,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      done
  
      QMAKE_BUILD_ERROR=no

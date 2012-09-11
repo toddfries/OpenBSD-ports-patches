@@ -1,12 +1,13 @@
-$OpenBSD: patch-base_lib_mak,v 1.1 2011/06/08 19:15:48 kili Exp $
---- base/lib.mak.orig	Thu Sep  9 01:20:36 2010
-+++ base/lib.mak	Sun Sep 19 13:19:33 2010
-@@ -25,11 +25,11 @@ GLO_=$(O_)$(GLOBJ)
+$OpenBSD: patch-base_lib_mak,v 1.4 2012/08/22 06:24:17 ajacoutot Exp $
+--- base/lib.mak.orig	Wed Aug  8 10:01:36 2012
++++ base/lib.mak	Fri Aug 17 15:14:10 2012
+@@ -28,12 +28,12 @@ AUXO_=$(O_)$(AUX)
  GLI_=$(GLGENDIR) $(II)$(GLSRCDIR)
  GLF_=
- GLCCFLAGS=$(I_)$(GLI_)$(_I) $(GLF_)
+ GLCCFLAGS=$(I_)$(GLI_)$(_I) $(GLF_) $(D_)WHICH_CMS="$(WHICH_CMS)"$(_D)
 -GLCC=$(CC_) $(GLCCFLAGS)
 +GLCC=$(CC) $(GLCCFLAGS) $(CCFLAGS)
+ GLCCAUX=$(CCAUX_) $(GLCCFLAGS)
  GLJCC=$(CC_) $(I_)$(GLI_) $(II)$(JI_)$(_I) $(JCF_) $(GLF_)
  GLZCC=$(CC_) $(I_)$(GLI_) $(II)$(ZI_)$(_I) $(ZCF_) $(GLF_)
  GLJBIG2CC=$(CC_) $(I_)$(GLI_) $(II)$(JB2I_)$(_I) $(JB2CF_) $(GLF_)
@@ -14,4 +15,4 @@ $OpenBSD: patch-base_lib_mak,v 1.1 2011/06/08 19:15:48 kili Exp $
 +GLJASCC=$(CC) $(I_)$(JPXI_) $(II)$(GLI_)$(_I) $(JPXCF_) $(GLF_) ${CCFLAGS}
  GLLDFJB2CC=$(CC_) $(I_)$(LDF_JB2I_) $(II)$(GLI_)$(_I) $(JB2CF_) $(GLF_)
  GLLWFJPXCC=$(CC_) $(I_)$(LWF_JPXI_) $(II)$(GLI_)$(_I) $(JPXCF_) $(GLF_)
- GLCCSHARED=$(CC_SHARED) $(GLCCFLAGS)
+ GLJPXOPJCC=$(CC_) $(I_)$(JPX_OPENJPEG_I_)$(D).. $(I_)$(JPX_OPENJPEG_I_) $(II)$(GLI_)$(_I) $(JPXCF_) $(GLF_)

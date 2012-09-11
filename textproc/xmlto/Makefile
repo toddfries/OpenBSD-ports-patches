@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/20 19:56:52 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2012/09/04 03:40:34 jeremy Exp $
 
 COMMENT=	front-end to an XSL toolchain
 
 DISTNAME=	xmlto-0.0.18
-REVISION=	1
+REVISION=	3
 EXTRACT_SUFX=	.tar.bz2
 CATEGORIES=	textproc
-
-MAINTAINER=	Mathieu Sauve-Frankel <msf@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

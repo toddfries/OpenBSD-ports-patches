@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/16 11:23:26 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2012/09/02 20:52:35 sthen Exp $
 
 SHARED_ONLY =		Yes
 
@@ -8,9 +8,9 @@ COMMENT-server =	server for the frozen-bubble bubble popping game
 VER =			2.2.0
 DISTNAME =		frozen-bubble-${VER}
 PKGNAME-main =		${DISTNAME}
-REVISION-main =		5
+REVISION-main =		7
 PKGNAME-server =	frozen-bubble-server-${VER}
-REVISION-server =	2
+REVISION-server =	4
 CATEGORIES =		games
 
 HOMEPAGE =		http://www.frozen-bubble.org
@@ -58,5 +58,13 @@ WANTLIB-main =		${MODGETTEXT_WANTLIB} \
 WANTLIB-server =	${MODGETTEXT_WANTLIB} c glib-2.0
 
 MULTI_PACKAGES =	-main -server
+
+post-configure:
+	${SUBST_CMD} -c ${FILESDIR}/wrapper.sh ${WRKDIR}/wrapper.sh
+
+post-install:
+	mv ${PREFIX}/bin/frozen-bubble* ${PREFIX}/libexec/frozen-bubble/
+	${INSTALL_SCRIPT} ${WRKDIR}/wrapper.sh ${PREFIX}/bin/frozen-bubble
+	${INSTALL_SCRIPT} ${WRKDIR}/wrapper.sh ${PREFIX}/bin/frozen-bubble-editor
 
 .include <bsd.port.mk>

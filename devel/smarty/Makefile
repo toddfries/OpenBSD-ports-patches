@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/08 18:51:23 robert Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/16 15:56:37 robert Exp $
 
 COMMENT-main =	template engine for PHP
 COMMENT-docs =	documentation for Smarty
@@ -10,7 +10,7 @@ DISTNAME-docs =	Smarty-2.6.14-docs
 PKGNAME-docs =	smarty-docs-${VERSION}
 CATEGORIES =	devel www
 
-REVISION =	0
+REVISION =	2
 
 HOMEPAGE =	http://www.smarty.net
 
@@ -46,11 +46,11 @@ do-install:
 	${INSTALL_DATA_DIR} ${WRKINST}${CHROOT_DIR}/smarty
 	cd ${WRKSRC}/libs; tar cf - . | \
 		tar xf - -C ${WRKINST}${CHROOT_DIR}/smarty
-	${CHOWN} -R ${LIBOWN}:${LIBGRP} ${WRKINST}${CHROOT_DIR}/smarty
+	chown -R ${LIBOWN}:${LIBGRP} ${WRKINST}${CHROOT_DIR}/smarty
 
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/smarty
 	cd ${WRKDIR}/manual; tar cf - . | \
 		tar xf - -C ${PREFIX}/share/doc/smarty
-	${CHOWN} -R ${DOCOWN}:${DOCGRP} ${PREFIX}/share/doc/smarty
+	chown -R ${DOCOWN}:${DOCGRP} ${PREFIX}/share/doc/smarty
 
 .include <bsd.port.mk>

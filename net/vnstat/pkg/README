@@ -1,10 +1,10 @@
-$OpenBSD: README,v 1.2 2011/06/02 13:41:40 ajacoutot Exp $
+$OpenBSD: README,v 1.4 2012/08/06 08:46:59 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
 +-----------------------------------------------------------------------
 
-All the command must be launched as the user _vnstat.
+All the commands must be launched as the user _vnstat.
 
 1) Launch vnstat --iflist to see all the available interfaces.
 
@@ -15,7 +15,7 @@ This will create the database for the specified interface.
 3) Edit ${SYSCONFDIR}/vnstat.conf if necessary
 
 4) Finally launch the vnstatd daemon:
-   # ${SYSCONFDIR}/rc.d/vnstatd start
+   # ${RCDIR}/vnstatd start
 
 5) Create graphics with the command vnstati
 

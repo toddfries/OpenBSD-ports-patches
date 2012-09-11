@@ -1,43 +1,44 @@
-# $OpenBSD: Makefile,v 1.17 2011/07/07 23:18:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/09/06 12:37:58 ajacoutot Exp $
 
-COMMENT =		Python bindings for GStreamer
+COMMENT=		Python bindings for GStreamer
 
-V =			0.10.21
-DISTNAME =		gst-python-$V
-PKGNAME =		py-gstreamer-$V
-REVISION =		1
+V=			0.10.22
+DISTNAME=		gst-python-${V}
+PKGNAME=		py-gstreamer-${V}
+REVISION=		2
 
-HOMEPAGE =		http://gstreamer.freedesktop.org/modules/gst-python.html
+HOMEPAGE=		http://gstreamer.freedesktop.org/modules/gst-python.html
 
 MASTER_SITES =		${MASTER_SITE_GST:=gst-python/}
 
-WANTLIB =		glib-2.0 gmodule-2.0 gobject-2.0 gstbase-0.10 \
-			gstcontroller-0.10 gstdataprotocol-0.10 gstnet-0.10 \
-			gstreamer-0.10 gthread-2.0 gstpbutils-0.10 \
-			m pcre xml2 z gstinterfaces-0.10 gstaudio-0.10 \
-			gsttag-0.10 gstvideo-0.10
+WANTLIB += ffi glib-2.0 gmodule-2.0 gobject-2.0 gstaudio-0.10
+WANTLIB += gstbase-0.10 gstcontroller-0.10 gstdataprotocol-0.10
+WANTLIB += gstinterfaces-0.10 gstnet-0.10 gstpbutils-0.10 gstreamer-0.10
+WANTLIB += gsttag-0.10 gstvideo-0.10 gthread-2.0 m orc-0.4 pcre
+WANTLIB += pthread xml2 z
 
-MODULES =		devel/gettext \
-			lang/python
+# check-lib-depends(1) list them as extra, but they are dlopened
+WANTLIB += ${MODPY_WANTLIB} util
 
-BUILD_DEPENDS =		x11/py-gtk2
-RUN_DEPENDS =		x11/py-gtk2 \
+MODULES=		lang/python
+
+BUILD_DEPENDS=		x11/py-gtk2
+RUN_DEPENDS=		x11/py-gtk2 \
 			textproc/libxml,-python
-LIB_DEPENDS =		$P/plugins-base
+LIB_DEPENDS=		${P}/plugins-base
 
-REGRESS_DEPENDS =	$P/plugins-good
+REGRESS_DEPENDS=	${P}/plugins-good
 
-# don't heritate from Makefile.inc
-# needed for the "regress" target
-SEPARATE_BUILD =	No
-
-CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	--disable-gcov \
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--disable-gcov \
 			--disable-shave
 
 post-install:
 	@cd ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/ && \
 		${MODPY_BIN} -OOOO -c 'import pygst' && \
 		${MODPY_BIN} -c 'import pygst'
+	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/gst-${VERSION}/gst/*.la \
+		${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.la \
+		${PREFIX}/lib/gstreamer-${VERSION}/*.la
 
 .include <bsd.port.mk>

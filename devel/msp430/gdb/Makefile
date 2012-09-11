@@ -1,29 +1,26 @@
-# $OpenBSD: Makefile,v 1.4 2011/05/09 08:59:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2012/07/06 16:41:21 jasper Exp $
 
-COMMENT=		GNU debugger for msp430
+TOOL=			gdb
+TOOL_V= 		7.2a
+LTS_V=			20111205
 
-VERSION=		7.2
-DISTNAME=		gdb-${VERSION}
-PKGNAME=		${TARGET}-${DISTNAME}
+REVISION=		0
+
+GNU_TOOL=		Yes
 
 MASTER_SITES=		${MASTER_SITE_GNU:=gdb/}
-PATCHFILES=		gdb-${VERSION}.patch:0
 
-DISTFILES=		${DISTNAME}${EXTRACT_SUFX} \
-			gdb-${VERSION}-config.tar.gz:0
-
-RUN_DEPENDS=		devel/msp430/binutils \
-			devel/msp430/gcc
+RUN_DEPENDS=		devel/msp430/binutils>=2.21.1a \
+			devel/msp430/gcc>=4.6.3
 BUILD_DEPENDS=		${RUN_DEPENDS}
 
 WANTLIB=		c expat m ncurses z
 
 CONFIGURE_ARGS+=	--disable-werror
 
-NO_REGRESS=		Yes
+WRKDIST=		${WRKDIR}/${DISTNAME:S/a$//}
 
-# Move the mspgcc4 config files into place.
-post-extract:
-	cp -r ${WRKDIR}/gdb-${VERSION}-config/{gdb,sim}/ ${WRKSRC}
+# XXX: Tries to install the xml syscall files?
+SEPARATE_BUILD= 	No
 
 .include <bsd.port.mk>

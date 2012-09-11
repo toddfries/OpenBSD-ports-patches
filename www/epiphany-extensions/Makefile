@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.32 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.42 2012/09/01 14:36:58 ajacoutot Exp $
+
+SHARED_ONLY=		Yes
 
 COMMENT=		collection of extensions for Epiphany
 
 GNOME_PROJECT=		epiphany-extensions
-GNOME_VERSION=		2.32.0
+GNOME_VERSION=		3.4.0
+REVISION=	0
 
-REVISION=		4
-
-# sync with www/epiphany
-API_V=		2.29
-M=		${GNOME_VERSION:R}
-SUBST_VARS=	M API_V
+M=			${GNOME_VERSION:R}
+SUBST_VARS=		M
 
 CATEGORIES=		www
 
@@ -25,36 +24,35 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender Xt atk-1.0 cairo
-WANTLIB += enchant expat fontconfig freetype gailutil gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gstapp-0.10 gstbase-0.10 gstpbutils-0.10
-WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 gtk-x11-2.0
-WANTLIB += icudata icui18n icuuc jpeg m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs soup-2.4
-WANTLIB += sqlite3 stdc++ webkitgtk-1.0 xcb xcb-render
-WANTLIB += xml2 xslt z GL Xxf86vm drm xcb-shm
-WANTLIB += gstinterfaces-0.10
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm atk-1.0
+WANTLIB += cairo cairo-gobject dbus-1 dbus-glib-1 drm enchant
+WANTLIB += expat ffi fontconfig freetype gailutil-3 gdk-3 gdk_pixbuf-2.0
+WANTLIB += geoclue gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gstapp-0.10
+WANTLIB += gstaudio-0.10 gstbase-0.10 gstfft-0.10 gstinterfaces-0.10
+WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
+WANTLIB += gtk-3 icudata icui18n icuuc javascriptcoregtk-3.0 jpeg
+WANTLIB += m orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread-stubs soup-2.4 sqlite3 stdc++
+WANTLIB += webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt z
 
-MODULES=	devel/gettext \
-		lang/python \
+MODULES=	devel/dconf \
+		devel/gettext \
 		x11/gnome
 
 BUILD_DEPENDS=	${RUN_DEPENDS}
-RUN_DEPENDS=	www/epiphany>=2.30.2
-LIB_DEPENDS=	security/libgpg-error
+RUN_DEPENDS=	www/epiphany>=3.4.0.1
+LIB_DEPENDS=	www/webkit,gtk3
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
-MODGNOME_HELP_FILES=	Yes
-
-FAKE_FLAGS+=	PYTHON="${MODPY_BIN}"
+MODGNOME_TOOLS= yelp
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
-		--disable-schemas-install \
-		--enable-opensp=no
+CONFIGURE_ARGS=	--disable-static \
+		--with-extensions=default
+
+# part of ALL_EXTENSIONS, not DEFAULT
+CONFIGURE_ARGS += --disable-opensp
 
 .include <bsd.port.mk>

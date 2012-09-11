@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2011/06/24 11:17:05 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2011/11/01 20:30:49 jasper Exp $
 
 COMMENT =	Amide a Medical Imaging Data Examiner
 
 DISTNAME =	amide-0.9.2
-REVISION =	10
+REVISION =	13
 CATEGORIES =	graphics
 
 HOMEPAGE =	http://amide.sourceforge.net/
@@ -16,7 +16,7 @@ PERMIT_PACKAGE_FTP =     Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =   Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm art_lgpl_2
 WANTLIB += atk-1.0 avcodec avutil c cairo drm expat fontconfig
 WANTLIB += freetype gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0
@@ -26,6 +26,7 @@ WANTLIB += ogg orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png pthread pthread-stubs schroedinger-1.0
 WANTLIB += speex stdc++ theoradec theoraenc vorbis vorbisenc vpx
 WANTLIB += x264 xcb xcb-render xcb-shm xml2 z
+WANTLIB += dbus-1 dbus-glib-1 ffi
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=amide/}
 

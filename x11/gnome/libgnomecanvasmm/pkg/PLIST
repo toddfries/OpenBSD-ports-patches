@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2010/12/22 22:49:02 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.4 2012/08/16 12:02:52 stsp Exp $
 include/libgnomecanvasmm-2.6/
 include/libgnomecanvasmm-2.6/libgnomecanvasmm/
 include/libgnomecanvasmm-2.6/libgnomecanvasmm.h
@@ -39,8 +39,8 @@ include/libgnomecanvasmm-2.6/libgnomecanvasmm/text.h
 include/libgnomecanvasmm-2.6/libgnomecanvasmm/widget.h
 include/libgnomecanvasmm-2.6/libgnomecanvasmm/wrap_init.h
 lib/libgnomecanvasmm-2.6/
-@comment lib/libgnomecanvasmm-2.6.a
-@comment lib/libgnomecanvasmm-2.6.la
+lib/libgnomecanvasmm-2.6.a
+lib/libgnomecanvasmm-2.6.la
 @lib lib/libgnomecanvasmm-2.6.so.${LIBgnomecanvasmm-2.6_VERSION}
 lib/libgnomecanvasmm-2.6/include/
 lib/libgnomecanvasmm-2.6/include/libgnomecanvasmmconfig.h

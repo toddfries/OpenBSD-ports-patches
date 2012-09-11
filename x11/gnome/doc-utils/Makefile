@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.46 2011/06/08 17:41:57 rpointel Exp $
+# $OpenBSD: Makefile,v 1.56 2012/03/26 23:19:36 ajacoutot Exp $
+
+# This port does set MODGNOME_TOOLS=yelp on purpose: it would create a
+# dependency on itself. We do not enforce dependency on x11/gnome/yelp
+# either because it would bring lots of other dependencies.
 
 COMMENT=	collection of documentation utilities for the GNOME project
 
 GNOME_PROJECT=	gnome-doc-utils
-GNOME_VERSION=	0.20.6
-REVISION=	0
+GNOME_VERSION=	0.20.10
 
 CATEGORIES=	textproc
 
@@ -24,15 +27,14 @@ BUILD_DEPENDS=	${RUN_DEPENDS} \
 RUN_DEPENDS=	devel/gettext \
 		misc/gnugetopt \
 		textproc/libxml,-python \
-		textproc/libxslt,-python \
+		textproc/libxslt \
 		textproc/rarian
 
 USE_LIBTOOL=	No
 USE_GROFF=	Yes
-CONFIGURE_ENV=	CPPFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
 
-FAKE_FLAGS+=	pkgconfigdir="${PREFIX}/lib/pkgconfig/"
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/xml2po/xml2po.1
 
 post-install:
 	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \

@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2010/11/19 22:31:32 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2012/07/08 19:24:18 steven Exp $
 
 COMMENT =	utilities to read and parse Argus data
 
-DISTNAME =	argus-clients-3.0.2
+DISTNAME =	argus-clients-3.0.6.2
 CATEGORIES =	net
 
 HOMEPAGE =	http://qosient.com/argus/
-MASTER_SITES =	http://qosient.com/argus/src/
+MASTER_SITES =	${HOMEPAGE}/src/
 
 MAINTAINER =	Steven Mestdagh <steven@openbsd.org>
 
@@ -16,16 +16,23 @@ PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
-WANTLIB =	c m ncurses readline
+WANTLIB =	c m ncurses readline z
 
 NO_REGRESS =	Yes
 
+LIB_DEPENDS =	net/flow-tools
+
 CONFIGURE_STYLE = 	gnu
+CONFIGURE_ARGS +=	--with-libft=${LOCALBASE} \
+			--without-mysql \
+			--without-GeoIP \
+			--without-sasl
 MODGNU_CONFIG_GUESS_DIRS = ${WRKSRC}/config
 BUILD_DEPENDS =	devel/bison
 USE_GROFF =	Yes
 
 MAKE_FLAGS =	CCOPT="${CFLAGS}"
+FAKE_FLAGS =	docdir=${PREFIX}/share/doc/argus-clients/
 
 post-extract:
 	@find ${WRKSRC} -name '.gdb_history' -exec rm -f {} \;

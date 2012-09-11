@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2011/04/10 18:02:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2012/03/17 15:10:47 naddy Exp $
 
 COMMENT=	graphical front end to Unix diff
 
 DISTNAME=	mgdiff
 PKGNAME=	${DISTNAME}-1.0
-REVISION=	4
+REVISION=	6
 CATEGORIES=	textproc
 
 MASTER_SITES=	${MASTER_SITE_XCONTRIB:=applications/}

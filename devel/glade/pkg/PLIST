@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.13 2011/04/07 17:48:22 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.18 2012/06/15 08:32:15 ajacoutot Exp $
 @conflict glade3-<3.8.0p1
 @bin bin/glade
 @bin bin/glade-previewer
@@ -61,7 +61,6 @@ share/glade/pixmaps/atk.png
 share/glade/pixmaps/deprecated-16x16.png
 share/glade/pixmaps/deprecated-22x22.png
 share/glade/pixmaps/devhelp.png
-share/glade/pixmaps/drag-resize.png
 share/glade/pixmaps/fixed-bg.png
 share/glade/pixmaps/hicolor/
 share/glade/pixmaps/hicolor/16x16/
@@ -128,6 +127,7 @@ share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-iconfactory.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-iconview.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-image.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-imagemenuitem.png
+share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-infobar.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-inputdialog.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-label.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-layout.png
@@ -166,6 +166,7 @@ share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-spinbutton.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-spinner.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-statusbar.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-statusicon.png
+share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-switch.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-table.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-tearoffmenuitem.png
 share/glade/pixmaps/hicolor/16x16/actions/widget-gtk-textbuffer.png
@@ -260,6 +261,7 @@ share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-iconfactory.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-iconview.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-image.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-imagemenuitem.png
+share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-infobar.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-inputdialog.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-label.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-layout.png
@@ -298,6 +300,7 @@ share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-spinbutton.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-spinner.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-statusbar.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-statusicon.png
+share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-switch.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-table.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-tearoffmenuitem.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-textbuffer.png
@@ -330,7 +333,8 @@ share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-window.png
 share/glade/pixmaps/hicolor/22x22/actions/widget-gtk-windowgroup.png
 share/glade/pixmaps/placeholder.png
 share/glade/pixmaps/plus.png
-share/glade/pixmaps/selector.png
+share/gnome/
+share/gnome/help/
 share/gnome/help/glade/
 share/gnome/help/glade/C/
 share/gnome/help/glade/C/figures/
@@ -342,6 +346,11 @@ share/gnome/help/glade/bg/figures/
 share/gnome/help/glade/bg/figures/main-window.png
 share/gnome/help/glade/bg/glade.xml
 share/gnome/help/glade/bg/legal.xml
+share/gnome/help/glade/ca/
+share/gnome/help/glade/ca/figures/
+share/gnome/help/glade/ca/figures/main-window.png
+share/gnome/help/glade/ca/glade.xml
+share/gnome/help/glade/ca/legal.xml
 share/gnome/help/glade/cs/
 share/gnome/help/glade/cs/figures/
 share/gnome/help/glade/cs/figures/main-window.png
@@ -377,6 +386,11 @@ share/gnome/help/glade/fr/figures/
 share/gnome/help/glade/fr/figures/main-window.png
 share/gnome/help/glade/fr/glade.xml
 share/gnome/help/glade/fr/legal.xml
+share/gnome/help/glade/gl/
+share/gnome/help/glade/gl/figures/
+share/gnome/help/glade/gl/figures/main-window.png
+share/gnome/help/glade/gl/glade.xml
+share/gnome/help/glade/gl/legal.xml
 share/gnome/help/glade/hi/
 share/gnome/help/glade/hi/figures/
 share/gnome/help/glade/hi/figures/main-window.png
@@ -427,47 +441,46 @@ share/gnome/help/glade/zh_CN/figures/
 share/gnome/help/glade/zh_CN/figures/main-window.png
 share/gnome/help/glade/zh_CN/glade.xml
 share/gnome/help/glade/zh_CN/legal.xml
-share/gtk-doc/html/gladeui/
-share/gtk-doc/html/gladeui/GladeApp.html
-share/gtk-doc/html/gladeui/GladeBaseEditor.html
-share/gtk-doc/html/gladeui/GladeClipboard.html
-share/gtk-doc/html/gladeui/GladeDesignView.html
-share/gtk-doc/html/gladeui/GladeEditorProperty.html
-share/gtk-doc/html/gladeui/GladeInspector.html
-share/gtk-doc/html/gladeui/GladePalette.html
-share/gtk-doc/html/gladeui/GladePlaceholder.html
-share/gtk-doc/html/gladeui/GladeProject.html
-share/gtk-doc/html/gladeui/GladeProperty.html
-share/gtk-doc/html/gladeui/GladeWidget.html
-share/gtk-doc/html/gladeui/GladeWidgetAction.html
-share/gtk-doc/html/gladeui/catalog.html
-share/gtk-doc/html/gladeui/catalogintro.html
-share/gtk-doc/html/gladeui/core.html
-share/gtk-doc/html/gladeui/dockables.html
-share/gtk-doc/html/gladeui/gladeui-Glade-Utils.html
-share/gtk-doc/html/gladeui/gladeui-GladeClipboardView.html
-share/gtk-doc/html/gladeui/gladeui-GladeFixed.html
-share/gtk-doc/html/gladeui/gladeui-GladePropertyClass.html
-share/gtk-doc/html/gladeui/gladeui-GladeSignalEditor.html
-share/gtk-doc/html/gladeui/gladeui-Xml-Utils.html
-share/gtk-doc/html/gladeui/gladeui-glade-command.html
-share/gtk-doc/html/gladeui/gladeui-glade-editor.html
-share/gtk-doc/html/gladeui/gladeui-glade-parameter.html
-share/gtk-doc/html/gladeui/gladeui-glade-widget-adaptor.html
-share/gtk-doc/html/gladeui/gladeui.devhelp
-share/gtk-doc/html/gladeui/gladeui.devhelp2
-share/gtk-doc/html/gladeui/home.png
-share/gtk-doc/html/gladeui/index.html
-share/gtk-doc/html/gladeui/index.sgml
-share/gtk-doc/html/gladeui/ix01.html
-share/gtk-doc/html/gladeui/left.png
-share/gtk-doc/html/gladeui/misc.html
-share/gtk-doc/html/gladeui/properties.html
-share/gtk-doc/html/gladeui/pythonsupport.html
-share/gtk-doc/html/gladeui/right.png
-share/gtk-doc/html/gladeui/style.css
-share/gtk-doc/html/gladeui/up.png
-share/gtk-doc/html/gladeui/widgetclasses.html
+share/gtk-doc/html/gladeui-2/
+share/gtk-doc/html/gladeui-2/GladeApp.html
+share/gtk-doc/html/gladeui-2/GladeBaseEditor.html
+share/gtk-doc/html/gladeui-2/GladeClipboard.html
+share/gtk-doc/html/gladeui-2/GladeDesignView.html
+share/gtk-doc/html/gladeui-2/GladeEditorProperty.html
+share/gtk-doc/html/gladeui-2/GladeInspector.html
+share/gtk-doc/html/gladeui-2/GladePalette.html
+share/gtk-doc/html/gladeui-2/GladePlaceholder.html
+share/gtk-doc/html/gladeui-2/GladeProject.html
+share/gtk-doc/html/gladeui-2/GladeProperty.html
+share/gtk-doc/html/gladeui-2/GladeWidget.html
+share/gtk-doc/html/gladeui-2/GladeWidgetAction.html
+share/gtk-doc/html/gladeui-2/catalog.html
+share/gtk-doc/html/gladeui-2/catalogintro.html
+share/gtk-doc/html/gladeui-2/core.html
+share/gtk-doc/html/gladeui-2/dockables.html
+share/gtk-doc/html/gladeui-2/gladeui-2.devhelp2
+share/gtk-doc/html/gladeui-2/gladeui-Glade-Utils.html
+share/gtk-doc/html/gladeui-2/gladeui-GladeClipboardView.html
+share/gtk-doc/html/gladeui-2/gladeui-GladeFixed.html
+share/gtk-doc/html/gladeui-2/gladeui-GladePropertyClass.html
+share/gtk-doc/html/gladeui-2/gladeui-GladeSignalEditor.html
+share/gtk-doc/html/gladeui-2/gladeui-Xml-Utils.html
+share/gtk-doc/html/gladeui-2/gladeui-glade-command.html
+share/gtk-doc/html/gladeui-2/gladeui-glade-editor.html
+share/gtk-doc/html/gladeui-2/gladeui-glade-parameter.html
+share/gtk-doc/html/gladeui-2/gladeui-glade-widget-adaptor.html
+share/gtk-doc/html/gladeui-2/home.png
+share/gtk-doc/html/gladeui-2/index.html
+share/gtk-doc/html/gladeui-2/index.sgml
+share/gtk-doc/html/gladeui-2/ix01.html
+share/gtk-doc/html/gladeui-2/left.png
+share/gtk-doc/html/gladeui-2/misc.html
+share/gtk-doc/html/gladeui-2/properties.html
+share/gtk-doc/html/gladeui-2/pythonsupport.html
+share/gtk-doc/html/gladeui-2/right.png
+share/gtk-doc/html/gladeui-2/style.css
+share/gtk-doc/html/gladeui-2/up.png
+share/gtk-doc/html/gladeui-2/widgetclasses.html
 share/icons/hicolor/16x16/apps/glade.png
 share/icons/hicolor/22x22/apps/glade.png
 share/icons/hicolor/24x24/apps/glade.png
@@ -504,6 +517,7 @@ share/locale/hy/LC_MESSAGES/glade.mo
 share/locale/id/LC_MESSAGES/glade.mo
 share/locale/it/LC_MESSAGES/glade.mo
 share/locale/ja/LC_MESSAGES/glade.mo
+share/locale/km/LC_MESSAGES/glade.mo
 share/locale/ko/LC_MESSAGES/glade.mo
 share/locale/lt/LC_MESSAGES/glade.mo
 share/locale/lv/LC_MESSAGES/glade.mo
@@ -540,9 +554,11 @@ share/locale/vi/LC_MESSAGES/glade.mo
 share/locale/zh_CN/LC_MESSAGES/glade.mo
 share/locale/zh_HK/LC_MESSAGES/glade.mo
 share/locale/zh_TW/LC_MESSAGES/glade.mo
+share/omf/
 share/omf/glade/
 share/omf/glade/glade-C.omf
 share/omf/glade/glade-bg.omf
+share/omf/glade/glade-ca.omf
 share/omf/glade/glade-cs.omf
 share/omf/glade/glade-de.omf
 share/omf/glade/glade-el.omf
@@ -550,6 +566,7 @@ share/omf/glade/glade-en_GB.omf
 share/omf/glade/glade-es.omf
 share/omf/glade/glade-eu.omf
 share/omf/glade/glade-fr.omf
+share/omf/glade/glade-gl.omf
 share/omf/glade/glade-hi.omf
 share/omf/glade/glade-it.omf
 share/omf/glade/glade-ja.omf
@@ -560,7 +577,7 @@ share/omf/glade/glade-sl.omf
 share/omf/glade/glade-sv.omf
 share/omf/glade/glade-uk.omf
 share/omf/glade/glade-zh_CN.omf
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

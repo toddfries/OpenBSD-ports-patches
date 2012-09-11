@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.13 2011/08/18 10:40:15 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.22 2012/09/06 12:38:35 ajacoutot Exp $
 
 COMMENT =	standalone YouTube.com video browser/player
 
-DISTNAME =	minitube-1.5
+DISTNAME =	minitube-1.8
+REVISION =	0
+
 CATEGORIES =	www multimedia
 
 HOMEPAGE =	http://flavio.tordini.org/minitube
@@ -20,15 +22,17 @@ MASTER_SITES =	http://flavio.tordini.org/files/minitube/
 
 MODULES =	x11/qt4
 
-WANTLIB +=	QtDBus QtGui QtNetwork QtXml phonon
-WANTLIB +=	c m pthread stdc++
+WANTLIB +=	ICE QtDBus QtGui QtNetwork QtXml SM X11
+WANTLIB +=	Xext Xi Xinerama Xrender c fontconfig
+WANTLIB +=	freetype m phonon pthread stdc++
 
 RUN_DEPENDS =	multimedia/gstreamer-0.10/plugins-base \
 		multimedia/gstreamer-0.10/plugins-good \
 		multimedia/gstreamer-0.10/plugins-bad \
 		multimedia/gstreamer-0.10/plugins-ffmpeg \
 		x11/gnome/icon-theme \
-		devel/desktop-file-utils
+		devel/desktop-file-utils \
+		x11/gtk+2,-guic
 
 WRKDIST =	${WRKDIR}/minitube
 

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/19 07:23:09 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2012/03/29 13:38:40 sthen Exp $
 
 COMMENT=		wm-dockapp; mail notifier
 
 DISTNAME=		WMMail.app-0.64
 PKGNAME=		wmmail-0.64
-REVISION =		0
+REVISION =		1
 CATEGORIES=		mail x11 x11/windowmaker
 
 MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
@@ -19,7 +19,7 @@ WANTLIB=		X11 Xext Xpm Xt c pthread-stubs xcb PropList>=2
 RUN_DEPENDS=		x11/windowmaker
 LIB_DEPENDS=		devel/libproplist
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 USE_GMAKE=		Yes
 NO_REGRESS=		Yes
 CONFIGURE_STYLE=	gnu

@@ -1,15 +1,17 @@
-# $OpenBSD: Makefile,v 1.17 2011/06/08 17:32:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2012/08/26 07:19:55 ajacoutot Exp $
 
 BROKEN-hppa=		linking .libs/python-libpst.o fails
 
 COMMENT-main=		read and convert Microsoft Outlook mail files
 COMMENT-python=		python interface to libpst
 
-DISTNAME=		libpst-0.6.49
-SHARED_LIBS +=  pst                  1.0      # .4.1
+DISTNAME=		libpst-0.6.54
+SHARED_LIBS +=  pst                  2.0      # .4.1
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-python=		py-${DISTNAME}
+
+REVISION-main=		1
 REVISION-python=	0
 
 CATEGORIES=		converters mail
@@ -29,9 +31,10 @@ WANTLIB-main += c expat fontconfig freetype jpeg m png pthread stdc++
 WANTLIB-main += gd>=20 z
 
 WANTLIB-python += ${cWANTLIB}
-WANTLIB-python += pst>=1 boost_python>=1 util
+WANTLIB-python += pst>=1 util boost_python
 
-MASTER_SITES=		${HOMEPAGE}/packages/
+MASTER_SITES=		${HOMEPAGE}/packages/ \
+			http://distfiles.nl/
 
 MULTI_PACKAGES=		-main -python
 
@@ -57,15 +60,9 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-static-tools=no \
 			--enable-libpst-shared
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${MODPY_INCDIR}" \
+			LDFLAGS="-L${LOCALBASE}/lib" \
 			PYTHON_LDFLAGS="-L${LOCALBASE}/lib -lpython${MODPY_VERSION} -lm" \
 			PYTHON_BIN="python${MODPY_VERSION}"
-
-CFLAGS+=		-pthread
-
-# XXX eats all memory
-.if ${MACHINE_ARCH} == "sparc64" || ${MACHINE_ARCH} == "hppa"
-CFLAGS+=        -O0
-.endif
 
 FAKE_FLAGS+=		htmldir="${PREFIX}/share/doc/libpst/" \
 			htmldeveldir="${PREFIX}/share/doc/libpst/devel/"

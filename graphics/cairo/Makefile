@@ -1,23 +1,24 @@
-# $OpenBSD: Makefile,v 1.35 2011/06/28 11:04:40 kili Exp $
+# $OpenBSD: Makefile,v 1.41 2012/09/01 14:36:57 ajacoutot Exp $
 
 COMMENT=		vector graphics library
 
-DISTNAME=		cairo-1.10.2
-REVISION=		1
-SHARED_LIBS=		cairo 11.1
-SHARED_LIBS+=		cairo-trace 0.0
-SHARED_LIBS+=		cairo-gobject 0.0
-SHARED_LIBS+=		cairo-script-interpreter 0.0
+DISTNAME=		cairo-1.12.2
+SHARED_LIBS+=		cairo 12.0
+SHARED_LIBS+=		cairo-gobject 1.0
+SHARED_LIBS+=		cairo-script-interpreter 1.0
 CATEGORIES=		graphics
+EXTRACT_SUFX=		.tar.xz
+REVISION=		2
 
-HOMEPAGE=		http://cairographics.org/introduction
+HOMEPAGE=		http://cairographics.org/
 
 MAINTAINER=		Eric Faurot <eric@openbsd.org>
 
 WANTLIB=		GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender \
-			Xxf86vm drm expat fontconfig freetype glib-2.0 \
-			gobject-2.0 gthread-2.0 m pcre pixman-1 png \
-			pthread-stubs xcb xcb-render xcb-shm z
+			Xxf86vm c drm expat ffi fontconfig freetype \
+			glib-2.0 gobject-2.0 gthread-2.0 m pcre pixman-1 \
+			png pthread-stubs pthread stdc++ xcb xcb-render \
+			xcb-shm z
 
 # LGPLv2.1 / MPL 1.1
 PERMIT_PACKAGE_CDROM=	Yes
@@ -36,18 +37,9 @@ LIB_DEPENDS=		graphics/png \
 			devel/glib2
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		PTHREAD_LIBS="-pthread"
-CONFIGURE_ARGS=		--enable-gl \
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--enable-gl \
 			--enable-tee \
-			--enable-xml \
-			--enable-xcb
-
-REGRESS_DEPENDS=	print/ghostscript/gnu
+			--enable-xml
 
 .include <bsd.port.mk>
-
-.for i in ${GCC2_ARCHS}
-. if ${MACHINE_ARCH} == $i
-PATCH_LIST=	patch-* gcc2-patch-*
-. endif
-.endfor

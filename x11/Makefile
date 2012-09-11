@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.461 2011/07/19 09:22:50 jasper Exp $
-# $FreeBSD: Makefile,v 1.178 1997/11/24 05:32:52 fenner Exp $
+# $OpenBSD: Makefile,v 1.499 2012/09/04 19:03:36 jasper Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -13,11 +12,8 @@
      SUBDIR += asclock
      SUBDIR += asfiles
      SUBDIR += astime
-     SUBDIR += aterm
-     SUBDIR += aterm,big5
      SUBDIR += autocutsel
      SUBDIR += awesome
-     SUBDIR += awn
      SUBDIR += bbdate
      SUBDIR += bbkeys
      SUBDIR += bbpager
@@ -29,12 +25,15 @@
      SUBDIR += bluetile
      SUBDIR += bricons
      SUBDIR += bwidget
+     SUBDIR += byzi
      SUBDIR += chbg
      SUBDIR += compiz
      SUBDIR += ctwm
      SUBDIR += dbus
      SUBDIR += dbus-glib
+     SUBDIR += dbus-intf
      SUBDIR += dbus-python
+     SUBDIR += dbus-tcl
      SUBDIR += dclock
      SUBDIR += devilspie
      SUBDIR += dmenu
@@ -52,6 +51,7 @@
      SUBDIR += eterm,kanji
      SUBDIR += evilwm
      SUBDIR += extace
+     SUBDIR += faenza-icon-theme
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
@@ -73,6 +73,7 @@
      SUBDIR += gentoo
      SUBDIR += gigolo
      SUBDIR += gmrun
+     SUBDIR += gmtk
      SUBDIR += gnome
      SUBDIR += gnome-colors-icon-theme
      SUBDIR += gnome-mplayer
@@ -80,6 +81,7 @@
      SUBDIR += gob2
      SUBDIR += goggles
      SUBDIR += golem
+     SUBDIR += gpointing-device-settings
      SUBDIR += gromit
      SUBDIR += gtk+
      SUBDIR += gtk+2
@@ -87,7 +89,6 @@
      SUBDIR += gtk-chtheme
      SUBDIR += gtk-engines2
      SUBDIR += gtk-vnc
-     SUBDIR += gtk-vnc,gtk2
      SUBDIR += gtk2-aurora-engine
      SUBDIR += gtk2-equinox-engine
      SUBDIR += gtk2-murrine-engine
@@ -95,15 +96,15 @@
      SUBDIR += gtk2-rezlooks-engine
      SUBDIR += gtk2-theme-switch
      SUBDIR += gtk2mm
-     SUBDIR += gtk3-engines
+     SUBDIR += gtk3-unico-engine
      SUBDIR += gtk3mm
      SUBDIR += gtkdatabox
      SUBDIR += gtkglarea
      SUBDIR += gtkglext
+     SUBDIR += gtkglextmm
      SUBDIR += gtkhotkey
      SUBDIR += gtksourceview
      SUBDIR += gtksourceview3
-     SUBDIR += gtksourceviewmm
      SUBDIR += gtksourceviewmm3
      SUBDIR += gxmessage
      SUBDIR += hicolor-icon-theme
@@ -113,7 +114,7 @@
      SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme
      SUBDIR += i3
-     SUBDIR += i3bar
+     SUBDIR += i3status
      SUBDIR += icewm
      SUBDIR += icon-naming-utils
      SUBDIR += icontool
@@ -139,7 +140,6 @@
      SUBDIR += libxdg-basedir
      SUBDIR += lupe
      SUBDIR += lxrandr
-     SUBDIR += matchbox
      SUBDIR += mlterm
      SUBDIR += mono-gtk2
      SUBDIR += mouseclock
@@ -159,13 +159,11 @@
      SUBDIR += ogle
      SUBDIR += ogle,altivec
      SUBDIR += ogle_gui
-     SUBDIR += olvwm
+     SUBDIR += ogre
      SUBDIR += openbox
      SUBDIR += openmotif
      SUBDIR += oroborus
      SUBDIR += osd_clock
-     SUBDIR += p5-AnyEvent-I3
-     SUBDIR += p5-Gnome2-Canvas
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
      SUBDIR += p5-Gtk2-Ex-PodViewer
@@ -173,11 +171,13 @@
      SUBDIR += p5-Gtk2-GladeXML
      SUBDIR += p5-Tk
      SUBDIR += p5-Tk-ProgressBar-Mac
+     SUBDIR += p5-Tk-TableMatrix
      SUBDIR += p5-Tk-Splash
      SUBDIR += p5-Tk-Stderr
      SUBDIR += p5-Wx
      SUBDIR += p5-X-Osd
      SUBDIR += p5-X11-Protocol
+     SUBDIR += parcellite
      SUBDIR += partiwm
      SUBDIR += pbrowser
      SUBDIR += pcmanfm
@@ -188,14 +188,14 @@
      SUBDIR += piewm
      SUBDIR += pinot
      SUBDIR += podbrowser
-     SUBDIR += polkit-gnome,gtk2
+     SUBDIR += polkit-gnome
      SUBDIR += polkit-qt4
      SUBDIR += pwm
      SUBDIR += py-Xlib
      SUBDIR += py-gtk2
-     SUBDIR += py-gtksourceview
      SUBDIR += py-kiwi
      SUBDIR += py-osd
+     SUBDIR += py-pyglet
      SUBDIR += py-qt3
      SUBDIR += py-qt4
      SUBDIR += py-wxPython
@@ -218,11 +218,11 @@
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
      SUBDIR += ruby-profligacy
+     SUBDIR += ruby-qt4
      SUBDIR += rxvt
      SUBDIR += rxvt-unicode
      SUBDIR += sawfish
      SUBDIR += sclock
-     SUBDIR += scrotwm
      SUBDIR += sisctrl
      SUBDIR += skippy
      SUBDIR += sliderule
@@ -230,8 +230,12 @@
      SUBDIR += slim-themes
      SUBDIR += slock
      SUBDIR += smplayer
+     SUBDIR += spectrwm
+     SUBDIR += sselp
+     SUBDIR += st
      SUBDIR += stalonetray
      SUBDIR += swisswatch
+     SUBDIR += tabbed
      SUBDIR += tangerine-icon-theme
      SUBDIR += tango-icon-theme
      SUBDIR += tango-icon-theme-extras
@@ -318,7 +322,6 @@
      SUBDIR += xfce4
      SUBDIR += xfe
      SUBDIR += xfed
-     SUBDIR += xfedor
      SUBDIR += xfishtank
      SUBDIR += xfm
      SUBDIR += xforms
@@ -330,7 +333,6 @@
      SUBDIR += xloadimage
      SUBDIR += xlogout
      SUBDIR += xmascot
-     SUBDIR += xmbdfed
      SUBDIR += xmobar
      SUBDIR += xmold
      SUBDIR += xmonad
@@ -343,9 +345,11 @@
      SUBDIR += xprompt
      SUBDIR += xrestop
      SUBDIR += xrootconsole
-     SUBDIR += xscreensaver,
+     SUBDIR += xruskb
+     SUBDIR += xscreensaver
      SUBDIR += xscribble
      SUBDIR += xsel
+     SUBDIR += xsettingsd
      SUBDIR += xsnow
      SUBDIR += xtacy
      SUBDIR += xtattr
@@ -354,7 +358,6 @@
      SUBDIR += xtoolwait
      SUBDIR += xtraceroute
      SUBDIR += xtu
-     SUBDIR += xview
      SUBDIR += xvkbd
      SUBDIR += xwit
      SUBDIR += xwrits

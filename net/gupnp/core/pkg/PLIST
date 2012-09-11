@@ -1,5 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2011/07/04 15:28:05 jasper Exp $
-%%SHARED%%
+@comment $OpenBSD: PLIST,v 1.4 2012/05/04 07:09:14 jasper Exp $
 bin/gupnp-binding-tool
 include/gupnp-1.0/
 include/gupnp-1.0/libgupnp/
@@ -19,16 +18,11 @@ include/gupnp-1.0/libgupnp/gupnp-service.h
 include/gupnp-1.0/libgupnp/gupnp-types.h
 include/gupnp-1.0/libgupnp/gupnp-xml-doc.h
 include/gupnp-1.0/libgupnp/gupnp.h
-lib/girepository-1.0/
 lib/girepository-1.0/GUPnP-1.0.typelib
-lib/libgupnp-1.0.a
 lib/libgupnp-1.0.la
-lib/pkgconfig/
+@lib lib/libgupnp-1.0.so.${LIBgupnp-1.0_VERSION}
 lib/pkgconfig/gupnp-1.0.pc
-share/gir-1.0/
 share/gir-1.0/GUPnP-1.0.gir
-share/gtk-doc/
-share/gtk-doc/html/
 share/gtk-doc/html/gupnp/
 share/gtk-doc/html/gupnp/GUPnPContext.html
 share/gtk-doc/html/gupnp/GUPnPContextManager.html
@@ -55,7 +49,6 @@ share/gtk-doc/html/gupnp/gupnp-Error-codes.html
 share/gtk-doc/html/gupnp/gupnp-Special-UPnP-types.html
 share/gtk-doc/html/gupnp/gupnp-binding-tool.html
 share/gtk-doc/html/gupnp/gupnp-gupnp-service-introspection.html
-share/gtk-doc/html/gupnp/gupnp.devhelp
 share/gtk-doc/html/gupnp/gupnp.devhelp2
 share/gtk-doc/html/gupnp/home.png
 share/gtk-doc/html/gupnp/index.html

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.61 2011/06/08 17:37:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.63 2012/03/29 13:38:49 sthen Exp $
 
 COMMENT=	graphical frontend for LaTeX (nearly WYSIWYG)
 
 DISTNAME=	lyx-1.6.6.1
-REVISION=	2
+REVISION=	3
 CATEGORIES=	print editors
 
 HOMEPAGE=	http://www.lyx.org/
@@ -30,7 +30,7 @@ WANTLIB += QtGui>=8 X11 aspell c m pthread stdc++ z
 WANTLIB += boost_filesystem-mt>=1 boost_iostreams-mt>=1
 WANTLIB += boost_regex-mt>=1 boost_signals-mt>=1
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 USE_GROFF =	Yes

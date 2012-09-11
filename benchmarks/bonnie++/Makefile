@@ -1,30 +1,28 @@
-# $OpenBSD: Makefile,v 1.5 2010/10/18 16:57:46 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2012/08/19 18:55:08 jasper Exp $
 
 COMMENT=	enhanced performance test of filesystem I/O
 
-DISTNAME=	bonnie++-1.03a
+DISTNAME=	bonnie++-1.96
+REVISION=	0
 CATEGORIES=	benchmarks
-
-HOMEPAGE=	http://www.coker.com.au/bonnie++/
-MASTER_SITES=	${HOMEPAGE} \
-		ftp://gd.tuwien.ac.at/opsys/linux/sf/b/bonnie/
+MASTER_SITES=	http://www.coker.com.au/bonnie++/experimental/
 EXTRACT_SUFX=	.tgz
 
-MAINTAINER=	Martin Reindl <martin@openbsd.org>
+HOMEPAGE=	http://www.coker.com.au/bonnie++/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c m stdc++
+
+WANTLIB=	c m pthread stdc++
+
+USE_GMAKE=	Yes
+CONFIGURE_STYLE= autoconf dest
+AUTOCONF_VERSION= 2.61
 
 NO_REGRESS=	Yes
-USE_GMAKE=      Yes
-USE_GROFF =	Yes
-MAKE_FLAGS=	CXX="${CXX} ${CXXFLAGS}"
-
-CONFIGURE_STYLE=gnu dest
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/bonnie++

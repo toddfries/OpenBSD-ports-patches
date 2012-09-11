@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.14 2011/03/14 09:17:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2011/10/07 13:54:31 kurt Exp $
 
 COMMENT=		dependency manager for Java
 
 VERSION=		1.4.1
 DISTNAME=		ivy-${VERSION}-bin
 PKGNAME=		ivy-${VERSION}
-REVISION =		6
-CATEGORIES=		devel java
+REVISION =		11
+CATEGORIES=		devel
 WRKDIST=		${WRKDIR}/ivy-${VERSION}
 
 HOMEPAGE=		http://incubator.apache.org/ivy/
-
-MAINTAINER=		Matthias Kilian <kili@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,8 +19,6 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://www.jaya.free.fr/downloads/ivy/${VERSION}/
 EXTRACT_SUFX=		.zip
-
-SUBST_VARS=		VERSION
 
 MODULES=	java
 MODJAVA_VER=	1.4+
@@ -34,22 +30,19 @@ NO_BUILD=	Yes
 NO_REGRESS=	Yes
 
 do-configure:
-	sed -e 's!@IVYDIR@!${PREFIX}/share/java/classes/ivy-${VERSION}!' \
+	sed -e 's!@IVYDIR@!${MODJAVA_JAR_DIR}/ivy/!' \
 	    -e 's!@JAVAPH@!${PREFIX}/bin/javaPathHelper!' \
 	    files/ivy.in > ${WRKSRC}/ivy
 
 # Note: we omit ivy-core.jar, since it's the same as ivy.jar with
 # the ant tasks removed.
 do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/java/classes/ivy-${VERSION}
-	${INSTALL_DATA_DIR} ${PREFIX}/share/java/ivy-${VERSION}
-	${INSTALL_DATA} ${WRKSRC}/LICENSE.txt \
-		${PREFIX}/share/java/ivy-${VERSION}
+	${INSTALL_DATA_DIR} ${MODJAVA_JAR_DIR}/ivy/ ${MODJAVA_SHARE_DIR}/ivy/
+	${INSTALL_DATA} ${WRKSRC}/LICENSE.txt ${MODJAVA_SHARE_DIR}/ivy/
 	${INSTALL_DATA} ${WRKSRC}/ivy-${VERSION}.jar \
-		${PREFIX}/share/java/classes/ivy-${VERSION}/ivy.jar
+		${MODJAVA_JAR_DIR}/ivy/ivy.jar
 	# Preliminary hack.
-	${INSTALL_DATA} ${WRKSRC}/lib/*.jar \
-		${PREFIX}/share/java/classes/ivy-${VERSION}
+	${INSTALL_DATA} ${WRKSRC}/lib/*.jar ${MODJAVA_JAR_DIR}/ivy/
 	${INSTALL_SCRIPT} ${WRKSRC}/ivy ${PREFIX}/bin
 
 .include <bsd.port.mk>

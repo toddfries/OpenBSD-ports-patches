@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.95 2011/07/22 22:21:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.114 2012/09/01 13:40:18 stsp Exp $
 
 COMMENT-main=		subversion revision control system
 COMMENT-perl=		perl interface to subversion
 COMMENT-python=		python interface to subversion
 COMMENT-ruby=		ruby interface to subversion
 COMMENT-ap2=		apache2 subversion modules
+COMMENT-gnome-keyring=	GNOME keyring support for subversion
 
-VERSION=		1.6.17
+VERSION=		1.7.6
 DISTNAME=		subversion-${VERSION}
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-perl=	p5-SVN-${VERSION}
@@ -17,18 +18,17 @@ FULLPKGNAME-ruby=	ruby-subversion-${VERSION}
 FULLPKGPATH-ruby=	devel/subversion,-ruby
 FULLPKGNAME-ap2=	ap2-subversion-${VERSION}
 FULLPKGPATH-ap2=	devel/subversion,-ap2
+FULLPKGNAME-gnome-keyring= gnome-keyring-subversion-${VERSION}
+FULLPKGPATH-gnome-keyring= devel/subversion,-gnome-keyring
 
-REVISION-main=		2
-REVISION-python=	0
-REVISION-perl=		0
-REVISION-ruby=		2
-REVISION-ap2=		0
-
-SO_VERSION=	1.2
+SO_VERSION=	1.3
 SVN_LIBS=	svn_client-1 svn_delta-1 svn_diff-1 svn_fs-1 \
-		svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1 svn_ra-1 svn_ra_neon-1 \
-		svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1 svn_repos-1 svn_subr-1 svn_wc-1
-.for _lib in ${SVN_LIBS} svn_swig_perl-1 svn_swig_py-1 svn_swig_ruby-1
+		svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1 svn_ra-1 \
+		svn_ra_neon-1 svn_ra_local-1 svn_ra_neon-1 \
+		svn_ra_svn-1 svn_repos-1 svn_subr-1 svn_wc-1
+SVN_EXT_LIBS=	svn_swig_perl-1 svn_swig_py-1 svn_swig_ruby-1 \
+		svn_auth_gnome_keyring-1
+.for _lib in ${SVN_LIBS} ${SVN_EXT_LIBS}
 SHARED_LIBS+=	${_lib} ${SO_VERSION}
 .endfor
 
@@ -44,25 +44,25 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-# Subversion 1.6.x tarballs are still hosted at tigris.org, not apache.org
-MASTER_SITES=	http://subversion.tigris.org/downloads/
+MASTER_SITES=	${MASTER_SITE_APACHE:=subversion/}
 EXTRACT_SUFX=	.tar.bz2
 
-PSEUDO_FLAVORS=	no_bindings no_ap2
-FLAVORS=	gnome_keyring
+PSEUDO_FLAVORS=	no_bindings no_ap2 no_perl no_python no_ruby
+FLAVORS=	maintainer_mode
 FLAVOR?=
+.if ${FLAVOR:Mno_bindings}
+FLAVOR += no_perl no_python no_ruby
+.endif
 
 MODULES=	devel/gettext lang/python
-USE_GROFF =	Yes
 
-WANTLIB=	expat db z
-
+WANTLIB=	expat magic pthread z
 
 # autogen.sh checks for libtoolize
 BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
 		devel/libtool
 
-MULTI_PACKAGES=	-main
+MULTI_PACKAGES = -main -ap2 -perl -python -ruby -gnome-keyring
 
 MAINSPEC =	${PKGNAME}:devel/subversion,-main
 LIB_DEPENDS-main = ${LIB_DEPENDS} \
@@ -70,17 +70,12 @@ LIB_DEPENDS-main = ${LIB_DEPENDS} \
 		devel/apr \
 		devel/apr-util \
 		security/cyrus-sasl2 \
-		databases/sqlite3
+		devel/libmagic
 
-WANTLIB-main=	${WANTLIB} asn1 c crypto gssapi krb5 ssl \
-		neon>=26 apr-1 aprutil-1 sasl2>=2 sqlite3
+WANTLIB-main=	${WANTLIB} asn1 c crypto db gssapi krb5 ssl \
+		neon>=26 apr-1 aprutil-1 sasl2>=2 sqlite3 \
+		m proxy stdc++
 RUN_DEPENDS-main= ${MODGETTEXT_RUN_DEPENDS}
-
-CONTRIB_HOOK_SCRIPTS=	case-insensitive.py pre-commit-check.py \
-	check-mime-type.pl pre-lock-require-needs-lock.py \
-	commit-block-joke.py remove-zombie-locks.py \
-	syntax-check.sh commit-email.pl
-# There's also 'enforcer', but we handle it separately, see post-install
 
 TOOLS_HOOK_SCRIPTS=	commit-access-control.cfg.example \
 	commit-access-control.pl commit-email.rb \
@@ -88,103 +83,95 @@ TOOLS_HOOK_SCRIPTS=	commit-access-control.cfg.example \
 	svnperms.py verify-po.py
 # There's also 'mailer', but we handle it separately, see post-install
 
-CONTRIB_CLIENT_SIDE_SCRIPTS=	incremental-update.py search-svnlog.pl \
-	svn-clean svn-merge-vendor.py svn_apply_autoprops.py \
-	svn_export_empty_files.py
-
-SVN_LOAD_DIRS_FILES=	LICENSE_AFL3.txt svn_load_dirs.README \
-	svn_load_dirs.pl svn_load_dirs_property_table.example
-
-CONTRIB_SERVER_SIDE_SCRIPTS=	authz_svn_group.py fsfsverify.py \
-	svn-fast-backup svn-tweak-author.py
-
 TOOLS_CLIENT_SIDE_SCRIPTS=	bash_completion change-svn-wc-format.py \
 	server-version.py showchange.pl svn-graph.pl
 
-.if !${FLAVOR:L:Mno_ap2}
-MULTI_PACKAGES+=	-ap2
-WANTLIB-ap2=		${WANTLIB} apr-1 aprutil-1 sqlite3
+WANTLIB-ap2=		${WANTLIB} apr-1 aprutil-1 db sqlite3
 LIB_DEPENDS-ap2=	${MODGETTEXT_LIB_DEPENDS} ${MAINSPEC}
-.  for _lib in svn_delta-1 svn_fs-1 svn_fs_base-1 svn_fs_fs-1 \
+.for _lib in svn_delta-1 svn_fs-1 svn_fs_base-1 svn_fs_fs-1 \
 	svn_fs_util-1 svn_repos-1 svn_subr-1
 WANTLIB-ap2 +=	${_lib}>=${SO_VERSION}
-.  endfor
-BUILD_DEPENDS+=		www/apache-httpd
+.endfor
 RUN_DEPENDS-ap2=	www/apache-httpd
-.endif
 
-.if !${FLAVOR:L:Mno_bindings}
-MULTI_PACKAGES+=-perl -python -ruby
-SHARED_ONLY=	Yes
+NOT_FOR_ARCHS-perl = ${NO_SHARED_ARCHS}
+NOT_FOR_ARCHS-python = ${NO_SHARED_ARCHS}
+NOT_FOR_ARCHS-ruby = ${NO_SHARED_ARCHS}
 
-WANTLIB-perl=		${WANTLIB} apr-1 aprutil-1 sqlite3
+WANTLIB-perl=		${WANTLIB} apr-1 aprutil-1 sqlite3 
 RUN_DEPENDS-perl=	${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-perl=	${MODGETTEXT_LIB_DEPENDS} ${MAINSPEC}
-.  for _lib in svn_diff-1 svn_ra-1 svn_delta-1 svn_subr-1 svn_fs-1 \
+.for _lib in svn_diff-1 svn_ra-1 svn_delta-1 svn_subr-1 svn_fs-1 \
 	svn_repos-1 svn_wc-1 svn_client-1
 WANTLIB-perl +=	${_lib}>=${SO_VERSION}
-.  endfor
+.endfor
 
-WANTLIB-python=		${WANTLIB} apr-1 aprutil-1 asn1 crypto gssapi \
-			krb5 neon sasl2 sqlite3 ssl ${MODPY_WANTLIB}
+WANTLIB-python=		${WANTLIB} apr-1 aprutil-1 asn1 crypto gssapi db \
+			krb5 neon proxy sasl2 sqlite3 ssl ${MODPY_WANTLIB}
 RUN_DEPENDS-python=	${MODPY_RUN_DEPENDS}
 LIB_DEPENDS-python=	${MODPY_LIB_DEPENDS} ${MODGETTEXT_LIB_DEPENDS} \
 			${MAINSPEC}
-.  for _lib in ${SVN_LIBS}
+.for _lib in ${SVN_LIBS}
 WANTLIB-python +=	${_lib}>=${SO_VERSION}
-.  endfor
+.endfor
 
-WANTLIB-ruby=		${WANTLIB} apr-1 aprutil-1 asn1 crypto gssapi \
-			krb5 m neon sasl2 sqlite3 ssl ${MODRUBY_WANTLIB}
+WANTLIB-ruby=		${WANTLIB} apr-1 aprutil-1 asn1 crypto gssapi db \
+			krb5 m neon proxy sasl2 sqlite3 ssl ${MODRUBY_WANTLIB}
 RUN_DEPENDS-ruby=	${MODRUBY_RUN_DEPENDS}
 LIB_DEPENDS-ruby=	${MODRUBY_LIB_DEPENDS} \
 			${MODGETTEXT_LIB_DEPENDS} ${MAINSPEC}
-.  for _lib in ${SVN_LIBS}
+.for _lib in ${SVN_LIBS}
 WANTLIB-ruby +=	${_lib}>=${SO_VERSION}
-.  endfor
+.endfor
 
-MODULES+=	lang/ruby
-BUILD_DEPENDS+=	devel/swig>=1.3.36
-.endif
+WANTLIB-gnome-keyring=	${WANTLIB} apr-1 aprutil-1 gcrypt gpg-error \
+		dbus-1>=7 glib-2.0 gnome-keyring>=6 pcre>=2 sqlite3 \
+		svn_subr-1>=${SO_VERSION} ffi gmodule-2.0 gobject-2.0 \
+		gthread-2.0
+LIB_DEPENDS-gnome-keyring= ${MAINSPEC} \
+		${MODGETTEXT_LIB_DEPENDS} \
+		x11/gnome/libgnome-keyring
 
-.if ${FLAVOR:L:Mgnome_keyring}
-SHARED_ONLY=	Yes
-MODULES+=	converters/libiconv
-LIB_DEPENDS-main += 	x11/dbus \
-			devel/glib2 \
-			x11/gnome/libgnome-keyring \
-			devel/pcre \
-			${MODGETTEXT_LIB_DEPENDS}
-WANTLIB-main+=	apr-1 aprutil-1 gcrypt gpg-error \
-		dbus-1>=7 glib-2.0 gnome-keyring>=6 pcre>=2
-SHARED_LIBS+=	svn_auth_gnome_keyring-1 ${SO_VERSION}
-# gnome-keyring depends on dbus depends on pthread, so svn won't be able
-# to load libsvn_auth_gnome_keyring without the main executable being compiled
-# and linked with -pthread. We want to avoid this as it causes problems with
-# our current threading implementation (which has to force stdin/stdout to
-# be non-blocking). As this affects -main it must be a FLAVOR.
-WANTLIB-main+=	pthread
-CFLAGS+=	-pthread
-.endif
+RUN_DEPENDS-gnome-keyring=	${MODGETTEXT_RUN_DEPENDS}
 
 MAKE_FLAGS=	MAKE=${MAKE_PROGRAM}
 USE_LIBTOOL=	Yes
 AUTOCONF_VERSION=2.64
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	PYTHON2=${MODPY_BIN}
+CONFIGURE_ENV=	PYTHON2=${MODPY_BIN} MKDIR="/bin/mkdir -p"
 CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
 		--with-sasl=${LOCALBASE} \
+		--with-gnome-keyring \
 		--without-jikes \
-		--without-jdk
-.if !${FLAVOR:L:Mno_bindings}
+		--without-jdk \
+		--with-libmagic=${LOCALBASE}
+
+# Maintainer mode shows files and line numbers for every error raised
+# by Subversion. It is useful for debugging problems with Subversion
+# but is not required for normal operation.
+.if ${FLAVOR:Mmaintainer_mode}
+CONFIGURE_ARGS+=--enable-maintainer-mode
+.endif
+
+.include <bsd.port.arch.mk>
+
+.if ${BUILD_PACKAGES:M-ruby} || ${BUILD_PACKAGES:M-perl} || ${BUILD_PACKAGES:M-python}
+
+BUILD_DEPENDS+=	devel/swig>=1.3.36
 CONFIGURE_ARGS+=--with-swig
 .else
 CONFIGURE_ARGS+=--without-swig
 .endif
 
-.if !${FLAVOR:L:Mno_ap2}
+.if ${BUILD_PACKAGES:M-ruby}
+MODULES+=	lang/ruby
+CONFIGURE_ENV+=	RUBY=ruby${MODRUBY_BINREV} RDOC=rdoc${MODRUBY_BINREV}
+.endif
+
+.if ${BUILD_PACKAGES:M-ap2}
 CONFIGURE_ARGS+=--with-apxs=${LOCALBASE}/sbin/apxs2 \
 		--disable-mod-activation
+BUILD_DEPENDS+=		www/apache-httpd
 .else
 CONFIGURE_ARGS+=--without-apxs
 .endif
@@ -201,13 +188,12 @@ pre-configure:
 	@cd ${WRKSRC} && ${SETENV} ${CONFIGURE_ENV} \
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} ./autogen.sh
 
-.if ${FLAVOR:L:Mgnome_keyring}
-CONFIGURE_ARGS+=--with-gnome-keyring
-.endif
+.if ${BUILD_PACKAGES:M-python}
+REGRESS_DEPENDS+=	${FULLPKGNAME-python}:${BUILD_PKGPATH},-python
 
-.if !${FLAVOR:L:Mno_bindings}
-REGRESS_DEPENDS+=	${FULLPKGNAME-python}:devel/subversion,-python \
-			${FULLPKGNAME-ruby}:devel/subversion,-ruby
+.if ${BUILD_PACKAGES:M-ruby}
+REGRESS_DEPENDS+=	${FULLPKGNAME-ruby}:${BUILD_PKGPATH},-ruby
+.endif
 
 pre-build:
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
@@ -215,11 +201,15 @@ pre-build:
 .endif
 
 post-build:
-.if !${FLAVOR:L:Mno_bindings}
+.if ${BUILD_PACKAGES:M-python}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${MAKE_FLAGS} swig-py
+.endif
+.if ${BUILD_PACKAGES:M-perl}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${MAKE_FLAGS} swig-pl
+.endif
+.if ${BUILD_PACKAGES:M-ruby}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${MAKE_FLAGS} swig-rb
 .endif
@@ -235,21 +225,29 @@ do-regress:
 		${ALL_REGRESS_FLAGS} check FS_TYPE=bdb
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_REGRESS_FLAGS} check FS_TYPE=fsfs
-.if !${FLAVOR:L:Mno_bindings}
+.if ${BUILD_PACKAGES:M-perl}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_REGRESS_FLAGS} TMPDIR=${WRKBUILD} check-swig-pl
+.endif
+.if ${BUILD_PACKAGES:M-python}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_REGRESS_FLAGS} check-swig-py
+.endif
+.if ${BUILD_PACKAGES:M-ruby}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_REGRESS_FLAGS} check-swig-rb
 .endif
 
 post-install:
-.if !${FLAVOR:L:Mno_bindings}
+.if ${BUILD_PACKAGES:M-python}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_FAKE_FLAGS} install-swig-py
+.endif
+.if ${BUILD_PACKAGES:M-perl}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_FAKE_FLAGS} install-swig-pl
+.endif
+.if ${BUILD_PACKAGES:M-ruby}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_FAKE_FLAGS} install-swig-rb
 .endif
@@ -268,34 +266,6 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/subversion/hook-scripts/enforcer
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/subversion/server-side/mod_dontdothat
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/subversion/xslt
-	${INSTALL_DATA} ${WRKSRC}/contrib/cgi/* \
-			${PREFIX}/share/examples/subversion/cgi
-	${INSTALL_DATA} ${WRKSRC}/contrib/client-side/emacs/* \
-			${PREFIX}/share/examples/subversion/client-side/emacs
-	${INSTALL_DATA} ${WRKSRC}/contrib/client-side/svn2cl/* \
-			${PREFIX}/share/examples/subversion/client-side/svn2cl
-.for _file in ${SVN_LOAD_DIRS_FILES}
-	${INSTALL_DATA} ${WRKSRC}/contrib/client-side/svn_load_dirs/${_file} \
-			${PREFIX}/share/examples/subversion/client-side/svn_load_dirs
-.endfor
-	${INSTALL_DATA} ${WRKSRC}/contrib/server-side/mod_dontdothat/* \
-			${PREFIX}/share/examples/subversion/server-side/mod_dontdothat
-.for _script in ${CONTRIB_CLIENT_SIDE_SCRIPTS}
-	${INSTALL_DATA} ${WRKSRC}/contrib/client-side/${_script} \
-			${PREFIX}/share/examples/subversion/client-side
-.endfor
-.for _script in ${CONTRIB_SERVER_SIDE_SCRIPTS}
-	${INSTALL_DATA} ${WRKSRC}/contrib/server-side/${_script} \
-			${PREFIX}/share/examples/subversion/server-side
-.endfor
-	${INSTALL_DATA} ${WRKSRC}/contrib/hook-scripts/enforcer/enforcer \
-			${PREFIX}/share/examples/subversion/hook-scripts/enforcer/
-	${INSTALL_DATA} ${WRKSRC}/contrib/hook-scripts/enforcer/enforcer.conf \
-			${PREFIX}/share/examples/subversion/hook-scripts/enforcer/
-.for _hook_script in ${CONTRIB_HOOK_SCRIPTS}
-	${INSTALL_DATA} ${WRKSRC}/contrib/hook-scripts/${_hook_script} \
-			${PREFIX}/share/examples/subversion/hook-scripts/
-.endfor
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${ALL_FAKE_FLAGS} install-tools
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/subversion/backup
@@ -317,8 +287,6 @@ post-install:
 			${PREFIX}/share/examples/subversion/server-side
 	${INSTALL_PROGRAM} ${WRKSRC}/tools/server-side/svn-populate-node-origins-index.c \
 		${PREFIX}/share/examples/subversion/server-side
-	${INSTALL_DATA} ${WRKSRC}/tools/hook-scripts/README \
-			${PREFIX}/share/examples/subversion/hook-scripts/
 	${INSTALL_DATA} ${WRKSRC}/tools/xslt/* \
 		${PREFIX}/share/examples/subversion/xslt
 .for _hook_script in ${TOOLS_HOOK_SCRIPTS}

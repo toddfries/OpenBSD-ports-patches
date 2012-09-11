@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.7 2010/02/06 11:26:29 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.9 2012/04/28 12:16:29 espie Exp $
+!%%a4%%
 @bin bin/epsffit
 bin/extractres
 bin/fixdlsrps

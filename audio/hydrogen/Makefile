@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.14 2011/07/20 15:30:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2012/08/22 20:14:06 naddy Exp $
 
 COMMENT=		software drum machine
 DISTNAME=		hydrogen-0.9.4
-REVISION=		1
+REVISION=		2
 CATEGORIES=		audio
 HOMEPAGE=		http://www.hydrogen-music.org/
 MAINTAINER=		Jacob Meuser <jakemsr@openbsd.org>
@@ -30,7 +30,7 @@ MODULES=		x11/qt4 devel/scons
 
 MAKE_ENV+=		QTDIR="${MODQT4_QTDIR}"
 MODSCONS_FLAGS=		localinc="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			locallib="-L${LOCALBASE}/lib -L${X11BASE}/lib -logg -pthread" \
+			locallib="-L${LOCALBASE}/lib -L${X11BASE}/lib -logg -lpthread" \
 			optflags="${CXXFLAGS} " \
 			libarchive="1" sndio="1" oss="0" alsa="0" portmidi="0" \
 			portaudio="0" lash="0" lrdf="1"

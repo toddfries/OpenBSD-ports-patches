@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2011/05/13 14:52:27 sthen Exp $
+# $OpenBSD: Makefile,v 1.21 2012/09/01 12:02:27 naddy Exp $
 
 COMMENT=	Basic Linear Algebra Subprograms
 
 VERSION=	1.0
 DISTNAME=	blas
 PKGNAME=	${DISTNAME}-${VERSION}
-REVISION=	5
+REVISION=	6
 SHARED_LIBS=	blas	2.0
 
 CATEGORIES=	math
@@ -40,13 +40,6 @@ FAKE_FLAGS=	LIBDIR=${LOCALBASE}/lib DEBUGLIBS=no
 USE_GROFF =	Yes
 
 MANSRC=		${WRKDIR}/manpages/blas/man/manl
-
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=	-Dno_mips64=0
-.else
-PKG_ARGS+=	-Dno_mips64=1
-.endif
 
 post-build:
 	@rm -f ${MANSRC}/{lsame,xerbla}.l

@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.12 2011/06/16 04:24:17 rpointel Exp $
+# $OpenBSD: Makefile,v 1.19 2012/08/28 19:13:12 espie Exp $
 
 COMMENT-main =		easy to use LaTeX and ConTeXt editor
 COMMENT-python =	Python scripting for TeXworks
 COMMENT-lua =		Lua scripting for TeXworks
 
-V =			0.4.0
-DISTNAME =		texworks-${V}-r759
+V =			0.4.4
+R =			1004
+DISTNAME =		texworks-${V}-r${R}
 
 PKGNAME-main =		texworks-${V}
 PKGNAME-lua =		texworks-lua-${V}
 PKGNAME-python =	texworks-python-${V}
-REVISION-main = 	0
-REVISION-python =	1
+
 REVISION-lua =		0
 
 WRKDIST =		${WRKDIR}/texworks-${V}
@@ -32,21 +32,29 @@ MODULES =		x11/qt4 \
 			lang/lua
 
 SHARED_ONLY =		Yes
-WANTLIB +=		QtDBus QtGui QtScript QtScriptTools QtXml c \
-			hunspell-1.2 m poppler poppler-qt4 pthread stdc++ z
-WANTLIB-lua =		QtCore QtGui QtXml lua m stdc++
-WANTLIB-python =	QtCore QtGui QtXml ${MODPY_WANTLIB} stdc++ m
+
+WANTLIB += ICE QtDBus QtGui QtScript QtScriptTools QtXml SM X11
+WANTLIB += Xext Xi Xinerama Xrender c fontconfig freetype hunspell-1.2
+WANTLIB += m poppler-qt4 pthread stdc++ z
+
+WANTLIB-lua =	${MODLUA_WANTLIB}
+WANTLIB-lua +=	ICE QtCore QtGui QtXml SM X11 Xext Xi Xinerama Xrender
+WANTLIB-lua +=	fontconfig freetype m stdc++
+
+WANTLIB-python =  ${MODPY_WANTLIB}
+WANTLIB-python += ICE QtCore QtGui QtXml SM X11 Xext Xi Xinerama Xrender
+WANTLIB-python += fontconfig freetype m stdc++
 
 MULTI_PACKAGES =	-main -lua -python
 
 MASTER_SITES =		http://texworks.googlecode.com/files/
 
-LIB_DEPENDS-main =	qt4->=4.7.2:${MODQT4_LIB_DEPENDS} \
+LIB_DEPENDS-main =	qt4->=4.8.2:${MODQT4_LIB_DEPENDS} \
 			textproc/hunspell \
 			x11/dbus \
-			print/poppler,-qt4
+			print/poppler,,-qt4
 LIB_DEPENDS-lua =	${MODQT4_LIB_DEPENDS} \
-			lang/lua
+			${MODLUA_LIB_DEPENDS}
 LIB_DEPENDS-python =	${MODQT4_LIB_DEPENDS} \
 			${MODPY_LIB_DEPENDS}
 
@@ -54,6 +62,8 @@ RUN_DEPENDS-main = 	print/texlive/base \
 			devel/desktop-file-utils
 RUN_DEPENDS-lua =	editors/texworks,-main
 RUN_DEPENDS-python =	editors/texworks,-main
+
+MODLUA_SA =		Yes
 
 USE_GMAKE =		Yes
 NO_REGRESS =		Yes
@@ -68,24 +78,23 @@ pre-configure:
 	${SUBST_CMD} ${PLUGIN_SRC}/TWPythonPlugin/TWPythonPlugin.pro
 
 do-configure:
-	cd ${PLUGIN_SRC}/TWPythonPlugin && qmake4	
-	cd ${PLUGIN_SRC}/TWLuaPlugin && qmake4	
+	cd ${PLUGIN_SRC}/TWPythonPlugin && qmake4
+	cd ${PLUGIN_SRC}/TWLuaPlugin && qmake4
 	cd ${WRKSRC} && qmake4
 
 # build plugins first
 pre-build:
 	cd ${PLUGIN_SRC}/TWPythonPlugin && ${MAKE_PROGRAM}
 	cd ${PLUGIN_SRC}/TWLuaPlugin && ${MAKE_PROGRAM}
-	
-# install main stuff and then plugins
-INSTALL_PATHS = ${WRKSRC} \
-		${PLUGIN_SRC}/TWPythonPlugin \
-		${PLUGIN_SRC}/TWLuaPlugin
 
-# note: install does not depend upon fake env or fake flags
-do-install:
-	for i in ${INSTALL_PATHS}; do \
-		cd $$i && ${MAKE_PROGRAM} -f ${MAKE_FILE} ${FAKE_TARGET}; \
+# install main stuff and then plugins
+PLUGIN_INSTALLS =	${PLUGIN_SRC}/TWPythonPlugin \
+			${PLUGIN_SRC}/TWLuaPlugin
+
+FAKE_FLAGS +=	INSTALL_ROOT=${WRKINST}
+post-install:
+	for i in ${PLUGIN_INSTALLS}; do \
+		cd $$i && ${MAKE_PROGRAM} -f ${MAKE_FILE} ${FAKE_TARGET} INSTALL_ROOT=${WRKINST}; \
 	done
 
 .include <bsd.port.mk>

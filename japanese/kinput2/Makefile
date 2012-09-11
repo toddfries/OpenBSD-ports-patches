@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2010/11/17 08:05:17 espie Exp $
+# $OpenBSD: Makefile,v 1.28 2012/03/17 23:01:09 naddy Exp $
 
 COMMENT-canna=		X input method for Japanese, canna support
 COMMENT-canna-wnn=	X input method for Japanese, canna and wnn support
@@ -6,7 +6,7 @@ COMMENT-wnn=		X input method for Japanese, wnn support
 
 DISTNAME=	kinput2-v3
 PKGNAME=	ja-kinput2-3.0
-REVISION=	3
+REVISION=	6
 MASTER_SITES=	ftp://ftp.sra.co.jp/pub/x11/kinput2/
 CATEGORIES=	japanese x11
 
@@ -16,7 +16,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt c pthread-stubs xcb
+WANTLIB=	ICE SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt c
 
 MAINTAINER=	SUZUKI Hitoshi <sigh@kuzirabekon.econ.nagasaki-u.ac.jp>
 
@@ -26,10 +26,10 @@ FLAVOR?=	wnn
 
 USE_GROFF =	Yes
 
-.if ${FLAVOR:L:Mwnn}
+.if ${FLAVOR:Mwnn}
 BUILD_DEPENDS+=	japanese/Wnn
 .endif
-.if ${FLAVOR:L:Mcanna}
+.if ${FLAVOR:Mcanna}
 PERMIT_PACKAGE_CDROM=	Canna prevents it
 WANTLIB += canna16
 LIB_DEPENDS=	japanese/canna

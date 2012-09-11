@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.12 2011/07/15 09:47:50 benoit Exp $
+# $OpenBSD: Makefile,v 1.18 2012/07/10 15:22:45 jasper Exp $
 
 COMMENT =		convert source code to markup formats
 
-DISTNAME =		highlight-3.5
+DISTNAME =		highlight-3.9
+REVISION =		1
 CATEGORIES =		textproc converters
 
 HOMEPAGE =		http://www.andre-simon.de/
@@ -15,20 +16,24 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		c m stdc++ lua
+WANTLIB =		c m stdc++ ${MODLUA_WANTLIB}
 
 MASTER_SITES =		${HOMEPAGE}/zip/
 EXTRACT_SUFX =		.tar.bz2
 
 USE_GMAKE =		Yes
-USE_GROFF =		Yes
+
+MODULES =		lang/lua
+MODLUA_SA =		Yes
 
 BUILD_DEPENDS =		devel/boost
-LIB_DEPENDS =		lang/lua
+LIB_DEPENDS =		${MODLUA_LIB_DEPENDS}
 
 MAKE_FILE =		makefile
 MAKE_FLAGS =		CXX=${CXX} \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib" \
+			CFLAGS+="`pkg-config --cflags ${MODLUA_DEP}`" \
+			LUA_LIBS="`pkg-config --libs ${MODLUA_DEP}`"
 
 NO_REGRESS =		Yes
 

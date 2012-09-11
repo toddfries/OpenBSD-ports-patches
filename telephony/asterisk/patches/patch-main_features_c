@@ -1,0 +1,13 @@
+$OpenBSD: patch-main_features_c,v 1.5 2012/08/04 21:53:56 sthen Exp $
+--- main/features.c.orig	Mon Jun 25 16:57:28 2012
++++ main/features.c	Mon Jul 30 23:13:45 2012
+@@ -1014,7 +1014,9 @@ static void bridge_call_thread_launch(struct ast_bridg
+ 	}
+ 	pthread_attr_destroy(&attr);
+ 	memset(&sched, 0, sizeof(sched));
++#if defined(_POSIX_THREAD_PRIORITY_SCHEDULING) && (_POSIX_THREAD_PRIORITY_SCHEDULING > 0)
+ 	pthread_setschedparam(thread, SCHED_RR, &sched);
++#endif
+ }
+ 
+ /*!

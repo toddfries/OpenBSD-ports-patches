@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2011/04/21 09:10:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.55 2012/07/13 16:57:39 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +7,7 @@ COMMENT=		personal photo management application for GNOME
 GNOME_VERSION=		0.8.2
 GNOME_PROJECT=		f-spot
 
-REVISION=		0
+REVISION=		4
 
 CATEGORIES=		graphics
 
@@ -20,6 +20,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+EXTRACT_SUFX=		.tar.bz2
+
 WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
 WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
 WANTLIB += Xrender art_lgpl_2 atk-1.0
@@ -30,7 +32,7 @@ WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gnome-2 gnome-keyring
 WANTLIB += gnomecanvas-2 gnomeui-2 gnomevfs-2 gobject-2.0 gpg-error
 WANTLIB += gthread-2.0 gtk-x11-2.0 jpeg m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png popt pthread-stubs ssl
-WANTLIB += util xcb xcb-render xml2 z lcms xcb-shm
+WANTLIB += util xcb xcb-render xml2 z lcms xcb-shm ffi stdc++
 WANTLIB += GL Xxf86vm canberra drm ltdl ogg pthread vorbis vorbisfile
 
 MODULES=		devel/gettext \
@@ -38,8 +40,9 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-DESKTOP_FILES=		Yes
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 
 BUILD_DEPENDS=		${RUN_DEPENDS} \
 			shells/bash \
@@ -56,11 +59,8 @@ MODGCONF2_SCHEMAS_DIR=	f-spot
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--enable-shave=no \
+CONFIGURE_ARGS+=	--disable-shave \
 			--disable-static
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 DLLMAP_FILES=		lib/unique-sharp/unique/unique-sharp.dll.config \
 			lib/gtk-sharp-beans/gtk-sharp-beans.dll.config \

@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.23 2011/07/12 08:12:29 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.31 2012/04/10 13:31:31 dcoppa Exp $
 
 COMMENT =		gnome-mplayer browser media plugin
-V =			1.0.4
+V =			1.0.6
 DISTNAME =		gecko-mediaplayer-${V}
-REVISION =		0
 CATEGORIES =		www
 
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 
-HOMEPAGE =		http://kdekorte.googlepages.com/gecko-mediaplayer
+HOMEPAGE =		http://kdekorte.googlepages.com/gecko-mediaplayer/
 
 MASTER_SITES =		http://gecko-mediaplayer.googlecode.com/files/
 
@@ -18,13 +17,14 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		curl dbus-1 dbus-glib-1 gio-2.0 glib-2.0 \
+WANTLIB =		curl dbus-1 dbus-glib-1 gio-2.0 glib-2.0 gmlib \
 			gmodule-2.0 gobject-2.0 gthread-2.0 m stdc++
 
 MODULES =		devel/gettext
 
 LIB_DEPENDS =		net/curl \
-			x11/dbus-glib
+			x11/dbus-glib \
+			x11/gmtk>=${V}
 
 BUILD_DEPENDS =		devel/xulrunner/1.9,-devel>=1.9.2
 RUN_DEPENDS =		x11/gnome-mplayer>=${V}
@@ -39,10 +39,8 @@ CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include \
 			-I${X11BASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 
-CONFIGURE_ARGS =	--enable-new-libxul \
-			--with-libcurl \
+CONFIGURE_ARGS =	--with-libcurl \
 			--with-xulrunner-sdk=${LOCALBASE}/xulrunner1.9 \
-			--with-plugin-dir=${LOCALBASE}/lib/mozilla/plugins \
-			--without-gconf
+			--with-plugin-dir=${LOCALBASE}/lib/mozilla/plugins
 
 .include <bsd.port.mk>

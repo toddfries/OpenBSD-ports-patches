@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.28 2011/06/21 17:54:25 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.32 2012/09/03 08:46:00 ajacoutot Exp $
+@pkgpath x11/gnome/metacity,gtk2
 @bin bin/metacity
 @bin bin/metacity-message
 @bin bin/metacity-theme-viewer
@@ -20,26 +21,27 @@ lib/pkgconfig/libmetacity-private.pc
 @man man/man1/metacity-theme-viewer.1
 @man man/man1/metacity-window-demo.1
 @man man/man1/metacity.1
+share/GConf/gsettings/metacity-schemas.convert
 share/applications/metacity.desktop
 share/doc/metacity/
 share/doc/metacity/README
 share/doc/metacity/metacity-theme.dtd
 share/doc/metacity/theme-format.txt
-share/doc/pkg-readmes/${FULLPKGNAME}
+share/glib-2.0/schemas/org.gnome.metacity.gschema.xml
 share/gnome-control-center/
 share/gnome-control-center/keybindings/
-share/gnome-control-center/keybindings/50-metacity-launchers.xml
 share/gnome-control-center/keybindings/50-metacity-navigation.xml
-share/gnome-control-center/keybindings/50-metacity-screenshot.xml
 share/gnome-control-center/keybindings/50-metacity-system.xml
 share/gnome-control-center/keybindings/50-metacity-windows.xml
-share/gnome/help/creating-metacity-themes/
-share/gnome/help/creating-metacity-themes/C/
-share/gnome/help/creating-metacity-themes/C/creating-metacity-themes.xml
-share/gnome/help/creating-metacity-themes/de/
-share/gnome/help/creating-metacity-themes/de/creating-metacity-themes.xml
 share/gnome/wm-properties/
 share/gnome/wm-properties/metacity-wm.desktop
+share/help/
+share/help/C/
+share/help/C/creating-metacity-themes/
+share/help/C/creating-metacity-themes/index.docbook
+share/help/de/
+share/help/de/creating-metacity-themes/
+share/help/de/creating-metacity-themes/index.docbook
 share/locale/am/LC_MESSAGES/metacity.mo
 share/locale/ar/LC_MESSAGES/metacity.mo
 share/locale/as/LC_MESSAGES/metacity.mo
@@ -143,10 +145,6 @@ share/locale/zh_TW/LC_MESSAGES/metacity.mo
 share/metacity/
 share/metacity/icons/
 share/metacity/icons/metacity-window-demo.png
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
-${SCHEMAS_INSTDIR}/
-${SCHEMAS_INSTDIR}/metacity.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
 share/themes/AgingGorilla/
 share/themes/AgingGorilla/metacity-1/
 share/themes/AgingGorilla/metacity-1/active-button.png
@@ -262,5 +260,7 @@ share/themes/Simple/metacity-1/maximize.png
 share/themes/Simple/metacity-1/maximized.png
 share/themes/Simple/metacity-1/metacity-theme-1.xml
 share/themes/Simple/metacity-1/minimize.png
+@exec %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null
+@unexec-delete %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

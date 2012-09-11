@@ -1,118 +1,84 @@
-# $OpenBSD: Makefile,v 1.36 2011/07/05 05:44:50 naddy Exp $
+# $OpenBSD: Makefile,v 1.52 2012/08/31 20:16:40 ratchov Exp $
 
 SHARED_ONLY =		Yes
 
-COMMENT-main =		input and output plugins for audacious
-COMMENT-jack =		jack plugin for audacious
+COMMENT =		input and output plugins for audacious
 
-V =			2.4.5
+V =			3.3.1
+
 DISTNAME =		audacious-plugins-$V
-PKGNAME-main =		${DISTNAME}
-REVISION-main =		1
-PKGNAME-jack =		audacious-jack-$V
-REVISION-jack =		0
+REVISION =		0
 
 CATEGORIES =		audio multimedia
 
 HOMEPAGE =		http://audacious-media-player.org/
 
-# GPL
+# BSD / GPL
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
-WANTLIB += Xrandr Xrender atk-1.0 audcore audgui cairo dbus-1
-WANTLIB += dbus-glib-1 expat fontconfig freetype gdk-x11-2.0
+WANTLIB += FLAC GL SDL X11 Xcomposite Xrender atk-1.0 audcore audgui
+WANTLIB += audtag cairo cairo-gobject cddb cdio cdio_cdda cue curl
+WANTLIB += dbus-1 dbus-glib-1 expat faad fontconfig freetype gdk-3
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-x11-2.0 m mcs mowgli pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 samplerate z ${MODGETTEXT_WANTLIB}
+WANTLIB += gtk-3 m mms modplug mp3lame mpg123 neon notify ogg
+WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png
+WANTLIB += pthread pthread-stubs samplerate sndfile sndio stdc++
+WANTLIB += vorbis vorbisenc vorbisfile wavpack xcb xcb-render
+WANTLIB += xcb-shm xml2 z
 
-WANTLIB-main += ${WANTLIB} FLAC SDL audtag avcodec avformat avutil
-WANTLIB-main += bz2 cddb cdio cdio_cdda cue curl faad gsm mp3lame
-WANTLIB-main += neon notify ogg orc-0.4 schroedinger-1.0 sndfile
-WANTLIB-main += sndio speex stdc++ theoradec theoraenc vorbis
-WANTLIB-main += vorbisenc vorbisfile vpx wavpack x264 xml2
+MASTER_SITES =		http://distfiles.audacious-media-player.org/
 
-WANTLIB-jack += ${WANTLIB} jack
-
-MASTER_SITES =		http://distfiles.atheme.org/
-
-EXTRACT_SUFX =		.tgz
-
-MULTI_PACKAGES =	-main
+EXTRACT_SUFX =		.tar.bz2
 
 MODULES =		devel/gettext
 
-BUILD_DEPENDS =		${RUN_DEPENDS-main}
+BUILD_DEPENDS =		${RUN_DEPENDS}
 
-RUN_DEPENDS-main =	audio/audacious>=${V}
-RUN_DEPENDS-jack =	audio/audacious-plugins,-main
+RUN_DEPENDS =		audio/audacious>=${V}
+# needed for the gio plugin
+RUN_DEPENDS +=		x11/gnome/gvfs
 
-LIB_DEPENDS-main =	audio/faad \
+LIB_DEPENDS =		audio/faad>=2.7 \
 			audio/flac \
 			audio/lame \
 			audio/libcdio \
 			audio/libcue \
-			audio/libmpcdec \
+			audio/libmodplug \
 			audio/libsamplerate \
 			audio/libsndfile \
 			audio/libvorbis \
-			audio/taglib>=1.4 \
+			audio/mpg123 \
 			audio/wavpack \
 			devel/libnotify>=0.7.2 \
 			devel/sdl \
-			graphics/ffmpeg \
+			multimedia/libmms \
 			net/curl \
 			net/neon \
 			textproc/libxml \
-			x11/gtk+2 \
-			x11/dbus-glib \
-			devel/mcs
-LIB_DEPENDS-jack =	audio/jack \
-			x11/gtk+2 \
-			x11/dbus-glib \
-			devel/mcs
-
-PSEUDO_FLAVORS =	no_jack
-FLAVOR ?=
-
-.if ${FLAVOR:Mno_jack}
-CONFIGURE_ARGS +=	--disable-jack
-.else
-MULTI_PACKAGES +=	-jack
-.endif
+			x11/gtk+3 \
+			x11/dbus-glib
 
 USE_GMAKE =		Yes
 
 CONFIGURE_STYLE =	autoconf
-AUTOCONF_VERSION =	2.68
+AUTOCONF_VERSION =	2.69
 CONFIGURE_ARGS +=	--enable-ipv6 \
-			--enable-sndio \
-			--disable-pulse \
-			--disable-altivec \
-			--disable-lirc \
 			--disable-adplug \
-			--disable-sid \
-			--disable-oss \
 			--disable-alsa \
 			--disable-amidiplug \
-			--disable-mms \
-			--disable-mtp_up \
-			--disable-projectm \
-			--disable-projectm-1.0
+			--disable-bs2b \
+			--disable-ffaudio \
+			--disable-jack \
+			--disable-lirc \
+			--disable-oss4 \
+			--disable-pulse \
+			--disable-sid
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-
-.if ${MACHINE_ARCH} != "amd64"
-CONFIGURE_ARGS +=	--disable-sse2
-.endif
+			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib"
 
 NO_REGRESS =		Yes
-
-post-patch:
-	@mkdir -p ${WRKSRC}/src/sndio
-	@cp ${FILESDIR}/{Makefile,sndio.c} ${WRKSRC}/src/sndio
 
 .include <bsd.port.mk>

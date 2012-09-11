@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/20 14:02:36 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2012/06/26 13:38:25 sthen Exp $
 
 COMMENT =	miscellaneous unix tools
 
-DISTNAME =	moreutils_0.45
+DISTNAME =	moreutils_0.47
 PKGNAME =	${DISTNAME:S/_/-/}
 WRKDIST =	${WRKDIR}/moreutils
 
@@ -20,7 +20,7 @@ PERMIT_DISTFILES_FTP =	 Yes
 
 WANTLIB += c
 
-MASTER_SITES =		http://ftp.de.debian.org/debian/pool/main/m/moreutils/
+MASTER_SITES =		${MASTER_SITE_DEBIAN:=main/m/moreutils/}
 
 BUILD_DEPENDS =		textproc/docbook2x
 RUN_DEPENDS =		devel/p5-IPC-Run \

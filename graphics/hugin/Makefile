@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2011/05/30 09:06:28 sthen Exp $
+# $OpenBSD: Makefile,v 1.27 2012/03/29 13:38:31 sthen Exp $
 
 VMEM_WARNING =		Yes
 SHARED_ONLY =		Yes
@@ -6,6 +6,7 @@ SHARED_ONLY =		Yes
 COMMENT =		panorama image stitcher
 
 DISTNAME =		hugin-2011.0.0
+REVISION=		0
 EXTRACT_SUFX =		.tar.bz2
 
 # not needed for releases, but makes RCs/betas easier to work with
@@ -61,7 +62,7 @@ LIB_DEPENDS =		devel/boost \
 
 USE_GROFF =		Yes
 MODULES +=		devel/cmake
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	cmake
 CONFIGURE_ENV =		MANDIR=man
 NO_REGRESS =		Yes

@@ -1,8 +1,8 @@
-$OpenBSD: patch-toolkit_xre_nsXREDirProvider_cpp,v 1.7 2011/08/23 20:14:52 landry Exp $
+$OpenBSD: patch-toolkit_xre_nsXREDirProvider_cpp,v 1.14 2012/09/01 13:56:45 landry Exp $
 Look for extensions in LOCALBASE
---- toolkit/xre/nsXREDirProvider.cpp.orig	Fri Jul 22 00:18:55 2011
-+++ toolkit/xre/nsXREDirProvider.cpp	Sat Jul 30 15:37:52 2011
-@@ -1122,11 +1122,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
+--- toolkit/xre/nsXREDirProvider.cpp.orig	Wed Aug 15 07:48:34 2012
++++ toolkit/xre/nsXREDirProvider.cpp	Sun Aug 19 13:50:39 2012
+@@ -1177,11 +1177,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
    NS_ENSURE_SUCCESS(rv, rv);
  #elif defined(XP_UNIX)
    static const char *const sysSExtDir = 
@@ -13,5 +13,5 @@ Look for extensions in LOCALBASE
 -#endif
 +    "${LOCALBASE}/lib/mozilla/extensions";
  
-   rv = NS_NewNativeLocalFile(nsDependentCString(sysSExtDir), PR_FALSE,
+   rv = NS_NewNativeLocalFile(nsDependentCString(sysSExtDir), false,
                               getter_AddRefs(localDir));

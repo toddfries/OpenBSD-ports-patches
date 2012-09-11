@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.22 2011/06/30 21:30:20 kili Exp $
+# $OpenBSD: Makefile,v 1.24 2012/09/02 20:09:08 kili Exp $
 
 COMMENT =	lexical analyser generator for Haskell
 
-DISTNAME =	alex-2.3.5
-REVISION =	1
+DISTNAME =	alex-3.0.1
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.haskell.org/alex/
@@ -26,7 +25,8 @@ AUTOCONF_VERSION =	2.61
 AUTOCONF_DIR =		${WRKSRC}/doc
 WRKCONF =		${AUTOCONF_DIR}
 
-BUILD_DEPENDS +=	textproc/docbook \
+BUILD_DEPENDS +=	devel/hs-QuickCheck>=2 \
+			textproc/docbook \
 			textproc/docbook-xsl \
 			textproc/libxslt
 

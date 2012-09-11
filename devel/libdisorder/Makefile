@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/08/26 01:10:16 kevlo Exp $
+# $OpenBSD: Makefile,v 1.3 2012/09/01 12:02:26 naddy Exp $
 
 COMMENT=	simple C Library for entropy measurement
 
 DISTNAME=	libdisorder-0.0.2
+REVISION=	0
 
 SHARED_LIBS=	disorder 0.0
 
@@ -21,13 +22,6 @@ PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=	c m
 
 MASTER_SITES=	${HOMEPAGE}/releases/
-
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=	-Dno_mips64=0
-.else
-PKG_ARGS+=	-Dno_mips64=1
-.endif
 
 MAKE_FILE=	${FILESDIR}/Makefile
 MAKE_ENV=	SHLIB_MAJOR=${LIBdisorder_VERSION:R} \

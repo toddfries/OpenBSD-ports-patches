@@ -1,46 +1,38 @@
-# $OpenBSD: Makefile,v 1.5 2011/05/09 08:59:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.23 2012/07/06 16:41:21 jasper Exp $
 
-COMMENT=		GNU Compiler Collection for msp430
+TOOL=			gcc
+TOOL_V= 		4.6.3
 
-VERSION=		4.4.5
-DISTNAME=		gcc-${VERSION}
-PKGNAME=		${TARGET}-${DISTNAME}
+REVISION=		0
 
-MASTER_SITES= 		${MASTER_SITE_GCC:=releases/gcc-$(VERSION)/}
-PATCHFILES=		gcc-${VERSION}.patch:0
+GNU_TOOL=		Yes
 
-DISTFILES=		gcc-core-${VERSION}${EXTRACT_SUFX} \
-			gcc-g++-${VERSION}${EXTRACT_SUFX} \
-			gcc-${VERSION}-config.tar.gz:0
+MASTER_SITES= 		${MASTER_SITE_GCC:=releases/gcc-$(TOOL_V)/}
 
-WANTLIB +=		c gmp mpfr
+DISTFILES=		gcc-core-${TOOL_V}${EXTRACT_SUFX} \
+			gcc-g++-${TOOL_V}${EXTRACT_SUFX}
+
+WANTLIB +=		c gmp mpc mpfr
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		devel/msp430/binutils>=2.21
-LIB_DEPENDS=            devel/gmp>=4.2 \
-                        devel/mpfr
-
-NO_REGRESS=		Yes
+RUN_DEPENDS=		devel/msp430/binutils>=2.21.1a
+LIB_DEPENDS=            devel/libmpc
 
 LANGS=			c,c++
 
-SEPARATE_BUILD= 	concurrent
-
-SUBST_VARS+=		VERSION
+SUBST_VARS+=		TOOL_V
 
 CONFIGURE_ARGS+= 	--enable-languages=${LANGS} 	\
 			--enable-cpp			\
 			--with-gmp=${LOCALBASE}		\
-			--with-mpfr=${LOCALBASE}
+			--with-mpfr=${LOCALBASE}	\
+			--with-mpc=${LOCALBASE}		\
+			--disable-lto
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-# Move the mspgcc4 config files into place.
-post-extract:
-	cp -r ${WRKDIR}/gcc-${VERSION}-config/gcc/ ${WRKSRC}
-
 post-install:
 	chown -R ${SHAREOWN}:${SHAREGRP} \
-		${PREFIX}/lib/gcc/${TARGET}/${VERSION}/
+		${PREFIX}/lib/gcc/${TARGET}/${TOOL_V}/
 
 .include <bsd.port.mk>

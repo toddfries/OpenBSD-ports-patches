@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2011/05/10 05:17:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2012/04/06 07:26:37 ajacoutot Exp $
 
 COMMENT=		send desktop notifications to a notification daemon
 
-GNOME_VERSION=		0.7.3
+GNOME_VERSION=		0.7.5
 GNOME_PROJECT=		libnotify
+REVISION=		0
 
 CATEGORIES=		devel
 
@@ -17,23 +18,19 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += c ffi gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 m pcre png pthread z
 
 MODULES=		devel/gettext \
 			x11/gnome
 
 # gtk+3 is needed to build the tests
-BUILD_DEPENDS=		x11/gtk+3 \
-			devel/gobject-introspection
+BUILD_DEPENDS=		x11/gtk+3
 
 LIB_DEPENDS=		graphics/gdk-pixbuf2
 
+MODGNOME_TOOLS= 	goi
+
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS= 	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection
 
 .include <bsd.port.mk>

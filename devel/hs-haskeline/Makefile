@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/04/26 19:24:40 kili Exp $
+# $OpenBSD: Makefile,v 1.3 2012/09/02 20:33:23 kili Exp $
 
 COMMENT =		command-line interface for user input
 
-DISTNAME =		haskeline-0.6.4.0
+DISTNAME =		haskeline-0.6.4.7
 CATEGORIES =		devel
 
 MAINTAINER =		Matthias Kilian <kili@openbsd.org>
@@ -20,7 +20,7 @@ MODGHC_BUILD =		cabal hackage haddock register
 # Add this when utf8-string will be removed from lang/ghc:
 #			devel/hs-utf8-string>=0.3.6,<0.4
 
-RUN_DEPENDS =		devel/hs-mtl>=1.1,<2.1 \
+RUN_DEPENDS =		devel/hs-mtl>=1.1,<2.2 \
 			devel/hs-terminfo>=0.3.1.3,<0.4
 BUILD_DEPENDS =		${RUN_DEPENDS}
 

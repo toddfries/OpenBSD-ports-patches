@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.21 2011/01/14 08:13:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2012/08/05 13:47:04 naddy Exp $
 
 COMMENT=		internationalization tools
 
-V=			0.41.1
+V=			0.50.2
 DISTNAME=		intltool-${V}
 CATEGORIES=		textproc
 
@@ -22,7 +22,6 @@ BUILD_DEPENDS=		textproc/p5-XML-Parser
 
 CONFIGURE_STYLE= 	gnu
 
-USE_GROFF=		Yes
 USE_GMAKE=		Yes
 PKG_ARCH=		*
 

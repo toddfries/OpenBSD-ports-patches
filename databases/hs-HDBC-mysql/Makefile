@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2011/05/04 08:06:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2012/03/01 09:50:30 dcoppa Exp $
 
 COMMENT=		mysql driver for HDBC
 
-DISTNAME=		HDBC-mysql-0.6.4.0
+DISTNAME=		HDBC-mysql-0.6.6.0
 CATEGORIES=		databases
 
-HOMEPAGE=		http://www.maubi.net/~waterson/hacks/hdbc-mysql.html
+HOMEPAGE=		https://github.com/bos/hdbc-mysql
 
 MAINTAINER=		David Coppa <dcoppa@openbsd.org>
 
@@ -19,7 +19,7 @@ MODULES=		lang/ghc
 
 MODGHC_BUILD=		cabal hackage haddock register
 
-RUN_DEPENDS +=		databases/hs-HDBC \
+RUN_DEPENDS +=		databases/hs-HDBC>=2.1.0 \
 			databases/mysql \
 			devel/hs-mtl
 BUILD_DEPENDS +=	${RUN_DEPENDS}

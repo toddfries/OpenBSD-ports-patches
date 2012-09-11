@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2010/12/20 18:09:01 jeremy Exp $
+# $OpenBSD: Makefile,v 1.4 2011/11/17 16:08:00 jeremy Exp $
 
 COMMENT =	simple subset sum problem solver for ruby
 
 DISTNAME =	subset_sum-1.0.1
+REVISION =	1
 CATEGORIES =	devel
 
 HOMEPAGE=	http://subset-sum.rubyforge.org/
@@ -19,6 +20,6 @@ MODULES =	lang/ruby
 
 CONFIGURE_STYLE = ruby gem ext
 MODRUBY_REGRESS = rspec
-RSPEC_REGRESS_TARGET = spec/*_spec.rb
+MODRUBY_REGRESS_TARGET = spec/*_spec.rb
 
 .include <bsd.port.mk>

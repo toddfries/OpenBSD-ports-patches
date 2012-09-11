@@ -1,21 +1,21 @@
-# $OpenBSD: Makefile,v 1.58 2011/07/19 21:32:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.67 2012/08/23 15:50:05 sthen Exp $
 
 COMMENT-main=	extendable SNMP implementation
 COMMENT-perl=	SNMP modules for Perl
 COMMENT-tkmib=	graphical SNMP MIB browser
 
-V=		5.7
-DISTNAME=	net-snmp-$V
-REVISION-main=	1
-REVISION-perl=	1
-REVISION-tkmib=	0
+V=		5.7.1
 
+DISTNAME=	net-snmp-$V
 MULTI_PACKAGES=	-main -perl -tkmib
+REVISION-main=	5
+REVISION-perl=	2
+REVISION-tkmib=	0
 PKGNAME-main=	${DISTNAME}
 PKGNAME-perl=	p5-SNMP-$V
 PKGNAME-tkmib=	net-snmp-tkmib-$V
 
-LIBV=		12.0
+LIBV=		12.1
 .for i in netsnmp netsnmpagent netsnmphelpers netsnmpmibs netsnmptrapd
 SHARED_LIBS +=	$i ${LIBV}
 .endfor
@@ -34,7 +34,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main=		c crypto kvm m perl util wrap
-WANTLIB-perl=		crypto m netsnmp netsnmpagent netsnmptrapd netsnmpmibs
+WANTLIB-perl=		c crypto m netsnmp netsnmpagent netsnmptrapd netsnmpmibs
 
 LIB_DEPENDS-perl=	net/net-snmp,-main
 RUN_DEPENDS-tkmib=	net/net-snmp,-perl \
@@ -46,10 +46,9 @@ NET_SNMP_MIB_LIST=	smux mibII/mta_sendmail
 # - net-snmp default mibs (include/net-snmp/net-snmp-config.h.in)
 # - this is checked in pre-configure as we don't want it to get out of sync
 DEFAULT_MIBS=		IP-MIB:IF-MIB:TCP-MIB:UDP-MIB:SNMPv2-MIB:RFC1213-MIB
-# - base OpenBSD mibs (/usr/share/snmp/mibs)
-OPENBSD_MIBS=		OPENBSD-BASE-MIB:OPENBSD-MEM-MIB:OPENBSD-SENSORS-MIB:OPENBSD-SNMPD-CONF
+# - base OpenBSD mibs (/usr/share/snmp/mibs), SNMPD-CONF pulls in the rest
+OPENBSD_MIBS=		OPENBSD-SNMPD-CONF
 
-USE_GROFF=	Yes
 USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=  autoconf
@@ -73,6 +72,7 @@ pre-configure:
 	@if ! fgrep '#define NETSNMP_DEFAULT_MIBS "${DEFAULT_MIBS}"' \
 	    ${WRKSRC}/include/net-snmp/net-snmp-config.h.in > /dev/null; then \
 	    echo 'DEFAULT_MIBS in the port Makefile is out of sync'; exit 1; fi
+	@perl -pi -e 's,(snmpd\(8\)|snmpd\.conf\(5\)),netsnmp-\1,' ${WRKSRC}/man/*
 
 post-install:
 	@perl -pi -e 's,^(#define[ ]PACKAGE_.*)$$,/* $$1 */,' \
@@ -86,5 +86,8 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/net-snmp
 	${INSTALL_DATA} ${WRKBUILD}/EXAMPLE.conf \
 	    ${PREFIX}/share/examples/net-snmp
+.for i j in man5 snmpd.conf.5 man8 snmpd.8
+	mv ${PREFIX}/man/$i/$j ${PREFIX}/man/$i/netsnmp-$j
+.endfor
 
 .include <bsd.port.mk>

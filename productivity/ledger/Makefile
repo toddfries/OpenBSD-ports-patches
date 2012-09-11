@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2010/11/20 09:48:40 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2012/03/29 13:38:49 sthen Exp $
 
 COMMENT=	command line double-entry accounting ledger
 
 DISTNAME=	ledger-2.6.3
+REVISION=	0
 CATEGORIES=	productivity
 
 HOMEPAGE=	http://www.newartisans.com/ledger.html
@@ -19,12 +20,12 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://github.com/downloads/jwiegley/ledger/
 
-WANTLIB=	gmp>=4 m pcre stdc++
+WANTLIB=	c gmp>=4 m pcre stdc++
 
 LIB_DEPENDS=	devel/gmp \
 		devel/pcre
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 
 USE_LIBTOOL=	Yes
 

@@ -1,10 +1,12 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2010/10/24 22:29:50 landry Exp $
+@comment $OpenBSD: PLIST,v 1.3 2012/04/05 12:58:14 ajacoutot Exp $
 %%SHARED%%
 include/gexiv2/
+include/gexiv2/gexiv2-log.h
 include/gexiv2/gexiv2-managed-stream.h
 include/gexiv2/gexiv2-metadata.h
 include/gexiv2/gexiv2-preview-image.h
 include/gexiv2/gexiv2-preview-properties.h
+include/gexiv2/gexiv2-startup.h
 include/gexiv2/gexiv2.h
 lib/libgexiv2.a
 lib/libgexiv2.la

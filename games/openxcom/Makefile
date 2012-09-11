@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/07/18 10:57:01 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2012/03/05 17:57:21 nigel Exp $
 
 COMMENT =		open source reimplementation of the original X-Com
-DISTNAME =		openxcom-20110716
+DISTNAME =		openxcom-20120217
+REVISION =		0
 CATEGORIES =		games x11
 
 HOMEPAGE =		http://openxcom.ninex.info/
@@ -17,28 +18,27 @@ WANTLIB =		SDL SDL_gfx SDL_mixer c m pthread stdc++ yaml-cpp
 
 MASTER_SITES =		http://openbsd.fi/dist/
 
+MODULES =		devel/cmake
+
 RUN_DEPENDS =		audio/timidity
 LIB_DEPENDS =		devel/sdl-gfx \
 			devel/sdl-mixer \
 			devel/yaml-cpp
 
-MAKE_ENV =		CXX="${CXX}" CXXFLAGS="${CXXFLAGS}" \
-			OPENXCOMDATA="${PREFIX}/share/openxcom/DATA"
+CONFIGURE_ARGS =	-DDEV_BUILD=Off
 
-USE_GMAKE =		Yes
 NO_REGRESS =		Yes
-WRKSRC =		${WRKDIST}/src
-
-post-extract:
-	${SUBST_CMD} -c ${FILESDIR}/wrapper ${WRKDIST}/bin/wrapper
+VMEM_WARNING =		Yes
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/Makefile
+	${SUBST_CMD} ${WRKSRC}/src/Engine/CrossPlatform.cpp
 
-do-install:
-	${INSTALL_PROGRAM} ${WRKDIST}/bin/openxcom ${PREFIX}/bin/openxcom-bin
-	${INSTALL_SCRIPT} ${WRKDIST}/bin/wrapper ${PREFIX}/bin/openxcom
+post-patch:
+	find "${WRKSRC}" \( -name '*.h' -o -name '*.cpp' \) -print0 | \
+		xargs -0r perl -pi -e 's,yaml.h,yaml-cpp/yaml.h,'
+
+post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/openxcom
-	cd ${WRKDIST}/bin && find DATA | pax -rw ${PREFIX}/share/openxcom
+	cd ${WRKDIST}/bin/data && find . | pax -rw ${PREFIX}/share/openxcom
 
 .include <bsd.port.mk>

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.41 2011/06/10 11:50:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.44 2012/09/04 07:04:31 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += bruce
      SUBDIR += calcurse
+     SUBDIR += davical
      SUBDIR += deskzilla
      SUBDIR += devtodo
      SUBDIR += entomologist
@@ -16,6 +17,7 @@
      SUBDIR += impressive
      SUBDIR += ledger
      SUBDIR += osmo
+     SUBDIR += palm2ical
      SUBDIR += qhacc
      SUBDIR += radicale
      SUBDIR += rednotebook
@@ -24,7 +26,6 @@
      SUBDIR += slideml
      SUBDIR += sunbird
      SUBDIR += taskjuggler
-     SUBDIR += tasks
      SUBDIR += taskwarrior
      SUBDIR += tdl
      SUBDIR += thinkingrock

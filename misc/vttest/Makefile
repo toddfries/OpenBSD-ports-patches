@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2010/10/18 20:52:10 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/03/29 13:38:40 sthen Exp $
 
 COMMENT=	test VT100-type terminal
 
-DISTNAME=	vttest-20100528
+DISTNAME=	vttest-20110705
 CATEGORIES=	misc
 HOMEPAGE=	http://invisible-island.net/vttest/vttest.html
 
@@ -19,9 +19,8 @@ EXTRACT_SUFX=	.tgz
 
 WANTLIB=	c
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE=gnu
 MAKE_FILE=	makefile
-USE_GROFF =	Yes
 
 .include <bsd.port.mk>

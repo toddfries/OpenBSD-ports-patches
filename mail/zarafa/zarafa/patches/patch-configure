@@ -1,109 +1,117 @@
-$OpenBSD: patch-configure,v 1.16 2011/08/16 15:01:17 ajacoutot Exp $
---- configure.orig	Tue Aug  2 11:47:36 2011
-+++ configure	Sun Aug 14 04:45:51 2011
-@@ -21934,13 +21934,13 @@ fi
- 
- # Everything uses pthread
- # check lib, but do not set in link list, but use -pthread instead (gnu c/c++ only?)
--{ echo "$as_me:$LINENO: checking for pthread_create in -lpthread" >&5
--echo $ECHO_N "checking for pthread_create in -lpthread... $ECHO_C" >&6; }
-+{ echo "$as_me:$LINENO: checking for pthread_create in -pthread" >&5
-+echo $ECHO_N "checking for pthread_create in -pthread... $ECHO_C" >&6; }
- if test "${ac_cv_lib_pthread_pthread_create+set}" = set; then
-   echo $ECHO_N "(cached) $ECHO_C" >&6
- else
-   ac_check_lib_save_LIBS=$LIBS
--LIBS="-lpthread  $LIBS"
-+LIBS="-pthread  $LIBS"
- cat >conftest.$ac_ext <<_ACEOF
- /* confdefs.h.  */
- _ACEOF
-@@ -22059,7 +22059,7 @@ else
-   with_distro=rhel
- fi
- 
--if test "$with_distro" != "rhel" -a "$with_distro" != "suse" -a "$with_distro" != "sles" -a "$with_distro" != "cbs4"; then
-+if test "$with_distro" != "rhel" -a "$with_distro" != "suse" -a "$with_distro" != "sles" -a "$with_distro" != "cbs4" -a "$with_distro" != "openbsd"; then
-    { echo "$as_me:$LINENO: result: unknown distro, using rhel instead" >&5
- echo "${ECHO_T}unknown distro, using rhel instead" >&6; }
-    with_distro=rhel
-@@ -24459,7 +24459,7 @@ if test "${ac_cv_lib_intl_strftime+set}" = set; then
-   echo $ECHO_N "(cached) $ECHO_C" >&6
+$OpenBSD: patch-configure,v 1.25 2012/08/30 14:28:22 ajacoutot Exp $
+
+Our crypt(3) is in libc.
+
+--- configure.orig	Wed Aug  8 16:35:42 2012
++++ configure	Wed Aug 29 10:06:28 2012
+@@ -17292,7 +17292,7 @@ if test "${ac_cv_lib_intl_strftime+set}" = set; then :
+   $as_echo_n "(cached) " >&6
  else
    ac_check_lib_save_LIBS=$LIBS
 -LIBS="-lintl  $LIBS"
 +LIBS="-lintl -liconv $LIBS"
- cat >conftest.$ac_ext <<_ACEOF
- /* confdefs.h.  */
- _ACEOF
-@@ -24519,7 +24519,7 @@ if test $ac_cv_lib_intl_strftime = yes; then
- #define HAVE_STRFTIME 1
- _ACEOF
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -17325,7 +17325,7 @@ $as_echo "$ac_cv_lib_intl_strftime" >&6; }
+ if test "x$ac_cv_lib_intl_strftime" = x""yes; then :
+   $as_echo "#define HAVE_STRFTIME 1" >>confdefs.h
  
 -LIBS="-lintl $LIBS"
 +LIBS="-lintl -liconv $LIBS"
  fi
  
  fi
-@@ -26035,7 +26035,7 @@ if test `eval echo '${'$as_ac_Header'}'` = yes; then
- _ACEOF
+@@ -18713,74 +18713,12 @@ rm -f core conftest.err conftest.$ac_objext \
  
- 		VMIME_CFLAGS=-I$VMIME_PREFIX
--	VMIME_LIBS="$VMIME_LIBS -lvmime"
-+	VMIME_LIBS="$VMIME_LIBS -lvmime-zarafa"
+ LIBS=$LIBS_system
  
- else
- 
-@@ -27552,13 +27552,13 @@ sed 's/^/| /' conftest.$ac_ext >&5
- 	 { echo "$as_me:$LINENO: result: no" >&5
- echo "${ECHO_T}no" >&6; }
- 
--{ echo "$as_me:$LINENO: checking for crypt in -lcrypt" >&5
--echo $ECHO_N "checking for crypt in -lcrypt... $ECHO_C" >&6; }
-+{ echo "$as_me:$LINENO: checking for crypt in -lcrypto" >&5
-+echo $ECHO_N "checking for crypt in -lcrypto... $ECHO_C" >&6; }
- if test "${ac_cv_lib_crypt_crypt+set}" = set; then
-   echo $ECHO_N "(cached) $ECHO_C" >&6
- else
-   ac_check_lib_save_LIBS=$LIBS
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for crypt" >&5
+-$as_echo_n "checking for crypt... " >&6; }
+-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-/* end confdefs.h.  */
+- int main() {
+-  char crypt();  crypt();
+-}
+-_ACEOF
+-if ac_fn_cxx_try_link "$LINENO"; then :
+-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+-$as_echo "yes" >&6; }
+-else
+-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-$as_echo "no" >&6; }
+-	  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for crypt in -lcrypt" >&5
+-$as_echo_n "checking for crypt in -lcrypt... " >&6; }
+-if test "${ac_cv_lib_crypt_crypt+set}" = set; then :
+-  $as_echo_n "(cached) " >&6
+-else
+-  ac_check_lib_save_LIBS=$LIBS
 -LIBS="-lcrypt  $LIBS"
-+LIBS="-lcrypto  $LIBS"
- cat >conftest.$ac_ext <<_ACEOF
- /* confdefs.h.  */
- _ACEOF
-@@ -27618,7 +27618,7 @@ if test $ac_cv_lib_crypt_crypt = yes; then
+-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-/* end confdefs.h.  */
+-
+-/* Override any GCC internal prototype to avoid an error.
+-   Use char because int might match the return type of a GCC
+-   builtin and then its argument prototype would still apply.  */
+-#ifdef __cplusplus
+-extern "C"
+-#endif
+-char crypt ();
+-int
+-main ()
+-{
+-return crypt ();
+-  ;
+-  return 0;
+-}
+-_ACEOF
+-if ac_fn_cxx_try_link "$LINENO"; then :
+-  ac_cv_lib_crypt_crypt=yes
+-else
+-  ac_cv_lib_crypt_crypt=no
+-fi
+-rm -f core conftest.err conftest.$ac_objext \
+-    conftest$ac_exeext conftest.$ac_ext
+-LIBS=$ac_check_lib_save_LIBS
+-fi
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_crypt_crypt" >&5
+-$as_echo "$ac_cv_lib_crypt_crypt" >&6; }
+-if test "x$ac_cv_lib_crypt_crypt" = x""yes; then :
+   cat >>confdefs.h <<_ACEOF
  #define HAVE_LIBCRYPT 1
  _ACEOF
  
 -  LIBS="-lcrypt $LIBS"
-+  LIBS="-lcrypto $LIBS"
  
- else
-   { { echo "$as_me:$LINENO: error: required library libcrypt missing or unusable" >&5
-@@ -27712,7 +27712,7 @@ if test "${ac_cv_lib_ssl_SSL_accept+set}" = set; then
-   echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  as_fn_error $? "required library libcrypt missing or unusable" "$LINENO" 5
+-fi
+ 
+-fi
+-rm -f core conftest.err conftest.$ac_objext \
+-    conftest$ac_exeext conftest.$ac_ext
+-CRYPT_LIBS=$LIBS
+-LIBS=$LIBS_system
+-
+-
+ # Only specific links with uuid and dl, clients only with crypto and ssl for ssl connections
+ SSL_LIBS=
+ # TODO: version of ssl check??
+@@ -18791,7 +18729,7 @@ if test "${ac_cv_lib_ssl_SSL_accept+set}" = set; then 
+   $as_echo_n "(cached) " >&6
  else
    ac_check_lib_save_LIBS=$LIBS
 -LIBS="-lssl  $LIBS"
 +LIBS="-lssl -lcrypto $LIBS"
- cat >conftest.$ac_ext <<_ACEOF
- /* confdefs.h.  */
- _ACEOF
-@@ -28819,7 +28819,7 @@ if test "${ac_cv_lib_intl_gettext+set}" = set; then
-   echo $ECHO_N "(cached) $ECHO_C" >&6
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -19298,7 +19236,7 @@ if test "${ac_cv_lib_intl_gettext+set}" = set; then :
+   $as_echo_n "(cached) " >&6
  else
    ac_check_lib_save_LIBS=$LIBS
 -LIBS="-lintl  $LIBS"
 +LIBS="-lintl -liconv $LIBS"
- cat >conftest.$ac_ext <<_ACEOF
- /* confdefs.h.  */
- _ACEOF
-@@ -28875,7 +28875,7 @@ fi
- { echo "$as_me:$LINENO: result: $ac_cv_lib_intl_gettext" >&5
- echo "${ECHO_T}$ac_cv_lib_intl_gettext" >&6; }
- if test $ac_cv_lib_intl_gettext = yes; then
--  INTL_LIBS="-lintl"
-+  INTL_LIBS="-lintl -liconv"
- else
-       { { echo "$as_me:$LINENO: error: required library libintl missing or unusable" >&5
- echo "$as_me: error: required library libintl missing or unusable" >&2;}
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 

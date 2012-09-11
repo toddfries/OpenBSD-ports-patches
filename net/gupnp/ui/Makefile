@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/05 17:14:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2011/09/20 20:51:52 jasper Exp $
 
 COMMENT=		collection of GTK+ widgets on top of GUPnp
 
@@ -7,6 +7,8 @@ GNOME_VERSION=		0.1.1
 REVISION=		0
 
 SHARED_LIBS +=  gupnp-ui-1.0         0.0      # 0.0
+
+EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -20,8 +22,6 @@ WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs soup-2.4
 WANTLIB += xcb xcb-render xcb-shm xml2 z
 
 LIB_DEPENDS=		net/gupnp/core
-
-CONFIGURE_ARGS+=	--disable-gtk-doc
 
 REGRESS_IS_INTERACTIVE=x11
 

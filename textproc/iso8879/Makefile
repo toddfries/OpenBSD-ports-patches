@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.20 2007/09/15 20:59:38 merdely Exp $
-# $FreeBSD: Makefile,v 1.4 1997/07/10 03:25:28 jfieber Exp $
+# $OpenBSD: Makefile,v 1.22 2012/08/18 12:41:39 ajacoutot Exp $
 
 COMMENT=	character entity sets from ISO 8879:1986 (SGML)
 
 DISTNAME=	isoENTS
 PKGNAME=	iso8879-1986
+REVISION=	0
 CATEGORIES=	textproc
 
 MASTER_SITES=	http://fallout.campusview.indiana.edu/ports/distfiles/

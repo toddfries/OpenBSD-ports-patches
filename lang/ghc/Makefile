@@ -1,17 +1,21 @@
-# $OpenBSD: Makefile,v 1.58 2011/08/24 18:31:39 kili Exp $
+# $OpenBSD: Makefile,v 1.75 2012/09/02 23:01:29 kili Exp $
 
 COMMENT-main =		compiler for the functional language Haskell
 COMMENT-doc =		documentation for GHC
 
 DISTNAME =		ghc-${MODGHC_VER}
 PKGNAME-main =		ghc-${MODGHC_VER}
-REVISION-main =		0
 PKGNAME-doc =		ghc-doc-${MODGHC_VER}
 CATEGORIES =		lang devel
 HOMEPAGE =		http://www.haskell.org/ghc/
 
 # Version of the precompiled binaries
-BIN_VER =		6.12.3.20101121
+BIN_VER =		7.0.4.20120626
+
+# xhtml replacement version (for meta/haskell-platform)
+XHTML_VER =		3000.2.1
+
+SUBST_VARS +=		XHTML_VER
 
 # Pull in lang/ghc to get MODGHC_VER and ONLY_FOR_ARCHS, which is maintained
 # in ghc.port.mk. lang/python needed for regress.
@@ -44,15 +48,18 @@ WANTLIB-doc =
 MASTER_SITES =		${HOMEPAGE}dist/${MODGHC_VER}/ \
 			${HOMEPAGE}dist/stable/dist/
 MASTER_SITES0 =		http://openbsd.dead-parrot.de/distfiles/
+MASTER_SITES1 =		http://hackage.haskell.org/packages/archive/xhtml/${XHTML_VER}/
 
 DIST_SUBDIR =		ghc
 
+# Haddock needs about 2.5 GB for processing the ghc library.
 VMEM_WARNING =		Yes
 
 BINDISTFILE =		${BINDISTFILE-${MACHINE_ARCH}}
 
 DISTFILES =		ghc-${MODGHC_VER}-src.tar.bz2 \
-			testsuite-${MODGHC_VER}.tar.bz2 \
+			ghc-${MODGHC_VER}-testsuite.tar.bz2 \
+			xhtml-${XHTML_VER}.tar.gz:1 \
 			${BINDISTFILE}
 
 .for m in amd64 i386
@@ -68,15 +75,26 @@ CONFIGURE_ARGS +=	--with-gmp-includes=${LOCALBASE}/include \
 			--with-gmp-libraries=${LOCALBASE}/lib \
 			--with-iconv-includes=${LOCALBASE}/include \
 			--with-iconv-libraries=${LOCALBASE}/lib
+CONFIGURE_ENV =		CONF_CC_OPTS_STAGE0="-fno-pie -nopie" \
+			CONF_CC_OPTS_STAGE1="-fno-pie -nopie" \
+			CONF_CC_OPTS_STAGE2="-fno-pie -nopie" \
+			CONF_GCC_LINKER_OPTS_STAGE0="-fno-pie -nopie" \
+			CONF_GCC_LINKER_OPTS_STAGE1="-fno-pie -nopie" \
+			CONF_GCC_LINKER_OPTS_STAGE2="-fno-pie -nopie" \
+			CONF_GCC_LD_OPTS_STAGE0="-nopie" \
+			CONF_GCC_LD_OPTS_STAGE1="-nopie" \
+			CONF_GCC_LD_OPTS_STAGE2="-nopie"
 
 MAKE_FLAGS +=		StripLibraries=YES \
 			INSTALL_BIN_OPTS=-s \
 			HSCOLOUR_SRCS=NO
 
 # Thank god that they're only building compilers and no nuclear
-# power plants.
-FAKE_FLAGS +=		CREATE_DATA="${INSTALL_DATA} /dev/null " \
-			CREATE_SCRIPT="${INSTALL_SCRIPT} /dev/null " \
+# power plants. Note that we do not override CREATE_DATA, because
+# it's now used for *changing* permissions instead of initially
+# creating the files, and because we remove them anyway in post-install
+# (they are re-created during pkg_add).
+FAKE_FLAGS +=		CREATE_SCRIPT="${INSTALL_SCRIPT} /dev/null " \
 			INSTALL_DATA="${INSTALL_DATA} \$$1 \$$2 \$$3" \
 			INSTALL_DIR="${INSTALL_DATA_DIR} \$$1" \
 			INSTALL_DOC="${INSTALL_DATA} \$$1 \$$2 \$$3" \
@@ -89,8 +107,6 @@ FAKE_FLAGS +=		CREATE_DATA="${INSTALL_DATA} /dev/null " \
 # For mktexpk (via dvips when building the PostScript documentation):
 PORTHOME =		${WRKDIR}
 
-BUILD_DEPENDS +=	devel/haddock,no_deps:patch
-
 REGRESS_DEPENDS =	print/ghostscript/gnu
 
 post-extract:
@@ -99,12 +115,13 @@ post-extract:
 	./configure --prefix=${WRKDIR} && \
 	${MAKE_PROGRAM} install
 	rm -rf ${WRKDIR}/ghc-${BIN_VER}
-# - Replace utils/haddock by the version from the ports tree.
-	mv ${WRKSRC}/utils/haddock{,-ghcdist}
-	mv ${WRKDIR}/devel/haddock/haddock-* ${WRKSRC}/utils/haddock
-. for f in ghc.mk doc/ghc.mk haddock.wrapper
-	cp -p ${WRKSRC}/utils/haddock{-ghcdist,}/$f
-. endfor
+# - Replace libraries/xhtml.
+	cp ${WRKSRC}/libraries/xhtml/ghc.mk ${WRKDIR}/xhtml-${XHTML_VER} 
+	cp ${WRKSRC}/libraries/xhtml/GNUmakefile ${WRKDIR}/xhtml-${XHTML_VER} 
+	mv ${WRKSRC}/libraries/xhtml{,-ghcdist}
+	mv ${WRKDIR}/xhtml-${XHTML_VER} ${WRKSRC}/libraries/xhtml
+	perl -pi -e 's/(\S+ \S+)/\1 -optl -nopie/ if /^exec /' \
+		${WRKDIR}/bin/ghc
 
 post-patch:
 	${SUBST_CMD} ${WRKSRC}/docs/index.html
@@ -135,7 +152,7 @@ post-install:
 
 do-regress:
 	ulimit -c 0 && \
-	cd ${WRKSRC}/testsuite/tests/ghc-regress && \
+	cd ${WRKSRC}/testsuite/tests && \
 	exec ${SETENV} ${MAKE_ENV} HS_ENCODING=utf-8 \
 		${MAKE_PROGRAM} ${MAKE_FLAGS} \
 		PYTHON="${MODPY_BIN}"
@@ -145,13 +162,17 @@ do-regress:
 # It doesn't matter wether this is the actual date of the bootstrapper
 # build. It's just used to get different distfiles whenever new
 # bootstrappers have to be built.
-BOOTSTRAP_DATE =	20110824
+BOOTSTRAP_DATE =	20120626
 
 # Create a bootstrapper. This compiles a stripped-down version of
 # ghc and creates a `bindist', i.e. a tarball with binaries that
 # can be used for bootstrapping.
 # You have to install gtar in order to run this target!
 bootstrap: patch
+	@if [ ! -x ${LOCALBASE}/bin/gtar ]; then \
+		echo Please pkg_add gtar.; \
+		false; \
+	fi
 	cd ${WRKDIR} && rm -rf bin
 
 	echo HSCOLOUR_SRCS=NO > ${WRKSRC}/mk/build.mk

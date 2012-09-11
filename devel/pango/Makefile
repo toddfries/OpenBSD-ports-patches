@@ -1,17 +1,20 @@
-# $OpenBSD: Makefile,v 1.56 2011/06/20 18:09:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.65 2012/09/01 14:36:57 ajacoutot Exp $
+
+SHARED_ONLY=		Yes
 
 COMMENT=		library for layout and rendering of text
 
-V=			1.28.4
-DISTNAME=		pango-${V}
+GNOME_VERSION=		1.30.1
+GNOME_PROJECT=		pango
+REVISION=	0
 
-REVISION=		2
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  pango-1.0            1802.0   # .2800.0
-SHARED_LIBS +=  pangox-1.0           1802.0   # .2800.0
-SHARED_LIBS +=  pangoft2-1.0         1802.0   # .2800.0
-SHARED_LIBS +=  pangoxft-1.0         1802.0   # .2800.0
-SHARED_LIBS +=  pangocairo-1.0       1802.0   # .2800.0
+SHARED_LIBS +=  pango-1.0            2905.0   # 2905.0
+SHARED_LIBS +=  pangox-1.0           2905.0   # 2905.0
+SHARED_LIBS +=  pangoft2-1.0         2905.0   # 2905.0
+SHARED_LIBS +=  pangoxft-1.0         2905.0   # 2905.0
+SHARED_LIBS +=  pangocairo-1.0       2905.0   # 2905.0
 
 CATEGORIES=		devel x11
 
@@ -23,33 +26,30 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	X11 Xau Xdmcp Xft Xrender c expat fontconfig freetype \
-		m pcre pixman-1 png pthread pthread-stubs xcb \
-		xcb-render GL Xdamage Xext Xfixes Xxf86vm drm xcb-shm z \
-		glib-2.0>=1800 gmodule-2.0>=1800 gobject-2.0>=1800 \
-		gthread-2.0>=1800 cairo>=9
+WANTLIB += GL X11 Xau Xdamage Xdmcp Xext Xfixes Xft Xrender Xxf86vm
+WANTLIB += c cairo drm expat ffi fontconfig freetype glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 m pcre pixman-1
+WANTLIB += png pthread pthread-stubs stdc++ xcb xcb-render xcb-shm
+WANTLIB += z
 
-MASTER_SITES=		${MASTER_SITE_GNOME:=sources/pango/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
-EXTRACT_SUFX=		.tar.bz2
+MODULES=		devel/gettext \
+			x11/gnome
 
-MODULES=		devel/gettext
+MODGNOME_TOOLS=		goi
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 
-BUILD_DEPENDS=		devel/gobject-introspection
-
-LIB_DEPENDS=		devel/glib2 \
+LIB_DEPENDS=		devel/glib2>=2.31.20 \
 			graphics/cairo
 
-USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
-USE_GROFF =		Yes
+LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-introspection
-CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include"
+			--disable-static
 
-FAKE_FLAGS=		aliasdir=${PREFIX}/share/examples/pango \
-			sysconfdir=${PREFIX}/share/examples
+FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples
+
+post-install:
+	rm ${PREFIX}/lib/pango/1.6.0/modules/*.la
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/06/02 13:41:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2011/12/02 08:29:45 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,12 +6,10 @@ COMMENT=		NetBeans Java IDE
 
 V=			6.9.1
 DISTNAME=		netbeans-${V}
-CATEGORIES=		java devel
-REVISION=		1
+CATEGORIES=		devel
+REVISION=		4
 
 HOMEPAGE=		http://www.netbeans.org/
-
-MAINTAINER=		Daniel Dickman <didickman@gmail.com>
 
 # CDDL and GPLv2 dual-licensed
 #

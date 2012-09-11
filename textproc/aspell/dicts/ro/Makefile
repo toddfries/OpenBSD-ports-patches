@@ -1,10 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/20 19:56:47 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/01/17 11:02:25 ajacoutot Exp $
 
 COMMENT=	aspell dictionary for Romanian
 CATEGORIES=	textproc
-DISTNAME=	aspell-ro-0.50-2
-PKGNAME=	${DISTNAME:C/-([0-9])$/_\1/}
-REVISION =	1
+DISTNAME=	aspell5-ro-3.3-2
 MASTER_SITES=	${MASTER_SITE_GNU:=aspell/dict/ro/}
 
 .include <bsd.port.mk>

@@ -1,13 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2011/05/14 21:29:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2012/09/01 14:36:57 ajacoutot Exp $
 
 COMMENT=	simple scanning utility
 
 GNOME_PROJECT=	simple-scan
-GNOME_VERSION=	2.32.0.2
-
-REVISION=	0
-
-EXTRACT_SUFX=	.tar.gz
+GNOME_VERSION=	3.4.2
+REVISION=	3
 
 CATEGORIES=	graphics
 
@@ -21,34 +18,29 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo dbus-1
-WANTLIB += expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pixman-1 png pthread pthread-stubs xcb z
-WANTLIB += xcb-render GL Xxf86vm dbus-glib-1 drm jpeg xcb-shm
-WANTLIB += sane>=2
+WANTLIB += GL X11 Xrender atk-1.0 c cairo cairo-gobject colord
+WANTLIB += expat fontconfig freetype gdk-3 gdk_pixbuf-2.0 gio-2.0
+WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 gtk-3
+WANTLIB += jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
+WANTLIB += png pthread pthread-stubs sane xcb xcb-render xcb-shm
+WANTLIB += z
 
-#MASTER_SITES=	http://people.ubuntu.com/~robert-ancell/simple-scan/
+MASTER_SITES=	https://launchpad.net/simple-scan/${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/${GNOME_VERSION}/+download/
+EXTRACT_SUFX=	.tar.gz
 
 MODULES=	devel/gettext \
 		x11/gnome \
-		devel/gconf2
+		devel/dconf
 
 LIB_DEPENDS=	graphics/sane-backends \
-		x11/gtk+2
+		x11/gtk+3 \
+		graphics/colord
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES= Yes
-MODGCONF2_SCHEMAS_DIR= simple-scan
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS= 	yelp
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURED_SHARED}
 
 .include <bsd.port.mk>

@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.19 2011/06/23 22:50:28 naddy Exp $
+# $OpenBSD: Makefile,v 1.22 2012/02/17 14:21:17 ajacoutot Exp $
 
 COMMENT=		DNS relay for ad blocking
 
-DISTNAME=		adsuck-2.3
+DISTNAME=		adsuck-2.4.2
 CATEGORIES=		net
-REVISION=		0
 
 HOMEPAGE=		http://opensource.conformal.com/wiki/Adsuck
 MAINTAINER=		Gonzalo L. R. <gonzalo@x61.com.ar>
@@ -24,8 +23,9 @@ LIB_DEPENDS=	net/ldns/libldns>=1.6.5
 
 MAKE_FLAGS=	BINDIR="${TRUEPREFIX}/sbin" \
 		MANDIR="${TRUEPREFIX}/man/man"
-_files= Hosts.blc Hosts.rsk regex \
-	Hosts.pub Hosts.trc hosts.small resolv.conf
+
+_files= Hosts.blc Hosts.mis Hosts.pub Hosts.rsk Hosts.sex \
+	Hosts.trc hosts.small hosts.yoyo regex resolv.conf
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/dhclient-adsuck
@@ -36,6 +36,7 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/adsuck
 	${INSTALL_DATA} ${WRKSRC}/files/README ${PREFIX}/share/doc/adsuck
 	${INSTALL_SCRIPT} ${WRKSRC}/dhclient-adsuck ${PREFIX}/sbin
+
 .for _f in ${_files}
 	${INSTALL_DATA} ${WRKSRC}/files/${_f} ${PREFIX}/share/examples/adsuck
 .endfor

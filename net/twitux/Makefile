@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.16 2011/04/21 07:05:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2012/06/15 08:32:17 ajacoutot Exp $
 
 COMMENT=		Gtk-based GUI client for Twitter
 
 GNOME_PROJECT=		twitux
 GNOME_VERSION=		0.69
-REVISION=		8
+REVISION=		4
+EPOCH=			0
 
 CATEGORIES=     	net
 
@@ -19,7 +20,7 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=twitux/}
 EXTRACT_SUFX=	.tar.bz2
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
 WANTLIB += c cairo canberra canberra-gtk dbus-1 dbus-glib-1 drm
 WANTLIB += enchant expat fontconfig freetype gcrypt gdk-x11-2.0
@@ -45,16 +46,14 @@ MODULES=	devel/gconf2 \
 
 MODGCONF2_SCHEMAS_DIR=	twitux
 
-MODGNOME_HELP_FILES=	Yes
+MODGNOME_TOOLS= 	yelp
+MODGNOME_ICON_CACHE=	Yes
 
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-dbus=yes \
+CONFIGURE_ARGS=	--enable-dbus=yes \
 		--enable-gnome-keyring=yes \
 		--enable-spell=yes
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 .include <bsd.port.mk>

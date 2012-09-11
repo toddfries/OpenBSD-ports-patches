@@ -1,13 +1,15 @@
-# $OpenBSD: Makefile,v 1.11 2011/08/24 06:19:51 landry Exp $
+# $OpenBSD: Makefile,v 1.26 2012/09/01 14:35:06 landry Exp $
 
 COMMENT =	Mozilla mobile web browser
 
-MOZILLA_VERSION =	6.0
-MOZILLA_BRANCH =	release
+MOZILLA_VERSION =	10.0.5esr
+MOZILLA_BRANCH =	esr10
 MOZILLA_PROJECT =	fennec
 MOZILLA_CODENAME =	mobile
+PKGNAME =	${MOZILLA_PROJECT}-${MOZILLA_VERSION:S/esr//}
+REVISION =	0
 
-SO_VERSION =	2.0
+SO_VERSION =	6.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 MOZILLA_LIBS =	mozalloc xpcom xul
@@ -21,6 +23,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES =	http://releases.mozilla.org/pub/mozilla.org/mobile/releases/${MOZILLA_VERSION}/source/ \
+		https://ftp.mozilla.org/pub/mozilla.org/mobile/releases/${MOZILLA_VERSION}/source/ \
 		ftp://ftp.mozilla.org/pub/mozilla.org/mobile/releases/${MOZILLA_VERSION}/source/
 HOMEPAGE =	http://www.mozilla.com/en-US/mobile/
 
@@ -29,12 +32,12 @@ MODULES =	www/mozilla devel/gettext lang/python
 
 MODPY_RUNDEP =	No
 
-USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
 NO_REGRESS =	Yes
 
 CONFIGURE_STYLE =	autoconf no-autoheader
 CONFIGURE_ARGS +=	--enable-official-branding
+CONFIGURE_ARGS +=	--disable-gconf
 CONFIGURE_ARGS +=	--with-system-libevent=/usr/
 CONFIGURE_ARGS +=	--with-system-zlib=/usr/ --with-system-bz2=${LOCALBASE}
 WANTLIB +=	event

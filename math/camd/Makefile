@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/19 07:23:10 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/09/01 12:02:27 naddy Exp $
 
 COMMENT=	constrained approximate minimum degree 
 
 VERSION=	2.2.1
 DISTNAME=	CAMD-${VERSION}
 PKGNAME=	${DISTNAME:L}
-REVISION=	0
+REVISION=	1
 SHARED_LIBS=	camd	0.0
 
 CATEGORIES=	math
@@ -33,13 +33,6 @@ FAKE_FLAGS=	LIBDIR=${LOCALBASE}/lib DEBUGLIBS=no
 CFLAGS+=	-I${WRKDIST}/Include -I${LOCALBASE}/include
 
 CSRC=	aat 1 2 dump postorder defaults order control info valid preprocess
-
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=	-Dno_mips64=0
-.else
-PKG_ARGS+=	-Dno_mips64=1
-.endif
 
 pre-configure:
 	@echo "#define DINT 1"  > ${WRKSRC}/di.c

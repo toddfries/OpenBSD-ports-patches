@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2011/03/05 11:33:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2012/08/23 15:05:15 sthen Exp $
 
 SHARED_ONLY =	Yes
 COMMENT =	perl interface to libev
 
 MODULES =	cpan
 DISTNAME =	EV-3.9
-REVISION =	0
+REVISION =	2
 CATEGORIES =	devel 
 CPAN_AUTHOR =	MLEHMANN
 
@@ -15,9 +15,9 @@ PERMIT_DISTFILES_FTP =	Yes
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 
-WANTLIB =		pthread
-BUILD_DEPENDS =		devel/libev
-RUN_DEPENDS =		${BUILD_DEPENDS}
+WANTLIB =		c pthread
+BUILD_DEPENDS =		${RUN_DEPENDS}
+RUN_DEPENDS =		devel/libev
 REGRESS_DEPENDS =	devel/p5-common-sense
 
 .include <bsd.port.mk>

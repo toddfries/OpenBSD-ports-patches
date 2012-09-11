@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2011/03/02 14:03:16 shadchin Exp $
+# $OpenBSD: Makefile,v 1.7 2012/05/10 11:14:13 edd Exp $
 
 COMMENT =		wxWidgets GUI for the computer algebra system maxima
 
-DISTNAME =		wxMaxima-0.8.7
+DISTNAME =		wxMaxima-12.04.0
 CATEGORIES =		math
 
 HOMEPAGE =		http://wxmaxima.sourceforge.net/
@@ -14,6 +14,7 @@ PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=wxmaxima/}
+MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
 WANTLIB += c m pthread stdc++ wx_base wx_base_net wx_base_xml
 WANTLIB += wx_gtk2_adv wx_gtk2_aui wx_gtk2_core wx_gtk2_html

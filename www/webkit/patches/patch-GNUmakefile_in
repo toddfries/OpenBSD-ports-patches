@@ -1,80 +1,82 @@
-$OpenBSD: patch-GNUmakefile_in,v 1.13 2011/07/11 12:08:24 jasper Exp $
-install GtkLauncher, remove silent build lines, fix lpthread/pthread
---- GNUmakefile.in.orig	Fri Jul  1 01:08:07 2011
-+++ GNUmakefile.in	Fri Jul  1 09:26:33 2011
-@@ -78,9 +78,9 @@ POST_UNINSTALL = :
- build_triplet = @build@
- host_triplet = @host@
- bin_PROGRAMS = Programs/jsc-@WEBKITGTK_API_MAJOR_VERSION@$(EXEEXT) \
--	$(am__EXEEXT_1)
-+	$(am__EXEEXT_1) Programs/GtkLauncher$(EXEEXT)
- noinst_PROGRAMS = Programs/jsc$(EXEEXT) Programs/minidom$(EXEEXT) \
--	$(am__EXEEXT_4)
-+	$(am__EXEEXT_4) Programs/GtkLauncher$(EXEEXT)
- 
- # For the Gtk port we want to use XP_UNIX both in X11 and Mac
- @TARGET_WIN32_FALSE@am__append_1 = \
-@@ -15090,7 +15090,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES
+$OpenBSD: patch-GNUmakefile_in,v 1.19 2012/08/22 07:48:37 landry Exp $
+
+- install GtkLauncher, remove silent build lines
+- install gtk-doc in a versionned dir to avoid conflicts
+- dont rebase doc, python process fails
+- append extra cflags for sparc64 which otherwise result in overoptimization
+  by emitting a fdtox %r8, %r7 call, whose second operand isn't even and thus invalid.
+(on Source/JavaScriptCore/runtime/NumberPrototype.cpp)
+--- GNUmakefile.in.orig	Mon Aug 20 22:37:15 2012
++++ GNUmakefile.in	Tue Aug 21 09:40:46 2012
+@@ -11414,7 +11414,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES
  	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
- AM_V_CC = $(am__v_CC_$(V))
- am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+ AM_V_CC = $(am__v_CC_@AM_V@)
+ am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
 -am__v_CC_0 = @echo "  CC    " $@;
 +am__v_CC_0 =
- AM_V_at = $(am__v_at_$(V))
- am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+ AM_V_at = $(am__v_at_@AM_V@)
+ am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
  am__v_at_0 = @
-@@ -15100,22 +15100,22 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAG
+@@ -11424,22 +11424,22 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAG
  	$(AM_LDFLAGS) $(LDFLAGS) -o $@
- AM_V_CCLD = $(am__v_CCLD_$(V))
- am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 -am__v_CCLD_0 = @echo "  CCLD  " $@;
 +am__v_CCLD_0 =
  CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
  	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
- AM_V_CXX = $(am__v_CXX_$(V))
- am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))
+ AM_V_CXX = $(am__v_CXX_@AM_V@)
+ am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
 -am__v_CXX_0 = @echo "  CXX   " $@;
 +am__v_CXX_0 =
  CXXLD = $(CXX)
  CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
  	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
  	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
- AM_V_CXXLD = $(am__v_CXXLD_$(V))
- am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
+ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
+ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 -am__v_CXXLD_0 = @echo "  CXXLD " $@;
 +am__v_CXXLD_0 =
- AM_V_GEN = $(am__v_GEN_$(V))
- am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+ AM_V_GEN = $(am__v_GEN_@AM_V@)
+ am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 -am__v_GEN_0 = @echo "  GEN   " $@;
 +am__v_GEN_0 =
- SOURCES = $(TestNetscapePlugin_libtestnetscapeplugin_la_SOURCES) \
- 	$(libJavaScriptCore_la_SOURCES) \
- 	$(nodist_libJavaScriptCore_la_SOURCES) \
-@@ -20137,9 +20137,10 @@ libJavaScriptCore_la_SOURCES = \
+ SOURCES = $(Libraries_libTestRunnerInjectedBundle_la_SOURCES) \
+ 	$(nodist_Libraries_libTestRunnerInjectedBundle_la_SOURCES) \
+ 	$(Libraries_libWebKit2APITestCore_la_SOURCES) \
+@@ -11838,7 +11838,7 @@ pkgconfigdir := $(libdir)/pkgconfig
+ libwebkitgtkincludedir := $(prefix)/include/webkitgtk-@WEBKITGTK_API_VERSION@
  
- libJavaScriptCore_la_LIBADD = \
- 	$(UNICODE_LIBS) \
--	$(GLIB_LIBS) \
--	-lpthread
-+	$(GLIB_LIBS)
+ # Libraries and support components
+-bin_PROGRAMS := Programs/jsc-@WEBKITGTK_API_MAJOR_VERSION@$(EXEEXT)
++bin_PROGRAMS := Programs/jsc-@WEBKITGTK_API_MAJOR_VERSION@$(EXEEXT) Programs/GtkLauncher$(EXEEXT)
+ noinst_HEADERS := 
  
-+libJavaScriptCore_la_LDFLAGS = -pthread
-+
- libJavaScriptCore_la_CXXFLAGS = \
- 	$(global_cxxflags) \
- 	$(libJavaScriptCore_la_CFLAGS)
-@@ -21245,12 +21246,13 @@ dist_webresources_DATA = \
- @ENABLE_WEBKIT2_FALSE@	$(XT_CFLAGS)
+ # We have a different library with only the files that require GTK+. It allows us
+@@ -62651,7 +62653,7 @@ Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WE
+ @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_CPPFLAGS) $(CPPFLAGS) $(libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_CXXFLAGS) $(CXXFLAGS) -c -o Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberObject.lo `test -f 'Source/JavaScriptCore/runtime/NumberObject.cpp' || echo '$(srcdir)/'`Source/JavaScriptCore/runtime/NumberObject.cpp
  
- @ENABLE_WEBKIT2_FALSE@libwebkitgtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_LDFLAGS = \
-+@ENABLE_WEBKIT2_FALSE@	-pthread \
- @ENABLE_WEBKIT2_FALSE@	-version-info @LIBWEBKITGTK_VERSION@ \
- @ENABLE_WEBKIT2_FALSE@	$(version_script) \
- @ENABLE_WEBKIT2_FALSE@	$(no_undefined)
+ Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.lo: Source/JavaScriptCore/runtime/NumberPrototype.cpp
+-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_CPPFLAGS) $(CPPFLAGS) $(libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_CXXFLAGS) $(CXXFLAGS) -MT Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.lo -MD -MP -MF Source/JavaScriptCore/runtime/$(DEPDIR)/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.Tpo -c -o Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.lo `test -f 'Source/JavaScriptCore/runtime/NumberPrototype.cpp' || echo '$(srcdir)/'`Source/JavaScriptCore/runtime/NumberPrototype.cpp
++@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_CPPFLAGS) $(CPPFLAGS) $(libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_CXXFLAGS) $(CXXFLAGS) $(EXTRA_FLAGS) -MT Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.lo -MD -MP -MF Source/JavaScriptCore/runtime/$(DEPDIR)/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.Tpo -c -o Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.lo `test -f 'Source/JavaScriptCore/runtime/NumberPrototype.cpp' || echo '$(srcdir)/'`Source/JavaScriptCore/runtime/NumberPrototype.cpp
+ @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) Source/JavaScriptCore/runtime/$(DEPDIR)/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.Tpo Source/JavaScriptCore/runtime/$(DEPDIR)/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.Plo
+ @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Source/JavaScriptCore/runtime/NumberPrototype.cpp' object='Source/JavaScriptCore/runtime/libjavascriptcoregtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la-NumberPrototype.lo' libtool=yes @AMDEPBACKSLASH@
+ @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@@ -70538,7 +70540,7 @@ install-data-local:
+ 	  if test -n "$(DOC_MODULE_VERSION)"; then \
+ 	    installdir="$(DESTDIR)$(HTML_DIR)/webkitgtk-$(DOC_MODULE_VERSION)"; \
+ 	  else \
+-	    installdir="$(DESTDIR)$(HTML_DIR)/webkitgtk"; \
++	    installdir="$(DESTDIR)$(HTML_DIR)/webkitgtk-$(WEBKITGTK_API_VERSION)"; \
+ 	  fi; \
+ 	  $(mkinstalldirs) $${installdir} ; \
+ 	  for i in $$installfiles; do \
+@@ -70570,7 +70572,7 @@ install-data-local:
+ @ENABLE_WEBKIT2_TRUE@	      $${installdir}/webkit2gtk-$(DOC_MODULE_VERSION).devhelp2; \
+ @ENABLE_WEBKIT2_TRUE@	  fi; \
+ @ENABLE_WEBKIT2_TRUE@	fi
+-	@$(AM_V_GEN)$(PYTHON) $(srcdir)/Tools/gtk/generate-gtkdoc --rebase --virtual-root=$${DESTDIR}
++@ENABLE_GTK_DOC_TRUE@	@$(AM_V_GEN)$(PYTHON) $(srcdir)/Tools/gtk/generate-gtkdoc --rebase --virtual-root=$${DESTDIR}
  
- @ENABLE_WEBKIT2_FALSE@libwebkitgtk_@WEBKITGTK_API_MAJOR_VERSION@_@WEBKITGTK_API_MINOR_VERSION@_la_LIBADD = \
--@ENABLE_WEBKIT2_FALSE@	-lpthread \
-+@ENABLE_WEBKIT2_FALSE@	-pthread \
- @ENABLE_WEBKIT2_FALSE@	libWebCore.la \
- @ENABLE_WEBKIT2_FALSE@	libJavaScriptCore.la \
- @ENABLE_WEBKIT2_FALSE@	$(webcore_ldflags) \
+ uninstall-local:
+ 	@DOC_MODULE_VERSION=`cat ./Documentation/webkitgtk/version.xml`; \

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Core.pm,v 1.9 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Core.pm,v 1.13 2012/07/08 09:59:31 jasper Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -106,10 +106,23 @@ sub is_alive
 	return 1;
 }
 
+sub shellclass
+{
+	"DPB::Shell::Abstract"
+}
+
+sub shell
+{
+	my $self = shift;
+	return $self->{shell};
+}
+
 sub new
 {
 	my ($class, $host, $prop) = @_;
-	bless {host => DPB::Host->new($host, $prop)}, $class;
+	my $c = bless {host => DPB::Host->new($host, $prop)}, $class;
+	$c->{shell} = $class->shellclass->new($c->host);
+	return $c;
 }
 
 sub host
@@ -146,6 +159,22 @@ sub hostname
 {
 	my $self = shift;
 	return $self->host->name;
+}
+
+sub lockname
+{
+	my $self = shift;
+	return "host:".$self->hostname;
+}
+
+sub logname
+{
+	&hostname;
+}
+
+sub print_parent
+{
+	# Nothing to do
 }
 
 sub fullhostname
@@ -337,13 +366,7 @@ our @ISA = qw(DPB::Task::Pipe);
 sub run
 {
 	my ($self, $core) = @_;
-	my $shell = $core->{shell};
-	my $sysctl = OpenBSD::Paths->sysctl;
-	if (defined  $shell) {
-		$shell->run("$sysctl -n hw.ncpu");
-	} else {
-		exec{$sysctl} ($sysctl, '-n', 'hw.ncpu');
-	}
+	$core->shell->exec(OpenBSD::Paths->sysctl, '-n', 'hw.ncpu');
 }
 
 sub finalize
@@ -425,11 +448,7 @@ sub init_cores
 				my $shell = shift;
 				DPB::Task->redirect($logger->logfile("init.".
 				    $core->hostname));
-				if (defined $shell) {
-					$shell->run($startup);
-				} else {
-					exec{$startup}($startup);
-				}
+				$shell->exec($startup);
 			    }
 			));
 		}
@@ -456,6 +475,11 @@ sub set_logdir
 {
 	my $class = shift;
 	$logdir = shift;
+}
+
+sub is_local
+{
+	return 0;
 }
 
 my @extra_report = ();
@@ -663,6 +687,16 @@ sub hostname
 	return $host;
 }
 
+sub is_local
+{
+	return 1;
+}
+
+sub shellclass
+{
+	"DPB::Shell::Local"
+}
+
 package DPB::Core::Fetcher;
 our @ISA = qw(DPB::Core::Local);
 
@@ -685,6 +719,58 @@ sub start
 		sleep($timeout);
 		exit(0);
 		}), 'clock'));
+}
+
+# the shell package is used to exec commands.
+# note that we're dealing with exec, so we can modify the object/context
+# itself with abandon
+package DPB::Shell::Abstract;
+
+sub new
+{
+	my ($class, $host) = @_;
+	bless {}, $class;
+}
+
+sub chdir
+{
+	my ($self, $dir) = @_;
+	$self->{dir} = $dir;
+	return $self;
+}
+
+sub env
+{
+	my ($self, %h) = @_;
+	while (my ($k, $v) = each %h) {
+		$self->{env}{$k} = $v;
+	}
+	return $self;
+}
+
+package DPB::Shell::Local;
+our @ISA = qw(DPB::Shell::Abstract);
+
+sub chdir
+{
+	my ($self, $dir) = @_;
+	CORE::chdir($dir) or die "Can't chdir to $dir\n";
+	return $self;
+}
+
+sub env
+{
+	my ($self, %h) = @_;
+	while (my ($k, $v) = each %h) {
+		$ENV{$k} = $v;
+	}
+	return $self;
+}
+
+sub exec
+{
+	my ($self, @argv) = @_;
+	exec {$argv[0]} @argv;
 }
 
 1;

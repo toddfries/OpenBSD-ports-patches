@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2011/01/06 04:24:23 jeremy Exp $
+# $OpenBSD: Makefile,v 1.4 2011/11/09 00:17:38 jeremy Exp $
 
 COMMENT =	case insensitive, case preserving hash class for ruby
 
 DISTNAME =	cicphash-1.0.0
-REVISION =	0
+REVISION =	2
 CATEGORIES =	devel
 
 HOMEPAGE=	http://cicphash.rubyforge.org/

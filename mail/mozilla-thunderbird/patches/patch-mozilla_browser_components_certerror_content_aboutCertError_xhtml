@@ -1,7 +1,7 @@
-$OpenBSD: patch-mozilla_browser_components_certerror_content_aboutCertError_xhtml,v 1.2 2011/07/24 07:10:12 landry Exp $
---- mozilla/browser/components/certerror/content/aboutCertError.xhtml.orig	Fri Jan 14 23:21:20 2011
-+++ mozilla/browser/components/certerror/content/aboutCertError.xhtml	Sun Feb 13 23:00:20 2011
-@@ -135,6 +135,9 @@
+$OpenBSD: patch-mozilla_browser_components_certerror_content_aboutCertError_xhtml,v 1.5 2012/09/01 14:22:45 landry Exp $
+--- mozilla/browser/components/certerror/content/aboutCertError.xhtml.orig	Sat Aug 25 02:30:57 2012
++++ mozilla/browser/components/certerror/content/aboutCertError.xhtml	Sat Sep  1 01:59:36 2012
+@@ -96,6 +96,9 @@
            tech.textContent = getDescription();
          
          addDomainErrorLink();

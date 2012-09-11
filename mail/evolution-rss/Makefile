@@ -1,17 +1,16 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/07/14 05:33:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2012/07/05 06:10:57 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
-COMMENT=		RSS-reader plugin for GNOME
+COMMENT=		RSS reader plugin for evolution
 
 GNOME_PROJECT=		evolution-rss
-GNOME_VERSION=		0.2.90.20110422
-
-REVISION=		1
+GNOME_VERSION=		0.3.91
+REVISION=		0
 
 CATEGORIES=		mail
 
-EVO_VERSION=		2.32
+EVO_VERSION=		3.4
 SUBST_VARS=		EVO_VERSION
 
 HOMEPAGE=		http://gnome.eu.org/evo/index.php/Evolution_RSS_Reader_Plugin
@@ -25,65 +24,54 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage
-WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
-WANTLIB += asn1 atk-1.0 c cairo camel-1.2 camel-provider-1.2 com_err
-WANTLIB += crypto dbus-1 dbus-glib-1 drm ebook-1.2 edataserver-1.2
-WANTLIB += edataserverui-1.2 enchant execinfo expat fontconfig
-WANTLIB += freetype gailutil gcrypt gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-2 gnome-keyring
-WANTLIB += gobject-2.0 gpg-error gssapi gthread-2.0 gtk-x11-2.0
-WANTLIB += gtkhtml-3.14 gtkhtml-editor-3.14 krb5 m nspr4 nss3
-WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB += plc4 plds4 png pthread pthread-stubs smime3 soup-2.4
-WANTLIB += soup-gnome-2.4 sqlite3 ssl3 startup-notification-1
-WANTLIB += stdc++ unique-1.0 xcb xcb-atom xcb-aux xcb-event xcb-render
-WANTLIB += xcb-shm xml2 z lib/evolution/${EVO_VERSION}/eshell
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm asn1
+WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 com_err crypto
+WANTLIB += db dbus-1 dbus-glib-1 drm ebackend-1.2 ebook-1.2 ecal-1.2
+WANTLIB += edataserver-1.2 edataserverui-3.0 enchant expat ffi
+WANTLIB += fontconfig freetype gailutil-3 gcrypt gdk-3 gdk_pixbuf-2.0
+WANTLIB += geoclue gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3
+WANTLIB += gnome-keyring gobject-2.0 gpg-error gssapi gstapp-0.10
+WANTLIB += gstaudio-0.10 gstbase-0.10 gstfft-0.10 gstinterfaces-0.10
+WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
+WANTLIB += gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0 ical icalss icalvcal
+WANTLIB += icudata icui18n icuuc javascriptcoregtk-3.0 jpeg krb5
+WANTLIB += m nspr4 nss3 nssutil3 orc-0.4 pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
+WANTLIB += smime3 softokn3 soup-2.4 soup-gnome-2.4 sqlite3 ssl3
+WANTLIB += stdc++ webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt
+WANTLIB += z
+WANTLIB += lib/evolution/${EVO_VERSION}/email-engine
+WANTLIB += lib/evolution/${EVO_VERSION}/email-utils
+WANTLIB += lib/evolution/${EVO_VERSION}/emiscwidgets
+WANTLIB += lib/evolution/${EVO_VERSION}/eshell
+WANTLIB += lib/evolution/${EVO_VERSION}/etable
+WANTLIB += lib/evolution/${EVO_VERSION}/etext
 WANTLIB += lib/evolution/${EVO_VERSION}/eutil
+WANTLIB += lib/evolution/${EVO_VERSION}/evolution-a11y
+WANTLIB += lib/evolution/${EVO_VERSION}/filter
+WANTLIB += lib/evolution/${EVO_VERSION}/gnomecanvas
+WANTLIB += lib/evolution/${EVO_VERSION}/menus
 
-MASTER_SITES=		http://gnome.eu.org/
-EXTRACT_SUFX=		.tar.gz
+# tarball from Fedora evolution-rss-0.3.91-1.fc18.src.rpm
+MASTER_SITES=		http://distfiles.bsdfrog.org/
+#MASTER_SITES=		http://gnome.eu.org/
 
 MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
 LIB_DEPENDS=		devel/libsoup,-gnome \
-			mail/evolution
+			mail/evolution,-main>=3.4.0 \
+			www/webkit,gtk3
 
-MODGCONF2_LIBDEP=	Yes
+MODGNOME_DESKTOP_FILE=		Yes
 MODGCONF2_SCHEMAS_DIR=	evolution-rss
 
-AUTOCONF_VERSION=	2.65
-AUTOMAKE_VERSION=	1.9
-
-CONFIGURE_STYLE=	autoconf automake
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--disable-gecko \
-			--disable-webkit \
-			--with-primary-render=gtkhtml
+CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-
-# XXX remove this chunk when updating to a 'real' release
-# (current tarball created from git)
-MASTER_SITES=		http://distfiles.bsdfrog.org/
-BUILD_DEPENDS +=	x11/gnome/common \
-			${MODGNU_AUTOMAKE_DEPENDS} \
-			${MODGNU_AUTOCONF_DEPENDS}
-USE_LIBTOOL=		gnu
-CONFIGURE_STYLE=	# empty
-do-configure:
-	perl -pi -e 's,sed -i -e,perl -pi -e,g' ${WRKSRC}/src/Makefile.am
-	echo "\nAC_PROG_LIBTOOL" >> ${WRKSRC}/configure.ac
-	@cd ${WRKSRC} && \
-		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-		CONFIGURE_ENV=${CONFIGURE_ENV} \
-		./autogen.sh ${CONFIGURE_ARGS} --disable-maintainer-mode
-# end XXX
-
-pre-configure:
-	perl -pi -e 's,sed -i -e,perl -pi -e,g' ${WRKSRC}/src/Makefile.in
+CONFIGURE_ARGS=		--disable-gecko \
+			--with-primary-render=webkit
 
 .include <bsd.port.mk>

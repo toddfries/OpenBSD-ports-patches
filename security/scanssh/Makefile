@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2010/11/20 17:22:45 espie Exp $
+# $OpenBSD: Makefile,v 1.22 2012/03/29 13:38:49 sthen Exp $
 
 COMMENT=	SSH remote version scanner
 
 DISTNAME=	scanssh-2.1
-REVISION =	1
+REVISION =	2
 CATEGORIES=	security
 MASTER_SITES=	http://monkey.org/~provos/ \
 		ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/scanssh/
@@ -20,7 +20,7 @@ WANTLIB=		c event pcap dnet>=1
 
 LIB_DEPENDS=	net/libdnet
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 USE_GROFF =	Yes
 

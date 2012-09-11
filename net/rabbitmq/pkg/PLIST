@@ -1,11 +1,12 @@
-@comment $OpenBSD: PLIST,v 1.4 2011/06/15 11:02:59 landry Exp $
+@comment $OpenBSD: PLIST,v 1.7 2012/07/18 14:03:44 jasper Exp $
 @newgroup _rabbitmq:646
 @newuser _rabbitmq:646:_rabbitmq:daemon:RabbitMQ account:/var/rabbitmq:/sbin/nologin
 lib/rabbitmq/
 lib/rabbitmq/ebin/
-lib/rabbitmq/ebin/bpqueue.beam
+lib/rabbitmq/ebin/credit_flow.beam
 lib/rabbitmq/ebin/delegate.beam
 lib/rabbitmq/ebin/delegate_sup.beam
+lib/rabbitmq/ebin/dtree.beam
 lib/rabbitmq/ebin/file_handle_cache.beam
 lib/rabbitmq/ebin/gatherer.beam
 lib/rabbitmq/ebin/gen_server2.beam
@@ -13,7 +14,13 @@ lib/rabbitmq/ebin/gm.beam
 lib/rabbitmq/ebin/gm_soak_test.beam
 lib/rabbitmq/ebin/gm_speed_test.beam
 lib/rabbitmq/ebin/gm_tests.beam
+lib/rabbitmq/ebin/lqueue.beam
+lib/rabbitmq/ebin/mirrored_supervisor.beam
+lib/rabbitmq/ebin/mirrored_supervisor_tests.beam
+lib/rabbitmq/ebin/mnesia_sync.beam
+lib/rabbitmq/ebin/pg2_fixed.beam
 lib/rabbitmq/ebin/pg_local.beam
+lib/rabbitmq/ebin/pmon.beam
 lib/rabbitmq/ebin/priority_queue.beam
 lib/rabbitmq/ebin/rabbit.app
 lib/rabbitmq/ebin/rabbit.beam
@@ -30,6 +37,7 @@ lib/rabbitmq/ebin/rabbit_auth_mechanism_amqplain.beam
 lib/rabbitmq/ebin/rabbit_auth_mechanism_cr_demo.beam
 lib/rabbitmq/ebin/rabbit_auth_mechanism_plain.beam
 lib/rabbitmq/ebin/rabbit_backing_queue.beam
+lib/rabbitmq/ebin/rabbit_backing_queue_qc.beam
 lib/rabbitmq/ebin/rabbit_basic.beam
 lib/rabbitmq/ebin/rabbit_binary_generator.beam
 lib/rabbitmq/ebin/rabbit_binary_parser.beam
@@ -43,6 +51,7 @@ lib/rabbitmq/ebin/rabbit_connection_sup.beam
 lib/rabbitmq/ebin/rabbit_control.beam
 lib/rabbitmq/ebin/rabbit_ctl_usage.beam
 lib/rabbitmq/ebin/rabbit_direct.beam
+lib/rabbitmq/ebin/rabbit_disk_monitor.beam
 lib/rabbitmq/ebin/rabbit_error_logger.beam
 lib/rabbitmq/ebin/rabbit_error_logger_file_h.beam
 lib/rabbitmq/ebin/rabbit_event.beam
@@ -51,7 +60,9 @@ lib/rabbitmq/ebin/rabbit_exchange_type.beam
 lib/rabbitmq/ebin/rabbit_exchange_type_direct.beam
 lib/rabbitmq/ebin/rabbit_exchange_type_fanout.beam
 lib/rabbitmq/ebin/rabbit_exchange_type_headers.beam
+lib/rabbitmq/ebin/rabbit_exchange_type_invalid.beam
 lib/rabbitmq/ebin/rabbit_exchange_type_topic.beam
+lib/rabbitmq/ebin/rabbit_file.beam
 lib/rabbitmq/ebin/rabbit_framing.beam
 lib/rabbitmq/ebin/rabbit_framing_amqp_0_8.beam
 lib/rabbitmq/ebin/rabbit_framing_amqp_0_9_1.beam
@@ -60,6 +71,11 @@ lib/rabbitmq/ebin/rabbit_heartbeat.beam
 lib/rabbitmq/ebin/rabbit_limiter.beam
 lib/rabbitmq/ebin/rabbit_log.beam
 lib/rabbitmq/ebin/rabbit_memory_monitor.beam
+lib/rabbitmq/ebin/rabbit_mirror_queue_coordinator.beam
+lib/rabbitmq/ebin/rabbit_mirror_queue_master.beam
+lib/rabbitmq/ebin/rabbit_mirror_queue_misc.beam
+lib/rabbitmq/ebin/rabbit_mirror_queue_slave.beam
+lib/rabbitmq/ebin/rabbit_mirror_queue_slave_sup.beam
 lib/rabbitmq/ebin/rabbit_misc.beam
 lib/rabbitmq/ebin/rabbit_mnesia.beam
 lib/rabbitmq/ebin/rabbit_msg_file.beam
@@ -70,6 +86,9 @@ lib/rabbitmq/ebin/rabbit_msg_store_index.beam
 lib/rabbitmq/ebin/rabbit_net.beam
 lib/rabbitmq/ebin/rabbit_networking.beam
 lib/rabbitmq/ebin/rabbit_node_monitor.beam
+lib/rabbitmq/ebin/rabbit_nodes.beam
+lib/rabbitmq/ebin/rabbit_plugins.beam
+lib/rabbitmq/ebin/rabbit_plugins_usage.beam
 lib/rabbitmq/ebin/rabbit_prelaunch.beam
 lib/rabbitmq/ebin/rabbit_queue_collector.beam
 lib/rabbitmq/ebin/rabbit_queue_index.beam
@@ -103,28 +122,57 @@ lib/rabbitmq/ebin/worker_pool_worker.beam
 lib/rabbitmq/include/
 lib/rabbitmq/include/gm_specs.hrl
 lib/rabbitmq/include/rabbit.hrl
-lib/rabbitmq/include/rabbit_auth_backend_spec.hrl
-lib/rabbitmq/include/rabbit_auth_mechanism_spec.hrl
-lib/rabbitmq/include/rabbit_backing_queue_spec.hrl
-lib/rabbitmq/include/rabbit_exchange_type_spec.hrl
 lib/rabbitmq/include/rabbit_framing.hrl
 lib/rabbitmq/include/rabbit_msg_store.hrl
-lib/rabbitmq/include/rabbit_msg_store_index.hrl
 lib/rabbitmq/plugins/
 lib/rabbitmq/plugins/README
+lib/rabbitmq/plugins/amqp_client-${V}.ez
+lib/rabbitmq/plugins/eldap-${V}-git.ez
+lib/rabbitmq/plugins/erlando-${V}.ez
+lib/rabbitmq/plugins/mochiweb-1.3-rmq${V}-git.ez
+lib/rabbitmq/plugins/rabbitmq_auth_backend_ldap-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_auth_mechanism_ssl-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_consistent_hash_exchange-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_federation-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_federation_management-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_jsonrpc-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_jsonrpc_channel-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_jsonrpc_channel_examples-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_management-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_management_agent-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_management_visualiser-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_mochiweb-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_shovel-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_shovel_management-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_stomp-${V}.ez
+lib/rabbitmq/plugins/rabbitmq_tracing-${V}.ez
+lib/rabbitmq/plugins/rfc4627_jsonrpc-${V}-git.ez
+lib/rabbitmq/plugins/webmachine-1.7.0-rmq${V}-hg.ez
 lib/rabbitmq/sbin/
+lib/rabbitmq/sbin/rabbitmq-defaults
 lib/rabbitmq/sbin/rabbitmq-env
+lib/rabbitmq/sbin/rabbitmq-plugins
 lib/rabbitmq/sbin/rabbitmq-server
 lib/rabbitmq/sbin/rabbitmqctl
+@man man/man1/rabbitmq-plugins.1
 @man man/man1/rabbitmq-server.1
 @man man/man1/rabbitmqctl.1
 @man man/man5/rabbitmq-env.conf.5
+sbin/rabbitmq-defaults
 sbin/rabbitmq-env
+sbin/rabbitmq-plugins
 sbin/rabbitmq-server
 sbin/rabbitmqctl
 share/doc/rabbitmq/
 share/doc/rabbitmq/INSTALL
 share/doc/rabbitmq/LICENSE
+share/doc/rabbitmq/LICENSE-Apache-Basho
+share/doc/rabbitmq/LICENSE-BSD-glMatrix
+share/doc/rabbitmq/LICENSE-MIT-EJS10
+share/doc/rabbitmq/LICENSE-MIT-Mochi
+share/doc/rabbitmq/LICENSE-MIT-Sammy060
+share/doc/rabbitmq/LICENSE-MIT-eldap
+share/doc/rabbitmq/LICENSE-MIT-jQuery164
 share/doc/rabbitmq/LICENSE-MPL-RabbitMQ
 share/examples/rabbitmq/
 @sample ${SYSCONFDIR}/rabbitmq/

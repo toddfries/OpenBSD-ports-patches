@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2010/11/16 11:23:27 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2012/06/15 08:32:15 ajacoutot Exp $
 
 COMMENT= 		billiard game
 CATEGORIES=		x11 x11/kde games
 DISTNAME=		kbilliards-0.8.7b
-REVISION =		4
+REVISION =		7
 
 HOMEPAGE=		http://www.hostnotfound.it/kbilliards.php
 MASTER_SITES=		http://www.hostnotfound.it/kbilliards/
@@ -26,6 +26,8 @@ WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 artsflow \
 MODULES=		x11/kde	devel/gettext
 
 LIB_DEPENDS=		x11/kde/libs3
+
+RUN_DEPENDS=		x11/gtk+2,-guic
 
 CONFIGURE_STYLE=	autoconf
 CONFIGURE_ENV+=		${MODKDE_CONFIGURE_ENV}

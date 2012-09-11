@@ -1,54 +1,10 @@
-$OpenBSD: patch-configure_in,v 1.5 2011/07/07 21:32:39 jasper Exp $
+$OpenBSD: patch-configure_in,v 1.8 2012/04/27 08:18:59 rpointel Exp $
 
 Wrong value of LDSHARED in sysconfig, cf http://bugs.python.org/issue10547
 
---- configure.in.orig	Mon Nov  1 02:47:19 2010
-+++ configure.in	Thu Jul  7 22:57:06 2011
-@@ -331,7 +331,7 @@ case $ac_sys_system/$ac_sys_release in
-     # As this has a different meaning on Linux, only define it on OpenBSD
-     AC_DEFINE(_BSD_SOURCE, 1, [Define on OpenBSD to activate all library features])
-     ;;
--  OpenBSD/4.@<:@789@:>@)
-+  OpenBSD/4.@<:@789@:>@ | OpenBSD/5.*)
-     # OpenBSD undoes our definition of __BSD_VISIBLE if _XOPEN_SOURCE is
-     # also defined. This can be overridden by defining _BSD_SOURCE
-     # As this has a different meaning on Linux, only define it on OpenBSD
-@@ -1850,30 +1850,14 @@ then
- 	BSD/OS*/4*)
- 		LDSHARED="gcc -shared"
- 		LDCXXSHARED="g++ -shared";;
--	FreeBSD*)
-+	FreeBSD*|OpenBSD*)
- 		if [[ "`$CC -dM -E - </dev/null | grep __ELF__`" != "" ]]
- 		then
--			LDSHARED='$(CC) -shared ${LDFLAGS}'
--			LDCXXSHARED='$(CXX) -shared ${LDFLAGS}'
-+			LDSHARED='$(CC) -shared'
-+			LDCXXSHARED='$(CXX) -shared'
- 		else
--			LDSHARED="ld -Bshareable ${LDFLAGS}"
-+			LDSHARED="ld -Bshareable"
- 		fi;;
--	OpenBSD*)
--		if [[ "`$CC -dM -E - </dev/null | grep __ELF__`" != "" ]]
--		then
--				LDSHARED='$(CC) -shared $(CCSHARED) ${LDFLAGS}'
--				LDCXXSHARED='$(CXX) -shared $(CCSHARED) ${LDFLAGS}'
--		else
--				case `uname -r` in
--				[[01]].* | 2.[[0-7]] | 2.[[0-7]].*)
--				   LDSHARED="ld -Bshareable ${LDFLAGS}"
--				   ;;
--				*)
--				   LDSHARED='$(CC) -shared $(CCSHARED) ${LDFLAGS}'
--				   LDCXXSHARED='$(CXX) -shared $(CCSHARED) ${LDFLAGS}'
--				   ;;
--				esac
--		fi;;
- 	NetBSD*|DragonFly*)
- 		LDSHARED="cc -shared ${LDFLAGS}"
- 		LDCXXSHARED="c++ -shared ${LDFLAGS}";;
-@@ -2035,9 +2019,10 @@ AC_CHECK_LIB(dld, shl_load)	# Dynamic linking for HP-U
+--- configure.in.orig	Tue Apr 10 01:07:36 2012
++++ configure.in	Fri Apr 13 07:45:44 2012
+@@ -2057,9 +2057,10 @@ AC_CHECK_LIB(dld, shl_load)	# Dynamic linking for HP-U
  
  # only check for sem_init if thread support is requested
  if test "$with_threads" = "yes" -o -z "$with_threads"; then
@@ -56,7 +12,7 @@ Wrong value of LDSHARED in sysconfig, cf http://bugs.python.org/issue10547
 +#    AC_SEARCH_LIBS(sem_init, pthread rt posix4) # 'Real Time' functions on Solaris
  						# posix4 on Solaris 2.6
  						# pthread (first!) on Linux
-+	LIBS="-pthread $(LIBS)"
++	LIBS="-pthread ${LIBS}"
  fi
  
  # check if we need libintl for locale functions

@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2011/04/10 10:26:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2011/09/16 06:27:26 ajacoutot Exp $
 
-COMMENT=	utilities to manage well know user directories
+COMMENT=	utilities to manage well known user directories
 
-DISTNAME=	xdg-user-dirs-0.13
+DISTNAME=	xdg-user-dirs-0.14
 CATEGORIES=	devel
-
-REVISION=	0
 
 HOMEPAGE=	http://freedesktop.org/wiki/Software/xdg-user-dirs/
 
@@ -32,7 +30,7 @@ FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/xdg-user-dirs
 # Under OpenBSD, we don't have generic directories containing login
 # scripts (e.g. /etc/X11/xinit/xinitrc.d/) that login managers would
 # check, so use the xdg autostart directory which is standard amongst
-# fd.o Desktops. It us up to the Desktop package maintainer to add a
+# fd.o Desktops. It is up to the Desktop package maintainer to add a
 # RUN_DEPENDS on xdg-user-dirs{|-gtk} if he/she wants to enable this.
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/xdg-user-dirs/xdg/autostart/

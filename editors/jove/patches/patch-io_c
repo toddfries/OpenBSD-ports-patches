@@ -1,20 +1,15 @@
-$OpenBSD: patch-io_c,v 1.1 2006/04/09 10:10:25 alek Exp $
---- io.c.orig	Thu Mar  7 18:34:42 1996
-+++ io.c	Sun Apr  9 12:05:56 2006
-@@ -1193,10 +1193,16 @@ tmpinit()
+$OpenBSD: patch-io_c,v 1.3 2012/03/18 17:02:00 naddy Exp $
+--- io.c.orig	Sun Mar 18 10:52:54 2012
++++ io.c	Sun Mar 18 10:53:09 2012
+@@ -1356,9 +1356,9 @@ int	Jr_Len;		/* length of Just Read Line */
+ 
+ void
+ #ifdef USE_PROTOTYPES
+-getline proto((daddr addr, register char *buf))
++get_line proto((daddr addr, register char *buf))
+ #else
+-getline(addr, buf)
++get_line(addr, buf)
+ daddr	addr;
+ register char	*buf;
  #endif
- 		);
- 	tfname = copystr(buf);
-+#if 0
- 	tfname = mktemp(tfname);
-+#endif
- #ifndef MSFILESYSTEM
-+#if 1
-+	tmpfd = mkstemp(tfname);
-+#else
- 	(void) close(creat(tfname, 0600));
- 	tmpfd = open(tfname, 2);
-+#endif
- #else /* MSFILESYSTEM */
- 	tmpfd = open(tfname, O_CREAT|O_EXCL|O_BINARY|O_RDWR, S_IWRITE|S_IREAD);
- #endif /* MSFILESYSTEM */

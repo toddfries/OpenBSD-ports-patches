@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2011/06/02 13:41:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2012/04/28 10:52:09 ajacoutot Exp $
 
 COMMENT-main=		high performance webserver written in Erlang, libraries
 COMMENT-web=		high performance webserver written in Erlang, docroot
@@ -6,7 +6,7 @@ COMMENT-web=		high performance webserver written in Erlang, docroot
 VERSION=		1.90
 DISTNAME=		yaws-${VERSION}
 PKGNAME-main=		yaws-${VERSION}
-REVISION-main=		1
+REVISION-main=		2
 PKGNAME-web=		yaws-web-${VERSION}
 CATEGORIES=		www
 
@@ -30,8 +30,7 @@ RUN_DEPENDS=		lang/erlang
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--disable-pam \
-			--disable-sendfile \
-			--localstatedir="/var"
+			--disable-sendfile
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 # erl(1) needs $HOME to be set.

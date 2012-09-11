@@ -5,11 +5,16 @@ This schema is mostly optimized for tools, and cumbersome to query by
 hand.
 
 Database Schema:
-- Paths (ID, FULLPKGPATH, PKGPATH)
+- Paths (ID, FULLPKGPATH, PKGPATH, CANONICAL)
 PKGPATH points to a PATHS entry corresponding to the stripped down version of 
 FULLPKGPATH, without flavors or subpackage markers, or is null if FULLPKGPATH
 is already stripped.  Every other FULLPKGPATH, PKGPATH, DEPENDSPATH entry
 in the database points to this table.
+The FULLPKGPATH is complete, including flavors and pseudo flavors markers. 
+For every port with MULTI_PACKAGES settings, one entry is written 
+for each SUBPACKAGE.
+CANONICAL points to the actual ID to use as an entry in other tables, for
+FULLPKGPATH which don't have their own entry.
 
 - Ports(FULLPKGPATH, ...)
 holds all the information retrieved through various variables that is not
@@ -24,6 +29,7 @@ stored in specialized tables, e.g.,:
     DIST_SUBDIR 
     EPOCH
     FLAVORS 
+    FULLPKGNAME
     HOMEPAGE 
     IS_INTERACTIVE 
     MAINTAINER
@@ -33,11 +39,13 @@ stored in specialized tables, e.g.,:
     PKGNAME 
     PKGSPEC
     PKG_ARCH 
+    PSEUDO_FLAVOR
     PSEUDO_FLAVORS 
     REGRESS_IS_INTERACTIVE 
     REVISION
     SEPARATE_BUILD 
     SHARED_ONLY 
+    STATIC_PLIST
     SUBPACKAGE 
     SUPDISTFILES 
     USE_*
@@ -52,7 +60,7 @@ MULTI_PACKAGES ports hold several entries with corresponding FULLPKGPATH
 - Flavors(FULLPKGPATH, VALUE)
 - PseudoFlavors(FULLPKGPATH, VALUE)
 - Categories(FULLPKGPATH, VALUE)
-- Multi(FULLPKGPATH, VALUE)		('-' values are not stored)
+- Multi(FULLPKGPATH, VALUE, SUBPKGPATH)	('-' values are not stored)
 - Modules(FULLPKGPATH, VALUE)
 - Configure(FULLPKGPATH, VALUE) 	(corresponds to CONFIGURE_STYLE)
 - ConfigureArgs(FULLPKGPATH, VALUE)
@@ -74,13 +82,16 @@ All depends are stored in a single table, including the type:
 1 -> run
 2 -> build
 3 -> regress
-with FULLDEPENDS the full text of the dependency, and DEPENDSPATH the key to
-the FULLPKGPATH we depend upon.
+with FULLDEPENDS the full text of the dependency, DEPENDSPATH the PKGPATH
+we depend upon, PKGSPEC the spec we depend upon (if explicit), and REST
+the rest.
 - Wantlib(FULLPKGPATH, VALUE, EXTRA)
 All the libraries the FULLPKGPATH depends upon, with optional version 
 number specification stored in EXTRA
 coming from either the WANTLIB variable or various LIB_DEPENDS.
 
+- Multi(FULLPKGPATH, VALUE, SUBPKGPATH)
+also contains the normalized pkgpath for the corresponding subpackage.
 - Broken(FULLPKGPATH, ARCH, TEXT)
 This is stored both in the main table (for now) and in a separate table, with
 keywords since it may be arch-dependent

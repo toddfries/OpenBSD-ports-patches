@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2011/06/08 17:39:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2012/06/26 07:26:41 landry Exp $
 
 COMMENT =	push/pull from a Git server repository using Mercurial
 
-MODPY_EGG_VERSION =	0.2.5
+MODPY_EGG_VERSION =	0.3.1
 DISTNAME =		schacon-hg-git-${MODPY_EGG_VERSION}
 PKGNAME =		py-hg-git-${MODPY_EGG_VERSION}
-REVISION =	0
 
 CATEGORIES =		devel
 
@@ -22,7 +21,7 @@ MASTER_SITES =	http://github.com/schacon/hg-git/tarball/${MODPY_EGG_VERSION}/
 MODULES =		lang/python
 MODPY_SETUPTOOLS =	Yes
 
-WRKDIST =		${WRKDIR}/${DISTNAME:S/-${MODPY_EGG_VERSION}/-0ed3c70/}
+WRKDIST =		${WRKDIR}/${DISTNAME:S/-${MODPY_EGG_VERSION}/-6dc5f17/}
 
 RUN_DEPENDS =		devel/py-dulwich \
 			devel/mercurial

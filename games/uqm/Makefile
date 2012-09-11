@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/16 11:23:28 espie Exp $
+# $OpenBSD: Makefile,v 1.34 2012/06/04 20:59:41 pascal Exp $
 
 COMMENT-main=		ur-quan masters: sdl port of star control 2; multiplayer
 COMMENT-content=	ur-quan masters: game content
@@ -8,22 +8,22 @@ COMMENT-remix3=		ur-quan masters: remix pack number three
 COMMENT-threedomusic=	ur-quan masters: 3DO music content
 COMMENT-voice=		ur-quan masters: speech content
 
-VER=			0.6.0
-DISTNAME=		uqm-0.6.2
+VER =			0.7.0
+EPOCH=			0 # N.B. in RUN_DEPENDS
+DISTNAME =		uqm-${VER}
 CATEGORIES=		games x11
 PDIST=			${DISTNAME}-source.tgz
-CDIST=			uqm-${VER}-content.uqm
-MDIST=			uqm-${VER}-3domusic.uqm
-VDIST=			uqm-${VER}-voice.uqm
-RM1DIST=		uqm-remix-pack1.zip
-RM2DIST=		uqm-remix-pack2.zip
-RM3DIST=		uqm-remix-pack3.zip
+CDIST =			${DISTNAME}-content.uqm
+MDIST =			${DISTNAME}-3domusic.uqm
+VDIST =			${DISTNAME}-voice.uqm
+RM1DIST =		uqm-remix-disc1.uqm
+RM2DIST =		uqm-remix-disc2.uqm
+RM3DIST =		uqm-remix-disc3.uqm
 DISTFILES=		${PDIST} ${CDIST}
 SUPDISTFILES=		${MDIST} ${VDIST} ${RM1DIST} ${RM2DIST} ${RM3DIST}
 DIST_SUBDIR=		uqm
 CATEGORIES=		games x11
-PKGNAME-main=		uqm-0.6.2
-REVISION-main =		1
+PKGNAME-main=		uqm-${VER}
 PKGNAME-content=	uqm-content-${VER}
 PKGNAME-remix1=		uqm-remix1-${VER}
 PKGNAME-remix2=		uqm-remix2-${VER}
@@ -42,7 +42,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 LIB_DEPENDS-main=	audio/libmikmod \
-			audio/tremor \
+			audio/tremor>=20120410 \
 			devel/sdl-image
 PKG_ARCH-content=	*
 PKG_ARCH-remix1=	*
@@ -50,46 +50,40 @@ PKG_ARCH-remix2=	*
 PKG_ARCH-remix3=	*
 PKG_ARCH-threedomusic=	*
 PKG_ARCH-voice=		*
-RUN_DEPENDS=		${PKGNAME-main}:games/uqm
-RUN_DEPENDS-content=	
-RUN_DEPENDS-main=	${PKGNAME-content}:games/uqm,-content
-WANTLIB-main=		c m pthread z SDL mikmod>=2.4 vorbisidec>=1 \
+RUN_DEPENDS=		${PKGNAME-main}v0:games/uqm
+RUN_DEPENDS-content=
+RUN_DEPENDS-main=	${PKGNAME-content}v0:games/uqm,-content
+WANTLIB-main=		c m pthread z SDL mikmod>=2.4 vorbisidec>=3 \
 			SDL_image
 
 NO_REGRESS=	Yes
 USE_GMAKE=	Yes
 
-WRKSRC=	${WRKDIST}/sc2
+PSEUDO_FLAVORS=	no_remix1 no_remix2 no_remix3 no_threedomusic no_voice
+FLAVOR?= no_remix1 no_remix2 no_remix3 no_threedomusic no_voice
 
-PSEUDO_FLAVORS=	remix1 remix2 remix3 threedomusic voice
-FLAVOR?=
+MULTI_PACKAGES= -main -content -remix1 -remix2 -remix3 -threedomusic -voice
 
-MULTI_PACKAGES= -main -content
-.if ${FLAVOR:L:Mremix1}
+.include <bsd.port.arch.mk>
+
+.if ${BUILD_PACKAGES:M-remix1}
 DISTFILES+=	${RM1DIST}
-MULTI_PACKAGES+=-remix1
 .endif
-.if ${FLAVOR:L:Mremix2}
+.if ${BUILD_PACKAGES:M-remix2}
 DISTFILES+=	${RM2DIST}
-MULTI_PACKAGES+=-remix2
 .endif
-.if ${FLAVOR:L:Mremix3}
+.if ${BUILD_PACKAGES:M-remix3}
 DISTFILES+=	${RM3DIST}
-MULTI_PACKAGES+=-remix3
 .endif
-.if ${FLAVOR:L:Mthreedomusic}
+.if ${BUILD_PACKAGES:M-threedomusic}
 DISTFILES+=	${MDIST}
-MULTI_PACKAGES+=-threedomusic
 .endif
-.if ${FLAVOR:L:Mvoice}
+.if ${BUILD_PACKAGES:M-voice}
 DISTFILES+=	${VDIST}
-MULTI_PACKAGES+=-voice
 .endif
-
-BYTEORDER!=sysctl -n hw.byteorder
 
 do-configure:
-.if ${BYTEORDER} == "1234"
+.if ${PROPERTIES:Mle}
 	@sed -e "s|@PREFIX@|${PREFIX}|g ; s|@ENDIAN@|undef|g" \
 		${FILESDIR}/config_unix.h > ${WRKSRC}/src/config_unix.h
 .else
@@ -106,32 +100,33 @@ do-build:
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/uqm
-	${INSTALL_DATA_DIR} ${PREFIX}/share/uqm/content/packages/addons/uqmremix
+	${INSTALL_DATA_DIR} ${PREFIX}/share/uqm/content/packages
+	${INSTALL_DATA_DIR} ${PREFIX}/share/uqm/content/addons
 	${INSTALL_DATA} ${WRKBUILD}/doc/users/manual.txt \
 		${PREFIX}/share/doc/uqm
 	${INSTALL_DATA} ${WRKBUILD}/content/version \
 		${PREFIX}/share/uqm/content
 	${INSTALL_DATA} ${FULLDISTDIR}/${CDIST} \
 		${PREFIX}/share/uqm/content/packages
-.if ${FLAVOR:L:Mremix1}
+.if ${BUILD_PACKAGES:M-remix1}
 	${INSTALL_DATA} ${FULLDISTDIR}/${RM1DIST} \
-		${PREFIX}/share/uqm/content/packages/addons/uqmremix
+		${PREFIX}/share/uqm/content/addons
 .endif
-.if ${FLAVOR:L:Mremix2}
+.if ${BUILD_PACKAGES:M-remix2}
 	${INSTALL_DATA} ${FULLDISTDIR}/${RM2DIST} \
-		${PREFIX}/share/uqm/content/packages/addons/uqmremix
+		${PREFIX}/share/uqm/content/addons
 .endif
-.if ${FLAVOR:L:Mremix2}
+.if ${BUILD_PACKAGES:M-remix3}
 	${INSTALL_DATA} ${FULLDISTDIR}/${RM3DIST} \
-		${PREFIX}/share/uqm/content/packages/addons/uqmremix
+		${PREFIX}/share/uqm/content/addons
 .endif
-.if ${FLAVOR:L:Mthreedomusic}
+.if ${BUILD_PACKAGES:M-threedomusic}
 	${INSTALL_DATA} ${FULLDISTDIR}/${MDIST} \
-		${PREFIX}/share/uqm/content/packages
+		${PREFIX}/share/uqm/content/addons
 .endif
-.if ${FLAVOR:L:Mvoice}
+.if ${BUILD_PACKAGES:M-voice}
 	${INSTALL_DATA} ${FULLDISTDIR}/${VDIST} \
-		${PREFIX}/share/uqm/content/packages
+		${PREFIX}/share/uqm/content/addons
 .endif
 	${INSTALL_PROGRAM} ${WRKBUILD}/uqm ${PREFIX}/bin
 

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2011/08/24 20:22:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2012/07/10 15:22:45 jasper Exp $
 
 COMMENT=	deductive database system similar to Prolog
 
-DISTNAME=	datalog-1.6
+DISTNAME=	datalog-2.2
 REVISION=	0
+SHARED_LIBS +=  datalog                   0.0 # 0.0
 CATEGORIES=	lang
 
 HOMEPAGE=	http://www.ccs.neu.edu/home/ramsdell/tools/datalog/
@@ -14,12 +15,16 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c m
+WANTLIB += c m readline termcap
 
 MASTER_SITES=		${HOMEPAGE} \
 			${MASTER_SITE_SOURCEFORGE:=datalog/}
 
+# perl libtool loses -llua somewhere along the way
+USE_LIBTOOL=		gnu
+
 MODULES=		lang/lua
+MODLUA_SA=		Yes
 
 CONFIGURE_STYLE=	gnu
 

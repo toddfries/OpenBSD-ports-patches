@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.129 2011/08/22 15:26:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.182 2012/09/01 14:36:57 ajacoutot Exp $
 
-COMMENT-main=		general-purpose utility library
-COMMENT-docs=		glib2 documentation
+COMMENT=		general-purpose utility library
 
-VERSION=		2.28.8
-DISTNAME=		glib-${VERSION}
-PKGNAME-main=		glib2-${VERSION}
-PKGNAME-docs=		glib2-docs-${VERSION}
+DISTNAME=		glib-2.32.4
+PKGNAME=		${DISTNAME:S/glib/glib2/}
+EXTRACT_SUFX=		.tar.xz
 
-REVISION-main=		3
+REVISION=		2
 
 CATEGORIES=		devel
 
@@ -16,11 +14,11 @@ HOMEPAGE=		http://www.gtk.org/
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  glib-2.0             2800.0   # 2800.7
-SHARED_LIBS +=  gmodule-2.0          2800.0   # 2800.7
-SHARED_LIBS +=  gthread-2.0          2800.0   # 2800.7
-SHARED_LIBS +=  gobject-2.0          2800.0   # 2800.7
-SHARED_LIBS +=  gio-2.0              2800.0   # 2800.7
+SHARED_LIBS +=  glib-2.0             3200.0   # 3200.0
+SHARED_LIBS +=  gmodule-2.0          3200.0   # 3200.0
+SHARED_LIBS +=  gthread-2.0          3200.0   # 3200.0
+SHARED_LIBS +=  gobject-2.0          3200.0   # 3200.0
+SHARED_LIBS +=  gio-2.0              3200.0   # 3200.0
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -28,34 +26,23 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		${MASTER_SITE_GNOME:=sources/glib/${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/}
-EXTRACT_SUFX=		.tar.bz2
+WANTLIB += c elf ffi pcre pthread z
 
-MULTI_PACKAGES=		-main -docs
+MASTER_SITES=		${MASTER_SITE_GNOME:=sources/glib/${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/}
 
 MODULES=		devel/gettext \
 			lang/python
 
-# Although gtester-report(1) is a python script we do not want to force
-# a dependency on python.
-MODPY_RUNDEP=		No
-# Python is needed for the regress tests.
-MODPY_BUILDDEP=		Yes
 MODPY_ADJ_FILES=	glib/gtester-report \
+			gio/gdbus-2.0/codegen/gdbus-codegen.in \
 			gio/tests/gdbus-testserver.py
 
-WANTLIB-main=		${WANTLIB} c pthread z pcre fam
+LIB_DEPENDS=		devel/pcre \
+			devel/libelf \
+			devel/libffi
 
-LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			devel/pcre>=8.12 \
-			sysutils/gamin,no_server,no_python
-
-PKG_ARCH-docs=		*
-WANTLIB-docs=
-LIB_DEPENDS-docs=
-RUN_DEPENDS-docs=
-
-# need X11 because DBus is used in the GDBus test cases
+# need X11 because DBus is used in the GDBus test cases;
+# also requires bumped limits (stack >= 24576)
 BUILD_DEPENDS +=	x11/dbus
 REGRESS_IS_INTERACTIVE=	x11
 REGRESS_FLAGS=		GTESTER="${WRKBUILD}/glib/gtester -k"
@@ -65,25 +52,38 @@ REGRESS_DEPENDS=	devel/desktop-file-utils \
 
 USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
-USE_GROFF=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--enable-static \
-			--enable-fam \
 			--with-pcre=system \
 			--disable-gtk-doc \
 			--disable-Bsymbolic \
+			--disable-fam \
 			--disable-selinux \
+			--disable-systemtap \
 			--disable-xattr
 
-# OpenBSD has support for monotonic clock (CLOCK_MONOTONIC), however we
-# currently don't have most of the _POSIX_* defines in unistd.h (e.g.
-# _POSIX_MONOTONIC_CLOCK 200112L) and the associated sysconf(3)
-# _SC_MONOTONIC_CLOCK variable.
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-				-D_POSIX_MONOTONIC_CLOCK=200112L" \
-			LDFLAGS="-L${LOCALBASE}/lib -pthread"
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
+
+### kqueue(2) backend ##################################################
+# https://bugzilla.gnome.org/show_bug.cgi?id=679793
+AUTOMAKE_VERSION=	1.11
+AUTOCONF_VERSION=	2.68
+BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
+			${MODGNU_AUTOMAKE_DEPENDS} \
+			devel/libtool
+#MASTER_SITES0=		http://dmitrymatveev.co.uk/files/
+MASTER_SITES0=		http://distfiles.bsdfrog.org/
+PATCHFILES=		glib-gio-kqueue-2.32.1-v1.patch:0
+AUTO_ENV=		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+			AUTOCONF_VERSION=${AUTOCONF_VERSION}
+post-patch:
+	cd ${WRKSRC} && ${AUTO_ENV} autoreconf --force --install
+### end of kqueue(1) backend ###########################################
+
+.include <bsd.port.arch.mk>
 
 pre-configure:
 	perl -pi -e "s,/usr/local,${LOCALBASE},g;" \
@@ -99,8 +99,9 @@ pre-configure:
 		${WRKSRC}/gio/gdbusprivate.c \
 		${WRKSRC}/po/*.po
 
-# glib's GDB macros rely on gdb(1) auto-load feature
 post-install:
-	rm -rf ${PREFIX}/share/{,glib-2.0}/gdb/
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/glib2
+	${INSTALL_DATA} ${FILESDIR}/gio-kqueue.conf \
+		${PREFIX}/share/examples/glib2
 
 .include <bsd.port.mk>

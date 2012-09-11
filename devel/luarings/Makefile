@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2011/04/18 18:14:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/08/12 17:25:31 jasper Exp $
 
 COMMENT =	multiple states library for the lua language
 SHARED_ONLY =	Yes
 
 DISTNAME =	rings-1.2.3
 PKGNAME =	lua${DISTNAME}
+REVISION =	2
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.keplerproject.org/rings/
@@ -19,27 +20,27 @@ MASTER_SITES =	http://github.com/downloads/keplerproject/rings/
 
 MODULES =	lang/lua
 
-CFLAGS +=	-I${LOCALBASE}/include
-COMPILE =	${CC} ${CFLAGS} -fPIC -I${LOCALBASE}/include -c
+CFLAGS +=	-I${MODLUA_INCL_DIR}
+COMPILE =	${CC} ${CFLAGS} -fPIC ${CFLAGS} -c
 LINK =		${CC} ${CFLAGS} -fPIC -shared -L${LOCALBASE}/lib -o
+
+REGRESS_FILES =	sample sample_state test
 
 do-build:
 	cd ${WRKDIST}/src && ${COMPILE} rings.c
 	cd ${WRKDIST}/src && ${LINK} rings.so rings.o
 
 do-install:
-	${INSTALL_DATA_DIR} ${MODLUA_DATADIR}
-	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR}
-	${INSTALL_DATA_DIR} ${PREFIX}/doc/luarings
+	${INSTALL_DATA_DIR} ${MODLUA_DATADIR} ${MODLUA_DOCDIR} ${MODLUA_LIBDIR}
 	${INSTALL_DATA} ${WRKSRC}/src/stable.lua ${MODLUA_DATADIR}
 	${INSTALL_DATA} ${WRKSRC}/src/*.so ${MODLUA_LIBDIR}
-	${INSTALL_DATA} ${WRKSRC}/doc/us/* ${PREFIX}/doc/luarings
+	${INSTALL_DATA} ${WRKSRC}/doc/us/* ${MODLUA_DOCDIR}
 
 do-regress:
 	cp ${WRKDIST}/src/*.so ${WRKDIST}/tests
 	cp ${WRKDIST}/src/*.lua ${WRKDIST}/tests
-	cd ${WRKDIST}/tests && lua sample.lua
-	cd ${WRKDIST}/tests && lua sample_state.lua
-	cd ${WRKDIST}/tests && lua test.lua
+.for r in ${REGRESS_FILES}
+	cd ${WRKDIST}/tests && ${MODLUA_BIN} $r.lua
+.endfor
 
 .include <bsd.port.mk>

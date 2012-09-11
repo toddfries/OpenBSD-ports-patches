@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2011/06/08 17:37:40 rpointel Exp $
+# $OpenBSD: Makefile,v 1.14 2011/09/19 07:54:03 ajacoutot Exp $
 
 COMMENT =	GVfs mountpoint manager
 
 XFCE_VERSION =	0.4.1
 XFCE_GOODIE =	gigolo
-REVISION=	2
+REVISION=	3
 
 CATEGORIES =	x11
 
@@ -21,7 +21,7 @@ PERMIT_PACKAGE_FTP =	Yes
 MODULES =	x11/xfce4 devel/waf
 CONFIGURE_ARGS =	--mandir=${PREFIX}/man
 NO_REGRESS =	Yes
-DESKTOP_FILES =	Yes
+MODXFCE_DESKTOP_FILE =	Yes
 USE_GROFF =	Yes
 
 BUILD_DEPENDS +=devel/waf>=1.5.18

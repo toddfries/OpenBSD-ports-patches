@@ -1,18 +1,24 @@
-# $OpenBSD: Makefile,v 1.47 2010/11/26 14:44:27 espie Exp $
+# $OpenBSD: Makefile,v 1.60 2012/03/09 12:59:25 espie Exp $
 
 COMMENT-java=	Java bindings for Berkeley DB, revision ${REV}
 
 REV=		4
 VERSION=	${REV}.6.21
 PKGNAME-main=	${DISTNAME}
-PKGSPEC-main =	db->=4,<5
-# XXX specs for java,tcl ?
+PKGSPEC-main =	db->=4,<5|db->=4v0,<5v0
+PKGSPEC-java =  db-java->=4,<5|db-java->=4v0,<5v0
+PKGSPEC-tcl =   db-tcl->=4,<5|db-tcl->=4v0,<5v0
+
 PKGNAME-java=	db-java-${VERSION}
 PKGNAME-tcl=	db-tcl-${VERSION}
-REVISION-main=	4
-REVISION-java=	8
-REVISION-tcl=	9
+EPOCH-main=	0
+EPOCH-java=	0
+EPOCH-tcl=	0
+REVISION-java =	1
+REVISION-tcl =	0
 DBLIBDIR=	lib/db4
+
+# XXX sync LIBdb_VERSION in x11/gnome/libgda
 SHARED_LIBS +=	db                   5.0      # .0.0
 SHARED_LIBS +=	db_cxx               6.0      # .0.0
 SHARED_LIBS +=	db_java              5.0      # .0.0
@@ -32,25 +38,14 @@ CONFIGURE_STYLE=gnu
 DEST_SUBDIR=	${REV}
 WANTLIB=	c m stdc++
 
-PSEUDO_FLAVORS=	java
-FLAVOR?=
+PSEUDO_FLAVORS=	no_java bootstrap
+FLAVOR?= 
+MULTI_PACKAGES = -java
 
-RUN_DEPENDS-java=	databases/db/v${REV} \
+RUN_DEPENDS-java=	${BUILD_PKGPATH} \
 			${MODJAVA_RUN_DEPENDS}
-RUN_DEPENDS-tcl=	databases/db/v${REV}
+RUN_DEPENDS-tcl=	${BUILD_PKGPATH}
 WANTLIB-java=
-
-.if ${FLAVOR:L:Mjava}
-MULTI_PACKAGES+=-java
-CONFIGURE_ARGS+=--enable-java
-MODULES+=	java
-MODJAVA_VER=	1.4+
-MODJAVA_JRERUN=	Yes
-CONFIGURE_ENV+=	JAVAC=${JAVA_HOME}/bin/javac \
-		JAR=${JAVA_HOME}/bin/jar \
-		JAVA=${JAVA_HOME}/bin/java
-MAKE_FLAGS+=	DBJVERSION=${LIBdb_java_VERSION}
-.endif
 
 SUBST_VARS=	LIBdb_tcl_VERSION
 

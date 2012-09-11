@@ -1,10 +1,13 @@
 #!/bin/sh
 #
-# $OpenBSD: nrpe.rc,v 1.1 2011/01/20 14:04:42 sthen Exp $
+# $OpenBSD: nrpe.rc,v 1.3 2012/09/05 19:55:57 sthen Exp $
 
-daemon="${TRUEPREFIX}/sbin/nrpe"
-daemon_flags="-d"
+daemon="${TRUEPREFIX}/sbin/nrpe -d"
 
 . /etc/rc.d/rc.subr
+
+rc_pre() {
+	install -o _nrpe -d /var/run/nrpe
+}
 
 rc_cmd $1

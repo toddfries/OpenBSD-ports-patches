@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.10 2011/03/30 07:59:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2012/09/01 14:36:56 ajacoutot Exp $
 
 COMMENT=	C++ binding for the ATK library
 
 GNOME_PROJECT=	atkmm
-GNOME_VERSION=	2.22.5
+GNOME_VERSION=	2.22.6
+REVISION=	0
 
 PKGNAME=	atk2mm-${GNOME_VERSION}
 
@@ -19,8 +20,8 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += m stdc++ atk-1.0 glib-2.0 glibmm-2.4 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 pcre sigc-2.0
+WANTLIB += atk-1.0 ffi glib-2.0 glibmm-2.4 gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 m pcre sigc-2.0 stdc++
 
 MODULES=	devel/gettext \
 		x11/gnome
@@ -31,8 +32,7 @@ LIB_DEPENDS=	devel/glib2mm \
 USE_GMAKE=	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-static \
+CONFIGURE_ARGS=	--enable-static \
 		--disable-dependency-tracking
 
 .include <bsd.port.mk>

@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2010/11/22 08:37:05 espie Exp $
-# $FreeBSD: ports/x11-wm/wmthemeinstall/Makefile,v 1.5 2000/10/05 06:42:57 reg Exp $
+# $OpenBSD: Makefile,v 1.22 2012/08/18 12:41:39 ajacoutot Exp $
 
 COMMENT=		neat theme manager for Window Maker
 
 DISTNAME=		wmthemeinstall-0.62
 CATEGORIES=		x11 x11/windowmaker
 
-REVISION=		0
+REVISION=		1
 
 MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
 
@@ -23,7 +22,7 @@ MODULES=		devel/gettext
 RUN_DEPENDS=		x11/windowmaker
 LIB_DEPENDS=		x11/gtk+
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 USE_GMAKE=		Yes
 NO_REGRESS=		Yes
 CONFIGURE_STYLE=	gnu

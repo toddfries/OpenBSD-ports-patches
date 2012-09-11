@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.5 2010/03/21 13:50:27 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.7 2012/06/06 15:01:49 jakob Exp $
 @conflict ldns-*
 %%SHARED%%
 bin/ldns-config
@@ -10,6 +10,7 @@ include/ldns/dnssec.h
 include/ldns/dnssec_sign.h
 include/ldns/dnssec_verify.h
 include/ldns/dnssec_zone.h
+include/ldns/duration.h
 include/ldns/error.h
 include/ldns/higher.h
 include/ldns/host2str.h
@@ -34,6 +35,7 @@ include/ldns/wire2host.h
 include/ldns/zone.h
 lib/libldns.a
 lib/libldns.la
+@man man/man1/ldns-config.1
 @man man/man3/ldns_bget_token.3
 @man man/man3/ldns_bgetc.3
 @man man/man3/ldns_bskipcs.3

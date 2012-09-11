@@ -1,21 +1,18 @@
-# $OpenBSD: Makefile,v 1.7 2011/06/20 18:15:29 sebastia Exp $
+# $OpenBSD: Makefile,v 1.11 2012/03/23 11:58:23 ajacoutot Exp $
 
 COMMENT=	implementation of basic iCAL protocols
 
-DISTNAME=	libical-0.44
-REVISION=	3
+DISTNAME=	libical-0.48
 
-SHARED_LIBS +=  ical                 1.0      # .44.0
-SHARED_LIBS +=  icalss               1.0      # .44.0
-SHARED_LIBS +=  icalvcal             0.0      # .44.0
+SHARED_LIBS +=  ical                 2.0      # 48.0
+SHARED_LIBS +=  icalss               2.0      # 48.0
+SHARED_LIBS +=  icalvcal             1.0      # 48.0
 
 CATEGORIES=	textproc
 
 HOMEPAGE=	http://freeassociation.sf.net/
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=freeassociation/}
-
-MAINTAINER=	Sebastian Reitenbach <sebastia@openbsd.org>
 
 # MPL/LGPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -26,7 +23,8 @@ PERMIT_DISTFILES_FTP=	Yes
 USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
+CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--without-builtintz
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/libical/

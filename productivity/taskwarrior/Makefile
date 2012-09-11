@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/04 12:10:43 kili Exp $
+# $OpenBSD: Makefile,v 1.5 2012/07/10 15:22:45 jasper Exp $
 
 COMMENT =	command line todo list manager
 
-VERSION =	1.9.4
+VERSION =	2.0.0
 DISTNAME =	task-${VERSION}
 PKGNAME =	taskwarrior-${VERSION}
-REVISION =	0
+REVISION =	1
 CATEGORIES =	productivity
 
 HOMEPAGE =	http://www.taskwarrior.org/
@@ -18,11 +18,13 @@ PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
-MODULES =		devel/cmake
+MODULES =		devel/cmake \
+			lang/lua
+MODLUA_SA =		Yes
 
-WANTLIB =		c e2fs-uuid lua m stdc++
+WANTLIB =		c e2fs-uuid m stdc++ ${MODLUA_WANTLIB}
 
-LIB_DEPENDS =		lang/lua \
+LIB_DEPENDS =		${MODLUA_LIB_DEPENDS} \
 			sysutils/e2fsprogs
 
 CONFIGURE_STYLE =	cmake
@@ -32,7 +34,9 @@ CONFIGURE_ARGS +=	-DTASK_DOCDIR=share/taskwarrior \
 			-DTASK_MAN5DIR=man/man5
 
 CONFIGURE_ENV +=	CFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib -le2fs-uuid"
+			LDFLAGS="-L${LOCALBASE}/lib"
+
+NO_REGRESS =		Yes
 
 pre-configure:
 	@perl -pi -e 's|share/doc/task/|share/taskwarrior/|g' \

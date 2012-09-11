@@ -1,4 +1,4 @@
-# $OpenBSD: mozilla.port.mk,v 1.35 2011/08/24 06:16:48 landry Exp $
+# $OpenBSD: mozilla.port.mk,v 1.44 2012/09/01 17:48:19 landry Exp $
 
 SHARED_ONLY =	Yes
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc64
@@ -7,7 +7,7 @@ ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc64
 SHARED_LIBS +=	${_lib}	${SO_VERSION}
 .endfor
 
-PKGNAME ?=	${MOZILLA_PROJECT}-${MOZILLA_VERSION}
+PKGNAME ?=	${MOZILLA_PROJECT}-${MOZILLA_VERSION:S/b/beta/}
 
 MAINTAINER ?=	Landry Breuil <landry@openbsd.org>
 
@@ -17,6 +17,7 @@ MOZILLA_DIST_VERSION ?=	${MOZILLA_VERSION}
 HOMEPAGE ?=	http://www.mozilla.org/projects/${MOZILLA_DIST}
 
 MASTER_SITES ?=	http://releases.mozilla.org/pub/mozilla.org/${MOZILLA_DIST}/releases/${MOZILLA_DIST_VERSION}/source/ \
+		https://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_DIST}/releases/${MOZILLA_DIST_VERSION}/source/ \
 		ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_DIST}/releases/${MOZILLA_DIST_VERSION}/source/
 DISTNAME ?=	${MOZILLA_DIST}-${MOZILLA_DIST_VERSION}.source
 EXTRACT_SUFX ?=	.tar.bz2
@@ -27,13 +28,13 @@ MODMOZ_BUILD_DEPENDS =	devel/libIDL \
 			archivers/zip>=2.3
 
 MODMOZ_LIB_DEPENDS =	x11/gtk+2 \
-			devel/nspr>=4.8.9 \
-			security/nss>=3.12.11
+			devel/nspr>=4.9 \
+			security/nss>=3.12.13
 
 MODMOZ_WANTLIB =	X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi \
 		Xinerama Xrandr Xrender Xt atk-1.0 c cairo crypto expat \
 		fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
-		gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 jpeg krb5 m \
+		gobject-2.0 gthread-2.0 gtk-x11-2.0 jpeg krb5 m \
 		nspr4>=21 nss3>=25 pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pixman-1 plc4>=21 plds4>=21 png pthread pthread-stubs \
 		smime3>=25 sndio softokn3>=25 ssl3>=25 stdc++ xcb \
@@ -41,9 +42,11 @@ MODMOZ_WANTLIB =	X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi \
 
 # for all mozilla ports, build against systemwide sqlite3
 MODMOZ_WANTLIB +=	sqlite3
-MODMOZ_LIB_DEPENDS +=	databases/sqlite3>=3.7.5
 CONFIGURE_ARGS +=	--enable-system-sqlite
 CONFIGURE_ENV +=	ac_cv_sqlite_secure_delete=yes
+
+# avoids OOM when linking libxul
+CONFIGURE_ENV +=	LDFLAGS="-Wl,--no-keep-memory"
 
 WANTLIB +=	${MODMOZ_WANTLIB}
 BUILD_DEPENDS +=${MODMOZ_BUILD_DEPENDS}
@@ -122,7 +125,8 @@ MOZ =		${PREFIX}/${MOZILLA_PROJECT}
 MOB =		${WRKSRC}/${_MOZDIR}/dist/bin
 
 # needed for PLIST and config/autoconf.mk.in
-SUBST_VARS +=	MOZILLA_PROJECT MOZILLA_VERSION
+MOZILLA_VER =	${MOZILLA_VERSION:C/b.$//}
+SUBST_VARS +=	MOZILLA_PROJECT MOZILLA_VER MOZILLA_VERSION 
 
 MAKE_ENV +=	MOZ_CO_PROJECT=${MOZILLA_CODENAME} \
 		LD_LIBRARY_PATH=${MOB} \
@@ -139,8 +143,6 @@ MODGNU_CONFIG_GUESS_DIRS +=	${WRKSRC}/${_MOZDIR}/build/autoconf \
 				${WRKSRC}/${_MOZDIR}/js/src/build/autoconf
 
 post-extract:
-# XXX nsSound.cpp different between mozilla branch - need to use local one
-	cp -f ${FILESDIR}/nsSound.cpp ${WRKSRC}/${_MOZDIR}/widget/src/gtk2/
 # syndeyaudio sndio file comes from ffx FILESDIR
 	cp -f ${PORTSDIR}/www/mozilla-firefox/files/sydney_audio_sndio.c \
 		${WRKSRC}/${_MOZDIR}/media/libsydneyaudio/src/
@@ -149,8 +151,11 @@ post-extract:
 MOZILLA_SUBST_FILES +=	${_MOZDIR}/xpcom/io/nsAppFileLocationProvider.cpp \
 			${_MOZDIR}/build/unix/mozilla.in \
 			${_MOZDIR}/extensions/spellcheck/hunspell/src/mozHunspell.cpp \
-			${_MOZDIR}/js/src/xpconnect/shell/Makefile.in \
 			${_MOZDIR}/toolkit/xre/nsXREDirProvider.cpp
+
+.if ${MOZILLA_BRANCH} == 1.9.1 || ${MOZILLA_BRANCH} == 1.9.2
+MOZILLA_SUBST_FILES +=	${_MOZDIR}/js/src/xpconnect/shell/Makefile.in
+.endif
 
 pre-configure:
 .for d in ${MOZILLA_AUTOCONF_DIRS}

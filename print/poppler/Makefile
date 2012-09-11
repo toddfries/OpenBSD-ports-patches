@@ -1,23 +1,25 @@
-# $OpenBSD: Makefile,v 1.53 2011/07/08 21:08:46 kili Exp $
-.include <bsd.own.mk>
+# $OpenBSD: Makefile,v 1.66 2012/09/02 15:21:17 kili Exp $
 
 COMMENT-main=	PDF rendering library
 COMMENT-qt=	qt interface to PDF rendering library
 COMMENT-qt4=	qt4 interface to PDF rendering library
+COMMENT-utils=	PDF conversion tools and utilities
 
-V=		0.16.7
+V=		0.20.3
 DISTNAME=	poppler-$V
 CATEGORIES=	print
 PKGNAME-main=	poppler-$V
-FULLPKGNAME-qt=	poppler-qt-$V
-FULLPKGNAME-qt4=poppler-qt4-$V
+PKGNAME-utils= poppler-utils-$V
+PKGNAME-qt=	poppler-qt-$V
+PKGNAME-qt4=	poppler-qt4-$V
+OLDSHIT = poppler-0.16.7
 
-REVISION-main=	0
-
-SHARED_LIBS +=	poppler              10.0
-SHARED_LIBS +=	poppler-glib         8.0
-SHARED_LIBS +=	poppler-qt           8.0
-SHARED_LIBS +=	poppler-qt4          7.0
+SHARED_LIBS +=	poppler              13.0
+SHARED_LIBS +=  poppler-cpp          2.0
+SHARED_LIBS +=	poppler-glib         10.0
+SHARED_LIBS +=	poppler-qt           9.0
+SHARED_LIBS +=	poppler-qt4          9.0
+DISTFILES = ${DISTNAME}${EXTRACT_SUFX} ${OLDSHIT}${EXTRACT_SUFX}
 
 HOMEPAGE=	http://poppler.freedesktop.org/
 
@@ -31,80 +33,88 @@ PERMIT_DISTFILES_CDROM=	Yes
 
 MASTER_SITES=	${HOMEPAGE}
 
-PSEUDO_FLAVORS=no_qt no_qt4
-FLAVOR?=
+PSEUDO_FLAVORS=no_qt no_qt4 bootstrap
+# XXX not strictly a bootstrap loop, but on the critical path for libreoffice
+FLAVOR?=no_qt no_qt4 bootstrap
 
-MULTI_PACKAGES=-main
+NOT_FOR_ARCHS-qt4 = arm
 
-cWANTLIB=	expat freetype fontconfig jpeg m z stdc++
+MULTI_PACKAGES=-main -qt -qt4 -utils
 
+.include <bsd.port.arch.mk>
 
-.if empty(FLAVOR:L:Mno_qt)
-MULTI_PACKAGES+=-qt
+cWANTLIB=	expat freetype fontconfig jpeg m tiff z stdc++
+
+.if ${BUILD_PACKAGES:M-qt}
 MODULES+=	x11/qt3
 .else
 CONFIGURE_ARGS+=	--disable-poppler-qt
 .endif
 
-NOT_FOR_ARCHS-qt4 = arm
-.if empty(FLAVOR:L:Mno_qt4)
-MULTI_PACKAGES+=-qt4
-.endif
-
-.if ${MULTI_PACKAGES:L:M-qt4} && ${MACHINE_ARCH} != "arm"
+.if ${BUILD_PACKAGES:M-qt4}
 MODULES+=	x11/qt4
 .else
 CONFIGURE_ARGS+=	--disable-poppler-qt4
 .endif
 
-# XXX g-ir-scanner failure with gcc3
-.if ${COMPILER_VERSION:L:Mgcc4*}
-PKG_ARGS+= 	-DGCC4=1
-BUILD_DEPENDS+=	devel/gobject-introspection
-CONFIGURE_ARGS+=--enable-introspection
-.else
-PKG_ARGS+=	-DGCC4=0
-CONFIGURE_ARGS+=--disable-introspection
-.endif
+MODULES+=	devel/gettext
 
-MODULES+=	devel/gettext converters/libiconv
+BUILD_DEPENDS+= devel/gobject-introspection
 
 LIB_DEPENDS-main=${MODGETTEXT_LIB_DEPENDS} \
-		${MODLIBICONV_LIB_DEPENDS} \
-		x11/gtk+2 \
-		graphics/lcms \
+		devel/glib2 \
+		graphics/cairo \
+		graphics/lcms2 \
 		graphics/openjpeg \
-		textproc/libxml
+		graphics/png \
+		graphics/tiff
+
 LIB_DEPENDS-qt=	${MODQT3_LIB_DEPENDS} \
-		${MODLIBICONV_LIB_DEPENDS} \
-		print/poppler
-LIB_DEPENDS-qt4=x11/qt4 \
-		${MODGETTEXT_LIB_DEPENDS} \
 		print/poppler
 
-WANTLIB-main=	${cWANTLIB} Xcursor Xext Xfixes Xi Xinerama Xrandr c gio-2.0 \
-		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 pango-1.0 xml2 \
-		pangocairo-1.0 pangoft2-1.0 pixman-1 gdk_pixbuf-2.0 openjpeg \
-		X11 Xau Xcomposite Xdamage Xdmcp Xrender cairo pcre png \
-		pthread pthread-stubs xcb xcb-render gdk-x11-2.0 lcms GL Xxf86vm \
+LIB_DEPENDS-qt4=${MODQT4_LIB_DEPENDS} \
+		print/poppler
+
+LIB_DEPENDS-utils=${MODGETTEXT_LIB_DEPENDS} \
+		print/poppler
+
+WANTLIB-main=	${cWANTLIB} Xext Xfixes ffi \
+		glib-2.0 gobject-2.0 gthread-2.0 \
+		pixman-1 openjpeg \
+		X11 Xau Xdamage Xdmcp Xrender cairo pcre png \
+		pthread-stubs xcb xcb-render lcms2 GL Xxf86vm \
 		drm xcb-shm ${MODGETTEXT_WANTLIB}
-WANTLIB-qt=	${cWANTLIB} lcms openjpeg xml2 poppler png ${MODQT3_WANTLIB} \
-		${MODLIBICONV_WANTLIB}
-WANTLIB-qt4=	${cWANTLIB} ICE QtCore QtGui QtXml SM X11 Xau Xdmcp Xext Xi \
-                Xinerama Xrender glib-2.0 gobject-2.0 gthread-2.0 lcms \
-		openjpeg pcre png poppler pthread-stubs xcb xml2 \
-		QtCore QtGui QtXml ${MODGETTEXT_WANTLIB}
+WANTLIB-qt=	${cWANTLIB} lcms2 openjpeg poppler png ${MODQT3_WANTLIB}
+WANTLIB-qt4=	${cWANTLIB} ${MODQT4_WANTLIB} ICE QtGui QtXml SM X11 Xext Xi \
+                Xinerama Xrender lcms2 openjpeg png poppler QtCore QtGui QtXml
+WANTLIB-utils=	GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm \
+		c cairo drm expat ffi fontconfig freetype glib-2.0 \
+		gobject-2.0 gthread-2.0 jpeg lcms2 m pcre pixman-1 png \
+		pthread pthread-stubs stdc++ tiff xcb xcb-render xcb-shm \
+		openjpeg poppler z ${cWANTLIB} ${MODGETTEXT_WANTLIB}
 
-CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS+= --enable-xpdf-headers \
-		--disable-poppler-cpp \
+CONFIGURE_STYLE=autoconf
+AUTOCONF_VERSION=2.68
+CONFIGURE_ARGS+= --disable-gtk-doc \
+		--enable-xpdf-headers \
+		--enable-poppler-cpp \
 		--enable-utils \
-		--enable-zlib
+		--enable-zlib \
+		--disable-gtk-test
 
-CONFIGURE_ENV+= CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV+= CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
+
+post-extract:
+	cd ${WRKDIST} && \
+	    for i in poppler-qt-uninstalled.pc.in poppler-qt.pc.cmake \
+		poppler-qt.pc.in; do  \
+			ln -sf ../${OLDSHIT}/$$i $$i; \
+	    done; \
+	    ln -sf ../../${OLDSHIT}/m4/qt.m4 m4/qt.m4
+	cd ${WRKDIST} && cp -R ../${OLDSHIT}/qt qt
 
 .include <bsd.port.mk>

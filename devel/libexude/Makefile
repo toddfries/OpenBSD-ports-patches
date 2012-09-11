@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.2 2011/07/04 16:40:21 dhill Exp $
+# $OpenBSD: Makefile,v 1.9 2012/09/01 12:02:27 naddy Exp $
 
 COMMENT=	memory allocation debugger library
 
-DISTNAME=	exude-0.3.0
+DISTNAME=	exude-0.7.1
 PKGNAME=	lib${DISTNAME}
+REVISION=	0
 CATEGORIES=    	devel
-SHARED_LIBS=	exude	1.0
+SHARED_LIBS=	exude	3.1
 
 HOMEPAGE=	http://opensource.conformal.com/wiki/Exude	
 MASTER_SITES=	http://opensource.conformal.com/snapshots/exude/
 
-MAINTAINER=	David Hill <dhill@openbsd.org>
-
-NO_REGRESS=	Yes
+MAINTAINER=	David Hill <dhill@mindcry.org>
 
 # ISC
 PERMIT_PACKAGE_CDROM=	Yes
@@ -21,15 +20,6 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 BUILD_DEPENDS=	devel/libclog
-
-# See bsd.lib.mk:162
-.if ${MACHINE_ARCH:Mmips64*}
-PKG_ARGS+=      -Dno_mips64=0
-.else
-PKG_ARGS+=      -Dno_mips64=1
-.endif
-
-FAKE_FLAGS=	MANDIR=${PREFIX}/man/man
 
 do-configure:
 	printf "major=${LIBexude_VERSION:R}\nminor=${LIBexude_VERSION:E}\n" \

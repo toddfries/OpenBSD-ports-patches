@@ -1,13 +1,17 @@
-# $OpenBSD: Makefile,v 1.267 2011/07/30 06:48:09 fgsch Exp $
-# $FreeBSD: Makefile,v 1.40 1997/11/16 22:49:20 fenner Exp $
+# $OpenBSD: Makefile,v 1.287 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += abcde
+     SUBDIR += abcde,lame
      SUBDIR += ac3dec
      SUBDIR += akode
+     SUBDIR += alac_decoder
      SUBDIR += amarok
      SUBDIR += aqualung
+     SUBDIR += ardour
      SUBDIR += ascd
+     SUBDIR += aubio
+     SUBDIR += aucatctl
      SUBDIR += audacious
      SUBDIR += audacious-plugins
      SUBDIR += audacity
@@ -23,8 +27,10 @@
      SUBDIR += cmt
      SUBDIR += cmu-sphinx3
      SUBDIR += cmu-sphinxbase
+     SUBDIR += cmus
      SUBDIR += cplay
      SUBDIR += daapd
+     SUBDIR += deadbeef
      SUBDIR += disc-cover
      SUBDIR += dumb
      SUBDIR += easytag
@@ -54,7 +60,6 @@
      SUBDIR += hydrogen
      SUBDIR += id3ed
      SUBDIR += id3lib
-     SUBDIR += ifp-line
      SUBDIR += jack
      SUBDIR += ksmp3play
      SUBDIR += ladspa
@@ -70,11 +75,11 @@
      SUBDIR += libdca
      SUBDIR += libgpod
      SUBDIR += libid3tag
+     SUBDIR += liblo
      SUBDIR += libmad
      SUBDIR += libmikmod
      SUBDIR += libmodplug
      SUBDIR += libmp3splt
-     SUBDIR += libmpcdec
      SUBDIR += libmpd
      SUBDIR += libmpdclient
      SUBDIR += libmusicbrainz
@@ -115,9 +120,9 @@
      SUBDIR += mpegaudio
      SUBDIR += mpg123
      SUBDIR += mpg321
-     SUBDIR += mppenc
      SUBDIR += mt-daapd
      SUBDIR += multimux
+     SUBDIR += musepack
      SUBDIR += nap
      SUBDIR += ncmpc
      SUBDIR += ncmpcpp
@@ -126,7 +131,10 @@
      SUBDIR += nspmod
      SUBDIR += oggtag
      SUBDIR += openal
+     SUBDIR += opencore-amr
      SUBDIR += opennap
+     SUBDIR += opus
+     SUBDIR += opus-tools
      SUBDIR += p5-Audio-CD
      SUBDIR += p5-Audio-FLAC-Header
      SUBDIR += p5-Audio-M4P
@@ -156,8 +164,9 @@
      SUBDIR += picard
      SUBDIR += pms
      SUBDIR += portaudio-svn
-     SUBDIR += py-audio
+     SUBDIR += pulseaudio
      SUBDIR += py-ao
+     SUBDIR += py-audio
      SUBDIR += py-cddb
      SUBDIR += py-eyed3
      SUBDIR += py-id3
@@ -182,6 +191,7 @@
      SUBDIR += ruby-vorbis_comment,ruby19
      SUBDIR += scmpc
      SUBDIR += shell-fm
+     SUBDIR += shntool
      SUBDIR += shorten
      SUBDIR += sidplay
      SUBDIR += snack
@@ -191,6 +201,7 @@
      SUBDIR += soundtouch
      SUBDIR += soundtracker
      SUBDIR += sox
+     SUBDIR += speech-dispatcher
      SUBDIR += speex
      SUBDIR += squeezecenter
      SUBDIR += streamripper
@@ -205,6 +216,7 @@
      SUBDIR += tracker
      SUBDIR += tremor
      SUBDIR += tremor-tools
+     SUBDIR += twolame
      SUBDIR += umurmur
      SUBDIR += vagalume
      SUBDIR += vamp-plugin-sdk
@@ -218,7 +230,6 @@
      SUBDIR += wmmp3
      SUBDIR += wmtune
      SUBDIR += wmtune,zoltrix
-     SUBDIR += workman
      SUBDIR += xcd
      SUBDIR += xcdplayer
      SUBDIR += xhippo

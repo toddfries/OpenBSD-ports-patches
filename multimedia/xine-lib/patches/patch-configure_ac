@@ -1,7 +1,7 @@
-$OpenBSD: patch-configure_ac,v 1.7 2010/09/13 20:12:16 sthen Exp $
---- configure.ac.orig	Sun Jul 25 10:37:30 2010
-+++ configure.ac	Wed Aug 25 11:21:06 2010
-@@ -565,9 +565,9 @@ t q
+$OpenBSD: patch-configure_ac,v 1.15 2012/08/28 05:54:05 ajacoutot Exp $
+--- configure.ac.orig	Sat Jun  9 12:40:10 2012
++++ configure.ac	Sat Jun 30 22:43:15 2012
+@@ -558,9 +558,9 @@ t q
  b
  :q
  q"
@@ -13,16 +13,16 @@ $OpenBSD: patch-configure_ac,v 1.7 2010/09/13 20:12:16 sthen Exp $
  AC_DEFINE_UNQUOTED([LIBXV_SO],  "${x_lib_location:-libXv.so}",  [The soname of libXv, needed for dlopen()])
  
  
-@@ -1309,7 +1309,7 @@ if test "x$enable_a52dec" = "xno"; then
-   AC_MSG_RESULT([a52dec support disabled])
- elif test "x$external_a52dec" = "xyes"; then
-   have_a52="yes"
--  AC_CHECK_HEADERS([a52dec/a52.h a52dec/a52_internal.h],, have_a52="no",
-+  AC_CHECK_HEADERS([a52dec/a52.h],, have_a52="no",
- [
-   #ifdef HAVE_SYS_TYPES_H
-   # include <sys/types.h>
-@@ -1402,9 +1402,10 @@ if test "x$with_mng" = "xyes"; then
+@@ -1369,7 +1369,7 @@ if test "x$enable_musepack" = "xno"; then
+    AC_MSG_RESULT([musepack support disabled])
+ elif test "x$with_external_libmpcdec" = "xyes"; then
+    AC_CHECK_LIB([mpcdec], [mpc_demux_decode], [have_mpcdec=yes],
+-   [AC_CHECK_LIB([mpcdec], [mpc_decoder_decode], [have_mpcdec=yes])])
++   [AC_CHECK_LIB([mpcdec], [mpc_decoder_decode], [have_mpcdec=yes])], [-lm])
+    AC_CHECK_HEADERS([mpc/mpcdec.h], [],
+    [AC_CHECK_HEADERS([mpcdec/mpcdec.h], [], [have_mpcdec=no])])
+    if test "x$have_mpcdec" != "xyes"; then
+@@ -1395,9 +1395,10 @@ if test "x$with_mng" = "xyes"; then
    AC_CHECK_LIB(mng, mng_initialize,
  	[ AC_CHECK_HEADER(libmng.h,
  		[ have_libmng=yes
@@ -35,12 +35,3 @@ $OpenBSD: patch-configure_ac,v 1.7 2010/09/13 20:12:16 sthen Exp $
    AC_SUBST(MNG_LIBS)
  else
    have_libmng=no
-@@ -2708,6 +2709,8 @@ CC_CHECK_CFLAGS_APPEND([-Wformat=2 -Wformat],
-   [CC_CHECK_CFLAGS_APPEND([-Wno-format-zero-length])
-    break;
-   ])
-+
-+CC_CHECK_CFLAGS_APPEND([-Wformat-security])
- 
- dnl check for strict aliasing problem, get the highest between =2 and
- dnl normal.

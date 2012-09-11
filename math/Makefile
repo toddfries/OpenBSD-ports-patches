@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.104 2011/04/29 17:55:50 matthew Exp $
-#
+# $OpenBSD: Makefile,v 1.111 2012/08/21 07:18:45 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += R
@@ -26,6 +25,7 @@
      SUBDIR += fftw3,float
      SUBDIR += freemat
      SUBDIR += galculator
+     SUBDIR += geogebra
      SUBDIR += ginac
      SUBDIR += gnumeric
      SUBDIR += gnuplot
@@ -41,6 +41,8 @@
      SUBDIR += lapack
      SUBDIR += libneural
      SUBDIR += logic2cnf
+     SUBDIR += lpsolve
+     SUBDIR += lrs
      SUBDIR += maple
      SUBDIR += maple-share
      SUBDIR += mathomatic
@@ -59,6 +61,7 @@
      SUBDIR += p5-AI-NeuralNet-Kohonen-Visual
      SUBDIR += p5-AI-NeuralNet-Mesh
      SUBDIR += p5-AI-Perceptron
+     SUBDIR += p5-Algorithm-Combinatorics
      SUBDIR += p5-Algorithm-NaiveBayes
      SUBDIR += p5-Bit-Vector
      SUBDIR += p5-Chart-Math-Axis
@@ -76,6 +79,7 @@
      SUBDIR += p5-Math-GMP
      SUBDIR += p5-Math-MatrixReal
      SUBDIR += p5-Math-Pari
+     SUBDIR += p5-Math-Random-ISAAC
      SUBDIR += p5-Math-Round
      SUBDIR += p5-Math-Spline
      SUBDIR += p5-Math-Symbolic
@@ -92,6 +96,7 @@
      SUBDIR += py-numpy
      SUBDIR += py-probstat
      SUBDIR += py-scipy
+     SUBDIR += py-sympy
      SUBDIR += qhull
      SUBDIR += qrupdate
      SUBDIR += qtoctave

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2011/06/08 17:33:59 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2012/04/23 17:15:17 espie Exp $
 
 COMMENT =	SQLite3 adapter for Python
 
@@ -6,7 +6,7 @@ MODPY_EGG_VERSION =	2.6.0
 
 DISTNAME =	pysqlite-${MODPY_EGG_VERSION}
 PKGNAME =	py-sqlite2-${MODPY_EGG_VERSION}
-REVISION =	0
+REVISION =	3
 CATEGORIES =	databases devel
 
 MAINTAINER =	Eric Faurot <eric@openbsd.org>
@@ -21,8 +21,7 @@ PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
 
-LIB_DEPENDS =	databases/sqlite3
-WANTLIB +=	sqlite3>=8.6
+WANTLIB +=	sqlite3>=8.6 ${MODPY_WANTLIB}
 BUILD_DEPENDS =	textproc/py-sphinx
 
 MODULES =	lang/python

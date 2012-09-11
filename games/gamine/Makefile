@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/08 21:57:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2012/06/15 08:32:15 ajacoutot Exp $
 
 COMMENT=	interactive game for young children
 
 DISTNAME=	gamine-1.1
-REVISION=	1
+REVISION=	5
 
 CATEGORIES=	games
 
@@ -18,7 +18,7 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
 WANTLIB += c cairo drm expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gstreamer-0.10
@@ -32,7 +32,8 @@ MODULES=	devel/gettext \
 		devel/gconf2
 
 RUN_DEPENDS=	devel/desktop-file-utils \
-		multimedia/gstreamer-0.10/plugins-good
+		multimedia/gstreamer-0.10/plugins-good \
+		x11/gtk+2,-guic
 
 LIB_DEPENDS=	multimedia/gstreamer-0.10/core \
 		x11/gtk+2

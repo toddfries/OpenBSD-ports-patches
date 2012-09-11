@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2011/03/11 21:25:45 dhill Exp $
+# $OpenBSD: Makefile,v 1.57 2012/06/16 12:52:04 sthen Exp $
 
      SUBDIR =
      SUBDIR += arc
@@ -15,6 +15,7 @@
      SUBDIR += ha
      SUBDIR += hs-zlib
      SUBDIR += hs-zlib-bindings
+     SUBDIR += hs-zlib-enum
      SUBDIR += lha
      SUBDIR += libarchive
      SUBDIR += libmspack
@@ -39,7 +40,6 @@
      SUBDIR += par2cmdline
      SUBDIR += pecl-lzf
      SUBDIR += pecl-rar
-     SUBDIR += pecl-zip
      SUBDIR += py-lzo
      SUBDIR += ripole
      SUBDIR += ruby-archive-tar-minitar

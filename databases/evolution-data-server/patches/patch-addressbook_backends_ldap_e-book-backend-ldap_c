@@ -1,17 +1,15 @@
-$OpenBSD: patch-addressbook_backends_ldap_e-book-backend-ldap_c,v 1.3 2011/03/29 11:20:02 ajacoutot Exp $
---- addressbook/backends/ldap/e-book-backend-ldap.c.orig	Fri Oct  1 14:16:05 2010
-+++ addressbook/backends/ldap/e-book-backend-ldap.c	Tue Mar 29 12:29:16 2011
-@@ -1204,11 +1204,11 @@ create_dn_from_contact (EContact *contact, gchar *root
+$OpenBSD: patch-addressbook_backends_ldap_e-book-backend-ldap_c,v 1.7 2012/03/29 06:45:21 ajacoutot Exp $
+
+On OpenBSD, time_t is an int.
+
+--- addressbook/backends/ldap/e-book-backend-ldap.c.orig	Tue Feb 28 06:01:01 2012
++++ addressbook/backends/ldap/e-book-backend-ldap.c	Fri Mar 23 23:05:19 2012
+@@ -1248,7 +1248,7 @@ create_dn_from_contact (EContact *contact,
  		}
  	}
  
 -	dn = g_strdup_printf ("%s=%s%s%lu",
-+	dn = g_strdup_printf ("%s=%s%s%llu",
++	dn = g_strdup_printf ("%s=%s%s%d",
  			      get_dn_attribute_name (rootdn),
  			      (cn_part && *cn_part) ? cn_part : "",
  			      (cn_part && *cn_part) ? "." : "",
--			      time (NULL));
-+			      (long long)time (NULL));
- 
- 	g_free (cn_part);
- 

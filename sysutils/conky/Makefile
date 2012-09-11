@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.24 2011/07/06 12:32:51 jasper Exp $
+# $OpenBSD: Makefile,v 1.33 2012/09/01 14:36:58 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= ${APM_ARCHS}
 
 COMMENT=	light-weight system monitor
 
 DISTNAME=	conky-1.8.1
-REVISION=	2
+REVISION=	11
 CATEGORIES=	sysutils
 HOMEPAGE=	http://conky.sourceforge.net/
 
@@ -20,15 +20,17 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB=	c crypto kvm idn m ncurses ossaudio pthread ssl z \
-		glib-2.0 pcre curl xml2 lua>=5.1
+		glib-2.0 pcre curl xml2 ${MODLUA_WANTLIB}
 
-MODULES=	devel/gettext
+MODULES=	devel/gettext \
+		lang/lua
+MODLUA_SA=	Yes
 
 LIB_DEPENDS=	devel/glib2 \
 		devel/pcre \
 		net/curl \
 		textproc/libxml \
-		lang/lua
+		${MODLUA_LIB_DEPENDS}
 
 USE_LIBTOOL=	Yes
 
@@ -56,12 +58,12 @@ WANTLIB+=	Imlib2 X11 Xau Xdamage Xdmcp Xext Xfixes Xft \
 .if ${FLAVOR:L:Maudacious}
 CONFIGURE_ARGS+=--enable-audacious=yes
 LIB_DEPENDS+=	audio/audacious
-WANTLIB +=      GL Xcomposite Xcursor Xi Xinerama Xrandr Xxf86vm \
-		atk-1.0 audclient audcore audgui cairo dbus-1 \
-		dbus-glib-1 drm execinfo gdk-x11-2.0 \
-		gdk_pixbuf-2.0 gio-2.0 gmodule-2.0 gobject-2.0 \
-		gthread-2.0 gtk-x11-2.0 mcs mowgli pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 pixman-1 png \
+WANTLIB +=	GL Xcomposite Xcursor Xi Xinerama Xrandr Xxf86vm \
+		atk-1.0 audclient audcore audgui cairo \
+		cairo-gobject dbus-1 dbus-glib-1 drm ffi \
+		gdk-3 gdk_pixbuf-2.0 gio-2.0 gmodule-2.0 \
+		gobject-2.0 gthread-2.0 gtk-3 pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pixman-1 png stdc++ \
 		xcb-render xcb-shm
 .endif
 
@@ -80,7 +82,9 @@ CONFIGURE_ARGS+=--enable-mpd \
 		--enable-lua \
 		--enable-curl \
 		--with-libiconv-prefix="${LOCALBASE}"
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" LDFLAGS="-L${LOCALBASE}/lib" \
+		LUA_CFLAGS="`pkg-config --cflags ${MODLUA_DEP}`" \
+		LUA_LIBS="`pkg-config --libs ${MODLUA_DEP}`"
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/conky

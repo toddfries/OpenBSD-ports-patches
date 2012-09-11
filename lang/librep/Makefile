@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.53 2011/07/18 17:26:41 naddy Exp $
+# $OpenBSD: Makefile,v 1.58 2012/07/07 09:07:03 jasper Exp $
 
 COMMENT=	Emacs Lisp-like runtime library
 
 SHARED_ONLY=	Yes
 
-VERSION=	0.92.0
+VERSION=	0.92.2.1
 DISTNAME=	librep-${VERSION}
+
 SHARED_LIBS +=  rep                  14.0     # .16.0
 
 CATEGORIES=	lang
@@ -21,9 +22,9 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=           http://download.tuxfamily.org/librep/
-EXTRACT_SUFX=           .tar.bz2
+EXTRACT_SUFX=           .tar.xz
 
-WANTLIB=		c gdbm gmp ffi m ncurses readline
+WANTLIB=		c gdbm gmp ffi m ncurses pthread readline
 
 MODULES=		devel/gettext
 LIB_DEPENDS=		databases/gdbm \
@@ -40,8 +41,12 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-static \
 			--with-aclocaldir=${PREFIX}/share/aclocal
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib -liconv -lintl"
+
+# -pthread is needed for opening libglib-2.0:
+# rep:/usr/local/lib/libglib-2.0.so.3200.0: undefined symbol 'pthread_mutex_trylock'
+# lazy binding failed!
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -pthread" \
+			LDFLAGS="-L${LOCALBASE}/lib -liconv -lintl -pthread"
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/rep-xgettext.jl

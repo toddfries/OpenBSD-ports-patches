@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.27 2011/02/12 21:05:38 pea Exp $
+# $OpenBSD: Makefile,v 1.31 2012/07/18 08:45:42 sthen Exp $
 
 COMMENT=	apache HTTP server
 
-V=		2.2.15
+V=		2.2.22
 PKGNAME=	apache-httpd-${V}
 DISTNAME=	httpd-${V}
-REVISION=	0
 
 CATEGORIES=	www net
 
@@ -21,7 +20,7 @@ SHARED_ONLY=		Yes
 USE_GROFF =		Yes
 NO_REGRESS=		Yes
 
-WANTLIB += c crypto m ssl expat apr-1-mt db>=4 z pcre pthread aprutil-1-mt>=2
+WANTLIB += c crypto m ssl expat apr-1 db>=4 z pcre pthread aprutil-1>=2
 
 LIB_DEPENDS=		devel/pcre
 
@@ -32,9 +31,9 @@ FLAVOR?=
 CONFIGURE_ARGS+=	--with-ldap --enable-ldap --enable-authnz-ldap
 WANTLIB+=		asn1 com_err gssapi krb5 sasl2 ldap lber
 LIB_DEPENDS+=		databases/openldap
-LIB_DEPENDS+=		apr-util-mt-*-ldap:devel/apr-util,ldap,mt
+LIB_DEPENDS+=		apr-util-*-ldap:devel/apr-util,ldap
 .else
-LIB_DEPENDS+=		apr-util-mt-*-!ldap:devel/apr-util,mt
+LIB_DEPENDS+=		apr-util-*-!ldap:devel/apr-util
 .endif
 
 MODULES=		converters/libiconv
@@ -52,8 +51,8 @@ CONFIGURE_ARGS+=	--enable-layout=OpenBSD \
 			--prefix=${HTTPD_DIR} \
 			--exec-prefix=${LOCALBASE} \
 			--sysconfdir=${CONFDIR} \
-			--with-apr=${LOCALBASE}/bin/apr-1-mt-config  \
-			--with-apr-util=${LOCALBASE}/bin/apu-1-mt-config \
+			--with-apr=${LOCALBASE}/bin/apr-1-config  \
+			--with-apr-util=${LOCALBASE}/bin/apu-1-config \
 			--enable-ssl --with-ssl=/usr \
 			--with-mpm=prefork \
 			--with-program-name=httpd2 \
@@ -78,8 +77,8 @@ FAKE_FLAGS+=		rel_user=_apache2 rel_group=_apache2 \
 
 A2SBIN=			apachectl apxs dbmmanage htdigest htpasswd \
 			logresolve rotatelogs suexec
-A2MAN1=			dbmmanage htdigest htpasswd
-A2MAN8= 		apachectl apxs httpd logresolve rotatelogs suexec
+A2MAN1=			apxs dbmmanage htdigest htpasswd logresolve
+A2MAN8=			apachectl httpd rotatelogs suexec
 
 pre-configure:
 	@perl -pi -e 's,%%PREFIX%%,${PREFIX},' ${WRKSRC}/config.layout
@@ -96,7 +95,7 @@ post-install:
 .for i in ${A2MAN1}
 	mv ${PREFIX}/man/man1/${i}.1 ${PREFIX}/man/man1/${i}2.1
 .endfor
-	
+
 .for i in ${A2MAN8}
 	mv ${PREFIX}/man/man8/${i}.8 ${PREFIX}/man/man8/${i}2.8
 .endfor

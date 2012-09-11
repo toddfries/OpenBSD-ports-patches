@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.25 2011/06/08 18:03:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2012/08/29 17:50:55 jasper Exp $
 
 COMMENT=		flexible communications framework, python bindings
 
 V=			0.15.19
 DISTNAME=		telepathy-python-$V
 
-REVISION=		1
+REVISION=		2
 
 HOMEPAGE=		${HOMEPAGE_TP:=Telepathy Python}
 
@@ -18,9 +18,6 @@ RUN_DEPENDS=		devel/py-gobject \
 			textproc/libxslt \
 			x11/dbus-python \
 			x11/py-gtk2
-
-CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV+=		ac_cv_prog_PYTHON="${MODPY_BIN}"
 
 USE_LIBTOOL=		No
 

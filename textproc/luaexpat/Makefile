@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2011/06/08 14:23:11 gsoares Exp $
+# $OpenBSD: Makefile,v 1.6 2012/08/12 17:26:30 jasper Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		lua library for the expat XML parser
 DISTNAME =		luaexpat-1.2.0
+REVISION =		1
 
 CATEGORIES =		textproc
 HOMEPAGE =		http://matthewwild.co.uk/projects/luaexpat/
@@ -19,27 +20,29 @@ WANTLIB =		expat
 MASTER_SITES =		${HOMEPAGE}
 
 MODULES =		lang/lua
-REGRESS_DEPENDS =	textproc/luaexpat
+MODLUA_REGRESS_DEPENDS =	textproc/luaexpat
 
-MAKE_ENV+=		LUA_INC="${LOCALBASE}/include"
+REGRESS_FILES =		test-lom test
+
+MAKE_FLAGS+=		LUA_INC="${MODLUA_INCL_DIR}"
 USE_GMAKE =		Yes
 MAKE_FILE =		makefile
 ALL_TARGET =		lib
 
-LUA = 			${LOCALBASE}/bin/lua
+LUA = 			${MODLUA_BIN}
 
 do-install:
-	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR}
-	${INSTALL_DATA_DIR} ${MODLUA_DATADIR}
-	${INSTALL_DATA_DIR} ${MODLUA_DATADIR}/lxp
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/luaexpat
+	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR} ${MODLUA_DATADIR}/lxp
+	${INSTALL_DATA_DIR} ${MODLUA_DOCDIR}
 	${INSTALL_DATA} ${WRKSRC}/src/lxp.so ${MODLUA_LIBDIR}
 	${INSTALL_DATA} ${WRKSRC}/src/lxp/lom.lua ${MODLUA_DATADIR}/lxp
 	${INSTALL_DATA} ${WRKSRC}/doc/us/{examples,index,license,lom,manual}.html \
-		${PREFIX}/share/doc/luaexpat
-	${INSTALL_DATA} ${WRKSRC}/doc/us/luaexpat.png ${PREFIX}/share/doc/luaexpat
+		${MODLUA_DOCDIR}
+	${INSTALL_DATA} ${WRKSRC}/doc/us/luaexpat.png ${MODLUA_DOCDIR}
 
 do-regress:
-	cd ${WRKSRC}/tests && ${LUA} test-lom.lua && ${LUA} test.lua
+.for r in ${REGRESS_FILES}
+	cd ${WRKSRC}/tests && ${MODLUA_BIN} $r.lua
+.endfor
 
 .include <bsd.port.mk>

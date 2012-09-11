@@ -1,19 +1,18 @@
-# $OpenBSD: Makefile,v 1.19 2011/07/01 08:04:57 landry Exp $
+# $OpenBSD: Makefile,v 1.22 2012/08/23 13:52:39 sthen Exp $
 
 COMMENT-main =	translator library for geospatial data formats
 COMMENT-python =python bindings and utilities for GDAL
 COMMENT-perl =	perl bindings for GDAL
 
-V =		1.8.0
+V =		1.8.1
 DISTNAME =	gdal-${V}
 
 PKGNAME-main =	${DISTNAME}
 PKGNAME-python =py-${DISTNAME}
 PKGNAME-perl =	p5-Geo-GDAL-${V}
-REVISION-main =	0
-REVISION-python =	0
+REVISION-perl = 0
 
-SHARED_LIBS =	gdal 17.0
+SHARED_LIBS =	gdal 18.0 #16.1
 CATEGORIES =	geo devel
 
 HOMEPAGE =	http://www.gdal.org/
@@ -52,8 +51,9 @@ LIB_DEPENDS-python =	${PKGNAME}:${BASE_PKGPATH},-main
 WANTLIB-python =	${MODPY_WANTLIB} gdal m stdc++
 
 LIB_DEPENDS-perl =	${PKGNAME}:${BASE_PKGPATH},-main
-WANTLIB-perl =		gdal crypto curl expat geos_c geotiff gif idn \
-			jasper jpeg m png pq ssl tiff z pthread
+WANTLIB-perl =		c gdal crypto curl expat geos_c geotiff gif idn \
+			jasper jpeg m png pq ssl tiff z pthread \
+			${MODGETTEXT_WANTLIB}
 
 RUN_DEPENDS +=		math/py-numpy
 BUILD_DEPENDS +=	${RUN_DEPENDS} devel/swig
@@ -66,6 +66,7 @@ MAKE_FILE =	GNUmakefile
 MAKE_FLAGS =	LIBTOOL_FINISH=:
 USE_GMAKE =	Yes
 USE_LIBTOOL =	Yes
+NO_REGRESS =	Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include \
 			  -I${LOCALBASE}/include/libpng" \

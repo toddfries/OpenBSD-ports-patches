@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.50 2011/07/18 19:06:36 naddy Exp $
+# $OpenBSD: Makefile,v 1.62 2012/09/01 00:00:32 pascal Exp $
 
 ONLY_FOR_ARCHS =	alpha amd64 i386 m68k sparc sparc64 powerpc vax
 
@@ -15,7 +15,7 @@ PKGNAME-g77 =	g77-${FULL_PKGVERSION}
 PKGNAME-java =	gcj-${FULL_PKGVERSION}
 PKGNAME-objc =	gobjc-${FULL_PKGVERSION}
 PKGNAME-ada =	gnat-${FULL_PKGVERSION}
-SHARED_LIBS =	estdc++		6.0 \
+SHARED_LIBS =	estdc++		7.0 \
 		g2c		1.0 \
 		-org-w3c-dom	1.0 \
 		-org-xml-sax	1.0 \
@@ -23,29 +23,24 @@ SHARED_LIBS =	estdc++		6.0 \
 		objc		2.0 \
 		objc_gc		2.0
 
-REVISION-main =		0
-REVISION-c++ =		0
-#REVISION-estdc =
-REVISION-g77 =		0
-REVISION-java =		0
-REVISION-objc =		0
-REVISION-ada =		0
+REVISION-main =		6
+REVISION-c++ =		8
+REVISION-estdc =	2
+REVISION-g77 =		7
+REVISION-java =		7
+REVISION-objc =		7
+REVISION-ada =		7
 EPOCH = 		0
 
 MAINTAINER =	Marc Espie <espie@openbsd.org>
 
-PSEUDO_FLAVORS =	c++ fortran objc java ada
-
-.include <bsd.own.mk>
+PSEUDO_FLAVORS = no_c++ no_g77 no_objc no_java no_ada
+FLAVOR ?= 
 
 # currently broken on i386 ? so empty
 ONLY_FOR_ARCHS-ada =
-
-FLAVOR ?= c++ fortran objc ada
-
-.if ${FLAVOR:L:Mjava}
-FLAVOR += c++
-.endif
+# not really interesting either
+ONLY_FOR_ARCHS-java =
 
 BUILD_DEPENDS =		devel/autoconf/2.13
 BUILD_DEPENDS +=	devel/metaauto
@@ -54,7 +49,15 @@ BUILD_DEPENDS +=	devel/metaauto
 BUILD_DEPENDS += 	devel/bison
 
 
-MULTI_PACKAGES =	-main
+MULTI_PACKAGES =	-main -g77 -objc -java -c++ -estdc -ada
+
+.include <bsd.port.arch.mk>
+
+# kill both C++ subpackages
+.if !${BUILD_PACKAGES:M-c++}
+BUILD_PACKAGES := ${BUILD_PACKAGES:N-estdc}
+.endif
+
 USE_GROFF =		Yes
 
 REGRESS_DEPENDS =	devel/dejagnu
@@ -72,36 +75,24 @@ MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC} ${WRKSRC}/gcc
 
 LANGS = c
 
-.if ${FLAVOR:L:Mc++}
+.if ${BUILD_PACKAGES:M-c++}
 LANGS := 		${LANGS},c++
-MULTI_PACKAGES += 	-c++ -estdc
 .endif
 
-.if ${FLAVOR:L:Mfortran}
+.if ${BUILD_PACKAGES:M-g77}
 LANGS :=		${LANGS},f77
-MULTI_PACKAGES +=	-g77
 .endif
 
-.if ${FLAVOR:L:Mobjc}
+.if ${BUILD_PACKAGES:M-objc}
 LANGS := 		${LANGS},objc
-MULTI_PACKAGES += 	-objc
 .endif
 
-.if ${FLAVOR:L:Mjava}
+.if ${BUILD_PACKAGES:M-java}
 LANGS :=		${LANGS},java
-MULTI_PACKAGES +=	-java
 CONFIGURE_ARGS +=	--enable-java-gc=system-boehm
 .endif
 
-BUILD_ADA = No
-.if ${FLAVOR:L:Mada}
-MULTI_PACKAGES +=	-ada
-# currently broken everywhere
-.  if ${MACHINE_ARCH:L} == "i386"
-#BUILD_ADA = yes
-.  endif
-.endif
-.if ${BUILD_ADA:L} == "yes"
+.if ${BUILD_PACKAGES:M-ada}
 LANGS :=	${LANGS},ada
 DISTFILES +=	${ADASTRAP}:0
 CONFIGURE_ENV = ADAC=${WRKDIR}/bin/egcc GNATBIND=${WRKDIR}/bin/gnatbind
@@ -112,7 +103,7 @@ post-build:
 .endif
 
 post-extract:
-.if ${BUILD_ADA:L} == "yes"
+.if ${BUILD_PACKAGES:M-ada}
 .  for f in egcc gnatbind gnatmake gnatlink
 	echo "#! /bin/sh" >${WRKDIR}/bin/$f
 	echo 'GNAT_ROOT=${WRKDIR}/bootstrap GCC_ROOT=${WRKDIR}/bootstrap exec ${WRKDIR}/bootstrap/bin/$f "$$@"' >>${WRKDIR}/bin/$f
@@ -125,7 +116,7 @@ post-extract:
 .endfor
 
 post-install:
-.if ${BUILD_ADA:L} == "yes"
+.if ${BUILD_PACKAGES:M-ada}
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/lib/gcc-lib/*/$V/adainclude
 .endif
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/lib/gcc-lib/*/$V/include
@@ -143,16 +134,13 @@ CONFIGURE_ARGS = \
 # visible beast
 CONFIGURE_ARGS += --enable-cpp
 
-.if ${FLAVOR:L:Mjava}
+.if ${BUILD_PACKAGES:M-java}
 CONFIGURE_ARGS += --enable-sjlj-exceptions
 # No way around it, java wants a pure parser
 BUILD_DEPENDS += devel/bison
 .endif
 
-
-# if you wish to try your luck
-#CONFIGURE_ARGS += --enable-threads=posix
-
+CONFIGURE_ARGS += --enable-threads=posix
 CONFIGURE_ARGS += --with-gnu-as 
 CONFIGURE_ARGS += --with-gnu-ld 
 CONFIGURE_ARGS += ${CONFIGURE_SHARED}

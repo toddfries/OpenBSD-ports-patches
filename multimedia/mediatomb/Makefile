@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2011/06/26 19:04:21 edd Exp $
+# $OpenBSD: Makefile,v 1.14 2012/05/08 12:50:29 landry Exp $
 
 COMMENT =	UPnP media server
 
 VER =		0.12.1
 DISTNAME =	mediatomb-${VER}
-REVISION =	3
+REVISION =	8
 
 CATEGORIES =	multimedia
 
@@ -24,11 +24,10 @@ MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=mediatomb/}
 MODULES =	converters/libiconv
 
 LIB_DEPENDS =	audio/taglib \
-		databases/sqlite3 \
 		devel/libmagic \
 		graphics/ffmpegthumbnailer \
 		graphics/libexif \
-		lang/spidermonkey \
+		lang/spidermonkey>=1.9 \
 		net/curl \
 		multimedia/libmp4v2
 
@@ -38,7 +37,8 @@ CONFIGURE_ARGS +=	--disable-inotify \
 			--disable-mysql \
 			PTHREAD_LIBS="-pthread"
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib" \
+			ac_cv_header_execinfo_h=no
 AUTOCONF_VERSION =	2.63
 USE_GROFF =	Yes
 

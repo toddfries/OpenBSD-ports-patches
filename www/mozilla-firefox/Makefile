@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.189 2011/08/24 06:19:51 landry Exp $
+# $OpenBSD: Makefile,v 1.208 2012/09/06 12:38:35 ajacoutot Exp $
 
 COMMENT =	Mozilla web browser
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
@@ -6,15 +6,13 @@ BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 # Don't forget to bump www/firefox-i18n after updates.
 # Don't forget to update devel/xulrunner/2.0 if patches changes.
 
-MOZILLA_VERSION =	6.0
+MOZILLA_VERSION =	15.0
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	firefox
 MOZILLA_CODENAME =	browser
+REVISION =		1
 
-# url for beta releases
-# MASTER_SITES=  ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/releases/${MOZILLA_VERSION}/source/
-
-SO_VERSION =	25.0
+SO_VERSION =	34.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 MOZILLA_LIBS =	browsercomps mozalloc \
@@ -36,6 +34,7 @@ MODPY_RUNDEP =	No
 USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
 NO_REGRESS =	Yes
+SEPARATE_BUILD =	Yes
 
 CONFIGURE_STYLE =	autoconf no-autoheader
 CONFIGURE_ARGS +=	--enable-official-branding
@@ -43,22 +42,34 @@ CONFIGURE_ARGS +=	--with-system-libevent=/usr/ --disable-gconf
 CONFIGURE_ARGS +=	--with-system-zlib=/usr/ --with-system-bz2=${LOCALBASE}
 WANTLIB +=	event
 
+CONFIGURE_ARGS +=	--enable-gstreamer
+LIB_DEPENDS +=	multimedia/gstreamer-0.10/plugins-base
+
+WANTLIB += gmodule-2.0 gstapp-0.10 gstbase-0.10 gstreamer-0.10
+WANTLIB += gstvideo-0.10 xml2
+
+RUN_DEPENDS +=	multimedia/gstreamer-0.10/plugins-good
+
 .if ${MACHINE_ARCH:Msparc64}
 CONFIGURE_ARGS +=	--disable-tracejit --disable-methodjit
+.endif
+
+# XXX needed since 15.0b5, relocation overflow otherwise...
+# replaces -g by -Os
+.if ${MACHINE_ARCH} == "powerpc"
+CONFIGURE_ENV +=	MOZ_DEBUG_FLAGS="-Os"
 .endif
 
 # needed during make install
 BUILD_DEPENDS +=	archivers/unzip
 
 # ensure we depend on cairo with tee backend enabled
-LIB_DEPENDS =	graphics/cairo>=1.10.2p0
+LIB_DEPENDS +=	graphics/cairo>=1.10.2p0
 # --with-system-png=${LOCALBASE}
 # no system png : apng support not bundled in
 
 MOZILLA_AUTOCONF_DIRS +=	js/src
 MOZILLA_SUBST_FILES +=		config/autoconf.mk.in services/crypto/modules/WeaveCrypto.js
-
-SUBST_VARS +=	MOZILLA_VERSION NSS_SO_VERSION
 
 post-install:
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/mozilla-firefox.1 \
@@ -71,6 +82,10 @@ post-install:
 		${PREFIX}/share/applications/${MOZILLA_PROJECT}.desktop
 
 	# link default48.png to default.png to be used by default by non-icccm compliant wm
-	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION}/chrome/icons/default/default{48,}.png
+	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/chrome/icons/default/default{48,}.png
+
+	# cleanup useless dirs from #717616
+	rm -Rf ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/js{sub,}loader
+
 
 .include <bsd.port.mk>

@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# $OpenBSD: pdnsd.rc,v 1.2 2011/12/17 22:01:13 sthen Exp $
+
+daemon="${TRUEPREFIX}/sbin/pdnsd -d"
+
+. /etc/rc.d/rc.subr
+
+rc_reload() {
+	${TRUEPREFIX}/sbin/pdnsd-ctl config
+}
+
+rc_cmd $1

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2011/08/16 10:06:58 landry Exp $
+# $OpenBSD: Makefile,v 1.23 2012/08/26 20:35:22 landry Exp $
 
 COMMENT =	mailing list manager with web interface
 
-VERSION =	6.1.6
+VERSION =	6.1.7
 DISTNAME =	sympa-${VERSION}
+REVISION =	3
 
 CATEGORIES =	mail www
 
@@ -17,6 +18,7 @@ PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${HOMEPAGE}/distribution/ \
+			${HOMEPAGE}/distribution/old/ \
 			http://distfiles.nl/
 
 MODULES =	perl
@@ -48,7 +50,7 @@ BUILD_DEPENDS =	devel/gettext
 WANTLIB =	c
 
 RUN_DEPENDS =	archivers/p5-Archive-Zip \
-		converters/p5-Unicode-LineBreak \
+		converters/p5-Unicode-LineBreak>=2011.05 \
 		databases/p5-DBI \
 		devel/gettext \
 		devel/p5-IO-stringy \

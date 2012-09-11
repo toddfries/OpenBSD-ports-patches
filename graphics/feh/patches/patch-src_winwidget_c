@@ -1,19 +1,15 @@
-$OpenBSD: patch-src_winwidget_c,v 1.7 2011/07/22 08:04:31 dcoppa Exp $
+$OpenBSD: patch-src_winwidget_c,v 1.9 2012/03/29 12:29:10 dcoppa Exp $
 
-Respect --image-bg option in full-screen mode
-(upstream git commit 0379af967bddd6e90e4c7dadee6d96be1cb82f1d)
+winwidget_allocate: memset winwid to zero
+(upstream git commit 82a976e0909e02ba8c25e4fd10d0e56a3e5c13ca)
 
---- src/winwidget.c.orig	Mon Jul  4 14:49:17 2011
-+++ src/winwidget.c	Fri Jul 22 09:59:28 2011
-@@ -350,7 +350,10 @@ void winwidget_setup_pixmaps(winwidget winwid)
- 			if (winwid->gc == None) {
- 				XGCValues gcval;
+--- src/winwidget.c.orig	Thu Mar 29 14:20:29 2012
++++ src/winwidget.c	Thu Mar 29 14:21:00 2012
+@@ -42,6 +42,7 @@ static winwidget winwidget_allocate(void)
+ 	winwidget ret = NULL;
  
--				gcval.foreground = BlackPixel(disp, DefaultScreen(disp));
-+				if (!strcmp(opt.image_bg, "white"))
-+					gcval.foreground = WhitePixel(disp, DefaultScreen(disp));
-+				else
-+					gcval.foreground = BlackPixel(disp, DefaultScreen(disp));
- 				winwid->gc = XCreateGC(disp, winwid->win, GCForeground, &gcval);
- 			}
- 			winwid->bg_pmap = XCreatePixmap(disp, winwid->win, scr->width, scr->height, depth);
+ 	ret = emalloc(sizeof(_winwidget));
++	memset(ret, 0, sizeof(_winwidget));
+ 
+ 	ret->win = 0;
+ 	ret->w = 0;

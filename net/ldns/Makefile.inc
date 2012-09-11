@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile.inc,v 1.18 2011/05/31 17:40:49 jakob Exp $
+# $OpenBSD: Makefile.inc,v 1.22 2012/06/06 15:01:49 jakob Exp $
 
-VERSION=	1.6.10
+VERSION=	1.6.13
 
 DISTNAME=	ldns-${VERSION}
 
@@ -16,10 +16,10 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
+USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV+=		ac_cv_prog_doxygen= \
 			cv_prog_cc_flag_O2=
-USE_LIBTOOL=		Yes
-USE_GMAKE=		Yes
+
 NO_REGRESS=		Yes

@@ -1,7 +1,7 @@
-$OpenBSD: patch-mozilla_toolkit_xre_nsXREDirProvider_cpp,v 1.5 2011/08/23 20:19:33 landry Exp $
---- mozilla/toolkit/xre/nsXREDirProvider.cpp.orig	Fri Jul 15 07:51:49 2011
-+++ mozilla/toolkit/xre/nsXREDirProvider.cpp	Sun Jul 31 22:20:16 2011
-@@ -1122,11 +1122,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
+$OpenBSD: patch-mozilla_toolkit_xre_nsXREDirProvider_cpp,v 1.12 2012/09/01 14:22:45 landry Exp $
+--- mozilla/toolkit/xre/nsXREDirProvider.cpp.orig	Sat Aug 25 02:31:34 2012
++++ mozilla/toolkit/xre/nsXREDirProvider.cpp	Sat Sep  1 01:59:42 2012
+@@ -1177,11 +1177,7 @@ nsXREDirProvider::GetSystemExtensionsDirectory(nsILoca
    NS_ENSURE_SUCCESS(rv, rv);
  #elif defined(XP_UNIX)
    static const char *const sysSExtDir = 
@@ -12,5 +12,5 @@ $OpenBSD: patch-mozilla_toolkit_xre_nsXREDirProvider_cpp,v 1.5 2011/08/23 20:19:
 -#endif
 +    "${LOCALBASE}/lib/mozilla/extensions";
  
-   rv = NS_NewNativeLocalFile(nsDependentCString(sysSExtDir), PR_FALSE,
+   rv = NS_NewNativeLocalFile(nsDependentCString(sysSExtDir), false,
                               getter_AddRefs(localDir));

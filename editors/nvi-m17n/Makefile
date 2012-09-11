@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2010/11/15 23:22:07 espie Exp $
+# $OpenBSD: Makefile,v 1.32 2012/07/14 10:19:14 naddy Exp $
 # NetBSD: Makefile,v 1.6 2000/01/19 12:28:44 hubertf Exp
 # FreeBSD Id: Makefile,v 1.11 1999/04/17 10:51:03 itojun Exp
 
@@ -6,7 +6,7 @@ COMMENT=	multilingual clone of vi/ex
 
 DISTNAME=	nvi-1.79
 PKGNAME=	nvi-m17n-1.79.19991117
-REVISION=	2
+REVISION=	4
 CATEGORIES=	editors
 
 MASTER_SITES=	ftp://ftp.foretune.co.jp/pub/tools/nvi/
@@ -32,7 +32,7 @@ CONFIGURE_ENV=	OPTFLAG='-D_PATH_SYSEXRC=\"${SYSCONFDIR}/vi.exrc\"'
 CONFIGURE_ARGS+=--enable-multibyte --program-prefix=n --host=${ARCH}-unknown-netbsd
 USE_GROFF =	Yes
 
-.if ${FLAVOR:L} == "canna"
+.if ${FLAVOR} == "canna"
 WANTLIB+=	canna
 LIB_DEPENDS+=	japanese/canna
 CONFIGURE_ARGS+=--enable-canna=${LOCALBASE}

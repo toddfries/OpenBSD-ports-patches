@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/24 15:14:45 sthen Exp $
-# $FreeBSD: ports/net/fping/Makefile,v 1.8 2000/03/22 00:26:51 obrien Exp $
+# $OpenBSD: Makefile,v 1.30 2012/08/18 12:41:38 ajacoutot Exp $
 
 COMMENT =		quickly ping N hosts w/o flooding the network
 
@@ -24,7 +23,7 @@ WANTLIB =		c
 MASTER_SITES =		http://oss.oetiker.ch/smokeping/pub/
 
 CONFIGURE_STYLE =	gnu
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 CONFIGURE_ARGS =	--bindir=${PREFIX}/sbin
 COPTS +=		-DHAVE_PROGNAME
 USE_GROFF =		Yes

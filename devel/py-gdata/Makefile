@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.13 2011/06/08 17:39:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2012/07/16 13:15:05 sthen Exp $
 
 COMMENT =	Python client library for Google data APIs
 
-MODPY_EGG_VERSION = 2.0.14
+MODPY_EGG_VERSION = 2.0.17
 DISTNAME =	gdata-${MODPY_EGG_VERSION}
 PKGNAME =	py-gdata-${MODPY_EGG_VERSION}
-REVISION =	0
 CATEGORIES =	devel
 
 HOMEPAGE =	http://code.google.com/p/gdata-python-client/
@@ -33,9 +32,9 @@ E =	${PREFIX}/share/examples/py-gdata
 post-install:
 	${INSTALL_DATA_DIR} $D
 	${INSTALL_DATA} ${WRKSRC}/pydocs/*.html $D && \
-		${CHMOD} o+r $D/*
+		chmod o+r $D/*
 	${INSTALL_DATA_DIR} $E
 	cp -r ${WRKSRC}/samples/* $E && \
-		${CHMOD} -R o+rx $E
+		chmod -R o+rx $E
 
 .include <bsd.port.mk>

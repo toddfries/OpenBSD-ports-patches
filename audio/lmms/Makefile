@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/11 12:08:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2011/10/12 12:54:30 jasper Exp $
 
 SHARED_ONLY =		Yes
 
@@ -6,7 +6,7 @@ ONLY_FOR_ARCHS =	${GCC4_ARCHS}
 
 COMMENT =		music studio with tracking, sampling and MIDI
 DISTNAME =		lmms-0.4.8
-REVISION =		0
+REVISION =		2
 
 CATEGORIES =		audio
 HOMEPAGE =		http://lmms.sourceforge.net/
@@ -22,7 +22,7 @@ PERMIT_DISTFILES_FTP =	Yes
 WANTLIB =		ICE SM QtGui QtXml X11 Xext Xft Xinerama c fltk jack \
 			fftw3f fluidsynth fontconfig freetype m ncurses ogg \
 			pthread readline samplerate sndfile sndio vorbis \
-			vorbisenc vorbisfile z
+			vorbisenc vorbisfile z stdc++
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=lmms/}
 EXTRACT_SUFX =		.tar.bz2
@@ -43,7 +43,7 @@ USE_X11 =		Yes
 CONFIGURE_ENV =		CFLAGS="${CFLAGS} -I${X11BASE}/include" \
 			CXXFLAGS="${CXXFLAGS} -I${X11BASE}/include" \
 			LDFLAGS="${LDFLAGS} -L${X11BASE}/lib"
-CONFIGURE_ARGS =	-DWANT_OSS=OFF -DWANT_SDL=OFF
+CONFIGURE_ARGS =	-DWANT_OSS=OFF -DWANT_SDL=OFF -DWANT_PULSEAUDIO=OFF
 
 # these are all available as separate ports
 CONFIGURE_ARGS +=	-DWANT_CALF=OFF -DWANT_CAPS=OFF -DWANT_CMT=OFF \

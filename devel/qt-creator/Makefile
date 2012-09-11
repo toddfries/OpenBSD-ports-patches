@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/15 19:46:08 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2012/06/14 09:47:23 landry Exp $
+
+BROKEN-powerpc =	qdoc3 goes into an infinite loop
 
 COMMENT =		cross-platform IDE for use with Qt
 
 V = 			1.3.1
 DISTNAME =		qt-creator-${V}-src
 PKGNAME =		qt-creator-${V}
-REVISION =		2
+REVISION =		4
 EXTRACT_SUFX = 		.zip
 ONLY_FOR_ARCHS =	${GCC4_ARCHS}
 
@@ -41,12 +43,11 @@ MASTER_SITES =	http://get.qt.nokia.com/qtcreator/
 
 MODULES =	x11/qt4
 
-BUILD_DEPENDS = x11/qt4,-sqlite
-RUN_DEPENDS = 	x11/qt4,-sqlite devel/gmake
+RUN_DEPENDS = 	devel/gmake
 
 PORTHOME =		${WRKDIR}
 
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 
 ALL_TARGET = 		all qch_docs
 

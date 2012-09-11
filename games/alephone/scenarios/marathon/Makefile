@@ -1,22 +1,21 @@
-#	$OpenBSD: Makefile,v 1.6 2010/12/05 18:24:33 jasper Exp $
+#	$OpenBSD: Makefile,v 1.9 2012/07/13 12:31:31 phessler Exp $
 PKG_ARCH =	*
 
 COMMENT =	marathon one data files
-V =		0.0.20090509
-DISTNAME =	marathon-${V}
-REVISION =	0
+V =		20120514
+DISTNAME =	marathon-0.0.${V}
 HOMEPAGE =	http://source.bungie.org/get/
 
-DISTFILES =	M1A1.zip
+DISTFILES =	Marathon-${V}-Data.zip:5
 DISTFILES +=	Marathon_Manual.pdf:4
 
 # http://trilogyrelease.bungie.org/faq.html
-PERMIT_PACKAGE_CDROM =	"not for sale"
+PERMIT_PACKAGE_CDROM =	not for sale
 PERMIT_PACKAGE_FTP =	YES
-PERMIT_DISTFILES_CDROM = "not for sale"
+PERMIT_DISTFILES_CDROM = not for sale
 PERMIT_DISTFILES_FTP =	YES
 
-EXTRACT_ONLY =	M1A1.zip
+EXTRACT_ONLY =	Marathon-${V}-Data.zip
 INSTALL_LOC =	${PREFIX}/share/alephone
 INSTALL_M =	${INSTALL_LOC}/Marathon
 
@@ -24,7 +23,7 @@ INSTALL_M =	${INSTALL_LOC}/Marathon
 do-install:
 	${INSTALL_DATA_DIR} ${INSTALL_M}
 	# Marathon 1
-	@cd ${WRKDIR}/M1A1 && pax -rw . ${INSTALL_M}
+	@cd ${WRKDIR}/"Marathon (A1)" && pax -rw . ${INSTALL_M}
 	${INSTALL_SCRIPT} ${FILESDIR}/marathon.sh ${PREFIX}/bin/marathon
 	${INSTALL_DATA} ${FULLDISTDIR}/Marathon_Manual.pdf ${INSTALL_M}
 

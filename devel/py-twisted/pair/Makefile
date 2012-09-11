@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2011/06/20 10:25:33 eric Exp $
+# $OpenBSD: Makefile,v 1.7 2011/12/08 20:15:40 eric Exp $
 
 COMMENT=	low-level networking for Twisted
 
 CATEGORIES+=	net
 
-VERSION=	11.0.0
+VERSION=	11.1.0
 DISTNAME=	TwistedPair-${VERSION}
 PKGNAME=	py-twisted-pair-${VERSION}
 

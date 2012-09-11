@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.17 2011/07/11 14:04:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2012/07/05 10:05:34 ajacoutot Exp $
 
 COMMENT=		International Components for Unicode
 
-VERSION=		4.8
+VERSION=		49.1.2
 DISTNAME=		icu4c-${VERSION:S/./_/g}-src
 PKGNAME=		icu4c-${VERSION}
-REVISION=		0
-SO_VERSION=		4.0
+REVISION =		1
+SO_VERSION=		5.0
 .for _lib in icudata icui18n icuio icule iculx icutest icutu icuuc
 SHARED_LIBS+=		${_lib} ${SO_VERSION}
 .endfor
@@ -15,7 +15,7 @@ CATEGORIES=		textproc devel
 
 HOMEPAGE=		http://www.icu-project.org
 
-MAINTAINER=		Vincent Gross <dermiste@screwball-coders.net>
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # ICU
 # http://source.icu-project.org/repos/icu/icu/trunk/license.html
@@ -35,11 +35,10 @@ USE_GROFF=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-static \
-			--disable-renaming \
 			--disable-extras \
 			--disable-samples
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 
 WRKDIST=		${WRKDIR}/icu
 WRKSRC=			${WRKDIST}/source
@@ -47,6 +46,13 @@ WRKSRC=			${WRKDIST}/source
 MAKE_FLAGS+=		SO_TARGET_VERSION=${SO_VERSION} \
 			SO_TARGET_VERSION_MAJOR=${SO_VERSION:R} \
 			PKGDATA_INVOKE_OPTS="SO_TARGET_VERSION=${SO_VERSION} SO_TARGET_VERSION_MAJOR=${SO_VERSION:R}"
+
+# XXX U_IS_BIG_ENDIAN is not propagated to the C/C++ files
+# http://comments.gmane.org/gmane.comp.tex.texlive.build/1705
+.include <bsd.port.arch.mk>
+.if ${PROPERTIES:Mbe}
+CONFIGURE_ENV +=	CPPFLAGS="-DU_IS_BIG_ENDIAN"
+.endif
 
 post-install:
 # Bug #7506, #7567 and #7574, libicutest is not installed

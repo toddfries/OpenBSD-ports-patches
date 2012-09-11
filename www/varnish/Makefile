@@ -1,35 +1,34 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/22 08:36:55 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2012/04/28 10:52:09 ajacoutot Exp $
+
+SHARED_ONLY =		Yes
 
 COMMENT =		high-performance HTTP accelerator
 
-DISTNAME =		varnish-2.1.3
+DISTNAME =		varnish-3.0.2
 CATEGORIES =		www
 
-MAINTAINER =		Jim Razmus II <jim@openbsd.org>
+SHARED_LIBS =		varnishapi	1.0
 
-SHARED_LIBS +=		varnish		0.0
-SHARED_LIBS +=		varnishapi	0.0
-SHARED_LIBS +=		varnishcompat	0.0
-SHARED_LIBS +=		vcl		0.0
+MAINTAINER =		Jim Razmus II <jim@openbsd.org>
 
 HOMEPAGE =		http://www.varnish-cache.org/
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB = 		c curses m pcre pthread
+WANTLIB = 		c curses edit m pcre pthread
+
 LIB_DEPENDS = 		devel/pcre
 
-MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=varnish/}
+MASTER_SITES =		http://repo.varnish-cache.org/source/
 
 USE_LIBTOOL =		Yes
 USE_GROFF =		Yes
-
-CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	--localstatedir=/var
+CONFIGURE_STYLE =	autoconf
+AUTOCONF_VERSION =	2.68
 
 REGRESS_TARGET =	check
 
@@ -38,7 +37,7 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/varnish
 	mv ${WRKINST}${SYSCONFDIR}/varnish/default.vcl \
 	    ${PREFIX}/share/examples/varnish
-	${INSTALL_DATA} ${WRKSRC}/doc/getting-started.html \
-	    ${PREFIX}/share/doc/varnish
+	@find ${PREFIX}/lib/varnish -name '*.a' -print | xargs rm
+	@find ${PREFIX}/lib/varnish -name '*.la' -print | xargs rm
 
 .include <bsd.port.mk>

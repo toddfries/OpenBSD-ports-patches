@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.21 2011/05/01 13:48:32 steven Exp $
+# $OpenBSD: Makefile,v 1.29 2012/09/01 14:36:58 ajacoutot Exp $
 
 COMMENT=	syslogd replacement
 
 V =		3.1.4
 DISTNAME =	syslog-ng-$V
+REVISION =	8
 CATEGORIES =	sysutils
 
 MAINTAINER =	Steven Mestdagh <steven@openbsd.org>
@@ -21,17 +22,20 @@ DISTFILES =	syslog-ng_$V.tar.gz
 
 MODULES =	devel/gettext
  
-WANTLIB =	c pcre wrap crypto ssl z glib-2.0 evtlog
+WANTLIB =	c pcre wrap crypto ssl z glib-2.0 evtlog dbi gthread-2.0 pthread
  
 LIB_DEPENDS = 	devel/glib2 \
- 		sysutils/eventlog
+ 		sysutils/eventlog \
+		databases/libdbi
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	--enable-tcp-wrapper \
 			--with-pidfile-dir=/var/run \
-			--disable-sql
+			--enable-sql
 CONFIGURE_ENV +=	OPENSSL_CFLAGS="-I/usr/include/openssl" \
-			OPENSSL_LIBS="-lssl -lcrypto"
+			OPENSSL_LIBS="-lssl -lcrypto" \
+			LIBDBI_CFLAGS="-I/usr/include/openssl" \
+			LIBDBI_LIBS="-ldbi"
 USE_GROFF =	Yes
 
 CFLAGS +=	-I${LOCALBASE}/include

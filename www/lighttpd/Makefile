@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.86 2011/08/24 21:28:09 sthen Exp $
+# $OpenBSD: Makefile,v 1.101 2012/07/10 15:22:45 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
-DISTNAME=	lighttpd-1.4.29
+DISTNAME=	lighttpd-1.4.31
 REVISION=	0
 CATEGORIES=	www net
 MASTER_SITES=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
@@ -18,23 +18,28 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c crypto lua>=5.1 m pcre ssl z
+WANTLIB=		c crypto ${MODLUA_WANTLIB} m pcre ssl z
+
+MODULES=	lang/lua
+MODLUA_SA=	Yes
 
 LIB_DEPENDS+=	devel/pcre \
-		lang/lua
+		${MODLUA_LIB_DEPENDS}
 RUN_DEPENDS+=	www/spawn-fcgi
 
 USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.68
+AUTOCONF_VERSION= 2.69
 CONFIGURE_ARGS+= --libdir="${PREFIX}/lib/lighttpd" \
 		 --with-lua \
 		 --with-openssl \
 		 --without-bzip2 \
 		 --without-libev
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		LUA_CFLAGS="`pkg-config --cflags ${MODLUA_DEP}`" \
+		LUA_LIBS="`pkg-config --libs ${MODLUA_DEP}`"
 
 FLAVORS=	ldap mysql
 FLAVOR?=

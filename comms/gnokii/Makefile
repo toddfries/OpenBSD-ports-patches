@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/15 00:22:50 espie Exp $
+# $OpenBSD: Makefile,v 1.33 2012/08/19 20:56:25 jasper Exp $
 
 COMMENT=	tools to talk to GSM cellular phones
 
 DISTNAME=	gnokii-0.6.14
-REVISION=	13
+REVISION=	17
 CATEGORIES=	comms x11
 SHARED_LIBS +=	gnokii               2.7      # .3.0
 
@@ -36,7 +36,7 @@ CONFIGURE_ARGS=		--enable-security \
 			--disable-xdebug \
 			--disable-rlpdebug
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=	--without-x
 .else
 CONFIGURE_ARGS+=	--with-x
@@ -50,11 +50,12 @@ WANTLIB += gmodule-2.0>=400.8 gobject-2.0>=400.8 pango-1.0>=600
 WANTLIB += pangoft2-1.0>=600 pangocairo-1.0 cairo png expat Xcursor
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr pthread-stubs xcb ical
 WANTLIB += gtk-x11-2.0>=400.13 gdk-x11-2.0>=400.13 gdk_pixbuf-2.0>=400.13
-WANTLIB += gthread-2.0 xcb-render xcb-render-util
+WANTLIB += gthread-2.0 xcb-render
+WANTLIB += GL Xxf86vm drm ffi stdc++ xcb-shm
 .endif
 
-WANTLIB += usb>=8
-LIB_DEPENDS +=		devel/libusb
+WANTLIB += usb usb-1.0
+LIB_DEPENDS +=		devel/libusb-compat
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gnokii
@@ -62,7 +63,7 @@ post-install:
 		${PREFIX}/share/examples/gnokii
 	${INSTALL_DATA} ${WRKSRC}/Docs/man/gnokii.1 \
 		${PREFIX}/man/man1
-.if !${FLAVOR:L:Mno_x11}
+.if !${FLAVOR:Mno_x11}
 	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps
 	${INSTALL_DATA} ${WRKSRC}/Docs/man/xgnokii.1x \
 		${PREFIX}/man/man1/xgnokii.1

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2011/01/06 04:24:23 jeremy Exp $
+# $OpenBSD: Makefile,v 1.20 2012/07/13 15:07:48 kili Exp $
 
 COMMENT =	Ruby interface to ImageMagick
 
-DISTNAME =	rmagick-2.9.0
-REVISION =	3
+DISTNAME =	rmagick-2.13.1
+REVISION =	2
 CATEGORIES =	graphics
 
 HOMEPAGE =	http://rmagick.rubyforge.org/
@@ -16,7 +16,9 @@ PERMIT_DISTFILES_FTP = Yes
 
 MODULES =	lang/ruby
 
-WANTLIB =	freetype z MagickCore>=1 MagickWand>=1
+WANTLIB =	freetype z MagickCore>=1
+WANTLIB += ICE SM X11 Xext Xt bz2 djvulibre expat fftw3 fontconfig
+WANTLIB += jasper jbig jpeg lcms2 ltdl lzma png tiff xml2
 
 LIB_DEPENDS =	graphics/ImageMagick
 

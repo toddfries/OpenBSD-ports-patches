@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.27 2011/06/08 17:41:57 rpointel Exp $
+# $OpenBSD: Makefile,v 1.44 2012/06/15 08:30:20 ajacoutot Exp $
 
-COMMENT=		assistive technology for people with visual impairments
+# XXX could use brltty and brlapi (with python bindinds) -- not ported yet
+
+COMMENT=		assistive screen reader
 
 GNOME_PROJECT=		orca
-GNOME_VERSION=		2.32.1
-
-REVISION=		2
+GNOME_VERSION=		3.4.2
+REVISION=		0
 
 HOMEPAGE=		http://live.gnome.org/Orca
 
@@ -18,19 +19,21 @@ PERMIT_DISTFILES_FTP=	Yes
 MODULES=		lang/python \
 			x11/gnome
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		x11/gnome/py-gnome-desktop \
-			x11/gnome/mag \
-			x11/gnome/py-atspi \
-			x11/gnome/speech \
+BUILD_DEPENDS=		${RUN_DEPENDS} \
+			x11/gtk+3
+RUN_DEPENDS=		x11/gnome/py-atspi>=2.2.0 \
+			devel/py-xdg \
 			x11/dbus-python \
-			devel/py-xdg
+			audio/speech-dispatcher \
+			devel/liblouis
 
-DESKTOP_FILES=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =		Yes
+CONFIGURE_ENV=		DATADIRNAME=share
+
+FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/orca/
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/orca/espeechfactory.py

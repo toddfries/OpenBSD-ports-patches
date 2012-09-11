@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2011/06/08 18:09:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2012/06/27 19:01:51 rpointel Exp $
 
 COMMENT=		implements an XML/HTML/XHTML markup safe string
 
-MODPY_EGG_VERSION=	0.11
+MODPY_EGG_VERSION=	0.15
 DISTNAME=		MarkupSafe-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION=		0
+REVISION =		0
 
 CATEGORIES=		textproc
 
@@ -21,6 +21,11 @@ MASTER_SITES=		${MASTER_SITE_PYPI:=M/MarkupSafe/}
 
 MODULES=		lang/python
 
+WANTLIB+=		${MODPY_WANTLIB}
+
 MODPY_SETUPTOOLS= Yes
+
+FLAVORS=		python3
+FLAVOR?=
 
 .include <bsd.port.mk>

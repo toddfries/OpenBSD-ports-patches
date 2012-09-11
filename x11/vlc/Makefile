@@ -1,156 +1,176 @@
-# $OpenBSD: Makefile,v 1.134 2011/07/17 06:35:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.157 2012/08/26 07:16:54 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	VideoLAN client; multimedia player
+COMMENT-jack=	JACK audio output module for VLC
 
-V=		1.0.6
+V=		2.0.3
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	33
-REVISION-jack=	5
-REVISION-web=	7
+REVISION-main=	1
+PKGNAME-jack=	vlc-jack-${V}
+REVISION-jack=	0
 CATEGORIES=	x11
 MASTER_SITES=	http://download.videolan.org/pub/videolan/vlc/${V}/
-EXTRACT_SUFX=	.tar.bz2
+EXTRACT_SUFX=	.tar.xz
 
-SHARED_LIBS=	vlc		0.0 \
-		vlccore		0.0
+SHARED_LIBS=	vlc	2.0 \
+		vlccore	2.0
 
 HOMEPAGE=	http://www.videolan.org/vlc/
 
 MAINTAINER=	Brad Smith <brad@comstyle.com>
 
-# GPLv2+
+# LGPLv2.1+ and GPLv2+
 PERMIT_PACKAGE_CDROM=	patents
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+WANTLIB-common=	dbus-1 m ${MODGETTEXT_WANTLIB}
+WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 \
+		Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama \
+		Xpm Xrandr Xrender ass atk-1.0 avcodec avformat \
+		avutil bluray bz2 c cairo cddb dvbpsi dvdnav dvdread \
+		ebml stdc++ expat ffi fontconfig freetype fribidi gcrypt \
+		gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 \
+		gmp gnutls gobject-2.0 gpg-error gsm gthread-2.0 gtk-x11-2.0 \
+		hogweed jpeg matroska mp3lame nettle notify orc-0.4 ogg \
+		p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
+		png portaudio postproc pthread-stubs pthread samplerate \
+		schroedinger-1.0>=2.0 sndio speex speexdsp sqlite3 swscale tag \
+		tar tasn1 tiff theoradec theoraenc usbhid vorbis vorbisenc \
+		vpx webp x264 xcb-composite xcb-keysyms xcb-randr xcb-render \
+		xcb-shape xcb-shm xcb-xfixes xcb-xv xcb xml2 xvidcore z \
+		${WANTLIB-common}
+WANTLIB-jack=	jack vlccore ${WANTLIB-common}
+
+AUTOCONF_VERSION= 2.69
+AUTOMAKE_VERSION= 1.11
+
 MODULES=	devel/gettext \
-		x11/qt4
-LIB_DEPENDS+=	x11/dbus
-LIB_DEPENDS-main=${LIB_DEPENDS} \
-		audio/faad \
+		x11/qt4 \
+		gcc4
+MODGCC4_VERSION= 4.6
+MODGCC4_ARCHS=	amd64 i386
+MODGCC4_LANGS=	c
+LIB_DEPENDS-main= ${MODQT4_LIB_DEPENDS} \
+		${MODGETTEXT_LIB_DEPENDS} \
+		archivers/libtar \
 		audio/libcddb \
+		audio/libsamplerate \
 		audio/libvorbis \
+		audio/portaudio-svn \
 		audio/speex \
 		audio/taglib \
 		devel/fribidi \
-		devel/libdvdread \
+		devel/libdvdread>=4.2.0 \
 		devel/libnotify>=0.7.2 \
+		devel/sdl \
 		devel/sdl-image \
-		graphics/ffmpeg>=20080620p10 \
+		graphics/ffmpeg>=20110408 \
 		graphics/libdvbpsi \
 		graphics/png \
-		multimedia/libdvdnav \
+		multimedia/libass \
+		multimedia/libbluray \
+		multimedia/libdvdnav>=4.2.0 \
 		multimedia/libmatroska \
 		multimedia/schroedinger>=1.0.10 \
 		multimedia/x264 \
-		net/libproxy \
+		security/gnutls \
+		security/libgcrypt \
 		textproc/libebml \
 		textproc/libxml \
-		x11/qt4
-RUN_DEPENDS=	devel/desktop-file-utils
+		x11/dbus \
+		x11/gtk+2
+LIB_DEPENDS-jack= ${MODGETTEXT_LIB_DEPENDS} \
+		${BUILD_PKGPATH} \
+		audio/jack
+BUILD_DEPENDS=	net/livemedia>=20120204p0 \
+		${MODGNU_AUTOCONF_DEPENDS} \
+		${MODGNU_AUTOMAKE_DEPENDS} \
+		devel/libtool
+RUN_DEPENDS-main= devel/desktop-file-utils \
+		x11/gtk+2,-guic
+RUN_DEPENDS-jack= ${BUILD_PKGPATH}
 
-WANTLIB-main=	GL GLU ICE lib/qt4/QtGui SM SDL SDL_image X11 Xau \
-		Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrender Xv \
-		Xxf86vm avcodec avformat avutil bz2 c cddb dbus-1 \
-		drm dvbpsi dvdnav dvdread ebml expat faad fontconfig \
-		freetype fribidi gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
-		gmodule-2.0 gobject-2.0 gsm gthread-2.0 jpeg m \
-		matroska modman mp3lame notify orc-0.4 ogg pcre \
-		png postproc proxy pthread-stubs pthread stdc++ \
-		schroedinger-1.0>=2.0 sndio speex swscale tag tiff \
-		theoradec theoraenc usbhid vorbis vorbisenc vpx x264 \
-		xcb-keysyms xcb xml2 z ${WANTLIB}
+MAKE_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
 
 CPPFLAGS=	-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
-CONFIGURE_STYLE= autoconf
-AUTOCONF_VERSION= 2.65
+# Fails to link _pic libs properly resulting in undefined symbols in the live555 plugin
+USE_LIBTOOL=	gnu
+LIBTOOL_FLAGS=	--tag=disable-static
+CONFIGURE_STYLE= gnu
 MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC}/autotools
 CONFIGURE_ARGS+=--disable-a52 \
 		--disable-alsa \
 		--disable-altivec \
 		--disable-bonjour \
-		--disable-cmml \
+		--disable-caca \
+		--disable-crystalhd \
+		--disable-dc1394 \
 		--disable-dca \
-		--disable-fluidsynth \
-		--disable-dvb \
+		--disable-decklink \
+		--disable-dirac \
+		--disable-dv \
+		--disable-flac \
 		--disable-fluidsynth \
 		--disable-gme \
-		--disable-gnutls \
-		--disable-hal \
+		--disable-gnomevfs \
+		--disable-goom \
 		--disable-kate \
-		--disable-libgcrypt \
 		--disable-libmpeg2 \
-		--disable-libtar \
-		--disable-libv4l2 \
-		--disable-live555 \
+		--disable-libproxy \
+		--disable-libva \
+		--disable-linsys \
 		--disable-lua \
 		--disable-mad \
 		--disable-mod \
 		--disable-mpc \
 		--disable-mtp \
-		--disable-oss \
+		--disable-neon \
+		--disable-projectm \
 		--disable-pulse \
-		--disable-remoteosd \
-		--disable-skins2 \
+		--disable-shout \
+		--disable-sid \
 		--disable-smb \
+		--disable-svg \
+		--disable-theora \
 		--disable-tiger \
+		--disable-twolame \
 		--disable-udev \
 		--disable-upnp \
+		--disable-v4l2 \
 		--disable-zvbi \
-		--enable-dvdread \
-		--enable-faad \
+		--enable-media-library \
 		--enable-real \
 		--enable-realrtsp \
-		--enable-release \
 		--without-contrib \
 		--without-tuning
 CONFIGURE_ENV+=	CPPFLAGS="${CPPFLAGS}" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
+		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -L${LOCALBASE}/live/liveMedia \
+		    -L${LOCALBASE}/live/groupsock -L${LOCALBASE}/live/BasicUsageEnvironment \
+		    -L${LOCALBASE}/live/UsageEnvironment" \
+		LOCALBASE="${LOCALBASE}" \
 		PKG_CONFIG_PATH="${LOCALBASE}/lib/qt4/pkgconfig" \
-		LOCALBASE=${LOCALBASE}
+		ac_cv_header_execinfo_h=no
 
-MULTI_PACKAGES=-main
-
-PSEUDO_FLAVORS=	no_web no_jack
+PSEUDO_FLAVORS=	no_jack
 FLAVOR?=
 
-.if !${FLAVOR:L:Mno_web}
-MULTI_PACKAGES+=-web
-COMMENT-web=	Mozilla plugin for embedded media playback
-PKGNAME-web=	vlc-web-${V}
-BUILD_DEPENDS+=	devel/xulrunner/1.9,-devel>=1.9
-CONFIGURE_ARGS+=--enable-mozilla --with-mozilla-sdk-path=${LOCALBASE}/xulrunner1.9
-CONFIGURE_ENV+=	with_mozilla_pkg="libxul"
-CPPFLAGS+=	-I${LOCALBASE}/include/nspr -I${LOCALBASE}/xulrunner1.9/include -DOPENBSD
-PORTPATH=	${WRKDIR}/bin:/usr/bin:/bin:/usr/sbin:/sbin:${DEPBASE}/bin:${LOCALBASE}/bin:${X11BASE}/bin:${LOCALBASE}/xulrunner1.9
-LIB_DEPENDS-web=${LIB_DEPENDS} \
-		${BASE_PKGPATH} \
-		devel/nspr
-RUN_DEPENDS-web=${BUILD_PKGPATH}
-WANTLIB-web=	ICE SM X11 Xau Xdmcp Xt Xpm m nspr4 plc4 plds4 \
-		pthread-stubs stdc++ vlc vlccore xcb dbus-1 \
-		${WANTLIB}
-.endif
+MULTI_PACKAGES=	-main
 
 .if !${FLAVOR:L:Mno_jack}
 MULTI_PACKAGES+=-jack
-COMMENT-jack=	jackd audio output module for VLC
-FULLPKGNAME-jack=vlc-jack-${V}
-FULLPKGPATH-jack=x11/vlc,-jack
-CONFIGURE_ARGS+=--enable-jack
-LIB_DEPENDS-jack=${LIB_DEPENDS} \
-		 ${BASE_PKGPATH} \
-		 audio/jack
-# any FLAVOR of VLC will do
-RUN_DEPENDS-jack=${BASE_PKGPATH}
-WANTLIB-jack=	${WANTLIB} m jack vlccore dbus-1
+.endif
+
+.include <bsd.port.arch.mk>
+
+.if !${BUILD_PACKAGES:M-jack}
+CONFIGURE_ARGS+=--disable-jack
 .endif
 
 .if ${MACHINE_ARCH} == "amd64"
@@ -166,19 +186,11 @@ PKG_ARGS+=-Di386=0
 .endif
 
 pre-configure:
-	@perl -pi -e 's/grep -v /grep -av /' ${WRKSRC}/src/Makefile.in
-	@find ${WRKSRC} -name 'Makefile.in' -exec perl -pi -e 's/-export-symbol-regex/-export-symbols-regex/' {} \;
+	@cp ${FILESDIR}/sndio.c ${WRKSRC}/modules/audio_output
+	@cd ${WRKSRC} && env AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    ./bootstrap
 
 post-install:
-.for _img in 16x16 32x32 48x48 128x128
-	${INSTALL_DATA_DIR} ${PREFIX}/share/icons/hicolor/${_img}/apps
-	${INSTALL_DATA} ${WRKBUILD}/share/vlc${_img}.png \
-	    ${PREFIX}/share/icons/hicolor/${_img}/apps/vlc.png
-.endfor
-.if !${FLAVOR:L:Mno_web}
-	@rm ${PREFIX}/lib/mozilla/plugins/libvlcplugin.a
-.endif
-	@find ${PREFIX}/lib/vlc -name '*.a' -print | xargs rm
-	@find ${PREFIX}/lib -name '*.la' -print | xargs rm
+	@find ${PREFIX}/lib/vlc -name '*.la' -print | xargs rm
 
 .include <bsd.port.mk>

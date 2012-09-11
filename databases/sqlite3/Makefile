@@ -1,16 +1,18 @@
-# $OpenBSD: Makefile,v 1.57 2011/03/14 14:39:51 landry Exp $
+# $OpenBSD: Makefile,v 1.67 2012/07/13 16:16:18 espie Exp $
 
 COMMENT-main=	embedded SQL implementation
 COMMENT-tcl=	TCL bindings for Sqlite3
 COMMENT-lemon=	LEMON LALR(1) parser generator
-V=		3.7.5
-DISTNAME=	sqlite-src-3070500
+V=		3.7.13
+DISTNAME=	sqlite-src-3071300
 EXTRACT_SUFX =	.zip
 PKGNAME-main=	sqlite3-${V}
 PKGNAME-tcl=	sqlite3-tcl-${V}
 PKGNAME-lemon=	lemon-${V}
 CATEGORIES=	databases
-SHARED_LIBS +=	sqlite3              15.1      # .8.6
+IGNORE-main = "--${FULLPKGNAME-main} comes with OpenBSD as of release 5.2"
+SUBPACKAGE ?= -lemon
+REVISION-tcl =	0
 
 MASTER_SITES=	${HOMEPAGE}
 
@@ -38,20 +40,21 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=${CONFIGURE_SHARED}
 
 PSEUDO_FLAVORS=	no_tcl
-.if ${MACHINE_ARCH} != "m88k" && ${MACHINE_ARCH} != "vax"
-FLAVOR?=
-CONFIGURE_ARGS +=	--enable-load-extension	
-.else
-FLAVOR=	no_tcl
+NOT_FOR_ARCHS-tcl = ${NO_SHARED_ARCHS}
+FLAVOR ?=
+
+MULTI_PACKAGES=-main -lemon -tcl
+
+.include <bsd.port.arch.mk>
+
+.if !${PROPERTIES:Mno_shared}
+CONFIGURE_ARGS +=	--enable-load-extension
 .endif
 
-MULTI_PACKAGES=-main -lemon
-.if !${FLAVOR:L:Mno_tcl}
-MULTI_PACKAGES+=-tcl
+.if ${BUILD_PACKAGES:M-tcl}
 MODULES+=	lang/tcl
 
 BUILD_DEPENDS=	${MODTCL_BUILD_DEPENDS}
-LIB_DEPENDS-tcl = ${BUILD_PKGPATH},-main>=${V}
 WANTLIB-tcl =	sqlite3
 
 CONFIGURE_ARGS+=--with-tcl=${MODTCL_LIBDIR}
@@ -70,11 +73,8 @@ NO_REGRESS=	Yes
 # Don't include dependency on pthreads, weak pthread functions are
 # used for non-threaded applications.
 post-install:
-	perl -pi -e s,'\-pthread','',g ${PREFIX}/lib/libsqlite3.la \
-		${PREFIX}/lib/pkgconfig/sqlite3.pc
 	${INSTALL_DATA_DIR} ${PREFIX}/share/lemon
 	${INSTALL_DATA} ${WRKBUILD}/lempar.c ${PREFIX}/share/lemon
 	${INSTALL_PROGRAM} ${WRKBUILD}/lemon ${PREFIX}/bin
-	${INSTALL_MAN} ${WRKBUILD}/sqlite3.1 ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

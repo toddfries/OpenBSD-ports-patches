@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/30 19:52:30 stephan Exp $
+# $OpenBSD: Makefile,v 1.5 2012/05/11 07:46:35 espie Exp $
 
 COMMENT =	periodically detect broken hypertext links
 
-DISTNAME = 	linkchecker-6.x-2.4
-PKGNAME =	drupal6-linkchecker-2.4
-REVISION =	1
+DISTNAME = 	linkchecker-6.x-2.5
+PKGNAME =	drupal6-linkchecker-2.5
 
 .include <bsd.port.mk>

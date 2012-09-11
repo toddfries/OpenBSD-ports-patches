@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.12 2011/04/10 17:28:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT =	distributed, document-oriented database
 
 COUCH_VER =	1.0.1
 DISTNAME =	apache-couchdb-${COUCH_VER}
-REVISION =	1
+REVISION =	2
 CATEGORIES =	databases
 
 HOMEPAGE =	http://couchdb.apache.org/
@@ -42,7 +42,6 @@ USE_GROFF =	Yes
 
 CONFIGURE_STYLE = gnu
 CONFIGURE_ARGS = ${CONFIGURE_SHARED} \
-		 --localstatedir=/var \
 		 --with-erlang=${LOCALBASE}/lib/erlang/usr/include \
 		 --with-js-include=${LOCALBASE}/include/js \
 		 --with-js-lib=${LOCALBASE}/lib

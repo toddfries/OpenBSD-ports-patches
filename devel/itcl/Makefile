@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.9 2011/01/05 18:55:31 sebastia Exp $
+# $OpenBSD: Makefile,v 1.11 2012/05/01 06:58:45 sebastia Exp $
 
 COMMENT=	object-oriented extensions to Tcl
 
+VERSION =	3.4.1
 REVISION =	0
-VERSION=	3.4
-DISTNAME=	itcl${VERSION}b1
-PKGNAME=	itcl-${VERSION}b1
+EPOCH =		0
+DISTNAME =	itcl${VERSION}
+PKGNAME =	itcl-${VERSION}
 SHARED_LIBS=	itcl34	0.0
 
 CATEGORIES=	devel
@@ -41,7 +42,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 
 CONFIGURE_ENV=	CPPFLAGS="-I${MODTCL_INCDIR}/generic \
 		-I${MODTCL_INCDIR}/unix -I${MODTCL_INCDIR}" \
-		LIBitcl34_VERSION=${LIBitcl34_VERSION}
+		SHLIB_VERSION=${LIBitcl34_VERSION}
 FAKE_FLAGS =	libdir=${MODTCL_TCLDIR}/itcl
 
 pre-configure:

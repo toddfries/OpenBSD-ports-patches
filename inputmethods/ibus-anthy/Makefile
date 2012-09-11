@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2011/06/20 08:53:55 fgsch Exp $
+# $OpenBSD: Makefile,v 1.9 2011/10/03 06:42:46 ajacoutot Exp $
 
 COMMENT =	japanese input engine for ibus
 
 DISTNAME =	ibus-anthy-1.2.6
+REVISION=	1
 
 CATEGORIES =	inputmethods japanese
 
@@ -31,7 +32,6 @@ USE_LIBTOOL =	Yes
 LIBTOOL_FLAGS =	--tag=disable-static
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include" \
-		DATADIRNAME="share"
+CONFIGURE_ENV =	CPPFLAGS="-I${LOCALBASE}/include"
 
 .include <bsd.port.mk>

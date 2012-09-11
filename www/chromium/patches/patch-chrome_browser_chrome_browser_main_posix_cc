@@ -1,0 +1,12 @@
+$OpenBSD: patch-chrome_browser_chrome_browser_main_posix_cc,v 1.3 2012/07/10 09:22:34 robert Exp $
+--- chrome/browser/chrome_browser_main_posix.cc.orig	Fri Jun  1 06:14:35 2012
++++ chrome/browser/chrome_browser_main_posix.cc	Fri Jun  1 06:14:42 2012
+@@ -216,7 +216,7 @@ void ChromeBrowserMainPartsPosix::PreEarlyInitializati
+   if (!fd_limit_string.empty()) {
+     base::StringToInt(fd_limit_string, &fd_limit);
+   }
+-#if defined(OS_MACOSX)
++#if defined(OS_BSD)
+   // We use quite a few file descriptors for our IPC, and the default limit on
+   // the Mac is low (256), so bump it up if there is no explicit override.
+   if (fd_limit == 0) {

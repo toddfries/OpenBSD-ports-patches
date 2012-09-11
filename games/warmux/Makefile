@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/05/30 09:14:11 landry Exp $
+# $OpenBSD: Makefile,v 1.4 2012/04/05 16:26:32 ajacoutot Exp $
 
 COMMENT=		free software clone of Worms(R) game concept
 
 DISTNAME=		warmux-11.04.1
+REVISION=		2
 WRKDIST=		${WRKDIR}/warmux-11.04
 CATEGORIES=		games
 
@@ -24,7 +25,7 @@ RUN_DEPENDS=		devel/desktop-file-utils
 LIB_DEPENDS=		devel/sdl-gfx \
 			devel/sdl-image \
 			devel/sdl-mixer \
-			devel/sdl-net \
+			devel/sdl-net>=1.2.8 \
 			devel/sdl-ttf \
 			net/curl \
 			textproc/libxml

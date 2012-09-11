@@ -1,7 +1,7 @@
-$OpenBSD: patch-bus_Makefile_in,v 1.13 2011/06/15 16:26:07 ajacoutot Exp $
---- bus/Makefile.in.orig	Fri Jun 10 22:57:24 2011
-+++ bus/Makefile.in	Wed Jun 15 18:17:02 2011
-@@ -2579,7 +2579,6 @@ clean-local:
+$OpenBSD: patch-bus_Makefile_in,v 1.17 2012/07/05 07:19:48 ajacoutot Exp $
+--- bus/Makefile.in.orig	Wed Jun 27 18:49:58 2012
++++ bus/Makefile.in	Thu Jul  5 07:47:00 2012
+@@ -1510,7 +1510,6 @@ clean-local:
  	/bin/rm *.bb *.bbg *.da *.gcov || true
  
  install-data-hook:
@@ -9,7 +9,7 @@ $OpenBSD: patch-bus_Makefile_in,v 1.13 2011/06/15 16:26:07 ajacoutot Exp $
  	$(mkinstalldirs) $(DESTDIR)$(configdir)/system.d
  	$(mkinstalldirs) $(DESTDIR)$(configdir)/session.d
  	$(mkinstalldirs) $(DESTDIR)$(datadir)/dbus-1/services
-@@ -2596,13 +2595,6 @@ install-data-hook:
+@@ -1527,13 +1526,6 @@ install-data-hook:
  @HAVE_SYSTEMD_TRUE@	ln -fs ../dbus.service $(DESTDIR)$(systemdsystemunitdir)/multi-user.target.wants/dbus.service
  
  @DBUS_UNIX_TRUE@install-exec-hook:

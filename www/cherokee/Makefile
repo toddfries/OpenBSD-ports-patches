@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.34 2012/04/28 10:52:08 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -18,11 +18,11 @@ PKGNAME-mysql =	cherokee-mysql-${VERSION}
 PKGNAME-geoip =	cherokee-geoip-${VERSION}
 PKGNAME-streaming = cherokee-streaming-${VERSION}
 
-REVISION-main =	6
-REVISION-geoip = 2
-REVISION-ldap =	3
-REVISION-mysql = 2
-REVISION-streaming = 5
+REVISION-main =	8
+REVISION-geoip = 3
+REVISION-ldap =	4
+REVISION-mysql = 3
+REVISION-streaming = 6
 
 SHARED_LIBS =	cherokee-base		0.0 \
 		cherokee-client		0.0 \
@@ -90,11 +90,11 @@ CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			PHPCGI="${LOCALBASE}/bin/php-fastcgi-${MODPHP_VERSION}" \
-			ac_cv_func_getgrnam_r=no
+			ac_cv_func_getgrnam_r=no \
+			ac_cv_header_execinfo_h=no
 CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--disable-static \
 			--sysconfdir=${SYSCONFDIR} \
-			--localstatedir=/var \
 			--with-wwwroot=/var/cherokee \
 			--with-wwwuser=_cherokee \
 			--with-wwwgroup=_cherokee \

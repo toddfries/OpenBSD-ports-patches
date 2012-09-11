@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.62 2011/08/24 10:01:21 espie Exp $
+# $OpenBSD: Makefile,v 1.72 2012/07/13 16:59:15 jasper Exp $
 
 COMMENT=	cross platform, open source .NET developement framework
 
-DISTNAME=	mono-2.10.2
+DISTNAME=	mono-2.10.9
 REVISION=	0
 
 CATEGORIES=	lang devel
@@ -26,7 +26,8 @@ PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB=	c m pthread z stdc++
 
-MASTER_SITES=	http://ftp.novell.com/pub/mono/sources/mono/
+MASTER_SITES=	http://download.mono-project.com/sources/mono/ \
+		http://ftp.novell.com/pub/mono/sources/mono/
 EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	lang/mono \
@@ -46,7 +47,7 @@ RUN_DEPENDS=	x11/libgdiplus
 LIB_DEPENDS=	devel/boehm-gc
 WANTLIB +=	gc
 
-AUTOCONF_VERSION=2.63
+AUTOCONF_VERSION=2.68
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib" \
 		CPPFLAGS="-I${LOCALBASE}/include"
@@ -90,10 +91,20 @@ pre-configure:
 	for i in ${BASH_SCRIPTS}; do \
 		perl -pi -e 's,/bin/bash,/bin/sh,' ${WRKSRC}/$${i}; \
 	done
+	perl -pi -e 's,^prefix=.*,prefix=\@prefix\@,g;' \
+		-e 's,^exec_prefix=.*,exec_prefix=\@prefix\@,g' \
+		${WRKSRC}/data/*.pc.in
 
 # Force using the internal mcs compiler
 pre-build:
 	@mkdir -p ${WRKSRC}/mcs/build/deps
 	@touch ${WRKSRC}/mcs/build/deps/use-monolite
+
+# XXX stop mono failing the first time
+# make _tmpinst more available
+post-build:
+	for i in ${WRKBUILD}/runtime/_tmpinst/bin/*; do \
+		ln -s $$i ${WRKDIR}/bin; \
+	done
 
 .include <bsd.port.mk>

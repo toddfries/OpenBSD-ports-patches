@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.53 2010/11/19 07:23:12 espie Exp $
+# $OpenBSD: Makefile,v 1.56 2012/02/24 07:18:01 ajacoutot Exp $
 
 COMMENT=	X11-based presentation tool
 
 DISTNAME=	magicpoint-1.09a
 # hack
 PKGNAME=	magicpoint-1.11b
-REVISION=	9
+REVISION=	10
 CATEGORIES=	misc productivity
 MASTER_SITES=	ftp://sh.wide.ad.jp/WIDE/free-ware/mgp/
 
@@ -32,6 +32,8 @@ MODULES=	devel/gettext
 
 USE_GROFF =	Yes
 AUTOCONF_VERSION=2.13
+# XXX while autoconf will append gnu in CONFIGURE_STYLE, we explicitely
+# set it anyway because order matters
 CONFIGURE_STYLE=autoconf gnu imake no-autoheader
 CONFIGURE_ARGS=	--disable-vflib
 CONFIGURE_ARGS+= --enable-gif

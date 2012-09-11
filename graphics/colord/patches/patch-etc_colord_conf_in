@@ -1,0 +1,9 @@
+$OpenBSD: patch-etc_colord_conf_in,v 1.2 2012/03/19 08:59:00 ajacoutot Exp $
+--- etc/colord.conf.in.orig	Fri Mar  9 21:04:40 2012
++++ etc/colord.conf.in	Sun Mar 18 20:24:56 2012
+@@ -25,4 +25,4 @@ CreateDummySensor=false
+ # using the profile dictionary metadata.
+ #
+ # default=
+-StandardSpaces=adobe-rgb:/usr/share/color/icc/Argyll/ClayRGB1998.icm;srgb:/usr/share/color/icc/Argyll/sRGB.icm;prophoto-rgb:/usr/share/color/icc/Argyll/ProPhotoRGB.icc
++StandardSpaces=adobe-rgb:${LOCALBASE}/share/color/icc/Argyll/ClayRGB1998.icm;srgb:${LOCALBASE}/share/color/icc/Argyll/sRGB.icm;prophoto-rgb:${LOCALBASE}/share/color/icc/Argyll/ProPhotoRGB.icc

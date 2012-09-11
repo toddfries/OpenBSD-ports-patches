@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.8 2010/11/19 22:31:39 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2012/03/29 13:38:49 sthen Exp $
 
 COMMENT=		wm-dockapp; simple network interface monitoring tool
 
 DISTNAME=		wmnetload-1.3
-REVISION=		0
+REVISION=		1
 CATEGORIES=		net x11 x11/windowmaker
 
 HOMEPAGE=		http://freshmeat.net/projects/wmnetload
@@ -21,7 +21,7 @@ MASTER_SITES=		ftp://truffula.com/pub/
 
 LIB_DEPENDS=		devel/libdockapp
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 CONFIGURE_STYLE=	gnu
 
 NO_REGRESS=		Yes

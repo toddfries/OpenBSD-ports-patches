@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2011/03/09 06:23:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/08 15:10:02 dcoppa Exp $
 
 COMMENT = 	gnu privacy guard - a free PGP replacement
 
-DISTNAME = 	gnupg-2.0.17
+DISTNAME = 	gnupg-2.0.19
+REVISION =	1
 CATEGORIES = 	security
 
 MASTER_SITES = 	ftp://ftp.gnupg.org/gcrypt/gnupg/ \
@@ -24,8 +25,9 @@ PERMIT_PACKAGE_FTP = 	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP = 	Yes
 
-WANTLIB +=		assuan bz2 c crypto curl gcrypt gpg-error
-WANTLIB +=		idn ksba pth readline ssl termcap usb z
+WANTLIB +=		assuan bz2 c crypto curl gcrypt
+WANTLIB +=		gpg-error idn ksba pth pthread
+WANTLIB +=		readline ssl termcap usb z
 
 EXTRACT_SUFX = 		.tar.bz2
 
@@ -34,8 +36,8 @@ MODULES = 		devel/gettext
 FLAVORS = 		ldap
 FLAVOR ?=
 
-LIB_DEPENDS = 		devel/libusb \
-			archivers/bzip2 \
+LIB_DEPENDS =		archivers/bzip2 \
+			devel/libusb-compat \
 			security/libassuan \
 			security/libgcrypt \
 			security/libksba \
@@ -60,7 +62,7 @@ USE_GROFF =		Yes
 
 CONFIGURE_STYLE = 	gnu
 CONFIGURE_ENV = 	CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" 
+			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS = 	docdir=${LOCALBASE}/share/doc/gnupg2 \
 			--enable-gpgtar
 

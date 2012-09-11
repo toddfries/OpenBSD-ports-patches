@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2011/06/03 17:25:56 jeremy Exp $
+# $OpenBSD: Makefile,v 1.21 2012/07/12 21:00:27 jeremy Exp $
 
-COMMENT =		lightweight ORM library for Ruby
+COMMENT =		lightweight database library and ORM for Ruby
 
-DISTNAME =		sequel-3.24.1
+DISTNAME =		sequel-3.37.0
 CATEGORIES =		databases
 
 HOMEPAGE =		http://sequel.rubyforge.org/
@@ -21,6 +21,6 @@ CONFIGURE_STYLE =	ruby gem
 
 REGRESS_DEPENDS =	databases/ruby-sqlite3,${MODRUBY_FLAVOR}
 MODRUBY_REGRESS =	rake rspec
-RAKE_REGRESS_TARGET =	spec spec_plugin spec_sqlite
+MODRUBY_REGRESS_TARGET = spec spec_plugin spec_sqlite
 
 .include <bsd.port.mk>

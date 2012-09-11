@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.5 2011/07/28 09:24:35 ajacoutot Exp $
+$OpenBSD: README,v 1.10 2012/06/21 07:00:20 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -7,30 +7,29 @@ $OpenBSD: README,v 1.5 2011/07/28 09:24:35 ajacoutot Exp $
 Webacula has been installed into ${INSTDIR}
 
 *** Upgrading users: refer to the "Update from prior version" section in
-*** ${INSTDIR}/webacula/docs/txt/install.txt
+*** ${INSTDIR}/docs/txt/install.txt
 
 Database creation
 =================
 
-You need to install the PHP module corresponding to the database used by
-your bacula(8) installation. e.g:
-    for PostreSQL you'll need to install php5-pdo_pgsql
-    for MySQL you'll need to install php5-pdo_mysql
-    for SQLite3 you'll need to install php5-pdo_sqlite
+Webacula can work with a PostgreSQL, MySQL or SQLite3 database.
+Support for SQLite3 is included with the main php package; to use
+another database, the corresponding package needs to be installed:
+    php-pdo_pgsql or php-pdo_mysql
 
 To add the webacula DB tables, run the following commands according to
 the RDBMS that bacula(8) uses. Note that prior to run these commands,
 you will have to ajust at least "db_name", "db_user", "db_pwd" and
 "webacula_root_pwd" in ${INSTDIR}/install/db.conf.
-Also note that the scripts can take arguments:
-    e.g. ./10_make_tables.sh -U postgres
+Also note that the scripts can take arguments and you must use the
+already available bacula user for connecting to the database.
 
 * change to the directory matching your DB (PostgreSql, MySql or SqLite)
     # cd ${INSTDIR}/install/PostgreSql
 
 * run the included scripts to create the webacula tables
-    # ./10_make_tables.sh
-    # ./20_acl_make_tables.sh
+    # ./10_make_tables.sh -U bacula
+    # ./20_acl_make_tables.sh -U bacula
 
 When using SQLite3, make sure that the "www" user|group has write access
 to the directory containing the DB as well as the DB file itself.
@@ -94,4 +93,4 @@ Messages {
 }
 
 Then reload bacula-dir(8):
-    # /etc/rc.d/bacula_dir reload
+    # ${RCDIR}/bacula_dir reload

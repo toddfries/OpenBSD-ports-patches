@@ -1,7 +1,7 @@
-$OpenBSD: patch-Modules_FindQt4_cmake,v 1.10 2011/03/13 18:23:02 dcoppa Exp $
---- Modules/FindQt4.cmake.orig	Tue Feb 15 18:47:27 2011
-+++ Modules/FindQt4.cmake	Mon Mar  7 10:10:46 2011
-@@ -464,13 +464,20 @@ GET_FILENAME_COMPONENT(qt_install_version "[HKEY_CURRE
+$OpenBSD: patch-Modules_FindQt4_cmake,v 1.15 2012/08/31 12:28:31 dcoppa Exp $
+--- Modules/FindQt4.cmake.orig	Thu Aug  9 20:15:19 2012
++++ Modules/FindQt4.cmake	Thu Aug 23 11:25:47 2012
+@@ -486,13 +486,20 @@ GET_FILENAME_COMPONENT(qt_install_version "[HKEY_CURRE
  # check for qmake
  # Debian uses qmake-qt4
  # macports' Qt uses qmake-mac
@@ -27,34 +27,21 @@ $OpenBSD: patch-Modules_FindQt4_cmake,v 1.10 2011/03/13 18:23:02 dcoppa Exp $
 +  )
 +ENDIF(CMAKE_SYSTEM MATCHES "OpenBSD*")
  
+ # double check that it was a Qt4 qmake, if not, re-find with different names
  IF (QT_QMAKE_EXECUTABLE)
- 
-@@ -967,6 +974,12 @@ IF (QT4_QMAKE_FOUND)
-     _QT4_ADJUST_LIB_VARS(QAxContainer)
-   ENDIF(Q_WS_WIN)
- 
-+  # Qt4 on OpenBSD needs to be linked with -pthread
-+  IF(CMAKE_SYSTEM MATCHES "OpenBSD*")
-+    FIND_PACKAGE(Threads)
-+    SET(QT_QTCORE_LIBRARY ${QT_QTCORE_LIBRARY}
-+              ${CMAKE_THREAD_LIBS_INIT})
-+  ENDIF(CMAKE_SYSTEM MATCHES "OpenBSD*")
- 
-   #######################################
-   #
-@@ -991,13 +1004,13 @@ IF (QT4_QMAKE_FOUND)
+@@ -959,13 +966,13 @@ IF (QT_QMAKE_EXECUTABLE AND QTVERSION)
    ENDIF(QT_QMAKE_CHANGED)
    
    FIND_PROGRAM(QT_MOC_EXECUTABLE
 -    NAMES moc-qt4 moc
 +    NAMES moc4 moc-qt4 moc
      PATHS ${QT_BINARY_DIR}
-     NO_DEFAULT_PATH
+     NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH
      )
  
    FIND_PROGRAM(QT_UIC_EXECUTABLE
 -    NAMES uic-qt4 uic
 +    NAMES uic4 uic-qt4 uic
      PATHS ${QT_BINARY_DIR}
-     NO_DEFAULT_PATH
+     NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH
      )

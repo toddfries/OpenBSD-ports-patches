@@ -1,0 +1,11 @@
+@comment $OpenBSD: PLIST,v 1.2 2012/08/11 15:16:49 ajacoutot Exp $
+lib/gedit/
+lib/gedit/plugins/
+lib/gedit/plugins/gcp.plugin
+@comment lib/gedit/plugins/libgcp.a
+@comment lib/gedit/plugins/libgcp.la
+lib/gedit/plugins/libgcp.so
+share/gedit/
+share/gedit/plugins/
+share/gedit/plugins/gcp/
+share/gedit/plugins/gcp/gcp.css

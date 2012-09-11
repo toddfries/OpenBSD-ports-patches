@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/25 08:58:49 sebastia Exp $
+# $OpenBSD: Makefile,v 1.16 2012/04/23 08:57:46 bentley Exp $
 
 COMMENT=	3D earth viewer with GPS support
 
 DISTNAME=	gaia-0.1.2
-REVISION=	6
+REVISION=	8
 CATEGORIES=	x11 geo
 
 EXTRACT_SUFX=	.tar.bz2
 
 HOMEPAGE=	http://gaia-clean.sourceforge.net/
-
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -35,15 +33,10 @@ LIB_DEPENDS=	devel/sdl \
 		graphics/png \
 		graphics/jpeg
 
+SUBST_VARS +=	CFLAGS CXXFLAGS CC CXX
+
 pre-configure:
-	perl -pi -e 's,!!CFLAGS!!,${CFLAGS},g;' \
-		-e 's,!!CXXFLAGS!!,${CXXFLAGS},g;' \
-		-e 's,!!CC!!,${CC},g;' \
-		-e 's,!!CXX!!,${CXX},g;' \
-		-e 's,!!PREFIX!!,${PREFIX},g;' \
-		-e 's,!!LOCALBASE!!,${LOCALBASE},g;' \
-		-e 's,!!X11BASE!!,${X11BASE},g;' \
-		${WRKSRC}/SConstruct
+	${SUBST_CMD} ${WRKSRC}/SConstruct
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKBUILD}/gaia ${PREFIX}/bin

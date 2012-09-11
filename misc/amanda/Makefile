@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.39 2010/11/19 07:23:11 espie Exp $
+# $OpenBSD: Makefile,v 1.41 2012/04/28 10:52:08 ajacoutot Exp $
 
 COMMENT-main=	network-capable tape backup (client and tape server)
 COMMENT-client=	network-capable tape backup (client only)
@@ -16,8 +16,8 @@ DISTNAME=	amanda-${DISTVERSION}
 PKGNAME-main=	amanda-${PKGVERSION}
 PKGNAME-client=	amanda-client-${PKGVERSION}
 PKGNAME-doc=	amanda-doc-${PKGVERSION}
-REVISION-main=	1
-REVISION-client=0
+REVISION-main=	2
+REVISION-client=1
 
 CATEGORIES=	misc
 
@@ -63,7 +63,6 @@ MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config
 # shared libraries, we disable the generation of shared libraries.
 CONFIGURE_ARGS=	--disable-shared \
 		--libexecdir=${PREFIX}/libexec/amanda \
-		--localstatedir=/var \
 		--with-configdir=${SYSCONFDIR}/amanda \
 		--with-user=operator \
 		--with-group=operator
@@ -73,13 +72,13 @@ USE_GROFF =	Yes
 # databases.
 .if ${FLAVOR:L:Mdb}
 WANTLIB+=	lib/db4/db
-LIB_DEPENDS+=	db->=4,<5:databases/db/v4
+LIB_DEPENDS+=	databases/db/v4
 CONFIGURE_ARGS+= --with-db=db
 CFLAGS+=	 -L${LOCALBASE}/lib
 .endif
 
 .if ${FLAVOR:L:Mgpg}
-BUILD_DEPENDS+=  :gnupg-*:security/gnupg
+BUILD_DEPENDS+=  security/gnupg
 CONFIGURE_ENV+=  GZIP=${LOCALBASE}/bin/gpgzip
 .endif
 

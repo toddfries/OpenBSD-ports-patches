@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/08 17:41:57 rpointel Exp $
+# $OpenBSD: Makefile,v 1.13 2012/07/13 16:35:26 ajacoutot Exp $
 
 COMMENT=		Javascript bindings for GNOME
 
 GNOME_PROJECT=		gjs
-GNOME_VERSION=		0.7.14
+GNOME_VERSION=		1.32.0
 REVISION=		0
 
-SHARED_LIBS +=  gjs                  0.0      # 0.0
-SHARED_LIBS +=  gjs-gi               0.0      # 0.0
-SHARED_LIBS +=  gjs-dbus             0.0      # 0.0
+SHARED_LIBS +=  gjs                  1.0      # 0.0
+SHARED_LIBS +=  gjs-dbus             1.0      # 0.0
+SHARED_LIBS +=  gjs-gdbus            1.0      # 0.0
 
 CATEGORIES=		devel
 
@@ -22,32 +22,32 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+WANTLIB += GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm
+WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 drm expat
+WANTLIB += ffi fontconfig freetype gio-2.0 girepository-1.0 glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 m mozjs185 ncurses
+WANTLIB += ncursesw nspr4 pcre pixman-1 plc4 plds4 png pthread
+WANTLIB += pthread-stubs readline stdc++ xcb xcb-render xcb-shm
+WANTLIB += z
+
 MODULES=		devel/gettext \
 			lang/python \
 			x11/gnome
 
 MODPY_RUNDEP=		No
-MODPY_BUILDDEP= 	Yes # scripts/make-tests needs python to run.
+MODPY_BUILDDEP= 	No
 MODPY_ADJ_FILES=	scripts/make-tests
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
-WANTLIB += GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm
-WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 drm expat
-WANTLIB += ffi fontconfig freetype gio-2.0 girepository-1.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 m mozjs ncurses
-WANTLIB += ncursesw nspr4 pcre pixman-1 plc4 plds4 png pthread
-WANTLIB += pthread-stubs readline stdc++ xcb xcb-render xcb-shm
-WANTLIB += z
-
-LIB_DEPENDS=		devel/gobject-introspection \
-			lang/spidermonkey \
+LIB_DEPENDS=		devel/gobject-introspection>=1.32.0 \
+			devel/spidermonkey \
 			x11/dbus-glib
-REGRESS_DEPENDS=	sysutils/e2fsprogs
 
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ARGS +=	--disable-static
+
+REGRESS_DEPENDS +=	sysutils/e2fsprogs # uuidgen(1)
+REGRESS_DEPENDS +=	${MODPY_RUN_DEPENDS} # scripts/make-tests needs python to run
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gjs/

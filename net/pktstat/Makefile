@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2010/11/19 22:31:37 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/16 00:20:09 sthen Exp $
 
 COMMENT=		network traffic viewer
 DISTNAME=		pktstat-1.8.4
-REVISION=		1
+REVISION=		3
 CATEGORIES=		net
 
-HOMEPAGE=		http://www.adaptive-enterprises.com.au/~d/software/pktstat/
-
-MAINTAINER=		Rui Reis <rui@openbsd.org>
+MAINTAINER=		Antti Harri <iku@openbsd.fi>
 
 # Public Domain
 PERMIT_PACKAGE_CDROM=	Yes
@@ -17,7 +15,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m pcap termlib
 
-MASTER_SITES=		${HOMEPAGE}
+MASTER_SITES=		http://openbsd.fi/dist/
 
 CONFIGURE_STYLE=	gnu
 USE_GROFF =		Yes

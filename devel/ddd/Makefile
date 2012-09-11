@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.58 2011/04/10 18:01:13 jasper Exp $
+# $OpenBSD: Makefile,v 1.60 2012/03/29 13:38:13 sthen Exp $
 
 COMMENT=	Data Display Debugger, graphical front-end for GDB, etc
 
 DISTNAME=	ddd-3.3.12
-REVISION =	2
+REVISION =	3
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GNU:=ddd/}
 
@@ -38,7 +38,7 @@ LIB_DEPENDS+=	devel/libelf
 WANTLIB +=	elf
 .endif
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 
 LIB_DEPENDS+=		x11/openmotif
 

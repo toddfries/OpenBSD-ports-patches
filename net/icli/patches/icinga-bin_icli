@@ -1,0 +1,16 @@
+$OpenBSD: icinga-bin_icli,v 1.3 2012/08/29 13:31:21 sthen Exp $
+--- bin/icli.orig	Tue Aug 28 16:47:39 2012
++++ bin/icli	Wed Aug 29 14:29:17 2012
+@@ -17,9 +17,9 @@ use Term::Size;
+ our $VERSION = '0.43';
+ 
+ my ( $cache, $config, $data, $extra );
+-my $config_file = '/var/cache/icinga/objects.cache';
+-my $status_file = '/var/lib/icinga/status.dat';
+-my $rw_file     = '/var/lib/icinga/rw/icinga.cmd';
++my $config_file = '/var/icinga/objects.cache';
++my $status_file = '/var/icinga/status.dat';
++my $rw_file     = '/var/icinga/rw/icinga.cmd';
+ my $context;
+ my $colours       = 1;
+ my $list_type     = 's';

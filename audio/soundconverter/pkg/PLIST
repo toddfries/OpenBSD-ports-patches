@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2011/04/06 07:22:45 landry Exp $
+@comment $OpenBSD: PLIST,v 1.3 2012/06/15 08:32:14 ajacoutot Exp $
 bin/soundconverter
 @man man/man1/soundconverter.1
 share/applications/soundconverter.desktop
@@ -48,7 +48,7 @@ share/locale/zh_CN/LC_MESSAGES/soundconverter.mo
 share/soundconverter/
 share/soundconverter/soundconverter-logo.svg
 share/soundconverter/soundconverter.glade
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

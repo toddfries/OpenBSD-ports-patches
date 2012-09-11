@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/16 22:43:57 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2012/09/06 12:38:35 ajacoutot Exp $
 
-ONLY_FOR_ARCH=		${GCC4_ARCHS}
+ONLY_FOR_ARCHS=		${GCC4_ARCHS}
 
 SHARED_ONLY=		Yes
 
@@ -10,7 +10,7 @@ COMMENT-docs=		documentation for OpenCV
 V=			2.2.0
 DISTNAME=		OpenCV-$V
 PKGNAME-main=		opencv-$V
-REVISION-main=		1
+REVISION-main=		7
 PKGNAME-docs=		opencv-docs-$V
 CATEGORIES=		graphics devel
 
@@ -40,10 +40,10 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=opencvlibrary/}
 EXTRACT_SUFX=		.tar.bz2
 
-WANTLIB += GL Half Iex IlmImf Imath X11 Xau Xcomposite Xcursor
-WANTLIB += Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender
-WANTLIB += Xxf86vm atk-1.0 avcodec avformat avutil bz2 c cairo
-WANTLIB += drm expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += GL Half Iex IlmImf Imath X11 Xcomposite Xcursor
+WANTLIB += Xdamage Xext Xfixes Xi Xinerama Xrandr Xrender
+WANTLIB += atk-1.0 avcodec avformat avutil bz2 c cairo
+WANTLIB += expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gsm gstapp-0.10
 WANTLIB += gstbase-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
 WANTLIB += gtk-x11-2.0 jasper jpeg m mp3lame ogg orc-0.4 pango-1.0
@@ -75,7 +75,8 @@ USE_LIBTOOL=		Yes
 VMEM_WARNING=		Yes
 
 RUN_DEPENDS-main=	math/py-numpy
-BUILD_DEPENDS=		devel/doxygen
+BUILD_DEPENDS=		devel/doxygen \
+			math/py-numpy
 
 # ATM opencv requires V4L1 compat, ask them to change it,
 # then see WITH_V4L below.
@@ -86,9 +87,13 @@ CONFIGURE_ARGS+=	-DBUILD_EXAMPLES:Bool=Off \
 			-DBUILD_LATEX_DOCS:Bool=Off \
 			-DWITH_GTK:Bool=On \
 			-DWITH_V4L:Bool=Off \
+			-DWITH_EIGEN2:Bool=Off \
 			-DWITH_GSTREAMER:Bool=On \
 			-DWITH_1394:Bool=Off \
 			-DWITH_FFMPEG:Bool=On
+
+pre-patch:
+	perl -i -pe 's/\r$$//' ${WRKSRC}/CMakeLists.txt
 
 post-configure:
 	find ${WRKSRC} -type f -iname "*.make" -exec \

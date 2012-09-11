@@ -1,30 +1,29 @@
-# $OpenBSD: Makefile,v 1.111 2011/08/25 09:50:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.139 2012/08/23 16:25:48 ajacoutot Exp $
 
-COMMENT=	Common Unix Printing System
+COMMENT-main=		Common Unix Printing System
+COMMENT-libs=		CUPS libraries and headers
 
-VERSION=	1.4.8
-DISTNAME=	cups-${VERSION}-source
-PKGNAME=	cups-${VERSION}
+VERSION=		1.6.1
+DISTNAME=		cups-${VERSION}-source
+EXTRACT_SUFX=		.tar.bz2
 
-# Allow both ulpt(4) and libusb based backends to work together.
-# See http://www.cups.org/str.php?L3357
-PATCHFILES=	usb-backend-both-usblp-and-libusb.dpatch:0
-MASTER_SITES0=	http://www.cups.org/strfiles/3357/
-PATCH_DIST_STRIP= -p1
+REVISION-main=		2
+REVISION-libs=		2
 
-CATEGORIES=	print sysutils
+PKGNAME-main=		cups-${VERSION}
+PKGNAME-libs=		cups-libs-${VERSION}
 
-# XXX ghostscript needs to dlopen() libcupsimage.so.4
-SHARED_LIBS+=	cupsimage	4.0
-SHARED_LIBS+=	cups		5.0
-SHARED_LIBS+=	cupscgi		0.0
-SHARED_LIBS+=	cupsdriver	0.0
-SHARED_LIBS+=	cupsmime	0.0
-SHARED_LIBS+=	cupsppdc	0.0
+CATEGORIES=		print sysutils
 
-HOMEPAGE=	http://www.cups.org/
+SHARED_LIBS+=	cupsimage	5.0
+SHARED_LIBS+=	cups		6.1
+SHARED_LIBS+=	cupscgi		1.0
+SHARED_LIBS+=	cupsmime	1.0
+SHARED_LIBS+=	cupsppdc	1.0
 
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
+HOMEPAGE=		http://www.cups.org/
+
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2 - LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -32,106 +31,99 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += 	asn1 c crypto dbus-1>=7 gssapi jpeg krb5 m png>=3 pthread
-WANTLIB +=	ssl stdc++ tiff>=35 z usb
+WANTLIB += asn1 c crypto gssapi krb5 m pthread
+WANTLIB += ssl stdc++ z
 
-MASTER_SITES=	http://ftp.easysw.com/pub/cups/${VERSION}/ \
-		http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
-		ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
-		ftp://ftp.easysw.com/pub/cups/${VERSION}/ \
-		ftp://ftp2.easysw.com/pub/cups/${VERSION}/ \
-		ftp://ftp3.easysw.com/pub/cups/${VERSION}/
+WANTLIB-main += ${WANTLIB}
+WANTLIB-main += cups cupscgi cupsimage cupsmime cupsppdc dbus-1 usb-1.0
 
-EXTRACT_SUFX=	.tar.bz2
+MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
+			http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
+			ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
+			ftp://ftp.easysw.com/pub/cups/${VERSION}/ \
+			ftp://ftp2.easysw.com/pub/cups/${VERSION}/ \
+			ftp://ftp3.easysw.com/pub/cups/${VERSION}/
 
-WRKDIST=	${WRKDIR}/${DISTNAME:S/-source//}
+WRKDIST=		${WRKDIR}/${DISTNAME:S/-source//}
 
-BUILD_DEPENDS=	devel/xdg-utils \
-		${MODGNU_AUTOMAKE_DEPENDS} \
-		${MODGNU_AUTOCONF_DEPENDS}
+MULTI_PACKAGES=		-main -libs
 
-RUN_DEPENDS=	devel/desktop-file-utils \
-		devel/xdg-utils
+BUILD_DEPENDS=		${MODGNU_AUTOMAKE_DEPENDS} \
+			${MODGNU_AUTOCONF_DEPENDS}
 
-LIB_DEPENDS=	graphics/png \
-		graphics/tiff \
-		devel/libusb \
-		x11/dbus
+RUN_DEPENDS-main=	print/cups-filters
 
-LIBS_ENV=	LIBcups_VERSION=${LIBcups_VERSION} \
-		LIBcupscgi_VERSION=${LIBcupscgi_VERSION} \
-		LIBcupsdriver_VERSION=${LIBcupsdriver_VERSION} \
-		LIBcupsimage_VERSION=${LIBcupsimage_VERSION} \
-		LIBcupsmime_VERSION=${LIBcupsmime_VERSION} \
-		LIBcupsppdc_VERSION=${LIBcupsppdc_VERSION} \
+# optional for now
+#RUN_DEPENDS-main +=	graphics/colord
 
-MAKE_ENV=	${LIBS_ENV}
+# we don't install the desktop file
+#BUILD_DEPENDS +=	devel/xdg-utils
+#RUN_DEPENDS-main +=	devel/xdg-utils
 
-FAKE_FLAGS=	BINMODE=${BINMODE} \
-		SHAREMODE=${SHAREMODE} \
-		DBUSDIR=${DESTDIR}${PREFIX}/share/examples/cups/dbus-1/system.d \
-		ICONDIR=${DESTDIR}${PREFIX}/share/icons \
-		MENUDIR=${DESTDIR}${PREFIX}/share/applications \
-		SERVERROOT=${DESTDIR}${PREFIX}/share/examples/cups
+LIB_DEPENDS-main=	${BASE_PKGPATH},-libs \
+			devel/libusb1 \
+			x11/dbus
 
-AUTOCONF_VERSION= 2.61
-AUTOMAKE_VERSION= 1.9
+LIBS_ENV=		LIBcups_VERSION=${LIBcups_VERSION} \
+			LIBcupscgi_VERSION=${LIBcupscgi_VERSION} \
+			LIBcupsimage_VERSION=${LIBcupsimage_VERSION} \
+			LIBcupsmime_VERSION=${LIBcupsmime_VERSION} \
+			LIBcupsppdc_VERSION=${LIBcupsppdc_VERSION} \
 
-USE_GMAKE=	Yes
-USE_GROFF=	Yes
+FAKE_FLAGS=		BUILDROOT=${WRKINST} \
+			DBUSDIR=${PREFIX}/share/examples/cups/dbus-1/system.d \
+			ICONDIR=${PREFIX}/share/icons \
+			MENUDIR=${PREFIX}/share/applications \
+			SERVERROOT=${WRKINST}${PREFIX}/share/examples/cups
 
-CONFIGURE_STYLE= gnu dest
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-static \
-		--with-cups-user=_cups \
-		--with-cups-group=_cups \
-		--with-system-groups=wheel \
-		--localstatedir=/var \
-		--without-java \
-		--with-perl="/usr/bin/perl" \
-		--with-optim="${CFLAGS}" \
-		--with-smbconfigfile="samba:///${SYSCONFDIR}/samba/smb.conf" \
-		--with-pdftops="${LOCALBASE}/bin/gs" \
-		--without-php \
-		--without-python \
-		--enable-image \
-		--enable-tcp-wrappers \
-		--enable-dbus \
-		--enable-texttops \
-		--enable-raw-printing \
-		--enable-gssapi \
-		--enable-openssl \
-		--enable-libusb \
-		--disable-gnutls \
-		--disable-pam \
-		--disable-launchd \
-		--disable-pap \
-		--disable-slp \
-		--disable-default-shared
+AUTOCONF_VERSION= 	2.68
+AUTOMAKE_VERSION= 	1.10
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng" \
-		LDFLAGS="-L${LOCALBASE}/lib" \
-		${LIBS_ENV}
+USE_GMAKE=		Yes
 
-FLAVORS=	ldap
-FLAVOR?=
+MAKE_ENV=		${LIBS_ENV}
 
-.if ${FLAVOR:L:Mldap}
-CONFIGURE_ARGS+= --enable-ldap
-WANTLIB +=	ldap
-LIB_DEPENDS+=	databases/openldap
-.else
-CONFIGURE_ARGS+=--disable-ldap
-.endif
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
+				-I${LOCALBASE}/include/libpng" \
+			LDFLAGS="-L${LOCALBASE}/lib -pthread" \
+			${LIBS_ENV}
+
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--enable-static \
+			--with-cups-group=_cups \
+			--with-cups-user=_cups \
+			--with-system-groups=wheel \
+			--with-optim="${CFLAGS}" \
+			--with-dbusdir=${SYSCONFDIR}/dbus-1 \
+			--with-perl="/usr/bin/perl" \
+			--with-printcap=${SYSCONFDIR}/cups/printcap \
+			--with-smbconfigfile="samba:///${SYSCONFDIR}/samba/smb.conf" \
+			--enable-libusb \
+			--enable-dbus \
+			--enable-openssl \
+			--disable-cdsassl \
+			--disable-gnutls \
+			--disable-libpaper \
+			--disable-pam \
+			--disable-default-shared \
+			--without-java \
+			--without-php \
+			--without-python
+
+# XXX FLAVOR?; adds to many dependencies to cups,-libs
+CONFIGURE_ARGS +=	--disable-avahi \
+			--disable-dnssd
 
 post-extract:
 	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
 
 pre-configure:
-	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} AUTOCONF_VERSION=${AUTOCONF_VERSION} aclocal -I config-scripts
-	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} AUTOCONF_VERSION=${AUTOCONF_VERSION} autoconf -I config-scripts
-	${SUBST_CMD} ${WRKSRC}/Makedefs.in
+	cd ${WRKSRC} && \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} AUTOCONF_VERSION=${AUTOCONF_VERSION} aclocal -I config-scripts
+	cd ${WRKSRC} && \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} AUTOCONF_VERSION=${AUTOCONF_VERSION} autoconf -I config-scripts
+	${SUBST_CMD} ${WRKSRC}/{Makedefs.in,cups/Makefile}
 
 post-configure:
 	cd ${WRKBUILD} && perl -pi -e 's|\$${DESTDIR}||g' \
@@ -140,12 +132,18 @@ post-configure:
 post-install:
 	ln -sf ${LOCALBASE}/bin/smbspool \
 		${PREFIX}/libexec/cups/backend/smb
+# used to register as @sample: classes.conf, client.conf, lpoptions,
+# printers.conf and subscriptions.conf in the PLIST
+	touch ${PREFIX}/share/examples/cups/empty.conf
+# Remove files now part of cups-filters
+	rm ${PREFIX}/share/cups/banners/*
+	rm ${PREFIX}/share/cups/data/testprint
 
-# Create a link to foomatic drivers database ; we do it here instead of
-# using --enable-ppds-to-cups in the foomatic-db port so that we don't
-# need to depend on it (other printer driver packages install PPDs under
-# ${PREFIX}/share/foomatic/db/source/PPD too, e.g. foo2zjs, hpijs...).
-	ln -sf ${LOCALBASE}/share/foomatic/db/source/PPD \
-		${PREFIX}/share/cups/model/foomatic-db-ppds
+# Remove desktop file and icons; we don't really need them (it's just a
+# launcher for http://localhost:631 and we may actually want to
+# configure a remote server); this is needed to prevent a dependency
+# loop: cups->gtk+2,-guic->cups
+	rm -rf ${PREFIX}/share/icons
+	rm -rf ${PREFIX}/share/applications
 
 .include <bsd.port.mk>

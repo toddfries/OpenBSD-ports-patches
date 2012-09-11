@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2011/05/02 18:54:06 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2012/03/29 13:38:39 sthen Exp $
 
 COMMENT-main=	high dynamic range image format
 COMMENT-tools=	image viewing tools for OpenEXR
@@ -9,7 +9,7 @@ DISTNAME=	openexr-$V
 PKGNAME-main=	OpenEXR-$V
 REVISION-main = 1
 PKGNAME-tools=  OpenEXR-tools-$V
-REVISION-tools =	0
+REVISION-tools =	1
 PKGNAME-doc=	OpenEXR-doc-$V
 SHARED_LIBS=	IlmImf               4.0      # .6.0	
 CATEGORIES=	graphics
@@ -35,7 +35,7 @@ LIB_DEPENDS-tools=	${LIB_DEPENDS-main} graphics/openexr
 PKG_ARCH-doc=		*
 
 # Regress unhappy with separate build
-#SEPARATE_BUILD=		simple
+#SEPARATE_BUILD=	Yes
 
 CONFIGURE_STYLE=	gnu
 USE_GMAKE=		Yes

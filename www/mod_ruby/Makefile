@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2010/11/24 21:35:16 jeremy Exp $
+# $OpenBSD: Makefile,v 1.17 2012/03/29 13:39:00 sthen Exp $
 
 COMMENT=		module that embeds Ruby into Apache
 
 DISTNAME=		mod_ruby-1.2.6
-REVISION =		5
+REVISION =		7
 CATEGORIES=		www
 
 HOMEPAGE=		http://modruby.net/
@@ -31,7 +31,7 @@ CONFIGURE_ARGS+=	--with-apxs=/usr/sbin/apxs
 
 NO_REGRESS=		Yes
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 INSTALL_TARGET=		install-ruby
 
 SUBST_VARS=		PKGNAME

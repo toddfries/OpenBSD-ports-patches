@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.9 2011/01/11 11:49:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2012/09/01 14:37:00 ajacoutot Exp $
 
 COMMENT=		GTK+ Object Builder
 DISTNAME=		gob2-2.0.18
+REVISION=	1
 
 CATEGORIES=		x11 devel
 

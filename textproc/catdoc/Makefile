@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.28 2011/03/08 21:07:22 landry Exp $
+# $OpenBSD: Makefile,v 1.30 2012/08/26 17:41:16 stu Exp $
 
 COMMENT=	MS Word, Excel, Powerpoint ==> ASCII or TeX
 
 DISTNAME=	catdoc-0.94.2
-REVISION=	0
+REVISION=	2
 CATEGORIES=	textproc
 MASTER_SITES=	http://ftp.wagner.pp.ru/pub/catdoc/
 
 HOMEPAGE=	http://wagner.pp.ru/~vitus/software/catdoc/
-
-MAINTAINER=	Jason Ish <ish@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,7 +20,9 @@ FLAVORS=	tk
 FLAVOR?=
 
 .if ${FLAVOR:L:Mtk}
-RUN_DEPENDS=	x11/tk/8.4
+MODULES=	x11/tk
+MODTK_VERSION=	8.4
+RUN_DEPENDS=	${MODTK_RUN_DEPENDS}
 .else
 CONFIGURE_ARGS+=--disable-wordview
 .endif

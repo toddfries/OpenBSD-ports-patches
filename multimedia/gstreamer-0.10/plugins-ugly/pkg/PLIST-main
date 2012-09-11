@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.10 2011/07/05 01:13:06 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.13 2012/09/06 12:37:58 ajacoutot Exp $
 @conflict gstreamer-bad-<0.10.17
 @conflict gstreamer-a52-*
 @conflict gstreamer-mad-*
@@ -8,27 +8,17 @@
 @pkgpath ${BASE_PKGPATH},-a52
 @pkgpath ${BASE_PKGPATH},-mpeg2
 @pkgpath ${BASE_PKGPATH},-dvdread
-@comment lib/gstreamer-${VERSION}/libgsta52dec.la
 lib/gstreamer-${VERSION}/libgsta52dec.so
-@comment lib/gstreamer-${VERSION}/libgstasf.la
 lib/gstreamer-${VERSION}/libgstasf.so
-@comment lib/gstreamer-${VERSION}/libgstdvdlpcmdec.la
 lib/gstreamer-${VERSION}/libgstdvdlpcmdec.so
-@comment lib/gstreamer-${VERSION}/libgstdvdread.la
 lib/gstreamer-${VERSION}/libgstdvdread.so
-@comment lib/gstreamer-${VERSION}/libgstdvdsub.la
 lib/gstreamer-${VERSION}/libgstdvdsub.so
-@comment lib/gstreamer-${VERSION}/libgstiec958.la
 lib/gstreamer-${VERSION}/libgstiec958.so
-@comment lib/gstreamer-${VERSION}/libgstmad.la
 lib/gstreamer-${VERSION}/libgstmad.so
-@comment lib/gstreamer-${VERSION}/libgstmpegaudioparse.la
 lib/gstreamer-${VERSION}/libgstmpegaudioparse.so
-@comment lib/gstreamer-${VERSION}/libgstmpegstream.la
 lib/gstreamer-${VERSION}/libgstmpegstream.so
-@comment lib/gstreamer-${VERSION}/libgstrmdemux.la
 lib/gstreamer-${VERSION}/libgstrmdemux.so
-@comment lib/gstreamer-${VERSION}/libgstx264.la
+lib/gstreamer-${VERSION}/libgsttwolame.so
 lib/gstreamer-${VERSION}/libgstx264.so
 share/gstreamer-${VERSION}/
 share/gstreamer-${VERSION}/presets/
@@ -42,6 +32,7 @@ share/locale/da/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/de/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/el/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/en_GB/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
+share/locale/eo/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/es/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/eu/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/fi/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo

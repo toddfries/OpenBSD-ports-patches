@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/15 00:22:49 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/08/19 18:55:08 jasper Exp $
 
 COMMENT =		multi-threaded HTTP benchmark and regression tester
 
 DISTNAME =		siege-2.70
+REVISION =		1
 
 CATEGORIES =		benchmarks www
 
@@ -20,12 +21,13 @@ WANTLIB += c crypto pthread ssl
 MASTER_SITES =		http://spacehopper.org/mirrors/ \
 			ftp://ftp.joedog.org/pub/siege/
 
-MAKE_FLAGS =		localstatedir='/var/log/siege'
+MAKE_FLAGS =		localstatedir=${LOCALSTATEDIR}
 USE_GROFF =		Yes
 
+LOCALSTATEDIR=		${BASELOCALSTATEDIR}/log/siege
+SYSCONFDIR=		${BASESYSCONFDIR}/siege
+
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS +=	--localstatedir=/var/log/siege \
-			--sysconfdir=${SYSCONFDIR}/siege
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/siege

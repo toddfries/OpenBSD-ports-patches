@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/22 10:20:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2012/08/25 11:41:46 ajacoutot Exp $
 
 COMMENT=		webbased rss reader with standalone look and feel
 
-DISTNAME=		tt-rss-1.3.3
-REVISION=		1
+DISTNAME=		tt-rss-1.5.11
 CATEGORIES=		www
+REVISION =		1
 
 HOMEPAGE=		http://tt-rss.org/
 
@@ -16,23 +16,23 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}/download/
 
-BUILD_DEPENDS=		archivers/gtar
-TAR=			${LOCALBASE}/bin/gtar
-
 NO_BUILD=		Yes
 NO_REGRESS=		Yes
 PKG_ARCH=		*
 
 PREFIX=			/var/www
-INSTDIR=		${PREFIX}/tt-rss/
-SUBST_VARS=		INSTDIR
+INSTDIR=		${PREFIX}/tt-rss
+SUBST_VARS=		INSTDIR MODPHP_BIN
 
 MODULES=	lang/php
 RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-pgsql \
+		lang/php/${MODPHP_VERSION},-curl \
 		lang/php/${MODPHP_VERSION},-xmlrpc
 
 do-install:
-	@cp -Rp ${WRKDIST} ${INSTDIR}
-	@chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
+	cp -Rp ${WRKDIST} ${INSTDIR}
+	${SUBST_CMD} ${INSTDIR}/{update.php,config.php-dist}
+	rm -Rf ${INSTDIR}/{*.{beforesubst,orig},.*,debian}
+	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 
 .include <bsd.port.mk>

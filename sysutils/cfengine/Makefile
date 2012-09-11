@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.36 2011/04/17 18:19:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.38 2011/09/16 11:41:39 espie Exp $
 
 COMMENT=	GNU system administration tool for networks
 
 DISTNAME=      	cfengine-2.2.10
-REVISION=	0
+REVISION=	2
 CATEGORIES=	sysutils
 
 HOMEPAGE=	http://www.cfengine.org/

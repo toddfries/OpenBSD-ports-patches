@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.7 2011/07/23 14:06:50 naddy Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/30 20:54:59 pascal Exp $
 
 COMMENT-main =		GNU editor: extensible, customizable, self-documenting
 COMMENT-el =		elisp sources for those who want to read/modify them
 
-VERSION =		23.3
+VERSION =		23.4
+WRKDIST =		${WRKDIR}/emacs-23.4
 DISTNAME =		emacs-${VERSION}
 PKGNAME-main =		emacs-${VERSION}
 FULLPKGNAME-el =	emacs-el-${VERSION}
 FULLPKGPATH-el =	editors/emacs23,-el
 
-REVISION-main =		2
-REVISION-el =		1
+REVISION-main =		4
+REVISION-el =		4
 
 CATEGORIES =		editors
 
@@ -35,11 +36,12 @@ GCCARCH =		${MACHINE_ARCH}-unknown-openbsd${OSREV}
 
 AUTOCONF_VERSION =	2.67
 CONFIGURE_STYLE =	autoconf
-CONFIGURE_ARGS =	${GCCARCH} --localstatedir=/var
+CONFIGURE_ARGS =	${GCCARCH} --with-system-malloc
 
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include \
 				  -I${LOCALBASE}/include/libpng" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib -nopie"
+CFLAGS +=		-fno-pie
 
 MAKE_ENV =		INSTALL_EMACS="${INSTALL_SCRIPT}" \
 			LOGNAME="${SHAREOWN}"
@@ -51,13 +53,13 @@ LIB_DEPENDS-main =	x11/dbus
 WANTLIB-el =
 LIB_DEPENDS-el =
 
-.if ${FLAVOR:L:Mno_x11}
-.if ${FLAVOR:L:Mathena}
+.if ${FLAVOR:Mno_x11}
+.  if ${FLAVOR:Mathena}
 ERRORS =		"Fatal: athena and no_x11 flavors are mutually exclusive"
-.endif
+.  endif
 CONFIGURE_ARGS +=	--without-x
 
-.elif ${FLAVOR:L:Mathena}
+.elif ${FLAVOR:Mathena}
 CONFIGURE_ARGS +=	--with-x-toolkit=athena --without-toolkit-scroll-bars
 LIB_DEPENDS-main +=	graphics/png \
 			graphics/tiff \
@@ -69,10 +71,9 @@ MODULES +=		devel/gettext
 CONFIGURE_ARGS +=	--with-x-toolkit=gtk
 LIB_DEPENDS-main +=	x11/gtk+2 \
 			graphics/libungif \
-			devel/ORBit2 \
 			devel/gconf2 \
 			x11/gnome/librsvg
-WANTLIB-main +=		GL ICE ORBit-2 SM X11 Xdmcp Xext Xft Xpm Xrender \
+WANTLIB-main +=		GL ICE SM X11 Xdmcp Xext Xft Xpm Xrender \
 			Xau Xcomposite Xcursor Xdamage Xfixes Xi Xinerama \
 			Xrandr Xxf86vm jpeg png tiff gthread-2.0 pthread-stubs xcb \
 			atk-1.0 cairo drm expat fontconfig freetype \
@@ -84,6 +85,8 @@ WANTLIB-main +=		GL ICE ORBit-2 SM X11 Xdmcp Xext Xft Xpm Xrender \
 
 RUN_DEPENDS-el =	emacs-${VERSION}:${PKGPATH}
 PKG_ARCH-el =		*
+
+NO_REGRESS =		Yes
 
 post-install:
 	chmod -t ${PREFIX}/bin/emacs

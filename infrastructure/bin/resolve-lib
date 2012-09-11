@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# $OpenBSD: resolve-lib,v 1.2 2010/09/15 09:36:02 espie Exp $
+# $OpenBSD: resolve-lib,v 1.4 2011/11/17 23:14:43 espie Exp $
 #
 # Copyright (c) 2001-2010 Marc Espie <espie@openbsd.org>
 #
@@ -32,26 +32,50 @@ use OpenBSD::Paths;
 
 my $LOCALBASE = $ENV{LOCALBASE} // '/usr/local';
 my $error = 0;
+my ($noshared, $needed, $silent) = @_;
+my $emited = {};
 
 sub solve_spec
 {
 	my ($spec, $noshared, $repo) = @_;
 	my $r = $spec->findbest($repo, $LOCALBASE);
+	if ($needed) {
+		if (!defined $r || $r->is_static) {
+			return;
+		} else {
+			exit(0);
+		}
+	}
 	
 	if (!defined $r) {
-		print STDERR "Missing library for ", $spec->to_string, "\n";
+		print STDERR "Missing library for ", $spec->to_string, "\n" 
+		    unless $silent;
 		$error = 1;
 	} else {
-		print $spec->key, $r->version, "\n";
+		my $string = $spec->key.$r->version;
+		unless ($emited->{$string}) {
+			$emited->{$string} = 1;
+			print $string, "\n" unless $silent;
+		}
 	}
 }
 
 
-my $noshared; 
 # Grab arguments
-if (@ARGV > 0 && $ARGV[0] eq '-noshared') {
-	$noshared = 1;
-	shift;
+while (@ARGV > 0) {
+	if ($ARGV[0] eq '-noshared') {
+		$noshared = 1;
+		shift;
+	} elsif ($ARGV[0] eq '-needed') {
+		$needed = 1;
+		$error = 1;
+		shift;
+	} elsif ($ARGV[0] eq '-silent') {
+		$silent = 1;
+		shift;
+	} else {
+		last;
+	}
 }
 
 my $_;

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2011/05/16 08:44:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2012/09/06 12:38:35 ajacoutot Exp $
 
 COMMENT=		last.fm client for GNOME
 
 V=			0.8.2
 DISTNAME=		vagalume_$V.orig
 PKGNAME=		vagalume-$V
-REVISION=		4
+REVISION=		11
 CATEGORIES=		audio x11
 
 HOMEPAGE=		http://vagalume.igalia.com/
@@ -23,7 +23,7 @@ WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 gstinterfaces-0.10 gstreamer-0.10
 WANTLIB += gthread-2.0 gtk-x11-2.0 idn m notify pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += ssl xcb xcb-render xcb-shm xml2 z
+WANTLIB += ssl xcb xcb-render xcb-shm xml2 z ffi stdc++
 
 MASTER_SITES=		http://vagalume.igalia.com/files/source/
 
@@ -34,12 +34,14 @@ MODULES+=		devel/gettext \
 
 RUN_DEPENDS+=		devel/desktop-file-utils \
 			multimedia/gstreamer-0.10/plugins-good \
-			multimedia/gstreamer-0.10/plugins-ugly
+			multimedia/gstreamer-0.10/plugins-ugly \
+			x11/gtk+2,-guic
 
 LIB_DEPENDS=		devel/libidn \
 			devel/libnotify>=0.7.2 \
 			multimedia/gstreamer-0.10/plugins-base \
 			net/curl \
+			x11/dbus-glib \
 			x11/gtk+2
 
 USE_GMAKE=		Yes

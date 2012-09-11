@@ -1,20 +1,10 @@
-# $OpenBSD: Makefile,v 1.44 2011/04/13 06:47:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.67 2012/09/06 12:38:35 ajacoutot Exp $
 
-COMMENT-main=	GNOME media utilities
-COMMENT-glade3=	GNOME media profiles catalog for Glade3
+COMMENT=	GNOME media utilities
 
 GNOME_PROJECT=	gnome-media
-GNOME_VERSION=	2.32.0
-
-PKGNAME-main=	${DISTNAME}
-PKGNAME-glade3=	glade3-${DISTNAME}
-
-REVISION-main=	3
-
-SHARED_LIBS +=	gnome-media-profiles 1.0      # .0.0
-
-CATEGORIES-main=	x11 ${CATEGORIES}
-CATEGORIES-glade3=	devel ${CATEGORIES}
+GNOME_VERSION=	3.4.0
+REVISION=	1
 
 # GPLv2/GFDLv1.1/LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,44 +12,37 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += cairo drm expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gstreamer-0.10
-WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs xcb xcb-render
-WANTLIB += xcb-shm xml2 z
-
-MULTI_PACKAGES=	-main -glade3
+WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 drm expat
+WANTLIB += ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0 gio-2.0
+WANTLIB += glib-2.0 gmodule-2.0 gnome-media-profiles-3.0 gobject-2.0
+WANTLIB += gstinterfaces-0.10 gstreamer-0.10 gthread-2.0 gtk-3
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs xcb xcb-render xcb-shm xml2
+WANTLIB += z stdc++
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
 BUILD_DEPENDS=	multimedia/gstreamer-0.10/plugins-good
+# gstreamer-plugins-good needed for sndio(7)
+RUN_DEPENDS=	multimedia/gstreamer-0.10/plugins-good
+LIB_DEPENDS=	multimedia/gstreamer-0.10/plugins-base \
+		x11/gnome/libgnome-media-profiles \
+		x11/gtk+3
 
-WANTLIB-main += ${WANTLIB}
-WANTLIB-main += c canberra canberra-gtk gstaudio-0.10 gstbase-0.10
-WANTLIB-main += gstinterfaces-0.10 ltdl ogg pthread vorbis vorbisfile
+MODGNOME_TOOLS=		yelp
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
+MODGCONF2_SCHEMAS_DIR=	gnome-media
 
-LIB_DEPENDS-main= multimedia/gstreamer-0.10/plugins-base>=0.10.25 \
-		audio/libcanberra,-gtk
-
-WANTLIB-glade3 += ${WANTLIB}
-WANTLIB-glade3 += gladeui-1 gnome-media-profiles
-
-LIB_DEPENDS-glade3= ${BUILD_PKGPATH},-main \
-		devel/glade3
-RUN_DEPENDS-glade3= ${MODGETTEXT_RUN_DEPENDS}
-
-MODGNOME_HELP_FILES= Yes
-DESKTOP_FILES=	Yes
-MODGCONF2_SCHEMAS_DIR= gnome-media
-
-CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib" \
-		CFLAGS="-I${LOCALBASE}/include ${CFLAGS}" \
-		CDROM_HOST="bsd"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
+# XXX libcanberra-gtk3 is needed to build the sound-theme which we
+# remove because it's already shipped by gnome-control-center and would
+# conflict -- revisit for next update
+BUILD_DEPENDS += audio/libcanberra,-gtk3
+post-install:
+	rm -rf ${PREFIX}/share/sounds
 
 .include <bsd.port.mk>

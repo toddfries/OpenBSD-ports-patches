@@ -1,51 +1,7 @@
-$OpenBSD: patch-src_nettool_c,v 1.2 2011/05/18 15:25:55 jasper Exp $
-
-On OpenBSD configured interfaces have default IPv6 address, this would
-cause the code in netinfo_get_ip_version() to believe we should use the IPv6
-version of various tools, like ping6 and traceroute6. While in reality many people
-leave the interfaces as is (don't remove the IPv6 address) and use the interface
-over IPv4. So the IPv6 tools wouldn't have a proper way out and fail, this was the
-default behaviour...
-Now the code defaults to checking if for AF_INET address family instead
-of the other way around (which would thus always return IPv6).
-
---- src/nettool.c.orig	Thu Dec  2 10:26:14 2010
-+++ src/nettool.c	Wed May 18 15:43:49 2011
-@@ -24,6 +24,7 @@
- #include <string.h>
- #include <sys/types.h>
- #include <sys/socket.h>
-+#include <netinet/in.h>
- #include <signal.h>
- #include <errno.h>
- #include <sys/wait.h>
-@@ -137,21 +138,21 @@ netinfo_get_ip_version (Netinfo * netinfo)
- 				   (GTK_BIN (netinfo->host)))));
- 
- 	if (strlen (ip) > 0) {
--		host = gethostbyname2 (ip, AF_INET6);
-+		host = gethostbyname2 (ip, AF_INET);
- 		if (host == NULL) {
--			host = gethostbyname2 (ip, AF_INET);
-+			host = gethostbyname2 (ip, AF_INET6);
- 			if (host == NULL)
- 				return -1;
- 			else {
- 				g_free (ip);
--				return IPV4;
-+				return IPV6;
- 			}
- 			
- 			return -1;
- 		}
- 		else {
- 			g_free (ip);
--			return IPV6;
-+			return IPV4;
- 		}
- 
- 	}
-@@ -374,6 +375,10 @@ netinfo_io_text_buffer_dialog (GIOChannel * channel,
+$OpenBSD: patch-src_nettool_c,v 1.5 2012/03/29 06:58:10 ajacoutot Exp $
+--- src/nettool.c.orig	Tue Jan  3 10:38:09 2012
++++ src/nettool.c	Wed Mar 28 09:44:06 2012
+@@ -410,6 +410,10 @@ netinfo_io_text_buffer_dialog (GIOChannel * channel,
  						 	len, NULL);
  			}
  
@@ -56,7 +12,7 @@ of the other way around (which would thus always return IPv6).
  		} else if (status == G_IO_STATUS_AGAIN) {
  			char buf[1];
  
-@@ -385,6 +390,8 @@ netinfo_io_text_buffer_dialog (GIOChannel * channel,
+@@ -421,6 +425,8 @@ netinfo_io_text_buffer_dialog (GIOChannel * channel,
  				}
  				g_string_append_c (netinfo->command_output, buf[0]);
  			}
@@ -65,7 +21,7 @@ of the other way around (which would thus always return IPv6).
  		} else if (status == G_IO_STATUS_EOF) {
  			
  		} else if (status == G_IO_STATUS_ERROR) {
-@@ -402,15 +409,15 @@ netinfo_io_text_buffer_dialog (GIOChannel * channel,
+@@ -438,15 +444,15 @@ netinfo_io_text_buffer_dialog (GIOChannel * channel,
  
  			} else {
  				g_warning ("Error: %s\n", err->message);

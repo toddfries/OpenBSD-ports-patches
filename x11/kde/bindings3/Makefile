@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.75 2011/07/19 18:00:16 jeremy Exp $
+# $OpenBSD: Makefile,v 1.79 2012/06/15 08:30:23 ajacoutot Exp $
 
 COMMENT = 		K Desktop Environment, extra language support
 CATEGORIES =		x11 x11/kde devel
@@ -11,12 +11,13 @@ SHARED_LIBS +=	smokekde             4.0      # .3.2
 
 MODULES =	x11/kde devel/gettext lang/ruby
 
-RUN_DEPENDS +=	devel/desktop-file-utils
+RUN_DEPENDS +=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 LIB_DEPENDS =	x11/kde/libs3 \
 		x11/qt3 \
 		${MODRUBY_LIB_DEPENDS}
 
-REVISION =	15
+REVISION =	18
 #XXX missing -rpath to /usr/local ?
 USE_LIBTOOL =	gnu
 USE_GROFF =	Yes
@@ -39,6 +40,6 @@ SEPARATE_BUILD =	flavored
 CONFIGURE_ENV +=	DO_NOT_COMPILE=python
 
 GNU_ARCH =		${MACHINE_ARCH:S/amd64/x86_64/}
-SUBST_VARS =		GNU_ARCH OSREV
+SUBST_VARS =		GNU_ARCH
 
 .include <bsd.port.mk>

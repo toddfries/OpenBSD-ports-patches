@@ -1,6 +1,5 @@
-# $OpenBSD: Makefile,v 1.199 2011/08/19 06:44:21 jasper Exp $
-# $FreeBSD: Makefile,v 1.24 1997/10/04 23:32:05 andreas Exp $
-#
+# $OpenBSD: Makefile,v 1.220 2012/09/04 07:02:57 ajacoutot Exp $
+
      SUBDIR =
      SUBDIR += apache-couchdb
      SUBDIR += architect
@@ -10,7 +9,6 @@
      SUBDIR += directoryassistant
      SUBDIR += evolution-data-server
      SUBDIR += freetds
-     SUBDIR += freetds,msdblib
      SUBDIR += gdbm
      SUBDIR += gnats
      SUBDIR += gq
@@ -22,14 +20,15 @@
      SUBDIR += iodbc
      SUBDIR += jxplorer
      SUBDIR += keximdb
+     SUBDIR += kyotocabinet
      SUBDIR += lbdb
      SUBDIR += leveldb
      SUBDIR += libdbi
      SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
+     SUBDIR += luadbi
      SUBDIR += luasqlite3
      SUBDIR += luma
-     SUBDIR += maatkit
      SUBDIR += mdbtools/snapshot
      SUBDIR += mongodb
      SUBDIR += mysql
@@ -37,6 +36,8 @@
      SUBDIR += mysql2pgsql
      SUBDIR += mysqlcc
      SUBDIR += mytop
+     SUBDIR += node-pg
+     SUBDIR += node-sqlite3
      SUBDIR += ocaml-postgresql
      SUBDIR += ocaml-sqlite3
      SUBDIR += openldap
@@ -76,9 +77,14 @@
      SUBDIR += p5-DBD-mysqlPP
      SUBDIR += p5-DBI
      SUBDIR += p5-DBI-Shell
+     SUBDIR += p5-DBICx-TestDatabase
      SUBDIR += p5-DBIx-Class
+     SUBDIR += p5-DBIx-Class-Cursor-Cached
+     SUBDIR += p5-DBIx-Class-DynamicDefault
      SUBDIR += p5-DBIx-Class-HTMLWidget
+     SUBDIR += p5-DBIx-Class-IntrospectableM2M
      SUBDIR += p5-DBIx-Class-Schema-Loader
+     SUBDIR += p5-DBIx-Class-TimeStamp
      SUBDIR += p5-DBIx-Class-UUIDColumns
      SUBDIR += p5-DBIx-Class-Validation
      SUBDIR += p5-DBIx-ContextualFetch
@@ -95,6 +101,7 @@
      SUBDIR += p5-GDBM_File
      SUBDIR += p5-Ima-DBI
      SUBDIR += p5-Jifty-DBI
+     SUBDIR += p5-Palm
      SUBDIR += p5-Redis
      SUBDIR += p5-Rose-DB
      SUBDIR += p5-Rose-DB-Object
@@ -117,16 +124,21 @@
      SUBDIR += pear-MDB2
      SUBDIR += pear-MDB2-mysql
      SUBDIR += pear-MDB2-mysqli
+     SUBDIR += pear-MDB2-pgsql
      SUBDIR += pear-MDB2-sqlite
+     SUBDIR += percona-toolkit
      SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3
      SUBDIR += pgbouncer
      SUBDIR += pgfouine
      SUBDIR += pgloader
+     SUBDIR += pgpool
      SUBDIR += pgtcl
      SUBDIR += pgworksheet
      SUBDIR += pkglocatedb
+     SUBDIR += pkglocatedb,src
+     SUBDIR += ports-readmes
      SUBDIR += postgresql
      SUBDIR += postgresql-jdbc
      SUBDIR += postgresql-odbc
@@ -135,17 +147,15 @@
      SUBDIR += py-cdb
      SUBDIR += py-couchdb
      SUBDIR += py-elixir
-     SUBDIR += py-ldap,python2.4
      SUBDIR += py-ldap
      SUBDIR += py-mysql
      SUBDIR += py-odbc
      SUBDIR += py-pgsql
-     SUBDIR += py-psycopg,python2.4
-     SUBDIR += py-psycopg
      SUBDIR += py-psycopg2
      SUBDIR += py-pygresql
      SUBDIR += py-redis
      SUBDIR += py-sqlalchemy
+     SUBDIR += py-sqlalchemy-migrate
      SUBDIR += py-sqlite
      SUBDIR += py-sqlite2
      SUBDIR += py-sqlobject
@@ -199,7 +209,6 @@
      SUBDIR += ruby-sequel,rbx
      SUBDIR += ruby-sequel_pg
      SUBDIR += ruby-sequel_pg,ruby19
-     SUBDIR += ruby-sequel_pg,rbx
      SUBDIR += ruby-sqlite3
      SUBDIR += ruby-sqlite3,ruby19
      SUBDIR += ruby-sqlite3,rbx
@@ -217,6 +226,7 @@
      SUBDIR += sqlports
      SUBDIR += sqsh
      SUBDIR += tdb
+     SUBDIR += tinycdb
      SUBDIR += xapian-core
      SUBDIR += xmysql
 

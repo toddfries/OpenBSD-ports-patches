@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.245 2011/08/23 14:22:22 jasper Exp $
-# $FreeBSD: Makefile,v 1.26 1997/11/20 08:58:51 tg Exp $
+# $OpenBSD: Makefile,v 1.269 2012/09/05 15:07:18 jasper Exp $
 
      SUBDIR =
      SUBDIR += LPRng
@@ -11,11 +10,11 @@
      SUBDIR += apcd
      SUBDIR += autossh
      SUBDIR += backintime
+     SUBDIR += backuppc
      SUBDIR += bacula,mysql
      SUBDIR += bacula,pgsql
      SUBDIR += bacula,sqlite3
      SUBDIR += bchunk
-     SUBDIR += bubblemon
      SUBDIR += bubblemon-dockapp
      SUBDIR += cdrtools
      SUBDIR += cfengine
@@ -31,24 +30,28 @@
      SUBDIR += conky,no_x11
      SUBDIR += conky,xmms2
      SUBDIR += consolekit
-     SUBDIR += contool
+     SUBDIR += coreutils
      SUBDIR += crashme
      SUBDIR += cyphertite
      SUBDIR += d-feet
      SUBDIR += dcfldd
      SUBDIR += dcled
      SUBDIR += ddrescue
+     SUBDIR += deja-dup
      SUBDIR += dellflash
      SUBDIR += detox
+     SUBDIR += dfc
      SUBDIR += diskrescue
      SUBDIR += dmassage
      SUBDIR += dmidecode
      SUBDIR += downtimed
+     SUBDIR += dsh
      SUBDIR += dtpstree
      SUBDIR += duplicity
      SUBDIR += dvd+rw-tools
      SUBDIR += dwdiff
      SUBDIR += e2fsprogs
+     SUBDIR += entr
      SUBDIR += eventlog
      SUBDIR += faubackup
      SUBDIR += fdupes
@@ -64,11 +67,10 @@
      SUBDIR += gkrellm
      SUBDIR += glastree
      SUBDIR += god
+     SUBDIR += gource
      SUBDIR += gpioflicker
      SUBDIR += grub
      SUBDIR += gsmartcontrol
-     SUBDIR += hcidump
-     SUBDIR += heartbeat
      SUBDIR += hot-babe
      SUBDIR += hotplug-diskmount
      SUBDIR += idled
@@ -81,10 +83,14 @@
      SUBDIR += libretto-config
      SUBDIR += librelp
      SUBDIR += libstatgrab
+     SUBDIR += libvirt
+     SUBDIR += logfmon
      SUBDIR += login_fingerprint
      SUBDIR += login_ldap
      SUBDIR += login_oath
      SUBDIR += logpp
+     SUBDIR += logstalgia
+     SUBDIR += logtail
      SUBDIR += lsof
      SUBDIR += luastatgrab
      SUBDIR += mac-robber
@@ -101,6 +107,9 @@
      SUBDIR += ndesk-dbus
      SUBDIR += ndesk-dbus-glib
      SUBDIR += notification-daemon
+     SUBDIR += node-always
+     SUBDIR += node-daemon
+     SUBDIR += node-syslog
      SUBDIR += ns4
      SUBDIR += nut
      SUBDIR += openpoppassd
@@ -120,13 +129,12 @@
      SUBDIR += p5-Schedule-At
      SUBDIR += p5-Set-Crontab
      SUBDIR += p5-Sys-Syscall
+     SUBDIR += p5-Sys-Virt
      SUBDIR += p5-UPS-Nut
      SUBDIR += p5-Unix-PID
      SUBDIR += p5-Unix-Statgrab
      SUBDIR += p5-Unix-Syslog
      SUBDIR += pecl-fileinfo
-     SUBDIR += py-daemon
-     SUBDIR += py-lockfile
      SUBDIR += pciutils
      SUBDIR += pftop
      SUBDIR += pkg_mgr
@@ -134,9 +142,14 @@
      SUBDIR += pscpug
      SUBDIR += pstree
      SUBDIR += pv
+     SUBDIR += py-cef
+     SUBDIR += py-daemon
+     SUBDIR += py-lockfile
+     SUBDIR += py-metlog
      SUBDIR += radiusreport
      SUBDIR += radmind
      SUBDIR += rancid
+     SUBDIR += ranger
      SUBDIR += rdiff-backup
      SUBDIR += resmon
      SUBDIR += rpl
@@ -187,6 +200,7 @@
      SUBDIR += upower
      SUBDIR += upsd
      SUBDIR += usbutil
+     SUBDIR += usbutils
      SUBDIR += vifm
      SUBDIR += vmwh
      SUBDIR += wdsetup
@@ -202,6 +216,7 @@
      SUBDIR += xps
      SUBDIR += xstatbar
      SUBDIR += xuvmstat
+     SUBDIR += ykpers
      SUBDIR += zap
 
 .include <bsd.port.subdir.mk>

@@ -1,4 +1,4 @@
-/* $OpenBSD: gs-auth-bsdauth.c,v 1.2 2010/07/16 10:04:35 ajacoutot Exp $
+/* $OpenBSD: gs-auth-bsdauth.c,v 1.4 2011/11/30 11:13:47 ajacoutot Exp $
  * gs-auth-bsdauth.c --- verifying typed passwords with bsd_auth(3)
  *
  * Copyright (c) 1993-1998 Jamie Zawinski <jwz@jwz.org>
@@ -84,11 +84,9 @@ gs_auth_verify_user (const char       *username,
 	}
 
 	/* authenticate */
-	if (res = auth_userokay((char *)username, NULL, "auth-gnome-screensaver", password)) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
+	res = auth_userokay((char *)username, NULL, "auth-gnome-screensaver", password);
+
+	return res;
 }
 
 gboolean

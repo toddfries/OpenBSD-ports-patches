@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/06/02 13:41:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2012/05/17 23:13:52 sthen Exp $
 
 COMMENT=	web-based tool for managing racks of equipment
 
@@ -6,7 +6,7 @@ VER=		1.2.5-1
 DISTNAME=	rackmonkey-${VER}
 PKGNAME=	rackmonkey-${VER:S/-/./}
 
-REVISION=	3
+REVISION=	4
 
 CATEGORIES=	www net databases
 
@@ -21,11 +21,6 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=rackmonkey/}
-
-# to setup a sample database (not strictly necessary, but makes for
-# easy end-user configuration for the simplest case). sqlite databases
-# are arch-independent so PKG_ARCH=* is ok.
-BUILD_DEPENDS=	databases/sqlite3
 
 RUN_DEPENDS=	p5-DBD-SQLite-*|p5-DBD-Pg-*|p5-DBD-mysql-*:databases/p5-DBD-SQLite \
 		misc/p5-Spreadsheet-WriteExcel \
@@ -42,13 +37,16 @@ do-configure:
 	find ${WRKSRC}/perl -type f -print0 | \
 	    xargs -r0 perl -pi -e 's,#!/usr/bin/env perl,#!/usr/bin/perl,'
 
+# setup a sample database: not strictly necessary, but makes for
+# easy end-user configuration for the simplest case.
+# sqlite databases are arch-independent so PKG_ARCH=* is ok.
 SAMPLEDB = db/rackmonkey.db.sample
 do-build:
 	cd ${WRKSRC}; mkdir db; \
-	${LOCALBASE}/bin/sqlite3 ${SAMPLEDB} < sql/schema/schema.sqlite.sql; \
-	${LOCALBASE}/bin/sqlite3 ${SAMPLEDB} < sql/data/default_data.sql; \
-	${LOCALBASE}/bin/sqlite3 ${SAMPLEDB} < sql/data/sample_data.sql
-	
+	/usr/bin/sqlite3 ${SAMPLEDB} < sql/schema/schema.sqlite.sql; \
+	/usr/bin/sqlite3 ${SAMPLEDB} < sql/data/default_data.sql; \
+	/usr/bin/sqlite3 ${SAMPLEDB} < sql/data/sample_data.sql
+
 do-install:
 	find ${WRKSRC} -type f -and -name '*.orig' -print0 | xargs -r0 rm
 	${INSTALL_DATA_DIR} ${PREFIX}/rackmonkey/db ${PREFIX}/htdocs/rackmonkey

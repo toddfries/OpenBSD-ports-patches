@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.56 2011/08/21 09:21:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.75 2012/09/03 16:14:59 robert Exp $
 
 COMMENT-main =		network and application monitoring - agent
 COMMENT-server =	network and application monitoring - server
 COMMENT-web =		network and application monitoring - web frontend
 
-VERSION =		1.8.6
+VERSION =		1.8.15
 DISTNAME =		zabbix-${VERSION}
 FULLPKGNAME-main =	zabbix-agent-${VERSION}
 FULLPKGPATH-main =	net/zabbix,-main
@@ -17,7 +17,7 @@ MAJV =			${VERSION:C/^([0-9]+\.[0-9]+).*/\1/}
 
 HOMEPAGE =		http://www.zabbix.com/
 
-MAINTAINER =		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER =		Robert Nagy <robert@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
@@ -50,7 +50,7 @@ LIB_DEPENDS-server =	${LIB_DEPENDS} \
 RUN_DEPENDS-server =	net/fping
 # we want the _zabbix user&group as well as README-main
 RUN_DEPENDS-server +=	net/zabbix,-main>=${VERSION}
-WANTLIB-server =	${WANTLIB} crypto idn ssl z curl netsnmp iksemel pthread
+WANTLIB-server =	${WANTLIB} crypto idn intl ssl z curl netsnmp iksemel pthread
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--enable-server \
@@ -73,6 +73,9 @@ WANTLIB-web =
 ZABBIX_WEB =		${PREFIX-web}/zabbix
 
 FLAVOR ?=		no_server
+.if empty(FLAVOR)
+FLAVOR =		sqlite3
+.endif
 
 #if non-backend-related flavors are added, add them to
 #the following line as ":L:Nflavor1:Nflavor2" so that
@@ -90,7 +93,6 @@ CONFIGURE_ARGS +=	--with-pgsql
 WANTLIB-server += pq
 .elif ${BACKEND} == "sqlite3"
 MULTI_PACKAGES += -server
-LIB_DEPENDS-server +=	databases/sqlite3,-main
 CONFIGURE_ARGS +=	--with-sqlite3
 WANTLIB-server += sqlite3
 .elif ${BACKEND} == "no_server"

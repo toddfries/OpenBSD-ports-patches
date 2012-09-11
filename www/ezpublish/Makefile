@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2011/11/16 15:56:37 robert Exp $
 
 COMMENT =	professional PHP application framework
 
 VERSION =	4.1.3
-REVISION =	1
+REVISION =	3
 DISTNAME =	ezpublish-${VERSION}-gpl
 PKGNAME =	ezpublish-${VERSION}
 CATEGORIES =	www
@@ -36,6 +36,6 @@ do-install:
 	${INSTALL_DATA_DIR} ${INSTDIR}
 	cd ${WRKSRC} && ${TAR} -cf - . | ${TAR} -C ${INSTDIR} -xf -
 	find ${INSTDIR} -name '*.orig' -type f | xargs -r rm -f
-	${CHOWN} -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
+	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 
 .include <bsd.port.mk>

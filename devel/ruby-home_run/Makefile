@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2011/07/11 04:13:17 jeremy Exp $
+# $OpenBSD: Makefile,v 1.7 2012/04/06 19:29:20 jeremy Exp $
 
 COMMENT =	fast Date/DateTime classes for ruby
 
-DISTNAME =	home_run-1.0.3
+DISTNAME =	home_run-1.0.6
 CATEGORIES =	devel
 
 HOMEPAGE=	http://github.com/jeremyevans/home_run
@@ -22,6 +22,6 @@ REGRESS_DEPENDS = devel/ruby-mspec,${MODRUBY_FLAVOR} \
 		${FULLPKGNAME}:${BUILD_PKGPATH}
 MODRUBY_REGRESS = rake
 do-regress:
-	cd ${WRKSRC} && RUBY=${RUBY} RUBYLIB=$$(dirname `${GEM} which date_ext`) ${RAKE}
+	cd ${WRKSRC} && ${RUBY} -S home_run ${RAKE}
 
 .include <bsd.port.mk>

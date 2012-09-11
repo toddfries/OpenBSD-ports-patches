@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2011/04/08 18:20:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2012/01/03 17:42:19 ajacoutot Exp $
 
 COMMENT=	OpenSSH client and daemon for NX
 
@@ -23,12 +23,12 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/nx -I/usr/include/kerberosV/" \
 
 WRKDIST=	${WRKDIR}/nxssh
 
+MAKE_FLAGS=	ASKPASS_PROGRAM=${X11BASE}/bin/ssh-askpass \
+		SFTP_SERVER=/usr/libexec/sftp-server \
+		SSH_KEYSIGN=/usr/libexec/ssh-keysign
+
 do-install:
 	${INSTALL_PROGRAM_DIR} ${PREFIX}/NX/bin
-	${INSTALL_PROGRAM_DIR} ${PREFIX}/NX/sbin
-.for i in nxssh nxssh-keygen
-	${INSTALL_PROGRAM} ${WRKBUILD}/${i} ${PREFIX}/NX/bin
-.endfor
-	${INSTALL_PROGRAM} ${WRKBUILD}/nxsshd ${PREFIX}/NX/sbin
+	${INSTALL_PROGRAM} ${WRKBUILD}/nxssh ${PREFIX}/NX/bin
 
 .include <bsd.port.mk>

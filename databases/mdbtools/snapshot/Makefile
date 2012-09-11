@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2011/05/11 15:27:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2012/09/01 14:36:56 ajacoutot Exp $
 
 COMMENT-main=	read microsoft Access MDB
 COMMENT-gmdb=	graphical interface to MDB tools
@@ -8,8 +8,8 @@ PKGNAME-main=	mdbtools-${DATE}
 PKGNAME-gmdb=	gmdb-${DATE}
 HOMEPAGE=	http://mdbtools.sourceforge.net/
 
-REVISION-main=	5
-REVISION-gmdb=	8
+REVISION-main=	7
+REVISION-gmdb=	11
 
 CATEGORIES=	databases converters
 MASTER_SITES=	ftp://quatramaran.ens.fr/pub/espie/
@@ -59,8 +59,9 @@ WANTLIB-gmdb=	${WANTLIB} \
 		gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pixman-1 png popt pthread ssl util xml2 z xcb-render \
 		pthread-stubs xcb mdb mdbsql gio-2.0 gmodule-2.0 \
-		gobject-2.0 gthread-2.0 gnomeui-2 xcb-render-util \
-		canberra gcrypt gpg-error ltdl ogg vorbis vorbisfile
+		gobject-2.0 gthread-2.0 gnomeui-2 \
+		canberra gcrypt gpg-error ltdl ogg vorbis vorbisfile \
+		GL Xxf86vm drm ffi stdc++ xcb-shm
 
 WANTLIB-main=	${WANTLIB} readline termcap
 

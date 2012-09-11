@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2011/06/30 21:30:20 kili Exp $
-# $FreeBSD: ports/devel/hs-c2hs/Makefile,v 1.20 2004/03/25 08:29:28 obraun Exp $
+# $OpenBSD: Makefile,v 1.21 2012/08/18 12:41:37 ajacoutot Exp $
 
 COMMENT=		interface generator for Haskell to C bindings
 
 V=			0.16.3
 DISTNAME=		c2hs-${V}
-REVISION=		1
+REVISION=		2
 CATEGORIES=		devel
 MAINTAINER=		Matthias Kilian <kili@openbsd.org>
 HOMEPAGE=		http://www.cse.unsw.edu.au/~chak/haskell/c2hs/
@@ -28,6 +27,7 @@ LIB_DEPENDS=		devel/gmp
 BUILD_DEPENDS=		devel/alex \
 			devel/happy \
 			devel/hs-language-c \
+			textproc/docbook-xsl \
 			textproc/libxml \
 			textproc/libxslt \
 			textproc/sgmlformat

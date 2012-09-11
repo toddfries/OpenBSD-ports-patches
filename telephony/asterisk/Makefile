@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.121 2011/07/12 19:54:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.158 2012/08/30 22:45:40 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			1.8.5.0
+VER=			1.8.15.1
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
 
 SOUNDS=			CORE MOH EXTRA
-SOUNDS_CORE=		asterisk-core-sounds-en-gsm-1.4.21
+SOUNDS_CORE=		asterisk-core-sounds-en-gsm-1.4.22
 SOUNDS_MOH=		asterisk-moh-opsound-wav-2.03
 SOUNDS_EXTRA=		asterisk-extra-sounds-en-gsm-1.4.11
 
@@ -20,33 +20,42 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 
 # Mostly GPL v2 (only). "Specific permission is also granted to link
 # Asterisk with OpenSSL and OpenH323 and distribute the resulting binary
-# files." core-sounds-*: GPLv2/CC-BY-SA.
-PERMIT_PACKAGE_CDROM=	Yes
+# files." core-sounds-*: GPLv2/CC-BY-SA. iLBC codec has BSD-like license
+# terms, but also see patent notes in codecs/ilbc/LICENSE_ADDENDUM.
+PERMIT_PACKAGE_CDROM=	patent licensing clauses
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
+PERMIT_DISTFILES_CDROM= patent licensing clauses
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main +=	c crypto curl execinfo gsm idn iksemel
 WANTLIB-main += m ogg pthread spandsp sqlite3 ssl stdc++ termcap
-WANTLIB-main += tiff vorbis vorbisenc xml2 z ${MODLIBICONV_WANTLIB}
+WANTLIB-main += tiff vorbis vorbisenc vorbisfile xml2 z
+WANTLIB-main += ${MODGETTEXT_WANTLIB}
 
-MODULES=		devel/gettext converters/libiconv
-MULTI_PACKAGES+=	-main
+MODULES=		devel/gettext
+
+MULTI_PACKAGES=		-main -calendar -http_post -ldap -odbc \
+			-pgsql -snmp -speex
+PSEUDO_FLAVORS=		no_calendar no_http_post no_ldap no_odbc \
+			no_pgsql no_snmp no_speex
+
 SUBST_VARS+=		${SOUNDS:S/^/SOUNDS_/}
 
 LIB_DEPENDS-main=	audio/gsm \
 			audio/libogg \
 			audio/libvorbis \
-			databases/sqlite3 \
 			devel/libexecinfo \
 			graphics/tiff \
 			net/curl \
 			telephony/spandsp \
 			textproc/iksemel \
-			textproc/libxml
+			textproc/libxml \
+			${MODGETTEXT_LIB_DEPENDS}
+RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS}
+BUILD_DEPENDS=		security/libsrtp>=1.4.4 # statically linked
 
-MASTER_SITES=	http://downloads.digium.com/pub/telephony/asterisk/releases/ \
-		http://downloads.digium.com/pub/telephony/asterisk/old-releases/
+MASTER_SITES=	http://downloads.asterisk.org/pub/telephony/asterisk/releases/ \
+		http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/
 MASTER_SITES0=	${MASTER_SITES:C/asterisk/sounds/}
 
 EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
@@ -62,14 +71,14 @@ USE_GMAKE=		Yes
 USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
-AUTOCONF_VERSION=	2.65
+AUTOCONF_VERSION=	2.68
 AUTOMAKE_VERSION=	1.10
 BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
 			${MODGNU_AUTOMAKE_DEPENDS} \
 			devel/libtool,-ltdl # bogus dependencies in menuselect
 
 CPPFLAGS+=		-I${X11BASE}/include -I${LOCALBASE}/include
-LDFLAGS+= 		-L${X11BASE}/lib -L${LOCALBASE}/lib
+LDFLAGS+=		-L${X11BASE}/lib -L${LOCALBASE}/lib
 CONFIGURE_ENV+=		CPPFLAGS="${CPPFLAGS}" \
 			CFLAGS="${CFLAGS}" \
 			LDFLAGS="${LDFLAGS}" \
@@ -79,15 +88,13 @@ MAKE_FLAGS+=		ASTCFLAGS="${CFLAGS}" \
 			NOISY_BUILD="Yes" \
 			OPTIMIZE=
 
-CONFIGURE_ARGS+=	--localstatedir=/var \
-			--with-sounds-cache=${DISTDIR}
+CONFIGURE_ARGS+=	--with-sounds-cache=${DISTDIR}
 
 CONFIGURE_ARGS+=	--with-asound=no \
 			--with-avcodec=no \
 			--with-cap=no \
 			--with-dahdi=no \
 			--with-gtk2=no \
-			--with-gmime=no \
 			--with-isdnnet=no \
 			--with-misdn=no \
 			--with-nbs=no \
@@ -102,12 +109,12 @@ CONFIGURE_ARGS+=	--with-asound=no \
 			--with-suppserv=no \
 			--with-tinfo=no \
 			--with-tonezone=no \
-			--with-usb=no \
 			--with-vpb=no
 
 CONFIGURE_ARGS+=	--with-jack=no \
 			--with-lua=no \
 			--with-portaudio=no \
+			--with-pwlib=no \
 			--with-radius=no \
 			--with-resample=no \
 			--with-tds=no
@@ -119,19 +126,10 @@ CONFIGURE_ARGS+=	--with-jack=no \
 
 FLAVOR?=
 FLAVORS=		imap
-#FLAVORS+=		h323 # XXX requires older h323
 
 ## flavours:
 
-.if ${FLAVOR:L:Mh323}
-LIB_DEPENDS-main+=	net/h323plus
-WANTLIB-main+=		SDL avutil expat h323.>=3 lber ldap ldap_r pt.>=3 sasl2
-.else
-CONFIGURE_ARGS+=	--with-pwlib=no \
-			--with-h323=no
-.endif
-
-.if ${FLAVOR:L:Mimap}
+.if ${FLAVOR:Mimap}
 CONFIGURE_ARGS+=	--with-imap=yes
 MAKE_FLAGS+=		MENUSELECT_OPTS_app_voicemail=IMAP_STORAGE
 CPPFLAGS+=		-I${LOCALBASE}/include/c-client
@@ -142,86 +140,79 @@ CONFIGURE_ARGS+=	--with-imap=no
 .endif
 
 ## multipackages:
+.include <bsd.port.arch.mk>
 
 # calendar
-PSEUDO_FLAVORS+=	no_calendar
-.if ${FLAVOR:L:Mno_calendar}
-CONFIGURE_ARGS+=	--with-ical=no
-.else
-MULTI_PACKAGES+=	-calendar
 COMMENT-calendar=	calendar support for Asterisk
-WANTLIB-calendar=	${MODGETTEXT_WANTLIB} asn1 crypto expat gssapi \
-			ical iksemel krb5 m neon ssl xml2 z
+WANTLIB-calendar=	${MODGETTEXT_WANTLIB} asn1 c crypto expat gssapi \
+			ical iksemel krb5 m neon proxy pthread ssl xml2 z
 LIB_DEPENDS-calendar=	net/neon \
 			textproc/libical \
 			${MODGETTEXT_LIB_DEPENDS}
+.if !${BUILD_PACKAGES:M-calendar}
+CONFIGURE_ARGS+=	--with-ical=no
+.endif
+
+# http_post
+COMMENT-http_post=	HTTP POST support for Asterisk
+LIB_DEPENDS-http_post=	mail/gmime ${MODGETTEXT_LIB_DEPENDS}
+WANTLIB-http_post=	c gio-2.0 glib-2.0 gmime-2.6 gobject-2.0 pthread \
+			${MODGETTEXT_WANTLIB}
+.if !${BUILD_PACKAGES:M-http_post}
+CONFIGURE_ARGS+=	--with-gmime=no
 .endif
 
 # ldap
-PSEUDO_FLAVORS+=	no_ldap
-.if ${FLAVOR:L:Mno_ldap}
-CONFIGURE_ARGS+=	--with-ldap=no
-.else
-MULTI_PACKAGES+=	-ldap
 COMMENT-ldap=		LDAP support for Asterisk
 LIB_DEPENDS-ldap=	databases/openldap,-main
-WANTLIB-ldap=		ldap
+WANTLIB-ldap=		c ldap
+.if !${BUILD_PACKAGES:M-ldap}
+CONFIGURE_ARGS+=	--with-ldap=no
 .endif
 
 # mysql				need to handle building addons/ first XXX
+# up above .include <bsd.port.arch.mk>
 #PSEUDO_FLAVORS+=	no_mysql
-#.if ${FLAVOR:L:Mno_mysql}
-#CONFIGURE_ARGS+=	--with-mysqlclient=no
-#.else
 #MULTI_PACKAGES+=	-mysql
+#
 #COMMENT-mysql=		MySQL support for Asterisk
 #WANTLIB-mysql=		mysqlclient
 #LIB_DEPENDS-mysql=	databases/mysql
+#.if !${BUILD_PACKAGES:M-mysql}
+#CONFIGURE_ARGS+=	--with-mysqlclient=no
 #.endif
 
 # odbc
-PSEUDO_FLAVORS+=	no_odbc
-.if ${FLAVOR:L:Mno_odbc}
-CONFIGURE_ARGS+=	--with-iodbc=no \
-			--with-ltdl=no
-.else
-MULTI_PACKAGES+=	-odbc
 COMMENT-odbc=		ODBC support for Asterisk
 LIB_DEPENDS-odbc=	databases/iodbc
-WANTLIB-odbc=		iodbc
+WANTLIB-odbc=		c iodbc pthread
+.if !${BUILD_PACKAGES:M-odbc}
+CONFIGURE_ARGS+=	--with-iodbc=no \
+			--with-ltdl=no
 .endif
 
 # postgresql
-PSEUDO_FLAVORS+=	no_pgsql
-.if ${FLAVOR:L:Mno_pgsql}
-CONFIGURE_ARGS+=	--with-postgres=no
-.else
-MULTI_PACKAGES+=	-pgsql
 COMMENT-pgsql=		PostgreSQL support for Asterisk
-WANTLIB-pgsql=		pq z
+WANTLIB-pgsql=		c pq z
 LIB_DEPENDS-pgsql=	databases/postgresql
+.if !${BUILD_PACKAGES:M-pgsql}
+CONFIGURE_ARGS+=	--with-postgres=no
 .endif
 
 # snmp
-PSEUDO_FLAVORS+=	no_snmp
-.if ${FLAVOR:L:Mno_snmp}
-CONFIGURE_ARGS+=	--with-snmp=no
-.else
-MULTI_PACKAGES+=	-snmp
 COMMENT-snmp=		Net-SNMP support for Asterisk
-WANTLIB-snmp=		c m netsnmp netsnmpagent netsnmphelpers netsnmpmibs perl util
-LIB_DEPENDS-snmp=	net/net-snmp 
+WANTLIB-snmp=		c m netsnmp netsnmpagent netsnmpmibs crypto kvm wrap
+LIB_DEPENDS-snmp=	net/net-snmp
+.if !${BUILD_PACKAGES:M-snmp}
+CONFIGURE_ARGS+=	--with-snmp=no
 .endif
 
 # speex
-PSEUDO_FLAVORS+=	no_speex
-.if ${FLAVOR:L:Mno_speex}
-CONFIGURE_ARGS+=	--with-speex=no
-.else
-MULTI_PACKAGES+=	-speex
 COMMENT-speex=		Speex codec for Asterisk
-WANTLIB-speex=		m speex speexdsp
+WANTLIB-speex=		c m speex speexdsp
 LIB_DEPENDS-speex=	audio/speex>=1.2rc1
+.if !${BUILD_PACKAGES:M-speex}
+CONFIGURE_ARGS+=	--with-speex=no
 .endif
 
 NO_REGRESS=		Yes
@@ -234,7 +225,7 @@ EXAMPLEFILES=		cdr.conf extensions.ael extensions.conf logger.conf \
 # subpackages aren't flavoured, so overwrite the default name/path
 FULLPKGNAME$i ?=	asterisk$i-${VER}
 FULLPKGPATH$i ?=	${PKGPATH},$i
-RUN_DEPENDS$i +=	asterisk-${VER}:${PKGPATH}
+RUN_DEPENDS$i +=	asterisk-${VER}:${BUILD_PKGPATH}
 .endfor
 
 post-patch:

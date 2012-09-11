@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/08 04:31:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2012/08/04 15:28:14 ajacoutot Exp $
 
 COMMENT =	highly reliable Enterprise Messaging System
 
-V =		2.5.0
+V =		2.8.4
 DISTNAME =	rabbitmq-server-$V
 PKGNAME =	rabbitmq-$V
 CATEGORIES =	net
-
 REVISION =	0
 
 HOMEPAGE =	http://www.rabbitmq.com/
@@ -22,7 +21,7 @@ PERMIT_DISTFILES_FTP = Yes
 MASTER_SITES =	http://www.rabbitmq.com/releases/rabbitmq-server/v${V}/
 
 MODULES =	lang/python
-MODPY_RUNDEPS =	No
+MODPY_RUNDEP =	No
 
 USE_GMAKE =	Yes
 USE_GROFF =	Yes
@@ -31,23 +30,31 @@ CONFIGURE_STYLE = none
 
 BUILD_DEPENDS =	${RUN_DEPENDS} \
 		${MODPY_JSON} \
+		archivers/unzip \
+		archivers/zip \
+		textproc/docbook \
 		textproc/libxslt \
 		textproc/xmlto
 
-RUN_DEPENDS =	lang/erlang
+RUN_DEPENDS =	lang/erlang>=15b.01p0v0
 
-MAKE_ENV =	PYTHON=${MODPY_BIN}
+MAKE_ENV =	PYTHON=${MODPY_BIN} VERSION=${V}
 
 RABBITUSER =	_rabbitmq
 
-SUBST_VARS +=	RABBITUSER
+SUBST_VARS +=	RABBITUSER V
+
+# help 'make update-patches' work.  if upstream do this often,
+# consider PATCHORIG and regenerating patches.
+post-extract:
+	rm ${WRKSRC}/plugins-src/mochiweb-wrapper/mochiweb-git/src/mochiweb_request.erl.orig
 
 pre-build:
 	${SUBST_CMD} ${WRKSRC}/scripts/rabbitmqctl
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/rabbitmq
-	@for file in INSTALL LICENSE LICENSE-MPL-RabbitMQ ; do \
+	@for file in INSTALL LICENSE*; do \
 		mv ${PREFIX}/lib/rabbitmq/$$file \
 			${PREFIX}/share/doc/rabbitmq; \
 	done

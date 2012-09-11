@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.42 2011/06/16 08:11:12 rpointel Exp $
+# $OpenBSD: Makefile,v 1.44 2011/09/27 21:29:16 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -9,7 +9,7 @@ MODPY_EGG_VERSION=0.8.4
 VERSION=	${MODPY_EGG_VERSION}
 DISTNAME=	PyXML-${VERSION}
 PKGNAME=	py-xml-${VERSION}
-REVISION=	11
+REVISION=	12
 CATEGORIES=	textproc devel
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pyxml/}
@@ -38,7 +38,7 @@ WANTLIB += expat
 
 WANTLIB +=	${MODPY_WANTLIB}
 
-REGRESS_DEPENDS= python-tests-${MODPY_VSPEC}:lang/python/${MODPY_VERSION},-tests
+REGRESS_DEPENDS= lang/python/${MODPY_VERSION},-tests
 
 DOC_DIR=	${PREFIX}/share/doc/py-xml/
 SRC_DOCDIR=	${WRKSRC}/doc

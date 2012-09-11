@@ -1,10 +1,8 @@
-@comment $OpenBSD: PLIST,v 1.4 2011/04/11 14:55:58 kili Exp $
+@comment $OpenBSD: PLIST,v 1.6 2012/04/28 19:33:06 kili Exp $
 lib/ghc/${DISTNAME}/
 lib/ghc/${DISTNAME}/Data/
 lib/ghc/${DISTNAME}/Data/Concurrent/
-lib/ghc/${DISTNAME}/Data/Concurrent/HashMap/
 lib/ghc/${DISTNAME}/Data/Concurrent/HashMap.hi
-lib/ghc/${DISTNAME}/Data/Concurrent/HashMap/Internal.hi
 lib/ghc/${DISTNAME}/HS${DISTNAME}.o
 lib/ghc/${DISTNAME}/Paths_snap_server.hi
 lib/ghc/${DISTNAME}/Snap/
@@ -17,9 +15,15 @@ lib/ghc/${DISTNAME}/Snap/Internal/Http/
 lib/ghc/${DISTNAME}/Snap/Internal/Http/Parser.hi
 lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/
 lib/ghc/${DISTNAME}/Snap/Internal/Http/Server.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/Address.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/Backend.hi
 lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/Date.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/HttpPort.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/LibevBackend.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/ListenHelpers.hi
 lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/SimpleBackend.hi
-lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/TimeoutTable.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/TLS.hi
+lib/ghc/${DISTNAME}/Snap/Internal/Http/Server/TimeoutManager.hi
 lib/ghc/${DISTNAME}/System/
 lib/ghc/${DISTNAME}/System/FastLogger.hi
 lib/ghc/${DISTNAME}/libHS${DISTNAME}.a

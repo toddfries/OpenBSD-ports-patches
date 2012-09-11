@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.9 2011/07/06 23:56:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2012/06/27 19:30:04 naddy Exp $
 
 COMMENT-main=	SSH and telnet client
 COMMENT-gui=	PuTTY GUI clients
 
-DISTNAME=       putty-0.60
+DISTNAME=	putty-0.60
 PKGNAME-main=	${DISTNAME}
-REVISION-main=	1
+REVISION-main=	2
 PKGNAME-gui=	${DISTNAME:S/putty/putty-gui/}
-REVISION-gui=	2
+REVISION-gui=	3
 CATEGORIES=	net security
 
 HOMEPAGE=	http://www.chiark.greenend.org.uk/~sgtatham/putty/
@@ -43,8 +43,3 @@ pre-configure:
 NO_REGRESS=	Yes
 
 .include <bsd.port.mk>
-
-# gcc4 is smarter !
-.if ${COMPILER_VERSION:L:Mgcc4*}
-CFLAGS += -Wno-error=address
-.endif

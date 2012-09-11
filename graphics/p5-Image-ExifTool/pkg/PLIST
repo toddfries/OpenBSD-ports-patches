@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.15 2011/04/07 16:59:43 giovanni Exp $
+@comment $OpenBSD: PLIST,v 1.18 2012/04/02 16:32:54 giovanni Exp $
 bin/exiftool
 ${P5SITE}/File/
 ${P5SITE}/File/RandomAccess.pm
@@ -82,6 +82,7 @@ ${P5SITE}/Image/ExifTool/ICC_Profile.pm
 ${P5SITE}/Image/ExifTool/ID3.pm
 ${P5SITE}/Image/ExifTool/IPTC.pm
 ${P5SITE}/Image/ExifTool/ITC.pm
+${P5SITE}/Image/ExifTool/Import.pm
 ${P5SITE}/Image/ExifTool/InDesign.pm
 ${P5SITE}/Image/ExifTool/JPEG.pm
 ${P5SITE}/Image/ExifTool/JPEGDigest.pm
@@ -96,6 +97,7 @@ ${P5SITE}/Image/ExifTool/Lang/de.pm
 ${P5SITE}/Image/ExifTool/Lang/en_ca.pm
 ${P5SITE}/Image/ExifTool/Lang/en_gb.pm
 ${P5SITE}/Image/ExifTool/Lang/es.pm
+${P5SITE}/Image/ExifTool/Lang/fi.pm
 ${P5SITE}/Image/ExifTool/Lang/fr.pm
 ${P5SITE}/Image/ExifTool/Lang/it.pm
 ${P5SITE}/Image/ExifTool/Lang/ja.pm
@@ -127,7 +129,9 @@ ${P5SITE}/Image/ExifTool/Nikon.pm
 ${P5SITE}/Image/ExifTool/NikonCapture.pm
 ${P5SITE}/Image/ExifTool/NikonCustom.pm
 ${P5SITE}/Image/ExifTool/OOXML.pm
+${P5SITE}/Image/ExifTool/Ogg.pm
 ${P5SITE}/Image/ExifTool/Olympus.pm
+${P5SITE}/Image/ExifTool/OpenEXR.pm
 ${P5SITE}/Image/ExifTool/PDF.pm
 ${P5SITE}/Image/ExifTool/PGF.pm
 ${P5SITE}/Image/ExifTool/PICT.pm
@@ -141,11 +145,13 @@ ${P5SITE}/Image/ExifTool/PhotoMechanic.pm
 ${P5SITE}/Image/ExifTool/Photoshop.pm
 ${P5SITE}/Image/ExifTool/PostScript.pm
 ${P5SITE}/Image/ExifTool/PrintIM.pm
+${P5SITE}/Image/ExifTool/Qualcomm.pm
 ${P5SITE}/Image/ExifTool/QuickTime.pm
 ${P5SITE}/Image/ExifTool/README
 ${P5SITE}/Image/ExifTool/RIFF.pm
 ${P5SITE}/Image/ExifTool/RSRC.pm
 ${P5SITE}/Image/ExifTool/RTF.pm
+${P5SITE}/Image/ExifTool/Radiance.pm
 ${P5SITE}/Image/ExifTool/Rawzor.pm
 ${P5SITE}/Image/ExifTool/Real.pm
 ${P5SITE}/Image/ExifTool/Reconyx.pm
@@ -162,6 +168,7 @@ ${P5SITE}/Image/ExifTool/Stim.pm
 ${P5SITE}/Image/ExifTool/TagInfoXML.pm
 ${P5SITE}/Image/ExifTool/TagLookup.pm
 ${P5SITE}/Image/ExifTool/TagNames.pod
+${P5SITE}/Image/ExifTool/Theora.pm
 ${P5SITE}/Image/ExifTool/Unknown.pm
 ${P5SITE}/Image/ExifTool/Vorbis.pm
 ${P5SITE}/Image/ExifTool/WriteCanonRaw.pl
@@ -225,6 +232,7 @@ ${P5SITE}/Image/ExifTool/iWork.pm
 @man man/man3p/Image::ExifTool::ID3.3p
 @man man/man3p/Image::ExifTool::IPTC.3p
 @man man/man3p/Image::ExifTool::ITC.3p
+@man man/man3p/Image::ExifTool::Import.3p
 @man man/man3p/Image::ExifTool::InDesign.3p
 @man man/man3p/Image::ExifTool::JPEG.3p
 @man man/man3p/Image::ExifTool::JPEGDigest.3p
@@ -238,6 +246,7 @@ ${P5SITE}/Image/ExifTool/iWork.pm
 @man man/man3p/Image::ExifTool::Lang::en_ca.3p
 @man man/man3p/Image::ExifTool::Lang::en_gb.3p
 @man man/man3p/Image::ExifTool::Lang::es.3p
+@man man/man3p/Image::ExifTool::Lang::fi.3p
 @man man/man3p/Image::ExifTool::Lang::fr.3p
 @man man/man3p/Image::ExifTool::Lang::it.3p
 @man man/man3p/Image::ExifTool::Lang::ja.3p
@@ -269,7 +278,9 @@ ${P5SITE}/Image/ExifTool/iWork.pm
 @man man/man3p/Image::ExifTool::NikonCapture.3p
 @man man/man3p/Image::ExifTool::NikonCustom.3p
 @man man/man3p/Image::ExifTool::OOXML.3p
+@man man/man3p/Image::ExifTool::Ogg.3p
 @man man/man3p/Image::ExifTool::Olympus.3p
+@man man/man3p/Image::ExifTool::OpenEXR.3p
 @man man/man3p/Image::ExifTool::PDF.3p
 @man man/man3p/Image::ExifTool::PGF.3p
 @man man/man3p/Image::ExifTool::PICT.3p
@@ -283,10 +294,12 @@ ${P5SITE}/Image/ExifTool/iWork.pm
 @man man/man3p/Image::ExifTool::Photoshop.3p
 @man man/man3p/Image::ExifTool::PostScript.3p
 @man man/man3p/Image::ExifTool::PrintIM.3p
+@man man/man3p/Image::ExifTool::Qualcomm.3p
 @man man/man3p/Image::ExifTool::QuickTime.3p
 @man man/man3p/Image::ExifTool::RIFF.3p
 @man man/man3p/Image::ExifTool::RSRC.3p
 @man man/man3p/Image::ExifTool::RTF.3p
+@man man/man3p/Image::ExifTool::Radiance.3p
 @man man/man3p/Image::ExifTool::Rawzor.3p
 @man man/man3p/Image::ExifTool::Real.3p
 @man man/man3p/Image::ExifTool::Reconyx.3p
@@ -303,6 +316,7 @@ ${P5SITE}/Image/ExifTool/iWork.pm
 @man man/man3p/Image::ExifTool::TagInfoXML.3p
 @man man/man3p/Image::ExifTool::TagLookup.3p
 @man man/man3p/Image::ExifTool::TagNames.3p
+@man man/man3p/Image::ExifTool::Theora.3p
 @man man/man3p/Image::ExifTool::Unknown.3p
 @man man/man3p/Image::ExifTool::Vorbis.3p
 @man man/man3p/Image::ExifTool::WriteCanonRaw.3p

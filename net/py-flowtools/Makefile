@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2011/06/08 18:00:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2012/09/04 03:40:34 jeremy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,10 +7,8 @@ COMMENT=	python interface to flow-tools file format
 MODPY_EGG_VERSION=0.3.4
 DISTNAME=	pyflowtools-${MODPY_EGG_VERSION}
 PKGNAME=	${DISTNAME:S/pyflow/py-flow/g}
-REVISION=	1
+REVISION=	3
 CATEGORIES=	net
-
-MAINTAINER=	Mathieu Sauve-Frankel <msf@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

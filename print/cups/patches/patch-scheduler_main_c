@@ -1,0 +1,23 @@
+$OpenBSD: patch-scheduler_main_c,v 1.7 2012/08/04 14:37:04 ajacoutot Exp $
+
+XXX push upstream
+
+--- scheduler/main.c.orig	Mon Apr 23 21:19:19 2012
++++ scheduler/main.c	Thu Jul 26 10:00:31 2012
+@@ -365,16 +365,6 @@ main(int  argc,				/* I - Number of command-line args 
+       }
+     }
+ 
+-#ifdef __OpenBSD__
+-   /*
+-    * Call _thread_sys_closefrom() so the child process doesn't reset the
+-    * parent's file descriptors to be blocking.  This is a workaround for a
+-    * limitation of userland libpthread on OpenBSD.
+-    */
+-
+-    _thread_sys_closefrom(0);
+-#endif /* __OpenBSD__ */
+-
+    /*
+     * Since CoreFoundation and DBUS both create fork-unsafe data on execution of
+     * a program, and since this kind of really unfriendly behavior seems to be

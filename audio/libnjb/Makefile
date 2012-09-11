@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/22 08:56:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.8 2012/08/22 20:14:06 naddy Exp $
 
 COMMENT=		communicate with some Creative and Dell audio players
 
 DISTNAME=		libnjb-2.2.6
-REVISION=		0
+REVISION=		1
 SHARED_LIBS=		njb	0.0	# .6.0
 CATEGORIES=		audio devel
 
@@ -15,11 +15,11 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c curses usb z
+WANTLIB=		c curses usb z pthread usb-1.0
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=libnjb/}
 
-LIB_DEPENDS=		devel/libusb
+LIB_DEPENDS=		devel/libusb-compat
 
 USE_LIBTOOL=		Yes
 

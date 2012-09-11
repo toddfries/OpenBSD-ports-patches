@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.40 2011/07/16 13:25:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.55 2012/08/25 13:30:50 ajacoutot Exp $
+
+SHARED_ONLY=	Yes
 
 COMMENT=	SIP and H.323 compatible conferencing application
 
 GNOME_PROJECT=	ekiga
-GNOME_VERSION=	3.2.7
-
-REVISION=	5
+GNOME_VERSION=	3.9.90
+SUBST_VARS +=	GNOME_VERSION # pkg/PLIST
 
 CATEGORIES=	net multimedia
 
@@ -17,40 +18,47 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ORBit-2 X11 Xau Xcomposite Xcursor avahi-client camel-1.2
-WANTLIB += Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender opal
-WANTLIB += Xv asn1 atk-1.0 c cairo xcb-render xcb-render-util
-WANTLIB += com_err crypto dbus-1 dbus-glib-1 expat fontconfig notify
-WANTLIB += freetype gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 sigc-2.0
-WANTLIB += glib-2.0 gmodule-2.0 gnutls gobject-2.0 gpg-error
-WANTLIB += gssapi gthread-2.0 gtk-x11-2.0 krb5 lber ldap ldap_r SDL
-WANTLIB += m nspr4 nss3 pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += GL SDL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+WANTLIB += Xfixes Xi Xinerama Xrandr Xrender Xv Xxf86vm asn1 atk-1.0
+WANTLIB += avahi-client avahi-common avahi-glib boost_signals-mt
+WANTLIB += c cairo camel-1.2 com_err crypto dbus-1 dbus-glib-1
+WANTLIB += drm ebook-1.2 edataserver-1.2 expat ffi fontconfig
+WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gssapi gthread-2.0 gtk-x11-2.0
+WANTLIB += krb5 lber-2.4 ldap-2.4 ldap_r-2.4 m notify nspr4 nss3
+WANTLIB += opal pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 plc4 plds4 png pt pthread pthread-stubs
-WANTLIB += sasl2 smime3 sndio soup-2.4 speexdsp sqlite3 avahi-common
-WANTLIB += ssl ssl3 stdc++ tasn1 usbhid xcb xml2 z avahi-glib ebook-1.2
-WANTLIB += edataserver-1.2
+WANTLIB += sasl2 smime3 sndio softokn3 soup-2.4 speexdsp sqlite3
+WANTLIB += ssl ssl3 stdc++ usbhid xcb xcb-render xcb-shm xml2
+WANTLIB += z
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
 LIB_DEPENDS=	net/avahi \
-		net/opal \
+		net/opal>=3.10.7 \
 		devel/sdl \
 		databases/evolution-data-server \
-		devel/libsigc++-2 \
-		devel/libnotify>=0.7.2
+		devel/libnotify>=0.7.2 \
+		devel/boost \
+		x11/gtk+2
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES=Yes
+# /usr/local/include/boost/throw_exception.hpp:65: \
+# error: exception handling disabled, use -fexceptions to enable
+CFLAGS +=	-fexceptions
+
 MODGCONF2_SCHEMAS_DIR= ekiga
-USE_GROFF =	Yes
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib -pthread"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-avahi \
-		--disable-gnome \
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS=	yelp
+MODGNOME_LDFLAGS=-L${X11BASE}/lib
+
+LIBTOOL_FLAGS=	--tag=disable-static
+
+CONFIGURE_ARGS=	--disable-static \
+		--enable-h323 \
 		--with-ldap-dir=${LOCALBASE} \
 		--with-libsasl2-dir=${LOCALBASE}
 

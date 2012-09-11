@@ -1,4 +1,8 @@
-@comment $OpenBSD: PLIST-main,v 1.4 2011/05/11 12:03:19 jasper Exp $
+@comment $OpenBSD: PLIST-main,v 1.7 2012/05/17 10:27:02 sthen Exp $
+@conflict powerdns-sqlite-*
+@conflict powerdns-sqlite3-*
+@pkgpath net/powerdns,-sqlite
+@pkgpath net/powerdns,-sqlite3
 @newgroup _powerdns:609
 @newuser _powerdns:609:_powerdns:daemon:Proxy DNS Server:/nonexistent:/sbin/nologin
 @extraunexec rm -rf /var/pdnsd/*
@@ -9,15 +13,19 @@ lib/powerdns/
 @comment lib/powerdns/libgeobackend.a
 @comment lib/powerdns/libgeobackend.la
 lib/powerdns/libgeobackend.so
+@comment lib/powerdns/libgsqlite3backend.a
+@comment lib/powerdns/libgsqlite3backend.la
+lib/powerdns/libgsqlite3backend.so
 @man man/man8/pdns_control.8
 @man man/man8/pdns_server.8
 @man man/man8/zone2sql.8
 @bin sbin/pdns_server
 share/examples/powerdns/
-@sample ${SYSCONFDIR}/pdns/
+@sample ${SYSCONFDIR}/
 share/examples/powerdns/pdns.conf
-@sample ${SYSCONFDIR}/pdns/pdns.conf
+@sample ${SYSCONFDIR}/pdns.conf
 share/examples/powerdns/pdns.conf-dist
 share/examples/powerdns/tables-mysql.sql
 share/examples/powerdns/tables-pgsql.sql
 share/examples/powerdns/tables-sqlite.sql
+@rcscript ${RCDIR}/pdns_server

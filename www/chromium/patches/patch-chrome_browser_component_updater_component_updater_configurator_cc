@@ -1,0 +1,16 @@
+$OpenBSD: patch-chrome_browser_component_updater_component_updater_configurator_cc,v 1.3 2012/07/10 09:22:34 robert Exp $
+--- chrome/browser/component_updater/component_updater_configurator.cc.orig	Wed May 23 03:50:22 2012
++++ chrome/browser/component_updater/component_updater_configurator.cc	Fri Jun  1 06:13:04 2012
+@@ -89,6 +89,12 @@ const char kExtraInfo[] =
+   #else
+     "os=openbsd&arch=unknown";
+   #endif
++#elif defined(OS_OPENBSD)
++  #if defined(__amd64__)
++    "os=openbsd&arch=x64&prod=chrome&prodversion=";
++  #elif defined(__i386__)
++    "os=openbsd&arch=x86&prod=chrome&prodversion=";
++  #endif
+ #else
+     #error "unknown os or architecture"
+ #endif

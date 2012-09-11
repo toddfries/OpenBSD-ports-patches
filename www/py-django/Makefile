@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.20 2011/06/08 18:15:29 rpointel Exp $
+# $OpenBSD: Makefile,v 1.23 2012/08/24 17:01:32 jasper Exp $
 
 COMMENT =	high-level Python web framework
 
-MODPY_EGG_VERSION =	1.3
+MODPY_EGG_VERSION =	1.4.1
 LNAME =			django
 DISTNAME =		Django-${MODPY_EGG_VERSION}
 PKGNAME =		py-${LNAME}-${MODPY_EGG_VERSION}
 CATEGORIES =		www
-REVISION =		2
 
 HOMEPAGE =	http://www.djangoproject.com/
 
@@ -19,7 +18,7 @@ PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
-MASTER_SITES =	http://media.djangoproject.com/releases/${MODPY_EGG_VERSION}/
+MASTER_SITES =	${HOMEPAGE}/m/releases/${MODPY_EGG_VERSION:R}/
 
 MODULES =	lang/python
 

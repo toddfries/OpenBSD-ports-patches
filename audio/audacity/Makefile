@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.33 2011/04/28 17:51:50 kili Exp $
+# $OpenBSD: Makefile,v 1.35 2012/09/03 09:09:34 stsp Exp $
 
 COMMENT=	free audio editor
 
 V=		1.3.9
 DISTNAME=	audacity-minsrc-${V}
 PKGNAME=	audacity-${V}
-REVISION=	3
+REVISION=	4
 CATEGORIES=	audio
 
 EXTRACT_SUFX=	.tar.bz2
@@ -45,9 +45,7 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 		misc/shared-mime-info
 
 USE_GMAKE=		Yes
-USE_GROFF =		Yes
 USE_LIBTOOL=		Yes
-
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 			CFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \

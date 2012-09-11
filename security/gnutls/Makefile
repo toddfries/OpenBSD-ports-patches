@@ -1,14 +1,18 @@
-# $OpenBSD: Makefile,v 1.40 2011/08/22 09:13:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.60 2012/09/05 07:15:50 ajacoutot Exp $
+
+# XXX check why our getopt_long(3) fails the configure test
+# + rm patch-gl_unistd_in_h
 
 COMMENT=	GNU Transport Layer Security library
 
-DISTNAME=	gnutls-2.12.9
+DISTNAME=	gnutls-3.1.1
+EXTRACT_SUFX=	.tar.xz
+
 CATEGORIES=	security
 
-SHARED_LIBS +=  gnutls               18.0     # 47.3
-SHARED_LIBS +=  gnutlsxx             17.0     # 27.0
-SHARED_LIBS +=  gnutls-extra         18.0     # 47.3
-SHARED_LIBS +=  gnutls-openssl       17.0     # 27.0
+SHARED_LIBS +=  gnutls               39.0     # 40.0
+SHARED_LIBS +=  gnutlsxx             29.0     # 29.0
+SHARED_LIBS +=  gnutls-openssl       27.2     # 27.2
 
 HOMEPAGE=	http://www.gnutls.org/
 
@@ -20,18 +24,17 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c gmp hogweed lzo2 m ncurses nettle p11-kit pthread
-WANTLIB += readline stdc++ tasn1 z
+WANTLIB += c gmp hogweed idn m nettle p11-kit pthread stdc++ tasn1
+WANTLIB += z
 
-EXTRACT_SUFX=	.tar.bz2
-
-MASTER_SITES=	ftp://ftp.gnutls.org/pub/gnutls/
+MASTER_SITES=	http://ftp.gnu.org/gnu/gnutls/ \
+		ftp://ftp.gnu.org/pub/gnu/gnutls/
 
 MODULES=	devel/gettext
 
-LIB_DEPENDS=	security/libtasn1 \
-		archivers/lzo2 \
-		security/libnettle \
+LIB_DEPENDS=	devel/libidn \
+		security/libtasn1 \
+		security/libnettle>=2.5 \
 		security/p11-kit
 
 USE_LIBTOOL=	Yes
@@ -44,17 +47,16 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--disable-guile \
 		--disable-valgrind-tests \
-		--with-included-libcfg \
-		--with-lzo \
+		--disable-hardware-acceleration \
 		--with-libtasn1-prefix=${LOCALBASE} \
 		--with-packager="OpenBSD Ports"
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
+# requires security/trousers: not committed, needs kernel support for tpm(4):
+# http://bsssd.sourceforge.net/
+CONFIGURE_ARGS += --without-tpm
 
-pre-configure:
-	perl -pi -e 's,-lpthread,-pthread,g' \
-		${WRKSRC}/{,lib/,libextra/}configure
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/gnutls

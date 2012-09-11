@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.2 2011/05/15 13:03:26 sebastia Exp $
+# $OpenBSD: Makefile,v 1.5 2012/08/22 07:15:52 sebastia Exp $
 
 COMMENT =	Guenthers RSS reader
 
-DISTNAME =	Grr-0.9.0
+DISTNAME =	Grr-1.0
+REVISION =	0
 
 HOMEPAGE =	http://gap.nongnu.org/grr/
-MASTER_SITES =	http://savannah.nongnu.org/download/gap/
+MASTER_SITES =	${MASTER_SITE_SAVANNAH:=gap/}
 
 MODULES =	x11/gnustep
 WANTLIB +=	c m pthread RSSKit

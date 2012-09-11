@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2011/08/16 08:35:07 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2012/05/02 13:40:09 sthen Exp $
 
 COMMENT-main=	nagios service check acceptor
 COMMENT-client=	nagios service check acceptor - client
@@ -10,10 +10,11 @@ WRKDIST=	${WRKDIR}/icinga-nsca
 PKGNAME-main=	nsca-${VERSION}
 PKGNAME-client=	nsca-client-${VERSION}
 CATEGORIES=	net
+REVISION=	2
 
 HOMEPAGE=	http://www.nagios.org/
 
-# GPL
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
@@ -24,10 +25,11 @@ MASTER_SITES=		http://spacehopper.org/mirrors/
 WANTLIB=		c mcrypt>=8
 LIB_DEPENDS=		security/libmcrypt
 
+LOCALSTATEDIR=		${BASELOCALSTATEDIR}/nagios
+
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-nsca-user=_nagios \
-			--with-nsca-grp=_nagios \
-			--localstatedir=/var/nagios
+			--with-nsca-grp=_nagios
 
 MULTI_PACKAGES=		-main -client
 
@@ -44,7 +46,8 @@ do-regress:
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/libexec/nagios
-	${INSTALL_PROGRAM} ${WRKSRC}/src/send_nsca ${PREFIX}/libexec/nagios/
+	${INSTALL_PROGRAM} ${WRKSRC}/src/send_nsca ${PREFIX}/sbin/
+	ln -s ${TRUEPREFIX}/sbin/send_nsca ${PREFIX}/libexec/nagios/
 	${INSTALL_PROGRAM} ${WRKSRC}/src/nsca ${PREFIX}/sbin/
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/nsca
 	${INSTALL_DATA} ${WRKSRC}/sample-config/nsca.cfg \

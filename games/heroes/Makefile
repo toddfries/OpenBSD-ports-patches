@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2010/11/16 11:23:27 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2012/03/29 13:38:30 sthen Exp $
 
 COMMENT=	graphically improved game of yore
 
@@ -36,15 +36,15 @@ MODULES=	devel/gettext
 FLAVORS=	sdl ggi
 FLAVOR?=	sdl
 
-.if empty(FLAVOR:L:Msdl) && empty(FLAVOR:L:Mggi)
+.if empty(FLAVOR:Msdl) && empty(FLAVOR:Mggi)
 ERRORS+=	"Fatal:	Must choose one flavor: sdl or ggi"
 .endif
 
-.if ${FLAVOR:L:Msdl} && ${FLAVOR:L:Mggi}
+.if ${FLAVOR:Msdl} && ${FLAVOR:Mggi}
 ERRORS+=	"Fatal: Choose only one flavor: sdl or ggi"
 .endif
 
-.if ${FLAVOR:L:Msdl}
+.if ${FLAVOR:Msdl}
 LIB_DEPENDS +=	devel/sdl \
 		devel/sdl-mixer
 WANTLIB +=	SDL SDL_mixer
@@ -56,7 +56,7 @@ CONFIGURE_ARGS+= --without-sdl --without-sdl-mixer
 WANTLIB +=	gii
 .endif
 
-.if ${FLAVOR:L:Mggi}
+.if ${FLAVOR:Mggi}
 # Sound support is disabled with the ggi flavor since it is dependent
 # on sdl-mixer.  No alternatives for now.
 LIB_DEPENDS +=	graphics/ggi
@@ -67,7 +67,7 @@ FULLPKGNAME =	heroes-${VERSION}
 CONFIGURE_ARGS += --without-ggi
 .endif
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/tools
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \

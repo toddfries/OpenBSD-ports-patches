@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.83 2011/07/17 20:15:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.89 2012/04/30 13:08:18 espie Exp $
 
 CATEGORIES =		mail
 COMMENT-main =		flexible mail transfer agent
 COMMENT-eximon =	X11 monitor tool for Exim MTA
-VERSION =		4.76
+VERSION =		4.77
+REVISION =		1
 DISTNAME =		exim-${VERSION}
 PKGNAME-main =		exim-${VERSION}
 FULLPKGNAME-eximon =	exim-eximon-${VERSION}
 FULLPKGPATH-eximon =	${PKGPATH},-eximon
-REVISION-main =		1
 MASTER_SITES =		http://ftp.exim.org/pub/exim/exim4/ \
 			http://ftp.exim.org/pub/exim/exim4/old/ \
 			ftp://ftp.exim.org/pub/exim/exim4/ \
@@ -27,7 +27,7 @@ PERMIT_DISTFILES_FTP =   Yes
 PSEUDO_FLAVORS =	no_eximon
 FLAVORS =		mysql postgresql sqlite3 ldap sasl
 FLAVOR ?=
-MULTI_PACKAGES =	-main
+MULTI_PACKAGES =	-main -eximon
 
 MODULES =		converters/libiconv
 LIB_DEPENDS-main =	${LIB_DEPENDS} devel/pcre
@@ -40,12 +40,13 @@ LIB_DEPENDS-eximon =	devel/pcre
 USE_GROFF =		Yes
 NO_REGRESS =		Yes
 
-.if !${FLAVOR:L:Mno_eximon}
-MULTI_PACKAGES +=	-eximon
+.include <bsd.port.arch.mk>
+
+.if ${BUILD_PACKAGES:M-eximon}
 EXIM_MAKECAT +=		"EXIM_MONITOR=eximon.bin\n"
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 EXIM_MAKECAT +=		"LOOKUP_MYSQL=yes\n"
 EXIM_LOOKUP_INCLUDE +=	-I${LOCALBASE}/include/mysql
 EXIM_LOOKUP_LIBS +=	-L${LOCALBASE}/lib/mysql -lmysqlclient
@@ -53,7 +54,7 @@ LIB_DEPENDS-main +=	databases/mysql
 WANTLIB-main +=		lib/mysql/mysqlclient>=10
 .endif
 
-.if ${FLAVOR:L:Mpostgresql}
+.if ${FLAVOR:Mpostgresql}
 EXIM_MAKECAT +=		"LOOKUP_PGSQL=yes\n"
 EXIM_LOOKUP_INCLUDE +=	-I${LOCALBASE}/include/postgresql
 EXIM_LOOKUP_LIBS +=	-L${LOCALBASE}/lib/ -lpq
@@ -61,14 +62,13 @@ LIB_DEPENDS-main +=	databases/postgresql
 WANTLIB-main +=		pq>=2
 .endif
 
-.if ${FLAVOR:L:Msqlite3}
+.if ${FLAVOR:Msqlite3}
 EXIM_MAKECAT +=		"LOOKUP_SQLITE=yes\n"
-EXIM_LOOKUP_LIBS +=	-L${LOCALBASE}/lib/ -lsqlite3
-LIB_DEPENDS-main +=	databases/sqlite3
+EXIM_LOOKUP_LIBS +=	-lsqlite3
 WANTLIB-main +=		sqlite3>=8
 .endif
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 EXIM_MAKECAT +=		"LOOKUP_LDAP=yes\n"
 EXIM_MAKECAT +=		"LDAP_LIB_TYPE=OPENLDAP2\n"
 EXIM_LOOKUP_LIBS +=	-L${LOCALBASE}/lib -lldap -llber
@@ -76,7 +76,7 @@ LIB_DEPENDS-main +=	databases/openldap>=2.3
 WANTLIB-main +=		ldap>=9 lber
 .endif
 
-.if ${FLAVOR:L:Msasl}
+.if ${FLAVOR:Msasl}
 EXIM_MAKECAT +=		"AUTH_CYRUS_SASL=yes\n"
 EXIM_EXTRA_LIBS +=	-L${LOCALBASE}/lib -lsasl2
 LIB_DEPENDS-main +=	security/cyrus-sasl2

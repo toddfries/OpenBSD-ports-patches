@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2011/08/26 07:44:56 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2012/09/02 21:54:08 kili Exp $
 
 COMMENT=	C compiler for GMC-4
 
 DISTNAME=	gmc4cc-0.6.2
 CATEGORIES=	devel lang
 
-REVISION=	0
+REVISION=	2
 
 # Japanese, use this for the English version: http://goo.gl/LPtgg
 HOMEPAGE=	http://terus.jp/engineering/gmc4cc/
@@ -26,7 +26,7 @@ DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
 
 MODULES=	converters/libiconv
 
-WANTLIB += c gmp m pthread util
+WANTLIB += c gmp m
 
 BUILD_DEPENDS=	lang/ghc
 LIB_DEPENDS=	devel/gmp

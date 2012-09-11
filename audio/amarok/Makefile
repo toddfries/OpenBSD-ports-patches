@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.48 2010/12/21 18:16:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.52 2012/04/23 17:15:17 espie Exp $
 
 CATEGORIES =	audio x11 x11/kde
 COMMENT =	music player for KDE
@@ -7,7 +7,7 @@ HOMEPAGE =	http://amarok.kde.org/
 V =		1.4.10
 MASTER_SITES =	${MASTER_SITE_KDE:=stable/amarok/$V/src/}
 DISTNAME =	amarok-$V
-REVISION =	12
+REVISION =	16
 EXTRACT_SUFX =	.tar.bz2
 
 # GPLv2/LGPLv2/GFDL
@@ -18,14 +18,16 @@ PERMIT_PACKAGE_CDROM =		Yes
 
 FLAVORS =	debug
 
-WANTLIB += ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c expat
+WANTLIB += ICE SM X11 Xext Xrender art_lgpl_2 c expat
 WANTLIB += fontconfig freetype gdk_pixbuf-2.0 gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 idn jpeg m pcre
 WANTLIB += pcreposix png pthread stdc++ usb util xml2 z
-WANTLIB += pthread-stubs xcb lib/qt3/qt-mt>=3.33 konqsidebarplugin
+WANTLIB += xcb lib/qt3/qt-mt>=3.33 konqsidebarplugin
 WANTLIB += kdecore>=6 DCOP khtml kwalletclient kdefx kdeprint
 WANTLIB += kutils kdeui kparts kio kdesu kjs knewstuff kdnssd tag>=5.0
 WANTLIB += xine sqlite3 gpod njb mtp ${MODRUBY_WANTLIB}
+WANTLIB += GL Xcursor Xdamage Xfixes Xft Xi Xinerama Xmu Xrandr
+WANTLIB += Xt Xxf86vm drm ffi lcms mng
 
 RUN_DEPENDS =	devel/desktop-file-utils
 LIB_DEPENDS +=	x11/kde/libs3 \
@@ -33,7 +35,6 @@ LIB_DEPENDS +=	x11/kde/libs3 \
 		x11/gtk+2 \
 		audio/taglib>=1.4 \
 		multimedia/xine-lib \
-		databases/sqlite3 \
 		audio/libgpod \
 		audio/libnjb \
 		devel/libmtp \

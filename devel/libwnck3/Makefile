@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.2 2011/05/23 21:38:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2012/09/04 12:26:12 jasper Exp $
 
 COMMENT=		window navigator construction kit
 
 GNOME_PROJECT=		libwnck
-GNOME_VERSION=		3.0.2
+GNOME_VERSION=		3.4.3
 PKGNAME=		${GNOME_PROJECT}3-${GNOME_VERSION}
 
-SHARED_LIBS +=  wnck-3               0.0      # 0.0
+SHARED_LIBS +=  wnck-3               2.0      # 2.0
 
 CATEGORIES=		devel
 
@@ -19,29 +19,24 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE SM X11 XRes Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += c cairo cairo-gobject drm execinfo expat fontconfig
+WANTLIB += GL X11 X11-xcb XRes Xau Xcomposite Xcursor Xdamage
+WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
+WANTLIB += atk-1.0 c cairo cairo-gobject drm expat ffi fontconfig
 WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += startup-notification-1 xcb xcb-atom xcb-aux xcb-event
-WANTLIB += xcb-render xcb-shm z
+WANTLIB += startup-notification-1 stdc++ xcb xcb-aux xcb-render
+WANTLIB += xcb-shm z
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/gobject-introspection
+MODGNOME_TOOLS= 	goi
 LIB_DEPENDS=		x11/gtk+3 \
 			devel/startup-notification
 
 CONFIGURE_STYLE= 	gnu
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--enable-startup-notification \
-			--enable-introspection \
+CONFIGURE_ARGS+= 	--enable-startup-notification \
 			--program-suffix=3
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

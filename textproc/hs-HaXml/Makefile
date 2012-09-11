@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2011/05/26 08:13:25 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.15 2012/09/02 21:22:55 kili Exp $
 
 COMMENT =		utilities for manipulating XML documents
 
-DISTNAME =		HaXml-1.20.2
+DISTNAME =		HaXml-1.23.3
 CATEGORIES =		textproc
 HOMEPAGE =		http://projects.haskell.org/HaXml/
 
@@ -20,7 +20,8 @@ MODULES =		lang/ghc converters/libiconv
 
 MODGHC_BUILD =		cabal hackage haddock register
 
-RUN_DEPENDS +=		textproc/hs-polyparse
+RUN_DEPENDS +=		devel/hs-random \
+			textproc/hs-polyparse>=1.5
 BUILD_DEPENDS +=	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

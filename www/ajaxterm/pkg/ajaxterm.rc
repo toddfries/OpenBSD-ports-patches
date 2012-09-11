@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# $OpenBSD: ajaxterm.rc,v 1.2 2012/08/25 10:05:34 sthen Exp $
+
+daemon="${TRUEPREFIX}/bin/ajaxterm -d"
+daemon_flags="-u _ajaxterm --command=/usr/bin/login"
+
+. /etc/rc.d/rc.subr
+
+pexp="${MODPY_BIN} ${daemon}${daemon_flags:+ ${daemon_flags}}"
+
+rc_bg=YES
+rc_reload=NO
+
+rc_cmd $1

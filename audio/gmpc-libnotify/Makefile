@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/04/21 07:04:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2011/11/04 08:42:25 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -8,7 +8,7 @@ VERSION=		0.20.0
 DISTNAME=		gmpc-libnotify-${VERSION}
 CATEGORIES=		audio
 
-REVISION=		0
+REVISION=		3
 
 HOMEPAGE=		http://gmpc.wikia.com/wiki/Plugins
 
@@ -28,7 +28,7 @@ WANTLIB += drm expat fontconfig freetype gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 gtk-x11-2.0 m mpd notify pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs xcb xcb-render
-WANTLIB += xcb-shm z
+WANTLIB += xcb-shm z ffi stdc++
 
 MODULES=		devel/gettext \
 			textproc/intltool

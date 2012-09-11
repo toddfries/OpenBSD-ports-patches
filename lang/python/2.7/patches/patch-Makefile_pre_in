@@ -1,7 +1,7 @@
-$OpenBSD: patch-Makefile_pre_in,v 1.2 2011/07/06 12:05:56 jasper Exp $
---- Makefile.pre.in.orig	Thu Oct 14 13:37:30 2010
-+++ Makefile.pre.in	Wed Jul  6 14:05:40 2011
-@@ -360,6 +360,8 @@ LIBRARY_OBJS=	\
+$OpenBSD: patch-Makefile_pre_in,v 1.4 2012/04/27 08:18:59 rpointel Exp $
+--- Makefile.pre.in.orig	Tue Apr 10 01:07:33 2012
++++ Makefile.pre.in	Fri Apr 13 07:49:16 2012
+@@ -364,6 +364,8 @@ LIBRARY_OBJS=	\
  #########################################################################
  # Rules
  
@@ -10,7 +10,7 @@ $OpenBSD: patch-Makefile_pre_in,v 1.2 2011/07/06 12:05:56 jasper Exp $
  # Default target
  all:		build_all
  build_all:	$(BUILDPYTHON) oldsharedmods sharedmods gdbhooks
-@@ -395,7 +397,7 @@ coverage:
+@@ -399,7 +401,7 @@ coverage:
  $(BUILDPYTHON):	Modules/python.o $(LIBRARY) $(LDLIBRARY)
  		$(LINKCC) $(LDFLAGS) $(LINKFORSHARED) -o $@ \
  			Modules/python.o \
@@ -19,7 +19,7 @@ $OpenBSD: patch-Makefile_pre_in,v 1.2 2011/07/06 12:05:56 jasper Exp $
  
  platform: $(BUILDPYTHON)
  	$(RUNSHARED) ./$(BUILDPYTHON) -E -c 'import sys ; from sysconfig import get_platform ; print get_platform()+"-"+sys.version[0:3]' >platform
-@@ -444,8 +446,12 @@ gdbhooks: $(BUILDPYTHON)-gdb.py
+@@ -448,8 +450,12 @@ gdbhooks: $(BUILDPYTHON)-gdb.py
  
  SRC_GDB_HOOKS=$(srcdir)/Tools/gdb/libpython.py
  $(BUILDPYTHON)-gdb.py: $(SRC_GDB_HOOKS)
@@ -33,15 +33,17 @@ $OpenBSD: patch-Makefile_pre_in,v 1.2 2011/07/06 12:05:56 jasper Exp $
  # This rule is here for OPENSTEP/Rhapsody/MacOSX. It builds a temporary
  # minimal framework (not including the Lib directory and such) in the current
  # directory.
-@@ -787,7 +793,6 @@ bininstall:	altbininstall
+@@ -795,9 +801,6 @@ bininstall:	altbininstall
  	then rm -f $(DESTDIR)$(BINDIR)/$(PYTHON); \
  	else true; \
  	fi
--	(cd $(DESTDIR)$(BINDIR); $(LN) python$(VERSION)$(EXE) $(PYTHON))
+-	(cd $(DESTDIR)$(BINDIR); $(LN) -s python2$(EXE) $(PYTHON))
+-	-rm -f $(DESTDIR)$(BINDIR)/python2$(EXE)
+-	(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(VERSION)$(EXE) python2$(EXE))
+ 	-rm -f $(DESTDIR)$(BINDIR)/python2-config
+ 	(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(VERSION)-config python2-config)
  	-rm -f $(DESTDIR)$(BINDIR)/python-config
- 	(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(VERSION)-config python-config)
- 	-test -d $(DESTDIR)$(LIBPC) || $(INSTALL) -d -m $(DIRMODE) $(DESTDIR)$(LIBPC)
-@@ -797,7 +802,7 @@ bininstall:	altbininstall
+@@ -811,7 +814,7 @@ bininstall:	altbininstall
  # Install the interpreter with $(VERSION) affixed
  # This goes into $(exec_prefix)
  altbininstall:	$(BUILDPYTHON)
@@ -50,7 +52,7 @@ $OpenBSD: patch-Makefile_pre_in,v 1.2 2011/07/06 12:05:56 jasper Exp $
  	do \
  		if test ! -d $(DESTDIR)$$i; then \
  			echo "Creating directory $$i"; \
-@@ -813,7 +818,8 @@ altbininstall:	$(BUILDPYTHON)
+@@ -827,7 +830,8 @@ altbininstall:	$(BUILDPYTHON)
  			$(INSTALL_SHARED) $(LDLIBRARY) $(DESTDIR)$(LIBDIR)/$(INSTSONAME); \
  			if test $(LDLIBRARY) != $(INSTSONAME); then \
  				(cd $(DESTDIR)$(LIBDIR); $(LN) -sf $(INSTSONAME) $(LDLIBRARY)) \
@@ -60,7 +62,7 @@ $OpenBSD: patch-Makefile_pre_in,v 1.2 2011/07/06 12:05:56 jasper Exp $
  		fi; \
  	else	true; \
  	fi
-@@ -942,8 +948,8 @@ libinstall:	build_all $(srcdir)/Lib/$(PLATDIR)
+@@ -960,8 +964,8 @@ libinstall:	build_all $(srcdir)/Lib/$(PLATDIR) $(srcdi
  		./$(BUILDPYTHON) -Wi -t -c "import lib2to3.pygram, lib2to3.patcomp;lib2to3.patcomp.PatternCompiler()"
  
  # Create the PLATDIR source directory, if one wasn't distributed..

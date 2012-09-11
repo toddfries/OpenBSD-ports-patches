@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2011/06/08 17:39:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2012/07/13 16:56:55 ajacoutot Exp $
 
 COMMENT=		python bindings for libnotify
 
 V=			0.1.1
 DISTNAME=		notify-python-${V}
 PKGNAME=		py-notify-${V}
-REVISION =		9
+REVISION =		10
 CATEGORIES=		devel
 
 HOMEPAGE=		http://www.galago-project.org/
@@ -43,6 +43,8 @@ LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+
+CONFIGURE_ARGS +=	--disable-static
 
 # Force regen of pynotify.c to include missing functions.
 # See http://trac.galago-project.org/ticket/121

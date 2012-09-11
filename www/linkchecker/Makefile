@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.34 2011/08/17 17:13:10 landry Exp $
+# $OpenBSD: Makefile,v 1.37 2012/07/05 11:37:51 gonzalo Exp $
 
 COMMENT=	checks HTML documents for broken links
 
-MODPY_EGG_VERSION=7.1
+MODPY_EGG_VERSION=7.9
 DISTNAME=	LinkChecker-${MODPY_EGG_VERSION}
 PKGNAME=	${DISTNAME:L}
 
@@ -23,12 +23,10 @@ EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	lang/python
 
-MODPY_DISTUTILS_INSTALLARGS=	--no-compile
-USE_GROFF =	Yes
-
 WANTLIB+=	${MODPY_WANTLIB}
 
-BUILD_DEPENDS=	net/py-dns
+RUN_DEPENDS=	devel/desktop-file-utils \
+		net/py-dnspython
 
 NO_REGRESS=	Yes
 

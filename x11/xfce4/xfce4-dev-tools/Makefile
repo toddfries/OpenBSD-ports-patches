@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2011/01/18 20:29:23 landry Exp $
+# $OpenBSD: Makefile,v 1.10 2012/09/01 14:37:00 ajacoutot Exp $
 
 COMMENT =	Xfce4 developer tools and macros
 
 XFCE_PROJECT =	xfce4-dev-tools
 HOMEPAGE =	http://foo-projects.org/~benny/projects/xfce4-dev-tools/
+REVISION=	0
 
 # GPLv2
 PERMIT_DISTFILES_CDROM =	Yes
@@ -25,6 +26,8 @@ RUN_DEPENDS =	devel/libtool \
 AUTOMAKE_VERSION =	1.9
 AUTOCONF_VERSION =	2.61
 SUBST_VARS+=	AUTOCONF_VERSION AUTOMAKE_VERSION
+LIB_DEPENDS =	devel/glib2
+WANTLIB = c glib-2.0 pcre pthread
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/scripts/xdt-autogen.in.in \

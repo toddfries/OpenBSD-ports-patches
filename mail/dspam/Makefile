@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.33 2011/05/11 12:57:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.38 2012/04/23 17:15:18 espie Exp $
 
 COMMENT=	anti-spam filter
 
 VERSION=	3.8.0
 DISTNAME=	dspam-${VERSION}
-REVISION=	1
+REVISION=	3
 SHARED_LIBS=	dspam	8.0
 CATEGORIES=	mail
 
@@ -24,7 +24,7 @@ WANTLIB=		c m
 USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 CONFIGURE_ARGS+=	--with-dspam-home=/var/dspam \
 			--with-dspam-home-owner=_dspam \
 			--with-dspam-home-group=_dspam \
@@ -47,12 +47,12 @@ FLAVORS=	sqlite3 sqlite mysql pgsql hash clamav ldap preferences \
 		domainscale largescale
 FLAVOR?=	sqlite3
 
-. if ${FLAVOR:L:Mlargescale} && ${FLAVOR:L:Mdomainscale}
+. if ${FLAVOR:Mlargescale} && ${FLAVOR:Mdomainscale}
 ERRORS+= "Fatal: choose either domainscale or largescale, not both"
 . endif
 
 .for d in sqlite3 sqlite mysql pgsql hash
-.  if ${FLAVOR:L:M$d}
+.  if ${FLAVOR:M$d}
 DRIVER ?= $d
 .    if ${DRIVER} != "$d"
 ERRORS += "Fatal: choose either mysql or pgsql or sqlite or sqlite3 or hash"
@@ -92,7 +92,6 @@ WANTLIB +=		sqlite>=8
 CONFIGURE_ARGS+=	--with-storage-driver=sqlite3_drv \
 			--with-sqlite-includes=${LOCALBASE}/include \
 			--with-sqlite-libraries=${LOCALBASE}/lib
-LIB_DEPENDS+=		databases/sqlite3
 WANTLIB +=		sqlite3>=8
 DRIVER =		sqlite
 .endif
@@ -103,32 +102,32 @@ CONFIGURE_ARGS+=	--enable-daemon
 WANTLIB+=		pthread
 .endif
 
-.if ${FLAVOR:L:Mclamav}
+.if ${FLAVOR:Mclamav}
 CONFIGURE_ARGS+=	--enable-clamav
 LIB_DEPENDS+=		security/clamav
 WANTLIB +=		clamav>=1
 .endif
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 CONFIGURE_ARGS+=	--enable-ldap
-CONFIGURE_ENV=		CPPFLAGS="-I${DEPBASE}/include" \
-			LDFLAGS="-L${DEPBASE}/lib"
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
 LIB_DEPENDS+=		databases/openldap
 WANTLIB+=		crypto ssl sasl2 asn1 com_err gssapi krb5 \
 			ldap>=8 lber>=8
 .endif
 
-.if ${FLAVOR:L:Mpreferences}
+.if ${FLAVOR:Mpreferences}
 CONFIGURE_ARGS+=	--enable-preferences-extension
 .endif
 
-.if ${FLAVOR:L:Mdomainscale}
+.if ${FLAVOR:Mdomainscale}
 CONFIGURE_ARGS+=	--enable-domain-scale
 .else
 CONFIGURE_ARGS+=	--disable-domain-scale
 .endif
 
-.if ${FLAVOR:L:Mlargescale}
+.if ${FLAVOR:Mlargescale}
 CONFIGURE_ARGS+=	--enable-large-scale
 .else
 CONFIGURE_ARGS+=	--disable-large-scale

@@ -1,21 +1,21 @@
-$OpenBSD: patch-texmaker_cpp,v 1.5 2011/04/28 17:06:11 shadchin Exp $
---- texmaker.cpp.orig	Mon Apr 25 19:12:44 2011
-+++ texmaker.cpp	Thu Apr 28 22:00:03 2011
-@@ -3474,7 +3474,7 @@ author=config->value("Quick/Author","").toString();
- #ifdef USB_VERSION
- QString dicDir=QCoreApplication::applicationDirPath() + "/";
+$OpenBSD: patch-texmaker_cpp,v 1.8 2012/05/30 18:48:59 shadchin Exp $
+--- texmaker.cpp.orig	Wed May 23 20:09:18 2012
++++ texmaker.cpp	Fri May 25 23:10:35 2012
+@@ -4146,7 +4146,7 @@ QString dicDir=QCoreApplication::applicationDirPath() 
+ #ifdef DEBIAN_SPELLDIR
+ QString dicDir=PREFIX"/share/myspell/dicts/";
  #else
 -QString dicDir=PREFIX"/share/texmaker/";
 +QString dicDir=PREFIX"/share/hunspell/";
  #endif
- 
  #endif
-@@ -3486,7 +3486,7 @@ QString dicDir=QCoreApplication::applicationDirPath() 
+ 
+@@ -4159,7 +4159,7 @@ QString dicDir=QCoreApplication::applicationDirPath() 
  #endif
  QString defaultDic=dicDir+QString(QLocale::system().name())+".dic";
  QFileInfo fi(defaultDic);
 -if (!fi.exists() || !fi.isReadable()) defaultDic=dicDir+"en_GB.dic";
 +if (!fi.exists() || !fi.isReadable()) defaultDic=dicDir+"default.dic";
  spell_dic=config->value("Spell/Dic",defaultDic).toString();
- 
- spell_ignored_words=config->value("Spell/Words","").toString();
+ QFileInfo fispell(spell_dic);
+ pdfCheckerLang=fispell.fileName().left(2);

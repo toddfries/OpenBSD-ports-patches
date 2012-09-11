@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.7 2011/06/08 18:26:44 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.10 2012/08/04 14:40:08 ajacoutot Exp $
+@pkgpath print/epdfview,cups
 @bin bin/epdfview
 @man man/man1/epdfview.1
 share/applications/epdfview.desktop
@@ -15,16 +16,8 @@ share/epdfview/pixmaps/stock_zoom-page-width.png
 share/epdfview/ui/
 share/epdfview/ui/epdfview-ui-print.xml
 share/epdfview/ui/epdfview-ui.xml
-share/icons/
-share/icons/hicolor/
-share/icons/hicolor/24x24/
-share/icons/hicolor/24x24/apps/
 share/icons/hicolor/24x24/apps/epdfview.png
-share/icons/hicolor/32x32/
-share/icons/hicolor/32x32/apps/
 share/icons/hicolor/32x32/apps/epdfview.png
-share/icons/hicolor/48x48/
-share/icons/hicolor/48x48/apps/
 share/icons/hicolor/48x48/apps/epdfview.png
 share/locale/ar/
 share/locale/ar/LC_MESSAGES/
@@ -56,7 +49,7 @@ share/locale/sv/LC_MESSAGES/epdfview.mo
 share/locale/vi/LC_MESSAGES/epdfview.mo
 share/locale/zh_CN/LC_MESSAGES/epdfview.mo
 share/locale/zh_TW/LC_MESSAGES/epdfview.mo
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

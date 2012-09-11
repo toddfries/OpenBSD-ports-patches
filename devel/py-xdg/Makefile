@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2011/06/08 17:39:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/08/04 15:11:00 ajacoutot Exp $
 
 COMMENT=	python library to access freedesktop.org standards
 
-MODPY_EGG_VERSION= 0.18
+MODPY_EGG_VERSION= 0.23
 DISTNAME=	pyxdg-${MODPY_EGG_VERSION}
 PKGNAME=	py-xdg-${MODPY_EGG_VERSION}
-REVISION =	2
 
 CATEGORIES=	devel
 
@@ -19,11 +18,10 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://people.freedesktop.org/~lanius/
+MASTER_SITES=	http://people.freedesktop.org/~takluyver/
 
 MODULES=	lang/python
 
-# regression tests are present, but don't make much sense
 NO_REGRESS=	Yes
 
 pre-configure:

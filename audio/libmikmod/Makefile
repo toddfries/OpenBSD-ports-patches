@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/04/16 21:21:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2012/08/10 20:11:41 naddy Exp $
 
 COMMENT=	mikmod sound library
 
@@ -22,10 +22,9 @@ MASTER_SITES=	${HOMEPAGE}/files/libmikmod/ \
 
 WANTLIB=	sndio
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 USE_LIBTOOL=	Yes
-USE_GROFF =	Yes
 CONFIGURE_ENV=	CFLAGS="-DDRV_SNDIO" LIBRARY_LIB="-lsndio"
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --disable-dl \

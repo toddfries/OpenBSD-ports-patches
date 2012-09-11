@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# $OpenBSD: pdns_server.rc,v 1.2 2011/12/17 22:01:13 sthen Exp $
+
+daemon="${TRUEPREFIX}/sbin/pdns_server --daemon=yes"
+daemon_flags="--guardian=no --control-console --loglevel=9"
+
+. /etc/rc.d/rc.subr
+
+rc_reload=NO
+
+rc_cmd $1

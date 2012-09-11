@@ -1,0 +1,16 @@
+$OpenBSD: patch-configure_in,v 1.4 2012/05/18 16:40:43 gonzalo Exp $
+--- configure.in.orig	Thu Mar 29 12:08:59 2012
++++ configure.in	Mon May 14 14:10:39 2012
+@@ -736,6 +736,12 @@ if test "x$xc_with_tcl" != "x" ; then
+ fi
+ 
+ if test "x$xc_with_tcl" != "x" ; then
++  # Tcl and Tk's lib versions can differ on some systems
++  case $target in
++     *-openbsd*)
++	SHDLIB_EXT=".so.${TK_LIB_FILE##*.so.}"
++	;;
++  esac
+   if test "x${xc_with_tk_libraries}" != "x" ; then
+     for libname in \
+      "${xc_with_tk_libraries}/lib${TK_LIB_NAME}${SHDLIB_EXT}"

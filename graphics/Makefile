@@ -1,20 +1,16 @@
-# $OpenBSD: Makefile,v 1.297 2011/08/17 19:05:00 jasper Exp $
-# $FreeBSD: Makefile,v 1.55 1997/11/03 12:12:27 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.334 2012/08/19 16:31:58 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += DevIL
      SUBDIR += GraphicsMagick
-     SUBDIR += GraphicsMagick,no_x11
      SUBDIR += ImageMagick
-     SUBDIR += ImageMagick,no_x11
      SUBDIR += aalib
-     SUBDIR += aalib,no_x11
      SUBDIR += agg
      SUBDIR += allegropng
      SUBDIR += amide
      SUBDIR += animorph
      SUBDIR += aqsis
+     SUBDIR += argyll
      SUBDIR += asymptote
      SUBDIR += autopano-sift-c
      SUBDIR += babl
@@ -24,9 +20,11 @@
      SUBDIR += cairo
      SUBDIR += cairomm
      SUBDIR += cal3d
-     SUBDIR += camlimages
+     SUBDIR += ocaml-camlimages
      SUBDIR += cfdg
      SUBDIR += clutter
+     SUBDIR += colord
+     SUBDIR += colord-gtk
      SUBDIR += colorexplorer
      SUBDIR += comix
      SUBDIR += compface
@@ -36,19 +34,19 @@
      SUBDIR += dcmtk
      SUBDIR += dcraw
      SUBDIR += dia
-     SUBDIR += dia,gnome
      SUBDIR += digikam
      SUBDIR += digikam-doc
      SUBDIR += discwrapper
      SUBDIR += djview4
      SUBDIR += djvulibre
-     SUBDIR += djvulibre,no_x11
+     SUBDIR += dmtx-utils
      SUBDIR += dpic
      SUBDIR += dumpmpeg
      SUBDIR += dvdrip
      SUBDIR += enblend-enfuse
      SUBDIR += enjoympeg
      SUBDIR += evince
+     SUBDIR += exiftran
      SUBDIR += exiv2
      SUBDIR += feh
      SUBDIR += ffmpeg
@@ -66,19 +64,19 @@
      SUBDIR += gegl
      SUBDIR += geomview
      SUBDIR += gfract
-     SUBDIR += ggi
      SUBDIR += gif2png
      SUBDIR += gifsicle
-     SUBDIR += gifsicle,no_x11
      SUBDIR += giftrans
-     SUBDIR += gii
      SUBDIR += gimp
      SUBDIR += gle
      SUBDIR += glew
      SUBDIR += glpng
      SUBDIR += gmt
+     SUBDIR += gnofract4d
      SUBDIR += gocr
      SUBDIR += goocanvas
+     SUBDIR += goocanvas2
+     SUBDIR += goocanvasmm2
      SUBDIR += gphoto2
      SUBDIR += gpicview
      SUBDIR += gracula
@@ -97,6 +95,7 @@
      SUBDIR += imlib2
      SUBDIR += indexpage
      SUBDIR += inkscape
+     SUBDIR += ipe
      SUBDIR += iview
      SUBDIR += jasper
      SUBDIR += jbig2dec
@@ -112,9 +111,11 @@
      SUBDIR += lcms
      SUBDIR += lcms2
      SUBDIR += lensfun
+     SUBDIR += leptonica
      SUBDIR += libart
      SUBDIR += libcaca
      SUBDIR += libdivxdecore
+     SUBDIR += libdmtx
      SUBDIR += libdvbpsi
      SUBDIR += libexif
      SUBDIR += libexif-gtk
@@ -132,12 +133,14 @@
      SUBDIR += libraw
      SUBDIR += libungif
      SUBDIR += libvidcap
+     SUBDIR += libwebp
      SUBDIR += libwmf
      SUBDIR += libxmi
      SUBDIR += lsys
      SUBDIR += luagd
      SUBDIR += luvcview
      SUBDIR += makehuman
+     SUBDIR += mandelbulber
      SUBDIR += mapivi
      SUBDIR += mapnik
      SUBDIR += mhgui
@@ -149,12 +152,14 @@
      SUBDIR += mplex
      SUBDIR += mscgen
      SUBDIR += netpbm
+     SUBDIR += node-canvas
      SUBDIR += ocrad
      SUBDIR += opencsg
      SUBDIR += opencv
      SUBDIR += openexr
      SUBDIR += openexr-ctl
      SUBDIR += openexr-viewers
+     SUBDIR += openimageio
      SUBDIR += openjpeg
      SUBDIR += p5-Cairo
      SUBDIR += p5-Captcha-reCAPTCHA
@@ -175,6 +180,7 @@
      SUBDIR += p5-Image-Imlib2
      SUBDIR += p5-Image-Info
      SUBDIR += p5-Image-MetaData-JPEG
+     SUBDIR += p5-Image-Scale
      SUBDIR += p5-Image-Size
      SUBDIR += p5-Imager
      SUBDIR += p5-Imager-QRCode
@@ -189,17 +195,16 @@
      SUBDIR += potrace
      SUBDIR += povray
      SUBDIR += pstoedit
-     SUBDIR += py-Imaging,python2.4
      SUBDIR += py-Imaging
      SUBDIR += py-cairo
      SUBDIR += py-dot
      SUBDIR += py-gd
-     SUBDIR += py-goocanvas
      SUBDIR += py-graphics
      SUBDIR += py-matplotlib
      SUBDIR += py-opengl
      SUBDIR += py-pigment
      SUBDIR += py-pyx
+     SUBDIR += py3-cairo
      SUBDIR += pycha
      SUBDIR += qiv
      SUBDIR += quesoglc
@@ -216,11 +221,14 @@
      SUBDIR += sane-frontends
      SUBDIR += scratch
      SUBDIR += scrot
+     SUBDIR += shared-color-profiles
+     SUBDIR += shared-color-targets
      SUBDIR += shotwell
      SUBDIR += simple-scan
      SUBDIR += sketch
      SUBDIR += smpeg-xmms
      SUBDIR += swfdec
+     SUBDIR += sxiv
      SUBDIR += synaesthesia
      SUBDIR += tesseract
      SUBDIR += tgif
@@ -232,6 +240,7 @@
      SUBDIR += vcdimager
      SUBDIR += vid
      SUBDIR += videod
+     SUBDIR += viewnior
      SUBDIR += wmgrabimage
      SUBDIR += wmicons
      SUBDIR += wmphoto
@@ -247,5 +256,7 @@
      SUBDIR += xv
      SUBDIR += xzgv
      SUBDIR += zbar
+     SUBDIR += zint
+     SUBDIR += zxing
 
 .include <bsd.port.subdir.mk>

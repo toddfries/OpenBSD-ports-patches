@@ -1,24 +1,34 @@
-@comment $OpenBSD: PLIST-main,v 1.2 2011/04/27 12:07:53 ajacoutot Exp $
-@pkgpath audio/libcanberra
+@comment $OpenBSD: PLIST-main,v 1.4 2012/07/13 17:03:32 ajacoutot Exp $
 @conflict libcanberra-<gtk-0.28p0
-%%SHARED%%
-include/canberra.h
+@pkgpath audio/libcanberra
 include/canberra-gtk.h
+include/canberra.h
 lib/libcanberra-${V}/
-@comment lib/libcanberra-${V}/libcanberra-gstreamer.a
-@comment lib/libcanberra-${V}/libcanberra-gstreamer.la
-@comment lib/libcanberra-${V}/libcanberra-multi.a
 @comment lib/libcanberra-${V}/libcanberra-multi.la
-@comment lib/libcanberra-${V}/libcanberra-null.a
+lib/libcanberra-${V}/libcanberra-multi.so
 @comment lib/libcanberra-${V}/libcanberra-null.la
-@comment lib/libcanberra-${V}/libcanberra-sndio.a
+lib/libcanberra-${V}/libcanberra-null.so
 @comment lib/libcanberra-${V}/libcanberra-sndio.la
-lib/libcanberra.a
+lib/libcanberra-${V}/libcanberra-sndio.so
 lib/libcanberra.la
+@lib lib/libcanberra.so.${LIBcanberra_VERSION}
 lib/pkgconfig/libcanberra.pc
 share/doc/libcanberra/
 share/doc/libcanberra/README
-@comment share/gtk-doc/html/libcanberra/
+share/gtk-doc/
+share/gtk-doc/html/
+share/gtk-doc/html/libcanberra/
+share/gtk-doc/html/libcanberra/ch01.html
+share/gtk-doc/html/libcanberra/home.png
+share/gtk-doc/html/libcanberra/index.html
+share/gtk-doc/html/libcanberra/index.sgml
+share/gtk-doc/html/libcanberra/left.png
+share/gtk-doc/html/libcanberra/libcanberra-canberra-gtk.html
+share/gtk-doc/html/libcanberra/libcanberra-canberra.html
+share/gtk-doc/html/libcanberra/libcanberra.devhelp2
+share/gtk-doc/html/libcanberra/right.png
+share/gtk-doc/html/libcanberra/style.css
+share/gtk-doc/html/libcanberra/up.png
 share/vala/
 share/vala/vapi/
 share/vala/vapi/libcanberra.vapi

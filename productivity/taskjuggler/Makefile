@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.19 2011/07/06 18:57:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/09/02 13:49:51 ajacoutot Exp $
 
 COMMENT=	project management tool
 
 DISTNAME=	taskjuggler-2.4.1
-REVISION=	3
+REVISION=	6
 
 CATEGORIES=	productivity
 
@@ -17,11 +17,13 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += DCOP ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c
-WANTLIB += fam idn jpeg kabc kdecore kdefx kdeprint
+WANTLIB += DCOP ICE SM X11 Xext Xrender art_lgpl_2 c
+WANTLIB += idn jpeg kabc kdecore kdefx kdeprint
 WANTLIB += kdesu kdeui khtml kio kjs kparts kresources ktexteditor
-WANTLIB += kutils kwalletclient m pcre pcreposix png pthread pthread-stubs
-WANTLIB += rpcsvc stdc++ util vcard xcb z kcal kmime ktnef
+WANTLIB += kutils kwalletclient m pcre pcreposix png pthread
+WANTLIB += stdc++ util vcard xcb z kcal kmime ktnef
+WANTLIB += GL Xcursor Xdamage Xfixes Xft Xi Xinerama Xmu Xrandr
+WANTLIB += Xt Xxf86vm drm expat fontconfig freetype lcms mng
 
 MASTER_SITES=	${HOMEPAGE}/download/
 EXTRACT_SUFX=	.tar.bz2
@@ -35,7 +37,6 @@ CONFIGURE_STYLE=autoconf
 AUTOCONF_VERSION=2.61
 CONFIGURE_ARGS+=${MODKDE_CONFIGURE_ARGS} \
 		--enable-dependency-tracking \
-		--disable-as-needed \
 		--disable-final \
 		--with-docdir=${PREFIX}/share/examples/taskjuggler/
 CONFIGURE_ENV=	${MODKDE_CONFIGURE_ENV} \

@@ -1,38 +1,19 @@
-$OpenBSD: patch-base_base_gypi,v 1.7 2011/08/16 08:17:44 robert Exp $
---- base/base.gypi.orig	Tue Aug  2 20:13:45 2011
-+++ base/base.gypi	Tue Aug  2 20:15:07 2011
-@@ -191,6 +191,7 @@
-           'process_util.h',
-           'process_util_linux.cc',
-           'process_util_mac.mm',
-+          'process_util_openbsd.cc',
-           'process_util_posix.cc',
-           'process_util_win.cc',
-           'process_win.cc',
-@@ -371,12 +372,11 @@
-                 'message_pump_glib_x.cc',
-               ],
-           }],
--          [ 'OS != "linux"', {
-+          [ 'OS != "linux" and OS !="openbsd"', {
-               'sources!': [
-                 # Not automatically excluded by the *linux.cc rules.
-                 'gtk_util.cc',
-                 'gtk_util.h',
--                'linux_util.cc',
-               ],
-             },
-           ],
-@@ -491,6 +491,12 @@
-             ],
-         }],
-         [ 'OS == "freebsd" or OS == "openbsd"', {
-+          'sources!': [
-+            'file_util_linux.cc',
-+            'process_linux.cc',
-+            'process_util_linux.cc',
-+          ],
-+          'include_dirs': [ '/usr/local/include' ],
-           'link_settings': {
-             'libraries': [
-               '-L/usr/local/lib -lexecinfo',
+$OpenBSD: patch-base_base_gypi,v 1.13 2012/08/26 18:47:01 robert Exp $
+--- base/base.gypi.orig	Tue Aug 14 09:01:48 2012
++++ base/base.gypi	Wed Aug 15 23:14:34 2012
+@@ -130,7 +130,6 @@
+           'file_version_info_win.h',
+           'files/file_path_watcher.cc',
+           'files/file_path_watcher.h',
+-          'files/file_path_watcher_kqueue.cc',
+           'files/file_path_watcher_linux.cc',
+           'files/file_path_watcher_stub.cc',
+           'files/file_path_watcher_win.cc',
+@@ -602,7 +601,6 @@
+           ['<(os_bsd)==1 and >(nacl_untrusted_build)==0', {
+             'sources/': [
+               ['exclude', '^files/file_path_watcher_linux\\.cc$'],
+-              ['exclude', '^files/file_path_watcher_stub\\.cc$'],
+               ['exclude', '^file_util_linux\\.cc$'],
+               ['exclude', '^process_linux\\.cc$'],
+               ['exclude', '^process_util_linux\\.cc$'],

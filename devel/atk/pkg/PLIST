@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.15 2011/06/13 17:18:05 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.17 2012/03/26 23:20:59 ajacoutot Exp $
 %%SHARED%%
 include/atk-1.0/
 include/atk-1.0/atk/
@@ -32,6 +32,7 @@ include/atk-1.0/atk/atktable.h
 include/atk-1.0/atk/atktext.h
 include/atk-1.0/atk/atkutil.h
 include/atk-1.0/atk/atkvalue.h
+include/atk-1.0/atk/atkwindow.h
 lib/girepository-1.0/
 lib/girepository-1.0/Atk-1.0.typelib
 lib/libatk-1.0.a
@@ -183,6 +184,9 @@ share/locale/ka/LC_MESSAGES/atk10.mo
 share/locale/kk/
 share/locale/kk/LC_MESSAGES/
 share/locale/kk/LC_MESSAGES/atk10.mo
+share/locale/km/
+share/locale/km/LC_MESSAGES/
+share/locale/km/LC_MESSAGES/atk10.mo
 share/locale/kn/
 share/locale/kn/LC_MESSAGES/
 share/locale/kn/LC_MESSAGES/atk10.mo

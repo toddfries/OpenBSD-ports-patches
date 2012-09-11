@@ -1,18 +1,20 @@
-$OpenBSD: patch-mozilla_ipc_chromium_src_chrome_common_ipc_message_utils_h,v 1.1 2011/07/24 07:10:12 landry Exp $
---- mozilla/ipc/chromium/src/chrome/common/ipc_message_utils.h.orig	Fri Jun 24 22:18:10 2011
-+++ mozilla/ipc/chromium/src/chrome/common/ipc_message_utils.h	Thu Jun 30 13:26:53 2011
-@@ -219,7 +219,33 @@ struct ParamTraits<unsigned long> {
+$OpenBSD: patch-mozilla_ipc_chromium_src_chrome_common_ipc_message_utils_h,v 1.4 2012/02/20 20:17:49 landry Exp $
+
+Add new long long template, may not be best solution.
+
+--- mozilla/ipc/chromium/src/chrome/common/ipc_message_utils.h.orig	Wed Jan 18 10:41:15 2012
++++ mozilla/ipc/chromium/src/chrome/common/ipc_message_utils.h	Sun Jan 22 22:18:19 2012
+@@ -193,6 +193,29 @@ struct ParamTraits<unsigned long long> {
+     l->append(StringPrintf(L"%ull", p));
    }
  };
- 
--#if !(defined(OS_MACOSX) || defined(OS_WIN) || (defined(CHROMIUM_MOZILLA_BUILD) && defined(OS_LINUX) && defined(ARCH_CPU_64_BITS)))
-+#if defined(OS_OPENBSD) && defined(ARCH_CPU_64_BITS)
++
 +template <>
-+struct ParamTraits<unsigned long long> {
-+  typedef unsigned long long param_type;
++struct ParamTraits<long long> {
++  typedef long long param_type;
 +  static void Write(Message* m, const param_type& p) {
 +    m->WriteData(reinterpret_cast<const char*>(&p), sizeof(param_type));
-+  }
++ }
 +  static bool Read(const Message* m, void** iter, param_type* r) {
 +    const char *data;
 +    int data_size = 0;
@@ -23,16 +25,12 @@ $OpenBSD: patch-mozilla_ipc_chromium_src_chrome_common_ipc_message_utils_h,v 1.1
 +      result = false;
 +      NOTREACHED();
 +    }
-+
 +    return result;
 +  }
 +  static void Log(const param_type& p, std::wstring* l) {
 +    l->append(StringPrintf(L"%ull", p));
 +  }
 +};
-+#endif
-+
-+#if !(defined(OS_MACOSX) || defined(OS_OPENBSD) || defined(OS_WIN) || (defined(CHROMIUM_MOZILLA_BUILD) && defined(OS_LINUX) && defined(ARCH_CPU_64_BITS)))
- // There size_t is a synonym for |unsigned long| ...
- template <>
- struct ParamTraits<size_t> {
+ #endif
+ 
+ #if !(defined(OS_MACOSX) || defined(OS_OPENBSD) || defined(OS_WIN) || (defined(OS_LINUX) && defined(ARCH_CPU_64_BITS)) || defined(ARCH_CPU_S390))

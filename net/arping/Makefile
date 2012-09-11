@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.33 2010/11/26 14:56:14 espie Exp $
+# $OpenBSD: Makefile,v 1.36 2012/09/02 19:52:41 gonzalo Exp $
 
 COMMENT =	ARP level ping utility
 
-DISTNAME =	arping-2.09
+DISTNAME =	arping-2.12
 CATEGORIES =	net
 
 HOMEPAGE =	http://www.habets.pp.se/synscan/programs.php?prog=ARPing
@@ -15,7 +15,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =	c pcap lib/libnet-1.1/net=11
+WANTLIB += c m net pcap lib/libnet-1.1/net=11
 
 MASTER_SITES =	http://www.habets.pp.se/synscan/files/ \
 		http://www.arcane-labs.net/download/OpenBSD/

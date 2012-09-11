@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.50 2011/05/11 06:56:42 ajacoutot Exp $
-# $FreeBSD: Makefile,v 1.13 1997/12/25 22:29:17 asami Exp $
+# $OpenBSD: Makefile,v 1.54 2012/08/18 12:41:38 ajacoutot Exp $
 
 COMMENT =	dungeon explorin', hackin', game.  Piece of cake
 V =		3.4.3
 DISTNAME =	nethack-$V
 PKGNAME =	${DISTNAME}
-REVISION =	4
+REVISION =	5
 CATEGORIES =	games
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=nethack/} \
@@ -34,9 +33,9 @@ USE_GROFF =	Yes
 FLAVORS =	no_x11 qt
 FLAVOR ?=
 
-.if ${FLAVOR:L} == "no_x11"
+.if ${FLAVOR} == "no_x11"
 NETHACKCONFIG =	${FILESDIR}/simple-config
-.elif ${FLAVOR:L} == "qt"
+.elif ${FLAVOR} == "qt"
 NETHACKCONFIG =	${FILESDIR}/qt-config
 MODULES =	x11/qt3
 WANTLIB +=	SM m pthread stdc++
@@ -51,7 +50,7 @@ NO_REGRESS =	Yes
 SUBST_VARS =	GAMEDIR V
 
 do-configure:
-	@cd ${WRKSRC}/sys/unix; ${SH} setup.sh symlinks
+	@cd ${WRKSRC}/sys/unix; /bin/sh setup.sh symlinks
 
 post-build:
 	@cd ${WRKSRC}/util && ${MAKE_ENV} make recover
@@ -61,7 +60,7 @@ post-install:
 	${INSTALL_MAN} ${WRKSRC}/doc/nethack.6 ${PREFIX}/man/man6/nethack-$V.6
 	${INSTALL_MAN} ${WRKSRC}/doc/recover.6 ${PREFIX}/man/man6/recover-$V.6
 	${INSTALL_PROGRAM} ${PREFIX}/bin/nethack ${PREFIX}/bin/nethack-$V
-.if ${FLAVOR:L} == ""
+.if ${FLAVOR} == ""
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/X11/app-defaults
 	@cd ${WRKSRC}/win/X11 && cp NetHack.ad NetHack-$V && \
 	    ${INSTALL_DATA} NetHack-$V ${PREFIX}/lib/X11/app-defaults

@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.38 2010/11/19 22:31:35 espie Exp $
+# $OpenBSD: Makefile,v 1.40 2012/08/23 15:50:05 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		module to interface the DNS resolver
 
 MODULES=		cpan
-DISTNAME=		Net-DNS-0.65
+DISTNAME=		Net-DNS-0.68
 REVISION=		0
 CATEGORIES=		net
-USE_GROFF =		Yes
 
 HOMEPAGE=		http://www.net-dns.org/
 
@@ -20,9 +19,10 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
+WANTLIB += c
+
 BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		security/p5-Digest-HMAC>=1.00 \
-			net/p5-Net-IP>=1.20
+RUN_DEPENDS=		security/p5-Digest-HMAC>=1.00
 REGRESS_DEPENDS=	security/p5-Digest-BubbleBabble \
 			devel/p5-Test-Pod
 

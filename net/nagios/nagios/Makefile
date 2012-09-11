@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.47 2011/07/08 22:31:59 robert Exp $
+# $OpenBSD: Makefile,v 1.52 2012/04/28 10:51:44 ajacoutot Exp $
 
 COMMENT-main=	host and service monitor
 COMMENT-web=	cgis and webpages for nagios
 
-V=		3.2.3
-REVISION-main=	3
-REVISION-web=	1
-DISTNAME=	nagios-${V}
-PKGNAME-main=	nagios-${V}
-PKGNAME-web=	nagios-web-${V}
+V=		3.3.1
+DISTNAME=	nagios-$V
+PKGNAME-main=	nagios-$V
+PKGNAME-web=	nagios-web-$V
+REVISION=	2
+WRKDIST=	${WRKDIR}/nagios
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.nagios.org/
@@ -29,10 +29,11 @@ BUILD_DEPENDS=	graphics/gd
 LIB_DEPENDS=	devel/libtool,-ltdl
 RUN_DEPENDS=	net/nagios/plugins
 
+LOCALSTATEDIR=	${BASELOCALSTATEDIR}/nagios
+
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=--datadir=/var/www/nagios \
 		--libexecdir=${PREFIX}/libexec/nagios \
-		--localstatedir=/var/nagios \
 		--sbindir=/var/www/cgi-bin/nagios \
 		--with-cgiurl=/cgi-bin/nagios \
 		--with-checkresult-dir=/var/spool/nagios \

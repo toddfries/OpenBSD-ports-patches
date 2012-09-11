@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.45 2011/06/27 21:17:55 sthen Exp $
+# $OpenBSD: Makefile,v 1.52 2012/08/29 13:16:42 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	video stream processing tools
 
-DISTNAME=	transcode-1.1.5
-REVISION=	11
+DISTNAME=	transcode-1.1.7
+REVISION=	2
 CATEGORIES=	multimedia
-MASTER_SITES=	${MASTER_SITE_BERLIOS:=tcforge/}
+MASTER_SITES=	http://cdn.bitbucket.org/france/transcode-tcforge/downloads/
 EXTRACT_SUFX=	.tar.bz2
 
 HOMEPAGE=	http://www.transcoding.org/
@@ -63,19 +63,17 @@ RUN_DEPENDS=	audio/sox \
 
 BUILD_DEPENDS+=	devel/libtool
 
-SEPARATE_BUILD=	concurrent
+SEPARATE_BUILD=	Yes
 
 USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 LIBTOOL_FLAGS+=	--tag=disable-static
 CONFIGURE_STYLE= autoconf automake
-AUTOCONF_VERSION= 2.61
-AUTOMAKE_VERSION= 1.9
+AUTOCONF_VERSION= 2.68
+AUTOMAKE_VERSION= 1.11
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/autotools
 CONFIGURE_ARGS+=--enable-a52 \
-		--enable-a52-default-decoder \
 		--enable-bktr \
-		--disable-faac \
 		--enable-freetype2 \
 		--enable-lame \
 		--enable-libdv \
@@ -96,8 +94,7 @@ CONFIGURE_ARGS+=--enable-a52 \
 		--enable-xvid \
 		--enable-x264
 CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
-		LIBAVCODEC_EXTRA_LIBS="-pthread"
+		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib"
 
 .if ${FLAVOR:L:Mlzo}
 CONFIGURE_ARGS+=--enable-lzo
@@ -110,7 +107,7 @@ PKG_ARGS+=	-Dlzo=0
 
 .if ${FLAVOR:L:Mmjpegtools}
 CONFIGURE_ARGS+=--enable-mjpegtools
-WANTLIB +=	mjpegutils>=3
+WANTLIB +=	mjpegutils-1.9
 LIB_DEPENDS+=	multimedia/mjpegtools
 RUN_DEPENDS+=	multimedia/mjpegtools
 PKG_ARGS+=	-Dmjpegtools=1

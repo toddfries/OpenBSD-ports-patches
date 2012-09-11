@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2011/03/19 09:56:28 benoit Exp $
+# $OpenBSD: Makefile,v 1.15 2012/06/17 09:50:46 benoit Exp $
 
 COMMENT =		word-based diff program
 
-DISTNAME =		dwdiff-1.9
+DISTNAME =		dwdiff-2.0.4
 CATEGORIES =		sysutils textproc
 
 HOMEPAGE =		http://os.ghalkes.nl/dwdiff.html
@@ -26,12 +26,13 @@ LIB_DEPENDS =		textproc/icu4c
 
 CONFIGURE_STYLE =	simple
 CONFIGURE_ENV =		CFLAGS="-I${LOCALBASE}/include ${CFLAGS}" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+			LDFLAGS="-L${LOCALBASE}/lib" \
+			LINGUAS="nl de fr es"
 
 USE_GROFF =		Yes
 NO_REGRESS =		Yes
 
-LANGS =			de nl fr ru
+LANGS =			de nl fr es
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/dwdiff ${PREFIX}/bin

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.19 2010/11/22 08:36:55 espie Exp $
+# $OpenBSD: Makefile,v 1.22 2012/03/29 13:39:00 sthen Exp $
 
 COMMENT=		Desktop wallpaper manager and X11 screensaver
 
 DISTNAME=		chbg-2.0.1
-REVISION=		1
+REVISION=		3
 
 CATEGORIES=     	x11
 
@@ -39,7 +39,7 @@ CONFIGURE_STYLE=	gnu
 
 MODULES=		devel/gettext
 
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 
 post-extract:
 	@cd ${WRKSRC} && ${MAKE_PROGRAM} distclean

@@ -1,18 +1,10 @@
-# $OpenBSD: Makefile,v 1.64 2011/06/08 17:41:57 rpointel Exp $
-
-SHARED_ONLY=		Yes
+# $OpenBSD: Makefile,v 1.86 2012/09/01 14:36:59 ajacoutot Exp $
 
 COMMENT=		lightweight GNOME text editor
 
-# PLIST regen is needed for at least the following ports when
-# the gedit plugins directory changes:
-# (i.e. ${LOCALBASE}/lib/gedit-2/plugins)
-# x11/gnome/gedit-plugins
-# x11/gnome/seahorse-plugins
-
 GNOME_PROJECT=		gedit
-GNOME_VERSION=		2.30.4
-REVISION=		3
+GNOME_VERSION=		3.4.2
+REVISION=	0
 
 CATEGORIES=		editors
 
@@ -24,43 +16,43 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo
-WANTLIB += dbus-1 dbus-glib-1 expat ffi fontconfig freetype gdk-x11-2.0
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += stdc++ util xcb  xcb-render xcb-render-util xml2 z
-WANTLIB += gtksourceview-2.0 enchant
-WANTLIB += ${MODPY_WANTLIB}
+WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
+WANTLIB += c cairo cairo-gobject drm enchant expat ffi fontconfig
+WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 girepository-1.0
+WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 gtk-3
+WANTLIB += gtksourceview-3.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre peas-1.0 peas-gtk-1.0 pixman-1 png pthread pthread-stubs
+WANTLIB += stdc++ xcb xcb-render xcb-shm xml2 z
 
-MODULES=		devel/gconf2 \
+MODULES=		devel/dconf \
 			devel/gettext \
 			lang/python \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/iso-codes \
-			x11/py-gtksourceview \
-			x11/py-gtk2>=2.12.0
-LIB_DEPENDS=		textproc/enchant \
-			x11/gtksourceview \
-			${MODPY_LIB_DEPENDS}
-RUN_DEPENDS=		x11/py-gtk2>=2.12.0 \
-			x11/py-gtksourceview \
-			x11/gnome/py-gnome
+BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/iso-codes
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
-MODGCONF2_SCHEMAS_DIR=	gedit
+LIB_DEPENDS=		devel/libpeas>=1.1.4p1 \
+			textproc/enchant \
+			x11/gtksourceview3
+
+RUN_DEPENDS=		devel/gsettings-desktop-schemas \
+			x11/gnome/gvfs # --enable-gvfs-metadata
+
+MODGNOME_TOOLS= 	goi yelp
+MODGNOME_DESKTOP_FILE=	Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+CONFIGURE_ARGS=		--disable-static \
 			--enable-python \
-			--disable-attr \
-			--disable-updater
-#CONFIGURE_ARGS+=	--enable-gvfs-metadata
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =		Yes
+			--enable-spell \
+			--enable-gvfs-metadata \
+			--disable-updater \
+			--disable-zeitgeist
+
+REGRESS_IS_INTERACTIVE=	X11
+
+USE_GROFF=		Yes
 
 .include <bsd.port.mk>

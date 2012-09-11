@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2011/06/08 17:41:58 rpointel Exp $
+# $OpenBSD: Makefile,v 1.24 2012/08/28 19:13:12 espie Exp $
 
 COMMENT=	organizer for book/dvd/music collections
 
 DISTNAME=	tellico-1.3.6
-REVISION=	3
+REVISION=	6
 
 CATEGORIES=	x11 databases
 
@@ -41,7 +41,8 @@ CONFIGURE_ARGS=	${MODKDE_CONFIGURE_ARGS} \
 MAKE_FLAGS=	${MODKDE_MAKE_FLAGS}
 
 RUN_DEPENDS=	devel/desktop-file-utils \
-		misc/shared-mime-info>=0.21
+		misc/shared-mime-info>=0.21 \
+		x11/gtk+2,-guic
 
 LIB_DEPENDS=	${MODQT_LIB_DEPENDS} \
 		textproc/exempi \
@@ -49,7 +50,7 @@ LIB_DEPENDS=	${MODQT_LIB_DEPENDS} \
 		x11/kde/multimedia3 \
 		x11/kde/libs3 \
 		graphics/lcms \
-		print/poppler,-qt \
+		print/poppler,,-qt \
 		audio/taglib \
 		net/yaz
 

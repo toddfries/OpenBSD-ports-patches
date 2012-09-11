@@ -1,3 +1,0 @@
-@comment $OpenBSD: PFRAG.shared,v 1.7 2009/04/10 16:19:13 ajacoutot Exp $
-@lib lib/libgnomeprint-2-2.so.${LIBgnomeprint-2-2_VERSION}
-lib/libgnomeprint/${VERSION}/modules/libgnomeprintcups.so

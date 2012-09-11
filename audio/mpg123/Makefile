@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.55 2011/01/12 21:39:27 naddy Exp $
+# $OpenBSD: Makefile,v 1.63 2012/08/04 17:38:56 naddy Exp $
 
 COMMENT=	fast console MPEG audio player and decoder library
 
-DISTNAME=	mpg123-1.13.1
-SHARED_LIBS=	mpg123		2.3	# .29.0
+DISTNAME=	mpg123-1.14.4
+SHARED_LIBS=	mpg123		3.0	# .36.6
 CATEGORIES=	audio
 HOMEPAGE=	http://www.mpg123.de/
 
@@ -22,7 +22,7 @@ WANTLIB=	c ltdl m sndio
 LIB_DEPENDS=	devel/libtool,-ltdl
 
 USE_LIBTOOL=	Yes
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} --enable-static \
 		--disable-lfs-alias \

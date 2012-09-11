@@ -1,12 +1,19 @@
-# $OpenBSD: Makefile,v 1.13 2010/12/12 06:04:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2012/08/05 08:05:38 sthen Exp $
+
+ONLY_FOR_ARCHS=	${GCC4_ARCHS}
+SHARED_ONLY=	Yes # XXX lua.port.mk bug
+# The lua module marks packages PKG_ARCH=* unless they are SHARED_ONLY.
+# To be fixed in lua, but marking this SHARED_ONLY as a temporary workaround
+# and doesn't hurt anyway as freedroidrpg is gcc4-only.
 
 COMMENT=	isometric RPG game
 
-M_V=		0.14
-DISTNAME=	freedroidrpg-${M_V}.1
+DISTNAME =	freedroidRPG-0.15.1
+REVISION =	1
+PKGNAME =	${DISTNAME:L}
 CATEGORIES=	games x11
 
-HOMEPAGE=	http://freedroid.sourceforge.net/
+HOMEPAGE =	http://www.freedroid.org/
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -16,21 +23,21 @@ PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=freedroid/freedroidRPG/freedroidRPG-${M_V}/}
+WANTLIB += GL SDL SDL_gfx SDL_image SDL_mixer X11 c execinfo jpeg
+WANTLIB += ${MODLUA_WANTLIB} m ogg png pthread vorbis z
 
-WANTLIB=	GL SDL X11 c jpeg m ogg png pthread vorbis z \
-		SDL_image>=2 SDL_mixer>=3 execinfo
+MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=freedroid/}
 
+WRKDIST =	${WRKDIR}/${DISTNAME:L}
 
-LIB_DEPENDS=	devel/sdl-image \
+MODULES=	lang/lua
+MODLUA_SA =	Yes
+
+LIB_DEPENDS=	devel/libexecinfo \
+		devel/sdl-gfx \
+		devel/sdl-image \
 		devel/sdl-mixer \
-		devel/libexecinfo
-
-# needed to avoid a SIGSEGV
-# (int i corruption in enemy.c line 2056:
-# should be "0" or "1" instead of a nonsense negative value)
-MODULES+=	gcc4
-MODGCC4_ARCHES=	*
+		${MODLUA_LIB_DEPENDS}
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \

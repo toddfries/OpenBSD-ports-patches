@@ -1,53 +1,39 @@
-$OpenBSD: patch-Makedefs_in,v 1.5 2010/04/07 13:55:30 ajacoutot Exp $
---- Makedefs.in.orig	Wed May 27 01:27:06 2009
-+++ Makedefs.in	Wed Apr  7 15:28:43 2010
-@@ -41,13 +41,13 @@ SHELL		=	/bin/sh
+$OpenBSD: patch-Makedefs_in,v 1.9 2012/08/04 14:37:04 ajacoutot Exp $
+
+BSD_INSTALL_PROGRAM is used to respect INSTALL_STRIP.
+
+--- Makedefs.in.orig	Wed May 23 01:58:31 2012
++++ Makedefs.in	Thu Jul 26 10:01:21 2012
+@@ -40,12 +40,12 @@ SHELL		=	/bin/sh
  # Installation programs...
  #
  
 -INSTALL_BIN	=	$(LIBTOOL) $(INSTALL) -c -m 555 @INSTALL_STRIP@
-+INSTALL_BIN	=	$(LIBTOOL) $(INSTALL) -c -m $(BINMODE) @INSTALL_STRIP@
++INSTALL_BIN	=	$(LIBTOOL) $(BSD_INSTALL_PROGRAM)
+ INSTALL_COMPDATA =	$(INSTALL) -c -m 444 @INSTALL_GZIP@
  INSTALL_CONFIG	=	$(INSTALL) -c -m @CUPS_CONFIG_FILE_PERM@
--INSTALL_DATA	=	$(INSTALL) -c -m 444
-+INSTALL_DATA	=	$(INSTALL) -c -m $(SHAREMODE)
+ INSTALL_DATA	=	$(INSTALL) -c -m 444
  INSTALL_DIR	=	$(INSTALL) -d
 -INSTALL_LIB	=	$(LIBTOOL) $(INSTALL) -c -m 555 @INSTALL_STRIP@
--INSTALL_MAN	=	$(INSTALL) -c -m 444
--INSTALL_SCRIPT	=	$(INSTALL) -c -m 555
-+INSTALL_LIB	=	$(LIBTOOL) $(INSTALL) -c -m $(BINMODE) @INSTALL_STRIP@
-+INSTALL_MAN	=	$(INSTALL) -c -m $(SHAREMODE)
-+INSTALL_SCRIPT	=	$(INSTALL) -c -m $(BINMODE)
++INSTALL_LIB	=	$(LIBTOOL) $(BSD_INSTALL_PROGRAM)
+ INSTALL_MAN	=	$(INSTALL) -c -m 444
+ INSTALL_SCRIPT	=	$(INSTALL) -c -m 555
  
- #
- # Default user, group, and system groups for the scheduler...
-@@ -83,15 +83,15 @@ LIBCUPSDRIVER	=	@LIBCUPSDRIVER@
- LIBCUPSIMAGE	=	@LIBCUPSIMAGE@
- LIBCUPSMIME	=	@LIBCUPSMIME@
- LIBCUPSPPDC	=	@LIBCUPSPPDC@
--LIBJPEG		=	@LIBJPEG@
--LIBLDAP		=	@LIBLDAP@
-+LIBJPEG		=	-L${LOCALBASE}/lib @LIBJPEG@
-+LIBLDAP		=	-L${LOCALBASE}/lib @LIBLDAP@
+@@ -88,7 +88,7 @@ LIBGSSAPI	=	@LIBGSSAPI@
  LIBMALLOC	=	@LIBMALLOC@
--LIBPAPER	=	@LIBPAPER@
--LIBPNG		=	@LIBPNG@
-+LIBPAPER	=	-L${LOCALBASE}/lib @LIBPAPER@
-+LIBPNG		=	-L${LOCALBASE}/lib @LIBPNG@
- LIBSLP		=	@LIBSLP@
- LIBGSSAPI	=	@LIBGSSAPI@
--LIBTIFF		=	@LIBTIFF@
+ LIBMXML		=	@LIBMXML@
+ LIBPAPER	=	@LIBPAPER@
 -LIBUSB		=	@LIBUSB@
-+LIBTIFF		=	-L${LOCALBASE}/lib @LIBTIFF@
-+LIBUSB		=	-L${LOCALBASE}/lib @LIBUSB@
++LIBUSB		=	-L${LOCALBASE} @LIBUSB@
  LIBWRAP		=	@LIBWRAP@
  LIBZ		=	@LIBZ@
  
-@@ -258,7 +258,7 @@ DBUSDIR		=	@DBUSDIR@
+@@ -235,7 +235,7 @@ DBUSDIR		=	@DBUSDIR@
  # Rules...
  #
  
 -.SILENT:
 +#.SILENT:
- .SUFFIXES:	.1 .1.gz .1m .1m.gz .3 .3.gz .5 .5.gz .7 .7.gz .8 .8.gz .a .c .cxx .h .man .o .32.o .64.o .gz
+ .SUFFIXES:	.1 .1.gz .1m .1m.gz .3 .3.gz .5 .5.gz .7 .7.gz .8 .8.gz .a .c .cxx .h .man .o .gz
  
  .c.o:

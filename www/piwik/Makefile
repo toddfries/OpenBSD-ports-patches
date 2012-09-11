@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.39 2011/07/22 10:20:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.47 2012/08/28 14:50:05 giovanni Exp $
 
 COMMENT=		open source web analytics software program
 
-DISTNAME=		piwik-1.5.1
-REVISION=		0
+DISTNAME=		piwik-1.8.3
 CATEGORIES=		www
 
 HOMEPAGE=		http://www.piwik.org/
@@ -27,10 +26,14 @@ PREFIX=			/var/www
 INSTDIR=		${PREFIX}/piwik/
 SUBST_VARS=		INSTDIR
 
-MODULES=	lang/php
+MODULES=	lang/php \
+		lang/python
 RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-gd \
 		lang/php/${MODPHP_VERSION},-mysql \
 		lang/php/${MODPHP_VERSION},-pdo_mysql
+
+MODPY_ADJ_FILES=misc/log-analytics/import_logs.py
+MODPY_RUNDEP=	No
 
 post-patch:
 	@find ${WRKSRC} -name "*.orig" -exec rm -f {} \;

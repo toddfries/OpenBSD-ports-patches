@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2011/05/19 15:56:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2012/07/16 07:23:50 giovanni Exp $
 
 COMMENT=	extract digital camera info tags from JPEG images
 
-DISTNAME=	libexif-0.6.20
-REVISION=	0
-SHARED_LIBS=	exif	13.0
+DISTNAME=	libexif-0.6.21
+SHARED_LIBS=	exif	13.1
 
 CATEGORIES=	graphics
 
@@ -22,7 +21,7 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=libexif/}
 EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext
-SEPARATE_BUILD=		concurrent
+SEPARATE_BUILD=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-docs
 USE_GMAKE=		Yes

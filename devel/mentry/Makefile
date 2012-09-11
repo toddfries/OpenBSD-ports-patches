@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/01/17 06:53:35 stu Exp $
+# $OpenBSD: Makefile,v 1.3 2012/04/18 09:42:19 stu Exp $
 
 COMMENT =	multi-entry widget package for Tcl/Tk
 
 N =		mentry
-DISTNAME =	$N3.4
-PKGNAME =	$N-3.4
+DISTNAME =	$N3.6
+PKGNAME =	$N-3.6
 CATEGORIES =	devel
 HOMEPAGE =	http://www.nemethi.de/
 MAINTAINER =	Stuart Cassoff <stwo@users.sourceforge.net>
@@ -46,6 +46,6 @@ do-install:
 		demos	*.tcl		${MT_EXA_DIR}
 	${INSTALL_DATA} ${WRKSRC}/${SRC}/${GLOB} ${DEST}
 .endfor
-	${CHMOD} ${BINMODE} ${EXA_SCRIPTS:S!^!${MT_EXA_DIR}/!}
+	chmod ${BINMODE} ${EXA_SCRIPTS:S!^!${MT_EXA_DIR}/!}
 
 .include <bsd.port.mk>

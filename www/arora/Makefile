@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/05/22 19:31:09 landry Exp $
+# $OpenBSD: Makefile,v 1.4 2012/06/15 08:32:18 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,6 +7,7 @@ COMMENT=	simple Qt4-based browser using WebKit
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
 DISTNAME=	arora-0.11.0
+REVISION=	2
 CATEGORIES=	www
 MASTER_SITES=	http://arora.googlecode.com/files/
 
@@ -25,7 +26,8 @@ MODULES=	x11/qt4
 RUN_DEPENDS=	devel/desktop-file-utils \
 		multimedia/gstreamer-0.10/plugins-bad \
 		multimedia/gstreamer-0.10/plugins-ffmpeg \
-		multimedia/gstreamer-0.10/plugins-good
+		multimedia/gstreamer-0.10/plugins-good \
+		x11/gtk+2,-guic
 
 MAKE_FLAGS=	CC="${CC}" CXX="${CXX}" LINK="${CXX}"
 FAKE_FLAGS=	INSTALL_FILE="${INSTALL_DATA}" INSTALL_PROGRAM="${INSTALL_PROGRAM}"

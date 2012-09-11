@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/20 17:22:44 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2012/06/28 18:52:00 jasper Exp $
 
 COMMENT=	libraries for Nessus
 DISTNAME=	nessus-libraries-${V}
-REVISION =	0
+REVISION=	2
 
 SHARED_LIBS=	hosts_gatherer	4.7 \
 		nessus		4.7

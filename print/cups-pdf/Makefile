@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.12 2011/03/31 08:32:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/08/04 14:38:26 ajacoutot Exp $
 
 COMMENT=		PDF backend for CUPS
 
-DISTNAME=		cups-pdf-2.5.1
+DISTNAME=		cups-pdf-2.6.1
 CATEGORIES=		print
+REVISION=		0
 
 HOMEPAGE=		http://www.cups-pdf.de/
 MASTER_SITES=		${HOMEPAGE}src/
@@ -15,21 +16,24 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c
+WANTLIB += c
 
-RUN_DEPENDS=		print/cups \
-			print/ghostscript/gnu \
+RUN_DEPENDS=		print/ghostscript/gnu \
 			mail/p5-MIME-Lite \
 			mail/p5-MIME-tools
 
+# package is only useful if cups is installed
+RUN_DEPENDS +=	print/cups
+
 NO_REGRESS=		Yes
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/extra/cups-pdf.conf \
+		${WRKSRC}/src/cups-pdf.h
 
 do-build:
 	cd ${WRKDIR} && \
 	${CC} ${CFLAGS} -o bin/cups-pdf ${WRKDIR}/${DISTNAME}/src/cups-pdf.c
-
-pre-install:
-	${SUBST_CMD} ${WRKBUILD}/extra/cups-pdf.conf
 
 do-install:
 	${INSTALL_PROGRAM_DIR} ${PREFIX}/libexec/cups/backend

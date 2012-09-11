@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.51 2011/08/24 06:22:19 landry Exp $
+# $OpenBSD: Makefile,v 1.64 2012/09/01 14:35:06 landry Exp $
 
-MOZILLA_VERSION =	1.9.2.20
+MOZILLA_VERSION =	1.9.2.28
 MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	xulrunner1.9
 MOZILLA_DIST =		firefox
-MOZILLA_DIST_VERSION =	3.6.20
+MOZILLA_DIST_VERSION =	3.6.28
+REVISION-devel =	1
+REVISION-main =		3
 
 SO_VERSION =		3.2
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -19,9 +21,8 @@ PKG_ARGS+=	-Djit=1 -Damd64=1
 PKG_ARGS+=	-Djit=0 -Damd64=0
 .endif
 
-# use files and patches from www/firefox36
+# use patches from www/firefox36
 PATCHDIR =		${PORTSDIR}/www/firefox36/patches
-FILESDIR =		${PORTSDIR}/www/firefox36/files
 
 MOZILLA_DATADIRS =	chrome components defaults dictionaries greprefs \
 			icons modules plugins res
@@ -33,6 +34,9 @@ TOOLS =			nsinstall xpcshell xpidl xpt_dump xpt_link xulrunner-bin xulrunner-stu
 PCFILES =		libxul.pc libxul-embedding.pc mozilla-js.pc \
 			mozilla-plugin.pc mozilla-gtkmozembed.pc \
 			mozilla-gtkmozembed-embedding.pc
+
+WANTLIB-devel =		${MOZILLA_PROJECT}/mozjs ${MOZILLA_PROJECT}/xpcom \
+			${MOZILLA_PROJECT}/xul
 
 post-build:
 	cd ${WRKSRC}/xulrunner/installer && env -i ${MAKE_ENV} \
@@ -59,11 +63,13 @@ post-install:
 	${INSTALL_DATA} ${WRKBUILD}/xulrunner/installer/${pcfile} \
 		${PREFIX}/lib/pkgconfig/${pcfile:S/mozilla/xulrunner/}
 .endfor
-	perl -pi -e 's|libxul-embedding-unstable|libxul-embedding|g; ' \
-		-e 's|libxul-unstable|libxul|g; s|unstable|stable|g; ' \
+	perl -pi -e 's|libxul|libxul19|g; s|/lib||g; ' \
 		-e 's|^(Libs:.*)|\1 -Wl,-rpath,${LOCALBASE}/xulrunner1.9|g; ' \
 		-e 's|-lxpcomglue |-lxpcomglue_pic |g; s|-lxpcomglue_s |-lxpcomglue_s_pic |; ' \
-		-e 's|/lib||g; s|/stable||g; s|/\$${includetype}||g; ' \
 		${PREFIX}/lib/pkgconfig/*.pc
+
+	# avoid conflicts with newer xulrunners
+	mv ${PREFIX}/lib/pkgconfig/libxul{,19}.pc
+	mv ${PREFIX}/lib/pkgconfig/libxul{,19}-embedding.pc
 
 .include <bsd.port.mk>

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PkgPath.pm,v 1.10 2011/06/15 10:09:31 espie Exp $
+# $OpenBSD: PkgPath.pm,v 1.33 2012/08/22 07:49:00 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -16,162 +16,30 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 use strict;
 use warnings;
+use feature qw(say);
 
 # Handles PkgPath;
 # all this code is *seriously* dependent on unique objects
 # everything is done to normalize PkgPaths, so that we have
 # one pkgpath object for each distinct flavor/subpackage combination
 
+use DPB::BasePkgPath;
+
 package DPB::PkgPath;
-my $cache = {};
-my $seen = {};
+our @ISA = qw(DPB::BasePkgPath);
 
-sub create
-{
-	my ($class, $fullpkgpath) = @_;
-	# subdivide into flavors/multi
-	# XXX we want to preserve empty fields
-	my @list = split /,/, $fullpkgpath, -1;
-	my $pkgpath = shift @list;
-	my %flavors = ();
-	my $sawflavor = 0;
-	my $multi = undef;
-	for my $v (@list) {
-		if ($v =~ m/^\-/) {
-			die "$fullpkgpath has >1 multi\n" if defined $multi;
-			$multi = $v;
-		} else {
-			$sawflavor = 1;
-			$flavors{$v} = 1 unless $v eq '';
-		}
-	}
-
-	bless {pkgpath => $pkgpath,
-		# XXX
-		has => 5,
-		new => 1,
-		flavors => \%flavors,
-		sawflavor => $sawflavor,
-		multi => $multi}, $class;
-}
-
-# cache just once, put into standard order, so that we don't
-# create different objects for path,f1,f2 and path,f2,f1
-sub normalize
-{
-	my $o = shift;
-
-	my $fullpkgpath = $o->fullpkgpath;
-	return $cache->{$fullpkgpath} //= $o;
-}
-
-# actual user constructor that doesn't record into seen
-sub new_hidden
-{
-	my ($class, $fullpkgpath) = @_;
-	if (defined $cache->{$fullpkgpath}) {
-		return $cache->{$fullpkgpath};
-	} else {
-		return $class->create($fullpkgpath)->normalize;
-	}
-}
-
-# actual user constructor that records into seen
-sub new
-{
-	my ($class, $fullpkgpath) = @_;
-	my $o = $class->new_hidden($fullpkgpath);
-	$seen->{$o} //= $o;
-}
-
-sub seen
-{
-	return values %$seen;
-}
-
-sub basic_list
+sub init
 {
 	my $self = shift;
-	my @list = ($self->{pkgpath});
-	if (keys %{$self->{flavors}}) {
-		push(@list, sort keys %{$self->{flavors}});
-	} elsif ($self->{sawflavor}) {
-		push(@list, '');
-	}
-	return @list;
-}
-# string version, with everything in a standard order
-sub fullpkgpath
-{
-	my $self = shift;
-	my @list = $self->basic_list;
-	if ($self->{multi}) {
-		push(@list, $self->{multi});
-	}
-	return join (',', @list);
+	# XXX
+	$self->{has} = 5;
 }
 
-sub logname
+sub clone_properties
 {
-	return shift->fullpkgpath;
-}
-
-sub lockname
-{
-	&logname;
-}
-
-sub simple_lockname
-{
-	return shift->{pkgpath};
-}
-
-sub unlock_conditions
-{
-	my ($v, $engine) = @_;
-	return $v->{info} && $engine->{buildable}{builder}->check($v);
-}
-
-sub requeue
-{
-	my ($v, $engine) = @_;
-	$engine->requeue($v);
-}
-
-# without multi. Used by the SUBDIRs code to make sure we get the right
-# value for default subpackage.
-
-sub pkgpath_and_flavors
-{
-	my $self = shift;
-	return join (',', $self->basic_list);
-}
-
-sub add_to_subdirlist
-{
-	my ($self, $list) = @_;
-	push(@$list, $self->pkgpath_and_flavors);
-}
-
-sub copy_flavors
-{
-	my $self = shift;
-	return {map {($_, 1)} keys %{$self->{flavors}}};
-}
-
-# XXX
-# in the ports tree, when you build with SUBDIR=n/value, you'll
-# get all the -multi packages, but with the default flavor.
-# we have to strip the flavor part to match the SUBDIR we asked for.
-
-sub compose
-{
-	my ($class, $fullpkgpath, $pseudo) = @_;
-	my $o = $class->create($fullpkgpath);
-	$o->{flavors} = $pseudo->copy_flavors;
-	$o->{sawflavor} = $pseudo->{sawflavor};
-	my $p = $o->normalize;
-	return $o->normalize;
+	my ($n, $o) = @_;
+	$n->{has} //= $o->{has};
+	$n->{info} //= $o->{info};
 }
 
 # XXX All this code knows too much about PortInfo for proper OO
@@ -179,32 +47,39 @@ sub compose
 sub fullpkgname
 {
 	my $self = shift;
-	return (defined $self->{info}) ?  $self->{info}->fullpkgname : undef;
-}
-
-
-sub zap_default
-{
-	my ($self, $subpackage) = @_;
-	return $self unless defined $subpackage;
-	if ($subpackage->string eq $self->{multi}) {
-		my $o = bless {pkgpath => $self->{pkgpath},
-			flavors => $self->copy_flavors}, ref($self);
-		return $o->normalize;
+	if (defined $self->{info} && defined $self->{info}{FULLPKGNAME}) {
+		return ${$self->{info}{FULLPKGNAME}};
 	} else {
-		return $self;
+		say STDERR $self->fullpkgpath, " has no associated fullpkgname\n";
+		if (defined $self->{info}) {
+			say STDERR "But info is defined"; 
+			require Data::Dumper;
+			say STDERR Dumper($self->{info});
+		}
+		die;
 	}
 }
 
-# default subpackage leads to pkgpath,-default = pkgpath
-sub handle_default
+sub has_fullpkgname
 {
-	my ($self, $h) = @_;
-	my $m = $self->zap_default($self->{info}->{SUBPACKAGE});
-	if ($m ne $self) {
-		#print $m->fullpkgpath, " vs. ", $self->fullpkgpath,"\n";
-		$m->{info} = $self->{info};
-		$h->{$m} = $m;
+	my $self = shift;
+	return defined $self->{info} && defined $self->{info}{FULLPKGNAME};
+}
+
+# requires flavor as a hash
+sub flavor
+{
+	my $self = shift;
+	return $self->{info}{FLAVOR};
+}
+
+sub subpackage
+{
+	my $self = shift;
+	if (defined $self->{info} && defined $self->{info}{SUBPACKAGE}) {
+		return ${$self->{info}{SUBPACKAGE}};
+	} else {
+		return undef;
 	}
 }
 
@@ -226,19 +101,86 @@ sub quick_dump
 	}
 }
 
+# interface with logger/lock engine
+sub logname
+{
+	my $self = shift;
+	return $self->fullpkgpath;
+}
+
+sub lockname
+{
+	my $self = shift;
+	return $self->pkgpath;
+}
+
+sub print_parent
+{
+	my ($self, $fh) = @_;
+	if (defined $self->{parent}) {
+		print $fh "parent=", $self->{parent}->logname, "\n";
+	}
+}
+
+sub unlock_conditions
+{
+	my ($v, $engine) = @_;
+	return $v->{info} && $engine->{buildable}{builder}->check($v);
+}
+
+sub requeue
+{
+	my ($v, $engine) = @_;
+	$engine->requeue($v);
+}
+
+sub simplifies_to
+{
+	my ($self, $simpler, $state) = @_;
+	open my $quicklog, '>>', $state->logger->logfile('equiv');
+	print $quicklog $self->fullpkgpath, " -> ", $simpler->fullpkgpath, "\n";
+}
+
+sub equates
+{
+	my ($class, $h) = @_;
+	DPB::Job::Port->equates($h);
+	DPB::Heuristics->equates($h);
+}
+
 # we're always called from values corresponding to the same subdir.
 sub merge_depends
 {
 	my ($class, $h) = @_;
 	my $global = bless {}, "AddDepends";
 	my $global2 = bless {}, "AddDepends";
+	my $global3 = bless {}, "AddDepends";
+	my $global4 = bless {}, "AddDepends";
+	my $multi;
 	for my $v (values %$h) {
 		my $info = $v->{info};
+		if (defined $info->{DIST} && !defined $info->{DISTIGNORE}) {
+			for my $f (values %{$info->{DIST}}) {
+				$info->{FDEPENDS}{$f} = $f;
+				bless $info->{FDEPENDS}, "AddDepends";
+			}
+		}
+		# share !
+		if (defined $info->{MULTI_PACKAGES}) {
+			$multi = $info->{MULTI_PACKAGES};
+		}
+		# XXX don't grab dependencies for IGNOREd stuff
+		next if defined $info->{IGNORE};
+
 		for my $k (qw(LIB_DEPENDS BUILD_DEPENDS)) {
 			if (defined $info->{$k}) {
 				for my $d (values %{$info->{$k}}) {
+					# filter these out like during build
+					# simpler to figure out logs from 
+					# depends stage that way.
+					next if $d->pkgpath_and_flavors eq 
+					    $v->pkgpath_and_flavors;
 					$global->{$d} = $d;
-					$global2->{$d} = $d;
 				}
 			}
 		}
@@ -250,22 +192,46 @@ sub merge_depends
 				}
 			}
 		}
-		if (defined $info->{DIST}) {
-			for my $f (values %{$info->{DIST}}) {
-				$info->{FDEPENDS}{$f} = $f;
-				bless $info->{FDEPENDS}, "AddDepends";
+		if (defined $info->{EXTRA}) {
+			for my $d (values %{$info->{EXTRA}}) {
+				$global3->{$d} = $d;
 			}
+	    	}
+			
+		for my $k (qw(LIB_DEPENDS BUILD_DEPENDS RUN_DEPENDS 
+		    SUBPACKAGE FLAVOR EXTRA PERMIT_DISTFILES_FTP 
+		    PERMIT_DISTFILES_CDROM)) {
+			delete $info->{$k};
 		}
 	}
 	if (values %$global > 0) {
 		for my $v (values %$h) {
-			my $info = $v->{info};
 			# remove stuff that depends on itself
 			delete $global->{$v};
-			delete $global2->{$v};
-			$info->{DEPENDS} = $global;
-			$info->{BDEPENDS} = $global2;
+			$v->{info}{DEPENDS} = $global;
+			$v->{info}{BDEPENDS} = $global2;
 		}
+	}
+	if (values %$global3 > 0) {
+		for my $v (values %$h) {
+			$v->{info}{EXTRA} = $global3;
+			$v->{info}{BEXTRA} = $global4;
+		}
+	}
+	if (defined $multi) {
+		for my $v (values %$h) {
+			$v->{info}{MULTI_PACKAGES} = $multi;
+		}
+	}
+}
+
+sub break
+{
+	my ($self, $why) = @_;
+	if (defined $self->{broken}) {
+		$self->{broken} .= " $why";
+	} else {
+		$self->{broken} = $why;
 	}
 }
 

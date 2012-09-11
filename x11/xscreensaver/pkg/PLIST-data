@@ -1,6 +1,8 @@
-@comment $OpenBSD: PLIST-data,v 1.6 2011/01/14 18:58:38 ajacoutot Exp $
+@comment $OpenBSD: PLIST-data,v 1.8 2012/09/02 09:36:55 ajacoutot Exp $
 @conflict xscreensaver-<5.07p3
 @conflict xscreensaver-<5.07p3-no_gle
+@conflict xscreensaver-gle-*
+@pkgpath x11/xscreensaver,-gle
 libexec/xscreensaver/
 @bin libexec/xscreensaver/abstractile
 @bin libexec/xscreensaver/anemone
@@ -32,6 +34,7 @@ libexec/xscreensaver/
 @bin libexec/xscreensaver/ccurve
 @bin libexec/xscreensaver/celtic
 @bin libexec/xscreensaver/cloudlife
+@bin libexec/xscreensaver/companioncube
 @bin libexec/xscreensaver/compass
 @bin libexec/xscreensaver/coral
 @bin libexec/xscreensaver/crackberg
@@ -54,6 +57,7 @@ libexec/xscreensaver/
 @bin libexec/xscreensaver/epicycle
 @bin libexec/xscreensaver/eruption
 @bin libexec/xscreensaver/euler2d
+@bin libexec/xscreensaver/extrusion
 @bin libexec/xscreensaver/fadeplot
 @bin libexec/xscreensaver/fiberlamp
 @bin libexec/xscreensaver/fireworkx
@@ -87,6 +91,7 @@ libexec/xscreensaver/
 @bin libexec/xscreensaver/halftone
 @bin libexec/xscreensaver/halo
 @bin libexec/xscreensaver/helix
+@bin libexec/xscreensaver/hilbert
 @bin libexec/xscreensaver/hopalong
 @bin libexec/xscreensaver/hypertorus
 @bin libexec/xscreensaver/hypnowheel
@@ -179,6 +184,7 @@ libexec/xscreensaver/ljlatest
 @bin libexec/xscreensaver/timetunnel
 @bin libexec/xscreensaver/topblock
 @bin libexec/xscreensaver/triangle
+@bin libexec/xscreensaver/tronbit
 @bin libexec/xscreensaver/truchet
 @bin libexec/xscreensaver/twang
 @bin libexec/xscreensaver/vermiculate
@@ -229,6 +235,7 @@ libexec/xscreensaver/webcollage
 @man man/man6/ccurve.6
 @man man/man6/celtic.6
 @man man/man6/cloudlife.6
+@man man/man6/companioncube.6
 @man man/man6/compass.6
 @man man/man6/coral.6
 @man man/man6/crackberg.6
@@ -251,6 +258,7 @@ libexec/xscreensaver/webcollage
 @man man/man6/epicycle.6
 @man man/man6/eruption.6
 @man man/man6/euler2d.6
+@man man/man6/extrusion.6
 @man man/man6/fadeplot.6
 @man man/man6/fiberlamp.6
 @man man/man6/fireworkx.6
@@ -284,6 +292,7 @@ libexec/xscreensaver/webcollage
 @man man/man6/halftone.6
 @man man/man6/halo.6
 @man man/man6/helix.6
+@man man/man6/hilbert.6
 @man man/man6/hopalong.6
 @man man/man6/hypertorus.6
 @man man/man6/hypnowheel.6
@@ -374,6 +383,7 @@ libexec/xscreensaver/webcollage
 @man man/man6/timetunnel.6
 @man man/man6/topblock.6
 @man man/man6/triangle.6
+@man man/man6/tronbit.6
 @man man/man6/truchet.6
 @man man/man6/twang.6
 @man man/man6/vermiculate.6
@@ -428,6 +438,7 @@ share/applications/screensavers/carousel.desktop
 share/applications/screensavers/ccurve.desktop
 share/applications/screensavers/celtic.desktop
 share/applications/screensavers/cloudlife.desktop
+share/applications/screensavers/companioncube.desktop
 share/applications/screensavers/compass.desktop
 share/applications/screensavers/coral.desktop
 share/applications/screensavers/crackberg.desktop
@@ -452,6 +463,7 @@ share/applications/screensavers/engine.desktop
 share/applications/screensavers/epicycle.desktop
 share/applications/screensavers/eruption.desktop
 share/applications/screensavers/euler2d.desktop
+share/applications/screensavers/extrusion.desktop
 share/applications/screensavers/fadeplot.desktop
 share/applications/screensavers/fiberlamp.desktop
 share/applications/screensavers/fireworkx.desktop
@@ -488,6 +500,7 @@ share/applications/screensavers/greynetic.desktop
 share/applications/screensavers/halftone.desktop
 share/applications/screensavers/halo.desktop
 share/applications/screensavers/helix.desktop
+share/applications/screensavers/hilbert.desktop
 share/applications/screensavers/hopalong.desktop
 share/applications/screensavers/hyperball.desktop
 share/applications/screensavers/hypercube.desktop
@@ -592,6 +605,7 @@ share/applications/screensavers/thornbird.desktop
 share/applications/screensavers/timetunnel.desktop
 share/applications/screensavers/topblock.desktop
 share/applications/screensavers/triangle.desktop
+share/applications/screensavers/tronbit.desktop
 share/applications/screensavers/truchet.desktop
 share/applications/screensavers/twang.desktop
 share/applications/screensavers/vermiculate.desktop
@@ -647,6 +661,7 @@ share/xscreensaver/config/carousel.xml
 share/xscreensaver/config/ccurve.xml
 share/xscreensaver/config/celtic.xml
 share/xscreensaver/config/cloudlife.xml
+share/xscreensaver/config/companioncube.xml
 share/xscreensaver/config/compass.xml
 share/xscreensaver/config/coral.xml
 share/xscreensaver/config/crackberg.xml
@@ -669,6 +684,7 @@ share/xscreensaver/config/engine.xml
 share/xscreensaver/config/epicycle.xml
 share/xscreensaver/config/eruption.xml
 share/xscreensaver/config/euler2d.xml
+share/xscreensaver/config/extrusion.xml
 share/xscreensaver/config/fadeplot.xml
 share/xscreensaver/config/fiberlamp.xml
 share/xscreensaver/config/fireworkx.xml
@@ -702,6 +718,7 @@ share/xscreensaver/config/greynetic.xml
 share/xscreensaver/config/halftone.xml
 share/xscreensaver/config/halo.xml
 share/xscreensaver/config/helix.xml
+share/xscreensaver/config/hilbert.xml
 share/xscreensaver/config/hopalong.xml
 share/xscreensaver/config/hypertorus.xml
 share/xscreensaver/config/hypnowheel.xml
@@ -793,6 +810,7 @@ share/xscreensaver/config/thornbird.xml
 share/xscreensaver/config/timetunnel.xml
 share/xscreensaver/config/topblock.xml
 share/xscreensaver/config/triangle.xml
+share/xscreensaver/config/tronbit.xml
 share/xscreensaver/config/truchet.xml
 share/xscreensaver/config/twang.xml
 share/xscreensaver/config/vermiculate.xml

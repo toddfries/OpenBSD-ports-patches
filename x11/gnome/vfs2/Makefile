@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.64 2011/01/18 20:03:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.71 2012/01/01 09:03:20 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,7 +9,7 @@ GNOME_VERSION=		2.24.4
 
 PKGNAME=		gnome-vfs2-${VERSION}
 
-REVISION=		0
+REVISION=		3
 
 SHARED_LIBS +=	gnomevfs-2           2400.0   # .2400.0
 
@@ -19,9 +19,11 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += crypto dbus-1 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += m pcre ssl util z ORBit-2 xml2 dbus-glib-1 c asn1 gssapi krb5
-WANTLIB += pthread gio-2.0 bz2 fam
+WANTLIB += asn1 bz2 c crypto dbus-1 dbus-glib-1 fam ffi gio-2.0
+WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gssapi gthread-2.0
+WANTLIB += krb5 m pcre pthread ssl util xml2 z
+
+EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext \
 			x11/gnome \
@@ -35,15 +37,12 @@ LIB_DEPENDS=		archivers/bzip2 \
 
 MODGCONF2_SCHEMAS_DIR=	gnome-vfs2
 
-CONFIGURE_ARGS+= 	${CONFIGURE_SHARED} \
-			--disable-gtk-doc \
-			--disable-cdda \
+CONFIGURE_ARGS+= 	--disable-cdda \
 			--disable-avahi \
 			--disable-howl \
 			--disable-samba
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib -pthread" \
-			ac_cv_header_sys_mount_h=yes
+MODGNOME_LDFLAGS=	-pthread
+CONFIGURE_ENV=		ac_cv_header_sys_mount_h=yes
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/gnome-vfs2
 

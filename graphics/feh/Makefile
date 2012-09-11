@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2011/07/22 08:04:31 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.42 2012/07/17 11:23:17 dcoppa Exp $
 
 COMMENT=	lightweight image viewer
 
-DISTNAME=	feh-1.14.2
-REVISION=	0
+DISTNAME=	feh-2.5
+REVISION=	2
 EXTRACT_SUFX=	.tar.bz2
 CATEGORIES=	graphics
 
@@ -17,11 +17,12 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	Imlib2 X11 Xinerama c curl giblib>=1 m png
+WANTLIB=	Imlib2 X11 Xinerama c curl exif giblib>=1 m png
 
 MASTER_SITES=	${HOMEPAGE}
 
 LIB_DEPENDS=	devel/giblib \
+		graphics/libexif \
 		net/curl
 
 # needed for jpegtran on NO_SHARED_LIBS archs
@@ -40,6 +41,8 @@ USE_GMAKE=	Yes
 NO_REGRESS=	Yes
 
 post-configure:
-	${SUBST_CMD} ${WRKSRC}/src/keyevents.c ${WRKSRC}/src/options.c
+	${SUBST_CMD} ${WRKSRC}/examples/themes ${WRKSRC}/man/feh.pre \
+		${WRKSRC}/src/events.c ${WRKSRC}/src/keyevents.c \
+			${WRKSRC}/src/options.c
 
 .include <bsd.port.mk>

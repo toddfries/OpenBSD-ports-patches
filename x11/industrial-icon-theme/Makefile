@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2011/05/19 14:43:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2012/06/15 08:30:22 ajacoutot Exp $
 
 COMMENT=		Industrial icon theme from OpenSUSE
 
 DISTNAME=		industrial-icon-theme-11.0.5
-REVISION=		4
+REVISION=		6
 
 CATEGORIES=		x11
 
@@ -14,6 +14,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+RUN_DEPENDS=	x11/gtk+2,-guic
 
 BUILD_DEPENDS=	x11/icon-naming-utils \
 		x11/gnome/librsvg \

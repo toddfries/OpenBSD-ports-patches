@@ -1,5 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2010/10/18 21:50:39 sthen Exp $
-# $FreeBSD: Makefile,v 1.19 1998/12/09 20:15:29 billf Exp $
+# $OpenBSD: Makefile,v 1.33 2012/08/18 12:41:38 ajacoutot Exp $
 
 COMMENT=	internet relay chat (irc) server
 
@@ -20,11 +19,12 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m z
 
+LOCALSTATEDIR=	${BASELOCALSTATEDIR}/run
+
 CONFDIR=	${SYSCONFDIR}/ircd
 CONFIGURE_STYLE= gnu old
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/support
 CONFIGURE_ARGS=	--logdir="/var/log/ircd" \
-		--localstatedir="/var/run" \
 		--sysconfdir=${CONFDIR}
 USE_GROFF =	Yes
 

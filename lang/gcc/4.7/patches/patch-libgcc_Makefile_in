@@ -1,0 +1,16 @@
+$OpenBSD: patch-libgcc_Makefile_in,v 1.2 2012/07/01 18:56:45 pascal Exp $
+--- libgcc/Makefile.in.orig	Thu May 24 16:59:38 2012
++++ libgcc/Makefile.in	Wed Jun 20 14:39:12 2012
+@@ -1062,10 +1062,10 @@ install-shared:
+ install-leaf: $(install-shared) $(install-libunwind)
+ 	$(mkinstalldirs) $(DESTDIR)$(inst_libdir)
+ 
+-	$(INSTALL_DATA) libgcc.a $(DESTDIR)$(inst_libdir)/
++	cp libgcc.a $(DESTDIR)$(inst_libdir)/
+ 	chmod 644 $(DESTDIR)$(inst_libdir)/libgcc.a
+ 	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcc.a
+-	$(INSTALL_DATA) libgcov.a $(DESTDIR)$(inst_libdir)/
++	cp libgcov.a $(DESTDIR)$(inst_libdir)/
+ 	chmod 644 $(DESTDIR)$(inst_libdir)/libgcov.a
+ 	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcov.a
+ 

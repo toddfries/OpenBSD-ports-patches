@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.5 2011/08/24 07:50:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2012/04/18 20:18:43 jasper Exp $
 
 COMMENT =		Lisp-1 dialect for the Java Virtual Machine
 
-V =			1.2.1
+V =			1.4.0
 DISTNAME =		clojure-${V}
-REVISION =		0
 EXTRACT_SUFX =		.zip
 PKG_ARCH =		*
 
-CATEGORIES =		lang java
+CATEGORIES =		lang
 
 HOMEPAGE =		http://www.clojure.org/
 
-MAINTAINER=		Ian Darwin <ian@openbsd.org>
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # Eclipse Public License EPL 1.0
 PERMIT_PACKAGE_CDROM =	Yes
@@ -20,27 +19,35 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-MASTER_SITES =		http://github.com/downloads/clojure/clojure/
+MASTER_SITES =		http://repo1.maven.org/maven2/org/clojure/clojure/$V/
 
 MODULES =		java
 MODJAVA_VER =		1.6+
+MODJAVA_BUILD = 	ant
+MODJAVA_BUILD_TARGET =	jar
 MODJAVA_JRERUN = 	Yes
 
 RUN_DEPENDS =		java/javaPathHelper \
 			misc/rlwrap
 
-NO_BUILD =		Yes
+# Tests fail to compile (and need JAX-WS)
 NO_REGRESS =		Yes
 
 CLOJURE_HOME =		${PREFIX}/clojure
 
+# Completions file created with:
+# (def completions (mapcat (comp keys ns-publics) (all-ns)))
+# (with-open [f (java.io.BufferedWriter. (java.io.FileWriter. "clj_completions"))]
+#    (.write f (apply str (interpose \newline completions))))
+
 do-install:
 	${INSTALL_DATA_DIR} ${CLOJURE_HOME}
-	${INSTALL_DATA} ${WRKDIST}/clojure.jar ${CLOJURE_HOME}
+	${INSTALL_DATA} ${WRKSRC}/clojure.jar ${CLOJURE_HOME}
 	@${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -c \
 		${FILESDIR}/clojure \
 		${PREFIX}/bin/clojure
 	cd ${WRKDIST} && tar -cf - src | tar -C ${CLOJURE_HOME} -xf -
-	${CHOWN} -R ${SHAREOWN}:${SHAREGRP} ${CLOJURE_HOME}/src
+	chown -R ${SHAREOWN}:${SHAREGRP} ${CLOJURE_HOME}/src
+	${INSTALL_DATA} ${FILESDIR}/clj_completions ${CLOJURE_HOME}
 
 .include <bsd.port.mk>

@@ -1,8 +1,11 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/05/02 20:45:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2012/09/02 18:08:33 kili Exp $
+
+BROKEN=			Does not build with ghc-7.4.
 
 COMMENT=		language front-end and interpreter for the Feldspar DSL
 
 DISTNAME=		feldspar-language-0.4.0.2
+REVISION=		0
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		devel/hs-QuickCheck>=2.4,<3 \

@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.17 2011/06/08 17:40:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2011/11/17 11:42:31 jasper Exp $
+
+# XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
+CFLAGS +=      "-DG_CONST_RETURN=const"
 
 COMMENT =	plugin framework library
 
 VERSION =	0.2.2
 DISTNAME =	ethos-${VERSION}
-REVISION =	7
+REVISION =	11
 
 SHARED_LIBS=	ethos-1.0 1.0 \
 		ethos-ui-1.0 0.0
@@ -28,9 +31,7 @@ CONFIGURE_ARGS =	--disable-shave \
 CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
-# XXX: the libtool wrapper script is passed as argument to g-ir-scanner,
-# instead of the actual library
-USE_LIBTOOL=	gnu
+USE_LIBTOOL =	Yes
 USE_GMAKE =	Yes
 
 MODULES =	lang/python \
@@ -45,11 +46,12 @@ RUN_DEPENDS +=	x11/py-gtk2
 LIB_DEPENDS =	${MODPY_LIB_DEPENDS} \
 		x11/gtk+2
 
-WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 gdk_pixbuf-2.0
 WANTLIB += pcre pixman-1 png pthread-stubs xcb z ffi
 WANTLIB += ${MODPY_WANTLIB} gtk-x11-2.0 gdk-x11-2.0
+WANTLIB += GL gthread-2.0 xcb-render xcb-shm
 
 .include <bsd.port.mk>

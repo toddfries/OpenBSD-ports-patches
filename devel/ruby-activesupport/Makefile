@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.25 2011/01/06 04:24:22 jeremy Exp $
+# $OpenBSD: Makefile,v 1.27 2011/12/13 17:51:43 jeremy Exp $
 
 COMMENT =	utility classes and extensions for rails framework 
 
-DISTNAME =	activesupport-3.0.3
-REVISION =	0
+DISTNAME =	activesupport-3.1.3
 CATEGORIES =	devel
 
 # MIT License
@@ -14,7 +13,9 @@ PERMIT_DISTFILES_FTP =		Yes
 
 MODULES =	lang/ruby
 
-RUN_DEPENDS =	${MODRUBY_ICONV_DEPENDS}
+BUILD_DEPENDS = converters/ruby-multi_json,${MODRUBY_FLAVOR}>=1.0,<2.0
+RUN_DEPENDS =	${MODRUBY_ICONV_DEPENDS} \
+		converters/ruby-multi_json,${MODRUBY_FLAVOR}>=1.0,<2.0
 
 CONFIGURE_STYLE =	ruby gem
 

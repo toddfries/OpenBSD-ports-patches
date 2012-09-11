@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Vars.pm,v 1.17 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Vars.pm,v 1.29 2012/08/15 09:05:05 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -21,7 +21,7 @@ package DPB::GetThings;
 sub subdirlist
 {
 	my ($class, $list) = @_;
-	return join(' ', sort @$list);
+	return join(' ', sort keys %$list);
 }
 
 sub run_command
@@ -30,20 +30,11 @@ sub run_command
 
 	my $ports = $grabber->ports;
 
-	if (defined $shell) {
-		my $s='';
-		if (defined $subdirs) {
-			$s="SUBDIR='".$class->subdirlist($subdirs)."'";
-		}
-		$shell->run("cd $ports && $s ".
-		    join(' ', $shell->make, @args));
-	} else {
-		if (defined $subdirs) {
-			$ENV{SUBDIR} = $class->subdirlist($subdirs);
-		}
-		chdir($ports) or die "Bad directory $ports";
-		exec {$grabber->make} ('make', @args);
+	$shell->chdir($ports);
+	if (defined $subdirs) {
+		$shell->env(SUBDIR => $class->subdirlist($subdirs));
 	}
+	$shell->exec($grabber->make_args, @args);
 	exit(1);
 }
 
@@ -72,6 +63,7 @@ PERMIT_DISTFILES_CDROM=Yes
 PERMIT_DISTFILES_FTP=Yes
 WRKOBJDIR=
 IGNORE=Yes
+_MAKEFILE_INC_DONE=Yes
 ECHO_MSG=:
 .include <bsd.port.mk>
 EOT
@@ -89,9 +81,10 @@ EOT
 		waitpid($pid, 0);
 	} else {
 		close STDIN;
+		chdir('/');
 		open(STDIN, '<&', $rh);
 		exec {$make} ('make', '-f', '-');
-		die "oops";
+		die "oops couldn't exec $make";
     	}
 	return @list;
 }
@@ -118,23 +111,23 @@ sub grab_list
 	my $subdir;
 	my $category;
 	my $reset = sub {
-			for my $v (values %$h) {
-				$v->handle_default($h);
-			}
-			$grabber->{fetch}->build_distinfo($h);
+			$h = DPB::PkgPath->handle_equivalences($grabber->{state}, $h, $subdirs);
+			$grabber->{fetch}->build_distinfo($h, 
+			    $grabber->{state}->{fetch_only});
 			DPB::PkgPath->merge_depends($h);
 			&$code($h);
 			$h = {};
 		    };
 
 	my @current = ();
+	my ($previous, $info);
 	while(<$fh>) {
 		push(@current, $_);
 		chomp;
 		if (m/^\=\=\=\>\s*Exiting (.*) with an error$/) {
 			undef $category;
-			my $dir = DPB::PkgPath->new_hidden($1);
-			$dir->{broken} = 1;
+			my $dir = DPB::PkgPath->new($1);
+			$dir->break("exiting with an error");
 			$h->{$dir} = $dir;
 			open my $quicklog,  '>>',
 			    $grabber->logger->log_pkgpath($dir);
@@ -144,9 +137,13 @@ sub grab_list
 		}
 		if (m/^\=\=\=\>\s*(.*)/) {
 			@current = ("$_\n");
-			print $log $_, "\n";
 			$core->job->set_status(" at $1");
-			$subdir = DPB::PkgPath->new_hidden($1);
+			$subdir = DPB::PkgPath->new($1);
+			print $log $_;
+			if (defined $subdir->{parent}) {
+				print $log " (", $subdir->{parent}->fullpkgpath, ")";
+			}
+			print $log "\n";
 			if (defined $category) {
 				$category->{category} = 1;
 			}
@@ -161,17 +158,20 @@ sub grab_list
 				$value = $1;
 			}
 			my $o = DPB::PkgPath->compose($pkgpath, $subdir);
-			$seen->{$o} //= DPB::PortInfo->new($o);
-			my $info = $seen->{$o};
-			$h->{$o} = $o;
+			if (!defined $previous || $previous != $o) {
+				$seen->{$o} = DPB::PortInfo->new($o);
+				$previous = $o;
+				$info = $seen->{$o};
+				$h->{$o} = $o;
+			}
 			eval { $info->add($var, $value, $o); };
 			if ($@) {
 				print $log $@;
-				$o->{broken} = 1;
+				$o->break("error with adding $var=$value");
 			}
 		} elsif (m/^\>\>\s*Broken dependency:\s*(.*?)\s*non existent/) {
-			my $dir = DPB::PkgPath->new_hidden($1);
-			$dir->{broken} = 1;
+			my $dir = DPB::PkgPath->new($1);
+			$dir->break("broken dependency");
 			$h->{$dir} = $dir;
 			print $log $_, "\n";
 			print $log "Broken ", $dir->fullpkgpath, "\n";
@@ -193,7 +193,7 @@ sub grab_signature
 	my $signature;
 	$core->start_pipe(sub {
 		my $shell = shift;
-		$class->run_command($core, $shell, $grabber, [$subdir],
+		$class->run_command($core, $shell, $grabber, {$subdir => 1},
 			'print-package-signature', 'ECHO_MSG=:')
 	}, "PORT-SIGNATURE");
 	my $fh = $core->fh;
@@ -212,7 +212,7 @@ sub clean
 	my ($class, $core, $grabber, $subdir) = @_;
 	$core->start_pipe(sub {
 		my $shell = shift;
-		$class->run_command($core, $shell, $grabber, [$subdir],
+		$class->run_command($core, $shell, $grabber, {$subdir => 1},
 			'clean=packages')
 	}, "CLEAN-PACKAGES");
 	my $fh = $core->fh;

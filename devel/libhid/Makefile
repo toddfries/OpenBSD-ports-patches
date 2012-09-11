@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/15 19:45:59 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2012/03/29 13:38:30 sthen Exp $
 
 COMMENT =	user-space USB HID access library written in C
 
 DISTNAME =	libhid-0.2.16
+REVISION =	0
+
 SHARED_LIBS =	hid	0.0
 
 CATEGORIES =	devel
@@ -19,14 +21,14 @@ PERMIT_DISTFILES_FTP=   Yes
 
 MASTER_SITES=	https://alioth.debian.org/frs/download.php/1958/
 
-WANTLIB += 	c usb
+WANTLIB += 	c usb pthread usb-1.0
 
-LIB_DEPENDS = 	devel/libusb
+LIB_DEPENDS = 	devel/libusb-compat
 
 USE_GMAKE = 		Yes
 USE_LIBTOOL =		Yes
 USE_GROFF =		Yes
-SEPARATE_BUILD =	concurrent
+SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE = 	gnu
 CONFIGURE_ARGS +=	--disable-swig
 

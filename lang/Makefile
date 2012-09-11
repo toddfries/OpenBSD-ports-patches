@@ -1,25 +1,28 @@
-# $OpenBSD: Makefile,v 1.115 2011/07/08 18:24:00 robert Exp $
-# $FreeBSD: Makefile,v 1.89 1997/11/24 09:24:06 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.139 2012/08/18 07:25:25 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += STk
-     SUBDIR += antlr2
+     SUBDIR += antlr3
      SUBDIR += arena
+     SUBDIR += boo
      SUBDIR += chicken
      SUBDIR += classpath
      SUBDIR += clisp
      SUBDIR += clojure
+     SUBDIR += coffeescript
      SUBDIR += cython
      SUBDIR += datalog
      SUBDIR += eagle
      SUBDIR += ecl
+     SUBDIR += elixir
      SUBDIR += eltclsh
      SUBDIR += erlang
      SUBDIR += expect
      SUBDIR += expect,no_tk
      SUBDIR += ezm3
      SUBDIR += feldspar
+     SUBDIR += freehdl
+     SUBDIR += gambit
      SUBDIR += gawk
      SUBDIR += g77
      SUBDIR += g77-old
@@ -27,6 +30,7 @@
      SUBDIR += gforth
      SUBDIR += gfortran
      SUBDIR += ghc
+     SUBDIR += go
      SUBDIR += gprolog
      SUBDIR += guile
      SUBDIR += hs-haskell-src
@@ -38,17 +42,19 @@
      SUBDIR += iverilog
      SUBDIR += jamvm
      SUBDIR += jikes
+     SUBDIR += jimtcl
      SUBDIR += jruby
-     SUBDIR += kaffe
      SUBDIR += librep
-     SUBDIR += llvm-gcc4
      SUBDIR += lua
      SUBDIR += mawk
      SUBDIR += mono
      SUBDIR += mono-basic
+     SUBDIR += myhdl
      SUBDIR += nbfc
      SUBDIR += newlisp
      SUBDIR += nhc98
+     SUBDIR += node
+     SUBDIR += nqp
      SUBDIR += obc
      SUBDIR += ocaml
      SUBDIR += ocamlduce
@@ -57,6 +63,7 @@
      SUBDIR += open-cobol
      SUBDIR += otcl
      SUBDIR += parrot
+     SUBDIR += pcc
      SUBDIR += petite-chez
      SUBDIR += pfe
      SUBDIR += php
@@ -64,10 +71,12 @@
      SUBDIR += processing
      SUBDIR += pugs
      SUBDIR += python
+     SUBDIR += railo
      SUBDIR += rakudo
      SUBDIR += rubinius
      SUBDIR += ruby
      SUBDIR += sbcl
+     SUBDIR += scala
      SUBDIR += scheme-report
      SUBDIR += scheme48
      SUBDIR += scm
@@ -78,8 +87,10 @@
      SUBDIR += swi-prolog
      SUBDIR += tcl
      SUBDIR += tcltutor
+     SUBDIR += tinyscheme
      SUBDIR += ucblogo
      SUBDIR += unicon
      SUBDIR += vala
+     SUBDIR += verilator
 
 .include <bsd.port.subdir.mk>

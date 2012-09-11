@@ -1,10 +1,13 @@
-# $OpenBSD: Makefile,v 1.58 2011/08/16 21:23:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.66 2012/07/07 07:50:47 ajacoutot Exp $
 
     SUBDIR =
     SUBDIR += BasiliskII
     SUBDIR += bochs
     SUBDIR += bochs,debug
     SUBDIR += coldfire
+    SUBDIR += desmume
+    SUBDIR += dgen-sdl
+    SUBDIR += dgen-sdl,debugger
     SUBDIR += dosbox
     SUBDIR += dynagen
     SUBDIR += dynamips
@@ -13,12 +16,13 @@
     SUBDIR += fuse
     SUBDIR += fuse-utils
     SUBDIR += gambatte
-    SUBDIR += generator
     SUBDIR += gns3
     SUBDIR += gxemul
     SUBDIR += ines
     SUBDIR += mastergear
     SUBDIR += mednafen
+    SUBDIR += mupen64plus
+    SUBDIR += openmsx
     SUBDIR += qemu
     SUBDIR += pcsxr
     SUBDIR += redhat
@@ -30,7 +34,7 @@
     SUBDIR += spim
     SUBDIR += stella
     SUBDIR += uae
-    SUBDIR += vba
+    SUBDIR += vbam
     SUBDIR += vgb
     SUBDIR += x48
     SUBDIR += xcopilot

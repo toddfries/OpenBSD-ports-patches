@@ -1,22 +1,48 @@
-$OpenBSD: patch-mozilla_security_manager_ssl_src_nsNSSComponent_cpp,v 1.3 2011/08/23 20:19:33 landry Exp $
---- mozilla/security/manager/ssl/src/nsNSSComponent.cpp.orig	Fri Jul 15 07:51:43 2011
-+++ mozilla/security/manager/ssl/src/nsNSSComponent.cpp	Sun Jul 31 22:20:16 2011
-@@ -821,11 +821,10 @@ nsNSSComponent::InstallLoadableRoots()
-     return;
+$OpenBSD: patch-mozilla_security_manager_ssl_src_nsNSSComponent_cpp,v 1.10 2012/09/01 14:22:45 landry Exp $
+--- mozilla/security/manager/ssl/src/nsNSSComponent.cpp.orig	Sat Aug 25 02:31:28 2012
++++ mozilla/security/manager/ssl/src/nsNSSComponent.cpp	Sat Sep  1 01:59:41 2012
+@@ -71,6 +71,7 @@
+ #include "secerr.h"
+ #include "sslerr.h"
+ #include "cert.h"
++#include "SSLServerCertVerification.h"
  
-   const char *possible_ckbi_locations[] = {
--    NS_XPCOM_CURRENT_PROCESS_DIR,
-+    0, // This special value means: 
-+       //   search for ckbi in NSS_LIBDIR
-     NS_GRE_DIR,
--    0 // This special value means: 
--      //   search for ckbi in the directories on the shared
--      //   library/DLL search path
-+    NS_XPCOM_CURRENT_PROCESS_DIR
-   };
+ #include "nsXULAppAPI.h"
  
-   for (size_t il = 0; il < sizeof(possible_ckbi_locations)/sizeof(const char*); ++il) {
-@@ -834,7 +833,7 @@ nsNSSComponent::InstallLoadableRoots()
+@@ -356,6 +357,8 @@ nsNSSComponent::deleteBackgroundThreads()
+     delete mCertVerificationThread;
+     mCertVerificationThread = nsnull;
+   }
++
++  StopSSLServerCertVerificationThreads();
+ }
+ 
+ void
+@@ -363,21 +366,20 @@ nsNSSComponent::createBackgroundThreads()
+ {
+   NS_ASSERTION(mCertVerificationThread == nsnull,
+                "Cert verification thread already created.");
+-
+   mCertVerificationThread = new nsCertVerificationThread;
+   nsresult rv = mCertVerificationThread->startThread();
+   if (NS_FAILED(rv)) {
+     delete mCertVerificationThread;
+     mCertVerificationThread = nsnull;
+   }
++
++  InitializeSSLServerCertVerificationThreads();
+ }
+ 
+ nsNSSComponent::~nsNSSComponent()
+ {
+   PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("nsNSSComponent::dtor\n"));
+ 
+-  deleteBackgroundThreads();
+-
+   if (mUpdateTimerInitialized) {
+     {
+       MutexAutoLock lock(mCrlTimerLock);
+@@ -806,7 +808,7 @@ nsNSSComponent::InstallLoadableRoots()
  
      if (!possible_ckbi_locations[il])
      {
@@ -25,3 +51,65 @@ $OpenBSD: patch-mozilla_security_manager_ssl_src_nsNSSComponent_cpp,v 1.3 2011/0
      }
      else
      {
+@@ -1869,6 +1871,8 @@ nsNSSComponent::InitializeNSS(bool showWarningBox)
+ 
+       LaunchSmartCardThreads();
+ 
++      createBackgroundThreads();
++
+       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("NSS Initialization done\n"));
+     }
+   }
+@@ -2012,16 +2016,6 @@ nsNSSComponent::Init()
+   if (mClientAuthRememberService)
+     mClientAuthRememberService->Init();
+ 
+-  createBackgroundThreads();
+-  if (!mCertVerificationThread)
+-  {
+-    PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("NSS init, could not create threads\n"));
+-
+-    DeregisterObservers();
+-    mPIPNSSBundle = nsnull;
+-    return NS_ERROR_OUT_OF_MEMORY;
+-  }
+-
+   InitializeCRLUpdateTimer();
+   RegisterPSMContentListener();
+ 
+@@ -2236,6 +2230,7 @@ nsNSSComponent::Observe(nsISupports *aSubject, const c
+     DoProfileChangeTeardown(aSubject);
+   }
+   else if (nsCRT::strcmp(aTopic, PROFILE_CHANGE_TEARDOWN_VETO_TOPIC) == 0) {
++    createBackgroundThreads();
+     mShutdownObjectList->allowUI();
+   }
+   else if (nsCRT::strcmp(aTopic, PROFILE_BEFORE_CHANGE_TOPIC) == 0) {
+@@ -2283,6 +2278,7 @@ nsNSSComponent::Observe(nsISupports *aSubject, const c
+     InitializeCRLUpdateTimer();
+   }
+   else if (nsCRT::strcmp(aTopic, NS_XPCOM_SHUTDOWN_OBSERVER_ID) == 0) {
++    ShutdownSSLServerCertVerification();
+ 
+     PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("nsNSSComponent: XPCom shutdown observed\n"));
+ 
+@@ -2573,6 +2569,9 @@ nsNSSComponent::DoProfileChangeNetTeardown()
+ void
+ nsNSSComponent::DoProfileChangeTeardown(nsISupports* aSubject)
+ {
++  /* XXX this doesn't work well, since nothing expects null pointers */
++  deleteBackgroundThreads();
++
+   bool callVeto = false;
+ 
+   if (!mShutdownObjectList->ifPossibleDisallowUI()) {
+@@ -2626,9 +2625,6 @@ nsNSSComponent::DoProfileBeforeChange(nsISupports* aSu
+ void
+ nsNSSComponent::DoProfileChangeNetRestore()
+ {
+-  /* XXX this doesn't work well, since nothing expects null pointers */
+-  deleteBackgroundThreads();
+-  createBackgroundThreads();
+   mIsNetworkDown = false;
+ }
+ 

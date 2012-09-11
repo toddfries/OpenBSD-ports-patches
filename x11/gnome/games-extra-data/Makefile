@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/22 08:36:57 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2012/07/08 08:19:39 jasper Exp $
 
 COMMENT=		extra themes and artwork for GNOME games
 
 GNOME_PROJECT=		gnome-games-extra-data
-GNOME_VERSION=		2.30.0
+GNOME_VERSION=		3.2.0
 
 CATEGORIES=		games
 
 HOMEPAGE=		http://live.gnome.org/GnomeGames/
 
 # GPLv2
-# cards/dondorf.svg has been placed into Public Domain
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes

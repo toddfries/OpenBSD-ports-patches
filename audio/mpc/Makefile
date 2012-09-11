@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.10 2011/04/05 20:10:36 landry Exp $
+# $OpenBSD: Makefile,v 1.12 2012/03/04 16:57:19 dcoppa Exp $
 
 COMMENT=		command line client for mpd
 
-DISTNAME=		mpc-0.20
+DISTNAME=		mpc-0.22
 CATEGORIES=		audio
 
 HOMEPAGE=		http://mpd.wikia.com/wiki/Client:Mpc
 
-MAINTAINER=		Tobias Ulmer <tobiasu@tmux.org>
+MAINTAINER=		David Coppa <dcoppa@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes

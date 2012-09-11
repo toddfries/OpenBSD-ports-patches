@@ -1,10 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2011/05/30 23:55:18 kili Exp $
+# $OpenBSD: Makefile,v 1.8 2012/03/28 19:27:04 kili Exp $
 
 COMMENT =		simple LaTeX editor
 
-DISTNAME =		gummi-0.5.8-2
-PKGNAME =		${DISTNAME:S/-2//}
-WRKDIST =		${WRKDIR}/${DISTNAME:S/-2//}
+DISTNAME =		gummi-0.6.3
 
 CATEGORIES =		editors
 
@@ -18,16 +16,16 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =	GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
-                Xfixes Xi Xinerama Xrandr Xrender Xxf86vm c drm \
+WANTLIB =	GL X11 Xcomposite Xcursor Xdamage Xext \
+                Xfixes Xi Xinerama Xrandr Xrender c \
                 expat fontconfig freetype m pixman-1 pthread \
                 pthread-stubs xcb xcb-render xcb-shm z gtksourceview-2.0 \
-                gtkspell poppler poppler-glib atk-1.0 cairo gdk-x11-2.0 \
-                gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 \
+                gtkspell poppler-glib atk-1.0 cairo gdk-x11-2.0 \
+                gdk_pixbuf-2.0 gio-2.0 glib-2.0 gobject-2.0 \
                 gthread-2.0 gtk-x11-2.0 pango-1.0 pangocairo-1.0 \
-                pangoft2-1.0 png xml2
+                pangoft2-1.0 png
 
-MASTER_SITES =		http://dev.midnightcoding.org/redmine/attachments/download/141/
+MASTER_SITES =		http://dev.midnightcoding.org/attachments/download/263/
 
 MODULES =		devel/gettext textproc/intltool
 

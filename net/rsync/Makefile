@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.62 2011/04/02 15:13:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.66 2012/08/23 13:27:51 espie Exp $
 
 COMMENT =	mirroring/synchronization over low bandwidth links
 
-DISTNAME =	rsync-3.0.8
+DISTNAME =	rsync-3.0.9
 CATEGORIES =	net
 HOMEPAGE =	http://rsync.samba.org/
-
 REVISION =	0
 
 MAINTAINER =	Marc Espie <espie@openbsd.org>
+
+FLAVORS =	iconv
+FLAVOR ?=
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes
@@ -23,15 +25,20 @@ MASTER_SITES =	ftp://ftp.samba.org/pub/rsync/ \
 		http://ftp.samba.org/ftp/rsync/ \
 		ftp://ftp.funet.fi/pub/mirrors/samba.org/pub/rsync/
 
-#SEPARATE_BUILD =	simple
+#SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =gnu
 CONFIGURE_ARGS =--with-included-popt \
 		--with-rsyncd-conf="${SYSCONFDIR}/rsyncd.conf" \
 		--with-rsh="ssh -T" \
 		--with-nobody-group=_rsync
 
+.if ${FLAVOR:L:Miconv}
+CONFIGURE_ENV += CPPFLAGS='-I${LOCALBASE}/include' \
+		LDFLAGS='-L${LOCALBASE}/lib'
+MODULES += converters/libiconv
+.endif
+
 DOCDIR =	${PREFIX}/share/doc/rsync
-USE_GROFF =	Yes
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/rsyncd.conf.5
@@ -42,5 +49,6 @@ do-install:
 	${INSTALL_MAN} ${WRKSRC}/rsync.1 ${PREFIX}/man/man1
 	${INSTALL_MAN} ${WRKSRC}/rsyncd.conf.5 ${PREFIX}/man/man5
 	${INSTALL_DATA} ${WRKSRC}/tech_report.tex ${DOCDIR}
+	${INSTALL_PROGRAM} ${WRKSRC}/support/rrsync ${PREFIX}/bin
 
 .include <bsd.port.mk>

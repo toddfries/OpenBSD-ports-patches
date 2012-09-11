@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.9 2009/05/16 09:35:00 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.11 2012/06/18 16:03:00 pascal Exp $
 @bin bin/ali
 @bin bin/anno
 @bin bin/burst
@@ -6,9 +6,11 @@
 @bin bin/dist
 @bin bin/flist
 @bin bin/flists
+@bin bin/fnext
 @bin bin/folder
 @bin bin/folders
 @bin bin/forw
+@bin bin/fprev
 @bin bin/inc
 @bin bin/install-mh
 @bin bin/mark
@@ -22,6 +24,7 @@
 @bin bin/mhstore
 @bin bin/msgchk
 @bin bin/msh
+@bin bin/new
 @bin bin/next
 @bin bin/packf
 @bin bin/pick
@@ -29,6 +32,7 @@
 @bin bin/prompter
 @bin bin/refile
 @bin bin/repl
+bin/replyfilter
 @bin bin/rmf
 @bin bin/rmm
 @bin bin/scan
@@ -36,6 +40,7 @@
 bin/sendfiles
 @bin bin/show
 @bin bin/sortm
+@bin bin/unseen
 @bin bin/whatnow
 @bin bin/whom
 lib/nmh/
@@ -86,9 +91,11 @@ lib/nmh/scan.unseen
 @man man/man1/dist.1
 @man man/man1/flist.1
 @man man/man1/flists.1
+@man man/man1/fnext.1
 @man man/man1/folder.1
 @man man/man1/folders.1
 @man man/man1/forw.1
+@man man/man1/fprev.1
 @man man/man1/inc.1
 @man man/man1/install-mh.1
 @man man/man1/mark.1
@@ -104,6 +111,7 @@ lib/nmh/scan.unseen
 @man man/man1/mhstore.1
 @man man/man1/msgchk.1
 @man man/man1/msh.1
+@man man/man1/new.1
 @man man/man1/next.1
 @man man/man1/nmh.1
 @man man/man1/packf.1
@@ -124,6 +132,7 @@ lib/nmh/scan.unseen
 @man man/man1/show.1
 @man man/man1/slocal.1
 @man man/man1/sortm.1
+@man man/man1/unseen.1
 @man man/man1/whatnow.1
 @man man/man1/whom.1
 @man man/man5/mh-alias.5
@@ -140,3 +149,28 @@ lib/nmh/scan.unseen
 @man man/man8/dp.8
 @man man/man8/fmtdump.8
 @man man/man8/post.8
+share/doc/nmh/
+share/doc/nmh/COMPLETION-BASH
+share/doc/nmh/COMPLETION-TCSH
+share/doc/nmh/COMPLETION-ZSH
+share/doc/nmh/COPYRIGHT
+share/doc/nmh/DIFFERENCES
+share/doc/nmh/FAQ
+share/doc/nmh/INSTALL
+share/doc/nmh/MAIL.FILTERING
+share/doc/nmh/MAILING-LISTS
+share/doc/nmh/NEWS
+share/doc/nmh/README
+share/doc/nmh/README-ATTACHMENTS
+share/doc/nmh/README-HOOKS
+share/doc/nmh/README-components
+share/doc/nmh/README.SASL
+share/doc/nmh/README.about
+share/doc/nmh/README.developers
+share/doc/nmh/README.manpages
+share/doc/nmh/TODO
+share/doc/nmh/VERSION
+share/doc/nmh/contrib/
+share/doc/nmh/contrib/build_nmh
+share/doc/nmh/contrib/nmh.spec
+share/doc/nmh/contrib/replyfilter

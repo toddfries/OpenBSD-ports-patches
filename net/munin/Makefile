@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.20 2011/05/11 12:03:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2012/09/03 18:00:32 jeremy Exp $
 
 COMMENT-main =	flexible network host monitoring, client
 COMMENT-server =flexible network host monitoring, server
 
-V =		1.4.5
+V =		1.4.7
 DISTNAME =	munin-$V
 PKGNAME-main =	munin-node-$V
 PKGNAME-server =munin-server-$V
-REVISION-main = 6
-REVISION-server = 2
+REVISION-main =	1
 CATEGORIES =	net
 
 HOMEPAGE =	http://munin-monitoring.org/
@@ -31,9 +30,11 @@ MULTI_PACKAGES =	-main -server
 MODULES =		lang/python lang/ruby
 # No need for MODx_RUNDEP as we already override RUN_DEPENDS-{main,server}
 MODPY_BUILDDEP =	No
-MODRUBY_BUILDDEP =	No # not supported yet, but won't need a bump when it is
+MODRUBY_BUILDDEP =	No
+MODRUBY_REV =		1.9
 
-RUN_DEPENDS-main =	devel/p5-Log-Log4perl \
+RUN_DEPENDS-main =	logtail-*|logsentry-*:sysutils/logtail \
+			devel/p5-Log-Log4perl \
 			devel/p5-Net-Server \
 			net/p5-Net-CIDR
 RUN_DEPENDS-server +=	net/rrdtool,-perl \
@@ -71,6 +72,9 @@ post-extract:
 	chmod -R +x ${WRKSRC}/plugins/node.d.openbsd
 	rm ${WRKSRC}/plugins/node.d.openbsd/memory.in # not yet ported
 
+# Fixup hardcoded paths in plugins to use TRUEPREFIX/LOCALBASE as appropriate,
+# there are far too many to handle this via patches/SUBST_CMD, and this method
+# plays nicer with update-patches.
 pre-configure:
 	cd ${WRKSRC}/node/sbin; \
 	${SUBST_CMD} munin-node munin-node-configure munin-run; \
@@ -80,17 +84,12 @@ pre-configure:
 	    -e 's,/usr/local/libexec/munin,${TRUEPREFIX}/libexec/munin,g;' \
 	    -e 's,/usr/local,${LOCALBASE},g;' \
 	    -e 's,/usr/share/munin/node/plugins-auto,${TRUEPREFIX}/libexec/munin/plugins,g;' \
-	    ${WRKSRC}/plugins/node.d/* ${WRKSRC}/plugins/node.d.openbsd/*; \
-	${MODRUBY_RUBY_ADJ} plugins/node.d/tomcat_.in
+	    ${WRKSRC}/plugins/node.d/* ${WRKSRC}/plugins/node.d.openbsd/*
 
 post-install:
+	${MODRUBY_RUBY_ADJ} ${PREFIX}/libexec/munin/plugins/tomcat_
 	${INSTALL_DATA} ${FILESDIR}/openbsd-packages \
 	    ${PREFIX}/share/examples/munin/plugin-conf.d
-# Remove some plugins which require logtail
-	rm ${PREFIX}/libexec/munin/plugins/amavis \
-	    ${PREFIX}/libexec/munin/plugins/courier_ \
-	    ${PREFIX}/libexec/munin/plugins/mailscanner \
-	    ${PREFIX}/libexec/munin/plugins/perdition
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/munin/
 	${INSTALL_DATA} ${WRKSRC}/UPGRADING ${PREFIX}/share/doc/munin/
 

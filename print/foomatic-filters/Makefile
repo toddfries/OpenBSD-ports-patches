@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2011/08/25 10:39:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.40 2012/09/01 21:09:24 ajacoutot Exp $
 
 COMMENT=		Foomatic PPD print filters
 
-DISTNAME=		foomatic-filters-4.0.9
+DISTNAME=		foomatic-filters-4.0.17
 CATEGORIES=		print
+REVISION=		0
 
 HOMEPAGE=		http://www.linuxfoundation.org/en/OpenPrinting/Database/Foomatic
 
@@ -15,20 +16,23 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB+=		c m
+WANTLIB += c dbus-1 m pthread
 
-MASTER_SITES=		http://www.linuxprinting.org/download/foomatic/ \
-			http://www.openprinting.org/download/foomatic/ \
-			http://www.linuxprinting.org/download/foomatic/oldstuff/ \
+MASTER_SITES=		http://www.openprinting.org/download/foomatic/ \
 			http://www.openprinting.org/download/foomatic/oldstuff/
+
+LIB_DEPENDS=		x11/dbus
 
 BUILD_DEPENDS=		${MODGNU_AUTOMAKE_DEPENDS}
 
 RUN_DEPENDS=		print/ghostscript/gnu \
 			print/a2ps
 
+# don't enforce dependency on colord; it'll be used only if found
+#RUN_DEPENDS +=	graphics/colord
+
 AUTOMAKE_VERSION=1.10
-AUTOCONF_VERSION=2.61
+AUTOCONF_VERSION=2.65
 
 INSTALL_TARGET=		install-main install-cups
 
@@ -48,7 +52,7 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			MPAGE="${LOCALBASE}/bin/mpage"
 
 CONFIGURE_ARGS=		--enable-file-converter-check=no \
-			--enable-dbus=no # only useful for colord which we don't have yet
+			--with-file-converter=a2ps
 
 MAKE_ENV=		${CONFIGURE_ENV}
 

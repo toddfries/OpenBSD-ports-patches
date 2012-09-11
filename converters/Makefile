@@ -1,17 +1,18 @@
-# $OpenBSD: Makefile,v 1.54 2011/06/14 11:16:46 robert Exp $
-#
+# $OpenBSD: Makefile,v 1.61 2012/09/04 19:01:41 jasper Exp $
 
     SUBDIR =
     SUBDIR += base64
     SUBDIR += btoa
+    SUBDIR += d1489
+    SUBDIR += dos2unix
     SUBDIR += enca
     SUBDIR += html2text
     SUBDIR += html2wml
     SUBDIR += ish
-    SUBDIR += libdvd
     SUBDIR += libdvdcss
     SUBDIR += libiconv
     SUBDIR += libpst
+    SUBDIR += libunistring
     SUBDIR += mimepp
     SUBDIR += mpack
     SUBDIR += p5-Calendar-Simple
@@ -54,7 +55,9 @@
     SUBDIR += py-iconvcodec
     SUBDIR += qprint
     SUBDIR += recode
+    SUBDIR += ripmime
     SUBDIR += rpm2cpio
+    SUBDIR += ruby-multi_json
     SUBDIR += ruby-json
     SUBDIR += ruby-json,ruby19
     SUBDIR += trans

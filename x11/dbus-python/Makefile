@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.18 2011/06/08 17:36:12 rpointel Exp $
+# $OpenBSD: Makefile,v 1.22 2012/07/05 07:21:14 ajacoutot Exp $
 
 COMMENT =	dbus bindings for Python
 
-DISTNAME =	dbus-python-0.84.0
-REVISION =	0
+DISTNAME =	dbus-python-1.1.1
 
 CATEGORIES =	x11
 
@@ -17,7 +16,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += dbus-1 dbus-glib-1 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += dbus-1 dbus-glib-1 ffi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += gthread-2.0 pcre z
 
 MASTER_SITES =	${HOMEPAGE}releases/dbus-python/
@@ -32,5 +31,7 @@ USE_LIBTOOL =	Yes
 CONFIGURE_STYLE = gnu
 CONFIGURE_ARGS = ${CONFIGURE_SHARED} \
 		 --disable-html-docs
+
+REGRESS_FLAGS =	LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

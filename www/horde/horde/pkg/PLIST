@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2011/01/04 09:46:51 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.5 2012/03/19 15:44:33 sthen Exp $
 @pkgpath devel/horde
 @pkgpath devel/horde,-ldap
 @pkgpath devel/horde,-mysql
@@ -35,32 +35,24 @@ ${INSTDIR}/admin/setup/scripts.php
 ${INSTDIR}/admin/signup_confirm.php
 ${INSTDIR}/admin/sqlshell.php
 ${INSTDIR}/admin/user.php
+@mode 700
+@owner www
 @group www
 ${INSTDIR}/config/
 @mode 600
-@owner www
 ${INSTDIR}/config/.htaccess
 ${INSTDIR}/config/conf.php.dist
-@sample horde/config/conf.php
 ${INSTDIR}/config/conf.xml
 ${INSTDIR}/config/hooks.php.dist
-@sample horde/config/hooks.php
 ${INSTDIR}/config/mime_drivers.php.dist
-@sample horde/config/mime_drivers.php
 ${INSTDIR}/config/motd.php.dist
-@sample horde/config/motd.php
 ${INSTDIR}/config/nls.php.dist
-@sample horde/config/nls.php
 ${INSTDIR}/config/prefs.php.dist
-@sample horde/config/prefs.php
-@mode
-@owner
+@mode 700
 ${INSTDIR}/config/registry.d/
-${INSTDIR}/config/registry.d/README
 @mode 600
-@owner www
+${INSTDIR}/config/registry.d/README
 ${INSTDIR}/config/registry.php.dist
-@sample horde/config/registry.php
 @mode
 @owner
 @group
@@ -470,12 +462,18 @@ ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Combined/Decorator/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Combined/Decorator/Cache.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Decorator/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Decorator/Log.php
-${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Fwthree.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Xacl/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Xacl/Cache.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Xacl/Configuration.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Xacl/Decorator/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Export/Freebusy/Xacl/Decorator/Log.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/Freebusy/
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/Freebusy/Owa.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/Freebusy/StatusMap/
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/Freebusy/StatusMap.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/Freebusy/StatusMap/Config.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Helper/Freebusy/StatusMap/Default.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Imap.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Logger.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Object/
@@ -488,11 +486,16 @@ ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Owner/Event/Kolab.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Owner/Kolab.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Folder/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Folder.php
-${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Owner.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Folder/Named.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Folder/Request.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Resource/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Freebusy/Resource/Kolab.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Owner/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Owner.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Owner/Named.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/Owner/Request.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Params/User.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Report.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Request.php
@@ -508,6 +511,7 @@ ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Resource/Event/Decorator/Log.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Resource/Event/Decorator/Mcache.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Resource/Event/Fwthree.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Resource/Event/Kolab.php
+${INSTDIR}/lib/Horde/Kolab/FreeBusy/Resource/Event/Owa.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/Resource/Kolab.php
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/User/
 ${INSTDIR}/lib/Horde/Kolab/FreeBusy/User.php
@@ -806,6 +810,7 @@ ${INSTDIR}/lib/Horde/Share/datatree.php
 ${INSTDIR}/lib/Horde/Share/kolab.php
 ${INSTDIR}/lib/Horde/Share/sql.php
 ${INSTDIR}/lib/Horde/Share/sql_hierarchical.php
+${INSTDIR}/lib/Horde/Share/sqlng.php
 ${INSTDIR}/lib/Horde/SpellChecker/
 ${INSTDIR}/lib/Horde/SpellChecker.php
 ${INSTDIR}/lib/Horde/SpellChecker/aspell.php
@@ -1229,6 +1234,10 @@ ${INSTDIR}/scripts/ldap/
 ${INSTDIR}/scripts/ldap/${INSTDIR}.prefs.acl
 ${INSTDIR}/scripts/ldap/${INSTDIR}.schema
 ${INSTDIR}/scripts/set_perms.sh
+${INSTDIR}/scripts/share-stress-test-conf.php.dist
+${INSTDIR}/scripts/share-stress-test-sql.xml
+${INSTDIR}/scripts/share-stress-test-sqlng.xml
+${INSTDIR}/scripts/share-stress-test.php
 ${INSTDIR}/scripts/sql/
 ${INSTDIR}/scripts/sql/README
 ${INSTDIR}/scripts/sql/README.OCI8
@@ -1244,6 +1253,7 @@ ${INSTDIR}/scripts/sql/create.pgsql.sql
 ${INSTDIR}/scripts/sql/create.sql
 @comment no checksum
 ${INSTDIR}/scripts/sql/create.sybase.sql
+@comment no checksum
 ${INSTDIR}/scripts/sql/create.xml
 ${INSTDIR}/scripts/sql/${INSTDIR}_alarms.mssql.sql
 ${INSTDIR}/scripts/sql/${INSTDIR}_alarms.oci8.sql
@@ -4397,3 +4407,8 @@ ${INSTDIR}/themes/tango-blue/themed_graphics
 ${INSTDIR}/util/
 ${INSTDIR}/util/barcode.php
 ${INSTDIR}/util/icon_browser.php
+@cwd ${LOCALBASE}/share/doc/pkg-readmes
+@mode
+@owner
+@group
+${FULLPKGNAME}

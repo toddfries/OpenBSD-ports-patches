@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.34 2010/07/08 21:28:49 espie Exp $
+@comment $OpenBSD: PLIST,v 1.37 2012/09/02 15:53:32 ajacoutot Exp $
 @conflict kdelibs-<3.4
 @conflict kdebase-<3.4
 @conflict kpilot-*
@@ -280,8 +280,6 @@ ${KDE}/conduit_doc.la
 ${KDE}/conduit_doc.so
 ${KDE}/conduit_knotes.la
 ${KDE}/conduit_knotes.so
-${KDE}/conduit_mal.la
-${KDE}/conduit_mal.so
 ${KDE}/conduit_memofile.la
 ${KDE}/conduit_memofile.so
 ${KDE}/conduit_notepad.la
@@ -1756,7 +1754,6 @@ share/config.kcfg/korganizer.kcfg
 share/config.kcfg/kpalmdoc.kcfg
 share/config.kcfg/kpilot.kcfg
 share/config.kcfg/kpilotlib.kcfg
-share/config.kcfg/malconduit.kcfg
 share/config.kcfg/memofileconduit.kcfg
 share/config.kcfg/mk4config.kcfg
 share/config.kcfg/pimemoticons.kcfg
@@ -2379,7 +2376,6 @@ share/services/kresources/knotes/local.desktop
 share/services/kresources/knotes/scalix.desktop
 share/services/kresources/knotes_manager.desktop
 share/services/ldifvcardthumbnail.desktop
-share/services/mal_conduit.desktop
 share/services/mbox.protocol
 share/services/memofile-conduit.desktop
 share/services/notepad-conduit.desktop
@@ -2410,9 +2406,9 @@ share/servicetypes/korgprintplugin.desktop
 share/servicetypes/kpilotconduit.desktop
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/crystalsvg 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/crystalsvg 2> /dev/null || true
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/locolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/locolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/crystalsvg
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/crystalsvg/hicolor
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/locolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/locolor

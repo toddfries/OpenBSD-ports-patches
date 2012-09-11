@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.232 2011/07/11 16:34:07 jasper Exp $
-# $FreeBSD: Makefile,v 1.91 1997/11/18 09:29:31 tg Exp $
-#
+# $OpenBSD: Makefile,v 1.248 2012/09/04 09:30:20 landry Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -14,15 +12,18 @@
      SUBDIR += an
      SUBDIR += angband
      SUBDIR += angband,no_x11
+     SUBDIR += angband,sdl
      SUBDIR += angrydd
      SUBDIR += atomix
      SUBDIR += barrage
      SUBDIR += bass
      SUBDIR += batrachians
      SUBDIR += belooted
+     SUBDIR += beret
      SUBDIR += blobwars
      SUBDIR += bomberclone
      SUBDIR += boswars
+     SUBDIR += braincurses
      SUBDIR += burgerspace
      SUBDIR += bzflag
      SUBDIR += capitan-sevilla
@@ -33,6 +34,7 @@
      SUBDIR += chocolate-doom
      SUBDIR += chroma
      SUBDIR += chroma-enigma
+     SUBDIR += chromium-bsu
      SUBDIR += circuit
      SUBDIR += clines
      SUBDIR += clonekeen
@@ -49,12 +51,17 @@
      SUBDIR += doomdata
      SUBDIR += dopewars
      SUBDIR += dopewars,no_x11
+     SUBDIR += duke3ddata
+     SUBDIR += dungeon
      SUBDIR += dungeon-crawl
      SUBDIR += eboard
      SUBDIR += eboard-extras
+     SUBDIR += eduke32
+     SUBDIR += eliot
      SUBDIR += egoboo
      SUBDIR += einstein
      SUBDIR += enigma
+     SUBDIR += extremetuxracer
      SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
@@ -73,13 +80,13 @@
      SUBDIR += gbrainy
      SUBDIR += gcompris
      SUBDIR += gemdropx
-     SUBDIR += ggz
      SUBDIR += glsfcave
      SUBDIR += glutton
      SUBDIR += gnome-mastermind
      SUBDIR += gnuchess
      SUBDIR += gnugo
      SUBDIR += gnushogi
+     SUBDIR += gottcode
      SUBDIR += grhino
      SUBDIR += gtetrinet
      SUBDIR += gtkballs
@@ -104,7 +111,9 @@
      SUBDIR += love
      SUBDIR += maelstrom
      SUBDIR += manaplus
+     SUBDIR += meandmyshadow
      SUBDIR += micropolis
+     SUBDIR += minetest
      SUBDIR += mirrormagic
      SUBDIR += mnemosyne
      SUBDIR += monadius
@@ -112,6 +121,7 @@
      SUBDIR += moonlander
      SUBDIR += moonlander,no_sound
      SUBDIR += moria
+     SUBDIR += naev
      SUBDIR += nethack
      SUBDIR += nethack,no_x11
      SUBDIR += nethack,qt
@@ -131,6 +141,7 @@
      SUBDIR += pioneers
      SUBDIR += pokerth
      SUBDIR += prboom
+     SUBDIR += puzzles
      SUBDIR += qgo
      SUBDIR += qstat
      SUBDIR += quake
@@ -184,7 +195,6 @@
      SUBDIR += warzone2100
      SUBDIR += wesnoth
      SUBDIR += wesnoth,lite
-     SUBDIR += wesnoth,tinygui
      SUBDIR += widelands
      SUBDIR += wmminichess
      SUBDIR += wmtictactoe

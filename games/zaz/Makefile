@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/07 18:24:02 landry Exp $
+# $OpenBSD: Makefile,v 1.4 2012/02/21 16:21:41 ajacoutot Exp $
 
 COMMENT =	zuma-like arkade game
 DISTNAME =	zaz-1.0.0
@@ -34,11 +34,11 @@ LIB_DEPENDS =	audio/libvorbis \
 RUN_DEPENDS =	devel/desktop-file-utils
 
 AUTOCONF_VERSION =	2.65
-CONFIGURE_STYLE =	gnu autoconf
+CONFIGURE_STYLE =	autoconf
 CONFIGURE_ENV =		CFLAGS="$(CFLAGS) -I${X11BASE}/include \
 				-I$(X11BASE)/include/freetype2 -pthread" \
 			CXXFLAGS="$(CXXFLAGS) -I${X11BASE}/include \
 				-I$(X11BASE)/include/freetype2 -pthread" \
-			LDFLAGS="-pthread -L${LOCALBASE}/lib"
+			LDFLAGS="-pthread -L${X11BASE}/lib -L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

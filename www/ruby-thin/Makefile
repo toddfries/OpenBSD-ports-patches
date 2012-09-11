@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.11 2011/03/25 16:39:24 jeremy Exp $
+# $OpenBSD: Makefile,v 1.13 2011/11/17 15:53:54 jeremy Exp $
 
 COMMENT =	fast and very simple Ruby web server
 
-DISTNAME =	thin-1.2.7
-REVISION =	0
+DISTNAME =	thin-1.3.0
 CATEGORIES =	www
 
 HOMEPAGE =	http://code.macournoyer.com/thin/
 
-# BSD
+# Ruby/GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM = Yes
@@ -24,7 +23,7 @@ RUN_DEPENDS =	www/ruby-rack,${MODRUBY_FLAVOR}>=1.0.0 \
 
 MODRUBY_REGRESS =	rspec
 REGRESS_DEPENDS =	${FULLPKGNAME}:${BUILD_PKGPATH}
-do-regress:
-	cd ${WRKSRC} && RUBYOPT=-I. ${RSPEC} spec/*_spec.rb
+MODRUBY_REGRESS_ENV =	RUBYLIB=$$(dirname `${GEM} which thin`) RUBYOPT='-I. -rubygems -rthin'
+MODRUBY_REGRESS_TARGET = spec/*_spec.rb
 
 .include <bsd.port.mk>

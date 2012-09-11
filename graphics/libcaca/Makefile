@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.19 2010/11/17 08:05:14 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2011/12/02 14:36:14 espie Exp $
 
 COMMENT=		color ascii art library
 
 DISTNAME=		libcaca-0.99.beta17
 PKGNAME=		libcaca-0.99.17
+REVISION=		0
 SHARED_LIBS +=  caca           1.0               # .0.99
 CATEGORIES=		graphics
 
@@ -13,7 +14,7 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB=		c ncurses m z
+WANTLIB=		c ncursesw m z
 
 HOMEPAGE=		http://caca.zoy.org/
 MASTER_SITES=		${HOMEPAGE}/files/libcaca/ \
@@ -29,13 +30,12 @@ USE_GROFF =		Yes
 FLAVORS=		no_x11
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=	--disable-x11 \
 			--disable-imlib2
 .else
 LIB_DEPENDS =    	graphics/imlib2
-WANTLIB +=		X11 Xau Xdmcp Xext freetype pthread-stubs xcb \
-			Imlib2>=1
+WANTLIB +=		X11 Xext freetype xcb Imlib2>=1
 .endif
 
 CONFIGURE_STYLE= 	gnu

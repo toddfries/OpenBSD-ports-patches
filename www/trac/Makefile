@@ -1,19 +1,19 @@
-# $OpenBSD: Makefile,v 1.34 2011/06/24 22:41:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.38 2012/04/22 11:41:55 ajacoutot Exp $
 
 COMMENT=	wiki and bug tracking system for software projects
 
-MODPY_EGG_VERSION=0.12.2
+MODPY_EGG_VERSION=0.12.3
+REVISION=	1
 DISTNAME=	Trac-${MODPY_EGG_VERSION}
 PKGNAME=	trac-${MODPY_EGG_VERSION}
-REVISION=	1
 CATEGORIES=	www devel
 
 MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 HOMEPAGE=	http://trac.edgewall.org/
 
-MASTER_SITES=	ftp://ftp.edgewall.com/pub/trac/ \
-		http://ftp.edgewall.com/pub/trac/
+MASTER_SITES=	http://ftp.edgewall.com/pub/trac/ \
+		ftp://ftp.edgewall.com/pub/trac/
 
 MODPY_SETUPTOOLS=	Yes
 

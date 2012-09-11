@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.3 2011/05/03 18:31:15 jasper Exp $
+@comment $OpenBSD: PLIST-main,v 1.6 2012/06/15 08:32:14 ajacoutot Exp $
 @bin bin/cvpcb
 @bin bin/eeschema
 bin/freeroute.jnlp
@@ -9,34 +9,16 @@ bin/freeroute.jnlp
 lib/kicad/
 lib/kicad/plugins/
 @bin lib/kicad/plugins/netlist_form_pads-pcb
-share/applications/
 share/applications/eeschema.desktop
 share/applications/kicad.desktop
-share/icons/
-share/icons/hicolor/
-share/icons/hicolor/16x16/
-share/icons/hicolor/16x16/mimetypes/
 share/icons/hicolor/16x16/mimetypes/application-x-kicad-project.png
-share/icons/hicolor/22x22/
-share/icons/hicolor/22x22/mimetypes/
 share/icons/hicolor/22x22/mimetypes/application-x-kicad-project.png
-share/icons/hicolor/24x24/
-share/icons/hicolor/24x24/mimetypes/
 share/icons/hicolor/24x24/mimetypes/application-x-kicad-project.png
-share/icons/hicolor/32x32/
-share/icons/hicolor/32x32/mimetypes/
 share/icons/hicolor/32x32/mimetypes/application-x-kicad-project.png
-share/icons/hicolor/48x48/
-share/icons/hicolor/48x48/apps/
 share/icons/hicolor/48x48/apps/kicad.png
-share/icons/hicolor/48x48/mimetypes/
 share/icons/hicolor/48x48/mimetypes/application-x-kicad-project.png
-share/icons/hicolor/scalable/
-share/icons/hicolor/scalable/apps/
 share/icons/hicolor/scalable/apps/kicad.svg
-share/icons/hicolor/scalable/mimetypes/
 share/icons/hicolor/scalable/mimetypes/application-x-kicad-project.svg
-share/kicad/
 share/kicad/demos/
 share/kicad/demos/complex_hierarchy/
 share/kicad/demos/complex_hierarchy/ampli_ht.sch
@@ -141,15 +123,13 @@ share/locale/ru/LC_MESSAGES/kicad.mo
 share/locale/sl/LC_MESSAGES/kicad.mo
 share/locale/sv/LC_MESSAGES/kicad.mo
 share/locale/zh_CN/LC_MESSAGES/kicad.mo
-share/mime/
-share/mime/packages/
 share/mime/packages/kicad.xml
 share/mimelnk/
 share/mimelnk/application/
 share/mimelnk/application/x-kicad-project.desktop
 share/mimelnk/application/x-kicad-schematic.desktop
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-mime-database %D/share/mime
 @unexec-delete %D/bin/update-mime-database %D/share/mime
 @exec %D/bin/update-desktop-database

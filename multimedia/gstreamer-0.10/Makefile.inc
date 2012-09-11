@@ -1,40 +1,68 @@
-# $OpenBSD: Makefile.inc,v 1.17 2011/07/07 23:18:43 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.23 2012/09/06 12:37:57 ajacoutot Exp $
 
-CATEGORIES ?=	multimedia devel
+# Most frequent usage of the GStreamer packages:
+# core          base library
+# plugins-base  minimal set: gio, playback, Ogg Vorbis
+# plugins-good  audio (sndio), volume control
+# plugins-ugly  mp3 decoding, dvd
+# plugins-bad   vaapi
+# plugins-libav divx, mpeg4, h264, vp8 (same decoding capabilities as FFmpeg)
+#
+# i.e. applications that use GStreamer require:
+#     gstreamer-plugins-base and gstreamer-plugins-good
+# audio/video support for MP3 decoding requires:
+#     gstreamer-plugins-ugly
+# support for most video codecs is provided by
+#     gstreamer-plugins-ffmpeg
 
-HOMEPAGE ?=	http://gstreamer.freedesktop.org/
+SHARED_ONLY=		Yes
 
-MAINTAINER ?=	Antoine Jacoutot <ajacoutot@openbsd.org>
+CATEGORIES ?=		multimedia devel
 
-# LGPL
-PERMIT_PACKAGE_CDROM ?=		Yes
-PERMIT_PACKAGE_FTP ?=		Yes
+HOMEPAGE ?=		http://gstreamer.freedesktop.org/
+
+MAINTAINER ?=		Antoine Jacoutot <ajacoutot@openbsd.org>
+
+# GPLv2 - GPLv2+ - LGPLv2
+PERMIT_PACKAGE_CDROM ?=	Yes
+PERMIT_PACKAGE_FTP ?=	Yes
 PERMIT_DISTFILES_CDROM ?=	Yes
-PERMIT_DISTFILES_FTP ?=		Yes
+PERMIT_DISTFILES_FTP ?=	Yes
 
-MASTER_SITE_GST =	http://gstreamer.freedesktop.org/src/
-EXTRACT_SUFX ?=		.tar.bz2
-VERSION =		0.10
+VERSION=		0.10
 SUBST_VARS +=		VERSION
-SHARED_ONLY =		Yes
-SEPARATE_BUILD ?=	simple
-P =			multimedia/gstreamer-${VERSION}
+
+DIST_SUBDIR=		gstreamer
+MASTER_SITE_GST=	http://gstreamer.freedesktop.org/src/
+EXTRACT_SUFX?=		.tar.bz2
+P=			multimedia/gstreamer-${VERSION}
+
+.if defined(MULTI_PACKAGES)
+.for i in ${MULTI_PACKAGES}
+REGRESS_DEPENDS +=	${BASE_PKGPATH},${i}
+.endfor
+.else
+REGRESS_DEPENDS +=	${BASE_PKGPATH}
+.endif
+
+MODULES +=		devel/gettext
 
 USE_GMAKE ?=		Yes
 USE_LIBTOOL ?=		Yes
-# avoid compiling plugins as static libraries
 LIBTOOL_FLAGS ?=	--tag=disable-static
+AUTOCONF_VERSION ?=	2.68
 
 BUILD_DEPENDS +=	devel/bison \
 			devel/gobject-introspection
 
-AUTOCONF_VERSION ?=	2.68
 CONFIGURE_STYLE ?=	autoconf
-
+CONFIGURE_ENV +=	CPPFLAGS="${CPPFLAGS}" \
+			LDFLAGS="${LDFLAGS}"
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
-			--localstatedir=/var/db \
-			--with-default-audiosink=libsndiosink \
-			--with-default-audiosrc=libsndiosrc \
+			--with-package-name="OpenBSD ${DISTNAME} package" \
+			--with-package-origin="http://www.openbsd.org/" \
+			--with-default-audiosink=sndiosink \
+			--with-default-audiosrc=sndiosrc \
 			--with-default-videosink=xvimagesink \
 			--with-default-videosrc=v4l2src \
 			--with-default-visualizer=goom \
@@ -49,5 +77,7 @@ CPPFLAGS +=		-I${LOCALBASE}/include \
 LDFLAGS +=		-L${LOCALBASE}/lib \
 			-L${X11BASE}/lib
 
-CONFIGURE_ENV +=	CPPFLAGS="${CPPFLAGS}" \
-			LDFLAGS="${LDFLAGS}"
+.if !target(post-install)
+post-install:
+	rm ${PREFIX}/lib/gstreamer-${VERSION}/*.la
+.endif

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.36 2010/11/22 08:36:59 espie Exp $
+# $OpenBSD: Makefile,v 1.40 2012/03/29 13:39:01 sthen Exp $
 
 COMMENT=		OpenGL widget for GTK+2 GUI toolkit
 
 GNOME_PROJECT=		gtkglarea
 GNOME_VERSION=		2.0.1
-REVISION=	0
+REVISION=	1
 
 SHARED_LIBS +=  gtkgl-2.0      0.0               # .1.1
 
@@ -15,6 +15,8 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
+EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -28,10 +30,9 @@ WANTLIB += gdk-x11-2.0 gtk-x11-2.0
 
 LIB_DEPENDS=		x11/gtk+2
 
-SEPARATE_BUILD= 	simple
+SEPARATE_BUILD= 	Yes
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
-			--with-lib-GL
+CONFIGURE_ARGS+=	--with-lib-GL
 
 DOC_DIR=		${PREFIX}/share/doc/gtkglarea2
 

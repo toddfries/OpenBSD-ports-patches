@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.11 2011/03/24 03:15:36 jeremy Exp $
+# $OpenBSD: Makefile,v 1.14 2012/01/05 02:10:40 jeremy Exp $
 
 COMMENT=		modular Ruby webserver interface
 
-DISTNAME=		rack-1.2.2
+DISTNAME=		rack-1.3.6
 CATEGORIES=		www
 
 HOMEPAGE=		http://rack.rubyforge.org/
+
+MAINTAINER =		Jeremy Evans <jeremy@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes

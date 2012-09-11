@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.32 2010/11/19 07:23:11 espie Exp $
+# $OpenBSD: Makefile,v 1.34 2012/07/04 07:46:56 sthen Exp $
 
 COMMENT=	write audio/data CD-Rs in disk-at-once mode
 
 DISTNAME= 	cdrdao-1.2.0
-REVISION=	0
+REVISION=	1
 CATEGORIES=	audio misc
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=cdrdao/}
 
 HOMEPAGE=	http://cdrdao.sourceforge.net/
-
-MAINTAINER=	Federico Schwindt <fgsch@openbsd.org>
 
 PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
@@ -32,7 +30,7 @@ FLAVOR?=
 .if ${FLAVOR:L:Maudio}
 CONFIGURE_ARGS+=	--with-lame-lib=${LOCALBASE}/lib \
 			--with-lame-include=${LOCALBASE}/include
-BUILD_DEPENDS+=		audio/libmad>=0.15bp0
+BUILD_DEPENDS+=		audio/libmad
 LIB_DEPENDS+=		audio/libao \
 			audio/lame \
 			audio/libmad \

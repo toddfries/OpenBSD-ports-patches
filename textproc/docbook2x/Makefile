@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.2 2011/05/14 20:16:11 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2012/03/29 13:39:00 sthen Exp $
 
 COMMENT =	convert DocBook to man pages and Texinfo
 
 DISTNAME =	docbook2X-0.8.8
 PKGNAME =	${DISTNAME:L}
-REVISION =	0
+REVISION =	1
 
 CATEGORIES =	textproc
 
@@ -26,7 +26,7 @@ RUN_DEPENDS =		textproc/libxml \
 			textproc/p5-XML-SAX
 BUILD_DEPENDS =		${RUN_DEPENDS}
 
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 USE_GMAKE =		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE =	gnu

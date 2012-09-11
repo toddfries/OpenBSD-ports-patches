@@ -1,19 +1,19 @@
-# $OpenBSD: Makefile,v 1.194 2011/08/17 15:12:15 edd Exp $
+# $OpenBSD: Makefile,v 1.209 2012/08/27 06:19:48 ajacoutot Exp $
 
 # May not be hard to add more.
-ONLY_FOR_ARCHS =	alpha amd64 arm i386 mips64 mips64el powerpc sparc64
+ONLY_FOR_ARCHS =	${GCC4_ARCHS}
 
 COMMENT =		movie player supporting many formats
 
 V =			20110309
-FFMPEG_V =		20110408
+FFMPEG_V =		20120610
 
 SUBST_VARS += 		PREFIX CONFDIR
 
 # Distfiles must be hand-rolled, see README
 N =			mplayer
 DISTNAME =		mplayer-${V}
-REVISION =		10
+REVISION =		21
 
 CATEGORIES =		x11 multimedia
 
@@ -26,12 +26,12 @@ PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
 
 WANTLIB =	GL X11 Xext Xinerama Xss Xv Xxf86dga Xxf86vm ass avcodec \
-		avformat avutil bz2 c cdda_interface cdda_paranoia \
-		crypto dv enca fontconfig freetype fribidi gsm jpeg lcms \
-		m mng mp3lame ncurses ogg>=5 orc-0.4 png postproc \
-		pthread SDL schroedinger-1.0>=2.0 sndio speex stdc++ \
-		swscale theoradec theoraenc ungif util vpx x264>=5 \
-		z
+		avformat avutil bluray bz2 c cdda_interface cdda_paranoia \
+		crypto dv dvdnavmini dvdread enca fontconfig freetype \
+		fribidi gsm jpeg lcms m mng mp3lame ncurses ogg>=5 orc-0.4 \
+		png postproc pthread SDL schroedinger-1.0>=2.0 sndio speex \
+		stdc++ swscale theoradec theoraenc ungif util vpx x264>=5 \
+		xvidcore z
 
 # we use a snapshot
 MASTER_SITES =	http://theunixzoo.co.uk/distfiles/
@@ -43,20 +43,22 @@ MODULES +=	converters/libiconv
 LIB_DEPENDS =	graphics/png \
 		graphics/jpeg \
 		graphics/libungif \
-		graphics/ffmpeg>=20110408p5 \
+		graphics/ffmpeg>=${FFMPEG_V} \
 		audio/cdparanoia>=3.a9.8 \
 		audio/speex \
 		audio/libogg \
 		audio/lame \
+		multimedia/libbluray \
 		multimedia/libdv \
 		devel/fribidi \
-		graphics/lcms \
 		graphics/libmng \
 		archivers/bzip2 \
 		multimedia/schroedinger>=1.0.10 \
 		multimedia/x264>=20101023 \
 		devel/sdl>=1.2.5 \
-		multimedia/libass
+		multimedia/libass \
+		devel/libdvdread>=4.2.0 \
+		multimedia/libdvdnav>=4.2.0
 
 BUILD_DEPENDS =	net/livemedia \
 		audio/rtunes>=0.8 \
@@ -65,7 +67,7 @@ BUILD_DEPENDS =	net/livemedia \
 		textproc/docbook \
 		textproc/docbook-xsl \
 		audio/ladspa
-# mplayer uses non-public interfaces to ffmepg, so we still need
+# mplayer uses non-public interfaces to ffmpeg, so we still need
 # the ffmpeg source in the mplayer tree at build time.
 BUILD_DEPENDS +=graphics/ffmpeg:patch
 
@@ -88,6 +90,7 @@ CONFIGURE_ARGS += --confdir=${CONFDIR} \
 		--extra-libs-mplayer="-lrtunes -lcrypto"
 
 # CONFIGURE_ARGS that disable internal stuff
+# gui is not supported anymore and we have better ones in ports
 CONFIGURE_ARGS += --disable-alsa \
 		--disable-arts \
 		--disable-esd \
@@ -96,17 +99,10 @@ CONFIGURE_ARGS += --disable-alsa \
 		--disable-vidix \
 		--disable-select \
 		--disable-libcdio \
-		--disable-libmpeg2-internal
-# seems stable dvdnav does not work with a new mplayer.
-# if they make a release in the future, maybe we can pull that in,
-# but for now we have to use the internal one.
-#		--disable-dvdread-internal \
-#		--disable-libdvdcss-internal \
-# If re-adding external libdvd*, don't forget the LIB_DEPENDS:
-#		multimedia/libdvdnav>=4.1.3 \
-#		devel/libdvdread \
-# gui is not supported anymore and we have better ones in ports
-CONFIGURE_ARGS += --disable-gui \
+		--disable-libmpeg2-internal \
+		--disable-dvdread-internal \
+		--disable-libdvdcss-internal \
+		--disable-gui \
 		--disable-ffmpeg_a	# link ffmpeg .so (graphics/ffmpeg)
 
 # CONFIGURE_ARGS that enable internal stuff
@@ -127,6 +123,7 @@ CONFIGURE_ARGS += --disable-smb \
 		--disable-liba52 \
 		--disable-libmpeg2 \
 		--disable-toolame \
+		--disable-twolame \
 		--disable-win32dll \
 		--disable-ggi \
 		--disable-libopencore_amrnb \
@@ -138,8 +135,7 @@ CONFIGURE_ARGS += --disable-smb \
 		--disable-faac-lavc \
 		--disable-faad \
 		--disable-theora \
-		--disable-xvid \
-		--disable-xvid-lavc
+		--disable-pulse
 
 # internal tremor, external tremor, external libvorbis all conflict
 # we choose libvorbis to enable encoding to vorbis

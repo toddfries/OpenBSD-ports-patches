@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.12 2011/07/14 11:03:49 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.43 2012/08/15 09:02:52 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -27,16 +27,15 @@ my $cache = {};
 
 sub create
 {
-	my ($class, $file, $short, $site, $distinfo, $v, $distdir) = @_;
+	my ($class, $file, $short, $site, $distinfo, $v, $repo) = @_;
 
 	my $sz = $distinfo->{size}{$file};
 	my $sha = $distinfo->{sha}{$file};
-	if (!defined $sz) {
-		die "Incomplete distinfo for $file: missing sz";
+	if (!defined $sz || !defined $sha) {
+		$v->break("Incomplete info for $file");
+		return;
 	}
-	if (!defined $sha) {
-		die "Incomplete distinfo for $file: missing sha";
-	}
+	$repo->known_file($sha, $file);
 	bless {
 		name => $file,
 		short => $short,
@@ -44,8 +43,20 @@ sub create
 		sha => $sha,
 		site => $site,
 		path => $v,
-		distdir => $distdir,
+		repo => $repo,
 	}, $class;
+}
+
+sub distdir
+{
+	my ($self, @rest) = @_;
+	return join('/', $self->{repo}->distdir, @rest);
+}
+
+sub cached
+{
+	my $self = shift;
+	return $self->{repo}{sha};
 }
 
 sub new
@@ -59,7 +70,7 @@ sub dump
 {
 	my ($class, $logger) = @_;
 	my $log = $logger->create("fetch/distfiles");
-	for my $f (sort map {$_->{name}} values %$cache) {
+	for my $f (sort map {$_->{name}} grep {defined $_} values %$cache) {
 		print $log $f, "\n";
 	}
 }
@@ -80,11 +91,22 @@ sub simple_lockname
 	&lockname;
 }
 
-# should be used for rebuild_info only
+# should be used for rebuild_info and logging only
 
 sub fullpkgpath
 {
 	return shift->{path}->fullpkgpath;
+}
+
+sub print_parent
+{
+	my ($self, $fh) = @_;
+	$self->{path}->print_parent($fh);
+}
+
+sub pkgpath_and_flavors
+{
+	return shift->{path}->pkgpath_and_flavors;
 }
 
 sub tempfilename
@@ -96,14 +118,71 @@ sub tempfilename
 sub filename
 {
 	my $self = shift;
-	return $self->{distdir}."/".$self->{name};
+	return $self->distdir($self->{name});
 }
 
+sub checked_already
+{
+	my $self = shift;
+	return $self->{okay} || $self->{checked};
+}
+
+# this is the entry point from the Engine, this is run as soon as the path
+# has been scanned. For performance reasons, we cannot run a sha at that point.
 sub check
 {
 	my ($self, $logger) = @_;
-	return $self->checksize($logger, $self->filename);
+	# XXX in fetch_only mode, we won't build anything, so this is
+	# the only place we can check the file is okay
+	if ($self->{repo}->{fetch_only}) {
+		return $self->checksum_and_cache($logger, $self->filename);
+	} else {
+		return $self->checkcache_or_size($logger, $self->filename);
+	}
+}
 
+sub make_link
+{
+	my $self = shift;
+	my $sha = $self->{sha}->stringize;
+	if ($sha =~ m/^(..)/) {
+		my $result = $self->distdir('by_cipher', 'sha256', $1, $sha);
+		File::Path::make_path($result);
+		my $dest = $self->{name};
+		$dest =~ s/^.*\///;
+		link $self->filename, "$result/$dest";
+	}
+}
+
+sub find_copy
+{
+	my ($self, $name) = @_;
+
+	# sha256 must match AND size as well
+	my $alternate = $self->{repo}{reverse}{$self->{sha}->stringize};
+	if (defined $alternate) {
+		my $full = $self->distdir($alternate);
+		if ((stat $full)[7] == $self->{sz}) {
+			unlink($name);
+			if (link($full, $name)) {
+				$self->do_cache;
+				$self->{okay} = 1;
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+sub checkcache_or_size
+{
+	my ($self, $logger, $name) = @_;
+	# XXX if we matched once, then we match "forever"
+	return 1 if $self->{okay};
+	if (defined $self->cached->{$self->{name}}) {
+		return $self->checkcached($logger, $name);
+	}
+	return $self->checksize($logger, $name);
 }
 
 sub checksize
@@ -111,15 +190,107 @@ sub checksize
 	my ($self, $logger, $name) = @_;
 	# XXX if we matched once, then we match "forever"
 	return 1 if $self->{okay};
+	if ($self->{sz} == 0) {
+		my $fh = $logger->open('dist/'.$self->{name});
+		print $fh "incomplete distinfo: no size\n";
+	}
+		
 	if (!stat $name) {
-		return 0;
+		return $self->find_copy($name);
 	}
 	if ((stat _)[7] != $self->{sz}) {
 		my $fh = $logger->open('dist/'.$self->{name});
 		print $fh "size does not match\n";
 		return 0;
 	}
+	$self->{checked} = 1;
 	return 1;
+}
+
+sub checkcached
+{
+	my ($self, $logger, $name) = @_;
+	if (!defined $self->{sha}) {
+		my $fh = $logger->open('dist/'.$self->{name});
+		print $fh "incomplete distinfo: no sha\n";
+		return 0;
+	}
+	if ($self->cached->{$self->{name}}->equals($self->{sha})) {
+		$self->{okay} = 1;
+		return 1;
+	} else {
+		delete $self->cached->{$self->{name}};
+		my $fh = $logger->open('dist/'.$self->{name});
+		print $fh "sha cache info does not match,";
+		if ($self->caches_okay($name)) {
+			print $fh "but actual file had the right sha\n";
+			return 1;
+		} else {
+			print $fh "and actual file was wrong, deleted\n";
+			return 0;
+		}
+	}
+}
+
+sub do_cache
+{
+	my $self = shift;
+
+	eval {
+	$self->make_link;
+	print {$self->{repo}->{log}} "SHA256 ($self->{name}) = ",
+	    $self->{sha}->stringize, "\n";
+	};
+	# also enter ourselves into the internal repository
+	$self->cached->{$self->{name}} = $self->{sha};
+}
+
+# this is where we actually enter new files in the cache, when they do match.
+sub caches_okay
+{
+	my ($self, $name) = @_;
+	if (-f -r $name) {
+		if (OpenBSD::sha->new($name)->equals($self->{sha})) {
+			$self->{okay} = 1;
+			$self->do_cache;
+			return 1;
+		} else {
+			unlink($name);
+		}
+	}
+	return 0;
+}
+
+sub checksum_and_cache
+{
+	my ($self, $logger, $name) = @_;
+	# XXX if we matched once, then we match "forever"
+	return 1 if $self->{okay};
+	if (!defined $self->{sha}) {
+		return 0;
+	}
+	if (defined $self->cached->{$self->{name}}) {
+		return $self->checkcached($logger, $name);
+	}
+	if ($self->caches_okay($name)) {
+		return 1;
+	}
+	return $self->find_copy($name);
+}
+
+sub cache
+{
+	my $self = shift;
+	# XXX if we matched once, then we match "forever"
+	return 1 if $self->{okay};
+	$self->{okay} = 1;
+	# already done
+	if (defined $self->cached->{$self->{name}}) {
+		if ($self->cached->{$self->{name}}->equals($self->{sha})) {
+			return;
+		}
+	}
+	$self->do_cache;
 }
 
 sub checksum
@@ -128,8 +299,18 @@ sub checksum
 	# XXX if we matched once, then we match "forever"
 	return 1 if $self->{okay};
 	print "checksum for $name: ";
-	if (OpenBSD::sha->new($name)->equals($self->{sha})) {
-		$self->{okay} = 1;
+	if (!defined $self->{sha}) {
+		print "NONE\n";
+		return 0;
+	}
+	if (defined $self->cached->{$self->{name}}) {
+		if ($self->cached->{$self->{name}}->equals($self->{sha})) {
+			print "OK (cached)\n";
+			$self->{okay} = 1;
+			return 1;
+		}
+	}
+	if ($self->caches_okay($name)) {
 		print "OK\n";
 		return 1;
 	}
@@ -149,19 +330,187 @@ sub requeue
 	$engine->requeue_dist($v);
 }
 
+sub forget
+{
+	my $self = shift;
+	delete $self->{size};
+	delete $self->{sha};
+	delete $self->{okay};
+}
+
 # handles fetch information, if required
 package DPB::Fetch;
 
 sub new
 {
-	my ($class, $distdir) = @_;
-	bless {distdir => $distdir}, $class;
+	my ($class, $distdir, $logger, $state) = @_;
+	my $o = bless {distdir => $distdir, sha => {}, reverse => {},
+	    known_sha => {}, known_files => {},
+	    known_short => {},
+	    fetch_only => $state->{fetch_only}}, $class;
+	if (defined $state->{subst}->value('FTP_ONLY')) {
+		$o->{ftp_only} = 1;
+	}
+	if (defined $state->{subst}->value('CDROM_ONLY')) {
+		$o->{cdrom_only} = 1;
+	}
+	if (open(my $fh, '<', "$distdir/distinfo")) {
+		print "Reading distinfo...";
+		my $_;
+		while (<$fh>) {
+			if (m/^SHA256\s*\((.*)\) \= (.*)/) {
+				next unless -f "$distdir/$1";
+				$o->{sha}{$1} = OpenBSD::sha->fromstring($2);
+				$o->{reverse}{$2} = $1;
+			}
+		}
+	}
+	print "zap duplicates...";
+	# rewrite "more or less" the same info, so we flush duplicates,
+	# e.g., keep only most recent checksum seen
+	File::Path::make_path($distdir);
+	open(my $fh, '>', "$distdir/distinfo.new");
+	for my $k (sort keys %{$o->{sha}}) {
+		print $fh "SHA256 ($k) = ", $o->{sha}{$k}->stringize,
+		    "\n";
+	}
+	close ($fh);
+	print "Done\n";
+	rename("$distdir/distinfo.new", "$distdir/distinfo");
+	open($o->{log}, ">>", "$distdir/distinfo");
+	DPB::Util->make_hot($o->{log});
+	return $o;
+}
+
+sub mark_sha
+{
+	my ($self, $sha, $file) = @_;
+
+	$self->{known_sha}{$sha}{$file} = 1;
+
+	# next cases are only needed to weed out by_cipher of extra links
+	if ($file =~ m/^.*\/([^\/]+)$/) {
+		$self->{known_short}{$sha}{$1} = 1;
+	}
+
+	# in particular, double / in $sha will vanish thanks to the fs
+	my $do = 0;
+	if ($sha =~ s/\/\//\//g) {
+		$do++;
+	}
+	if ($sha =~ s/^\///) {
+		$do++;
+	}
+	if ($do) {
+		if ($file =~ m/^.*\/([^\/]+)$/) {
+			$self->{known_short}{$sha}{$1} = 1;
+		} else {
+			$self->{known_short}{$sha}{$file} = 1;
+		}
+	}
+}
+
+sub known_file
+{
+	my ($self, $sha, $file) = @_;
+	$self->mark_sha($sha->stringize, $file);
+	$self->{known_file}{$file} = 1;
+}
+
+sub run_expire_old
+{
+	my ($self, $core, $opt_e) = @_;
+	$core->start_job(DPB::Job::Normal->new(
+	    sub {
+		$self->expire_old;
+	    },
+	    sub {
+		# and we will never need this again
+		delete $self->{known_file};
+		delete $self->{known_sha};
+		delete $self->{known_short};
+		if (!$opt_e) {
+			$core->mark_ready;
+		}
+		return 0;
+	    }, 
+	    "UPDATING DISTFILES HISTORY"));
+	return 1;
+}
+
+sub expire_old
+{
+	my $self = shift;
+	my $ts = time();
+	my $distdir = $self->distdir;
+	if (open(my $fh, '<', "$distdir/history")) {
+		my $_;
+		while (<$fh>) {
+			if (m/^\d+\s+SHA256\s*\((.*)\) \= (.*\=)$/) {
+				my ($file, $sha) = ($1, $2);
+				$self->mark_sha($sha, $file);
+				$self->{known_file}{$file} = 1;
+			}
+		}
+		close $fh;
+	}
+	open my $fh, ">>", "$distdir/history" or return;
+	while (my ($sha, $file) = each %{$self->{reverse}}) {
+		next if $self->{known_sha}{$sha}{$file};
+		print $fh "$ts SHA256 ($file) = $sha\n";
+		$self->{known_file}{$file} = 1;
+	}
+	for my $special (qw(Makefile distinfo history)) {
+		$self->{known_file}{$special} = 1;
+	}
+
+	# let's also scan the directory proper
+	require File::Find;
+	File::Find::find(sub {
+		if (-d $_ && 
+		    ($File::Find::name eq "$distdir/by_cipher" || 
+		    $File::Find::name eq "$distdir/build-stats")) {
+			$File::Find::prune = 1;
+			return;
+		}
+		return unless -f _;
+		return if m/\.part$/;
+		my $actual = $File::Find::name;
+		$actual =~ s/^\Q$distdir\E\/?//;
+		return if $self->{known_file}{$actual};
+		my $sha = OpenBSD::sha->new($_)->stringize;
+		print $fh "$ts SHA256 ($actual) = $sha\n";
+		$self->mark_sha($sha, $actual);
+	}, $distdir);
+
+	my $c = "$distdir/by_cipher/sha256";
+	if (-d $c) {
+		# and scan the ciphers as well !
+		File::Find::find(sub {
+			return unless -f $_;
+			if ($File::Find::dir =~ 
+			    m/^\Q$distdir\E\/by_cipher\/sha256\/..?\/(.*)$/) {
+				my $sha = $1;
+				return if $self->{known_sha}{$sha}{$_};
+				return if $self->{known_short}{$sha}{$_};
+				print $fh "$ts SHA256 ($_) = ", $sha, "\n";
+			}
+		}, $c);
+	}
+
+	close $fh;
+}
+
+sub distdir
+{
+	my $self = shift;
+	return $self->{distdir};
 }
 
 sub read_checksums
 {
 	my $filename = shift;
-	open my $fh, '<', $filename or die "Can't read distinfo $filename";
+	open my $fh, '<', $filename or return;
 	my $r = { size => {}, sha => {}};
 	my $_;
 	while (<$fh>) {
@@ -171,7 +520,7 @@ sub read_checksums
 		} elsif (m/^SHA256 \((.*)\) \= (.*)$/) {
 			$r->{sha}->{$1} = OpenBSD::sha->fromstring($2);
 		} else {
-			die "Unknown line in $filename: $_";
+			next;
 		}
 	}
 	return $r;
@@ -179,7 +528,7 @@ sub read_checksums
 
 sub build_distinfo
 {
-	my ($self, $h) = @_;
+	my ($self, $h, $fetch_only) = @_;
 	my $distinfo = {};
 	for my $v (values %$h) {
 		my $info = $v->{info};
@@ -191,7 +540,8 @@ sub build_distinfo
 		my $checksum_file = $info->{CHECKSUM_FILE};
 
 		if (!defined $checksum_file) {
-			die "No checksum file for ".$v->fullpkgpath;
+			$v->break("No checksum file");
+			next;
 		}
 		$checksum_file = $checksum_file->string;
 		$distinfo->{$checksum_file} //=
@@ -207,18 +557,22 @@ sub build_distinfo
 				$site.= $2;
 			}
 			if (!defined $info->{$site}) {
-				die "Can't find $site for $arg";
+				$v->break("Can't find $site for $arg");
+				return;
 			}
 			return DPB::Distfile->new($arg, $dir,
-			    $info->{$site}, $checksums, $v, $self->{distdir});
+			    $info->{$site}, $checksums, $v, $self);
 		};
 
 		for my $d ((keys %{$info->{DISTFILES}}), (keys %{$info->{PATCHFILES}})) {
 			my $file = &$build($d);
-			$files->{$file} = $file;
+			$files->{$file} = $file if defined $file;
 		}
 		for my $d (keys %{$info->{SUPDISTFILES}}) {
-			&$build($d);
+			my $file = &$build($d);
+			if ($fetch_only) {
+				$files->{$file} = $file if defined $file;
+			}
 		}
 		for my $k (qw(DIST_SUBDIR CHECKSUM_FILE DISTFILES
 		    PATCHFILES SUPDISTFILES MASTER_SITES MASTER_SITES0
@@ -229,6 +583,17 @@ sub build_distinfo
 		}
 		bless $files, "AddDepends";
 		$info->{DIST} = $files;
+		if ($self->{cdrom_only} && 
+		    defined $info->{PERMIT_PACKAGE_CDROM}) {
+			$info->{DISTIGNORE} = 1;
+			$info->{IGNORE} //= AddIgnore->new(
+				"Distfile not allowed for cdrom");
+		} elsif ($self->{ftp_only} &&
+		    defined $info->{PERMIT_PACKAGE_FTP}) {
+			$info->{DISTIGNORE} = 1;
+			$info->{IGNORE} //= AddIgnore->new(
+			    "Distfile not allowed for ftp");
+		}
 	}
 }
 
@@ -273,6 +638,7 @@ sub finalize
 		return $job->bad_file($self->{fetcher}, $core);
 	}
 	rename($job->{file}->tempfilename, $job->{file}->filename);
+	$job->{file}->cache;
 	my $sz = $job->{file}->{sz};
 	if (defined $self->{fetcher}->{initial_sz}) {
 		$sz -= $self->{fetcher}->{initial_sz};
@@ -285,12 +651,21 @@ sub finalize
 		print $fh "(", sprintf("%.2f", $sz / $elapsed / 1024), "KB/s)";
 	}
 	print $fh "\n";
+	close $fh;
 	return 1;
 }
 
 # Fetching stuff is almost a normal job
 package DPB::Task::Fetch;
 our @ISA = qw(DPB::Task::Clocked);
+
+sub stopped_clock
+{
+	my ($self, $gap) = @_;
+	# note that we're missing time
+	$self->{got_suspended}++;
+	$self->SUPER::stopped_clock($gap);
+}
 
 sub new
 {
@@ -313,22 +688,24 @@ sub run
 	my $job = $core->job;
 	my $shell = $core->{shell};
 	my $site = $self->{site};
+	$self->redirect($job->{log});
+	if ($job->{file}{sz} == 0) {
+		print STDERR "No size in distinfo\n";
+		exit(1);
+	}
 	my $ftp = OpenBSD::Paths->ftp;
 	$self->redirect($job->{log});
-	my @cmd = ($ftp, '-C', '-o', $job->{file}->tempfilename, '-v',
+	my @cmd = ('-C', '-o', $job->{file}->tempfilename, '-v',
 	    $site.$job->{file}->{short});
+	if ($ftp =~ /\s/) {
+		unshift @cmd, split(/\s+/, $ftp);
+	} else {
+		unshift @cmd, $ftp;
+	}
 	print STDERR "===> Trying $site\n";
 	print STDERR join(' ', @cmd), "\n";
 	# run ftp;
-	if (defined $shell) {
-		$shell->run(join(' ', @cmd));
-	} else {
-		if ($ftp =~ /\s/) {
-			exec join(' ', @cmd);
-		} else {
-			exec{$ftp} @cmd;
-		}
-	}
+	$core->shell->exec(@cmd);
 }
 
 sub finalize
@@ -340,6 +717,10 @@ sub finalize
 	    $job->{file}->tempfilename)) {
 	    	$job->new_checksum_task($self, $core->{status});
 	} else {
+		if ($job->{file}->{sz} == 0) {
+			$job->{sites} = [];
+			return $job->bad_file($self, $core);
+		}
 		# Fetch exited okay, but the file is not the right size
 		if ($core->{status} == 0 ||
 		# definite error also if file is too large
@@ -347,7 +728,10 @@ sub finalize
 		    (stat _)[7] > $job->{file}->{sz}) {
 			unlink($job->{file}->tempfilename);
 		}
-		shift @{$job->{sites}};
+		# if we got suspended, well, might have to retry same site
+		if (!$self->{got_suspended}) {
+			shift @{$job->{sites}};
+		}
 		return $job->bad_file($self, $core);
 	}
 }
@@ -402,6 +786,10 @@ sub new
 		logger => $logger,
 		log => $logger->make_distlogs($file),
 	}, $class;
+	if (open my $fh, '>>', $job->{log}) {
+		print $fh ">>> From ", $file->fullpkgpath, "\n";
+		close $fh;
+	}
 	File::Path::mkpath(File::Basename::dirname($file->filename));
 	$job->{watched} = DPB::Watch->new($file->tempfilename,
 		$file->{sz}, undef, $job->{started});
@@ -412,7 +800,7 @@ sub new
 sub name
 {
 	my $self = shift;
-	return '>'.$self->{file}->{name}."(#".$self->{tries}.")";
+	return '<'.$self->{file}->{name}."(#".$self->{tries}.")";
 }
 
 sub watched

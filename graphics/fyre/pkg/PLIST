@@ -1,5 +1,7 @@
-@comment $OpenBSD: PLIST,v 1.4 2009/12/22 16:06:40 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.7 2012/07/17 10:05:34 jasper Exp $
 @bin bin/fyre
+share/applications/
+share/applications/fyre.desktop
 share/fyre/
 share/fyre/about-box.fa
 share/fyre/animation-render.glade
@@ -11,7 +13,9 @@ share/icons/hicolor/24x24/apps/fyre.png
 share/icons/hicolor/48x48/mimetypes/application-x-fyre-animation.png
 share/icons/hicolor/scalable/apps/fyre.svg
 share/mime/packages/fyre.xml
-@exec %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
-@unexec-delete %D/bin/gtk-update-icon-cache -q -f -t %D/share/icons/hicolor 2> /dev/null || true
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/update-mime-database %D/share/mime
 @unexec-delete %D/bin/update-mime-database %D/share/mime
+@exec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database

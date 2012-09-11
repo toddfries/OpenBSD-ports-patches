@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.51 2011/07/02 15:46:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.76 2012/09/01 14:36:59 ajacoutot Exp $
 
-COMMENT-main=	GNOME virtual file system
+COMMENT-main=	GNOME Virtual File System
 COMMENT-smb=	samba module for GVFS
 
 GNOME_PROJECT=	gvfs
-GNOME_VERSION=	1.8.2
+GNOME_VERSION=	1.12.3
 
 PKGNAME-main=	${DISTNAME}
 PKGNAME-smb=	${GNOME_PROJECT}-smb-${GNOME_VERSION}
 
-REVISION-main=	5
-REVISION-smb=	0
+REVISION-main=	1
+REVISION-smb=	1
 
 SHARED_LIBS +=  gvfscommon           3.0      # .0.0
 SHARED_LIBS +=  gvfscommon-dnssd     1.0      # .0.0
@@ -25,38 +25,36 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
+# XXX PaxHeaders
+TAR=		${LOCALBASE}/bin/gtar
+BUILD_DEPENDS+=	archivers/gtar
+
 WANTLIB += c dbus-1 gio-2.0 glib-2.0>=2800
 WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 pcre pthread util
-WANTLIB += expat gpg-error z gcrypt gnome-keyring>=6
+WANTLIB += ffi gpg-error z gcrypt gnome-keyring>=6
 
 LIB_DEPENDS=	x11/gnome/libgnome-keyring
 
 WANTLIB-main +=	${WANTLIB}
-WANTLIB-main += bz2 lzma m soup-2.4 sqlite3
+WANTLIB-main += bz2 m lzma soup-2.4 sqlite3 expat
 WANTLIB-main += xml2 archive soup-gnome-2.4>=1
 WANTLIB-main += avahi-client avahi-common avahi-glib
 
-DESKTOP_FILES=	Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		archivers/libarchive \
 		devel/libsoup,-gnome \
 		net/avahi
-RUN_DEPENDS-main= ${RUN_DEPENDS} \
-		sysutils/gamin,-server
 
-WANTLIB-smb += ${WANTLIB} gvfscommon smbclient execinfo m talloc tdb wbclient
+WANTLIB-smb += ${WANTLIB} gvfscommon smbclient execinfo talloc tdb wbclient
 RUN_DEPENDS-smb= ${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-smb= ${LIB_DEPENDS} \
 		${BASE_PKGPATH},-main \
 		net/samba
 
-AUTOCONF_VERSION=2.68
-CONFIGURE_STYLE=autoconf
-
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--disable-cdda \
+CONFIGURE_ARGS=	--disable-cdda \
+		--disable-bluray \
 		--disable-fuse \
 		--disable-hal \
 		--disable-afc \
@@ -64,19 +62,22 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gphoto2 \
 		--disable-gudev \
 		--disable-udev \
+		--disable-gdu \
+		--enable-afp \
 		--enable-archive \
 		--enable-avahi \
 		--enable-http \
 		--enable-keyring \
 		--with-bash-completion-dir="${PREFIX}/share/gvfs"
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-
-SUBST_VARS+=	GNOME_VERSION
 
 MULTI_PACKAGES=		-main
 PSEUDO_FLAVORS=		no_smb
 FLAVOR?=
+
+AUTOCONF_VERSION=	2.68
+AUTOMAKE_VERSION=	1.11
+
+CONFIGURE_STYLE=	autoconf
 
 .if ${FLAVOR:L:Mno_smb}
 CONFIGURE_ARGS+= --disable-samba

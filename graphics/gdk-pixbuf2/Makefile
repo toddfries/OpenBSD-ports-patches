@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.11 2011/08/27 08:19:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2012/09/01 14:36:57 ajacoutot Exp $
 
-COMMENT=	graphic library for GTK+2
+COMMENT=	graphic library for gtk+2
 
-V=		2.24.0
-DISTNAME=	gdk-pixbuf-${V}
-
-EXTRACT_SUFX=	.tar.xz
+GNOME_PROJECT=	gdk-pixbuf
+GNOME_VERSION=	2.26.3
+REVISION=	0
 
 CATEGORIES=	graphics
 
-SHARED_LIBS +=  gdk_pixbuf-2.0            2200.1 # 2300.3
-SHARED_LIBS +=  gdk_pixbuf_xlib-2.0       2200.1 # 2300.3
+SHARED_LIBS +=  gdk_pixbuf-2.0       2600.0   # 2600.0
+SHARED_LIBS +=  gdk_pixbuf_xlib-2.0  2600.0   # 2600.0
 
 HOMEPAGE=	http://www.gtk.org/
 
@@ -23,30 +22,23 @@ PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 c gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += jasper jpeg m pcre png pthread tiff xcb z
-
-MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gdk-pixbuf/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
-
-BUILD_DEPENDS=	devel/gobject-introspection
+WANTLIB += jasper jpeg m pcre png pthread tiff xcb z ffi
 
 LIB_DEPENDS=	devel/glib2>=2.26.0 \
 		graphics/jasper \
 		graphics/png \
 		graphics/tiff
 
-MODULES=	devel/gettext
+MODULES=	devel/gettext \
+		x11/gnome
 
-USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
+MODGNOME_TOOLS=	goi
+
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--disable-Bsymbolic \
-		--enable-introspection \
-		--with-libjasper
+CONFIGURE_ARGS=	--disable-Bsymbolic \
+		--with-libjasper \
+		--with-x11
 
 .include <bsd.port.mk>

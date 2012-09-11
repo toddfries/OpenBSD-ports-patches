@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2011/01/05 18:45:45 sebastia Exp $
+# $OpenBSD: Makefile,v 1.60 2012/03/29 13:38:40 sthen Exp $
 
 COMMENT=	sophisticated scripter based on Tcl/Tk
 
@@ -22,9 +22,9 @@ WANTLIB += c util m
 FLAVORS=	no_tk
 FLAVOR?=
 
-SEPARATE_BUILD=	simple
+SEPARATE_BUILD=	Yes
 AUTOCONF_VERSION=	2.59
-CONFIGURE_STYLE=autoconf no-autoheader gnu
+CONFIGURE_STYLE=autoconf no-autoheader
 CONFIGURE_ARGS+=${CONFIGURE_SHARED}
 
 CFLAGS+=	-I${X11BASE}/include
@@ -33,7 +33,7 @@ CONFIGURE_ARGS+=--with-tclconfig="${MODTCL_LIBDIR}" \
 CONFIGURE_ENV+=	LIBexpect544115_VERSION=${LIBexpect544115_VERSION} \
 		CFLAGS="-I${MODTCL_INCDIR} -I${X11BASE}/include"
 
-.if !${FLAVOR:L:Mno_tk}
+.if !${FLAVOR:Mno_tk}
 MODULES=	x11/tk
 WANTLIB+= X11 z pthread-stubs xcb
 WANTLIB+= Xau Xdmcp Xext Xft Xrender Xss expat fontconfig freetype

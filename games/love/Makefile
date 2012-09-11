@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/07/02 09:54:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2012/07/10 22:21:37 jasper Exp $
 
 COMMENT=		2D games framework for use with Lua
 
-V=			0.7.2
+V=			0.8.0
 DISTNAME=		love-$V-linux-src
 PKGNAME=		love-$V
+REVISION=		1
 
 HOMEPAGE=		http://love2d.org/
 
@@ -19,11 +20,12 @@ PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://bitbucket.org/rude/love/downloads/
 
-MODULES=		converters/libiconv
+MODULES=		converters/libiconv \
+			lang/lua
 
 WANTLIB += GL Half IL Iex IlmImf IlmThread Imath SDL X11 Xdamage
 WANTLIB += Xext Xfixes Xxf86vm c drm freetype jasper jpeg lcms
-WANTLIB += ltdl lua m mng modplug mpg123 ogg openal physfs-1.0
+WANTLIB += ltdl ${MODLUA_WANTLIB} m modplug mpg123 ogg openal physfs-1.0
 WANTLIB += png pthread sndio stdc++ tiff usbhid vorbis vorbisfile
 WANTLIB += xcb z
 
@@ -35,18 +37,18 @@ LIB_DEPENDS=		audio/libmodplug \
 			devel/sdl \
 			graphics/DevIL \
 			graphics/ilmbase \
-			graphics/libmng \
 			graphics/openexr \
-			lang/lua
+			${MODLUA_LIB_DEPENDS}
 
 USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/SDL/ \
-				-I${X11BASE}/include/ -I${X11BASE}/include/freetype2" \
+				-I${X11BASE}/include/ -I${X11BASE}/include/freetype2 \
+				`pkg-config --cflags ${MODLUA_DEP}`" \
 			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -pthread"
 
-WRKDIST=		${WRKDIR}/love-HEAD/
+WRKDIST=		${WRKDIR}/love-$V/
 
 post-extract:
 # Add missing newlines

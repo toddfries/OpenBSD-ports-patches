@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2011/06/20 16:04:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2012/05/02 07:48:59 ajacoutot Exp $
 
 TRYTOND_MODULE =	account
 REVISION =		0

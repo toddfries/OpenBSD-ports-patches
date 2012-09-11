@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Reporter.pm,v 1.6 2011/06/04 12:58:24 espie Exp $
+# $OpenBSD: Reporter.pm,v 1.11 2012/07/10 14:28:30 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -34,13 +34,13 @@ sub term_send
 sub reset_cursor
 {
 	my $self = shift;
-	$self->term_send("ve");
+	print $self->{visible} if defined $self->{visible};
 }
 
 sub set_cursor
 {
 	my $self = shift;
-	$self->term_send("vi");
+	print $self->{invisible} if defined $self->{invisible};
 }
 
 sub reset
@@ -73,6 +73,10 @@ sub set_sig_handlers
 	};
 }
 
+sub refresh
+{
+}
+
 sub handle_window
 {
 }
@@ -90,12 +94,20 @@ sub filter_can
 sub new
 {
 	my $class = shift;
-	my $notty = shift;
-	my $isatty = !$notty && -t STDOUT;
-	if ($isatty) {
-		$class->ttyclass->new(@_);
+	my $state = shift;
+	my $dotty;
+	if ($state->opt('x')) {
+		$dotty = 0;
+	} elsif ($state->opt('m')) {
+		$dotty = 1;
 	} else {
-		$singleton //= bless {msg => '', tty => $isatty,
+		$dotty = -t STDOUT;
+	}
+		
+	if ($dotty) {
+		$class->ttyclass->new($state, @_);
+	} else {
+		$singleton //= bless {msg => '', tty => $dotty,
 		    producers => $class->filter_can(\@_, 'important'),
 		    continued => 0}, $class;
 	}
@@ -153,12 +165,18 @@ sub term_send
 	$self->{terminal}->Tputs($seq, 1, \*STDOUT);
 }
 
+sub refresh
+{
+	my $self = shift;
+	$self->{write} = 'go_write_home';
+}
+
 sub handle_window
 {
 	my $self = shift;
 	$self->set_cursor;
 	$self->find_window_size;
-	$self->{write} = 'go_write_home';
+	$self->refresh;
 }
 
 sub set_sig_handlers
@@ -170,14 +188,12 @@ sub set_sig_handlers
 	};
 	OpenBSD::Handler->register(sub {
 		$self->reset_cursor; });
-	$SIG{'__DIE__'} = sub {
-		$self->reset_cursor;
-	};
 }
 
 sub new
 {
 	my $class = shift;
+	my $state = shift;
 	$singleton //= bless {msg => '',
 	    producers => $class->filter_can(\@_, 'report'),
 	    continued => 0}, $class;
@@ -197,7 +213,13 @@ sub new
 	$singleton->{clear} = $singleton->{terminal}->Tputs("cl", 1);
 	$singleton->{down} = $singleton->{terminal}->Tputs("do", 1);
 	$singleton->{glitch} = $singleton->{terminal}->Tputs("xn", 1);
-	$singleton->{cleareol} = $singleton->{terminal}->Tputs("", 1);
+	$singleton->{cleareol} = $singleton->{terminal}->Tputs("ce", 1);
+	if ($state->{subst}->value("NO_CURSOR")) {
+		$singleton->{invisible} = 
+		    $singleton->{terminal}->Tputs("vi", 1);
+		$singleton->{visible} = 
+		    $singleton->{terminal}->Tputs("ve", 1);
+	}
 	if ($singleton->{home}) {
 		$singleton->{write} = "go_write_home";
 	} else {
@@ -335,6 +357,7 @@ sub myprint
 {
 	my $self = shift;
 	for my $string (@_) {
+		$string =~ s/^\t/       /gm; # XXX dirty hack for warn
 		$extra .= $string;
 	}
 }

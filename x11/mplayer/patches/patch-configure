@@ -1,6 +1,6 @@
-$OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
---- configure.orig	Wed Mar  9 00:33:03 2011
-+++ configure	Fri Jun 24 12:19:32 2011
+$OpenBSD: patch-configure,v 1.64 2012/08/27 06:19:48 ajacoutot Exp $
+--- configure.orig	Tue Mar  8 19:33:03 2011
++++ configure	Thu Aug 16 17:53:14 2012
 @@ -35,29 +35,33 @@
  #
  #############################################################################
@@ -81,8 +81,12 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
    --enable-sgiaudio)    _sgiaudio=yes   ;;
    --disable-sgiaudio)   _sgiaudio=no    ;;
    --enable-alsa)        _alsa=yes       ;;
-@@ -1489,7 +1497,7 @@ if test -z "$_target" ; then
-       sh3|sh4|sh4a) host_arch=sh ;;
+@@ -1486,10 +1494,10 @@ if test -z "$_target" ; then
+       sparc64) host_arch=sparc64 ;;
+       parisc*|hppa*|9000*) host_arch=hppa ;;
+       arm*|zaurus|cats) host_arch=arm ;;
+-      sh3|sh4|sh4a) host_arch=sh ;;
++      sh3|sh4|sh4a|landisk) host_arch=sh ;;
        s390) host_arch=s390 ;;
        s390x) host_arch=s390x ;;
 -      *mips*) host_arch=mips ;;
@@ -131,6 +135,15 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
  echores "$gnu_as"
  
  fi
+@@ -3118,7 +3129,7 @@ if test "$_posix4" = yes ; then
+ fi
+ echores "$_posix4"
+ 
+-for func in exp2 exp2f llrint llrintf log2 log2f lrint lrintf round roundf truncf; do
++for func in exp2 exp2f llrint llrintf log2 log2f lrint lrintf round roundf trunc truncf; do
+ echocheck $func
+ eval _$func=no
+ statement_check math.h "${func}(2.0)" -D_ISOC99_SOURCE $_ld_lm && eval _$func=yes
 @@ -3480,7 +3491,8 @@ if test "$_memalign" = yes ; then
  else
    def_memalign='#define HAVE_MEMALIGN 0'
@@ -141,15 +154,6 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
  fi
  echores "$_memalign"
  
-@@ -3585,7 +3597,7 @@ int main(void) { pthread_t tid; return pthread_create(
- EOF
- _pthreads=no
- if ! hpux ; then
--  for _ld_tmp in "-lpthreadGC2" "" "-lpthread" "-pthread" ; do
-+  for _ld_tmp in "-lpthreadGC2" "" "-pthread" "-lpthread" ; do
-     # for crosscompilation, we cannot execute the program, be happy if we can link statically
-     cc_check $THREAD_CFLAGS $_ld_tmp && (tmp_run || test "$_ld_static") && _ld_pthread="$_ld_tmp" && _pthreads=yes && break
-   done
 @@ -4661,6 +4673,8 @@ if test "$_aa" = yes ; then
    def_aa='#define CONFIG_AA 1'
    if cygwin ; then
@@ -210,19 +214,32 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
  def_mlib='#define CONFIG_MLIB 0'
  if sunos; then
  echocheck "Sun mediaLib"
-@@ -5832,8 +5866,9 @@ if test "$_dvdread_internal" = auto ; then
- elif test "$_dvdread" = auto ; then
-   _dvdread=no
-   if test "$_dl" = yes; then
--    _dvdreadcflags=$($_dvdreadconfig --cflags 2> /dev/null)
--    _dvdreadlibs=$($_dvdreadconfig --libs 2> /dev/null)
-+# OpenBSD - we do not use dvdread-config, picked up anyway without
-+#    _dvdreadcflags=$($_dvdreadconfig --cflags 2> /dev/null)
-+#    _dvdreadlibs=$($_dvdreadconfig --libs 2> /dev/null)
-     if header_check dvdread/dvd_reader.h $_dvdreadcflags $_dvdreadlibs $_ld_dl ; then
-       _dvdread=yes
-       extra_cflags="$extra_cflags $_dvdreadcflags"
-@@ -6521,7 +6556,7 @@ echores "$_libmpeg2"
+@@ -5780,7 +5814,15 @@ else
+   default_dvd_device="/dev/dvd"
+ fi
+ 
++if win32 || os2 || dragonfly || freebsd || openbsd || sunos || amigaos ; then
++  default_bluray_device=$default_cdrom_device
++elif darwin ; then
++  default_bluray_device="/dev/rdiskN"
++else
++  default_bluray_device="/dev/dvd"
++fi
+ 
++
+ echocheck "VCD support"
+ if test "$_vcd" = auto; then
+   _vcd=no
+@@ -5805,7 +5847,7 @@ echores "$_vcd"
+ echocheck "Blu-ray support"
+ if test "$_bluray" = auto ; then
+   _bluray=no
+-  statement_check libbluray/bluray.h 'bd_get_title_info(0, 0)' -lbluray && _bluray=yes
++  statement_check libbluray/bluray.h 'bd_get_title_info(0, 0, 0)' -lbluray && _bluray=yes
+ fi
+ if test "$_bluray" = yes ; then
+   def_bluray='#define CONFIG_LIBBLURAY 1'
+@@ -6521,7 +6563,7 @@ echores "$_libmpeg2"
  echocheck "libdca support"
  if test "$_libdca" = auto ; then
    _libdca=no
@@ -231,7 +248,7 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
      statement_check_broken stdint.h dts.h 'dts_init(0)' $_ld_dca $_ld_lm &&
        extra_ldflags="$extra_ldflags $_ld_dca" && _libdca=yes && break
    done
-@@ -7360,6 +7395,8 @@ if test "$_tv_v4l2" = auto ; then
+@@ -7360,6 +7402,8 @@ if test "$_tv_v4l2" = auto ; then
    _tv_v4l2=no
    if test "$_tv" = yes && linux ; then
      header_check_broken sys/time.h linux/videodev2.h && _tv_v4l2=yes
@@ -240,7 +257,7 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
    fi
  fi
  if test "$_tv_v4l2" = yes ; then
-@@ -8069,6 +8106,7 @@ SPEEX = $_speex
+@@ -8069,6 +8113,7 @@ SPEEX = $_speex
  STREAM_CACHE = $_stream_cache
  SGIAUDIO = $_sgiaudio
  SUNAUDIO = $_sunaudio
@@ -248,7 +265,15 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
  SVGA = $_svga
  TDFXFB = $_tdfxfb
  TDFXVID = $_tdfxvid
-@@ -8445,6 +8483,7 @@ $def_ossaudio_devmixer
+@@ -8357,6 +8402,7 @@ $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE
+ /* Blu-ray/DVD/VCD/CD */
+ #define DEFAULT_CDROM_DEVICE "$default_cdrom_device"
+ #define DEFAULT_DVD_DEVICE   "$default_dvd_device"
++#define DEFAULT_BLURAY_DEVICE   "$default_bluray_device"
+ $def_bluray
+ $def_bsdi_dvd
+ $def_cddb
+@@ -8445,6 +8491,7 @@ $def_ossaudio_devmixer
  $def_pulse
  $def_sgiaudio
  $def_sunaudio
@@ -256,3 +281,11 @@ $OpenBSD: patch-configure,v 1.59 2011/06/25 14:15:43 edd Exp $
  $def_win32waveout
  
  $def_ladspa
+@@ -8622,6 +8669,7 @@ $def_round
+ $def_roundf
+ $def_ten_operands
+ $def_threads
++$def_trunc
+ $def_truncf
+ $def_xform_asm
+ $def_xmm_clobbers

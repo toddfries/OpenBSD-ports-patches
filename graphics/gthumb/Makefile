@@ -1,9 +1,12 @@
-# $OpenBSD: Makefile,v 1.41 2011/04/14 05:32:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.64 2012/09/06 12:38:35 ajacoutot Exp $
+
+SHARED_ONLY=	Yes
 
 COMMENT=	image viewer and browser for GNOME
 
 GNOME_PROJECT=	gthumb
-GNOME_VERSION=	2.12.3
+GNOME_VERSION=	3.0.2
+REVISION=	1
 
 CATEGORIES=	graphics
 
@@ -18,43 +21,44 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ORBit-2 X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += c cairo dbus-1 dbus-glib-1 drm expat fontconfig freetype
-WANTLIB += gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gnome-keyring gobject-2.0 gpg-error
-WANTLIB += gstreamer-0.10 gthread-2.0 gtk-x11-2.0 jpeg m pango-1.0
-WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs tiff xcb xcb-render sqlite3
-WANTLIB += xml2 z unique-1.0 gstinterfaces-0.10 soup-gnome-2.4 soup-2.4
-WANTLIB += json-glib-1.0 stdc++ xcb-shm
-WANTLIB += clutter-glx-1.0 clutter-gtk-0.10 exiv2
+WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
+WANTLIB += cairo-gobject drm exiv2 expat ffi fontconfig freetype
+WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gnome-keyring
+WANTLIB += gobject-2.0 gstinterfaces-0.10 gstreamer-0.10 gthread-2.0
+WANTLIB += gtk-3 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs rsvg-2 soup-2.4
+WANTLIB += soup-gnome-2.4 stdc++ tiff xcb xcb-render xcb-shm z
+WANTLIB += clutter-1.0 clutter-gtk-1.0 cogl
 
-MODULES=	x11/gnome \
+MODULES=	devel/dconf \
 		devel/gettext \
-		devel/gconf2
+		x11/gnome
 
-LIB_DEPENDS=	devel/json-glib \
-		devel/libsoup,-gnome \
-		devel/libunique \
+# web albums
+BUILD_DEPENDS +=	devel/bison
+
+LIB_DEPENDS=	devel/libsoup,-gnome \
 		graphics/clutter/clutter-gtk \
-		graphics/exiv2 \
+		graphics/exiv2>=0.22 \
 		multimedia/gstreamer-0.10/plugins-base \
-		databases/sqlite3
+		x11/gnome/librsvg
 RUN_DEPENDS=	misc/shared-mime-info
 
-MODGNOME_HELP_FILES=	Yes
-DESKTOP_FILES=		Yes
-MODGCONF2_SCHEMAS_DIR=	gthumb
+LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-libopenraw \
-		--disable-libbrasero \
-		--enable-libsoup \
-		--enable-gnome-keyring \
-		--enable-exiv2
+MODGNOME_TOOLS= 	yelp
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+
+CONFIGURE_STYLE=	gnu
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib -Wl,-rpath,${TRUEPREFIX}/lib/gthumb/extensions
+CONFIGURE_ARGS=		--disable-static \
+			--disable-libopenraw \
+			--disable-libbrasero
+
+post-install:
+	rm ${PREFIX}/lib/gthumb/extensions/*.la
 
 .include <bsd.port.mk>

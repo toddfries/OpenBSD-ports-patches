@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2011/07/22 10:20:10 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2012/07/09 20:30:01 gonzalo Exp $
 
 COMMENT =	web-based bug tracking system
 
-DISTNAME =	flyspray-0.9.9.6
-REVISION =	1
+DISTNAME =	flyspray-0.9.9.7
 CATEGORIES =	www devel
 
 HOMEPAGE =	http://flyspray.org/

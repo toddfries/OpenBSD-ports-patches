@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.22 2011/01/05 18:40:55 sebastia Exp $
+# $OpenBSD: Makefile,v 1.24 2012/04/28 20:20:15 matthieu Exp $
 
 COMMENT =	Libedit interface to Tcl/Tk interpreters
 
 DISTNAME =	eltclsh-1.9
-REVISION=	5
+REVISION=	6
 CATEGORIES =	lang x11
 
-MASTER_SITES =	http://softs.laas.fr/openrobots/php/download.php/
+MASTER_SITES =	http://www.openrobots.org/distfiles/eltclsh/
 
-HOMEPAGE =	https://softs.laas.fr/openrobots/wiki/eltclsh
+HOMEPAGE =	http://www.openrobots.org/wiki/eltclsh
 
 MAINTAINER =	Matthieu Herrb <matthieu@openbsd.org>
 
@@ -22,7 +22,7 @@ MODULES +=	x11/tk
 WANTLIB += X11 Xau Xdmcp Xext Xft Xrender Xss c edit expat fontconfig
 WANTLIB += freetype m pthread-stubs termcap xcb z
 
-SEPARATE_BUILD =	concurrent
+SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--with-tcl=${MODTCL_LIBDIR} \
 			--with-tk=${MODTK_LIBDIR}

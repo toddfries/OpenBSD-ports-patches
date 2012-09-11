@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2011/05/18 21:12:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2012/06/15 08:30:25 ajacoutot Exp $
 
 COMMENT=	virtual sticky pad system
 
 DISTNAME=	xpad-4.0
-REVISION=	2
+REVISION=	5
 CATEGORIES=	x11
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=xpad/}
@@ -16,7 +16,8 @@ MODULES=	devel/gettext \
 		textproc/intltool
 
 LIB_DEPENDS=	x11/gtk+2
-RUN_DEPENDS=	devel/desktop-file-utils
+RUN_DEPENDS=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
 
 # nothing in the dep chain provides librsvg, so explicitely depend on it
 # so that the icon is correctly displayed

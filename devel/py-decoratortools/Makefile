@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile,v 1.9 2011/06/08 17:39:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2012/04/22 09:04:33 jasper Exp $
 
 COMMENT=		class and function decorators
 
-VERSION=		1.7
+VERSION=		1.8
 DISTNAME=		DecoratorTools-${VERSION}
 PKGNAME=		py-decoratortools-${VERSION}
-REVISION =		2
 
 CATEGORIES=		devel
 
 HOMEPAGE=		http://cheeseshop.python.org/pypi/DecoratorTools
-
-MAINTAINER=		Martynas Venckus <martynas@openbsd.org>
 
 # PSF/ZPL
 PERMIT_PACKAGE_CDROM=	Yes

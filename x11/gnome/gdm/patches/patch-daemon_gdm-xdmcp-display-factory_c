@@ -1,0 +1,26 @@
+$OpenBSD: patch-daemon_gdm-xdmcp-display-factory_c,v 1.2 2012/06/26 14:54:29 jasper Exp $
+--- daemon/gdm-xdmcp-display-factory.c.orig	Fri Feb 18 04:27:53 2011
++++ daemon/gdm-xdmcp-display-factory.c	Fri Jun 17 15:13:52 2011
+@@ -64,7 +65,7 @@
+  * On Sun, we need to define allow_severity and deny_severity to link
+  * against libwrap.
+  */
+-#ifdef __sun
++#if defined(__sun) || defined(__OpenBSD__)
+ #include <syslog.h>
+ int allow_severity = LOG_INFO;
+ int deny_severity = LOG_WARNING;
+@@ -86,6 +87,13 @@ int deny_severity = LOG_WARNING;
+ #define GDM_MAX_FORWARD_QUERIES 10
+ #define GDM_FORWARD_QUERY_TIMEOUT 30
+ #define MANAGED_FORWARD_INTERVAL 1500 /* 1.5 seconds */
++
++#ifndef AI_ALL
++#define AI_ALL 0
++#endif
++#ifndef AI_V4MAPPED
++#define AI_V4MAPPED 0
++#endif
+ 
+ /* some extra XDMCP opcodes that xdm will happily ignore since they'll be
+  * the wrong XDMCP version anyway */

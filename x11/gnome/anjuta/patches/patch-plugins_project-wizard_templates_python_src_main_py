@@ -1,0 +1,11 @@
+$OpenBSD: patch-plugins_project-wizard_templates_python_src_main_py,v 1.2 2012/03/29 07:22:04 ajacoutot Exp $
+--- plugins/project-wizard/templates/python/src/main.py.orig	Sun Jan 29 11:43:18 2012
++++ plugins/project-wizard/templates/python/src/main.py	Wed Mar 28 18:14:09 2012
+@@ -1,6 +1,6 @@
+ [+ autogen5 template +]
+ [+INCLUDE (string-append "licenses/" (get "License") ".tpl") \+]
+-#!/usr/bin/python
++#!${MODPY_BIN}
+ #
+ # main.py
+ # Copyright (C) [+(shell "date +%Y")+] [+Author+] <[+Email+]>

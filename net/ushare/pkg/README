@@ -1,0 +1,13 @@
+$OpenBSD: README,v 1.1 2011/12/03 13:59:37 ajacoutot Exp $
+
++-----------------------------------------------------------------------
+| Running ${FULLPKGNAME} on OpenBSD
++-----------------------------------------------------------------------
+
+USHARE_IFACE (listening interface) and USHARE_DIR (shared directories)
+need to be set in ${SYSCONFDIR}/ushare.conf before starting ushare.
+
+UPnP multicast discovery on the listening interface needs to be enabled.
+Add this line to the matching hostname.if(5) and restart the network
+(a.b.c.d being the interface IP address).
+!route -qn add -net 239.0.0.0/8 -interface a.b.c.d

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/01/17 06:51:50 stu Exp $
+# $OpenBSD: Makefile,v 1.3 2012/04/18 09:41:33 stu Exp $
 
 COMMENT =	widget callback package for Tcl/Tk
 
 N =		wcb
-DISTNAME =	$N3.3
-PKGNAME =	$N-3.3
+DISTNAME =	$N3.4
+PKGNAME =	$N-3.4
 CATEGORIES =	devel
 HOMEPAGE =	http://www.nemethi.de/
 MAINTAINER =	Stuart Cassoff <stwo@users.sourceforge.net>
@@ -49,6 +49,6 @@ do-install:
 		demos	*.tcl		${WC_EXA_DIR}
 	${INSTALL_DATA} ${WRKSRC}/${SRC}/${GLOB} ${DEST}
 .endfor
-	${CHMOD} ${BINMODE} ${EXA_SCRIPTS:S!^!${WC_EXA_DIR}/!}
+	chmod ${BINMODE} ${EXA_SCRIPTS:S!^!${WC_EXA_DIR}/!}
 
 .include <bsd.port.mk>

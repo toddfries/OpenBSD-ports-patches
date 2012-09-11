@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2011/08/23 19:53:15 kili Exp $
+# $OpenBSD: Makefile,v 1.62 2012/09/06 13:05:01 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += atomicparsley
@@ -17,10 +17,14 @@
      SUBDIR += get_flash_videos
      SUBDIR += get_iplayer
      SUBDIR += gstreamer-0.10
+     SUBDIR += gstreamer1
      SUBDIR += hdhomerun
      SUBDIR += k3b
      SUBDIR += kaffeine
+     SUBDIR += kguitar
+     SUBDIR += libaacs
      SUBDIR += libass
+     SUBDIR += libbluray
      SUBDIR += libdv
      SUBDIR += libdvdnav
      SUBDIR += libmatroska
@@ -29,6 +33,7 @@
      SUBDIR += libquicktime
      SUBDIR += libtheora
      SUBDIR += libvpx
+     SUBDIR += lives
      SUBDIR += lsdvd
      SUBDIR += mediatomb
      SUBDIR += ming
@@ -40,8 +45,11 @@
      SUBDIR += mpgtx
      SUBDIR += oggconvert
      SUBDIR += oggz
+     SUBDIR += ogmrip
      SUBDIR += ogmtools
+     SUBDIR += p5-AMF-Connection
      SUBDIR += p5-Data-AMF
+     SUBDIR += p5-Storable-AMF
      SUBDIR += pspvc
      SUBDIR += recordmydesktop
      SUBDIR += regionset
@@ -57,5 +65,6 @@
      SUBDIR += xine-lib
      SUBDIR += xine-ui
      SUBDIR += xvidcore
+     SUBDIR += yle-dl
 
 .include <bsd.port.subdir.mk>

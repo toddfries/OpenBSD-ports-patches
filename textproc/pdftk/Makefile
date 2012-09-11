@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.2 2011/07/21 12:29:21 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.4 2011/11/17 18:03:43 sthen Exp $
 
 COMMENT=	pdf swiss army knife
 VERSION=	1.44
+REVISION=	0
 DISTNAME=	pdftk-$(VERSION)
 EXTRACT_SUFX=	-src.zip
 CATEGORIES=	textproc
 
-MAINTAINER=	Christopher Zimmermann <madroach@zakweb.org>
+MAINTAINER=	Christopher Zimmermann <madroach@zakweb.de>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
@@ -19,7 +20,7 @@ WANTLIB += ${MODGCC4_GCJWANTLIB} c m pthread z
 MASTER_SITES=	http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 
 MODULES=	converters/libiconv gcc4
-MODGCC4_ARCHES=	*
+MODGCC4_ARCHS=	*
 MODGCC4_LANGS=	java c++
 LIB_DEPENDS=	${MODGCC4_GCJLIBDEP}
 

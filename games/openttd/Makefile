@@ -1,23 +1,22 @@
-# $OpenBSD: Makefile,v 1.19 2011/06/02 13:41:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2012/08/21 18:01:42 jasper Exp $
 
 COMMENT=	open source clone of the game Transport Tycoon Deluxe
 
-V=		1.1.0
+V=		1.1.5
 DISTNAME=	openttd-${V}
 EXTRACT_SUFX=	-source.tar.gz
-GFX_V=		0.3.2
+REVISION=	1
+GFX_V=		0.3.5
 SFX_V=		0.2.3
 MSX_V=		0.3.1
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
-		opengfx-${GFX_V}.zip:0 opensfx-${SFX_V}.zip:1 openmsx-${MSX_V}.zip:2
-
-REVISION=	0
+		opengfx-${GFX_V}.zip:0 \
+		opensfx-${SFX_V}.zip:1 \
+		openmsx-${MSX_V}.zip:2
 
 CATEGORIES=	games
 
 HOMEPAGE=	http://www.openttd.org/
-
-MAINTAINER=	Daniel Dickman <didickman@gmail.com>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -39,7 +38,8 @@ LIB_DEPENDS=		archivers/lzo2 \
 			textproc/icu4c \
 			archivers/xz
 
-RUN_DEPENDS=            devel/desktop-file-utils
+RUN_DEPENDS=            devel/desktop-file-utils \
+			x11/gtk+2,-guic
 
 CONFIGURE_STYLE=	simple
 CONFIGURE_ARGS+=	--prefix-dir=${PREFIX} \
@@ -75,5 +75,6 @@ post-install:
 	${INSTALL_DATA} ${WRKDIR}/opengfx-${GFX_V}/*.{grf,obg} ${GAMEDIR}/data
 	${INSTALL_DATA} ${WRKDIR}/opensfx-${SFX_V}/*.{cat,obs} ${GAMEDIR}/data
 	${INSTALL_DATA} ${WRKDIR}/openmsx-${MSX_V}/*.{mid,obm} ${GAMEDIR}/gm
+	rm -rf ${WRKINST}/bundle
 
 .include <bsd.port.mk>

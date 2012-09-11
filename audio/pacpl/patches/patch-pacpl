@@ -1,26 +1,196 @@
-$OpenBSD: patch-pacpl,v 1.2 2008/12/23 15:52:42 ajacoutot Exp $
---- pacpl.orig	Sun Aug 17 05:31:57 2008
-+++ pacpl	Fri Nov 14 09:25:49 2008
-@@ -131,8 +131,12 @@ my %config = (
+$OpenBSD: patch-pacpl,v 1.5 2012/06/13 11:43:12 jasper Exp $
+--- pacpl.orig	Sat Feb 14 12:04:50 2009
++++ pacpl	Fri May 25 05:43:14 2012
+@@ -130,8 +130,8 @@ my %config = (
+              );
  
  # location of configuration file
- my $conf_path = "/etc/pacpl";
+-my $conf_path = "/etc/pacpl";
 -my $po_dir    = "/usr/share/pacpl/locale";
++my $conf_path = "${SYSCONFDIR}/pacpl";
 +my $po_dir    = "${PREFIX}/share/pacpl/locale";
  my $mod_dir   = "$conf_path/modules";
-+my $language  = "en";
-+if ($ENV{LANG}) {
-+	$language = "$ENV{LANG}";
-+}
  
  my $conf_file;
+@@ -708,8 +708,8 @@ my $opts;
  
-@@ -203,7 +207,7 @@ sub load_codecs {
- # load po file and store in %lang hash
- sub load_lang {
+        flac => {
  
--    my $po = "$po_dir/$ENV{LANG}.po";
-+    my $po = "$po_dir/$language.po";
-        $po =~ s/\.UTF-8//i      if $po =~ /UTF-8/i; 
-        $po =~ s/\.utf8//i       if $po =~ /utf8/i;  
-        $po =~ s/_\w+//          if not -e $po;      
+-                DEFAULT_ENCODER => "flac",
+-                DEFAULT_DECODER => "flac",
++                DEFAULT_ENCODER => "ffmpeg",
++                DEFAULT_DECODER => "ffmpeg",
+                 
+                 ENCODER => {
+                               flac => {
+@@ -908,8 +908,8 @@ my $opts;
+ 
+        aac  => {
+ 
+-                DEFAULT_ENCODER => "faac",
+-                DEFAULT_DECODER => "faad",
++                DEFAULT_ENCODER => "ffmpeg",
++                DEFAULT_DECODER => "ffmpeg",
+                 
+                 ENCODER => {
+                               faac => {
+@@ -927,7 +927,7 @@ my $opts;
+                                         ESTR => sub { 
+                                                       $opts = "-ab $bitrate.k -ar $freq -ac $channels" if $defopts == 1;
+                                                       $opts = '' if $defopts == 0;
+-                                                      "$eopts -y -i %i $opts %o" 
++                                                      "$eopts -y -i %i $opts -strict experimental %o" 
+                                                     },
+                                         
+                                         PROMPT => {
+@@ -941,7 +941,7 @@ my $opts;
+                 DECODER => {
+                               faad => {
+                                         NAME => "faad",
+-                                        DSTR => sub { "$dopts -o %i %o" },
++                                        DSTR => sub { "$dopts -o %o %i" },
+                                       },
+                               
+                             ffmpeg => {
+@@ -964,8 +964,8 @@ my $opts;
+ 
+        mp4  => {
+ 
+-                DEFAULT_ENCODER => "faac",
+-                DEFAULT_DECODER => "faad",
++                DEFAULT_ENCODER => "ffmpeg",
++                DEFAULT_DECODER => "ffmpeg",
+                 
+                 ENCODER => {
+                 
+@@ -984,7 +984,7 @@ my $opts;
+                                       ESTR => sub { 
+                                                     $opts = "-ab $bitrate.k -ar $freq -ac $channels" if $defopts == 1;
+                                                     $opts = '' if $defopts == 0;
+-                                                    "$eopts -y -i %i $opts %o" 
++                                                    "$eopts -y -i %i $opts -strict experimental %o" 
+                                                   },
+                                       
+                                       PROMPT => {
+@@ -1022,8 +1022,8 @@ my $opts;
+ 
+        m4a  => {
+ 
+-                DEFAULT_ENCODER => "faac",
+-                DEFAULT_DECODER => "faad",
++                DEFAULT_ENCODER => "ffmpeg",
++                DEFAULT_DECODER => "ffmpeg",
+                 
+                 ENCODER => {
+                   
+@@ -1042,7 +1042,7 @@ my $opts;
+                                       ESTR => sub { 
+                                                     $opts = "-ab $bitrate.k -ar $freq -ac $channels" if $defopts == 1;
+                                                     $opts = '' if $defopts == 0;
+-                                                    "$eopts -y -i %i $opts %o" 
++                                                    "$eopts -y -i %i $opts -strict experimental %o" 
+                                                   },
+                                       
+                                       PROMPT => {
+@@ -1084,7 +1084,7 @@ my $opts;
+        m4b  => {
+        
+                 DEFAULT_ENCODER => "faac",
+-                DEFAULT_DECODER => "faad",
++                DEFAULT_DECODER => "mplayer",
+                 
+                 ENCODER => {
+                            
+@@ -1124,13 +1124,13 @@ my $opts;
+                              
+        mpc  => {
+ 
+-                DEFAULT_ENCODER => "mppenc",
+-                DEFAULT_DECODER => "mppdec",
++                DEFAULT_ENCODER => "mpcenc",
++                DEFAULT_DECODER => "mpcdec",
+                 
+                 ENCODER => {
+ 
+-                            mppenc => {
+-                                        NAME => "mppenc",
++                            mpcenc => {
++                                        NAME => "mpcenc",
+                                         ESTR => sub { 
+                                                       $opts = "--$mpcqual" if $defopts == 1;
+                                                       $opts = '' if $defopts == 0;
+@@ -1142,8 +1142,8 @@ my $opts;
+                 
+                 DECODER => {
+ 
+-                            mppdec => {
+-                                        NAME => "mppdec",
++                            mpcdec => {
++                                        NAME => "mpcdec",
+                                         DSTR => sub { "$dopts %i %o" },
+                                       },
+ 
+@@ -1166,13 +1166,13 @@ my $opts;
+ 
+        mpp  => {
+ 
+-                DEFAULT_ENCODER => "mppenc",
+-                DEFAULT_DECODER => "mppdec",
++                DEFAULT_ENCODER => "mpcenc",
++                DEFAULT_DECODER => "mpcdec",
+                 
+                 ENCODER => {
+ 
+-                            mppenc => {
+-                                        NAME => "mppenc",
++                            mpcenc => {
++                                        NAME => "mpcenc",
+                                         ESTR => sub { 
+                                                       $opts = "--$mpcqual" if $defopts == 1;
+                                                       $opts = '' if $defopts == 0;
+@@ -1184,8 +1184,8 @@ my $opts;
+                 
+                 DECODER => {
+ 
+-                            mppdec => {
+-                                        NAME => "mppdec",
++                            mpcdec => {
++                                        NAME => "mpcdec",
+                                         DSTR => sub { "$dopts %i %o" },
+                                       },
+ 
+@@ -1401,7 +1401,7 @@ my $opts;
+        wv   => {
+ 
+                 DEFAULT_ENCODER => "wavpack",
+-                DEFAULT_DECODER => "wvunpack",
++                DEFAULT_DECODER => "ffmpeg",
+                 
+                 ENCODER => {
+                               wavpack => {
+@@ -2050,11 +2050,11 @@ sub format_tags {
+      
+                 $tag_name{track} = 0 if not $tag_name{track};
+                 $tag_name{year}  = 0 if not $tag_name{year};
+-                return "-title \"$tag_name{title}\" -track \"$tag_name{track}\" -author \"$tag_name{artist}\" -album \"$tag_name{album}\" -comment \"$tag_name{comment}\" -year \"$tag_name{year}\" -genre \"$tag_name{genre}\"";
++                return "-metadata title=\"$tag_name{title}\" -metadata track=\"$tag_name{track}\" -metadata author=\"$tag_name{artist}\" -metadata album=\"$tag_name{album}\" -metadata comment=\"$tag_name{comment}\" -metadata year=\"$tag_name{year}\" -metadata genre=\"$tag_name{genre}\"";
+ 
+             } else {
+                 
+-              return "--title \"$tag_name{title}\" --track \"$tag_name{track}\" --artist \"$tag_name{artist}\" --ablum \"$tag_name{album}\" --comment \"$tag_name{comment}\" --year \"$tag_name{year}\" --genre \"$tag_name{genre}\"";
++              return "--title \"$tag_name{title}\" --track \"$tag_name{track}\" --artist \"$tag_name{artist}\" --album \"$tag_name{album}\" --comment \"$tag_name{comment}\" --year \"$tag_name{year}\" --genre \"$tag_name{genre}\"";
+ 
+               }
+         } 
+@@ -3217,9 +3217,9 @@ show cddb information for current disc.
+ 
+ =item B<sox>(1) B<ffmpeg>(1) B<lame>(1) B<oggenc>(1) B<oggdec>(1)
+ 
+-=item B<flac>(1) B<shorten>(1) B<faac>(1) B<faad>(1) B<mppenc>(1)
++=item B<flac>(1) B<shorten>(1) B<faac>(1) B<faad>(1) B<mpcenc>(1)
+ 
+-=item B<mppdec>(1) B<mplayer>(1) B<speexenc>(1) B<speexdec>(1)
++=item B<mpcdec>(1) B<mplayer>(1) B<speexenc>(1) B<speexdec>(1)
+ 
+ =item B<sndfile-convert>(1) B<normalize>(1) B<cdparanoia>(1)
+ 

@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.15 2011/06/30 21:36:37 kili Exp $
+# $OpenBSD: Makefile,v 1.22 2012/09/02 18:12:56 kili Exp $
+
+BROKEN =		Does not build with new ghc and HaXml
 
 COMMENT =		command line podcast aggregator
 
-DISTNAME =		hpodder-1.1.5
-REVISION =		8
+DISTNAME =		hpodder-1.1.6
+REVISION =		2
 CATEGORIES =		net
-HOMEPAGE =		https://github.com/jgoerzen/hpodder/wiki
+HOMEPAGE =		http://wiki.github.com/jgoerzen/hpodder/
 
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 
@@ -23,10 +25,9 @@ MODGHC_BUILD =		cabal hackage nort
 
 BUILD_DEPENDS =		devel/hs-ConfigFile \
 			devel/hs-mtl \
-			textproc/hs-HaXml>=1.20 \
-			databases/hs-HDBC-sqlite3
-LIB_DEPENDS =		databases/sqlite3 \
-			devel/gmp
+			textproc/hs-HaXml>=1.20,<1.21 \
+			databases/hs-HDBC-sqlite3>=1.1.0
+LIB_DEPENDS =		devel/gmp
 RUN_DEPENDS =		net/curl>=7.15.5 \
 			audio/py-mutagen>=1.9
 

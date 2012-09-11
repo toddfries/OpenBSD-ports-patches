@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.38 2011/07/15 07:06:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.64 2012/09/01 14:37:00 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT=	VNC Client for the GNOME Desktop
+COMMENT=	remote desktop viewer for GNOME
 
-GNOME_VERSION=	2.30.3
 GNOME_PROJECT=	vinagre
-REVISION=	2
+GNOME_VERSION=	3.4.2
+REVISION=	1
 
 CATEGORIES=	net
 
@@ -18,43 +18,32 @@ PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += ICE ORBit-2 ORBitCosNaming-2 SM X11 Xau Xcomposite
-WANTLIB += Xcursor Xdamage Xdmcp Xext Xfixes Xi Xinerama Xrandr
-WANTLIB += Xrender atk-1.0 c cairo crypto dbus-1 dbus-glib-1 expat
-WANTLIB += fontconfig freetype gailutil gcrypt gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gpg-error
-WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 pthread pthread-stubs ssl
-WANTLIB += util xcb xcb-render xcb-render-util xml2 z png
-WANTLIB += art_lgpl_2 avahi-client avahi-common avahi-glib avahi-gobject
-WANTLIB += avahi-ui bonobo-2 bonobo-activation bonoboui-2
-WANTLIB += gdbm gnome-2 gnome-keyring gnomecanvas-2 gnomevfs-2 gnutls
-WANTLIB += gtk-vnc-1.0 gvnc-1.0 panel-applet-2 popt sasl2 tasn1
-WANTLIB += canberra ltdl ogg vorbis vorbisfile telepathy-glib
+WANTLIB += GL X11 Xrender atk-1.0 avahi-client avahi-common avahi-glib
+WANTLIB += avahi-gobject avahi-ui-gtk3 c cairo cairo-gobject dbus-1
+WANTLIB += dbus-glib-1 expat fontconfig freetype gdk-3 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 gnome-keyring gobject-2.0 gthread-2.0
+WANTLIB += gtk-3 gtk-vnc-2.0 gvnc-1.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pixman-1 png pthread pthread-stubs telepathy-glib
+WANTLIB += util vte2_90 xcb xcb-render xcb-shm xml2 z
 
 MODULES=	devel/gettext \
 		x11/gnome \
-		devel/gconf2
+		devel/dconf
 
-RUN_DEPENDS=	misc/shared-mime-info>=0.21
-LIB_DEPENDS=	x11/gnome/panel \
-		STEM-*-gtk2:x11/gtk-vnc,gtk2 \
+RUN_DEPENDS=	misc/shared-mime-info>=0.21 \
+		x11/rdesktop
+LIB_DEPENDS=	x11/gtk-vnc \
 		net/telepathy/telepathy-glib \
-		net/avahi,-gtk,no_mono,no_qt3,no_qt4
+		net/avahi,-gtk3,no_mono,no_qt3,no_qt4 \
+		devel/vte3 \
+		x11/gnome/libgnome-keyring
 
-DESKTOP_FILES=	Yes
-MODGNOME_HELP_FILES=	Yes
-MODGCONF2_SCHEMAS_DIR=	vinagre
+MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS= 	yelp
 
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--enable-avahi \
-		--enable-telepathy=yes
-
-# XXX console does not spawn (pthreads(3) or vte bug?)
-CONFIGURE_ARGS+= --enable-ssh=no
-
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-USE_GROFF =	Yes
+CONFIGURE_ARGS=	--with-avahi \
+		--with-telepathy \
+		--disable-spice
 
 .include <bsd.port.mk>

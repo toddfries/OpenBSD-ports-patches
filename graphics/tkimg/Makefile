@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2011/01/05 18:33:14 sebastia Exp $
+# $OpenBSD: Makefile,v 1.8 2012/03/29 13:38:40 sthen Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	image extension for Tcl/Tk
 
 V =		1.4
-REVISION =	0
+REVISION =	1
 DISTNAME =	tkimg$V
 PKGNAME =	tkimg-$V
 SHLIB_VERSION =	0.0
@@ -28,8 +28,8 @@ PERMIT_PACKAGE_CDROM =		Yes
 PERMIT_PACKAGE_FTP =		Yes
 PERMIT_DISTFILES_CDROM =	Yes
 PERMIT_DISTFILES_FTP =		Yes
-WANTLIB += X11 Xau Xdmcp Xext Xft Xrender Xss expat fontconfig
-WANTLIB += freetype m z pthread-stubs xcb
+
+WANTLIB += X11 Xext Xft Xss m
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=tkimg/}
 
@@ -39,7 +39,7 @@ BUILD_DEPENDS =		${MODTK_BUILD_DEPENDS} \
 RUN_DEPENDS =		${MODTK_RUN_DEPENDS}
 REGRESS_DEPENDS =	${PKGPATH}
 
-SEPARATE_BUILD =	simple
+SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS= --libdir=${MODTCL_TCLDIR} \
 		--with-tcl=${MODTCL_LIBDIR} \

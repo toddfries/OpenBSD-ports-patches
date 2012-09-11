@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2011/08/22 00:37:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.15 2012/07/18 08:04:43 sthen Exp $
 
 SHARED_ONLY =	Yes
 
@@ -6,7 +6,7 @@ COMMENT =	program matching and transformation engine
 
 # if updating, check for any additional use of diff/grep which
 # may need to be switched to gdiff/ggrep
-DISTNAME =	coccinelle-1.0.0-rc6
+DISTNAME =	coccinelle-1.0.0-rc11
 PKGNAME =	${DISTNAME:S/-rc/rc/}
 EXTRACT_SUFX =	.tgz
 
@@ -22,7 +22,7 @@ PERMIT_PACKAGE_FTP =	 Yes
 PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP =	 Yes
 
-WANTLIB += c m pthread util ${MODPY_WANTLIB}
+WANTLIB += c m pthread util pcre ${MODPY_WANTLIB}
 
 MASTER_SITES = ${HOMEPAGE}distrib/
 
@@ -31,7 +31,8 @@ MODULES =		lang/ocaml \
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 REGRESS_DEPENDS =	${FULLPKGPATH}
-RUN_DEPENDS =		sysutils/findlib \
+RUN_DEPENDS =		devel/ocaml-pcre \
+			sysutils/findlib \
 			sysutils/ggrep \
 			textproc/gdiff
 
@@ -41,13 +42,10 @@ REGRESS_IS_INTERACTIVE = Yes
 USE_GMAKE =		Yes
 CONFIGURE_STYLE =	simple
 CONFIGURE_ENV =		MAKE_PROGRAM=${MAKE_PROGRAM}
+CONFIGURE_ARGS =	--with-python=${MODPY_BIN}
 
 REGRESS_TARGET =	test
 SUBST_VARS +=		MAKE_PROGRAM
-
-pre-configure:
-	${SUBST_CMD} ${WRKSRC}/configure ${WRKSRC}/pycaml/Makefile
-	perl -pi -e s,/usr/local,${TRUEPREFIX},g ${WRKSRC}/scripts/spatch*
 
 # can't use MODOCAML_NATIVE here because we need not
 # just native code, but also dynlink
@@ -62,5 +60,13 @@ PKG_ARGS +=	-DOCAMLOPT=.opt
 WANTLIB +=	curses
 PKG_ARGS +=	-DOCAMLOPT=
 .endif
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/pycaml/Makefile
+	perl -pi -e s,/usr/local,${TRUEPREFIX},g ${WRKSRC}/scripts/spatch*
+
+post-install:
+	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \
+	    ${PREFIX}/share/coccinelle/python/coccilib
 
 .include <bsd.port.mk>

@@ -1,11 +1,14 @@
-# $OpenBSD: Makefile,v 1.31 2011/08/22 20:09:43 espie Exp $
+# $OpenBSD: Makefile,v 1.36 2012/08/22 07:03:31 sebastia Exp $
 
      SUBDIR =
+     SUBDIR += aclock
      SUBDIR += addresses
      SUBDIR += affiche
      SUBDIR += back
      SUBDIR += base
+     SUBDIR += batmon
      SUBDIR += cdplayer
+     SUBDIR += corebase
      SUBDIR += databasin
      SUBDIR += dbuskit
      SUBDIR += edenmath
@@ -16,6 +19,7 @@
      SUBDIR += gmastermind
      SUBDIR += gmines
      SUBDIR += gnumail
+     SUBDIR += gomoku
      SUBDIR += gorm
      SUBDIR += graphos
      SUBDIR += grr
@@ -28,8 +32,12 @@
      SUBDIR += jigsaw
      SUBDIR += lapispuzzle
      SUBDIR += laternamagica
+     SUBDIR += libobjc2
      SUBDIR += make
+     SUBDIR += matharray
      SUBDIR += mpdcon
+     SUBDIR += netclasses
+     SUBDIR += paje
      SUBDIR += pantomime
      SUBDIR += pdfkit
      SUBDIR += performance
@@ -39,11 +47,12 @@
      SUBDIR += renaissance
      SUBDIR += rsskit
      SUBDIR += simpleagenda
+     SUBDIR += sqlclient
      SUBDIR += sudoku
      SUBDIR += systempreferences
      SUBDIR += terminal
      SUBDIR += timemon
-#     SUBDIR += webserver
+     SUBDIR += webserver
      SUBDIR += webservices
      SUBDIR += zipper
 

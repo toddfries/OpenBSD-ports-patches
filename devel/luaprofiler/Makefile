@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2010/07/08 12:38:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2012/07/10 15:22:44 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		time profiler for Lua
 
 DISTNAME=		luaprofiler-2.0.2
+REVISION=		0
 CATEGORIES=		devel
 
 HOMEPAGE=		http://luaprofiler.luaforge.net/
@@ -26,16 +27,16 @@ NO_REGRESS=		Yes
 # but references files from elsewhere (ie. src/clock.o).
 MAKE_FILE=		../Makefile.linux
 ALL_TARGET=		# empty
-CFLAGS +=       	-I${LOCALBASE}/include -fPIC
+CFLAGS +=       	-I${MODLUA_INCL_DIR} -fPIC
 
 WRKSRC= 		${WRKDIST}/src/
 
 do-install:
 	${INSTALL_DATA_DIR} ${MODLUA_LIBDIR} ${MODLUA_DATADIR}/luaprofiler/\
-				${PREFIX}/share/doc/luaprofiler/
+				${MODLUA_DOCDIR}
 	${INSTALL_PROGRAM} ${WRKSRC}/bin/profiler.so ${MODLUA_LIBDIR}
 	${INSTALL_SCRIPT} ${WRKSRC}/analyzer/summary.lua \
 		${MODLUA_DATADIR}/luaprofiler/
-	${INSTALL_DATA} ${WRKDIST}/doc/us/*.html ${PREFIX}/share/doc/luaprofiler/
+	${INSTALL_DATA} ${WRKDIST}/doc/us/*.html ${MODLUA_DOCDIR}
 
 .include <bsd.port.mk>
