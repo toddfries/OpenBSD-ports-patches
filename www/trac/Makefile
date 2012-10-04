@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.38 2012/04/22 11:41:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.40 2012/09/15 10:02:22 sthen Exp $
 
 COMMENT=	wiki and bug tracking system for software projects
 
-MODPY_EGG_VERSION=0.12.3
-REVISION=	1
+MODPY_EGG_VERSION=1.0
 DISTNAME=	Trac-${MODPY_EGG_VERSION}
 PKGNAME=	trac-${MODPY_EGG_VERSION}
 CATEGORIES=	www devel
@@ -25,15 +24,15 @@ PERMIT_DISTFILES_FTP=   Yes
 
 MODULES=	lang/python
 
-RUN_DEPENDS=	databases/py-sqlite2 \
-		devel/py-babel \
-		devel/subversion,-python \
-		textproc/py-docutils \
-		textproc/py-pygments \
+COMMON_DEPS=	devel/py-babel>=0.9.6 \
 		www/py-genshi>=0.6
 
-BUILD_DEPENDS=	devel/py-babel \
-		www/py-genshi>=0.6
+RUN_DEPENDS=	${COMMON_DEPS} \
+		devel/subversion,-python \
+		textproc/py-docutils \
+		textproc/py-pygments
+
+BUILD_DEPENDS=	${COMMON_DEPS}
 
 do-regress:
 	@cd ${WRKSRC} && PYTHONPATH=. ${MODPY_BIN} ./trac/test.py
