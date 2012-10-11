@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1067 2012/09/05 07:34:32 jasper Exp $
+# $OpenBSD: Makefile,v 1.1078 2012/10/03 08:07:41 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -128,6 +128,7 @@
      SUBDIR += gobject-introspection
      SUBDIR += goffice
      SUBDIR += goopy
+     SUBDIR += gpatch
      SUBDIR += gperf
      SUBDIR += gputils
      SUBDIR += grcs
@@ -140,6 +141,7 @@
      SUBDIR += guilib
      SUBDIR += haddock
      SUBDIR += happy
+     SUBDIR += harfbuzz
      SUBDIR += hasktags
      SUBDIR += help2man
      SUBDIR += hmake
@@ -262,6 +264,8 @@
      SUBDIR += hudson
      SUBDIR += hyena
      SUBDIR += id-utils
+     SUBDIR += imake
+     SUBDIR += imake-cf
      SUBDIR += iniparser
      SUBDIR += intellij
      SUBDIR += ipython
@@ -345,6 +349,7 @@
      SUBDIR += libusb-compat
      SUBDIR += libusb1
      SUBDIR += libutf
+     SUBDIR += libvirt-glib
      SUBDIR += libvmime
      SUBDIR += libvstr
      SUBDIR += libwnck
@@ -383,7 +388,6 @@
      SUBDIR += mm
      SUBDIR += mm-common
      SUBDIR += mono-addins
-     SUBDIR += mono-flickrnet
      SUBDIR += mono-gdata
      SUBDIR += mono-notify
      SUBDIR += monodevelop
@@ -642,6 +646,7 @@
      SUBDIR += p5-File-Find-Rule-Perl
      SUBDIR += p5-File-Finder
      SUBDIR += p5-File-Flat
+     SUBDIR += p5-File-FnMatch
      SUBDIR += p5-File-HomeDir
      SUBDIR += p5-File-MimeInfo
      SUBDIR += p5-File-Modified
@@ -998,6 +1003,7 @@
      SUBDIR += p5-prefork
      SUBDIR += pango
      SUBDIR += pangomm
+     SUBDIR += pangox-compat
      SUBDIR += pccts
      SUBDIR += pcre
      SUBDIR += pcre++
@@ -1059,6 +1065,7 @@
      SUBDIR += py-hg-git
      SUBDIR += py-html5lib
      SUBDIR += py-iniparse
+     SUBDIR += py-isodate
      SUBDIR += py-kid
      SUBDIR += py-liblarch
      SUBDIR += py-liblarch_gtk
@@ -1155,10 +1162,9 @@
      SUBDIR += ruby-diff-lcs
      SUBDIR += ruby-echoe
      SUBDIR += ruby-extlib
-     SUBDIR += ruby-facets
      SUBDIR += ruby-fastthread
      SUBDIR += ruby-ffi
-     SUBDIR += ruby-ffi,ruby19
+     SUBDIR += ruby-ffi,ruby18
      SUBDIR += ruby-ffi-inliner
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin
@@ -1169,12 +1175,12 @@
      SUBDIR += ruby-highline
      SUBDIR += ruby-hike
      SUBDIR += ruby-hoe
-     SUBDIR += ruby-home_run
+     SUBDIR += ruby-home_run,ruby18
      SUBDIR += ruby-i18n
      SUBDIR += ruby-isolate
      SUBDIR += ruby-jeweler
      SUBDIR += ruby-kgio
-     SUBDIR += ruby-kgio,ruby19
+     SUBDIR += ruby-kgio,ruby18
      SUBDIR += ruby-linecache
      SUBDIR += ruby-locale
      SUBDIR += ruby-minitest
@@ -1188,24 +1194,22 @@
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-polyglot
      SUBDIR += ruby-prof
-     SUBDIR += ruby-prof,ruby19
+     SUBDIR += ruby-prof,ruby18
      SUBDIR += ruby-rake
      SUBDIR += ruby-rake-compiler
      SUBDIR += ruby-rcov
-     SUBDIR += ruby-rcov,ruby19
+     SUBDIR += ruby-rcov,ruby18
      SUBDIR += ruby-rdoc
-     SUBDIR += ruby-rparsec
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-ruby_parser
      SUBDIR += ruby-rubyforge
      SUBDIR += ruby-rubyinline
-     SUBDIR += ruby-sexp
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-sprockets
      SUBDIR += ruby-stringex
      SUBDIR += ruby-subset_sum
-     SUBDIR += ruby-subset_sum,ruby19
+     SUBDIR += ruby-subset_sum,ruby18
      SUBDIR += ruby-systemtimer
      SUBDIR += ruby-systemu
      SUBDIR += ruby-term-ansicolor
@@ -1236,6 +1240,7 @@
      SUBDIR += smarty
      SUBDIR += smpeg
      SUBDIR += spe
+     SUBDIR += spice-protocol
      SUBDIR += spidermonkey
      SUBDIR += splint
      SUBDIR += srecord

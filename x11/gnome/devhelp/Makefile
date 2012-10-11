@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.62 2012/06/15 08:30:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.64 2012/09/27 11:20:37 ajacoutot Exp $
 
 COMMENT=	API documentation browser for GNOME
 
 GNOME_PROJECT=	devhelp
-GNOME_VERSION=	3.4.1
-REVISION=	0
+GNOME_VERSION=	3.6.0
 
 SHARED_LIBS +=  devhelp-3                 0.0 # 0.0
 
@@ -27,8 +26,9 @@ WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
 WANTLIB += gtk-3 icudata icui18n icuuc jpeg m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += soup-2.4 sqlite3 stdc++ webkitgtk-3.0 xcb xcb-render
-WANTLIB += dbus-1 dbus-glib-1 ffi orc-0.4
+WANTLIB += dbus-1 dbus-glib-1 ffi orc-0.4 geoclue gstaudio-0.10 gstfft-0.10
 WANTLIB += xcb-shm xml2 xslt z javascriptcoregtk-3.0
+WANTLIB += atk-bridge-2.0 atspi harfbuzz icule
 
 MODULES=	devel/gettext \
 		lang/python \
@@ -36,7 +36,11 @@ MODULES=	devel/gettext \
 		devel/gconf2
 
 BUILD_DEPENDS=	x11/gnome/doc-utils
-LIB_DEPENDS=	www/webkit,gtk3>=1.6.1v0
+LIB_DEPENDS=	multimedia/gstreamer-0.10/plugins-base \
+		www/webkit,gtk3
+
+# for convenience
+RUN_DEPENDS +=	x11/gnome/devel-docs
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes

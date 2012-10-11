@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.47 2012/07/12 08:08:46 jasper Exp $
+# $OpenBSD: Makefile,v 1.49 2012/09/21 13:23:23 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GObject-based parsing library
 
 GNOME_PROJECT=	totem-pl-parser
-GNOME_VERSION=	3.4.2
-REVISION=	0
+GNOME_VERSION=	3.4.3
 
 SHARED_LIBS +=  totem-plparser       17.2      # 17.2
 SHARED_LIBS +=  totem-plparser-mini  17.2      # 17.2
@@ -23,8 +22,8 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += archive bz2 crypto curl dbus-1 expat ffi gcrypt gio-2.0
 WANTLIB += glib-2.0 gmime-2.6 gmodule-2.0 gnome-keyring gobject-2.0
-WANTLIB += gpg-error gthread-2.0 idn lua5.1 lzma m pcre quvi soup-2.4
-WANTLIB += soup-gnome-2.4 sqlite3 ssl xml2 z
+WANTLIB += gpg-error gthread-2.0 idn lua5.1 lzma m pcre pthread
+WANTLIB += quvi soup-2.4 soup-gnome-2.4 sqlite3 ssl xml2 z
 
 MODULES=	devel/gettext \
 		x11/gnome
