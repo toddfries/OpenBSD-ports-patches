@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2012/09/06 14:30:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.89 2012/10/04 07:39:51 ajacoutot Exp $
 
 # XXX ossaudio(3) is only enabled to be used as a mixing device by
 # audio/pulseaudio and x11/xfce4/xfce4-mixer
@@ -10,6 +10,7 @@ COMMENT-caca=		libcaca element for GStreamer (plugins-good)
 
 V=			0.10.31
 DISTNAME=		gst-plugins-good-${V}
+PKGNAME=		gstreamer-plugins-good-${V}
 
 PKGNAME-main=		gstreamer-plugins-good-${V}
 PKGNAME-aalib=		gstreamer-aalib-${V}
@@ -17,10 +18,10 @@ PKGNAME-dv=		gstreamer-dv-${V}
 PKGNAME-caca=		gstreamer-libcaca-${V}
 EPOCH-main=		0
 
-REVISION-main=		3
-REVISION-aalib=		2
-REVISION-dv=		2
-REVISION-caca=		2
+REVISION-main=		5
+REVISION-aalib=		3
+REVISION-dv=		3
+REVISION-caca=		3
 
 MULTI_PACKAGES=		-main -aalib -dv -caca
 
@@ -56,6 +57,9 @@ WANTLIB-dv += dv gstaudio-0.10 gstinterfaces-0.10 gstpbutils-0.10
 
 RUN_DEPENDS=		${BUILD_PKGPATH}
 LIB_DEPENDS=		${P}/core
+
+# needed for ${WRKSRC}/tests/
+BUILD_DEPENDS += x11/gtk+2
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			${MODGCONF2_LIB_DEPENDS} \

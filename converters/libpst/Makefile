@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.24 2012/08/26 07:19:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2012/09/28 12:22:46 ajacoutot Exp $
 
 BROKEN-hppa=		linking .libs/python-libpst.o fails
 
 COMMENT-main=		read and convert Microsoft Outlook mail files
 COMMENT-python=		python interface to libpst
 
-DISTNAME=		libpst-0.6.54
-SHARED_LIBS +=  pst                  2.0      # .4.1
+DISTNAME=		libpst-0.6.55
+SHARED_LIBS +=  pst                  2.0      # 5.5
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-python=		py-${DISTNAME}
-
-REVISION-main=		1
-REVISION-python=	0
 
 CATEGORIES=		converters mail
 
@@ -57,19 +54,25 @@ USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-pst-debug \
-			--enable-static-tools=no \
+			--disable-static-tools \
 			--enable-libpst-shared
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${MODPY_INCDIR}" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			PYTHON_LDFLAGS="-L${LOCALBASE}/lib -lpython${MODPY_VERSION} -lm" \
 			PYTHON_BIN="python${MODPY_VERSION}"
 
+# XXX eats all memory
+.if ${MACHINE_ARCH} == "sparc64" || ${MACHINE_ARCH} == "hppa"
+CFLAGS+=	-O0
+.endif
+
 FAKE_FLAGS+=		htmldir="${PREFIX}/share/doc/libpst/" \
 			htmldeveldir="${PREFIX}/share/doc/libpst/devel/"
 
 pre-configure:
-	perl -pi -e 's,!!MODPY_VERSION!!,${MODPY_VERSION},;' \
-		-e 's,!!LOCALBASE!!,${LOCALBASE},' \
-		${WRKSRC}/configure
+	${SUBST_CMD} ${WRKSRC}/configure
+
+post-install:
+	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.{a,la}
 
 .include <bsd.port.mk>

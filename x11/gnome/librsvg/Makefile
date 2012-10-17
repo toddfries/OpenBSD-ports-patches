@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.78 2012/08/21 06:59:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.80 2012/09/29 10:52:28 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	SAX-based render library for SVG files
 
 GNOME_PROJECT=	librsvg
-GNOME_VERSION=	2.36.2
+GNOME_VERSION=	2.36.3
 REVISION=	0
 
 SHARED_LIBS +=	rsvg-2         38.0           # .38.0
@@ -47,5 +47,6 @@ CONFIGURE_ARGS=	--disable-gtk-theme \
 post-install:
 	rm -f ${PREFIX}/bin/rsvg-view-3 # gtk+3
 	rm -f ${PREFIX}/man/man1/rsvg.1 # gtk+2
+	rm ${PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.{a,la}
 
 .include <bsd.port.mk>
