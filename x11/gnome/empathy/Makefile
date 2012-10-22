@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.105 2012/10/03 11:53:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.110 2012/10/17 11:49:37 ajacoutot Exp $
 
 COMMENT= 		Telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
-GNOME_VERSION=		3.6.0.1
-
-SHARED_LIBS +=	empathy              0.0      # unknown
-SHARED_LIBS +=	empathy-gtk          0.0      # unknown
+GNOME_VERSION=		3.6.1
+REVISION=		1
 
 CATEGORIES=		net
 
@@ -49,7 +47,7 @@ BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
 			devel/iso-codes \
 			x11/gnome/nautilus-sendto
 LIB_DEPENDS=		audio/libcanberra,-gtk3 \
-			audio/pulseaudio>=2.0 \
+			audio/pulseaudio>=2.1 \
 			geo/geoclue \
 			geo/libchamplain>=0.12.2 \
 			graphics/clutter/clutter-gst>=1.9.92 \
@@ -75,11 +73,8 @@ MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 MODGNOME_TOOLS= 	yelp
 
-MODGNOME_LDFLAGS=	-Wl,-rpath,${LOCALBASE}/lib/pulseaudio
-
 CONFIGURE_ARGS+=	--disable-gudev \
 			--disable-Werror \
-			--with-eds \
 			--without-cheese
 
 # XXX needs geocode-glib
@@ -89,8 +84,7 @@ CONFIGURE_ARGS +=	--disable-geocode
 CONFIGURE_ARGS+=	--without-connectivity
 
 post-install:
-	#XXX: Disabled until M-C is updated to >= 5.13.1
-	#rm ${PREFIX}/lib/mission-control-plugins.0/*.{a,la}
+	rm ${PREFIX}/lib/mission-control-plugins.0/*.{a,la}
 	rm ${PREFIX}/lib/nautilus-sendto/plugins/*.{a,la}
 
 .include <bsd.port.mk>

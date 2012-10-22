@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.74 2012/10/02 20:51:18 sthen Exp $
+# $OpenBSD: Makefile,v 1.78 2012/10/17 11:49:37 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
-GNOME_VERSION=		3.6.0
+GNOME_VERSION=		3.6.1
+REVISION=		1
 
 CATEGORIES=		x11
 
@@ -43,17 +44,19 @@ LIB_DEPENDS=		x11/gnome/desktop>=3.6.0 \
 			sysutils/upower \
 			devel/libgtop2 \
 			print/cups,-libs \
-			audio/pulseaudio \
+			audio/pulseaudio>=2.1 \
 			audio/libcanberra,-gtk3 \
 			graphics/colord
 
-BUILD_DEPENDS=		x11/gnome/settings-daemon>=3.6.0 \
-			textproc/docbook-xsl \
+BUILD_DEPENDS=		x11/gnome/settings-daemon>=3.6.1 \
 			devel/iso-codes \
 			devel/gsettings-desktop-schemas
-RUN_DEPENDS=		x11/gnome/settings-daemon>=3.6.0 \
+RUN_DEPENDS=		x11/gnome/settings-daemon>=3.6.1 \
 			devel/iso-codes \
 			devel/gsettings-desktop-schemas
+
+# man pages
+BUILD_DEPENDS += textproc/docbook-xsl
 
 # XXX when the user account panel is re-enabled
 BUILD_DEPENDS +=	security/libpwquality
@@ -104,7 +107,7 @@ CONFIGURE_ARGS=	--disable-static \
 CONFIGURE_ARGS += --disable-ibus
 
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include
-MODGNOME_LDFLAGS=	-L${X11BASE}/lib -Wl,-rpath,${LOCALBASE}/lib/pulseaudio
+MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gnome-control-center
 

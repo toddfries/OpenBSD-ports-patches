@@ -1,11 +1,17 @@
-# $OpenBSD: Makefile,v 1.81 2012/09/27 17:26:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.84 2012/10/11 11:05:02 kili Exp $
 
 COMMENT-main =		compiler for the functional language Haskell
 COMMENT-doc =		documentation for GHC
 
+# Note: please never ever set DPB_PROPERTIES=parallel (or some other
+# magic that enables parallel builds) for this port! Not even if it
+# appears to work. (search the upstream bug tracker for terms like
+# "non-dterministic", "unresolved symbol", "signature mismatch" etc. to
+# find the appropriate bug tickets)
+
 DISTNAME =		ghc-${MODGHC_VER}
 PKGNAME-main =		ghc-${MODGHC_VER}
-REVISION-main =		0
+REVISION-main =		1
 PKGNAME-doc =		ghc-doc-${MODGHC_VER}
 CATEGORIES =		lang devel
 HOMEPAGE =		http://www.haskell.org/ghc/
@@ -38,11 +44,11 @@ PKG_ARCH-doc =		*
 BUILD_DEPENDS =		archivers/gtar \
 			textproc/docbook-xsl
 LIB_DEPENDS-doc =
-LIB_DEPENDS-main =	${LIB_DEPENDS} devel/gmp
+LIB_DEPENDS-main =	${LIB_DEPENDS}
 RUN_DEPENDS-doc =
 RUN_DEPENDS-main =
 
-WANTLIB-main =		${WANTLIB} c gmp m ncursesw pthread util
+WANTLIB-main =		${WANTLIB} c m ncursesw pthread util
 
 WANTLIB-doc =
 
@@ -72,9 +78,7 @@ USE_GMAKE =		Yes
 USE_GROFF =		Yes
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS +=	--with-gmp-includes=${LOCALBASE}/include \
-			--with-gmp-libraries=${LOCALBASE}/lib \
-			--with-iconv-includes=${LOCALBASE}/include \
+CONFIGURE_ARGS +=	--with-iconv-includes=${LOCALBASE}/include \
 			--with-iconv-libraries=${LOCALBASE}/lib
 CONFIGURE_ENV =		CONF_CC_OPTS_STAGE0="-fno-pie -nopie" \
 			CONF_CC_OPTS_STAGE1="-fno-pie -nopie" \
@@ -179,8 +183,6 @@ BOOTSTRAP_DATE =	20120917
 # ghc and creates a `bindist', i.e. a tarball with binaries that
 # can be used for bootstrapping.
 bootstrap: patch
-	cd ${WRKDIR} && rm -rf bin
-
 	echo HSCOLOUR_SRCS=NO > ${WRKSRC}/mk/build.mk
 	echo GhcLibHcOpts=-O -fasm >> ${WRKSRC}/mk/build.mk
 	echo GhcStage1HcOpts=-O -fasm >> ${WRKSRC}/mk/build.mk
@@ -205,10 +207,5 @@ bootstrap: patch
 
 	env MAKE_ENV="AUTOCONF_VERSION=2.61 AUTOMAKE_VERSION=1.4" \
 	${MAKE} build ALL_TARGET="all binary-dist" \
-
-	cd ${WRKSRC} && \
-	pre=ghc-${MODGHC_VER}.$$(cat VERSION_DATE) && \
-	suf=unknown-openbsd.tar.bz2 && \
-	mv "$$pre-x86_64-$$suf" "$$pre-amd64-$$suf" || true
 
 .include <bsd.port.mk>

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.65 2012/09/28 11:24:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.67 2012/10/17 10:30:47 ajacoutot Exp $
 
 COMMENT=		collection of games for the GNOME desktop
 
 GNOME_PROJECT=		gnome-games
-GNOME_VERSION=		3.6.0.2
+GNOME_VERSION=		3.6.1
+REVISION=		0
 
 CATEGORIES=		games
 
@@ -37,10 +38,9 @@ LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 			graphics/clutter/clutter-gtk \
 			x11/gnome/librsvg
 RUN_DEPENDS=		games/gnuchess \
-			multimedia/gstreamer-0.10/plugins-good \
 			devel/py-gobject3
 
-MODGNOME_TOOLS= 	goi yelp
+MODGNOME_TOOLS= 	yelp
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes

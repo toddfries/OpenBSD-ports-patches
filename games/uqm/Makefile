@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2012/06/04 20:59:41 pascal Exp $
+# $OpenBSD: Makefile,v 1.36 2012/10/11 19:02:12 naddy Exp $
 
 COMMENT-main=		ur-quan masters: sdl port of star control 2; multiplayer
 COMMENT-content=	ur-quan masters: game content
@@ -30,15 +30,23 @@ PKGNAME-remix2=		uqm-remix2-${VER}
 PKGNAME-remix3=		uqm-remix3-${VER}
 PKGNAME-threedomusic=	uqm-threedomusic-${VER}
 PKGNAME-voice=		uqm-voice-${VER}
+REVISION-main=		0
+REVISION-content=	0
+REVISION-remix1=	0
+REVISION-remix2=	0
+REVISION-remix3=	0
+REVISION-threedomusic=	0
+REVISION-voice=		0
 EXTRACT_ONLY=		${PDIST}
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=sc2/}
 
 HOMEPAGE=		http://sc2.sourceforge.net/
 
-# GPL + Creative Commons Attribution-NonCommercial-ShareAlike 2.5
-PERMIT_PACKAGE_CDROM=	Yes
+# code GPLv2+, data Creative Commons Attribution-NonCommercial-ShareAlike 2.5
+# NC does not apply to unmodified uqm distributions, but mark it to be safe
+PERMIT_PACKAGE_CDROM=	NonCommercial
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
+PERMIT_DISTFILES_CDROM=	NonCommercial
 PERMIT_DISTFILES_FTP=	Yes
 
 LIB_DEPENDS-main=	audio/libmikmod \
@@ -60,7 +68,7 @@ NO_REGRESS=	Yes
 USE_GMAKE=	Yes
 
 PSEUDO_FLAVORS=	no_remix1 no_remix2 no_remix3 no_threedomusic no_voice
-FLAVOR?= no_remix1 no_remix2 no_remix3 no_threedomusic no_voice
+FLAVOR?=
 
 MULTI_PACKAGES= -main -content -remix1 -remix2 -remix3 -threedomusic -voice
 

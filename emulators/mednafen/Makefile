@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2012/09/28 16:21:03 jeremy Exp $
+# $OpenBSD: Makefile,v 1.6 2012/10/20 17:35:18 edd Exp $
 
 COMMENT =	emulates numerous game consoles
 
-DISTNAME =	mednafen-0.9.24-wip
-PKGNAME =	mednafen-0.9.24
-REVISION =	0
+V =		0.9.26
+DISTNAME =	mednafen-${V}-wip
+PKGNAME =	mednafen-${V}
 
 CATEGORIES =	emulators games
 HOMEPAGE =	http://mednafen.sourceforge.net/
@@ -42,6 +42,9 @@ CONFIGURE_ARGS =	--disable-alsa \
 			--disable-jack \
 			--with-x \
 			--with-gnu-ld
+
+# this intrinsic is not supported with our old gcc
+CONFIGURE_ARGS +=	--disable-altivec
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/mednafen

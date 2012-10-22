@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Core.pm,v 1.15 2012/09/24 20:41:57 espie Exp $
+# $OpenBSD: Core.pm,v 1.19 2012/10/13 09:06:55 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -29,6 +29,9 @@ sub new
 	$prop->{sf} //= 1;
 	if (defined $prop->{stuck}) {
 		$prop->{stuck_timeout} = $prop->{stuck} * $prop->{sf};
+	}
+	if ($class->name_is_localhost($name)) {
+		delete $prop->{waiting_timeout};
 	}
 	$hosts->{$name} //= bless {host => $name, prop => $prop }, $class;
 }
@@ -476,6 +479,26 @@ my $available = [];
 my %stopped = ();
 
 my $logdir;
+my $lastcount = 0;
+
+sub log_concurrency
+{
+	my ($class, $time, $fh) = @_;
+	my $j = 0;
+	while (my ($k, $c) = each %{$class->repository}) {
+		$j++;
+		if (defined $c->{swallow}) {
+			$j += $c->{swallow};
+		}
+		if (defined $c->{swallowed}) {
+			$j += scalar(@{$c->{swallowed}});
+		}
+	}
+	if ($j != $lastcount) {
+		print $fh "$$ $time $j\n";
+		$lastcount = $j;
+	}
+}
 
 sub set_logdir
 {
@@ -579,6 +602,7 @@ sub can_swallow
 	my ($core, $n) = @_;
 	$core->{swallow} = $n;
 	$core->{swallowed} = [];
+	$core->{realjobs} = $n+1;
 	$core->host->{swallow}{$core} = $core;
 
 	# try to reswallow freed things right away.
@@ -603,6 +627,7 @@ sub mark_available
 			delete $core->{swallowed};
 			delete $core->host->{swallow}{$core};
 			delete $core->{swallow};
+			delete $core->{realjobs};
 
 			# then free up our swallowed jobs
 			$self->mark_available(@$l);
@@ -674,7 +699,7 @@ sub has_sf
 
 sub parse_hosts_file
 {
-	my ($class, $filename, $state) = @_;
+	my ($class, $filename, $state, $default, $override) = @_;
 	open my $fh, '<', $filename or
 		$state->fatal("Can't read host files #1: #2", $filename, $!);
 	my $_;
@@ -688,7 +713,8 @@ sub parse_hosts_file
 			$state->{startup_script} = $1;
 			next;
 		}
-		my $prop = {};
+		# copy default properties
+		my $prop = { %$default };
 		my ($host, @properties) = split(/\s+/, $_);
 		for my $_ (@properties) {
 			if (m/^(.*?)=(.*)$/) {
@@ -701,15 +727,16 @@ sub parse_hosts_file
 		if (defined $prop->{mem}) {
 			$prop->{memory} = $prop->{mem};
 		}
+		if ($host eq 'DEFAULT') {
+			$default = { %$prop };
+			next;
+		}
+		while (my ($k, $v) = each %$override) {
+			$prop->{$k} = $v;
+		}
 		$sf //= $prop->{sf};
 		if (defined $prop->{sf} && $prop->{sf} != $sf) {
 			$has_sf = 1;
-		}
-		if (defined $state->{connection_timeout}) {
-			$prop->{timeout} //= $state->{connection_timeout};
-		}
-		if (defined $state->{stuck_timeout}) {
-			$prop->{stuck} //= $state->{stuck_timeout};
 		}
 		$state->heuristics->calibrate(DPB::Core::Factory->new($host,
 		    $prop));

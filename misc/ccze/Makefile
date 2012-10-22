@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.13 2010/11/19 07:23:11 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2012/10/18 21:23:51 espie Exp $
 
 COMMENT=	log colorizer
 
-DISTNAME=	ccze-0.2.1	
-REVISION=	2
+DISTNAME=	ccze-0.2.1
+REVISION=	3
 CATEGORIES=	misc
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
-HOMEPAGE=	http://bonehunter.rulez.org/software/ccze/
-
-MASTER_SITES=	ftp://bonehunter.rulez.org/pub/ccze/stable/
+MASTER_SITES=	http://distfiles.bsdfrog.org/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes

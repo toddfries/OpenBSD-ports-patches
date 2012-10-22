@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.8 2012/06/21 07:00:20 ajacoutot Exp $
+$OpenBSD: README,v 1.10 2012/10/16 09:43:11 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -51,6 +51,11 @@ Finishing and validating the installation
 Accessing http://<hostname>/owncloud with a Web browser will finish the
 installation and create a new admin user.
 
+Updating
+========
+Before updating to a new release, read:
+    http://owncloud.org/support/upgrade/
+
 WebDAV access
 =============
 The personnal WebDAV share can be accessed using the following URL (e.g.
@@ -63,6 +68,13 @@ access is done over https instead of http.
 
 Synchronization
 ===============
-The "csync" package (net/csync) can be installed to synchronize local
+The "ocsync" package (net/ocsync) can be installed to synchronize local
 files with ownCloud. e.g.
-    $ csync /path/to/localdir ownclouds://<username>:<password>@<hostname>/files/webdav.php/remotedir/
+    $ ocsync /path/to/localdir ownclouds://<username>:<password>@<hostname>/files/webdav.php/remotedir/
+
+Apps and dependencies
+=====================
+To keep dependencies to a minimum, not all dependencies for all
+installed apps are enforced. It is the job of the administrator to
+manually install required packages according to the non-default apps he
+wants to enable.

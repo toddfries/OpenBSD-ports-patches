@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1078 2012/10/03 08:07:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.1087 2012/10/19 21:40:42 steven Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -139,6 +139,7 @@
      SUBDIR += gtkparasite
      SUBDIR += guichan
      SUBDIR += guilib
+     SUBDIR += gyp
      SUBDIR += haddock
      SUBDIR += happy
      SUBDIR += harfbuzz
@@ -320,6 +321,7 @@
      SUBDIR += libhid
      SUBDIR += libidn
      SUBDIR += libio
+     SUBDIR += libivykis
      SUBDIR += libixp
      SUBDIR += liblouis
      SUBDIR += libmagic
@@ -386,7 +388,6 @@
      SUBDIR += mingw
      SUBDIR += mk
      SUBDIR += mm
-     SUBDIR += mm-common
      SUBDIR += mono-addins
      SUBDIR += mono-gdata
      SUBDIR += mono-notify
@@ -408,6 +409,7 @@
      SUBDIR += node-generic-pool
      SUBDIR += node-gir
      SUBDIR += node-mnm
+     SUBDIR += npth
      SUBDIR += nspr
      SUBDIR += ocaml-batteries
      SUBDIR += ocaml-calendar
@@ -872,6 +874,7 @@
      SUBDIR += p5-Sub-Name
      SUBDIR += p5-Sub-Override
      SUBDIR += p5-Sub-Uplevel
+     SUBDIR += p5-Switch
      SUBDIR += p5-Sys-SigAction
      SUBDIR += p5-System-Command
      SUBDIR += p5-TAP-Harness-Archive
@@ -1043,7 +1046,6 @@
      SUBDIR += py-configobj
      SUBDIR += py-country
      SUBDIR += py-coverage
-     SUBDIR += py-ctypes
      SUBDIR += py-dateutil
      SUBDIR += py-decorator
      SUBDIR += py-decoratortools
@@ -1134,6 +1136,7 @@
      SUBDIR += qgit
      SUBDIR += qt-creator
      SUBDIR += qt4-eventsview
+     SUBDIR += quilt
      SUBDIR += quirks
      SUBDIR += radare2
      SUBDIR += ragel
@@ -1251,6 +1254,7 @@
      SUBDIR += svk
      SUBDIR += swig
      SUBDIR += t1lib
+     SUBDIR += tclap
      SUBDIR += tclcl
      SUBDIR += tcllib
      SUBDIR += teensyloader

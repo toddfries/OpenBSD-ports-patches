@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.34 2012/09/23 18:13:32 espie Exp $
+# $OpenBSD: Port.pm,v 1.41 2012/10/13 09:06:56 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -19,10 +19,18 @@ use warnings;
 
 use DPB::Job;
 use DPB::Clock;
-package DPB::Task::Port;
+package DPB::Task::BasePort;
+our @ISA = qw(DPB::Task::Clocked);
 use OpenBSD::Paths;
 
-our @ISA = qw(DPB::Task::Clocked);
+sub finalize
+{
+	my ($self, $core) = @_;
+	$self->SUPER::finalize($core);
+	$core->job->finished_task($self);
+	return $core->{status} == 0;
+}
+
 sub new
 {
 	my ($class, $phase) = @_;
@@ -41,14 +49,6 @@ sub fork
 
 	$core->job->{current} = $self->{phase};
 	return $self->SUPER::fork($core);
-}
-
-sub finalize
-{
-	my ($self, $core) = @_;
-	$self->SUPER::finalize($core);
-	$core->job->finished_task($self);
-	return $core->{status} == 0;
 }
 
 sub handle_output
@@ -107,6 +107,51 @@ sub run
 }
 
 sub notime { 0 }
+
+# this code is only necessary thanks to NFS's brain-damage...
+sub make_sure_we_have_packages
+{
+	my ($self, $core) = @_;
+	my $job = $core->job;
+	open my $log, '>>', $job->{log};
+	my $check = 1;
+	# check ALL BUILD_PACKAGES
+	for my $w ($job->{v}->build_path_list) {
+		my $f = $job->{builder}->pkgfile($w);
+		unless (-f $f) {
+			$check = 0;
+			print $log ">>> Missing $f\n";
+		}
+	}
+	if (!$check && $core->prop->{wait_timeout}) {
+		if ($job->{waiting}*10 > $core->prop->{wait_timeout}) {
+			print $log ">>> giving up\n";
+		} else {
+			print $log ">>> waiting 10 seconds\n";
+			$job->insert_tasks(
+			    DPB::Task::Port::VerifyPackages->new(
+				'waiting-'.$job->{waiting}++));
+		}
+	}
+}
+
+package DPB::Task::Port;
+our @ISA = qw(DPB::Task::BasePort);
+
+sub finalize
+{
+	my ($self, $core) = @_;
+	$self->SUPER::finalize($core);
+	if ($core->{status} == 0) {
+		return 1;
+	}
+	if ($core->prop->{always_clean}) {
+		$core->job->insert_tasks(DPB::Task::Port::CleanOnError->new(
+			'clean'));
+		return 1;
+	}
+	return 0;
+}
 
 package DPB::Task::Port::Serialized;
 our @ISA = qw(DPB::Task::Port);
@@ -425,11 +470,20 @@ sub finalize
 }
 
 package DPB::Task::Port::Clean;
-our @ISA = qw(DPB::Task::Port);
+our @ISA = qw(DPB::Task::BasePort);
 
 sub notime { 1 }
 
 sub finalize
+{
+	my ($self, $core) = @_;
+	if (!$self->requeue($core)) {
+		$self->make_sure_we_have_packages($core);
+	}
+	$self->SUPER::finalize($core);
+}
+
+sub requeue
 {
 	my ($self, $core) = @_;
 	# didn't clean right, and no sudo yet:
@@ -437,16 +491,44 @@ sub finalize
 	if ($core->{status} != 0 && !$self->{sudo}) {
 		$self->{sudo} = 1;
 		my $job = $core->job;
-		unshift(@{$job->{tasks}}, $self);
+		$job->insert_tasks($self);
 		my $fh = $job->{builder}->logger->open("clean");
 		print $fh $job->{v}->fullpkgpath, "\n";
 		$core->{status} = 0;
 		return 1;
 	}
+	return 0;
+}
+
+package DPB::Task::Port::CleanOnError;
+our @ISA = qw(DPB::Task::Port::Clean);
+
+sub finalize
+{
+	my ($self, $core) = @_;
+	if ($self->requeue($core)) {
+		return 1;
+	}
 	$self->SUPER::finalize($core);
+	return 0;
 }
 
 package DPB::Task::Port::VerifyPackages;
+our @ISA = qw(DPB::Task::Port);
+sub finalize
+{
+	my ($self, $core) = @_;
+	if ($core->{status} != 0) {
+		return 0;
+	}
+	$self->make_sure_we_have_packages($core);
+}
+
+sub run
+{
+	sleep 10;
+	exit(0);
+}
 
 package DPB::Port::TaskFactory;
 my $repo = {
@@ -460,7 +542,6 @@ my $repo = {
 	'show-size' => 'DPB::Task::Port::ShowSize',
 	'show-fake-size' => 'DPB::Task::Port::ShowFakeSize',
 	'junk' => 'DPB::Task::Port::Uninstall',
-	'final-check' => "DPB::Task::Port::VerifyPackages",
 };
 
 sub create
@@ -478,7 +559,7 @@ use Time::HiRes qw(time);
 
 sub new
 {
-	my ($class, $log, $v, $builder, $special, $parallel, $endcode) = @_;
+	my ($class, $log, $v, $builder, $special, $core, $endcode) = @_;
 	my $e;
 	if ($builder->{rebuild}) {
 		$e = sub { $builder->register_built($v); &$endcode; };
@@ -492,22 +573,34 @@ sub new
 	    builder => $builder, endcode => $e},
 		$class;
 
-	if ($parallel && $v->{info}{DPB_PROPERTIES}{parallel}) {
-		$job->{parallel} = $parallel;
+	my $prop = $core->prop;
+	if ($prop->{parallel} =~ m/^\/(\d+)$/) {
+		if ($prop->{jobs} == 1) {
+			$prop->{parallel} = 0;
+		} else {
+			$prop->{parallel} = int($prop->{jobs}/$1);
+			if ($prop->{parallel} < 2) {
+				$prop->{parallel} = 2;
+			}
+		}
+	}
+	if ($prop->{parallel} && $v->{info}{DPB_PROPERTIES}{parallel}) {
+		$job->{parallel} = $prop->{parallel};
 	}
 
 	if ($builder->{rebuild}) {
 		push(@{$job->{tasks}},
 		    DPB::Task::Port::Signature->new('signature'));
 	} else {
-		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath});
+		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath},
+		    $prop);
 	}
 	return $job;
 }
 
 sub add_normal_tasks
 {
-	my ($self, $dontclean) = @_;
+	my ($self, $dontclean, $hostprop) = @_;
 
 	my @todo;
 	my $builder = $self->{builder};
@@ -515,9 +608,9 @@ sub add_normal_tasks
 		push @todo, "clean";
 	}
 	push(@todo, qw(depends prepare show-prepare-results));
-	if ($builder->{junk}) {
-		if ($builder->{junk_count}++ >= $builder->{junk}) {
-			$builder->{junk_count} = 0;
+	if ($hostprop->{junk}) {
+		if ($hostprop->{junk_count}++ >= $hostprop->{junk}) {
+			$hostprop->{junk_count} = 0;
 			push(@todo, 'junk');
 		}
 	}
@@ -537,7 +630,6 @@ sub add_normal_tasks
 	if (!$dontclean) {
 		push @todo, 'clean';
 	}
-#	push @todo, 'final-check';
 	$self->add_tasks(map {DPB::Port::TaskFactory->create($_)} @todo);
 }
 
@@ -621,7 +713,7 @@ sub set_watch
 {
 	my ($self, $logger, $v) = @_;
 	my $expected;
-	for my $w ($logger->pathlist($v)) {
+	for my $w ($v->build_path_list) {
 		if (defined $logsize->{$w}) {
 			$expected = $logsize->{$w};
 			last;

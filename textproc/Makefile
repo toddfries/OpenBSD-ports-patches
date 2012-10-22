@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.369 2012/09/29 10:27:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.371 2012/10/15 07:57:02 dcoppa Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -57,8 +57,10 @@
      SUBDIR += hs-bytestring-show
      SUBDIR += hs-heist
      SUBDIR += hs-hexpat
+     SUBDIR += hs-libxml-sax
      SUBDIR += hs-polyparse
      SUBDIR += hs-tagsoup
+     SUBDIR += hs-xml-types
      SUBDIR += hs-xml
      SUBDIR += hs-xmlhtml
      SUBDIR += html
@@ -361,6 +363,7 @@
      SUBDIR += urlview,slang
      SUBDIR += validate
      SUBDIR += vgrind
+     SUBDIR += vislcg3
      SUBDIR += wdg-sgml-lib
      SUBDIR += wdiff
      SUBDIR += xerces

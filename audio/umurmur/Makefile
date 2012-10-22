@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.4 2012/04/12 10:03:19 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.6 2012/10/15 15:06:41 sthen Exp $
 
-COMMENT =		minimalistic Mumble server 
+COMMENT =		minimalistic Mumble server
 
 DISTNAME =		umurmur-0.2.10
-
+REVISION =		0
 CATEGORIES =		audio
 
 HOMEPAGE =		http://umurmur.googlecode.com/
@@ -13,10 +13,10 @@ MASTER_SITES =		${HOMEPAGE}/files/
 MAINTAINER =		Jonathon Sisson <sisson.j@gmail.com>
 
 # BSD
-PERMIT_PACKAGE_CDROM =	Yes 
-PERMIT_PACKAGE_FTP =	Yes 
+PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes 
+PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB = 		c config crypto protobuf-c ssl
 
