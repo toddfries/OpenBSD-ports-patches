@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.7 2012/10/11 12:00:46 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.9 2012/10/22 11:41:56 ajacoutot Exp $
 
 # Note that PLIST with shared libs requires the following cleaning:
 # perl -pi -e "s,^\@lib ,," pkg/PLIST
@@ -6,7 +6,8 @@
 ONLY_FOR_ARCHS=	i386
 SHARED_ONLY=	Yes
 
-FEDORA_V=	10
+FEDORA_V ?=	10
+FEDORADIR ?=	${PREFIX}/emul/fedora
 
 CATEGORIES=	emulators
 
@@ -32,8 +33,6 @@ BUILD_DEPENDS+=	rpm-*|rpm2cpio-*:converters/rpm2cpio \
 
 NO_BUILD=	Yes
 NO_REGRESS=	Yes
-
-FEDORADIR=	${PREFIX}/emul/fedora
 
 .if !target(do-install)
 do-install:

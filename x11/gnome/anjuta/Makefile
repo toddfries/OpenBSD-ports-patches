@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.72 2012/10/01 15:17:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.75 2012/10/21 15:22:05 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.6.0
-REVISION=		1
+GNOME_VERSION=		3.6.1
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
 
@@ -75,10 +74,8 @@ YACC=			bison -y
 CONFIGURE_ARGS+=	--disable-static \
 			--enable-plugin-subversion \
 			--with-symbol-db-shm=/tmp
-# XXX: configure can't find c++???
-CONFIGURE_ENV+=		ac_ct_CXX=/usr/bin/c++
 
-# XXX: needed because of patch-m4_intltool_m4
+# XXX: needed because of patch-m4_intltool_m4 (and patch-configure_ac)
 AUTOCONF_VERSION=	2.68
 CONFIGURE_STYLE=	autoconf
 
