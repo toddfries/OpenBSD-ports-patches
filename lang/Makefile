@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.140 2012/10/14 03:29:35 abieber Exp $
+# $OpenBSD: Makefile,v 1.142 2012/10/31 19:27:29 kili Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -36,6 +36,7 @@
      SUBDIR += hs-haskell-src
      SUBDIR += hs-haskell-src-exts
      SUBDIR += hs-HsParrot
+     SUBDIR += hs-syntactic
      SUBDIR += hugs
      SUBDIR += icon
      SUBDIR += intel2gas
@@ -47,6 +48,7 @@
      SUBDIR += libv8
      SUBDIR += librep
      SUBDIR += lua
+     SUBDIR += luajit
      SUBDIR += mawk
      SUBDIR += mono
      SUBDIR += mono-basic

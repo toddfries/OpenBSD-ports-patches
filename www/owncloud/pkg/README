@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.10 2012/10/16 09:43:11 ajacoutot Exp $
+$OpenBSD: README,v 1.12 2012/10/26 12:09:13 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -41,6 +41,14 @@ MySQL or PostgreSQL, the file ${INSTADIR}/config/config.sample.php will
 need to be copied to ${INSTADIR}/config/config.php and configured
 accordingly.
 
+Cron job
+--------
+If "backgroundjobs" is configured to "Cron" (as opposed to "AJAX" or
+"Webcron") in the Admin menu, a cron(8) job must be added to the root's
+crontab(5):
+
+*/5	*	*	*	*	${MODPHP_BIN} ${INSTDIR}/cron.php
+
 LDAP User Backend
 -----------------
 If the LDAP user backend is enabled, the "php-ldap" package will need to
@@ -55,6 +63,10 @@ Updating
 ========
 Before updating to a new release, read:
     http://owncloud.org/support/upgrade/
+
+When using a PostgreSQL or MySQL, the corresponding MDB2 php package
+must be installed to properly upgrade the database:
+    php-pgsql or php-mysql
 
 WebDAV access
 =============
