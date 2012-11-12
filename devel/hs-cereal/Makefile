@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2011/09/16 09:24:50 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2012/10/28 23:27:04 kili Exp $
 
 COMMENT =		binary serialization library
 
-DISTNAME =		cereal-0.3.0.0
-REVISION =		3
+DISTNAME =		cereal-0.3.5.2
+REVISION =		0
 CATEGORIES =		devel
 
 MAINTAINER =		Jim Razmus II <jim@openbsd.org>

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Distant.pm,v 1.4 2012/07/12 20:27:19 espie Exp $
+# $OpenBSD: Distant.pm,v 1.7 2012/11/06 08:26:29 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -76,6 +76,7 @@ sub exec
 	my ($self, @argv) = @_;
 	if ($self->{env}) {
 		while (my ($k, $v) = each %{$self->{env}}) {
+			$v //= '';
 			unshift @argv, "$k=\'$v\'";
 		}
 	}
@@ -83,7 +84,8 @@ sub exec
 	if ($self->{dir}) {
 		$cmd = "cd $self->{dir} && $cmd";
 	}
-	$self->_run($cmd);
+	my $umask = $self->{master}{host}{prop}{umask};
+	$self->_run("umask $umask && $cmd");
 }
 
 package DPB::Task::SshMaster;
@@ -182,7 +184,7 @@ sub alive_hosts
 			push(@l, $host.'-');
 		}
 	}
-	return "Distant hosts: ".join(' ', sort(@l))."\n";
+	return "Hosts: ".join(' ', sort(@l))."\n";
 }
 
 sub changed_hosts

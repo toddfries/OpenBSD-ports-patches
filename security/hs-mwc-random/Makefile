@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/01/22 17:16:04 kili Exp $
+# $OpenBSD: Makefile,v 1.3 2012/10/28 23:30:36 kili Exp $
 
 COMMENT=		fast, high quality pseudo random number generation
 
-DISTNAME=		mwc-random-0.10.0.1
+DISTNAME=		mwc-random-0.12.0.1
+REVISION=		0
 CATEGORIES=		math security
 
 # BSD3
@@ -16,7 +17,7 @@ MODULES=		lang/ghc
 MODGHC_BUILD =          cabal hackage haddock register
 
 RUN_DEPENDS =		devel/hs-primitive \
-			devel/hs-vector>=0.6.0.2
+			devel/hs-vector>=0.7
 BUILD_DEPENDS =		${RUN_DEPENDS}
 
 .include <bsd.port.mk>

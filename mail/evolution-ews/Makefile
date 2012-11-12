@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/03 15:57:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2012/11/11 19:00:25 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	evolution connector for MS Exchange via EWS
 
 GNOME_PROJECT=	evolution-ews
-GNOME_VERSION=	3.6.0
-REVISION=	0
+GNOME_VERSION=	3.6.1
 
 CATEGORIES=	mail
 
@@ -46,31 +45,15 @@ WANTLIB += nss3 nssutil3 ogg orc-0.4 p11-kit pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
 WANTLIB += smime3 softokn3 soup-2.4 soup-gnome-2.4 sqlite3 ssl3
 WANTLIB += stdc++ vorbis vorbisfile webkitgtk-3.0 xcb xcb-render
-WANTLIB += xcb-shm xkbfile xml2 xslt z secret-1
-WANTLIB += lib/evolution/${EVO_VERSION}/composer
-WANTLIB += lib/evolution/${EVO_VERSION}/eabutil
-WANTLIB += lib/evolution/${EVO_VERSION}/econtacteditor
-WANTLIB += lib/evolution/${EVO_VERSION}/econtactlisteditor
-WANTLIB += lib/evolution/${EVO_VERSION}/email-engine
-WANTLIB += lib/evolution/${EVO_VERSION}/email-utils
-WANTLIB += lib/evolution/${EVO_VERSION}/emformat
-WANTLIB += lib/evolution/${EVO_VERSION}/emiscwidgets
-WANTLIB += lib/evolution/${EVO_VERSION}/eshell
-WANTLIB += lib/evolution/${EVO_VERSION}/essmime
-WANTLIB += lib/evolution/${EVO_VERSION}/etable
-WANTLIB += lib/evolution/${EVO_VERSION}/etext
-WANTLIB += lib/evolution/${EVO_VERSION}/eutil
-WANTLIB += lib/evolution/${EVO_VERSION}/evolution-a11y
-WANTLIB += lib/evolution/${EVO_VERSION}/evolution-mail
-WANTLIB += lib/evolution/${EVO_VERSION}/evolution-smime
-WANTLIB += lib/evolution/${EVO_VERSION}/filter
-WANTLIB += lib/evolution/${EVO_VERSION}/gnomecanvas
-WANTLIB += lib/evolution/${EVO_VERSION}/menus
+WANTLIB += xcb-shm xkbfile xml2 xslt z
 
 MODULES=	devel/gettext \
 		x11/gnome
 
-LIB_DEPENDS=	mail/evolution,-main>=3.6.0
+# XXX should be a LIB_DEPENDS+WANTLIB but check-lib-depends(1) does not
+# work with unversioned solibs (LOCALBASE/lib/evolution/*/*.so).
+BUILD_DEPENDS +=	mail/evolution,-main
+RUN_DEPENDS +=		mail/evolution,-main
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
@@ -79,7 +62,7 @@ CONFIGURE_ARGS=	--disable-static \
 		--with-krb5=/usr \
 		--with-krb5-includes=/usr/include/kerberosV
 
-MODGNOME_LDFLAGS=-Wl,-rpath,${TRUEPREFIX}/lib/evolution-data-server/camel-providers:${LOCALBASE}/lib/evolution-data-server-${EVO_VERSION}:${TRUEPREFIX}/lib
+MODGNOME_LDFLAGS=-Wl,-rpath,${TRUEPREFIX}/lib/evolution-data-server-${EVO_VERSION}
 
 post-install:
 	rm ${PREFIX}/lib/evolution-data-server/*/*.la

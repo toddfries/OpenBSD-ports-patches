@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.193 2012/10/03 08:06:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.195 2012/10/11 21:51:41 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += anjuta
@@ -28,7 +28,6 @@
      SUBDIR += file-roller
      SUBDIR += font-viewer
      SUBDIR += games
-     SUBDIR += games-extra-data
      SUBDIR += gcalctool
      SUBDIR += gcr
      SUBDIR += gdl
@@ -39,7 +38,6 @@
      SUBDIR += gedit-cossa
      SUBDIR += gedit-latex
      SUBDIR += gedit-plugins
-     SUBDIR += genius
      SUBDIR += ghex
      SUBDIR += gitg
      SUBDIR += gjs

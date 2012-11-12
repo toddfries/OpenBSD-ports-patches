@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.23 2012/09/09 17:15:59 robert Exp $
+# $OpenBSD: Makefile,v 1.26 2012/10/15 19:31:04 robert Exp $
 
-COMMENT=	ActiveSync protocol implementation	
+COMMENT=	ActiveSync protocol implementation
 
-V=		2.0.2
-DISTNAME=	z-push-${V}-1437
+V=		2.0.4
+DISTNAME=	z-push-${V}-1497
 PKGNAME=	z-push-${V}
 
 CATEGORIES=	mail www
 
 HOMEPAGE=	http://z-push.sourceforge.net/
 
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 # AGPLv3 (GNU Affero Public License)
 PERMIT_PACKAGE_CDROM=	Yes

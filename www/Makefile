@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.576 2012/09/27 15:52:18 landry Exp $
+# $OpenBSD: Makefile,v 1.585 2012/11/07 07:54:04 jasper Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -58,10 +58,15 @@
      SUBDIR += flyspray
      SUBDIR += gcap
      SUBDIR += gecko-mediaplayer
+     SUBDIR += gitlist
      SUBDIR += glpi
      SUBDIR += gnash
      SUBDIR += gtkhtml3
      SUBDIR += gtkhtml4
+     SUBDIR += haserl
+     SUBDIR += haserl,no_lua
+     SUBDIR += haserl,static
+     SUBDIR += haserl,no_lua,static
      SUBDIR += havp
      SUBDIR += hiawatha
      SUBDIR += horde
@@ -71,6 +76,8 @@
      SUBDIR += hs-http-types
      SUBDIR += hs-snap
      SUBDIR += hs-snap-core
+     SUBDIR += hs-snap-loader-dynamic
+     SUBDIR += hs-snap-loader-static
      SUBDIR += hs-snap-server
      SUBDIR += hs-webkit
      SUBDIR += hs-wai
@@ -99,6 +106,7 @@
      SUBDIR += links+
      SUBDIR += links+,no_x11
      SUBDIR += llgal
+     SUBDIR += luakit
      SUBDIR += man2web
      SUBDIR += mantis
      SUBDIR += mediawiki
@@ -458,6 +466,8 @@
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-unicorn
      SUBDIR += ruby-unicorn,ruby18
+     SUBDIR += ruby-vegas
+     SUBDIR += ruby-vegas,ruby18
      SUBDIR += sabredav
      SUBDIR += sarg
      SUBDIR += seamonkey
@@ -482,7 +492,6 @@
      SUBDIR += syweb
      SUBDIR += thttpd
      SUBDIR += tidyp
-     SUBDIR += tikiwiki
      SUBDIR += timetrex
      SUBDIR += tinyproxy
      SUBDIR += tntnet

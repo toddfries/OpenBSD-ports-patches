@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2012/06/19 20:40:10 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.37 2012/10/28 23:31:50 kili Exp $
 
 COMMENT-main =		tiling window manager
 COMMENT-lib =		libraries for runtime configuration
@@ -6,8 +6,8 @@ COMMENT-lib =		libraries for runtime configuration
 DISTNAME =		xmonad-0.10
 PKGNAME-main =		${DISTNAME}
 PKGNAME-lib =		${DISTNAME:S,-,-lib-,}
-REVISION-main =		0
-REVISION-lib =		0
+REVISION-main =		1
+REVISION-lib =		2
 CATEGORIES =		x11
 HOMEPAGE =		http://www.xmonad.org/
 
@@ -19,20 +19,18 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB-main =		${WANTLIB} X11 Xext Xinerama c gmp m pthread util
+WANTLIB-main =		${WANTLIB} X11 Xext Xinerama Xrandr c m \
+			pthread util
 WANTLIB-lib =
 
 MODULES =		lang/ghc converters/libiconv
-# No documentation for now (haddock thinks that module `xmonad-0.9.2:Main'
-# is defined in multiple files).
-MODGHC_BUILD =		cabal hackage register nort
+MODGHC_BUILD =		cabal hackage haddock register nort
 
 BUILD_DEPENDS =		${RUN_DEPENDS-lib}
 RUN_DEPENDS-lib =	devel/hs-mtl \
 			devel/hs-syb \
 			x11/hs-X11>=1.5.0.0
-LIB_DEPENDS-main =	${LIB_DEPENDS} \
-			devel/gmp
+LIB_DEPENDS-main =	${LIB_DEPENDS}
 
 # Instead of adding `nort' to MODGHC_BUILD for -main, explicitely set
 # MODGHC_SETUP_CONF_ARGS and add lang/ghc to RUN_DEPENDS-lib.

@@ -1,9 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2011/04/28 19:28:15 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2012/11/01 21:31:55 jasper Exp $
 
-ONLY_FOR_ARCHS=	i386
+ONLY_FOR_ARCHS=        i386
 
 COMMENT=	New Jersey Standard ML
-PKGNAME=	smlnj-110.0.7
+
+V=		110.0.7
+
+PKGNAME=	smlnj-$V
 REVISION=	0
 CATEGORIES=	lang
 
@@ -13,20 +16,20 @@ MAINTAINER=	Jens Gerlach Christensen <vepjan@worldonline.dk>
 
 # http://www.smlnj.org/license.html
 PERMIT_PACKAGE_CDROM=	without fee
-PERMIT_PACKAGE_FTP=	Yes 
+PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	without fee
-PERMIT_DISTFILES_FTP=	Yes 
+PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m
 
-MASTER_SITES=	ftp://ftp.research.bell-labs.com/dist/smlnj/release/110.0.7/
-DIST_SUBDIR=	smlnj-110.0.7
+MASTER_SITES=	ftp://ftp.research.bell-labs.com/dist/smlnj/release/$V/
+DIST_SUBDIR=	smlnj-$V
 DISTFILES=	bin.x86-unix.tar.Z cm.tar.Z cml.tar.Z \
 		config.tar.Z eXene.tar.Z \
 		ml-burg.tar.Z ml-lex.tar.Z \
 		ml-yacc.tar.Z runtime.tar.Z \
 		smlnj-c.tar.Z smlnj-lib.tar.Z
-#EXTRACT_ONLY=	config.tar.Z 
+#EXTRACT_ONLY=	config.tar.Z
 
 USE_GMAKE=	Yes
 
@@ -48,7 +51,7 @@ do-build:
 	FILESDIR="$(FILESDIR)" ./config/install.sh
 
 NO_REGRESS=	Yes
-	
+
 do-install:
 	rm -rf ${SML_BASE}
 	-mkdir ${SML_BASE} ${SML_BINDIR} ${SML_LIBDIR}

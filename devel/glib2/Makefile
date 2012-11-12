@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.189 2012/10/02 20:56:18 landry Exp $
+# $OpenBSD: Makefile,v 1.195 2012/11/10 07:37:06 ajacoutot Exp $
 
 COMMENT=		general-purpose utility library
 
-V=			2.34.0
+V=			2.34.2
 DISTNAME=		glib-${V}
 PKGNAME=		${DISTNAME:S/glib/glib2/}
 EXTRACT_SUFX=		.tar.xz
@@ -13,11 +13,11 @@ HOMEPAGE=		http://www.gtk.org/
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  glib-2.0             3400.0   # 3400.0
-SHARED_LIBS +=  gmodule-2.0          3400.0   # 3400.0
-SHARED_LIBS +=  gthread-2.0          3400.0   # 3400.0
-SHARED_LIBS +=  gobject-2.0          3400.0   # 3400.0
-SHARED_LIBS +=  gio-2.0              3400.0   # 3400.0
+SHARED_LIBS +=  glib-2.0             3400.0   # 3400.1
+SHARED_LIBS +=  gmodule-2.0          3400.0   # 3400.1
+SHARED_LIBS +=  gthread-2.0          3400.0   # 3400.1
+SHARED_LIBS +=  gobject-2.0          3400.0   # 3400.1
+SHARED_LIBS +=  gio-2.0              3400.0   # 3400.1
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -48,9 +48,9 @@ LIB_DEPENDS=		devel/pcre \
 # also requires bumped limits (stack >= 24576)
 BUILD_DEPENDS +=	x11/dbus
 REGRESS_IS_INTERACTIVE=	x11
-REGRESS_FLAGS=		GTESTER="${WRKBUILD}/glib/gtester -k"
 REGRESS_DEPENDS=	devel/desktop-file-utils \
 			devel/py-gobject \
+			devel/py-gobject3 \
 			x11/dbus-python
 
 USE_GMAKE=		Yes
@@ -91,8 +91,6 @@ AUTO_ENV=		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
 post-patch:
 	cd ${WRKSRC} && ${AUTO_ENV} autoreconf --force --install
 ### end of kqueue(1) backend ###########################################
-
-.include <bsd.port.arch.mk>
 
 pre-configure:
 	perl -pi -e "s,/usr/local,${LOCALBASE},g;" \

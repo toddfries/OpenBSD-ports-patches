@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2012/09/26 07:38:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2012/10/25 14:00:40 ajacoutot Exp $
 
 # XXX ossaudio(3) is only enabled to be used as a mixing device by
 # audio/pulseaudio and x11/xfce4/xfce4-mixer
@@ -6,7 +6,7 @@
 COMMENT-main=		good elements for GStreamer
 COMMENT-pulse=		pulseaudio(1) element for GStreamer
 
-V=			1.0.0
+V=			1.0.2
 DISTNAME=		gst-plugins-good-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-good-${V}
 
@@ -46,7 +46,7 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			net/libshout
 
 LIB_DEPENDS-pulse=	${LIB_DEPENDS} \
-			audio/pulseaudio
+			audio/pulseaudio>=2.1
 RUN_DEPENDS-pulse=	${BASE_PKGPATH},-main=${V}
 
 CONFIGURE_ARGS=		--disable-aalib \

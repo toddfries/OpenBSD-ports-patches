@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/07/19 09:14:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2012/11/03 03:26:59 espie Exp $
 
 COMMENT=	chinese big5/gb truetype fonts
 
@@ -20,7 +20,7 @@ NO_BUILD=	Yes
 NO_REGRESS=	Yes
 PKG_ARCH=	*
 
-WRKDIST=        ${WRKDIR}/arphic 
+WRKDIST=        ${WRKDIR}/arphic
 
 FONTDIR=	${PREFIX}/lib/X11/fonts/TrueType
 

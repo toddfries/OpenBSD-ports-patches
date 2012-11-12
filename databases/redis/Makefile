@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.33 2012/09/18 13:20:43 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.41 2012/11/09 09:52:50 dcoppa Exp $
 
 COMMENT =		persistent key-value database
-DISTNAME =		redis-2.4.17
+DISTNAME =		redis-2.6.4
 CATEGORIES =		databases
 HOMEPAGE =		http://redis.io/
 
@@ -13,13 +13,13 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += 		c execinfo m pthread
+WANTLIB += 		c m pthread
 
 MASTER_SITES =		http://redis.googlecode.com/files/
 
+# XXX: Should use lang/lua, with new dependencies on
+# lua-cmsgpack, lua-cjson, and lua-struct
 MODULES =		lang/tcl
-
-LIB_DEPENDS =		devel/libexecinfo
 
 MAKE_FLAGS =		CC=${CC} \
 			DEBUG="" \
@@ -43,10 +43,17 @@ REGRESS_TARGET =	test
 DBDIR =			/var/redis
 SUBST_VARS +=		DBDIR
 
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/src/redis.c
+
 post-install:
+	${INSTALL_PROGRAM} ${WRKBUILD}/src/redis-sentinel ${PREFIX}/bin/
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/redis
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c \
 		${WRKSRC}/redis.conf \
 			${PREFIX}/share/examples/redis/redis.conf
+	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c \
+		${WRKSRC}/sentinel.conf \
+			${PREFIX}/share/examples/redis/sentinel.conf
 
 .include <bsd.port.mk>

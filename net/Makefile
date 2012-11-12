@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.778 2012/10/03 19:27:18 bluhm Exp $
+# $OpenBSD: Makefile,v 1.781 2012/11/01 14:46:23 zinke Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -50,7 +50,6 @@
      SUBDIR += courtney
      SUBDIR += crawl
      SUBDIR += csup
-     SUBDIR += csync
      SUBDIR += ctrace
      SUBDIR += curl
      SUBDIR += cvsup
@@ -63,6 +62,7 @@
      SUBDIR += dhcping
      SUBDIR += dictd
      SUBDIR += dlint
+     SUBDIR += dnscrypt-proxy
      SUBDIR += dnsmasq
      SUBDIR += dnsreflector
      SUBDIR += dnstop
@@ -154,6 +154,7 @@
      SUBDIR += irssi,socks
      SUBDIR += irssi-icb
      SUBDIR += irssi-silc
+     SUBDIR += irssi-xmpp
      SUBDIR += isc-bind
      SUBDIR += isc-bind,ratelimit
      SUBDIR += isc-dhcp
@@ -247,6 +248,7 @@
      SUBDIR += ntop
      SUBDIR += ntp
      SUBDIR += nylon
+     SUBDIR += ocsync
      SUBDIR += oggfwd
      SUBDIR += oidentd
      SUBDIR += oinkmaster
