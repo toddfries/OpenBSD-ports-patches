@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1190 2012/09/24 15:49:00 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1195 2012/11/05 20:29:35 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -93,12 +93,12 @@ DPB_PROPERTIES ?=
 
 # All variables relevant to the port's description
 _ALL_VARIABLES = BUILD_DEPENDS IS_INTERACTIVE \
-	SUBPACKAGE MULTI_PACKAGES FLAVOR BUILD_PACKAGES \
-	DPB_PROPERTIES
+	SUBPACKAGE FLAVOR BUILD_PACKAGES DPB_PROPERTIES
 # and stuff needing to be MULTI_PACKAGE'd
-_ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS \
-	PKG_ARCH IGNORE 
+_ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS IGNORE 
 _ALL_VARIABLES_PER_ARCH =
+
+_DPB_MULTI = ${BUILD_PACKAGES}
 
 .if ${DPB:L:Mfetch}
 _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
@@ -106,6 +106,7 @@ _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
 	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES \
 	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP
+_DPB_MULTI = ${MULTI_PACKAGES}
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
@@ -116,13 +117,14 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
 	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS \
-	VMEM_WARNING
+	VMEM_WARNING MULTI_PACKAGES PKG_ARCH 
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
 	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC \
 	PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM WANTLIB CATEGORIES DESCR \
 	EPOCH REVISION STATIC_PLIST
+_DPB_MULTI = ${MULTI_PACKAGES}
 .endif
 # special purpose user settings
 PATCH_CHECK_ONLY ?= No
@@ -141,8 +143,14 @@ PLIST_DB ?= ${PORTSDIR}/plist/${MACHINE_ARCH}
 
 PACKAGE_REPOSITORY ?= ${PORTSDIR}/packages
 
-.if !exists(${X11BASE}/man/whatis.db)
+# experimental, don't touch the default unless you really know
+# what you are doing
+PORTS_BUILD_XENOCARA_TOO ?= No
+
+.if ${PORTS_BUILD_XENOCARA_TOO:L} == "no"
+.  if !exists(${X11BASE}/man/whatis.db)
 ERRORS += "Fatal: building ports requires correctly installed X11"
+.  endif
 .endif
 
 # local path locations
@@ -626,7 +634,6 @@ CXXFLAGS += ${CXXDIAGFLAGS}
 .  endif
 .endif
 
-MAKE_FILE ?= Makefile
 PORTHOME ?= /${PKGNAME}_writes_to_HOME
 
 MAKE_ENV += PATH='${PORTPATH}' PREFIX='${PREFIX}' \
@@ -705,6 +712,16 @@ WRKBUILD ?= ${WRKSRC}
 .endif
 WRKCONF ?= ${WRKBUILD}
 
+XENOCARA_COMPONENT ?= No
+# XXX autodetermine makefile actual name, can't do this in
+# xenocara.port.mk, since WRKBUILD isn't known yet.
+.if ${XENOCARA_COMPONENT:L} == "yes"
+.  if exists(${WRKBUILD}/Makefile.bsd-wrapper)
+MAKE_FILE ?= Makefile.bsd-wrapper
+.  endif
+.endif
+
+MAKE_FILE ?= Makefile
 ALL_TARGET ?= all
 
 FAKE_TARGET ?= ${INSTALL_TARGET}
@@ -981,7 +998,12 @@ ERRORS += "Fatal: REQ script support is obsolete"
 .endif
 
 MTREE_FILE ?=
+
+.if ${XENOCARA_COMPONENT:L} == "yes"
+MTREE_FILE += /etc/mtree/BSD.x11.dist
+.else
 MTREE_FILE += ${PORTSDIR}/infrastructure/db/fake.mtree
+.endif
 
 .for _S in ${MULTI_PACKAGES}
 # Fill out package command, and package dependencies
@@ -1390,6 +1412,22 @@ _LIB4${_s} = ${LIB_DEPENDS${_s}:M*\:${_path}} ${LIB_DEPENDS${_s}:M*\:${_path},*}
 _LIB4 += ${_LIB4${_s}}
 .  endfor
 .endfor
+
+# automatically try to determine USE_X11 from wantlib
+USE_X11 ?= No
+.for _lib in X11 GL ICE xcb pixman freetype Xft
+.  if ${USE_X11:L} != "yes"
+.    for _b in ${_BUILDWANTLIB:C/[>=].*//}
+.      if "${_b:M${_lib}}"
+USE_X11 = Yes
+.      endif
+.    endfor
+.  endif
+.endfor
+
+.if ${USE_X11:L} == "yes" && ${PORTS_BUILD_XENOCARA_TOO:L} == "yes"
+BUILD_DEPENDS += base/xenocara/meta
+.endif
 
 .if ${NO_DEPENDS:L} == "no"
 _BUILD_DEPLIST = ${BUILD_DEPENDS}
@@ -2294,11 +2332,13 @@ ${_WRKDIR_COOKIE}:
 		echo 1>&2 "Fatal: ${PORTSDIR} is a symlink. Please set to the real directory"; \
 		exit 1; \
 	fi
+.if ${PORTS_BUILD_XENOCARA_TOO:L} != "yes"
 	@appdefaults=${LOCALBASE}/lib/X11/app-defaults; \
 	if ! test -d $$appdefaults -a -h $$appdefaults; then \
 		echo 1>&2 "Fatal: $$appdefaults should exist and be a symlink"; \
 		exit 1; \
 	fi
+.endif
 	@mkdir -p ${WRKDIR} ${WRKDIR}/bin ${DEPDIR}
 #	@ln -s ${LOCALBASE}/bin/pkg-config ${WRKDIR}/bin
 .if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no"
@@ -3241,7 +3281,7 @@ verbose-show:
 .endfor
 
 dump-vars:
-.if ${MULTI_PACKAGES} == "-"
+.if ${_DPB_MULTI} == "-"
 .  for _v in ${_ALL_VARIABLES} ${_ALL_VARIABLES_INDEXED}
 .   if defined(${_v}-)
 	@echo ${FULLPKGPATH}.${_v}=${${_v}-:Q}
@@ -3257,7 +3297,7 @@ dump-vars:
 .    endfor
 .  endfor
 .else
-.  for _S in ${MULTI_PACKAGES}
+.  for _S in ${_DPB_MULTI}
 .    for _v in ${_ALL_VARIABLES}
 .     if defined(${_v})
 	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}:Q}

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.501 2012/09/27 14:58:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.504 2012/11/01 14:49:25 zinke Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -110,6 +110,7 @@
      SUBDIR += hicolor-icon-theme
      SUBDIR += hs-X11
      SUBDIR += hs-X11-xft
+     SUBDIR += hs-dbus
      SUBDIR += hs-gtk
      SUBDIR += hs-xmonad-contrib
      SUBDIR += human-icon-theme
@@ -138,6 +139,7 @@
      SUBDIR += libgdiplus
      SUBDIR += libsexy
      SUBDIR += libxdg-basedir
+     SUBDIR += lsw
      SUBDIR += lupe
      SUBDIR += lxrandr
      SUBDIR += mlterm
@@ -235,6 +237,7 @@
      SUBDIR += sselp
      SUBDIR += st
      SUBDIR += stalonetray
+     SUBDIR += swarp
      SUBDIR += swisswatch
      SUBDIR += tabbed
      SUBDIR += tangerine-icon-theme
@@ -364,6 +367,7 @@
      SUBDIR += xwit
      SUBDIR += xwrits
      SUBDIR += xzoom
+     SUBDIR += yad
      SUBDIR += yakuake
      SUBDIR += yeahlaunch
 

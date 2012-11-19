@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2012/10/03 15:56:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/10/17 11:49:37 ajacoutot Exp $
 
 COMMENT=		next generation GNOME shell
 
 GNOME_PROJECT=		gnome-shell
-GNOME_VERSION=		3.6.0
+GNOME_VERSION=		3.6.1
 REVISION=		1
 
 HOMEPAGE=		http://live.gnome.org/GnomeShell
@@ -32,7 +32,7 @@ WANTLIB += pixman-1 plc4 plds4 png polkit-agent-1 polkit-gobject-1
 WANTLIB += pthread pthread-stubs pulse pulse-mainloop-glib smime3
 WANTLIB += sndfile softokn3 soup-2.4 sqlite3 ssl3 startup-notification-1
 WANTLIB += stdc++ telepathy-glib telepathy-logger vorbis vorbisfile
-WANTLIB += xcb xcb-aux xcb-render xcb-shm xkbfile xml2 z secret-1
+WANTLIB += xcb xcb-aux xcb-render xcb-shm xkbfile xml2 z
 
 MODULES=		devel/dconf \
 			devel/gettext \
@@ -44,7 +44,7 @@ MODGNOME_TOOLS=		goi
 # gnome-keybindings.pc
 BUILD_DEPENDS +=	x11/gnome/controlcenter
 
-LIB_DEPENDS=		audio/pulseaudio \
+LIB_DEPENDS=		audio/pulseaudio>=2.1 \
 			databases/evolution-data-server>=3.6.0p3 \
 			multimedia/gstreamer1/core \
 			net/telepathy/telepathy-logger \
@@ -54,7 +54,7 @@ LIB_DEPENDS=		audio/pulseaudio \
 			x11/gnome/gcr \
 			x11/gnome/gjs \
 			x11/gnome/menus \
-			x11/gnome/mutter
+			x11/gnome/mutter>=3.6.1
 RUN_DEPENDS=		devel/py-gobject3 \
 			x11/dbus-python \
 			x11/gnome/caribou
@@ -64,13 +64,16 @@ RUN_DEPENDS=		devel/py-gobject3 \
 # be installed separately or as part of the "gnome-extra" meta-package.
 #RUN_DEPENDS +=		mail/evolution
 
+# add required introspection libs that are not in the dependency chain
+RUN_DEPENDS +=	inputmethods/ibus \
+		x11/gnome/gdm
+
 MODGNOME_DESKTOP_FILE=	Yes
 
 LIBTOOL_FLAGS= 		--tag=disable-static
 
 CONFIGURE_STYLE=	autoconf
 CONFIGURE_ARGS=		--disable-static \
-			--with-ca-certificates=/etc/ssl/cert.pem \
 			--without-systemd
 
 AUTOCONF_VERSION=	2.69

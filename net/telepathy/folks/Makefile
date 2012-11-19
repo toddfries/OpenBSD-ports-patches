@@ -1,14 +1,18 @@
-# $OpenBSD: Makefile,v 1.44 2012/10/04 09:14:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.48 2012/11/09 16:15:15 sthen Exp $
 
 COMMENT-main=		people aggregation library
 COMMENT-tracker=	(meta-)tracker backend for folks
 
 GNOME_PROJECT=		folks
 GNOME_VERSION=		0.8.0
-API_V=			37 # MODULE_VERSION in config.h
+# MODULE_VERSION in config.h
+API_V=			37
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-tracker=	${GNOME_PROJECT}-meta-tracker-${GNOME_VERSION}
+
+REVISION-main=		1
+REVISION-tracker=	1
 
 SHARED_LIBS +=  folks-telepathy           5.0 # 37.0
 SHARED_LIBS +=  folks                     5.1 # 37.0
@@ -34,8 +38,8 @@ WANTLIB-main += ${WANTLIB}
 WANTLIB-main += asn1 c camel-1.2 com_err crypto ebook-1.2 edataserver-1.2
 WANTLIB-main += gssapi krb5 ncurses nspr4 nss3 socialweb-client plc4 plds4
 WANTLIB-main += pthread readline smime3 softokn3 soup-2.4 ssl3 telepathy-glib
-WANTLIB-main += xml2 z gck-1 gcr-base-3 gcrypt gpg-error
-WANTLIB-main += nssutil3 p11-kit zeitgeist-1.0 dbus-1 dbus-glib-1 secret-1
+WANTLIB-main += xml2 z gck-1 gcr-base-3 gcrypt gpg-error gnome-keyring
+WANTLIB-main += nssutil3 p11-kit zeitgeist-1.0 dbus-1 dbus-glib-1
 
 LIB_DEPENDS-main=	${MODGETTEXT_LIB_DEPENDS} \
 			databases/evolution-data-server>=3.6.0p3 \
@@ -50,7 +54,7 @@ WANTLIB-tracker += ${WANTLIB}
 WANTLIB-tracker += lib/tracker-${TRACKER_VERSION}/tracker-common
 WANTLIB-tracker += lib/tracker-${TRACKER_VERSION}/tracker-data
 WANTLIB-tracker += e2fs-uuid folks kvm tracker-sparql-${TRACKER_VERSION}
-WANTLIB-tracker += z pthread unistring
+WANTLIB-tracker += z pthread icui18n icuuc
 
 RUN_DEPENDS-tracker=	${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-tracker=	${MODGETTEXT_LIB_DEPENDS} \
@@ -60,7 +64,6 @@ LIB_DEPENDS-tracker=	${MODGETTEXT_LIB_DEPENDS} \
 REGRESS_DEPENDS=	${FULLPKGNAME}:${BASE_PKGPATH}
 
 MODGNOME_TOOLS= 	goi vala
-MODGNOME_LDFLAGS=	-Wl,-rpath,${LOCALBASE}/lib/tracker-${TRACKER_VERSION}
 
 CONFIGURE_ARGS+=	--enable-import-tool \
 			--enable-inspect-tool \

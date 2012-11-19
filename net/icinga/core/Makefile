@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.32 2012/10/01 23:05:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.37 2012/10/25 18:42:32 sthen Exp $
 
-REVISION-main =		1
+V = 1.8.1
 
 COMMENT-main =		network monitoring system (improved fork of Nagios)
 COMMENT-cgi =		cgi scripts for Icinga (classic Nagios-style UI)
@@ -15,7 +15,7 @@ WANTLIB =		c crypto m pthread ssl
 
 MULTI_PACKAGES =	-main -cgi -ido
 PREFIX-cgi =		/var/www
-SUBST_VARS +=		PREFIX-cgi
+SUBST_VARS +=		PREFIX-cgi BASESYSCONFDIR
 
 RUN_DEPENDS =		${BASE_PKGPATH},-main
 
@@ -26,7 +26,7 @@ LIB_DEPENDS-main =	devel/libtool,-ltdl
 WANTLIB-ido =		${WANTLIB} dbi
 LIB_DEPENDS-ido =	databases/libdbi
 RUN_DEPENDS-ido =	${BASE_PKGPATH},-main \
-			libdbi-drivers-mysql-*|libdbi-drivers-pgsql-*:databases/libdbi-drivers,-pgsql
+			libdbi-drivers-mysql-*|libdbi-drivers-pgsql-*:databases/libdbi-drivers,-main
 
 MODULES =		lang/php
 
@@ -44,14 +44,14 @@ SYSCONFDIR =		${BASESYSCONFDIR}/icinga
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS += \
-	--datarootdir=/var/www/icinga-cgi \
+	--datarootdir=${PREFIX-cgi}/icinga-cgi \
 	--libexecdir=${PREFIX}/libexec/nagios \
-	--sbindir=/var/www/cgi-bin/icinga \
+	--sbindir=${PREFIX-cgi}/cgi-bin/icinga \
 	--with-command-group=www \
 	--with-cgiurl=/cgi-bin/icinga \
 	--with-checkresult-dir=/var/spool/icinga \
 	--with-htmurl=/icinga \
-	--with-httpd-conf=/var/www/conf/modules.sample \
+	--with-httpd-conf=${PREFIX-cgi}/conf/modules.sample \
 	--with-icinga-group=_icinga \
 	--with-icinga-user=_icinga \
 	--with-lockfile=/var/run/icinga/icinga.pid \
@@ -65,8 +65,6 @@ CFLAGS +=	-fPIC \
 		-I${LOCALBASE}/include \
 		-L${X11BASE}/lib -L${LOCALBASE}/lib
 
-CFGDIR =	${SYSCONFDIR}/icinga
-MAKE_FLAGS =	CFGDIR=${CFGDIR} SYSCONFDIR=${CFGDIR}
 INSTALL_TARGET = install-unstripped install-idoutils \
 		install-config install-webconf
 
@@ -78,13 +76,19 @@ REGRESS_DEPENDS = devel/p5-IPC-Run3
 
 post-install:
 	${INSTALL_DATA_DIR} ${WRKINST}${PREFIX-cgi}/conf/modules.sample
-	${INSTALL_DATA_DIR} \
-	    ${PREFIX}/share/examples/icinga/db/{mysql,pgsql,queries,scripts}
+	cd ${PREFIX}/share; ${INSTALL_DATA_DIR} \
+	    examples/icinga/db/{mysql,pgsql,queries,scripts} \
+	    examples/icinga/updates doc/icinga
+	cd ${WRKSRC}; ${INSTALL_DATA} README LICENSE UPGRADING \
+	    Changelog Changelog_json ${PREFIX}/share/doc/icinga/
+	${INSTALL_DATA} ${WRKSRC}/sample-config/updates/* \
+	    ${WRKSRC}/module/idoutils/config/updates/* \
+	    ${PREFIX}/share/examples/icinga/updates/
 	cd ${WRKINST}${PREFIX-cgi}; \
 	mv conf/modules.sample/icinga.conf \
 	    conf/modules.sample/icinga-cgi.conf.dist; \
 	chown -R ${SHAREOWN}:${SHAREGRP} icinga-cgi conf
 	cd ${WRKSRC}/module/idoutils; \
-	pax -rw db ${PREFIX}/share/examples/icinga/
+	    pax -rw db ${PREFIX}/share/examples/icinga/
 
 .include <bsd.port.mk>

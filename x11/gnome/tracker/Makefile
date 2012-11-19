@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.117 2012/10/04 07:21:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.123 2012/11/10 11:10:41 espie Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=		powerful desktop search tool and indexer
 COMMENT-evolution=	(meta-)tracker indexer plugin for evolution
 COMMENT-nautilus=	(meta-)tracker tagging plugin for nautilus
+REVISION-main =		0
 
 GNOME_PROJECT=	tracker
-GNOME_VERSION=	0.14.2
+GNOME_VERSION=	0.14.4
 
 # there is already audio/tracker, so this port has to live
 # as meta-tracker.
@@ -16,10 +17,6 @@ PKGNAME=	meta-tracker-${VERSION}
 PKGNAME-main=		meta-tracker-${VERSION}
 PKGNAME-evolution=	evolution-meta-tracker-${VERSION}
 PKGNAME-nautilus=	nautilus-meta-tracker-${VERSION}
-
-REVISION-main=		7
-REVISION-evolution=	4
-REVISION-nautilus=	4
 
 # Only get the first x.y which is needed in the PLIST.
 # NOTE: when MAJ_V changes, increment TRACKER_VERSION accordingly and bump:
@@ -57,7 +54,7 @@ WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm drm expat ffi fontconfig
 WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB += kvm m pcre pixman-1 pthread-stubs xcb xcb-render xcb-shm
 WANTLIB += ICE SM atk-bridge-2.0 atspi harfbuzz icudata icule
-WANTLIB += z unistring pthread icuuc
+WANTLIB += z icui18n pthread icuuc
 
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += archive atk-1.0 bz2 c cairo cairo-gobject
@@ -84,17 +81,6 @@ WANTLIB-evolution += sqlite3 ssl3 stdc++ tracker-miner-0.14 tracker-sparql-0.14
 WANTLIB-evolution += xml2 dbus-glib-1 ICE SM db ebackend-1.2 gnome-desktop-3
 WANTLIB-evolution += lib/tracker-${MAJ_V}/tracker-common
 WANTLIB-evolution += lib/tracker-${MAJ_V}/tracker-data
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/emiscwidgets
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/email-engine
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/email-utils
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/eshell
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/etable
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/etext
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/eutil
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/evolution-a11y
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/filter
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/gnomecanvas
-WANTLIB-evolution += lib/evolution/${EVO_VERSION}/menus
 
 WANTLIB-nautilus += ${WANTLIB}
 WANTLIB-nautilus += lib/tracker-${MAJ_V}/tracker-common
@@ -104,8 +90,6 @@ WANTLIB-nautilus += gtk-3 nautilus-extension pango-1.0 pangocairo-1.0 dbus-1
 WANTLIB-nautilus += pangoft2-1.0 png sqlite3 tracker-sparql-0.14 stdc++
 
 BUILD_DEPENDS=		lang/vala
-
-LIB_DEPENDS=		converters/libunistring
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			x11/gnome/panel \
@@ -124,9 +108,12 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			audio/taglib
 
 RUN_DEPENDS-evolution=	${MODGETTEXT_RUN_DEPENDS}
+# XXX should be a LIB_DEPENDS+WANTLIB but check-lib-depends(1) does not
+# work with unversioned solibs (LOCALBASE/lib/evolution/*/*.so).
+#BUILD_DEPENDS +=	mail/evolution,-main
+RUN_DEPENDS-evolution +=mail/evolution,-main
 LIB_DEPENDS-evolution=	${LIB_DEPENDS} \
-			x11/gnome/tracker,-main=${GNOME_VERSION} \
-			mail/evolution,-main>=3.4.0
+			x11/gnome/tracker,-main=${GNOME_VERSION}
 
 RUN_DEPENDS-nautilus=	${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-nautilus=	${LIB_DEPENDS} \
@@ -150,6 +137,9 @@ CONFIGURE_ARGS=	--disable-static \
 		--disable-network-manager \
 		--disable-qt
 
+# needs libgxps
+CONFIGURE_ARGS += --disable-libgxps
+
 # needs libosinfo
 CONFIGURE_ARGS += --disable-libosinfo
 
@@ -161,10 +151,14 @@ CONFIGURE_ARGS += --disable-libiptcdata
 
 # XXX temporarily disable tracker,-evolution which does not build with evo >= 3.6.0
 # when fixed:
+#  uncomment BUILD_DEPENDS on evolution
 #  uncomment the rm call in post-install
 #  add -evolution to MULTI_PACKAGES
 #  add x11/gnome/tracker,-evolution to RUN_DEPENDS-extra in meta/gnome
 CONFIGURE_ARGS += --disable-miner-evolution
+
+# XXX make it build until we figure out the full extent of the brain-damage
+CONFIGURE_ARGS +=	--disable-unit-tests
 
 MODGNOME_LDFLAGS=	-Wl,-rpath,${TRUEPREFIX}/lib/tracker-${MAJ_V}
 

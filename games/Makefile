@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.248 2012/09/04 09:30:20 landry Exp $
+# $OpenBSD: Makefile,v 1.251 2012/10/27 07:13:22 bentley Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -14,12 +14,14 @@
      SUBDIR += angband,no_x11
      SUBDIR += angband,sdl
      SUBDIR += angrydd
+     SUBDIR += armagetronad
      SUBDIR += atomix
      SUBDIR += barrage
      SUBDIR += bass
      SUBDIR += batrachians
      SUBDIR += belooted
      SUBDIR += beret
+     SUBDIR += blobby
      SUBDIR += blobwars
      SUBDIR += bomberclone
      SUBDIR += boswars
@@ -136,6 +138,7 @@
      SUBDIR += opensonic
      SUBDIR += openttd
      SUBDIR += openxcom
+     SUBDIR += pacman-arena
      SUBDIR += pathological
      SUBDIR += pingus
      SUBDIR += pioneers

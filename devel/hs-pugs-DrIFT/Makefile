@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2012/09/02 21:21:48 kili Exp $
+# $OpenBSD: Makefile,v 1.12 2012/10/28 23:28:49 kili Exp $
 
 COMMENT =		DrIFT with pugs-specific rules
 
 DISTNAME =		pugs-DrIFT-2.2.3.20120203
+REVISION =		1
 CATEGORIES =		devel
 HOMEPAGE =		http://pugscode.org/
 
@@ -12,7 +13,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		c gmp m pthread util
+WANTLIB =		c m
 
 MODULES =		lang/ghc converters/libiconv
 MODGHC_BUILD =		cabal hackage haddock register

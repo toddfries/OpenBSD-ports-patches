@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.39 2012/10/01 15:17:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2012/11/11 19:00:02 ajacoutot Exp $
+
+BROKEN=		https://bugzilla.gnome.org/show_bug.cgi?id=687322
 
 SHARED_ONLY=	Yes
 

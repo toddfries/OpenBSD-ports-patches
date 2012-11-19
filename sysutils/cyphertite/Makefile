@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.20 2012/08/31 15:40:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2012/11/07 08:24:23 ajacoutot Exp $
 
 COMMENT =		tar-like secure remote deduplicating archiver
 
-DISTNAME =		cyphertite-1.3.6
+DISTNAME =		cyphertite-1.4.1
 CATEGORIES =		sysutils archivers security
 
 HOMEPAGE =		https://www.cyphertite.com/

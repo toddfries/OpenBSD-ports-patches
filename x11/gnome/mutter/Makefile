@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2012/09/30 12:42:04 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2012/10/16 08:34:25 jasper Exp $
+
+BROKEN-sparc64=		cast increases required alignment of target type
 
 COMMENT=		window and compositing manager
 
 GNOME_PROJECT=		mutter
-GNOME_VERSION=		3.6.0
+GNOME_VERSION=		3.6.1
 
 SHARED_LIBS +=  mutter                    0.0 # 0.0
 

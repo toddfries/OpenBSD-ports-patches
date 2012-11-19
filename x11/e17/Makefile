@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/01/16 01:05:50 laurent Exp $
-
-# edb, epeg and etk are disabled as they need an update.
+# $OpenBSD: Makefile,v 1.8 2012/11/10 15:01:34 stsp Exp $
 
      SUBDIR =
      SUBDIR += e
@@ -10,6 +8,7 @@
      SUBDIR += eet
      SUBDIR += efreet
      SUBDIR += eina
+     SUBDIR += eio
      SUBDIR += embryo
      SUBDIR += evas
 

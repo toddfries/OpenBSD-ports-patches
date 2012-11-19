@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.69 2012/09/28 19:30:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.72 2012/10/25 19:52:16 naddy Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		highly flexible sniffer/NIDS
 
-DISTNAME =		snort-2.9.3.1
+VERSION =		2.9.3.1
+DISTNAME =		snort-${VERSION}
+REVISION =		0
 
 CATEGORIES =		net security
 
@@ -26,11 +28,10 @@ USE_LIBTOOL =		Yes
 USE_GROFF =		Yes
 
 SEPARATE_BUILD =	Yes
-CONFIGURE_STYLE =	simple
+CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--disable-static-daq
-
-MAKE_FLAGS =		mandir=${TRUEPREFIX}/man
+CONFIGURE_ENV=		MKDIR_P="/bin/mkdir -p"
 
 LIB_DEPENDS =		devel/pcre \
 			net/libdnet \
@@ -43,6 +44,9 @@ PREPROC =		decoder.rules preprocessor.rules
 
 DOCS =			AUTHORS CREDITS README README.* *.pdf TODO USAGE \
 			WISHLIST
+
+V =			${VERSION:S/.//g}
+SUBST_VARS +=		V
 
 pre-configure:
 	@${SUBST_CMD} ${WRKSRC}/etc/snort.conf

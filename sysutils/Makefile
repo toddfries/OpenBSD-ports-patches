@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.272 2012/10/03 07:59:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.274 2012/10/26 18:07:31 jasper Exp $
 
      SUBDIR =
      SUBDIR += LPRng
@@ -134,6 +134,7 @@
      SUBDIR += p5-Unix-PID
      SUBDIR += p5-Unix-Statgrab
      SUBDIR += p5-Unix-Syslog
+     SUBDIR += parallel
      SUBDIR += pecl-fileinfo
      SUBDIR += pciutils
      SUBDIR += pftop
@@ -158,6 +159,7 @@
      SUBDIR += ruby-capistrano
      SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter
+     SUBDIR += ruby-libvirt
      SUBDIR += ruby-puppet
      SUBDIR += ruby-puppet-lint
      SUBDIR += ruby-thor

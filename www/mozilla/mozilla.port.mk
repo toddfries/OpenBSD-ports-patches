@@ -1,7 +1,9 @@
-# $OpenBSD: mozilla.port.mk,v 1.45 2012/09/22 10:30:17 landry Exp $
+# $OpenBSD: mozilla.port.mk,v 1.47 2012/10/24 19:28:43 landry Exp $
 
 SHARED_ONLY =	Yes
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 powerpc sparc64
+
+DPB_PROPERTIES =	parallel
 
 .for _lib in ${MOZILLA_LIBS}
 SHARED_LIBS +=	${_lib}	${SO_VERSION}
@@ -58,7 +60,7 @@ USE_GMAKE ?=	Yes
 
 AUTOCONF_VERSION =	2.13
 CONFIGURE_ARGS +=--with-system-jpeg=${LOCALBASE}	\
-		--with-system-zlib=/usr/lib	\
+		--with-system-zlib=/usr		\
 		--with-system-nspr		\
 		--with-system-nss		\
 		--with-pthreads			\

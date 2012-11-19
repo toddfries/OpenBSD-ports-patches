@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.24 2012/05/25 14:32:15 fgsch Exp $
+# $OpenBSD: Makefile,v 1.26 2012/10/24 22:09:30 fgsch Exp $
 
 COMMENT =	wiki engine written in python
 
-MODPY_EGG_VERSION = 1.9.4
+MODPY_EGG_VERSION = 1.9.5
 DISTNAME =	moin-${MODPY_EGG_VERSION}
 PKGNAME =	moin${DISTNAME}
 
@@ -21,6 +21,8 @@ MASTER_SITES =	http://static.moinmo.in/files/
 
 MODULES =	lang/python
 
+MODPY_VERSION =	2.7
+
 NO_REGRESS =	Yes
 
 post-configure:
@@ -31,6 +33,6 @@ post-configure:
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/moinmoin
 	cd ${WRKSRC}/docs && ${INSTALL_DATA} CHANGES INSTALL.html \
-	    README.migration ${PREFIX}/share/doc/moinmoin
+	    README.migration UPDATE.html ${PREFIX}/share/doc/moinmoin
 
 .include <bsd.port.mk>

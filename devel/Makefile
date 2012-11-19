@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1078 2012/10/03 08:07:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.1092 2012/11/06 20:54:39 jasper Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -139,6 +139,7 @@
      SUBDIR += gtkparasite
      SUBDIR += guichan
      SUBDIR += guilib
+     SUBDIR += gyp
      SUBDIR += haddock
      SUBDIR += happy
      SUBDIR += harfbuzz
@@ -155,8 +156,12 @@
      SUBDIR += hs-MissingH
      SUBDIR += hs-MonadCatchIO-mtl
      SUBDIR += hs-MonadCatchIO-transformers
+     SUBDIR += hs-OneTuple
      SUBDIR += hs-PSQueue
+     SUBDIR += hs-QuickAnnotate
      SUBDIR += hs-QuickCheck
+     SUBDIR += hs-abstract-deque
+     SUBDIR += hs-abstract-par
      SUBDIR += hs-aeson
      SUBDIR += hs-ansi-terminal
      SUBDIR += hs-ansi-wl-pprint
@@ -180,10 +185,12 @@
      SUBDIR += hs-concurrent-extra
      SUBDIR += hs-conduit
      SUBDIR += hs-configurator
+     SUBDIR += hs-constraints
      SUBDIR += hs-contravariant
      SUBDIR += hs-control-timeout
      SUBDIR += hs-convertible
      SUBDIR += hs-data-default
+     SUBDIR += hs-data-hash
      SUBDIR += hs-data-lens
      SUBDIR += hs-data-lens-template
      SUBDIR += hs-dataenc
@@ -213,15 +220,19 @@
      SUBDIR += hs-logict
      SUBDIR += hs-mmap
      SUBDIR += hs-monad-control
+     SUBDIR += hs-monad-par
+     SUBDIR += hs-monad-par-extras
      SUBDIR += hs-monads-fd
      SUBDIR += hs-monads-tf
      SUBDIR += hs-mtl
      SUBDIR += hs-murmur-hash
      SUBDIR += hs-network
      SUBDIR += hs-network-conduit
+     SUBDIR += hs-newtype
      SUBDIR += hs-pango
      SUBDIR += hs-parallel
      SUBDIR += hs-parsec
+     SUBDIR += hs-patch-combinators
      SUBDIR += hs-primitive
      SUBDIR += hs-pugs-DrIFT
      SUBDIR += hs-pugs-compat
@@ -251,6 +262,7 @@
      SUBDIR += hs-text
      SUBDIR += hs-transformers
      SUBDIR += hs-transformers-base
+     SUBDIR += hs-tuple
      SUBDIR += hs-type-level
      SUBDIR += hs-unbounded-delays
      SUBDIR += hs-uniplate
@@ -320,6 +332,7 @@
      SUBDIR += libhid
      SUBDIR += libidn
      SUBDIR += libio
+     SUBDIR += libivykis
      SUBDIR += libixp
      SUBDIR += liblouis
      SUBDIR += libmagic
@@ -363,6 +376,7 @@
      SUBDIR += log4cplus
      SUBDIR += lpc21isp
      SUBDIR += lpeg
+     SUBDIR += lua-cmsgpack
      SUBDIR += lua-lgi
      SUBDIR += luaalarm
      SUBDIR += luabitop
@@ -386,7 +400,6 @@
      SUBDIR += mingw
      SUBDIR += mk
      SUBDIR += mm
-     SUBDIR += mm-common
      SUBDIR += mono-addins
      SUBDIR += mono-gdata
      SUBDIR += mono-notify
@@ -402,16 +415,19 @@
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
-     SUBIDR += node-expresso
+     SUBDIR += node-expresso
      SUBDIR += newt
      SUBDIR += node-fibers
      SUBDIR += node-generic-pool
      SUBDIR += node-gir
      SUBDIR += node-mnm
+     SUBDIR += npth
      SUBDIR += nspr
      SUBDIR += ocaml-batteries
      SUBDIR += ocaml-calendar
      SUBDIR += ocaml-camomile
+     SUBDIR += ocaml-curses
+     SUBDIR += ocaml-extlib
      SUBDIR += ocaml-lwt
      SUBDIR += ocaml-mlgmp
      SUBDIR += ocaml-net
@@ -872,6 +888,7 @@
      SUBDIR += p5-Sub-Name
      SUBDIR += p5-Sub-Override
      SUBDIR += p5-Sub-Uplevel
+     SUBDIR += p5-Switch
      SUBDIR += p5-Sys-SigAction
      SUBDIR += p5-System-Command
      SUBDIR += p5-TAP-Harness-Archive
@@ -1043,7 +1060,6 @@
      SUBDIR += py-configobj
      SUBDIR += py-country
      SUBDIR += py-coverage
-     SUBDIR += py-ctypes
      SUBDIR += py-dateutil
      SUBDIR += py-decorator
      SUBDIR += py-decoratortools
@@ -1066,6 +1082,7 @@
      SUBDIR += py-html5lib
      SUBDIR += py-iniparse
      SUBDIR += py-isodate
+     SUBDIR += py-jsonrpclib
      SUBDIR += py-kid
      SUBDIR += py-liblarch
      SUBDIR += py-liblarch_gtk
@@ -1134,6 +1151,7 @@
      SUBDIR += qgit
      SUBDIR += qt-creator
      SUBDIR += qt4-eventsview
+     SUBDIR += quilt
      SUBDIR += quirks
      SUBDIR += radare2
      SUBDIR += ragel
@@ -1251,6 +1269,7 @@
      SUBDIR += svk
      SUBDIR += swig
      SUBDIR += t1lib
+     SUBDIR += tclap
      SUBDIR += tclcl
      SUBDIR += tcllib
      SUBDIR += teensyloader

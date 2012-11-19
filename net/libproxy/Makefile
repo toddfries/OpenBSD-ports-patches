@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2012/09/27 08:01:04 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.30 2012/10/14 20:01:38 sthen Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,20 +6,17 @@ COMMENT-main=		library handling all the details of proxy configuration
 COMMENT-mozilla=	pacrunner libproxy plugin for mozilla-based (gecko) browsers
 COMMENT-webkit=		pacrunner libproxy plugin for webkit-based browsers
 
-VERSION=		0.4.7
+VERSION=		0.4.9
+REVISION=		0
 DISTNAME=		libproxy-${VERSION}
 
 PKGNAME-main=		libproxy-${VERSION}
 PKGNAME-mozilla=	libproxy-mozilla-${VERSION}
 PKGNAME-webkit=		libproxy-webkit-${VERSION}
 
-REVISION-main=		2
-REVISION-mozilla=	1
-REVISION-webkit=	1
-
 CATEGORIES=		net
 
-SHARED_LIBS +=  proxy          1.0 # 0.0
+SHARED_LIBS +=  proxy          1.1 # 0.0
 
 HOMEPAGE=		http://libproxy.googlecode.com/
 
@@ -35,6 +32,8 @@ MASTER_SITES=		${HOMEPAGE}/files/
 MODULES=		devel/cmake \
 			lang/python \
 			devel/gettext
+
+SUBST_VARS+=		VERSION
 
 # do not enable webkit support by default because of cyclic dependency:
 #     libproxy,-webkit -> webkit -> libsoup -> libproxy
@@ -55,7 +54,7 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 
 RUN_DEPENDS-mozilla=	# empty
 LIB_DEPENDS-mozilla=	${BUILD_PKGPATH}>=${VERSION} \
-		 	devel/xulrunner/1.9 \
+			devel/xulrunner/1.9 \
 			devel/nspr
 
 RUN_DEPENDS-webkit=	${MODGETTEXT_RUN_DEPENDS}
@@ -86,7 +85,8 @@ CONFIGURE_ARGS=		-DCMAKE_C_FLAGS="${CFLAGS}" \
 			-DWITH_VALA:BOOL=ON \
 			-DWITH_KDE4:BOOL=OFF \
 			-DWITH_DOTNET:BOOL=OFF \
-			-DWITH_NM:BOOL=OFF
+			-DWITH_NM:BOOL=OFF \
+			-DBIPR:BOOL=OFF
 
 .if ${FLAVOR:L:Mmozilla}
 BUILD_DEPENDS +=	devel/xulrunner/1.9,-devel>=1.9.1
