@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.101 2012/07/10 15:22:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.104 2012/11/21 21:58:18 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
-DISTNAME=	lighttpd-1.4.31
-REVISION=	0
+DISTNAME=	lighttpd-1.4.32
 CATEGORIES=	www net
 MASTER_SITES=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
 
@@ -18,6 +17,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 PERMIT_PACKAGE_FTP=	Yes
 PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
+
 WANTLIB=		c crypto ${MODLUA_WANTLIB} m pcre ssl z
 
 MODULES=	lang/lua

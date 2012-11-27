@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.23 2012/10/15 15:42:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2012/11/17 09:40:42 ajacoutot Exp $
 
 COMMENT=		general user documentation for GNOME
 
 GNOME_PROJECT=		gnome-user-docs
-GNOME_VERSION=		3.6.1
+GNOME_VERSION=		3.6.2
 
 # CC Attribution 3.0
 PERMIT_PACKAGE_CDROM=	Yes
@@ -16,6 +16,5 @@ MODULES=		x11/gnome
 MODGNOME_TOOLS= 	yelp
 
 PKG_ARCH=		*
-USE_LIBTOOL=		No
 
 .include <bsd.port.mk>

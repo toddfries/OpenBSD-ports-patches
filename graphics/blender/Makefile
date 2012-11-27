@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2012/10/31 17:45:55 pascal Exp $
+# $OpenBSD: Makefile,v 1.48 2012/11/26 15:02:40 pascal Exp $
 
 COMMENT =	3D creation software
 BROKEN-sparc64 = error: cast from 'ccl::uchar*' to 'CUdeviceptr' loses precision

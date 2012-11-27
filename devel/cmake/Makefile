@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2012/11/11 17:13:31 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.70 2012/11/26 12:32:29 dcoppa Exp $
 
 VMEM_WARNING =	Yes
 BROKEN-arm =	build fails since move to gcc4
@@ -6,7 +6,8 @@ BROKEN-arm =	build fails since move to gcc4
 HOMEPAGE =	http://www.cmake.org/
 CATEGORIES =	devel
 COMMENT =	portable build system
-DISTNAME =	cmake-2.8.10
+DISTNAME =	cmake-2.8.10.1
+REVISION =	2
 MASTER_SITES =	${HOMEPAGE}files/v2.8/
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>
@@ -39,8 +40,9 @@ REGRESS_TARGET =	test
 MAKE_FLAGS +=		VERBOSE=1
 
 pre-configure:
-	@cp ${FILESDIR}/*.cmake ${WRKSRC}/Modules/
+	cp ${FILESDIR}/*.cmake ${WRKSRC}/Modules/
 	${SUBST_CMD} ${WRKSRC}/Modules/CMakeDetermineJavaCompiler.cmake \
+		${WRKSRC}/Modules/FindFreetype.cmake \
 		${WRKSRC}/Modules/FindJNI.cmake \
 		${WRKSRC}/Modules/FindJava.cmake \
 		${WRKSRC}/Modules/FindLuaLibs.cmake \
@@ -48,14 +50,15 @@ pre-configure:
 		${WRKSRC}/Modules/FindMPEG2.cmake \
 		${WRKSRC}/Modules/FindQt.cmake \
 		${WRKSRC}/Modules/FindQt3.cmake \
+		${WRKSRC}/Modules/FindQt4.cmake \
 		${WRKSRC}/Modules/FindSDL.cmake \
 		${WRKSRC}/Modules/FindTCL.cmake \
 		${WRKSRC}/Modules/FindwxWindows.cmake \
 		${WRKSRC}/Modules/UseJava.cmake
 
 post-install:
-	@rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/*.{beforesubst,orig}
-	@rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Compiler/*.orig
-	@rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Platform/*.orig
+	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/*.{beforesubst,orig}
+	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Compiler/*.orig
+	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Platform/*.orig
 
 .include <bsd.port.mk>

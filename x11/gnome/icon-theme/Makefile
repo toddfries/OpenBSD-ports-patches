@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.55 2012/10/17 08:50:40 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.57 2012/11/17 09:40:42 ajacoutot Exp $
 
 PKG_ARCH=	*
 
 COMMENT=	base icon theme for GNOME
 
 GNOME_PROJECT=	gnome-icon-theme
-GNOME_VERSION=	3.6.0
-REVISION=	1
+GNOME_VERSION=	3.6.2
 
 CATEGORIES=	x11
 
@@ -30,7 +29,6 @@ BUILD_DEPENDS +=x11/gtk+2,-guic
 MODGNOME_ICON_CACHE=	Yes
 RUN_DEPENDS +=		x11/gnome/librsvg
 
-USE_LIBTOOL=	No
 CONFIGURE_ARGS=	--enable-icon-mapping \
 		--disable-nls
 

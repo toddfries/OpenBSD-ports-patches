@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.47 2012/10/12 14:29:22 kirby Exp $
+# $OpenBSD: Makefile,v 1.49 2012/11/26 15:57:46 sthen Exp $
 
 COMMENT=	fantasy turn-based strategy game
 
 DISTNAME=	wesnoth-1.10.4
-REVISION=	0
+REVISION=	2
 
 CATEGORIES=	games x11
 
@@ -43,7 +43,9 @@ LIB_DEPENDS=	devel/boost \
 RUN_DEPENDS=	devel/desktop-file-utils \
 		textproc/libxslt
 
-CONFIGURE_ARGS+=-DFIFO_DIR=/var/run/ \
+CONFIGURE_ARGS+=-DFIFO_DIR=/var/wesnothd \
+		-DSERVER_UID=708 \
+		-DSERVER_GID=708 \
 		-DENABLE_CAMPAIGN_SERVER=ON \
 		-DENABLE_STRICT_COMPILATION=OFF \
 		-DMANDIR=${PREFIX}/man

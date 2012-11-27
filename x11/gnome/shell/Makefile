@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.22 2012/10/17 11:49:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2012/11/17 12:43:04 ajacoutot Exp $
 
 COMMENT=		next generation GNOME shell
 
 GNOME_PROJECT=		gnome-shell
-GNOME_VERSION=		3.6.1
-REVISION=		1
+GNOME_VERSION=		3.6.2
+REVISION=		0
 
 HOMEPAGE=		http://live.gnome.org/GnomeShell
 
@@ -18,8 +18,8 @@ WANTLIB += GL ICE SM X11 X11-xcb Xau Xcomposite Xcursor Xdamage
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
 WANTLIB += asn1 atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
 WANTLIB += camel-1.2 canberra canberra-gtk3 clutter-1.0 cogl cogl-pango
-WANTLIB += com_err croco-0.6 crypto db dbus-1 dbus-glib-1 drm
-WANTLIB += ebackend-1.2 ebook-1.2 ecal-1.2 edataserver-1.2 edataserverui-3.0
+WANTLIB += com_err croco-0.6 crypto dbus-1 dbus-glib-1 drm
+WANTLIB += ecal-1.2 edataserver-1.2 xkbfile xml2 z
 WANTLIB += execinfo expat ffi fontconfig freetype gck-1 gcr-3
 WANTLIB += gcr-base-3 gcrypt gdbm gdk-3 gdk_pixbuf-2.0 gio-2.0
 WANTLIB += girepository-1.0 gjs glib-2.0 gmodule-2.0 gnome-desktop-3
@@ -32,7 +32,7 @@ WANTLIB += pixman-1 plc4 plds4 png polkit-agent-1 polkit-gobject-1
 WANTLIB += pthread pthread-stubs pulse pulse-mainloop-glib smime3
 WANTLIB += sndfile softokn3 soup-2.4 sqlite3 ssl3 startup-notification-1
 WANTLIB += stdc++ telepathy-glib telepathy-logger vorbis vorbisfile
-WANTLIB += xcb xcb-aux xcb-render xcb-shm xkbfile xml2 z
+WANTLIB += xcb xcb-aux xcb-render xcb-shm
 
 MODULES=		devel/dconf \
 			devel/gettext \
@@ -41,8 +41,11 @@ MODULES=		devel/dconf \
 
 MODGNOME_TOOLS=		goi
 
+# man pages
+BUILD_DEPENDS += textproc/docbook-xsl
+
 # gnome-keybindings.pc
-BUILD_DEPENDS +=	x11/gnome/controlcenter
+BUILD_DEPENDS += x11/gnome/controlcenter
 
 LIB_DEPENDS=		audio/pulseaudio>=2.1 \
 			databases/evolution-data-server>=3.6.0p3 \

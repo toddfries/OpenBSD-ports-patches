@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.123 2012/11/10 11:10:41 espie Exp $
+# $OpenBSD: Makefile,v 1.125 2012/11/16 07:22:51 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=		powerful desktop search tool and indexer
 COMMENT-evolution=	(meta-)tracker indexer plugin for evolution
 COMMENT-nautilus=	(meta-)tracker tagging plugin for nautilus
-REVISION-main =		0
 
 GNOME_PROJECT=	tracker
 GNOME_VERSION=	0.14.4
@@ -17,6 +16,9 @@ PKGNAME=	meta-tracker-${VERSION}
 PKGNAME-main=		meta-tracker-${VERSION}
 PKGNAME-evolution=	evolution-meta-tracker-${VERSION}
 PKGNAME-nautilus=	nautilus-meta-tracker-${VERSION}
+
+REVISION-main =		2
+REVISION-nautilus =	1
 
 # Only get the first x.y which is needed in the PLIST.
 # NOTE: when MAJ_V changes, increment TRACKER_VERSION accordingly and bump:

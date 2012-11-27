@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.110 2012/11/07 06:59:45 robert Exp $
+# $OpenBSD: Makefile,v 1.112 2012/11/26 07:32:30 robert Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 
@@ -6,6 +6,7 @@ COMMENT=		Chromium browser
 
 V=			23.0.1271.64
 DISTNAME=		chromium-${V}
+REVISION=		0
 
 CATEGORIES=		www
 
@@ -22,6 +23,10 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://commondatastorage.googleapis.com/chromium-browser-official/
+
+# The proprietary flavor compiles and enables patented codecs like H.264
+FLAVORS=	proprietary
+FLAVOR?=
 
 MODULES=	gcc4 lang/python
 
@@ -99,17 +104,29 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Denable_webrtc=0 \
 		-Denable_one_click_signin=1 \
 		-Duse_kerberos=0 \
+		-Duse_sndio=1 \
 		-DOS=openbsd
+
+.if ${FLAVOR:Mproprietary}
+GYP_DEFS+=	-Dffmpeg_branding=Chrome \
+		-Dproprietary_codecs=1
+.endif
+
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/webkit/plugins/npapi/plugin_list_posix.cc
 	@ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
 .for _arch in x64 ia32
+	@cp -pR ${WRKSRC}/third_party/ffmpeg/chromium/config/Chrome/linux/${_arch}/libavcodec \
+		${WRKSRC}/third_party/ffmpeg/chromium/config/Chrome/openbsd/${_arch}/libavcodec
+
 	@cp -pR ${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/linux/${_arch}/libavcodec \
 		${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/openbsd/${_arch}/libavcodec
 .endfor
 	@cp -R ${WRKSRC}/third_party/libvpx/source/config/linux \
 		${WRKSRC}/third_party/libvpx/source/config/openbsd
+	@mkdir -p ${WRKSRC}/media/audio/sndio
+	@cp files/sndio_output.{cc,h} ${WRKSRC}/media/audio/sndio
 
 # gyp_chromium generates all the Makefiles from gyp
 do-configure:

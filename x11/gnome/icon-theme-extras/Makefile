@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2012/06/15 08:30:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2012/11/17 09:40:42 ajacoutot Exp $
 
 COMMENT=	extra icons for GNOME
 
 GNOME_PROJECT=	gnome-icon-theme-extras
-GNOME_VERSION=	3.4.0
-REVISION=	0
+GNOME_VERSION=	3.6.2
 
 CATEGORIES=	x11
 
@@ -23,7 +22,6 @@ RUN_DEPENDS=	x11/gnome/icon-theme
 
 PKG_ARCH=	*
 
-USE_LIBTOOL=	No
 MODGNOME_ICON_CACHE=	Yes
 
 CONFIGURE_ENV=	ac_cv_path_GIT=false \

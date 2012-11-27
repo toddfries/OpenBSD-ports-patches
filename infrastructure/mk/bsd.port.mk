@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1195 2012/11/05 20:29:35 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1199 2012/11/27 11:35:57 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -72,7 +72,7 @@ TRUST_PACKAGES ?= No
 FETCH_PACKAGES ?= No
 CLEANDEPENDS ?= No
 USE_SYSTRACE ?= No
-BULK ?= No
+BULK ?= Auto
 RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
@@ -874,7 +874,7 @@ SUBST_VARS += MACHINE_ARCH ARCH HOMEPAGE ^PREFIX ^SYSCONFDIR FLAVOR_EXT \
 _tmpvars =
 
 _PKG_ADD_AUTO ?=
-.if ${_SOLVING_DEP:L} == "yes"
+.if ${_SOLVING_DEP:L} != "no"
 _PKG_ADD_AUTO += -a
 .endif
 
@@ -1554,9 +1554,9 @@ _LOCK = ${LOCK_CMD} ${LOCKDIR}/$$lock.lock ${BUILD_PKGPATH}
 _UNLOCK = ${UNLOCK_CMD} ${LOCKDIR}/$$lock.lock
 .  endif
 .  if ${SEPARATE_BUILD:L:Mflavored}
-_LOCKNAME = ${PKGNAME}
-.  else
 _LOCKNAME = ${FULLPKGNAME}
+.  else
+_LOCKNAME = ${PKGNAME}
 .  endif
 
 .  for _i in ${_LOCKNAME}
@@ -1809,13 +1809,6 @@ ${_INSTALL_COOKIE${_S}}:
 		exec ${MAKE} _internal-run-depends _internal-runlib-depends \
 		_internal-runwantlib-depends
 	@${ECHO_MSG} "===>  Installing ${FULLPKGNAME${_S}} from ${_PKG_REPO}"
-.  for _m in ${MODULES:T:U}
-.    if defined(MOD${_m}_pre-install)
-	@${MOD${_m}_pre-install}
-.    elif defined(MOD${_m}_pre_install)
-	@${MOD${_m}_pre_install}
-.    endif
-.  endfor
 .  if ${TRUST_PACKAGES:L} == "yes"
 	@if ${PKG_INFO} -e ${FULLPKGNAME${_S}}; then \
 		echo "Package ${FULLPKGNAME${_S}} is already installed"; \
@@ -1960,8 +1953,11 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 			${REPORT_PROBLEM}; \
 			exit 1;; \
 		esac; \
-		toset="$$toset _SOLVING_DEP=Yes"; \
 		${_complete_pkgspec}; \
+		case X"$$dir" in \
+			X${PKGPATH}) toset="$$toset _SOLVING_DEP=self";; \
+			*) toset="$$toset _SOLVING_DEP=Yes";; \
+		esac; \
 		h="===> ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$pkg -"; \
 		for second_pass in false true; do \
 			if $$check_installed; then \
@@ -2305,7 +2301,7 @@ subpackage:
 
 _internal-package: 
 	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-package-only
-.if ${BULK_${PKGPATH}:L} == "yes"
+.if ${BULK_${PKGPATH}:L} == "yes" || (${BULK_${PKGPATH}:L} == "auto" && ${_SOLVING_DEP:L} == "yes")
 	@${_MAKE} ${_BULK_COOKIE}
 .endif
 
