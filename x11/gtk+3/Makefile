@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2012/11/11 09:13:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.55 2012/12/12 18:53:08 landry Exp $
 
 SHARED_ONLY=	Yes
 
@@ -11,6 +11,7 @@ EXTRACT_SUFX=	.tar.xz
 
 PKGNAME-main=	gtk+3-${V}
 PKGNAME-cups=	gtk+3-cups-${V}
+REVISION-cups =	0
 
 # grep ^GTK_BINARY_VERSION ${WRKSRC}/Makefile (after do-configure)
 GTK_BINARY_VERSION=3.0.0
@@ -71,11 +72,10 @@ WANTLIB-main += c
 RUN_DEPENDS-cups= # empty
 LIB_DEPENDS-cups= ${LIB_DEPENDS} \
 		print/cups,-libs \
-		graphics/colord \
 		STEM->=${V}:${BASE_PKGPATH},-main
 
 WANTLIB-cups += ${WANTLIB}
-WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl colord lcms2
+WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl
 
 USE_GMAKE=	Yes
 USE_LIBTOOL=	Yes
@@ -91,6 +91,16 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-papi \
 		--disable-packagekit \
 		--enable-introspection
+
+# sync archs list with devel/spidermonkey
+# colord depends on polkit which depends on spidermonkey
+.if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64" || \
+    ${MACHINE_ARCH} == "powerpc" || ${MACHINE_ARCH} == "sparc64"
+LIB_DEPENDS-cups += graphics/colord
+WANTLIB-cups +=	colord lcms2
+.else
+CONFIGURE_ARGS +=	--disable-colord
+.endif
 
 # If one of these tools is found at configure stage, it might be used,
 # no matter whether we use --disable-gtk-doc or not.

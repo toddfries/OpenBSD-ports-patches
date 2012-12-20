@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.60 2012/11/27 08:15:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.62 2012/11/30 11:55:45 sthen Exp $
 
 # if ekiga ever moves to gstreamer, detect_sndiosink_devices() will need
 # to be implemented in:
@@ -10,6 +10,7 @@ COMMENT=	SIP and H.323 compatible conferencing application
 
 GNOME_PROJECT=	ekiga
 GNOME_VERSION=	4.0.0
+REVISION=	1
 
 SUBST_VARS +=	GNOME_VERSION # pkg/PLIST
 
@@ -41,6 +42,9 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
+BUILD_DEPENDS=	x11/gnome/icon-theme
+RUN_DEPENDS=	x11/gnome/icon-theme
+
 LIB_DEPENDS=	net/opal>=3.10.9 \
 		devel/sdl \
 		databases/evolution-data-server \
@@ -56,7 +60,7 @@ MODGCONF2_SCHEMAS_DIR= ekiga
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
-#MODGNOME_TOOLS=	yelp
+MODGNOME_TOOLS=		yelp
 MODGNOME_LDFLAGS=-L${X11BASE}/lib
 
 LIBTOOL_FLAGS=	--tag=disable-static

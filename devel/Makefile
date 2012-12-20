@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1093 2012/11/26 09:52:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.1096 2012/12/19 10:40:40 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -127,6 +127,7 @@
      SUBDIR += gmp
      SUBDIR += gobject-introspection
      SUBDIR += goffice
+     SUBDIR += goffice08
      SUBDIR += goopy
      SUBDIR += gpatch
      SUBDIR += gperf
@@ -165,6 +166,7 @@
      SUBDIR += hs-aeson
      SUBDIR += hs-ansi-terminal
      SUBDIR += hs-ansi-wl-pprint
+     SUBDIR += hs-async
      SUBDIR += hs-atom
      SUBDIR += hs-base-unicode-symbols
      SUBDIR += hs-base16-bytestring
@@ -1219,6 +1221,7 @@
      SUBDIR += ruby-rcov
      SUBDIR += ruby-rcov,ruby18
      SUBDIR += ruby-rdoc
+     SUBDIR += ruby-ref
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-ruby_parser
@@ -1232,6 +1235,7 @@
      SUBDIR += ruby-systemtimer
      SUBDIR += ruby-systemu
      SUBDIR += ruby-term-ansicolor
+     SUBDIR += ruby-therubyracer
      SUBDIR += ruby-tilt
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-trollop

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.781 2012/11/01 14:46:23 zinke Exp $
+# $OpenBSD: Makefile,v 1.783 2012/12/08 12:04:15 landry Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -63,6 +63,7 @@
      SUBDIR += dictd
      SUBDIR += dlint
      SUBDIR += dnscrypt-proxy
+     SUBDIR += dnsfilter
      SUBDIR += dnsmasq
      SUBDIR += dnsreflector
      SUBDIR += dnstop
@@ -522,7 +523,6 @@
      SUBDIR += sipcalc
      SUBDIR += sipsak
      SUBDIR += sirc
-     SUBDIR += slirp
      SUBDIR += slurm
      SUBDIR += smokeping
      SUBDIR += snmptt

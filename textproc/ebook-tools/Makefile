@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2012/03/29 13:39:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2012/12/17 16:06:52 espie Exp $
 
 V =			0.2.1
+REVISION =		0
 COMMENT =		accessing and converting various ebook file formats
 DISTNAME =		ebook-tools-${V}
 
@@ -19,7 +20,8 @@ WANTLIB +=		c xml2 zip
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=ebook-tools/${V}/}
 
 MODULES =		devel/cmake
-BUILD_DEPENDS =		devel/doxygen
+BUILD_DEPENDS =		devel/doxygen \
+			math/graphviz
 LIB_DEPENDS =		textproc/libxml \
 			archivers/libzip \
 

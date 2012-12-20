@@ -1,0 +1,53 @@
+$OpenBSD: README-main,v 1.1 2012/11/28 17:45:29 sthen Exp $
+
++-----------------------------------------------------------------------
+| Running ${FULLPKGNAME} on OpenBSD
++-----------------------------------------------------------------------
+
+The sample configuration in ${SYSCONFDIR}/squid.conf is a simple version
+with only the most essential options. By default, only RAM-based cache is
+used, un-comment the cache_dir line to enable a persistent disk cache
+("swap"); this is normally kept in ${LOCALSTATEDIR}/cache and must be
+initialized with "squid -z" before starting the daemon. If you need to
+place it elsewhere, create the directory and make sure it is owned and
+writable by user _squid, group _squid.
+
+Logs are stored in ${LOCALSTATEDIR}/logs; access logs on a busy cache will
+grow rapidly so rotate them as necessary (use "squid -k rotate").
+
+See ${TRUEPREFIX}/share/examples/squid/squid.conf.documented for a complete
+annotated file, similar to the standard squid.conf in previous versions
+of Squid, however in many cases the defaults will suffice.
+
+The HTML error pages can be easily themed by editing the style-sheet in
+${SYSCONFDIR}/errorpage.css.
+
+Transparent Proxying with PF
+============================
+
+To configure a transparent proxy, bind to a specific address in
+${SYSCONFDIR}/squid/squid.conf, for example:
+
+http_port 127.0.0.1:3127 transparent
+
+On the machine running Squid, add a firewall rule similar to this:
+
+pass in quick log inet proto tcp to port 80 divert-to 127.0.0.1 port 3127
+
+If Squid is running on a machine which doesn't normally handle the
+traffic (e.g. if you have a firewall and would like to divert packets
+to Squid on another machine) you will also need a rule like this:
+
+pass in quick from 10.77.3.5
+pass in quick inet proto tcp to port 80 route-to (vr2 10.77.3.5)
+
+(this example assumes Squid is running on 10.77.3.5 reachable over
+the vr2 interface).
+
+If the proxy server is running on the same subnet as the clients, the
+return traffic from the proxy will go directly back to them without
+ever hitting the firewall, which means the states will never get updated
+and may fill-up your pflog(4) with blocked attempts. To circumvent this
+the "no state" option needs to be specified for the route-to rule.
+e.g.
+pass in quick inet proto tcp to port 80 route-to (vr2 10.77.3.5) no state

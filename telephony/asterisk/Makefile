@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.163 2012/11/08 09:34:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.166 2012/12/11 14:46:41 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			10.10.0
+VER=			10.11.0
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
 
@@ -17,9 +17,9 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 # Asterisk with OpenSSL and OpenH323 and distribute the resulting binary
 # files." iLBC codec has BSD-like license terms, but also see patent
 # notes in codecs/ilbc/LICENSE_ADDENDUM.
-PERMIT_PACKAGE_CDROM=	patent licensing clauses
+PERMIT_PACKAGE_CDROM=	patent licensing clauses in iLBC
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= patent licensing clauses
+PERMIT_DISTFILES_CDROM= patent licensing clauses in iLBC
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main +=	c crypto curl execinfo gsm idn iksemel
@@ -47,7 +47,8 @@ LIB_DEPENDS-main=	audio/gsm \
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
 			telephony/asterisk-sounds/core-sounds/en,gsm \
 			telephony/asterisk-sounds/moh-opsound,wav
-BUILD_DEPENDS=		security/libsrtp>=1.4.4 # statically linked
+BUILD_DEPENDS+=		devel/libtool# for share/aclocal/lt~obsolete.m4
+BUILD_DEPENDS+=		security/libsrtp>=1.4.4# statically linked
 
 MASTER_SITES=	http://downloads.asterisk.org/pub/telephony/asterisk/releases/ \
 		http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/

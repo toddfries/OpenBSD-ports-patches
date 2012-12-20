@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/08/18 22:51:21 avsm Exp $
+# $OpenBSD: Makefile,v 1.3 2012/12/04 07:02:08 chrisz Exp $
 
 COMMENT =	streaming XML input/output for OCaml
 CATEGORIES =	textproc
 
-V =		1.1.0
+V =		1.1.1
 DISTNAME =	xmlm-${V}
 PKGNAME =	ocaml-${DISTNAME}
 EXTRACT_SUFX =	.tbz

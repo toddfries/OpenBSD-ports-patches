@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.587 2012/11/21 21:44:42 rpe Exp $
+# $OpenBSD: Makefile,v 1.590 2012/12/05 07:41:54 rpe Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -53,7 +53,6 @@
      SUBDIR += fennec
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
-     SUBDIR += firefox35
      SUBDIR += firefox36
      SUBDIR += fluxbb
      SUBDIR += flyspray
@@ -481,16 +480,13 @@
      SUBDIR += spawn-fcgi
      SUBDIR += sqtop
      SUBDIR += squid
-     SUBDIR += squid,ldap
-     SUBDIR += squid,ldap,snmp
-     SUBDIR += squid,ntlm
-     SUBDIR += squid,snmp
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
      SUBDIR += statusnet
      SUBDIR += surf
      SUBDIR += surfraw
      SUBDIR += swfdec-plugin
+     SUBDIR += swiggle
      SUBDIR += syweb
      SUBDIR += thttpd
      SUBDIR += tidyp

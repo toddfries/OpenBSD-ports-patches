@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2012/09/27 16:45:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2012/11/30 12:56:02 sthen Exp $
 
 # doesn't set USE_LIBTOOL but use the bundled one because it needs some
 # specific options we don't have.

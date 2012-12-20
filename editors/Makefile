@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.91 2012/10/13 22:25:26 rpe Exp $
+# $OpenBSD: Makefile,v 1.93 2012/12/07 12:31:58 jasper Exp $
 
      SUBDIR =
      SUBDIR += abiword
@@ -12,6 +12,8 @@
      SUBDIR += ee
      SUBDIR += elvis
      SUBDIR += elvis,no_x11
+     SUBDIR += emacs
+     SUBDIR += emacs,no_x11
      SUBDIR += emacs21
      SUBDIR += emacs21,no_x11
      SUBDIR += emacs22
