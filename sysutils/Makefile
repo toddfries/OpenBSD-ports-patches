@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.276 2012/12/10 15:43:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.278 2012/12/31 14:52:16 jasper Exp $
 
      SUBDIR =
      SUBDIR += LPRng
@@ -8,6 +8,7 @@
      SUBDIR += apc-upsd
      SUBDIR += apcupsd
      SUBDIR += apcd
+     SUBDIR += augeas
      SUBDIR += autossh
      SUBDIR += backintime
      SUBDIR += backuppc
@@ -158,6 +159,7 @@
      SUBDIR += rpl
      SUBDIR += rsyslog
      SUBDIR += rtty
+     SUBDIR += ruby-augeas
      SUBDIR += ruby-capistrano
      SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter

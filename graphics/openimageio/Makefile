@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/05/09 12:42:06 pascal Exp $
+# $OpenBSD: Makefile,v 1.3 2013/01/09 23:24:08 sthen Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		library for reading and writing images
+BROKEN-hppa =		missing atomic ops
 
 MAJ =			1.0
 V =			${MAJ}.4
 REV =			513d0dd
 DISTNAME =		OpenImageIO-oiio-Release-${V}-0-g${REV}
 PKGNAME =		openimageio-${V}
+REVISION =		0
 
 SHARED_LIBS +=		OpenImageIO	0.0 # 1.0
 

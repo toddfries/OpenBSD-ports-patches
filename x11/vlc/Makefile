@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.159 2012/12/16 21:26:22 brad Exp $
+# $OpenBSD: Makefile,v 1.163 2013/01/03 03:18:21 brad Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,7 +8,9 @@ COMMENT-jack=	JACK audio output module for VLC
 V=		2.0.5
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
+REVISION-main=	2
 PKGNAME-jack=	vlc-jack-${V}
+REVISION-jack=	1
 CATEGORIES=	x11
 MASTER_SITES=	http://download.videolan.org/pub/videolan/vlc/${V}/
 EXTRACT_SUFX=	.tar.xz
@@ -37,8 +39,8 @@ WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 Xcomposite \
 		nettle notify opus orc-0.4 ogg p11-kit pango-1.0 pangocairo-1.0 \
 		pangoft2-1.0 pcre pixman-1 png postproc pthread-stubs \
 		samplerate schroedinger-1.0>=2.0 sndio speex speexdsp \
-		sqlite3 swscale tag tar tasn1 tiff usbhid vorbis vorbisenc \
-		webp x264 xcb-composite xcb-keysyms xcb-randr xcb-render \
+		swscale tag tar tasn1 tiff usbhid vorbis vorbisenc webp \
+		x264 xcb-composite xcb-keysyms xcb-randr xcb-render \
 		xcb-shape xcb-shm xcb-xfixes xcb-xv xcb xml2 z ${WANTLIB-common}
 WANTLIB-jack=	jack vlccore ${WANTLIB-common}
 
@@ -46,11 +48,10 @@ AUTOCONF_VERSION= 2.69
 AUTOMAKE_VERSION= 1.11
 
 MODULES=	devel/gettext \
-		x11/qt4 \
-		gcc4
-MODGCC4_VERSION= 4.6
-MODGCC4_ARCHS=	amd64 i386
-MODGCC4_LANGS=	c
+		lang/clang \
+		x11/qt4
+MODCLANG_ARCHS=	amd64 i386
+MODCLANG_LANGS=	c
 LIB_DEPENDS-main= ${MODQT4_LIB_DEPENDS} \
 		${MODGETTEXT_LIB_DEPENDS} \
 		archivers/libtar \
@@ -142,7 +143,6 @@ CONFIGURE_ARGS+=--disable-a52 \
 		--disable-upnp \
 		--disable-v4l2 \
 		--disable-zvbi \
-		--enable-media-library \
 		--enable-real \
 		--enable-realrtsp \
 		--without-contrib \

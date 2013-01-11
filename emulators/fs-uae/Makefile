@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.5 2012/12/07 08:43:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2012/12/20 22:29:32 edd Exp $
 
 BROKEN-powerpc =	error: invalid 'asm': invalid %k value
+BROKEN-sparc64 =	error: invalid 'asm': invalid operand output code
 
 COMMENT =		modern Amiga emulator
 V =			2.0.1
 DISTNAME =		fs-uae-$V
 CATEGORIES =		emulators
-REVISION = 		1
+REVISION = 		2
 
 HOMEPAGE =		http://fengestad.no/fs-uae/
 MAINTAINER =		Edd Barrett <edd@openbsd.org>
@@ -34,7 +35,8 @@ RUN_DEPENDS =		devel/desktop-file-utils \
 			x11/py-wxPython
 
 USE_GMAKE =		Yes
-MAKE_FLAGS +=		prefix=${PREFIX}
+
+MAKE_FLAGS +=		prefix=${PREFIX} CXXFLAGS="${CXXFLAGS}" CFLAGS="${CFLAGS}"
 
 NO_REGRESS =		Yes
 

@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.40 2012/06/15 08:30:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.42 2013/01/02 18:25:27 landry Exp $
 
 COMMENT=	Xfce4 extension library
 
-XFCE_VERSION=	0.8.0
+XFCE_VERSION=	0.10.2
 XFCE_PROJECT=	exo
-REVISION=	0
 
-SHARED_LIBS=	exo-1		0.1
+SHARED_LIBS=	exo-1		0.2
 
 HOMEPAGE=	http://www.xfce.org/projects
 
@@ -20,13 +19,12 @@ MODULES=	x11/xfce4
 MODXFCE_DESKTOP_FILE=	Yes
 MODXFCE_ICON_CACHE=	Yes
 
-CONFIGURE_ARGS=	--disable-linker-opts
 CONFIGURE_ENV=	ac_cv_header_sys_ucred_h=yes \
 		ac_cv_header_sys_mount_h=yes
 
 BUILD_DEPENDS=	www/p5-URI
-LIB_DEPENDS=	x11/xfce4/libxfce4ui>=4.9.0 \
-		x11/xfce4/libxfce4util>=4.8.0
+LIB_DEPENDS=	x11/xfce4/libxfce4ui>=4.10.0 \
+		x11/xfce4/libxfce4util>=4.10.0
 
 FAKE_FLAGS=	defaultsdir=${PREFIX}/share/examples/exo
 
@@ -36,6 +34,6 @@ WANTLIB=	ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 		gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 stdc++ xcb-aux xfce4ui-1\
 		m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 \
 		png pthread z pthread-stubs xcb X11-xcb startup-notification-1 \
-		xcb-render xfce4util GL Xxf86vm drm xcb-shm ffi
+		xcb-render xfce4util GL Xxf86vm drm xcb-shm ffi harfbuzz icudata icule icuuc
 
 .include <bsd.port.mk>

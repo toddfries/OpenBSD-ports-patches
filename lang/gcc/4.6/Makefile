@@ -1,7 +1,9 @@
-# $OpenBSD: Makefile,v 1.40 2012/11/06 00:57:43 tobiasu Exp $
+# $OpenBSD: Makefile,v 1.42 2012/12/28 14:32:01 espie Exp $
 
 ONLY_FOR_ARCHS = amd64 i386 powerpc sparc sparc64
 DPB_PROPERTIES = parallel
+# race condition in fake
+PARALLEL_INSTALL = No
 
 V = 4.6.3
 FULL_VERSION = $V
@@ -115,6 +117,7 @@ MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC} ${WRKSRC}/gcc
 EXTRA_ENV += am_cv_func_iconv=no JAR=no
 EXTRA_ENV += ac_cv_prog_M4=/usr/bin/m4
 EXTRA_ENV += ac_cv_header_magic_h=no
+EXTRA_ENV += lt_cv_path_SED=/usr/bin/sed
 MAKE_FLAGS +=	 ac_cv_path_mkdir=/bin/mkdir
 
 CONFIGURE_ENV += ${EXTRA_ENV}

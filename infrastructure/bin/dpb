@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: dpb,v 1.62 2012/11/18 12:37:21 espie Exp $
+# $OpenBSD: dpb,v 1.75 2013/01/10 12:27:21 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -35,6 +35,7 @@ use OpenBSD::Paths;
 use DPB::Heuristics;
 use DPB::PkgPath;
 use DPB::Logger;
+use DPB::Affinity;
 use File::Path;
 use File::Basename;
 
@@ -74,6 +75,7 @@ sub startdate
 sub expand_path
 {
 	my ($self, $path) = @_;
+	$path =~ s/\%L/$self->{logdir}/g;
 	$path =~ s/\%p/$self->{ports}/g;
 	$path =~ s/\%h/DPB::Core::Local->hostname/ge;
 	$path =~ s/\%a/$self->{arch}/g;
@@ -146,6 +148,9 @@ sub handle_options
 		L => sub {
 			$state->{logdir} = shift;
 		},
+		l => sub {
+			$state->{lockdir} = shift;
+		},
 		r => sub {
 			$state->{random} = 1;
 			$state->heuristics->random;
@@ -162,6 +167,9 @@ sub handle_options
 		C => sub {
 			push(@{$state->{cpaths}}, shift);
 		},
+		X => sub {
+			push(@{$state->{xpaths}}, shift);
+		},
 		b => sub {
 			push(@{$state->{build_files}}, shift);
 		},
@@ -170,12 +178,13 @@ sub handle_options
 		},
 	};
 
-	$state->SUPER::handle_options('acemqrRsuUvh:xA:C:f:F:I:j:J:M:p:P:b:L:S:',
+	$state->SUPER::handle_options('acemqrRsuUvh:xX:A:C:f:F:I:j:J:M:p:P:b:l:L:S:',
     "[-acemrRsuUvx] [-A arch] [-C plist] [-f N] [-F N] [-I plist] [-J p] [-j N]",
-    "[-p parallel] [-P plist] [-h hosts] [-L logdir] [-b log] [-M threshold]",
-    "[path ...]");
+    "[-p parallel] [-P plist] [-h hosts] [-L logdir] [-l lockdir] [-b log]",
+    "[-M threshold] [-X plist] [path ...]");
     	$state->{fullrepo} = join("/", $state->{repo}, $state->arch, "all");
 	$state->{logdir} //= $ENV{LOGDIR} // '%p/logs/%a';
+	$state->{lockdir} //= "%L/locks";
 	if (defined $state->{opt}{F}) {
 		if (defined $state->{opt}{j} || defined $state->{opt}{f}) {
 			$state->usage("Can't use -F with -f or -j");
@@ -213,13 +222,14 @@ sub handle_options
 	}
 
 	$state->{logdir} = $state->expand_path($state->{logdir});
+	$state->{lockdir} = $state->expand_path($state->{lockdir});
 	if ($state->opt('h')) {
 		$state->{config} = $state->expand_path($state->opt('h'));
 	}
 	if (!$state->{subst}->value("NO_BUILD_STATS")) {
 		push @{$state->{build_files}}, "%f/build-stats/%a";
 	}
-	for my $cat (qw(build_files paths ipaths cpaths)) {
+	for my $cat (qw(build_files paths ipaths cpaths xpaths)) {
 		next unless defined $state->{$cat};
 		for my $f (@{$state->{$cat}}) {
 			$f = $state->expand_path($f);
@@ -228,6 +238,7 @@ sub handle_options
 	$state->{permanent_log} = $state->{build_files}[-1];
 
 	$state->{logger} = DPB::Logger->new($state->logdir, $state->opt('c'));
+	DPB::Limiter->setup($state->logger);
 	$state->heuristics->set_logger($state->logger);
 	$state->{display_timeout} =
 	    $state->{subst}->value('DISPLAY_TIMEOUT') // 10;
@@ -254,6 +265,10 @@ sub start_cores
 		$override_prop->{stuck} = 
 		    $state->{subst}->value('STUCK_TIMEOUT');
 	}
+	if ($state->define_present('SMALL_TIME')) {
+		$override_prop->{small} = 
+		    $state->{subst}->value('SMALL_TIME');
+	}
 	if ($state->define_present('CONNECTION_TIMEOUT')) {
 		$override_prop->{timeout} = 
 		    $state->{subst}->value('CONNECTION_TIMEOUT');
@@ -273,6 +288,7 @@ sub start_cores
 		junk => 100, 
 		parallel => '/2',
 		wait_timeout => 600,
+		small => 120,
 	};
 
 	if ($state->{config}) {
@@ -304,6 +320,11 @@ sub heuristics
 sub locker
 {
 	return shift->{locker};
+}
+
+sub stalelocks
+{
+	return shift->locker->{stalelocks};
 }
 
 sub builder
@@ -481,6 +502,15 @@ use DPB::Locks;
 use DPB::Job;
 use DPB::Grabber;
 
+my $keep_going = 1;
+
+sub report
+{
+	return DPB::Util->time2string(time)." [$$]".
+		($keep_going ? "" : " STOPPED!").
+		"\n";
+}
+
 my $reporter;
 
 # inspired by Carp::Always
@@ -513,6 +543,7 @@ my $subdirlist = {};
 
 my $state = DPB::State->new('dpb');
 $state->handle_options;
+$state->{locker} = DPB::Locks->new($state, $state->{lockdir});
 $state->start_cores;
 
 $state->{all} = 1;
@@ -529,19 +560,24 @@ my $default_handling =
 
 $state->interpret_paths(@{$state->{paths}}, @ARGV,
     sub {
-	my $p = shift;
-	&$default_handling($p);
+	&$default_handling(@_);
     });
 $state->interpret_paths(@{$state->{ipaths}},
     sub {
+	&$default_handling(@_);
 	my $p = shift;
-	&$default_handling($p);
 	$p->{wantinstall} = 1;
     });
 $state->interpret_paths(@{$state->{cpaths}},
     sub {
 	my $p = shift;
 	$state->{dontclean}{$p->pkgpath} = 1;
+    });
+
+$state->interpret_paths(@{$state->{xpaths}},
+    sub {
+	my $p = shift;
+	$p->{dontjunk} = 1;
     });
 
 if ($state->opt('a')) {
@@ -552,10 +588,9 @@ $state->handle_build_files;
 
 $state->{builder} = DPB::PortBuilder->new($state);
 
-$state->{locker} = DPB::Locks->new($state, join("/", $state->logdir, "locks"));
+$state->{affinity} = DPB::Affinity->new($state, join("/", $state->logdir, "affinity"));
 $state->{engine} = DPB::Engine->new($state);
-$reporter = DPB::Reporter->new($state,
-    $state->heuristics, "DPB::Core", $state->engine);
+$reporter = DPB::Reporter->new($state, "main", "DPB::Core", $state->engine);
 while (!DPB::Core->avail) {
 	DPB::Core->reap;
 	sleep 1;
@@ -569,45 +604,46 @@ $SIG{INFO} = sub {
 	$reporter->refresh;
 };
 
-my $keep_going = 1;
 my $last_time = time() - $state->{display_timeout};
 
 sub handle_non_waiting_jobs
 {
 	my $need_clock = shift;
 	my $checked = !$need_clock; # XXX
+	my $force_report = 0;
 	my $reaped = DPB::Core->reap;
 	$keep_going = !-e $state->logdir."/stop";
 	if (DPB::Core->avail > 1) {
 		$state->engine->recheck_errors;
 	}
 	if (DPB::Core->avail) {
-		$state->engine->check_buildable(0);
+		$state->engine->check_buildable;
 		$checked = 1;
 	}
 	while ($keep_going && DPB::Core->avail && $state->engine->can_build) {
 		$state->engine->start_new_job;
+		$force_report = 1;
 	}
 	while ($keep_going && DPB::Core::Fetcher->avail &&
 	    $state->engine->can_fetch) {
 	    	if (!$checked) {
-			$state->engine->check_buildable(1);
+			$state->engine->check_buildable;
 			$checked = 1;
 		}
 		$state->engine->start_new_fetch;
+		$force_report = 1;
 	}
 	my $current = time();
 	DPB::Core->log_concurrency($current, $state->{concurrent});
 	if ($need_clock) {
 		if ($current >= $last_time + $state->{display_timeout} ||
 		    $reaped) {
-			$reporter->report;
+			$reporter->report($force_report);
 			$last_time = $current;
 		}
 	} else {
-		$reporter->report;
+		$reporter->report($force_report);
 	}
-	return $keep_going;
 }
 
 sub main_loop
@@ -615,11 +651,13 @@ sub main_loop
 	while (1) {
 		while (1) {
 			handle_non_waiting_jobs(0);
-			if (!DPB::Core->running &&
-			    (!$keep_going || !$state->engine->can_build)) {
-				$state->engine->check_buildable(0);
+			if (!DPB::Core->running) {
+				last if !$keep_going;
 				if (!$state->engine->can_build) {
-					last;
+					$state->engine->check_buildable(1);
+					if (!$state->engine->can_build) {
+						last;
+					}
 				}
 			}
 			if (DPB::Core->running) {
@@ -628,7 +666,7 @@ sub main_loop
 			if ($state->{fetch_only}) {
 				if (!DPB::Core::Fetcher->running &&
 				    (!$keep_going || !$state->engine->can_fetch)) {
-					$state->engine->check_buildable(0);
+					$state->engine->check_buildable;
 					if (!$state->engine->can_fetch) {
 						last;
 					}
@@ -679,8 +717,11 @@ if ($state->{all}) {
 	if ($state->opt('f')) {
 		DPB::Distfile->dump($state->{logger});
 	}
-	if ($state->grabber->expire_old_distfiles($core, $state->opt('e'))) {
-		$occupied  = 1;
+	if (!$state->defines('NO_HISTORY')) {
+		if ($state->grabber->expire_old_distfiles($core, 
+		    $state->opt('e'))) {
+			$occupied  = 1;
+		}
 	}
 }
 
@@ -688,7 +729,7 @@ if (!$state->opt('e') && !$occupied) {
 	$core->mark_ready;
 }
 
-$state->engine->check_buildable(1);
+$state->engine->check_buildable;
 
 if ($state->{scan_only}) {
 	# very shortened loop

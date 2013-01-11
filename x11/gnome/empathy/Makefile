@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.112 2012/11/18 09:26:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.115 2013/01/09 11:29:52 jasper Exp $
 
 COMMENT= 		Telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
-GNOME_VERSION=		3.6.2
-REVISION=		0
+GNOME_VERSION=		3.6.3
 
 CATEGORIES=		net
 
@@ -42,6 +41,7 @@ WANTLIB += pulse pulse-mainloop-glib secret-1 sndfile soup-2.4
 WANTLIB += soup-gnome-2.4 sqlite3 stdc++ tasn1 telepathy-farstream
 WANTLIB += telepathy-glib telepathy-logger vorbis vorbisfile webkitgtk-3.0
 WANTLIB += xcb xcb-render xcb-shm xml2 xslt z zeitgeist-1.0
+WANTLIB += X11-xcb Xtst
 
 BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
 			devel/iso-codes \

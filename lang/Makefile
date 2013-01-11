@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.145 2012/12/17 23:57:13 jeremy Exp $
+# $OpenBSD: Makefile,v 1.147 2012/12/26 15:07:57 naddy Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -46,6 +46,7 @@
      SUBDIR += jikes
      SUBDIR += jimtcl
      SUBDIR += jruby
+     SUBDIR += kawa
      SUBDIR += libv8
      SUBDIR += librep
      SUBDIR += lua
@@ -71,7 +72,6 @@
      SUBDIR += petite-chez
      SUBDIR += pfe
      SUBDIR += php
-     SUBDIR += pm3
      SUBDIR += processing
      SUBDIR += pugs
      SUBDIR += python

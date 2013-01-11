@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.251 2012/10/27 07:13:22 bentley Exp $
+# $OpenBSD: Makefile,v 1.253 2013/01/04 23:11:53 stsp Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -67,6 +67,7 @@
      SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
+     SUBDIR += flare
      SUBDIR += foobillard
      SUBDIR += forcedattack
      SUBDIR += fotaq
@@ -94,6 +95,7 @@
      SUBDIR += gtkballs
      SUBDIR += hackdata
      SUBDIR += heroes
+     SUBDIR += hex-a-hop
      SUBDIR += icebreaker
      SUBDIR += ivan
      SUBDIR += jbrickshooter

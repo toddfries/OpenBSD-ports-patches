@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.23 2012/11/17 14:07:50 ratchov Exp $
+# $OpenBSD: Makefile,v 1.25 2012/12/23 13:25:11 sthen Exp $
 
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
 COMMENT=	x86 with DOS emulator targeted at playing games
+BROKEN-hppa =	mpu401.cpp:42: error: expected identifier before numeric constant
 
 DISTNAME=	dosbox-0.74
-REVISION=	2
+REVISION=	3
 CATEGORIES=	games x11 emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dosbox/}
 
@@ -19,7 +20,7 @@ PERMIT_PACKAGE_FTP=     Yes
 PERMIT_DISTFILES_CDROM= Yes
 PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB=		SDL SDL_net SDL_sound png X11 c m pthread sndio z
+WANTLIB += SDL SDL_net SDL_sound stdc++ png X11 c m pthread sndio z
 
 LIB_DEPENDS=	devel/sdl-net \
 		devel/sdl-sound \
@@ -34,7 +35,7 @@ BUILD_DEPENDS=          ${MODGNU_AUTOCONF_DEPENDS} \
 			${MODGNU_AUTOMAKE_DEPENDS}
 
 CONFIGURE_STYLE= gnu
-CONFIGURE_ENV=CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" 
+CONFIGURE_ENV=CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include"
 CONFIGURE_ENV+=LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 CONFIGURE_ARGS+=	--disable-alsatest
 CONFIGURE_ARGS+=	--disable-opengl

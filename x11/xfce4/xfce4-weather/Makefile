@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.44 2012/08/07 12:57:59 landry Exp $
+# $OpenBSD: Makefile,v 1.46 2013/01/02 18:58:25 landry Exp $
 
 COMMENT=	Xfce4 temperature/weather conditions panel plugin
 
-XFCE_VERSION=	0.8.1
+XFCE_VERSION=	0.8.2
 XFCE_PLUGIN=	weather
 
 # GPLv2
@@ -25,5 +25,6 @@ WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs
 WANTLIB += startup-notification-1 xcb xcb-aux xcb-render xcb-shm
 WANTLIB += xfce4util xfce4ui-1 xml2 z stdc++
+WANTLIB += harfbuzz icudata icule icuuc pthread
 
 .include <bsd.port.mk>

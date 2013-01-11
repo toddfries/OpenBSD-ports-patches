@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.138 2012/12/17 18:56:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.141 2013/01/09 21:41:48 sthen Exp $
 
 MULTI_PACKAGES=	-main -ntlm
 
 BROKEN-hppa=	broken autoconf test for atomic ops; test succeeds but actual code build fails
+BROKEN-mips64=	broken autoconf test for atomic ops; test succeeds but actual code build fails
 
 COMMENT-main=	WWW and FTP proxy cache and accelerator
 COMMENT-ldap=	LDAP authentication/ACL support for Squid
 COMMENT-ntlm=	NTLM authentication/ACL support for Squid
 
-V=		3.2.5
+V=		3.2.6
 
 DISTNAME=	squid-$V
 PKGNAME-main=	squid-$V
@@ -52,6 +53,14 @@ MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC}/cfgaux
 
 USE_GROFF=	Yes
 USE_LIBTOOL=	Yes
+
+# gcc 4.2: src/ipc/StoreMap.cc fails with "unrecognizable insn" unless
+# optimizer is disabled, see e.g.
+# http://www.squid-cache.org/mail-archive/squid-users/201208/0060.html
+MODULES+=	gcc4
+MODGCC4_VERSION= 4.6
+MODGCC4_ARCHS=	powerpc
+MODGCC4_LANGS=	c c++
 
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--datadir="${PREFIX}/share/squid" \

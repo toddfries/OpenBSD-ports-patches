@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.375 2012/12/13 13:46:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.378 2013/01/08 23:28:22 stsp Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -102,6 +102,7 @@
      SUBDIR += mupdf
      SUBDIR += mxml
      SUBDIR += namazu
+     SUBDIR += naturaldocs
      SUBDIR += ocaml-csv
      SUBDIR += ocaml-rss
      SUBDIR += ocaml-text
@@ -357,9 +358,11 @@
      SUBDIR += sphinx,pgsql
      SUBDIR += spiff
      SUBDIR += stringtemplate
+     SUBDIR += svndumptool
      SUBDIR += swish-e
      SUBDIR += tcpdf
      SUBDIR += texi2html
+     SUBDIR += tinyxml
      SUBDIR += tre
      SUBDIR += txt2tags
      SUBDIR += uncrustify

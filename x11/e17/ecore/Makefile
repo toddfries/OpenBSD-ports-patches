@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.21 2012/11/10 15:01:15 stsp Exp $
+# $OpenBSD: Makefile,v 1.25 2013/01/08 08:13:28 jasper Exp $
 
 COMMENT =		core event/X abstraction layer
-DISTNAME =		ecore-1.7.1
+DISTNAME =		ecore-1.7.4
 
+REVISION = 		2
 EPOCH =			2
 
-SO_VERSION =		2.0		# 8.1
+SO_VERSION =		3.0		# 8.4
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 .for _lib in ecore ecore_con ecore_evas ecore_file ecore_imf \
@@ -25,15 +26,16 @@ USE_LIBTOOL =		Yes
 
 WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
 WANTLIB += Xrandr Xrender Xss Xtst cares crypto curl eet eina
-WANTLIB += evas expat ffi fontconfig freetype fribidi glib-2.0
-WANTLIB += gobject-2.0 gthread-2.0 harfbuzz icudata icule icuuc
-WANTLIB += idn jpeg m pcre pthread ssl xcb z
+WANTLIB += evas expat ffi fontconfig freetype fribidi glib-2.0 gio-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 harfbuzz ibus-1.0 icudata icule
+WANTLIB += icuuc idn jpeg m pcre pthread ssl xcb z
 
 LIB_DEPENDS =		devel/glib2 \
 			devel/fribidi \
+			inputmethods/ibus \
 			net/curl \
 			net/libcares \
-			x11/e17/evas>=2.0
+			x11/e17/evas>=3.0
 
 CONFIGURE_ARGS +=	--disable-doc \
 			--disable-gnutls \

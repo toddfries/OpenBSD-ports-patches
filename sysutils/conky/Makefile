@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.34 2012/09/19 08:15:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.36 2012/12/31 09:36:38 chrisz Exp $
 
 ONLY_FOR_ARCHS= ${APM_ARCHS}
 
 COMMENT=	light-weight system monitor
 
-DISTNAME=	conky-1.8.1
-REVISION=	12
+DISTNAME=	conky-1.9.0
 CATEGORIES=	sysutils
 HOMEPAGE=	http://conky.sourceforge.net/
 
@@ -50,21 +49,21 @@ CONFIGURE_ARGS+=--disable-double-buffer \
 .else
 CONFIGURE_ARGS+=--enable-imlib2
 LIB_DEPENDS+=	graphics/imlib2
-WANTLIB+=	Imlib2 X11 Xau Xdamage Xdmcp Xext Xfixes Xft \
-		Xrender expat fontconfig freetype \
-		pthread-stubs xcb
+WANTLIB += Imlib2 X11 Xdamage Xext Xfixes Xft
+WANTLIB += Xrender expat fontconfig freetype xcb
 .endif
 
 .if ${FLAVOR:L:Maudacious}
 CONFIGURE_ARGS+=--enable-audacious=yes
-LIB_DEPENDS+=	audio/audacious
-WANTLIB +=	GL Xcomposite Xcursor Xi Xinerama Xrandr Xxf86vm \
-		atk-1.0 audclient audcore audgui cairo \
-		cairo-gobject dbus-1 dbus-glib-1 drm ffi \
-		gdk-3 gdk_pixbuf-2.0 gio-2.0 gmodule-2.0 \
-		gobject-2.0 gthread-2.0 gtk-3 pango-1.0 \
-		pangocairo-1.0 pangoft2-1.0 pixman-1 png stdc++ \
-		xcb-render xcb-shm
+LIB_DEPENDS +=	audio/audacious devel/harfbuzz
+WANTLIB +=	GL ICE Xau Xcomposite Xcursor Xdmcp Xi Xinerama \
+		Xrandr Xxf86vm atk-1.0 atk-bridge-2.0 atspi \
+		audclient audcore audgui cairo cairo-gobject \
+		dbus-1 dbus-glib-1 drm ffi gdk-3 gdk_pixbuf-2.0 \
+		gio-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
+		gtk-3 harfbuzz icudata icule icuuc pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pixman-1 png \
+		pthread-stubs SM stdc++ xcb-render xcb-shm
 .endif
 
 .if ${FLAVOR:L:Mxmms2}

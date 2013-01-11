@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Grabber.pm,v 1.24 2012/01/30 15:11:04 espie Exp $
+# $OpenBSD: Grabber.pm,v 1.26 2013/01/07 10:59:41 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -29,6 +29,7 @@ sub new
 	my $o = bless { 
 		loglist => DPB::Util->make_hot($state->logger->open("vars")),
 		engine => $state->engine,
+		builder => $state->builder,
 		state => $state,
 		keep_going => 1,
 		errors => 0,
@@ -62,11 +63,17 @@ sub finish
 			delete $v->{info};
 			$self->{engine}->add_fatal($v, $v->{broken});
 			delete $v->{broken};
-		} elsif ($v->{wantbuild}) {
-			delete $v->{wantbuild};
-			$self->{engine}->new_path($v);
+		} else {
+			if ($v->{wantbuild}) {
+				delete $v->{wantbuild};
+				$self->{engine}->new_path($v);
+			}
+			if ($v->{dontjunk}) {
+				$self->{builder}->dontjunk($v);
+			}
 		}
 	}
+	$self->{engine}->flush;
 	$self->{keepgoing} = &{$self->{endcode}};
 }
 
@@ -134,6 +141,9 @@ sub complete_subdirs
 					delete $v->{wantbuild};
 					$self->{engine}->new_path($v);
 				}
+				if (defined $v->{dontjunk}) {
+					$self->{builder}->dontjunk($v);
+				}
 				next;
 			}
 			next if defined $v->{category};
@@ -147,6 +157,7 @@ sub complete_subdirs
 				$v->{tried} = 1;
 			}
 		}
+		$self->{engine}->flush;
 		last if (keys %$subdirlist) == 0;
 
 		DPB::Vars->grab_list($core, $self, $subdirlist,

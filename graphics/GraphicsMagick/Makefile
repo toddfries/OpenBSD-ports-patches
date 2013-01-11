@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.26 2012/08/28 15:18:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2012/12/23 20:40:39 brad Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	image processing tools with stable ABI
 
-DISTNAME=	GraphicsMagick-1.3.15
-REVISION=	0
+DISTNAME=	GraphicsMagick-1.3.17
 CATEGORIES=	graphics devel
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=graphicsmagick/}
 EXTRACT_SUFX=	.tar.xz
@@ -59,7 +58,6 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-ltdl-install
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
 			LDFLAGS="-L${WRKBUILD}/magick/.libs -L${WRKBUILD}/wand/.libs -L${LOCALBASE}/lib" \
-			PTHREAD_LIBS="-pthread" \
 			ac_cv_path_LaunchDelegate=no
 
 post-build:

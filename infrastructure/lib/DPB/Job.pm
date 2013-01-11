@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Job.pm,v 1.3 2012/10/12 20:24:56 espie Exp $
+# $OpenBSD: Job.pm,v 1.5 2013/01/05 21:48:18 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -31,6 +31,12 @@ sub code
 	return $self->{code};
 }
 
+# no name by default, just display the object
+sub name
+{
+	return shift;
+}
+
 sub new
 {
 	my ($class, $code) = @_;
@@ -58,8 +64,17 @@ sub redirect
 {
 	my ($self, $log) = @_;
 	close STDOUT;
-	close STDERR;
 	open STDOUT, '>>', $log or die "Can't write to $log";
+	close STDERR;
+	open STDERR, '>&STDOUT' or die "bad redirect";
+}
+
+sub redirect_fh
+{
+	my ($self, $fh, $log) = @_;
+	close STDOUT;
+	open STDOUT, '>&', $fh or die "Can't write to $log";
+	close STDERR;
 	open STDERR, '>&STDOUT' or die "bad redirect";
 }
 

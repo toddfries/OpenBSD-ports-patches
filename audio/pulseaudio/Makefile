@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.35 2012/11/30 12:26:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.40 2013/01/05 18:27:42 ajacoutot Exp $
 
 # XXX
 # fix autospawn lock (patch-src_daemon_main_c)
+# util.c: implement pa_get_binary_name()
 # sndio: what to do with (channel) map
 # sndio: check sample format
 # sndio: support for recording
@@ -17,11 +18,12 @@ SHARED_ONLY=		Yes
 
 COMMENT=		cross-platform networked sound server
 
-VERSION=		2.1
+VERSION=		3.0
 DISTNAME=		pulseaudio-${VERSION}
-REVISION=		3
+EXTRACT_SUFX=		.tar.xz
+REVISION=		2
 
-SHARED_LIBS +=  pulse                1.1      # .14.2
+SHARED_LIBS +=  pulse                2.0      # .15.3
 SHARED_LIBS +=  pulse-simple         0.0      # .0.3
 SHARED_LIBS +=  pulse-mainloop-glib  0.0      # .0.4
 
@@ -54,6 +56,9 @@ USE_LIBTOOL=		gnu
 LIBTOOL_FLAGS=		--tag=disable-static
 
 BUILD_DEPENDS=		archivers/gtar
+
+# needed for tests
+BUILD_DEPENDS +=	devel/check
 
 LIB_DEPENDS=		audio/libsndfile \
 			audio/speex \
@@ -89,7 +94,6 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-esound \
 			--disable-gtk2 \
 			--disable-jack \
-			--disable-hal \
 			--disable-hal-compat \
 			--disable-systemd \
 			--disable-udev \
@@ -108,7 +112,7 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 				-Wl,-rpath,${TRUEPREFIX}/lib/pulseaudio:${TRUEPREFIX}/lib/pulse-${VERSION}/modules"
 
 FAKE_FLAGS=		pulseconfdir="${PREFIX}/share/examples/pulseaudio/pulse" \
-			xdgautostartdir="${PREFIX}/share/examples/pulseaudio/xdg/autostart"
+			sysconfdir="${PREFIX}/share/examples/pulseaudio"
 
 ### SNDIO ###
 CONFIGURE_STYLE=	gnu
@@ -126,8 +130,7 @@ pre-configure:
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
 		autoreconf -i
 ### END SNDIO ###
-	${SUBST_CMD} ${WRKSRC}/src/daemon/default.pa.in \
-			${WRKSRC}/src/pulse/util.c
+	${SUBST_CMD} ${WRKSRC}/src/daemon/default.pa.in
 
 # remove man pages for utilities we don't install
 post-install:

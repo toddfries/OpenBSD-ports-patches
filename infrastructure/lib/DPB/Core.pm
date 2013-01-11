@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Core.pm,v 1.20 2012/11/06 08:26:29 espie Exp $
+# $OpenBSD: Core.pm,v 1.28 2013/01/10 10:26:34 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -81,6 +81,20 @@ use OpenBSD::Error;
 use DPB::Util;
 use DPB::Job;
 
+# need to know which host are around for affinity purposes
+my %allhosts;
+sub matches
+{
+	my ($self, $hostname) = @_;
+
+	# same host
+	return 1 if $self->hostname eq $hostname;
+	# ... or host isn't around
+	return 1 if !defined $allhosts{$hostname};
+	# okay, try to avoid this
+	return 0;
+}
+
 
 # note that we play dangerously, e.g., we only keep cores that are running
 # something in there, the code can keep some others.
@@ -126,6 +140,7 @@ sub new
 	my ($class, $host, $prop) = @_;
 	my $c = bless {host => DPB::Host->new($host, $prop)}, $class;
 	$c->{shell} = $class->shellclass->new($c->host);
+	$allhosts{$c->hostname} = 1;
 	return $c;
 }
 
@@ -299,7 +314,7 @@ sub run_task
 	my $core = shift;
 	my $pid = $core->task->fork($core);
 	if (!defined $pid) {
-		die "Oops: task couldn't start\n";
+		die "Oops: task ".$core->task->name." couldn't start\n";
 	} elsif ($pid == 0) {
 		for my $sig (keys %SIG) {
 			$SIG{$sig} = 'DEFAULT';
@@ -446,6 +461,7 @@ sub init_cores
 
 	my $logger = $state->logger;
 	my $startup = $state->{startup_script};
+	my $stale = $state->stalelocks;
 	DPB::Core->set_logdir($logger->{logdir});
 	for my $core (values %$init) {
 		my $job = DPB::Job::Init->new($logger);
@@ -459,6 +475,20 @@ sub init_cores
 				DPB::Task->redirect($logger->logfile("init.".
 				    $core->hostname));
 				$shell->exec($startup);
+			    }
+			));
+		}
+		if (defined $stale->{$core->hostname}) {
+			my $subdirlist=join(' ', @{$stale->{$core->hostname}});
+			$job->add_tasks(DPB::Task::Fork->new(
+			    sub {
+				my $shell = shift;
+				DPB::Task->redirect($logger->logfile("init.".
+				$core->hostname));
+				$shell
+				    ->chdir($state->ports)
+				    ->env(SUBDIR => $subdirlist)
+				    ->exec($state->make, 'unlock');
 			    }
 			));
 		}
@@ -526,6 +556,16 @@ sub repository
 	return $running;
 }
 
+sub same_host_jobs
+{
+	my $self = shift;
+	my @jobs = ();
+	for my $core (values %{$self->repository}) {
+		next if $core->hostname ne $self->hostname;
+		push(@jobs, $core->job);
+	}
+	return @jobs;
+}
 
 sub one_core
 {
@@ -664,6 +704,22 @@ sub get
 	return shift @$a;
 }
 
+sub get_affinity
+{
+	my ($self, $host) = @_;
+	my $l = [];
+	while (@$available > 0) {
+		my $core = shift @$available;
+		if ($core->hostname eq $host) {
+			push(@$available, @$l);
+			return $core;
+		}
+		push(@$l, $core);
+	}
+	$available = $l;
+	return undef
+}
+
 my @all_cores = ();
 
 sub all_sf
@@ -741,6 +797,9 @@ sub parse_hosts_file
 		}
 		$state->heuristics->calibrate(DPB::Core::Factory->new($host,
 		    $prop));
+	}
+	if ($state->define_present("STARTUP")) {
+		$state->{startup_script} = $state->{subst}->value("STARTUP");
 	}
 }
 

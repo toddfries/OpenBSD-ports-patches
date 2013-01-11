@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2012/12/08 10:10:22 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2013/01/03 16:17:18 landry Exp $
 
 COMMENT =	semantic grep, based on coccinelle
 
