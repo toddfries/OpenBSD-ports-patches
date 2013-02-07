@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.278 2012/12/31 14:52:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.282 2013/02/05 18:01:25 jasper Exp $
 
      SUBDIR =
      SUBDIR += LPRng
      SUBDIR += accountsservice
      SUBDIR += anacron
+     SUBDIR += ansible
      SUBDIR += apachetop
      SUBDIR += apc-upsd
      SUBDIR += apcupsd
@@ -164,9 +165,10 @@
      SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter
      SUBDIR += ruby-libvirt
+     SUBDIR += ruby-posix-spawn
      SUBDIR += ruby-puppet
      SUBDIR += ruby-puppet-lint
-     SUBDIR += ruby-thor
+     SUBDIR += ruby-puppet-lint,ruby18
      SUBDIR += ruby-vlad
      SUBDIR += runit
      SUBDIR += safecat

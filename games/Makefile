@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.253 2013/01/04 23:11:53 stsp Exp $
+# $OpenBSD: Makefile,v 1.257 2013/02/04 15:13:35 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -98,6 +98,7 @@
      SUBDIR += hex-a-hop
      SUBDIR += icebreaker
      SUBDIR += ivan
+     SUBDIR += jag
      SUBDIR += jbrickshooter
      SUBDIR += kbilliards
      SUBDIR += kobodeluxe
@@ -116,6 +117,7 @@
      SUBDIR += maelstrom
      SUBDIR += manaplus
      SUBDIR += meandmyshadow
+     SUBDIR += megaglest
      SUBDIR += micropolis
      SUBDIR += minetest
      SUBDIR += mirrormagic
@@ -151,6 +153,7 @@
      SUBDIR += qstat
      SUBDIR += quake
      SUBDIR += quake2
+     SUBDIR += renpy
      SUBDIR += rftg
      SUBDIR += ri-li
      SUBDIR += roadfighter
@@ -182,7 +185,6 @@
      SUBDIR += taxipilot
      SUBDIR += teeworlds
      SUBDIR += tetrinetx
-     SUBDIR += tmw
      SUBDIR += toppler
      SUBDIR += tornado
      SUBDIR += tutris

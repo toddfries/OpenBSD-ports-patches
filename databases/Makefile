@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.230 2013/01/11 20:23:45 kili Exp $
+# $OpenBSD: Makefile,v 1.234 2013/02/07 14:19:53 stu Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -16,6 +16,7 @@
      SUBDIR += hs-HDBC-mysql
      SUBDIR += hs-HDBC-postgresql
      SUBDIR += hs-HDBC-sqlite3
+     SUBDIR += hs-hackage-db
      SUBDIR += hs-postgresql-libpq
      SUBDIR += hs-postgresql-simple
      SUBDIR += hs-redis
@@ -171,12 +172,9 @@
      SUBDIR += qdbm
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += redis
-     SUBDIR += ruby-activerecord
      SUBDIR += ruby-amalgalite
      SUBDIR += ruby-amalgalite,ruby18
-     SUBDIR += ruby-arel
      SUBDIR += ruby-bdb
-     SUBDIR += ruby-couch_potato
      SUBDIR += ruby-couchrest
      SUBDIR += ruby-data_objects
      SUBDIR += ruby-data_objects,ruby18
@@ -191,6 +189,7 @@
      SUBDIR += ruby-do_sqlite3
      SUBDIR += ruby-do_sqlite3,ruby18
      SUBDIR += ruby-do_sqlite3,rbx
+     SUBDIR += ruby-hiera
      SUBDIR += ruby-jdbc-h2
      SUBDIR += ruby-jdbc-mysql
      SUBDIR += ruby-jdbc-postgres
@@ -239,6 +238,8 @@
      SUBDIR += sqsh
      SUBDIR += strigi
      SUBDIR += tdb
+     SUBDIR += tdbc
+     SUBDIR += tdbc-sqlite3
      SUBDIR += tinycdb
      SUBDIR += xapian-core
      SUBDIR += xmysql

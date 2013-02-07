@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.18 2013/01/04 11:07:28 chrisz Exp $
+# $OpenBSD: Makefile,v 1.20 2013/02/07 12:16:08 naddy Exp $
 
 COMMENT=		proof assistant based on a typed lambda calculus
 
-DISTNAME=		coq-8.4
+V=			8.4pl1
+DISTNAME=		coq-$V
 CATEGORIES=		math
 HOMEPAGE=		http://coq.inria.fr/
 
@@ -21,7 +22,7 @@ WANTLIB += gtk-x11-2.0 iconv intl m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pixman-1 png pthread pthread-stubs
 WANTLIB += xcb xcb-render xcb-shm z
 
-MASTER_SITES=	http://pauillac.inria.fr/~herbelin/coq/distrib/V8.4/files/
+MASTER_SITES=	${HOMEPAGE}distrib/V${V}/files/
 
 RUN_DEPENDS=	x11/lablgtk2
 BUILD_DEPENDS=	${RUN_DEPENDS}
@@ -39,7 +40,7 @@ CONFIGURE_ARGS=	-emacslib ${PREFIX}/share/emacs/site-lisp \
 		-prefix ${PREFIX} \
 		-mandir ${PREFIX}/man \
 		-configdir ${SYSCONFDIR}/xdg/coq \
-		-usecamlp4 \
+		-usecamlp4
 
 .include <bsd.port.arch.mk>
 .if ${PROPERTIES:Mocaml_native_dynlink}

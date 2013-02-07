@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.337 2012/12/19 07:53:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.339 2013/01/28 07:56:39 jasper Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -122,6 +122,7 @@
      SUBDIR += libexif-gtk
      SUBDIR += libgexiv2
      SUBDIR += libgphoto2
+     SUBDIR += libiptcdata
      SUBDIR += libkdcraw
      SUBDIR += libkexif
      SUBDIR += libkexiv2
@@ -197,6 +198,7 @@
      SUBDIR += povray
      SUBDIR += pstoedit
      SUBDIR += py-Imaging
+     SUBDIR += py-Pillow
      SUBDIR += py-cairo
      SUBDIR += py-dot
      SUBDIR += py-gd
@@ -210,6 +212,7 @@
      SUBDIR += qiv
      SUBDIR += quesoglc
      SUBDIR += rawstudio
+     SUBDIR += rawtherapee
      SUBDIR += ruby-color
      SUBDIR += ruby-gruff
      SUBDIR += ruby-mini_magick

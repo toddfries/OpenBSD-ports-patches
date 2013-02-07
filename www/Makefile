@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.592 2013/01/02 10:14:29 sthen Exp $
+# $OpenBSD: Makefile,v 1.597 2013/02/03 11:01:45 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
-     SUBDIR += amaya
      SUBDIR += analog
      SUBDIR += ap2-mod_fastcgi
      SUBDIR += ap2-mod_fcgid
+     SUBDIR += ap2-mod_jk
      SUBDIR += ap2-mod_perl
      SUBDIR += apache-httpd
      SUBDIR += aria2
@@ -29,6 +29,7 @@
      SUBDIR += cherokee
      SUBDIR += chive
      SUBDIR += chromium
+     SUBDIR += chromium,proprietary
      SUBDIR += clearsilver
      SUBDIR += cms-ms
      SUBDIR += cntlm
@@ -376,6 +377,7 @@
      SUBDIR += phpmemcachedadmin
      SUBDIR += phpmyadmin
      SUBDIR += phppgadmin
+     SUBDIR += phpvirtualbox
      SUBDIR += piwik
      SUBDIR += plans
      SUBDIR += pmwiki
@@ -437,7 +439,6 @@
      SUBDIR += reportmagic
      SUBDIR += retawq
      SUBDIR += rt
-     SUBDIR += ruby-activeresource
      SUBDIR += ruby-addressable
      SUBDIR += ruby-capybara
      SUBDIR += ruby-capybara-webkit
@@ -449,13 +450,7 @@
      SUBDIR += ruby-passenger
      SUBDIR += ruby-passenger,ruby18
      SUBDIR += ruby-rack
-     SUBDIR += ruby-rack-cache
-     SUBDIR += ruby-rack-mount
-     SUBDIR += ruby-rack-ssl
      SUBDIR += ruby-rack-test
-     SUBDIR += ruby-rails
-     SUBDIR += ruby-rails,ruby18
-     SUBDIR += ruby-railties
      SUBDIR += ruby-rainbows
      SUBDIR += ruby-rainbows,ruby18
      SUBDIR += ruby-raindrops

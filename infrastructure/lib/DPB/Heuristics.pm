@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Heuristics.pm,v 1.16 2013/01/10 22:42:21 espie Exp $
+# $OpenBSD: Heuristics.pm,v 1.19 2013/02/02 13:35:17 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -25,7 +25,7 @@ package DPB::Heuristics;
 # for now, we don't create a separate object, we assume everything here is
 # "global"
 
-my (%weight, %bad_weight, %wrkdir, %needed_by);
+my (%weight, %bad_weight, %wrkdir, %needed_by, %pkgname);
 
 sub new
 {
@@ -78,17 +78,26 @@ sub equates
 	}
 }
 
-my $threshold;
-sub set_threshold
-{
-	my ($self, $t) = @_;
-	$threshold = $t;
-}
-
 sub add_size_info
 {
-	my ($self, $path, $sz) = @_;
+	my ($self, $path, $pkgname, $sz) = @_;
 	$wrkdir{$path->pkgpath_and_flavors} = $sz;
+	if (defined $pkgname) {
+		$pkgname{$path->fullpkgpath} = $pkgname;
+	}
+}
+
+sub match_pkgname
+{
+	my ($self, $v) = @_;
+	my $p = $pkgname{$v->fullpkgpath};
+	if (!defined $p) {
+		return 0;
+	}
+	if ($p eq $v->fullpkgname) {
+		return 1;
+	}
+	return 0;
 }
 
 my $used_memory = {};
@@ -96,12 +105,13 @@ my $used_per_host = {};
 
 sub special_parameters
 {
-	my ($self, $host, $v) = @_;
-	my $t = $host->{prop}->{memory} // $threshold;
+	my ($self, $core, $v) = @_;
+	my $t = $core->memory;
+	return 0 if !defined $t;
 	my $p = $v->pkgpath_and_flavors;
 	# we build in memory if we know this port and it's light enough
 	if (defined $t && defined $wrkdir{$p}) {
-		my $hostname = $host->name;
+		my $hostname = $core->hostname;
 		$used_per_host->{$hostname} //= 0;
 		if ($used_per_host->{$hostname} + $wrkdir{$p} <= $t) {
 			$used_per_host->{$hostname} += $wrkdir{$p};
@@ -345,7 +355,7 @@ sub count
 sub non_empty
 {
 	my $self = shift;
-	return scalar %{$self->{o}};
+	return scalar keys %{$self->{o}};
 }
 
 sub sorted_values

@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.167 2013/01/02 22:33:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.170 2013/01/30 20:59:41 sthen Exp $
 
 SHARED_ONLY=		Yes
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			10.11.1
+VER=			10.12.1
+REVISION=		0
+REVISION-main=
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
 
@@ -123,7 +125,7 @@ FLAVORS=		imap
 CONFIGURE_ARGS+=	--with-imap=yes
 MAKE_FLAGS+=		MENUSELECT_OPTS_app_voicemail=IMAP_STORAGE
 CPPFLAGS+=		-I${LOCALBASE}/include/c-client
-LIB_DEPENDS-main+=	mail/imap-uw,-c-client
+LIB_DEPENDS-main+=	mail/re-alpine,-c-client
 WANTLIB-main+=		c-client gssapi krb5
 .else
 CONFIGURE_ARGS+=	--with-imap=no
@@ -215,7 +217,7 @@ EXAMPLEFILES=		cdr.conf extensions.ael extensions.conf logger.conf \
 # subpackages aren't flavoured, so overwrite the default name/path
 FULLPKGNAME$i ?=	asterisk$i-${VER}
 FULLPKGPATH$i ?=	${PKGPATH},$i
-RUN_DEPENDS$i +=	asterisk-${VER}:${BUILD_PKGPATH}
+RUN_DEPENDS$i +=	asterisk-${VER}:telephony/asterisk
 .endfor
 
 post-patch:

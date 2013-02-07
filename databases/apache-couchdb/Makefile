@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.14 2012/04/28 10:52:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2013/02/07 17:28:29 jasper Exp $
 
 COMMENT =	distributed, document-oriented database
 
-COUCH_VER =	1.0.1
+COUCH_VER =	1.0.4
 DISTNAME =	apache-couchdb-${COUCH_VER}
-REVISION =	2
+REVISION =	0
 CATEGORIES =	databases
 
 HOMEPAGE =	http://couchdb.apache.org/
-
-MAINTAINER =	Benoit Chesneau <benoitc@metavers.net>
 
 # Apache 2.0
 PERMIT_PACKAGE_CDROM =	Yes
@@ -38,7 +36,6 @@ MAKE_FLAGS =	LDFLAGS="-L${LOCALBASE}/lib -pthread" \
 
 USE_GMAKE =	Yes
 USE_LIBTOOL =	Yes
-USE_GROFF =	Yes
 
 CONFIGURE_STYLE = gnu
 CONFIGURE_ARGS = ${CONFIGURE_SHARED} \

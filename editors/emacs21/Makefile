@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.61 2012/08/30 20:54:59 pascal Exp $
+# $OpenBSD: Makefile,v 1.63 2013/02/05 18:13:35 sthen Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -11,7 +11,7 @@ FULLPKGNAME-el=		emacs-el-${VERSION}
 FULLPKGPATH-el=		editors/emacs21,-el
 FULLPKGNAME-leim=	emacs-leim-${VERSION}
 FULLPKGPATH-leim=	editors/emacs21,-leim
-REVISION-main=		19
+REVISION-main=		21
 REVISION-el=		6
 REVISION-leim=		6
 
@@ -40,11 +40,18 @@ MODGNU_EMACS_YOURE_WEIRD = Oh yes
 
 CONFIGURE_STYLE=	gnu dest
 CONFIGURE_ARGS=		${GCCARCH} --with-pop --with-system-malloc
+LDFLAGS=		${ELF_TOOLCHAIN:L:S/yes/-Z/:S/no//} \
+			-L${LOCALBASE}/lib
+
+.include <bsd.port.arch.mk>
+.if ! ${PROPERTIES:Mgcc2}
+LDFLAGS +=		-nopie
+CFLAGS +=		-fno-pie
+.endif
+
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
 				  -I${LOCALBASE}/include/libpng" \
-			LDFLAGS="${ELF_TOOLCHAIN:L:S/yes/-Z/:S/no//} \
-				 -L${LOCALBASE}/lib -nopie"
-CFLAGS +=		-fno-pie
+			LDFLAGS="${LDFLAGS}"
 
 MAKE_ENV=		INSTALL_EMACS="${INSTALL_SCRIPT}"
 

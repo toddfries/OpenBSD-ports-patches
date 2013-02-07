@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.96 2013/01/03 08:30:54 brad Exp $
+# $OpenBSD: Makefile,v 1.99 2013/02/02 23:51:45 brad Exp $
 
 ONLY_FOR_ARCHS=	amd64 i386 powerpc sparc64
 
 COMMENT=	multi system emulator
 
-DISTNAME=	qemu-1.2.2
-REVISION=	1
+DISTNAME=	qemu-1.3.1
+REVISION=	0
 CATEGORIES=	emulators
 MASTER_SITES=	http://wiki.qemu.org/download/
 EXTRACT_SUFX=	.tar.bz2
@@ -21,7 +21,7 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	GL SDL X11 c curl glib-2.0 gthread-2.0 jpeg m ncurses \
-		png pthread util z
+		pixman-1 png pthread pthread-stubs util z
 
 MODULES=	devel/gettext \
 		lang/python

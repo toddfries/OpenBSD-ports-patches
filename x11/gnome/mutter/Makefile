@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.9 2012/12/21 18:33:55 landry Exp $
+# $OpenBSD: Makefile,v 1.11 2013/01/15 10:18:11 jasper Exp $
 
 BROKEN-sparc64=		cast increases required alignment of target type
 BROKEN-hppa=		cast increases required alignment of target type
+BROKEN-mips64=		cast increases required alignment of target type
 
 COMMENT=		window and compositing manager
 
@@ -39,8 +40,7 @@ LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 			devel/startup-notification \
 			graphics/clutter/core>=1.12.0 \
 			devel/gobject-introspection
-BUILD_DEPENDS=		${RUN_DEPENDS} \
-			x11/gnome/doc-utils
+BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		devel/gsettings-desktop-schemas>=3.4.2p0 \
 			x11/gnome/zenity
 

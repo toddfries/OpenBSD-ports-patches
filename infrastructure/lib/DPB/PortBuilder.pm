@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortBuilder.pm,v 1.28 2013/01/07 10:59:41 espie Exp $
+# $OpenBSD: PortBuilder.pm,v 1.44 2013/02/03 21:17:21 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -49,6 +49,19 @@ sub new
 	return $self;
 }
 
+sub want_size
+{
+	my ($self, $v) = @_;
+	if (!$self->{size}) {
+		return 0;
+	}
+	if ($self->{heuristics}->match_pkgname($v)) {
+		return rand(10) < 1;
+	} else {
+		return 1;
+	}
+}
+
 sub rebuild_class
 { 'DPB::PortBuilder::Rebuild' }
 
@@ -93,6 +106,12 @@ sub init
 	my $self = shift;
 	File::Path::make_path($self->{fullrepo});
 	$self->{global} = $self->logger->open("build");
+	$self->{lockperf} = 
+	    DPB::Util->make_hot($self->logger->open("awaiting-locks"));
+	if ($self->{size}) {
+		$self->{logsize} = 
+		    DPB::Util->make_hot($self->logger->open("size"));
+	}
 	if ($self->{state}->defines("WRAP_MAKE")) {
 		$self->{rsslog} = $self->logger->logfile("rss");
 		$self->{wrapper} = $self->{state}->defines("WRAP_MAKE");
@@ -112,11 +131,11 @@ sub check
 	return -f $self->pkgfile($v);
 }
 
-sub register_built
+sub checks_rebuild
 {
 }
 
-sub checks_rebuild
+sub register_package
 {
 }
 
@@ -166,19 +185,27 @@ sub end_lock
 
 sub build
 {
-	my ($self, $v, $core, $special, $lock, $final_sub) = @_;
+	my ($self, $v, $core, $lock, $final_sub) = @_;
 	my $start = time();
 	my $log = $self->logger->make_logs($v);
+	my $special = $self->{heuristics}->special_parameters($core, $v);
 
 	open my $fh, ">>", $log;
-	print $fh ">>> Building under ";
+	if ($special) {
+		print $fh ">>> Building in memory under ";
+	} else {
+		print $fh ">>> Building under ";
+	}
 	$v->quick_dump($fh);
-	close($fh);
 
 	my $job;
-	$job = DPB::Job::Port->new($log, $v, $self, $special, $core,
-	    sub {$self->end_lock($lock, $core, $job); $self->report($v, $job, $core); &$final_sub;});
-	$job->{lock} = $lock;
+	$job = DPB::Job::Port->new($log, $fh, $v, $lock, $self, $special, $core,
+	    sub {
+	    	close($fh); 
+		$self->end_lock($lock, $core, $job); 
+		$self->report($v, $job, $core); 
+		&$final_sub;
+	    });
 	$core->start_job($job, $v);
 	if ($job->{parallel}) {
 		$core->can_swallow($job->{parallel}-1);
@@ -193,8 +220,14 @@ sub install
 {
 	my ($self, $v, $core) = @_;
 	my $log = $self->logger->make_logs($v);
-	my $job = DPB::Job::Port::Install->new($log, $v, $self,
-	    sub {$core->mark_ready; });
+	open my $fh, ">>", $log;
+	print $fh ">>> Installing under ";
+	$v->quick_dump($fh);
+	my $job = DPB::Job::Port::Install->new($log, $fh, $v, $self,
+	    sub {
+	    	close($fh);
+	    	$core->mark_ready; 
+	    });
 	$core->start_job($job, $v);
 	return $core;
 }
@@ -212,37 +245,52 @@ sub init
 	    "file:/$self->{fullrepo}");
 	# this is just a dummy core, for running quick pipes
 	$self->{core} = DPB::Core->new_noreg('localhost');
-	$self->{logrebuild} = DPB::Util->make_hot(
-	    $self->logger->open('rebuild'));
 }
 
 my $uptodate = {};
 
-sub check_signature
+sub equal_signatures
 {
 	my ($self, $core, $v) = @_;
-	my $name = $v->fullpkgname;
-	return 0 unless -f "$self->{fullrepo}/$name.tgz";
-	if ($uptodate->{$name}) {
-		return 1;
-	}
-	# check the package
-	my $p = $self->{repository}->find("$name.tgz");
+	my $p = $self->{repository}->find($v->fullpkgname.".tgz");
 	my $plist = $p->plist(\&OpenBSD::PackingList::UpdateInfoOnly);
 	my $pkgsig = $plist->signature->string;
 	# and the port
 	my $portsig = $self->{state}->grabber->grab_signature($core,
 	    $v->fullpkgpath);
-	if ($portsig eq $pkgsig) {
-		$uptodate->{$name} = 1;
-		print {$self->{logrebuild}} "$name: uptodate\n";
-		return 1;
-	} else {
-		print {$self->{logrebuild}} "$name: rebuild\n";
+	return $portsig eq $pkgsig;
+}
+
+sub check_signature
+{
+	my ($self, $core, $v) = @_;
+	my $okay = 1;
+	for my $w ($v->build_path_list) {
+		my $name = $w->fullpkgname;
+		if (!-f "$self->{fullrepo}/$name.tgz") {
+			print "$name: absent\n";
+			$okay = 0;
+			next;
+		}
+		next if $uptodate->{$name};
+		if ($self->equal_signatures($core, $w)) {
+			$uptodate->{$name} = 1;
+			print "$name: uptodate\n";
+			next;
+		}
+		print "$name: rebuild\n";
 		$self->{state}->grabber->clean_packages($core,
-		    $v->fullpkgpath);
-		return 0;
+		    $w->fullpkgpath);
+	    	$okay = 0;
 	}
+	return $okay;
+}
+
+# this is due to the fact check_signature is within a child
+sub register_package
+{
+	my ($self, $v) = @_;
+	$uptodate->{$v->fullpkgname} = 1;
 }
 
 sub check
@@ -258,12 +306,3 @@ sub checks_rebuild
 	return 1 unless $uptodate->{$v->fullpkgname};
 }
 
-sub register_built
-{
-	my ($self, $v) = @_;
-	for my $w ($v->build_path_list) {
-		$uptodate->{$w->fullpkgname} = -f $self->pkgfile($w);
-	}
-}
-
-1;

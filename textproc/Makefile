@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.378 2013/01/08 23:28:22 stsp Exp $
+# $OpenBSD: Makefile,v 1.383 2013/02/02 16:00:55 jasper Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -314,7 +314,6 @@
      SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
      SUBDIR += ruby-classifier
-     SUBDIR += ruby-erubis
      SUBDIR += ruby-fastercsv,ruby18
      SUBDIR += ruby-fastri,ruby18
      SUBDIR += ruby-fast-stemmer
@@ -326,6 +325,7 @@
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-hyperestraier,ruby19
      SUBDIR += ruby-icalendar
+     SUBDIR += ruby-kramdown
      SUBDIR += ruby-liquid
      SUBDIR += ruby-markaby
      SUBDIR += ruby-maruku
@@ -333,6 +333,7 @@
      SUBDIR += ruby-nokogiri
      SUBDIR += ruby-nokogiri,ruby18
      SUBDIR += ruby-pdf-reader
+     SUBDIR += ruby-pygments.rb
      SUBDIR += ruby-randexp
      SUBDIR += ruby-rdiscount
      SUBDIR += ruby-rdiscount,ruby18
@@ -348,6 +349,7 @@
      SUBDIR += ruby-syntax
      SUBDIR += ruby-templater
      SUBDIR += ruby-treetop
+     SUBDIR += ruby-yard
      SUBDIR += rxp
      SUBDIR += sablotron
      SUBDIR += sgmlformat
@@ -377,7 +379,6 @@
      SUBDIR += xerces
      SUBDIR += xerces-c
      SUBDIR += xml2rfc
-     SUBDIR += xml2rfc,no_x11
      SUBDIR += xmlcatmgr
      SUBDIR += xmlto
      SUBDIR += xmlwf

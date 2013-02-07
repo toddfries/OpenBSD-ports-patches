@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1097 2012/12/30 18:00:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.1106 2013/02/05 11:16:14 zhuk Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -24,6 +24,7 @@
      SUBDIR += autoconf
      SUBDIR += autogen
      SUBDIR += automake
+     SUBDIR += automoc
      SUBDIR += avr
      SUBDIR += avrdude
      SUBDIR += beediff
@@ -32,6 +33,7 @@
      SUBDIR += boehm-gc
      SUBDIR += boost
      SUBDIR += bouml
+     SUBDIR += bpython
      SUBDIR += bustle
      SUBDIR += bzr
      SUBDIR += bzr-svn
@@ -93,7 +95,6 @@
      SUBDIR += eclipse
      SUBDIR += ectags
      SUBDIR += emacs-haskell
-     SUBDIR += emacs-python
      SUBDIR += ethos
      SUBDIR += fasm
      SUBDIR += ffcall
@@ -294,6 +295,7 @@
      SUBDIR += kdbg
      SUBDIR += kdiff3
      SUBDIR += lam
+     SUBDIR += legit
      SUBDIR += leiningen
      SUBDIR += libIDL
      SUBDIR += libJudy
@@ -1054,12 +1056,14 @@
      SUBDIR += py-addons
      SUBDIR += py-altgraph
      SUBDIR += py-asn1
+     SUBDIR += py-async
      SUBDIR += py-babel
      SUBDIR += py-blinker
      SUBDIR += py-buildbot
      SUBDIR += py-buildslave
      SUBDIR += py-bytecodeassembler
      SUBDIR += py-cheetah
+     SUBDIR += py-clint
      SUBDIR += py-configobj
      SUBDIR += py-country
      SUBDIR += py-coverage
@@ -1077,6 +1081,8 @@
      SUBDIR += py-fpconst
      SUBDIR += py-gdata
      SUBDIR += py-gevent
+     SUBDIR += py-gitdb
+     SUBDIR += py-gitpython
      SUBDIR += py-gobject
      SUBDIR += py-gobject3
      SUBDIR += py-greenlet
@@ -1123,6 +1129,7 @@
      SUBDIR += py-silc
      SUBDIR += py-simplejson
      SUBDIR += py-sip
+     SUBDIR += py-smmap
      SUBDIR += py-subvertpy
      SUBDIR += py-suds
      SUBDIR += py-symboltype
@@ -1152,6 +1159,7 @@
      SUBDIR += pysvn
      SUBDIR += pyusb
      SUBDIR += qgit
+     SUBDIR += qjson
      SUBDIR += qt-creator
      SUBDIR += qt4-eventsview
      SUBDIR += quilt
@@ -1165,9 +1173,6 @@
      SUBDIR += rebar
      SUBDIR += remake
      SUBDIR += ruby-abstract
-     SUBDIR += ruby-actionpack
-     SUBDIR += ruby-activemodel
-     SUBDIR += ruby-activesupport
      SUBDIR += ruby-arrayfields
      SUBDIR += ruby-bacon
      SUBDIR += ruby-bundler
@@ -1194,12 +1199,12 @@
      SUBDIR += ruby-gir_ffi
      SUBDIR += ruby-git
      SUBDIR += ruby-highline
-     SUBDIR += ruby-hike
      SUBDIR += ruby-hoe
      SUBDIR += ruby-home_run,ruby18
      SUBDIR += ruby-i18n
      SUBDIR += ruby-isolate
      SUBDIR += ruby-jeweler
+     SUBDIR += ruby-json_pure
      SUBDIR += ruby-kgio
      SUBDIR += ruby-kgio,ruby18
      SUBDIR += ruby-linecache
@@ -1207,17 +1212,18 @@
      SUBDIR += ruby-minitest
      SUBDIR += ruby-mocha
      SUBDIR += ruby-mspec
+     SUBDIR += ruby-narray
      SUBDIR += ruby-ncurses
      SUBDIR += ruby-needle
      SUBDIR += ruby-ole
      SUBDIR += ruby-open4
-     SUBDIR += ruby-paper_trail
      SUBDIR += ruby-parsetree
      SUBDIR += ruby-polyglot
      SUBDIR += ruby-prof
      SUBDIR += ruby-prof,ruby18
      SUBDIR += ruby-rake
      SUBDIR += ruby-rake-compiler
+     SUBDIR += ruby-rb-gsl
      SUBDIR += ruby-rcov
      SUBDIR += ruby-rcov,ruby18
      SUBDIR += ruby-rdoc
@@ -1228,7 +1234,6 @@
      SUBDIR += ruby-rubyforge
      SUBDIR += ruby-rubyinline
      SUBDIR += ruby-sexp_processor
-     SUBDIR += ruby-sprockets
      SUBDIR += ruby-stringex
      SUBDIR += ruby-subset_sum
      SUBDIR += ruby-subset_sum,ruby18
@@ -1239,8 +1244,8 @@
      SUBDIR += ruby-tilt
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-trollop
-     SUBDIR += ruby-tzinfo
      SUBDIR += ruby-uuidtools
+     SUBDIR += ruby-yajl
      SUBDIR += ruby-zentest
      SUBDIR += scons
      SUBDIR += sdcc
@@ -1262,6 +1267,7 @@
      SUBDIR += slib-guile
      SUBDIR += smarty
      SUBDIR += smpeg
+     SUBDIR += sparsehash
      SUBDIR += spe
      SUBDIR += spice-protocol
      SUBDIR += spidermonkey

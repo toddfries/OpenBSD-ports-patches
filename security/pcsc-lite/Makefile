@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2012/11/29 11:28:47 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.16 2013/02/04 09:25:20 dcoppa Exp $
 
 COMMENT=	resource manager for PC/SC
 
-DISTNAME=	pcsc-lite-1.8.7
+DISTNAME=	pcsc-lite-1.8.8
+REVISION=	0
 CATEGORIES=	security
 
 SHARED_LIBS+=	pcsclite	1.0 # 1.0.0
@@ -10,7 +11,7 @@ SHARED_LIBS+=	pcscspy		0.0 # 0.0.0
 
 HOMEPAGE=	http://pcsclite.alioth.debian.org/pcsclite.html
 
-MASTER_SITES=	https://alioth.debian.org/frs/download.php/3842/
+MASTER_SITES=	https://alioth.debian.org/frs/download.php/3862/
 
 EXTRACT_SUFX=	.tar.bz2
 

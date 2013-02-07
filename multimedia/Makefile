@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2012/10/10 10:45:35 sthen Exp $
+# $OpenBSD: Makefile,v 1.66 2013/01/21 14:24:01 espie Exp $
 
      SUBDIR =
      SUBDIR += atomicparsley
@@ -10,7 +10,6 @@
      SUBDIR += devede
      SUBDIR += dvdauthor
      SUBDIR += dvdbackup
-     SUBDIR += dvdcpy
      SUBDIR += dvdstyler
      SUBDIR += ffmpeg-php
      SUBDIR += ffmpeg2theora
@@ -51,7 +50,6 @@
      SUBDIR += p5-AMF-Connection
      SUBDIR += p5-Data-AMF
      SUBDIR += p5-Storable-AMF
-     SUBDIR += pspvc
      SUBDIR += recordmydesktop
      SUBDIR += regionset
      SUBDIR += schroedinger

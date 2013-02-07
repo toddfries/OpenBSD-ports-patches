@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.25 2013/01/08 08:13:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.29 2013/02/03 12:09:27 rpe Exp $
 
 COMMENT =		canvas API for X
-VERSION = 		1.7.4
+VERSION = 		1.7.5
 DISTNAME =		evas-${VERSION}
-REVISION = 		1
+REVISION =		1
 EPOCH =			2
 
-SHARED_LIBS +=  evas                 3.0      # 8.4
+SHARED_LIBS +=  evas                 3.0      # 8.5
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
@@ -21,11 +21,14 @@ WANTLIB += eet eina expat ffi fontconfig freetype fribidi gif
 WANTLIB += glib-2.0 gobject-2.0 gthread-2.0 harfbuzz icudata icule
 WANTLIB += icuuc jpeg m pcre png pthread ssl stdc++ tiff xcb z
 
-MODULES=		devel/gettext
+MODULES=		devel/gettext \
+			x11/e17
+
+MODE17_PURGE_LA =	lib/evas/modules
 
 VMEM_WARNING =	Yes
 
-LIB_DEPENDS =		x11/e17/eet>=3.0 \
+LIB_DEPENDS =		x11/e17/eet>=1.7.5v2 \
 			graphics/libungif \
 			graphics/png \
 			graphics/tiff \
@@ -81,8 +84,5 @@ CONFIGURE_ENV +=	CXXFLAGS="${CFLAGS} -I${LOCALBASE}/include -I${X11BASE}/include
 			CPPFLAGS="${CFLAGS} -I${LOCALBASE}/include -I${X11BASE}/include" \
 			CFLAGS="${CFLAGS} -I${LOCALBASE}/include -I${X11BASE}/include" \
 			LDFLAGS="${LDFLAGS} -L${LOCALBASE}/lib -L${X11BASE}/lib"
-
-FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}
-SUBST_VARS +=		FULLARCH OSREV VERSION
 
 .include <bsd.port.mk>

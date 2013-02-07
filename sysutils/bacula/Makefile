@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2012/11/09 16:39:51 sthen Exp $
+# $OpenBSD: Makefile,v 1.54 2013/01/15 12:46:52 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=		network backup solution (client)
 COMMENT-server=		network backup solution (server)
 COMMENT-bat=		network backup solution (gui-client)
 
-V=			5.2.11
+V=			5.2.12
 DISTNAME=		bacula-$V
 FULLPKGNAME-main=	bacula-client-$V
 FULLPKGPATH-main=	${PKGPATH},-main

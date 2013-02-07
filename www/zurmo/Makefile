@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2012/08/05 22:16:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2013/02/05 16:54:32 ajacoutot Exp $
 
 COMMENT=	customer relationship management (CRM) software
 
-V=		0.7.10
-DISTNAME=	zurmo-stable-${V}.2b36c58196f9
+V=		1.0.20
+DISTNAME=	zurmo-stable-${V}.46dd9c95bfed
 PKGNAME=	zurmo-${V}
-REVISION=	0
+REVISION=	1
 
 CATEGORIES=	www productivity
 
@@ -34,17 +34,16 @@ RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-curl \
 		lang/php/${MODPHP_VERSION},-mysql \
 		lang/php/${MODPHP_VERSION},-pdo_mysql \
 		lang/php/${MODPHP_VERSION},-soap \
-		www/pecl-APC
-
-# XXX needs memcached >= 2.2.0
-#RUN_DEPENDS +=	misc/memcached
+		misc/memcached \
+		www/pecl-APC \
+		www/pecl-memcache
 
 do-extract:
 	mkdir ${WRKDIST}
 	${GZIP_CMD} -dc ${FULLDISTDIR}/${DISTFILES} | ${TAR} xf - -C ${WRKDIST}
 
 do-install:
-	cp -Rp ${WRKDIST} ${INSTDIR}
+	cp -Rp ${WRKDIST}/zurmo ${INSTDIR}
 	# "Remove the api test entry script for production use."
 	# "If this website is in production mode, please remove the app/test.php file."
 	rm ${PREFIX}/zurmo/app/test.php

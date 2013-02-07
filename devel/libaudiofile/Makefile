@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.41 2012/05/01 06:04:48 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.43 2013/02/07 07:54:40 ajacoutot Exp $
 
 COMMENT=	SGI audiofile library clone
 
-V=		0.3.4
+V=		0.3.5
 SUBST_VARS=	V
 
 DISTNAME=	audiofile-${V}
 PKGNAME=	lib${DISTNAME}
+REVISION=	0
 
 SHARED_LIBS +=  audiofile            1.0      # 1.0
 

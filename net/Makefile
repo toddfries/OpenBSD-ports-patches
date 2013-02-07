@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.784 2013/01/11 20:25:08 kili Exp $
+# $OpenBSD: Makefile,v 1.789 2013/02/05 15:09:26 jasper Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -14,6 +14,7 @@
      SUBDIR += amsn
      SUBDIR += amule
      SUBDIR += angst
+     SUBDIR += apache-activemq
      SUBDIR += ap-utils
      SUBDIR += archie
      SUBDIR += argus
@@ -32,6 +33,9 @@
      SUBDIR += bird
      SUBDIR += bird,v6
      SUBDIR += bitlbee
+     SUBDIR += bitlbee,otr
+     SUBDIR += bitlbee,libpurple
+     SUBDIR += bitlbee,otr,libpurple
      SUBDIR += bnc
      SUBDIR += bro
      SUBDIR += btpd
@@ -75,7 +79,6 @@
      SUBDIR += echoping
      SUBDIR += ejabberd
      SUBDIR += ekg
-     SUBDIR += emacs-jabber
      SUBDIR += emesene
      SUBDIR += enet
      SUBDIR += epic4
@@ -177,6 +180,7 @@
      SUBDIR += libdnsres
      SUBDIR += libepc
      SUBDIR += libgadu
+     SUBDIR += libircclient
      SUBDIR += libnet
      SUBDIR += libnice
      SUBDIR += libnids
@@ -598,6 +602,7 @@
      SUBDIR += wol
      SUBDIR += xarchie
      SUBDIR += xchat
+     SUBDIR += xl2tpd
      SUBDIR += xmlrpc-c
      SUBDIR += xmlrpc-epi
      SUBDIR += xorp

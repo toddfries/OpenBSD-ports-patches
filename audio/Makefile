@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.294 2012/11/22 18:36:52 landry Exp $
+# $OpenBSD: Makefile,v 1.298 2013/02/05 14:04:03 zhuk Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -24,6 +24,8 @@
      SUBDIR += cdparanoia
      SUBDIR += celt
      SUBDIR += celt051
+     SUBDIR += chromaprint
+     SUBDIR += clementine
      SUBDIR += cmixer
      SUBDIR += cmt
      SUBDIR += cmu-sphinx3
@@ -78,6 +80,7 @@
      SUBDIR += libdca
      SUBDIR += libgpod
      SUBDIR += libid3tag
+     SUBDIR += liblastfm
      SUBDIR += liblo
      SUBDIR += libmad
      SUBDIR += libmikmod
@@ -101,6 +104,7 @@
      SUBDIR += mcp-plugins
      SUBDIR += metronome
      SUBDIR += midish
+     SUBDIR += mikmod
      SUBDIR += milkytracker
      SUBDIR += mixer.app
      SUBDIR += mkplaylist
@@ -124,6 +128,7 @@
      SUBDIR += mpegaudio
      SUBDIR += mpg123
      SUBDIR += mpg321
+     SUBDIR += mscore
      SUBDIR += mt-daapd
      SUBDIR += multimux
      SUBDIR += musepack

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.46 2012/06/15 08:30:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2013/01/23 21:10:37 zhuk Exp $
 
 COMMENT = 		X11 toolkit, accessibility aids
 CATEGORIES =		x11 x11/kde
@@ -14,11 +14,9 @@ RUN_DEPENDS +=	devel/desktop-file-utils \
 		x11/gtk+2,-guic
 LIB_DEPENDS =	x11/kde/libs3 
 
-FLAVORS =	debug
-
 SEPARATE_BUILD =	flavored
 
-REVISION =	11
+REVISION =	12
 
 WANTLIB = ICE SM X11 Xau Xdmcp Xext Xi Xrender Xtst art_lgpl_2 artsflow \
 	artsflow_idl audiofile c fam glib-2.0 gmodule-2.0 gthread-2.0 idn jpeg \

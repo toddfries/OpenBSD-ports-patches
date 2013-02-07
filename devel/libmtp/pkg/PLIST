@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.8 2012/12/16 11:35:24 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.10 2013/01/26 23:58:36 nigel Exp $
 %%SHARED%%
 @bin bin/mtp-albumart
 @bin bin/mtp-albums
@@ -107,6 +107,9 @@ share/doc/libmtp/html/libusb-glue_8h.html
 share/doc/libmtp/html/libusb-glue_8h_source.html
 share/doc/libmtp/html/mainpage_8h_source.html
 share/doc/libmtp/html/modules.html
+share/doc/libmtp/html/mtpz_8c.html
+share/doc/libmtp/html/mtpz_8h.html
+share/doc/libmtp/html/mtpz_8h_source.html
 share/doc/libmtp/html/music-players_8h.html
 share/doc/libmtp/html/music-players_8h_source.html
 share/doc/libmtp/html/nav_f.png
@@ -168,6 +171,7 @@ share/doc/libmtp/html/struct__PTPUSBEventContainer.html
 share/doc/libmtp/html/struct__PTP__USB.html
 share/doc/libmtp/html/structfilemap__struct.html
 share/doc/libmtp/html/structmtpdevice__list__struct.html
+share/doc/libmtp/html/structmtpz__rsa__struct.html
 share/doc/libmtp/html/structpropertymap__struct.html
 share/doc/libmtp/html/structtagptp__chdk__videosettings.html
 share/doc/libmtp/html/structtext__struct.html

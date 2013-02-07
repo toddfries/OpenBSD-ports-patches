@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.34 2012/09/19 08:15:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.36 2013/01/19 19:08:33 jeremy Exp $
 
 COMMENT=	advanced music player
 
 DISTNAME=	aqualung-0.9beta11
-REVISION=	11
+REVISION=	12
 EPOCH=		0
 CATEGORIES=	audio
 
@@ -35,6 +35,9 @@ MODULES=	devel/gettext \
 
 MODLUA_SA=	Yes
 
+BUILD_DEPENDS=	devel/autoconf/2.63 \
+		devel/automake/1.10
+
 LIB_DEPENDS=	audio/flac \
 		audio/jack \
 		audio/libcdio \
@@ -54,7 +57,10 @@ LIB_DEPENDS=	audio/flac \
 
 RUN_DEPENDS=	devel/desktop-file-utils
 
-CONFIGURE_STYLE=gnu
+AUTOCONF_VERSION= 2.63
+AUTOMAKE_VERSION= 1.10
+
+CONFIGURE_STYLE= gnu
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib " \
 		CFLAGS="${CFLAGS} -DOSS_DEVICE='\"/dev/audio\"'  \
 		-DPTHREAD_MIN_PRIORITY=0 -DPTHREAD_MAX_PRIORITY=31  \
@@ -87,6 +93,10 @@ CONFIGURE_ARGS=	--with-cdda \
 		--without-ifp \
 		--without-oss \
 		--without-pulse
+
+post-patch:
+	@cd ${WRKSRC} && env AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+	    AUTOMAKE_VERSION=${AUTOMAKE_VERSION} ./autogen.sh
 
 post-install:
 	mv ${PREFIX}/share/aqualung/doc ${PREFIX}/share/doc/aqualung

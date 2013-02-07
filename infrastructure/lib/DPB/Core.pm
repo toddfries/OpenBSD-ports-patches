@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Core.pm,v 1.28 2013/01/10 10:26:34 espie Exp $
+# $OpenBSD: Core.pm,v 1.33 2013/01/29 11:16:58 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -31,6 +31,21 @@ sub new
 	if (defined $prop->{stuck}) {
 		$prop->{stuck_timeout} = $prop->{stuck} * $prop->{sf};
 	}
+	if (defined $prop->{mem}) {
+		$prop->{memory} = $prop->{mem};
+	}
+	if (defined $prop->{memory}) {
+		my $_ = $prop->{memory};
+		if (s/K$//) {
+		} elsif (s/M$//) {
+			$_ *= 1024;
+		} elsif (s/G$//) {
+			$_ *= 1024 * 1024;
+		}
+		$prop->{memory} = $_;
+	}
+	$prop->{small} //= 120;
+	$prop->{small_timeout} = $prop->{small} * $prop->{sf};
 #	if ($class->name_is_localhost($name)) {
 #		delete $prop->{wait_timeout};
 #	}
@@ -166,6 +181,12 @@ sub stuck_timeout
 {
 	my $self = shift;
 	return $self->prop->{stuck_timeout};
+}
+
+sub fetch_timeout
+{
+	my $self = shift;
+	return $self->prop->{fetch_timeout};
 }
 
 sub memory
@@ -469,12 +490,18 @@ sub init_cores
 			$job->add_tasks(DPB::Task::Ncpu->new);
 		}
 		if (defined $startup) {
+			my @args = split(/\s+/, $startup);
+			unshift(@args, OpenBSD::Paths->sudo, "-E");
 			$job->add_tasks(DPB::Task::Fork->new(
 			    sub {
 				my $shell = shift;
 				DPB::Task->redirect($logger->logfile("init.".
 				    $core->hostname));
-				$shell->exec($startup);
+				$shell
+				    ->chdir($state->ports)
+				    ->env(PORTSDIR => $state->ports,
+				    	MAKE => $state->make)
+				    ->exec(@args);
 			    }
 			));
 		}
@@ -780,9 +807,6 @@ sub parse_hosts_file
 		}
 		if (defined $prop->{arch} && $prop->{arch} ne $state->arch) {
 			next;
-		}
-		if (defined $prop->{mem}) {
-			$prop->{memory} = $prop->{mem};
 		}
 		if ($host eq 'DEFAULT') {
 			$default = { %$prop };

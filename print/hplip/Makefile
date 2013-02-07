@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.61 2013/01/05 12:53:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.67 2013/01/26 19:38:00 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -17,9 +17,9 @@ PKGNAME-hpcups=	hpcups-${V}
 PKGNAME-libs=	hplip-libs-${V}
 PKGNAME-gui=	hplip-gui-${V}
 
-REVISION-main=	0
+REVISION-main=	6
 REVISION-libs=	0
-REVISION-gui=	0
+REVISION-gui=	2
 REVISION-hpcups=1
 REVISION-hpijs=	0
 
@@ -108,7 +108,6 @@ FAKE_FLAGS=	hplip_confdir=${PREFIX}/share/examples/hplip/hp \
 		hplip_statedir=${PREFIX}/share/examples/hplip/db \
 		mimedir=${PREFIX}/share/examples/hplip/cups \
 		policykit_dbus_etcdir=${PREFIX}/share/examples/hplip/dbus-1/system.d \
-		policykit_dir=${PREFIX}/share/polkit-1/actions/ \
 		policykit_dbus_sharedir=${PREFIX}/share/dbus-1/system-services
 
 CONFIGURE_STYLE=gnu
@@ -145,6 +144,7 @@ pre-configure:
 	perl -pi -e "s,^PACKAGE_NAME=.*,PACKAGE_NAME='HP Linux (& Unix) Imaging and Printing',;" \
 		-e "s,^PACKAGE_STRING=.*,PACKAGE_STRING='HP Linux (& Unix) Imaging and Printing ${V}'," \
 		${WRKSRC}/configure
+	perl -pi -e 's,/usr/share/polkit-1,${LOCALBASE}/share/polkit-1,g' ${WRKSRC}/configure
 	@find ${WRKSRC} -name \*.py | \
 		xargs perl -pi -e 's,(/usr/bin/python|/usr/bin/env python),${MODPY_BIN},g'
 	@perl -pi -e 's,/usr/bin/python,${MODPY_BIN},g' \
@@ -179,6 +179,8 @@ pre-configure:
 		${WRKSRC}/ui/nodevicesform.py
 
 post-install:
+	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/hplip.state \
+		${PREFIX}/share/examples/hplip/db/hplip.state
 	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \
 		${PREFIX}/share/hplip
 	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.la

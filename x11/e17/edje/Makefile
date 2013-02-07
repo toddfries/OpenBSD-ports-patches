@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.29 2013/01/08 08:13:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.31 2013/02/03 12:09:27 rpe Exp $
 
 COMMENT =		complex graphical design & layout library
-DISTNAME =		edje-1.7.4
-
-REVISION = 		1
+DISTNAME =		edje-1.7.5
 EPOCH =			2
 
-SHARED_LIBS +=		edje 3.0	# 8.4
+SHARED_LIBS +=		edje 3.0	# 8.5
 
-# BSD
+# BSD (epp binary GPLv2)
 PERMIT_PACKAGE_CDROM =	Yes
 PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
@@ -23,18 +21,17 @@ WANTLIB += harfbuzz idn icudata icule icuuc jpeg m pcre pthread
 WANTLIB += ssl xcb z ${MODLUA_WANTLIB}
 
 MODULES =		devel/gettext \
-			lang/lua
+			lang/lua \
+			x11/e17
+
+MODE17_MIME_DB =	Yes
 
 USE_LIBTOOL =		Yes
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		misc/shared-mime-info>=0.21
-
-LIB_DEPENDS +=		x11/e17/ecore>=3.0 \
-			x11/e17/embryo>=3.0 \
-			x11/e17/eio \
-			${MODLUA_LIB_DEPENDS} \
-			devel/fribidi
+LIB_DEPENDS +=		devel/fribidi \
+			x11/e17/eio>=1.7.5 \
+			x11/e17/embryo>=1.7.5v2 \
+			${MODLUA_LIB_DEPENDS}
 
 CONFIGURE_ARGS +=	--disable-doc
 # perf ?

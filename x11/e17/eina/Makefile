@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2013/01/08 08:13:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2013/01/28 08:17:15 rpe Exp $
 
 COMMENT =		EFL API for data types
-VERSION = 		1.7.4
+VERSION = 		1.7.5
 DISTNAME =		eina-${VERSION}
-REVISION = 		1
 EPOCH=			1
 
-SHARED_LIBS +=  eina                 3.0      # 8.4
+SHARED_LIBS +=  eina                 3.0      # 8.5
 
 # LGPL v2.1
 PERMIT_PACKAGE_CDROM =	Yes
@@ -47,9 +46,6 @@ CONFIGURE_ARGS =	--disable-doc \
 
 CONFIGURE_ENV =		CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 			LDFLAGS="${LDFLAGS} -L${LOCALBASE}/lib"
-
-FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}
-SUBST_VARS +=		FULLARCH VERSION
 
 REGRESS_TARGET = 	check-local
 

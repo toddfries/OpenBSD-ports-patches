@@ -1,4 +1,4 @@
-$OpenBSD: patch-smoke_qt_generate_pl_in,v 1.3 2005/07/28 08:47:40 espie Exp $
+$OpenBSD: patch-smoke_qt_generate_pl_in,v 1.5 2013/01/15 17:31:18 zhuk Exp $
 --- smoke/qt/generate.pl.in.orig	Wed Jul 20 11:59:51 2005
 +++ smoke/qt/generate.pl.in	Tue Jul 26 11:44:55 2005
 @@ -16,7 +16,6 @@ my $finaloutdir = $here;

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2012/12/09 07:29:57 brad Exp $
+# $OpenBSD: Makefile,v 1.21 2013/01/23 21:40:07 zhuk Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		CD/DVD creator
 
 DISTNAME =		k3b-1.0.4
-REVISION=		14
+REVISION=		16
 CATEGORIES =		multimedia
 
 SHARED_LIBS =		k3b	0.0	# 3.0
@@ -20,17 +20,17 @@ PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += DCOP FLAC FLAC++ ICE SM X11 Xext Xfixes Xrender Xt
-WANTLIB += art_lgpl_2 artsc avcodec avformat avutil bz2 c dvdread
-WANTLIB += expat fontconfig freetype gsm idn jpeg kdecore kdefx kdesu
-WANTLIB += kdeui kio kparts kwalletclient m mad mp3lame mpcdec ogg
-WANTLIB += orc-0.4 png pthread samplerate schroedinger-1.0 sndfile
-WANTLIB += speex stdc++ tag theoradec theoraenc util vorbis vorbisenc
-WANTLIB += vorbisfile vpx x264 xcb xvidcore z
+WANTLIB += art_lgpl_2 artsc avcodec avformat avutil bz2 c crypto
+WANTLIB += dvdread expat fam fontconfig freetype gsm idn jpeg kdecore
+WANTLIB += kdefx kdesu kdeui kio kparts kwalletclient m mad mp3lame
+WANTLIB += mpcdec ogg orc-0.4 png pthread samplerate schroedinger-1.0
+WANTLIB += sndfile speex ssl stdc++ tag theoradec theoraenc util vorbis
+WANTLIB += vorbisenc vorbisfile vpx x264 xcb xvidcore z
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=k3b/}
 EXTRACT_SUFX =		.tar.bz2
 
-MODULES =		x11/qt3 devel/gettext
+MODULES =		x11/kde devel/gettext
 
 RUN_DEPENDS =		sysutils/cdrtools \
 			sysutils/dvd+rw-tools \
@@ -50,17 +50,16 @@ LIB_DEPENDS =		audio/flac \
 			audio/musepack \
 			audio/taglib \
 			devel/libdvdread \
-			graphics/ffmpeg>=20100512 \
+			graphics/ffmpeg>=20121026 \
 			graphics/jpeg \
-			x11/kde/arts3 \
 			x11/kde/libs3
 
-USE_GMAKE =		Yes
 USE_LIBTOOL =		Yes
 LIBTOOL_FLAGS +=	--tag=disable-static
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	--with-qt-dir=${MODQT_QTDIR} \
 			${MODQT_CONFIGURE_ARGS} \
+			${MODKDE_CONFIGURE_ARGS} \
 			--without-musicbrainz \
 			--without-resmgr \
 			--without-hal \

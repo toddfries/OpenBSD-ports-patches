@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.73 2012/12/26 17:47:56 naddy Exp $
-
-BROKEN=		unreliable build, fails in bulk builds
+# $OpenBSD: Makefile,v 1.77 2013/01/27 13:52:35 sthen Exp $
 
 COMMENT=	cross platform, open source .NET developement framework
 
 DISTNAME=	mono-2.10.9
-REVISION=	0
+REVISION=	2
 
 CATEGORIES=	lang devel
 
@@ -52,7 +50,8 @@ WANTLIB +=	gc
 AUTOCONF_VERSION=2.68
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib" \
-		CPPFLAGS="-I${LOCALBASE}/include"
+		CPPFLAGS="-I${LOCALBASE}/include" \
+		ac_cv_header_execinfo_h=no
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-gc=boehm \
 		--enable-quiet-build=no \

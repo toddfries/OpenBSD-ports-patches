@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.126 2012/11/14 08:09:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.128 2013/01/24 10:40:56 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	GNOME panel
 
 GNOME_PROJECT=	gnome-panel
 GNOME_VERSION=	3.6.2
+REVISION=	1
 
 SHARED_LIBS=	panel-applet-4            1.1 # 1.1
 
@@ -55,16 +56,12 @@ LIB_DEPENDS=	databases/evolution-data-server>=3.6.0p3 \
 		x11/gnome/libgweather>=3.6.0 \
 		x11/gnome/menus>=3.2.0 \
 		x11/gnome/librsvg
-RUN_DEPENDS=	x11/gnome/icon-theme-symbolic
 
 # notification-area-applet
 RUN_DEPENDS +=	sysutils/notification-daemon
 
 # "Lock Screen"
 RUN_DEPENDS+=	x11/gnome/screensaver
-
-# yelp.desktop menu entry (from yelp: OnlyShowIn=GNOME;)
-RUN_DEPENDS+=	x11/gnome/user-docs
 
 MODGNOME_TOOLS= goi yelp
 MODGNOME_DESKTOP_FILE=	Yes

@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1203 2013/01/07 17:46:14 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1209 2013/02/05 11:22:50 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -76,12 +76,21 @@ BULK ?= Auto
 RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
+
+.if ${USE_SYSTRACE:L} == "yes"
+WRKOBJDIR_MFS ?!= readlink -fn /tmp/pobj
+.else
+WRKOBJDIR_MFS ?= /tmp/pobj
+.endif
+
+USE_MFS ?= No
 .if ${USE_SYSTRACE:L} == "yes"
 WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/pobj
 .else
 WRKOBJDIR ?= ${PORTSDIR}/pobj
 .endif
 FAKEOBJDIR ?=
+
 BULK_TARGETS ?=
 BULK_DO ?=
 CHECK_LIB_DEPENDS ?= No
@@ -156,8 +165,13 @@ ERRORS += "Fatal: building ports requires correctly installed X11"
 # local path locations
 .include "${PORTSDIR}/infrastructure/mk/pkgpath.mk"
 
+.if ${USE_MFS:L} == "yes"
+WRKOBJDIR_${PKGPATH} ?= ${WRKOBJDIR_MFS}
+.else
 WRKOBJDIR_${PKGPATH} ?= ${WRKOBJDIR}
+.endif
 FAKEOBJDIR_${PKGPATH} ?= ${FAKEOBJDIR}
+
 BULK_${PKGPATH} ?= ${BULK}
 BULK_TARGETS_${PKGPATH} ?= ${BULK_TARGETS}
 BULK_DO_${PKGPATH} ?= ${BULK_DO}
@@ -228,25 +242,25 @@ clean = ${_internal-clean}
 # need to go through an extra var because clean is set in stone,
 # on the cmdline.
 _clean = ${clean}
-.if empty(_clean) || ${_clean:L} == "depends"
+.if empty(_clean) || ${_clean} == "depends"
 _clean += work
 .endif
-.if ${_clean:L:Mall}
+.if ${_clean:Mall}
 _clean += work build packages plist
 .endif
 .if ${CLEANDEPENDS_${PKGPATH}:L} == "yes"
 _clean += depends
 .endif
-.if ${_clean:L:Mwork} || ${_clean:L:Mbuild}
+.if ${_clean:Mwork} || ${_clean:Mbuild}
 _clean += fake
 .endif
-.if ${_clean:L:Mforce}
+.if ${_clean:Mforce}
 _clean += -f
 .endif
 # check that clean is clean
 _okay_words = depends work fake -f flavors dist install sub packages package \
 	bulk force plist build all
-.for _w in ${_clean:L}
+.for _w in ${_clean}
 .  if !${_okay_words:M${_w}}
 ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
 .  endif
@@ -379,7 +393,7 @@ CONFIGURE_ENV += CCACHE_DIR=${CCACHE_DIR}
 BUILD_DEPENDS += devel/ccache
 .endif
 
-ALL_FAKE_FLAGS=	${MAKE_FLAGS} ${DESTDIRNAME}=${WRKINST} ${FAKE_FLAGS}
+ALL_FAKE_FLAGS=	${MAKE_FLAGS:N-j[0-9]*} ${DESTDIRNAME}=${WRKINST} ${FAKE_FLAGS}
 
 
 PARALLEL_BUILD ?= Yes
@@ -686,17 +700,20 @@ WRKINST ?= ${WRKDIR}/fake-${ARCH}${_FLAVOR_EXT2}
 .endif
 
 .if ${SEPARATE_BUILD:L:Mflavored}
-OLD_WRKDIR_NAME = w-${PKGNAME}
+_WRKDIR_STEM = ${PKGNAME}
 .else
-OLD_WRKDIR_NAME = w-${PKGNAME}${_FLAVOR_EXT2}
+_WRKDIR_STEM = ${PKGNAME}${_FLAVOR_EXT2}
 .endif
 
+OLD_WRKDIR_NAME = w-${_WRKDIR_STEM}
+
+_WRKDIRS = ${.CURDIR}/${OLD_WRKDIR_NAME}
+
 .if !empty(WRKOBJDIR_${PKGPATH})
-.  if ${SEPARATE_BUILD:L:Mflavored}
-WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}
-.  else
-WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}${_FLAVOR_EXT2}
-.  endif
+WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${_WRKDIR_STEM}
+_WRKDIRS += ${WRKOBJDIR_${PKGPATH}}/${_WRKDIR_STEM}
+_WRKDIRS += ${WRKOBJDIR}/${_WRKDIR_STEM}
+_WRKDIRS += ${WRKOBJDIR_MFS}/${_WRKDIR_STEM}
 .else
 WRKDIR ?= ${.CURDIR}/${OLD_WRKDIR_NAME}
 .endif
@@ -800,6 +817,7 @@ PKGFILE${_S} = ${_PKG_REPO}${_PKGFILE${_S}}
 .if empty(SUBPACKAGE) || ${SUBPACKAGE} == "-"
 FULLPKGPATH ?= ${PKGPATH}${FLAVOR_EXT:S/-/,/g}
 FULLPKGPATH- = ${FULLPKGPATH}
+_FULLPKGPATH = ${PKGPATH}${_FLAVOR_EXT2:S/-/,/g}
 _ALLPKGPATHS = ${FULLPKGPATH}
 .else
 _ALLPKGPATHS = ${PKGPATH}${FLAVOR_EXT:S/-/,/g}
@@ -808,6 +826,7 @@ FULLPKGPATH${_S} ?= ${PKGPATH},${_S}${FLAVOR_EXT:S/-/,/g}
 _ALLPKGPATHS += ${FULLPKGPATH${_S}}
 .  endfor
 FULLPKGPATH = ${FULLPKGPATH${SUBPACKAGE}}
+_FULLPKGPATH = ${PKGPATH},${SUBPACKAGE}${_FLAVOR_EXT2:S/-/,/g}
 .endif
 
 # A few aliases for *-install targets
@@ -2817,32 +2836,36 @@ ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
 # Cleaning up
 
 _internal-clean:
-.if ${_clean:L:Mdepends} && ${_CLEANDEPENDS:L} == "yes"
+.if ${_clean:Mdepends} && ${_CLEANDEPENDS:L} == "yes"
 	@PKGPATH=${PKGPATH} ${MAKE} all-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
 		eval $$toset ${MAKE} _CLEANDEPENDS=No clean; \
 	done
 .endif
 	@${ECHO_MSG} "===>  Cleaning for ${FULLPKGNAME${SUBPACKAGE}}"
-.if ${_clean:L:Mfake}
+.if ${_clean:Mfake}
 	@if cd ${WRKINST} 2>/dev/null; then ${SUDO} rm -rf ${WRKINST}; fi
 .endif
-.if ${_clean:L:Mwork} || (${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} == "no")
-.  if ${_clean:L:Mflavors}
+.if ${_clean:Mwork} || (${_clean:Mbuild} && ${SEPARATE_BUILD:L} == "no")
+.  if ${_clean:Mflavors}
 	@for i in ${.CURDIR}/w-*; do \
 		if [ -L $$i ]; then ${SUDO} rm -rf `readlink $$i`; fi; \
 		${SUDO} rm -rf $$i; \
 	done
 .  endif
-	@if [ -L ${WRKDIR} ]; then rm -rf `readlink ${WRKDIR}`; fi
-	@rm -rf ${WRKDIR}
+.  for l in ${_WRKDIRS}
+.    if "$l" != ""
+	@if [ -L $l ]; then rm -rf `readlink $l`; fi
+	@if [ -e $l ]; then rm -rf $l; fi
+.    endif
+.  endfor
 .  if !empty(WRKDIR_LINKNAME)
 	@if [ -L ${WRKDIR_LINKNAME} ]; then rm -f ${.CURDIR}/${WRKDIR_LINKNAME}; fi
 .  endif
-.elif ${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} != "no"
+.elif ${_clean:Mbuild} && ${SEPARATE_BUILD:L} != "no"
 	@rm -rf ${WRKBUILD} ${_CONFIGURE_COOKIE} ${_BUILD_COOKIE}
 .endif
-.if ${_clean:L:Mdist}
+.if ${_clean:Mdist}
 	@${ECHO_MSG} "===>  Dist cleaning for ${FULLPKGNAME${SUBPACKAGE}}"
 	@if cd ${DISTDIR} 2>/dev/null; then \
 		rm -f ${MAKESUMFILES}; \
@@ -2851,22 +2874,22 @@ _internal-clean:
 	-@rmdir ${FULLDISTDIR}
 .  endif
 .endif
-.if ${_clean:L:Minstall}
-.  if ${_clean:L:Msub}
+.if ${_clean:Minstall}
+.  if ${_clean:Msub}
 	-${SUDO} ${_PKG_DELETE} ${PKGNAMES}
 .  else
 	-${SUDO} ${_PKG_DELETE} ${FULLPKGNAME${SUBPACKAGE}}
 .  endif
 .endif
-.if ${_clean:L:Mpackages} || ${_clean:L:Mpackage} && ${_clean:L:Msub}
+.if ${_clean:Mpackages} || ${_clean:Mpackage} && ${_clean:Msub}
 	rm -f ${_PACKAGE_COOKIES} ${_UPDATE_COOKIES}
-.elif ${_clean:L:Mpackage}
+.elif ${_clean:Mpackage}
 	rm -f ${_PACKAGE_COOKIES${SUBPACKAGE}} ${_UPDATE_COOKIE${SUBPACKAGE}}
 .endif
-.if ${_clean:L:Mbulk}
+.if ${_clean:Mbulk}
 	rm -f ${_BULK_COOKIE}
 .endif
-.if ${_clean:L:Mplist}
+.if ${_clean:Mplist}
 .  for _d in ${PLIST_DB:S/:/ /}
 .    for _p in ${PKGNAMES}
 	rm -f ${_d}/${_p}
@@ -3123,12 +3146,12 @@ _recurse-run-dir-depends:
 run-dir-depends:
 .if !empty(_RUN_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q -e "r|${FULLPKGPATH}|" -e "a|${FULLPKGPATH}" $${_DEPENDS_FILE}; then \
-		echo "r|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-run-dir-depends; \
+	if ! fgrep -q -e "r|${_FULLPKGPATH}|" -e "a|${_FULLPKGPATH}" $${_DEPENDS_FILE}; then \
+		echo "r|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-run-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 # recursively build a list of dirs for package regression, ready for tsort
@@ -3149,12 +3172,12 @@ _recurse-regress-dir-depends:
 regress-dir-depends:
 .if !empty(_REGRESS_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q -e "R|${FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
-		echo "R|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-regress-dir-depends; \
+	if ! fgrep -q -e "R|${_FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
+		echo "R|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-regress-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 # recursively build a list of dirs for package building, ready for tsort
@@ -3191,23 +3214,23 @@ _build-dir-depends:
 build-dir-depends:
 .if !empty(_BUILD_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q -e "b|${FULLPKGPATH}|" -e "a|${_dir}|" $${_DEPENDS_FILE}; then \
-		echo "b|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _build-dir-depends; \
+	if ! fgrep -q -e "b|${_FULLPKGPATH}|" -e "a|${_dir}|" $${_DEPENDS_FILE}; then \
+		echo "b|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _build-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 all-dir-depends:
 .if !empty(_BUILD_DEP) || !empty(_RUN_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q "|${FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
-		echo "|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-all-dir-depends; \
+	if ! fgrep -q "|${_FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
+		echo "|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-all-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 # simpler list of package depends, no need to tsort, no duplicates
@@ -3226,7 +3249,7 @@ _recurse-show-run-depends:
 show-run-depends:
 .if !empty(_RUN_DEP)
 	@${_depfile_fragment}; \
-	echo "|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+	echo "|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
 	for d in ${_RUN_DEP}; do \
 		fgrep -q -e "|$$d|" $${_DEPENDS_FILE} && continue; \
 		echo "$$d"; \

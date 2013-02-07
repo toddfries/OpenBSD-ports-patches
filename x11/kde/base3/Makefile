@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.112 2012/12/17 18:42:13 naddy Exp $
+# $OpenBSD: Makefile,v 1.115 2013/01/23 21:10:37 zhuk Exp $
 
 COMMENT-main = 		K Desktop Environment, basic applications
 COMMENT-samba =		K Desktop Environment, samba support
@@ -23,7 +23,6 @@ SHARED_LIBS +=	kasbar               2.0      # .1.0
 SHARED_LIBS +=	kfontinst            1.0      # .0.0
 
 MULTI_PACKAGES =	-main -samba
-FLAVORS =		debug
 
 MODULES =	x11/kde devel/gettext
 
@@ -49,7 +48,7 @@ LIB_DEPENDS-samba = ${LIB_DEPENDS} \
 		net/samba>=3
 
 
-REVISION-main =		21
+REVISION-main =		23
 WANTLIB-main = ${WANTLIB} GL GLU Half Iex IlmImf IlmThread Imath Xcomposite \
 	Xcursor Xdamage Xdamage Xfixes Xfixes Xft Xi Xinerama Xmu Xrandr Xss \
 	Xt Xtst Xxf86misc Xxf86vm Xxf86vm asn1 audiofile c com_err crypto drm \

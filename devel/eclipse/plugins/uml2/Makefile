@@ -1,17 +1,15 @@
-# $OpenBSD: Makefile,v 1.8 2011/09/11 16:32:27 fgsch Exp $
+# $OpenBSD: Makefile,v 1.10 2013/02/04 13:13:39 jasper Exp $
 
 COMMENT=		UML diagram framework for Eclipse
 
 V=			2.0.3
 DISTNAME=		uml2-SDK-${V}
 PKGNAME=		eclipse-plugin-uml2-sdk-${V}
-CATEGORIES=		devel/eclipse/plugins java
+CATEGORIES+=		java
 
 HOMEPAGE=		http://www.eclipse.org/uml2/
 
 MAINTAINER=		Kurt Miller <kurt@openbsd.org>
-
-EXTRACT_SUFX=           .zip
 
 # Common Public License Version 1.0 (http://www.eclipse.org/legal/cpl-v10.html)
 PERMIT_PACKAGE_CDROM=	commercial distribution defend and indemnify clauses

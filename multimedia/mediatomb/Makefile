@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.15 2012/11/05 21:52:44 merdely Exp $
+# $OpenBSD: Makefile,v 1.17 2013/01/27 14:13:30 brad Exp $
 
 COMMENT =	UPnP media server
 
 VER =		0.12.1
 DISTNAME =	mediatomb-${VER}
-REVISION =	9
+REVISION =	11
 
 CATEGORIES =	multimedia
 
@@ -21,27 +21,27 @@ WANTLIB +=	m magic mozjs mp4v2 pthread sqlite3 ssl stdc++ tag z
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=mediatomb/}
 
-MODULES =	converters/libiconv
+MODULES =	devel/gettext
 
 LIB_DEPENDS =	audio/taglib \
 		devel/libmagic \
+		graphics/ffmpeg>=20121026 \
 		graphics/ffmpegthumbnailer \
 		graphics/libexif \
-		lang/spidermonkey>=1.9 \
+		lang/spidermonkey>=1.9v0 \
 		net/curl \
 		multimedia/libmp4v2
 
 CONFIGURE_STYLE =	autoconf
-CONFIGURE_ARGS +=	--disable-inotify \
+AUTOCONF_VERSION =	2.63
+CONFIGURE_ARGS =	--disable-inotify \
 			--disable-lastfmlib \
-			--disable-mysql \
-			PTHREAD_LIBS="-pthread"
+			--disable-mysql
 # Add "-I${WRKSRC}/src" to make mediatomb find its own dictionary.h first.
 CONFIGURE_ENV =		CPPFLAGS="-I${WRKSRC}/src -I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
-			ac_cv_header_execinfo_h=no
-AUTOCONF_VERSION =	2.63
-USE_GROFF =	Yes
+			ac_cv_header_execinfo_h=no \
+			ac_cv_header_lwres_netdb_h=no
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mediatomb/

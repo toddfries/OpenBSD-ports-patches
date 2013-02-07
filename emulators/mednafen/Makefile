@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2012/10/20 17:35:18 edd Exp $
+# $OpenBSD: Makefile,v 1.8 2013/01/26 15:53:20 bcallah Exp $
 
 COMMENT =	emulates numerous game consoles
 
-V =		0.9.26
+V =		0.9.28
 DISTNAME =	mednafen-${V}-wip
 PKGNAME =	mednafen-${V}
+REVISION =	0
 
 CATEGORIES =	emulators games
 HOMEPAGE =	http://mednafen.sourceforge.net/
@@ -23,6 +24,7 @@ EXTRACT_SUFX =	.tar.bz2
 MODULES =	devel/gettext
 
 WANTLIB += SDL c cdio m pthread sndfile sndio stdc++ usbhid z
+WANTLIB += FLAC ogg vorbis vorbisenc
 
 USE_GMAKE =	Yes
 

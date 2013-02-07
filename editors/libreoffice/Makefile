@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.79 2013/01/03 21:03:14 robert Exp $
+# $OpenBSD: Makefile,v 1.82 2013/02/05 10:39:29 ajacoutot Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -35,7 +35,7 @@ MASTER_SITES0=	http://hg.services.openoffice.org/binaries/ \
 		http://ooo.itc.hu/oxygenoffice/download/libreoffice/ \
 		http://dev-www.libreoffice.org/src/
 
-TAR=		/usr/local/bin/gtar
+TAR=		${LOCALBASE}/bin/gtar
 EDISTFILES=	libreoffice-core-${VERSION}.tar.xz
 
 COMPONENTS=	binfilter dictionaries help translations
@@ -219,6 +219,7 @@ AUTOMAKE_VERSION=	1.12
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
 		QTINC="${MODQT_INCDIR}" QTDIR="${MODQT_LIBDIR}" \
+		KDEDIR="${LOCALBASE}" \
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
 

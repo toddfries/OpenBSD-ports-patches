@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2012/10/10 09:49:20 rpe Exp $
+# $OpenBSD: Makefile,v 1.21 2013/01/27 11:40:22 espie Exp $
 
 # NOTE for FLAVOR=src
 # - you can have up-to-date ${BSDSRCDIR}/distrib/sets/lists 
@@ -17,6 +17,7 @@ COMMENT =		database of packages for use with locate(1)
 # locate data is NOT MI, unfortunately
 # PKG_ARCH = ${ARCH}....
 DISTNAME =		pkglocatedb-0.6
+REVISION =		0
 DISTFILES =
 
 CATEGORIES =		databases
@@ -26,16 +27,13 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
-BUILD_DEPENDS =	databases/sqlports,-compact>=2.3
 FLAVORS = src
 FLAVOR ?=
 
-ARGS = -a -p ${PORTSDIR}
 .if ${FLAVOR:Msrc}
-ARGS += -C -s ${BSDSRCDIR} -x ${XSRCDIR}
-
+ARGS = -u -C -s ${BSDSRCDIR} -x ${XSRCDIR}
+USE_X11 = Yes
 .  include <bsd.own.mk>
-
 PKGLOCATEDB_WANTANONCVS ?= No
 .  if ${PKGLOCATEDB_WANTANONCVS:L} == "yes"
 PKGLOCATEDB_CVSROOT ?= anoncvs@anoncvs1.ca.openbsd.org:/cvs
@@ -60,7 +58,16 @@ post-extract:
 		exit 1; \
 	fi
 .  endif
-.endif
+
+# we depend on the other flavor for the build
+BUILD_DEPENDS = databases/pkglocatedb
+do-build:
+
+.else
+BUILD_DEPENDS =	databases/sqlports,-compact>=2.3
+
+ARGS = -a -p ${PORTSDIR}
+
 
 do-build: 
 	@if test -s ${WRKBUILD}/ouch; then \
@@ -68,8 +75,11 @@ do-build:
 		exit 1; \
 	fi
 
+.endif
+
 do-install:
 	${INSTALL_DATA} ${WRKBUILD}/pkglocatedb ${PREFIX}/share
+	${INSTALL_MAN} ${FILESDIR}/pkg_locate.1 ${PREFIX}/man/man1
 	${SUBST_CMD} -o root -g bin -c ${FILESDIR}/pkglocate ${PREFIX}/bin/pkg_locate
 	chmod ${BINMODE} ${PREFIX}/bin/pkg_locate
 	ln -s ${TRUEPREFIX}/bin/pkg_locate ${PREFIX}/bin/pkglocate
@@ -83,5 +93,11 @@ do-build: ${WRKBUILD}/pkglocatedb
 
 ${WRKBUILD}/subdirlist:
 	sqlite3 ${LOCALBASE}/share/sqlports-compact 'select min(paths.fullpkgpath) from paths join ports on paths.id=ports.fullpkgpath where ports.static_plist=1 group by fullpkgname order by paths.fullpkgpath' >$@
+.if ${FLAVOR:Msrc}
+${WRKBUILD}/pkglocatedb:
+	${LOCALBASE}/bin/pkg_locate : | \
+		${SUDO} pkg_mklocatedb ${ARGS} >$@.tmp && mv $@.tmp $@
+.else
 ${WRKBUILD}/pkglocatedb: ${WRKBUILD}/subdirlist
-	SUBDIRLIST=${WRKBUILD}/subdirlist REPORT_PROBLEM_LOGFILE=${WRKBUILD}/ouch ${SUDO} pkg_mklocatedb ${ARGS} > $@.tmp && mv $@.tmp $@
+	unset REPORT_PROBLEM; SUBDIRLIST=${WRKBUILD}/subdirlist REPORT_PROBLEM_LOGFILE=${WRKBUILD}/ouch ${SUDO} pkg_mklocatedb ${ARGS} > $@.tmp && mv $@.tmp $@
+.endif

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2013/01/05 18:27:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.42 2013/01/26 15:53:20 bcallah Exp $
 
 # XXX
 # fix autospawn lock (patch-src_daemon_main_c)
@@ -21,7 +21,7 @@ COMMENT=		cross-platform networked sound server
 VERSION=		3.0
 DISTNAME=		pulseaudio-${VERSION}
 EXTRACT_SUFX=		.tar.xz
-REVISION=		2
+REVISION=		3
 
 SHARED_LIBS +=  pulse                2.0      # .15.3
 SHARED_LIBS +=  pulse-simple         0.0      # .0.3
@@ -42,7 +42,7 @@ PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += ICE SM X11 X11-xcb Xext Xi Xtst c crypto execinfo gdbm
 WANTLIB += glib-2.0 json ltdl m pcre pthread sndfile sndio speexdsp
-WANTLIB += ssl xcb
+WANTLIB += ssl xcb FLAC ogg vorbis vorbisenc
 
 MASTER_SITES=		http://freedesktop.org/software/pulseaudio/releases/
 TAR=			${LOCALBASE}/bin/gtar
@@ -68,8 +68,7 @@ LIB_DEPENDS=		audio/libsndfile \
 			devel/libexecinfo \
 			devel/libtool,-ltdl
 
-AUTOCONF_VERSION=	2.69
-CONFIGURE_STYLE=	autoconf
+CONFIGURE_STYLE=	gnu
 
 # We only enable the strict minimum for basic volume control support.
 # sndiod(1) is the default sound server on OpenBSD and pulseaudio is only
@@ -115,7 +114,7 @@ FAKE_FLAGS=		pulseconfdir="${PREFIX}/share/examples/pulseaudio/pulse" \
 			sysconfdir="${PREFIX}/share/examples/pulseaudio"
 
 ### SNDIO ###
-CONFIGURE_STYLE=	gnu
+AUTOCONF_VERSION=	2.69
 AUTOMAKE_VERSION=	1.12
 BUILD_DEPENDS +=	${MODGNU_AUTOMAKE_DEPENDS} \
 			${MODGNU_AUTOCONF_DEPENDS}

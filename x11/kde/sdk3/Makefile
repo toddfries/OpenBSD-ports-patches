@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.56 2012/06/15 08:30:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.59 2013/01/23 21:10:38 zhuk Exp $
 
 COMMENT-main = 		K Desktop Environment, developer extensions
 COMMENT-svn = 		K Desktop Environment, svn extensions
@@ -7,7 +7,7 @@ VERSION =		3.5.10
 DISTNAME =		kdesdk-${VERSION}
 
 PKGNAME-main =		${DISTNAME}
-REVISION-main =		9
+REVISION-main =		11
 PKGNAME-svn =		kdesvn-${VERSION}
 REVISION-svn =		9
 
@@ -35,7 +35,6 @@ RUN_DEPENDS-svn =	x11/gtk+2,-guic
 LIB_DEPENDS-svn = 	${LIB_DEPENDS} \
 			devel/subversion
 
-FLAVORS =		debug
 SEPARATE_BUILD =	flavored
 
 WANTLIB	= ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c fam idn jpeg \

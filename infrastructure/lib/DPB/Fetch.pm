@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.45 2013/01/10 12:00:38 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.49 2013/02/02 09:02:11 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -64,15 +64,6 @@ sub new
 	my ($class, $file, $dir, @r) = @_;
 	my $full = (defined $dir) ? join('/', $dir->string, $file) : $file;
 	$cache->{$full} //= $class->create($full, $file, @r);
-}
-
-sub dump
-{
-	my ($class, $logger) = @_;
-	my $log = $logger->create("fetch/distfiles");
-	for my $f (sort map {$_->{name}} grep {defined $_} values %$cache) {
-		print $log $f, "\n";
-	}
 }
 
 sub logname
@@ -492,6 +483,7 @@ sub expire_old
 	File::Find::find(sub {
 		if (-d $_ && 
 		    ($File::Find::name eq "$distdir/by_cipher" || 
+		     $File::Find::name eq "$distdir/list" ||
 		    $File::Find::name eq "$distdir/build-stats")) {
 			$File::Find::prune = 1;
 			return;
@@ -592,9 +584,9 @@ sub build_distinfo
 			my $file = &$build($d);
 			$files->{$file} = $file if defined $file;
 		}
-		for my $d (keys %{$info->{SUPDISTFILES}}) {
-			my $file = &$build($d);
-			if ($fetch_only) {
+		if ($fetch_only) {
+			for my $d (keys %{$info->{SUPDISTFILES}}) {
+				my $file = &$build($d);
 				$files->{$file} = $file if defined $file;
 			}
 		}
@@ -832,6 +824,15 @@ sub watched
 	my ($self, $current, $core) = @_;
 	my $diff = $self->{watched}->check_change($current);
 	my $msg = $self->{watched}->change_message($diff);
+	my $to = $core->fetch_timeout;
+	if (defined $to) {
+		if ($diff > $to) {
+			$self->{stuck} =
+			    "KILLED: $self->{current} stuck at $msg";
+			kill 9, $core->{pid};
+			return $self->{stuck};
+		}
+	}
 	return $msg;
 }
 

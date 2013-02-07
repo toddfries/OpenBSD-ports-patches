@@ -1,13 +1,17 @@
-# $OpenBSD: Makefile,v 1.25 2012/10/08 08:52:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2013/01/17 19:52:14 robert Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Ruby library for retrieving facts from operating systems
 
-VERSION=	1.6.13
+VERSION=	1.6.17
+REVISION=	1
+
 DISTNAME=	facter-${VERSION}
 PKGNAME=	ruby-${DISTNAME}
 CATEGORIES=	sysutils
+
+MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 HOMEPAGE=	http://reductivelabs.com/projects/facter/
 MASTER_SITES=	http://reductivelabs.com/downloads/facter/

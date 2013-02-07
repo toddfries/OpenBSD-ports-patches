@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.20 2012/10/28 23:31:50 kili Exp $
+# $OpenBSD: Makefile,v 1.22 2013/01/24 09:44:18 dcoppa Exp $
+
+# ghc: out of memory (requested 1048576 bytes)
+VMEM_WARNING =	Yes
 
 COMMENT =		third party xmonad extensions
 
-DISTNAME =		xmonad-contrib-0.10
-REVISION =		2
+DISTNAME =		xmonad-contrib-0.11
 CATEGORIES =		x11
 HOMEPAGE =		http://www.xmonad.org/
 

@@ -1,18 +1,16 @@
-# $OpenBSD: Makefile,v 1.11 2011/09/16 09:24:49 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/02/04 13:13:39 jasper Exp $
 
 COMMENT=		graphical editing environment for eclipse
 
 V=			3.2.2
 DISTNAME=		GEF-SDK-${V}
 PKGNAME=		eclipse-plugin-gef-sdk-${V}
-CATEGORIES=		devel/eclipse/plugins java
+CATEGORIES+=		java
 REVISION =		0
 
 HOMEPAGE=		http://www.eclipse.org/gef/
 
 MAINTAINER=		Kurt Miller <kurt@openbsd.org>
-
-EXTRACT_SUFX=           .zip
 
 # Eclipse Public License Version 1.0 (http://www.eclipse.org/legal/epl-v10.html)
 PERMIT_PACKAGE_CDROM=	commercial distribution defend and indemnify clauses

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.20 2011/11/02 09:57:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2013/01/23 21:30:18 zhuk Exp $
 
 COMMENT =		kde image plugins api
 CATEGORIES =		graphics devel x11 x11/kde
 V =			0.1.6
 DISTNAME =		libkipi-$V
-REVISION =		3
+REVISION =		4
 SHARED_LIBS +=	kipi                 1.4      # .2.0
 EXTRACT_SUFX =		.tar.bz2
 HOMEPAGE =		http://extragear.kde.org/apps/kipi/
@@ -20,7 +20,6 @@ WANTLIB =		ICE Xrender SM Xext X11 util m z \
 WANTLIB += GL Xcursor Xdamage Xfixes Xft Xi Xinerama Xmu Xrandr
 WANTLIB += Xt Xxf86vm drm expat fontconfig freetype lcms mng
 
-FLAVORS =	debug
 MODULES =	x11/kde devel/gettext
 
 USE_LIBTOOL =		Yes

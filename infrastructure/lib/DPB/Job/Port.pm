@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.77 2013/01/11 20:11:54 espie Exp $
+# $OpenBSD: Port.pm,v 1.99 2013/02/07 06:46:58 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -81,7 +81,7 @@ sub run
 		push(@args, "MAKE_JOBS=$job->{parallel}");
 	}
 	if ($job->{special}) {
-		push(@args, "WRKOBJDIR=/tmp/ports");
+		push(@args, "USE_MFS=Yes");
 	}
 	if ($builder->{fetch}) {
 		push(@args, "NO_CHECKSUM=Yes");
@@ -121,7 +121,9 @@ sub make_sure_we_have_packages
 	# check ALL BUILD_PACKAGES
 	for my $w ($job->{v}->build_path_list) {
 		my $f = $job->{builder}->pkgfile($w);
-		unless (-f $f) {
+		if (-f $f) {
+			$job->{builder}->register_package($w);
+		} else {
 			$check = 0;
 			print {$job->{logfh}} ">>> Missing $f\n";
 		}
@@ -169,6 +171,7 @@ sub run
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
+	$self->handle_output($job);
 	exit($job->{builder}->check_signature($core, $job->{v}));
 }
 
@@ -180,21 +183,29 @@ sub finalize
 	if ($core->{status} == 0) {
 		my $v = $job->{v};
 		my $builder = $job->{builder};
-		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath});
+		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath}, 
+		    $core);
 	} else {
 		$job->{signature_only} = 1;
+		for my $w ($job->{v}->build_path_list) {
+			my $f = $job->{builder}->pkgfile($w);
+			if (-f $f) {
+				$job->{builder}->register_package($w);
+			}
+		}
 	}
 	return 1;
 }
 
 package DPB::Task::Port::Checksum;
 our @ISA = qw(DPB::Task::Port);
+
 sub need_checksum
 {
-	my ($self, $info) = @_;
+	my ($self, $log, $info) = @_;
 	my $need = 0;
 	for my $dist (values %{$info->{DIST}}) {
-		if (!$dist->cached_checksum($self->{logfh}, $dist->filename)) {
+		if (!$dist->cached_checksum($log, $dist->filename)) {
 			$need = 1;
 		} else {
 			unlink($dist->tempfilename);
@@ -211,7 +222,7 @@ sub setup
 	if (defined $info->{distsize}) {
 		print {$job->{logfh}} "distfiles size=$info->{distsize}\n";
 	}
-	if ($task->need_checksum($info)) {
+	if ($task->need_checksum($job->{logfh}, $info)) {
 		return $task;
 	} else {
 		delete $info->{DIST};
@@ -219,7 +230,7 @@ sub setup
     	}
 }
 
-sub run
+sub checksum
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
@@ -232,7 +243,13 @@ sub run
 			unlink($dist->tempfilename);
 		}
 	}
-	exit($exit);
+	return $exit;
+}
+
+sub run
+{
+	my ($self, $core) = @_;
+	exit($self->checksum($core));
 }
 
 sub finalize
@@ -243,6 +260,7 @@ sub finalize
 		delete $core->job->{v}{info}{DIST};
 	}
 }
+
 
 package DPB::Task::Port::Serialized;
 our @ISA = qw(DPB::Task::Port);
@@ -319,12 +337,17 @@ sub run
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
+	my $try = 1;
 
 	while (1) {
+		$try++;
+		$self->try_lock($core);
 		if ($job->{locked}) {
+			print {$job->{builder}{lockperf}} 
+			    time(), ":", $core->hostname, 
+			    ": $self->{phase}: $try seconds\n";
 			exit(0);
 		}
-		$self->try_lock($core);
 		sleep 1;
 	}
 }
@@ -349,14 +372,14 @@ sub run
 
 	$self->handle_output($job);
 	my @cmd = ('/usr/sbin/pkg_add', '-aI');
-	if ($job->{builder}->{update}) {
+	if ($job->{builder}{update}) {
 		push(@cmd, "-rqU", "-Dupdate", "-Dupdatedepends");
 	}
-	if ($job->{builder}->{forceupdate}) {
+	if ($job->{builder}{forceupdate}) {
 		push(@cmd,  "-Dinstalled");
 	}
 	print join(' ', @cmd, (sort keys %$dep)), "\n";
-	my $path = $job->{builder}->{fullrepo}.'/';
+	my $path = $job->{builder}{fullrepo}.'/';
 	$core->shell->env(PKG_PATH => $path)
 	    ->exec(OpenBSD::Paths->sudo, @cmd, (sort keys %$dep));
 	exit(1);
@@ -394,15 +417,12 @@ sub finalize
 			# zap headers
 			next if m/^\>\>\>\s/ || m/^\=\=\=\>\s/;
 			chomp;
+			# normal lines *only have one package name*
+			next if m/\s/;
 			push(@r, $_);
 		}
-		if ($v->{info}->has_property('nojunk')) {
-			print {$job->{lock}} "nojunk\n";
-			$job->{nojunk} = 1;
-		}
-		print {$job->{lock}} "needed=", join(' ', sort @r), "\n";
 		close $fh;
-		$job->{live_depends} = \@r;
+		$job->save_depends(\@r);
 	} else {
 		$core->{status} = 1;
 	}
@@ -418,11 +438,11 @@ sub setup
 {
 	my ($task, $core) = @_;
 	# zap things HERE
-	if ($core->prop->{junk_count} < $core->prop->{junk}) {
+	if ($core->prop->{depends_count} < $core->prop->{junk}) {
 		$task->junk_unlock($core);
 		return $core->job->next_task($core);
 	}
-	return $task;
+	return $task->SUPER::setup($core);
 }
 
 sub add_dontjunk
@@ -433,11 +453,13 @@ sub add_dontjunk
 		$h->{$pkgname} = 1;
 	}
 }
+
 sub add_live_depends
 {
 	my ($self, $h, $core) = @_;
 	for my $job ($core->same_host_jobs) {
 		if ($job->{nojunk}) {
+			print "Don't run junk because nojunk in $job->{path}\n";
 			return 0;
 		}
 		next unless defined $job->{live_depends};
@@ -456,7 +478,7 @@ sub run
 
 	$self->handle_output($job);
 	# we got pre-empted
-	if ($core->prop->{junk_count} < $core->prop->{junk}) {
+	if ($core->prop->{depends_count} < $core->prop->{junk}) {
 		exit(2);
 	}
 
@@ -478,6 +500,8 @@ sub finalize
 	my ($self, $core) = @_;
 	if ($core->{status} == 0) {
 		$core->prop->{junk_count} = 0;
+		$core->prop->{ports_count} = 0;
+		$core->prop->{depends_count} = 0;
 	}
 	$core->{status} = 0;
 	$self->SUPER::finalize($core);
@@ -508,28 +532,14 @@ sub finalize
 		if ($line =~ m/^\s*(\d+)\s+/) {
 			my $sz = $1;
 			my $job = $core->job;
-			$core->job->{wrkdir} = $sz;
-		}
-	}
-	close($fh);
-	return 1;
-}
-
-package DPB::Task::Port::ShowFakeSize;
-our @ISA = qw(DPB::Task::Port::ShowSize);
-
-sub finalize
-{
-	my ($self, $core) = @_;
-	my $fh = $self->{fh};
-	if ($core->{status} == 0) {
-		my $line = <$fh>;
-		$line = <$fh>;
-		if ($line =~ m/^\s*(\d+)\s+/) {
-			my $sz = $1;
-			my $job = $core->job;
-			my $f2 = $job->{builder}->logger->open("size");
-			print $f2 $job->{path}, " $job->{wrkdir} $sz\n";
+			my $info = $job->{path}."(".$job->{v}->fullpkgname.") $sz\n";
+			print {$job->{builder}{logsize}} $info;
+			# XXX the rolling log might be shared with other dpb
+			# so it can be rewritten and sorted
+			# don't keep a handle on it, so that we always
+			# append new information to the correct filename
+		    	open(my $fh2, '>>', $job->{builder}{state}{size_log});
+			print $fh2 $info;
 		}
 	}
 	close($fh);
@@ -660,7 +670,6 @@ my $repo = {
 	fetch => 'DPB::Task::Port::Fetch',
 	depends => 'DPB::Task::Port::Depends',
 	'show-size' => 'DPB::Task::Port::ShowSize',
-	'show-fake-size' => 'DPB::Task::Port::ShowFakeSize',
 	'junk' => 'DPB::Task::Port::Uninstall',
 };
 
@@ -679,20 +688,21 @@ use Time::HiRes qw(time);
 
 sub new
 {
-	my ($class, $log, $v, $builder, $special, $core, $endcode) = @_;
+	my ($class, $log, $fh, $v, $lock, $builder, $special, $core, 
+	    $endcode) = @_;
 	my $job = bless {
 	    tasks => [],
-	    log => $log, v => $v,
+	    log => $log,
+	    logfh => $fh, 
+	    v => $v,
+	    lock => $lock,
 	    path => $v->fullpkgpath,
 	    special => $special,  current => '',
 	    builder => $builder},
 		$class;
 
-	open $job->{logfh}, ">>", $job->{log} or die "can't open $job->{log}";
-
 	$job->{endcode} = sub { 
 		close($job->{logfh}); 
-		$builder->register_built($v); 
 		&$endcode; };
 
 	my $prop = $core->prop;
@@ -715,7 +725,7 @@ sub new
 		    DPB::Task::Port::Signature->new('signature'));
 	} else {
 		$job->add_normal_tasks($builder->{dontclean}{$v->pkgpath},
-		    $prop);
+		    $core);
 	}
 	return $job;
 }
@@ -732,42 +742,46 @@ sub next_task
 	}
 }
 
+sub save_depends
+{
+	my ($job, $l) = @_;
+	$job->{live_depends} = $l;
+	if ($job->{v}{info}->has_property('nojunk')) {
+		print {$job->{lock}} "nojunk\n";
+		$job->{nojunk} = 1;
+	}
+	print {$job->{lock}} "needed=", join(' ', sort @$l), "\n";
+}
+
 sub has_depends
 {
-	my $self = shift;
-	my $dep = {};
-	my $v = $self->{v};
-	if (exists $v->{info}{BDEPENDS}) {
-		for my $d (values %{$v->{info}{BDEPENDS}}) {
-			$dep->{$d->fullpkgname} = 1;
-		}
-	}
-	#XXX ?
-	if (exists $v->{info}{DEPENDS}) {
-		for my $d (values %{$v->{info}{DEPENDS}}) {
-			$dep->{$d->fullpkgname} = 1;
-		}
-	}
-	# recurse for extra stuff
-	if (exists $v->{info}{BEXTRA}) {
-		for my $two (values %{$v->{info}{BEXTRA}}) {
-			$two->quick_dump($self->{logfh});
-			if (exists $two->{info}{BDEPENDS}) {
-				for my $d (values %{$two->{info}{BDEPENDS}}) {
-					$dep->{$d->fullpkgname} = 1;
-				}
-			}
-			# XXX
-			if (exists $two->{info}{DEPENDS}) {
-				for my $d (values %{$two->{info}{DEPENDS}}) {
-					$dep->{$d->fullpkgname} = 1;
-				}
-			}
-		}
-	}
+	my ($self, $core) = @_;
+	my $dep = $self->{v}{info}->solve_depends;
 	return 0 unless %$dep;
-	$self->{depends} = $dep;
-	return 1;
+	# XXX we are running this synchronously with other jobs on the
+	# same host, so we know exactly which live_depends we can reuse.
+	# try to see if other jobs that already have locks are enough to
+	# satisfy our depends, then we can completely avoid a pkg_add
+	my @live = ();
+	my %deps2 = %$dep;
+	for my $job ($core->same_host_jobs) {
+		next unless defined $job->{live_depends};
+		for my $d (@{$job->{live_depends}}) {
+			if (defined $deps2{$d}) {
+				delete $deps2{$d};
+				push(@live, $d);
+			}
+		}
+	}
+	my $c = scalar(keys %deps2);
+	if (!$c) {
+		$self->save_depends(\@live);
+		print {$self->{logfh}} "Avoided depends for ", 
+		    join(' ', @live), "\n";
+	} else {
+		$self->{depends} = $dep;
+	}
+	return $c;
 }
 
 my $logsize = {};
@@ -782,24 +796,38 @@ sub add_build_info
 
 sub add_normal_tasks
 {
-	my ($self, $dontclean, $hostprop) = @_;
+	my ($self, $dontclean, $core) = @_;
 
 	my @todo;
 	my $builder = $self->{builder};
+	my $hostprop = $core->prop;
 	my $small = 0;
 	if (defined $times->{$self->{v}} && 
-	    $times->{$self->{v}} < ($hostprop->{small} // 120)) {
+	    $times->{$self->{v}} < $hostprop->{small_timeout}) {
 		$small = 1;
 	}
-
 	if ($builder->{clean}) {
 		$self->insert_tasks(DPB::Task::Port::BaseClean->new('clean'));
 	}
-	if ($self->has_depends) {
+	$hostprop->{junk_count} //= 0;
+	$hostprop->{depends_count} //= 0;
+	$hostprop->{ports_count} //= 0;
+	my $c = $self->has_depends($core);
+	$hostprop->{ports_count}++;
+	$hostprop->{depends_count} += $c;
+	if ($c) {
+		$hostprop->{junk_count}++;
 		push(@todo, qw(depends show-prepare-results));
 	}
+	# gc stuff we will no longer need
+	delete $self->{v}{info}{solved};
 	if ($hostprop->{junk}) {
-		if ($hostprop->{junk_count}++ >= $hostprop->{junk}) {
+		if ($hostprop->{depends_count} >= $hostprop->{junk}) {
+			my $fh = $self->{builder}->logger->open("junk");
+			print $fh "$$@", CORE::time(), ": ", $core->hostname,
+			    ": depends=$hostprop->{depends_count} ",
+			    " ports=$hostprop->{ports_count} ",
+			    " junk=$hostprop->{junk_count} -> $self->{path}\n";
 			push(@todo, 'junk');
 		}
 	}
@@ -814,15 +842,12 @@ sub add_normal_tasks
 	}
 	push(@todo, qw(build));
 
-	if ($builder->{size}) {
-		push @todo, 'show-size';
-	}
 	if (!$small) {
 		push(@todo, qw(fake));
 	}
 	push(@todo, qw(package));
-	if ($builder->{size}) {
-		push @todo, 'show-fake-size';
+	if ($builder->want_size($self->{v})) {
+		push @todo, 'show-size';
 	}
 	if (!$dontclean) {
 		push @todo, 'clean';
@@ -951,19 +976,16 @@ our @ISA = qw(DPB::Job::Port);
 
 sub new
 {
-	my ($class, $log, $v, $builder, $endcode) = @_;
+	my ($class, $log, $fh, $v, $builder, $endcode) = @_;
 	my $job = bless {
 	    tasks => [],
-	    log => $log, v => $v,
+	    log => $log, 
+	    logfh => $fh,
+	    v => $v,
 	    path => $v->fullpkgpath,
-	    builder => $builder},
+	    builder => $builder,
+	    endcode => $endcode},
 		$class;
-
-	open $job->{logfh}, ">>", $job->{log} or die "can't open $job->{log}";
-
-	$job->{endcode} = sub { 
-		close($job->{logfh}); 
-		&$endcode; };
 
 	push(@{$job->{tasks}},
 		    DPB::Task::Port::Install->new('install'));

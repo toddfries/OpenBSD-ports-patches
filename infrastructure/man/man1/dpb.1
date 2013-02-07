@@ -1,4 +1,4 @@
-.\"	$OpenBSD: dpb.1,v 1.61 2013/01/07 11:05:17 espie Exp $
+.\"	$OpenBSD: dpb.1,v 1.78 2013/02/04 11:35:27 espie Exp $
 .\"
 .\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 .\"
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: January 7 2013 $
+.Dd $Mdocdate: February 4 2013 $
 .Dt DPB 1
 .Os
 .Sh NAME
@@ -38,7 +38,7 @@
 .Op Fl l Ar lockdir
 .Op Fl M Ar threshold
 .Op Fl P Ar pathlist
-.Op Fl S Ar sizefile
+.Op Fl S Ar logfile
 .Op Fl X Ar pathlist
 .Op Ar pathlist ...
 .Ek
@@ -46,13 +46,10 @@
 .Nm
 is used to build ports on a cluster of machines, or on a single machine
 with several cores.
-Its name is an acronym for
-.Sq distributed ports builder .
 .Nm
-walks the ports tree to figure out dependencies, and starts building
+walks the ports tree to figure out dependencies, and starts building ports
 as soon as it can.
 .Pp
-On a clean machine,
 .Nm
 will run with sensible defaults if used without options.
 Note, however, that it will produce logs, lock files, packages, and package
@@ -94,9 +91,13 @@ through NFS, including distfiles and built packages, but the WRKOBJDIR
 should be local to each machine.
 Option
 .Fl h Ar file
-is used to specify hosts to use,
+is used to specify hosts to use, where
 .Ar file
-can be as simple as a list of hosts to use, one host per line.
+may contain lots of information,
+but can be as simple as a list of hosts to use, one host per line
+(however, it is recommended to also include a
+.Ar STARTUP
+script).
 .Pp
 As
 .Nm
@@ -137,20 +138,24 @@ Walk the whole tree and builds all packages (default if no
 .Ar pathlist
 is given).
 .It Fl b Ar logfile
-Prime the heuristics module with a previous build log, so that packages that
-take a long time to build will happen earlier.
+Explicitly prime the heuristics module with a previous build log,
+so that packages that take a long time to build will happen earlier.
+The rolling log under
+.Pa %f/build-stats/%a
+is automatically used.
 .It Fl c
 Clean port working directory and log before each build.
 .It Fl C Ar pathlist
 Don't clean port working directories after build.
-Use a list of simple
-.Xr pkgpath 7 ,
+Only use simple
+.Xr pkgpath 7
+in the list,
 as this does not take subpackages and flavors into account.
 .It Fl D Ar PARAM Ns = Ns Ar value
 Set defined parameter to value.
 Known parameters are as follows:
 .Bl -tag -width DISP
-.It ALWAYS_CLEAN
+.It Ar ALWAYS_CLEAN
 Set to 1 if
 .Nm
 should clean work directories even if the port errored out.
@@ -188,6 +193,9 @@ provided they didn't end in error.
 This is usually the right thing to do after a crash, or after killing dpb
 abruptly.
 Sometimes, one may want manual control over which locks to remove.
+.It Ar FETCH_TIMEOUT
+Timeout (in seconds) after which fetches that don't show
+any progress will be killed.
 .It Ar FTP_ONLY
 Don't fetch distfiles that are not allowed for ftp.
 .It Ar HISTORY_ONLY
@@ -201,12 +209,12 @@ Make the terminal cursor invisible if possible.
 Avoids flickering on slow graphics cards.
 .It Ar NO_BUILD_STATS
 Disable reading/saving of default build stats under
+.Pa ${DISTDIR}/build-stats/${ARCH} .
 .It Ar NO_HISTORY
 Do not update the distfiles history.
 For instance, if
 .Nm
 is run a second time after a problem during the first run.
-.Pa ${DISTDIR}/build-stats/${ARCH} .
 .It Ar STARTUP
 Define a start-up script on the command-line, override any host file contents.
 .It Ar STUCK_TIMEOUT
@@ -243,12 +251,27 @@ Do not build any package but fetch everything, disregarding
 and
 .Ev ONLY_FOR_ARCHS
 information.
+Create
+.Ar m
+localhost jobs for fetching files.
 .It Fl h Ar hosts
 File with hosts to use for building.
 One host per line, plus properties, such as:
 .Bd -literal -offset indent
 espie@aeryn jobs=4 arch=i386
 .Ed
+.Pp
+The special line
+.Bd -literal -offset indent
+STARTUP=path
+.Ed
+.Pp
+will define a script which will be run at start-up on each build machine.
+This script must exist locally.
+This script will always be run under ${PORTSDIR}, with environment
+variables MAKE and PORTSDIR set.
+It can be a list, e.g.,
+STARTUP=/bin/sh /some/path
 .Pp
 The special hostname
 .Ar DEFAULT
@@ -282,12 +305,23 @@ See
 .Fl J
 option.
 .It memory=thr
-Builds everything below that wrkdir threshold in /tmp, assuming
-it is a memory filesystem.
-Avoid for now, as
-.Xr mfs 8
-has serious race conditions which yield
-random errors under stress conditions such as bulk build.
+Build everything below that wrkdir threshold in
+.Pa /tmp/ports ,
+assuming it is a memory filesystem.
+.Ar thr
+is the sum, in KBytes, of ports that will be allowed under
+.Pa /tmp .
+.Nm
+understands suffixes, such as
+.Fl M Ar 2G
+or
+.Fl M Ar 500M .
+.Pp
+Note that you should always allow for some margin, as
+.Nm
+makes its decision based on the size information collected during previous
+builds, so in cases of significant updates, the work directory size will
+usually grow.
 .It parallel=p
 Run big ports on several cores.
 See
@@ -302,6 +336,13 @@ The machine (or machines) with the highest speed factor will
 get access to all jobs, whereas other machines will be clamped
 to stuff which does not take too long.
 Requires previous build information to be effective.
+.It small=s
+Small threshold (in seconds * sf):
+ports known to build under that duration are deemed to be small, so
+.Nm
+won't bother calling fine-grained steps for patch/configure/fake.
+It will go straight to build and package instead.
+Defaults to 120 seconds.
 .It stuck=s
 Stuck timeout (in seconds * sf) after which tasks which show no progress
 will get killed.
@@ -309,14 +350,6 @@ will get killed.
 Defines a specific connection timeout for ssh to that host.
 .El
 .Pp
-The
-.Ar hosts
-file can also define a start-up script, as
-.Bd -literal -offset indent
-STARTUP=path
-.Ed
-.Pp
-which will be run at start-up on each machine.
 There are no fine-grained options to control
 .Xr ssh 1
 options, as those can be specified through virtual host declarations in
@@ -336,9 +369,9 @@ Each
 stage is followed by a
 .Ar show-prepare-results
 stage.
-Every
+After every
 .Ar p
-build, it will be followed by a
+new dependencies, it will be followed by a
 .Ar junk
 stage which uses
 .Xr pkg_delete 1
@@ -364,7 +397,7 @@ solves by preventing more than one job on a given host to be in the
 stages at one time, by using a per-host lock.
 .Pp
 Defaults to
-.Ar 250 .
+.Ar 150 .
 Can be disabled by setting to
 .Ar 0 .
 .Pp
@@ -399,12 +432,16 @@ Defaults to
 .Pc .
 Override to keep local, as locks don't really like NFS.
 .It Fl M Ar threshold
-Build ports besides the memory threshold within
-.Pa /tmp .
-Avoid for now, as
+Build ports below the memory threshold under a
 .Xr mfs 8
-has serious race conditions which yield
-random errors under stress conditions such as bulk build.
+filesystem, as configured through
+.Ev WRKOBJDIR_MFS
+.Po
+see
+.Xr bsd.port.mk 5
+.Pc .
+.Ar threshold
+is the sum, in KBytes, of ports allowed to build there.
 .It Fl m
 Force tty-style reporting.
 .It Fl P Ar pathlist
@@ -454,13 +491,19 @@ Note that
 .Fl R
 won't always work, as rebuilding a package when another version is already
 installed is not supported.
-It will go into an infinite loop with always-update packages such as sqlports
-or pkglocatedb.
+.It Fl S Ar logfile
+Read
+.Ar logfile
+as an initial workdir size log.
 .It Fl s
 Compute workdir sizes before cleaning up, and stash them in log file
-.Pa ${LOGDIR}/size.log .
-.It Fl S Ar sizefile
-Read a size log file and use it for choosing to put WRKDIR in memory.
+.Pa %L/size.log .
+Also maintain a rolling log of build sizes under
+.Pa %f/build-stats/%a-size .
+In order to save time,
+.Nm
+will actually not always compute new sizes for known directories, but mostly
+for new ones, or when the package name changes.
 .It Fl u
 Update existing packages during dependency solving.
 Can be used to run a bulk-build on a machine with installed packages,
@@ -576,7 +619,22 @@ Similarly, fetches will use the continue option of
 .Xr ftp 1 ,
 since distfiles are checksummed after the fetch anyways.
 .Sh LOCKS AND ERRORS
-When building a package,
+.Nm
+still uses the normal ports tree mechanism while building, which includes
+.Ev LOCKDIR .
+When starting up
+.Nm
+will normally detect stale locks from old dpb runs, and remove them.
+If this does not happen, builds will stay stuck in their initial stage,
+that is:
+.Ar show-prepare-results , patch , build
+depending on the port.
+A telltale message
+.Sq Awaiting lock ...
+can be found in the corresponding logfile
+.Pa paths/pkgpath.log
+.Pp
+In addition, when building a package,
 .Nm
 produces a lockfile in the locks directory, whose name is deduced from
 the basic pkgpath with slashes replaced by dots.
@@ -662,7 +720,7 @@ the current jobs are finished unless
 .Pp
 .Nm
 also checks for files named
-.Pa <hostname>-stop
+.Pa stop-<hostname>
 in its log directory.
 If such a file exists, then it won't start new jobs on
 the corresponding machine.
@@ -746,6 +804,16 @@ also records rolling build statistics under
 and uses them automatically in the absence of
 .Fl b Ar logfile .
 .Pp
+If
+.Fl s
+is used, size information for successful builds will be recorded under
+.Pa ${DISTDIR}/build-stats/${ARCH}-size
+.Po
+by default, location adjustable with
+.Fl S Ar sizelog
+.Pc .
+This is then reused for the mfs threshold option.
+.Pp
 .Nm
 will also create a large number of log files under
 .Pa ${PORTSDIR}/logs/{$ARCH} :
@@ -763,6 +831,13 @@ together with its pid.
 This log just exists to verify, along with
 .Pa engine.log ,
 whether correct affinity was heeded.
+.It Pa awaiting-locks.log
+This is purely for gathering performance statistics, about how much
+lock contention happened around
+.Xr pkg_add 1
+and
+.xr pkg_delete 1
+usage.
 .It Pa build.log
 Actual build log.
 Each line summarizes build of a single pkgpath, as:
@@ -851,18 +926,21 @@ Lists of equivalent pkgpaths for the build, when default flavors and default sub
 .It Pa fetch/bad.log
 List of URLs that did not lead to a correct distfile, either because
 they were not responding, or because of incorrect checksums.
-.It Pa fetch/distfiles.log
-Full list of distfiles seen through this build.
-Can be used to remove old distfiles.
 .It Pa fetch/good.log
 List of URLs that fetched correctly, along with timing statistics.
 .It Pa fetch/manually.log
 List of pkgpaths that require manual intervention, in human-readable form.
-.It Pa <hostname>-stop
-Not a logfile at all, but created by the user to stop hostname creating
-new jobs.
 .It Pa <hostname>.sig.log
 Complete library signature of the host.
+.It Pa junk.log
+Option
+.Fl J
+counts the number of dependencies directly added to decide when to run
+.Nm pkg_delete Fl a .
+This file sums up how many ports were built, and how many ports had
+dependencies each time
+.Nm
+decides to junk.
 .It Pa locks/
 Directory where locks are created.
 The slash in a pkgpath is replaced with a dot like so:
@@ -910,10 +988,6 @@ a measure of how much time it took to run this pass.
 That information is mostly relevant while
 .Nm
 is building lots of small packages very quickly.
-.It Pa rebuild.log
-When using
-.Fl R ,
-contains the list of decisions to build/not rebuild a given pkgpath.
 .It Pa signature.log
 Discrepancies between hosts that prevent them from starting up.
 .It Pa size.log
@@ -926,6 +1000,9 @@ Mostly useful for making plots and tweaking performance.
 Not a logfile at all, but a file created by the user to stop
 .Nm
 creating new jobs.
+.It Pa stop-<hostname>
+Not a logfile at all, but created by the user to stop hostname creating
+new jobs.
 .It Pa vars.log
 Logs the directories that were walked in the ports tree for dependency
 information, including the path to a dependency that triggered this
@@ -987,10 +1064,6 @@ after fixing the problem.
 You have to stop
 .Nm ,
 cleanup and restart.
-.Pp
-There's a bug in
-.Xr mfs 8
-that prevents it from proper use in bulk builds.
 .Pp
 The default limits in
 .Pa login.conf

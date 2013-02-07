@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.41 2013/01/08 08:13:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.45 2013/02/03 12:09:27 rpe Exp $
 
 COMMENT =		the enlightened window manager
 
 VERSION = 		0.17.0
 DISTNAME =		enlightenment-${VERSION}
 PKGNAME =		enlightenment-${VERSION:S/-//}
-EXTRACT_SUFX=		.tar.bz2
 
-REVISION = 		1
+REVISION = 		4
 EPOCH =			1
 
 # BSD
@@ -17,27 +16,25 @@ PERMIT_DISTFILES_CDROM =Yes
 PERMIT_DISTFILES_FTP =	Yes
 
 MODULES +=		devel/gettext \
-			lang/lua
+			lang/lua \
+			x11/e17
+
+MODE17_DESKTOP_FILE =	Yes
+MODE17_PURGE_LA =	lib/enlightenment/modules
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xss Xtst c cares crypto
-WANTLIB += curl dbus-1 ecore ecore_con ecore_evas
-WANTLIB += ecore_file ecore_imf ecore_imf_evas ecore_input ecore_input_evas
-WANTLIB += ecore_ipc ecore_x edbus edje eet efreet efreet_mime
-WANTLIB += efreet_trash ehal eina eio embryo enotify eukit evas execinfo
-WANTLIB += expat ffi fribidi fontconfig freetype glib-2.0 gobject-2.0
-WANTLIB += gthread-2.0 harfbuzz idn icudata icule icuuc jpeg ${MODLUA_WANTLIB}
-WANTLIB += m pcre pthread pthread-stubs ssl xcb xcb-keysyms xcb-shape z
+WANTLIB += curl dbus-1 ecore ecore_con ecore_evas ecore_file ecore_imf
+WANTLIB += ecore_imf_evas ecore_input ecore_input_evas ecore_ipc
+WANTLIB += ecore_x edbus edje eet efreet efreet_mime efreet_trash
+WANTLIB += ehal eina eio elementary embryo emotion enotify ethumb
+WANTLIB += ethumb_client eukit evas execinfo exif expat ffi fontconfig
+WANTLIB += freetype fribidi glib-2.0 gobject-2.0 gthread-2.0 harfbuzz
+WANTLIB += icudata icule icuuc idn jpeg m pcre pthread pthread-stubs
+WANTLIB += ssl xcb xcb-keysyms xcb-shape z ${MODLUA_WANTLIB}
 
-LIB_DEPENDS =		x11/e17/edje>=3.0 \
-			x11/e17/efreet>=3.0 \
-			x11/e17/ecore>=3.0 \
-			x11/e17/e_dbus>=3.0 \
-			x11/e17/eio \
-			devel/fribidi \
+LIB_DEPENDS =		x11/e17/elementary>=1.7.5 \
 			devel/libexecinfo
-
-RUN_DEPENDS =		devel/desktop-file-utils
 
 CONFIGURE_ARGS +=	--disable-doc \
 			--disable-nls
@@ -103,9 +100,6 @@ USE_LIBTOOL =		Yes
 # Stupid crap in /src/modules/illume/dicts chokes in regular make.
 # Some issue with the "(US)" bit
 USE_GMAKE =		Yes
-
-FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}
-SUBST_VARS +=		FULLARCH OSREV VERSION
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/enlightenment
