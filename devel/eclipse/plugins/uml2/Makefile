@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2013/02/04 13:13:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2013/02/07 20:21:03 jasper Exp $
 
 COMMENT=		UML diagram framework for Eclipse
 
@@ -20,11 +20,6 @@ PERMIT_DISTFILES_FTP=	Yes
 MASTER_SITES=		http://download.eclipse.org/modeling/mdt/uml2/downloads/drops/${V}/R200702141227/
 
 RUN_DEPENDS=		devel/eclipse/plugins/emf>=2.2.2
-
-NO_BUILD=		Yes
-NO_REGRESS=		Yes
-
-WRKDIST=		${WRKDIR}
 
 do-install:
 	cd ${WRKDIST} && tar cfL - eclipse | \

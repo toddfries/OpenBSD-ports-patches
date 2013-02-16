@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.199 2013/02/01 07:59:03 brad Exp $
+# $OpenBSD: Makefile,v 1.201 2013/02/09 14:49:51 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -9,7 +9,7 @@ COMMENT-postgresql= PostgreSQL authentication / dictionary support for Dovecot
 
 # Bump dovecot-pigeonhole every time you update to a new Dovecot version.
 V_MAJOR=	2.1
-V_DOVECOT=	2.1.14
+V_DOVECOT=	2.1.15
 
 DISTNAME=	dovecot-${V_DOVECOT}
 PKGNAME=	dovecot-${V_DOVECOT}
@@ -76,15 +76,15 @@ FLAVOR+=	no_ldap no_mysql no_postgresql
 MULTI_PACKAGES= -server
 SUBPACKAGE?=	-server
 
-.if !${FLAVOR:L:Mno_ldap}
+.if !${FLAVOR:Mno_ldap}
 MULTI_PACKAGES+=-ldap
 .endif
 
-.if !${FLAVOR:L:Mno_mysql}
+.if !${FLAVOR:Mno_mysql}
 MULTI_PACKAGES+=-mysql
 .endif
 
-.if !${FLAVOR:L:Mno_postgresql}
+.if !${FLAVOR:Mno_postgresql}
 MULTI_PACKAGES+=-postgresql
 .endif
 

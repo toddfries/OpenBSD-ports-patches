@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.224 2013/02/06 22:44:47 landry Exp $
+# $OpenBSD: Makefile,v 1.226 2013/02/07 19:13:49 ajacoutot Exp $
 
 COMMENT =	Mozilla web browser
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
@@ -10,6 +10,7 @@ MOZILLA_VERSION =	18.0.2
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	firefox
 MOZILLA_CODENAME =	browser
+REVISION =	0
 
 #MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build1/source/
 SO_VERSION =	37.0
@@ -33,7 +34,6 @@ MODPY_RUNDEP =	No
 
 # necessary glue to build with the correct compiler after fx 17
 MODULES +=		gcc4 lang/clang
-MODGCC4_VERSION =	4.6
 MODGCC4_ARCHS =		i386 powerpc
 MODGCC4_LANGS =		c c++
 MODCLANG_ARCHS =	amd64

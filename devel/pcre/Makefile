@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2012/09/26 15:04:09 sthen Exp $
+# $OpenBSD: Makefile,v 1.47 2013/02/10 19:45:55 robert Exp $
 
 COMMENT=	perl-compatible regular expression library
 

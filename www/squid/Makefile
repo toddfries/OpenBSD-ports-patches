@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.144 2013/02/01 17:34:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.146 2013/02/09 14:49:53 sthen Exp $
 
 MULTI_PACKAGES=	-main -ntlm
 
@@ -64,7 +64,6 @@ USE_LIBTOOL=	Yes
 # optimizer is disabled, see e.g.
 # http://www.squid-cache.org/mail-archive/squid-users/201208/0060.html
 MODULES+=	gcc4
-MODGCC4_VERSION= 4.6
 MODGCC4_ARCHS=	powerpc
 MODGCC4_LANGS=	c c++
 
@@ -109,7 +108,7 @@ FAKE_FLAGS=	sysconfdir=$E \
 		DEFAULT_MIME_TABLE=$E/mime.conf
 REGRESS_DEPENDS= devel/cppunit
 
-.if !${FLAVOR:L:Mno_ldap}
+.if !${FLAVOR:Mno_ldap}
 MULTI_PACKAGES+= -ldap
 BASIC_AUTH+=	LDAP
 DIGEST_AUTH+=	LDAP

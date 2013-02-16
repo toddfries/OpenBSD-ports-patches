@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2013/02/04 13:13:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2013/02/07 20:21:03 jasper Exp $
 
 COMMENT=		Eclipse Modeling Framework (EMF)
 
@@ -19,13 +19,6 @@ PERMIT_DISTFILES_CDROM=	commercial distribution defend and indemnify clauses
 PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://download.eclipse.org/modeling/emf/emf/downloads/drops/${V}/R200705141058/
-
-RUN_DEPENDS=		devel/eclipse/sdk>=3.2
-
-NO_BUILD=		Yes
-NO_REGRESS=		Yes
-
-WRKDIST=		${WRKDIR}
 
 do-install:
 	cd ${WRKDIST} && tar cfL - eclipse | \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2013/02/06 22:08:33 kurt Exp $
+# $OpenBSD: Makefile,v 1.59 2013/02/09 14:49:50 sthen Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	i386 amd64
@@ -50,7 +50,7 @@ PERMIT_DISTFILES_FTP=	Yes
 USE_GROFF =	Yes
 NO_REGRESS=	Yes
 
-.if ${FLAVOR:L:Mnative_bootstrap}
+.if ${FLAVOR:Mnative_bootstrap}
 INSTALLED!= (pkg_info -qe "jdk->=1.7.0.00v0,<1.8v0" && echo yes) || echo no
 .if ${INSTALLED:L} != "yes"
 ERRORS += "Fatal: This flavor requires an installed 1.7.0.00v0 or greater jdk package"
@@ -75,6 +75,8 @@ USE_GMAKE=	Yes
 # Don't call make -jN, instead pass MAKE_JOBS to HOTSPOT_BUILD_JOBS
 PARALLEL_BUILD=         No
 
+# Allow HOTSPOT_BUILD_JOBS to be overridden
+HOTSPOT_BUILD_JOBS?= ${MAKE_JOBS}
 
 MAKE_ENV=	ALT_BOOTDIR=${ALT_BOOTDIR} \
 		ALT_FREETYPE_HEADERS_PATH=${X11BASE}/include \
@@ -90,11 +92,11 @@ MAKE_ENV=	ALT_BOOTDIR=${ALT_BOOTDIR} \
 		MILESTONE=fcs \
 		BUILD_NUMBER=${B} \
 		JDK_UPDATE_VERSION=11 \
-		HOTSPOT_BUILD_JOBS=${MAKE_JOBS}
+		HOTSPOT_BUILD_JOBS=${HOTSPOT_BUILD_JOBS}
 
 #ALL_TARGET=	debug_build
 
-.if !${FLAVOR:L:Mwith_ipv6}
+.if !${FLAVOR:Mwith_ipv6}
 MAKE_ENV+=	DONT_ENABLE_IPV6="YES"
 .endif
 

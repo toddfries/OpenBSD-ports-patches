@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2013/02/03 21:03:39 kurt Exp $
+# $OpenBSD: Makefile,v 1.43 2013/02/13 18:13:12 sthen Exp $
 
 SHARED_ONLY=	Yes
 ONLY_FOR_ARCHS=	amd64 i386
@@ -77,7 +77,7 @@ BUILD_DEPENDS=	archivers/zip \
 MODULES=	converters/libiconv
 WANTLIB=	X11 Xext Xi Xtst c freetype m pthread sndio stdc++ z
 
-.if ${FLAVOR:L:Mnative_bootstrap}
+.if ${FLAVOR:Mnative_bootstrap}
 INSTALLED!= (pkg_info -e "jdk->=1.6,<1.7" -q && echo yes) || echo no
 .if ${INSTALLED:L} != "yes"
 ERRORS += "Fatal: This flavor requires an installed 1.6 jdk package"
@@ -88,7 +88,12 @@ ALT_BOOTDIR=	${LOCALBASE}/${JDKHOME}
 .else
 BOOT_JDK=	openjdk6-bootjdk-${ARCH}-20130128.tar.gz
 APACHE_ANT=	apache-ant-1.8.4-bin.tar.gz
-DISTFILES+=	${BOOT_JDK}:1 ${APACHE_ANT}:5
+.include <bsd.port.arch.mk>
+.if (${ARCH}==amd64) || (${ARCH}==i386)
+DISTFILES+=	${BOOT_JDK}:1
+.endif
+DISTFILES+=	${APACHE_ANT}:5
+SUPDISTFILES+=	openjdk6-bootjdk-amd64-20130128.tar.gz:1 openjdk6-bootjdk-i386-20130128.tar.gz:1
 EXTRACT_ONLY+=	${BOOT_JDK} ${APACHE_ANT}
 MAKE_ENV+=	ANT_HOME=${WRKDIST}/apache-ant-1.8.4 \
 		LD_LIBRARY_PATH=${WRKDIST}/bootjdk-libs
@@ -101,6 +106,9 @@ DPB_PROPERTIES=	parallel
 
 # Don't call make -jN, instead pass MAKE_JOBS to HOTSPOT_BUILD_JOBS
 PARALLEL_BUILD=	No
+
+# Allow HOTSPOT_BUILD_JOBS to be overridden
+HOTSPOT_BUILD_JOBS?= ${MAKE_JOBS}
 
 MAKE_ENV+=	ALT_BOOTDIR=${ALT_BOOTDIR} \
 		ALT_FREETYPE_HEADERS_PATH=${X11BASE}/include \
@@ -120,9 +128,9 @@ MAKE_ENV+=	ALT_BOOTDIR=${ALT_BOOTDIR} \
 		DEFAULT_LIBPATH="/usr/lib:${X11BASE}/lib:${LOCALBASE}/lib" \
 		USER="${USER}" \
 		WARNINGS_ARE_ERRORS="" \
-		HOTSPOT_BUILD_JOBS=${MAKE_JOBS}
+		HOTSPOT_BUILD_JOBS=${HOTSPOT_BUILD_JOBS}
 
-.if !${FLAVOR:L:Mwith_ipv6}
+.if !${FLAVOR:Mwith_ipv6}
 MAKE_ENV+=	DONT_ENABLE_IPV6=YES
 .endif
 
