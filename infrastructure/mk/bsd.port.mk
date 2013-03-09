@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1211 2013/02/11 14:31:14 jasper Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1215 2013/03/09 00:09:14 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -114,7 +114,7 @@ _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
 	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES \
-	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP
+	PERMIT_DISTFILES_FTP
 _DPB_MULTI = ${MULTI_PACKAGES}
 .endif
 .if ${DPB:L:Mall}
@@ -214,14 +214,20 @@ _MAKEFILE_INC_DONE = Yes
 .  endif
 .endif
 
+.if defined(PERMIT_PACKAGE_CDROM) && ${PERMIT_PACKAGE_CDROM:L} == "yes"
+PERMIT_PACKAGE_FTP ?= Yes
+PERMIT_DISTFILES_FTP ?= Yes
+.elif defined(PERMIT_PACKAGE_FTP) && ${PERMIT_PACKAGE_FTP:L} == "yes"
+PERMIT_DISTFILES_FTP ?= Yes
+.endif
+
 .if !defined(PERMIT_PACKAGE_CDROM) || !defined(PERMIT_PACKAGE_FTP) || \
-	!defined(PERMIT_DISTFILES_CDROM) || !defined(PERMIT_DISTFILES_FTP)
+	!defined(PERMIT_DISTFILES_FTP)
 ERRORS += "The licensing info for ${FULLPKGNAME} is incomplete."
 ERRORS += "Please notify the OpenBSD port maintainer:"
 ERRORS += "    ${MAINTAINER}"
 _BAD_LICENSING = Yes
 PERMIT_PACKAGE_CDROM = No
-PERMIT_DISTFILES_CDROM = No
 PERMIT_PACKAGE_FTP = No
 PERMIT_DISTFILES_FTP = No
 .endif
@@ -1944,26 +1950,15 @@ makesum: fetch-all
 	@sort -u -o ${CHECKSUM_FILE} ${CHECKSUM_FILE}
 .endif
 
-
-addsum: fetch-all
-.if !defined(NO_CHECKSUM)
-	@touch ${CHECKSUM_FILE}
-	@cd ${DISTDIR} && \
-	 	for cipher in ${_CIPHERS}; do \
-			cksum -b -a $$cipher ${MAKESUMFILES} >> ${CHECKSUM_FILE}; \
-	    done
-	@cd ${DISTDIR} && \
-		for file in ${MAKESUMFILES}; do \
-			${_size_fragment} >> ${CHECKSUM_FILE}; \
-		done
-	@sort -u -o ${CHECKSUM_FILE} ${CHECKSUM_FILE}
-	@if [ `sed -e 's/\=.*$$//' ${CHECKSUM_FILE} | uniq -d | wc -l` -ne 0 ]; then \
-		echo "Inconsistent checksum in ${CHECKSUM_FILE}"; \
-		exit 1; \
+list-distinfo:
+	@if test -e ${CHECKSUM_FILE}; then cat ${CHECKSUM_FILE}; \
 	else \
-		${ECHO_MSG} "${CHECKSUM_FILE} updated okay, don't forget to remove cruft"; \
+		if ! test -z "${DISTFILES}"; then \
+			echo 1>&2 "${CHECKSUM_FILE} not found"; \
+			exit 1; \
+		fi; \
 	fi
-.endif
+
 
 ################################################################
 # Dependency checking
@@ -2199,6 +2194,22 @@ _internal-fetch:
 
 
 _internal-checksum: _internal-fetch
+	@fgrep SIZE ${CHECKSUM_FILE} | sed -e '/SIZE (\(.*\)).*/s//\1/'|\
+	while read i; do \
+		for j in ${MAKESUMFILES}; do \
+			missing=true; \
+			if test $$i = $$j; then \
+				missing=false; \
+				break; \
+			fi; \
+		done; \
+		if $$missing; then \
+			bad=true; \
+			echo 1>&2 "!!! File '$$i' not found in ${CHECKSUM_FILE}"; \
+			echo 1>&2 "!!! Read up on SUPDISTFILES in bsd.port.mk(5)"; \
+			exit 1; \
+		fi; \
+	done
 .  if ! defined(NO_CHECKSUM)
 	@if [ -z "${DISTFILES}" ]; then \
 	  ${ECHO_MSG} ">> No distfiles."; \
@@ -2384,7 +2395,8 @@ ${_BULK_COOKIE}:
 ${_WRKDIR_COOKIE}:
 	@rm -rf ${WRKDIR}
 	@if test -h ${PORTSDIR}; then \
-		echo 1>&2 "Fatal: ${PORTSDIR} is a symlink. Please set to the real directory"; \
+		echo 1>&2 "Fatal: ${PORTSDIR} is a symlink."; \
+		echo 1>&2 "Please point PORTSDIR to the real directory (in /etc/mk.conf)"; \
 		exit 1; \
 	fi
 .if ${PORTS_BUILD_XENOCARA_TOO:L} != "yes"
@@ -2723,6 +2735,7 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	fi
 .  endfor
 .endif
+	@mkdir -p ${PKGDIR}
 	@cd ${PKGDIR} && for i in *.rc; do \
 		if test X"$$i" != "X*.rc"; then \
 			r=${WRKINST}${RCDIR}/$${i%.rc}; \
@@ -2943,11 +2956,6 @@ describe:
 	@echo -n "n|"
 .    endif
 .    if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
-	@echo -n "y|"
-.    else
-	@echo -n "n|"
-.    endif
-.    if ${PERMIT_DISTFILES_CDROM:L} == "yes"
 	@echo -n "y|"
 .    else
 	@echo -n "n|"
@@ -3369,7 +3377,7 @@ _all_phony = ${_recursive_depends_targets} \
 	_internal_install _internal_runlib-depends _license-check \
 	print-package-args _print-package-signature-lib \
 	_print-package-signature-run _print-packagename _recurse-all-dir-depends \
-	_recurse-regress-dir-depends _recurse-run-dir-depends _refetch addsum \
+	_recurse-regress-dir-depends _recurse-run-dir-depends _refetch \
 	build-depends build-depends-list checkpatch clean clean-depends \
 	delete-package depends distpatch do-build do-configure do-distpatch \
 	do-extract do-install do-regress fetch-all \

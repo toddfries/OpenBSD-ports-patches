@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.597 2013/02/03 11:01:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.602 2013/03/08 12:17:38 jasper Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -48,6 +48,8 @@
 #     SUBDIR += elinks,js
      SUBDIR += epiphany
      SUBDIR += epiphany-extensions
+     SUBDIR += erl-mochiweb
+     SUBDIR += erl-webmachine
      SUBDIR += ezpublish
      SUBDIR += fcgi
      SUBDIR += fcgi-cgi
@@ -228,6 +230,7 @@
      SUBDIR += p5-Catalyst-View-Mason
      SUBDIR += p5-CatalystX-Component-Traits
      SUBDIR += p5-Config-ApacheFormat
+     SUBDIR += p5-Dancer
      SUBDIR += p5-Data-URIEncode
      SUBDIR += p5-Drupal-Admin
      SUBDIR += p5-FCGI-ProcManager
@@ -291,6 +294,7 @@
      SUBDIR += p5-HTTP-Response-Encoding
      SUBDIR += p5-HTTP-Server-Simple
      SUBDIR += p5-HTTP-Server-Simple-Mason
+     SUBDIR += p5-HTTP-Server-Simple-PSGI
      SUBDIR += p5-HTTP-Server-Simple-Recorder
      SUBDIR += p5-HTTPD-Log-Filter
      SUBDIR += p5-JavaScript-Minifier
@@ -471,6 +475,7 @@
      SUBDIR += sarg,ldap
      SUBDIR += seamonkey
      SUBDIR += seamonkey-i18n
+     SUBDIR += silverstripe
      SUBDIR += slowhttptest
      SUBDIR += snownews
      SUBDIR += sogo
@@ -489,7 +494,6 @@
      SUBDIR += syweb
      SUBDIR += thttpd
      SUBDIR += tidyp
-     SUBDIR += timetrex
      SUBDIR += tinyproxy
      SUBDIR += tntnet
      SUBDIR += tomcat

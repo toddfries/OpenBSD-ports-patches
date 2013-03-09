@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/09/16 09:24:55 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2013/03/08 09:13:36 jasper Exp $
 
 COMMENT=	Python API for advanced date calculations
 
@@ -6,12 +6,12 @@ VERSION=	1.1
 ZINFO=		2005q
 DISTNAME=	python-dateutil-${VERSION}
 PKGNAME=	${DISTNAME:S/^python-/py-/}
-REVISION =	4
+REVISION =	6
 CATEGORIES=    	devel
 
 HOMEPAGE=	http://labix.org/python-dateutil
 
-MAINTAINER=	Damien Miller <djm@openbsd.org>
+MAINTAINER =	frantisek holop <minusf@obiit.org>
 
 MODULES=	lang/python
 

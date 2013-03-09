@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: dpb,v 1.85 2013/02/04 09:43:57 espie Exp $
+# $OpenBSD: dpb,v 1.87 2013/03/03 11:11:08 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -19,13 +19,81 @@
 
 use strict;
 use warnings;
-my $ports1;
+my ($ports1, $olddie, $oldwarn, $reporter);
 use FindBin;
 BEGIN {
 	$ports1 = $ENV{PORTSDIR} || '/usr/ports';
-}
-use lib ("$ports1/infrastructure/lib", "$FindBin::Bin/../lib");
+# inspired by Carp::Always
+	$olddie = $SIG{__DIE__};
+	$oldwarn = $SIG{__WARN__};
+	sub trace_message
+	{
+		my $msg = '';
+		my $x = 1;
+		while (1) {
+			my @c;
+			{
+				package DB;
+				our @args;
+				@c = caller($x+1);
+			}
+			last if !@c;
+			$msg .= "$c[3](". 
+			    join(', ', map { 
+				    if (!defined $_) {
+					'<undef>';
+				    } else {
+					my $string;
+					eval { $string = $_->debug_dump };
+					if (defined $string) {
+					    "$_($string)";
+					} else {
+					    $_;
+					}
+				    }
+				} @DB::args). 
+			    ") called at $c[1] line $c[2]\n";
+			$x++;
+		}
+		return $msg;
+	}
 
+	$SIG{__WARN__} = sub {
+		my $_ = pop @_;
+		s/(.*)( at .*? line .*?\n$)/$1/s;
+		push @_, $_;
+		$SIG{__WARN__} = $oldwarn;
+		if (defined $reporter) {
+			$reporter->myprint(&trace_message);
+		} else {
+			warn &trace_message;
+		}
+	};
+
+	$SIG{__DIE__} = sub {
+		my $_ = pop @_;
+		s/(.*)( at .*? line .*?\n$)/$1/s;
+		push @_, $_;
+		if (defined $reporter) {
+			$reporter->reset_cursor;
+		}
+		$SIG{__DIE__} = $olddie;
+		die &trace_message;
+	};
+
+	$SIG{INFO} = sub {
+		print "Trace:\n", &trace_message;
+		sleep 1;
+	};
+
+}
+
+END {
+	$SIG{__DIE__} = $olddie;
+	$SIG{__WARN__} = $oldwarn;
+}
+
+use lib ("$ports1/infrastructure/lib", "$FindBin::Bin/../lib");
 
 package DPB::State;
 our @ISA = qw(OpenBSD::State);
@@ -248,9 +316,10 @@ sub handle_options
 		$state->{build_once} = 0;
 	}
 	$state->{concurrent} = $state->{logger}->open("concurrent");
+	$state->parse_config_files;
 }
 
-sub start_cores
+sub parse_config_files
 {
 	my $state = shift;
 
@@ -292,7 +361,7 @@ sub start_cores
 		$override_prop->{mem} = $state->opt('M');
 	}
 
-	my $default_prop = { 
+	my $default_prop = {
 		junk => 150, 
 		parallel => '/2',
 		wait_timeout => 600,
@@ -303,10 +372,16 @@ sub start_cores
 		DPB::Core->parse_hosts_file($state->{config}, $state, 
 		    $default_prop, $override_prop);
 	}
+	$state->{default_prop} = $default_prop;
+	$state->{override_prop} = $override_prop;
+}
 
+sub start_cores
+{
+	my $state = shift;
 	if (!$state->{config}) {
-		my $prop = { %$default_prop };
-		while (my ($k, $v) = each %$override_prop) {
+		my $prop = { %{$state->{default_prop}} };
+		while (my ($k, $v) = each %{$state->{override_prop}}) {
 			$prop->{$k} = $v;
 		}
 
@@ -542,53 +617,6 @@ sub report
 		($keep_going ? "" : " STOPPED!").
 		"\n";
 }
-
-my $reporter;
-
-# inspired by Carp::Always
-$SIG{__WARN__} = sub {
-	require Carp;
-
-	my $_ = pop @_;
-	s/(.*)( at .*? line .*?\n$)/$1/s;
-	push @_, $_;
-	if (defined $reporter) {
-		$reporter->myprint(&Carp::longmess);
-	} else {
-		warn &Carp::longmess;
-	}
-};
-
-$SIG{__DIE__} = sub {
-	require Carp;
-
-	my $_ = pop @_;
-	s/(.*)( at .*? line .*?\n$)/$1/s;
-	push @_, $_;
-	if (defined $reporter) {
-		$reporter->reset_cursor;
-	}
-	die &Carp::longmess;
-};
-
-$SIG{INFO} = sub {
-	print "Trace:\n";
-	my $x = 1;
-	while (1) {
-		my @c;
-		{
-			package DB;
-			our @args;
-			@c = caller($x);
-		}
-		last if !@c;
-		print "#$x: $c[3]( ", 
-		    join(', ', map { defined $_ ? $_ : "<undef>" } @DB::args), 
-		    " )\n\tat line $c[2] of $c[1]\n";
-		$x++;
-	}
-	sleep 5;
-};
 
 my $subdirlist = {};
 

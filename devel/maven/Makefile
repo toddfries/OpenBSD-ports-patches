@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.16 2013/02/06 17:46:44 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/08 10:40:08 jasper Exp $
 
 COMMENT=	software project management and comprehension tool
 
-V=		3.0.4
+V=		3.0.5
 DISTNAME=	apache-maven-$V
 PKGNAME=	${DISTNAME:S/apache-//}
 CATEGORIES=	devel
+REVISION=	0
 
 HOMEPAGE=	http://maven.apache.org/
 
@@ -28,27 +29,25 @@ RUN_DEPENDS=	java/javaPathHelper
 NO_BUILD=	Yes
 NO_REGRESS=	Yes
 
-MAVEN_HOME=	${LOCALBASE}/${DISTNAME}
+MAVEN_HOME=	${LOCALBASE}/maven
 SAMPLEDIR=	${PREFIX}/share/examples/maven
-SUBST_VARS+=	DISTNAME
 
 do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/${DISTNAME}
+	${INSTALL_DATA_DIR} ${PREFIX}/maven
 	${INSTALL_DATA_DIR} ${SAMPLEDIR}
 	cd ${WRKDIST} && \
 		tar -cf - bin boot lib `find * -prune -type f` | \
-		tar -C ${PREFIX}/${DISTNAME} -xf -
+		tar -C ${PREFIX}/maven -xf -
 	find ${WRKINST} -name \*.orig -or -name \*.bat -or -name \*.exe | \
 		xargs rm
 	${INSTALL_DATA} ${WRKSRC}/conf/settings.xml ${SAMPLEDIR}/
-	ln -s ${SYSCONFDIR}/maven ${PREFIX}/${DISTNAME}/conf
+	ln -s ${SYSCONFDIR}/maven ${PREFIX}/maven/conf
 	@perl -pi -e 's,%%SYSCONFDIR%%,${SYSCONFDIR},' \
-		${PREFIX}/${DISTNAME}/bin/mvn
+		${PREFIX}/maven/bin/mvn
 	@sed -e 's,%%MAVEN_HOME%%,${MAVEN_HOME},' \
 		< ${FILESDIR}/maven.rc \
 		> ${SAMPLEDIR}/maven.rc
-	@sed -e 's,%%DISTNAME%%,${DISTNAME},' \
-		-e 's,%%LOCALBASE%%,${LOCALBASE},' \
+	@sed -e 's,%%LOCALBASE%%,${LOCALBASE},' \
 		< ${FILESDIR}/mvn \
 		> ${WRKSRC}/bin/mvn
 	${INSTALL_SCRIPT} ${WRKSRC}/bin/mvn ${PREFIX}/bin/

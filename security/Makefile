@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.303 2013/01/23 08:39:27 jasper Exp $
+# $OpenBSD: Makefile,v 1.306 2013/03/08 12:07:42 jasper Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -29,8 +29,8 @@
      SUBDIR += corkscrew
      SUBDIR += cracklib
      SUBDIR += cryptcat
-     SUBDIR += ocaml-cryptokit
      SUBDIR += ctunnel
+     SUBDIR += cvechecker
      SUBDIR += cyrus-sasl2
      SUBDIR += cyrus-sasl2,db4
      SUBDIR += cyrus-sasl2,ldap
@@ -41,6 +41,8 @@
      SUBDIR += despoof
      SUBDIR += dsniff
      SUBDIR += dsniff,no_x11
+     SUBDIR += erl-bcrypt
+     SUBDIR += erl-oauth
      SUBDIR += fcrackzip
      SUBDIR += fragroute
      SUBDIR += fragrouter
@@ -114,6 +116,7 @@
      SUBDIR += node-bcrypt
      SUBDIR += nss
      SUBDIR += oath-toolkit
+     SUBDIR += ocaml-cryptokit
      SUBDIR += ocaml-ssl
      SUBDIR += onesixtyone
      SUBDIR += opencdk

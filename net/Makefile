@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.789 2013/02/05 15:09:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.792 2013/03/08 12:07:47 jasper Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -82,6 +82,11 @@
      SUBDIR += emesene
      SUBDIR += enet
      SUBDIR += epic4
+     SUBDIR += erl-amqp_client
+     SUBDIR += erl-gen_bunny
+     SUBDIR += erl-ibrowse
+     SUBDIR += erl-mini_s3
+     SUBDIR += erl-rabbit_common
      SUBDIR += etherape
      SUBDIR += ettercap
      SUBDIR += ettercap,no_x11
@@ -135,6 +140,7 @@
      SUBDIR += icmpinfo
      SUBDIR += ifmcstat
      SUBDIR += ifstat
+     SUBDIR += ifstat,snmp
      SUBDIR += iftop
      SUBDIR += igmpproxy
      SUBDIR += ii
@@ -592,6 +598,7 @@
      SUBDIR += weechat
      SUBDIR += weex
      SUBDIR += wget
+     SUBDIR += whatweb
      SUBDIR += wide-dhcp
      SUBDIR += wide-dhcpv6
      SUBDIR += winexe
