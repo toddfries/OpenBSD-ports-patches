@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2013/01/21 06:55:29 benoit Exp $
+# $OpenBSD: Makefile,v 1.17 2013/03/11 23:01:31 fgsch Exp $
 
 COMMENT =	package for creating PostScript/PDF graphics
 
@@ -6,6 +6,7 @@ MODPY_EGG_VERSION = 0.12.1
 DISTNAME =	PyX-${MODPY_EGG_VERSION}
 PKGNAME =	py-pyx-${MODPY_EGG_VERSION}
 CATEGORIES =	graphics devel
+REVISION =	0
 
 HOMEPAGE =	http://pyx.sourceforge.net/
 
@@ -13,9 +14,6 @@ MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB +=	${MODPY_WANTLIB} pthread
 
@@ -30,7 +28,7 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/py-pyx
 	cd ${WRKSRC}/examples && pax -rw * ${PREFIX}/share/examples/py-pyx
 
-do-regress: fake
+do-test: fake
 	cd ${WRKSRC}/examples && for i in `find . -name "*.py"`; do \
 		echo $$i; \
 		cd ${WRKSRC}/examples/`dirname $$i`; \

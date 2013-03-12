@@ -1,35 +1,28 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/03/08 11:53:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2013/03/11 13:02:16 jasper Exp $
 
 COMMENT=	set of statistics functions for Erlang
 
 VERSION=	0.1.3
 DISTNAME=	bear-${VERSION}
 PKGNAME=	erl-${DISTNAME}
-CATEGORIES=	devel lang/erlang
+REVISION=	0
+CATEGORIES=	devel
 
 HOMEPAGE=	https://github.com/boundary/bear
 
 # Apache2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://distfiles.nl/
-TAR=		${LOCALBASE}/bin/gtar
 
-BUILD_DEPENDS=	archivers/gtar \
-		devel/rebar
-RUN_DEPENDS=	lang/erlang
+MODULES=	lang/erlang
 
-NO_REGRESS=	Yes
-ERL_LIBDIR=	${PREFIX}/lib/erlang/lib/${DISTNAME}
-SUBST_VARS+=	VERSION
+ERL_APP_SUBST=	Yes
 
-pre-configure:
-	${SUBST_CMD} ${WRKSRC}/src/bear.app.src
+NO_TEST=	Yes
 
 do-build:
-	cd ${WRKSRC} && ${LOCALBASE}/bin/rebar compile
+	cd ${WRKSRC} && ${REBAR_BIN} compile
 
 do-install:
 	${INSTALL_DATA_DIR} ${ERL_LIBDIR}/{ebin,src}

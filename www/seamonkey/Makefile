@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.129 2013/03/03 17:39:15 landry Exp $
+# $OpenBSD: Makefile,v 1.131 2013/03/11 11:44:49 espie Exp $
 
 COMMENT-main =		Mozilla application suite
 COMMENT-lightning =	Mozilla Seamonkey calendar extension
 COMMENT-enigmail =	Mozilla Seamonkey GnuPG extension
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 
-MOZILLA_VERSION=	2.16
+MOZILLA_VERSION=	2.16.1
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	seamonkey
 MOZILLA_CODENAME =	suite
@@ -17,6 +17,8 @@ ENIG_V =		1.5.1
 PKGNAME-enigmail =	enigmail-seamonkey-${ENIG_V}
 EPOCH-lightning =	0
 EPOCH-enigmail =	0
+REVISION-lightning =	0
+REVISION-enigmail =	0
 
 #MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build1/source/
 MASTER_SITES0 =	http://www.mozilla-enigmail.org/download/source/
@@ -35,9 +37,6 @@ CATEGORIES=	www mail net news
 
 # MPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES =	www/mozilla devel/gettext lang/python
 MODPY_RUNDEP =	No
@@ -49,7 +48,7 @@ MODGCC4_LANGS =		c c++
 MODCLANG_ARCHS =	amd64
 MODCLANG_LANGS =	c c++
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 MODGNU_CONFIG_GUESS_DIRS +=	${WRKSRC}/ldap/sdks/c-sdk/config/autoconf
 

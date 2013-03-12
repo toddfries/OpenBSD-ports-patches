@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.68 2013/03/08 06:51:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.70 2013/03/11 23:04:32 fgsch Exp $
 
 SHARED_ONLY=	Yes
 
@@ -17,6 +17,8 @@ PKGNAME-hpcups=	hpcups-${V}
 PKGNAME-libs=	hplip-libs-${V}
 PKGNAME-gui=	hplip-gui-${V}
 
+REVISION-main =	0
+
 SHARED_LIBS +=  hpmud		2.0 # .0.6
 SHARED_LIBS +=  hpip		2.0 # .0.1
 
@@ -30,9 +32,6 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2 - MIT (backend) - BSD (hpijs)
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=hplip/}
 

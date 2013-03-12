@@ -1,31 +1,26 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/03/08 11:55:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:03 espie Exp $
 
 COMMENT=	collection of Erlang Performancy related tools
 
 VERSION=	0.62
 DISTNAME=	eper-${VERSION}
 PKGNAME=	erl-${DISTNAME}
-CATEGORIES=	devel lang/erlang
+REVISION=	0
+CATEGORIES=	devel
 
 HOMEPAGE=	https://github.com/massemanet/eper
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://distfiles.nl/
 
-BUILD_DEPENDS=	devel/rebar
-RUN_DEPENDS=	lang/erlang
+MODULES=	lang/erlang
 
-NO_REGRESS=	Yes
-
-ERL_LIBDIR=	${PREFIX}/lib/erlang/lib/${DISTNAME}
-SUBST_VARS+=	VERSION
+NO_TEST=	Yes
 
 do-build:
-	cd ${WRKSRC} && ${LOCALBASE}/bin/rebar compile escriptize
+	cd ${WRKSRC} && ${REBAR_BIN} compile escriptize
 
 do-install:
 	${INSTALL_DATA_DIR} ${ERL_LIBDIR}/{ebin,priv,src}

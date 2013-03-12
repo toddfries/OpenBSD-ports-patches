@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/03/08 12:07:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 11:41:24 espie Exp $
 
 COMMENT=	Erlang OAuth implementation
 
@@ -6,23 +6,20 @@ COMMENT=	Erlang OAuth implementation
 VERSION=	0.1
 DISTNAME=	erlang-oauth-${VERSION}
 PKGNAME=	${DISTNAME:S/erlang/erl/}
-REVISION=0
-CATEGORIES=	security lang/erlang
+REVISION=	1
+CATEGORIES=	security
 
 HOMEPAGE=	https://github.com/opscode/erlang-oauth
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://distfiles.nl/
 
-RUN_DEPENDS=	lang/erlang
+MODULES=	lang/erlang
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 ERL_LIBDIR=	${PREFIX}/lib/erlang/lib/erl-oauth-${VERSION}
-SUBST_VARS+=	VERSION
 
 do-install:
 	${INSTALL_DATA_DIR} ${ERL_LIBDIR}/{ebin,src}

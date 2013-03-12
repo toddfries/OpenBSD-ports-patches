@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.147 2013/02/24 11:18:38 espie Exp $
+# $OpenBSD: Makefile,v 1.149 2013/03/12 14:58:16 sthen Exp $
 
 MULTI_PACKAGES=	-main -ntlm
 
@@ -9,15 +9,13 @@ COMMENT-main=	WWW and FTP proxy cache and accelerator
 COMMENT-ldap=	LDAP authentication/ACL support for Squid
 COMMENT-ntlm=	NTLM authentication/ACL support for Squid
 
-V=		3.2.7
+V=		3.2.9
 
 DISTNAME=	squid-$V
 PKGNAME-main=	squid-$V
 PKGNAME-ldap=	squid-ldap-$V
 PKGNAME-ntlm=	squid-ntlm-$V
 CATEGORIES=	www
-REVISION-main = 0
-REVISION-ldap = 0
 
 # bzr repository at https://code.launchpad.net/squid
 MASTER_SITES=	${HOMEPAGE}Versions/v${V:R:R}/${V:R}/
@@ -28,9 +26,6 @@ HOMEPAGE=	http://www.squid-cache.org/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m pthread stdc++
 
@@ -108,7 +103,7 @@ E=		${TRUEPREFIX}/share/examples/squid
 FAKE_FLAGS=	sysconfdir=$E \
 		DEFAULT_CONFIG_FILE=$E/squid.conf \
 		DEFAULT_MIME_TABLE=$E/mime.conf
-REGRESS_DEPENDS= devel/cppunit
+TEST_DEPENDS= devel/cppunit
 
 .if !${FLAVOR:Mno_ldap}
 MULTI_PACKAGES+= -ldap

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.1.1.1 2012/09/01 16:11:36 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.3 2013/03/11 12:27:54 sthen Exp $
 
 # version comes from the .spec file or setup.py for -full
 
@@ -12,9 +12,6 @@ MASTER_SITES ?=	http://rhaalovely.net/stuff/
 
 # MPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES =	lang/python
 MODPY_SETUPTOOLS =	Yes

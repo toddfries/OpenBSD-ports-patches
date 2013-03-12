@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.8 2013/02/09 14:49:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/11 11:41:26 espie Exp $
 
 COMMENT =		password cracker based on rainbow tables
 
-DISTNAME =		ophcrack-3.4.0
+DISTNAME =		ophcrack-3.4.1
 CATEGORIES =		security
 
 HOMEPAGE =		http://ophcrack.sourceforge.net/
@@ -11,9 +11,6 @@ MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m pthread ssl crypto
 
@@ -33,12 +30,11 @@ FLAVORS =		gui
 FLAVOR ?=
 
 .if ${FLAVOR:Mgui}
-WANTLIB +=		ICE SM X11 Xext Xi Xinerama Xrender expat fontconfig
-WANTLIB +=		freetype glib-2.0 gobject-2.0 gthread-2.0 png
-WANTLIB +=		pthread-stubs stdc++ xcb z
-MODULES +=		x11/qt4 \
-			devel/gettext
-WANTLIB +=		QtGui>=8 QtCore>=7 qwt
+WANTLIB +=		ICE SM X11 Xext Xi Xinerama Xrender fontconfig
+WANTLIB +=		freetype stdc++ QtGui>=8 QtCore>=7 qwt
+
+MODULES +=		x11/qt4
+
 LIB_DEPENDS +=		x11/qt4 \
 			x11/qwt
 CONFIGURE_ARGS +=	--enable-gui \
@@ -51,6 +47,6 @@ CONFIGURE_ENV +=	QTDIR="${MODQT4_QTDIR}" \
 CONFIGURE_ARGS =	--disable-gui --disable-graph
 .endif
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

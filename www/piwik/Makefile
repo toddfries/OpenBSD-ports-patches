@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.54 2013/01/18 16:44:55 giovanni Exp $
+# $OpenBSD: Makefile,v 1.56 2013/03/11 11:44:48 espie Exp $
 
 COMMENT=		open source web analytics software program
 
-DISTNAME=		piwik-1.10.1
+DISTNAME=		piwik-1.11.1
 CATEGORIES=		www
 
 HOMEPAGE=		http://www.piwik.org/
@@ -10,16 +10,13 @@ MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://builds.piwik.org/
 
 WRKDIST=		${WRKDIR}/piwik/
 
 NO_BUILD=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 PKG_ARCH=		*
 
 PREFIX=			/var/www

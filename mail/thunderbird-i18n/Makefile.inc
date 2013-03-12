@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile.inc,v 1.16 2013/03/03 17:41:16 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.19 2013/03/12 10:49:30 landry Exp $
 
 # keep in sync with www/mozilla/mozilla.port.mk
 ONLY_FOR_ARCHS =	amd64 i386 powerpc
 
 PKG_ARCH =	*
 
-FV =		17.0.3
+FV =		17.0.4
 V =		${FV:C/b.$//}
 NAME =		thunderbird-i18n
 
@@ -17,9 +17,6 @@ MAINTAINER =	Landry Breuil <landry@openbsd.org>
 
 # Mozilla public license
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/${FV}/linux-i686/xpi/ \
 		http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/${FV}/linux-i686/xpi/ \
@@ -35,7 +32,7 @@ RUN_DEPENDS =	thunderbird-${FV:S/b/beta/}:mail/mozilla-thunderbird
 
 DIST_SUBDIR =	mozilla/${NAME}-${FV}
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 EXTRACT_ONLY =
 
 .for i in ${LANGUAGES}

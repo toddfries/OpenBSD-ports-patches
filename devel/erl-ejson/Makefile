@@ -1,32 +1,25 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/03/08 11:54:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 10:50:03 espie Exp $
 
 COMMENT=	decode/encode JSON into/from Erlang terms
 
 VERSION=	0.1
 DISTNAME=	ejson-${VERSION}
 PKGNAME=	erl-${DISTNAME}
-CATEGORIES=	devel lang/erlang
+REVISION=	0
+CATEGORIES=	devel
 
 HOMEPAGE=	https://github.com/kevsmith/ejson
 
 # Apache2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://distfiles.nl/
-TAR=		${LOCALBASE}/bin/gtar
 
-BUILD_DEPENDS=	archivers/gtar \
-		devel/rebar
-RUN_DEPENDS=	lang/erlang \
-		www/erl-mochiweb
+MODULES=	lang/erlang
 
-USE_GMAKE=	Yes
-REGRESS_TARGET=	check
+RUN_DEPENDS=	www/erl-mochiweb
 
-ERL_LIBDIR=	${PREFIX}/lib/erlang/lib/${DISTNAME}
-SUBST_VARS+=	VERSION
+TEST_TARGET=	check
 
 do-install:
 	${INSTALL_DATA_DIR} ${ERL_LIBDIR}/{ebin,priv,src}

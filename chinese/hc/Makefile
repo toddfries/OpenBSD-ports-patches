@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2010/10/18 16:57:48 espie Exp $	
+# $OpenBSD: Makefile,v 1.10 2013/03/11 10:48:55 espie Exp $	
 
 COMMENT=	convert between GB and BIG-5 codes
 
@@ -10,8 +10,6 @@ MAINTAINER=     Kevin Lo <kevlo@openbsd.org>
 # Fairly restrictive licence
 PERMIT_PACKAGE_CDROM=	No
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	No
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c
 
@@ -24,7 +22,7 @@ WRKDIST=	${WRKDIR}/hc3
 USE_GROFF =	Yes
 ALL_TARGET=	hc b2g g2b
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 pre-patch:
 	perl -pi -e 's|malloc.h|stdlib.h|' ${WRKSRC}/hclib.c

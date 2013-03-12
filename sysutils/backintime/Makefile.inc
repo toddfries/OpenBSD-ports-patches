@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.6 2011/09/15 09:05:22 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.8 2013/03/11 13:42:59 sthen Exp $
 
 V=		1.0.8
 BASENAME=	backintime-${V}
@@ -10,15 +10,12 @@ HOMEPAGE=	http://backintime.le-web.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${HOMEPAGE}download/backintime/
 
 MODULES+=	lang/python
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 WRKDIST= 	${WRKDIR}/${BASENAME}
 

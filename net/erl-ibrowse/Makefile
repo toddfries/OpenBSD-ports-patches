@@ -1,30 +1,21 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/03/08 12:03:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 11:35:46 espie Exp $
 
 COMMENT=	Erlang HTTP client
 
 VERSION=	4.0.1.1
 DISTNAME=	ibrowse-${VERSION}
 PKGNAME=	erl-${DISTNAME}
-CATEGORIES=	net lang/erlang
+REVISION=	1
+CATEGORIES=	net
 
 HOMEPAGE=	https://github.com/opscode/ibrowse
 
 # LGPL / BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://distfiles.nl/
-TAR=		${LOCALBASE}/bin/gtar
 
-BUILD_DEPENDS=	archivers/gtar
-
-USE_GMAKE=	Yes
-
-REGRESS_TARGET=	test
-
-ERL_LIBDIR=	${PREFIX}/lib/erlang/lib/${DISTNAME}
-SUBST_VARS+=	VERSION
+MODULES=	lang/erlang
 
 do-install:
 	${INSTALL_DATA_DIR} ${ERL_LIBDIR}/{ebin,include,priv,src}

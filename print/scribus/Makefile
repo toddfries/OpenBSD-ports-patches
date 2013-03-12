@@ -1,19 +1,16 @@
-# $OpenBSD: Makefile,v 1.46 2013/02/09 14:49:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.48 2013/03/11 23:04:32 fgsch Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	DTP program
 DISTNAME=	scribus-1.4.1
 CATEGORIES=	print
-REVISION=	1
+REVISION=	2
 
 HOMEPAGE=	http://www.scribus.net/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB +=	QtGui QtNetwork QtXml aspell c cairo cups execinfo
 WANTLIB +=	fontconfig freetype jpeg lcms2 m pthread stdc++

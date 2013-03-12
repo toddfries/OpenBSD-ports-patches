@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.1 2013/03/08 16:12:47 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.3 2013/03/11 12:27:54 sthen Exp $
 
 COMMENT ?=	centralised configuration management for networks
 DISTNAME ?=	puppet-${VERSION}
@@ -6,7 +6,7 @@ PKGNAME ?=	ruby-${DISTNAME}
 HOMEPAGE ?=	https://puppetlabs.com
 MASTER_SITES ?=	${HOMEPAGE}/downloads/puppet/
 MAINTAINER ?=	Robert Nagy <robert@openbsd.org>
-NO_REGRESS ?=	Yes
+NO_TEST ?=	Yes
 NO_BUILD ?=	Yes
 FILESDIR ?=	${.CURDIR}/../files
 
@@ -20,8 +20,6 @@ RUN_DEPENDS +=	converters/ruby-json,${MODRUBY_FLAVOR} \
 
 # Apache
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 do-install:
 	${SUBST_CMD} ${WRKSRC}/lib/puppet/defaults.rb

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2013/03/06 08:51:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/12 06:13:33 ajacoutot Exp $
 
 COMMENT=	customer relationship management (CRM) software
 
-V=		1.1.20
-DISTNAME=	zurmo-stable-${V}.e84b9e76d27d
+V=		1.1.30
+DISTNAME=	zurmo-stable-${V}.21bbcc52bd20
 PKGNAME=	zurmo-${V}
+REVISION=	0
 
 CATEGORIES=	www productivity
 
@@ -12,14 +13,11 @@ HOMEPAGE=	http://zurmo.org/
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://dev2.zurmo.com/downloads/
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 
 PREFIX=		/var/www

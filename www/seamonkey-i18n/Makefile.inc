@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile.inc,v 1.17 2013/03/03 17:39:15 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.20 2013/03/11 13:42:59 sthen Exp $
 
 # keep in sync with working archs.. sigh
 ONLY_FOR_ARCHS =	amd64 i386 powerpc
 
 PKG_ARCH =	*
 
-FV =		2.16
+FV =		2.16.1
 V =		${FV:C/b.$//}
 NAME =		seamonkey-i18n
 
@@ -17,9 +17,6 @@ MAINTAINER =	Landry Breuil <landry@openbsd.org>
 
 # Mozilla public license
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	https://ftp.mozilla.org/pub/mozilla.org/seamonkey/releases/${FV}/langpack/ \
 		http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/${FV}/langpack/ \
@@ -30,7 +27,7 @@ RUN_DEPENDS =	seamonkey-${FV:S/b/beta/}:www/seamonkey
 
 DIST_SUBDIR =	mozilla/${NAME}-${FV}
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 EXTRACT_ONLY =
 
 # needed to have all distfiles in distinfo
