@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.284 2013/03/12 07:35:16 jasper Exp $
+# $OpenBSD: Makefile,v 1.286 2013/03/18 09:02:35 ajacoutot Exp $
 
      SUBDIR =
-     SUBDIR += LPRng
      SUBDIR += accountsservice
      SUBDIR += anacron
      SUBDIR += ansible
@@ -98,6 +97,7 @@
      SUBDIR += lsof
      SUBDIR += luastatgrab
      SUBDIR += mac-robber
+     SUBDIR += mcollective
      SUBDIR += memtest86+
      SUBDIR += memtester
      SUBDIR += mencal

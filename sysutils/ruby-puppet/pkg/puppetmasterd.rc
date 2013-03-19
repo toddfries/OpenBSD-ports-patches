@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# $OpenBSD: puppetmasterd.rc,v 1.4 2013/03/13 14:35:39 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/bin/puppet master"
+
+. /etc/rc.d/rc.subr
+
+pexp="${RUBY} ${daemon}${daemon_flags:+ ${daemon_flags}}"
+rc_reload=NO
+
+rc_cmd $1

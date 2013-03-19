@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.73 2013/03/11 11:42:42 espie Exp $
+# $OpenBSD: Makefile,v 1.75 2013/03/16 09:59:19 jasper Exp $
 
 COMMENT-main=		XSLT C Library for GNOME
 COMMENT-python= 	Python bindings for libxslt
 
-VERSION=		1.1.27
+VERSION=		1.1.28
 DISTNAME=		libxslt-${VERSION}
 PKGNAME-main=		libxslt-${VERSION}
 PKGNAME-python= 	py-libxslt-${VERSION}
@@ -14,8 +14,8 @@ CATEGORIES=		textproc
 
 HOMEPAGE=		http://xmlsoft.org/XSLT/
 
-MASTER_SITES=		ftp://xmlsoft.org/libxslt/ \
-			${MASTER_SITE_GNOME:=sources/libxslt/1.1/}
+MASTER_SITES=		http://distfiles.nl/ \
+			ftp://xmlsoft.org/libxslt/
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
@@ -56,6 +56,9 @@ LIB_DEPENDS-python=	textproc/libxslt,-main \
 			${MODGETTEXT_LIB_DEPENDS}
 FAKE_FLAGS=		EXAMPLE_DIR=${PREFIX}/share/examples/libxslt/
 CONFIGURE_ARGS+=	--with-python
+
+post-install:
+	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.{la,a}
 .else
 CONFIGURE_ARGS+=	--without-python
 .endif

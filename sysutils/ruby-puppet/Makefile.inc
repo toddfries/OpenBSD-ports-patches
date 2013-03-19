@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.3 2013/03/11 12:27:54 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.5 2013/03/13 14:35:38 ajacoutot Exp $
 
 COMMENT ?=	centralised configuration management for networks
 DISTNAME ?=	puppet-${VERSION}
@@ -9,9 +9,12 @@ MAINTAINER ?=	Robert Nagy <robert@openbsd.org>
 NO_TEST ?=	Yes
 NO_BUILD ?=	Yes
 FILESDIR ?=	${.CURDIR}/../files
+PKGDIR ?=	${.CURDIR}/../pkg
+PLIST ?=	${.CURDIR}/pkg/PLIST
 
 CATEGORIES +=	sysutils net
 MODULES +=	lang/ruby
+SUBST_VARS +=	RUBY
 
 BUILD_DEPENDS +=${RUN_DEPENDS}
 RUN_DEPENDS +=	converters/ruby-json,${MODRUBY_FLAVOR} \

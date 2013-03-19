@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# $OpenBSD: puppet_dashboard.rc,v 1.2 2013/03/18 14:25:41 ajacoutot Exp $
+
+daemon="./script/server -d"
+daemon_flags="-e production"
+daemon_user="_puppet-dashboard"
+
+. /etc/rc.d/rc.subr
+
+pexp="${RUBY} ${daemon}${daemon_flags:+ ${daemon_flags}}"
+rc_reload=NO
+
+rc_start() {
+	${rcexec} "cd ${INSTDIR} && ${daemon} ${daemon_flags}"
+}
+
+rc_stop() {
+	pkill -INT -f "^${pexp}"
+}
+
+rc_cmd $1

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2013/03/11 11:35:49 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2013/03/14 10:28:52 sthen Exp $
 
 COMMENT-main=	nagios service check acceptor
 COMMENT-client=	nagios service check acceptor - client
@@ -10,7 +10,7 @@ WRKDIST=	${WRKDIR}/icinga-nsca
 PKGNAME-main=	nsca-${VERSION}
 PKGNAME-client=	nsca-client-${VERSION}
 CATEGORIES=	net
-REVISION=	2
+REVISION=	4
 
 HOMEPAGE=	http://www.nagios.org/
 

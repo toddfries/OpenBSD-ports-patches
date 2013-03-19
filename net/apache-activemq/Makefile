@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2013/03/11 11:35:45 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/18 14:46:28 ajacoutot Exp $
 
 PKG_ARCH=	*
 
@@ -6,9 +6,11 @@ COMMENT=	open source message broker implementing JMS 1.1
 
 V=		5.8.0
 DISTNAME=	apache-activemq-$V
-REVISION=	0
+REVISION=	5
 
 CATEGORIES=	net
+
+MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # Apache2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -26,15 +28,19 @@ SUBST_VARS +=	V
 NO_BUILD=	Yes
 NO_TEST=	Yes
 
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/bin/activemq
+
 do-install:
-	rm -r ${WRKSRC}/bin/macosx/ ${WRKSRC}/bin/linux-x86-* ${WRKSRC}/bin/*.orig
+	rm -r ${WRKSRC}/bin/{macosx,linux-x86-*,*.orig} \
+		${WRKSRC}/data
 	${INSTALL_DATA_DIR} ${PREFIX}/activemq/
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/activemq/conf
 	cd ${WRKSRC} && tar cf - * | tar xf - -C ${PREFIX}/activemq/
-.for s in activemq activemq-admin
-	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -c ${FILESDIR}/$s \
-		${PREFIX}/bin/$s
-	chmod +x ${PREFIX}/bin/$s
-.endfor
-	${INSTALL_DATA} ${FILESDIR}/activemqrc ${PREFIX}/activemq/conf/
+	${INSTALL_DATA} ${FILESDIR}/activemq.conf ${PREFIX}/share/examples/activemq/
+	mv ${PREFIX}/activemq/conf ${PREFIX}/share/examples/activemq/
+	cd ${PREFIX}/activemq && ln -sf /var/db/activemq/data data
+	cd ${PREFIX}/activemq && ln -sf /var/db/activemq/tmp tmp
+	cd ${PREFIX}/activemq && ln -sf ${SYSCONFDIR}/activemq conf
 
 .include <bsd.port.mk>
