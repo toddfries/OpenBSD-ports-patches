@@ -1,5 +1,6 @@
-# $OpenBSD: Makefile.inc,v 1.5 2013/03/13 14:35:38 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.7 2013/03/20 07:12:22 ajacoutot Exp $
 
+PKG_ARCH ?=	*
 COMMENT ?=	centralised configuration management for networks
 DISTNAME ?=	puppet-${VERSION}
 PKGNAME ?=	ruby-${DISTNAME}
@@ -13,8 +14,17 @@ PKGDIR ?=	${.CURDIR}/../pkg
 PLIST ?=	${.CURDIR}/pkg/PLIST
 
 CATEGORIES +=	sysutils net
-MODULES +=	lang/ruby
 SUBST_VARS +=	RUBY
+
+# Ruby 1.8 supports both version 2 and 3 of Puppet
+# (http://docs.puppetlabs.com/guides/platforms.html).
+# For maintenance/ease of use, the following ports should use the same
+# Ruby version as Puppet:
+#  databases/ruby-hiera
+#  sysutils/mcollective
+#  sysutils/ruby-facter
+#  www/puppet-dashboard
+MODULES +=	lang/ruby
 
 BUILD_DEPENDS +=${RUN_DEPENDS}
 RUN_DEPENDS +=	converters/ruby-json,${MODRUBY_FLAVOR} \

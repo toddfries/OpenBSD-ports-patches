@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.341 2013/03/10 09:06:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.343 2013/03/19 15:49:09 sthen Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -20,7 +20,6 @@
      SUBDIR += cairo
      SUBDIR += cairomm
      SUBDIR += cal3d
-     SUBDIR += ocaml-camlimages
      SUBDIR += cfdg
      SUBDIR += clutter
      SUBDIR += colord
@@ -70,6 +69,7 @@
      SUBDIR += gimp
      SUBDIR += gle
      SUBDIR += glew
+     SUBDIR += glm
      SUBDIR += glpng
      SUBDIR += gmt
      SUBDIR += gnofract4d
@@ -156,6 +156,7 @@
      SUBDIR += mscgen
      SUBDIR += netpbm
      SUBDIR += node-canvas
+     SUBDIR += ocaml-camlimages
      SUBDIR += ocrad
      SUBDIR += opencsg
      SUBDIR += opencv
