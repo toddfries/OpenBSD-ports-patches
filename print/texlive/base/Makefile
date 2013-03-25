@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.64 2013/03/11 11:37:54 espie Exp $
+# $OpenBSD: Makefile,v 1.66 2013/03/21 08:46:36 ajacoutot Exp $
 
 COMMENT =		base binaries for TeXLive typesetting distribution
 
@@ -35,6 +35,7 @@ MODULES =		textproc/intltool converters/libiconv
 # These following two modules are just for variable substitution in patches
 # They are not real dependencies of _base, but of _texmf-full
 MODULES +=		lang/ruby lang/python
+MODRUBY_REV =		1.8
 MODRUBY_BUILDDEP =	No
 MODRUBY_RUNDEP =	No
 MODPY_BUILDDEP =	No
@@ -71,7 +72,6 @@ MAKE_ENV =		${CONFIGURE_ENV}
 NO_TEST =		Yes
 
 USE_GMAKE =	Yes
-USE_LIBTOOL =	Yes
 
 .if ${MACHINE_ARCH} == "sparc64"
 CFLAGS +=	-fPIC

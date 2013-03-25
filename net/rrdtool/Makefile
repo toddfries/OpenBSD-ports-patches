@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.68 2013/03/11 11:35:56 espie Exp $
+# $OpenBSD: Makefile,v 1.70 2013/03/21 08:46:35 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -32,7 +32,6 @@ PERMIT_PACKAGE_CDROM=	Yes
 MASTER_SITES=	${HOMEPAGE}pub/
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
 MULTI_PACKAGES=	-main -perl -python -ruby
@@ -68,6 +67,7 @@ LIB_DEPENDS-python=	rrdtool-${VERSION}:net/rrdtool
 RUN_DEPENDS-python=	${MODPY_RUN_DEPENDS}
 MODPY_EGG_VERSION=	0.2.1
 
+MODRUBY_REV=		1.8
 LIB_DEPENDS-ruby=	rrdtool-${VERSION}:net/rrdtool \
 			${MODRUBY_LIB_DEPENDS}
 WANTLIB-ruby=		c m rrd ${MODRUBY_WANTLIB}

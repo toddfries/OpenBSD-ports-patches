@@ -1,7 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2013/03/11 10:50:09 espie Exp $
-
-# XXX: cannot be updated to a newer version before the binutils in base
-# is updated to 2.17.
+# $OpenBSD: Makefile,v 1.19 2013/03/21 16:22:51 jasper Exp $
 
 # m68k - needs ELF and serious tinkering
 # m88k - missing code
@@ -11,6 +8,7 @@ NOT_FOR_ARCHS= 		m68k m88k vax
 COMMENT=		Foreign Function Interface
 
 DISTNAME=		libffi-3.0.9
+REVISION=		1
 SHARED_LIBS +=  ffi                  0.0      # .5.9
 CATEGORIES=		devel
 
@@ -23,9 +21,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 MASTER_SITES=		ftp://sourceware.org/pub/libffi/
 
-TEST_DEPENDS=	devel/dejagnu
-
-USE_LIBTOOL=		Yes
+TEST_DEPENDS=		devel/dejagnu
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}

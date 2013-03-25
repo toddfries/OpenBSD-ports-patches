@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2013/03/11 11:37:53 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/23 08:33:31 ajacoutot Exp $
 
 # XXX remove @exec-update when we branch 5.4-current
 
 COMMENT=	OpenPrinting CUPS filters
 
-DISTNAME=	cups-filters-1.0.30
+DISTNAME=	cups-filters-1.0.31
 CATEGORIES=	print
 
 SHARED_LIBS +=  cupsfilters               0.0 # 1.0
@@ -20,7 +20,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 WANTLIB += asn1 avahi-client avahi-common avahi-glib c crypto
 WANTLIB += cups cupsimage dbus-1 expat fontconfig freetype glib-2.0
 WANTLIB += gssapi iconv ijs intl jpeg krb5 lcms2 m openjpeg pcre
-WANTLIB += png poppler pthread qpdf ssl stdc++ tiff z
+WANTLIB += png poppler pthread qpdf ssl stdc++ tiff z pthread-stubs
 
 MASTER_SITES=	http://www.openprinting.org/download/cups-filters/
 
@@ -42,7 +42,6 @@ LIB_DEPENDS=	print/cups,-libs \
 RUN_DEPENDS +=	print/foomatic-db-engine
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 
 MAKE_FLAGS=	DLOPEN_LIBS=""
 

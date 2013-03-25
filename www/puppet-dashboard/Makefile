@@ -1,17 +1,19 @@
-# $OpenBSD: Makefile,v 1.19 2013/03/20 07:08:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2013/03/25 07:55:10 ajacoutot Exp $
 
 COMMENT=	overview of your Puppet ecosystem
 
-DISTNAME=	puppet-dashboard-1.2.22
+DISTNAME=	puppet-dashboard-1.2.23
 CATEGORIES=	www sysutils
-REVISION=	5
 
 HOMEPAGE=	https://puppetlabs.com/puppet/related-projects/dashboard/
+
+MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # Apache 2.0
 PERMIT_PACKAGE_CDROM=	Yes
 
 MODULES=	lang/ruby
+MODRUBY_REV=	1.8
 
 MASTER_SITES=	http://puppetlabs.com/downloads/dashboard/
 
@@ -41,7 +43,6 @@ pre-configure:
 do-install:
 	mkdir -p ${INSTDIR}
 	cd ${WRKSRC} && ${TAR} -cf - * | tar -C ${INSTDIR} -xf -
-	find ${INSTDIR} -name '*.orig' -print0 | xargs -0 rm
 	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 
 .include <bsd.port.mk>

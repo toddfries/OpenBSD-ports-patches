@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.125 2013/03/16 22:56:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.128 2013/03/23 01:42:03 sthen Exp $
 
 COMMENT-main=	vi clone, many additional features
 COMMENT-lang=	vi clone, NLS subpackage
@@ -7,6 +7,7 @@ VERSION=	7.3.850
 DISTNAME=	vim-${VERSION}
 PKGNAME-main=	vim-${VERSION}
 PKGNAME-lang=	vim-lang-${VERSION}
+REVISION-lang=	1
 P=		vim${VERSION:R:S/.//}
 CATEGORIES=	editors
 # Upstream's normal distribution (http://ftp.vim.org/pub/vim/unix/) consists
@@ -30,6 +31,9 @@ WANTLIB +=	c curses
 
 USE_GROFF =	Yes
 MULTI_PACKAGES=	-main -lang
+
+FULLPKGNAME-lang= vim-lang-${VERSION}
+FULLPKGPATH-lang= ${PKGPATH},-lang
 
 FLAVORS=	huge gtk2 athena motif no_x11 perl python ruby
 FLAVOR?=	gtk2
@@ -61,6 +65,7 @@ WANTLIB+=	m pthread util ${MODPY_WANTLIB}
 
 .if ${FLAVOR:Mruby}
 MODULES+=	lang/ruby
+MODRUBY_REV=	1.8
 CONFIGURE_ARGS+= --enable-rubyinterp
 MAKE_ENV+=	RUBY="${RUBY}"
 LIB_DEPENDS+=	${MODRUBY_LIB_DEPENDS}

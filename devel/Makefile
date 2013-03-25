@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1115 2013/03/18 20:20:04 jasper Exp $
+# $OpenBSD: Makefile,v 1.1117 2013/03/22 13:44:31 bcallah Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -922,6 +922,7 @@
      SUBDIR += p5-Term-ReadKey
      SUBDIR += p5-Term-ReadLine-Gnu
      SUBDIR += p5-Term-ReadLine-Perl
+     SUBDIR += p5-Term-ReadLine-TTYtter
      SUBDIR += p5-Term-ReadLine-Zoid
      SUBDIR += p5-Term-ReadPassword
      SUBDIR += p5-Term-Screen
@@ -1103,6 +1104,7 @@
      SUBDIR += py-greenlet
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
+     SUBDIR += py-hgtools 
      SUBDIR += py-html5lib
      SUBDIR += py-iniparse
      SUBDIR += py-isodate

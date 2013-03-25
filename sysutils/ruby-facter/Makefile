@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.31 2013/03/20 06:50:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2013/03/25 07:57:00 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Ruby library for retrieving facts from operating systems
 
-VERSION=	1.6.17
-REVISION=	3
+VERSION=	1.6.18
 
 DISTNAME=	facter-${VERSION}
 PKGNAME=	ruby-${DISTNAME}
@@ -20,6 +19,7 @@ MASTER_SITES=	https://puppetlabs.com/downloads/facter/
 PERMIT_PACKAGE_CDROM=	Yes
 
 MODULES=	lang/ruby
+MODRUBY_REV=	1.8
 
 NO_BUILD=	Yes
 PKG_ARCH=	*

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.7 2013/03/11 11:42:41 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/21 08:57:49 fgsch Exp $
 
 COMMENT =	spelling, stemming, morphological analysis and generation
 
-DISTNAME =	hunspell-1.2.12
+DISTNAME =	hunspell-1.3.2
 
-SHARED_LIBS =	hunspell-1.2 	0.0 #	.0.0
+SHARED_LIBS =	hunspell-1.3 	0.0 #	.0.0
 
 CATEGORIES =	textproc
 
-HOMEPAGE =	http://hunspell.sourceforge.net
+HOMEPAGE =	http://hunspell.sourceforge.net/
 
 MAINTAINER =	Edd Barrett <edd@openbsd.org>
 
@@ -27,9 +27,6 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--with-ui \
 			--with-readline
-
-USE_LIBTOOL =		yes
-USE_GROFF =		Yes
 
 # default dictionary
 RUN_DEPENDS =		textproc/mozilla-dicts,-en-GB

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2013/03/11 11:20:28 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2013/03/21 08:46:32 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -24,6 +24,7 @@ PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB =	c crypto curses db gdbm m pthread readline ssl stdc++ \
 		${MODRUBY_WANTLIB}
+MODRUBY_REV=	1.8
 
 MASTER_SITES =	http://asset.rubini.us/
 
@@ -36,7 +37,6 @@ LIB_DEPENDS =	databases/gdbm \
 MODULES =	lang/ruby
 
 USE_GMAKE =	Yes
-USE_LIBTOOL=	Yes
 
 RBX_ARCH =	${MACHINE_ARCH}-openbsd
 RAKE_VER =	0.8.7

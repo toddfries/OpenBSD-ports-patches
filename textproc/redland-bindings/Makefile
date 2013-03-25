@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/03/11 11:42:46 espie Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/21 08:48:54 ajacoutot Exp $
 
 COMMENT-main=		Redland librdf Perl Bindings
 #COMMENT-lua=		Redland librdf Lua Bindings
@@ -33,7 +33,6 @@ BUILD_DEPENDS=		devel/swig
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--with-perl
-USE_LIBTOOL=		Yes
 USE_GROFF=		Yes
 
 MODULES+=		lang/python
@@ -63,6 +62,7 @@ RUN_DEPENDS-php=	${MODPHP_RUN_DEPENDS}
 
 MODULES+=		lang/ruby
 CONFIGURE_ARGS+=	--with-ruby
+MODRUBY_REV=		1.8
 MODRUBY_RUNDEP=		No
 CONFIGURE_ENV+=		RUBY=${RUBY}
 LIB_DEPENDS-ruby=	${LIB_DEPENDS} ${MODRUBY_LIB_DEPENDS}

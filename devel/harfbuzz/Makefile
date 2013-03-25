@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.9 2013/03/11 10:50:06 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2013/03/24 15:35:27 ajacoutot Exp $
 
 COMMENT=	text shaping library
 
-DISTNAME=	harfbuzz-0.9.13
+DISTNAME=	harfbuzz-0.9.14
 EXTRACT_SUFX=	.tar.bz2
-REVISION=	0
 
-SHARED_LIBS +=  harfbuzz                  3.0 # 913.0
+SHARED_LIBS +=  harfbuzz             3.1      # 914.0
 
 CATEGORIES=	devel x11
 
@@ -27,7 +26,6 @@ MASTER_SITES=	http://www.freedesktop.org/software/harfbuzz/release/
 MODULES=	devel/gettext
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 
 LIB_DEPENDS=	graphics/cairo \
 		graphics/graphite2 \
