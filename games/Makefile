@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.258 2013/03/13 15:50:57 bcallah Exp $
+# $OpenBSD: Makefile,v 1.263 2013/04/21 03:30:42 bentley Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -56,6 +56,7 @@
      SUBDIR += duke3ddata
      SUBDIR += dungeon
      SUBDIR += dungeon-crawl
+     SUBDIR += easyrpg
      SUBDIR += eboard
      SUBDIR += eboard-extras
      SUBDIR += eduke32
@@ -79,6 +80,7 @@
      SUBDIR += frotz
      SUBDIR += frozen-bubble
      SUBDIR += gamine
+     SUBDIR += garden
      SUBDIR += gargoyle
      SUBDIR += gbrainy
      SUBDIR += gcompris
@@ -89,6 +91,7 @@
      SUBDIR += gnuchess
      SUBDIR += gnugo
      SUBDIR += gnushogi
+     SUBDIR += golly
      SUBDIR += gottcode
      SUBDIR += grhino
      SUBDIR += gtetrinet
@@ -147,7 +150,9 @@
      SUBDIR += pingus
      SUBDIR += pioneers
      SUBDIR += pokerth
+     SUBDIR += polymorphable
      SUBDIR += prboom
+     SUBDIR += prboom-plus
      SUBDIR += puzzles
      SUBDIR += qgo
      SUBDIR += qstat

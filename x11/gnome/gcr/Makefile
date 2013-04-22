@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.17 2013/03/22 11:05:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2013/04/16 13:17:02 ajacoutot Exp $
 
 COMMENT=	library for bits of crypto UI and parsing
 
 GNOME_PROJECT=	gcr
-GNOME_VERSION=	3.6.2
-REVISION=	1
+GNOME_VERSION=	3.8.1
 
-SHARED_LIBS +=  gck-1                     1.0 # 0.0
-SHARED_LIBS +=  gcr-3                     2.0 # 1.0
-SHARED_LIBS +=  gcr-base-3                1.0 # 1.0
+SHARED_LIBS +=  gck-1                1.0      # 0.0
+SHARED_LIBS +=  gcr-base-3           2.0      # 1.0
+SHARED_LIBS +=  gcr-ui-3             2.0      # 1.0
+SHARED_LIBS +=  gcr-3                2.0      # 1.0
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -26,7 +26,7 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
-MODGNOME_TOOLS=		goi
+MODGNOME_TOOLS=		gi
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 
@@ -41,18 +41,12 @@ LIB_DEPENDS=	x11/gtk+3 \
 
 CONFIGURE_ARGS=	--disable-update-mime
 
-### XXX remove on next upgrade
-AUTOCONF_VERSION=	2.68
-AUTOMAKE_VERSION=	1.11
-BUILD_DEPENDS +=	devel/autoconf/${AUTOCONF_VERSION} \
-			devel/automake/${AUTOMAKE_VERSION} \
-			devel/libtool
-
-post-patch:
-	@cd ${WRKSRC} && \
-		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-		autoreconf -i
-### end remove
+# XXX push a proper fix upstream
+BUILD_DEPENDS += textproc/gsed
+pre-configure:
+	perl -pi -e 's,sed -i,gsed -i,g' \
+		${WRKSRC}/{,ui,ui/tests,gcr,gcr/tests,gck,gck/tests,egg,egg/tests}/Makefile.in \
+		${WRKSRC}/Makefile.decl
+	${SUBST_CMD} ${WRKSRC}/ui/Makefile.in
 
 .include <bsd.port.mk>

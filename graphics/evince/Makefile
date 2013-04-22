@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.90 2013/03/22 06:44:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.94 2013/04/16 13:17:01 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,7 +8,7 @@ COMMENT-dvi=	evince document viewer backend for dvi documents
 COMMENT-nautilus= evince plugin for nautilus
 
 GNOME_PROJECT=	evince
-GNOME_VERSION=	3.6.1
+GNOME_VERSION=	3.8.0
 
 MAJ_V=		3.0
 SUBST_VARS=	MAJ_V
@@ -20,7 +20,9 @@ PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
 PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
 PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
-SHARED_LIBS +=  evdocument3               0.0 # 3.0
+REVISION-main=	0
+
+SHARED_LIBS +=  evdocument3               0.1 # 4.0
 SHARED_LIBS +=  evview3                   0.0 # 3.0
 
 HOMEPAGE=	http://www.gnome.org/projects/evince/
@@ -37,44 +39,43 @@ MODULES=	devel/gettext \
 
 USE_GROFF =	Yes
 
-BUILD_DEPENDS=	x11/gnome/icon-theme \
-		devel/gsettings-desktop-schemas
+BUILD_DEPENDS=	devel/gsettings-desktop-schemas
 
-WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes drm stdc++
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes gtk-3 pango-1.0
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
-WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gtk-3 pango-1.0 Xau Xdmcp Xxf86vm
+WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gobject-2.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs
-WANTLIB += GL xcb-shm xcb xcb-render z gthread-2.0 cairo-gobject m ffi
+WANTLIB += xcb-shm xcb xcb-render z gthread-2.0 cairo-gobject m ffi
 WANTLIB += atk-bridge-2.0 atspi harfbuzz icudata icule icuuc
+WANTLIB += gmodule-2.0 graphite2
 
-MODGNOME_TOOLS= goi yelp
+MODGNOME_TOOLS= gi yelp
 
 LIB_DEPENDS=	x11/gtk+3
 
 WANTLIB-main=	${WANTLIB} ICE SM c dbus-1 gailutil-3 \
-		gnome-keyring gs gcrypt gpg-error \
+		gs gcrypt gpg-error stdc++ secret-1 \
 		jpeg pthread tiff xml2 lcms2 openjpeg \
-		poppler poppler-glib spectre gnome-keyring
+		poppler poppler-glib spectre avahi-common
 LIB_DEPENDS-main= print/poppler \
 		print/libspectre \
-		x11/gnome/libgnome-keyring \
 		${LIB_DEPENDS}
 RUN_DEPENDS-main= ${RUN_DEPENDS} \
+		archivers/unrar \
+		archivers/unzip \
 		devel/gsettings-desktop-schemas \
 		misc/shared-mime-info \
 		print/ghostscript/gnu \
-		x11/gnome/icon-theme \
 		${MODGNOME_RUN_DEPENDS_yelp}
 
 WANTLIB-djvu=	${WANTLIB} jpeg evdocument3 djvulibre ICE SM \
-		 dbus-1 pthread
+		dbus-1 pthread
 LIB_DEPENDS-djvu= ${LIB_DEPENDS} \
 		${BASE_PKGPATH} \
 		graphics/djvulibre
 
 WANTLIB-dvi=	${WANTLIB} gs evdocument3 kpathsea spectre ICE SM \
-		jpeg
+		jpeg avahi-common dbus-1 pthread
 LIB_DEPENDS-dvi= ${LIB_DEPENDS} \
 		${BASE_PKGPATH} \
 		print/texlive/base \
@@ -93,8 +94,7 @@ MODGNOME_ICON_CACHE=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS+= --disable-static \
-		--disable-comics
+CONFIGURE_ARGS+= --disable-static
 
 MODGNOME_CPPFLAGS=${CFLAGS}
 CONFIGURE_ENV=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include"

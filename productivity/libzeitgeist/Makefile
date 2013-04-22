@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2013/03/21 08:48:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/28 21:39:26 jasper Exp $
 
 COMMENT=		Zeitgeist client library
 
@@ -28,7 +28,7 @@ WANTLIB += pcre pthread z
 LIB_DEPENDS=		devel/glib2
 
 RUN_DEPENDS=		productivity/zeitgeist
-TEST_DEPENDS=	productivity/zeitgeist
+TEST_DEPENDS=		productivity/zeitgeist
 
 CONFIGURE_STYLE=	gnu
 

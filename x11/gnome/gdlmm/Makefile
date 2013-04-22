@@ -1,26 +1,24 @@
-# $OpenBSD: Makefile,v 1.7 2013/03/11 11:46:10 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/31 13:37:57 ajacoutot Exp $
 
 COMMENT=	C++ binding for gdl
 
 GNOME_PROJECT=	gdlmm
-GNOME_VERSION=	3.3.2
-REVISION=	2
+GNOME_VERSION=	3.7.3
 
-SHARED_LIBS +=  gdlmm-3.0                 0.0 # 1.0
+SHARED_LIBS +=  gdlmm-3.0                 1.0 # 1.0
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 atkmm-1.6
-WANTLIB += cairo cairo-gobject cairomm-1.0 drm expat ffi fontconfig
-WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gdkmm-3.0 gdl-3 gio-2.0
-WANTLIB += giomm-2.4 glib-2.0 glibmm-2.4 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 gtkmm-3.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pangomm-1.4 pcre pixman-1 png pthread-stubs
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atkmm-1.6
+WANTLIB += atspi cairo cairo-gobject cairomm-1.0 dbus-1 expat
+WANTLIB += ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0 gdkmm-3.0
+WANTLIB += gdl-3 gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gmodule-2.0
+WANTLIB += gobject-2.0 graphite2 gthread-2.0 gtk-3 gtkmm-3.0 harfbuzz
+WANTLIB += icudata icule icuuc m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pangomm-1.4 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += sigc-2.0 stdc++ xcb xcb-render xcb-shm xml2 z
-WANTLIB += ICE SM atk-bridge-2.0 atspi dbus-1 harfbuzz icudata
-WANTLIB += icule icuuc pthread
 
 MODULES=	devel/gettext \
 		x11/gnome
@@ -29,15 +27,7 @@ LIB_DEPENDS=	x11/gnome/gdl \
 		x11/gtk3mm
 
 CONFIGURE_ENV=	ac_cv_path_DOT= \
-		ac_cv_path_DOXYGEN=
-
-### XXX remove at next release ###
-BUILD_DEPENDS+=	devel/m4
-CONFIGURE_ENV+=	ac_cv_path_DOXYGEN=doxygen
-CONFIGURE_ARGS=	--enable-maintainer-mode
-
-pre-configure:
-	ln -s /usr/local/bin/gm4 ${WRKDIR}/bin/m4
-##################################
+		ac_cv_path_DOXYGEN= \
+		ac_cv_path_XSLTPROC=
 
 .include <bsd.port.mk>

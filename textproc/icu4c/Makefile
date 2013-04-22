@@ -1,4 +1,9 @@
-# $OpenBSD: Makefile,v 1.31 2013/03/24 10:28:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2013/04/12 17:39:57 sthen Exp $
+
+# avoid segfaults from icupkg compiled and then used during the build
+.if ${MACHINE_ARCH} == "arm"
+CFLAGS+=		-O1 -fno-stack-protector
+.endif
 
 COMMENT=		International Components for Unicode
 

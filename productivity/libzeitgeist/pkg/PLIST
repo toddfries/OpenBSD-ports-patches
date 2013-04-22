@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2012/09/29 10:29:11 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.3 2013/03/28 21:30:35 jasper Exp $
 %%SHARED%%
 include/zeitgeist-1.0/
 include/zeitgeist-1.0/zeitgeist-data-source-registry.h

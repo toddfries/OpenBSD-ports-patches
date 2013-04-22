@@ -1,4 +1,4 @@
-# $OpenBSD: ruby.port.mk,v 1.60 2013/03/20 19:13:50 jeremy Exp $
+# $OpenBSD: ruby.port.mk,v 1.63 2013/04/02 15:41:23 zhuk Exp $
 
 # ruby module
 
@@ -252,7 +252,10 @@ TEST_DEPENDS+=	${MODRUBY_RSPEC_DEPENDS}
 TEST_DEPENDS+=	${MODRUBY_RSPEC2_DEPENDS}
 .endif
 
-MODRUBY_RUBY_ADJ=	perl -pi -e 's,/usr/bin/env ruby,${RUBY},'
+MODRUBY_RUBY_ADJ =	perl -pi \
+		-e '$$. == 1 && s|^.*env ruby.*$$|\#!${RUBY}|;' \
+		-e '$$. == 1 && s|^.*bin/ruby.*$$|\#!${RUBY}|;' \
+		-e 'close ARGV if eof;'
 MODRUBY_ADJ_FILES?=
 .if !empty(MODRUBY_ADJ_FILES)
 MODRUBY_ADJ_REPLACE=	for pat in ${MODRUBY_ADJ_FILES:QL}; do \
@@ -374,8 +377,8 @@ MODRUBY_BUILD_TARGET = \
 	    cd ${WRKDIST} && gzip .metadata && \
 		    mv -f .metadata.gz ${_GEM_CONTENT}/metadata.gz; \
     fi; \
-    cd ${WRKDIST} && find . -type f \! -name '*.orig'  -print | \
-	    pax -wz -s '/^\.\///' -f ${_GEM_DATAFILE}; \
+    cd ${WRKDIST} && pax -wz -s '/.*${PATCHORIG:S@.@\.@g}$$//' \
+	    -x ustar -o write_opt=nodir * .* >${_GEM_DATAFILE}; \
     cd ${_GEM_CONTENT} && tar -cf ${WRKDIR}/${_GEM_PATCHED} *.gz; \
     mkdir -p ${GEM_BASE}; \
     env -i ${MAKE_ENV} HOME=`dirname ${GEM_BASE}` GEM_HOME=${GEM_BASE} \

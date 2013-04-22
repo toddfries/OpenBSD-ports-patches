@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.53 2013/03/11 10:50:04 espie Exp $
+# $OpenBSD: Makefile,v 1.55 2013/04/16 13:17:01 ajacoutot Exp $
 
 COMMENT=	user interface builder for the gtk+3 toolkit
 
 GNOME_VERSION=	3.14.2
 GNOME_PROJECT= 	glade
+REVISION=	0
 
 CATEGORIES=	devel
 
@@ -40,7 +41,7 @@ RUN_DEPENDS=	x11/gnome/devhelp \
 
 MODGNOME_DESKTOP_FILE= 	Yes
 MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS= goi yelp
+MODGNOME_TOOLS= gi yelp
 
 CONFIGURE_STYLE=	gnu
 MODGNOME_CPPFLAGS=	-pthread

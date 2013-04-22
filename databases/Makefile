@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.237 2013/03/09 06:38:30 fgsch Exp $
+# $OpenBSD: Makefile,v 1.241 2013/04/22 17:46:55 zhuk Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -147,6 +147,7 @@
      SUBDIR += pkglocatedb
      SUBDIR += pkglocatedb,src
      SUBDIR += ports-readmes
+     SUBDIR += ports-readmes-dancer
      SUBDIR += postgresql
      SUBDIR += postgresql-jdbc
      SUBDIR += postgresql-odbc
@@ -175,6 +176,7 @@
      SUBDIR += qdbm
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += redis
+     SUBDIR += riak
      SUBDIR += ruby-amalgalite
      SUBDIR += ruby-amalgalite,ruby18
      SUBDIR += ruby-bdb
@@ -244,7 +246,7 @@
      SUBDIR += tdbc
      SUBDIR += tdbc-sqlite3
      SUBDIR += tinycdb
+     SUBDIR += virtuoso
      SUBDIR += xapian-core
-     SUBDIR += xmysql
 
 .include <bsd.port.subdir.mk>

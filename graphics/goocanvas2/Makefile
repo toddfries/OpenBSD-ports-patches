@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.10 2013/03/11 11:10:52 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/04/16 13:17:01 ajacoutot Exp $
 
 COMMENT=		canvas widget for GTK+ based on Cairo
 
 GNOME_PROJECT=		goocanvas
 GNOME_VERSION=		2.0.1
 PKGNAME=		goocanvas2-${GNOME_VERSION}
-REVISION=		0
+REVISION=		2
 
 SHARED_LIBS +=  goocanvas-2.0             0.0 # 11.0
 CATEGORIES=		graphics
@@ -34,6 +34,6 @@ LIB_DEPENDS=	x11/gtk+3
 AUTOCONF_VERSION=2.68
 CONFIGURE_STYLE=autoconf
 
-MODGNOME_TOOLS= goi
+MODGNOME_TOOLS= gi
 
 .include <bsd.port.mk>

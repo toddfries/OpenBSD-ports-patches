@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.602 2013/03/08 12:17:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.606 2013/04/16 10:01:18 sthen Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
      SUBDIR += analog
+     SUBDIR += ap2-mod_dnssd
      SUBDIR += ap2-mod_fastcgi
      SUBDIR += ap2-mod_fcgid
      SUBDIR += ap2-mod_jk
@@ -20,6 +21,7 @@
      SUBDIR += bluefish
      SUBDIR += bozohttpd
      SUBDIR += bricolage
+     SUBDIR += c-icap
      SUBDIR += calamaris
      SUBDIR += canto
      SUBDIR += cclive
@@ -36,7 +38,6 @@
      SUBDIR += concrete5
      SUBDIR += conkeror
      SUBDIR += cronolog
-     SUBDIR += cssed
      SUBDIR += dansguardian
      SUBDIR += decss
      SUBDIR += dillo
@@ -47,7 +48,6 @@
      SUBDIR += elinks
 #     SUBDIR += elinks,js
      SUBDIR += epiphany
-     SUBDIR += epiphany-extensions
      SUBDIR += erl-mochiweb
      SUBDIR += erl-webmachine
      SUBDIR += ezpublish
@@ -484,6 +484,7 @@
      SUBDIR += sqtop
      SUBDIR += squid
      SUBDIR += squid27
+     SUBDIR += squidclamav
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
      SUBDIR += statusnet

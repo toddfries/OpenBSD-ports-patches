@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.308 2013/03/22 20:53:30 rpe Exp $
+# $OpenBSD: Makefile,v 1.313 2013/04/21 13:54:30 shadchin Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -41,6 +41,7 @@
      SUBDIR += despoof
      SUBDIR += dsniff
      SUBDIR += dsniff,no_x11
+     SUBDIR += easy-rsa
      SUBDIR += erl-bcrypt
      SUBDIR += erl-oauth
      SUBDIR += fcrackzip
@@ -81,6 +82,7 @@
      SUBDIR += keepassx
      SUBDIR += keychain
      SUBDIR += klaxon
+     SUBDIR += kqoauth
      SUBDIR += l0phtcrack
      SUBDIR += libassuan
      SUBDIR += libfprint
@@ -209,6 +211,7 @@
      SUBDIR += pwsafe
      SUBDIR += py-M2Crypto
      SUBDIR += py-Rijndael
+     SUBDIR += py-bcrypt
      SUBDIR += py-crack
      SUBDIR += py-cryptkit
      SUBDIR += py-crypto
@@ -219,8 +222,10 @@
      SUBDIR += py-sslwrapper
      SUBDIR += qca
      SUBDIR += qca2
+     SUBDIR += qca-gnupg
      SUBDIR += qca-ossl
      SUBDIR += qca-tls
+     SUBDIR += qoauth
      SUBDIR += radiusniff
      SUBDIR += rarcrack
      SUBDIR += rdp
@@ -259,6 +264,7 @@
      SUBDIR += swatch
      SUBDIR += tcltls
      SUBDIR += tempwatch
+     SUBDIR += tinyca
      SUBDIR += towitoko
      SUBDIR += vomit
      SUBDIR += vpnc

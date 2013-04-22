@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.26 2013/03/11 10:50:10 espie Exp $
+# $OpenBSD: Makefile,v 1.31 2013/04/18 09:00:54 ajacoutot Exp $
 
 COMMENT=	gobject-based plugins engine
 
 GNOME_PROJECT=	libpeas
-GNOME_VERSION=	1.6.2
+GNOME_VERSION=	1.8.0
+REVISION=	4
 
 CATEGORIES=	devel
 
@@ -22,32 +23,42 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		lang/python
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += atk-bridge-2.0 atspi c cairo cairo-gobject dbus-1 drm
-WANTLIB += expat ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 girepository-1.0 gjs glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 harfbuzz icudata icule icuuc m mozjs185
-WANTLIB += ncurses nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 plc4 plds4 png pthread pthread-stubs
-WANTLIB += stdc++ util xcb xcb-render xcb-shm z
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += c cairo cairo-gobject dbus-1 expat ffi fontconfig freetype
+WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 girepository-1.0 gjs glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 graphite2 gthread-2.0 gtk-3
+WANTLIB += harfbuzz icudata icule icuuc m mozjs185 ncurses ncursesw
+WANTLIB += nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += plc4 plds4 png pthread pthread-stubs readline stdc++
+WANTLIB += util xcb xcb-render xcb-shm z
 WANTLIB += ${MODPY_WANTLIB}
 
-RUN_DEPENDS=	devel/py-gobject3
-BUILD_DEPENDS=	devel/py-gobject3
+BUILD_DEPENDS=	devel/py-gobject3${MODPY_FLAVOR}
+
+RUN_DEPENDS=	devel/py-gobject3 \
+		devel/py-gobject3${MODPY_FLAVOR}
 
 LIB_DEPENDS=	devel/gobject-introspection \
-		x11/gnome/gjs>=1.32.0 \
+		x11/gnome/gjs \
 		x11/gtk+3
 
 MODGNOME_ICON_CACHE=	Yes
+MODPY_VERSION=		${MODPY_DEFAULT_VERSION_3}
 
 LIBTOOL_FLAGS=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--disable-static \
-		--disable-glade-catalog \
-		--disable-seed
+		--disable-glade-catalog
+
+# we need support for both python2 and python3
+BUILD_DEPENDS +=lang/python/${MODPY_DEFAULT_VERSION_2}
+RUN_DEPENDS +=	lang/python/${MODPY_DEFAULT_VERSION_2}
+WANTLIB +=	python${MODPY_DEFAULT_VERSION_2}
+CONFIGURE_ENV=	PYTHON2="${LOCALBASE}/bin/python${MODPY_DEFAULT_VERSION_2}" \
+		PYTHON3="${MODPY_BIN}" \
+		PYTHON3_CONFIG="${LOCALBASE}/bin/python${MODPY_DEFAULT_VERSION_3}-config"
 
 post-install:
 	rm ${PREFIX}/lib/libpeas-1.0/loaders/*.la

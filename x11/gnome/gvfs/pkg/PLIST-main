@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.24 2012/09/27 13:03:01 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.27 2013/03/30 17:06:41 ajacoutot Exp $
 @pkgpath ${BASE_PKGPATH}
 %%SHARED%%
 @bin bin/gvfs-cat
@@ -25,6 +25,7 @@ include/gvfs-client/gvfs/gvfsurimapper.h
 include/gvfs-client/gvfs/gvfsuriutils.h
 lib/libgvfscommon.a
 lib/libgvfscommon.la
+@lib lib/libgvfscommon.so.${LIBgvfscommon_VERSION}
 @bin libexec/gvfsd
 @bin libexec/gvfsd-afp
 @bin libexec/gvfsd-afp-browse
@@ -65,7 +66,6 @@ lib/libgvfscommon.la
 share/GConf/
 share/GConf/gsettings/
 share/GConf/gsettings/gvfs-dns-sd.convert
-share/applications/mount-archive.desktop
 share/bash-completion/completions/gvfs
 share/dbus-1/
 share/dbus-1/services/
@@ -153,6 +153,7 @@ share/locale/sr@latin/LC_MESSAGES/gvfs.mo
 share/locale/sv/LC_MESSAGES/gvfs.mo
 share/locale/ta/LC_MESSAGES/gvfs.mo
 share/locale/te/LC_MESSAGES/gvfs.mo
+share/locale/tg/LC_MESSAGES/gvfs.mo
 share/locale/th/LC_MESSAGES/gvfs.mo
 share/locale/tr/LC_MESSAGES/gvfs.mo
 share/locale/ug/LC_MESSAGES/gvfs.mo

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.172 2013/03/21 08:48:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.175 2013/03/28 21:25:17 sthen Exp $
 
 SHARED_ONLY=		Yes
+
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			10.12.1
-REVISION=		0
-REVISION-main=
+VER=			11.3.0
+REVISION-main=		0
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
 
@@ -19,13 +19,16 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 # Asterisk with OpenSSL and OpenH323 and distribute the resulting binary
 # files." iLBC codec has BSD-like license terms, but also see patent
 # notes in codecs/ilbc/LICENSE_ADDENDUM.
-PERMIT_PACKAGE_CDROM=	patent licensing clauses in iLBC
+PERMIT_PACKAGE_CDROM=	patent licensing clauses
 PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB-main +=	c crypto curl execinfo gsm idn iksemel
 WANTLIB-main += m ogg pthread spandsp sqlite3 ssl stdc++ termcap
 WANTLIB-main += tiff vorbis vorbisenc vorbisfile xml2 z
+WANTLIB-main += avcodec avformat avutil opencore-amrnb swscale
 WANTLIB-main += ${MODGETTEXT_WANTLIB}
+
+SHARED_LIBS=		asteriskssl 0.0		# 1
 
 MODULES=		devel/gettext
 
@@ -37,7 +40,9 @@ PSEUDO_FLAVORS=		no_calendar no_http_post no_ldap no_odbc \
 LIB_DEPENDS-main=	audio/gsm \
 			audio/libogg \
 			audio/libvorbis \
+			audio/opencore-amr \
 			devel/libexecinfo \
+			graphics/ffmpeg \
 			graphics/tiff \
 			net/curl \
 			telephony/spandsp \
@@ -47,8 +52,7 @@ LIB_DEPENDS-main=	audio/gsm \
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
 			telephony/asterisk-sounds/core-sounds/en,gsm \
 			telephony/asterisk-sounds/moh-opsound,wav
-BUILD_DEPENDS+=		devel/libtool# for share/aclocal/lt~obsolete.m4
-BUILD_DEPENDS+=		security/libsrtp>=1.4.4# statically linked
+BUILD_DEPENDS=		security/libsrtp>=1.4.4 # statically linked
 
 MASTER_SITES=	http://downloads.asterisk.org/pub/telephony/asterisk/releases/ \
 		http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/
@@ -70,9 +74,11 @@ LDFLAGS+=		-L${X11BASE}/lib -L${LOCALBASE}/lib
 CONFIGURE_ENV+=		CPPFLAGS="${CPPFLAGS}" \
 			CFLAGS="${CFLAGS}" \
 			LDFLAGS="${LDFLAGS}" \
-			LIBS="-pthread"
+			LIBS="-lpthread" \
+			ac_cv_path_LDCONFIG=:
 MAKE_FLAGS+=		ASTCFLAGS="${CFLAGS}" \
 			ASTLDFLAGS="${LDFLAGS}" \
+			ASTSSL_SO_VERSION="${LIBasteriskssl_VERSION}" \
 			NOISY_BUILD="Yes" \
 			OPTIMIZE=
 

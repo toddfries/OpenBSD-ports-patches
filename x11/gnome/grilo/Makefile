@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2013/03/19 17:42:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2013/04/16 13:17:01 ajacoutot Exp $
 
 COMMENT=	framework for making media discovery and browsing easy
 
 GNOME_PROJECT=	grilo
 GNOME_VERSION=	0.2.5
 API=		0.2
+REVISION=	1
 
 SHARED_LIBS +=  grilo-0.2            0.0      # 1.2
 SHARED_LIBS +=  grlnet-0.2           0.0      # 0.2
@@ -31,7 +32,7 @@ WANTLIB += xcb-shm xml2 z
 LIB_DEPENDS=	devel/libsoup \
 		x11/gtk+3
 
-MODGNOME_TOOLS= goi vala
+MODGNOME_TOOLS= gi vala
 
 SUBST_VARS+=	API
 

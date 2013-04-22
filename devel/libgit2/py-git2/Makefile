@@ -1,19 +1,18 @@
-# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:10 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2013/04/22 06:39:53 jasper Exp $
 
 COMMENT=		libgit2 bindings in Python
 
-V=			0.17.1
-DISTNAME=		libgit2-pygit2-v${V}-0-ga1716a3
+V=			0.18.1
+PROJECT=		pygit2
 PKGNAME=		py-git2-$V
 
 MODULES=		lang/python
 
-WANTLIB += 		crypto git2 z ${MODPY_WANTLIB}
+WANTLIB += 		git2 pthread ${MODPY_WANTLIB}
 
-LIB_DEPENDS=		devel/libgit2/libgit2>=0.17.0
+LIB_DEPENDS=		devel/libgit2/libgit2>=0.18.0
 
-WRKDIST= 		${WRKDIR}/libgit2-pygit2-a1716a3/
-
-NO_TEST=		Yes
+do-test:
+	cd ${WRKSRC} && ${MODPY_BIN} setup.py test
 
 .include <bsd.port.mk>

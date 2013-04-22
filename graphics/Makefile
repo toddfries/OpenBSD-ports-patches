@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.344 2013/03/21 08:31:55 zhuk Exp $
+# $OpenBSD: Makefile,v 1.346 2013/04/01 12:03:30 zhuk Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -76,7 +76,6 @@
      SUBDIR += gocr
      SUBDIR += goocanvas
      SUBDIR += goocanvas2
-     SUBDIR += goocanvasmm2
      SUBDIR += gphoto2
      SUBDIR += gpicview
      SUBDIR += gracula
@@ -132,6 +131,7 @@
      SUBDIR += libmng
      SUBDIR += libmpeg2
      SUBDIR += libpano13
+     SUBDIR += libpgf
      SUBDIR += libqrencode
      SUBDIR += libraw
      SUBDIR += libungif

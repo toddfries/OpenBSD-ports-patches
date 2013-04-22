@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.147 2013/03/11 11:46:10 espie Exp $
+# $OpenBSD: Makefile,v 1.156 2013/04/19 15:00:27 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
-GNOME_VERSION=		3.6.2
-REVISION=		4
+GNOME_VERSION=		3.8.1.1
 
 HOMEPAGE=		http://projects.gnome.org/gdm/
 
@@ -16,17 +15,17 @@ SHARED_LIBS +=  gdmsimplegreeter          0.0 # 1.0
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm accountsservice
-WANTLIB += atk-1.0 c cairo cairo-gobject canberra canberra-gtk3
-WANTLIB += dbus-1 dbus-glib-1 drm execinfo expat ffi fontconfig
+WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+WANTLIB += Xfixes Xi Xinerama Xrandr Xrender accountsservice atk-1.0
+WANTLIB += atk-bridge-2.0 atspi c cairo cairo-gobject canberra
+WANTLIB += canberra-gtk3 dbus-1 dbus-glib-1 expat ffi fontconfig
 WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gthread-2.0 gtk-3 ltdl m nspr4 nss3 nssutil3
-WANTLIB += ogg pam pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
-WANTLIB += pixman-1 plc4 plds4 png pthread pthread-stubs smime3
-WANTLIB += softokn3 sqlite3 ssl3 stdc++ upower-glib util vorbis
-WANTLIB += vorbisfile xcb xcb-render xcb-shm z icuuc
-WANTLIB += ICE SM atk-bridge-2.0 atspi harfbuzz icudata icule
+WANTLIB += gobject-2.0 graphite2 gthread-2.0 gtk-3 harfbuzz icudata
+WANTLIB += icule icuuc ltdl m nspr4 nss3 nssutil3 ogg pam pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4
+WANTLIB += png pthread pthread-stubs smime3 softokn3 sqlite3 ssl3
+WANTLIB += upower-glib util vorbis vorbisfile xcb xcb-render xcb-shm
+WANTLIB += z
 
 MODULES=		devel/gettext \
 			x11/gnome \
@@ -36,14 +35,10 @@ MODULES=		devel/gettext \
 # bring _all_ runtime dependencies (including sysutils/consolekit and zenity)
 #RUN_DEPENDS +=		x11/gnome/session
 
-# power icon
-RUN_DEPENDS +=		x11/gnome/icon-theme-symbolic
-
 # orca-autostart.desktop
 RUN_DEPENDS +=		x11/gnome/orca
 
 LIB_DEPENDS=		audio/libcanberra,-gtk3 \
-			devel/libexecinfo \
 			security/nss \
 			security/openpam \
 			sysutils/accountsservice \
@@ -51,7 +46,7 @@ LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
-MODGNOME_TOOLS= 	goi yelp
+MODGNOME_TOOLS= 	gi yelp
 MODGNOME_ICON_CACHE=	Yes
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include -DHAS_SA_LEN
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib
@@ -68,15 +63,12 @@ CONFIGURE_ARGS=		--disable-static \
 			--with-pid-file=/var/run/gdm.pid \
 			--with-dmconfdir="${LOCALBASE}/share/xsessions" \
 			--with-screenshot-dir=/var/run/gdm/greeter \
-			--with-incomplete-locales \
 			--with-user=_gdm \
 			--with-group=_gdm \
 			--with-console-kit \
 			--with-xauth-dir=/var/run/gdm \
 			--with-initial-vt=05 \
-			--without-systemd \
-			--without-tcp-wrappers \
-			--disable-console-helper
+			--without-tcp-wrappers
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Makefile.in \

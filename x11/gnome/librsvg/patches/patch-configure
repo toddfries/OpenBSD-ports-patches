@@ -1,0 +1,16 @@
+$OpenBSD: patch-configure,v 1.15 2013/04/05 08:21:45 ajacoutot Exp $
+
+https://bugzilla.gnome.org/show_bug.cgi?id=653323
+
+--- configure.orig	Fri Apr  5 09:23:01 2013
++++ configure	Fri Apr  5 09:24:04 2013
+@@ -13736,6 +13736,9 @@ fi
+ GTK2_BINARY_VERSION=
+ GTK3_BINARY_VERSION=
+ 
++have_gtk_2=no
++have_gtk_3=no
++
+ if test "$have_gtk_2" = "yes"; then
+     GTK2_BINARY_VERSION="`$PKG_CONFIG --variable=gtk_binary_version gtk+-2.0`"
+ fi

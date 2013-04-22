@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.38 2013/03/21 01:26:03 sthen Exp $
+# $OpenBSD: Makefile,v 1.41 2013/04/07 11:38:06 sthen Exp $
 
 COMMENT =	graphic library, pdf parser, viewer and utilities
 
@@ -6,6 +6,7 @@ V =		1.2
 DISTNAME =	mupdf-$V-source
 EXTRACT_SUFX =	.zip
 PKGNAME =	mupdf-${V:S/-rc/rc/}
+REVISION =	1
 
 CATEGORIES =	textproc x11
 
@@ -13,7 +14,9 @@ HOMEPAGE =	http://mupdf.com/
 
 MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
-# code: GPLv3. font maps: Adobe (redist ok, see headers). droid font: Apache.
+# code: Affero v3 (UGH!)
+# font maps: Adobe (redist ok, see headers).
+# droid font: Apache.
 PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB =	X11 Xext c freetype jbig2dec jpeg>=62 m openjpeg z

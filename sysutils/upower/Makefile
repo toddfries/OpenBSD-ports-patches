@@ -1,22 +1,25 @@
-# $OpenBSD: Makefile,v 1.24 2013/03/21 08:48:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2013/04/06 08:48:50 ajacoutot Exp $
 
 ONLY_FOR_ARCHS =${APM_ARCHS}
 
 COMMENT =	userland power management interface
 
-DISTNAME =	upower-0.9.18
+DISTNAME =	upower-0.9.20
 EXTRACT_SUFX =	.tar.xz
 CATEGORIES =	sysutils
-SHARED_LIBS +=  upower-glib               0.0 # 1.1
-REVISION =	0
+SHARED_LIBS +=  upower-glib               0.0 # 1.2
+REVISION =	1
 
 HOMEPAGE =	http://upower.freedesktop.org/
 MASTER_SITES =	${HOMEPAGE}/releases/
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 
-#GPLv2+
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
+
+WANTLIB += c dbus-1 dbus-glib-1 glib-2.0 gobject-2.0 m polkit-gobject-1
+WANTLIB += pthread
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
@@ -48,7 +51,7 @@ LIB_DEPENDS =	sysutils/polkit>=0.101 \
 BUILD_DEPENDS =	devel/gobject-introspection \
 		textproc/docbook-xsl
 
-WANTLIB += c dbus-1 dbus-glib-1 glib-2.0 gobject-2.0 gthread-2.0
-WANTLIB += m polkit-gobject-1 pthread
+# polkit(8) almost always needs to know the "active" session
+RUN_DEPENDS +=	sysutils/consolekit
 
 .include <bsd.port.mk>

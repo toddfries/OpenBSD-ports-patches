@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.796 2013/03/22 16:50:25 bcallah Exp $
+# $OpenBSD: Makefile,v 1.802 2013/04/21 19:46:56 sthen Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -16,7 +16,6 @@
      SUBDIR += angst
      SUBDIR += apache-activemq
      SUBDIR += ap-utils
-     SUBDIR += archie
      SUBDIR += argus
      SUBDIR += argus-clients
      SUBDIR += arp-scan
@@ -177,6 +176,7 @@
      SUBDIR += ldistfp
      SUBDIR += ldns
      SUBDIR += lftp
+     SUBDIR += libaccounts-glib
      SUBDIR += libbgpdump
      SUBDIR += libcares
      SUBDIR += libdnet
@@ -189,7 +189,7 @@
      SUBDIR += libnids
      SUBDIR += liboauth
      SUBDIR += libpcapnav
-     SUBDIR += libproxy,webkit
+     SUBDIR += libproxy,
      SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
@@ -216,6 +216,7 @@
      SUBDIR += mldonkey
      SUBDIR += mon
      SUBDIR += mono-zeroconf
+     SUBDIR += mosh
      SUBDIR += mrtd
      SUBDIR += mrtg
      SUBDIR += mtr
@@ -288,6 +289,7 @@
      SUBDIR += p5-Geo-IP
      SUBDIR += p5-IO-Interface
      SUBDIR += p5-IO-Socket-INET6
+     SUBDIR += p5-IO-Socket-IP
      SUBDIR += p5-IO-Socket-Multicast
      SUBDIR += p5-IO-Socket-Socks
      SUBDIR += p5-IP-Country
@@ -516,7 +518,6 @@
      SUBDIR += ruby-nmap-parser
      SUBDIR += ruby-pcap
      SUBDIR += ruby-pcaprub-msf
-     SUBDIR += ruby-rrdtool
      SUBDIR += ruby-snmp
      SUBDIR += ruby-stomp
      SUBDIR += ruby-xmpp4r
@@ -610,7 +611,6 @@
      SUBDIR += wmnetload
      SUBDIR += wmwave
      SUBDIR += wol
-     SUBDIR += xarchie
      SUBDIR += xchat
      SUBDIR += xl2tpd
      SUBDIR += xmlrpc-c

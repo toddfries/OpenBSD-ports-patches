@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.24 2013/03/11 11:46:11 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2013/04/16 13:17:01 ajacoutot Exp $
 
 COMMENT=	library for gnome keyring integration
 
 GNOME_PROJECT=	libgnome-keyring
-GNOME_VERSION=	3.6.0
-REVISION=	2
+GNOME_VERSION=	3.8.0
 
 SHARED_LIBS +=  gnome-keyring        7.0      # 2.0
 
@@ -12,9 +11,9 @@ SHARED_LIBS +=  gnome-keyring        7.0      # 2.0
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += dbus-1 ffi gcrypt glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gpg-error gthread-2.0 pcre pthread
+WANTLIB += gpg-error pcre pthread
 
-MODGNOME_TOOLS=	goi vala
+MODGNOME_TOOLS=	gi vala
 
 MODULES=	devel/gettext \
 		x11/gnome
@@ -22,5 +21,8 @@ MODULES=	devel/gettext \
 LIB_DEPENDS=	security/libgcrypt \
 		x11/dbus \
 		devel/glib2
+
+# test-gi.py
+TEST_DEPENDS=	devel/py-gobject3
 
 .include <bsd.port.mk>

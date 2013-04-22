@@ -1,0 +1,15 @@
+$OpenBSD: patch-src_terminal_c,v 1.5 2013/04/15 18:57:55 jasper Exp $
+--- src/terminal.c.orig	Mon Apr 15 15:51:46 2013
++++ src/terminal.c	Mon Apr 15 20:55:57 2013
+@@ -230,7 +230,11 @@ main (int argc, char **argv)
+    * because we want to use the value from PWD (if it is correct).
+    * See bug 502146.
+    */
++#ifdef get_current_dir_name
+   cwd = get_current_dir_name ();
++#else
++  cwd = g_get_current_dir ();
++#endif
+   working_directory = g_strdup (cwd);
+   free (cwd);
+ 

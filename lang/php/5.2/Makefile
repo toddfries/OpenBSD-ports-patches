@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.34 2013/03/21 08:33:52 landry Exp $
+# $OpenBSD: Makefile,v 1.36 2013/04/18 08:38:54 sthen Exp $
 
 # XXX use the bundled libtool because it needs some specific options we
 # don't have.
@@ -8,9 +8,11 @@ PV=		5.2
 V=		5.2.17
 SUHOSIN_PHPV=	5.2.16
 SUHOSIN_P_V=	0.9.7
+REVISION=	14
 
-REVISION=		13
-REVISION-imap=		14
+# remove if updating; defaulting to tar.bz2 but there's no point
+# fetching new files for 5.2 unless it's updated.
+DISTFILES=	php-${V}.tar.gz
 
 INI_TEMPLATES=	dist recommended
 

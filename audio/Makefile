@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.300 2013/03/19 14:44:33 bcallah Exp $
+# $OpenBSD: Makefile,v 1.304 2013/04/08 07:59:10 jasper Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -16,7 +16,6 @@
      SUBDIR += audacity
      SUBDIR += aumix
      SUBDIR += bladeenc
-     SUBDIR += bmp
      SUBDIR += bonk
      SUBDIR += calf
      SUBDIR += caps-plugins
@@ -49,9 +48,9 @@
      SUBDIR += fluidsynth
      SUBDIR += fookebox
      SUBDIR += freealut
+     SUBDIR += generaluser-gs-soundfont
      SUBDIR += gimmix
      SUBDIR += gmpc
-     SUBDIR += gmpc-libnotify
      SUBDIR += gmpc-plugins
      SUBDIR += gnomad2
      SUBDIR += gogo
@@ -208,7 +207,6 @@
      SUBDIR += snack
      SUBDIR += sonata
      SUBDIR += sound-theme-freedesktop
-     SUBDIR += soundconverter
      SUBDIR += soundtouch
      SUBDIR += soundtracker
      SUBDIR += sox

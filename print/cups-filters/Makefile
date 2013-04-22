@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.13 2013/03/23 08:33:31 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2013/04/10 17:17:23 ajacoutot Exp $
 
 # XXX remove @exec-update when we branch 5.4-current
 
 COMMENT=	OpenPrinting CUPS filters
 
-DISTNAME=	cups-filters-1.0.31
+DISTNAME=	cups-filters-1.0.33
 CATEGORIES=	print
+REVISION=	0
 
 SHARED_LIBS +=  cupsfilters               0.0 # 1.0
 SHARED_LIBS +=  fontembed                 0.0 # 1.0

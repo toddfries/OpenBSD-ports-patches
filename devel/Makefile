@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1117 2013/03/22 13:44:31 bcallah Exp $
+# $OpenBSD: Makefile,v 1.1122 2013/04/18 15:08:40 sthen Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -45,6 +45,7 @@
      SUBDIR += ccrtp
      SUBDIR += cdk
      SUBDIR += cflow
+     SUBDIR += cgdb
      SUBDIR += check
      SUBDIR += chmlib
      SUBDIR += cil
@@ -1101,6 +1102,7 @@
      SUBDIR += py-gitpython
      SUBDIR += py-gobject
      SUBDIR += py-gobject3
+     SUBDIR += py-gobject3,python3
      SUBDIR += py-greenlet
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
@@ -1125,7 +1127,6 @@
      SUBDIR += py-notify
      SUBDIR += py-openbsd
      SUBDIR += py-optik
-     SUBDIR += py-orbit
      SUBDIR += py-parsing
      SUBDIR += py-peak-rules
      SUBDIR += py-pexpect
@@ -1166,6 +1167,7 @@
      SUBDIR += py-wbem
      SUBDIR += py-wsgiutils
      SUBDIR += py-xdg
+     SUBDIR += py-xdg,python3
      SUBDIR += py-xmlrunner
      SUBDIR += py-zopeinterface
      SUBDIR += py-zopetesting
@@ -1194,6 +1196,7 @@
      SUBDIR += ruby-arrayfields
      SUBDIR += ruby-bacon
      SUBDIR += ruby-bundler
+     SUBDIR += ruby-bundler,ruby18
      SUBDIR += ruby-cicphash
      SUBDIR += ruby-clio
      SUBDIR += ruby-color-tools

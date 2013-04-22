@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.190 2013/03/11 11:23:50 espie Exp $
+# $OpenBSD: Makefile,v 1.195 2013/04/14 16:53:54 ajacoutot Exp $
+
+# XXX textproc/highlight
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +8,7 @@ COMMENT-main=		integrated email and PIM software for GNOME
 COMMENT-plugins=	additionnal plugins for evolution
 
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		3.6.4
+GNOME_VERSION=		3.8.1
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-plugins=	evolution-plugins-${GNOME_VERSION}
@@ -28,20 +30,21 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 # # GPLv2+ - LGPLv2+ - OpenLDAP license - GFDL 1.1
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += camel-1.2 canberra ebook-1.2 ecal-1.2
-WANTLIB += edataserver-1.2 edataserverui-3.0 gdk-3 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gobject-2.0 gtk-3 gtkhtml-4.0
-WANTLIB += gtkhtml-editor-4.0 ical notify pthread xml2
-
 WANTLIB-main += ${WANTLIB}
-WANTLIB-main += atk-1.0 c cairo pango-1.0 pangocairo-1.0
-WANTLIB-main += ICE SM cairo-gobject canberra-gtk3 ebackend-1.2
-WANTLIB-main += gailutil-3 gdata gmodule-2.0 gnome-desktop-3 goa-1.0
-WANTLIB-main += gweather-3 icalvcal ldap-2.4 m nspr4 nss3 plc4 smime3
-WANTLIB-main += soup-2.4 gstreamer-0.10 soup-gnome-2.4 webkitgtk-3.0
+WANTLIB-main += atk-1.0 c cairo cairo-gobject camel-1.2 canberra canberra-gtk3
+WANTLIB-main += ebackend-1.2 ebook-1.2 ebook-contacts-1.2 ecal-1.2
+WANTLIB-main += edataserver-1.2 gailutil-3 gdata gdk-3 gdk_pixbuf-2.0
+WANTLIB-main += gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3 goa-1.0
+WANTLIB-main += gobject-2.0 gstreamer-1.0 gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0
+WANTLIB-main += gweather-3 ical icalvcal ldap-2.4 m notify nspr4 nss3
+WANTLIB-main += pango-1.0 pangocairo-1.0 plc4 pthread secret-1 smime3
+WANTLIB-main += soup-2.4 soup-gnome-2.4 webkitgtk-3.0 xml2
 
 WANTLIB-plugins += ${WANTLIB}
-WANTLIB-plugins += pst
+WANTLIB-plugins += camel-1.2 canberra ebook-1.2 ebook-contacts-1.2 ecal-1.2
+WANTLIB-plugins += edataserver-1.2 gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB-plugins += gobject-2.0 gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0 ical
+WANTLIB-plugins += notify pst pthread xml2
 
 MULTI_PACKAGES=		-main -plugins
 
@@ -51,8 +54,7 @@ MODULES=		devel/dconf \
 
 BUILD_DEPENDS=		devel/bison \
 			devel/gsettings-desktop-schemas \
-			devel/iso-codes \
-			x11/gnome/icon-theme
+			devel/iso-codes
 
 LIB_DEPENDS=		databases/evolution-data-server>=${GNOME_VERSION} \
 			devel/libnotify \
@@ -66,19 +68,20 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			x11/gnome/desktop
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
-			devel/gsettings-desktop-schemas \
-			x11/gnome/icon-theme
-
-# gstreamer1(-plugins-base) is needed for the audio-inline plugin
-BUILD_DEPENDS +=	multimedia/gstreamer1/core
-RUN_DEPENDS-main +=	multimedia/gstreamer1/plugins-base
+			devel/gsettings-desktop-schemas
 
 LIB_DEPENDS-plugins=	${LIB_DEPENDS} \
 			converters/libpst
 
+RUN_DEPENDS-plugins=	${MODDCONF_RUN_DEPENDS}
+
 # XXX should be a LIB_DEPENDS+WANTLIB but check-lib-depends(1) does not
 # work with unversioned solibs (LOCALBASE/lib/evolution/*/*.so).
 RUN_DEPENDS-plugins +=	mail/evolution,-main=${GNOME_VERSION}
+
+# module-text-highlight.so
+BUILD_DEPENDS +=	textproc/highlight
+RUN_DEPENDS-main +=	textproc/highlight
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=	Yes
@@ -94,6 +97,10 @@ AUTOCONF_VERSION=	2.69
 AUTOMAKE_VERSION=	1.9
 CONFIGURE_STYLE=	autoconf
 
+CONFIGURE_ENV=		BOGOFILTER=${LOCALBASE}/bin/bogofilter \
+			SPAMASSASSIN=${LOCALBASE}/bin/spamassassin \
+			SA_LEARN=${LOCALBASE}/bin/sa-learn
+
 CONFIGURE_ARGS=		--disable-static \
 			--with-openldap="${LOCALBASE}" \
 			--with-sub-version="OpenBSD Ports" \
@@ -101,12 +108,6 @@ CONFIGURE_ARGS=		--disable-static \
 			--with-krb5-includes=/usr/include/kerberosV
 
 FAKE_FLAGS=		autostartdir=${PREFIX}/share/examples/evolution/xdg/autostart
-
-pre-configure:
-	${SUBST_CMD} ${WRKSRC}/modules/spamassassin/evolution-spamassassin.c \
-		${WRKSRC}/modules/bogofilter/evolution-bogofilter.c
-	perl -pi -e 's,/usr/bin,${LOCALBASE}/bin,g' \
-		${WRKSRC}/data/org.gnome.evolution.spamassassin.gschema.xml.in
 
 post-install:
 	rm ${PREFIX}/lib/evolution/${R}/{modules,plugins}/*.la

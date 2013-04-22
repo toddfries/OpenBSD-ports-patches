@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.2 2013/01/30 08:26:58 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.5 2013/03/28 21:37:34 jasper Exp $
 @bin bin/zeitgeist-daemon
 lib/python${MODPY_VERSION}/site-packages/zeitgeist/
 lib/python${MODPY_VERSION}/site-packages/zeitgeist/__init__.py

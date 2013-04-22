@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.286 2013/03/18 09:02:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.290 2013/04/22 06:48:58 jasper Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -10,7 +10,6 @@
      SUBDIR += apcd
      SUBDIR += augeas
      SUBDIR += autossh
-     SUBDIR += backintime
      SUBDIR += backuppc
      SUBDIR += bacula,mysql
      SUBDIR += bacula,pgsql
@@ -68,6 +67,7 @@
      SUBDIR += fsstress
      SUBDIR += gamin
      SUBDIR += ggrep
+     SUBDIR += gitolite
      SUBDIR += gkrellm
      SUBDIR += glastree
      SUBDIR += god
@@ -111,7 +111,6 @@
      SUBDIR += ncdu
      SUBDIR += ndesk-dbus
      SUBDIR += ndesk-dbus-glib
-     SUBDIR += notification-daemon
      SUBDIR += node-always
      SUBDIR += node-daemon
      SUBDIR += node-syslog
@@ -164,6 +163,7 @@
      SUBDIR += rsyslog
      SUBDIR += rtty
      SUBDIR += ruby-augeas
+     SUBDIR += ruby-augeas,ruby18
      SUBDIR += ruby-capistrano
      SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter

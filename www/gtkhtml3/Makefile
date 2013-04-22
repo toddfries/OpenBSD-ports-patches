@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2013/03/11 11:44:42 espie Exp $
+# $OpenBSD: Makefile,v 1.57 2013/04/02 16:16:47 ajacoutot Exp $
 
 # XXX fix building with glib2 >= 2.29 (G_CONST_RETURN is deprecated)
 CFLAGS +=	"-DG_CONST_RETURN=const"
@@ -10,10 +10,11 @@ COMMENT=		lightweight HTML rendering/printing/editing engine
 GNOME_PROJECT=		gtkhtml
 GNOME_VERSION=		3.32.2
 API_VERSION=		3.14
+EXTRACT_SUFX=		.tar.bz2
 
 PKGNAME=		gtkhtml3-${VERSION}
 
-REVISION=		3
+REVISION=		5
 
 HOMEPAGE=		http://www.gnome.org/
 
@@ -28,16 +29,14 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 # GPLv2/LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
-WANTLIB += dbus-1 dbus-glib-1 drm enchant expat ffi fontconfig
-WANTLIB += freetype gailutil gconf-2 gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender atk-1.0 c cairo dbus-1 dbus-glib-1 enchant
+WANTLIB += expat ffi fontconfig freetype gailutil gconf-2 gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += graphite2 gthread-2.0 gtk-x11-2.0 harfbuzz icudata
+WANTLIB += icule icuuc m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs stdc++ xcb
 WANTLIB += xcb-render xcb-shm z
-
-EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext \
 			x11/gnome
@@ -46,15 +45,18 @@ LIB_DEPENDS=		devel/gconf2 \
 			textproc/enchant \
 			x11/gtk+2
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
+BUILD_DEPENDS=		devel/iso-codes
+
 # libsoup is only used by testgtkhtml, but since libsoup may be around during
 # configure, and can have disappeared afterwards, the build can fail. so
 # register it as a dependency instead of axing the Makefiles..
 BUILD_DEPENDS+=		devel/libsoup
-RUN_DEPENDS=		devel/iso-codes \
-			x11/gnome/icon-theme
+
+RUN_DEPENDS=		devel/iso-codes
 
 CONFIGURE_STYLE=	gnu
+
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 
 SUBST_VARS=		API_VERSION
 

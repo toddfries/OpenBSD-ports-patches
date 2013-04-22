@@ -1,14 +1,18 @@
-# $OpenBSD: Makefile,v 1.77 2013/03/21 10:21:49 zhuk Exp $
+# $OpenBSD: Makefile,v 1.79 2013/04/22 13:13:56 zhuk Exp $
 
 VMEM_WARNING =	Yes
-BROKEN-arm =	build fails since move to gcc4
 DPB_PROPERTIES =parallel
+
+# avoid segfaults from binaries compiled and then used during the build
+.if ${MACHINE_ARCH} == "arm"
+CFLAGS +=	-O1 -fno-stack-protector
+.endif
 
 HOMEPAGE =	http://www.cmake.org/
 CATEGORIES =	devel
 COMMENT =	portable build system
 DISTNAME =	cmake-2.8.10.2
-REVISION =	3
+REVISION =	4
 MASTER_SITES =	${HOMEPAGE}files/v2.8/
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>

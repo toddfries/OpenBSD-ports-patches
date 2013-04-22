@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.34 2013/03/11 11:42:41 espie Exp $
+# $OpenBSD: Makefile,v 1.37 2013/04/05 07:41:08 ajacoutot Exp $
 
 COMMENT=	GTK C code documentation system
 
 GNOME_VERSION=	1.18
 GNOME_PROJECT=	gtk-doc
-REVISION=	3
+REVISION=	5
 
 CATEGORIES=    	textproc devel
 
@@ -20,16 +20,22 @@ MODPY_RUNDEP=		No
 MODGNOME_TOOLS= 	yelp
 
 CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--with-highlight=source-highlight
+CONFIGURE_ENV=		ac_cv_path_DBLATEX= \
+			ac_cv_path_FOP=
 
 # only files under tests/ are compiled but not installed
 PKG_ARCH=		*
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		textproc/openjade \
-			textproc/docbook-xsl \
-			editors/vim,no_x11
+BUILD_DEPENDS=		textproc/docbook-xsl \
+			textproc/openjade \
+			textproc/source-highlight
 
-TEST_DEPENDS=	shells/bash
+RUN_DEPENDS=		textproc/docbook-xsl \
+			textproc/openjade \
+			textproc/source-highlight
+
+TEST_DEPENDS=		shells/bash
 
 pre-configure:
 	perl -pi -e "s,/bin/bash,${LOCALBASE}/bin/bash," \

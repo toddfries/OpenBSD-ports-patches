@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.507 2013/03/25 21:23:17 zhuk Exp $
+# $OpenBSD: Makefile,v 1.512 2013/03/30 12:22:36 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -56,7 +56,6 @@
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
-     SUBDIR += fltk2
      SUBDIR += fluxbox
      SUBDIR += fluxter
      SUBDIR += flvw
@@ -69,7 +68,6 @@
      SUBDIR += gammapage
      SUBDIR += gbdfed
      SUBDIR += gcolor2
-     SUBDIR += gdesklets
      SUBDIR += gdevilspie
      SUBDIR += gentoo
      SUBDIR += gigolo
@@ -193,7 +191,6 @@
      SUBDIR += piewm
      SUBDIR += pinot
      SUBDIR += podbrowser
-     SUBDIR += polkit-gnome
      SUBDIR += polkit-qt4
      SUBDIR += pwm
      SUBDIR += py-Xlib
@@ -226,6 +223,7 @@
      SUBDIR += ruby-qt4
      SUBDIR += rxvt
      SUBDIR += rxvt-unicode
+     SUBDIR += sakura
      SUBDIR += sawfish
      SUBDIR += sclock
      SUBDIR += sisctrl
@@ -271,6 +269,7 @@
      SUBDIR += vlc
      SUBDIR += waimea
      SUBDIR += wampager
+     SUBDIR += wbar
      SUBDIR += windowmaker
      SUBDIR += windowmaker-extra
      SUBDIR += winwrangler

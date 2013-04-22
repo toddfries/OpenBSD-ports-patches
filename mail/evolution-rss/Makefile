@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.24 2013/03/11 11:23:50 espie Exp $
+# $OpenBSD: Makefile,v 1.28 2013/04/16 07:34:14 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		RSS reader plugin for evolution
 
 GNOME_PROJECT=		evolution-rss
-GNOME_VERSION=		0.3.92
-REVISION=		3
+GNOME_VERSION=		0.3.93
+REVISION=		0
 
 CATEGORIES=		mail
 
-EVO_VERSION=		3.6
+EVO_VERSION=		3.8
 SUBST_VARS=		EVO_VERSION
 
 HOMEPAGE=		http://gnome.eu.org/evo/index.php/Evolution_RSS_Reader_Plugin
@@ -21,24 +21,23 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt asn1
-WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 com_err crypto
-WANTLIB += db dbus-1 dbus-glib-1 ebackend-1.2 ebook-1.2 ecal-1.2
-WANTLIB += edataserver-1.2 edataserverui-3.0 enchant expat ffi
-WANTLIB += fontconfig freetype gailutil-3 gcrypt gdk-3 gdk_pixbuf-2.0
-WANTLIB += geoclue gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3
-WANTLIB += gnome-keyring gobject-2.0 gpg-error gssapi gstapp-0.10
-WANTLIB += gstaudio-0.10 gstbase-0.10 gstfft-0.10 gstinterfaces-0.10
-WANTLIB += gstpbutils-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
-WANTLIB += gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0 ical icalss icalvcal
-WANTLIB += icudata icui18n icuuc javascriptcoregtk-3.0 jpeg krb5
-WANTLIB += m nspr4 nss3 nssutil3 orc-0.4 pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
-WANTLIB += smime3 softokn3 soup-2.4 soup-gnome-2.4 sqlite3 ssl3
-WANTLIB += stdc++ webkitgtk-3.0 xcb xcb-render xcb-shm xml2 xslt
-WANTLIB += atk-bridge-2.0 atspi gck-1 gcr-base-3 harfbuzz icule
-WANTLIB += p11-kit xkbfile z
+WANTLIB += GL ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender Xt asn1 atk-1.0 atk-bridge-2.0
+WANTLIB += atspi c cairo cairo-gobject camel-1.2 com_err crypto
+WANTLIB += db dbus-1 dbus-glib-1 ebackend-1.2 ebook-1.2 ebook-contacts-1.2
+WANTLIB += ecal-1.2 edata-book-1.2 edataserver-1.2 enchant expat
+WANTLIB += ffi fontconfig freetype gailutil-3 gck-1 gcr-base-3
+WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 geoclue gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gnome-desktop-3 gobject-2.0 gpg-error graphite2
+WANTLIB += gssapi gstapp-1.0 gstaudio-1.0 gstbase-1.0 gstfft-1.0
+WANTLIB += gstpbutils-1.0 gstreamer-1.0 gsttag-1.0 gstvideo-1.0
+WANTLIB += gthread-2.0 gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0 harfbuzz
+WANTLIB += ical icalss icalvcal icudata icui18n icule icuuc javascriptcoregtk-3.0
+WANTLIB += jpeg krb5 m nspr4 nss3 nssutil3 orc-0.4 p11-kit pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4
+WANTLIB += png pthread pthread-stubs secret-1 smime3 softokn3
+WANTLIB += soup-2.4 soup-gnome-2.4 sqlite3 ssl3 stdc++ webkitgtk-3.0
+WANTLIB += webp xcb xcb-render xcb-shm xkbfile xml2 xslt z
 
 MASTER_SITES=		http://gnome.eu.org/
 
@@ -54,13 +53,11 @@ LIB_DEPENDS=		devel/libsoup,-gnome \
 BUILD_DEPENDS +=	mail/evolution,-main
 RUN_DEPENDS +=		mail/evolution,-main
 
-MODGNOME_DESKTOP_FILE=		Yes
+MODGNOME_DESKTOP_FILE=	Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=		--disable-gecko \
-			--with-primary-render=webkit
 
 post-install:
 	rm ${PREFIX}/lib/evolution/${EVO_VERSION}/{plugins,modules}/*.{a,la}

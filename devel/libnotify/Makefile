@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.26 2013/03/11 10:50:10 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2013/04/16 13:17:00 ajacoutot Exp $
 
 COMMENT=		send desktop notifications to a notification daemon
 
 GNOME_VERSION=		0.7.5
 GNOME_PROJECT=		libnotify
-REVISION=		0
+REVISION=		2
 
 CATEGORIES=		devel
 
@@ -26,7 +26,7 @@ BUILD_DEPENDS=		x11/gtk+3
 
 LIB_DEPENDS=		graphics/gdk-pixbuf2
 
-MODGNOME_TOOLS= 	goi
+MODGNOME_TOOLS= 	gi
 
 CONFIGURE_STYLE=	gnu
 

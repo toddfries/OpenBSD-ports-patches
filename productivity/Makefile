@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.51 2013/03/25 21:23:17 zhuk Exp $
+# $OpenBSD: Makefile,v 1.53 2013/03/28 21:30:35 jasper Exp $
 
      SUBDIR =
      SUBDIR += attica

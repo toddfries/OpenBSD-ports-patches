@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2013/03/21 08:45:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2013/04/17 16:26:34 ajacoutot Exp $
 
 COMMENT=	common interface to speech synthesis
 
-DISTNAME=	speech-dispatcher-0.7.1
+DISTNAME=	speech-dispatcher-0.8
 REVISION=	1
 
-SHARED_LIBS +=  sdaudio              0.0      # 2.4
-SHARED_LIBS +=  speechd              0.0      # 5.0
+SHARED_LIBS +=  speechd              1.0      # .6.0
 
 CATEGORIES=	audio
 
@@ -15,37 +14,35 @@ HOMEPAGE=	http://devel.freebsoft.org/speechd
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += ao c dotconf-1.1 espeak glib-2.0 gmodule-2.0 gthread-2.0
-WANTLIB += m pcre portaudio pthread sndfile sndio stdc++ FLAC ogg
-WANTLIB += vorbis vorbisenc
+WANTLIB += FLAC ao c dotconf espeak glib-2.0 gmodule-2.0 gthread-2.0
+WANTLIB += ltdl m ogg pcre pthread sndfile vorbis vorbisenc
 
 MASTER_SITES=	http://devel.freebsoft.org/pub/projects/speechd/
 
 MODULES=	devel/gettext \
 		lang/python
 
-MODPY_ADJ_FILES=src/python/speechd_config/spd-conf \
-		src/python/speechd/_test.py
+MODPY_VERSION=	${MODPY_DEFAULT_VERSION_3}
+MODPY_ADJ_FILES=src/api/python/speechd_config/spd-conf \
+		src/api/python/speechd/_test.py
 
-LIB_DEPENDS=	audio/espeak \
+# used by spd-conf
+RUN_DEPENDS=	devel/py-xdg${MODPY_FLAVOR}
+
+LIB_DEPENDS=	audio/espeak>=1.47.03p0 \
 		audio/libao \
 		audio/libsndfile \
-		devel/dotconf \
-		devel/glib2
+		devel/dotconf>=1.3 \
+		devel/glib2 \
+		devel/libtool,-ltdl
 
+# undefined reference to `lt__PROGRAM__LTX_preloaded_symbols'
+USE_LIBTOOL=	gnu
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--with-libao \
-		--with-espeak \
-		--without-flite \
-		--without-ibmtts \
-		--without-ivona \
-		--without-nas \
-		--without-oss \
-		--without-alsa \
 		--without-pulse
 
 
@@ -55,5 +52,8 @@ pre-configure:
 	perl -pi -e 's,/usr/share,${LOCALBASE}/share,g;' \
 		-e 's,/usr/bin,${LOCALBASE}/bin,g' \
 		${WRKSRC}/config/modules/*.conf
+
+post-install:
+	rm ${PREFIX}/lib/speech-dispatcher/spd_libao.{a,la}
 
 .include <bsd.port.mk>

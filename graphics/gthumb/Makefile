@@ -1,12 +1,14 @@
-# $OpenBSD: Makefile,v 1.65 2013/03/11 11:10:53 espie Exp $
+# $OpenBSD: Makefile,v 1.69 2013/04/16 06:42:21 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	image viewer and browser for GNOME
 
 GNOME_PROJECT=	gthumb
-GNOME_VERSION=	3.0.2
-REVISION=	1
+GNOME_VERSION=	3.2.1
+
+API_V=		${GNOME_VERSION:R}
+SUBST_VARS=	API_V
 
 CATEGORIES=	graphics
 
@@ -18,15 +20,15 @@ MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
-WANTLIB += cairo-gobject drm exiv2 expat ffi fontconfig freetype
-WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gnome-keyring
-WANTLIB += gobject-2.0 gstinterfaces-0.10 gstreamer-0.10 gthread-2.0
-WANTLIB += gtk-3 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 png pthread pthread-stubs rsvg-2 soup-2.4
-WANTLIB += soup-gnome-2.4 stdc++ tiff xcb xcb-render xcb-shm z
-WANTLIB += clutter-1.0 clutter-gtk-1.0 cogl
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += c cairo cairo-gobject clutter-1.0 clutter-gtk-1.0 cogl
+WANTLIB += dbus-1 exiv2 expat ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 graphite2
+WANTLIB += gthread-2.0 gtk-3 harfbuzz icudata icule icuuc jpeg
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs rsvg-2 stdc++ tiff xcb xcb-render
+WANTLIB += xcb-shm z gstreamer-1.0 webp
 
 MODULES=	devel/dconf \
 		devel/gettext \
@@ -35,25 +37,28 @@ MODULES=	devel/dconf \
 # web albums
 BUILD_DEPENDS +=	devel/bison
 
-LIB_DEPENDS=	devel/libsoup,-gnome \
-		graphics/clutter/clutter-gtk \
-		graphics/exiv2>=0.22 \
-		multimedia/gstreamer-0.10/plugins-base \
+BUILD_DEPENDS +=	multimedia/gstreamer1/plugins-base
+
+LIB_DEPENDS=	graphics/clutter/clutter-gtk  \
+		graphics/exiv2 \
+		graphics/libwebp \
+		multimedia/gstreamer1/core \
 		x11/gnome/librsvg
-RUN_DEPENDS=	misc/shared-mime-info
+
+RUN_DEPENDS=	graphics/dcraw \
+		misc/shared-mime-info \
+		multimedia/gstreamer1/plugins-base
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
-
-CONFIGURE_STYLE=	gnu
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib -Wl,-rpath,${TRUEPREFIX}/lib/gthumb/extensions
-CONFIGURE_ARGS=		--disable-static \
-			--disable-libopenraw \
-			--disable-libbrasero
+
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--disable-static
 
 post-install:
 	rm ${PREFIX}/lib/gthumb/extensions/*.la

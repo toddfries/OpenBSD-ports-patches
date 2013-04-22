@@ -1,0 +1,11 @@
+$OpenBSD: patch-src_callbacks_c,v 1.2 2013/04/17 13:00:26 giovanni Exp $
+--- src/callbacks.c.orig	Mon Apr 15 16:00:51 2013
++++ src/callbacks.c	Mon Apr 15 16:01:08 2013
+@@ -19,6 +19,7 @@
+  *
+  */
+ 
++#include <libintl.h>
+ #include "callbacks.h"
+ #include "export.h"
+ #include <math.h>

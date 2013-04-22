@@ -1,6 +1,6 @@
-@comment $OpenBSD: PLIST,v 1.2 2012/09/28 06:26:15 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.4 2013/04/16 21:41:31 ajacoutot Exp $
 @conflict at-spi-<=1.32.0p3
-bin/magFocusTracker.py
+@conflict py-atspi-*
 lib/python${MODPY_VERSION}/site-packages/pyatspi/
 lib/python${MODPY_VERSION}/site-packages/pyatspi/Accessibility.py
 lib/python${MODPY_VERSION}/site-packages/pyatspi/Accessibility.pyc
