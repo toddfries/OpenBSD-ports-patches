@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.90 2013/03/11 11:20:27 espie Exp $
+# $OpenBSD: Makefile,v 1.94 2013/05/09 05:54:31 kili Exp $
 
 COMMENT-main =		compiler for the functional language Haskell
 COMMENT-doc =		documentation for GHC
@@ -121,7 +121,8 @@ PORTHOME =		${WRKDIR}
 
 TEST_DEPENDS =	print/ghostscript/gnu
 
-post-extract:
+post-patch:
+	${SUBST_CMD} ${WRKSRC}/docs/index.html
 # - Install a precompiled binary.
 	cd ${WRKDIR}/ghc-${BIN_VER} && \
 	./configure --prefix=${WRKDIR} && \
@@ -134,9 +135,6 @@ post-extract:
 	mv ${WRKDIR}/xhtml-${XHTML_VER} ${WRKSRC}/libraries/xhtml
 	perl -pi -e 's/(\S+ \S+)/\1 -optl -nopie/ if /^exec /' \
 		${WRKDIR}/bin/ghc
-
-post-patch:
-	${SUBST_CMD} ${WRKSRC}/docs/index.html
 
 post-install:
 	cd ${PREFIX}/lib/ghc && \
@@ -179,6 +177,7 @@ BOOTSTRAP_DATE =	20120917
 # Create a bootstrapper. This compiles a stripped-down version of
 # ghc and creates a `bindist', i.e. a tarball with binaries that
 # can be used for bootstrapping.
+# Note: this needs autoconf-2.61 as an additional dependency.
 bootstrap: patch
 	echo HSCOLOUR_SRCS=NO > ${WRKSRC}/mk/build.mk
 	echo GhcLibHcOpts=-O -fasm >> ${WRKSRC}/mk/build.mk

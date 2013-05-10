@@ -1,4 +1,4 @@
-# $OpenBSD: python.port.mk,v 1.61 2013/04/04 12:36:43 sthen Exp $
+# $OpenBSD: python.port.mk,v 1.65 2013/05/10 06:07:53 ajacoutot Exp $
 #
 #	python.port.mk - Xavier Santolaria <xavier@santolaria.net>
 #	This file is in the public domain.
@@ -25,7 +25,8 @@ MODPY_VERSION ?=	${MODPY_DEFAULT_VERSION_2}
 .else
 .  if ${MODPY_VERSION} != "2.5" && \
       ${MODPY_VERSION} != "2.7" && \
-      ${MODPY_VERSION} != "3.2"
+      ${MODPY_VERSION} != "3.2" && \
+      ${MODPY_VERSION} != "3.3"
 ERRORS += "Fatal: unknown or unsupported MODPY_VERSION: ${MODPY_VERSION}"
 .  endif
 .endif
@@ -152,7 +153,7 @@ CONFIGURE_ENV += PYTHON="${MODPY_BIN}" \
 _MODPY_CMD =	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} \
 			${MODPY_BIN} ./${MODPY_SETUP}
 
-SUBST_VARS :=	MODPY_PYCACHE MODPY_COMMENT MODPY_PYC_MAGIC_TAG MODPY_BIN MODPY_EGG_VERSION MODPY_VERSION MODPY_BIN_SUFFIX ^MODPY_PY_PREFIX ${SUBST_VARS}
+SUBST_VARS :=	MODPY_PYCACHE MODPY_COMMENT MODPY_PYC_MAGIC_TAG MODPY_BIN MODPY_EGG_VERSION MODPY_VERSION MODPY_BIN_SUFFIX MODPY_PY_PREFIX ${SUBST_VARS}
 
 # set MODPY_BIN for executable scripts
 MODPY_BIN_ADJ =	perl -pi \

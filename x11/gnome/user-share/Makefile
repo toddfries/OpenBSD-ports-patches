@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2013/04/11 10:14:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2013/05/07 10:48:24 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		personal file-sharing service for GNOME
 
 GNOME_PROJECT=		gnome-user-share
 GNOME_VERSION=		3.8.0
-REVISION=		2
+REVISION=		5
 
 CATEGORIES=		www sysutils
 
@@ -45,6 +45,7 @@ CONFIGURE_ARGS=		--disable-static \
 			--with-modules-path=${LOCALBASE}/lib/apache2
 
 ### https://bugzilla.gnome.org/show_bug.cgi?id=697537
+CONFIGURE_ARGS +=	--disable-bluetooth
 AUTOCONF_VERSION=	2.69
 AUTOMAKE_VERSION=	1.13
 BUILD_DEPENDS +=	${MODGNU_AUTOCONF_DEPENDS} \

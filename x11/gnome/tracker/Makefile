@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.140 2013/04/20 13:55:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.143 2013/05/01 12:40:18 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		powerful desktop search tool and indexer
 
 GNOME_PROJECT=		tracker
-GNOME_VERSION=		0.16.0
-REVISION=		5
+GNOME_VERSION=		0.16.1
 
 # there is already audio/tracker, so this port has to live
 # as meta-tracker.
@@ -123,6 +122,8 @@ FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/meta-tracker/
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/tracker-needle/tracker-utils.vala
+	perl -pi -e 's,/usr/bin,${LOCALBASE}/bin,' \
+		${WRKSRC}/src/tracker-needle/tracker-utils.vala
 
 post-install:
 	rm ${PREFIX}/lib/tracker-${MAJ_V}/extract-modules/*.la

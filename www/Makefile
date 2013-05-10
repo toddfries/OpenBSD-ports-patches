@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.606 2013/04/16 10:01:18 sthen Exp $
+# $OpenBSD: Makefile,v 1.608 2013/05/03 23:17:52 rpe Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -16,7 +16,6 @@
      SUBDIR += awl
      SUBDIR += awstats
      SUBDIR += bacula-web
-     SUBDIR += bk2site
      SUBDIR += blogsum
      SUBDIR += bluefish
      SUBDIR += bozohttpd
@@ -475,6 +474,7 @@
      SUBDIR += sarg,ldap
      SUBDIR += seamonkey
      SUBDIR += seamonkey-i18n
+     SUBDIR += selfoss
      SUBDIR += silverstripe
      SUBDIR += slowhttptest
      SUBDIR += snownews

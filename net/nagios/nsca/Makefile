@@ -1,23 +1,20 @@
-# $OpenBSD: Makefile,v 1.14 2013/03/14 10:28:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2013/05/07 20:17:43 sthen Exp $
 
 COMMENT-main=	nagios service check acceptor
 COMMENT-client=	nagios service check acceptor - client
 
-# packaged from Icinga git repo.
-VERSION=	2.8pre20100831
-DISTNAME=	icinga-nsca-${VERSION}
-WRKDIST=	${WRKDIR}/icinga-nsca
+VERSION=	2.9.1
+DISTNAME=	nsca-${VERSION}
 PKGNAME-main=	nsca-${VERSION}
 PKGNAME-client=	nsca-client-${VERSION}
 CATEGORIES=	net
-REVISION=	4
 
 HOMEPAGE=	http://www.nagios.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-MASTER_SITES=		http://spacehopper.org/mirrors/
+MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=nagios/}
 
 WANTLIB=		c mcrypt>=8
 LIB_DEPENDS=		security/libmcrypt
@@ -34,9 +31,11 @@ TEST_DEPENDS=	devel/p5-Clone \
 			devel/p5-Parallel-Forker
 RUN_DEPENDS-main=	net/nagios/nagios
 
+post-extract:
+	@cd ${WRKSRC} && perl -i -pe 's/\r$$//' src/nsca.c src/send_nsca.c
+
 pre-build:
-	@perl -pi -e "s,%%SYSCONFDIR%%,${SYSCONFDIR}," ${WRKSRC}/src/nsca.c \
-		${WRKSRC}/src/send_nsca.c
+	@${SUBST_CMD} ${WRKSRC}/src/nsca.c ${WRKSRC}/src/send_nsca.c
 
 do-test:
 	@cd ${WRKSRC}/nsca_tests && ./runtests

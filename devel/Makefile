@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1122 2013/04/18 15:08:40 sthen Exp $
+# $OpenBSD: Makefile,v 1.1127 2013/05/08 06:17:45 jasper Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -435,6 +435,7 @@
      SUBDIR += nant
      SUBDIR += nasm
      SUBDIR += netbeans
+     SUBDIR += ninja
      SUBDIR += node-expresso
      SUBDIR += newt
      SUBDIR += node-fibers
@@ -1032,6 +1033,7 @@
      SUBDIR += p5-YAML-XS
      SUBDIR += p5-accessors
      SUBDIR += p5-aliased
+     SUBDIR += p5-autobox
      SUBDIR += p5-boolean
      SUBDIR += p5-capitalization
      SUBDIR += p5-common-sense
@@ -1134,7 +1136,6 @@
      SUBDIR += py-prioritized_methods
      SUBDIR += py-progressbar
      SUBDIR += py-protocols
-     SUBDIR += py-psyco
      SUBDIR += py-py
      SUBDIR += py-pyprof2calltree
      SUBDIR += py-pyro
@@ -1200,7 +1201,9 @@
      SUBDIR += ruby-cicphash
      SUBDIR += ruby-clio
      SUBDIR += ruby-color-tools
+     SUBDIR += ruby-colorator
      SUBDIR += ruby-columnize
+     SUBDIR += ruby-commander
      SUBDIR += ruby-cucumber
      SUBDIR += ruby-daemon_controller
      SUBDIR += ruby-daemons
@@ -1232,6 +1235,7 @@
      SUBDIR += ruby-kgio,ruby18
      SUBDIR += ruby-linecache
      SUBDIR += ruby-locale
+     SUBDIR += ruby-metaclass
      SUBDIR += ruby-minitest
      SUBDIR += ruby-mocha
      SUBDIR += ruby-mspec
@@ -1256,6 +1260,7 @@
      SUBDIR += ruby-ruby_parser
      SUBDIR += ruby-rubyforge
      SUBDIR += ruby-rubyinline
+     SUBDIR += ruby-safe_yaml
      SUBDIR += ruby-sexp_processor
      SUBDIR += ruby-stringex
      SUBDIR += ruby-subset_sum

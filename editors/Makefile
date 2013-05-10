@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.95 2013/01/16 19:09:34 yasuoka Exp $
+# $OpenBSD: Makefile,v 1.97 2013/05/04 15:17:27 jturner Exp $
 
      SUBDIR =
      SUBDIR += abiword
@@ -45,12 +45,14 @@
      SUBDIR += qscintilla
      SUBDIR += scintilla
      SUBDIR += scite
+     SUBDIR += se
      SUBDIR += subtitleeditor
      SUBDIR += tea
      SUBDIR += teaqt
      SUBDIR += ted
      SUBDIR += texmaker
      SUBDIR += texworks
+     SUBDIR += tpad
      SUBDIR += traditional-vi
      SUBDIR += uemacs
      SUBDIR += vim

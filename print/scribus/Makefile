@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.48 2013/03/11 23:04:32 fgsch Exp $
+# $OpenBSD: Makefile,v 1.50 2013/05/10 06:03:30 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	DTP program
-DISTNAME=	scribus-1.4.1
+DISTNAME=	scribus-1.4.2
 CATEGORIES=	print
-REVISION=	2
 
 HOMEPAGE=	http://www.scribus.net/
 
@@ -18,13 +17,12 @@ WANTLIB +=	tiff util xml2 z ${MODPY_WANTLIB}
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scribus/}
 
-EXTRACT_SUFX=	.tar.bz2
+EXTRACT_SUFX=	.tar.xz
 
 MODULES=	x11/qt4 \
 		devel/cmake \
 		lang/python
 
-MODPY_VERSION=	2.7
 MODPY_RUNDEP=	No
 
 BUILD_DEPENDS=	devel/boost
@@ -45,8 +43,6 @@ LIB_DEPENDS= 	devel/libexecinfo \
 
 FLAVORS=	debug
 FLAVOR?=
-
-WRKDIST=	${WRKDIR}/Scribus
 
 CONFIGURE_ARGS +=	-DCMAKE_SKIP_RPATH:BOOL=1 \
 			-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2013/03/21 08:45:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2013/04/27 15:22:00 jasper Exp $
 
 BROKEN-sparc64= 	needs pthread for reasons yet unknown
 
 COMMENT=		collection of tools for manipulating EPROM load files
 
-DISTNAME=		srecord-1.57
+DISTNAME=		srecord-1.61
 CATEGORIES=		devel
 
 SHARED_LIBS +=  srecord              0.0      # 0.0
@@ -20,7 +20,8 @@ MODULES=		devel/gettext
 
 WANTLIB += c gcrypt gpg-error m stdc++
 
-BUILD_DEPENDS=		devel/boost
+BUILD_DEPENDS=		devel/boost \
+			print/ghostscript/gnu
 LIB_DEPENDS=		security/libgcrypt
 
 USE_GROFF=		Yes
