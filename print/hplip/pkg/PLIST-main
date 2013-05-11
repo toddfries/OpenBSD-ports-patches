@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.20 2013/04/15 10:11:01 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.22 2013/05/11 11:15:53 ajacoutot Exp $
 @conflict hplip-docs-*
 @conflict hplip-gui-<3.11.3p0
 @extraunexec rm -rf /var/log/hp/tmp/*
