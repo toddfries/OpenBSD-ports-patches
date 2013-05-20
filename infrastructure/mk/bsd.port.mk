@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1223 2013/05/08 08:38:36 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1225 2013/05/15 16:32:16 sthen Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -201,8 +201,8 @@ _PROGRESS = -m
 .else
 _PROGRESS =
 .endif
- 
-FETCH_CMD ?= /usr/bin/ftp -V ${_PROGRESS} -k ${FTP_KEEPALIVE}
+
+FETCH_CMD ?= /usr/bin/ftp -V ${_PROGRESS} -k ${FTP_KEEPALIVE} -C
 
 PKG_TMPDIR ?= /var/tmp
 
@@ -2825,7 +2825,7 @@ ${DISTDIR}/$p:
 	for site in ${$m}; do \
 		file=$@.part; \
 		${ECHO_MSG} ">> Fetch $${site}$u"; \
-		if ${FETCH_CMD} -C -o $$file $${site}$u; then \
+		if ${FETCH_CMD} -o $$file $${site}$u; then \
 				ck=`${_size_fragment} $$file $f`; \
 				if [ ! -f ${CHECKSUM_FILE} ]; then \
 					${ECHO_MSG} ">> Checksum file does not exist"; \

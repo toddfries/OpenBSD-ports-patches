@@ -1,21 +1,16 @@
-$OpenBSD: patch-configure,v 1.3 2013/03/28 07:33:02 jasper Exp $
+$OpenBSD: patch-configure,v 1.5 2013/05/19 17:28:29 jasper Exp $
 
-Recognize vala 0.20
+Fix DATADIRNAME: see LOCALBASE/share/aclocal/{glib-gettext.m4,intltool.m4}
 
---- configure.orig	Thu Mar 28 08:29:09 2013
-+++ configure	Thu Mar 28 08:29:01 2013
-@@ -12408,6 +12408,14 @@ fi
-   test $ac_status = 0; }; then
-    valapkg="libvala-0.18"
+--- configure.orig	Thu May 16 11:03:26 2013
++++ configure	Thu May 16 11:04:07 2013
+@@ -13799,6 +13799,9 @@ else
  fi
-+		   if test -n "$PKG_CONFIG" && \
-+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \" libvala-0.20 \""; } >&5
-+  ($PKG_CONFIG --exists --print-errors " libvala-0.20 ") 2>&5
-+  ac_status=$?
-+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-+  test $ac_status = 0; }; then
-+   valapkg="libvala-0.20"
-+fi
  
- 
- 	if test "x$valapkg" != "x"; then
+     ;;
++    *-*-openbsd*)
++    DATADIRNAME=share
++    ;;
+     *)
+     DATADIRNAME=lib
+     ;;

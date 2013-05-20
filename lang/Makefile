@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.149 2013/03/18 20:01:14 naddy Exp $
+# $OpenBSD: Makefile,v 1.151 2013/05/15 11:45:41 naddy Exp $
 
      SUBDIR =
      SUBDIR += STk
+     SUBDIR += abcl
      SUBDIR += antlr3
      SUBDIR += arena
      SUBDIR += boo
@@ -18,7 +19,6 @@
      SUBDIR += eltclsh
      SUBDIR += erlang
      SUBDIR += expect
-     SUBDIR += expect,no_tk
      SUBDIR += feldspar
      SUBDIR += fpc
      SUBDIR += freehdl

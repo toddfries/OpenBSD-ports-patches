@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.27 2013/04/02 16:16:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2013/05/14 10:36:19 dcoppa Exp $
 
 COMMENT =	standalone YouTube.com video browser/player
 
-DISTNAME =	minitube-1.9
-REVISION =	1
+DISTNAME =	minitube-2.0
 CATEGORIES =	www multimedia
 
 HOMEPAGE =	http://flavio.tordini.org/minitube
@@ -34,8 +33,5 @@ NO_TEST =	Yes
 
 do-configure:
 	cd ${WRKDIST} && env -i ${CONFIGURE_ENV} qmake4 PREFIX=${PREFIX}
-
-post-configure:
-	${SUBST_CMD} ${WRKSRC}/src/iconloader/qticonloader.cpp
 
 .include <bsd.port.mk>

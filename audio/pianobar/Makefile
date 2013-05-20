@@ -1,25 +1,25 @@
-# $OpenBSD: Makefile,v 1.52 2013/03/10 22:55:05 espie Exp $
+# $OpenBSD: Makefile,v 1.54 2013/05/20 07:16:25 dcoppa Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	console client for pandora
 
-DISTNAME =	pianobar-2012.12.01
-REVISION =	0
+DISTNAME =	pianobar-2013.05.19
 EXTRACT_SUFX =	.tar.bz2
 CATEGORIES =	audio
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>
 
 HOMEPAGE =	http://6xq.net/projects/pianobar/
+
 MASTER_SITES =	${HOMEPAGE}
 
-SHARED_LIBS =	piano	3.0	# 0.0.0
+SHARED_LIBS =	piano	3.1	# 0.0.0
 
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB =	ao c faad gcrypt gnutls json m mad pthread
+WANTLIB =	ao c faad gcrypt gnutls json-c m mad pthread
 
 LIB_DEPENDS =	audio/faad>=2.7 \
 		audio/libao \

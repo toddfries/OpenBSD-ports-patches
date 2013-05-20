@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.17 2013/03/11 11:35:57 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2013/05/17 18:53:24 dcoppa Exp $
 
 COMMENT=		mouse and keyboard sharing utility
 
-DISTNAME=		synergy-1.4.10-Source
-PKGNAME=		${DISTNAME:S/-Source//}
+V=			1.4.12
+DISTNAME=		synergy-${V}-Source
+PKGNAME=		synergy-${V}
+REVISION=		1
 CATEGORIES=		net x11
 
 MAINTAINER=		Brian Callahan <bcallah@openbsd.org>
@@ -13,14 +15,15 @@ HOMEPAGE=		http://synergy-foss.org/
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += ICE SM X11 Xext Xi Xinerama Xrandr Xtst c m pthread stdc++
+WANTLIB=		ICE SM X11 Xext Xi Xinerama Xrandr Xtst \
+			c cryptopp m pthread stdc++
 
 MASTER_SITES=		http://synergy.googlecode.com/files/
 
 BUILD_DEPENDS=		archivers/gtar
 
-# The synergy devs decided to release a fucked tarball.
-# Our tar complains, then errors out.
+LIB_DEPENDS=		devel/cryptopp
+
 # tar: Invalid header, starting valid header search.
 TAR=			${LOCALBASE}/bin/gtar
 

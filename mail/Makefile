@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.290 2013/04/25 23:01:34 jturner Exp $
+# $OpenBSD: Makefile,v 1.292 2013/05/14 04:55:17 mglocker Exp $
 
      SUBDIR =
      SUBDIR += abook
@@ -92,6 +92,7 @@
      SUBDIR += milter-regex
      SUBDIR += milter-spamd
      SUBDIR += mimedefang
+     SUBDIR += mimetic
      SUBDIR += mini_sendmail
      SUBDIR += mixmaster
      SUBDIR += mlmmj
@@ -120,6 +121,7 @@
      SUBDIR += p5-Email-MIME-ContentType
      SUBDIR += p5-Email-MIME-Encodings
      SUBDIR += p5-Email-MessageID
+     SUBDIR += p5-Email-Received
      SUBDIR += p5-Email-Reply
      SUBDIR += p5-Email-Send
      SUBDIR += p5-Email-Sender

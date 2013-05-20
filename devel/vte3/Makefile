@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.25 2013/04/16 13:17:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2013/05/14 09:06:39 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		terminal emulation library
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.34.4
+GNOME_VERSION=		0.34.5
 
 PKGNAME=		vte3-${GNOME_VERSION}
 
@@ -43,8 +43,13 @@ CONFIGURE_ARGS=		--disable-gnome-pty-helper
 # error: -Bsymbolic requested but not supported by ld
 CONFIGURE_ARGS +=	--disable-Bsymbolic
 
+TEST_DEPENDS +=		shells/bash
+
 # XXX: https://bugzilla.gnome.org/show_bug.cgi?id=675987
 post-install:
 	rm -r ${WRKINST}${SYSCONFDIR}/profile.d
+
+pre-test:
+	${SUBST_CMD} ${WRKSRC}/src/test-vte-sh.sh
 
 .include <bsd.port.mk>

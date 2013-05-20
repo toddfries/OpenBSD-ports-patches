@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1127 2013/05/08 06:17:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.1130 2013/05/19 14:54:00 abieber Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -34,6 +34,7 @@
      SUBDIR += boost
      SUBDIR += bouml
      SUBDIR += bpython
+     SUBDIR += bullet
      SUBDIR += bustle
      SUBDIR += bzr
      SUBDIR += bzr-svn
@@ -131,6 +132,7 @@
      SUBDIR += gindent
      SUBDIR += git
      SUBDIR += git-cola
+     SUBDIR += git-cvs
      SUBDIR += glade
      SUBDIR += glade3
      SUBDIR += glib
@@ -436,8 +438,11 @@
      SUBDIR += nasm
      SUBDIR += netbeans
      SUBDIR += ninja
-     SUBDIR += node-expresso
      SUBDIR += newt
+     SUBDIR += node-async
+     SUBDIR += node-buffer-writer
+     SUBDIR += node-cloned
+     SUBDIR += node-expresso
      SUBDIR += node-fibers
      SUBDIR += node-generic-pool
      SUBDIR += node-gir
