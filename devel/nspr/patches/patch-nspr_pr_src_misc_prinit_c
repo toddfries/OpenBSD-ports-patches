@@ -1,0 +1,33 @@
+$OpenBSD: patch-nspr_pr_src_misc_prinit_c,v 1.1 2013/06/23 18:36:50 landry Exp $
+--- nspr/pr/src/misc/prinit.c.orig	Tue May 28 23:39:29 2013
++++ nspr/pr/src/misc/prinit.c	Wed Jun 12 21:26:27 2013
+@@ -384,8 +384,6 @@ PR_IMPLEMENT(PRStatus) PR_Cleanup()
+         _PR_CleanupDtoa();
+         _PR_CleanupCallOnce();
+ 		_PR_ShutdownLinker();
+-        _PR_CleanupNet();
+-        _PR_CleanupIO();
+         /* Release the primordial thread's private data, etc. */
+         _PR_CleanupThread(me);
+ 
+@@ -396,6 +394,12 @@ PR_IMPLEMENT(PRStatus) PR_Cleanup()
+ 	    _PR_LogCleanup();
+ 
+         /*
++         * accesses the current thread
++         */
++        _PR_CleanupNet();
++        _PR_CleanupIO();
++
++        /*
+          * This part should look like the end of _PR_NativeRunThread
+          * and _PR_UserRunThread.
+          */
+@@ -407,6 +411,7 @@ PR_IMPLEMENT(PRStatus) PR_Cleanup()
+             PR_DELETE(me->stack);
+             PR_DELETE(me);
+         }
++        _PR_MD_SET_CURRENT_THREAD(NULL);
+ 
+         /*
+          * XXX: We are freeing the heap memory here so that Purify won't

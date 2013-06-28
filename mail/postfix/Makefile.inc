@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.87 2013/03/11 11:23:53 espie Exp $
+# $OpenBSD: Makefile.inc,v 1.89 2013/06/12 20:36:33 brad Exp $
 
 COMMENT=	fast, secure sendmail replacement
 

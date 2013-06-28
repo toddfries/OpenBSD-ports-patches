@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.173 2013/04/04 14:45:46 sthen Exp $
+# $OpenBSD: Makefile,v 1.178 2013/06/20 08:26:13 ajacoutot Exp $
 
 COMMENT-main=	PostgreSQL RDBMS (client)
 COMMENT-server=	PostgreSQL RDBMS (server)
@@ -12,6 +12,10 @@ PKGNAME-server=	postgresql-server-${VERSION}
 PKGNAME-docs=	postgresql-docs-${VERSION}
 PKGNAME-contrib=postgresql-contrib-${VERSION}
 
+REVISION-main=	2
+REVISION-server=2
+REVISION-contrib=3
+
 CATEGORIES=	databases
 SHARED_LIBS=	ecpg		7.4 \
 		ecpg_compat	4.4 \
@@ -24,7 +28,9 @@ MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-WANTLIB=		c com_err crypto m readline ssl termcap z
+
+WANTLIB=		c com_err crypto m readline ssl termcap z asn1 \
+			heimbase krb5 roken wind
 
 MASTER_SITES=	http://ftp.postgresql.org/pub/source/v${VERSION}/ \
 	http://ftp5.es.postgresql.org/mirror/postgresql/source/v${VERSION}/ \
@@ -44,12 +50,14 @@ MAKE_FILE=	GNUmakefile
 SUBST_VARS=	VERSION
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
-CONFIGURE_STYLE=gnu
+USE_GROFF=	Yes
 
-INCLUDES=	${LOCALBASE}/include /usr/include/kerberosV
+CONFIGURE_STYLE=gnu
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include $$(krb5-config --cflags)" \
+		LDFLAGS="-L${LOCALBASE}/lib $$(krb5-config --libs)"
 CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-perl \
+		--with-pam=no \
 		--enable-integer-datetimes \
 		--includedir="${PREFIX}/include/postgresql" \
 		--datadir="${PREFIX}/share/postgresql" \
@@ -60,8 +68,8 @@ CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-openssl \
 		--with-ossp-uuid \
 		--with-libxml \
-		--disable-thread-safety \
-		--with-krb5
+		--with-krb5 \
+		--disable-thread-safety
 
 # There is no spinlock support for hppa yet. Until we have access to
 # a system to get this working, disable them for now. There is
@@ -88,7 +96,7 @@ RUN_DEPENDS-contrib= databases/postgresql,-server=${VERSION}
 LIB_DEPENDS-contrib= databases/postgresql=${VERSION} \
 		     ${LIB_DEPENDS-main} \
 		     devel/uuid
-WANTLIB-contrib = 	${WANTLIB-main} pq>=4 uuid
+WANTLIB-contrib=	${WANTLIB-main} pq>=4 ossp-uuid
 
 WANTLIB-docs=
 PKG_ARCH-docs=	*

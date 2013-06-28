@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.41 2013/03/21 08:46:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2013/06/20 08:26:13 ajacoutot Exp $
 
 COMMENT=	anti-spam filter
 
 VERSION=	3.8.0
 DISTNAME=	dspam-${VERSION}
-REVISION=	4
+REVISION=	9
 SHARED_LIBS=	dspam	8.0
 CATEGORIES=	mail
 
@@ -62,7 +62,6 @@ DRIVER = sqlite3
 FLAVOR += sqlite3
 .endif
 
-
 .if ${DRIVER} == "mysql"
 CONFIGURE_ARGS+=	--with-storage-driver=mysql_drv \
 			--with-mysql-includes=${LOCALBASE}/include/mysql \
@@ -111,7 +110,8 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 LIB_DEPENDS+=		databases/openldap
 WANTLIB+=		crypto ssl sasl2 asn1 com_err gssapi krb5 \
-			ldap-2.4 lber-2.4
+			ldap-2.4 lber-2.4 heimbase \
+			roken wind
 .endif
 
 .if ${FLAVOR:Mpreferences}

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2012/11/06 07:37:44 jasper Exp $
+# $OpenBSD: Makefile,v 1.65 2013/06/26 16:17:25 sthen Exp $
 
     SUBDIR =
     SUBDIR += base64
@@ -14,6 +14,7 @@
     SUBDIR += libpst
     SUBDIR += libunistring
     SUBDIR += luastruct
+    SUBDIR += luastruct,lua52
     SUBDIR += mimepp
     SUBDIR += mpack
     SUBDIR += p5-Calendar-Simple
@@ -53,6 +54,7 @@
     SUBDIR += pflogx
     SUBDIR += ppmtoTbmp
     SUBDIR += py-cjkcodecs
+    SUBDIR += py-html2text
     SUBDIR += py-iconvcodec
     SUBDIR += qprint
     SUBDIR += recode

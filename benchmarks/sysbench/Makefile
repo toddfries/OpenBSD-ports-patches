@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2013/03/21 08:45:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2013/06/12 20:36:33 brad Exp $
 
 COMMENT =	modular, cross-platform and multi-threaded benchmark tool
 DISTNAME =	sysbench-0.4.8
-REVISION=	3
+REVISION =	6
 CATEGORIES =	benchmarks
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=sysbench/}
 
@@ -13,7 +13,7 @@ PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB =		m c pthread
 
-MAINTAINER =		Jung Lee <openwall77@gmail.com>
+MAINTAINER =		Jung Lee <moorang@gmail.com>
 
 BUILD_DEPENDS =		textproc/docbook-xsl
 NO_TEST =		Yes

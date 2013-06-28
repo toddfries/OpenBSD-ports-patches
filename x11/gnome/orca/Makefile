@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.56 2013/04/18 09:00:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.60 2013/06/18 12:05:22 ajacoutot Exp $
 
 # XXX could use brltty and brlapi (with python bindinds) -- not ported yet
 
@@ -7,8 +7,7 @@ PKG_ARCH=		*
 COMMENT=		assistive screen reader
 
 GNOME_PROJECT=		orca
-GNOME_VERSION=		3.8.1
-REVISION=		1
+GNOME_VERSION=		3.8.2
 
 HOMEPAGE=		http://live.gnome.org/Orca
 
@@ -32,9 +31,6 @@ MODPY_VERSION=		${MODPY_DEFAULT_VERSION_3}
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 MODGNOME_TOOLS= 	yelp
-
-CONFIGURE_STYLE=	autoconf no-autoheader
-AUTOCONF_VERSION=	2.69
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/orca/
 

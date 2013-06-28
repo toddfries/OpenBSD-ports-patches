@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2013/03/11 11:41:31 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2013/05/30 16:05:52 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		libstatgrab bindings for Lua
 
 DISTNAME=		lua-statgrab-0.3.0
 PKGNAME=		${DISTNAME:S/-//}
-REVISION=		3
+REVISION=		4
 CATEGORIES=		sysutils devel
 
 HOMEPAGE=		http://luaforge.net/projects/lua-statgrab
@@ -37,6 +37,6 @@ do-install:
 	${INSTALL_DATA} ${WRKSRC}/API.txt ${MODLUA_DOCDIR}
 
 do-test:
-	cd ${WRKSRC} && ${LOCALBASE}/bin/lua *.lua
+	cd ${WRKSRC} && ${MODLUA_BIN} *.lua
 
 .include <bsd.port.mk>

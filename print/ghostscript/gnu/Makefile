@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.96 2013/03/11 11:37:53 espie Exp $
+# $OpenBSD: Makefile,v 1.98 2013/06/17 19:28:37 ajacoutot Exp $
 
 COMMENT=	GNU PostScript interpreter
 
@@ -6,7 +6,7 @@ VERSION=	9.06
 DISTNAME=	ghostscript-${VERSION}
 CATEGORIES=	print lang
 SHARED_LIBS=	gs	15.0
-REVISION=	1
+REVISION=	2
 
 MASTER_SITES=	http://downloads.ghostscript.com/public/
 
@@ -39,8 +39,7 @@ LIB_DEPENDS=	graphics/jbig2dec	\
 
 CFLAGS+=	-DSYS_TYPES_HAS_STDINT_TYPES	\
 		-I${LOCALBASE}/include		\
-		-I${LOCALBASE}/include/ijs	\
-		-I${LOCALBASE}/include/libpng
+		-I${LOCALBASE}/include/ijs
 USE_GROFF =	Yes
 
 STDLIBS=	-pthread -lm -liconv
@@ -316,7 +315,7 @@ DEVICES+=	ijs
 
 # Cups
 LIB_DEPENDS+=	print/cups,-libs
-WANTLIB += asn1 crypto cups cupsimage gssapi krb5 ssl
+WANTLIB += cups cupsimage
 DEVICES+=	cups
 ALL_TARGET_CUPS=cups
 INSTALL_TARGET_CUPS=	install-cups

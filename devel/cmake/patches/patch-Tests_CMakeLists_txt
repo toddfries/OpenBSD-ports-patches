@@ -1,10 +1,10 @@
-$OpenBSD: patch-Tests_CMakeLists_txt,v 1.4 2012/11/15 08:43:25 dcoppa Exp $
+$OpenBSD: patch-Tests_CMakeLists_txt,v 1.6 2013/06/21 11:12:51 dcoppa Exp $
 
 Disable CTestTestUpload test because it requires Internet access.
 
---- Tests/CMakeLists.txt.orig	Tue Nov 13 14:03:57 2012
-+++ Tests/CMakeLists.txt	Tue Nov 13 14:04:56 2012
-@@ -1707,17 +1707,6 @@ ${CMake_BINARY_DIR}/bin/cmake -DVERSION=master -P ${CM
+--- Tests/CMakeLists.txt.orig	Fri Jun  7 17:21:34 2013
++++ Tests/CMakeLists.txt	Fri Jun 21 11:38:23 2013
+@@ -1778,17 +1778,6 @@ ${CMake_BINARY_DIR}/bin/cmake -DVERSION=master -P ${CM
      FAIL_REGULAR_EXPRESSION "SegFault")
  
    configure_file(

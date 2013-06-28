@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.74 2013/04/16 13:17:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.80 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -21,8 +21,11 @@ PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}
 PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
 
-REVISION-main=		1
-REVISION-ui=		0
+REVISION-main=		2
+REVISION-mysql=		2
+REVISION-ui=		2
+REVISION-ldap=		1
+REVISION-pgsql=		1
 
 EPOCH-main=		2
 EPOCH-ldap=		0
@@ -52,6 +55,9 @@ MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 
 SUBST_VARS=		GDA_MAJOR
+
+# /libgda-5.1.2_writes_to_HOME/.cache/g-ir-scanner
+PORTHOME=		${WRKDIST}
 
 # no no_ldap PSEUDO_FLAVOR because we need the headers in -main
 # since some are referenced by other headers
@@ -121,8 +127,8 @@ WANTLIB-ui += Xi Xinerama Xrandr Xrender atk-1.0 c cairo
 WANTLIB-ui += cairo-gobject expat fontconfig freetype gda-${GDA_MAJOR}
 WANTLIB-ui += gdk-3 gdk_pixbuf-2.0 goocanvas-2.0 gtk-3 gtksourceview-3.0
 WANTLIB-ui += pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png
-WANTLIB-ui += pthread-stubs xcb xcb-render xcb-shm icuuc
-WANTLIB-ui += ICE SM atk-bridge-2.0 atspi harfbuzz icudata icule dbus-1
+WANTLIB-ui += pthread-stubs xcb xcb-render xcb-shm
+WANTLIB-ui += ICE SM atk-bridge-2.0 atspi harfbuzz dbus-1
 LIB_DEPENDS-ui=		${LIB_DEPENDS} \
 			graphics/goocanvas2 \
 			x11/dbus \
@@ -148,7 +154,8 @@ CONFIGURE_ARGS+=	--without-postgres
 .else
 RUN_DEPENDS-pgsql=	${MODGETTEXT_RUN_DEPENDS}
 MULTI_PACKAGES+=	-pgsql
-WANTLIB-pgsql=		${WANTLIB} gda-${GDA_MAJOR} pq com_err crypto ssl
+WANTLIB-pgsql=		${WANTLIB} gda-${GDA_MAJOR} pq com_err crypto ssl \
+			asn1 heimbase krb5 roken wind
 LIB_DEPENDS-pgsql=	${LIB_DEPENDS} \
 			x11/gnome/libgda \
 			databases/postgresql
@@ -159,7 +166,8 @@ CONFIGURE_ARGS+=	--with-postgres="${LOCALBASE}"
 RUN_DEPENDS-ldap=	${MODGETTEXT_RUN_DEPENDS}
 MULTI_PACKAGES+=	-ldap
 WANTLIB-ldap=		${WANTLIB} crypto gda-${GDA_MAJOR} gssapi krb5 lber-2.4 \
-			ldap-2.4 sasl2 ssl asn1 com_err
+			ldap-2.4 sasl2 ssl asn1 com_err heimbase \
+			roken wind
 LIB_DEPENDS-ldap=	${LIB_DEPENDS} \
 			x11/gnome/libgda \
 			databases/openldap

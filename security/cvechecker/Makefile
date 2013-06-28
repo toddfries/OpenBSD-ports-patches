@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2013/03/11 11:41:24 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2013/06/12 20:36:34 brad Exp $
 
 COMMENT=	local CVE checker tool
 
 DISTNAME=	cvechecker-3.2
+REVISION=	2
 
 CATEGORIES=	security sysutils
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.154 2013/04/30 18:41:50 sthen Exp $
+# $OpenBSD: Makefile,v 1.160 2013/06/21 21:37:56 sthen Exp $
 
 MULTI_PACKAGES=	-main -ntlm
 
@@ -9,7 +9,7 @@ COMMENT-main=	WWW and FTP proxy cache and accelerator
 COMMENT-ldap=	LDAP authentication/ACL support for Squid
 COMMENT-ntlm=	NTLM authentication/ACL support for Squid
 
-V=		3.3.4
+V=		3.3.5
 
 DISTNAME=	squid-$V
 EXTRACT_SUFX=	.tar.bz2
@@ -17,6 +17,10 @@ PKGNAME-main=	squid-$V
 PKGNAME-ldap=	squid-ldap-$V
 PKGNAME-ntlm=	squid-ntlm-$V
 CATEGORIES=	www
+
+REVISION-main=	4
+REVISION-ldap=	1
+REVISION-ntlm=	1
 
 # bzr repository at https://code.launchpad.net/squid
 MASTER_SITES=	${HOMEPAGE}Versions/v${V:R:R}/${V:R}/
@@ -30,9 +34,12 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += c m pthread stdc++
 
-WANTLIB-main=	${WANTLIB} asn1 crypto execinfo gssapi krb5 ssl
+WANTLIB-main=	${WANTLIB} asn1 crypto db execinfo gssapi krb5 ssl \
+		com_err heimbase roken wind
 
-LIB_DEPENDS-main= ${LIB_DEPENDS} devel/libexecinfo
+LIB_DEPENDS-main= ${LIB_DEPENDS} \
+		databases/db/v4 \
+		devel/libexecinfo
 
 SYSCONFDIR=	${BASESYSCONFDIR}/squid
 LOCALSTATEDIR=	${BASELOCALSTATEDIR}/squid
@@ -114,14 +121,11 @@ EXTERNAL_ACL+=	LDAP_group eDirectory_userip
 RUN_DEPENDS-ldap= ${BASE_PKGPATH}
 LIB_DEPENDS-ldap= ${LIB_DEPENDS} databases/openldap
 WANTLIB-ldap +=	${WANTLIB} asn1 com_err crypto gssapi krb5
-WANTLIB-ldap +=	lber-2.4 ldap-2.4 sasl2 ssl
+WANTLIB-ldap +=	lber-2.4 ldap-2.4 sasl2 ssl wind
+WANTLIB-ldap +=	com_err heimbase roken
 .endif
 
 RUN_DEPENDS-ntlm= net/samba,ads ${BASE_PKGPATH}
-
-post-extract:
-	@cp ${FILESDIR}/krb5-config ${WRKDIR}/bin
-	@chmod a+x ${WRKDIR}/bin/krb5-config
 
 post-patch:
 	cd ${WRKSRC}; AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSION} LOCALBASE=${LOCALBASE} ./bootstrap.sh

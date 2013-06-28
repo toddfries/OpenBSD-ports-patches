@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.151 2013/05/15 11:45:41 naddy Exp $
+# $OpenBSD: Makefile,v 1.153 2013/06/19 22:39:01 jturner Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -59,6 +59,7 @@
      SUBDIR += newlisp
      SUBDIR += nhc98
      SUBDIR += node
+     SUBDIR += node-typescript
      SUBDIR += nqp
      SUBDIR += obc
      SUBDIR += ocaml
@@ -74,6 +75,7 @@
      SUBDIR += php
      SUBDIR += processing
      SUBDIR += pugs
+     SUBDIR += pypy
      SUBDIR += python
      SUBDIR += railo
      SUBDIR += rakudo

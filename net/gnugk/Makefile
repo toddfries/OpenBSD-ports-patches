@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2013/05/14 15:01:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2013/06/12 20:36:34 brad Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,6 +7,8 @@ COMMENT=	H.323 gatekeeper
 V=		3.3
 DISTNAME=	gnugk-${V}-2
 PKGNAME=	gnugk-${V}
+REVISION=	0
+
 WRKDIST=	${WRKDIR}/gnugk-${V}
 
 CATEGORIES=	net telephony

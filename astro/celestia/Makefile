@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.33 2013/03/30 07:50:14 brad Exp $
+# $OpenBSD: Makefile,v 1.35 2013/06/04 18:41:39 naddy Exp $
 
 COMMENT=	free space simulator and planetarium
 
 DISTNAME=	celestia-1.6.1
-REVISION=	7
+REVISION=	8
 
 CATEGORIES=	astro x11
 
@@ -24,7 +24,7 @@ WANTLIB += jpeg m ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pangox-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs stdc++ xcb z
 WANTLIB += gdkglext-x11-1.0 gtkglext-x11-1.0 ${MODLUA_WANTLIB} theora
 WANTLIB += Xxf86vm drm gthread-2.0 xcb-render xcb-shm ffi
-WANTLIB += harfbuzz icudata icule icuuc
+WANTLIB += harfbuzz
 
 MODULES=	devel/gettext \
 		lang/lua
@@ -36,8 +36,7 @@ RUN_DEPENDS=	devel/desktop-file-utils
 USE_GMAKE=	Yes
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -lGL" \
 		LUA_CFLAGS="`pkg-config --cflags ${MODLUA_DEP}`" \
 		LUA_LIBS="`pkg-config --libs ${MODLUA_DEP}`"

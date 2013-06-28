@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2013/04/25 15:57:18 sthen Exp $
+# $OpenBSD: Makefile,v 1.46 2013/06/20 08:26:14 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -10,7 +10,6 @@ COMMENT-streaming = Streaming module for Cherokee web server
 
 DIR =		1.2
 VERSION =	${DIR}.101
-REVISION =	1
 DISTNAME =	cherokee-${VERSION}
 
 PKGNAME-main =	${DISTNAME}
@@ -18,6 +17,12 @@ PKGNAME-ldap =	cherokee-ldap-${VERSION}
 PKGNAME-mysql =	cherokee-mysql-${VERSION}
 PKGNAME-geoip =	cherokee-geoip-${VERSION}
 PKGNAME-streaming = cherokee-streaming-${VERSION}
+
+REVISION-main =		2
+REVISION-geoip =	2
+REVISION-ldap =		4
+REVISION-mysql =	4
+REVISION-streaming =	3
 
 SHARED_LIBS =	cherokee-base		0.0 \
 		cherokee-client		0.0 \
@@ -56,7 +61,8 @@ WANTLIB-geoip =		crypto GeoIP>=6
 RUN_DEPENDS-geoip =	${BASE_PKGPATH}
 
 LIB_DEPENDS-ldap =	databases/openldap
-WANTLIB-ldap =		asn1 com_err crypto gssapi krb5 lber-2.4 ldap-2.4 sasl2 ssl
+WANTLIB-ldap =		asn1 com_err crypto gssapi krb5 lber-2.4 ldap-2.4 sasl2 ssl \
+			heimbase roken wind
 RUN_DEPENDS-ldap =	${BASE_PKGPATH}
 
 LIB_DEPENDS-mysql =	databases/mysql
@@ -68,7 +74,7 @@ LIB_DEPENDS-streaming =	graphics/ffmpeg>=20121026 \
 WANTLIB-streaming += avcodec avformat avutil bz2 crypto m gsm
 WANTLIB-streaming += mp3lame ogg orc-0.4 pthread schroedinger-1.0
 WANTLIB-streaming += speex theoradec theoraenc vorbis vorbisenc vpx
-WANTLIB-streaming += x264 xvidcore z
+WANTLIB-streaming += x264 xvidcore z opus ssl
 RUN_DEPENDS-streaming = ${BASE_PKGPATH}
 
 USE_GROFF =	Yes

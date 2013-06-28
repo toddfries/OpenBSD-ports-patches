@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.111 2013/04/26 07:21:40 sthen Exp $
+# $OpenBSD: Makefile,v 1.116 2013/06/20 08:26:14 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
 DISTNAME=	lighttpd-1.4.32
-REVISION=	3
+REVISION=	8
 CATEGORIES=	www net
 MASTER_SITES=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
 
@@ -44,7 +44,8 @@ FLAVOR?=
 .if ${FLAVOR:Mldap}
 CONFIGURE_ARGS+= --with-ldap
 LIB_DEPENDS+=	databases/openldap
-WANTLIB+=	sasl2 asn1 com_err gssapi krb5 lber ldap
+WANTLIB+=	sasl2 asn1 com_err gssapi krb5 wind
+WANTLIB+=	heimbase lber-2.4 ldap-2.4 roken
 .endif
 
 .if ${FLAVOR:Mmysql}

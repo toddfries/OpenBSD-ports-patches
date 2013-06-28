@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.27 2013/03/21 08:45:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2013/06/04 18:41:51 naddy Exp $
 
 COMMENT =	medical image conversion
 
 DISTNAME =	xmedcon-0.12.0
 SHARED_LIBS =	mdc	2.2	# .2.1
 CATEGORIES =	graphics
+REVISION =	0
 
 HOMEPAGE =	http://xmedcon.sourceforge.net
 
@@ -19,7 +20,7 @@ WANTLIB += freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1 ffi
 WANTLIB += png pthread-stubs xcb z gthread-2.0 pthread xcb-render
 WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gtk-x11-2.0 xcb-shm
-WANTLIB += icudata icule icuuc graphite2
+WANTLIB += graphite2
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=xmedcon/}
 
@@ -35,7 +36,7 @@ CONFIGURE_STYLE = gnu
 CONFIGURE_ARGS += ${CONFIGURE_SHARED} \
 		 --enable-static \
 		 --sysconfdir="${SYSCONFDIR}"
-CONFIGURE_ENV = CFLAGS="${CFLAGS} -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV = CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 		LDFLAGS="${LDFLAGS} -L${LOCALBASE}/lib"
                          
 NO_TEST =	Yes

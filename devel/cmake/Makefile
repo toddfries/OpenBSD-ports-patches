@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.80 2013/05/13 15:02:26 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.85 2013/06/28 14:58:23 dcoppa Exp $
 
 VMEM_WARNING =	Yes
 DPB_PROPERTIES =parallel
@@ -11,8 +11,8 @@ CFLAGS +=	-O1 -fno-stack-protector
 HOMEPAGE =	http://www.cmake.org/
 CATEGORIES =	devel
 COMMENT =	portable build system
-DISTNAME =	cmake-2.8.10.2
-REVISION =	5
+DISTNAME =	cmake-2.8.11.1
+REVISION =	0
 MASTER_SITES =	${HOMEPAGE}files/v2.8/
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>
@@ -22,6 +22,8 @@ PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB =		archive c curl curses expat form m \
 			stdc++ z
+
+BUILD_DEPENDS =		devel/ninja
 
 LIB_DEPENDS =		archivers/libarchive \
 			net/curl
@@ -40,29 +42,36 @@ PORTHOME =		${WRKDIR}
 
 SEPARATE_BUILD =	Yes
 
-TEST_TARGET =	test
+TEST_TARGET =		test
 
 MAKE_FLAGS +=		VERBOSE=1
 
 pre-configure:
 	cp ${FILESDIR}/*.cmake ${WRKSRC}/Modules/
 	${SUBST_CMD} ${WRKSRC}/Modules/CMakeDetermineJavaCompiler.cmake \
-		${WRKSRC}/Modules/FindFreetype.cmake \
 		${WRKSRC}/Modules/FindJNI.cmake \
 		${WRKSRC}/Modules/FindJava.cmake \
 		${WRKSRC}/Modules/FindLuaLibs.cmake \
 		${WRKSRC}/Modules/FindMPEG.cmake \
 		${WRKSRC}/Modules/FindMPEG2.cmake \
 		${WRKSRC}/Modules/FindQt.cmake \
-		${WRKSRC}/Modules/FindQt3.cmake \
 		${WRKSRC}/Modules/FindQt4.cmake \
 		${WRKSRC}/Modules/FindSDL.cmake \
-		${WRKSRC}/Modules/FindTCL.cmake \
-		${WRKSRC}/Modules/UseJava.cmake
+		${WRKSRC}/Modules/FindTCL.cmake
 
-post-install:
+do-build:
+	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} ninja -v -j \
+		${MAKE_JOBS} ${ALL_TARGET}
+
+do-install:
+	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
+		${FAKE_SETUP} ninja -v -j ${MAKE_JOBS} ${FAKE_TARGET}
 	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/*.{beforesubst,orig}
 	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Compiler/*.orig
 	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Platform/*.orig
+
+do-test:
+	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} ninja -v -j \
+		${MAKE_JOBS} ${TEST_FLAGS} ${TEST_TARGET}
 
 .include <bsd.port.mk>

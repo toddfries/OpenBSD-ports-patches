@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.17 2013/03/21 08:45:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/06/09 14:52:58 naddy Exp $
 
 COMMENT =		ncurses mpd client inspired by ncmpc
 
 DISTNAME =		ncmpcpp-0.5.10
-REVISION =		3
+REVISION =		4
 
 EXTRACT_SUFX =		.tar.bz2
 
@@ -28,6 +28,7 @@ LIB_DEPENDS =		audio/libmpdclient>=2.4 \
 
 MODULES =		devel/gettext
 
+FAKE_FLAGS =		docdir="${PREFIX}/share/examples/ncmpcpp/"
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--enable-clock \

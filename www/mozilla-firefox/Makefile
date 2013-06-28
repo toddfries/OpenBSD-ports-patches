@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.230 2013/04/06 14:44:52 landry Exp $
+# $OpenBSD: Makefile,v 1.234 2013/06/26 19:29:13 landry Exp $
 
 COMMENT =	Mozilla web browser
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
@@ -6,17 +6,16 @@ BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 # Don't forget to bump www/firefox-i18n after updates.
 # Don't forget to update devel/xulrunner/2.0 if patches changes.
 
-MOZILLA_VERSION =	20.0
+MOZILLA_VERSION =	22.0
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	firefox
 MOZILLA_CODENAME =	browser
 
 #MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build1/source/
-SO_VERSION =	39.0
+SO_VERSION =	41.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
-MOZILLA_LIBS =	browsercomps mozalloc mozgnome \
-		xpcom xul
+MOZILLA_LIBS =	browsercomps mozalloc mozgnome xul
 
 CATEGORIES =	www
 
@@ -42,6 +41,15 @@ NO_TEST =	Yes
 CONFIGURE_STYLE =	autoconf no-autoheader
 WANTLIB +=	kvm
 
+# to be able to link when building with clang on i386
+.if ${MACHINE_ARCH} == "i386"
+CONFIGURE_ARGS +=	--disable-debug-symbols
+.endif
+
+# XXX remove in 24
+CONFIGURE_ENV+=	TERM=xterm
+MAKE_ENV+=	TERM=xterm
+
 CONFIGURE_ARGS +=	--enable-gstreamer
 LIB_DEPENDS +=	multimedia/gstreamer-0.10/plugins-base
 
@@ -50,15 +58,13 @@ WANTLIB += gstvideo-0.10 xml2
 
 RUN_DEPENDS +=	multimedia/gstreamer-0.10/plugins-good
 
+# needs 3.0.10 when not using gcc
+# CONFIGURE_ARGS += --with-system-ffi
+
 # --with-system-png=${LOCALBASE}
 # no system png : apng support not bundled in
 
 MOZILLA_AUTOCONF_DIRS +=	js/src
-
-# add method appeared in 18
-post-patch:
-	echo "UNSUPPORTED(int sa_stream_set_stream_type(sa_stream_t *s,  const sa_stream_type_t stream_type))" \
-		>> ${WRKSRC}/${_MOZDIR}/media/libsydneyaudio/src/sydney_audio_sndio.c
 
 post-install:
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/mozilla-firefox.1 \
@@ -71,14 +77,14 @@ post-install:
 		${PREFIX}/share/applications/${MOZILLA_PROJECT}.desktop
 	# install icon for desktop file
 	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps/
-	${INSTALL_DATA} ${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/icons/mozicon128.png \
+	${INSTALL_DATA} ${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/browser/icons/mozicon128.png \
 		${PREFIX}/share/pixmaps/firefox.png
 
 	# link default48.png to default.png to be used by default by non-icccm compliant wm
-	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/chrome/icons/default/default{48,}.png
+	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/browser/chrome/icons/default/default{48,}.png
 
 	# cleanup useless dirs from #798450 (fx 18?)
-	rm -Rf ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/modules
+#	rm -Rf ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/modules
 
 
 .include <bsd.port.mk>

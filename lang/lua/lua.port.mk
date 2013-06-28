@@ -1,4 +1,4 @@
-# $OpenBSD: lua.port.mk,v 1.26 2013/03/11 11:20:28 espie Exp $
+# $OpenBSD: lua.port.mk,v 1.28 2013/06/02 16:59:48 jasper Exp $
 
 CATEGORIES+=	lang/lua
 

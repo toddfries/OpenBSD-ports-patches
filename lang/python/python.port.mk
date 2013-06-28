@@ -1,4 +1,4 @@
-# $OpenBSD: python.port.mk,v 1.66 2013/05/13 19:06:45 fgsch Exp $
+# $OpenBSD: python.port.mk,v 1.71 2013/06/28 10:27:49 espie Exp $
 #
 #	python.port.mk - Xavier Santolaria <xavier@santolaria.net>
 #	This file is in the public domain.
@@ -7,7 +7,7 @@ CATEGORIES +=		lang/python
 
 # define the default versions
 MODPY_DEFAULT_VERSION_2 = 2.7
-MODPY_DEFAULT_VERSION_3 = 3.2
+MODPY_DEFAULT_VERSION_3 = 3.3
 
 .if !defined(MODPY_VERSION)
 
@@ -23,9 +23,7 @@ MODPY_VERSION ?=	${MODPY_DEFAULT_VERSION_2}
 
 # verify if MODPY_VERSION forced is correct
 .else
-.  if ${MODPY_VERSION} != "2.5" && \
-      ${MODPY_VERSION} != "2.7" && \
-      ${MODPY_VERSION} != "3.2" && \
+.  if ${MODPY_VERSION} != "2.7" && \
       ${MODPY_VERSION} != "3.3"
 ERRORS += "Fatal: unknown or unsupported MODPY_VERSION: ${MODPY_VERSION}"
 .  endif
@@ -45,7 +43,7 @@ MODPY_COMMENT =	"@comment "
 .elif ${MODPY_MAJOR_VERSION} == 3
 MODPY_LIB_SUFFIX =	m
 # replace py- prefix by py3-
-FULLPKGNAME =	${PKGNAME:S/^py-/py3-/}
+FULLPKGNAME ?=	${PKGNAME:S/^py-/py3-/}${FLAVOR_EXT:S/-python3//}
 MODPY_FLAVOR =	,python3
 # use MODPY_SUFFIX for binaries to avoid conflict
 MODPY_BIN_SUFFIX =	-3
@@ -58,12 +56,6 @@ MODPY_COMMENT =
 .endif
 
 MODPY_WANTLIB = python${MODPY_VERSION}${MODPY_LIB_SUFFIX}
-
-.if ${MODPY_VERSION} < 2.6
-MODPY_JSON =		devel/py-simplejson
-.else
-MODPY_JSON =
-.endif
 
 MODPY_RUN_DEPENDS =	lang/python/${MODPY_VERSION}
 MODPY_LIB_DEPENDS =	${MODPY_RUN_DEPENDS}
@@ -83,7 +75,7 @@ RUN_DEPENDS +=		${MODPY_RUN_DEPENDS}
 SHARED_ONLY =		Yes
 .endif
 
-_MODPY_PRE_BUILD_STEPS = @:
+_MODPY_PRE_BUILD_STEPS = :
 .if defined(MODPY_SETUPTOOLS) && ${MODPY_SETUPTOOLS:L} == "yes"
 # The setuptools module provides a package locator (site.py) that is
 # required at runtime for the pkg_resources stuff to work
@@ -106,11 +98,13 @@ _MODPY_SETUPUTILS_FAKE_DIR =	\
 	${WRKDIR}/lib/python${MODPY_VERSION}/site-packages/setuptools
 _MODPY_PRE_BUILD_STEPS +=	\
 	;mkdir -p ${_MODPY_SETUPUTILS_FAKE_DIR} \
+	;exec 3>&1 \
 	;exec >${_MODPY_SETUPUTILS_FAKE_DIR}/__init__.py \
 	;echo 'def setup(*args, **kwargs):' \
 	;echo '    msg = "OpenBSD ports: MODPY_SETUPTOOLS = Yes is required"' \
 	;echo '    raise Exception(msg)' \
-	;echo 'Extension = Feature = find_packages = setup'
+	;echo 'Extension = Feature = find_packages = setup' \
+	;exec 1>&3
 MODPY_SETUPUTILS =	No
 _MODPY_USERBASE =	${WRKDIR}
 .endif
@@ -150,7 +144,7 @@ MAKE_ENV +=	CC=${CC} PYTHONUSERBASE=${_MODPY_USERBASE}
 CONFIGURE_ENV += PYTHON="${MODPY_BIN}" \
 		ac_cv_prog_PYTHON="${MODPY_BIN}"
 
-MODPY_CMD =	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} \
+MODPY_CMD =	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} \
 			${MODPY_BIN} ./${MODPY_SETUP}
 
 SUBST_VARS :=	MODPY_PYCACHE MODPY_COMMENT MODPY_PYC_MAGIC_TAG MODPY_BIN MODPY_EGG_VERSION MODPY_VERSION MODPY_BIN_SUFFIX MODPY_PY_PREFIX ${SUBST_VARS}
@@ -167,25 +161,31 @@ MODPYTHON_pre-configure += for f in ${MODPY_ADJ_FILES}; do \
 	${MODPY_BIN_ADJ} ${WRKSRC}/$${f}; done
 .endif
 
+MODPY_BUILD_TARGET = ${_MODPY_PRE_BUILD_STEPS}; \
+	${MODPY_CMD} ${MODPY_DISTUTILS_BUILD} ${MODPY_DISTUTILS_BUILDARGS}
+MODPY_INSTALL_TARGET = \
+	${MODPY_CMD} ${MODPY_DISTUTILS_BUILD} ${MODPY_DISTUTILS_BUILDARGS} \
+		${MODPY_DISTUTILS_INSTALL} ${MODPY_DISTUTILS_INSTALLARGS}
+MODPY_TEST_TARGET = \
+	${MODPY_CMD} ${TEST_TARGET}
+
 # dirty way to do it with no modifications in bsd.port.mk
 .if empty(CONFIGURE_STYLE)
 .  if !target(do-build)
 do-build:
-	${_MODPY_PRE_BUILD_STEPS}
-	${MODPY_CMD} ${MODPY_DISTUTILS_BUILD} ${MODPY_DISTUTILS_BUILDARGS}
+	@${MODPY_BUILD_TARGET}
 .  endif
 
 # extra documentation or scripts should be installed via post-install
 .  if !target(do-install)
 do-install:
-	${MODPY_CMD} ${MODPY_DISTUTILS_BUILD} ${MODPY_DISTUTILS_BUILDARGS} \
-		${MODPY_DISTUTILS_INSTALL} ${MODPY_DISTUTILS_INSTALLARGS}
+	@${MODPY_INSTALL_TARGET}
 .  endif
 
 # setuptools supports regress testing from setup.py using a standard target
 .  if !target(do-test) && ${MODPY_SETUPUTILS:L} == "yes"
 do-test:
-	${MODPY_CMD} ${TEST_TARGET}
+	@${MODPY_TEST_TARGET}
 .  endif
 
 .endif

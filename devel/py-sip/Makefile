@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.24 2013/03/11 10:50:26 espie Exp $
+# $OpenBSD: Makefile,v 1.26 2013/06/15 19:57:18 espie Exp $
 
-# XXX: Don't forget to update x11/py-qt{3,4} when updating this port.
+# XXX: Don't forget to update x11/py-qt4 when updating this port.
 
 SHARED_ONLY=	Yes
 

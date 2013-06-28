@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.142 2013/05/14 11:01:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.149 2013/06/20 06:54:36 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		unified backend for PIM programs
 
 GNOME_PROJECT=		evolution-data-server
-GNOME_VERSION=		3.8.2
-REVISION=		0
+GNOME_VERSION=		3.8.3
+REVISION=		3
 
 CATEGORIES=		databases productivity
 
@@ -34,11 +34,12 @@ WANTLIB += dbus-1 expat ffi fontconfig freetype gck-1 gcr-base-3
 WANTLIB += gcrypt gdata gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
 WANTLIB += gmodule-2.0 goa-1.0 gobject-2.0 gpg-error graphite2
 WANTLIB += gssapi gthread-2.0 gtk-3 gweather-3 harfbuzz ical icalss
-WANTLIB += icalvcal icudata icule icuuc idn krb5 lber-2.4 ldap-2.4
+WANTLIB += icalvcal idn krb5 lber-2.4 ldap-2.4
 WANTLIB += m nspr4 nss3 nssutil3 oauth p11-kit pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
 WANTLIB += sasl2 secret-1 smime3 softokn3 soup-2.4 soup-gnome-2.4
 WANTLIB += sqlite3 ssl ssl3 xcb xcb-render xcb-shm xml2 z
+WANTLIB += heimbase roken wind
 
 MODULES=		devel/gettext \
 			devel/dconf \
@@ -58,14 +59,10 @@ LIB_DEPENDS= 		databases/db/v4 \
 
 MODPY_RUNDEP=		No
 MODGNOME_TOOLS= 	gi vala
-MODGNOME_CPPFLAGS=	-I${LOCALBASE}/include/db4
+MODGNOME_CPPFLAGS=	-I${LOCALBASE}/include/db4 $$(krb5-config --cflags)
 
-AUTOCONF_VERSION=	2.69
-
-CONFIGURE_STYLE= 	autoconf
+CONFIGURE_STYLE= 	gnu
 CONFIGURE_ARGS=		--with-krb5 \
-			--with-krb5-libs=/usr/lib \
-			--with-krb5-includes=/usr/include/kerberosV \
 			--with-libdb=${LOCALBASE} \
 			--with-openldap=${LOCALBASE}
 

@@ -1,34 +1,34 @@
-# $OpenBSD: Makefile,v 1.49 2013/05/18 17:27:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2013/06/23 10:10:11 ajacoutot Exp $
 
 COMMENT=		next generation GNOME shell
 
 GNOME_PROJECT=		gnome-shell
-GNOME_VERSION=		3.8.2
-REVISION=		0
+GNOME_VERSION=		3.8.3
+REVISION=		2
 
 HOMEPAGE=		http://live.gnome.org/GnomeShell
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += FLAC ICE SM X11 X11-xcb Xau Xcomposite Xcursor Xdamage
-WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xtst asn1
-WANTLIB += atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
-WANTLIB += camel-1.2 canberra canberra-gtk3 clutter-1.0 cogl cogl-pango
+WANTLIB += FLAC ICE SM X11 X11-xcb Xcomposite Xcursor Xdamage
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xtst asn1 atk-1.0
+WANTLIB += atk-bridge-2.0 atspi c cairo cairo-gobject camel-1.2
+WANTLIB += canberra canberra-gtk3 clutter-1.0 cogl cogl-pango
 WANTLIB += com_err croco-0.6 crypto dbus-1 dbus-glib-1 ecal-1.2
 WANTLIB += edataserver-1.2 execinfo expat ffi fontconfig freetype
-WANTLIB += gck-1 gcr-3 gcr-base-3 gcrypt gdbm gdk-3 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 girepository-1.0 gjs glib-2.0 gmodule-2.0 gnome-menu-3
+WANTLIB += gck-1 gcr-base-3 gcrypt gdbm gdk-3 gdk_pixbuf-2.0 gio-2.0
+WANTLIB += girepository-1.0 gjs glib-2.0 gmodule-2.0 gnome-menu-3
 WANTLIB += gobject-2.0 gpg-error graphite2 gssapi gstbase-1.0
-WANTLIB += gstreamer-1.0 gthread-2.0 gtk-3 harfbuzz ical icalss
-WANTLIB += icalvcal icudata icule icuuc json-c json-glib-1.0 krb5
+WANTLIB += gstreamer-1.0 gthread-2.0 gtk-3 harfbuzz heimbase
+WANTLIB += ical icalss icalvcal json-c json-glib-1.0 krb5
 WANTLIB += ltdl m mozjs185 mutter ncurses ncursesw nspr4 nss3
 WANTLIB += nssutil3 ogg p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 plc4 plds4 png polkit-agent-1 polkit-gobject-1
 WANTLIB += pthread pthread-stubs pulse pulse-mainloop-glib readline
-WANTLIB += secret-1 smime3 sndfile softokn3 soup-2.4 sqlite3 ssl3
-WANTLIB += startup-notification-1 stdc++ telepathy-glib vorbis
-WANTLIB += vorbisenc vorbisfile xcb xcb-aux xcb-render xcb-shm
+WANTLIB += roken secret-1 smime3 sndfile softokn3 soup-2.4 sqlite3
+WANTLIB += ssl3 startup-notification-1 stdc++ telepathy-glib vorbis
+WANTLIB += vorbisenc vorbisfile wind xcb xcb-aux xcb-render xcb-shm
 WANTLIB += xml2 z
 
 MODULES=		devel/dconf \
@@ -61,7 +61,7 @@ LIB_DEPENDS=		audio/pulseaudio \
 			x11/gnome/gcr \
 			x11/gnome/gjs \
 			x11/gnome/menus \
-			x11/gnome/mutter>=3.8.1
+			x11/gnome/mutter>=3.8.3
 
 # polkit(8) almost always needs to know the "active" session
 RUN_DEPENDS +=		sysutils/consolekit
@@ -96,7 +96,6 @@ MODGNOME_DESKTOP_FILE=	Yes
 
 LIBTOOL_FLAGS= 		--tag=disable-static
 
-CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-static \
 			--without-systemd
 

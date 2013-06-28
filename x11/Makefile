@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.514 2013/05/20 06:39:00 bcallah Exp $
+# $OpenBSD: Makefile,v 1.517 2013/06/15 11:47:30 bcallah Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -199,7 +199,6 @@
      SUBDIR += py-kiwi
      SUBDIR += py-osd
      SUBDIR += py-pyglet
-     SUBDIR += py-qt3
      SUBDIR += py-qt4
      SUBDIR += py-wxPython
      SUBDIR += pypanel
@@ -272,6 +271,7 @@
      SUBDIR += waimea
      SUBDIR += wampager
      SUBDIR += wbar
+     SUBDIR += windowlab
      SUBDIR += windowmaker
      SUBDIR += windowmaker-extra
      SUBDIR += winwrangler
@@ -309,6 +309,7 @@
      SUBDIR += xautolock
      SUBDIR += xawtv
      SUBDIR += xbae
+     SUBDIR += xbanish
      SUBDIR += xbindkeys
      SUBDIR += xcalib
      SUBDIR += xcb

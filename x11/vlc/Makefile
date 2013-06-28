@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.170 2013/04/11 17:58:42 brad Exp $
+# $OpenBSD: Makefile,v 1.173 2013/06/04 18:42:00 naddy Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	VideoLAN client; multimedia player
 COMMENT-jack=	JACK audio output module for VLC
 
-V=		2.0.6
+V=		2.0.7
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
 PKGNAME-jack=	vlc-jack-${V}
@@ -24,14 +24,14 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 PERMIT_PACKAGE_CDROM=	patents
 PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB-common=	dbus-1 m pthread ${MODGETTEXT_WANTLIB}
+WANTLIB-common=	c dbus-1 m pthread ${MODGETTEXT_WANTLIB}
 WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 Xcomposite \
 		Xcursor Xdamage Xext Xfixes Xi Xinerama Xpm Xrandr Xrender \
-		ass atk-1.0 avcodec avformat avutil bluray c cairo cddb dvbpsi \
+		ass atk-1.0 avcodec avformat avutil bluray cairo cddb dvbpsi \
 		dvdnav dvdread ebml stdc++ expat ffi fontconfig freetype \
 		fribidi gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
 		gmodule-2.0 gmp gnutls gobject-2.0 gpg-error graphite2 \
-		gthread-2.0 gtk-x11-2.0 harfbuzz hogweed icudata icule icuuc \
+		gthread-2.0 gtk-x11-2.0 harfbuzz hogweed \
 		jpeg matroska nettle notify opus orc-0.4 ogg p11-kit pango-1.0 \
 		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png postproc \
 		pthread-stubs samplerate schroedinger-1.0>=2.0 sndio speex \
@@ -90,7 +90,7 @@ RUN_DEPENDS-jack= ${BUILD_PKGPATH}
 
 MAKE_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
 
-CPPFLAGS=	-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
+CPPFLAGS=	-I${X11BASE}/include -I${LOCALBASE}/include
 
 USE_GMAKE=	Yes
 # Fails to link _pic libs properly resulting in undefined symbols in the live555 plugin

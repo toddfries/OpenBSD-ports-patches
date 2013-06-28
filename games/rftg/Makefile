@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2013/03/11 11:07:40 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2013/06/12 20:36:33 brad Exp $
 
 V = 0.8.1
 COMMENT-client = race for the galaxy card game
@@ -14,6 +14,7 @@ MULTI_PACKAGES = -client #-server
 SUBPACKAGE ?= -client
 
 REVISION-client =	1
+REVISION-server =	1
 
 # Licence: GPL
 # official authorization from the game publisher (Rio Grande)

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.8 2013/05/09 17:03:55 rpe Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/02 16:48:56 naddy Exp $
 
 COMMENT =		video (and audio) codec playback library
 
 DISTNAME =		emotion-1.7.6
+REVISION =		1
 
 SHARED_LIBS +=	emotion                   1.0 # 8.6
 
@@ -15,8 +16,8 @@ WANTLIB += ecore_evas ecore_file ecore_imf ecore_imf_evas ecore_input
 WANTLIB += ecore_input_evas ecore_ipc ecore_x edje eet eina eio
 WANTLIB += embryo evas expat ffi fontconfig freetype fribidi glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 graphite2 gstbase-0.10 gstinterfaces-0.10
-WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 harfbuzz icudata
-WANTLIB += icule icuuc idn jpeg m orc-0.4 pcre pthread pthread-stubs
+WANTLIB += gstreamer-0.10 gstvideo-0.10 gthread-2.0 harfbuzz
+WANTLIB += idn jpeg m orc-0.4 pcre pthread pthread-stubs
 WANTLIB += ssl xcb xml2 z ${MODLUA_WANTLIB}
 
 MODULES =		devel/gettext \
@@ -31,6 +32,8 @@ LIB_DEPENDS =		devel/orc \
 			x11/e17/edje>=1.7.6v2 \
 			x11/e17/embryo>=1.7.6v2
 
-CONFIGURE_ARGS +=	--disable-doc
+CONFIGURE_ARGS +=	--disable-doc \
+			--disable-xine \
+			--disable-generic-vlc
 
 .include <bsd.port.mk>

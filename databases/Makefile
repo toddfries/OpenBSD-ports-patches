@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.242 2013/05/06 16:20:11 fgsch Exp $
+# $OpenBSD: Makefile,v 1.250 2013/06/28 09:14:02 jasper Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -34,7 +34,9 @@
      SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
      SUBDIR += luadbi
+     SUBDIR += luadbi,lua52
      SUBDIR += luasqlite3
+     SUBDIR += luasqlite3,lua52
      SUBDIR += luma
      SUBDIR += mdbtools/snapshot
      SUBDIR += mongodb
@@ -154,6 +156,7 @@
      SUBDIR += postgresql-pllua
      SUBDIR += postgresql-plv8
      SUBDIR += postgresql_autodoc
+     SUBDIR += puppetdb
      SUBDIR += py-axiom
      SUBDIR += py-carbon
      SUBDIR += py-cdb
@@ -197,6 +200,7 @@
      SUBDIR += ruby-do_sqlite3,ruby18
      SUBDIR += ruby-do_sqlite3,rbx
      SUBDIR += ruby-hiera
+     SUBDIR += ruby-hiera,ruby18
      SUBDIR += ruby-jdbc-h2
      SUBDIR += ruby-jdbc-mysql
      SUBDIR += ruby-jdbc-postgres
@@ -209,8 +213,6 @@
      SUBDIR += ruby-mysql,rbx
      SUBDIR += ruby-mysql2
      SUBDIR += ruby-mysql2,ruby18
-     SUBDIR += ruby-mysqlplus
-     SUBDIR += ruby-mysqlplus,ruby18
      SUBDIR += ruby-pg
      SUBDIR += ruby-pg,ruby18
      SUBDIR += ruby-pg,rbx
@@ -230,6 +232,12 @@
      SUBDIR += ruby-sqlite3,ruby18
      SUBDIR += ruby-sqlite3,rbx
      SUBDIR += ruby-swift
+     SUBDIR += ruby-swift-db-mysql,ruby19
+     SUBDIR += ruby-swift-db-mysql,ruby20
+     SUBDIR += ruby-swift-db-postgres,ruby19
+     SUBDIR += ruby-swift-db-postgres,ruby20
+     SUBDIR += ruby-swift-db-sqlite3,ruby19
+     SUBDIR += ruby-swift-db-sqlite3,ruby20
      SUBDIR += ruby-tiny_tds
      SUBDIR += ruby-tiny_tds,ruby18
      SUBDIR += ruby-tiny_tds,rbx

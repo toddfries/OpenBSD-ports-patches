@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.31 2013/04/18 09:00:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2013/06/18 11:48:56 jasper Exp $
 
 COMMENT=	gobject-based plugins engine
 
 GNOME_PROJECT=	libpeas
-GNOME_VERSION=	1.8.0
-REVISION=	4
+GNOME_VERSION=	1.8.1
 
 CATEGORIES=	devel
 
@@ -28,7 +27,7 @@ WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
 WANTLIB += c cairo cairo-gobject dbus-1 expat ffi fontconfig freetype
 WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 girepository-1.0 gjs glib-2.0
 WANTLIB += gmodule-2.0 gobject-2.0 graphite2 gthread-2.0 gtk-3
-WANTLIB += harfbuzz icudata icule icuuc m mozjs185 ncurses ncursesw
+WANTLIB += harfbuzz m mozjs185 ncurses ncursesw
 WANTLIB += nspr4 pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += plc4 plds4 png pthread pthread-stubs readline stdc++
 WANTLIB += util xcb xcb-render xcb-shm z

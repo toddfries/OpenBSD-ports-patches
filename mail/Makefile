@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.292 2013/05/14 04:55:17 mglocker Exp $
+# $OpenBSD: Makefile,v 1.296 2013/06/26 16:23:31 sthen Exp $
 
      SUBDIR =
      SUBDIR += abook
@@ -76,6 +76,7 @@
      SUBDIR += ldapvacation
      SUBDIR += libetpan
      SUBDIR += libspf2
+     SUBDIR += lumail
      SUBDIR += mailcrypt
      SUBDIR += maildrop
      SUBDIR += mailgraph
@@ -107,6 +108,7 @@
      SUBDIR += offlineimap
      SUBDIR += openwebmail
      SUBDIR += osbf-lua
+     SUBDIR += osbf-lua,lua52
      SUBDIR += p5-Catalyst-Plugin-Email
      SUBDIR += p5-Email-Abstract
      SUBDIR += p5-Email-Address
@@ -182,9 +184,11 @@
      SUBDIR += razor-agents
      SUBDIR += rcube-contextmenu
      SUBDIR += rcube-sieverules
+     SUBDIR += rcube-yubikey-plugin
      SUBDIR += re-alpine
      SUBDIR += relaydb
      SUBDIR += roundcubemail
+     SUBDIR += rss2email
      SUBDIR += ruby-mail
      SUBDIR += ruby-mailfactory
      SUBDIR += ruby-mime

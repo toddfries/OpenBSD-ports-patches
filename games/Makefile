@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.265 2013/05/20 14:46:29 bcallah Exp $
+# $OpenBSD: Makefile,v 1.270 2013/06/17 02:55:02 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -34,6 +34,7 @@
      SUBDIR += childsplay
      SUBDIR += childsplay-plugins
      SUBDIR += chocolate-doom
+     SUBDIR += choria
      SUBDIR += chroma
      SUBDIR += chroma-enigma
      SUBDIR += chromium-bsu
@@ -49,6 +50,7 @@
      SUBDIR += crimson
      SUBDIR += crossfire-client
      SUBDIR += csmash
+     SUBDIR += dangerdeep
      SUBDIR += defendguin
      SUBDIR += doomdata
      SUBDIR += dopewars
@@ -95,6 +97,7 @@
      SUBDIR += gottcode
      SUBDIR += grhino
      SUBDIR += gtetrinet
+     SUBDIR += gti
      SUBDIR += gtkballs
      SUBDIR += hackdata
      SUBDIR += heroes
@@ -154,6 +157,7 @@
      SUBDIR += polymorphable
      SUBDIR += prboom
      SUBDIR += prboom-plus
+     SUBDIR += pushover
      SUBDIR += puzzles
      SUBDIR += qgo
      SUBDIR += qstat
@@ -179,6 +183,7 @@
      SUBDIR += slash-em
      SUBDIR += slash-em,no_x11
      SUBDIR += snipe2d
+     SUBDIR += solarus
      SUBDIR += spacehulk
      SUBDIR += spatial
      SUBDIR += speyes

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.111 2013/04/27 15:42:15 sthen Exp $
+# $OpenBSD: Makefile,v 1.114 2013/06/12 20:36:34 brad Exp $
 
 ONLY_FOR_ARCHS =	${GCC4_ARCHS}
 SHARED_ONLY =		Yes
@@ -25,7 +25,7 @@ FULLPKGNAME-html =	qt4-html-${PKGVERSION}
 FULLPKGPATH-html =	${BASE_PKGPATH},-html
 
 REVISION-main=		7
-REVISION-mysql=		1
+REVISION-mysql=		3
 REVISION-postgresql=	1
 REVISION-examples=	0
 REVISION-sqlite2=	1
@@ -96,7 +96,6 @@ CONFIGURE_ARGS =	-system-libpng -system-libjpeg -system-zlib \
 			-cups \
 			-confirm-license \
 			-opensource \
-			-I${LOCALBASE}/include/libpng \
 			-I${X11BASE}/include/freetype2 \
 			-I${X11BASE}/include \
 			-L${WRKBUILD}/lib \

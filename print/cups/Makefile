@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.156 2013/05/17 13:47:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.159 2013/06/20 06:54:37 ajacoutot Exp $
 
 COMMENT-main=		Common Unix Printing System
 COMMENT-libs=		CUPS libraries and headers
@@ -10,7 +10,8 @@ EXTRACT_SUFX=		.tar.bz2
 PKGNAME-main=		cups-${VERSION}
 PKGNAME-libs=		cups-libs-${VERSION}
 
-REVISION-main=		1
+REVISION-main=		3
+REVISION-libs=		1
 
 CATEGORIES=		print sysutils
 
@@ -28,7 +29,7 @@ MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += asn1 avahi-client avahi-common crypto gssapi krb5 m pthread
-WANTLIB += ssl stdc++ z
+WANTLIB += com_err heimbase roken wind ssl stdc++ z
 
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += c cups cupscgi cupsimage cupsmime cupsppdc dbus-1 usb-1.0
@@ -80,8 +81,7 @@ USE_GMAKE=		Yes
 
 MAKE_ENV=		${LIBS_ENV}
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-				-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -pthread" \
 			${LIBS_ENV}
 
@@ -103,9 +103,6 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--without-java \
 			--without-php \
 			--without-python
-
-post-extract:
-	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
 
 pre-configure:
 	cd ${WRKSRC} && \

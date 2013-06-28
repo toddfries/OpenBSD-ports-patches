@@ -1,0 +1,35 @@
+$OpenBSD: patch-nspr_pr_src_pthreads_ptthread_c,v 1.1 2013/06/23 18:36:50 landry Exp $
+Don't only check for _POSIX_THREAD_PRIORITY_SCHEDULING being defined, but check that it's > 0
+on openbsd/rthreads it's -1 atm.
+https://bugzilla.mozilla.org/show_bug.cgi?id=756047
+--- nspr/pr/src/pthreads/ptthread.c.orig	Tue May 28 23:39:29 2013
++++ nspr/pr/src/pthreads/ptthread.c	Wed Jun 12 21:26:28 2013
+@@ -16,6 +16,7 @@
+ #include "prpdce.h"
+ 
+ #include <pthread.h>
++#include <pthread_np.h>
+ #include <unistd.h>
+ #include <string.h>
+ #include <signal.h>
+@@ -36,6 +37,10 @@
+ #endif
+ #endif
+ 
++#if defined(_POSIX_THREAD_PRIORITY_SCHEDULING) && !(_POSIX_THREAD_PRIORITY_SCHEDULING > 0)
++#undef _POSIX_THREAD_PRIORITY_SCHEDULING
++#endif
++
+ /*
+  * Record whether or not we have the privilege to set the scheduling
+  * policy and priority of threads.  0 means that privilege is available.
+@@ -1719,7 +1724,8 @@ PR_IMPLEMENT(PRStatus) PR_SetCurrentThreadName(const c
+     memcpy(thread->name, name, nameLen + 1);
+ 
+ #if defined(OPENBSD) || defined(FREEBSD)
+-    result = pthread_set_name_np(thread->id, name);
++    pthread_set_name_np(thread->id, name);
++    result = 0;
+ #else /* not BSD */
+     /*
+      * On OSX, pthread_setname_np is only available in 10.6 or later, so test

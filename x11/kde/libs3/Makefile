@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.126 2013/03/19 13:07:14 nigel Exp $
+# $OpenBSD: Makefile,v 1.128 2013/06/20 06:54:38 ajacoutot Exp $
 
 COMMENT-main =		K Desktop Environment, libraries
 COMMENT-cups =		K Desktop Environment, cups support
@@ -93,8 +93,8 @@ LIB_DEPENDS-cups = \
 	print/cups,-libs
 
 
-REVISION-main = 22
-REVISION-cups = 10
+REVISION-main = 24
+REVISION-cups = 11
 
 WANTLIB-main =	${WANTLIB} 
 WANTLIB-main +=	GL Half Iex IlmImf>=4 IlmThread Imath Xcursor Xdamage Xfixes
@@ -104,6 +104,7 @@ WANTLIB-main +=	dbus-1 dns_sd drm expat fontconfig freetype glib-2.0
 WANTLIB-main +=	gmodule-2.0 gthread-2.0 jasper kmedia2_idl lcms mad mcop mng
 WANTLIB-main +=	ogg pcre pcreposix qtmcop sndio soundserver_idl tiff>=35
 WANTLIB-main +=	vorbis vorbisenc vorbisfile xml2 xslt>=1.10
+WANTLIB-main += com_err heimbase roken wind
 
 WANTLIB-cups = ${WANTLIB}
 WANTLIB-cups += DCOP cups lib/kde3/kdecore>=6 lib/kde3/kdefakes \
@@ -117,10 +118,6 @@ SAMPLECONFDIR =		${TRUEPREFIX}/share/apps/kde-conf-sample
 EXTRA_CONFIG =		xdg/menus/applications.menu
 
 FAKE_FLAGS =		sysconfdir=${SAMPLECONFDIR}
-
-post-extract:
-	cp ${FILESDIR}/krb5-config ${WRKDIR}/bin
-	chmod a+x ${WRKDIR}/bin/krb5-config
 
 pre-configure:
 	@perl -pi -e 's,!!LOCALBASE!!,${LOCALBASE},g' \

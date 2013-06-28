@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2013/03/21 08:46:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.32 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -17,15 +17,18 @@ PKGNAME-ldap=		powerdns-ldap-${V}
 CATEGORIES=		net
 HOMEPAGE=		http://www.powerdns.com/
 
-REVISION-main=		0
+REVISION-main=		2
+REVISION-mysql=		3
+REVISION-pgsql=		1
+REVISION-ldap=		1
 
 MULTI_PACKAGES=		-main
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB=		m stdc++ z
-WANTLIB-main=		c pthread sqlite3>=8 ${WANTLIB}
+WANTLIB=		m stdc++ z pthread
+WANTLIB-main=		c sqlite3>=8 ${WANTLIB}
 
 MASTER_SITES=		http://downloads.powerdns.com/releases/
 
@@ -59,7 +62,8 @@ CONFIGURE_ARGS+=	--with-pgsql=${LOCALBASE} \
 			--with-pgsql-includes=${LOCALBASE}/include/postgresql
 LIB_DEPENDS-pgsql=	databases/postgresql,-main
 RUN_DEPENDS-pgsql=	${FULLPKGNAME-main}:net/powerdns
-WANTLIB-pgsql=		com_err crypto pq>=2 ssl ${WANTLIB}
+WANTLIB-pgsql=		com_err crypto pq>=2 ssl asn1 heimbase krb5 \
+			roken wind ${WANTLIB}
 BACKENDS+=		gpgsql
 .endif
 
@@ -72,7 +76,8 @@ LIB_DEPENDS-ldap=	databases/openldap
 RUN_DEPENDS-ldap=	${FULLPKGNAME-main}:net/powerdns
 CONFIGURE_ARGS+=	--with-ldap=${LOCALBASE} \
 			--with-ldap-includes=${LOCALBASE}/include
-WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 lber-2.4 ldap_r-2.4 sasl2 ssl ${WANTLIB}
+WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 lber-2.4 ldap_r-2.4 \
+			heimbase roken wind sasl2 ssl ${WANTLIB}
 BACKENDS+=		ldap
 .endif
 

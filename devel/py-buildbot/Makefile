@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2013/03/11 10:50:25 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2013/06/20 14:07:40 sthen Exp $
 
 COMMENT =	system to automate the compile/test cycle
 
-MODPY_EGG_VERSION =	0.8.6p1
+MODPY_EGG_VERSION =	0.8.7p1
 DISTNAME =	buildbot-${MODPY_EGG_VERSION}
-PKGNAME =	py-${DISTNAME:S/p1/pl1/}
+PKGNAME =	py-${DISTNAME:S/p/pl/}
 
 CATEGORIES =	devel
 
@@ -29,8 +29,7 @@ RUN_DEPENDS =	databases/py-sqlalchemy \
 		devel/py-twisted/mail \
 		devel/py-twisted/web \
 		devel/py-twisted/words \
-		www/py-jinja2 \
-		${MODPY_JSON}
+		www/py-jinja2
 
 TEST_DEPENDS =	${RUN_DEPENDS} \
 			devel/py-mock

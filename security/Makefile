@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.313 2013/04/21 13:54:30 shadchin Exp $
+# $OpenBSD: Makefile,v 1.315 2013/06/07 13:33:24 dcoppa Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -106,6 +106,7 @@
      SUBDIR += logsurfer
      SUBDIR += luacrypto
      SUBDIR += luasec
+     SUBDIR += luasec,lua52
      SUBDIR += lxnb
      SUBDIR += mcrypt
      SUBDIR += metasploit
@@ -123,7 +124,6 @@
      SUBDIR += ocaml-ssl
      SUBDIR += onesixtyone
      SUBDIR += opencdk
-     SUBDIR += openct
      SUBDIR += openpam
      SUBDIR += opensc
      SUBDIR += ophcrack

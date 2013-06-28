@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.214 2013/03/21 08:45:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.217 2013/06/14 13:13:37 giovanni Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=	multithreaded SQL database (client)
 COMMENT-server=	multithreaded SQL database (server)
 COMMENT-tests=	multithreaded SQL database (regression test suite/benchmark)
 
-VERSION=	5.1.68
+VERSION=	5.1.70
 DISTNAME=	mysql-${VERSION}
 PKGNAME-main=	mysql-client-${VERSION}
 PKGNAME-server=	mysql-server-${VERSION}
@@ -15,10 +15,12 @@ CATEGORIES=	databases
 V=		MySQL-5.1
 MASTER_SITES=	${MASTER_SITE_MYSQL:=Downloads/$V/}
 
-REVISION-server=0
+EPOCH-main=	0
+EPOCH-server=	0
+EPOCH-tests=	0
 
-SHARED_LIBS=	mysqlclient_r	21.0 \
-		mysqlclient	21.0
+SHARED_LIBS=	mysqlclient_r	23.0 \
+		mysqlclient	23.0
 
 HOMEPAGE=	http://www.mysql.com/
 
@@ -67,9 +69,9 @@ CONFIGURE_ARGS+= --with-client-ldflags=-lsupc++ \
 CONFIGURE_ARGS+= --enable-assembler
 .endif
 
-RUN_DEPENDS-server=	${BASE_PKGPATH}>=5.1,<5.2 \
+RUN_DEPENDS-server=	${BASE_PKGPATH}>=5.1v0,<5.2v0 \
 			databases/p5-DBD-mysql
-LIB_DEPENDS-server=	${BASE_PKGPATH}>=5.1,<5.2
+LIB_DEPENDS-server=	${BASE_PKGPATH}>=5.1v0,<5.2v0
 
 WANTLIB-server=		${WANTLIB} crypto mysqlclient ssl wrap z
 WANTLIB-main=		${WANTLIB} crypto ncursesw readline ssl z

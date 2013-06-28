@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Heuristics.pm,v 1.19 2013/02/02 13:35:17 espie Exp $
+# $OpenBSD: Heuristics.pm,v 1.21 2013/06/21 09:05:18 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -110,7 +110,7 @@ sub special_parameters
 	return 0 if !defined $t;
 	my $p = $v->pkgpath_and_flavors;
 	# we build in memory if we know this port and it's light enough
-	if (defined $t && defined $wrkdir{$p}) {
+	if (defined $wrkdir{$p}) {
 		my $hostname = $core->hostname;
 		$used_per_host->{$hostname} //= 0;
 		if ($used_per_host->{$hostname} + $wrkdir{$p} <= $t) {
@@ -223,7 +223,7 @@ sub compare_weights
 sub new_queue
 {
 	my $self = shift;
-	if (DPB::Core->has_sf) {
+	if (DPB::HostProperties->has_sf) {
 		return DPB::Heuristics::Queue::Part->new($self);
 	} else {
 		return DPB::Heuristics::Queue->new($self);

@@ -1,13 +1,16 @@
-# $OpenBSD: Makefile,v 1.167 2013/05/13 14:29:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.173 2013/06/20 06:54:38 ajacoutot Exp $
 
 COMMENT-main=		multi-platform graphical toolkit
 COMMENT-guic=		gtk+ icon theme caching utility
 
-GNOME_VERSION=		2.24.18
+GNOME_VERSION=		2.24.19
 GNOME_PROJECT=		gtk+
 
 PKGNAME-main=		gtk+2-${GNOME_VERSION}
 PKGNAME-guic=		gtk-update-icon-cache-${GNOME_VERSION}
+
+REVISION-main=		1
+REVISION-guic=		1
 
 CATEGORIES=		x11 devel
 
@@ -22,7 +25,7 @@ MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += ffi gdk_pixbuf-2.0 m pcre z
+WANTLIB += ffi gdk_pixbuf-2.0 m pcre png z
 
 MULTI_PACKAGES=		-main -guic
 
@@ -53,10 +56,11 @@ RUN_DEPENDS-main +=	x11/gnome/icon-theme-symbolic #pulls in gnome-icon-theme+lib
 WANTLIB-main += ${WANTLIB} c pthread glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB-main += gio-2.0 pango-1.0 pangocairo-1.0 pangoft2-1.0 atk-1.0
 WANTLIB-main += X11 Xcomposite Xcursor Xdamage Xext Xfixes graphite2
-WANTLIB-main += Xi Xinerama Xrandr Xrender cairo expat dbus-1 icuuc
-WANTLIB-main += fontconfig freetype pixman-1 pthread-stubs xcb icule
-WANTLIB-main += xcb-render xcb-shm png asn1 crypto cups gssapi krb5 ssl
-WANTLIB-main += harfbuzz icudata avahi-client avahi-common gthread-2.0
+WANTLIB-main += Xi Xinerama Xrandr Xrender cairo expat dbus-1
+WANTLIB-main += fontconfig freetype pixman-1 pthread-stubs xcb
+WANTLIB-main += xcb-render xcb-shm asn1 crypto cups gssapi krb5 ssl
+WANTLIB-main += harfbuzz avahi-client avahi-common gthread-2.0
+WANTLIB-main += com_err heimbase roken wind
 
 WANTLIB-guic += ${WANTLIB}
 WANTLIB-guic += c gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 pthread
@@ -66,7 +70,7 @@ MODPY_RUNDEP=		No
 MODPY_ADJ_FILES=	gtk/gtk-builder-convert
 
 MODGNOME_TOOLS=		gi
-MODGNOME_CPPFLAGS=	-I${X11BASE}/include/freetype2 -I${LOCALBASE}/include/libpng
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include/freetype2
 
 TEST_IS_INTERACTIVE=	x11
 
@@ -74,5 +78,9 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-xinput=xfree
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/gtk+2
+
+post-install:
+	rm ${PREFIX}/lib/gtk-2.0/2.10.0/{engines,immodules,printbackends}/*.{a,la}
+	rm ${PREFIX}/lib/gtk-2.0/modules/*.{a,la}
 
 .include <bsd.port.mk>

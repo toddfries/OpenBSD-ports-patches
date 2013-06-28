@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 09:05:59 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/06/12 20:36:34 brad Exp $
 
 CATEGORIES =	productivity
 COMMENT =	PIM cache and access services

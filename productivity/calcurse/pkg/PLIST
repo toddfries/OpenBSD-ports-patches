@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.4 2011/11/06 08:51:43 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.6 2013/06/02 18:53:38 ajacoutot Exp $
 @bin bin/calcurse
 @man man/man1/calcurse.1
 share/doc/calcurse/

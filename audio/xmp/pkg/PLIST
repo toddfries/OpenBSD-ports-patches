@@ -1,0 +1,14 @@
+@comment $OpenBSD: PLIST,v 1.8 2013/06/19 15:59:14 shadchin Exp $
+@conflict xmp-bmp-*
+@pkgpath audio/xmp,-bmp
+@pkgpath audio/xmp,-main
+@pkgpath audio/xmp,-xmms
+@pkgpath audio/xmp,no_xmms
+@bin bin/xmp
+@man man/man1/xmp.1
+share/examples/xmp/
+@sample ${SYSCONFDIR}/xmp/
+share/examples/xmp/modules.conf
+@sample ${SYSCONFDIR}/xmp/modules.conf
+share/examples/xmp/xmp.conf
+@sample ${SYSCONFDIR}/xmp/xmp.conf

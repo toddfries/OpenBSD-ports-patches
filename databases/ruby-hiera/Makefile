@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2013/04/26 12:46:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2013/06/28 08:43:01 jasper Exp $
 
 COMMENT=		simple pluggable hierarchical database
 
 V=			1.2.1
 DISTNAME=		hiera-${V}
-REVISION=		0
+REVISION=		3
 
 CATEGORIES=		databases
 
@@ -17,12 +17,11 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 MODULES=		lang/ruby
 
-FLAVOR=			ruby18
-
 CONFIGURE_STYLE=	ruby gem
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		devel/ruby-json_pure,${MODRUBY_FLAVOR}
+RUN_DEPENDS=		devel/ruby-deep_merge,${MODRUBY_FLAVOR} \
+			devel/ruby-json_pure,${MODRUBY_FLAVOR}
 
 TEST_DEPENDS=		devel/ruby-mocha,${MODRUBY_FLAVOR}
 MODRUBY_TEST=		rspec2

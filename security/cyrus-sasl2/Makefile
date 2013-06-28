@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.72 2013/05/11 06:21:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.79 2013/06/20 09:48:28 ajacoutot Exp $
 
 COMMENT=	RFC 2222 SASL (Simple Authentication and Security Layer)
 
 DISTNAME=	cyrus-sasl-2.1.26
-REVISION=	1
+REVISION=	8
 
 SHARED_LIBS += sasl2           3.0 # 3.0
 
@@ -18,19 +18,21 @@ PERMIT_PACKAGE_CDROM=	yes
 
 MASTER_SITES=	ftp://ftp.cyrusimap.org/cyrus-sasl/
 
-WANTLIB += asn1 c com_err crypto gssapi krb5
+WANTLIB += asn1 c com_err crypto gssapi heimbase
+WANTLIB += krb5 roken wind
 
+# uses nroff(1)
 USE_GROFF=	Yes
 
 CFLAGS +=	-fPIC
 
 CONFIGURE_STYLE=gnu
+CONFIGURE_ENV=	CPPFLAGS="$$(krb5-config --cflags)" \
+		LIBS="$$(krb5-config --libs gssapi)"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-static \
 		--without-pam \
 		--with-saslauthd="/var/sasl2" \
-		--enable-gssapi="/usr" \
-		--with-gss_impl="heimdal" \
 		--with-plugindir=${PREFIX}/lib/sasl2 \
 		--enable-login \
 		--enable-ntlm \

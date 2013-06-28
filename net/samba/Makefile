@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.183 2013/05/03 18:43:28 sthen Exp $
+# $OpenBSD: Makefile,v 1.186 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
 
-DISTNAME=		samba-3.6.14
+DISTNAME=		samba-3.6.15
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-docs=	${DISTNAME:S/-/-docs-/}
 FULLPKGPATH-docs=	net/samba,-docs
-REVISION-main=		0
+REVISION-main=		1
 
 SHARED_LIBS=		smbclient	3.0 \
 			smbsharemodes	1.0 \
@@ -112,7 +112,8 @@ CONFIGURE_ARGS+=	--with-krb5="${WRKDIR}/usr"
 #MODULES+=		lang/python
 #MODPY_RUNDEP=		No
 
-WANTLIB+=		com_err
+WANTLIB += asn1 crypto gssapi heimbase krb5 roken
+WANTLIB += wind com_err
 .else
 CONFIGURE_ARGS+=	--without-ads
 .endif
@@ -148,10 +149,6 @@ post-patch:
 
 pre-configure:
 	@${SUBST_CMD} ${SAMBA_MANPAGES}/swat.8
-
-post-extract:
-	@cp ${FILESDIR}/krb5-config ${WRKDIR}/bin
-	@chmod a+x ${WRKDIR}/bin/krb5-config
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/samba/pdf

@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/05/13 23:15:47 jturner Exp $
+# $OpenBSD: Makefile,v 1.3 2013/06/08 20:22:57 jturner Exp $
 
 COMMENT =		C++ MIME library
 
 DISTNAME =		mimetic-0.9.7
+REVISION =		1
 CATEGORIES =		mail devel
 
-SHARED_LIBS =		mimetic	0.0 #0.0
+SHARED_LIBS =		mimetic	1.0 #0.0
 
 MAINTAINER =		James Turner <james@calminferno.net>
 
@@ -15,7 +16,12 @@ MASTER_SITES =		http://www.codesink.org/download/
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB =		m stdc++
+WANTLIB +=		m
+
+MODULES =		gcc4
+
+MODGCC4_ARCHS =		*
+MODGCC4_LANGS =		c++
 
 AUTOCONF_VERSION =	2.64
 AUTOMAKE_VERSION =	1.11

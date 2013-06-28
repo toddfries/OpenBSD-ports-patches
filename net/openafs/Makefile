@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2013/05/12 17:32:10 rpe Exp $
+# $OpenBSD: Makefile,v 1.49 2013/06/18 11:22:23 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=		i386
 
@@ -6,7 +6,7 @@ COMMENT=		OpenAFS distributed filesystem
 
 VERSION=		1.4.7
 DISTNAME=		openafs-${VERSION}
-REVISION=		22
+REVISION=		23
 
 CATEGORIES=		net
 
@@ -30,8 +30,6 @@ NO_TEST=		Yes
 AUTOCONF_VERSION=	2.60
 CONFIGURE_STYLE=	automake autoconf
 
-CONFIGURE_ENV+=		KRB5CFLAGS="-I/usr/include/kerberosV -DUSING_HEIMDAL" \
-			KRB5LIBS="-lkrb5"
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-transarc-paths \
 			--enable-namei-fileserver \

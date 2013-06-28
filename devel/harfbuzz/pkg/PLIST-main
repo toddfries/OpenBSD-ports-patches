@@ -1,0 +1,28 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2013/05/31 15:28:37 ajacoutot Exp $
+@pkgpath devel/harfbuzz
+@bin bin/hb-ot-shape-closure
+@bin bin/hb-shape
+@bin bin/hb-view
+include/harfbuzz/
+include/harfbuzz/hb-blob.h
+include/harfbuzz/hb-buffer.h
+include/harfbuzz/hb-common.h
+include/harfbuzz/hb-font.h
+include/harfbuzz/hb-ft.h
+include/harfbuzz/hb-glib.h
+include/harfbuzz/hb-gobject.h
+include/harfbuzz/hb-graphite2.h
+include/harfbuzz/hb-ot-layout.h
+include/harfbuzz/hb-ot-tag.h
+include/harfbuzz/hb-ot.h
+include/harfbuzz/hb-set.h
+include/harfbuzz/hb-shape-plan.h
+include/harfbuzz/hb-shape.h
+include/harfbuzz/hb-unicode.h
+include/harfbuzz/hb-version.h
+include/harfbuzz/hb.h
+lib/libharfbuzz.a
+lib/libharfbuzz.la
+@lib lib/libharfbuzz.so.${LIBharfbuzz_VERSION}
+lib/pkgconfig/
+lib/pkgconfig/harfbuzz.pc

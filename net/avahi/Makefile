@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.91 2013/05/09 15:17:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.94 2013/05/31 21:12:02 ajacoutot Exp $
 
 ONLY_FOR_ARCHS-mono=	${MONO_ARCHS}
 
@@ -24,14 +24,14 @@ PKGNAME-qt3=	avahi-qt3-${V}
 PKGNAME-qt4=	avahi-qt4-${V}
 PKGNAME-ui=	avahi-ui-${V}
 
-REVISION-main=	8
-REVISION-gtk=	4
-REVISION-gtk3=	4
-REVISION-gui=	4
+REVISION-main=	10
+REVISION-gtk=	5
+REVISION-gtk3=	5
+REVISION-gui=	5
 REVISION-mono=	2
 REVISION-qt3=	2
 REVISION-qt4=	3
-REVISION-ui=	2
+REVISION-ui=	3
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
@@ -112,7 +112,7 @@ WANTLIB-gtk=	X11 Xcomposite Xcursor Xdamage Xext Xfixes \
 		gobject-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0 \
 		pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs xcb z \
 		xcb-render avahi-client avahi-common xcb-shm \
-		avahi-glib ffi harfbuzz icudata icule icuuc graphite2 \
+		avahi-glib ffi harfbuzz graphite2 \
 		${MODGETTEXT_WANTLIB}
 
 ### -gtk3
@@ -130,8 +130,8 @@ WANTLIB-gtk3 += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
 WANTLIB-gtk3 += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB-gtk3 += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
 WANTLIB-gtk3 += xcb-shm z ffi ${MODGETTEXT_WANTLIB}
-WANTLIB-gtk3 += ICE SM atk-bridge-2.0 atspi harfbuzz icudata icule
-WANTLIB-gtk3 += icuuc graphite2
+WANTLIB-gtk3 += ICE SM atk-bridge-2.0 atspi harfbuzz
+WANTLIB-gtk3 += graphite2
 
 ### -gui
 LIB_DEPENDS-gui= ${MODGETTEXT_LIB_DEPENDS} \
@@ -151,8 +151,8 @@ WANTLIB-gui += gdbm gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB-gui += gobject-2.0 gthread-2.0 gtk-3 m pango-1.0
 WANTLIB-gui += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
 WANTLIB-gui += pthread-stubs xcb xcb-render xcb-shm z ffi
-WANTLIB-gui += ICE SM atk-bridge-2.0 atspi harfbuzz icudata icule
-WANTLIB-gui += icuuc graphite2
+WANTLIB-gui += ICE SM atk-bridge-2.0 atspi harfbuzz
+WANTLIB-gui += graphite2
 WANTLIB-gui += ${MODGETTEXT_WANTLIB}
 
 ### -ui

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1130 2013/05/19 14:54:00 abieber Exp $
+# $OpenBSD: Makefile,v 1.1141 2013/06/28 08:41:28 jasper Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -397,21 +397,38 @@
      SUBDIR += log4cplus
      SUBDIR += lpc21isp
      SUBDIR += lpeg
+     SUBDIR += lpeg,lua52
      SUBDIR += lua-cjson
+     SUBDIR += lua-cjson,lua52
      SUBDIR += lua-cmsgpack
+     SUBDIR += lua-cmsgpack,lua52
      SUBDIR += lua-lgi
+     SUBDIR += lua-lgi,lua52
+     SUBDIR += lua-penlight
+     SUBDIR += lua-penlight,lua52
      SUBDIR += luaalarm
+     SUBDIR += luaalarm,lua52
      SUBDIR += luabitop
+     SUBDIR += luabitop,lua52
      SUBDIR += luacopas
+     SUBDIR += luacopas,lua52
      SUBDIR += luadoc
+     SUBDIR += luadoc,lua52
      SUBDIR += luaevent
+     SUBDIR += luaevent,lua52
      SUBDIR += luafs
+     SUBDIR += luafs,lua52
+     SUBDIR += lualdoc
+     SUBDIR += lualdoc,lua52
      SUBDIR += luapack
+     SUBDIR += luapack,lua52
      SUBDIR += luaposix
      SUBDIR += luaprofiler
+     SUBDIR += luaprofiler,lua52
      SUBDIR += luarexlib
      SUBDIR += luarings
      SUBDIR += luastdlib
+     SUBDIR += luastdlib,lua52
      SUBDIR += m4
      SUBDIR += maven
      SUBDIR += mcs
@@ -438,8 +455,8 @@
      SUBDIR += nasm
      SUBDIR += netbeans
      SUBDIR += ninja
-     SUBDIR += newt
      SUBDIR += node-async
+     SUBDIR += node-bindings
      SUBDIR += node-buffer-writer
      SUBDIR += node-cloned
      SUBDIR += node-expresso
@@ -1113,7 +1130,7 @@
      SUBDIR += py-greenlet
      SUBDIR += py-guppy
      SUBDIR += py-hg-git
-     SUBDIR += py-hgtools 
+     SUBDIR += py-hgtools
      SUBDIR += py-html5lib
      SUBDIR += py-iniparse
      SUBDIR += py-isodate
@@ -1129,7 +1146,6 @@
      SUBDIR += py-monthdelta
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime
-     SUBDIR += py-newt-syrup
      SUBDIR += py-nose
      SUBDIR += py-notify
      SUBDIR += py-openbsd
@@ -1146,6 +1162,7 @@
      SUBDIR += py-pyro
      SUBDIR += py-radix
      SUBDIR += py-rcsparse
+     SUBDIR += py-rope
      SUBDIR += py-ruledispatch
      SUBDIR += py-serial
      SUBDIR += py-setproctitle
@@ -1167,7 +1184,7 @@
      SUBDIR += py-tz
      SUBDIR += py-unit
      SUBDIR += py-unit,no_x11
-     SUBDIR += py-unittest2 
+     SUBDIR += py-unittest2
      SUBDIR += py-urwid
      SUBDIR += py-virtualenv
      SUBDIR += py-wbem
@@ -1214,6 +1231,7 @@
      SUBDIR += ruby-daemons
      SUBDIR += ruby-debug
      SUBDIR += ruby-debug-base
+     SUBDIR += ruby-deep_merge
      SUBDIR += ruby-diff-lcs
      SUBDIR += ruby-echoe
      SUBDIR += ruby-extlib
@@ -1260,6 +1278,8 @@
      SUBDIR += ruby-rcov,ruby18
      SUBDIR += ruby-rdoc
      SUBDIR += ruby-ref
+     SUBDIR += ruby-rgen
+     SUBDIR += ruby-rgen,ruby18
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
      SUBDIR += ruby-ruby_parser

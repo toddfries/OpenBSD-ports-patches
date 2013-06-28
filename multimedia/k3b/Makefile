@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.23 2013/03/21 08:46:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2013/06/24 15:53:38 zhuk Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		CD/DVD creator
 
 DISTNAME =		k3b-1.0.4
-REVISION=		16
+REVISION=		18
 CATEGORIES =		multimedia
 
 SHARED_LIBS =		k3b	0.0	# 3.0
@@ -16,13 +16,16 @@ HOMEPAGE =		http://k3b.plainblack.com/
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB += DCOP FLAC FLAC++ ICE SM X11 Xext Xfixes Xrender Xt
-WANTLIB += art_lgpl_2 artsc avcodec avformat avutil bz2 c crypto
-WANTLIB += dvdread expat fam fontconfig freetype gsm idn jpeg kdecore
-WANTLIB += kdefx kdesu kdeui kio kparts kwalletclient m mad mp3lame
+WANTLIB =  FLAC FLAC++ ICE SM X11 Xext Xfixes Xrender Xt
+WANTLIB += art_lgpl_2 avcodec avformat avutil bz2 c crypto
+WANTLIB += dvdread expat fam fontconfig freetype gsm idn jpeg
+WANTLIB += m mad mp3lame
 WANTLIB += mpcdec ogg orc-0.4 png pthread samplerate schroedinger-1.0
 WANTLIB += sndfile speex ssl stdc++ tag theoradec theoraenc util vorbis
 WANTLIB += vorbisenc vorbisfile vpx x264 xcb xvidcore z
+WANTLIB += ${KDE}/DCOP ${KDE}/artsc ${KDE}/kdecore ${KDE}/kdefx
+WANTLIB += ${KDE}/kdesu ${KDE}/kdeui ${KDE}/kio ${KDE}/kparts
+WANTLIB += ${KDE}/kwalletclient
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=k3b/}
 EXTRACT_SUFX =		.tar.bz2
@@ -51,6 +54,7 @@ LIB_DEPENDS =		audio/flac \
 			graphics/jpeg \
 			x11/kde/libs3
 
+USE_GMAKE =		Yes
 LIBTOOL_FLAGS +=	--tag=disable-static
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	--with-qt-dir=${MODQT_QTDIR} \

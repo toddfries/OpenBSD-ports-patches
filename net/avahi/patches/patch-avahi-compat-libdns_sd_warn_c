@@ -1,9 +1,9 @@
-$OpenBSD: patch-avahi-compat-libdns_sd_warn_c,v 1.3 2013/05/09 15:17:32 ajacoutot Exp $
+$OpenBSD: patch-avahi-compat-libdns_sd_warn_c,v 1.5 2013/05/31 21:12:02 ajacoutot Exp $
 
 Stop polluting syslog(3).
 
 --- avahi-compat-libdns_sd/warn.c.orig	Thu Aug 26 02:51:38 2010
-+++ avahi-compat-libdns_sd/warn.c	Thu May  9 17:16:59 2013
++++ avahi-compat-libdns_sd/warn.c	Fri May 31 23:11:19 2013
 @@ -110,11 +110,13 @@ void avahi_warn_linkage(void) {
      linkage_warning = 1;
      pthread_mutex_unlock(&linkage_mutex);

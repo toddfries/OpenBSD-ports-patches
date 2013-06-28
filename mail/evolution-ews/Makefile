@@ -1,25 +1,26 @@
-# $OpenBSD: Makefile,v 1.21 2013/05/12 15:34:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2013/06/20 06:54:36 ajacoutot Exp $
 
-SHARED_ONLY=	Yes
+SHARED_ONLY=		Yes
 
-COMMENT=	evolution connector for MS Exchange via EWS
+COMMENT=		evolution connector for MS Exchange via EWS
 
-GNOME_PROJECT=	evolution-ews
-GNOME_VERSION=	3.8.2
+GNOME_PROJECT=		evolution-ews
+GNOME_VERSION=		3.8.3
+REVISION=		3
 
-CATEGORIES=	mail
+CATEGORIES=		mail
 
 SHARED_LIBS +=  eews-1.2             1.0      # unknown
 SHARED_LIBS +=  ewsutils             1.0      # unknown
 SHARED_LIBS +=  lzx                  1.0      # unknown
 
-EVO_VERSION=	3.8
-SUBST_VARS=	EVO_VERSION
+EVO_VERSION=		3.8
+SUBST_VARS=		EVO_VERSION
 
-HOMEPAGE=	http://projects.gnome.org/evolution/
+HOMEPAGE=		http://projects.gnome.org/evolution/
 
-MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
-		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
@@ -35,31 +36,32 @@ WANTLIB += geoclue gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3
 WANTLIB += gobject-2.0 gpg-error graphite2 gssapi gstapp-1.0 gstaudio-1.0
 WANTLIB += gstbase-1.0 gstfft-1.0 gstpbutils-1.0 gstreamer-1.0
 WANTLIB += gsttag-1.0 gstvideo-1.0 gthread-2.0 gtk-3 gtkhtml-4.0
-WANTLIB += gtkhtml-editor-4.0 harfbuzz ical icalss icalvcal icudata
-WANTLIB += icui18n icule icuuc javascriptcoregtk-3.0 jpeg krb5
+WANTLIB += gtkhtml-editor-4.0 harfbuzz ical icalss icalvcal
+WANTLIB += icui18n javascriptcoregtk-3.0 jpeg krb5
 WANTLIB += ltdl m nspr4 nss3 nssutil3 ogg orc-0.4 p11-kit pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4
-WANTLIB += png pthread pthread-stubs secret-1 smime3 softokn3
+WANTLIB += pthread pthread-stubs secret-1 smime3 softokn3
 WANTLIB += soup-2.4 soup-gnome-2.4 sqlite3 ssl3 stdc++ vorbis
 WANTLIB += vorbisfile webkitgtk-3.0 webp xcb xcb-render xcb-shm
-WANTLIB += xkbfile xml2 xslt z
+WANTLIB += harfbuzz-icu icudata icuuc png xkbfile xml2 xslt z
+WANTLIB += heimbase roken wind
 
-MODULES=	devel/gettext \
-		x11/gnome
+MODULES=		devel/gettext \
+			x11/gnome
 
 # XXX should be a LIB_DEPENDS+WANTLIB but check-lib-depends(1) does not
 # work with unversioned solibs (LOCALBASE/lib/evolution/*/*.so).
 BUILD_DEPENDS +=	mail/evolution,-main
 RUN_DEPENDS +=		mail/evolution,-main
 
-LIBTOOL_FLAGS=	--tag=disable-static
+LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--disable-static \
-		--with-krb5=/usr \
-		--with-krb5-includes=/usr/include/kerberosV
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--disable-static \
+			--with-krb5
 
-MODGNOME_LDFLAGS=-Wl,-rpath,${TRUEPREFIX}/lib/evolution-data-server-${EVO_VERSION}
+MODGNOME_CPPFLAGS=	$$(krb5-config --cflags)
+MODGNOME_LDFLAGS=	-Wl,-rpath,${TRUEPREFIX}/lib/evolution-data-server-${EVO_VERSION}
 
 post-install:
 	rm ${PREFIX}/lib/evolution-data-server/*/*.la

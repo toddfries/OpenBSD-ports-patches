@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.36 2013/04/18 08:38:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.43 2013/06/22 13:30:55 naddy Exp $
 
 # XXX use the bundled libtool because it needs some specific options we
 # don't have.
@@ -8,7 +8,15 @@ PV=		5.2
 V=		5.2.17
 SUHOSIN_PHPV=	5.2.16
 SUHOSIN_P_V=	0.9.7
-REVISION=	14
+
+REVISION=		14
+REVISION-main=		16
+REVISION-fastcgi=	16
+REVISION-fpm=		15
+REVISION-imap=		16
+REVISION-mysql=		16
+REVISION-mysqli=	16
+REVISION-pdo_mysql=	16
 
 # remove if updating; defaulting to tar.bz2 but there's no point
 # fetching new files for 5.2 unless it's updated.

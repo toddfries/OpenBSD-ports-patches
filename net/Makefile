@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.803 2013/05/17 12:49:49 stsp Exp $
+# $OpenBSD: Makefile,v 1.805 2013/05/30 16:17:58 jasper Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -201,6 +201,7 @@
      SUBDIR += livemedia
      SUBDIR += loudmouth
      SUBDIR += luasocket
+     SUBDIR += luasocket,lua52
      SUBDIR += maclookup
      SUBDIR += maradns
      SUBDIR += maradns-deadwood
@@ -476,7 +477,6 @@
      SUBDIR += py-nmap
      SUBDIR += py-pcapy
      SUBDIR += py-pcs
-     SUBDIR += py-smbc
      SUBDIR += py-snmp
      SUBDIR += py-twitter
      SUBDIR += py-xmpp

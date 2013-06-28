@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.106 2013/04/29 10:44:43 espie Exp $
+# $OpenBSD: Makefile,v 1.109 2013/06/12 20:36:34 brad Exp $
 
 COMMENT-main=		C++ X11 GUI toolkit
 COMMENT-examples=	examples and tutorial for qt3
@@ -16,7 +16,7 @@ FULLPKGNAME-html=	qt3-html-${VERSION}
 FULLPKGPATH-html=	x11/qt3,-html
 PKGNAME-sqlite2=	qt3-sqlite2-${VERSION}
 
-REVISION-mysql= 	4
+REVISION-mysql= 	6
 REVISION-postgresql= 	4
 REVISION-main= 		7
 REVISION-html= 		1
@@ -86,7 +86,6 @@ CONFIGURE_ARGS=	-qt-gif -system-libmng -system-libpng -system-libjpeg -system-zl
 		-xinerama \
 		-cups \
 		-inputmethod \
-		-I${LOCALBASE}/include/libpng \
 		-I${X11BASE}/include/freetype2 \
 		-I${LOCALBASE}/include \
 		-L${WRKSRC}/lib \

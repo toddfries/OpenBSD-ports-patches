@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1225 2013/05/15 16:32:16 sthen Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1238 2013/06/25 20:21:03 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -50,10 +50,6 @@ ERRORS += "Fatal: you're not allowed to override $t"
 ERRORS += "Fatal: inclusion of bsd.port.mk from $f"
 .  endif
 .endfor
-
-.if !defined(PIE_ARCH)
-PIE_ARCH = alpha amd64 hppa mips64 mips64el sh sparc64
-.endif
 
 _BSD_PORT_MK = Done
 
@@ -108,45 +104,45 @@ BULK_TARGETS ?=
 BULK_DO ?=
 CHECK_LIB_DEPENDS ?= No
 FORCE_UPDATE ?= No
-DPB ?= All Fetch
+DPB ?= All Fetch Test
 PREPARE_CHECK_ONLY ?= No
 _SHSCRIPT = sh ${PORTSDIR}/infrastructure/bin
 DPB_PROPERTIES ?=
 
 # All variables relevant to the port's description
 _ALL_VARIABLES = BUILD_DEPENDS IS_INTERACTIVE \
-	SUBPACKAGE FLAVOR BUILD_PACKAGES DPB_PROPERTIES
+	SUBPACKAGE FLAVOR BUILD_PACKAGES DPB_PROPERTIES \
+	MULTI_PACKAGES 
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS IGNORE 
 _ALL_VARIABLES_PER_ARCH =
 
-_DPB_MULTI = ${BUILD_PACKAGES}
 
-.if ${DPB:L:Mfetch}
+.if ${DPB:L:Mfetch} || ${DPB:L:Mall}
 _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
 	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES \
 	PERMIT_DISTFILES_FTP
-_DPB_MULTI = ${MULTI_PACKAGES}
+.endif
+.if ${DPB:L:Mtest} || ${DPB:L:Mall}
+_ALL_VARIABLES += NO_TEST TEST_IS_INTERACTIVE TEST_DEPENDS
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	BROKEN COMES_WITH \
-	TEST_DEPENDS USE_GMAKE USE_GROFF MODULES FLAVORS \
-	NO_BUILD NO_TEST SHARED_ONLY PSEUDO_FLAVORS \
-	TEST_IS_INTERACTIVE \
+	USE_GMAKE USE_GROFF MODULES FLAVORS \
+	NO_BUILD SHARED_ONLY PSEUDO_FLAVORS \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
 	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS \
-	VMEM_WARNING MULTI_PACKAGES PKG_ARCH 
+	VMEM_WARNING PKG_ARCH 
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
-	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC \
+	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC PREFIX \
 	PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM WANTLIB CATEGORIES DESCR \
 	EPOCH REVISION STATIC_PLIST
-_DPB_MULTI = ${MULTI_PACKAGES}
 .endif
 # special purpose user settings
 PATCH_CHECK_ONLY ?= No
@@ -158,6 +154,7 @@ REFETCH ?= false
 PORTSDIR ?= /usr/ports
 LOCALBASE ?= /usr/local
 X11BASE ?= /usr/X11R6
+VARBASE ?= /var
 DISTDIR ?= ${PORTSDIR}/distfiles
 BULK_COOKIES_DIR ?= ${PORTSDIR}/bulk/${MACHINE_ARCH}
 UPDATE_COOKIES_DIR ?= ${PORTSDIR}/update/${MACHINE_ARCH}
@@ -354,7 +351,7 @@ BASESYSCONFDIR ?= /etc
 SYSCONFDIR ?= ${BASESYSCONFDIR}
 
 # User choice, consider read-only from a given port
-BASELOCALSTATEDIR ?= /var
+BASELOCALSTATEDIR ?= ${VARBASE}
 # Defaut localstatedir for gnu ports
 LOCALSTATEDIR ?= ${BASELOCALSTATEDIR}
 
@@ -1116,8 +1113,16 @@ MASTER_SITES := ${MASTER_SITES} ${MASTER_SITE_BACKUP}
 MASTER_SITES := ${MASTER_SITE_OVERRIDE} ${MASTER_SITES}
 .endif
 
+_warn_checksum = :
+.if !empty(MASTER_SITES:M*[^/])
+_warn_checksum += ;echo ">>> MASTER_SITES not ending in /: ${MASTER_SITES:M*[^/]}"
+.endif
+
 .for _I in 0 1 2 3 4 5 6 7 8 9
 .  if defined(MASTER_SITES${_I})
+.    if !empty(MASTER_SITES${_I}:M*[^/])
+_warn_checksum += ;echo ">>> MASTER_SITES${_I} not ending in /: ${MASTER_SITES${_I}:M*[^/]}"
+.    endif
 .    if ${MASTER_SITE_OVERRIDE:L} == "no"
 MASTER_SITES${_I} := ${MASTER_SITES${_I}} ${MASTER_SITE_BACKUP}
 .    else
@@ -1495,7 +1500,7 @@ MODSIMPLE_configure = \
 
 VMEM_WARNING ?= No
 
-_FAKE_SETUP = TRUEPREFIX=${PREFIX} PREFIX=${WRKINST}${PREFIX} \
+FAKE_SETUP = TRUEPREFIX=${PREFIX} PREFIX=${WRKINST}${PREFIX} \
 	${DESTDIRNAME}=${WRKINST}
 
 _CLEANDEPENDS ?= Yes
@@ -1761,7 +1766,7 @@ _register_plist${_s} = ${_register_plist}
 ### end of variable setup. Only targets now
 ###
 dump-vars:
-.if ${_DPB_MULTI} == "-"
+.if ${MULTI_PACKAGES} == "-"
 .  for _v in ${_ALL_VARIABLES} ${_ALL_VARIABLES_INDEXED}
 .   if defined(${_v}-)
 .     if !empty(${_v}-)
@@ -1779,7 +1784,7 @@ dump-vars:
 .    endfor
 .  endfor
 .else
-.  for _S in ${_DPB_MULTI}
+.  for _S in ${MULTI_PACKAGES}
 .    for _v in ${_ALL_VARIABLES}
 .     if defined(${_v}) && !empty(${_v})
 	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}:Q}
@@ -1945,6 +1950,7 @@ ${_SYSTRACE_COOKIE}: ${_WRKDIR_COOKIE}
 	fi
 
 makesum: fetch-all
+	@${_warn_checksum}
 .if !defined(NO_CHECKSUM) && !empty(MAKESUMFILES)
 	@rm -f ${CHECKSUM_FILE}
 	@cd ${DISTDIR} && cksum -b -a "${_CIPHERS}" ${MAKESUMFILES} >> ${CHECKSUM_FILE}
@@ -2199,6 +2205,7 @@ _internal-fetch:
 
 
 _internal-checksum: _internal-fetch
+	@${_warn_checksum}
 	@fgrep 2>/dev/null SIZE ${CHECKSUM_FILE} | \
 	sed -e '/SIZE (\(.*\)).*/s//\1/'|\
 	while read i; do \
@@ -2401,11 +2408,6 @@ ${_BULK_COOKIE}:
 
 ${_WRKDIR_COOKIE}:
 	@rm -rf ${WRKDIR}
-	@if test -h ${PORTSDIR}; then \
-		echo 1>&2 "Fatal: ${PORTSDIR} is a symlink."; \
-		echo 1>&2 "Please point PORTSDIR to the real directory (in /etc/mk.conf)"; \
-		exit 1; \
-	fi
 .if ${PORTS_BUILD_XENOCARA_TOO:L} != "yes"
 	@appdefaults=${LOCALBASE}/lib/X11/app-defaults; \
 	if ! test -d $$appdefaults -a -h $$appdefaults; then \
@@ -2430,11 +2432,6 @@ ${_WRKDIR_COOKIE}:
 ${_EXTRACT_COOKIE}: ${_WRKDIR_COOKIE} ${_SYSTRACE_COOKIE}
 	@${_MAKE} _internal-checksum _internal-prepare
 	@${ECHO_MSG} "===>  Extracting for ${FULLPKGNAME}${_MASTER}"
-.if ${_USE_XZ:L} != "no" && ${SHARED_ONLY:L} != "yes"
-	@echo ""; \
-	echo "*** WARNING: this port uses xz distfiles: it will not build on vax."; \
-	echo ""
-.endif
 .if target(pre-extract)
 	@${_MAKESYS} pre-extract
 .endif
@@ -2706,26 +2703,26 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 .  endif
 .endfor
 .if target(pre-fake)
-	@${_SUDOMAKESYS} pre-fake ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} pre-fake ${FAKE_SETUP}
 .endif
 	@${SUDO} ${_MAKE_COOKIE} ${_INSTALL_PRE_COOKIE}
 .if target(pre-install)
-	@${_SUDOMAKESYS} pre-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} pre-install ${FAKE_SETUP}
 .endif
 .if target(do-install)
-	@${_SUDOMAKESYS} do-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} do-install ${FAKE_SETUP}
 .else
 # What FAKE normally does:
 	@cd ${WRKBUILD} && exec ${SUDO} ${_SYSTRACE_CMD} \
-		${SETENV} ${MAKE_ENV} ${_FAKE_SETUP} \
+		${SETENV} ${MAKE_ENV} ${FAKE_SETUP} \
 		${MAKE_PROGRAM} ${ALL_FAKE_FLAGS} -f ${MAKE_FILE} ${FAKE_TARGET}
 # End of FAKE.
 .endif
 .if target(post-install)
-	@${_SUDOMAKESYS} post-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} post-install ${FAKE_SETUP}
 .endif
 .if target(_hook-post-install)
-	@${_SUDOMAKESYS} _hook-post-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} _hook-post-install ${FAKE_SETUP}
 .endif
 .if ${MULTI_PACKAGES} == "-"
 	@if test -e ${PKGDIR}/README; then \
@@ -2836,10 +2833,10 @@ ${DISTDIR}/$p:
 					exit 0; \
 				else \
 					if grep -q "SIZE ($f)" ${CHECKSUM_FILE}; then \
-						${ECHO_MSG} ">> Size does not match for $$file"; \
-						test `{ wc -c "$$file" 2>/dev/null || echo 0 ; }| awk '{print $$1}'` -lt 30000 && rm -f $$file; \
+						${ECHO_MSG} ">> Size does not match for $f"; \
+						rm -f $$file; \
 					else \
-						${ECHO_MSG} ">> No size recorded for $$file"; \
+						${ECHO_MSG} ">> No size recorded for $f"; \
 						mv $$file $@; \
 						exit 0; \
 					fi; \
@@ -3094,16 +3091,19 @@ wantlib-args:
 	@${_cache_fragment}; \
 	a=$${_DEPENDS_CACHE}/portstree${SUBPACKAGE}; \
 	b=$${_DEPENDS_CACHE}/inst${SUBPACKAGE}; \
-	cd ${.CURDIR} && \
+	if cd ${.CURDIR} && \
 	${MAKE} port-wantlib-args >$$a && \
-	${MAKE} fake-wantlib-args >$$b; \
-	if cmp -s $$a $$b; \
-	then \
-		cat $$a; \
+	${MAKE} fake-wantlib-args >$$b; then \
+		if cmp -s $$a $$b; \
+		then \
+			cat $$a; \
+		else \
+			echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
+			echo 1>&2 "       and libraries from installed packages don't match"; \
+			diff 1>&2 -u $$a $$b; \
+			exit 1; \
+		fi; \
 	else \
-		echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
-		echo 1>&2 "       and libraries from installed packages don't match"; \
-		diff 1>&2 -u $$a $$b; \
 		exit 1; \
 	fi
 

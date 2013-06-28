@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.52 2013/03/11 11:35:49 espie Exp $
+# $OpenBSD: Makefile,v 1.54 2013/06/18 09:35:13 dcoppa Exp $
 
 COMMENT =	e-donkey client
 DISTNAME =	mldonkey-3.1.3
-REVISION=	0
+REVISION=	1
 CATEGORIES =	net
 
 HOMEPAGE =	http://mldonkey.sourceforge.net/Main_Page
@@ -15,16 +15,14 @@ PERMIT_PACKAGE_CDROM =	Yes
 
 EXTRACT_SUFX =		.tar.bz2
 
-WANTLIB =		GL X11 Xcomposite Xcursor Xdamage Xext \
+WANTLIB =		X11 Xcomposite Xcursor Xdamage Xext \
 			Xfixes Xi Xinerama Xrandr Xrender \
-			atk-1.0 bz2 c cairo charset curses \
-			expat fontconfig freetype gd \
-			gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 \
-			glib-2.0 gobject-2.0 gtk-x11-2.0 jpeg \
-			m magic miniupnpc natpmp pango-1.0 \
-			pangocairo-1.0 pangoft2-1.0 pixman-1 \
-			png pthread pthread-stubs rsvg-2 \
-			stdc++ xcb xcb-render xcb-shm z
+			atk-1.0 bz2 c cairo charset fontconfig \
+			freetype gd gdk-x11-2.0 gdk_pixbuf-2.0 \
+			gio-2.0 glib-2.0 gobject-2.0 gtk-x11-2.0 \
+			jpeg m magic miniupnpc natpmp pango-1.0 \
+			pangocairo-1.0 pangoft2-1.0 png pthread \
+			rsvg-2 stdc++ z
 
 CONFIGURE_STYLE =	autoconf no-autoheader
 AUTOCONF_DIR =		${WRKSRC}/config
@@ -33,8 +31,7 @@ MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/config
 
 CONFIGURE_ARGS +=	--enable-gui=newgui2 \
 			--enable-upnp-natpmp
-CONFIGURE_ENV +=	CPPFLAGS='-I${LOCALBASE}/include/libpng \
-			-I${LOCALBASE}/include -I${X11BASE}/include' \
+CONFIGURE_ENV +=	CPPFLAGS='-I${LOCALBASE}/include -I${X11BASE}/include' \
 			LDFLAGS='-L${LOCALBASE}/lib -L${X11BASE}/lib' \
 			ac_cv_prog_RPMBUILD="" \
 			ac_cv_prog_WGET=""

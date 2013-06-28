@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.39 2013/04/18 08:38:54 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.44 2013/06/20 06:54:38 ajacoutot Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -138,7 +138,6 @@ LIB_DEPENDS-gd=		graphics/jpeg \
 			graphics/png \
 			devel/t1lib
 WANTLIB-gd=		z jpeg>=62 png>=3 t1>=5 c pthread X11 Xpm freetype
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng"
 CONFIGURE_ARGS+=	--with-gd=shared \
 			--with-jpeg-dir=${LOCALBASE} \
 			--with-png-dir=${LOCALBASE} \
@@ -158,9 +157,10 @@ WANTLIB-gmp=		c gmp>=4 pthread
 MULTI_PACKAGES+=	-imap
 COMMENT-imap=		imap, pop3 and nntp extensions for php5
 CONFIGURE_ARGS+=	--with-imap=shared,${LOCALBASE} \
-			--with-kerberos=/usr --with-imap-ssl
+			--with-imap-ssl --with-kerberos
 LIB_DEPENDS-imap=	mail/re-alpine,-c-client
-WANTLIB-imap=		c pthread crypto gssapi krb5 ssl c-client>=5
+WANTLIB-imap=		c pthread crypto gssapi krb5 ssl c-client>=5 \
+			asn1 com_err heimbase roken wind
 
 # ldap
 MULTI_PACKAGES+=	-ldap
@@ -306,7 +306,8 @@ PHPXS_SUBST+= -e 's,${i},${${i}},'
 MODULES=		converters/libiconv devel/gettext
 
 WANTLIB-main=		c crypto ssl z pthread gssapi krb5 xml2>=8 \
-			m ${MODGETTEXT_WANTLIB}
+			m asn1 com_err heimbase roken \
+			wind ${MODGETTEXT_WANTLIB}
 WANTLIB-fastcgi=	${WANTLIB-main}
 LIB_DEPENDS-main=	textproc/libxml
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \

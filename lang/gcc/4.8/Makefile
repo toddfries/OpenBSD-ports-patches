@@ -1,18 +1,19 @@
-# $OpenBSD: Makefile,v 1.3 2013/04/20 20:54:04 pascal Exp $
+# $OpenBSD: Makefile,v 1.8 2013/06/18 20:24:29 sthen Exp $
 
 ONLY_FOR_ARCHS = alpha amd64 i386 powerpc sparc64
 
-V = 4.8.0
+V = 4.8.1
 FULL_VERSION = $V
 FULL_PKGVERSION = $V
+REVISION-main = 0
 
-ADASTRAP_LIBC-i386 = 67.0
+ADASTRAP_LIBC-i386 = 68.2
 ADASTRAP_LIBM-i386 = 8.0
-ADASTRAP-i386 = adastrap-i386-$V-1.tar.xz
+ADASTRAP-i386 = adastrap-i386-$V-0.tar.xz
 ADASTRAP_LIBC-amd64 = 67.0
 ADASTRAP_LIBM-amd64 = 8.0
-ADASTRAP-amd64 = adastrap-amd64-$V-1.tar.xz
-ADASTRAP_LIBC-sparc64 = 67.0
+ADASTRAP-amd64 = adastrap-amd64-$V-0.tar.xz
+ADASTRAP_LIBC-sparc64 = 68.3
 ADASTRAP_LIBM-sparc64 = 8.0
 ADASTRAP-sparc64 = adastrap-sparc64-$V-0.tar.xz
 
@@ -26,8 +27,6 @@ PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 # needs [gs]etcontext
 #PKGNAME-go =	gccgo-${FULL_PKGVERSION}
 PKGSPEC-main = gcc->=4.8,<4.9
-
-REVISION-ada = 0
 
 SHARED_LIBS =	estdc++		16.0 \
 		gfortran	5.0 \

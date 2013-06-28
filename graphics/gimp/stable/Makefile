@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.88 2013/03/21 08:45:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.92 2013/06/20 06:54:36 ajacoutot Exp $
 
 COMMENT=	GNU Image Manipulation Program
 
 SHARED_ONLY=	Yes
 
 DISTNAME=	gimp-2.8.4
+REVISION=	2
 
 SHARED_LIBS+=	gimp-2.0	272.0	# 800.0
 SHARED_LIBS+=	gimpbase-2.0	272.0	# 800.0
@@ -56,12 +57,13 @@ WANTLIB=	ICE SM X11 Xcomposite Xcursor Xdamage \
 		cups cupsimage curl dbus-1 dbus-glib-1 execinfo \
 		exif expat ffi fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
 		gegl-0.2 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gs \
-		gssapi gthread-2.0 gtk-x11-2.0 harfbuzz icudata icule \
-		icuuc idn ijs jasper jbig2dec jpeg krb5 lcms lcms2 \
+		gssapi gthread-2.0 gtk-x11-2.0 harfbuzz \
+		idn ijs jasper jbig2dec jpeg krb5 lcms lcms2 \
 		m mng ncurses openjpeg pango-1.0 pangocairo-1.0 pangoft2-1.0 \
 		pcre pixman-1 png poppler poppler-glib pthread pthread-stubs \
 		rsvg-2 ssl tiff wmf-0.2 wmflite-0.2 xcb xcb-render \
-		xcb-shm xml2 z
+		xcb-shm xml2 z com_err graphite2 heimbase \
+		roken wind
 
 MODULES=	devel/gettext \
 		textproc/intltool \
@@ -75,7 +77,7 @@ CONFIGURE_ARGS+=--enable-gimp-console \
 		--with-libcurl \
 		--without-gvfs \
 		--without-webkit
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include -I${X11BASE}/include" \
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 # If one of these tools is found at configure stage, it might be used,
 # no matter whether we use --disable-gtk-doc or not.

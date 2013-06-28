@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.306 2013/05/15 06:25:36 bcallah Exp $
+# $OpenBSD: Makefile,v 1.308 2013/06/19 15:57:42 shadchin Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -70,7 +70,6 @@
      SUBDIR += ksmp3play
      SUBDIR += ladspa
      SUBDIR += lame
-     SUBDIR += last.fm
      SUBDIR += liba52
      SUBDIR += libao
      SUBDIR += libcanberra
@@ -100,6 +99,7 @@
      SUBDIR += libsoxr
      SUBDIR += libvorbis
      SUBDIR += libworkman
+     SUBDIR += libxmp
      SUBDIR += lmms
      SUBDIR += mac
      SUBDIR += madplay

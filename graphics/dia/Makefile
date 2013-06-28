@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.94 2013/04/16 13:53:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.96 2013/06/04 18:41:47 naddy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	technical diagrams drawing tool
 
 GNOME_PROJECT=	dia
 GNOME_VERSION=	0.97.2
-REVISION=	6
+REVISION=	7
 
 CATEGORIES=	graphics
 
@@ -21,7 +21,7 @@ WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
 WANTLIB += Xrandr Xrender art_lgpl_2 atk-1.0 c cairo expat ffi
 WANTLIB += fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 graphite2 gthread-2.0
-WANTLIB += gtk-x11-2.0 harfbuzz icudata icule icuuc m pango-1.0
+WANTLIB += gtk-x11-2.0 harfbuzz m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
 WANTLIB += pthread-stubs xcb xcb-render xcb-shm xml2 xslt z
 
@@ -36,7 +36,6 @@ MODULES=	devel/gettext \
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
-MODGNOME_CPPFLAGS=	-I${LOCALBASE}/include/libpng
 
 LIBTOOL_FLAGS=	--tag=disable-static
 

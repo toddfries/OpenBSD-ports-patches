@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2013/04/13 10:58:41 sthen Exp $
+# $OpenBSD: Makefile,v 1.17 2013/06/12 20:36:34 brad Exp $
 
 COMMENT =	free open-source SQL full-text search engine
 BROKEN-hppa =	internal compiler error: internal consistency failure
@@ -6,6 +6,7 @@ BROKEN-hppa =	internal compiler error: internal consistency failure
 VERSION =	2.0.4
 DISTNAME =	sphinx-${VERSION}-release
 PKGNAME =	sphinx-${VERSION}
+REVISION =	1
 CATEGORIES =	textproc
 
 HOMEPAGE =	http://www.sphinxsearch.com/

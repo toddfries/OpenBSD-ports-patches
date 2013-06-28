@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.51 2013/05/20 07:56:48 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.53 2013/06/17 13:40:53 dcoppa Exp $
 
 COMMENT=	lightweight image viewer
 
-DISTNAME=	feh-2.9.2
+DISTNAME=	feh-2.9.3
 EXTRACT_SUFX=	.tar.bz2
 CATEGORIES=	graphics
 
@@ -27,7 +27,6 @@ RUN_DEPENDS=	graphics/jpeg
 RUN_DEPENDS+=	devel/desktop-file-utils
 
 CFLAGS+=	-I${LOCALBASE}/include \
-		-I${LOCALBASE}/include/libpng \
 		-I${X11BASE}/include
 LDFLAGS+=	-L${LOCALBASE}/lib -L${X11BASE}/lib
 MAKE_FLAGS=	LDFLAGS="${LDFLAGS}" man_dir="${DESTDIR}${PREFIX}/man" \

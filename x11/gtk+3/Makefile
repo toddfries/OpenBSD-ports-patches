@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.76 2013/05/13 13:48:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.81 2013/06/20 06:54:38 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -10,6 +10,9 @@ GNOME_PROJECT=		gtk+
 
 PKGNAME-main=		gtk+3-${GNOME_VERSION}
 PKGNAME-cups=		gtk+3-cups-${GNOME_VERSION}
+
+REVISION-main=		2
+REVISION-cups=		3
 
 CATEGORIES=		x11 devel
 
@@ -29,7 +32,7 @@ WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo cairo-gobject
 WANTLIB += expat ffi fontconfig freetype gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs
-WANTLIB += ICE SM dbus-1 harfbuzz icudata icule icuuc pthread
+WANTLIB += ICE SM dbus-1 harfbuzz pthread
 WANTLIB += xcb xcb-render xcb-shm z atk-bridge-2.0 atspi
 
 MULTI_PACKAGES=		-main -cups
@@ -67,9 +70,10 @@ LIB_DEPENDS-cups=	${LIB_DEPENDS} \
 WANTLIB-cups += ${WANTLIB}
 WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl
 WANTLIB-cups += avahi-client avahi-common colordprivate
+WANTLIB-cups += com_err heimbase roken wind
 
 MODGNOME_TOOLS=		gi
-MODGNOME_CPPFLAGS=	-I${X11BASE}/include/freetype2 -I${LOCALBASE}/include/libpng
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include/freetype2
 MODGNOME_ICON_CACHE=	Yes
 
 TEST_IS_INTERACTIVE=	x11
@@ -86,12 +90,6 @@ LIB_DEPENDS-cups +=	graphics/colord
 WANTLIB-cups +=	colord lcms2
 .else
 CONFIGURE_ARGS +=	--disable-colord
-.endif
-
-# XXX gtkcssselector.c exposes a life analysis bug otherwise
-.if ${MACHINE_ARCH} == "powerpc"
-CFLAGS +=	-fno-tree-store-copy-prop -fno-tree-copy-prop \
-		-fno-tree-dominator-opts
 .endif
 
 # do not build gtk-update-icon-cache and other shared tools

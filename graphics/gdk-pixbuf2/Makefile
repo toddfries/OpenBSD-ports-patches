@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2013/04/16 13:17:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2013/06/09 15:26:50 ajacoutot Exp $
 
 COMMENT=		graphic library for gtk+2
 
 GNOME_PROJECT=		gdk-pixbuf
-GNOME_VERSION=		2.28.1
+GNOME_VERSION=		2.28.2
+REVISION=		1
 
 CATEGORIES=		graphics
 
@@ -33,7 +34,6 @@ BUILD_DEPENDS +=	misc/shared-mime-info
 RUN_DEPENDS +=		misc/shared-mime-info
 
 MODGNOME_TOOLS=		gi
-MODGNOME_CPPFLAGS=	-I${LOCALBASE}/include/libpng
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-libjasper \

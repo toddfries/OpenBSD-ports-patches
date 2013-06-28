@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2013/05/14 08:59:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.7 2013/06/18 06:23:38 jasper Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		collection of extensions for GNOME Shell
 
 GNOME_PROJECT=		gnome-shell-extensions
-GNOME_VERSION=		3.8.2
+GNOME_VERSION=		3.8.3.1
 
 HOMEPAGE=		http://live.gnome.org/GnomeShell/Extensions
 
@@ -25,9 +25,5 @@ BUILD_DEPENDS=		devel/gettext \
 RUN_DEPENDS=		devel/libgtop2 \
 			x11/gnome/desktop \
 			x11/gnome/shell
-
-# Fix DATADIRNAME: see LOCALBASE/share/aclocal/{glib-gettext.m4,intltool.m4}
-# XXX: not using autoconf due to lack of autogen.sh
-FAKE_FLAGS=		DATADIRNAME=share
 
 .include <bsd.port.mk>

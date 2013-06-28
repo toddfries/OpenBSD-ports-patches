@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.22 2013/03/11 11:44:43 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2013/06/12 20:36:34 brad Exp $
 
 COMMENT=	turns Apache into an MP3 or Ogg streaming server
 
-REVISION=	4
+REVISION=	6
 DISTNAME=	mod_mp3-0.40
 CATEGORIES=	www audio
 

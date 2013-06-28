@@ -1,11 +1,13 @@
-# $OpenBSD: OpenBSD,v 1.93 2013/05/02 19:12:49 stsp Exp $
+# $OpenBSD: OpenBSD,v 1.107 2013/06/17 15:54:56 renato Exp $
 #
 # This is a list of OpenBSD developers and related people.
 #
 
+-37.7374	145.0084	"brett"		# Brett Mahar
 -37.457132	144.580589	"djm"		# Damien Miller
 -34.709197	-58.395080	"gonzalo"	# Gonzalo L. Rodriguez
--33.81		151.15		"dtucker"	# Darren Tucker
+-33.867		151.192		"dtucker"	# Darren Tucker
+-30.035984	-51.220206	"renato"	# Renato Westphal
 -30.018701	-51.167282	"haesbaert"	# Christiano F. Haesbaert
 -27.28		153.02		"dlg"		# David Gwynne
 -22.88		-43.28		"pedro"		# Pedro Martelletto
@@ -16,8 +18,8 @@
 34.710962	-82.872323	"okan"		# Okan Demirmen
 35.083		-106.625	"bentley"	# Anthony J. Bentley
 35.5635277	-97.5437221	"todd"		# Todd T. Fries
-35.62		139.69		"mcbride"	# Ryan Thomas McBride
 35.66834	139.719186	"itojun"	# Jun-ichiro Itojun
+35.698		139.713		"mcbride"	# Ryan Thomas McBride
 36.134		-86.70		"david"		# David Krause
 37.25230	-121.81576	"mlarkin"	# Mike Larkin
 37.3706		-122.0138	"ckuethe"	# Chris Kuethe
@@ -31,7 +33,7 @@
 39.66138	-104.98088	"guenther"	# Philip Guenther
 40.033779	-105.250051	"millert"	# Todd C. Miller
 40.115		-88.02		"drahn"		# Dale Rahn
-40.392935	-74.330056	"bcallah"	# Brian Callahan
+40.382		-74.311		"bcallah"	# Brian Callahan
 40.4		-79.7		"jaredy"	# Jared Yanovich
 40.552889	-8.333124	"rui"		# Rui Reis
 40.721300	-73.858770	"ray"		# Ray Lai
@@ -46,15 +48,18 @@
 43.30		5.37		"aanriot"	# Alexandre Anriot
 43.355902	-5.849892	"sobrado"	# Igor Sobrado
 43.5312		13.2519		"giovanni"	# Giovanni Bechis
-43.61495	1.44094		"matthieu"	# Matthieu Herrb
+43.61475	1.45094		"matthieu"	# Matthieu Herrb
 43.633		-79.500		"brad"		# Brad Smith
 43.66		7.18		"pyr"		# Pierre-Yves Ritschard
 43.70		-79.42		"krw"		# Kenneth R. Westerback
 43.875194	10.730377	"dcoppa"	# David Coppa
+43.948818	4.807039	"jca"		# Jeremie Courreges-Anglas
 44.01		-79.93		"ian"		# Ian Darwin
 44.1		-77.580556	"brynet"	# Bryan Steele
 44.4325		26.103889	"pirofti"	# Paul Irofti
 45.095683	-93.4982	"jim"		# Jim Razmus II
+45.2002, 	5.7222		"ratchov"	# Alexandre Ratchov
+45.3333,	4.3167		"syl"		# Sylvestre Gallon
 45.43		12.13		"michele"	# Michele Marchetto
 45.4745		-73.6556	"msf"		# Mathieu Sauve-Frankel
 45.5		-122.5		"joshe"		# Joshua Elsasser
@@ -82,7 +87,6 @@
 48.8571		2.44		"chl"		# Charles Longeau
 48.864185	2.355328	"ajacoutot"	# Antoine Jacoutot
 48.87		2.33		"espie"		# Marc Espie
-48.87		2.37		"mpi"		# Martin Pieuchot
 49.0120		8.4165		"schwarze"	# Ingo Schwarze
 49.033		2.0666		"benoit"	# Benoit Lecocq
 49.0816		-0.2885		"eric"		# Eric Faurot
@@ -91,11 +95,13 @@
 49.48		8.42		"naddy"		# Christian Weisgerber
 50.362309	7.586465	"pascal"	# Pascal Stumpf
 50.752		-3.276		"sthen"		# Stuart Henderson
+50.76859	6.10157		"mpi"		# Martin Pieuchot
 50.7819		6.0856		"mikeb"		# Mike Belopuhov
 50.858		4.3897		"xsa"		# Xavier Santolaria
-50.87		4.37		"steven"	# Steven Mestdagh
+50.85		4.364		"steven"	# Steven Mestdagh
 51.0333		-114.0500	"pvalchev"	# Peter Valchev
 51.05		3.60		"wvdputte"	# Wim Vandeputte
+51.31885	9.56641		"tobiasu"	# Tobias Ulmer
 51.395466	-0.759525	"nigel"		# Nigel Taylor
 51.46		-0.13		"fgsch"		# Federico G. Schwindt
 51.8365		5.00271		"jasper"	# Jasper Lievisse Adriaanse
@@ -107,11 +113,11 @@
 52.26		4.63		"camield"	# Camiel Dobbelaar
 52.28083	10.57271	"kili"		# Matthias Kilian
 52.35447	4.630657	"otto"		# Otto Moerbeek
-52.3667		9.71667		"reyk"		# Reyk Floeter
 52.3717		9.73416		"phessler"	# Peter Hessler
-52.3963543	13.107545	"zinke"		# Joerg Zinke
+52.3963543	13.107545	"jung"		# Joerg Jung
 52.4144		12.5524		"sebastia"	# Sebastian Reitenbach
 52.5		21		"alek"		# Aleksander Piotrowski
+52.584		9.739		"reyk"		# Reyk Floeter
 53.08566	8.13058		"fkr"		# Felix Kronlage
 53.13		9		"jufi"		# Jan-Uwe Finck
 53.30		-6.24		"niallo"	# Niall O'Higgins

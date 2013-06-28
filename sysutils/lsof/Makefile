@@ -1,18 +1,20 @@
-# $OpenBSD: Makefile,v 1.87 2013/03/11 11:41:31 espie Exp $
+# $OpenBSD: Makefile,v 1.91 2013/06/08 11:40:48 dcoppa Exp $
 
 COMMENT=	list information about open files
 
-VERSION=	4.83
+VERSION=	4.87
 DISTNAME=	lsof_${VERSION}
 PKGNAME=	${DISTNAME:S/_/-/}
-REVISION=	8
+REVISION=	2
 CATEGORIES=	sysutils
-MASTER_SITES=	http://www.mirrorservice.org/sites/vic.cc.purdue.edu/pub/tools/unix/lsof/OLD/ \
+MASTER_SITES=	http://www.mirrorservice.org/sites/lsof.itap.purdue.edu/pub/tools/unix/lsof/ \
 		ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/ \
 		ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/OLD/ \
-		ftp://ftp.fu-berlin.de/pub/unix/tools/lsof/OLD/ \
+		ftp://sunsite.ualberta.ca/pub/Mirror/lsof/ \
+		ftp://sunsite.ualberta.ca/pub/Mirror/lsof/OLD/ \
 		ftp://ftp.fu-berlin.de/pub/unix/tools/lsof/ \
-		http://www.mirrorservice.org/sites/vic.cc.purdue.edu/pub/tools/unix/lsof/
+		ftp://ftp.fu-berlin.de/pub/unix/tools/lsof/OLD/ \
+		http://www.mirrorservice.org/sites/lsof.itap.purdue.edu/pub/tools/unix/lsof/OLD/
 
 HOMEPAGE=	http://people.freebsd.org/~abe/
 
@@ -21,6 +23,19 @@ MAINTAINER=     Peter Valchev <pvalchev@openbsd.org>
 PERMIT_PACKAGE_CDROM=	Yes
 WANTLIB=		c kvm>=13
 
+MODULES=	perl
+
+MODPERL_ADJ_FILES=	scripts/big_brother.perl5 \
+			scripts/count_pf.perl \
+			scripts/count_pf.perl5 \
+			scripts/identd.perl5 \
+			scripts/idrlogin.perl \
+			scripts/idrlogin.perl5 \
+			scripts/list_NULf.perl5 \
+			scripts/list_fields.perl \
+			scripts/shared.perl5 \
+			scripts/watch_a_file.perl
+
 MAKE_FLAGS=	DEBUG="${CFLAGS}"
 
 CONFIGURE_STYLE= simple
@@ -28,20 +43,14 @@ CONFIGURE_SCRIPT= Configure
 CONFIGURE_ARGS=	-n openbsd
 CONFIGURE_ENV=	LSOF_CC="${CC}"
 
+NO_TEST=	Yes
+
 SRCBALL_NAME=	${DISTNAME}_src
 WRKDIST=	${WRKDIR}/${DISTNAME}/${SRCBALL_NAME}
 
 post-extract:
-	@(cd ${WRKDIST}/..; \
-	EXPMD5=`/usr/bin/grep "MD5 (" README.${DISTNAME} | \
-	    /usr/bin/sed 's/^[ ]*//'` ; \
-	CALCMD5=`md5 ${SRCBALL_NAME}.tar` ; \
-	if [ "$${EXPMD5}"X != "$${CALCMD5}"X ]; then \
-	    echo "Expected and calculated MD5 signatures don't agree." ; \
-	    echo "($$EXPMD5 != $$CALCMD5)" ; \
-	    exit 1 ; \
-	fi ; \
-	tar -xf ${SRCBALL_NAME}.tar)
+	cd ${WRKDIST}/.. ; grep MD5.*tar README.${DISTNAME} | \
+		cksum -c - && tar -xf ${SRCBALL_NAME}.tar
 
 pre-configure:
 	@if [ ! -d /sys ]; then \
@@ -51,14 +60,15 @@ pre-configure:
 	    echo ""; \
 	    exit 1; \
 	fi
-
-NO_TEST=	Yes
+# XXX: CVS keyword found in patch
+	perl -pi -e 'print "#!/usr/bin/awk -f\n" if $$. == 1' \
+		${WRKSRC}/scripts/list_fields.awk
 
 do-install:
 	${INSTALL_SCRIPT_DIR} ${PREFIX}/share/lsof
 	${INSTALL_PROGRAM} ${WRKBUILD}/lsof ${PREFIX}/sbin
 	${INSTALL_MAN} ${WRKSRC}/lsof.8 ${PREFIX}/man/man8/lsof.8
 	${INSTALL_SCRIPT} ${WRKSRC}/scripts/* ${PREFIX}/share/lsof
-	@chmod 444 ${PREFIX}/share/lsof/00*
+	@chmod ${SHAREMODE} ${PREFIX}/share/lsof/00*
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2013/03/21 08:48:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/12 20:36:34 brad Exp $
 
 BROKEN-hppa =		lack of atomic ops
 BROKEN-mips64 =		lack of atomic ops
@@ -19,7 +19,7 @@ PKGNAME-pgsql =		rsyslog-pgsql-$V
 CATEGORIES =		sysutils
 
 REVISION-main =		5
-REVISION-mysql =	2
+REVISION-mysql =	4
 REVISION-pgsql =	2
 
 HOMEPAGE =		http://www.rsyslog.com/

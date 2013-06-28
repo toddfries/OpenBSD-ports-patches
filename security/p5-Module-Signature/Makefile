@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.17 2013/03/11 11:41:27 espie Exp $
+# $OpenBSD: Makefile,v 1.19 2013/06/09 21:25:04 bluhm Exp $
 
 COMMENT =		module signature file manipulation
 
-DISTNAME =		Module-Signature-0.70
+DISTNAME =		Module-Signature-0.73
 
 CATEGORIES =		security
 
@@ -14,7 +14,7 @@ PERMIT_PACKAGE_CDROM =	Yes
 MODULES =		cpan
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS =		security/gnupg
-TEST_DEPENDS =	devel/p5-IPC-Run
+TEST_DEPENDS =		devel/p5-IPC-Run
 
 # Enable signature check by the module itself during make regress.
 # Thus the regression test only works on an unpatched port as it

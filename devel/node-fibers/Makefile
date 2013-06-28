@@ -1,19 +1,18 @@
-# $OpenBSD: Makefile,v 1.10 2013/03/11 10:50:12 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/06/21 08:52:05 espie Exp $
 
 # Currently node itself is only for amd64 and i386, but
 # the coroutine library this uses only works on amd64
 # and i386, so even if other arches are supported by node
 # later, this extension will only support these arches.
 ONLY_FOR_ARCHS= amd64 i386
+BROKEN =	requires root privileges during building
 
 COMMENT =	fiber/coroutine support for Node.js
 
 NPM_VERSION =	0.6.8
 NPM_NAME =	fibers
-REVISION =	1
+REVISION =	3
 CATEGORIES =	devel
-
-MAINTAINER =	Jeremy Evans <jeremy@openbsd.org>
 
 HOMEPAGE =	https://github.com/laverdet/node-fibers
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2013/03/21 08:46:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.43 2013/06/04 18:41:52 naddy Exp $
 
 COMMENT=	free video editor
 
@@ -6,7 +6,7 @@ V=		2.4.4
 DISTNAME=	avidemux_${V}
 PKGNAME=	avidemux-${V}
 
-REVISION=	13
+REVISION=	14
 
 CATEGORIES=	multimedia
 
@@ -24,7 +24,7 @@ WANTLIB += gobject-2.0 gthread-2.0 m ogg pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs sndio
 WANTLIB += stdc++ xcb xcb-render xcb-shm z gdk_pixbuf-2.0 gdk-x11-2.0
 WANTLIB += gtk-x11-2.0 faad mp3lame vorbis vorbisenc xml2 xvidcore
-WANTLIB += ffi harfbuzz icudata icule icuuc
+WANTLIB += ffi harfbuzz
 
 MODULES=	devel/gettext
 
@@ -45,8 +45,7 @@ AUTOCONF_VERSION=2.60
 AUTOMAKE_VERSION=1.9
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include \
-		-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -logg -lm -lz"
 CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
 		--enable-xv \

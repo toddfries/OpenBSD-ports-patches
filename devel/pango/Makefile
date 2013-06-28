@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.81 2013/05/13 18:07:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.83 2013/05/31 18:54:54 landry Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,6 +6,7 @@ COMMENT=		library for layout and rendering of text
 
 GNOME_VERSION=		1.34.1
 GNOME_PROJECT=		pango
+REVISION=		1
 
 SHARED_LIBS +=  pango-1.0            3400.0   # 3400.0
 SHARED_LIBS +=  pangoft2-1.0         3400.0   # 3400.0
@@ -23,7 +24,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += X11 Xext Xft Xrender c cairo expat ffi fontconfig>=8 freetype
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 graphite2 gthread-2.0
-WANTLIB += harfbuzz icudata icule icuuc m pcre pixman-1 png pthread
+WANTLIB += harfbuzz m pcre pixman-1 png pthread
 WANTLIB += pthread-stubs xcb xcb-render xcb-shm z
 
 MODULES=		devel/gettext \

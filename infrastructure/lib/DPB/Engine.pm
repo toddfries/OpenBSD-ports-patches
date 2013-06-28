@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Engine.pm,v 1.77 2013/05/01 22:39:24 espie Exp $
+# $OpenBSD: Engine.pm,v 1.82 2013/06/25 07:49:52 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -195,7 +195,7 @@ sub done
 		}
 	}
 	delete $self->{doing}{$self->key_for_doing($v)};
-	$self->{engine}{locker}->recheck_errors($self->{engine});
+	$self->{engine}->recheck_errors;
 }
 
 sub end
@@ -382,11 +382,10 @@ sub new_queue
 sub is_done
 {
 	my ($self, $v) = @_;
-	if ($v->checked_already) {
-		return 1;
-	}
+	return 1 if $v->{done};
 	if ($v->check($self->{engine}{logger})) {
 		$self->log('B', $v);
+		$v->{done} = 1;
 		return 1;
 	} else {
 		return 0;
@@ -625,6 +624,8 @@ sub stub_out
 	my ($self, $v) = @_;
 	my $i = $v->{info};
 	for my $w ($v->build_path_list) {
+		# don't fill in equiv lists if they don't matter.
+		next if !defined $w->{info};
 		if ($w->{info} eq $i) {
 			$w->{info} = DPB::PortInfo->stub;
 		}
@@ -696,6 +697,15 @@ sub adjust_built
 	for my $v (values %{$self->{built}}) {
 		if ($self->adjust($v, 'RDEPENDS') == 0) {
 			delete $self->{built}{$v};
+			# okay, thanks to equiv, some other path was marked
+			# as stub, and obviously we lost our deps
+			if ($v->{info}->is_stub) {
+				$self->log_no_ts('!', $v, 
+				    " equivalent to an ignored path");
+				# just drop it, it's already ignored as
+				# an equivalent path
+				next;
+			}
 			$self->{installable}{$v} = $v;
 			if ($v->{wantinstall}) {
 				$self->{buildable}->will_install($v);
@@ -727,6 +737,16 @@ sub adjust_tobuild
 				$v->{has} = 2;
 			}
 		} else {
+			# okay, thanks to equiv, some other path was marked
+			# as stub, and obviously we lost our deps
+			if ($v->{info}->is_stub) {
+				$self->log_no_ts('!', $v, 
+				    " equivalent to an ignored path");
+				# just drop it, it's already ignored as
+				# an equivalent path
+				delete $self->{tobuild}{$v};
+				next;
+			}
 			my $has = $has->{$v} + 
 			    $self->adjust_extra($v, 'EXTRA', 'BEXTRA');
 

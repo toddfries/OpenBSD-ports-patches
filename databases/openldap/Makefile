@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.123 2013/04/29 14:29:56 sthen Exp $
+# $OpenBSD: Makefile,v 1.126 2013/06/26 19:09:13 sthen Exp $
 
 COMMENT-main =		open-source LDAP software (client)
 COMMENT-server =	open-source LDAP software (server)
@@ -6,6 +6,9 @@ COMMENT-server =	open-source LDAP software (server)
 DISTNAME =		openldap-2.4.35
 PKGNAME-main =		${DISTNAME:S/-/-client-/}
 PKGNAME-server =	${DISTNAME:S/-/-server-/}
+
+REVISION-main =		1
+REVISION-server =	2
 
 # overwrite -main pkgname/path to strip FLAVOR, aci only affects the server
 FULLPKGNAME-main =	${DISTNAME:S/-/-client-/}
@@ -25,7 +28,8 @@ HOMEPAGE =	http://www.openldap.org/
 # OpenLDAP Public License
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB += c crypto ssl asn1 com_err gssapi krb5 sasl2
+WANTLIB += asn1 c com_err crypto gssapi heimbase
+WANTLIB += krb5 roken ssl wind
 
 MASTER_SITES =	http://mirror.switch.ch/ftp/mirror/OpenLDAP/openldap-release/ \
 		http://gd.tuwien.ac.at/infosys/network/OpenLDAP/openldap-release/ \
@@ -91,11 +95,12 @@ TEST_TARGET =	test
 
 MULTI_PACKAGES =	-main -server
 
-LIB_DEPENDS +=		security/cyrus-sasl2
+LIB_DEPENDS +=		security/cyrus-sasl2 
 WANTLIB +=		pthread sasl2
 CPPFLAGS +=		-I${LOCALBASE}/include/sasl
 
 LIB_DEPENDS-server =	${LIB_DEPENDS-main} \
+			sysutils/e2fsprogs \
 			textproc/icu4c \
 			databases/db/v4,no_java,no_tcl
 
@@ -103,7 +108,7 @@ CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include/sasl -I${LOCALBASE}/include/db
 			LDFLAGS="-L${LOCALBASE}/lib/db4 -L${LOCALBASE}/lib"
 
 RUN_DEPENDS-server =	databases/openldap,-main
-WANTLIB-server +=	${WANTLIB} perl util wrap m icudata icuuc
+WANTLIB-server +=	${WANTLIB} perl util wrap m icudata icuuc uuid
 WANTLIB-server +=	stdc++ lib/db4/db>=4
 
 pre-build:

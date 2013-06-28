@@ -1,16 +1,18 @@
-# $OpenBSD: Makefile,v 1.55 2013/04/16 13:17:01 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.58 2013/06/20 06:54:37 ajacoutot Exp $
 
 COMMENT=		people aggregation library
 
 GNOME_PROJECT=		folks
-GNOME_VERSION=		0.9.1
+GNOME_VERSION=		0.9.2
 # MODULE_VERSION in config.h
-API_V=			38
+API_V=			39
 
-SHARED_LIBS +=  folks-telepathy           5.0 # 38.1
-SHARED_LIBS +=  folks                     5.2 # 38.1
-SHARED_LIBS +=  folks-eds                 1.0 # 38.1
-SHARED_LIBS +=  folks-libsocialweb        0.0 # 38.1
+REVISION=		1
+
+SHARED_LIBS +=  folks-telepathy           5.0 # 39.0
+SHARED_LIBS +=  folks                     5.2 # 39.0
+SHARED_LIBS +=  folks-eds                 1.1 # 39.0
+SHARED_LIBS +=  folks-libsocialweb        0.0 # 39.0
 
 SUBST_VARS=		API_V
 
@@ -27,9 +29,9 @@ WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gpg-error gssapi gthread-2.0
 WANTLIB += krb5 m ncurses nspr4 nss3 nssutil3 p11-kit pcre plc4
 WANTLIB += plds4 pthread readline secret-1 smime3 socialweb-client
 WANTLIB += softokn3 soup-2.4 sqlite3 ssl3 telepathy-glib xml2
-WANTLIB += z zeitgeist-1.0
+WANTLIB += heimbase roken wind z zeitgeist-1.0
 
-LIB_DEPENDS=	databases/evolution-data-server>=3.8.0 \
+LIB_DEPENDS=	databases/evolution-data-server>=3.8.1 \
 		devel/libgee \
 		net/telepathy/telepathy-glib>=0.20.1 \
 		net/libsocialweb \

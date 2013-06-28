@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.29 2013/04/16 13:37:23 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.32 2013/06/16 20:40:19 sthen Exp $
 @extraunexec rm -rf %D/roundcubemail/logs/*
 roundcubemail/
 roundcubemail/.htaccess.dist
@@ -78,7 +78,10 @@ roundcubemail/bin/moduserprefs.sh
 roundcubemail/bin/msgexport.sh
 roundcubemail/bin/msgimport.sh
 roundcubemail/bin/update.sh
+roundcubemail/bin/updatecss.sh
 roundcubemail/bin/updatedb.sh
+roundcubemail/composer.json-dist
+@sample roundcubemail/composer.json
 roundcubemail/config/
 roundcubemail/config/.htaccess
 roundcubemail/config/db.inc.php.dist
@@ -2693,6 +2696,7 @@ roundcubemail/program/localization/fi_FI/
 roundcubemail/program/localization/fi_FI/labels.inc
 roundcubemail/program/localization/fi_FI/messages.inc
 roundcubemail/program/localization/fr_FR/
+roundcubemail/program/localization/fr_FR/csv2vcard.inc
 roundcubemail/program/localization/fr_FR/labels.inc
 roundcubemail/program/localization/fr_FR/messages.inc
 roundcubemail/program/localization/fy_NL/
