@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2012/10/01 21:20:55 edd Exp $
+# $OpenBSD: Makefile,v 1.6 2013/03/11 10:50:12 espie Exp $
 
 COMMENT =		GMP bindings for OCaml
 
 V =			0.13
-REVISION =		1
+REVISION =		3
 DISTNAME =		mlgmp-${V}
 PKGNAME =		ocaml-mlgmp-${V}
 
@@ -13,15 +13,12 @@ MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		http://theunixzoo.co.uk/files/
 
 MODULES =		lang/ocaml
-BUILD_DEPENDS =		devel/gmp devel/mpfr
-RUN_DEPENDS =		${BUILD_DEPENDS}
+BUILD_DEPENDS =		${RUN_DEPENDS}
+RUN_DEPENDS =		devel/gmp devel/mpfr
 
 USE_GMAKE =		Yes
 
@@ -46,7 +43,7 @@ MAKE_FLAGS +=	TESTS="test_suite"
 MAKE_FLAGS +=	TESTS_RUN="tests-nonative"
 .endif
 
-REGRESS_TARGET =	tests
+TEST_TARGET =	tests
 
 # make dependencies are screwed up in the release tarball
 pre-build:

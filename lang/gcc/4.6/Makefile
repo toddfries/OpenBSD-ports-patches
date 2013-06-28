@@ -1,17 +1,18 @@
-# $OpenBSD: Makefile,v 1.40 2012/11/06 00:57:43 tobiasu Exp $
+# $OpenBSD: Makefile,v 1.56 2013/06/18 20:24:29 sthen Exp $
 
-ONLY_FOR_ARCHS = amd64 i386 powerpc sparc sparc64
+ONLY_FOR_ARCHS = alpha amd64 hppa i386 powerpc sparc64
 DPB_PROPERTIES = parallel
 
-V = 4.6.3
+V = 4.6.4
 FULL_VERSION = $V
 FULL_PKGVERSION = $V
+REVISION-main = 0
 
-ADASTRAP_LIBC-i386 = 63.0
+ADASTRAP_LIBC-i386 = 68.2
 ADASTRAP-i386 = adastrap-i386-$V-0.tar.xz
-ADASTRAP_LIBC-amd64 = 66.0
+ADASTRAP_LIBC-amd64 = 67.0
 ADASTRAP-amd64 = adastrap-amd64-$V-0.tar.xz
-ADASTRAP_LIBC-sparc64 = 66.0
+ADASTRAP_LIBC-sparc64 = 68.3
 ADASTRAP-sparc64 = adastrap-sparc64-$V-0.tar.xz
 
 PKGNAME-main =  gcc-${FULL_PKGVERSION}
@@ -23,15 +24,6 @@ PKGNAME-objc =  gobjc-${FULL_PKGVERSION}
 PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 PKGNAME-go =	gccgo-${FULL_PKGVERSION}
 PKGSPEC-main = gcc->=4.6,<4.7
-
-REVISION-main = 13
-REVISION-c++ = 12
-REVISION-estdc = 10
-REVISION-f95 = 12
-REVISION-java = 13
-REVISION-objc = 12
-REVISION-ada = 13
-REVISION-go = 12
 
 SHARED_LIBS =	estdc++		14.0 \
 		gfortran	3.0 \
@@ -49,6 +41,7 @@ FLAVOR ?=
 
 ONLY_FOR_ARCHS-ada = i386 amd64 sparc64
 ONLY_FOR_ARCHS-java = amd64 i386 sparc64
+NOT_FOR_ARCHS-go = alpha hppa mips64el
 
 MULTI_PACKAGES = -main -f95 -objc -java -c++ -estdc -ada -go
 
@@ -67,12 +60,11 @@ SUPDISTFILES =	${ADASTRAP-i386}:0 ${ADASTRAP-amd64}:0 ${ADASTRAP-sparc64}:0 \
 		${ECJ}:1
 EXTRACT_ONLY =	${DISTNAME}.tar.bz2
 
-USE_LIBTOOL =	Yes
 
 BUILD_DEPENDS +=	devel/bison \
 			devel/libexecinfo
 
-REGRESS_DEPENDS = 	devel/dejagnu \
+TEST_DEPENDS = 	devel/dejagnu \
 			devel/autogen
 
 MASTER_SITES =	${MASTER_SITE_GCC:=releases/gcc-$(FULL_VERSION)/}
@@ -82,7 +74,7 @@ MASTER_SITES1 =	ftp://sources.redhat.com/pub/java/
 LANGS = c
 .if ${BUILD_PACKAGES:M-c++}
 LANGS := ${LANGS},c++
-REGRESS_DEPENDS += 	${BUILD_PKGPATH},-estdc>=4.6,<4.7
+TEST_DEPENDS += 	${BUILD_PKGPATH},-estdc>=4.6,<4.7
 .endif
 .if ${BUILD_PACKAGES:M-f95}
 LANGS := ${LANGS},fortran
@@ -103,7 +95,7 @@ DISTFILES += ${ADASTRAP-${MACHINE_ARCH}}:0
 EXTRACT_ONLY += ${ADASTRAP-${MACHINE_ARCH}}
 EXTRA_ENV += ADAC=${WRKDIR}/bin/egcc GNATBIND=${WRKDIR}/bin/gnatbind
 CC = ${WRKDIR}/bin/egcc
-REGRESS_DEPENDS += ${BUILD_PKGPATH},-ada
+TEST_DEPENDS += ${BUILD_PKGPATH},-ada
 .endif
 .if ${BUILD_PACKAGES:M-go}
 LANGS := ${LANGS},go
@@ -115,6 +107,8 @@ MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC} ${WRKSRC}/gcc
 EXTRA_ENV += am_cv_func_iconv=no JAR=no
 EXTRA_ENV += ac_cv_prog_M4=/usr/bin/m4
 EXTRA_ENV += ac_cv_header_magic_h=no
+EXTRA_ENV += lt_cv_path_SED=/usr/bin/sed
+EXTRA_ENV += STRIP=/usr/bin/strip
 MAKE_FLAGS +=	 ac_cv_path_mkdir=/bin/mkdir
 
 CONFIGURE_ENV += ${EXTRA_ENV}
@@ -122,7 +116,7 @@ MAKE_ENV += ${EXTRA_ENV}
 
 # Note: the configure target passes CFLAGS to the configure script anyways.
 
-CFLAGS = -O2 -g
+CFLAGS = -O2
 
 CONFIGURE_ARGS += \
 	--verbose \
@@ -152,6 +146,7 @@ CONFIGURE_ARGS += ${CONFIGURE_SHARED}
 SEPARATE_BUILD = flavored
 
 USE_GMAKE = yes
+MAKE_FLAGS += --print-directory
 
 .if ${FLAVOR:Mfull}
 # you shouldn't skip bootstrap unless you know what you're doing

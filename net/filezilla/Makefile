@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.25 2012/04/23 17:15:18 espie Exp $
+# $OpenBSD: Makefile,v 1.30 2013/05/31 15:29:40 ajacoutot Exp $
 
 COMMENT=	fast FTP and SFTP GUI client with a lot of features
 
-V=		3.5.3
+V=		3.7.0.2
 PKGNAME=	filezilla-$V
 DISTNAME=	FileZilla_$V_src
 EXTRACT_SUFX=	.tar.bz2
-REVISION =	0
+REVISION=	0
 
 MAINTAINER=	Giovanni Bechis <giovanni@openbsd.org>
 
@@ -17,9 +17,6 @@ HOMEPAGE=	http://www.filezilla-project.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m pthread stdc++ tasn1 z gmp hogweed nettle
 WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes
@@ -30,10 +27,14 @@ WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png pthread-stubs xcb xcb-render xcb-shm
 WANTLIB += idn gnutls>=13 dbus-1 wx_gtk2_aui wx_base_xml wx_gtk2_adv
 WANTLIB += wx_gtk2_xrc wx_base_net wx_base wx_gtk2_core
-WANTLIB += GL sqlite3 ffi p11-kit
+WANTLIB += sqlite3 ffi p11-kit
+WANTLIB += harfbuzz
+WANTLIB += ICE SDL SM Xxf86vm graphite2 jpeg mspack sndio tiff
+WANTLIB += usbhid wx_gtk2_html
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	devel/libidn \
+				devel/harfbuzz \
 		security/gnutls \
 		x11/dbus \
 		x11/wxWidgets>=2.8.6
@@ -47,7 +48,7 @@ SEPARATE_BUILD= Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS+=--with-dbus \
 		--with-tinyxml=builtin \
-		--disable-autoupdatecheck
+		--disable-manualupdatecheck
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		GREP=/usr/bin/grep \
@@ -56,7 +57,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 USE_GMAKE=	Yes
 WRKDIST=	${WRKDIR}/filezilla-$V
 
-do-regress:
+do-test:
 	@cd ${WRKBUILD}/tests && ${MAKE_PROGRAM} check-TESTS
 
 .include <bsd.port.mk>

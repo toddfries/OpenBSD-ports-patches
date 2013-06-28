@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.58 2012/09/13 09:49:39 giovanni Exp $
+# $OpenBSD: Makefile,v 1.60 2013/03/26 18:24:29 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -13,16 +13,13 @@ MAINTAINER=	Simon Bertrang <simon@openbsd.org>
 
 # Perl
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c
 
-MAKE_ENV=		TEST_POD=1
+MAKE_ENV=	TEST_POD=1
 RUN_DEPENDS=	net/p5-PlRPC>=0.2017 \
-				databases/p5-SQL-Statement>=1.28 \
-				devel/p5-MLDBM
+		databases/p5-SQL-Statement>=1.28 \
+		devel/p5-MLDBM
 BUILD_DEPENDS=	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

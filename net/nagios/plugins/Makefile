@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.33 2012/06/28 23:10:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.40 2013/06/20 06:54:37 ajacoutot Exp $
 
 COMMENT-main=	nagios base plugins
 COMMENT-fping=	fping plugin
@@ -16,9 +16,12 @@ PKGNAME-main=	nagios-plugins-$V
 PKGNAME-fping=	nagios-plugins-fping-$V
 PKGNAME-game=	nagios-plugins-game-$V
 PKGNAME-ldap=	nagios-plugins-ldap-$V
+REVISION-ldap=	1
 PKGNAME-mysql=	nagios-plugins-mysql-$V
+REVISION-mysql=	2
 PKGNAME-ntp=	nagios-plugins-ntp-$V
 PKGNAME-pgsql=	nagios-plugins-pgsql-$V
+REVISION-pgsql=	1
 PKGNAME-samba=	nagios-plugins-samba-$V
 PKGNAME-snmp=	nagios-plugins-snmp-$V
 CATEGORIES=	net
@@ -29,9 +32,6 @@ MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 # see below for WANTLIB
 
@@ -42,13 +42,13 @@ BUILD_DEPENDS=	games/qstat \
 
 FAKE_FLAGS=	setuid_root_mode=0555
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.67
 CONFIGURE_ENV=	PATH_TO_FPING=${LOCALBASE}/sbin/fping \
 		PATH_TO_NTPDATE=${LOCALBASE}/sbin/ntpdate \
 		PATH_TO_NTPDC=${LOCALBASE}/sbin/ntpdc \
-		PATH_TO_NTPQ=${LOCALBASE}/sbin/ntpq
+		PATH_TO_NTPQ=${LOCALBASE}/sbin/ntpq \
+		CPPFLAGS="$$(krb5-config --cflags)"
 CONFIGURE_ARGS+=--libexecdir=${PREFIX}/libexec/nagios \
 		--with-cgiurl=/cgi-bin/nagios \
 		--with-openssl=/usr \
@@ -59,7 +59,7 @@ FLAVOR?=
 
 MULTI_PACKAGES=	-main -fping -game
 
-.if ! ${FLAVOR:L:Mno_db}
+.if ! ${FLAVOR:Mno_db}
 MULTI_PACKAGES+=-ldap -mysql -pgsql
 CONFIGURE_ARGS+=--with-mysql=${LOCALBASE} \
 		--with-pgsql=${LOCALBASE}
@@ -68,17 +68,17 @@ CFLAGS+=	-DLDAP_DEPRECATED
 CONFIGURE_ARGS+=--without-mysql --without-pgsql
 .endif
 
-.if ! ${FLAVOR:L:Mno_ntp}
+.if ! ${FLAVOR:Mno_ntp}
 MULTI_PACKAGES+=-ntp
 BUILD_DEPENDS+=	net/ntp
 .endif
 
-.if ! ${FLAVOR:L:Mno_samba}
+.if ! ${FLAVOR:Mno_samba}
 MULTI_PACKAGES+=-samba
 BUILD_DEPENDS+=	net/samba
 .endif
 
-.if ! ${FLAVOR:L:Mno_snmp}
+.if ! ${FLAVOR:Mno_snmp}
 MULTI_PACKAGES+=-snmp
 BUILD_DEPENDS+=	net/p5-Net-SNMP \
 		net/net-snmp
@@ -92,6 +92,7 @@ RUN_DEPENDS-game=	games/qstat
 
 WANTLIB-ldap+=		${WANTLIB} asn1 com_err crypto gssapi krb5
 WANTLIB-ldap+=		lber-2.4 ldap-2.4 sasl2 ssl
+WANTLIB-ldap+=		heimbase roken wind
 LIB_DEPENDS-ldap=	databases/openldap \
 			${LIB_DEPENDS}
 
@@ -102,7 +103,8 @@ LIB_DEPENDS-mysql=	databases/mysql \
 WANTLIB-ntp=		${WANTLIB} m
 RUN_DEPENDS-ntp=	net/ntp
 
-WANTLIB-pgsql=		${WANTLIB} com_err crypto pq ssl
+WANTLIB-pgsql+=		${WANTLIB} com_err crypto pq ssl
+WANTLIB-pgsql+=		asn1 krb5 heimbase roken wind
 LIB_DEPENDS-pgsql=	databases/postgresql \
 			${LIB_DEPENDS}
 
@@ -118,6 +120,6 @@ WANTLIB-main=		${WANTLIB} crypto m ssl
 MODULES=	devel/gettext
 
 # many broken tests, but...
-REGRESS_IS_INTERACTIVE=Yes
+TEST_IS_INTERACTIVE=Yes
 
 .include <bsd.port.mk>

@@ -1,16 +1,20 @@
-# $OpenBSD: Makefile,v 1.77 2012/09/29 13:14:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.83 2013/04/16 13:17:00 ajacoutot Exp $
+
+# gconf2-polkit requires spidermonkey
+ONLY_FOR_ARCHS-polkit=	alpha amd64 i386 hppa mips64el mips64 powerpc sparc64
 
 COMMENT-main=	configuration database system for GNOME
 COMMENT-polkit=	PolicyKit integration for GConf2
 
 GNOME_PROJECT=	GConf
-GNOME_VERSION=	3.2.5
+GNOME_VERSION=	3.2.6
 PKGNAME=	gconf2-${GNOME_VERSION}
 
 PKGNAME-main=	gconf2-${GNOME_VERSION}
 PKGNAME-polkit=	gconf2-polkit-${GNOME_VERSION}
 
-REVISION-main=	2
+REVISION-main=	0
+REVISION-polkit=1
 
 SHARED_LIBS +=	gconf-2              6.2      # 5.5
 
@@ -23,10 +27,7 @@ MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB += c gio-2.0 glib-2.0 gmodule-2.0 ffi
 WANTLIB += gobject-2.0 gthread-2.0 pcre pthread z
@@ -55,21 +56,33 @@ LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		textproc/libxml \
 		x11/dbus-glib
 
-RUN_DEPENDS-polkit= # empty
+RUN_DEPENDS-polkit=${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-polkit= ${LIB_DEPENDS} \
 		devel/gconf2 \
 		sysutils/polkit
 
-MODGNOME_TOOLS=	goi
+# polkit(8) almost always needs to know the "active" session
+RUN_DEPENDS-polkit +=sysutils/consolekit
+
+MODGNOME_TOOLS=	gi
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--without-openldap \
-		--enable-defaults-service \
 		--disable-gtk \
 		--disable-orbit
 
 FAKE_FLAGS=	sysgconfdir=${PREFIX}/share/examples/gconf2 \
 		sysconfdir=${PREFIX}/share/examples/gconf2
+
+PSEUDO_FLAVORS=	no_polkit
+FLAVOR?=
+
+.include <bsd.port.arch.mk>
+.if !${BUILD_PACKAGES:M-polkit}
+CONFIGURE_ARGS+= --disable-defaults-service
+.else
+CONFIGURE_ARGS+= --enable-defaults-service
+.endif
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/gsettings/gsettings-data-convert.1

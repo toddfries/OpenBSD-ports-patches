@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.22 2012/11/06 07:03:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2013/03/13 02:51:42 brad Exp $
 
 COMMENT =	encrypted backup using rsync algorithm
 
-MODPY_EGG_VERSION = 0.6.20
+MODPY_EGG_VERSION = 0.6.21
 DISTNAME =	duplicity-${MODPY_EGG_VERSION}
 
 CATEGORIES =	sysutils
@@ -14,9 +14,6 @@ MAINTAINER =	Jim Razmus II <jim@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =	lang/python
 
@@ -31,7 +28,7 @@ RUN_DEPENDS +=	net/py-boto \
 
 MAKE_ENV +=	LIBRSYNC_DIR=${LOCALBASE}
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 # XXX 600 mode prevents from reading the man page;
 # check if still required at next update

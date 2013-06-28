@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.46 2012/10/31 17:45:55 pascal Exp $
+# $OpenBSD: Makefile,v 1.54 2013/05/30 13:09:20 ajacoutot Exp $
 
 COMMENT =	3D creation software
 BROKEN-sparc64 = error: cast from 'ccl::uchar*' to 'CUdeviceptr' loses precision
 
-DISTNAME =	blender-2.64a
+DISTNAME =	blender-2.67
+REVISION =	0
 
 CATEGORIES =	graphics
 
@@ -15,22 +16,18 @@ VMEM_WARNING =	Yes
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://download.blender.org/source/ \
 		http://mirror.cs.umn.edu/blender.org/source/
 
 MODULES =	devel/cmake \
-		lang/python \
-		devel/gettext
-MODPY_VERSION = ${MODPY_DEFAULT_VERSION_3}
+		lang/python
+MODPY_VERSION =	${MODPY_DEFAULT_VERSION_3}
 
-CONFIGURE_ARGS =	-DPYTHON_LIBRARY="${LOCALBASE}/lib/libpython${MODPY_VERSION}m.so" \
-			-DPYTHON_INCLUDE_DIR="${MODPY_INCDIR}" \
+CONFIGURE_ARGS =	-DPYTHON_INCLUDE_DIR="${MODPY_INCDIR}" \
 			-DPYTHON_VERSION=${MODPY_VERSION} \
-			-DWITH_CODEC_FFMPEG=ON
+			-DWITH_CODEC_FFMPEG=ON \
+			-DWITH_INTERNATIONAL=OFF
 
 BUILD_DEPENDS =	devel/gflags
 LIB_DEPENDS =	graphics/png \
@@ -44,6 +41,7 @@ LIB_DEPENDS =	graphics/png \
 		graphics/openjpeg \
 		graphics/ffmpeg>=20111126 \
 		graphics/openimageio \
+		math/fftw3 \
 		${MODPY_LIB_DEPENDS}
 RUN_DEPENDS =	devel/desktop-file-utils \
 		x11/gnome/librsvg
@@ -53,8 +51,9 @@ WANTLIB += SDL X11 Xi Xxf86vm avcodec avdevice avformat avutil
 WANTLIB += boost_filesystem-mt boost_regex-mt boost_system-mt
 WANTLIB += boost_thread-mt c freetype jpeg m openal openjpeg png
 WANTLIB += pthread ${MODPY_WANTLIB} stdc++ swscale tiff util z
+WANTLIB += boost_date_time-mt fftw3
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 CFLAGS +=	-I${LOCALBASE}/include -I${X11BASE}/include -pthread
 

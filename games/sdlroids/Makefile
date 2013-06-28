@@ -1,20 +1,17 @@
-# $OpenBSD: Makefile,v 1.16 2012/03/29 13:38:30 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2013/05/26 09:30:55 kirby Exp $
 
 COMMENT=	essentially an Asteroids clone
 
 DISTNAME=	sdlroids-1.3.4
-REVISION =	1
+REVISION =	2
 CATEGORIES=	games
 
-HOMEPAGE=	http://david.hedbor.org/projects/sdlroids/
+HOMEPAGE=	http://sourceforge.net/projects/sdlroids/
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=sdlroids/}
 
 # GPL
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB=	SDL c m pthread SDL_mixer
 

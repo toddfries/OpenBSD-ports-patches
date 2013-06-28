@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2012/08/19 22:30:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/11 11:20:28 espie Exp $
 
 COMMENT=	portable Haskell compiler
 
 # not for 64 bits, broken on ppc
 NOT_FOR_ARCHS=	${LP64_ARCHS} powerpc
+BROKEN-hppa= 	Segfault during build since the PIE switch
 
 V=		1.22
 DISTNAME=	nhc98-$V
@@ -17,9 +18,6 @@ DISTFILES=	nhc98src-$V.tar.gz
 
 # BSDish
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m
 
@@ -34,6 +32,6 @@ CONFIGURE_ARGS=		--prefix=${PREFIX} \
 # worse than with a cc-built nhc, so still stick with cc.
 CONFIGURE_ARGS+=--buildwith=cc
 
-REGRESS_TARGET=	test
+TEST_TARGET=	test
 
 .include <bsd.port.mk>

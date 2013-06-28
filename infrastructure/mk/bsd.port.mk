@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1195 2012/11/05 20:29:35 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1238 2013/06/25 20:21:03 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -30,6 +30,15 @@ ERRORS += "Fatal: Use 'env SUBPACKAGE=${SUBPACKAGE} ${MAKE}' instead."
 ERRORS += "Fatal: Variable $v is obsolete, use PACKAGE_REPOSITORY instead."
 .  endif
 .endfor
+.if defined(PERMIT_DISTFILES_CDROM)
+ERRORS += "Fatal: Variable PERMIT_DISTFILES_CDROM is obsolete."
+.endif
+.for v in NO_REGRESS REGRESS_IS_INTERACTIVE REGRESS_DEPENDS
+.  if defined($v)
+ERRORS += "Fatal: $v has been replaced with ${v:S/REGRESS/TEST/}."
+.  endif
+.endfor
+
 .for t in pre-fetch do-fetch post-fetch pre-package do-package post-package
 .  if target($t)
 ERRORS += "Fatal: you're not allowed to override $t"
@@ -72,59 +81,68 @@ TRUST_PACKAGES ?= No
 FETCH_PACKAGES ?= No
 CLEANDEPENDS ?= No
 USE_SYSTRACE ?= No
-BULK ?= No
+BULK ?= Auto
 RECURSIVE_FETCH_LIST ?= No
 WRKDIR_LINKNAME ?= 
 _FETCH_MAKEFILE ?= /dev/stdout
+
+.if ${USE_SYSTRACE:L} == "yes"
+WRKOBJDIR_MFS ?!= readlink -fn /tmp/pobj
+.else
+WRKOBJDIR_MFS ?= /tmp/pobj
+.endif
+
+USE_MFS ?= No
 .if ${USE_SYSTRACE:L} == "yes"
 WRKOBJDIR ?!= readlink -fn ${PORTSDIR}/pobj
 .else
 WRKOBJDIR ?= ${PORTSDIR}/pobj
 .endif
 FAKEOBJDIR ?=
+
 BULK_TARGETS ?=
 BULK_DO ?=
 CHECK_LIB_DEPENDS ?= No
 FORCE_UPDATE ?= No
-DPB ?= All Fetch
+DPB ?= All Fetch Test
 PREPARE_CHECK_ONLY ?= No
 _SHSCRIPT = sh ${PORTSDIR}/infrastructure/bin
 DPB_PROPERTIES ?=
 
 # All variables relevant to the port's description
 _ALL_VARIABLES = BUILD_DEPENDS IS_INTERACTIVE \
-	SUBPACKAGE FLAVOR BUILD_PACKAGES DPB_PROPERTIES
+	SUBPACKAGE FLAVOR BUILD_PACKAGES DPB_PROPERTIES \
+	MULTI_PACKAGES 
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS IGNORE 
 _ALL_VARIABLES_PER_ARCH =
 
-_DPB_MULTI = ${BUILD_PACKAGES}
 
-.if ${DPB:L:Mfetch}
+.if ${DPB:L:Mfetch} || ${DPB:L:Mall}
 _ALL_VARIABLES += DISTFILES PATCHFILES SUPDISTFILES DIST_SUBDIR MASTER_SITES \
 	MASTER_SITES0 MASTER_SITES1 MASTER_SITES2 MASTER_SITES3 MASTER_SITES4 \
 	MASTER_SITES5 MASTER_SITES6 MASTER_SITES7 MASTER_SITES8 MASTER_SITES9 \
 	CHECKSUM_FILE FETCH_MANUALLY MISSING_FILES \
-	PERMIT_DISTFILES_CDROM PERMIT_DISTFILES_FTP
-_DPB_MULTI = ${MULTI_PACKAGES}
+	PERMIT_DISTFILES_FTP
+.endif
+.if ${DPB:L:Mtest} || ${DPB:L:Mall}
+_ALL_VARIABLES += NO_TEST TEST_IS_INTERACTIVE TEST_DEPENDS
 .endif
 .if ${DPB:L:Mall}
 _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	BROKEN COMES_WITH \
-	REGRESS_DEPENDS USE_GMAKE USE_GROFF MODULES FLAVORS \
-	NO_BUILD NO_REGRESS SHARED_ONLY PSEUDO_FLAVORS \
-	REGRESS_IS_INTERACTIVE \
+	USE_GMAKE USE_GROFF MODULES FLAVORS \
+	NO_BUILD SHARED_ONLY PSEUDO_FLAVORS \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
 	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS \
-	VMEM_WARNING MULTI_PACKAGES PKG_ARCH 
+	VMEM_WARNING PKG_ARCH 
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
-	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC \
+	ONLY_FOR_ARCHS NOT_FOR_ARCHS PKGSPEC PREFIX \
 	PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM WANTLIB CATEGORIES DESCR \
 	EPOCH REVISION STATIC_PLIST
-_DPB_MULTI = ${MULTI_PACKAGES}
 .endif
 # special purpose user settings
 PATCH_CHECK_ONLY ?= No
@@ -136,6 +154,7 @@ REFETCH ?= false
 PORTSDIR ?= /usr/ports
 LOCALBASE ?= /usr/local
 X11BASE ?= /usr/X11R6
+VARBASE ?= /var
 DISTDIR ?= ${PORTSDIR}/distfiles
 BULK_COOKIES_DIR ?= ${PORTSDIR}/bulk/${MACHINE_ARCH}
 UPDATE_COOKIES_DIR ?= ${PORTSDIR}/update/${MACHINE_ARCH}
@@ -156,8 +175,13 @@ ERRORS += "Fatal: building ports requires correctly installed X11"
 # local path locations
 .include "${PORTSDIR}/infrastructure/mk/pkgpath.mk"
 
+.if ${USE_MFS:L} == "yes"
+WRKOBJDIR_${PKGPATH} ?= ${WRKOBJDIR_MFS}
+.else
 WRKOBJDIR_${PKGPATH} ?= ${WRKOBJDIR}
+.endif
 FAKEOBJDIR_${PKGPATH} ?= ${FAKEOBJDIR}
+
 BULK_${PKGPATH} ?= ${BULK}
 BULK_TARGETS_${PKGPATH} ?= ${BULK_TARGETS}
 BULK_DO_${PKGPATH} ?= ${BULK_DO}
@@ -174,8 +198,8 @@ _PROGRESS = -m
 .else
 _PROGRESS =
 .endif
- 
-FETCH_CMD ?= /usr/bin/ftp -V ${_PROGRESS} -k ${FTP_KEEPALIVE}
+
+FETCH_CMD ?= /usr/bin/ftp -V ${_PROGRESS} -k ${FTP_KEEPALIVE} -C
 
 PKG_TMPDIR ?= /var/tmp
 
@@ -199,19 +223,6 @@ _MAKEFILE_INC_DONE = Yes
 .    include "${.CURDIR}/../Makefile.inc"
 .  endif
 .endif
-
-.if !defined(PERMIT_PACKAGE_CDROM) || !defined(PERMIT_PACKAGE_FTP) || \
-	!defined(PERMIT_DISTFILES_CDROM) || !defined(PERMIT_DISTFILES_FTP)
-ERRORS += "The licensing info for ${FULLPKGNAME} is incomplete."
-ERRORS += "Please notify the OpenBSD port maintainer:"
-ERRORS += "    ${MAINTAINER}"
-_BAD_LICENSING = Yes
-PERMIT_PACKAGE_CDROM = No
-PERMIT_DISTFILES_CDROM = No
-PERMIT_PACKAGE_FTP = No
-PERMIT_DISTFILES_FTP = No
-.endif
-
 .if defined(verbose-show)
 .MAIN: verbose-show
 .elif defined(show)
@@ -228,25 +239,25 @@ clean = ${_internal-clean}
 # need to go through an extra var because clean is set in stone,
 # on the cmdline.
 _clean = ${clean}
-.if empty(_clean) || ${_clean:L} == "depends"
+.if empty(_clean) || ${_clean} == "depends"
 _clean += work
 .endif
-.if ${_clean:L:Mall}
+.if ${_clean:Mall}
 _clean += work build packages plist
 .endif
 .if ${CLEANDEPENDS_${PKGPATH}:L} == "yes"
 _clean += depends
 .endif
-.if ${_clean:L:Mwork} || ${_clean:L:Mbuild}
+.if ${_clean:Mwork} || ${_clean:Mbuild}
 _clean += fake
 .endif
-.if ${_clean:L:Mforce}
+.if ${_clean:Mforce}
 _clean += -f
 .endif
 # check that clean is clean
 _okay_words = depends work fake -f flavors dist install sub packages package \
 	bulk force plist build all
-.for _w in ${_clean:L}
+.for _w in ${_clean}
 .  if !${_okay_words:M${_w}}
 ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
 .  endif
@@ -260,7 +271,7 @@ ERRORS += "Fatal: unknown clean command: ${_w}\n(not in ${_okay_words})"
 CONFIGURE_STYLE ?=
 NO_DEPENDS ?= No
 NO_BUILD ?= No
-NO_REGRESS ?= No
+NO_TEST ?= No
 INSTALL_TARGET ?= install
 
 .if ${CONFIGURE_STYLE:L:Mautomake} || ${CONFIGURE_STYLE:L:Mautoconf} || \
@@ -291,6 +302,7 @@ _MODULES_DONE =
 ### Variable setup that can happen after modules
 ###
 
+
 # some introspection
 TARGETS =
 .for _t in extract patch distpatch configure build fake install
@@ -300,7 +312,7 @@ TARGETS += ${_s}-${_t}
 .    endif
 .  endfor
 .endfor
-.for _t in post-patch pre-configure configure pre-fake pre-install
+.for _t in post-patch pre-configure configure pre-fake post-install
 .  for _m in ${MODULES:T:U}
 .    if defined(MOD${_m}_${_t})
 TARGETS += MOD${_m}_${_t}
@@ -339,7 +351,7 @@ BASESYSCONFDIR ?= /etc
 SYSCONFDIR ?= ${BASESYSCONFDIR}
 
 # User choice, consider read-only from a given port
-BASELOCALSTATEDIR ?= /var
+BASELOCALSTATEDIR ?= ${VARBASE}
 # Defaut localstatedir for gnu ports
 LOCALSTATEDIR ?= ${BASELOCALSTATEDIR}
 
@@ -352,7 +364,7 @@ CONFIGURE_ENV += MAKE=${MAKE_PROGRAM}
 .else
 MAKE_PROGRAM = ${MAKE}
 .endif
-USE_LIBTOOL ?= No
+USE_LIBTOOL ?= Yes
 _lt_libs =
 .if ${USE_LIBTOOL:L} != "no"
 .  if ${USE_LIBTOOL:L} == "gnu"
@@ -379,7 +391,7 @@ CONFIGURE_ENV += CCACHE_DIR=${CCACHE_DIR}
 BUILD_DEPENDS += devel/ccache
 .endif
 
-ALL_FAKE_FLAGS=	${MAKE_FLAGS} ${DESTDIRNAME}=${WRKINST} ${FAKE_FLAGS}
+ALL_FAKE_FLAGS=	${MAKE_FLAGS:N-j[0-9]*} ${DESTDIRNAME}=${WRKINST} ${FAKE_FLAGS}
 
 
 PARALLEL_BUILD ?= Yes
@@ -398,6 +410,45 @@ ALL_FAKE_FLAGS += -j${MAKE_JOBS}
 
 .if !defined(_BSD_PORT_ARCH_MK_INCLUDED)
 .  include "${PORTSDIR}/infrastructure/mk/bsd.port.arch.mk"
+.endif
+
+.for _S in ${MULTI_PACKAGES}
+PERMIT_PACKAGE_CDROM${_S} ?= ${PERMIT_PACKAGE_CDROM}
+.  if defined(PERMIT_PACKAGE_FTP)
+PERMIT_PACKAGE_FTP${_S} ?= ${PERMIT_PACKAGE_FTP}
+.  endif
+.  if defined(PERMIT_PACKAGE_CDROM${_S}) && ${PERMIT_PACKAGE_CDROM${_S}:L} == "yes"
+PERMIT_PACKAGE_FTP${_S} ?= Yes
+.  endif
+.  if !defined(PERMIT_PACKAGE_CDROM${_S}) || !defined(PERMIT_PACKAGE_FTP${_S})
+ERRORS += "The licensing info for ${FULLPKGNAME${_S}} is incomplete."
+_BAD_LICENSING = Yes
+.  endif
+.endfor
+
+.if defined(PERMIT_PACKAGE_CDROM) && ${PERMIT_PACKAGE_CDROM:L} == "yes"
+PERMIT_PACKAGE_FTP ?= Yes
+PERMIT_DISTFILES_FTP ?= Yes
+.elif defined(PERMIT_PACKAGE_FTP) && ${PERMIT_PACKAGE_FTP:L} == "yes"
+PERMIT_DISTFILES_FTP ?= Yes
+.endif
+
+.if !defined(PERMIT_PACKAGE_CDROM) || !defined(PERMIT_PACKAGE_FTP) || \
+	!defined(PERMIT_DISTFILES_FTP)
+ERRORS += "The licensing info for ${FULLPKGNAME} is incomplete."
+_BAD_LICENSING = Yes
+.endif
+
+.if defined(_BAD_LICENSING)
+ERRORS += "Please notify the OpenBSD port maintainer:"
+ERRORS += "    ${MAINTAINER}"
+PERMIT_PACKAGE_CDROM = No
+PERMIT_PACKAGE_FTP = No
+PERMIT_DISTFILES_FTP = No
+.  for _S in ${MULTI_PACKAGES}
+PERMIT_PACKAGE_CDROM${_S} = No
+PERMIT_PACKAGE_FTP${_S} = No
+.  endfor
 .endif
 
 .if ${MACHINE_ARCH} != ${ARCH}
@@ -419,8 +470,8 @@ FLAVORS ?=
 PSEUDO_FLAVORS ?=
 FLAVORS += ${PSEUDO_FLAVORS}
 
-.if !empty(FLAVORS:Mregress) && empty(FLAVOR:Mregress)
-NO_REGRESS = Yes
+.if !empty(FLAVORS:Mtest) && empty(FLAVOR:Mtest)
+NO_TEST = Yes
 .endif
 
 .if empty(SUBPACKAGE)
@@ -585,19 +636,19 @@ _INSTALL_COOKIES +=		${_INSTALL_COOKIE${_S}}
 .if ${SEPARATE_BUILD:L} != "no"
 _CONFIGURE_COOKIE =		${WRKBUILD}/.configure_done
 _BUILD_COOKIE =			${WRKBUILD}/.build_done
-_REGRESS_COOKIE =		${WRKBUILD}/.regress_done
+_TEST_COOKIE =			${WRKBUILD}/.test_done
 .else
 _CONFIGURE_COOKIE =		${WRKDIR}/.configure_done
 _BUILD_COOKIE =			${WRKDIR}/.build_done
-_REGRESS_COOKIE =		${WRKDIR}/.regress_done
+_TEST_COOKIE =			${WRKDIR}/.test_done
 .endif
 
 _ALL_COOKIES = ${_EXTRACT_COOKIE} ${_PATCH_COOKIE} ${_CONFIGURE_COOKIE} \
-	${_INSTALL_PRE_COOKIE} ${_BUILD_COOKIE} ${_REGRESS_COOKIE} \
+	${_INSTALL_PRE_COOKIE} ${_BUILD_COOKIE} ${_TEST_COOKIE} \
 	${_SYSTRACE_COOKIE} ${_PACKAGE_COOKIES} \
 	${_DISTPATCH_COOKIE} ${_PREPATCH_COOKIE} ${_FAKE_COOKIE} \
 	${_WRKDIR_COOKIE} ${_DEPBUILD_COOKIES} \
-	${_DEPRUN_COOKIES} ${_DEPREGRESS_COOKIES} ${_UPDATE_COOKIES} \
+	${_DEPRUN_COOKIES} ${_DEPTEST_COOKIES} ${_UPDATE_COOKIES} \
 	${_DEPBUILDLIB_COOKIES} ${_DEPRUNLIB_COOKIES} \
 	${_DEPBUILDWANTLIB_COOKIE} ${_DEPRUNWANTLIB_COOKIE} ${_DEPLIBSPECS_COOKIES}
 
@@ -686,17 +737,20 @@ WRKINST ?= ${WRKDIR}/fake-${ARCH}${_FLAVOR_EXT2}
 .endif
 
 .if ${SEPARATE_BUILD:L:Mflavored}
-OLD_WRKDIR_NAME = w-${PKGNAME}
+_WRKDIR_STEM = ${PKGNAME}
 .else
-OLD_WRKDIR_NAME = w-${PKGNAME}${_FLAVOR_EXT2}
+_WRKDIR_STEM = ${PKGNAME}${_FLAVOR_EXT2}
 .endif
 
+OLD_WRKDIR_NAME = w-${_WRKDIR_STEM}
+
+_WRKDIRS = ${.CURDIR}/${OLD_WRKDIR_NAME}
+
 .if !empty(WRKOBJDIR_${PKGPATH})
-.  if ${SEPARATE_BUILD:L:Mflavored}
-WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}
-.  else
-WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${PKGNAME}${_FLAVOR_EXT2}
-.  endif
+WRKDIR ?= ${WRKOBJDIR_${PKGPATH}}/${_WRKDIR_STEM}
+_WRKDIRS += ${WRKOBJDIR_${PKGPATH}}/${_WRKDIR_STEM}
+_WRKDIRS += ${WRKOBJDIR}/${_WRKDIR_STEM}
+_WRKDIRS += ${WRKOBJDIR_MFS}/${_WRKDIR_STEM}
 .else
 WRKDIR ?= ${.CURDIR}/${OLD_WRKDIR_NAME}
 .endif
@@ -726,16 +780,16 @@ ALL_TARGET ?= all
 
 FAKE_TARGET ?= ${INSTALL_TARGET}
 
-REGRESS_TARGET ?= regress
-REGRESS_FLAGS ?= 
-ALL_REGRESS_FLAGS = ${MAKE_FLAGS} ${REGRESS_FLAGS}
-REGRESS_LOGFILE ?= ${WRKDIR}/regress.log
-REGRESS_LOG ?= | tee ${REGRESS_LOGFILE}
+TEST_TARGET ?= test
+TEST_FLAGS ?= 
+ALL_TEST_FLAGS = ${MAKE_FLAGS} ${TEST_FLAGS}
+TEST_LOGFILE ?= ${WRKDIR}/test.log
+TEST_LOG ?= | tee ${TEST_LOGFILE}
 IS_INTERACTIVE ?= No
-REGRESS_IS_INTERACTIVE ?= No
+TEST_IS_INTERACTIVE ?= No
 
-.if ${REGRESS_IS_INTERACTIVE:L} == "x11"
-REGRESS_FLAGS += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+.if ${TEST_IS_INTERACTIVE:L} == "x11"
+TEST_FLAGS += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
 XAUTHORITY ?= ${HOME}/.Xauthority
 .endif
 
@@ -748,8 +802,8 @@ PKGFILES += ${PKGFILE${_s}}
 
 STATIC_PLIST ?= Yes
 .for _s in ${MULTI_PACKAGES}
-.  for _v in PKG_ARCH PERMIT_PACKAGE_FTP PERMIT_PACKAGE_CDROM \
-	RUN_DEPENDS WANTLIB LIB_DEPENDS PREFIX CATEGORIES STATIC_PLIST
+.  for _v in PKG_ARCH RUN_DEPENDS WANTLIB LIB_DEPENDS PREFIX CATEGORIES \
+	STATIC_PLIST
 ${_v}${_s} ?= ${${_v}}
 .  endfor
 .endfor
@@ -763,7 +817,7 @@ ${_v}${_s} ?= ${${_v}}
 .endfor
 
 _PACKAGE_LINKS =
-NO_ARCH ?= no-arch
+NO_ARCH ?= ${MACHINE_ARCH}/no-arch
 _PKG_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/all/
 _TMP_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/tmp/
 _CACHE_REPO = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/cache/
@@ -800,6 +854,7 @@ PKGFILE${_S} = ${_PKG_REPO}${_PKGFILE${_S}}
 .if empty(SUBPACKAGE) || ${SUBPACKAGE} == "-"
 FULLPKGPATH ?= ${PKGPATH}${FLAVOR_EXT:S/-/,/g}
 FULLPKGPATH- = ${FULLPKGPATH}
+_FULLPKGPATH = ${PKGPATH}${_FLAVOR_EXT2:S/-/,/g}
 _ALLPKGPATHS = ${FULLPKGPATH}
 .else
 _ALLPKGPATHS = ${PKGPATH}${FLAVOR_EXT:S/-/,/g}
@@ -808,6 +863,7 @@ FULLPKGPATH${_S} ?= ${PKGPATH},${_S}${FLAVOR_EXT:S/-/,/g}
 _ALLPKGPATHS += ${FULLPKGPATH${_S}}
 .  endfor
 FULLPKGPATH = ${FULLPKGPATH${SUBPACKAGE}}
+_FULLPKGPATH = ${PKGPATH},${SUBPACKAGE}${_FLAVOR_EXT2:S/-/,/g}
 .endif
 
 # A few aliases for *-install targets
@@ -874,7 +930,7 @@ SUBST_VARS += MACHINE_ARCH ARCH HOMEPAGE ^PREFIX ^SYSCONFDIR FLAVOR_EXT \
 _tmpvars =
 
 _PKG_ADD_AUTO ?=
-.if ${_SOLVING_DEP:L} == "yes"
+.if ${_SOLVING_DEP:L} != "no"
 _PKG_ADD_AUTO += -a
 .endif
 
@@ -1057,23 +1113,23 @@ MASTER_SITES := ${MASTER_SITES} ${MASTER_SITE_BACKUP}
 MASTER_SITES := ${MASTER_SITE_OVERRIDE} ${MASTER_SITES}
 .endif
 
-# _SITE_SELECTOR chooses the value of sites based on select.
-_SITE_SELECTOR = case $$select in
-
+_warn_checksum = :
+.if !empty(MASTER_SITES:M*[^/])
+_warn_checksum += ;echo ">>> MASTER_SITES not ending in /: ${MASTER_SITES:M*[^/]}"
+.endif
 
 .for _I in 0 1 2 3 4 5 6 7 8 9
 .  if defined(MASTER_SITES${_I})
+.    if !empty(MASTER_SITES${_I}:M*[^/])
+_warn_checksum += ;echo ">>> MASTER_SITES${_I} not ending in /: ${MASTER_SITES${_I}:M*[^/]}"
+.    endif
 .    if ${MASTER_SITE_OVERRIDE:L} == "no"
 MASTER_SITES${_I} := ${MASTER_SITES${_I}} ${MASTER_SITE_BACKUP}
 .    else
 MASTER_SITES${_I} := ${MASTER_SITE_OVERRIDE} ${MASTER_SITES${_I}}
 .    endif
-_SITE_SELECTOR += *:${_I}) sites="${MASTER_SITES${_I}}";;
-.  else
-_SITE_SELECTOR += *:${_I}) echo >&2 "Error: MASTER_SITES${_I} not defined";;
 .  endif
 .endfor
-_SITE_SELECTOR += *) sites="${MASTER_SITES}";; esac
 
 
 # OpenBSD code to handle ports distfiles on a CDROM.
@@ -1095,57 +1151,37 @@ EXTRACT_SUFX ?= .tar.gz
 
 DISTFILES ?= ${DISTNAME}${EXTRACT_SUFX}
 
-_EVERYTHING = ${DISTFILES}
-_DISTFILES = ${DISTFILES:C/:[0-9]$//}
-
-.if defined(PATCHFILES)
-_PATCHFILES = ${PATCHFILES:C/:[0-9]$//}
-_EVERYTHING += ${PATCHFILES}
-.endif
-
-.if defined(SUPDISTFILES)
-_EVERYTHING += ${SUPDISTFILES}
-.endif
-
-__CKSUMFILES =
-# First, remove duplicates
-.for _file in ${_DISTFILES} ${_PATCHFILES}
-.  if empty(__CKSUMFILES:M${_file})
-__CKSUMFILES += ${_file}
+_FILES=
+.for v in DISTFILES PATCHFILES SUPDISTFILES
+.  if defined($v)
+.    for e in ${$v}
+.      for f m u in ${e:C/:[0-9]$//:C/\{.*\}$//} MASTER_SITES${e:M*\:[0-9]:C/.*:([0-9])/\1/} ${e:C/:[0-9]$//:C/.*\{(.*)\}$/\1/}
+.        if empty(_FILES:M$f)
+_FILES += $f
+.          if empty(DIST_SUBDIR)
+_FULL_$v += $f $f $m $u
+_PATH_$v += $f
+.          else
+_FULL_$v += ${DIST_SUBDIR}/$f $f $m $u
+_PATH_$v += ${DIST_SUBDIR}/$f
+.          endif
+_LIST_$v += $f
+.        endif
+.      endfor
+.    endfor
 .  endif
 .endfor
 
-# List of all files, with ${DIST_SUBDIR} in front.  Used for checksum.
-.if !empty(DIST_SUBDIR)
-CHECKSUMFILES = ${__CKSUMFILES:S/^/${DIST_SUBDIR}\//}
-.else
-CHECKSUMFILES = ${__CKSUMFILES}
-.endif
-
-__MKSUMFILES = ${__CKSUMFILES}
-.if defined(SUPDISTFILES)
-# First, remove duplicates
-.  for _file in ${SUPDISTFILES:C/:[0-9]$//}
-.    if empty(__MKSUMFILES:M${_file})
-__MKSUMFILES += ${_file}
-.    endif
-.  endfor
-.endif
-
-# List of all files, with ${DIST_SUBDIR} in front.  Used for makesum.
-.if !empty(DIST_SUBDIR)
-MAKESUMFILES = ${__MKSUMFILES:S/^/${DIST_SUBDIR}\//}
-.else
-MAKESUMFILES = ${__MKSUMFILES}
-.endif
+CHECKSUMFILES = ${_PATH_DISTFILES} ${_PATH_PATCHFILES}
+MAKESUMFILES = ${CHECKSUMFILES} ${_PATH_SUPDISTFILES}
 
 .if defined(IGNOREFILES)
 ERRORS += "Fatal: don't use IGNOREFILES"
 .endif
 
 # This is what is actually going to be extracted, and is overridable
-#  by user.
-EXTRACT_ONLY ?= ${_DISTFILES}
+# by the user.
+EXTRACT_ONLY ?= ${_LIST_DISTFILES}
 
 # okay, time for some guess work
 .if !empty(EXTRACT_ONLY:M*.zip)
@@ -1155,7 +1191,7 @@ _USE_ZIP ?= Yes
 _USE_XZ ?= Yes
 .endif
 .if !empty(EXTRACT_ONLY:M*.tar.bz2) || !empty(EXTRACT_ONLY:M*.tbz2) || !empty(EXTRACT_ONLY:M*.tbz) || \
-	(defined(PATCHFILES) && !empty(_PATCHFILES:M*.bz2))
+	(defined(PATCHFILES) && !empty(_LIST_PATCHFILES:M*.bz2))
 _USE_BZIP2 ?= Yes
 .endif
 _USE_XZ ?= No
@@ -1276,11 +1312,11 @@ MISSING_FILES += ${_F}
 # Don't build a port if it comes with the base system.
 ################################################################
 TRY_BROKEN ?= No
-_IGNORE_REGRESS ?=
-.if ${REGRESS_IS_INTERACTIVE:L} != "no" && defined(BATCH)
-_IGNORE_REGRESS += "has interactive tests"
-.elif ${REGRESS_IS_INTERACTIVE:L} == "no" && defined(INTERACTIVE)
-_IGNORE_REGRESS += "does not have interactive tests"
+_IGNORE_TEST ?=
+.if ${TEST_IS_INTERACTIVE:L} != "no" && defined(BATCH)
+_IGNORE_TEST += "has interactive tests"
+.elif ${TEST_IS_INTERACTIVE:L} == "no" && defined(INTERACTIVE)
+_IGNORE_TEST += "does not have interactive tests"
 .endif
 
 .if ${IS_INTERACTIVE:L} != "no" && defined(BATCH)
@@ -1372,7 +1408,7 @@ _FULL_PACKAGE_NAME ?= No
 
 # XXX save result pre-normalization, just for checking
 _CHECK_DEPENDS =
-.for _v in BUILD LIB RUN REGRESS
+.for _v in BUILD LIB RUN TEST
 _CHECK_DEPENDS +:= ${${_v}_DEPENDS}
 .endfor
 .for _s in ${MULTI_PACKAGES}
@@ -1388,10 +1424,10 @@ ERRORS += "Fatal: old style depends ${_CHECK_DEPENDS:M\:*}"
 # if the depends contains only pkgpath>=something
 # then we rebuild it as STEM->=something:pkgpath
 
-.for _v in BUILD LIB RUN REGRESS
+.for _v in BUILD LIB RUN TEST
 ${_v}_DEPENDS := ${${_v}_DEPENDS:C,^([^:]+/[^:<=>]+)([<=>][^:]+)$,STEM-\2:\1,}
 .endfor
-.for _v in BUILD REGRESS
+.for _v in BUILD TEST
 ${_v}_DEPENDS := ${${_v}_DEPENDS:C,^([^:]+/[^:<=>]+)([<=>][^:]+)(:patch|:configure|:build)$,STEM-\2:\1\3,}
 .endfor
 .for _s in ${MULTI_PACKAGES}
@@ -1432,16 +1468,16 @@ BUILD_DEPENDS += base/xenocara/meta
 .if ${NO_DEPENDS:L} == "no"
 _BUILD_DEPLIST = ${BUILD_DEPENDS}
 _RUN_DEPLIST = ${RUN_DEPENDS${SUBPACKAGE}}
-_REGRESS_DEPLIST = ${REGRESS_DEPENDS}
+_TEST_DEPLIST = ${TEST_DEPENDS}
 _BUILDLIB_DEPLIST = ${_BUILDLIB_DEPENDS}
 _RUNLIB_DEPLIST = ${LIB_DEPENDS${SUBPACKAGE}}
 .endif
 
-_DEPLIST = ${_BUILD_DEPLIST} ${_RUN_DEPLIST} ${_REGRESS_DEPLIST} \
+_DEPLIST = ${_BUILD_DEPLIST} ${_RUN_DEPLIST} ${_TEST_DEPLIST} \
 	${_BUILDLIB_DEPLIST} ${_RUNLIB_DEPLIST}
 
 # compute DEPBUILD_COOKIES and friends
-.for _DEP in BUILD RUN BUILDLIB RUNLIB REGRESS
+.for _DEP in BUILD RUN BUILDLIB RUNLIB TEST
 _DEP${_DEP}_COOKIES =
 .  for _i in ${_${_DEP}_DEPLIST}
 _DEP${_DEP}_COOKIES += ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g}
@@ -1464,7 +1500,7 @@ MODSIMPLE_configure = \
 
 VMEM_WARNING ?= No
 
-_FAKE_SETUP = TRUEPREFIX=${PREFIX} PREFIX=${WRKINST}${PREFIX} \
+FAKE_SETUP = TRUEPREFIX=${PREFIX} PREFIX=${WRKINST}${PREFIX} \
 	${DESTDIRNAME}=${WRKINST}
 
 _CLEANDEPENDS ?= Yes
@@ -1483,8 +1519,8 @@ _BUILD_DEP3 = ${BUILD_DEPENDS:${_mod}}
 _RUN_DEP2 = ${RUN_DEPENDS${SUBPACKAGE}:${_mod}}
 _RUN_DEP3 = ${RUN_DEPENDS${SUBPACKAGE}:${_mod}}
 
-_REGRESS_DEP2 = ${REGRESS_DEPENDS:${_mod}}
-_REGRESS_DEP3 = ${_REGRESS_DEP2}
+_TEST_DEP2 = ${TEST_DEPENDS:${_mod}}
+_TEST_DEP3 = ${_TEST_DEP2}
 
 .  if ${NO_SHARED_LIBS:L} != "yes"
 _RUN_DEP2 += ${LIB_DEPENDS${SUBPACKAGE}:${_mod}}
@@ -1532,7 +1568,7 @@ _DEPLIBSPECS_COOKIES = ${_DEPBUILDLIBSPECS_COOKIES} ${_DEPRUNLIBSPECS_COOKIES}
 # strip optional pkgspec, only keep the path
 _BUILD_DEP = ${_BUILD_DEP2:C,^[^:/]*:,,}
 _RUN_DEP = ${_RUN_DEP2:C,^[^:/]*:,,}
-_REGRESS_DEP = ${_REGRESS_DEP2:C,^[^:/]*:,,}
+_TEST_DEP = ${_TEST_DEP2:C,^[^:/]*:,,}
 
 REORDER_DEPENDENCIES ?=
 ECHO_REORDER ?= :
@@ -1554,9 +1590,9 @@ _LOCK = ${LOCK_CMD} ${LOCKDIR}/$$lock.lock ${BUILD_PKGPATH}
 _UNLOCK = ${UNLOCK_CMD} ${LOCKDIR}/$$lock.lock
 .  endif
 .  if ${SEPARATE_BUILD:L:Mflavored}
-_LOCKNAME = ${PKGNAME}
-.  else
 _LOCKNAME = ${FULLPKGNAME}
+.  else
+_LOCKNAME = ${PKGNAME}
 .  endif
 
 .  for _i in ${_LOCKNAME}
@@ -1602,8 +1638,7 @@ _checksum_package = \
 _checksum_package = :
 .endif
 
-_size_fragment = wc -c $$file 2>/dev/null| \
-	awk '{print "SIZE (" $$2 ") = " $$1}'
+_size_fragment = perl -e '$$s = (stat $$ARGV[0])[7]; print "SIZE ($$ARGV[1]) = $$s\n";'
 
 # commands used all the time
 _lines2list = tr '\012' '\040' | sed -e 's, $$,,'
@@ -1730,6 +1765,46 @@ _register_plist${_s} = ${_register_plist}
 ###
 ### end of variable setup. Only targets now
 ###
+dump-vars:
+.if ${MULTI_PACKAGES} == "-"
+.  for _v in ${_ALL_VARIABLES} ${_ALL_VARIABLES_INDEXED}
+.   if defined(${_v}-)
+.     if !empty(${_v}-)
+	@echo ${FULLPKGPATH}.${_v}=${${_v}-:Q}
+.     endif
+.   elif defined(${_v}) && !empty(${_v})
+	@echo ${FULLPKGPATH}.${_v}=${${_v}:Q}
+.   endif
+.  endfor
+.  for _v in ${_ALL_VARIABLES_PER_ARCH}
+.    for _a in ${ALL_ARCHS}
+.      if defined(${_v}-${_a}) && !empty(${_v}-${_a})
+	@echo ${FULLPKGPATH}.${_v}-${_a}=${${_v}-${_a}:Q}
+.      endif
+.    endfor
+.  endfor
+.else
+.  for _S in ${MULTI_PACKAGES}
+.    for _v in ${_ALL_VARIABLES}
+.     if defined(${_v}) && !empty(${_v})
+	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}:Q}
+.     endif
+.    endfor
+.    for _v in ${_ALL_VARIABLES_PER_ARCH}
+.      for _a in ${ALL_ARCHS}
+.        if defined(${_v}-${_a}) && !empty(${_v}-${_a})
+	@echo ${FULLPKGPATH${_S}}.${_v}-${_a}=${${_v}-${_a}:Q}
+.        endif
+.      endfor
+.    endfor
+.    for _v in ${_ALL_VARIABLES_INDEXED}
+.      if defined(${_v}${_S}) && !empty(${_v}${_S})
+	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}${_S}:Q}
+.      endif
+.    endfor
+.  endfor
+.endif
+
 check-register:
 .if empty(PLIST_DB)
 	@exit 1
@@ -1809,13 +1884,6 @@ ${_INSTALL_COOKIE${_S}}:
 		exec ${MAKE} _internal-run-depends _internal-runlib-depends \
 		_internal-runwantlib-depends
 	@${ECHO_MSG} "===>  Installing ${FULLPKGNAME${_S}} from ${_PKG_REPO}"
-.  for _m in ${MODULES:T:U}
-.    if defined(MOD${_m}_pre-install)
-	@${MOD${_m}_pre-install}
-.    elif defined(MOD${_m}_pre_install)
-	@${MOD${_m}_pre_install}
-.    endif
-.  endfor
 .  if ${TRUST_PACKAGES:L} == "yes"
 	@if ${PKG_INFO} -e ${FULLPKGNAME${_S}}; then \
 		echo "Package ${FULLPKGNAME${_S}} is already installed"; \
@@ -1882,36 +1950,26 @@ ${_SYSTRACE_COOKIE}: ${_WRKDIR_COOKIE}
 	fi
 
 makesum: fetch-all
+	@${_warn_checksum}
 .if !defined(NO_CHECKSUM) && !empty(MAKESUMFILES)
 	@rm -f ${CHECKSUM_FILE}
 	@cd ${DISTDIR} && cksum -b -a "${_CIPHERS}" ${MAKESUMFILES} >> ${CHECKSUM_FILE}
 	@cd ${DISTDIR} && \
 		for file in ${MAKESUMFILES}; do \
-			${_size_fragment} >> ${CHECKSUM_FILE}; \
+			${_size_fragment} $$file $$file >> ${CHECKSUM_FILE}; \
 		done
 	@sort -u -o ${CHECKSUM_FILE} ${CHECKSUM_FILE}
 .endif
 
-
-addsum: fetch-all
-.if !defined(NO_CHECKSUM)
-	@touch ${CHECKSUM_FILE}
-	@cd ${DISTDIR} && \
-	 	for cipher in ${_CIPHERS}; do \
-			cksum -b -a $$cipher ${MAKESUMFILES} >> ${CHECKSUM_FILE}; \
-	    done
-	@cd ${DISTDIR} && \
-		for file in ${MAKESUMFILES}; do \
-			${_size_fragment} >> ${CHECKSUM_FILE}; \
-		done
-	@sort -u -o ${CHECKSUM_FILE} ${CHECKSUM_FILE}
-	@if [ `sed -e 's/\=.*$$//' ${CHECKSUM_FILE} | uniq -d | wc -l` -ne 0 ]; then \
-		echo "Inconsistent checksum in ${CHECKSUM_FILE}"; \
-		exit 1; \
+list-distinfo:
+	@if test -e ${CHECKSUM_FILE}; then cat ${CHECKSUM_FILE}; \
 	else \
-		${ECHO_MSG} "${CHECKSUM_FILE} updated okay, don't forget to remove cruft"; \
+		if ! test -z "${DISTFILES}"; then \
+			echo 1>&2 "${CHECKSUM_FILE} not found"; \
+			exit 1; \
+		fi; \
 	fi
-.endif
+
 
 ################################################################
 # Dependency checking
@@ -1922,7 +1980,7 @@ addsum: fetch-all
 _internal-depends: _internal-lib-depends _internal-build-depends \
 	_internal-buildlib-depends \
 	_internal-run-depends _internal-buildwantlib-depends \
-	_internal-runwantlib-depends _internal-regress-depends
+	_internal-runwantlib-depends _internal-test-depends
 
 _internal-prepare: _internal-build-depends _internal-buildlib-depends \
 	_internal-buildwantlib-depends
@@ -1960,8 +2018,11 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 			${REPORT_PROBLEM}; \
 			exit 1;; \
 		esac; \
-		toset="$$toset _SOLVING_DEP=Yes"; \
 		${_complete_pkgspec}; \
+		case X"$$dir" in \
+			X${PKGPATH}) toset="$$toset _SOLVING_DEP=self";; \
+			*) toset="$$toset _SOLVING_DEP=Yes";; \
+		esac; \
 		h="===> ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} depends on: $$pkg -"; \
 		for second_pass in false true; do \
 			if $$check_installed; then \
@@ -2029,7 +2090,7 @@ show-prepare-results: prepare
 _internal-build-depends: ${_DEPBUILD_COOKIES}
 _internal-run-depends: ${_DEPRUN_COOKIES}
 _internal-lib-depends: ${_DEPBUILDLIB_COOKIES}
-_internal-regress-depends: ${_DEPREGRESS_COOKIES}
+_internal-test-depends: ${_DEPTEST_COOKIES}
 _internal-buildlib-depends: ${_DEPBUILDLIB_COOKIES}
 _internal-runlib-depends: ${_DEPRUNLIB_COOKIES}
 
@@ -2090,7 +2151,7 @@ _internal-fetch-all:
 _internal-all _internal-build _internal-checksum _internal-configure \
 	_internal-deinstall _internal-extract _internal-fake _internal-fetch \
 	_internal-install _internal-install-all _internal-manpages-check \
-	_internal-package _internal-patch _internal-plist _internal-regress \
+	_internal-package _internal-patch _internal-plist _internal-test \
 	_internal-subpackage _internal-subupdate _internal-uninstall \
 	_internal-update _internal-update-or-install \
 	_internal-update-or-install-all _internal-update-plist \
@@ -2144,6 +2205,24 @@ _internal-fetch:
 
 
 _internal-checksum: _internal-fetch
+	@${_warn_checksum}
+	@fgrep 2>/dev/null SIZE ${CHECKSUM_FILE} | \
+	sed -e '/SIZE (\(.*\)).*/s//\1/'|\
+	while read i; do \
+		for j in ${MAKESUMFILES}; do \
+			missing=true; \
+			if test $$i = $$j; then \
+				missing=false; \
+				break; \
+			fi; \
+		done; \
+		if $$missing; then \
+			bad=true; \
+			echo 1>&2 "!!! File '$$i' not found in ${CHECKSUM_FILE}"; \
+			echo 1>&2 "!!! Read up on SUPDISTFILES in bsd.port.mk(5)"; \
+			exit 1; \
+		fi; \
+	done
 .  if ! defined(NO_CHECKSUM)
 	@if [ -z "${DISTFILES}" ]; then \
 	  ${ECHO_MSG} ">> No distfiles."; \
@@ -2216,14 +2295,15 @@ _internal-update: ${_UPDATE_COOKIES}
 _internal-update-or-install: ${_FUPDATE_COOKIE${SUBPACKAGE}}
 _internal-update-or-install-all: ${_FUPDATE_COOKIES}
 
+regress: test
 
-.  if !empty(_IGNORE_REGRESS)
-_internal-regress:
+.  if !empty(_IGNORE_TEST)
+_internal-test:
 .    if !defined(IGNORE_SILENT)
-	@${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} ${_IGNORE_REGRESS}."
+	@${ECHO_MSG} "===>  ${FULLPKGNAME${SUBPACKAGE}}${_MASTER} ${_IGNORE_TEST}."
 .    endif
 .  else
-_internal-regress: ${_BUILD_COOKIE} ${_DEPREGRESS_COOKIES} ${_REGRESS_COOKIE}
+_internal-test: ${_BUILD_COOKIE} ${_DEPTEST_COOKIES} ${_TEST_COOKIE}
 .  endif
 
 # packing list utilities.  This generates a packing list from a recently
@@ -2278,8 +2358,8 @@ update-patches:
 # if locking exists.
 
 .for _t in extract patch distpatch configure build all install fake \
-	subupdate fetch fetch-all checksum regress prepare \
-	depends lib-depends build-depends run-depends regress-depends \
+	subupdate fetch fetch-all checksum test prepare \
+	depends lib-depends build-depends run-depends test-depends \
 	clean manpages-check plist update-plist \
 	update update-or-install update-or-install-all package install-all
 .  if defined(_LOCK)
@@ -2305,7 +2385,7 @@ subpackage:
 
 _internal-package: 
 	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-package-only
-.if ${BULK_${PKGPATH}:L} == "yes"
+.if ${BULK_${PKGPATH}:L} == "yes" || (${BULK_${PKGPATH}:L} == "auto" && ${_SOLVING_DEP:L} == "yes")
 	@${_MAKE} ${_BULK_COOKIE}
 .endif
 
@@ -2328,10 +2408,6 @@ ${_BULK_COOKIE}:
 
 ${_WRKDIR_COOKIE}:
 	@rm -rf ${WRKDIR}
-	@if test -h ${PORTSDIR}; then \
-		echo 1>&2 "Fatal: ${PORTSDIR} is a symlink. Please set to the real directory"; \
-		exit 1; \
-	fi
 .if ${PORTS_BUILD_XENOCARA_TOO:L} != "yes"
 	@appdefaults=${LOCALBASE}/lib/X11/app-defaults; \
 	if ! test -d $$appdefaults -a -h $$appdefaults; then \
@@ -2356,11 +2432,6 @@ ${_WRKDIR_COOKIE}:
 ${_EXTRACT_COOKIE}: ${_WRKDIR_COOKIE} ${_SYSTRACE_COOKIE}
 	@${_MAKE} _internal-checksum _internal-prepare
 	@${ECHO_MSG} "===>  Extracting for ${FULLPKGNAME}${_MASTER}"
-.if ${_USE_XZ:L} != "no" && ${SHARED_ONLY:L} != "yes"
-	@echo ""; \
-	echo "*** WARNING: this port uses xz distfiles: it will not build on vax."; \
-	echo ""
-.endif
 .if target(pre-extract)
 	@${_MAKESYS} pre-extract
 .endif
@@ -2412,10 +2483,10 @@ ${_DISTPATCH_COOKIE}: ${_EXTRACT_COOKIE}
 .if !target(do-distpatch)
 do-distpatch:
 # What DISTPATCH normally does
-.  if defined(_PATCHFILES)
+.  if defined(_LIST_PATCHFILES)
 	@${ECHO_MSG} "===>  Applying distribution patches for ${FULLPKGNAME}${_MASTER}"
 	@cd ${FULLDISTDIR}; \
-	  for patchfile in ${_PATCHFILES}; do \
+	  for patchfile in ${_LIST_PATCHFILES}; do \
 	  	case "${PATCH_DEBUG:L}" in \
 			no) ;; \
 			*) ${ECHO_MSG} "===>   Applying distribution patch $$patchfile" ;; \
@@ -2573,11 +2644,11 @@ ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 .endif
 	@${_MAKE_COOKIE} $@
 
-${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
-.if ${NO_REGRESS:L} == "no"
-	@${ECHO_MSG} "===>  Regression check for ${FULLPKGNAME}${_MASTER}"
+${_TEST_COOKIE}: ${_BUILD_COOKIE}
+.if ${NO_TEST:L} == "no"
+	@${ECHO_MSG} "===>  Regression tests for ${FULLPKGNAME}${_MASTER}"
 # When interactive tests need X11
-.  if ${REGRESS_IS_INTERACTIVE:L} == "x11"
+.  if ${TEST_IS_INTERACTIVE:L} == "x11"
 .    if !defined(DISPLAY) || !exists(${XAUTHORITY})
 	@echo 1>&2 "The regression tests require a running instance of X."
 	@echo 1>&2 "You will also need to set the environment variable DISPLAY"
@@ -2586,28 +2657,36 @@ ${_REGRESS_COOKIE}: ${_BUILD_COOKIE}
 	@exit 1
 .    endif
 .  endif
-.  if target(pre-regress)
-	@${_MAKE} pre-regress
+.  if target(pre-test)
+	@${_MAKE} pre-test
 .  endif
-.  if target(do-regress)
+.  if target(do-test)
 	@cd ${.CURDIR} && exec 3>&1 && exit `exec 4>&1 1>&3; \
-		(exec; set +e; PKGPATH=${PKGPATH} ${MAKE} do-regress; \
-		echo $$? >&4) 2>&1 ${REGRESS_LOG}`
+		(exec; set +e; PKGPATH=${PKGPATH} ${MAKE} do-test; \
+		echo $$? >&4) 2>&1 ${TEST_LOG}`
 .  else
-# What REGRESS normally does:
+# What TEST normally does:
 	@cd ${WRKBUILD} && exec 3>&1 && exit `exec 4>&1 1>&3; \
 		(exec; set +e; ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		${ALL_REGRESS_FLAGS} -f ${MAKE_FILE} ${REGRESS_TARGET}; \
-		echo $$? >&4) 2>&1 ${REGRESS_LOG}`
-# End of REGRESS
+		${ALL_TEST_FLAGS} -f ${MAKE_FILE} ${TEST_TARGET}; \
+		echo $$? >&4) 2>&1 ${TEST_LOG}`
+# End of TEST
 .  endif
-.  if target(post-regress)
-	@${_MAKE} post-regress
+.  if target(post-test)
+	@${_MAKE} post-test
 .  endif
 .else
-	@echo 1>&2 "No regression check for ${FULLPKGNAME}"
+	@echo 1>&2 "No regression tests for ${FULLPKGNAME}"
 .endif
 	@${_MAKE_COOKIE} $@
+
+# XXX we don't care about the order
+.for _m in ${MODULES:T:U}
+.  if defined(MOD${_m}_post-install)
+_hook-post-install::
+	@${MOD${_m}_post-install}
+.  endif
+.endfor
 
 ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	@${ECHO_MSG} "===>  Faking installation for ${FULLPKGNAME}${_MASTER}"
@@ -2623,25 +2702,27 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	@${MOD${_m}_pre-fake}
 .  endif
 .endfor
-
 .if target(pre-fake)
-	@${_SUDOMAKESYS} pre-fake ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} pre-fake ${FAKE_SETUP}
 .endif
 	@${SUDO} ${_MAKE_COOKIE} ${_INSTALL_PRE_COOKIE}
 .if target(pre-install)
-	@${_SUDOMAKESYS} pre-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} pre-install ${FAKE_SETUP}
 .endif
 .if target(do-install)
-	@${_SUDOMAKESYS} do-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} do-install ${FAKE_SETUP}
 .else
 # What FAKE normally does:
 	@cd ${WRKBUILD} && exec ${SUDO} ${_SYSTRACE_CMD} \
-		${SETENV} ${MAKE_ENV} ${_FAKE_SETUP} \
+		${SETENV} ${MAKE_ENV} ${FAKE_SETUP} \
 		${MAKE_PROGRAM} ${ALL_FAKE_FLAGS} -f ${MAKE_FILE} ${FAKE_TARGET}
 # End of FAKE.
 .endif
 .if target(post-install)
-	@${_SUDOMAKESYS} post-install ${_FAKE_SETUP}
+	@${_SUDOMAKESYS} post-install ${FAKE_SETUP}
+.endif
+.if target(_hook-post-install)
+	@${_SUDOMAKESYS} _hook-post-install ${FAKE_SETUP}
 .endif
 .if ${MULTI_PACKAGES} == "-"
 	@if test -e ${PKGDIR}/README; then \
@@ -2658,6 +2739,7 @@ ${_FAKE_COOKIE}: ${_BUILD_COOKIE}
 	fi
 .  endfor
 .endif
+	@mkdir -p ${PKGDIR}
 	@cd ${PKGDIR} && for i in *.rc; do \
 		if test X"$$i" != "X*.rc"; then \
 			r=${WRKINST}${RCDIR}/$${i%.rc}; \
@@ -2690,8 +2772,12 @@ print-plist-libs-with-depends:
 
 print-plist-all:
 .for _S in ${MULTI_PACKAGES}
-	@${ECHO_MSG} "===> ${FULLPKGNAME${_S}}"
-	@${_PKG_CREATE} -n -q ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}}
+		@${ECHO_MSG} "===> ${FULLPKGNAME${_S}}"
+.  if ${STATIC_PLIST${_s}:L} == "yes"
+		@${_PKG_CREATE} -n -q ${PKG_ARGS${_S}} ${_PACKAGE_COOKIE${_S}}
+.  else
+		@echo "@pkgname ${FULLPKGNAME${_S}}"
+.  endif
 .endfor
 
 print-plist-all-with-depends:
@@ -2717,8 +2803,8 @@ _internal-subpackage: ${_PACKAGE_COOKIES${SUBPACKAGE}}
 
 # Separate target for each file fetch-all will retrieve
 
-.for _F in ${MAKESUMFILES:S@^@${DISTDIR}/@}
-${_F}:
+.for p f m u in ${_FULL_DISTFILES} ${_FULL_PATCHFILES} ${_FULL_SUPDISTFILES}
+${DISTDIR}/$p:
 .  if ${FETCH_MANUALLY:L} != "no"
 .    if !empty(MISSING_FILES)
 	@echo "*** You're missing files: ${MISSING_FILES}"
@@ -2728,29 +2814,30 @@ ${_F}:
 .    endfor
 	@exit 1
 .  else
-	@lock=${_F:T}.dist; ${_SIMPLE_LOCK}; mkdir -p ${_F:H}; \
-	cd ${_F:H}; \
-	test -f ${_F:T} && exit 0; \
-	select='${_EVERYTHING:M*${_F:S@^${FULLDISTDIR}/@@}\:[0-9]}'; \
-	f=${_F:S@^${FULLDISTDIR}/@@}; \
+	@lock=${@:T}.dist; ${_SIMPLE_LOCK}; mkdir -p ${@:H}; \
+	cd ${@:H}; \
+	test -f ${@:T} && exit 0; \
+	f=$f; \
 	${_CDROM_OVERRIDE}; \
-	${_SITE_SELECTOR}; \
-	for site in $$sites; do \
-		${ECHO_MSG} ">> Fetch $${site}$$f"; \
-		if ${FETCH_CMD} $${site}$$f; then \
-				file=${_F:S@^${DISTDIR}/@@}; \
-				ck=`cd ${DISTDIR} && ${_size_fragment}`; \
+	for site in ${$m}; do \
+		file=$@.part; \
+		${ECHO_MSG} ">> Fetch $${site}$u"; \
+		if ${FETCH_CMD} -o $$file $${site}$u; then \
+				ck=`${_size_fragment} $$file $f`; \
 				if [ ! -f ${CHECKSUM_FILE} ]; then \
 					${ECHO_MSG} ">> Checksum file does not exist"; \
+					mv $$file $@; \
 					exit 0; \
 				elif grep -q "^$$ck\$$" ${CHECKSUM_FILE}; then \
+					mv $$file $@; \
 					exit 0; \
 				else \
-					if grep -q "SIZE ($$file)" ${CHECKSUM_FILE}; then \
-						${ECHO_MSG} ">> Size does not match for ${_F}"; \
-						test `{ wc -c "$$file" 2>/dev/null || echo 0 ; }| awk '{print $$1}'` -lt 30000 && rm -f $$file; \
+					if grep -q "SIZE ($f)" ${CHECKSUM_FILE}; then \
+						${ECHO_MSG} ">> Size does not match for $f"; \
+						rm -f $$file; \
 					else \
-						${ECHO_MSG} ">> No size recorded for ${_F}"; \
+						${ECHO_MSG} ">> No size recorded for $f"; \
+						mv $$file $@; \
 						exit 0; \
 					fi; \
 				fi; \
@@ -2771,32 +2858,36 @@ ${PACKAGE_REPOSITORY}/${_l}: ${PACKAGE_REPOSITORY}/${_o}
 # Cleaning up
 
 _internal-clean:
-.if ${_clean:L:Mdepends} && ${_CLEANDEPENDS:L} == "yes"
+.if ${_clean:Mdepends} && ${_CLEANDEPENDS:L} == "yes"
 	@PKGPATH=${PKGPATH} ${MAKE} all-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
 		eval $$toset ${MAKE} _CLEANDEPENDS=No clean; \
 	done
 .endif
 	@${ECHO_MSG} "===>  Cleaning for ${FULLPKGNAME${SUBPACKAGE}}"
-.if ${_clean:L:Mfake}
+.if ${_clean:Mfake}
 	@if cd ${WRKINST} 2>/dev/null; then ${SUDO} rm -rf ${WRKINST}; fi
 .endif
-.if ${_clean:L:Mwork} || (${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} == "no")
-.  if ${_clean:L:Mflavors}
+.if ${_clean:Mwork} || (${_clean:Mbuild} && ${SEPARATE_BUILD:L} == "no")
+.  if ${_clean:Mflavors}
 	@for i in ${.CURDIR}/w-*; do \
 		if [ -L $$i ]; then ${SUDO} rm -rf `readlink $$i`; fi; \
 		${SUDO} rm -rf $$i; \
 	done
 .  endif
-	@if [ -L ${WRKDIR} ]; then rm -rf `readlink ${WRKDIR}`; fi
-	@rm -rf ${WRKDIR}
+.  for l in ${_WRKDIRS}
+.    if "$l" != ""
+	@if [ -L $l ]; then rm -rf `readlink $l`; fi
+	@if [ -e $l ]; then rm -rf $l; fi
+.    endif
+.  endfor
 .  if !empty(WRKDIR_LINKNAME)
 	@if [ -L ${WRKDIR_LINKNAME} ]; then rm -f ${.CURDIR}/${WRKDIR_LINKNAME}; fi
 .  endif
-.elif ${_clean:L:Mbuild} && ${SEPARATE_BUILD:L} != "no"
+.elif ${_clean:Mbuild} && ${SEPARATE_BUILD:L} != "no"
 	@rm -rf ${WRKBUILD} ${_CONFIGURE_COOKIE} ${_BUILD_COOKIE}
 .endif
-.if ${_clean:L:Mdist}
+.if ${_clean:Mdist}
 	@${ECHO_MSG} "===>  Dist cleaning for ${FULLPKGNAME${SUBPACKAGE}}"
 	@if cd ${DISTDIR} 2>/dev/null; then \
 		rm -f ${MAKESUMFILES}; \
@@ -2805,22 +2896,22 @@ _internal-clean:
 	-@rmdir ${FULLDISTDIR}
 .  endif
 .endif
-.if ${_clean:L:Minstall}
-.  if ${_clean:L:Msub}
+.if ${_clean:Minstall}
+.  if ${_clean:Msub}
 	-${SUDO} ${_PKG_DELETE} ${PKGNAMES}
 .  else
 	-${SUDO} ${_PKG_DELETE} ${FULLPKGNAME${SUBPACKAGE}}
 .  endif
 .endif
-.if ${_clean:L:Mpackages} || ${_clean:L:Mpackage} && ${_clean:L:Msub}
+.if ${_clean:Mpackages} || ${_clean:Mpackage} && ${_clean:Msub}
 	rm -f ${_PACKAGE_COOKIES} ${_UPDATE_COOKIES}
-.elif ${_clean:L:Mpackage}
+.elif ${_clean:Mpackage}
 	rm -f ${_PACKAGE_COOKIES${SUBPACKAGE}} ${_UPDATE_COOKIE${SUBPACKAGE}}
 .endif
-.if ${_clean:L:Mbulk}
+.if ${_clean:Mbulk}
 	rm -f ${_BULK_COOKIE}
 .endif
-.if ${_clean:L:Mplist}
+.if ${_clean:Mplist}
 .  for _d in ${PLIST_DB:S/:/ /}
 .    for _p in ${PKGNAMES}
 	rm -f ${_d}/${_p}
@@ -2874,11 +2965,6 @@ describe:
 .    else
 	@echo -n "n|"
 .    endif
-.    if ${PERMIT_DISTFILES_CDROM:L} == "yes"
-	@echo -n "y|"
-.    else
-	@echo -n "n|"
-.    endif
 .    if ${PERMIT_DISTFILES_FTP:L} == "yes"
 	@echo "y"
 .    else
@@ -2901,8 +2987,8 @@ print-run-depends:
 	@echo '" to run.'
 .endif
 
-# full-build-depends, full-all-depends, full-run-depends full-regress-depends
-.for _i in build all run regress
+# full-build-depends, full-all-depends, full-run-depends full-test-depends
+.for _i in build all run test
 full-${_i}-depends:
 	@PKGPATH=${PKGPATH} ${MAKE} ${_i}-dir-depends|${_sort_dependencies}|while read subdir; do \
 		${_flavor_fragment}; \
@@ -2932,8 +3018,8 @@ _license-check:
 .  endif
 .endfor
 
-# run-depends-list, build-depends-list, lib-depends-list, regress-depends-list
-.for _i in RUN BUILD LIB REGRESS
+# run-depends-list, build-depends-list, lib-depends-list, test-depends-list
+.for _i in RUN BUILD LIB TEST
 ${_i:L}-depends-list:
 .  if !empty(_${_i}_DEP3)
 	@echo -n "This port requires \""
@@ -3005,16 +3091,19 @@ wantlib-args:
 	@${_cache_fragment}; \
 	a=$${_DEPENDS_CACHE}/portstree${SUBPACKAGE}; \
 	b=$${_DEPENDS_CACHE}/inst${SUBPACKAGE}; \
-	cd ${.CURDIR} && \
+	if cd ${.CURDIR} && \
 	${MAKE} port-wantlib-args >$$a && \
-	${MAKE} fake-wantlib-args >$$b; \
-	if cmp -s $$a $$b; \
-	then \
-		cat $$a; \
+	${MAKE} fake-wantlib-args >$$b; then \
+		if cmp -s $$a $$b; \
+		then \
+			cat $$a; \
+		else \
+			echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
+			echo 1>&2 "       and libraries from installed packages don't match"; \
+			diff 1>&2 -u $$a $$b; \
+			exit 1; \
+		fi; \
 	else \
-		echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
-		echo 1>&2 "       and libraries from installed packages don't match"; \
-		diff 1>&2 -u $$a $$b; \
 		exit 1; \
 	fi
 
@@ -3077,17 +3166,17 @@ _recurse-run-dir-depends:
 run-dir-depends:
 .if !empty(_RUN_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q -e "r|${FULLPKGPATH}|" -e "a|${FULLPKGPATH}" $${_DEPENDS_FILE}; then \
-		echo "r|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-run-dir-depends; \
+	if ! fgrep -q -e "r|${_FULLPKGPATH}|" -e "a|${_FULLPKGPATH}" $${_DEPENDS_FILE}; then \
+		echo "r|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-run-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
-# recursively build a list of dirs for package regression, ready for tsort
-_recurse-regress-dir-depends:
-.for _dir in ${_REGRESS_DEP}
+# recursively build a list of dirs for package regression tests, ready for tsort
+_recurse-test-dir-depends:
+.for _dir in ${_TEST_DEP}
 	@echo "$$self ${_dir}"; \
 	if ! fgrep -q -e "R|${_dir}|" $${_DEPENDS_FILE}; then \
 		echo "R|${_dir}|" >> $${_DEPENDS_FILE}; \
@@ -3100,15 +3189,15 @@ _recurse-regress-dir-depends:
 	fi
 .endfor
 
-regress-dir-depends:
-.if !empty(_REGRESS_DEP)
+test-dir-depends:
+.if !empty(_TEST_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q -e "R|${FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
-		echo "R|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-regress-dir-depends; \
+	if ! fgrep -q -e "R|${_FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
+		echo "R|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-test-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 # recursively build a list of dirs for package building, ready for tsort
@@ -3145,23 +3234,23 @@ _build-dir-depends:
 build-dir-depends:
 .if !empty(_BUILD_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q -e "b|${FULLPKGPATH}|" -e "a|${_dir}|" $${_DEPENDS_FILE}; then \
-		echo "b|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _build-dir-depends; \
+	if ! fgrep -q -e "b|${_FULLPKGPATH}|" -e "a|${_dir}|" $${_DEPENDS_FILE}; then \
+		echo "b|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _build-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 all-dir-depends:
 .if !empty(_BUILD_DEP) || !empty(_RUN_DEP)
 	@${_depfile_fragment}; \
-	if ! fgrep -q "|${FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
-		echo "|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
-		self=${FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-all-dir-depends; \
+	if ! fgrep -q "|${_FULLPKGPATH}|" $${_DEPENDS_FILE}; then \
+		echo "|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+		self=${_FULLPKGPATH} PKGPATH=${PKGPATH} ${MAKE} _recurse-all-dir-depends; \
 	fi
 .else
-	@echo "${FULLPKGPATH} ${FULLPKGPATH}"
+	@echo "${_FULLPKGPATH} ${_FULLPKGPATH}"
 .endif
 
 # simpler list of package depends, no need to tsort, no duplicates
@@ -3180,7 +3269,7 @@ _recurse-show-run-depends:
 show-run-depends:
 .if !empty(_RUN_DEP)
 	@${_depfile_fragment}; \
-	echo "|${FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
+	echo "|${_FULLPKGPATH}|" >>$${_DEPENDS_FILE}; \
 	for d in ${_RUN_DEP}; do \
 		fgrep -q -e "|$$d|" $${_DEPENDS_FILE} && continue; \
 		echo "$$d"; \
@@ -3280,48 +3369,9 @@ verbose-show:
 . endif
 .endfor
 
-dump-vars:
-.if ${_DPB_MULTI} == "-"
-.  for _v in ${_ALL_VARIABLES} ${_ALL_VARIABLES_INDEXED}
-.   if defined(${_v}-)
-	@echo ${FULLPKGPATH}.${_v}=${${_v}-:Q}
-.   elif defined(${_v})
-	@echo ${FULLPKGPATH}.${_v}=${${_v}:Q}
-.   endif
-.  endfor
-.  for _v in ${_ALL_VARIABLES_PER_ARCH}
-.    for _a in ${ALL_ARCHS}
-.      if defined(${_v}-${_a})
-	@echo ${FULLPKGPATH}.${_v}-${_a}=${${_v}-${_a}:Q}
-.      endif
-.    endfor
-.  endfor
-.else
-.  for _S in ${_DPB_MULTI}
-.    for _v in ${_ALL_VARIABLES}
-.     if defined(${_v})
-	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}:Q}
-.     endif
-.    endfor
-.    for _v in ${_ALL_VARIABLES_PER_ARCH}
-.      for _a in ${ALL_ARCHS}
-.        if defined(${_v}-${_a})
-	@echo ${FULLPKGPATH${_S}}.${_v}-${_a}=${${_v}-${_a}:Q}
-.        endif
-.      endfor
-.    endfor
-.    for _v in ${_ALL_VARIABLES_INDEXED}
-.      if defined(${_v}${_S})
-	@echo ${FULLPKGPATH${_S}}.${_v}=${${_v}${_S}:Q}
-.      endif
-.    endfor
-.  endfor
-.endif
-
-
 _all_phony = ${_recursive_depends_targets} \
 	${_recursive_targets} ${_dangerous_recursive_targets} \
-	_build-dir-depends \
+	_build-dir-depends _hook-post-install \
 	_internal-all _internal-build _internal-build-depends \
 	_internal-buildlib-depends _internal-buildwantlib-depends \
 	_internal-checksum _internal-clean _internal-configure _internal-depends \
@@ -3329,25 +3379,24 @@ _all_phony = ${_recursive_depends_targets} \
 	_internal-fetch-all \
 	_internal-install-all _internal-lib-depends _internal-manpages-check \
 	_internal-package _internal-package-only _internal-plist _internal-prepare \
-	_internal-regress _internal-regress-depends _internal-run-depends \
+	_internal-test _internal-test-depends _internal-run-depends \
 	_internal-runwantlib-depends _internal-subpackage _internal-subupdate \
 	_internal-update _internal-update _internal-update-plist \
 	_internal_install _internal_runlib-depends _license-check \
 	print-package-args _print-package-signature-lib \
 	_print-package-signature-run _print-packagename _recurse-all-dir-depends \
-	_recurse-regress-dir-depends _recurse-run-dir-depends _refetch addsum \
+	_recurse-test-dir-depends _recurse-run-dir-depends _refetch \
 	build-depends build-depends-list checkpatch clean clean-depends \
 	delete-package depends distpatch do-build do-configure do-distpatch \
-	do-extract do-install do-regress fetch-all \
+	do-extract do-install do-test fetch-all \
 	install-all lib-depends lib-depends-list \
 	peek-ftp port-lib-depends-check post-build post-configure \
 	post-distpatch post-extract post-install \
-	post-patch post-regress pre-build pre-configure pre-extract pre-fake \
-	pre-install pre-patch pre-regress prepare \
+	post-patch post-test pre-build pre-configure pre-extract pre-fake \
+	pre-install pre-patch pre-test prepare \
 	print-build-depends print-run-depends rebuild \
-	regress-depends regress-depends-list run-depends run-depends-list \
+	test-depends test-depends-list run-depends run-depends-list \
     show-required-by subpackage uninstall _print-metadata \
-	lock unlock \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
 	port-wantlib-args fake-wantlib-args no-wantlib-args no-lib-depends-args \
 	_recurse-show-run-depends show-run-depends

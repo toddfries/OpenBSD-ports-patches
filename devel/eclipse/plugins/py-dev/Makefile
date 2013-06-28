@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2011/09/16 09:24:49 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/11 10:50:03 espie Exp $
 
 COMMENT =	Python development plug-in for Eclipse
 
@@ -7,9 +7,9 @@ SVN =		2788
 SUBST_VARS =	V SVN
 DISTNAME =	org.python.pydev.feature-${V}.${SVN}
 PKGNAME =	py-dev-${V}
-REVISION =	2
+REVISION =	3
 
-CATEGORIES =	devel lang/python
+CATEGORIES +=	lang/python
 
 HOMEPAGE =	http://pydev.sourceforge.net/
 
@@ -18,18 +18,8 @@ MAINTAINER=	Ian Darwin <ian@openbsd.org>
 # Eclipse Public License
 PERMIT_PACKAGE_CDROM =	EPL Indemnify clause
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =EPL Indemnify clause
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=pydev/}
-EXTRACT_SUFX =	.zip
-
-RUN_DEPENDS=	devel/eclipse/sdk
-
-NO_BUILD =	Yes
-NO_REGRESS =	Yes
-
-WRKDIST =	${WRKDIR}
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/eclipse/

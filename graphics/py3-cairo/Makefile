@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/03/30 07:12:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.4 2013/05/30 13:09:21 ajacoutot Exp $
 
 COMMENT=	cairo bindings for Python
 
@@ -6,6 +6,7 @@ VERSION=	1.10.0
 DISTNAME=	pycairo-${VERSION}
 PKGNAME=	py3-cairo-${VERSION}
 EXTRACT_SUFX=	.tar.bz2
+REVISION=	0
 
 CATEGORIES=	graphics
 
@@ -13,9 +14,6 @@ HOMEPAGE=	http://cairographics.org/pycairo/
 
 # LGPLv2.1 / MPL 1.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://cairographics.org/releases/
 
@@ -33,7 +31,7 @@ MODPY_VERSION=	${MODPY_DEFAULT_VERSION_3}
 LIB_DEPENDS=	${MODPY_LIB_DEPENDS} \
 		graphics/cairo
 
-REGRESS_DEPENDS=devel/py-test,python3
+TEST_DEPENDS=devel/py-test${MODPY_FLAVOR}
 
 do-configure:
 	cd ${WRKSRC} && env PYTHON=${MODPY_BIN} \
@@ -46,7 +44,7 @@ do-build:
 do-install:
 	cd ${WRKBUILD} && ${MODPY_BIN} ./waf install
 
-do-regress: install
+do-test: install
 	perl -i -pe "s/python/python${MODPY_VERSION}/g" ${WRKSRC}/test/examples_test.py
 	cd ${WRKSRC}/test && py.test${MODPY_BIN_SUFFIX}
 

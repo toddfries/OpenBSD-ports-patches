@@ -1,23 +1,19 @@
-# $OpenBSD: Makefile,v 1.45 2012/09/01 14:36:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.51 2013/04/27 15:44:21 ajacoutot Exp $
 
 COMMENT=		IRC proxy to connect to AIM, ICQ, Jabber, MSN and Yahoo
 
-DISTNAME=		bitlbee-3.0.5
+DISTNAME=		bitlbee-3.2
 CATEGORIES=		net
 REVISION=		1
 
 HOMEPAGE=		http://bitlbee.org/
 
-MAINTAINER=		Okan Demirmen <okan@openbsd.org>
+MAINTAINER=		Tom Doherty <tom@singlesecond.com>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB +=		c pthread glib-2.0 gmodule-2.0 gnutls>=13
-WANTLIB +=		gcrypt gpg-error
+WANTLIB +=		c pthread glib-2.0 gmodule-2.0 ssl crypto
 
 MASTER_SITES=		http://get.bitlbee.org/src/
 
@@ -29,16 +25,14 @@ EXAMPLEDIR=		${PREFIX}/share/examples/bitlbee
 DOCS=			${WRKSRC}/doc/user-guide/user-guide.html
 DOCDIR=			${PREFIX}/share/doc/bitlbee/
 
-LIB_DEPENDS=		devel/glib2 \
-			security/gnutls \
-			security/libgcrypt
+LIB_DEPENDS=		devel/glib2
 
 CONFIGURE_STYLE=	simple
 CONFIGURE_ARGS+=	--bindir=${PREFIX}/libexec \
 			--mandir=${PREFIX}/man \
 			--config=${DB_DIR} \
 			--etcdir=${ETCDIR} \
-			--ssl=gnutls
+			--ssl=openssl
 
 USE_GMAKE=		Yes
 MAKE_ENV=		"CC=${CC}" "CFLAGS=${CFLAGS}"
@@ -49,21 +43,18 @@ SUBST_VARS=		DB_DIR
 FLAVORS =		libpurple otr
 FLAVOR ?=
 
-.if ${FLAVOR:L:Mlibpurple}
+.if ${FLAVOR:Mlibpurple}
 CONFIGURE_ARGS +=	--purple=1
-LIB_DEPENDS +=		net/pidgin,-libpurple \
-			devel/silc-toolkit \
-			net/meanwhile \
-			net/libgadu
+LIB_DEPENDS +=		net/pidgin,-libpurple
 WANTLIB +=		purple
 .endif
-.if ${FLAVOR:L:Motr}
-CONFIGURE_ARGS +=	--otr=1                                                
-LIB_DEPENDS +=		security/libotr                                        
-WANTLIB +=		otr
+.if ${FLAVOR:Motr}
+CONFIGURE_ARGS +=	--otr=1
+LIB_DEPENDS +=		security/libotr security/libgcrypt
+WANTLIB +=		gcrypt otr
 .endif
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 # don't hide compile command lines
 pre-configure:

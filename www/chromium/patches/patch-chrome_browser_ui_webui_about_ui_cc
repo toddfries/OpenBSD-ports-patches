@@ -1,7 +1,7 @@
-$OpenBSD: patch-chrome_browser_ui_webui_about_ui_cc,v 1.6 2012/11/07 06:59:45 robert Exp $
---- chrome/browser/ui/webui/about_ui.cc.orig	Wed Oct 31 20:02:22 2012
-+++ chrome/browser/ui/webui/about_ui.cc	Tue Nov  6 22:45:22 2012
-@@ -78,7 +78,7 @@
+$OpenBSD: patch-chrome_browser_ui_webui_about_ui_cc,v 1.10 2013/05/30 18:42:18 robert Exp $
+--- chrome/browser/ui/webui/about_ui.cc.orig.port	Fri May 17 22:44:58 2013
++++ chrome/browser/ui/webui/about_ui.cc	Thu May 30 00:10:48 2013
+@@ -64,7 +64,7 @@
  #include "chrome/browser/ui/webui/theme_source.h"
  #endif
  
@@ -10,7 +10,7 @@ $OpenBSD: patch-chrome_browser_ui_webui_about_ui_cc,v 1.6 2012/11/07 06:59:45 ro
  #include "content/public/browser/zygote_host_linux.h"
  #include "content/public/common/sandbox_linux.h"
  #endif
-@@ -944,6 +944,7 @@ std::string AboutLinuxProxyConfig() {
+@@ -755,6 +755,7 @@ std::string AboutLinuxProxyConfig() {
    return data;
  }
  
@@ -18,20 +18,20 @@ $OpenBSD: patch-chrome_browser_ui_webui_about_ui_cc,v 1.6 2012/11/07 06:59:45 ro
  void AboutSandboxRow(std::string* data, const std::string& prefix, int name_id,
                       bool good) {
    data->append("<tr><td>");
-@@ -1005,6 +1006,7 @@ std::string AboutSandbox() {
+@@ -819,6 +820,7 @@ std::string AboutSandbox() {
    return data;
  }
  #endif
 +#endif
  
- std::string AboutVersionStaticContent(const std::string& query) {
-   return ResourceBundle::GetSharedInstance().GetRawDataResource(
-@@ -1412,7 +1414,7 @@ void AboutUIHTMLSource::StartDataRequest(const std::st
+ // AboutMemoryHandler ----------------------------------------------------------
+ 
+@@ -1003,7 +1005,7 @@ void AboutUIHTMLSource::StartDataRequest(
      response = ResourceBundle::GetSharedInstance().GetRawDataResource(
-         IDR_OS_CREDITS_HTML, ui::SCALE_FACTOR_NONE).as_string();
+         IDR_OS_CREDITS_HTML).as_string();
  #endif
 -#if defined(OS_LINUX) || defined(OS_OPENBSD)
 +#if defined(OS_LINUX)
-   } else if (host == chrome::kChromeUISandboxHost) {
+   } else if (source_name_ == chrome::kChromeUISandboxHost) {
      response = AboutSandbox();
  #endif

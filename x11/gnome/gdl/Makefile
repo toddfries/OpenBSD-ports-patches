@@ -1,27 +1,24 @@
-# $OpenBSD: Makefile,v 1.36 2012/11/10 11:06:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.42 2013/05/31 15:35:03 ajacoutot Exp $
 
 COMMENT=		GNOME Docking Library
 
 GNOME_PROJECT=		gdl
-GNOME_VERSION=		3.6.2
+GNOME_VERSION=		3.8.1
+REVISION=		0
 
-SHARED_LIBS +=  gdl-3                3.0      # 5.1
+SHARED_LIBS +=  gdl-3                3.1      # 5.6
 
 # LGPLv2.1+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 cairo cairo-gobject
-WANTLIB += drm expat ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0
-WANTLIB += gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
-WANTLIB += pixman-1 png pthread-stubs xcb xcb-render xcb-shm xml2
-WANTLIB += z stdc++ pthread
-WANTLIB += ICE SM atk-bridge-2.0 atspi dbus-1 harfbuzz icudata
-WANTLIB += icule icuuc
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += cairo cairo-gobject dbus-1 expat ffi fontconfig freetype
+WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += graphite2 gthread-2.0 gtk-3 harfbuzz
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread pthread-stubs xcb xcb-render xcb-shm
+WANTLIB += xml2 z
 
 MODULES=	devel/gettext \
 		x11/gnome
@@ -29,6 +26,6 @@ MODULES=	devel/gettext \
 LIB_DEPENDS=	textproc/libxml \
 		x11/gtk+3
 
-MODGNOME_TOOLS= goi
+MODGNOME_TOOLS= gi
 
 .include <bsd.port.mk>

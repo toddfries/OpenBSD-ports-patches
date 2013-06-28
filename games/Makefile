@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.251 2012/10/27 07:13:22 bentley Exp $
+# $OpenBSD: Makefile,v 1.270 2013/06/17 02:55:02 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -34,6 +34,7 @@
      SUBDIR += childsplay
      SUBDIR += childsplay-plugins
      SUBDIR += chocolate-doom
+     SUBDIR += choria
      SUBDIR += chroma
      SUBDIR += chroma-enigma
      SUBDIR += chromium-bsu
@@ -49,6 +50,7 @@
      SUBDIR += crimson
      SUBDIR += crossfire-client
      SUBDIR += csmash
+     SUBDIR += dangerdeep
      SUBDIR += defendguin
      SUBDIR += doomdata
      SUBDIR += dopewars
@@ -56,6 +58,7 @@
      SUBDIR += duke3ddata
      SUBDIR += dungeon
      SUBDIR += dungeon-crawl
+     SUBDIR += easyrpg
      SUBDIR += eboard
      SUBDIR += eboard-extras
      SUBDIR += eduke32
@@ -67,6 +70,7 @@
      SUBDIR += f1spirit
      SUBDIR += falconseye
      SUBDIR += fire
+     SUBDIR += flare
      SUBDIR += foobillard
      SUBDIR += forcedattack
      SUBDIR += fotaq
@@ -78,6 +82,7 @@
      SUBDIR += frotz
      SUBDIR += frozen-bubble
      SUBDIR += gamine
+     SUBDIR += garden
      SUBDIR += gargoyle
      SUBDIR += gbrainy
      SUBDIR += gcompris
@@ -88,14 +93,19 @@
      SUBDIR += gnuchess
      SUBDIR += gnugo
      SUBDIR += gnushogi
+     SUBDIR += golly
      SUBDIR += gottcode
      SUBDIR += grhino
      SUBDIR += gtetrinet
+     SUBDIR += gti
      SUBDIR += gtkballs
      SUBDIR += hackdata
      SUBDIR += heroes
+     SUBDIR += hex-a-hop
      SUBDIR += icebreaker
+     SUBDIR += irrlamb
      SUBDIR += ivan
+     SUBDIR += jag
      SUBDIR += jbrickshooter
      SUBDIR += kbilliards
      SUBDIR += kobodeluxe
@@ -114,6 +124,7 @@
      SUBDIR += maelstrom
      SUBDIR += manaplus
      SUBDIR += meandmyshadow
+     SUBDIR += megaglest
      SUBDIR += micropolis
      SUBDIR += minetest
      SUBDIR += mirrormagic
@@ -143,16 +154,22 @@
      SUBDIR += pingus
      SUBDIR += pioneers
      SUBDIR += pokerth
+     SUBDIR += polymorphable
      SUBDIR += prboom
+     SUBDIR += prboom-plus
+     SUBDIR += pushover
      SUBDIR += puzzles
      SUBDIR += qgo
      SUBDIR += qstat
      SUBDIR += quake
      SUBDIR += quake2
+     SUBDIR += redeclipse
+     SUBDIR += renpy
      SUBDIR += rftg
      SUBDIR += ri-li
      SUBDIR += roadfighter
      SUBDIR += rocksndiamonds
+     SUBDIR += sauerbraten
      SUBDIR += scorched3d
      SUBDIR += scummvm
      SUBDIR += scummvm-tools
@@ -166,6 +183,7 @@
      SUBDIR += slash-em
      SUBDIR += slash-em,no_x11
      SUBDIR += snipe2d
+     SUBDIR += solarus
      SUBDIR += spacehulk
      SUBDIR += spatial
      SUBDIR += speyes
@@ -180,7 +198,6 @@
      SUBDIR += taxipilot
      SUBDIR += teeworlds
      SUBDIR += tetrinetx
-     SUBDIR += tmw
      SUBDIR += toppler
      SUBDIR += tornado
      SUBDIR += tutris
@@ -190,6 +207,7 @@
      SUBDIR += tuxpaint-stamps
      SUBDIR += ufoai
      SUBDIR += uqm
+     SUBDIR += valyriatear
      SUBDIR += vectoroids
      SUBDIR += vitetris
      SUBDIR += vodovod

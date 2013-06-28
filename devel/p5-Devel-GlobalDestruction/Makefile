@@ -1,23 +1,17 @@
-# $OpenBSD: Makefile,v 1.7 2012/08/23 15:05:15 sthen Exp $
-
-SHARED_ONLY =		Yes
+# $OpenBSD: Makefile,v 1.9 2013/03/25 23:29:55 sthen Exp $
 
 COMMENT =		expose the flag which marks global destruction
 
 DISTNAME =		Devel-GlobalDestruction-0.03
-REVISION =		0
+REVISION =		1
 CATEGORIES =		devel
 
 # perl
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c
 
 MODULES =		cpan
-USE_GROFF =		Yes
 
 RUN_DEPENDS =		devel/p5-Scope-Guard \
 			devel/p5-Sub-Exporter

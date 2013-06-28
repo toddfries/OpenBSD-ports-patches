@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.76 2012/08/28 19:13:12 espie Exp $
+# $OpenBSD: Makefile,v 1.84 2013/06/12 20:36:34 brad Exp $
 
 COMMENT=		office suite for KDE
 
 VERSION=		1.6.3
-REVISION =		24
+REVISION =		31
 CATEGORIES=		x11 x11/kde productivity
 VMEM_WARNING=		Yes
 MASTER_SITES?=		${MASTER_SITE_KDE:S@$@stable/koffice-${VERSION}/src/@}
@@ -76,14 +76,15 @@ SEPARATE_BUILD=	flavored
 MODKDE_VERSION=	3.5.7
 AUTOCONF_VERSION=2.61
 
-MODULES =	x11/kde devel/gettext lang/ruby
+MODULES =	x11/kde devel/gettext lang/python lang/ruby
+MODRUBY_REV=	1.8
 
-RUN_DEPENDS+=	devel/desktop-file-utils \
+RUN_DEPENDS=	devel/desktop-file-utils \
 		x11/gtk+2,-guic
+
 LIB_DEPENDS=	x11/kde/libs3 \
-		python->=2.5,<2.6:lang/python/2.5 \
 		graphics/libart \
-		converters/wv2 \
+		converters/wv2>=0.4.2 \
 		graphics/ImageMagick \
 		graphics/jbigkit \
 		databases/mysql \
@@ -93,10 +94,11 @@ LIB_DEPENDS=	x11/kde/libs3 \
 		textproc/libwpd \
 		databases/libpqxx \
 		databases/postgresql \
+		${MODPY_LIB_DEPENDS} \
 		${MODRUBY_LIB_DEPENDS}
 
 WANTLIB= GL GLU GraphicsMagick>=1 Half ICE Iex IlmImf IlmThread Imath \
-	MagickCore>=1 SM X11 Xcursor Xdamage Xext \
+	MagickCore>=1 SM X11 Xcursor Xdamage Xext FLAC fam pthread-stubs \
 	Xfixes Xft Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2>=5 \
 	artsflow artsflow_idl audiofile bz2 c crypto drm exif>=12 expat \
 	fontconfig freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gsf-1 \
@@ -108,11 +110,10 @@ WANTLIB= GL GLU GraphicsMagick>=1 Half ICE Iex IlmImf IlmThread Imath \
 	lib/kde3/ktexteditor lib/kde3/kutils lib/kde3/kwalletclient \
 	lib/kde3/vcard m mad mcop mng mysqlclient ogg openjpeg pcre \
 	pcreposix png poppler poppler-qt pq pqxx pthread \
-	python2.5 qtmcop readline sndio soundserver_idl ssl stdc++ \
+	qtmcop readline sndio soundserver_idl ssl stdc++ \
 	termcap tiff util vorbis vorbisenc vorbisfile wpd-0.8 \
 	wv2 xcb xml2 xslt z djvulibre ffi fftw3 lcms2 lzma wmf-0.2 wmflite-0.2 \
-	${MODRUBY_WANTLIB}
-
+	${MODPY_WANTLIB} ${MODRUBY_WANTLIB}
 
 CONFIGURE_ARGS+= --with-pgsqlincdir=${LOCALBASE}/include/postgresql
 
@@ -123,6 +124,5 @@ CONFIGURE_ENV +=	ac_cv_header_paper_h=no \
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/HTML/en/common
 	@${post_install_libs}
-
 
 .include <bsd.port.mk>

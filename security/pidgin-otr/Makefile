@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/05/16 12:18:29 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/21 08:48:53 ajacoutot Exp $
 
 COMMENT =	allows deniable private conversations using Pidgin
 
@@ -12,9 +12,6 @@ MASTER_SITES =	${HOMEPAGE}
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 RUN_DEPENDS =	net/pidgin>=2.0.0
 BUILD_DEPENDS =	${RUN_DEPENDS} \
@@ -25,7 +22,6 @@ MODULES =	devel/gettext \
 		textproc/intltool
 WANTLIB =	gpg-error gcrypt otr>=3.2
 
-USE_LIBTOOL =	Yes
 LIBTOOL_FLAGS += --tag=disable-static
 
 SHARED_ONLY =	Yes

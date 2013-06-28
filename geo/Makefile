@@ -1,5 +1,5 @@
-# $OpenBSD: Makefile,v 1.36 2012/10/12 15:42:18 kirby Exp $
- 
+# $OpenBSD: Makefile,v 1.38 2013/05/13 06:57:51 jasper Exp $
+
      SUBDIR =
      SUBDIR += emerillon
      SUBDIR += foxtrotgps
@@ -7,6 +7,7 @@
      SUBDIR += gdal
      SUBDIR += geoclue
      SUBDIR += geos
+     SUBDIR += gimgtools
      SUBDIR += globe
      SUBDIR += gmapcatcher
      SUBDIR += gpsbabel
@@ -41,6 +42,8 @@
      SUBDIR += qlandkarte
      SUBDIR += qlandkartegt
      SUBDIR += ruby-findmyiphone
+     SUBDIR += spatialindex
+     SUBDIR += spatialite
      SUBDIR += tilecache
      SUBDIR += viking
 

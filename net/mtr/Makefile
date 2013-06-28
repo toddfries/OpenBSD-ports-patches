@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.50 2012/10/15 10:13:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.53 2013/04/01 14:08:26 sthen Exp $
 
 COMMENT=	Matt's traceroute - network diagnostic tool#'
 
 DISTNAME=	mtr-0.82
+REVISION=	0
 CATEGORIES=	net
 
 MAINTAINER=     Jakob Schlyter <jakob@openbsd.org>
@@ -11,21 +12,19 @@ HOMEPAGE=	http://www.bitwizard.nl/mtr/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	yes
-PERMIT_PACKAGE_FTP=	yes
-PERMIT_DISTFILES_CDROM=	yes
-PERMIT_DISTFILES_FTP=	yes
 
-WANTLIB=		c m termcap
+WANTLIB=	bind c m termcap
+LIB_DEPENDS=	net/libbind
 
 MASTER_SITES=	ftp://ftp.bitwizard.nl/mtr/
 
-CONFIGURE_STYLE=gnu
+CONFIGURE_STYLE= gnu
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/bind" \
+		LDFLAGS="-L${LOCALBASE}/lib -lbind"
 
 FLAVORS=	gtk
-
 FLAVOR?=
-.if ${FLAVOR:L} == "gtk"
-BROKEN= fails at runtime with "No nameservers defined"
+.if ${FLAVOR} == "gtk"
 MODULES+=		devel/gettext
 CONFIGURE_ARGS+=	--with-gtk-prefix=${LOCALBASE}
 LIB_DEPENDS+=		x11/gtk+2

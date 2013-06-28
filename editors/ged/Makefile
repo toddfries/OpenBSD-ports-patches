@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/06/25 23:07:54 pascal Exp $
+# $OpenBSD: Makefile,v 1.4 2013/06/09 22:19:41 jca Exp $
 
 COMMENT =		GNU version of standard text editor
 
-V =			1.6
+V =			1.8
 DISTNAME =		ed-${V}
 PKGNAME =		ged-${V}
 
@@ -14,9 +14,6 @@ MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c
 

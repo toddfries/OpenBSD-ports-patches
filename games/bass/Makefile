@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2010/11/26 07:20:11 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/05/14 09:57:27 sthen Exp $
 
 PKG_ARCH=	*
 
 COMMENT=	Beneath A Steel Sky
 DISTNAME=	bass-cd-1.2
+REVISION=	0
 PKGNAME=	${DISTNAME:S/cd-//}
 EXTRACT_SUFX=	.zip
 CATEGORIES=	games
@@ -12,15 +13,14 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scummvm/}
 MAINTAINER=	Jonathan Gray <jsg@openbsd.org>
 
 # Conditional
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	space constraints
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 RUN_DEPENDS=	games/scummvm>=0.5.1
+# don't waste time building on arch where scummvm doesn't build
+BUILD_DEPENDS=	${RUN_DEPENDS}
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/bass

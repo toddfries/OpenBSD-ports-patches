@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.29 2012/10/28 17:42:07 jasper Exp $
+# $OpenBSD: Makefile,v 1.37 2013/06/23 11:41:14 landry Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		desktop note-taking application written in C++
 
 GNOME_PROJECT=		gnote
-GNOME_VERSION=		3.6.1
+GNOME_VERSION=		3.8.1
+REVISION=		1
 
-SHARED_LIBS +=	gnote-3.6                 0.0 # 0.0
+SHARED_LIBS +=	gnote-3.8                 0.0 # 0.0
 SHARED_LIBS +=	gnote                     0.0 # 0.0
 
 SUBST_VARS=		GNOME_VERSION
@@ -16,28 +17,25 @@ HOMEPAGE=		http://live.gnome.org/Gnote
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 atkmm-1.6
-WANTLIB += c cairo cairo-gobject cairomm-1.0 drm e2fs-uuid expat
-WANTLIB += ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0 gdkmm-3.0
-WANTLIB += gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 gtkmm-3.0 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pangomm-1.4 pcre pixman-1 png
-WANTLIB += pthread pthread-stubs sigc-2.0 stdc++ xcb xcb-render
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atkmm-1.6
+WANTLIB += atspi c cairo cairo-gobject cairomm-1.0 dbus-1 uuid
+WANTLIB += expat ffi fontconfig freetype gcrypt gdk-3 gdk_pixbuf-2.0
+WANTLIB += gdkmm-3.0 gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gmodule-2.0
+WANTLIB += gobject-2.0 gpg-error graphite2 gthread-2.0 gtk-3 gtkmm-3.0
+WANTLIB += harfbuzz m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pangomm-1.4 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs secret-1 sigc-2.0 stdc++ xcb xcb-render
 WANTLIB += xcb-shm xml2 xslt z
-WANTLIB += ICE SM atk-bridge-2.0 atspi dbus-1 gcrypt gpg-error
-WANTLIB += harfbuzz icudata icule icuuc secret-1
 
 MODULES=		devel/dconf \
 			devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/boost>=1.42.0p6
-LIB_DEPENDS=		sysutils/e2fsprogs>=1.41.4p5 \
+BUILD_DEPENDS=		devel/boost>=1.42.0p6 \
+			devel/desktop-file-utils
+LIB_DEPENDS=		sysutils/e2fsprogs>=1.42.7 \
 			textproc/libxslt \
 			x11/gnome/libsecret>=0.10 \
 			x11/gtk3mm

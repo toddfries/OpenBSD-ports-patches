@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2012/08/23 15:52:47 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/23 07:10:06 benoit Exp $
 
 COMMENT =	interface to md4 message-digest algorithm
 
-DISTNAME =	Digest-MD4-1.5
+DISTNAME =	Digest-MD4-1.9
 CATEGORIES =	security
-
-REVISION =	3
 
 MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 
@@ -14,9 +12,6 @@ MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 # This implementation is derived from the reference C code in RFC 1320.
 # See "A.3 md4c.c" for the copyright notice.
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c
 

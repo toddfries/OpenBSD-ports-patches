@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.40 2011/11/02 08:46:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.42 2013/06/03 02:46:57 naddy Exp $
 
 COMMENT=	converts GIF images to the PNG format
 
@@ -9,9 +9,6 @@ HOMEPAGE=	http://www.catb.org/~esr/gif2png/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m z png
 
 MASTER_SITES=	${HOMEPAGE}
@@ -21,7 +18,7 @@ LIB_DEPENDS=	graphics/png
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE= gnu
-CONFIGURE_ARGS=	--with-png-inc="${LOCALBASE}/include/libpng" \
+CONFIGURE_ARGS=	--with-png-inc="${LOCALBASE}/include" \
 		--with-png-lib="${LOCALBASE}/lib"
 
 pre-build:

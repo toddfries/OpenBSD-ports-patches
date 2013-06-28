@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.161 2012/10/29 14:53:36 landry Exp $
+# $OpenBSD: Makefile,v 1.174 2013/06/26 19:19:52 landry Exp $
 
 COMMENT-main =		Mozilla e-mail, rss and usenet client
 COMMENT-lightning =	Mozilla Thunderbird calendar extension
@@ -6,22 +6,23 @@ COMMENT-enigmail =	Mozilla Thunderbird GnuPG extension
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 
 # Don't forget to bump mail/thunderbird-i18n after updates.
-# Don't forget to update productivity/sunbird if patches changes.
 
-MOZILLA_VERSION =	16.0.2
-MOZILLA_BRANCH =	release
+MOZILLA_VERSION =	17.0.7
+MOZILLA_BRANCH =	esr17
 MOZILLA_PROJECT =	thunderbird
 MOZILLA_CODENAME =	mail
 
 MULTI_PACKAGES =	-main -lightning -enigmail
 PKGNAME-main =		${PKGNAME}
-PKGNAME-lightning =	lightning-1.8beta1
-ENIG_V =		1.4.5
+PKGNAME-lightning =	lightning-1.9beta1
+ENIG_V =		1.5.1
 PKGNAME-enigmail =	enigmail-${ENIG_V}
 EPOCH-lightning =	0
-REVISION-lightning =	1
 EPOCH-enigmail =	0
-REVISION-enigmail =	1
+REVISION-lightning =	7
+REVISION-enigmail =	5
+
+HOMEPAGE =	http://www.mozilla.org/thunderbird/
 
 #MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build1/source/
 MASTER_SITES0 =	http://www.mozilla-enigmail.org/download/source/
@@ -29,13 +30,13 @@ DISTFILES +=	${MOZILLA_PROJECT}-${MOZILLA_VERSION}.source.tar.bz2 \
 		enigmail-${ENIG_V}.tar.gz:0
 EXTRACT_CASES =	enigmail-*.tar.gz) ${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive | tar -C comm-${MOZILLA_BRANCH}/mailnews/extensions/ -xf -;;
 
-SO_VERSION =	26.0
+SO_VERSION =	27.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 
-MOZILLA_LIBS = ldap60 ldif60 mozalloc prldap60 xpcom xul calbasecomps enigmime ipc
-
-#.if ${FLAVOR:L:Mdebug}
+MOZILLA_LIBS = ldap60 ldif60 mozalloc mozgnome prldap60 xpcom xul calbasecomps \
+	enigmime-${XPCOM_ABI}-gcc3 subprocess-${XPCOM_ABI}-gcc3
+#.if ${FLAVOR:Mdebug}
 #MOZILLA_LIBS +=	addrbook bayesflt fts3tok mailview mime mimeemitter msgbase \
 #	msgcompose msgdb msgimap msglocal msgmdn msgnews vcard msgbaseutil
 #.endif
@@ -44,52 +45,32 @@ CATEGORIES=	mail news
 
 # MPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES =	www/mozilla devel/gettext lang/python
 MODPY_RUNDEP =	No
 
 # Regression tests are too hard to adapt to run here
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 MODGNU_CONFIG_GUESS_DIRS +=	${WRKSRC}/ldap/sdks/c-sdk/config/autoconf
 
 CONFIGURE_STYLE =	autoconf no-autoheader
-CONFIGURE_ARGS +=	--enable-official-branding
-CONFIGURE_ARGS +=	--with-system-libevent=/usr/
-CONFIGURE_ARGS +=	--with-system-zlib=/usr/ --with-system-bz2=${LOCALBASE}
-WANTLIB +=	event
+# to remove in 18
+CONFIGURE_ARGS +=	--with-system-jpeg=${LOCALBASE}
+WANTLIB +=	jpeg
 
-# bug #736961
-SEPARATE_BUILD =	Yes
-# XXX solved in firefox by patch-config-autoconf_mk_in ?
-CONFIGURE_ENV +=	CPPFLAGS=-I${X11BASE}/include
-
-# XXX needed since 10.0b4, relocation overflow otherwise...
-# replaces -g by -Os
-.if ${MACHINE_ARCH} == "powerpc"
-CONFIGURE_ENV +=	MOZ_DEBUG_FLAGS="-Os"
-.endif
-
-LIB_DEPENDS-main =	${LIB_DEPENDS}
-WANTLIB-main =		${WANTLIB}
 LIB_DEPENDS-lightning = STEM->=${MOZILLA_VERSION:S/b/beta/}:${BUILD_PKGPATH},-main
-WANTLIB-lightning =	lib/thunderbird-${MOZILLA_VER}/xpcom \
-			lib/thunderbird-${MOZILLA_VER}/xul \
-			lib/thunderbird-${MOZILLA_VER}/mozalloc \
-			c m stdc++ nspr4 plc4 plds4
-BUILD_DEPENDS +=	archivers/unzip #to unzip xpi
+WANTLIB-lightning =	lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/xpcom \
+			lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/xul \
+			lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/mozalloc \
+			c m stdc++ nspr4 plc4 plds4 pthread
 
 RUN_DEPENDS-enigmail =	security/gnupg
 LIB_DEPENDS-enigmail =	${LIB_DEPENDS-lightning}
 WANTLIB-enigmail =	${WANTLIB-lightning}
 
 # build lightning xpi
-CONFIGURE_ARGS +=	--enable-calendar \
-			--enable-official-branding \
-			--disable-gconf
+CONFIGURE_ARGS +=	--enable-calendar
 
 ALL_TARGET =	default
 
@@ -104,6 +85,16 @@ post-build:
 	cd ${WRKBUILD}/mozilla/dist/bin/chrome/enigmail && zip -r ../enigmail.jar .
 	cd ${WRKBUILD}/${ENIGMAIL_DIR} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} xpi
 
+# needed for the naming of the enigmail lib
+.if ${MACHINE_ARCH:Mi386}
+XPCOM_ABI =	x86
+.elif ${MACHINE_ARCH:Mamd64}
+XPCOM_ABI =	x86_64
+.elif ${MACHINE_ARCH:Mpowerpc}
+XPCOM_ABI =	ppc
+.endif
+SUBST_VARS += XPCOM_ABI
+
 GNU_ARCH =	${MACHINE_ARCH:S/amd64/x86_64/}
 # guid for gdata-provider comes from em:id in install.rdf
 GUIDS =	gdata-provider {a62ef8ec-5fdc-40c2-873c-223b8a6925cc} \
@@ -114,14 +105,15 @@ GUIDS =	gdata-provider {a62ef8ec-5fdc-40c2-873c-223b8a6925cc} \
 EXTDIR =	${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/extensions/
 post-install:
 .for xpi guid in ${GUIDS}
-	unzip -q ${WRKBUILD}/mozilla/dist/xpi-stage/${xpi}.xpi -d ${EXTDIR}/${guid}
+	${UNZIP} -oq ${WRKBUILD}/mozilla/dist/xpi-stage/${xpi}.xpi -d ${EXTDIR}/${guid}
 .endfor
 	# install desktop file
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications/ ; \
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/${MOZILLA_PROJECT}.desktop \
 		${PREFIX}/share/applications/${MOZILLA_PROJECT}.desktop ; \
-
-	# cleanup useless dirs from #717616
-	rm -Rf ${PREFIX}/lib/thunderbird-${MOZILLA_VERSION:C/b.//}/js{sub,}loader
+	# install icon for desktop file
+	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps/
+	${INSTALL_DATA} ${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/chrome/icons/default/default256.png \
+		${PREFIX}/share/pixmaps/${MOZILLA_PROJECT}.png
 
 .include <bsd.port.mk>

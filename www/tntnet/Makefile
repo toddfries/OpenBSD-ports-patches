@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/11 12:13:03 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2013/03/21 08:48:55 ajacoutot Exp $
 
 COMMENT=		modular webapplication server for C++
 
@@ -19,9 +19,6 @@ SHARED_LIBS+=	${_lib}	${SO_VERSION}
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c crypto cxxtools>=2 m pthread ssl stdc++ z
 
@@ -32,7 +29,6 @@ MODULES=		converters/libiconv
 BUILD_DEPENDS=		archivers/zip
 LIB_DEPENDS= 		devel/cxxtools
 
-USE_LIBTOOL=		Yes
 USE_GMAKE=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu

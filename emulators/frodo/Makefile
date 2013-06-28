@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.23 2012/08/17 14:48:34 stu Exp $
+# $OpenBSD: Makefile,v 1.25 2013/03/11 11:06:04 espie Exp $
 
 COMMENT=	Commodore 64 emulator
 
 DISTNAME=	FrodoV4_1b.Src
 PKGNAME=	frodo-4.1b
-REVISION=	6
+REVISION=	7
 DISTFILES=	FrodoV4_1b.Src${EXTRACT_SUFX}
 
 CATEGORIES=	emulators games
@@ -14,24 +14,20 @@ MAINTAINER=	Marc Espie <espie@openbsd.org>
 HOMEPAGE=	http://frodo.cebix.net/
 
 # FreeWare
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB=		SDL c m pthread sndio stdc++
 
 CONFIGURE_STYLE=	gnu
 
 MODULES=	x11/tk
-MODTK_VERSION=	8.4
 RUN_DEPENDS=	${MODTK_RUN_DEPENDS}
 LIB_DEPENDS=	sdl-*-!no_x11:devel/sdl
 
-WISH=wish${MODTK_VERSION}
-FRODOLIBDIR=${PREFIX}/lib/frodo
+WISH=		${MODTK_BIN}
+FRODOLIBDIR=	${PREFIX}/lib/frodo
 
-CONFIGURE_ENV=		CFLAGS='${CFLAGS} -O3 -D__unix -DX_USE_SHM -DUSE_SNDIO -fno-exceptions' \
+CONFIGURE_ENV=		CFLAGS='${CFLAGS} -D__unix -DX_USE_SHM -DUSE_SNDIO -fno-exceptions' \
 			LIBS='-lsndio'
 
 
@@ -46,7 +42,7 @@ WRKSRC=${WRKDIST}/Src
 post-patch:
 	cp ${FILESDIR}/SID_sndio.i	${WRKSRC}
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKDIST}/Frodo ${PREFIX}/bin/frodo

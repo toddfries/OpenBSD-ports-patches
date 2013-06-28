@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2012/09/28 06:32:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2013/05/30 13:09:21 ajacoutot Exp $
 
 COMMENT=	braille translator and back-translator
 
-DISTNAME=	liblouis-2.5.1
+DISTNAME=	liblouis-2.5.2
+REVISION=	1
 
-SHARED_LIBS +=  louis                1.0      # 5.1
+SHARED_LIBS +=  louis                1.0      # 5.2
 
 CATEGORIES=	devel
 
@@ -12,9 +13,6 @@ HOMEPAGE=	http://code.google.com/p/liblouis/
 
 # GPLv3 - LGPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c
 
@@ -22,11 +20,10 @@ MASTER_SITES=	http://liblouis.googlecode.com/files/
 
 MODULES=	lang/python
 
+MODPY_VERSION=	${MODPY_DEFAULT_VERSION_3}
 MODPY_ADJ_FILES=tools/lou_harnessGenerator
 
 BUILD_DEPENDS=	devel/help2man
-
-USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \

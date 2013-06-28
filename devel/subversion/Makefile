@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.115 2012/10/29 14:30:55 stsp Exp $
+# $OpenBSD: Makefile,v 1.124 2013/06/20 06:54:36 ajacoutot Exp $
 
 COMMENT-main=		subversion revision control system
 COMMENT-perl=		perl interface to subversion
@@ -7,7 +7,7 @@ COMMENT-ruby=		ruby interface to subversion
 COMMENT-ap2=		apache2 subversion modules
 COMMENT-gnome-keyring=	GNOME keyring support for subversion
 
-VERSION=		1.7.7
+VERSION=		1.7.10
 DISTNAME=		subversion-${VERSION}
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-perl=	p5-SVN-${VERSION}
@@ -20,6 +20,8 @@ FULLPKGNAME-ap2=	ap2-subversion-${VERSION}
 FULLPKGPATH-ap2=	devel/subversion,-ap2
 FULLPKGNAME-gnome-keyring= gnome-keyring-subversion-${VERSION}
 FULLPKGPATH-gnome-keyring= devel/subversion,-gnome-keyring
+REVISION-main=		1
+REVISION-gnome-keyring=	1
 
 SO_VERSION=	1.3
 SVN_LIBS=	svn_client-1 svn_delta-1 svn_diff-1 svn_fs-1 \
@@ -40,9 +42,6 @@ MAINTAINER=	Stefan Sperling <stsp@openbsd.org>
 
 # BSD alike + Apache License 2.0
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_APACHE:=subversion/}
 EXTRACT_SUFX=	.tar.bz2
@@ -74,7 +73,8 @@ LIB_DEPENDS-main = ${LIB_DEPENDS} \
 
 WANTLIB-main=	${WANTLIB} asn1 c crypto db gssapi krb5 ssl \
 		neon>=26 apr-1 aprutil-1 sasl2>=2 sqlite3 \
-		m proxy stdc++
+		m proxy stdc++ com_err heimbase \
+		roken wind
 RUN_DEPENDS-main= ${MODGETTEXT_RUN_DEPENDS}
 
 TOOLS_HOOK_SCRIPTS=	commit-access-control.cfg.example \
@@ -115,6 +115,7 @@ LIB_DEPENDS-python=	${MODPY_LIB_DEPENDS} ${MODGETTEXT_LIB_DEPENDS} \
 WANTLIB-python +=	${_lib}>=${SO_VERSION}
 .endfor
 
+MODRUBY_REV=		1.8
 WANTLIB-ruby=		${WANTLIB} apr-1 aprutil-1 asn1 crypto gssapi db \
 			krb5 m neon proxy sasl2 sqlite3 ssl ${MODRUBY_WANTLIB}
 RUN_DEPENDS-ruby=	${MODRUBY_RUN_DEPENDS}
@@ -126,8 +127,7 @@ WANTLIB-ruby +=	${_lib}>=${SO_VERSION}
 
 WANTLIB-gnome-keyring=	${WANTLIB} apr-1 aprutil-1 gcrypt gpg-error \
 		dbus-1>=7 glib-2.0 gnome-keyring>=6 pcre>=2 sqlite3 \
-		svn_subr-1>=${SO_VERSION} ffi gmodule-2.0 gobject-2.0 \
-		gthread-2.0
+		svn_subr-1>=${SO_VERSION} ffi gmodule-2.0 gobject-2.0
 LIB_DEPENDS-gnome-keyring= ${MAINSPEC} \
 		${MODGETTEXT_LIB_DEPENDS} \
 		x11/gnome/libgnome-keyring
@@ -135,7 +135,6 @@ LIB_DEPENDS-gnome-keyring= ${MAINSPEC} \
 RUN_DEPENDS-gnome-keyring=	${MODGETTEXT_RUN_DEPENDS}
 
 MAKE_FLAGS=	MAKE=${MAKE_PROGRAM}
-USE_LIBTOOL=	Yes
 AUTOCONF_VERSION=2.64
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	PYTHON2=${MODPY_BIN} MKDIR="/bin/mkdir -p"
@@ -176,7 +175,7 @@ BUILD_DEPENDS+=		www/apache-httpd
 CONFIGURE_ARGS+=--without-apxs
 .endif
 
-REGRESS_DEPENDS=${MODPY_RUN_DEPENDS}
+TEST_DEPENDS=${MODPY_RUN_DEPENDS}
 SUBST_VARS+=	LOCALBASE SO_VERSION
 
 pre-patch:
@@ -189,10 +188,10 @@ pre-configure:
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} ./autogen.sh
 
 .if ${BUILD_PACKAGES:M-python}
-REGRESS_DEPENDS+=	${FULLPKGNAME-python}:${BUILD_PKGPATH},-python
+TEST_DEPENDS+=	${FULLPKGNAME-python}:${BUILD_PKGPATH},-python
 
 .if ${BUILD_PACKAGES:M-ruby}
-REGRESS_DEPENDS+=	${FULLPKGNAME-ruby}:${BUILD_PKGPATH},-ruby
+TEST_DEPENDS+=	${FULLPKGNAME-ruby}:${BUILD_PKGPATH},-ruby
 .endif
 
 pre-build:
@@ -220,22 +219,22 @@ post-build:
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
 		${MAKE_FLAGS} svn-populate-node-origins-index
 
-do-regress:
+do-test:
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		${ALL_REGRESS_FLAGS} check FS_TYPE=bdb
+		${ALL_TEST_FLAGS} check FS_TYPE=bdb
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		${ALL_REGRESS_FLAGS} check FS_TYPE=fsfs
+		${ALL_TEST_FLAGS} check FS_TYPE=fsfs
 .if ${BUILD_PACKAGES:M-perl}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		${ALL_REGRESS_FLAGS} TMPDIR=${WRKBUILD} check-swig-pl
+		${ALL_TEST_FLAGS} TMPDIR=${WRKBUILD} check-swig-pl
 .endif
 .if ${BUILD_PACKAGES:M-python}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		${ALL_REGRESS_FLAGS} check-swig-py
+		${ALL_TEST_FLAGS} check-swig-py
 .endif
 .if ${BUILD_PACKAGES:M-ruby}
 	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		${ALL_REGRESS_FLAGS} check-swig-rb
+		${ALL_TEST_FLAGS} check-swig-rb
 .endif
 
 post-install:

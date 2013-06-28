@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.44 2012/10/10 08:11:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.50 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	AFP file and print services for IP networks
 
 DISTNAME=	netatalk-2.2.3
-REVISION=	2
+REVISION=	5
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=netatalk/}
 EXTRACT_SUFX=	.tar.bz2
@@ -14,19 +14,15 @@ HOMEPAGE=	http://netatalk.sourceforge.net/
 
 # GPLv2+ and BSD or similar
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	asn1 c crypto db>=4 gcrypt gpg-error gssapi krb5 pthread \
-		rpcsvc wrap
+WANTLIB += asn1 c com_err crypto db gcrypt gpg-error gssapi heimbase
+WANTLIB += krb5 pthread roken rpcsvc wind wrap
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	databases/db/v4 \
 		security/libgcrypt 
 
 USE_GROFF=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--disable-cups \
 		--disable-overwrite \
@@ -42,17 +38,14 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 FLAVORS=	avahi
 FLAVOR?=
 
-.if ${FLAVOR:L:Mavahi}
+.if ${FLAVOR:Mavahi}
 WANTLIB+=	avahi-client avahi-common dbus-1
 LIB_DEPENDS+=	net/avahi
 .else
 CONFIGURE_ARGS+= --disable-zeroconf
 .endif
 
-NO_REGRESS=	Yes
-
-post-extract:
-	@${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
+NO_TEST=	Yes
 
 post-build:
 	@cd ${WRKSRC}/config; make afpd.conf AppleVolumes.default

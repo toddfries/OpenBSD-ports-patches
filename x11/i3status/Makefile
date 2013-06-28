@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.26 2012/10/25 14:21:54 jasper Exp $
+# $OpenBSD: Makefile,v 1.30 2013/06/19 09:15:07 dcoppa Exp $
 
 ONLY_FOR_ARCHS=		${APM_ARCHS}
 
 COMMENT=		generate a statusbar for use with i3/xmobar/dzen2
 
-DISTNAME=		i3status-2.6
-REVISION=		17
+DISTNAME=		i3status-2.7
+REVISION=		0
 CATEGORIES=		x11 sysutils
 
 HOMEPAGE=		http://i3wm.org/i3status/
@@ -14,9 +14,6 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}
 EXTRACT_SUFX=		.tar.bz2
@@ -25,17 +22,16 @@ WANTLIB += c confuse ossaudio yajl
 
 USE_GMAKE=		Yes
 
-BUILD_DEPENDS=		textproc/asciidoc
+BUILD_DEPENDS=		textproc/asciidoc>=8.6.8
 LIB_DEPENDS=		devel/libconfuse \
 			devel/libyajl
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 # XXX: Optimizing results in seg. faults on at least amd64.
 CFLAGS+=		-O0
 
-MAKE_ENV+=		A2X=a2x.py \
-			SYSCONFDIR=${PREFIX}/share/examples/i3status/
+MAKE_ENV+=		SYSCONFDIR=${PREFIX}/share/examples/i3status/
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Makefile

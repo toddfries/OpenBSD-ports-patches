@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2012/10/28 10:42:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2013/05/19 10:49:10 ajacoutot Exp $
 
 TRYTOND_MODULE =	carrier_percentage
 

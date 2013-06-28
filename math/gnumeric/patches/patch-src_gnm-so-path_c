@@ -1,0 +1,14 @@
+$OpenBSD: patch-src_gnm-so-path_c,v 1.2 2013/03/10 12:17:57 ajacoutot Exp $
+--- src/gnm-so-path.c.orig	Sat Mar  2 22:21:08 2013
++++ src/gnm-so-path.c	Sun Mar 10 11:18:15 2013
+@@ -31,6 +31,10 @@
+ #include <gsf/gsf-impl-utils.h>
+ #include <glib/gi18n-lib.h>
+ 
++#ifndef MAXDOUBLE
++#define MAXDOUBLE DBL_MAX
++#endif
++
+ #define CXML2C(s) ((char const *)(s))
+ 
+ static inline gboolean

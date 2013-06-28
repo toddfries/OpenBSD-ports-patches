@@ -1,33 +1,28 @@
-# $OpenBSD: Makefile,v 1.9 2012/03/07 20:42:36 pea Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/23 13:44:44 ajacoutot Exp $
 
 COMMENT=	IPC library used by GnuPG and gpgme
 
-DISTNAME=	libassuan-2.0.3
+DISTNAME=	libassuan-2.1.0
+EXTRACT_SUFX=	.tar.bz2
 
-SHARED_LIBS +=  assuan            1.0      # 2.0
-
+SHARED_LIBS +=  assuan            1.1      # 2.0
 
 CATEGORIES=	security devel
 
 # LGPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		ftp://ftp.gnupg.org/gcrypt/libassuan/
-EXTRACT_SUFX=		.tar.bz2
+WANTLIB += gpg-error
 
-USE_LIBTOOL=		Yes
+MASTER_SITES=	ftp://ftp.gnupg.org/gcrypt/libassuan/
 
-MODULES=		devel/gettext \
-			textproc/intltool
+MODULES=	devel/gettext \
+		textproc/intltool
 
-WANTLIB=		gpg-error
-LIB_DEPENDS=		security/libgpg-error
+LIB_DEPENDS=	security/libgpg-error
 
-CONFIGURE_STYLE=	gnu
+CONFIGURE_STYLE=gnu
 
-CFLAGS+=		-fPIC
+CFLAGS+=	-fPIC
 
 .include <bsd.port.mk>

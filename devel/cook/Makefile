@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.20 2012/08/18 12:41:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2013/05/31 14:50:27 jasper Exp $
 
 COMMENT=	like make(1), but more powerful and clean
 
 DISTNAME=	cook-2.21
-REVISION=	0
+REVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${HOMEPAGE}
 
-HOMEPAGE=       http://www.canb.auug.org.au/~millerp/cook/
+HOMEPAGE=       http://miller.emu.id.au/pmiller/software/cook/
 
 MODULES=	devel/gettext
 
@@ -15,9 +15,6 @@ MAINTAINER=	Gregory Steuck <greg@nest.cx>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c
 
 DESTDIRNAME=RPM_BUILD_ROOT
@@ -28,7 +25,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 CONFIGURE_ARGS= --libdir="${PREFIX}/share/locale"
 USE_GROFF =	Yes
 
-REGRESS_TARGET=	sure
-REGRESS_FLAGS=	HOME=/ LOGNAME=nobody
+TEST_TARGET=	sure
+TEST_FLAGS=	HOME=/ LOGNAME=nobody
 
 .include <bsd.port.mk>

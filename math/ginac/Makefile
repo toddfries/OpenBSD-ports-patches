@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/02/16 23:29:11 pirofti Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=	GiNaC is Not a Computer Algebra System (CAS)
 
@@ -12,9 +12,6 @@ MAINTAINER=	Paul Irofti <pirofti@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	ftp://ftpthep.physik.uni-mainz.de/pub/GiNaC/ \
 		${HOMEPAGE}
@@ -25,10 +22,9 @@ WANTLIB=	c m ncurses readline stdc++ gmp cln
 LIB_DEPENDS=	devel/cln
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 
-REGRESS_TARGET=	check
+TEST_TARGET=	check
 
 .include <bsd.port.mk>

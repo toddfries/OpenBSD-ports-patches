@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.17 2012/01/03 07:03:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/04/02 16:16:47 ajacoutot Exp $
 
 COMMENT=		small and easy to use graphical MPD client
 
 DISTNAME=		gimmix-0.5.7.1
-REVISION=		2
+REVISION=		3
 CATEGORIES=		audio x11
 
 HOMEPAGE=		http://gimmix.berlios.de/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
@@ -28,7 +25,6 @@ EXTRACT_SUFX=		.tar.bz2
 
 MODULES=		devel/gettext textproc/intltool
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
@@ -37,8 +33,7 @@ LIB_DEPENDS=		audio/libmpd>=0.17 \
 			textproc/libnxml \
 			audio/taglib \
 			devel/libglade2
-RUN_DEPENDS=		devel/desktop-file-utils \
-			x11/gnome/icon-theme
+RUN_DEPENDS=		devel/desktop-file-utils
 
 post-extract:
 	rm ${WRKSRC}/po/Makefile.in.in

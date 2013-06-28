@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/04/02 13:06:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/06/04 18:41:50 naddy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -13,9 +13,6 @@ HOMEPAGE=	http://newcenturycomputers.net/projects/gdmodule.html
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	jpeg png z gd>=20 ${MODPY_WANTLIB}
 
@@ -27,14 +24,14 @@ MODPY_SETUP=	Setup.py
 
 LIB_DEPENDS=	graphics/gd
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 EXAMPLESDIR=	${PREFIX}/share/examples/py-gd
 DOCSDIR=	${PREFIX}/share/doc/py-gd
 
 do-configure:
 	@perl -pi -e "s,%%LOCALBASE%%,${LOCALBASE},g;" \
-		-e "s,%%LIBPNG%%,${LOCALBASE}/include/libpng,g" \
+		-e "s,%%LIBPNG%%,${LOCALBASE}/include,g" \
 			${WRKSRC}/${MODPY_SETUP}
 
 post-install:

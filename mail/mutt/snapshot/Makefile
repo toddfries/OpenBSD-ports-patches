@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.71 2012/09/27 17:26:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.77 2013/06/20 08:26:13 ajacoutot Exp $
 
 COMMENT=	tty-based e-mail client, development version
 
 DISTNAME=	mutt-1.5.21
 EPOCH=		0
-REVISION=	0
+REVISION=	4
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mutt/} \
 		${MASTER_SITES_MUTT:=devel/}
 
@@ -21,7 +21,7 @@ CONFIGURE_ARGS= --enable-hcache \
 LIB_DEPENDS=	databases/qdbm
 BUILD_DEPENDS+=	textproc/docbook-xsl
 
-.if ${FLAVOR:L:Msasl}
+.if ${FLAVOR:Msasl}
 CONFIGURE_ARGS+= --with-sasl=${LOCALBASE}
 LIB_DEPENDS+=	security/cyrus-sasl2
 WANTLIB+=	sasl2
@@ -32,9 +32,11 @@ MUTTRCDIR=	doc/
 DIST_COMPRESSED=compressed-5302767aa6aa.gz:2
 DIST_SIDEBAR=	sidebar-5302767aa6aa.gz:2
 
-.if ${FLAVOR:L:Msidebar}
+# http://cedricduval.free.fr/mutt/patches/
+PATCHFILES+=	trashfolder-5302767aa6aa.gz:2
+
+.if ${FLAVOR:Msidebar}
 PATCHFILES+=		${DIST_SIDEBAR}
-PATCH_DIST_STRIP=	-p1
 .else
 SUPDISTFILES+=		${DIST_SIDEBAR}
 .endif

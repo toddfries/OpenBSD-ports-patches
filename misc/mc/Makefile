@@ -1,22 +1,18 @@
-# $OpenBSD: Makefile,v 1.45 2012/09/01 14:36:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2013/03/11 11:23:57 espie Exp $
 
 COMMENT=		free Norton Commander clone with many useful features
 
-DISTNAME=		mc-4.8.1.1
+DISTNAME=		mc-4.8.1.7
 CATEGORIES=		misc
 
 HOMEPAGE=		http://www.midnight-commander.org/
 MASTER_SITES=		${HOMEPAGE}downloads/
 MAINTAINER=		Robert Nagy <robert@openbsd.org>
-REVISION=	0
 
 EXTRACT_SUFX=		.tar.bz2
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m pcre pthread termcap glib-2.0 gmodule-2.0 slang
 
@@ -26,7 +22,7 @@ USE_GROFF=		Yes
 FLAVORS=		no_x11
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=	--without-x
 .endif
 

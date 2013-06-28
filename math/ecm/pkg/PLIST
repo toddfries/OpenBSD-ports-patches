@@ -1,7 +1,8 @@
-@comment $OpenBSD: PLIST,v 1.2 2009/05/27 19:09:28 benoit Exp $
-%%SHARED%%
+@comment $OpenBSD: PLIST,v 1.4 2013/03/05 08:01:32 benoit Exp $
+@conflict cmdpack-*
 @bin bin/ecm
 include/ecm.h
 lib/libecm.a
 lib/libecm.la
+@lib lib/libecm.so.${LIBecm_VERSION}
 @man man/man1/ecm.1

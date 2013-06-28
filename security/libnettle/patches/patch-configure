@@ -1,0 +1,14 @@
+$OpenBSD: patch-configure,v 1.3 2013/06/09 14:25:12 ajacoutot Exp $
+
+Fix relocation errors on (at least) sparc64.
+
+--- configure.orig	Tue May 28 16:21:53 2013
++++ configure	Sun Jun  9 16:11:13 2013
+@@ -4899,6 +4899,7 @@ else
+ 	bsdi4.*)	CCPIC="-fPIC" ;;
+ 	bsdi*)		CCPIC="" ;;
+ 	darwin*)	CCPIC="-fPIC" ;;
++	openbsd*)	CCPIC="-fPIC" ;;
+ 	# Could also use -fpic, depending on the number of symbol references
+ 	solaris*)	CCPIC="-fPIC" ;;
+ 	cygwin*)	CCPIC="" ;;

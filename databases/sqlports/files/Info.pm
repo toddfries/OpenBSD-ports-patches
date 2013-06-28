@@ -1,4 +1,4 @@
-# $OpenBSD: Info.pm,v 1.3 2012/06/18 12:18:45 espie Exp $
+# $OpenBSD: Info.pm,v 1.10 2013/06/23 08:58:07 espie Exp $
 #
 # Copyright (c) 2012 Marc Espie <espie@openbsd.org>
 #
@@ -34,14 +34,13 @@ our $vars = {
     COMMENT => 'AnyVar',
     CONFIGURE_ARGS => 'ConfigureArgsVar',
     CONFIGURE_STYLE => 'ConfigureVar',
-    DESCR => 'FileVar',
+    DESCR => 'DescrVar',
     DISTFILES => 'AnyVar',
+    DPB_PROPERTIES => 'DPBPropertiesVar',
     PATCHFILES => 'AnyVar',
     DISTNAME => 'AnyVar',
     DIST_SUBDIR => 'DefinedVar',
     EPOCH => 'AnyVar',
-    FETCH_MANUALLY => 'IgnoredVar',
-    FLAVOR => 'IgnoredVar',
     FLAVORS => 'FlavorsVar',
     FULLPKGNAME => 'AnyVar',
     HOMEPAGE => 'AnyVar',
@@ -60,25 +59,25 @@ our $vars = {
     MASTER_SITES7 => 'MasterSitesVar',
     MASTER_SITES8 => 'MasterSitesVar',
     MASTER_SITES9=> 'MasterSitesVar',
-    MISSING_FILES => 'IgnoredVar',
     MODULES => 'ModulesVar',
     MULTI_PACKAGES => 'MultiVar',
     NO_BUILD => 'YesNoVar',
-    NO_REGRESS => 'YesNoVar',
+    NO_TEST => 'YesNoVar',
     NOT_FOR_ARCHS => 'NotForArchListVar',
     ONLY_FOR_ARCHS => 'OnlyForArchListVar',
-    PERMIT_DISTFILES_CDROM => 'YesKeyVar',
     PERMIT_DISTFILES_FTP=> 'YesKeyVar',
     PERMIT_PACKAGE_CDROM => 'YesKeyVar',
     PERMIT_PACKAGE_FTP=> 'YesKeyVar',
     PKGNAME => 'AnyVar',
     PKGSPEC => 'AnyVar',
+    PREFIX => 'PrefixKeyVar',
     PKG_ARCH => 'ArchKeyVar',
     PSEUDO_FLAVOR => 'AnyVar',
     PSEUDO_FLAVORS => 'PseudoFlavorsVar',
-    REGRESS_DEPENDS => 'RegressDependsVar',
-    REGRESS_IS_INTERACTIVE => 'AnyVar',
+    TEST_DEPENDS => 'TestDependsVar',
+    TEST_IS_INTERACTIVE => 'AnyVar',
     REVISION => 'AnyVar',
+    README => 'ReadmeVar',
     RUN_DEPENDS => 'RunDependsVar',
     SEPARATE_BUILD => 'YesKeyVar',
     SHARED_LIBS => 'SharedLibsVar',
@@ -92,6 +91,13 @@ our $vars = {
     USE_LIBTOOL => 'YesNoGnuVar',
     VMEM_WARNING => 'YesNoVar',
     WANTLIB => 'WantlibVar',
+    # XXX those variables are part of the dump for dpb, but really should
+    # not end up in sqlports. But make sure we know about them.
+    BUILD_PACKAGES => 'IgnoredVar',
+    CHECKSUM_FILE => 'IgnoredVar',
+    FETCH_MANUALLY => 'IgnoredVar',
+    FLAVOR => 'IgnoredVar',
+    MISSING_FILES => 'IgnoredVar',
 };
 
 our $unknown = {};
@@ -126,7 +132,11 @@ sub variables
 sub value
 {
 	my ($self, $name) = @_;
-	return $self->{vars}{$name}->value;
+	if (defined $self->{vars}{$name}) {
+		return $self->{vars}{$name}->value;
+	} else {
+		return "";
+	}
 }
 
 sub reclaim

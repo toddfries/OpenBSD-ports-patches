@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2011/11/04 08:16:24 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2013/05/30 10:51:23 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -15,19 +15,15 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pysqlite/}
 HOMEPAGE=	http://pysqlite.org/
 
 # BSD-like
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 LIB_DEPENDS =	databases/sqlite
 WANTLIB +=	sqlite>=8.6 ${MODPY_WANTLIB}
 
 MODULES=	lang/python
 
-do-regress: fake
+do-test: fake
 	@cd ${WRKSRC}/test && ${SETENV} PYTHONPATH=${WRKINST}${MODPY_SITEPKG} \
 		${MODPY_BIN} ./all_tests.py
 
 .include <bsd.port.mk>
-

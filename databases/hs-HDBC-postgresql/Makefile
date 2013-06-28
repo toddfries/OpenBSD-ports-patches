@@ -1,20 +1,17 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/28 23:24:28 kili Exp $
+# $OpenBSD: Makefile,v 1.14 2013/03/11 02:52:05 espie Exp $
 
 COMMENT=		postgresql driver for HDBC
 
 DISTNAME=		HDBC-postgresql-2.3.2.1
-REVISION=		0
+REVISION=		3
 CATEGORIES=		databases
 
-HOMEPAGE=		http://software.complete.org/hdbc-postgresql
+HOMEPAGE=		https://github.com/hdbc/hdbc-postgresql/wiki
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES=		lang/ghc
 

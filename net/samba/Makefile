@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.172 2012/11/04 00:22:50 brad Exp $
+# $OpenBSD: Makefile,v 1.186 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		SMB and CIFS client and server for UNIX
 COMMENT-docs=		additional documentation and examples for Samba
 
-DISTNAME=		samba-3.6.9
+DISTNAME=		samba-3.6.15
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-docs=	${DISTNAME:S/-/-docs-/}
 FULLPKGPATH-docs=	net/samba,-docs
+REVISION-main=		1
 
 SHARED_LIBS=		smbclient	3.0 \
 			smbsharemodes	1.0 \
@@ -23,12 +24,9 @@ MAINTAINER=		Ian McWilliam <kaosagnt@tpg.com.au>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM=		Yes
-PERMIT_PACKAGE_FTP=		Yes
-PERMIT_DISTFILES_CDROM=		Yes
-PERMIT_DISTFILES_FTP=		Yes
 
-WANTLIB += asn1 c crypto cups execinfo gssapi iniparser krb5 m ncurses
-WANTLIB += popt pthread readline ssl talloc tdb z
+WANTLIB += c cups execinfo iniparser ncurses popt pthread readline talloc
+WANTLIB += tdb z
 
 MASTER_SITES=	http://download.samba.org/samba/ftp/ \
 		http://us2.samba.org/samba/ftp/ \
@@ -60,9 +58,10 @@ USE_GMAKE=		Yes
 USE_GROFF=		Yes
 #SEPARATE_BUILD=		Yes
 CONFIGURE_STYLE=	gnu
-AUTOCONF_VERSION=	2.68
+AUTOCONF_VERSION=	2.69
 
 CONFIGURE_ARGS=		--disable-fam \
+			--without-pam \
 			--libdir="${PREFIX}/lib/samba" \
 			--sbindir="${PREFIX}/libexec" \
 			--with-configdir="${CONFDIR}" \
@@ -93,18 +92,18 @@ FLAVOR?=
 
 MULTI_PACKAGES=		-main -docs
 
-.if ${FLAVOR:L:Mldap} && ${FLAVOR:L:Mads}
+.if ${FLAVOR:Mldap} && ${FLAVOR:Mads}
 ERRORS+= "Fatal: ldap and ads flavors conflict"
 .endif
 
-.if ${FLAVOR:L:Mldap} || ${FLAVOR:L:Mads}
+.if ${FLAVOR:Mldap} || ${FLAVOR:Mads}
 LIB_DEPENDS+=	databases/openldap
 WANTLIB +=	ldap lber
 .else
 CONFIGURE_ARGS+=	--without-ldap
 .endif
 
-.if ${FLAVOR:L:Mads}
+.if ${FLAVOR:Mads}
 CONFIGURE_ARGS+=	--with-krb5="${WRKDIR}/usr"
 
 # Merged build cruft needs loads of work. Disable until ready.
@@ -113,7 +112,8 @@ CONFIGURE_ARGS+=	--with-krb5="${WRKDIR}/usr"
 #MODULES+=		lang/python
 #MODPY_RUNDEP=		No
 
-WANTLIB+=		com_err
+WANTLIB += asn1 crypto gssapi heimbase krb5 roken
+WANTLIB += wind com_err
 .else
 CONFIGURE_ARGS+=	--without-ads
 .endif
@@ -125,9 +125,9 @@ RUN_DEPENDS-docs=
 
 # REGRESSION testing is currently borked. Builds, runs
 # tests fail. Fix one day.
-NO_REGRESS=		Yes
-#REGRESS_TARGET=	test
-#.ifmake regress
+NO_TEST=		Yes
+#TEST_TARGET=	test
+#.ifmake test
 #CONFIGURE_ARGS+=	--enable-socket-wrapper \
 #			--enable-nss-wrapper
 #.endif
@@ -150,14 +150,13 @@ post-patch:
 pre-configure:
 	@${SUBST_CMD} ${SAMBA_MANPAGES}/swat.8
 
-post-extract:
-	@cp ${FILESDIR}/krb5-config ${WRKDIR}/bin
-	@chmod a+x ${WRKDIR}/bin/krb5-config
-
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/samba/pdf
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/samba/htmldocs
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/samba
+	${INSTALL_DATA_DIR} ${PREFIX}/lib/pkgconfig
+	${INSTALL_DATA} ${WRKSRC}/pkgconfig/*.pc \
+		${PREFIX}/lib/pkgconfig
 	@cp -R ${WRKDIST}/examples/* ${PREFIX}/share/examples/samba
 	@chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/examples/samba
 	@find ${PREFIX}/share/examples/samba -type f | \

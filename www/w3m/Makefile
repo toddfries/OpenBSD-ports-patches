@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile,v 1.80 2012/02/20 18:25:47 sthen Exp $
+# $OpenBSD: Makefile,v 1.83 2013/06/01 21:06:20 kurt Exp $
 
 COMMENT=	pager/text-based web browser
 
 DISTNAME=	w3m-0.5.3
-REVISION=	1
+REVISION=	2
 CATEGORIES=	www
 HOMEPAGE=	http://w3m.sourceforge.net/
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c crypto curses gc>=3 m pthread ssl z
 
@@ -29,10 +26,10 @@ CONFIGURE_ARGS=	--disable-xface \
 		--with-termlib=curses \
 		--with-gc=${LOCALBASE}
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 USE_GROFF=	Yes
 
-.if ${FLAVOR:L:Mimage}
+.if ${FLAVOR:Mimage}
 LIB_DEPENDS+=	x11/gtk+2
 CONFIGURE_ARGS+=--with-imagelib=gtk2
 WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
@@ -45,7 +42,7 @@ WANTLIB += pthread-stubs xcb xcb-render xcb-shm
 CONFIGURE_ARGS+=--enable-image=no
 .endif
 
-.if ${FLAVOR:L:Mjapanese}
+.if ${FLAVOR:Mjapanese}
 FULLPKGNAME=	ja-${PKGNAME}${FLAVOR_EXT:S/-japanese//}
 CATEGORIES+=	japanese
 CONFIGURE_ARGS+=--enable-japanese=E

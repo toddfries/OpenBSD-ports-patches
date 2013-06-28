@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortInfo.pm,v 1.21 2012/10/11 08:05:03 espie Exp $
+# $OpenBSD: PortInfo.pm,v 1.27 2013/06/25 19:48:14 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -204,7 +204,7 @@ sub quickie
 	return 1;
 }
 
-package AddRegressDepends;
+package AddTestDepends;
 our @ISA = qw(AddDepends);
 sub extra
 {
@@ -255,16 +255,17 @@ my %adder = (
 	MASTER_SITES7 => 'AddOrderedList',
 	MASTER_SITES8 => 'AddOrderedList',
 	MASTER_SITES9 => 'AddOrderedList',
+	MULTI_PACKAGES => 'AddList',
 	PERMIT_DISTFILES_FTP => 'AddNegative',
 	PERMIT_DISTFILES_CDROM => 'AddNegative',
-# not yet used, provision for regression
-	REGRESS_DEPENDS => "AddRegressDepends",
-	NO_REGRESS => "AddYesNo",
-	REGRESS_IS_INTERACTIVE => "AddYesNo",
+# not yet used, provision for regression tests
+	TEST_DEPENDS => "AddTestDepends",
+	NO_TEST => "AddYesNo",
+	TEST_IS_INTERACTIVE => "AddYesNo",
 # extra stuff we're generating
 	DEPENDS => "AddDepends",	# all BUILD_DEPENDS/LIB_DEPENDS
 	EXTRA => "Extra",	# extract stuff and things in DEPENDS
-	EXTRA2 => "Extra",	# extract stuff and things in REGRESS_DEPENDS
+	EXTRA2 => "Extra",	# extract stuff and things in TEST_DEPENDS
 	BEXTRA => "Extra",	# EXTRA moved from todo to done
 	BDEPENDS => "AddDepends",# DEPENDS moved from todo to done
 	RDEPENDS => "AddDepends",# RUN_DEPENDS moved from todo to done
@@ -302,13 +303,25 @@ sub dump
 }
 
 my $string = "ignored already";
-my $s2 = "stub name";
+my $s2 = "stub_name";
+my $stub_name = bless(\$s2, "AddInfoShow");
 my $stub_info = bless { IGNORE => bless(\$string, "AddIgnore"),
-		FULLPKGNAME => bless(\$s2, "AddInfoShow")}, __PACKAGE__;
+		FULLPKGNAME => $stub_name}, __PACKAGE__;
 
 sub stub
 {
 	return $stub_info;
+}
+
+sub stub_name
+{
+	my $self = shift;
+	$self->{FULLPKGNAME} = $stub_name;
+}
+
+sub is_stub
+{
+	return shift eq $stub_info;
 }
 
 use Data::Dumper;
@@ -333,6 +346,39 @@ sub fullpkgname
 
 	return (defined $self->{FULLPKGNAME}) ?
 	    $self->{FULLPKGNAME}->string : undef;
+}
+
+sub has_property
+{
+	my ($self, $name) = @_;
+	return defined $self->{DPB_PROPERTIES} &&
+	    $self->{DPB_PROPERTIES}{$name};
+}
+
+sub solve_depends
+{
+	my $self = shift;
+	if (!defined $self->{solved}) {
+		my $dep = {};
+		for my $k (qw(DEPENDS BDEPENDS)) {
+		
+			if (exists $self->{$k}) {
+				for my $d (values %{$self->{$k}}) {
+					$dep->{$d->fullpkgname} = 1;
+				}
+			}
+			next unless exists $self->{BEXTRA};
+			for my $two (values %{$self->{BEXTRA}}) {
+				next unless exists $two->{info}{$k};
+				for my $d (values %{$two->{info}{$k}}) {
+					$dep->{$d->fullpkgname} = 1;
+				}
+			}
+		}
+		bless $dep, 'AddList';
+		$self->{solved} = $dep;
+	}
+	return $self->{solved};
 }
 
 1;

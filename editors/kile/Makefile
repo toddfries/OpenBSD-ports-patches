@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.19 2011/09/16 09:48:08 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2013/06/26 08:55:38 sthen Exp $
 
 COMMENT=	integrated LaTeX environment for KDE
 DISTNAME=	kile-2.0
-REVISION=	2
+REVISION=	4
 CATEGORIES=	editors x11/kde
 
 HOMEPAGE=	http://kile.sourceforge.net/
@@ -14,21 +14,22 @@ EXTRACT_SUFX=	.tar.bz2
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += X11 Xau Xdmcp Xext Xrender ICE SM c m pthread stdc++ util z 
-WANTLIB += fam rpcsvc art_lgpl_2 jpeg pcre pcreposix png idn 
-WANTLIB += pthread-stubs xcb DCOP kabc katepartinterfaces kdecore 
-WANTLIB += kdefx kdeprint kdesu kdeui khtml kio kjs kparts kresources 
-WANTLIB += kspell ktexteditor kutils kwalletclient vcard
+WANTLIB =	ICE SM X11 Xext Xfixes Xrender Xt art_lgpl_2 c expat
+WANTLIB +=	fam fontconfig freetype idn jpeg m pcre pcreposix png
+WANTLIB +=	pthread pthread-stubs stdc++ util xcb z
+WANTLIB +=	${KDE}/DCOP ${KDE}/kabc ${KDE}/katepartinterfaces
+WANTLIB +=	${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdeprint ${KDE}/kdesu
+WANTLIB +=	${KDE}/kdeui ${KDE}/khtml ${KDE}/kio ${KDE}/kjs
+WANTLIB +=	${KDE}/kparts ${KDE}/kresources ${KDE}/kspell ${KDE}/ktexteditor
+WANTLIB +=	${KDE}/kutils ${KDE}/kwalletclient ${KDE}/vcard
 
-LIB_DEPENDS=	x11/kde/libs3
-	
 RUN_DEPENDS=	x11/kde/graphics3 \
 		print/texlive/base \
-		devel/desktop-file-utils
+		devel/desktop-file-utils \
+		x11/gtk+2,-guic
+
+LIB_DEPENDS=	x11/kde/libs3
 
 MODULES=	x11/kde devel/gettext
 
@@ -36,11 +37,9 @@ MAKE_ENV=	KDEDIR="${LOCALBASE}"
 MAKE_FLAGS=	${MODKDE_MAKE_FLAGS}
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=autoconf
 AUTOCONF_VERSION=2.61
-USE_LIBTOOL=	Yes
 
 MODGNU_CONFIG_GUESS_DIRS=${MODKDE_CONFIG_GUESS_DIRS}
 

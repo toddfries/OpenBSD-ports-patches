@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2010/11/17 08:05:17 espie Exp $
+# $OpenBSD: Makefile,v 1.26 2013/06/03 22:47:02 naddy Exp $
 
 COMMENT-main=		programming language with generators, X11 and more
 COMMENT-main-no_x11=	programming language with generators
@@ -14,14 +14,12 @@ DISTFILES=	icon.v943src.tgz
 MULTI_PACKAGES=		-main -compiler
 
 PKGNAME-main=		icon-interp-${VERSION}
-REVISION-main =		2
+REVISION-main =		3
+REVISION-compiler =	0
 PKGNAME-compiler= 	icon-compiler-${VERSION}
 
 # Public domain
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 HOMEPAGE=	http://www.cs.arizona.edu/icon/
 
@@ -42,7 +40,7 @@ LIBDIR=${TRUEPREFIX}/lib/icon
 WANTLIB-compiler=	c
 WANTLIB-main=		c m pthread
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_TARGET=	Configure
 .else
 CONFIGURE_TARGET=	X-Configure
@@ -65,7 +63,7 @@ post-build:
 do-install:
 	sed -e 's,@PREFIX@,${TRUEPREFIX},' \
 	    ${FILESDIR}/icont.template >${WRKBUILD}/icont
-	${INSTALL_DATA_DIR} ${WRKBUILD}/bin/rt.h ${WRKINST}${LIBDIR}
+	${INSTALL_DATA_DIR} ${WRKINST}${LIBDIR}
 	${INSTALL_PROGRAM} ${WRKBUILD}/bin/icont ${WRKINST}${LIBDIR}
 	${INSTALL_PROGRAM} ${WRKBUILD}/bin/iconx ${PREFIX}/bin
 	${INSTALL_PROGRAM} ${WRKBUILD}/bin/iconc ${PREFIX}/bin
@@ -85,9 +83,9 @@ do-install:
 	    ${INSTALL_DATA} ${WRKBUILD}/ipl/cfuncs/libcfunc.so ${PREFIX}/lib; \
 	fi
 
-REGRESS_FLAGS=	HOME=/
+TEST_FLAGS=	HOME=/
 
 # Iconc does not pass quite a few tests currently...
-REGRESS_TARGET=	Test-icont #Test-iconc
+TEST_TARGET=	Test-icont #Test-iconc
 
 .include <bsd.port.mk>

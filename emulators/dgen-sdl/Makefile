@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.4 2012/03/13 11:15:02 edd Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/23 02:12:21 edd Exp $
 
 COMMENT =		Sega Megadrive/Genesis emulator
-DISTNAME =		dgen-sdl-1.30
+DISTNAME =		dgen-sdl-1.32
 CATEGORIES =		emulators games
 HOMEPAGE =		http://dgen.sourceforge.net/
 MAINTAINER =		Edd Barrett <edd@openbsd.org>
@@ -19,8 +19,6 @@ FLAVOR ?=
 #  - hqx LGPL
 PERMIT_PACKAGE_CDROM =	No
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =No
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		GL SDL archive c m pthread stdc++
 

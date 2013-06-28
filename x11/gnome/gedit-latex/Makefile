@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2012/09/01 14:36:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2013/05/30 13:09:21 ajacoutot Exp $
 
 COMMENT=	LaTeX plugin for Gedit
 
 GNOME_PROJECT=	gedit-latex
 GNOME_VERSION=	3.4.1
-REVISION=	0
+REVISION=	4
 
 CATEGORIES=	editors print
 
@@ -12,19 +12,20 @@ HOMEPAGE=	https://live.gnome.org/Gedit/LaTeXPlugin
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	x11/gnome \
 		lang/python \
 		devel/dconf
 
+MODPY_VERSION=	${MODPY_DEFAULT_VERSION_3}
+
 BUILD_DEPENDS=	devel/gettext \
-		x11/gnome/gedit>=3.2.0
-RUN_DEPENDS=	devel/gettext \
+		x11/gnome/gedit
+
+RUN_DEPENDS=	devel/py-gobject3${MODPY_FLAVOR} \
+		devel/gettext \
 		textproc/rubber \
-		x11/gnome/gedit>=3.2.0
+		x11/gnome/gedit
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/latex/latex/environment.py

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.49 2011/09/16 10:31:22 espie Exp $
+# $OpenBSD: Makefile,v 1.53 2013/05/09 18:47:53 jasper Exp $
 
 COMMENT=	sendmail milter to scan messages for viruses and spam
 
-DISTNAME=	smtp-vilter-1.3.6
-REVISION=	14
+DISTNAME=	smtp-vilter-1.3.8
+REVISION=	0
 
 CATEGORIES=    	mail
 
@@ -13,21 +13,18 @@ SHARED_ONLY=	Yes
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m pthread milter
 
 MASTER_SITES=  	${HOMEPAGE}
 EXTRACT_SUFX=	.tgz
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 FLAVORS=	ldap
 FLAVOR?=
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 MAKE_FLAGS+=	-DENABLE_LDAP
 LIB_DEPENDS+=	databases/openldap
 WANTLIB += ldap_r lber

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.6 2012/10/25 14:01:07 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.9 2013/06/20 15:23:54 jasper Exp $
 include/gstreamer-${VERSION}/gst/basecamerabinsrc/
 include/gstreamer-${VERSION}/gst/basecamerabinsrc/gstbasecamerasrc.h
 include/gstreamer-${VERSION}/gst/basecamerabinsrc/gstcamerabin-enum.h
@@ -45,8 +45,10 @@ lib/gstreamer-${VERSION}/libgstjpegformat.so
 lib/gstreamer-${VERSION}/libgstliveadder.so
 lib/gstreamer-${VERSION}/libgstmms.so
 lib/gstreamer-${VERSION}/libgstmpegpsdemux.so
+lib/gstreamer-${VERSION}/libgstmpegpsmux.so
 lib/gstreamer-${VERSION}/libgstmpegtsdemux.so
 lib/gstreamer-${VERSION}/libgstmpegtsmux.so
+lib/gstreamer-${VERSION}/libgstopus.so
 lib/gstreamer-${VERSION}/libgstpcapparse.so
 lib/gstreamer-${VERSION}/libgstpnm.so
 lib/gstreamer-${VERSION}/libgstrawparse.so
@@ -57,6 +59,7 @@ lib/gstreamer-${VERSION}/libgstscaletempoplugin.so
 lib/gstreamer-${VERSION}/libgstschro.so
 lib/gstreamer-${VERSION}/libgstsdpelem.so
 lib/gstreamer-${VERSION}/libgstsegmentclip.so
+lib/gstreamer-${VERSION}/libgstshm.so
 lib/gstreamer-${VERSION}/libgstsiren.so
 lib/gstreamer-${VERSION}/libgstsmooth.so
 lib/gstreamer-${VERSION}/libgstsoundtouch.so
@@ -120,6 +123,7 @@ share/locale/eu/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
 share/locale/fi/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
 share/locale/fr/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
 share/locale/gl/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
+share/locale/hr/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
 share/locale/hu/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
 share/locale/id/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo
 share/locale/it/LC_MESSAGES/gst-plugins-bad-${VERSION}.mo

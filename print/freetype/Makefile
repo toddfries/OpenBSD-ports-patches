@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2012/08/18 12:41:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2013/03/21 08:46:35 ajacoutot Exp $
 
 COMMENT-main=	free and portable TrueType font rendering engine
 COMMENT-doc=	documentation for FreeType
@@ -19,13 +19,9 @@ HOMEPAGE=	http://www.freetype.org/
 # See http://www.freetype.org/patents.html
 # bytecode interpreter disabled
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		m
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu dest
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}

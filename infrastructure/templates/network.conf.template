@@ -1,4 +1,4 @@
-# $OpenBSD: network.conf.template,v 1.175 2012/09/25 20:52:15 sthen Exp $
+# $OpenBSD: network.conf.template,v 1.182 2013/04/06 19:57:48 rpe Exp $
 
 #
 # NEVER EDIT THIS FILE DIRECTLY!!!!
@@ -64,7 +64,7 @@ MASTER_SITE_GNU+=	\
 	http://ftp.ibiblio.org/pub/mirrors/gnu/ftp/gnu/ \
 	http://ftp.kddilabs.jp/GNU/ \
 	ftp://ftp.sunet.se/pub/gnu/ \
-	ftp://ftp.nluug.nl/pub/gnu/
+	http://ftp.nluug.nl/pub/gnu/
 
 MASTER_SITE_GCC+=	\
 	http://ftp.nluug.nl/languages/gcc/ \
@@ -81,21 +81,16 @@ MASTER_SITE_GCC+=	\
 	ftp://ftp.ntua.gr/pub/gnu/gcc/ \
 	http://robotlab.itk.ppke.hu/gcc/ \
 	ftp://ftp.dti.ad.jp/pub/lang/gcc/ \
-	ftp://ftp.nluug.nl/mirror/languages/gcc \
 	http://gcc.fyxm.net/ \
 	http://www.mirrorservice.org/sites/sourceware.org/pub/gcc/ \
-	http://gcc-uk.internet.bs/ \
-	http://mirrorpool.in/Gcc/ \
-	http://mirror-fpt-telecom.fpt.net/gcc/
+	http://gcc-uk.internet.bs/
 
 MASTER_SITE_XCONTRIB+=	\
 	http://ftp.gwdg.de/pub/x11/x.org/contrib/ \
 	ftp://ftp.x.org/contrib/ \
 	http://ftp.sunet.se/pub/X11/ftp.x.org/contrib/ \
 	http://ftp.kddilabs.jp/X11/ftp.x.org/contrib/ \
-	ftp://ftp.uvsq.fr/pub/X11/x.org/contrib/ \
-	http://ftp.chg.ru/pub/X11/x.org/contrib/ \
-	ftp://sunsite.sut.ac.jp/pub/archives/X11/contrib/
+	ftp://ftp.uvsq.fr/pub/X11/x.org/contrib/
 
 MASTER_SITE_R5CONTRIB+=	\
 	${MASTER_SITE_XCONTRIB:=../R5contrib/}
@@ -111,10 +106,9 @@ MASTER_SITE_SUNSITE+=	\
 	ftp://ftp.cs.tu-berlin.de/pub/linux/Mirrors/sunsite.unc.edu/ \
 	ftp://ftp.uvsq.fr/pub/linux/sunsite/ \
 	ftp://ftp.nvg.ntnu.no/pub/mirrors/metalab.unc.edu/ \
-	ftp://ftp.icm.edu.pl/vol/rzm1/linux-sunsite/ \
+	http://ftp.icm.edu.pl/vol/rzm1/linux-sunsite/ \
 	ftp://ftp.cse.cuhk.edu.hk/pub/Linux/ \
-	http://ftp.nluug.nl/metalab/ \
-	http://ftp.chg.ru/pub/Linux/sunsite/
+	http://ftp.nluug.nl/metalab/
 
 # XXX  We ought to be using full logical directory names in all the
 # sourceforge-hosted ports, rather than relying on the redirector to
@@ -130,16 +124,12 @@ MASTER_SITE_SOURCEFORGE_JP+=	\
 
 MASTER_SITE_GNOME+=	\
 	http://ftp.acc.umu.se/pub/GNOME/ \
-	http://ftp.belnet.be/mirror/ftp.gnome.org/ \
+	http://ftp.belnet.be/ftp.gnome.org/ \
 	http://ftp.df.lth.se/pub/gnome/ \
 	http://gnome.mirrors.pair.com/ \
-	http://linorg.usp.br/gnome/ \
-	http://mirror.aarnet.edu.au/pub/GNOME/ \
 	http://ftp.gnome.org/pub/GNOME/ \
 	ftp://ftp.cse.buffalo.edu/pub/Gnome/ \
-	ftp://gnome.mirrors.pair.com/ \
-	ftp://ftp.nara.wide.ad.jp/pub/X11/GNOME/ \
-	ftp://ftp.gnome.org/pub/GNOME/
+	ftp://ftp.nara.wide.ad.jp/pub/X11/GNOME/
 
 # mirror survey: http://www.cs.uu.nl/stats/mirmon/cpan.html
 MASTER_SITE_PERL_CPAN+=	\
@@ -159,7 +149,6 @@ MASTER_SITE_TEX_CTAN+=	\
 	http://ftp.kddilabs.jp/CTAN/ \
 	http://mirrors.dotsrc.org/ctan/ \
 	http://ctan.tug.org/tex-archive/ \
-	http://ftp.chg.ru/pub/TeX/CTAN/ \
 	http://ftp.dante.de/tex-archive/ \
 	ftp://ftp.uvsq.fr/pub/TeX/CTAN/ \
 	http://ftp.sunet.se/pub/text-processing/TeX/ \
@@ -171,10 +160,9 @@ MASTER_SITE_KDE+=	\
 	http://ftp.SURFnet.nl/windowing/kde/ \
 	http://ftp.tuniv.szczecin.pl/pub/kde/ \
 	http://ftp.kddilabs.jp/X11/kde/ \
-	http://ftp.uvsq.fr/pub/X11/kde/ \
+	ftp://ftp.uvsq.fr/pub/X11/kde/ \
 	http://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/ \
 	http://ftp.sunet.se/pub/X11/kde/ \
-	http://ftp.chg.ru/pub/X11/kde/ \
 	ftp://ftp.kde.org/pub/kde/ \
 	ftp://ftp.fu-berlin.de/pub/unix/X11/gui/kde/
 
@@ -199,27 +187,17 @@ MASTER_SITE_WINDOWMAKER+=	\
 
 MASTER_SITE_FREEBSD_LOCAL+=	\
 	http://ftp.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
+	http://ftp.se.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
+	http://ftp.uk.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
 	ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
-	ftp://ftp.se.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
 	ftp://ftp.jp.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
-	ftp://ftp.uk.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/ \
-	http://ftp.ru.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/
+	ftp://ftp.ru.FreeBSD.org/pub/FreeBSD/ports/local-distfiles/
 
 MASTER_SITE_PACKETSTORM+=	\
-	http://packetstorm.linuxsecurity.com/ \
-	http://packetstorm.orion-hosting.co.uk/ \
-	http://packetstormsecurity.nl/ \
-	http://packetstorm.setnine.com/ \
-	http://packetstorm.wowhacker.com/ \
-	http://packetstorm.offensive-security.com/ \
-	http://packetstorm.austin2600.net/ \
-	http://packetstorm.sub7.be/ \
-	http://packetstorm.foofus.com/ \
-	http://packetstorm.ussrback.com/ \
-	http://packetstorm.unixteacher.org/ \
-	http://packetstormsecurity.org/ \
-	http://packetstorm.codar.com.br/ \
-	http://packetstorm.rlz.cl/
+	http://dl.packetstormsecurity.net/ \
+	http://packetstorm.igor.onlinedirect.bg/ \
+	http://packetstorm.interhost.co.il/ \
+	http://packetstorm.wowhacker.com/
 
 MASTER_SITE_APACHE+= \
 	http://www.reverse.net/pub/apache/ \
@@ -233,27 +211,23 @@ MASTER_SITE_APACHE+= \
 	http://www.apache.org/dist/
 
 MASTER_SITE_BERLIOS+=	\
-	http://download.berlios.de/ \
-	http://download2.berlios.de/ \
-	http://spacehopper.org/mirrors/berlios/
+	http://download.berlios.de/
 
 MASTER_SITE_MYSQL+= \
+	http://mirror.switch.ch/mirror/mysql/ \
 	http://mirrors.ukfast.co.uk/sites/ftp.mysql.com/ \
-	ftp://ftp.easynet.be/mysql/ \
-	ftp://ftp.gwdg.de/pub/misc/mysql/ \
-	ftp://ftp.fh-wolfenbuettel.de/pub/database/mysql/ \
-	ftp://ftp.fi.muni.cz/pub/mysql/ \
-	http://mysql.mirrors.cybercity.dk/ \
+	http://ftp.easynet.be/mysql/ \
+	http://ftp.gwdg.de/pub/misc/mysql/ \
+	http://ftp.fh-wolfenbuettel.de/pub/database/mysql/ \
+	http://ftp.fi.muni.cz/pub/mysql/ \
 	http://mirrors.ntua.gr/MySQL/ \
-	ftp://ftp.ntua.gr/pub/databases/mysql/ \
+	http://ftp.ntua.gr/pub/databases/mysql/ \
 	http://mysql.sote.hu/ \
-	ftp://ftp.rhnet.is/pub/mysql/ \
-	ftp://mirror.switch.ch/mirror/mysql/ \
-	ftp://mirror.services.wisc.edu/mirrors/mysql/ \
 	http://mysql.mirrors.pair.com/ \
-	ftp://ftp.linorg.usp.br/mysql/ \
-	ftp://ftp.cbn.net.id/mirror/mysql/ \
-	http://download.softagency.net/MySQL/
+	http://linorg.usp.br/mysql/ \
+	http://download.softagency.net/MySQL/ \
+	ftp://mirror.switch.ch/mirror/mysql/ \
+	ftp://ftp.cbn.net.id/mirror/mysql/
 
 MASTER_SITE_PYPI +=	\
 	http://b.pypi.python.org/packages/source/ \
@@ -272,12 +246,11 @@ MASTER_SITE_NPM += \
 MASTER_SITE_ISC +=	\
 	http://ftp.isc.org/isc/ \
 	http://www.mirrorservice.org/sites/ftp.isc.org/isc/ \
-	http://ftp.arcane-networks.net/pub/mirrors/ftp.isc.org/isc/ \
 	http://ftp.sunet.se/pub/network/isc/ \
 	http://ftp.funet.fi/pub/mirrors/ftp.isc.org/isc/ \
 	http://ftp.iij.ad.jp/pub/network/isc/ \
 	ftp://ftp.isc.org/isc/ \
-	ftp://ftp.epix.net/pub/isc/ \
+	ftp://ftp.arcane-networks.net/pub/mirrors/ftp.isc.org/isc/ \
 	ftp://ftp.nominum.com/pub/isc/
 
 MASTER_SITE_DEBIAN += \

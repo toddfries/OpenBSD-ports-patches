@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2012/09/17 12:31:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.14 2013/06/28 12:05:18 espie Exp $
 
 COMMENT=		open-source JPEG 2000 codec library
 
 DISTNAME=		openjpeg-1.5.0
-REVISION=		3
+REVISION=		4
 
 SHARED_LIBS +=	openjpeg             5.0      # 6.0
 
@@ -15,9 +15,6 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c jpeg lcms2 m png tiff z
 
@@ -25,10 +22,13 @@ MASTER_SITES=		http://openjpeg.googlecode.com/files/
 
 CONFIGURE_STYLE=	gnu
 SEPARATE_BUILD=		Yes
-USE_LIBTOOL=		Yes
 
 LIB_DEPENDS=		graphics/lcms2 \
 			graphics/png
+
+# LIB_DEPENDS do not propagate on non shared architectures
+LIB_DEPENDS +=		graphics/jpeg \
+			graphics/tiff
 
 pre-patch:
 	perl -i -pe 's/\r$$//; s/\t*$$//;' ${WRKSRC}/libopenjpeg/opj_malloc.h

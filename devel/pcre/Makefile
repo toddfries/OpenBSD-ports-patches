@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.45 2012/09/26 15:04:09 sthen Exp $
+# $OpenBSD: Makefile,v 1.51 2013/06/11 19:03:00 robert Exp $
 
 COMMENT=	perl-compatible regular expression library
 
-DISTNAME=	pcre-8.31
+DISTNAME=	pcre-8.33
 
 SHARED_LIBS +=  pcre                 3.0      # 0.1
 SHARED_LIBS +=  pcre16               0.0      # 0.0
@@ -21,13 +21,9 @@ MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c curses m readline stdc++
 
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \

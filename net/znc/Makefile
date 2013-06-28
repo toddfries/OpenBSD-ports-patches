@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.15 2012/04/28 09:33:58 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2013/04/01 14:30:32 brad Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	advanced IRC bouncer
 
-DISTNAME=	znc-0.206
+DISTNAME=	znc-1.0
+REVISION=	0
 CATEGORIES=	net
 MASTER_SITES=	${HOMEPAGE}releases/
 
@@ -14,22 +15,17 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	c cares crypto m ssl stdc++
-
-LIB_DEPENDS=	net/libcares
+WANTLIB=	c crypto m ssl stdc++
 
 MAKE_FLAGS=	VERBOSE=1
 
 SEPARATE_BUILD=	Yes
 USE_GMAKE=	Yes
-CONFIGURE_STYLE= gnu
+CONFIGURE_STYLE= autoconf
+AUTOCONF_VERSION= 2.68
 CONFIGURE_ARGS= --disable-optimization
-CONFIGURE_ENV=	ac_cv_path_GNUMAKE=gmake
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

@@ -1,20 +1,15 @@
-# $OpenBSD: Makefile,v 1.31 2011/09/16 12:29:17 espie Exp $
+# $OpenBSD: Makefile,v 1.33 2013/03/11 11:46:17 espie Exp $
 
 COMMENT=		color vt102 terminal emulator with transparency support
 
 DISTNAME=		wterm-6.2.9
-REVISION=		1
+REVISION=		2
 CATEGORIES=		x11
-
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
 
 HOMEPAGE=		http://www.wterm.org/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		ICE SM X11 Xpm c util
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=wterm/}
@@ -23,7 +18,7 @@ BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		x11/windowmaker>=0.50.0
 
 USE_GROFF =		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--enable-utmp --enable-wtmp \
 			--with-xpm --enable-xpm-background --enable-transparency \

@@ -1,20 +1,15 @@
-# $OpenBSD: Makefile,v 1.11 2010/12/03 11:46:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/24 14:46:27 benoit Exp $
 
 COMMENT=		perl module for formatting plaintext
 
 MODULES=		cpan
-DISTNAME=		Text-Autoformat-1.668001
-REVISION=		0
+DISTNAME =		Text-Autoformat-1.669002
 CATEGORIES=		textproc
-USE_GROFF =		Yes
 
 MAINTAINER=		Sam Smith <s@msmith.net>
 
 # Artistic
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 RUN_DEPENDS=  		textproc/p5-Text-Reform
 

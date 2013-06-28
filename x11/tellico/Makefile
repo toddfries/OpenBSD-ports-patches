@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.24 2012/08/28 19:13:12 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2013/06/24 15:53:39 zhuk Exp $
 
 COMMENT=	organizer for book/dvd/music collections
 
 DISTNAME=	tellico-1.3.6
-REVISION=	6
+REVISION=	7
 
 CATEGORIES=	x11 databases
 
@@ -14,21 +14,24 @@ MAINTAINER=	Andreas Bihlmaier <andreas.bihlmaier@gmx.de>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB+=	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c
-WANTLIB+=	exslt gcrypt gpg-error idn jpeg m pcre pcreposix
-WANTLIB+=	png pthread stdc++ util xml2 xslt z fam
-WANTLIB+=	expat fontconfig freetype pthread-stubs xcb
-WANTLIB+=	poppler
+WANTLIB =  GL ICE SM X11 Xcursor Xdamage Xext Xfixes Xft Xi Xinerama
+WANTLIB += Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2 c drm exempi expat
+WANTLIB += exslt fam fontconfig freetype gcrypt gpg-error idn jpeg
+WANTLIB += lcms lcms2 m mng openjpeg pcre pcreposix png poppler
+WANTLIB += poppler-qt>=3 pthread stdc++ tag tiff util xcb xml2 xslt
+WANTLIB += yaz z 
+WANTLIB += ${KDE}/DCOP ${KDE}/kabc ${KDE}/kcal ${KDE}/kcddb
+WANTLIB += ${KDE}/kdecore>=6 ${KDE}/kdefx ${KDE}/kdeprint ${KDE}/kdesu
+WANTLIB += ${KDE}/kdeui ${KDE}/khtml ${KDE}/kio ${KDE}/kjs
+WANTLIB += ${KDE}/kmime ${KDE}/knewstuff ${KDE}/kparts
+WANTLIB += ${KDE}/kresources ${KDE}/ktnef ${KDE}/kutils
+WANTLIB += ${KDE}/kwalletclient ${KDE}/vcard
 
 MODULES=	x11/kde \
 		lang/python \
 		devel/gettext
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 CONFIGURE_STYLE=gnu
 
@@ -54,11 +57,6 @@ LIB_DEPENDS=	${MODQT_LIB_DEPENDS} \
 		audio/taglib \
 		net/yaz
 
-WANTLIB +=	exempi kcal ktnef kmime kcddb \
-		kdecore>=6 DCOP kabc kdefx kdeprint kdesu kdeui khtml \
-		kio kjs knewstuff kparts kresources kutils kwalletclient \
-		vcard lcms poppler-qt>=3 tag yaz
-
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

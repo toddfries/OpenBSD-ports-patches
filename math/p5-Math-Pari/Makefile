@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2012/10/29 15:19:03 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/20 22:54:27 sthen Exp $
 
 # Lacks p5-Term-Gnuplot regress dependency!
 
@@ -7,16 +7,12 @@ SHARED_ONLY=	Yes
 COMMENT=	Perl interface to libPARI and GP
 
 MODULES=	cpan
-DISTNAME=	Math-Pari-2.010800
-REVISION=	3
+# beware may need EPOCH if updating
+DISTNAME=	Math-Pari-2.01080605
 CATEGORIES=	math
-USE_GROFF =	Yes
 
 # Perl
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m
 

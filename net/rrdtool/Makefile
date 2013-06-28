@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2012/10/15 15:18:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.71 2013/06/04 18:41:54 naddy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -28,14 +28,10 @@ HOMEPAGE=	http://oss.oetiker.ch/rrdtool/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${HOMEPAGE}pub/
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
 MULTI_PACKAGES=	-main -perl -python -ruby
@@ -49,7 +45,6 @@ CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--enable-ruby-site-install \
 		--disable-tcl
 CPPFLAGS+=	-I${LOCALBASE}/include/libart-2.0 \
-		-I${LOCALBASE}/include/libpng \
 		-I${X11BASE}/include/ \
 		-I${X11BASE}/include/freetype2
 LDFLAGS+=	-L${LOCALBASE}/lib -L${X11BASE}/lib
@@ -71,6 +66,7 @@ LIB_DEPENDS-python=	rrdtool-${VERSION}:net/rrdtool
 RUN_DEPENDS-python=	${MODPY_RUN_DEPENDS}
 MODPY_EGG_VERSION=	0.2.1
 
+MODRUBY_REV=		1.8
 LIB_DEPENDS-ruby=	rrdtool-${VERSION}:net/rrdtool \
 			${MODRUBY_LIB_DEPENDS}
 WANTLIB-ruby=		c m rrd ${MODRUBY_WANTLIB}

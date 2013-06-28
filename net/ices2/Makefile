@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2012/03/29 13:38:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/21 08:46:34 ajacoutot Exp $
 
 COMMENT=	icecast source for streaming Ogg Vorbis
 
@@ -10,9 +10,6 @@ HOMEPAGE=	http://www.icecast.org/ices.php
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://downloads.xiph.org/releases/ices/
 
@@ -21,7 +18,6 @@ AUTOMAKE_VERSION=1.9
 CONFIGURE_STYLE=autoconf automake
 CONFIGURE_ARGS=	--program-suffix=2 --disable-sun-audio
 
-USE_LIBTOOL =	Yes
 # Needs AC_PROG_LIBTOOL	
 BUILD_DEPENDS += devel/libtool
 MODULES=	converters/libiconv

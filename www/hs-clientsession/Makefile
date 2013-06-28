@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2012/10/28 23:31:33 kili Exp $
+# $OpenBSD: Makefile,v 1.8 2013/03/11 11:44:42 espie Exp $
 
 COMMENT =		securely store session data in a client-side cookie
 
 DISTNAME =		clientsession-0.8.0.1
-REVISION =		0
+REVISION =		2
 CATEGORIES =		security www
 
 MAINTAINER =		Jim Razmus II <jim@openbsd.org>, \
@@ -11,9 +11,6 @@ MAINTAINER =		Jim Razmus II <jim@openbsd.org>, \
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 
@@ -28,5 +25,8 @@ RUN_DEPENDS =		devel/hs-base64-bytestring>=0.1.1.1 \
 			security/hs-entropy>=0.2.1 \
 			security/hs-skein>=0.1,<0.2
 BUILD_DEPENDS =		${RUN_DEPENDS}
+
+# Missing dependencies
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.84 2012/07/11 22:15:00 naddy Exp $
+# $OpenBSD: Makefile,v 1.89 2013/05/07 06:53:26 jasper Exp $
 
 COMMENT=	get files from FTP, Gopher, HTTP or HTTPS servers
 
 DISTNAME=	curl-7.26.0
+REVISION=	2
 SHARED_LIBS=	curl                 23.0     # .6.0
 CATEGORIES=	net
 MASTER_SITES=	http://curl.haxx.se/download/ \
@@ -14,20 +15,17 @@ MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	devel/libidn
 WANTLIB=	c crypto idn ssl z
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-ca-bundle=/etc/ssl/cert.pem \
 		--with-libidn=${LOCALBASE} \
 		--without-libssh2
+CONFIGURE_ENV=	ac_cv_path_NROFF=/usr/bin/mandoc
 
 # speed up some time-consuming configure tests
 CONFIGURE_ENV+=curl_cv_func_select_args="int,fd_set *,struct timeval *,int"
@@ -41,6 +39,6 @@ post-install:
 		${PREFIX}/share/emacs/site-lisp
 
 # Note:
-# use ulimit -p 256 for regress
+# use ulimit -p 256 for test
 
 .include <bsd.port.mk>

@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2012/09/01 14:36:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/05/30 12:01:17 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		console jabber client
-DISTNAME=		mcabber-0.10.1
+DISTNAME=		mcabber-0.10.2
 CATEGORIES=		net
-
-REVISION=		2
 
 HOMEPAGE=		http://www.lilotux.net/~mikael/mcabber/
 
@@ -14,9 +12,6 @@ MAINTAINER=		Markus Hennecke <markus-hennecke@markus-hennecke.de>
 
 # GPLv2+ with SSL exemption
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}/files/
 EXTRACT_SUFX=		.tar.bz2
@@ -34,8 +29,8 @@ LIB_DEPENDS=		devel/glib2 \
 			security/libotr
 RUN_DEPENDS=		devel/desktop-file-utils
 
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
+LIBTOOL_FLAGS=		--tag=disable-static
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS= 	--enable-gpgme \

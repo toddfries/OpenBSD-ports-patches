@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.10 2011/09/16 09:24:50 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/11 10:50:07 espie Exp $
 
 COMMENT =		knowledge of GHC's installation directories
 
 DISTNAME =		ghc-paths-0.1.0.8
-REVISION =		0
+REVISION =		1
 CATEGORIES =		devel
 
 MAINTAINER =		Matthias Kilian <kili@openbsd.org>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 

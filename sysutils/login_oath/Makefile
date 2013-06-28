@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2011/07/17 12:06:35 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2013/05/21 10:54:44 jasper Exp $
 
 COMMENT=	authentication provider for OATH one-time passwords
 
-DISTNAME=	login_oath-0.7
+DISTNAME=	login_oath-0.8
+REVISION=	1
 CATEGORIES=	sysutils
 
 MASTER_SITES=	http://spacehopper.org/mirrors/
@@ -11,13 +12,10 @@ MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c oath util
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 LIB_DEPENDS=	security/oath-toolkit
 

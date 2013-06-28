@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.103 2012/08/18 12:41:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.109 2013/06/12 20:36:34 brad Exp $
 
 COMMENT-main=		C++ X11 GUI toolkit
 COMMENT-examples=	examples and tutorial for qt3
@@ -16,9 +16,9 @@ FULLPKGNAME-html=	qt3-html-${VERSION}
 FULLPKGPATH-html=	x11/qt3,-html
 PKGNAME-sqlite2=	qt3-sqlite2-${VERSION}
 
-REVISION-mysql= 	4
+REVISION-mysql= 	6
 REVISION-postgresql= 	4
-REVISION-main= 		6
+REVISION-main= 		7
 REVISION-html= 		1
 REVISION-examples=	1
 REVISION-sqlite2= 	4
@@ -64,9 +64,6 @@ FLAVOR?=
 
 # GPL/QPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 USE_GROFF =	Yes
 MAKE_ENV=	QTDIR="${WRKDIST}" EXTRA_SAMPLES="${EXTRA_SAMPLES}" \
@@ -89,7 +86,6 @@ CONFIGURE_ARGS=	-qt-gif -system-libmng -system-libpng -system-libjpeg -system-zl
 		-xinerama \
 		-cups \
 		-inputmethod \
-		-I${LOCALBASE}/include/libpng \
 		-I${X11BASE}/include/freetype2 \
 		-I${LOCALBASE}/include \
 		-L${WRKSRC}/lib \
@@ -97,7 +93,7 @@ CONFIGURE_ARGS=	-qt-gif -system-libmng -system-libpng -system-libjpeg -system-zl
 
 MULTI_PACKAGES+=-main -html -examples -mysql -postgresql -sqlite2
 
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 CONFIGURE_ARGS+=-debug
 PKGDEBUG=-debug
 FLAVOR += no_examples
@@ -200,14 +196,14 @@ DOCS=	FAQ LICENSE.GPL README README-QT.TXT \
 	README.immodule changes.immodule
 
 VMEM_WARNING=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 PROGRAMS3=designer findtr moc qt20fix qtrename140 uic
 PROGRAMS=assistant linguist lrelease lupdate qm2ts qmake qtconfig 
 
 post-configure:
 	perl -pi.bak -e 's,-L(\Q${WRKDIST}\E|\Q$$(LOCALBASE)\E)/lib,,' ${WRKDIST}/lib/qt-mt.pc
-.if !${FLAVOR:L:Mdebug}
+.if !${FLAVOR:Mdebug}
 	@cd ${WRKSRC} && cp -R examples examples-src
 	@find ${WRKSRC}/examples-src -name '*.orig' |xargs rm -f
 	@find ${WRKSRC}/examples-src -name '.moc' |xargs rm -rf

@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.145 2012/10/19 07:18:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.159 2013/06/20 06:54:37 ajacoutot Exp $
 
 COMMENT-main=		Common Unix Printing System
 COMMENT-libs=		CUPS libraries and headers
 
-VERSION=		1.6.1
+VERSION=		1.6.2
 DISTNAME=		cups-${VERSION}-source
 EXTRACT_SUFX=		.tar.bz2
 
-REVISION-main=		8
-REVISION-libs=		4
-
 PKGNAME-main=		cups-${VERSION}
 PKGNAME-libs=		cups-libs-${VERSION}
+
+REVISION-main=		3
+REVISION-libs=		1
 
 CATEGORIES=		print sysutils
 
@@ -27,29 +27,31 @@ MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2 - LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += asn1 crypto gssapi krb5 m pthread
-WANTLIB += ssl stdc++ z
+WANTLIB += asn1 avahi-client avahi-common crypto gssapi krb5 m pthread
+WANTLIB += com_err heimbase roken wind ssl stdc++ z
 
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += c cups cupscgi cupsimage cupsmime cupsppdc dbus-1 usb-1.0
 
-MASTER_SITES=		http://ftp.easysw.com/pub/cups/${VERSION}/ \
-			http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
-			ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${VERSION}/ \
-			ftp://ftp.easysw.com/pub/cups/${VERSION}/ \
-			ftp://ftp2.easysw.com/pub/cups/${VERSION}/ \
-			ftp://ftp3.easysw.com/pub/cups/${VERSION}/
+MASTER_SITES=		${HOMEPAGE}software/${VERSION}/
 
 WRKDIST=		${WRKDIR}/${DISTNAME:S/-source//}
 
 MULTI_PACKAGES=		-main -libs
 
+# XXX $(LIBTOOL) is hardcoded in some Makefiles even when *not* using
+# --enable-libtool-unsupported
+USE_LIBTOOL=		No
+
 BUILD_DEPENDS=		${MODGNU_AUTOMAKE_DEPENDS} \
 			${MODGNU_AUTOCONF_DEPENDS}
+
+# bootstrap prevents a cyclic dep: gtk+{2,3}->cups->avahi->gtk+{2,3}
+LIB_DEPENDS-libs=	net/avahi,no_gui,no_mono,no_qt3,no_qt4,bootstrap
+
+LIB_DEPENDS-main=	${BASE_PKGPATH},-libs=${VERSION} \
+			devel/libusb1
 
 RUN_DEPENDS-main=	print/cups-filters
 
@@ -60,10 +62,6 @@ RUN_DEPENDS-main=	print/cups-filters
 #BUILD_DEPENDS +=	devel/xdg-utils
 #RUN_DEPENDS-main +=	devel/xdg-utils
 
-LIB_DEPENDS-main=	${BASE_PKGPATH},-libs \
-			devel/libusb1 \
-			x11/dbus
-
 LIBS_ENV=		LIBcups_VERSION=${LIBcups_VERSION} \
 			LIBcupscgi_VERSION=${LIBcupscgi_VERSION} \
 			LIBcupsimage_VERSION=${LIBcupsimage_VERSION} \
@@ -71,7 +69,7 @@ LIBS_ENV=		LIBcups_VERSION=${LIBcups_VERSION} \
 			LIBcupsppdc_VERSION=${LIBcupsppdc_VERSION} \
 
 FAKE_FLAGS=		BUILDROOT=${WRKINST} \
-			DBUSDIR=${PREFIX}/share/examples/cups/dbus-1/system.d \
+			DBUSDIR=${PREFIX}/share/examples/cups/dbus-1 \
 			ICONDIR=${PREFIX}/share/icons \
 			MENUDIR=${PREFIX}/share/applications \
 			SERVERROOT=${WRKINST}${PREFIX}/share/examples/cups
@@ -83,8 +81,7 @@ USE_GMAKE=		Yes
 
 MAKE_ENV=		${LIBS_ENV}
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-				-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -pthread" \
 			${LIBS_ENV}
 
@@ -96,27 +93,16 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--with-system-groups=wheel \
 			--with-optim="${CFLAGS}" \
 			--with-dbusdir=${SYSCONFDIR}/dbus-1 \
-			--with-perl="/usr/bin/perl" \
 			--with-printcap=${SYSCONFDIR}/cups/printcap \
 			--with-smbconfigfile="samba:///${SYSCONFDIR}/samba/smb.conf" \
-			--enable-libusb \
-			--enable-dbus \
 			--enable-openssl \
 			--disable-cdsassl \
 			--disable-gnutls \
 			--disable-libpaper \
 			--disable-pam \
-			--disable-default-shared \
 			--without-java \
 			--without-php \
 			--without-python
-
-# XXX FLAVOR?; adds to many dependencies to cups,-libs
-CONFIGURE_ARGS +=	--disable-avahi \
-			--disable-dnssd
-
-post-extract:
-	${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
 
 pre-configure:
 	cd ${WRKSRC} && \

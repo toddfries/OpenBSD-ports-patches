@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2012/05/14 20:58:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.15 2013/05/29 20:57:58 benoit Exp $
 
 COMMENT=	relay for bidirectional data transfer
 
-DISTNAME=	socat-1.7.2.1
+DISTNAME=	socat-1.7.2.2
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.dest-unreach.org/socat/
@@ -11,15 +11,12 @@ MAINTAINER=	Nigel Taylor <nigel@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${HOMEPAGE}/download/
 
 WANTLIB=	curses c readline crypto util ssl wrap
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 CONFIGURE_STYLE=gnu
 

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2012/06/15 08:30:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/24 15:53:39 zhuk Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	twin panel file manager for KDE
 
 DISTNAME=	krusader-1.80.0
-REVISION=	6
+REVISION=	9
 
 CATEGORIES=	x11 x11/kde
 
@@ -13,24 +13,23 @@ HOMEPAGE=	http://krusader.sourceforge.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=krusader/}
 
-WANTLIB=	ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c fam idn \
-		jpeg m pcre pcreposix png pthread rpcsvc stdc++ util z \
-		pthread-stubs xcb kdecore DCOP kdefx kdesu kdeui kio \
-		kparts kwalletclient kdeprint khtml kjs kutils konq \
-		kjsembed qui-mt
+WANTLIB =  GL ICE SM X11 Xcursor Xdamage Xext Xfixes Xft
+WANTLIB += Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2 c drm
+WANTLIB += expat fam fontconfig freetype idn jpeg lcms m mng pcre
+WANTLIB += pcreposix png pthread pthread-stubs qui-mt stdc++ util xcb z
+WANTLIB += ${KDE}/DCOP ${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdeprint
+WANTLIB += ${KDE}/kdesu ${KDE}/kdeui ${KDE}/khtml ${KDE}/kio
+WANTLIB += ${KDE}/kjs ${KDE}/kjsembed ${KDE}/konq ${KDE}/kparts
+WANTLIB += ${KDE}/kutils ${KDE}/kwalletclient
 
 PORTHOME=	${WRKDIR}
 
 MODULES=	x11/kde devel/gettext
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 LIBTOOL_FLAGS+=	--tag=disable-static
 
@@ -44,13 +43,11 @@ LIB_DEPENDS=	x11/kde/libs3 \
 AUTOCONF_VERSION=2.61
 
 CONFIGURE_STYLE=autoconf
-CONFIGURE_ENV=	${MODKDE_CONFIGURE_ENV} \
-		KDEDIR=${LOCALBASE}/bin \
-		QTDIR=${LOCALBASE}/bin
+CONFIGURE_ENV=	${MODKDE_CONFIGURE_ENV}
 CONFIGURE_ARGS=	${MODQT_CONFIGURE_ARGS} \
 		--disable-dependency-tracking \
 		--with-extra-libs="${LOCALBASE}/lib" \
-		--with-extra-includes="${LOCALBASE}/include/libpng:${LOCALBASE}/include" \
+		--with-extra-includes="${LOCALBASE}/include" \
 		--without-acl
 
 pre-configure:

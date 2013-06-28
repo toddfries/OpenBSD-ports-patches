@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2011/09/24 09:47:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.27 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=	hfsplus filesystem access tool
 
@@ -11,9 +11,6 @@ SHARED_LIBS=	hfsp	0.0
 CATEGORIES=	misc 
 
 # GPL
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB=		c
@@ -22,7 +19,6 @@ MASTER_SITES=		http://distfiles.nl/
 EXTRACT_SUFX=		.src.tar.bz2
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 
 AUTOCONF_VERSION=	2.59
 AUTOMAKE_VERSION=	1.9

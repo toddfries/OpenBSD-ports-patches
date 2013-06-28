@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.23 2011/11/01 20:30:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2013/05/31 15:34:46 ajacoutot Exp $
 
 COMMENT =	Amide a Medical Imaging Data Examiner
 
 DISTNAME =	amide-0.9.2
-REVISION =	13
+REVISION =	16
 CATEGORIES =	graphics
 
 HOMEPAGE =	http://amide.sourceforge.net/
@@ -12,9 +12,6 @@ MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =   Yes
-PERMIT_PACKAGE_FTP =     Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =   Yes
 
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm art_lgpl_2
@@ -27,6 +24,7 @@ WANTLIB += pixman-1 png pthread pthread-stubs schroedinger-1.0
 WANTLIB += speex stdc++ theoradec theoraenc vorbis vorbisenc vpx
 WANTLIB += x264 xcb xcb-render xcb-shm xml2 z
 WANTLIB += dbus-1 dbus-glib-1 ffi
+WANTLIB += harfbuzz xvidcore
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=amide/}
 
@@ -42,10 +40,9 @@ RUN_DEPENDS =	devel/desktop-file-utils \
 LIB_DEPENDS =	devel/gsl>=1.6 \
 		x11/gnome/libgnomecanvas \
 		graphics/xmedcon \
-		graphics/ffmpeg>=20100512 \
+		graphics/ffmpeg>=20121026 \
 		devel/gconf2
 
-USE_LIBTOOL =	Yes
 USE_GMAKE =	Yes
 USE_GROFF =		Yes
 
@@ -60,7 +57,7 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--disable-libdcmdata \
 			--enable-ffmpeg
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 post-extract:
 	@rm -f ${WRKSRC}/src/ui_common.c.orig

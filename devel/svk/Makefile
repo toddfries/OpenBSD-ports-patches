@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.19 2012/09/10 14:37:59 sthen Exp $
+# $OpenBSD: Makefile,v 1.21 2013/05/04 10:33:55 sthen Exp $
 
 COMMENT=	decentralized version control system
 
 V=		2.2.1
-REVISION=	1
+REVISION=	2
 DISTNAME=	SVK-v${V}
 PKGNAME=	svk-${V}
 CATEGORIES=	devel perl5
@@ -14,9 +14,6 @@ MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 # Artistic
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=../by-authors/id/C/CL/CLKAO/}
 
@@ -48,20 +45,7 @@ BUILD_DEPENDS=	${RUN_DEPENDS}
 
 CONFIGURE_STYLE= perl
 
-REGRESS_DEPENDS=devel/p5-BSD-Resource \
+TEST_DEPENDS=devel/p5-BSD-Resource \
 		devel/p5-Test-Pod
-
-# XXX remove entire section below when perl is -lpthread
-
-CONFIGURE_ENV=	LD_PRELOAD=libpthread.so
-
-post-configure:
-	${SUBST_CMD} -c ${FILESDIR}/wrapper.sh ${WRKDIR}/wrapper.sh
-
-post-install:
-	mv ${PREFIX}/bin/svk ${PREFIX}/libexec/
-	${INSTALL_SCRIPT} ${WRKDIR}/wrapper.sh ${PREFIX}/bin/svk
-
-###
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/20 09:48:39 espie Exp $
+# $OpenBSD: Makefile,v 1.30 2013/03/11 11:37:53 espie Exp $
 
 COMMENT=		convert ASCII files to PostScript
 
@@ -10,9 +10,6 @@ HOMEPAGE=		http://www.codento.com/people/mtr/genscript/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE} \
 			${MASTER_SITE_GNU:=enscript/}
@@ -27,7 +24,7 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-nls
 USE_GROFF =		Yes
 
-.if !${FLAVOR:L:Ma4}
+.if !${FLAVOR:Ma4}
 CONFIGURE_ARGS+=	--with-media=Letter
 .endif
 

@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.45 2012/10/11 08:19:02 espie Exp $
+# $OpenBSD: Makefile,v 1.51 2013/06/21 10:48:38 espie Exp $
 
 CATEGORIES =		databases
-V =			2.3
-REVISION =		0
+V =			2.8
 DISTNAME =		sqlports-$V
 DISTFILES =
 COMMENT =		sqlite database of ports
@@ -14,9 +13,6 @@ PKGNAME-main =		sqlports-$V
 
 
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 MULTI_PACKAGES =	-main -compact
 
 DBNAME =		${WRKBUILD}/sqlports
@@ -33,7 +29,7 @@ do-install:
 	${INSTALL_DATA} ${DBNAME}-compact ${PREFIX}/share
 
 BUILD_DEPENDS =		databases/p5-DBD-SQLite
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 NO_CHECKSUM =		Yes
 
 .include <bsd.port.mk>

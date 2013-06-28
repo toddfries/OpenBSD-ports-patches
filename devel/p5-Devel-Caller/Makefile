@@ -1,19 +1,15 @@
-# $OpenBSD: Makefile,v 1.8 2012/08/23 15:05:15 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/23 14:17:44 benoit Exp $
 
 COMMENT =		meatier versions of caller
 
 SHARED_ONLY =		Yes
 MODULES =		cpan
-DISTNAME =		Devel-Caller-2.05
-REVISION =		0
+DISTNAME =		Devel-Caller-2.06
 CATEGORIES =		devel
 CPAN_AUTHOR =		RCLAMP
 
 # Perl
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c
 

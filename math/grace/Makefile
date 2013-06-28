@@ -1,30 +1,26 @@
-# $OpenBSD: Makefile,v 1.37 2011/09/16 10:31:22 espie Exp $
+# $OpenBSD: Makefile,v 1.41 2013/06/04 18:41:52 naddy Exp $
 
 COMMENT=	GRaphing, Advanced Computation and Exploration of data
 
 DISTNAME=	grace-5.1.15
-REVISION=	5
+REVISION=	6
 CATEGORIES=	math
 
 HOMEPAGE=	http://plasma-gate.weizmann.ac.il/Grace/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m z
 
 GRACE_SITES=	ftp://plasma-gate.weizmann.ac.il/pub/ \
 		ftp://ftp.fu-berlin.de/unix/graphics/ \
-		ftp://ftp.u-aizu.ac.jp/pub/SciEng/math/ \
-		ftp://freedom7.swmed.edu/pub/mirrors/
+		ftp://ftp.u-aizu.ac.jp/pub/SciEng/math/
 MASTER_SITES=	${GRACE_SITES:=grace/src/grace5/}
 
 CONFIGURE_STYLE=	gnu
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/ac-tools
 CONFIGURE_ARGS+=	--with-bundled-xbae \
-			--with-extra-incpath=${LOCALBASE}/include:${LOCALBASE}/include/libpng \
+			--with-extra-incpath=${LOCALBASE}/include \
 			--with-extra-ldpath=${LOCALBASE}/lib \
 			--enable-grace-home=${PREFIX}/grace
 USE_GROFF =	Yes
@@ -36,31 +32,21 @@ LIB_DEPENDS =	graphics/jpeg \
 		print/pdflib
 WANTLIB +=	jpeg>=62 png>=2 t1>=5 tiff>=35 pdf>=2
 
-FLAVORS=	no_x11 fftw netcdf xmhtml
+FLAVORS=	no_x11 fftw netcdf
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 CONFIGURE_ARGS+=	--without-x
-NO_REGRESS=		Yes
-.  if ${FLAVOR:L:Mxmhtml}
-ERRORS+=	"Fatal: Flavors 'no_x11' and 'xmhtml' are mutually exclusive."
-.  endif
+NO_TEST=		Yes
 .else
-REGRESS_IS_INTERACTIVE=	x11
+TEST_IS_INTERACTIVE=	x11
 LIB_DEPENDS+=		x11/openmotif
 WANTLIB+=		ICE SM X11 Xext Xmu Xpm Xt Xm
-MAKE_ENV+=MOTIFLIB='-L${LOCALBASE}/lib -lXm'
-.  if ${FLAVOR:L:Mxmhtml}
-LIB_DEPENDS +=		www/xmhtml
-WANTLIB +=		XmHTML>=1
-CONFIGURE_ARGS+=	--enable-xmhtml
-.  else
-CONFIGURE_ARGS+=	--disable-xmhtml
-.  endif
+MAKE_ENV+=		MOTIFLIB='-L${LOCALBASE}/lib -lXm'
 CONFIGURE_ENV=		LDFLAGS=-lm
 .endif
 
-.if ${FLAVOR:L:Mfftw}
+.if ${FLAVOR:Mfftw}
 LIB_DEPENDS +=		math/fftw
 WANTLIB +=		fftw>=2
 CONFIGURE_ARGS+=	--with-fftw
@@ -68,7 +54,7 @@ CONFIGURE_ARGS+=	--with-fftw
 CONFIGURE_ARGS+=	--without-fftw
 .endif
 
-.if ${FLAVOR:L:Mnetcdf}
+.if ${FLAVOR:Mnetcdf}
 LIB_DEPENDS +=		math/netcdf
 WANTLIB +=		netcdf>=1
 CONFIGURE_ARGS+=	--enable-netcdf
@@ -77,8 +63,9 @@ CONFIGURE_ARGS+=	--disable-netcdf
 .endif
 
 GRACE_DIR=${TRUEPREFIX}/grace
+
 post-install:
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 	ln -sf ${GRACE_DIR}/bin/grace ${PREFIX}/bin/grace
 	ln -sf ${GRACE_DIR}/bin/grace ${PREFIX}/bin/gracebat
 .else
@@ -92,5 +79,5 @@ post-install:
 	ln -sf ../../grace/doc/grace.1 ${PREFIX}/man/man1/grace.1
 	ln -sf ../../grace/doc/gracebat.1 ${PREFIX}/man/man1/gracebat.1
 	ln -sf ../../grace/doc/grconvert.1 ${PREFIX}/man/man1/grconvert.1
-	
+
 .include <bsd.port.mk>

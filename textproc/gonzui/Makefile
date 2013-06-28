@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2012/09/23 17:09:54 jeremy Exp $
+# $OpenBSD: Makefile,v 1.32 2013/03/26 18:52:54 jeremy Exp $
 
 SHARED_ONLY=		Yes
 
@@ -7,7 +7,7 @@ NOT_FOR_ARCHS=		mips64 mips64el
 
 COMMENT=		source code search engine
 DISTNAME=		gonzui-1.2
-REVISION=		21
+REVISION=		23
 CATEGORIES=		textproc www
 
 HOMEPAGE=		http://gonzui.sourceforge.net/
@@ -16,12 +16,10 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		m
 
 MODULES=		lang/ruby lang/ocaml
+MODRUBY_REV=		1.8
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=gonzui/}
 
@@ -50,12 +48,11 @@ CONFIGURE_ARGS=		--with-user="_gonzui" \
 			--with-logdir="/var/log"
 
 # Tests want to do cvs checkouts, apt-get, etc.
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 # XXX: Bad, but saves a metric buttload of patches.
 pre-configure:
 	ln -sf ${RUBY} ${WRKDIR}/bin/ruby
-	${MODRUBY_ADJ_REPLACE}
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gonzui/

@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.13 2012/09/04 12:26:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.18 2013/05/31 15:34:43 ajacoutot Exp $
 
 COMMENT=		window navigator construction kit
 
 GNOME_PROJECT=		libwnck
-GNOME_VERSION=		3.4.3
+GNOME_VERSION=		3.4.5
 PKGNAME=		${GNOME_PROJECT}3-${GNOME_VERSION}
+REVISION=		0
 
 SHARED_LIBS +=  wnck-3               2.0      # 2.0
 
@@ -15,23 +16,20 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 X11-xcb XRes Xau Xcomposite Xcursor Xdamage
-WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm
-WANTLIB += atk-1.0 c cairo cairo-gobject drm expat ffi fontconfig
+WANTLIB += ICE SM X11 X11-xcb XRes Xcomposite Xcursor Xdamage
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0
+WANTLIB += atspi c cairo cairo-gobject dbus-1 expat ffi fontconfig
 WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += startup-notification-1 stdc++ xcb xcb-aux xcb-render
-WANTLIB += xcb-shm z
+WANTLIB += gobject-2.0 gthread-2.0 gtk-3 harfbuzz
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread pthread-stubs startup-notification-1
+WANTLIB += xcb xcb-aux xcb-render xcb-shm z
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS= 	goi
+MODGNOME_TOOLS= 	gi
 LIB_DEPENDS=		x11/gtk+3 \
 			devel/startup-notification
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2010/10/23 15:09:57 steven Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=	library for reading and writing Matlab MAT files
 
@@ -11,9 +11,6 @@ HOMEPAGE=	http://sourceforge.net/projects/matio/
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=matio/}
 EXTRACT_SUFX=	.tar.bz2
@@ -24,7 +21,6 @@ WANTLIB=	${MODFORTRAN_WANTLIB} m
 BUILD_DEPENDS=	${MODFORTRAN_BUILD_DEPENDS}
 LIB_DEPENDS=	${MODFORTRAN_LIB_DEPENDS}
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-fortran=no \
@@ -34,7 +30,7 @@ TESTS=	copy write writecompressed writecell readslab \
 	writeslab writesparse writenan writeinf readslab4 ind2sub sub2ind \
 	write_compressed_cell write_compressed_sparse
 
-do-regress:
+do-test:
 .for t in ${TESTS}
 	@echo "Testing ${t}"
 	@cd ${WRKBUILD}/test && ./test_mat ${t}

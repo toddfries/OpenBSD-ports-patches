@@ -1,25 +1,19 @@
-# $OpenBSD: Makefile,v 1.5 2011/03/14 09:17:26 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2013/05/16 11:01:09 sthen Exp $
 
 COMMENT=	RFC 2217 compliant serial port redirector
 
 DISTNAME=	sredird-2.2.2
-REVISION=	0
+REVISION=	2
 CATEGORIES=	comms
 
-MAINTAINER=	Alexey E. Suslikov <alexey.suslikov@gmail.com>
-
-# GPL
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c
+WANTLIB=	c
 
 MASTER_SITES=	http://www.ibiblio.org/pub/Linux/system/serial/
 
-USE_GROFF =	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 pre-build:
 	@perl -pi -e "s,%%LOCALBASE%%,${LOCALBASE},g" ${WRKSRC}/sredird.8

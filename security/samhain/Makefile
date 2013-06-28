@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2012/09/07 13:39:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2013/06/12 20:36:34 brad Exp $
 
 COMMENT-main=		Samhain Intrusion Detection System - documentation
 COMMENT-client=		Samhain Intrusion Detection System - client
@@ -14,7 +14,7 @@ PKGNAME-server=		samhain-server-${VERSION}
 
 REVISION-main=		3
 REVISION-client=	7
-REVISION-server=	5
+REVISION-server=	9
 
 CATEGORIES=		security
 
@@ -25,9 +25,6 @@ MAINTAINER=		Robert Nagy <robert@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-DAI_ADDRCONFIG=0"
@@ -37,7 +34,7 @@ CONFIGURE_ARGS=		--enable-login-watch \
 			--enable-identity=_yule \
 			--enable-network=server
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 MULTI_PACKAGES=		-main
 FLAVORS=		mysql postgresql

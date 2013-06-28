@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.11 2012/10/28 23:30:15 kili Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/11 11:20:27 espie Exp $
 
 COMMENT=		abstract syntax, lexer, parser and pretty printer
 
 DISTNAME=		haskell-src-exts-1.13.3
-REVISION=		0
+REVISION=		1
 CATEGORIES=		lang devel
 
 # 3-clause BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		lang/ghc
 
@@ -21,6 +18,6 @@ BUILD_DEPENDS=		${RUN_DEPENDS} \
 RUN_DEPENDS=		devel/cpphs,-lib>=1.3
 
 VMEM_WARNING=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 .include <bsd.port.mk>

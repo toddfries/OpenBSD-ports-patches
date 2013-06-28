@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.10 2011/09/16 09:24:55 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/13 15:33:17 benoit Exp $
 
 COMMENT=		config file reader and writer
 
-MODPY_EGG_VERSION=	4.5.3
+MODPY_EGG_VERSION =	4.7.2
 DISTNAME=		configobj-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION =		3
 
 CATEGORIES=		devel
 
@@ -15,9 +14,6 @@ MAINTAINER=		Martynas Venckus <martynas@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=configobj/}
 EXTRACT_SUFX=		.zip
@@ -30,7 +26,9 @@ post-install:
 		find . -type d -exec ${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-configobj/{} \; && \
 		find . ! -type d -exec ${INSTALL_DATA} {} ${PREFIX}/share/doc/py-configobj/{} \;
 
-do-regress:
-	cd ${WRKSRC} && ${MODPY_BIN} configobj_test.py -v
+do-test: fake
+	cd ${WRKSRC}/tests && ${MAKE_ENV} \
+	PYTHONPATH=${WRKINST}${MODPY_SITEPKG} \
+	${MODPY_BIN} ./test_configobj.py -v
 
 .include <bsd.port.mk>

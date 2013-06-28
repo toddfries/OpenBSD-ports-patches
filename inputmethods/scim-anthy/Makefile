@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2011/11/03 17:46:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/21 08:46:31 ajacoutot Exp $
 
 SHARED_ONLY =	Yes
 
@@ -14,9 +14,6 @@ HOMEPAGE =	http://scim-imengine.sourceforge.jp/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		Xi Xinerama Xrandr Xrender anthy anthydic atk-1.0 \
@@ -35,7 +32,6 @@ MODULES =	devel/gettext
 LIB_DEPENDS =	inputmethods/anthy \
 		inputmethods/scim
 
-USE_LIBTOOL =	Yes
 LIBTOOL_FLAGS =	--tag=disable-static
 
 CONFIGURE_STYLE = gnu

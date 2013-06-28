@@ -1,25 +1,21 @@
-# $OpenBSD: Makefile,v 1.14 2010/11/22 08:36:55 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/11 11:46:08 espie Exp $
 
 COMMENT=		wm-dockapp; Time/Date applet
 
 DISTNAME=		astime-2.8
+REVISION=		0
 CATEGORIES=		x11 x11/windowmaker
 
 HOMEPAGE=		http://www.tigr.net/afterstep/view.php?applet=astime/data
 
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
-
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		ICE SM X11 Xext Xpm c m
 
 MASTER_SITES=		http://www.tigr.net/afterstep/download/astime/
 
 USE_GROFF =		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-jpeg
 

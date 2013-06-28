@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.53 2012/08/28 08:26:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.60 2013/06/20 06:54:36 ajacoutot Exp $
 
 COMMENT=	API for accessing scanners, backends
 
 DISTNAME=	sane-backends-1.0.23
+REVISION=	4
 
 SHARED_LIBS=	sane 2.0 # .1.0
 CATEGORIES=	graphics
@@ -13,12 +14,10 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += asn1 c crypto cups gssapi jpeg krb5 m pthread ssl tiff
-WANTLIB += usb usb-1.0 z
+WANTLIB += usb usb-1.0 z avahi-client avahi-common dbus-1
+WANTLIB += com_err heimbase roken wind
 
 # XXX
 # README.txt: Due to limitations in alioth's file upload software, the
@@ -33,6 +32,8 @@ WANTLIB += usb usb-1.0 z
 #		ftp://ftp2.sane-project.org/pub/sane/${DISTNAME}/
 MASTER_SITES=	http://distfiles.bsdfrog.org/
 
+MODULES=	devel/gettext
+
 LIB_DEPENDS=	graphics/tiff \
 		devel/libusb-compat \
 		print/cups,-libs
@@ -40,10 +41,9 @@ LIB_DEPENDS=	graphics/tiff \
 FLAVORS=	snmp
 FLAVOR?=
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 USE_GROFF=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 LOCALSTATEDIR=	${BASELOCALSTATEDIR}/spool
 

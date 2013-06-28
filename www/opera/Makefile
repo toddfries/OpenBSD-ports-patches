@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.75 2012/11/06 08:29:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.81 2013/04/04 12:57:25 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=	i386
 SHARED_ONLY=	Yes
 
 COMMENT=	fast and customizable WWW browser
 
-V=		12.10
-OPERA_BUILD=	1652
+V=		12.15
+OPERA_BUILD=	1748
 DISTNAME=	opera-${V}-${OPERA_BUILD}.i386.linux
 PKGNAME=	opera-${V}
 EXTRACT_SUFX=	.tar.xz
@@ -19,7 +19,6 @@ HOMEPAGE=	http://www.opera.com/
 
 PERMIT_PACKAGE_CDROM=	Commercial software
 PERMIT_PACKAGE_FTP=	Commercial software
-PERMIT_DISTFILES_CDROM=	Commercial software
 PERMIT_DISTFILES_FTP=	Commercial software
 
 MASTER_SITES=	ftp://ftp.opera.com/pub/opera/linux/${V:S/.//}/
@@ -31,7 +30,7 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 		x11/gtk+2,-guic
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 post-extract:
 	mv ${WRKSRC}/share/man ${WRKSRC}/man

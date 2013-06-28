@@ -1,21 +1,23 @@
-# $OpenBSD: Makefile,v 1.13 2012/10/18 20:04:58 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2013/05/13 20:57:38 sthen Exp $
 
 COMMENT =	web UI for icinga
-DISTNAME =	icinga-web-$V
+DISTNAME =	icinga-web-1.9.0
+REVISION =	0
 
 MODULES=	lang/php
 
-RUN_DEPENDS =	www/pear \
+COMMON =	www/pear \
+		shells/bash
+
+RUN_DEPENDS =	${COMMON_DEPENDS} \
 		lang/php/${MODPHP_VERSION},-gd \
-		lang/php/${MODPHP_VERSION},-ldap \
 		lang/php/${MODPHP_VERSION},-xsl \
 		php-pdo_mysql-${MODPHP_VSPEC}|php-pdo_pgsql-${MODPHP_VSPEC}:lang/php/${MODPHP_VERSION},-pdo_mysql \
 		net/icinga/core \
-		net/icinga/core,-ido \
-		shells/bash
-# Optional php extensions: soap xmlrpc memcache
+		net/icinga/core,-ido
+# Optional php extensions: ldap soap xmlrpc memcache
 
-BUILD_DEPENDS=	${RUN_DEPENDS}
+BUILD_DEPENDS=	${COMMON_DEPENDS}
 
 LOCALSTATEDIR =	${BASELOCALSTATEDIR}/icinga
 
@@ -39,7 +41,7 @@ CONFIGURE_ARGS += \
 	--with-api-host=127.0.0.1 \
 	--with-db-host=127.0.0.1
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 NO_BUILD =	Yes
 
 INSTALL_TARGET = install install-apache-config
@@ -47,10 +49,10 @@ INSTALL_TARGET = install install-apache-config
 PREFIX =	/var/www/icinga-web
 
 pre-configure:
-	@ln -s ${MODPHP_BIN} ${WRKDIR}/bin/php
+	ln -s ${MODPHP_BIN} ${WRKDIR}/bin/php
 
 post-configure:
-	@find ${WRKSRC}/bin -name '*.sh' -print0 | xargs -0r \
+	find ${WRKSRC}/bin -name '*.sh' -print0 | xargs -0r \
 		perl -pi -e 's,^#!/bin/bash,#!${LOCALBASE}/bin/bash,g'
 
 pre-install:

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2012/06/15 08:32:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/04/02 16:41:21 ajacoutot Exp $
 
 COMMENT =	Mastermind clone reflexion game
 
 GNOME_PROJECT =	gnome-mastermind
 GNOME_VERSION =	0.3.1
-REVISION=	7
+REVISION=	8
 
 CATEGORIES =	games
 
@@ -12,9 +12,6 @@ HOMEPAGE =	http://www.autistici.org/gnome-mastermind/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://download.gna.org/gnome-mastermind/
 EXTRACT_SUFX=		.tar.bz2
@@ -24,7 +21,6 @@ MODULES =	devel/gettext \
 
 LIB_DEPENDS =	x11/gtk+2 \
 		devel/gconf2
-RUN_DEPENDS +=	x11/gnome/librsvg
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_ICON_CACHE=	Yes

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2012/04/14 09:52:40 landry Exp $
+# $OpenBSD: Makefile,v 1.20 2013/06/20 14:07:40 sthen Exp $
 
 COMMENT =	system to automate the compile/test cycle
 
-MODPY_EGG_VERSION =	0.8.6p1
+MODPY_EGG_VERSION =	0.8.7p1
 DISTNAME =	buildbot-${MODPY_EGG_VERSION}
-PKGNAME =	py-${DISTNAME:S/p1/pl1/}
+PKGNAME =	py-${DISTNAME:S/p/pl/}
 
 CATEGORIES =	devel
 
@@ -14,9 +14,6 @@ MAINTAINER =	Piotr Sikora <piotr.sikora@frickle.com>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://buildbot.googlecode.com/files/
 
@@ -32,10 +29,9 @@ RUN_DEPENDS =	databases/py-sqlalchemy \
 		devel/py-twisted/mail \
 		devel/py-twisted/web \
 		devel/py-twisted/words \
-		www/py-jinja2 \
-		${MODPY_JSON}
+		www/py-jinja2
 
-REGRESS_DEPENDS =	${RUN_DEPENDS} \
+TEST_DEPENDS =	${RUN_DEPENDS} \
 			devel/py-mock
 
 HOMEDIR =		/var/buildbot
@@ -51,7 +47,7 @@ post-install:
 	cd ${WRKSRC} && pax -rw contrib ${PREFIX}/share/doc/py-buildbot
 	${INSTALL_MAN} ${WRKSRC}/docs/buildbot.1 ${PREFIX}/man/man1
 
-do-regress:
+do-test:
 	@${MAKE_ENV} PYTHONPATH=${WRKSRC} \
 	    ${LOCALBASE}/bin/trial --temp-directory=${WRKBUILD}/regress \
 	    buildbot.test

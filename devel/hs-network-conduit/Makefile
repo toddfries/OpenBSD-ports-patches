@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.2 2012/10/28 23:28:20 kili Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 10:50:08 espie Exp $
 
 COMMENT =		stream socket data using conduits
 
 DISTNAME =		network-conduit-0.4.0.1
-REVISION =		0
+REVISION =		1
 CATEGORIES =		devel
 
 MAINTAINER =		Matthias Kilian <kili@openbsd.org>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 

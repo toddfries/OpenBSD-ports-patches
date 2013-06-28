@@ -1,15 +1,12 @@
-# $OpenBSD: Makefile,v 1.10 2012/09/27 17:26:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2013/05/04 09:41:32 sthen Exp $
 
 COMMENT =		convert DocBook to LaTeX, DVI, PostScript, and PDF
 DISTNAME =		dblatex-0.3
-REVISION=		6
+REVISION =		7
 CATEGORIES =		textproc
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 HOMEPAGE =		http://dblatex.sourceforge.net
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=dblatex/}
@@ -25,9 +22,8 @@ RUN_DEPENDS =		print/texlive/base \
 			print/texlive/texmf,-main \
 			textproc/docbook-xsl \
 			graphics/ImageMagick
-BUILD_DEPENDS = 	${RUN_DEPENDS}
-USE_GROFF =		Yes
-NO_REGRESS =		Yes
+BUILD_DEPENDS =		${RUN_DEPENDS}
+NO_TEST =		Yes
 
 SUBST_VARS +=		LOCALBASE MODPY_BIN
 
@@ -36,7 +32,7 @@ post-extract:
 
 post-install:
 	@rm -r ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/contrib
-	${SUBST_CMD} -c ${FILESDIR}/dblatex ${WRKSRC}/scripts/dblatex
-	${INSTALL_SCRIPT} ${WRKSRC}/scripts/dblatex ${PREFIX}/bin/dblatex
+	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
+	    -c ${FILESDIR}/dblatex ${PREFIX}/bin/dblatex
 
 .include <bsd.port.mk>

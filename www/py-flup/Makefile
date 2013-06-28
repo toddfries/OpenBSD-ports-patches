@@ -1,29 +1,26 @@
-# $OpenBSD: Makefile,v 1.10 2011/09/16 12:00:08 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2013/05/26 09:30:55 kirby Exp $
 
 COMMENT =		random assortment of WSGI servers, middleware
 
 MODPY_EGG_VERSION =	1.0.2
 DISTNAME =		flup-${MODPY_EGG_VERSION}
 PKGNAME =		py-flup-${MODPY_EGG_VERSION}
-REVISION =		1
+REVISION =		2
 
 CATEGORIES =		www
 
-HOMEPAGE =		http://trac.saddi.com/flup
+HOMEPAGE =		${MASTER_SITE_PYPI:=y/flup/}
 
 MAINTAINER =		Martynas Venckus <martynas@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${MASTER_SITE_PYPI:=f/flup/}
 
 MODULES =		lang/python
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 MODPY_SETUPTOOLS =	Yes
 

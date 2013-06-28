@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2012/09/08 08:03:03 rpointel Exp $
+# $OpenBSD: Makefile,v 1.9 2013/05/16 09:10:05 rpointel Exp $
 
 COMMENT =		series of applications for Mercurial
 
-MODPY_EGG_VERSION =	2.5
+MODPY_EGG_VERSION =	2.8
 DISTNAME =		tortoisehg-${MODPY_EGG_VERSION}
 
 CATEGORIES =		devel
@@ -13,9 +13,6 @@ MAINTAINER =		Remi Pointel <rpointel@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		http://bitbucket.org/tortoisehg/targz/downloads/
 
@@ -26,9 +23,9 @@ BUILD_DEPENDS =		x11/py-qt4 \
 
 RUN_DEPENDS =		${BUILD_DEPENDS} \
 			editors/py-qscintilla \
-			devel/mercurial>=2.3.1 \
+			devel/mercurial>=2.6.1 \
 			devel/py-iniparse
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

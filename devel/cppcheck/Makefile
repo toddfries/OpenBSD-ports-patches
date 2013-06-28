@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/27 17:26:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2013/04/03 03:00:31 gsoares Exp $
 
 COMMENT =		C/C++ static checker
 
-DISTNAME =		cppcheck-1.56
+DISTNAME =		cppcheck-1.59
 
 CATEGORIES =		devel
 
@@ -12,9 +12,6 @@ MAINTAINER =		Gleydson Soares <gsoares@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m pcre stdc++
 
@@ -25,13 +22,22 @@ LIB_DEPENDS =		devel/pcre
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=cppcheck/}
 
 ALL_TARGET =		cppcheck
-REGRESS_TARGET = 	test
-MAKE_FLAGS =		BIN=${PREFIX}/bin \
+TEST_TARGET =		test
+
+# -Ilib before PREFIX/include to avoid picking up header from devel/check
+MAKE_FLAGS =		BIN=${PREFIX}/bin SRCDIR=build \
 			CXX="${CXX}" CXXFLAGS="${CXXFLAGS}" \
-			CPPFLAGS="-DHAVE_RULES -I${PREFIX}/include" \
+			CPPFLAGS="-DHAVE_RULES -DTIXML_USE_STL -Ilib -I${PREFIX}/include" \
 			LDFLAGS="-L${PREFIX}/lib -lpcre"
 
+MODULES =		lang/python
+MODPY_RUNDEP =		No
+CONFIGURE_STYLE =	none
+
 USE_GMAKE =		Yes
+
+pre-configure:
+	ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
 post-build:
 	cd ${WRKSRC} && \

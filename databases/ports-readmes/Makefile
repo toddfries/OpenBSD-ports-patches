@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile,v 1.5 2012/06/18 12:18:45 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/11 02:52:07 espie Exp $
 
 COMMENT =		readmes.html
 
 PKG_ARCH = *
-DISTNAME =		ports-readmes-1
+DISTNAME =		ports-readmes-2
 DISTFILES =
 
 CATEGORIES =		databases
 
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 BUILD_DEPENDS =	databases/sqlports,-compact>=2.2 \
 		databases/p5-DBD-SQLite \

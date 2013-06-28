@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.781 2012/11/01 14:46:23 zinke Exp $
+# $OpenBSD: Makefile,v 1.805 2013/05/30 16:17:58 jasper Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -14,8 +14,8 @@
      SUBDIR += amsn
      SUBDIR += amule
      SUBDIR += angst
+     SUBDIR += apache-activemq
      SUBDIR += ap-utils
-     SUBDIR += archie
      SUBDIR += argus
      SUBDIR += argus-clients
      SUBDIR += arp-scan
@@ -32,6 +32,9 @@
      SUBDIR += bird
      SUBDIR += bird,v6
      SUBDIR += bitlbee
+     SUBDIR += bitlbee,otr
+     SUBDIR += bitlbee,libpurple
+     SUBDIR += bitlbee,otr,libpurple
      SUBDIR += bnc
      SUBDIR += bro
      SUBDIR += btpd
@@ -49,11 +52,8 @@
      SUBDIR += coccinella
      SUBDIR += courtney
      SUBDIR += crawl
-     SUBDIR += csup
      SUBDIR += ctrace
      SUBDIR += curl
-     SUBDIR += cvsup
-     SUBDIR += cvsup,no_x11
      SUBDIR += cvsync
      SUBDIR += daq
      SUBDIR += darkstat
@@ -63,6 +63,7 @@
      SUBDIR += dictd
      SUBDIR += dlint
      SUBDIR += dnscrypt-proxy
+     SUBDIR += dnsfilter
      SUBDIR += dnsmasq
      SUBDIR += dnsreflector
      SUBDIR += dnstop
@@ -74,10 +75,14 @@
      SUBDIR += echoping
      SUBDIR += ejabberd
      SUBDIR += ekg
-     SUBDIR += emacs-jabber
      SUBDIR += emesene
      SUBDIR += enet
      SUBDIR += epic4
+     SUBDIR += erl-amqp_client
+     SUBDIR += erl-gen_bunny
+     SUBDIR += erl-ibrowse
+     SUBDIR += erl-mini_s3
+     SUBDIR += erl-rabbit_common
      SUBDIR += etherape
      SUBDIR += ettercap
      SUBDIR += ettercap,no_x11
@@ -117,6 +122,7 @@
      SUBDIR += hping
      SUBDIR += hpodder
      SUBDIR += hs-HTTP
+     SUBDIR += hs-curl
      SUBDIR += hs-hostname
      SUBDIR += httptunnel
      SUBDIR += icb
@@ -130,6 +136,7 @@
      SUBDIR += icmpinfo
      SUBDIR += ifmcstat
      SUBDIR += ifstat
+     SUBDIR += ifstat,snmp
      SUBDIR += iftop
      SUBDIR += igmpproxy
      SUBDIR += ii
@@ -169,18 +176,20 @@
      SUBDIR += ldistfp
      SUBDIR += ldns
      SUBDIR += lftp
+     SUBDIR += libaccounts-glib
      SUBDIR += libbgpdump
      SUBDIR += libcares
      SUBDIR += libdnet
      SUBDIR += libdnsres
      SUBDIR += libepc
      SUBDIR += libgadu
+     SUBDIR += libircclient
      SUBDIR += libnet
      SUBDIR += libnice
      SUBDIR += libnids
      SUBDIR += liboauth
      SUBDIR += libpcapnav
-     SUBDIR += libproxy,webkit
+     SUBDIR += libproxy,
      SUBDIR += librest
      SUBDIR += librsync
      SUBDIR += libshout
@@ -192,6 +201,7 @@
      SUBDIR += livemedia
      SUBDIR += loudmouth
      SUBDIR += luasocket
+     SUBDIR += luasocket,lua52
      SUBDIR += maclookup
      SUBDIR += maradns
      SUBDIR += maradns-deadwood
@@ -207,6 +217,7 @@
      SUBDIR += mldonkey
      SUBDIR += mon
      SUBDIR += mono-zeroconf
+     SUBDIR += mosh
      SUBDIR += mrtd
      SUBDIR += mrtg
      SUBDIR += mtr
@@ -279,6 +290,7 @@
      SUBDIR += p5-Geo-IP
      SUBDIR += p5-IO-Interface
      SUBDIR += p5-IO-Socket-INET6
+     SUBDIR += p5-IO-Socket-IP
      SUBDIR += p5-IO-Socket-Multicast
      SUBDIR += p5-IO-Socket-Socks
      SUBDIR += p5-IP-Country
@@ -465,7 +477,6 @@
      SUBDIR += py-nmap
      SUBDIR += py-pcapy
      SUBDIR += py-pcs
-     SUBDIR += py-smbc
      SUBDIR += py-snmp
      SUBDIR += py-twitter
      SUBDIR += py-xmpp
@@ -489,12 +500,17 @@
      SUBDIR += rtg
      SUBDIR += rtmpdump
      SUBDIR += rtorrent
+     SUBDIR += ruby-agcaldav
      SUBDIR += ruby-amqp
      SUBDIR += ruby-bunny
      SUBDIR += ruby-eventmachine
      SUBDIR += ruby-eventmachine,ruby18
+     SUBDIR += ruby-macaddr
+     SUBDIR += ruby-macaddr,ruby18
      SUBDIR += ruby-minion
      SUBDIR += ruby-net-dns
+     SUBDIR += ruby-net-http-digest_auth
+     SUBDIR += ruby-net-http-digest_auth,ruby18
      SUBDIR += ruby-net-scp
      SUBDIR += ruby-net-sftp
      SUBDIR += ruby-net-ssh
@@ -502,7 +518,6 @@
      SUBDIR += ruby-nmap-parser
      SUBDIR += ruby-pcap
      SUBDIR += ruby-pcaprub-msf
-     SUBDIR += ruby-rrdtool
      SUBDIR += ruby-snmp
      SUBDIR += ruby-stomp
      SUBDIR += ruby-xmpp4r
@@ -512,6 +527,7 @@
      SUBDIR += scamper
      SUBDIR += scapy
      SUBDIR += sendxmpp
+     SUBDIR += serf
      SUBDIR += sharity-light
      SUBDIR += si
      SUBDIR += sic
@@ -522,7 +538,6 @@
      SUBDIR += sipcalc
      SUBDIR += sipsak
      SUBDIR += sirc
-     SUBDIR += slirp
      SUBDIR += slurm
      SUBDIR += smokeping
      SUBDIR += snmptt
@@ -552,6 +567,7 @@
      SUBDIR += tcptrace
      SUBDIR += tcptraceroute
      SUBDIR += telepathy
+     SUBDIR += texapp
      SUBDIR += thcrut
      SUBDIR += tintin++
      SUBDIR += tinyfugue
@@ -587,6 +603,7 @@
      SUBDIR += weechat
      SUBDIR += weex
      SUBDIR += wget
+     SUBDIR += whatweb
      SUBDIR += wide-dhcp
      SUBDIR += wide-dhcpv6
      SUBDIR += winexe
@@ -595,8 +612,8 @@
      SUBDIR += wmnetload
      SUBDIR += wmwave
      SUBDIR += wol
-     SUBDIR += xarchie
      SUBDIR += xchat
+     SUBDIR += xl2tpd
      SUBDIR += xmlrpc-c
      SUBDIR += xmlrpc-epi
      SUBDIR += xorp

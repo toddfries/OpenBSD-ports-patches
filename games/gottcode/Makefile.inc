@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile.inc,v 1.1.1.1 2012/09/04 09:29:38 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.4 2013/05/16 20:45:30 rpe Exp $
 
-CATEGORIES =	games/gottcode games
+CATEGORIES =	games
 PKGNAME ?=	${DISTNAME:S/-src//}
 EXTRACT_SUFX ?=	.tar.bz2
 
@@ -9,9 +9,6 @@ MASTER_SITES ?=	${HOMEPAGE}
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WRKDIST ?=	${WRKDIR}/${DISTNAME:S/-src//}
 MODULES +=	x11/qt4

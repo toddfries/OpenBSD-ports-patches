@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2012/05/02 06:57:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2013/05/19 10:49:10 ajacoutot Exp $
 
 TRYTOND_MODULE =	calendar
 

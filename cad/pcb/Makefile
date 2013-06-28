@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/09/21 13:21:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2013/04/02 17:26:34 ajacoutot Exp $
 
 COMMENT=	printed circuit board layout tool
 DISTNAME=	pcb-20110918
@@ -11,9 +11,6 @@ MAINTAINER=	Andreas Bihlmaier <andreas.bihlmaier@gmx.de>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += GL GLU ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xmu Xrandr Xrender Xt atk-1.0 c cairo dbus-1
@@ -31,8 +28,12 @@ RUN_DEPENDS=	devel/m4 \
 		misc/shared-mime-info \
 		x11/gtk+2,-guic \
 		${MODTK_RUN_DEPENDS}
-BUILD_DEPENDS=	${RUN_DEPENDS} \
+
+BUILD_DEPENDS=	${MODTK_BUILD_DEPENDS} \
+		devel/m4 \
+		graphics/ImageMagick \
 		shells/bash
+
 LIB_DEPENDS=	graphics/gd \
 		x11/dbus \
 		x11/gtkglext

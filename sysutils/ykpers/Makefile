@@ -1,32 +1,30 @@
-# $OpenBSD: Makefile,v 1.3 2012/11/08 21:46:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2013/06/01 12:00:26 sthen Exp $
 
 COMMENT=	library and tools to program YubiKeys
 
-DISTNAME=	ykpers-1.9.0
+DISTNAME=	ykpers-1.13.0
+REVISION=	0
 
-SHARED_LIBS +=	ykpers-1                  0.0 # 7.3
+SHARED_LIBS +=	ykpers-1                  0.1 # 14.0
 
-CATEGORIES=	sysutils
+CATEGORIES=	sysutils security
 
-HOMEPAGE=	http://code.google.com/p/yubikey-personalization/
+HOMEPAGE=	http://yubico.github.io/yubikey-personalization/
 
 MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c pthread usb-1.0 yubikey
+WANTLIB += c json-c pthread usb-1.0 yubikey
 
-MASTER_SITES=	http://yubikey-personalization.googlecode.com/files/
+MASTER_SITES=	http://yubico.github.io/yubikey-personalization/releases/
 
-LIB_DEPENDS=	devel/libyubikey \
-		devel/libusb1>=1.0.9p1
+LIB_DEPENDS=	devel/json-c \
+		devel/libusb1>=1.0.9p1 \
+		devel/libyubikey \
 
 SEPARATE_BUILD=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 

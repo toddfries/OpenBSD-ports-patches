@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.227 2012/11/12 13:38:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.250 2013/06/28 09:14:02 jasper Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -7,6 +7,10 @@
      SUBDIR += dbh
      SUBDIR += dbic++
      SUBDIR += directoryassistant
+     SUBDIR += erl-Emysql
+     SUBDIR += erl-couchbeam
+     SUBDIR += erl-epgsql
+     SUBDIR += erl-sqerl
      SUBDIR += evolution-data-server
      SUBDIR += freetds
      SUBDIR += gdbm
@@ -16,6 +20,9 @@
      SUBDIR += hs-HDBC-mysql
      SUBDIR += hs-HDBC-postgresql
      SUBDIR += hs-HDBC-sqlite3
+     SUBDIR += hs-hackage-db
+     SUBDIR += hs-postgresql-libpq
+     SUBDIR += hs-postgresql-simple
      SUBDIR += hs-redis
      SUBDIR += iodbc
      SUBDIR += jxplorer
@@ -27,7 +34,9 @@
      SUBDIR += libdbi-drivers
      SUBDIR += libpqxx
      SUBDIR += luadbi
+     SUBDIR += luadbi,lua52
      SUBDIR += luasqlite3
+     SUBDIR += luasqlite3,lua52
      SUBDIR += luma
      SUBDIR += mdbtools/snapshot
      SUBDIR += mongodb
@@ -140,18 +149,22 @@
      SUBDIR += pkglocatedb
      SUBDIR += pkglocatedb,src
      SUBDIR += ports-readmes
+     SUBDIR += ports-readmes-dancer
      SUBDIR += postgresql
      SUBDIR += postgresql-jdbc
      SUBDIR += postgresql-odbc
      SUBDIR += postgresql-pllua
+     SUBDIR += postgresql-plv8
      SUBDIR += postgresql_autodoc
+     SUBDIR += puppetdb
      SUBDIR += py-axiom
      SUBDIR += py-carbon
      SUBDIR += py-cdb
      SUBDIR += py-couchdb
-     SUBDIR += py-elixir
+     SUBDIR += py-flask-sqlalchemy
      SUBDIR += py-ldap
      SUBDIR += py-mysql
+     SUBDIR += py-mongo
      SUBDIR += py-odbc
      SUBDIR += py-pgsql
      SUBDIR += py-psycopg2
@@ -168,12 +181,10 @@
      SUBDIR += qdbm
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += redis
-     SUBDIR += ruby-activerecord
+     SUBDIR += riak
      SUBDIR += ruby-amalgalite
      SUBDIR += ruby-amalgalite,ruby18
-     SUBDIR += ruby-arel
      SUBDIR += ruby-bdb
-     SUBDIR += ruby-couch_potato
      SUBDIR += ruby-couchrest
      SUBDIR += ruby-data_objects
      SUBDIR += ruby-data_objects,ruby18
@@ -188,6 +199,8 @@
      SUBDIR += ruby-do_sqlite3
      SUBDIR += ruby-do_sqlite3,ruby18
      SUBDIR += ruby-do_sqlite3,rbx
+     SUBDIR += ruby-hiera
+     SUBDIR += ruby-hiera,ruby18
      SUBDIR += ruby-jdbc-h2
      SUBDIR += ruby-jdbc-mysql
      SUBDIR += ruby-jdbc-postgres
@@ -200,8 +213,6 @@
      SUBDIR += ruby-mysql,rbx
      SUBDIR += ruby-mysql2
      SUBDIR += ruby-mysql2,ruby18
-     SUBDIR += ruby-mysqlplus
-     SUBDIR += ruby-mysqlplus,ruby18
      SUBDIR += ruby-pg
      SUBDIR += ruby-pg,ruby18
      SUBDIR += ruby-pg,rbx
@@ -221,6 +232,12 @@
      SUBDIR += ruby-sqlite3,ruby18
      SUBDIR += ruby-sqlite3,rbx
      SUBDIR += ruby-swift
+     SUBDIR += ruby-swift-db-mysql,ruby19
+     SUBDIR += ruby-swift-db-mysql,ruby20
+     SUBDIR += ruby-swift-db-postgres,ruby19
+     SUBDIR += ruby-swift-db-postgres,ruby20
+     SUBDIR += ruby-swift-db-sqlite3,ruby19
+     SUBDIR += ruby-swift-db-sqlite3,ruby20
      SUBDIR += ruby-tiny_tds
      SUBDIR += ruby-tiny_tds,ruby18
      SUBDIR += ruby-tiny_tds,rbx
@@ -234,9 +251,12 @@
      SUBDIR += sqliteman
      SUBDIR += sqlports
      SUBDIR += sqsh
+     SUBDIR += strigi
      SUBDIR += tdb
+     SUBDIR += tdbc
+     SUBDIR += tdbc-sqlite3
      SUBDIR += tinycdb
+     SUBDIR += virtuoso
      SUBDIR += xapian-core
-     SUBDIR += xmysql
 
 .include <bsd.port.subdir.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2012/08/28 19:54:15 naddy Exp $
+# $OpenBSD: Makefile,v 1.5 2013/06/12 20:36:33 brad Exp $
 
 SHARED_ONLY=	Yes
 
@@ -10,6 +10,7 @@ V=		0.5
 DISTNAME=	luadbi.$V
 PKGNAME-main=	luadbi-$V
 PKGNAME-mysql=	luadbi-mysql-$V
+REVISION-mysql=	1
 PKGNAME-pgsql=	luadbi-pgsql-$V
 
 CATEGORIES=	databases
@@ -18,9 +19,6 @@ HOMEPAGE=	http://luadbi.googlecode.com/
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}/files/
 
@@ -43,7 +41,7 @@ MODULES=		lang/lua
 USE_GMAKE=		Yes
 
 ALL_TARGET=		free # == sqlite3 mysql postgresql
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 MAKE_FLAGS=	CC="${CC}" \
 		COMMON_LDFLAGS="-L${LOCALBASE}/lib" \

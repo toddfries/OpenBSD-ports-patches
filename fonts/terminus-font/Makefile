@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2012/10/29 15:19:03 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/11 11:06:05 espie Exp $
 
 COMMENT =		fixed width fonts especially for long hacking sessions
 
@@ -11,14 +11,11 @@ MAINTAINER =		LEVAI Daniel <leva@ecentrum.hu>
 
 # OFL http://scripts.sil.org/OFL
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=terminus-font/}
 
 CONFIGURE_STYLE =	simple
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 USE_X11 =		Yes
 
 ALL_TARGET =		pcf
@@ -30,7 +27,7 @@ USE_GMAKE =		Yes
 FLAVORS =		symquotes
 FLAVOR ?=
 
-.if ${FLAVOR:L:Msymquotes}
+.if ${FLAVOR:Msymquotes}
 post-patch:
 	${PATCH} -d ${WRKSRC} < ${WRKSRC}/alt/gq2.diff
 .endif

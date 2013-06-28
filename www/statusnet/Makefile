@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2012/10/10 10:45:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2013/06/06 13:57:48 ajacoutot Exp $
 
 COMMENT=		open source micro messaging platform
 
 DISTNAME=		statusnet-1.1.0
+REVISION=		3
 
 CATEGORIES=		www net
 
@@ -10,9 +11,6 @@ HOMEPAGE=		http://status.net/
 
 # AGPLv3
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 MASTER_SITES=		${HOMEPAGE}
 
@@ -36,7 +34,7 @@ RUN_DEPENDS=		databases/pear-DB \
 			lang/php/${MODPHP_VERSION},-mysqli
 
 NO_BUILD=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 PKG_ARCH=		*
 
 PREFIX=                 /var/www

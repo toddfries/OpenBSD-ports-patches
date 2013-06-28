@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.52 2011/11/03 14:57:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.55 2013/06/27 11:31:51 zhuk Exp $
 
 COMMENT=	image viewer for KDE
 
 DISTNAME=	gwenview-1.4.2
-REVISION =	10
+REVISION =	11
 SHARED_LIBS +=	gwenviewcore         5.0      # .1.0
 CATEGORIES=	graphics x11 x11/kde
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gwenview/}
@@ -13,18 +13,19 @@ HOMEPAGE=	http://gwenview.sourceforge.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	ICE SM X11 Xcursor Xext Xfixes Xrender \
-		art_lgpl_2 c expat idn jpeg m mng png pthread \
-		stdc++ util xcb z kdecore>=6 DCOP kdefx \
-		kdeprint kdesu kparts kdeui kio kmediaplayer kutils \
-		kwalletclient kipi exiv2
-WANTLIB += GL Xdamage Xft Xi Xinerama Xmu Xrandr Xt Xxf86vm drm
-WANTLIB += fontconfig freetype lcms
-RUN_DEPENDS=	devel/desktop-file-utils
+WANTLIB =  GL ICE SM X11 Xcursor Xdamage Xext Xfixes Xft Xi Xinerama
+WANTLIB += Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2 c drm expat exiv2
+WANTLIB += fam fontconfig freetype idn jpeg lcms m mng png pthread
+WANTLIB += stdc++ util xcb z
+WANTLIB += ${KDE}/kdecore>=6 ${KDE}/DCOP ${KDE}/kdefx ${KDE}/kdeprint
+WANTLIB += ${KDE}/kdesu ${KDE}/kparts ${KDE}/kdeui ${KDE}/kio
+WANTLIB += ${KDE}/kmediaplayer ${KDE}/kutils ${KDE}/kwalletclient
+WANTLIB += kipi
+
+RUN_DEPENDS=	devel/desktop-file-utils \
+		x11/gtk+2,-guic
+
 LIB_DEPENDS=	x11/kde/libs3 \
 		graphics/libkipi \
 		graphics/exiv2

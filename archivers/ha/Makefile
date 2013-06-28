@@ -1,22 +1,18 @@
-# $OpenBSD: Makefile,v 1.27 2010/07/11 15:57:47 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2013/04/03 15:14:16 naddy Exp $
 
 COMMENT=	archive files using the HSC compression method
 
 DISTNAME=	ha0999
 PKGNAME=	ha-0.999b
+REVISION =	2
 CATEGORIES=	archivers
 MASTER_SITES=	ftp://ftp.kiarchive.ru/pub/unix/arcers/
 EXTRACT_SUFX=	.tgz
 
-FAKE=			all
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-REVISION =	1
-WANTLIB=		c
+WANTLIB=	c
 
 USE_GMAKE=	Yes
 
@@ -33,6 +29,6 @@ ALL_TARGET=	ha
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/ha ${PREFIX}/bin
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

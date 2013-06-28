@@ -1,22 +1,26 @@
-# $OpenBSD: Makefile,v 1.168 2012/09/24 19:57:02 pea Exp $
+# $OpenBSD: Makefile,v 1.178 2013/06/20 08:26:13 ajacoutot Exp $
 
 COMMENT-main=	PostgreSQL RDBMS (client)
 COMMENT-server=	PostgreSQL RDBMS (server)
 COMMENT-docs=	PostgreSQL RDBMS documentation
 COMMENT-contrib=PostgreSQL RDBMS contributions
 
-VERSION=	9.2.1
+VERSION=	9.2.4
 DISTNAME=	postgresql-${VERSION}
 PKGNAME-main=	postgresql-client-${VERSION}
 PKGNAME-server=	postgresql-server-${VERSION}
 PKGNAME-docs=	postgresql-docs-${VERSION}
 PKGNAME-contrib=postgresql-contrib-${VERSION}
 
+REVISION-main=	2
+REVISION-server=2
+REVISION-contrib=3
+
 CATEGORIES=	databases
 SHARED_LIBS=	ecpg		7.4 \
 		ecpg_compat	4.4 \
 		pgtypes		4.3 \
-		pq		5.5 
+		pq		5.5
 
 HOMEPAGE=	http://www.postgresql.org/
 
@@ -24,14 +28,14 @@ MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c com_err crypto m readline ssl termcap z
 
-MASTER_SITES= 	ftp://ftp5.us.postgresql.org/pub/PostgreSQL/source/v${VERSION}/ \
-	ftp://ftp5.es.postgresql.org/mirror/postgresql/source/v${VERSION}/ \
-	ftp://ftp.postgresql.org/pub/source/v${VERSION}/
+WANTLIB=		c com_err crypto m readline ssl termcap z asn1 \
+			heimbase krb5 roken wind
+
+MASTER_SITES=	http://ftp.postgresql.org/pub/source/v${VERSION}/ \
+	http://ftp5.es.postgresql.org/mirror/postgresql/source/v${VERSION}/ \
+	ftp://ftp.postgresql.org/pub/source/v${VERSION}/ \
+	ftp://ftp5.us.postgresql.org/pub/PostgreSQL/source/v${VERSION}/
 
 MULTI_PACKAGES=	-docs -main -server -contrib
 
@@ -46,12 +50,14 @@ MAKE_FILE=	GNUmakefile
 SUBST_VARS=	VERSION
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
-CONFIGURE_STYLE=gnu
+USE_GROFF=	Yes
 
-INCLUDES=	${LOCALBASE}/include /usr/include/kerberosV
+CONFIGURE_STYLE=gnu
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include $$(krb5-config --cflags)" \
+		LDFLAGS="-L${LOCALBASE}/lib $$(krb5-config --libs)"
 CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-perl \
+		--with-pam=no \
 		--enable-integer-datetimes \
 		--includedir="${PREFIX}/include/postgresql" \
 		--datadir="${PREFIX}/share/postgresql" \
@@ -62,8 +68,8 @@ CONFIGURE_ARGS=	--disable-rpath --with-openssl=/usr \
 		--with-openssl \
 		--with-ossp-uuid \
 		--with-libxml \
-		--disable-thread-safety \
-		--with-krb5
+		--with-krb5 \
+		--disable-thread-safety
 
 # There is no spinlock support for hppa yet. Until we have access to
 # a system to get this working, disable them for now. There is
@@ -90,7 +96,7 @@ RUN_DEPENDS-contrib= databases/postgresql,-server=${VERSION}
 LIB_DEPENDS-contrib= databases/postgresql=${VERSION} \
 		     ${LIB_DEPENDS-main} \
 		     devel/uuid
-WANTLIB-contrib = 	${WANTLIB-main} pq>=4 uuid
+WANTLIB-contrib=	${WANTLIB-main} pq>=4 ossp-uuid
 
 WANTLIB-docs=
 PKG_ARCH-docs=	*
@@ -111,11 +117,11 @@ MAKE_ENV=	LIBpq_MAJOR=${LIBpq_VERSION:R} \
 #
 #	$ ulimit -p 128
 #	$ ulimit -n 1024
-#	$ make regress NO_REGRESS=No
+#	$ make test NO_TEST=No
 #
 # Note, you may also need to change a variety of SYSV IPC parameters.
 # See pkg/README-server for more details
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 DOCS=	${WRKSRC}/COPYRIGHT ${WRKSRC}/HISTORY \
 	${WRKSRC}/INSTALL ${WRKSRC}/README \

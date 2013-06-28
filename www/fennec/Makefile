@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2012/10/06 07:55:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2013/06/26 19:31:57 landry Exp $
 
 COMMENT =	Mozilla mobile web browser
 
@@ -7,7 +7,7 @@ MOZILLA_BRANCH =	esr10
 MOZILLA_PROJECT =	fennec
 MOZILLA_CODENAME =	mobile
 PKGNAME =	${MOZILLA_PROJECT}-${MOZILLA_VERSION:S/esr//}
-REVISION =	3
+REVISION =		9
 
 SO_VERSION =	6.0
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -18,9 +18,6 @@ CATEGORIES =	www
 
 # mozilla public license
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES =	http://releases.mozilla.org/pub/mozilla.org/mobile/releases/${MOZILLA_VERSION}/source/ \
 		https://ftp.mozilla.org/pub/mozilla.org/mobile/releases/${MOZILLA_VERSION}/source/ \
@@ -33,7 +30,7 @@ MODULES =	www/mozilla devel/gettext lang/python
 MODPY_RUNDEP =	No
 
 # Regression tests are too hard to adapt to run here
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 CONFIGURE_STYLE =	autoconf no-autoheader
 CONFIGURE_ARGS +=	--enable-official-branding
@@ -42,12 +39,6 @@ CONFIGURE_ARGS +=	--with-system-libevent=/usr/
 CONFIGURE_ARGS +=	--with-system-zlib=/usr/ --with-system-bz2=${LOCALBASE}
 WANTLIB +=	event
 
-.if ${MACHINE_ARCH:Msparc64}
-CONFIGURE_ARGS +=	--disable-tracejit --disable-methodjit
-.endif
-
-# ensure we depend on cairo with tee backend enabled
-LIB_DEPENDS =	graphics/cairo>=1.10.2p0
 # --with-system-png=${LOCALBASE}
 # no system png : apng support not bundled in
 
@@ -56,8 +47,6 @@ MOZILLA_SUBST_FILES +=		config/autoconf.mk.in services/crypto/modules/WeaveCrypt
 
 SUBST_VARS +=	MOZILLA_VERSION NSS_SO_VERSION
 
-# package target uses gtar options
-BUILD_DEPENDS +=	archivers/gtar
 INSTALL_TARGET =	package
 
 # unzip used during install

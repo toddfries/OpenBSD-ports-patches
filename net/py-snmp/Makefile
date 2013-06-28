@@ -1,21 +1,16 @@
-# $OpenBSD: Makefile,v 1.14 2011/12/04 10:48:11 benoit Exp $
+# $OpenBSD: Makefile,v 1.17 2013/03/11 11:35:55 espie Exp $
 
 COMMENT=	SNMP framework for Python
 
-MODPY_EGG_VERSION = 4.2.1
+MODPY_EGG_VERSION = 4.2.4
 DISTNAME=	pysnmp-${MODPY_EGG_VERSION}
 PKGNAME=	${DISTNAME:S/py/py-/}
 CATEGORIES=	net
 
-REVISION =	0
-
 HOMEPAGE=	http://pysnmp.sourceforge.net/
 
 # BSD
-PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
+PERMIT_PACKAGE_CDROM =	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pysnmp/}
 
@@ -35,6 +30,6 @@ post-install:
 	cd ${WRKSRC}/docs; tar cf - . | tar xf - -C ${DOCSDIR} 
 	cd ${WRKSRC}/examples; tar cf - . | tar xf - -C ${EXAMPLESDIR}
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 .include <bsd.port.mk>

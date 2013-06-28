@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.20 2012/10/15 15:18:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.26 2013/06/09 21:51:58 robert Exp $
 
 COMMENT=		industrial-grade ticketing system
 
-DISTNAME=		rt-4.0.7
+DISTNAME=		rt-4.0.13
 CATEGORIES=		www
+
+REVISION=		0
 
 MAINTAINER=		Robert Nagy <robert@openbsd.org>
 
@@ -75,9 +77,6 @@ RUN_DEPENDS=		converters/p5-Convert-Color \
 
 # GPL
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 NO_BUILD=		Yes
 
@@ -104,10 +103,10 @@ BUILD_DEPENDS+=		security/gnupg \
 FLAVORS=		pgsql sqlite
 FLAVOR?=
 
-.if ${FLAVOR:L:Mpgsql}
+.if ${FLAVOR:Mpgsql}
 RUN_DEPENDS+=		databases/p5-DBD-Pg
 CONFIGURE_ARGS+=	--with-db-type=Pg
-.elif ${FLAVOR:L:Msqlite}
+.elif ${FLAVOR:Msqlite}
 RUN_DEPENDS+=		databases/p5-DBD-SQLite
 CONFIGURE_ARGS+=	--with-db-type=SQLite
 .else
@@ -115,8 +114,8 @@ RUN_DEPENDS+=		databases/p5-DBD-mysql
 .endif
 
 # needs an initialized database and /etc/rt3/RT_Config.pm to be present
-REGRESS_IS_INTERACTIVE=	Yes
-REGRESS_TARGET=		test
+TEST_IS_INTERACTIVE=	Yes
+TEST_TARGET=		test
 
 pre-configure:
 	@perl -pi -e 's#%%PREFIX%%#${PREFIX}#' ${WRKSRC}/config.layout

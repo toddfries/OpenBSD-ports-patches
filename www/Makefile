@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.585 2012/11/07 07:54:04 jasper Exp $
+# $OpenBSD: Makefile,v 1.610 2013/05/29 20:44:52 jasper Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
-     SUBDIR += amaya
      SUBDIR += analog
+     SUBDIR += ap2-mod_dnssd
      SUBDIR += ap2-mod_fastcgi
      SUBDIR += ap2-mod_fcgid
+     SUBDIR += ap2-mod_jk
      SUBDIR += ap2-mod_perl
      SUBDIR += apache-httpd
      SUBDIR += aria2
@@ -13,12 +14,13 @@
      SUBDIR += asql
      SUBDIR += august
      SUBDIR += awl
+     SUBDIR += awstats
      SUBDIR += bacula-web
-     SUBDIR += bk2site
      SUBDIR += blogsum
      SUBDIR += bluefish
      SUBDIR += bozohttpd
      SUBDIR += bricolage
+     SUBDIR += c-icap
      SUBDIR += calamaris
      SUBDIR += canto
      SUBDIR += cclive
@@ -28,13 +30,13 @@
      SUBDIR += cherokee
      SUBDIR += chive
      SUBDIR += chromium
+     SUBDIR += chromium,proprietary
      SUBDIR += clearsilver
      SUBDIR += cms-ms
      SUBDIR += cntlm
      SUBDIR += concrete5
      SUBDIR += conkeror
      SUBDIR += cronolog
-     SUBDIR += cssed
      SUBDIR += dansguardian
      SUBDIR += decss
      SUBDIR += dillo
@@ -45,14 +47,14 @@
      SUBDIR += elinks
 #     SUBDIR += elinks,js
      SUBDIR += epiphany
-     SUBDIR += epiphany-extensions
+     SUBDIR += erl-mochiweb
+     SUBDIR += erl-webmachine
      SUBDIR += ezpublish
      SUBDIR += fcgi
      SUBDIR += fcgi-cgi
      SUBDIR += fennec
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
-     SUBDIR += firefox35
      SUBDIR += firefox36
      SUBDIR += fluxbb
      SUBDIR += flyspray
@@ -227,6 +229,7 @@
      SUBDIR += p5-Catalyst-View-Mason
      SUBDIR += p5-CatalystX-Component-Traits
      SUBDIR += p5-Config-ApacheFormat
+     SUBDIR += p5-Dancer
      SUBDIR += p5-Data-URIEncode
      SUBDIR += p5-Drupal-Admin
      SUBDIR += p5-FCGI-ProcManager
@@ -279,6 +282,7 @@
      SUBDIR += p5-HTTP-Async
      SUBDIR += p5-HTTP-Body
      SUBDIR += p5-HTTP-BrowserDetect
+     SUBDIR += p5-HTTP-DAV
      SUBDIR += p5-HTTP-GHTTP
      SUBDIR += p5-HTTP-GetImages
      SUBDIR += p5-HTTP-Lite
@@ -290,6 +294,7 @@
      SUBDIR += p5-HTTP-Response-Encoding
      SUBDIR += p5-HTTP-Server-Simple
      SUBDIR += p5-HTTP-Server-Simple-Mason
+     SUBDIR += p5-HTTP-Server-Simple-PSGI
      SUBDIR += p5-HTTP-Server-Simple-Recorder
      SUBDIR += p5-HTTPD-Log-Filter
      SUBDIR += p5-JavaScript-Minifier
@@ -376,6 +381,7 @@
      SUBDIR += phpmemcachedadmin
      SUBDIR += phpmyadmin
      SUBDIR += phppgadmin
+     SUBDIR += phpvirtualbox
      SUBDIR += piwik
      SUBDIR += plans
      SUBDIR += pmwiki
@@ -437,8 +443,9 @@
      SUBDIR += reportmagic
      SUBDIR += retawq
      SUBDIR += rt
-     SUBDIR += ruby-activeresource
      SUBDIR += ruby-addressable
+     SUBDIR += ruby-capybara
+     SUBDIR += ruby-capybara-webkit
      SUBDIR += ruby-fcgi
      SUBDIR += ruby-httpclient
      SUBDIR += ruby-jekyll
@@ -447,13 +454,7 @@
      SUBDIR += ruby-passenger
      SUBDIR += ruby-passenger,ruby18
      SUBDIR += ruby-rack
-     SUBDIR += ruby-rack-cache
-     SUBDIR += ruby-rack-mount
-     SUBDIR += ruby-rack-ssl
      SUBDIR += ruby-rack-test
-     SUBDIR += ruby-rails
-     SUBDIR += ruby-rails,ruby18
-     SUBDIR += ruby-railties
      SUBDIR += ruby-rainbows
      SUBDIR += ruby-rainbows,ruby18
      SUBDIR += ruby-raindrops
@@ -468,10 +469,14 @@
      SUBDIR += ruby-unicorn,ruby18
      SUBDIR += ruby-vegas
      SUBDIR += ruby-vegas,ruby18
+     SUBDIR += ruby-xpath
      SUBDIR += sabredav
      SUBDIR += sarg
+     SUBDIR += sarg,ldap
      SUBDIR += seamonkey
      SUBDIR += seamonkey-i18n
+     SUBDIR += selfoss
+     SUBDIR += silverstripe
      SUBDIR += slowhttptest
      SUBDIR += snownews
      SUBDIR += sogo
@@ -479,20 +484,18 @@
      SUBDIR += spawn-fcgi
      SUBDIR += sqtop
      SUBDIR += squid
-     SUBDIR += squid,ldap
-     SUBDIR += squid,ldap,snmp
-     SUBDIR += squid,ntlm
-     SUBDIR += squid,snmp
+     SUBDIR += squid27
+     SUBDIR += squidclamav
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
      SUBDIR += statusnet
      SUBDIR += surf
      SUBDIR += surfraw
      SUBDIR += swfdec-plugin
+     SUBDIR += swiggle
      SUBDIR += syweb
      SUBDIR += thttpd
      SUBDIR += tidyp
-     SUBDIR += timetrex
      SUBDIR += tinyproxy
      SUBDIR += tntnet
      SUBDIR += tomcat
@@ -526,7 +529,6 @@
      SUBDIR += wwwoffle
      SUBDIR += xapian-omega
      SUBDIR += xcache
-     SUBDIR += xmhtml
      SUBDIR += xombrero
      SUBDIR += yaws
      SUBDIR += youtube-dl

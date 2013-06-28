@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.27 2012/04/28 10:51:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2013/04/19 21:32:37 sthen Exp $
 
 SHARED_LIBS +=  ft                   0.0      # .0.0
 
@@ -6,7 +6,7 @@ COMMENT=	cisco NetFlow utilities
 
 DISTNAME=	flow-tools-0.68.5.1
 EXTRACT_SUFX=	.tar.bz2
-REVISION=	2
+REVISION=	3
 CATEGORIES=	net
 
 MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
@@ -17,9 +17,6 @@ HOMEPAGE=	http://code.google.com/p/flow-tools/
 MASTER_SITES=	http://flow-tools.googlecode.com/files/
 
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 FLAVORS=		pgsql
 FLAVOR?=
@@ -34,7 +31,7 @@ CONFIGURE_STYLE=	gnu
 SEPARATE_BUILD=		Yes
 SYSCONFDIR=		${BASESYSCONFDIR}/flow-tools
 
-.if !${FLAVOR:L:Mpgsql}
+.if !${FLAVOR:Mpgsql}
 CONFIGURE_ARGS+=	--without-postgresql
 .else
 WANTLIB +=		pq
@@ -45,7 +42,6 @@ MAKE_FLAGS+=		SUBDIRS="lib src bin configs docs"
 FAKE_FLAGS+=		sysconfdir=${PREFIX}/share/examples/flow-tools
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF=		Yes
 
 # let configure generate a new ftconfig.h, the supplied one has

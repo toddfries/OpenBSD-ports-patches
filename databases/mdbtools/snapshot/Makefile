@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2012/09/01 14:36:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.33 2013/05/30 10:51:23 sthen Exp $
 
 COMMENT-main=	read microsoft Access MDB
 COMMENT-gmdb=	graphical interface to MDB tools
@@ -14,6 +14,7 @@ REVISION-gmdb=	11
 CATEGORIES=	databases converters
 MASTER_SITES=	ftp://quatramaran.ens.fr/pub/espie/
 
+# https://github.com/brianb/mdbtools
 #MASTER_SITES=${MASTER_SITE_SOURCEFORGE:=mdbtools/}
 MULTI_PACKAGES=	-main -gmdb
 
@@ -21,12 +22,8 @@ SHARED_LIBS +=	mdb                  1.0      # .1.0
 SHARED_LIBS +=	mdbsql               1.0      # .1.0
 
 # GPLv2+, LGPL v2+
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=	gnu
 
@@ -66,4 +63,3 @@ WANTLIB-gmdb=	${WANTLIB} \
 WANTLIB-main=	${WANTLIB} readline termcap
 
 .include <bsd.port.mk>
-

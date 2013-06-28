@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.5 2012/09/22 09:25:06 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.8 2013/06/04 18:41:53 naddy Exp $
 
 # Most frequent usage of the GStreamer packages:
 # core		base library
@@ -28,7 +28,6 @@ GST_PKGNAME_PREFIX=	gstreamer1
 # GPLv2 - GPLv2+ - LGPLv2
 PERMIT_PACKAGE_CDROM ?=	Yes
 PERMIT_PACKAGE_FTP ?=	Yes
-PERMIT_DISTFILES_CDROM ?=	Yes
 PERMIT_DISTFILES_FTP ?=	Yes
 
 VERSION=		1.0
@@ -41,16 +40,15 @@ P=			multimedia/${GST_PKGNAME_PREFIX}
 
 .if defined(MULTI_PACKAGES)
 .for i in ${MULTI_PACKAGES}
-REGRESS_DEPENDS +=	${BASE_PKGPATH},${i}
+TEST_DEPENDS +=	${BASE_PKGPATH},${i}
 .endfor
 .else
-REGRESS_DEPENDS +=	${BASE_PKGPATH}
+TEST_DEPENDS +=	${BASE_PKGPATH}
 .endif
 
 MODULES +=		devel/gettext
 
 USE_GMAKE ?=		Yes
-USE_LIBTOOL ?=		Yes
 LIBTOOL_FLAGS ?=	--tag=disable-static
 AUTOCONF_VERSION ?=	2.69
 
@@ -81,7 +79,6 @@ CONFIGURE_ENV +=ac_cv_path_GTKDOC_CHECK="" \
 		ac_cv_path_GTKDOC_MKPDF=""
 
 CPPFLAGS +=		-I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng \
 			-I${X11BASE}/include
 LDFLAGS +=		-L${LOCALBASE}/lib \
 			-L${X11BASE}/lib

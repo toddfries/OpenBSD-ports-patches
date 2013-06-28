@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.3 2012/06/21 07:00:20 ajacoutot Exp $
+$OpenBSD: README,v 1.5 2013/05/05 19:24:13 jasper Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -8,7 +8,7 @@ To enable a decent configuration of drupal, please create a symbolic
 link:
 
 ln -sf ../modules.sample/${DRUPAL}.conf \
-	${TRUEPREFIX}/conf/modules
+	/var/www/conf/modules
 
 Drupal can work with a PostgreSQL, MySQL or SQLite3 database.
 Support for SQLite3 is included with the main php package; to use
@@ -17,22 +17,6 @@ another database, the corresponding package needs to be installed:
 
 If you just want to try out drupal, you don't need any database server,
 an sqlite file will do just fine.
-
-In order to run with standard OpenBSD chroot'ed httpd:
-
-- make sure you can connect to your database.
-
-Create a directory for the mysql socket and adjust permissions:
-
-	install -d -g _mysql -o _mysql /var/www/var/run/mysql
-
-Adjust ${SYSCONFDIR}/my.cnf to put the mysql socket into the chroot.
-
-	[client]
-	socket = /var/www/var/run/mysql/mysql.sock
-
-	[mysqld]
-	socket = /var/www/var/run/mysql/mysql.sock
 
 Don't forget to set the character set to utf8 in your database.
 

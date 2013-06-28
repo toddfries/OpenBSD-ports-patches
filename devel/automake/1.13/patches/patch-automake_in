@@ -1,0 +1,19 @@
+$OpenBSD: patch-automake_in,v 1.2 2013/02/01 04:19:05 brad Exp $
+--- automake.in.orig	Tue Jan  1 06:50:12 2013
++++ automake.in	Thu Jan 31 07:57:02 2013
+@@ -5156,6 +5156,7 @@ sub scan_autoconf_traces ($)
+ 		_LT_AC_TAGCONFIG => 0,
+ 		m4_include => 1,
+ 		m4_sinclude => 1,
++		include => 1,
+ 		sinclude => 1,
+ 	      );
+ 
+@@ -5179,6 +5180,7 @@ sub scan_autoconf_traces ($)
+       my ($here, $depth, @args) = split (/::/);
+       $where = new Automake::Location $here;
+       my $macro = $args[0];
++      next if ($macro eq "include");
+ 
+       prog_error ("unrequested trace '$macro'")
+ 	unless exists $traced{$macro};

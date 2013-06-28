@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2012/06/30 20:47:53 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2013/05/14 09:37:17 sthen Exp $
 
 COMMENT=		open-source CFML engine
 
-V=			3.3.4.003
+V=			4.1.0.004
 DISTNAME=		railo-$V
 EXTRACT_SUFX=		.war
 
@@ -14,18 +14,18 @@ MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES =		http://www.getrailo.org/down.cfm?item=/railo/remote/download/$V/custom/all/
 
-BUILD_DEPENDS=		archivers/unzip
+# doesn't actually need tomcat to build, but listing it here avoids
+# wasting time on !java arch
+BUILD_DEPENDS=		archivers/unzip \
+			${RUN_DEPENDS}
 RUN_DEPENDS=		tomcat->=7,<8:www/tomcat/v7
 SUBST_VARS=		CATALINA_BASE
 
 NO_BUILD=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 PKG_ARCH=		*
 
 CATALINA_BASE=		/var/tomcat
@@ -39,14 +39,15 @@ do-extract:
 # patch/edit/update-patches cycle. Also strips horizontal whitespace at eol.
 pre-patch:
 	perl -pi -e 's,<servlet-name>,<servlet-name>PKG_,g;' \
-	    -e 's,\h*$$,,;' ${WRKSRC}/WEB-INF/web.xml
+	    -e 's,\h*\r*$$,,;' ${WRKSRC}/WEB-INF/web.xml
 
 post-patch:
 	perl -pi -e 's,/var/tomcat/,${CATALINA_BASE}/,g' ${WRKSRC}/WEB-INF/web.xml
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/railo ${PREFIX}/lib ${PREFIX}/conf
-	${INSTALL_DATA} ${WRKSRC}/WEB-INF/lib/* ${PREFIX}/lib/
+	cd ${WRKSRC}/WEB-INF/lib && pax -rw * ${PREFIX}/lib/
+	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/lib/*
 	${INSTALL_DATA} ${WRKSRC}/index.cfm ${PREFIX}/railo/index.cfm.dist
 	${INSTALL_DATA} ${WRKSRC}/WEB-INF/web.xml ${PREFIX}/conf/web-railo.xml.dist
 

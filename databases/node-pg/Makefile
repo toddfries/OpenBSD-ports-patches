@@ -1,21 +1,18 @@
-# $OpenBSD: Makefile,v 1.8 2012/07/12 21:42:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2013/05/24 18:30:28 jeremy Exp $
 
 COMMENT =	postgresql client for Node.js
 
-NPM_VERSION =	0.7.1
+NPM_VERSION =	1.1.0
 NPM_NAME =	pg
-REVISION =	0
 CATEGORIES =	databases
+REVISION =	0
 
-MAINTAINER =	Jeremy Evans <jeremy@openbsd.org>
+MAINTAINER =	Roman Kravchuk <kravchuk.kp@gmail.com>
 
 HOMEPAGE =	https://github.com/brianc/node-postgres
 
 # MIT
 PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
 
 MODULES =		lang/node
 
@@ -25,14 +22,17 @@ WANTLIB =	pq
 
 BUILD_DEPENDS =	${RUN_DEPENDS}
 LIB_DEPENDS =	databases/postgresql
-RUN_DEPENDS =	devel/node-generic-pool
-MODNODE_DEPENDS = generic-pool
+RUN_DEPENDS =	devel/node-generic-pool \
+		devel/node-buffer-writer
+
+MODNODE_DEPENDS = generic-pool \
+		  buffer-writer
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/binding.gyp
 
 # Must have a database setup running on localhost with
 # user=postgres and password=1234
-REGRESS_TARGET = test-all
+TEST_TARGET = test-all
 
 .include <bsd.port.mk>

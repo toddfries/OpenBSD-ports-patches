@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.43 2012/09/16 12:44:02 pea Exp $
+# $OpenBSD: Makefile,v 1.50 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 SHARED_LIBS +=  freeradius-radius    4.1      # .0.0
@@ -15,10 +15,15 @@ DISTNAME=	freeradius-server-$V
 EXTRACT_SUFX=	.tar.bz2
 
 PKGNAME-main=	freeradius-$V
+REVISION-main=	2
 PKGNAME-iodbc=	freeradius-iodbc-$V
+REVISION-iodbc=	3
 PKGNAME-mysql=	freeradius-mysql-$V
+REVISION-mysql=	3
 PKGNAME-pgsql=	freeradius-pgsql-$V
+REVISION-pgsql=	1
 PKGNAME-ldap=	freeradius-ldap-$V
+REVISION-ldap=	1
 
 CATEGORIES=	net security
 
@@ -31,17 +36,14 @@ MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # GPLv2 - LGPLv2 - OpenSSL exemption
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	crypto ssl
+MODULES=	devel/gettext
 
 CONFIGURE_STYLE=autoconf dest
 AUTOCONF_VERSION=2.61
 # we only patch {WRKSRC}/configure.in so there's no need
 # to set AUTOCONF_DIR for the modules
-CFLAGS+=	-I${LOCALBASE}/include
+CFLAGS+=	-I${LOCALBASE}/include $$(krb5-config --cflags)
 LDFLAGS+=	-L${LOCALBASE}/lib
 CONFIGURE_ENV=	LDFLAGS="${LDFLAGS}"
 
@@ -56,13 +58,13 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--without-rlm_sql_oracle \
 		--without-rlm_sql_db2 \
 		--without-rlm_sql_unixodbc \
+		--enable-heimdal-krb5 \
 		--disable-ltdl-install \
-		--with-rlm-krb5-include-dir=/usr/include/kerberosV \
 		--with-system-libltdl
 
-REGRESS_TARGET=	tests
-REGRESS_DEPENDS=freeradius-$V:net/freeradius
-REGRESS_IS_INTERACTIVE=Yes # doesn't exit properly
+TEST_TARGET=	tests
+TEST_DEPENDS=freeradius-$V:net/freeradius
+TEST_IS_INTERACTIVE=Yes # doesn't exit properly
 
 MULTI_PACKAGES=	-main
 SUBST_VARS+=	V
@@ -79,49 +81,50 @@ BUILD_DEPENDS=		archivers/gtar \
 LIB_DEPENDS-main =	databases/gdbm \
 			devel/libtool,-ltdl
 WANTLIB-main=		${WANTLIB} c com_err krb5 pcap pthread readline \
-			termcap gdbm>=3 ltdl>=4
+			termcap gdbm>=3 ltdl>=4 crypto ssl
 
 PSEUDO_FLAVORS=	no_ldap no_mysql no_pgsql no_iodbc
 FLAVOR?=		
 
-.if ${FLAVOR:L:Mno_iodbc}
+.if ${FLAVOR:Mno_iodbc}
 CONFIGURE_ARGS+=	--without-rlm_sql_iodbc
 .else
 MULTI_PACKAGES+=	-iodbc
-BUILD_DEPENDS+=		databases/iodbc
 CONFIGURE_ARGS+=	--with-rlm_sql_iodbc
 LIB_DEPENDS-iodbc=	databases/iodbc
 WANTLIB-iodbc=		iodbc>=2 pthread
+RUN_DEPENDS-iodbc=	#empty
 .endif
 
-.if ${FLAVOR:L:Mno_ldap}
+.if ${FLAVOR:Mno_ldap}
 CONFIGURE_ARGS+=	--without-rlm_ldap
 .else
 MULTI_PACKAGES+=	-ldap
-BUILD_DEPENDS+=		databases/openldap
 LIB_DEPENDS-ldap=	databases/openldap \
 			${BASE_PKGPATH}
-WANTLIB-ldap=		${WANTLIB} sasl2 asn1 com_err gssapi krb5 \
-			lber>=8 ldap_r>=8 freeradius-radius>=1 pthread
+WANTLIB-ldap=		crypto ssl sasl2 asn1 com_err gssapi krb5 \
+			lber>=8 ldap_r>=8 freeradius-radius>=1 pthread \
+			heimbase roken wind
+RUN_DEPENDS-ldap=	#empty
 .endif
 
-.if ${FLAVOR:L:Mno_mysql}
+.if ${FLAVOR:Mno_mysql}
 CONFIGURE_ARGS+=	--without-rlm_sql_mysql
 .else
 MULTI_PACKAGES+=	-mysql
-BUILD_DEPENDS+=		databases/mysql
 LIB_DEPENDS-mysql=	databases/mysql
-WANTLIB-mysql=		${WANTLIB} m pthread z mysqlclient_r>=16
+WANTLIB-mysql=		crypto ssl m pthread z mysqlclient_r>=16
+RUN_DEPENDS-mysql=	#empty
 .endif
 
-.if ${FLAVOR:L:Mno_pgsql}
+.if ${FLAVOR:Mno_pgsql}
 CONFIGURE_ARGS+=	--without-rlm_sql_postgresql
 .else
 MULTI_PACKAGES+=	-pgsql
-BUILD_DEPENDS+=		databases/postgresql
 CONFIGURE_ARGS+=	--with-rlm-sql-postgresql-include-dir=${LOCALBASE}/include/postgresql
 LIB_DEPENDS-pgsql=	databases/postgresql
 WANTLIB-pgsql=		pq>=2
+RUN_DEPENDS-pgsql=	#empty
 .endif
 
 .for i in ${MULTI_PACKAGES:N-main}
@@ -138,7 +141,7 @@ post-install:
 .endfor
 	rm ${PREFIX}/lib/freeradius/*.la ${PREFIX}/lib/freeradius/*.a
 
-pre-regress:
+pre-test:
 	perl -pi -e 's,\$${DESTDIR},${DESTDIR},g' ${WRKSRC}/raddb/radiusd.conf
 
 .include <bsd.port.mk>

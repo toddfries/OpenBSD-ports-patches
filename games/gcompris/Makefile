@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.50 2012/09/06 12:38:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2013/05/31 15:34:45 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	educational game for children
 
-DISTNAME=	gcompris-12.05
-REVISION=	1
+DISTNAME=	gcompris-12.11
 EXTRACT_SUFX=	.tar.bz2
+REVISION=	0
 
 CATEGORIES=	games education
 
@@ -16,9 +16,6 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
@@ -27,7 +24,7 @@ WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gstreamer-0.10 gthread-2.0 gtk-x11-2.0
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png pthread pthread-stubs rsvg-2 sqlite3 stdc++ util
-WANTLIB += xcb xcb-render xcb-shm xml2 z
+WANTLIB += xcb xcb-render xcb-shm xml2 z harfbuzz
 WANTLIB += ${MODPY_WANTLIB}
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gcompris/}
@@ -52,7 +49,6 @@ RUN_DEPENDS=	games/gnuchess \
 		devel/desktop-file-utils \
 		multimedia/gstreamer-0.10/plugins-base
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 
 LIBTOOL_FLAGS=	--tag=disable-static

@@ -1,21 +1,17 @@
-# $OpenBSD: Makefile,v 1.53 2012/07/09 13:25:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.56 2013/03/21 08:45:13 ajacoutot Exp $
 
 COMMENT=	Sound eXchange, the Swiss Army knife of audio manipulation
 
-DISTNAME=	sox-14.4.0
-SHARED_LIBS +=	sox 3.0 # .2.0
+DISTNAME=	sox-14.4.1
+SHARED_LIBS +=	sox 3.0 # .2.1
 
 CATEGORIES=	audio
 HOMEPAGE=	http://sox.sourceforge.net/
 MAINTAINER=	Jan Stary <hans@stare.cz>
-REVISION=	1
 
 # code is GPLv2+, however as opencore is under Apache License we must use
 # sox under the terms of GPLv3 to avoid license conflict.
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		converters/libiconv
 
@@ -44,7 +40,6 @@ LIB_DEPENDS=			\
 	audio/gsm
 
 USE_GROFF=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--datarootdir=${LOCALBASE}      \
@@ -87,7 +82,7 @@ CONFIGURE_ENV= \
 	CPPFLAGS="-I${LOCALBASE}/include" \
 	LDFLAGS="-L${LOCALBASE}/lib"
 
-do-regress:
+do-test:
 	@cd ${WRKSRC}/src && ./tests.sh && ./testall.sh
 
 .include <bsd.port.mk>

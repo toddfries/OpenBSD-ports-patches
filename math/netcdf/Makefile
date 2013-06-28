@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.20 2012/10/11 15:14:02 ajacoutot Exp $ 
+# $OpenBSD: Makefile,v 1.23 2013/03/21 08:46:33 ajacoutot Exp $ 
 
 BROKEN-powerpc=	fails to build
+BROKEN-hppa =	fails to configure
 
 COMMENT=	library for machine-independent, array-oriented data access
 
@@ -21,9 +22,6 @@ BUILD_DEPENDS =	${MODFORTRAN_BUILD_DEPENDS}
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m stdc++
 
@@ -35,7 +33,6 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--disable-f90
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 SEPARATE_BUILD=		Yes
 

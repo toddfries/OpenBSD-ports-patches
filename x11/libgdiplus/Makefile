@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2012/10/10 16:43:18 robert Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/04 18:41:59 naddy Exp $
 
 COMMENT=	GDI+ comptible API
 
@@ -14,10 +14,7 @@ HOMEPAGE=	http://www.mono-project.com/Libgdiplus
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 # GPLv2 and Mozilla Public License 1.1
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB += X11 Xau Xdmcp Xrender cairo expat fontconfig freetype
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 jpeg m pcre
@@ -31,7 +28,6 @@ EXTRACT_SUFX=	.tar.bz2
 
 MODULES=	devel/gettext
 
-USE_LIBTOOL=	Yes
 
 LIB_DEPENDS=	devel/pango \
 		graphics/tiff \
@@ -40,8 +36,7 @@ LIB_DEPENDS=	devel/pango \
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib" \
-		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include \
-		-I${LOCALBASE}/include/libpng"
+		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-pango
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2012/03/29 13:38:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/21 08:46:34 ajacoutot Exp $
 
 COMMENT=	icecast source for streaming MP3
 
@@ -10,9 +10,6 @@ HOMEPAGE=	http://www.icecast.org/ices.php
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB =	c m ogg perl pthread theora util vorbis vorbisfile z
 WANTLIB += 	${MODPY_WANTLIB}
@@ -37,7 +34,7 @@ LIB_DEPENDS=	audio/lame \
 FLAVORS=	python mp4
 FLAVOR?=
 
-.if ${FLAVOR:L:Mpython}
+.if ${FLAVOR:Mpython}
 MODULES+=	lang/python
 CONFIGURE_ARGS+=--with-python=${MODPY_BIN}
 LIB_DEPENDS+=	${MODPY_LIB_DEPENDS}
@@ -45,7 +42,7 @@ LIB_DEPENDS+=	${MODPY_LIB_DEPENDS}
 CONFIGURE_ARGS+=--without-python
 .endif
 
-.if ${FLAVOR:L:Mmp4}
+.if ${FLAVOR:Mmp4}
 CONFIGURE_ARGS+=--with-faad=${LOCALBASE}
 LIB_DEPENDS+=	audio/faad \
 		multimedia/libmp4v2
@@ -55,7 +52,6 @@ CONFIGURE_ARGS+=--without-faad
 .endif
 
 SEPARATE_BUILD=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
 post-install:

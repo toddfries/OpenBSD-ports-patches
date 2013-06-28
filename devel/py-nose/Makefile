@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.20 2012/06/27 19:03:32 rpointel Exp $
+# $OpenBSD: Makefile,v 1.24 2013/05/30 13:09:21 ajacoutot Exp $
 
 COMMENT=		discovery-based unittest extension
 
 MODPY_EGG_VERSION=	1.1.2
 DISTNAME=		nose-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION=		1
+REVISION=		2
 CATEGORIES=		devel
 
 HOMEPAGE=		http://readthedocs.org/docs/nose/en/latest/
@@ -14,9 +14,6 @@ MAINTAINER=		Martynas Venckus <martynas@openbsd.org>
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_PYPI:=n/nose/}
 
@@ -26,10 +23,10 @@ MODULES=		lang/python
 FLAVORS=		python3
 FLAVOR?=
 
-.if ${FLAVOR:L:Mpython3}
-NO_REGRESS=		Yes
+.if ${FLAVOR:Mpython3}
+NO_TEST=		Yes
 .else
-REGRESS_DEPENDS=	devel/py-nose \
+TEST_DEPENDS=		devel/py-nose \
 			devel/py-twisted/core \
 			devel/py-coverage
 .endif
@@ -39,7 +36,7 @@ USE_GROFF =		Yes
 MODPY_SETUPTOOLS=	Yes
 
 # problem with upstream tar and our tar
-TAR=gtar
+TAR=${LOCALBASE}/bin/gtar
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/${MODPY_PY_PREFIX}nose
@@ -51,7 +48,7 @@ post-install:
 		find . ! -type d -exec ${INSTALL_DATA} {} \
 			${PREFIX}/share/examples/${MODPY_PY_PREFIX}nose/{} \;
 	rm ${PREFIX}/bin/nosetests-${MODPY_VERSION}
-.if ${FLAVOR:L:Mpython3}
+.if ${FLAVOR:Mpython3}
 	mv ${PREFIX}/bin/nosetests \
 		${PREFIX}/bin/nosetests${MODPY_BIN_SUFFIX}
 	mv ${PREFIX}/man/man1/nosetests.1 \
@@ -59,7 +56,7 @@ post-install:
 .endif
 
 
-do-regress:
+do-test:
 	cd ${WRKSRC}/functional_tests && nosetests -v
 	cd ${WRKSRC}/unit_tests && nosetests -v
 

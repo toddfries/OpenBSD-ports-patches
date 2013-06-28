@@ -1,16 +1,17 @@
-$OpenBSD: patch-Changelog,v 1.2 2012/10/25 18:42:32 sthen Exp $
---- Changelog.orig	Wed Oct 24 23:21:44 2012
-+++ Changelog	Thu Oct 25 18:09:24 2012
-@@ -7,10 +7,9 @@ Thanks to all contributers, testers and developers. Pl
+$OpenBSD: patch-Changelog,v 1.6 2013/05/22 21:17:13 sthen Exp $
+--- Changelog.orig	Wed May 22 09:01:16 2013
++++ Changelog	Wed May 22 22:14:33 2013
+@@ -7,11 +7,9 @@ Thanks to all contributers, testers and developers. Pl
  UPGRADE NOTES
  
  * for idoutils database upgrades, check the following for upgrade sql scripts
--	- module/idoutils/db/<yourrdbms>/upgrade/
+-	- ${source}/module/idoutils/db/<yourrdbms>/upgrade/
 +	- ${TRUEPREFIX}/share/examples/icinga/db/<yourrdbms>/upgrade/
  * for configuration file changes, check the following for added/removed config options
--	- core, classic ui: sample-config/updates/
--	- idoutils: module/idoutils/config/updates
+-	- core, classic ui: ${source}/sample-config/updates/
+-	- idoutils: ${source}/module/idoutils/config/updates
+-* package locations may differ!
 +	- ${TRUEPREFIX}/share/examples/icinga/updates/
  
- 1.8.1 - 25/10/2012
+ 1.9.1 - 22/05/2013
  

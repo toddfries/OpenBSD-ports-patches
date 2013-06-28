@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.110 2012/09/23 08:08:49 matthieu Exp $
+# $OpenBSD: Makefile,v 1.117 2013/06/20 06:54:38 ajacoutot Exp $
 
 COMMENT-main = 		K Desktop Environment, basic applications
 COMMENT-samba =		K Desktop Environment, samba support
@@ -23,17 +23,16 @@ SHARED_LIBS +=	kasbar               2.0      # .1.0
 SHARED_LIBS +=	kfontinst            1.0      # .0.0
 
 MULTI_PACKAGES =	-main -samba
-FLAVORS =		debug
 
 MODULES =	x11/kde devel/gettext
 
 BUILD_DEPENDS = devel/imake
 
 LIB_DEPENDS =	x11/kde/libs3
-WANTLIB = ICE SM X11 Xext Xrender art_lgpl_2 idn jpeg \
+WANTLIB = ICE SM X11 Xext Xrender art_lgpl_2 idn \
 	lib/kde3/DCOP lib/kde3/kdecore>=6 lib/kde3/kdefx lib/kde3/kdesu \
 	lib/kde3/kdeui lib/kde3/kio lib/kde3/kwalletclient m png \
-	stdc++ util xcb z
+	stdc++ util xcb z fam pthread-stubs
 
 RUN_DEPENDS-main =${RUN_DEPENDS} \
 		devel/desktop-file-utils \
@@ -49,7 +48,7 @@ LIB_DEPENDS-samba = ${LIB_DEPENDS} \
 		net/samba>=3
 
 
-REVISION-main =		19
+REVISION-main =		25
 WANTLIB-main = ${WANTLIB} GL GLU Half Iex IlmImf IlmThread Imath Xcomposite \
 	Xcursor Xdamage Xdamage Xfixes Xfixes Xft Xi Xinerama Xmu Xrandr Xss \
 	Xt Xtst Xxf86misc Xxf86vm Xxf86vm asn1 audiofile c com_err crypto drm \
@@ -61,9 +60,11 @@ WANTLIB-main = ${WANTLIB} GL GLU Half Iex IlmImf IlmThread Imath Xcomposite \
 	lib/kde3/kmid lib/kde3/knewstuff lib/kde3/kparts lib/kde3/kresources \
 	lib/kde3/kscreensaver lib/kde3/ktexteditor lib/kde3/kutils mad mcop \
 	mng ogg pcre pcreposix pthread qtmcop sasl2 sndio soundserver_idl ssl \
-	usb vcard vorbis vorbisenc vorbisfile xkbfile Xau Xdmcp
+	usb vcard vorbis vorbisenc vorbisfile xkbfile Xau Xdmcp jpeg \
+	FLAC avahi-client avahi-common dbus-1 dns_sd heimbase \
+	roken wind
 
-REVISION-samba =	5
+REVISION-samba =	7
 WANTLIB-samba = ${WANTLIB} execinfo lib/samba/smbclient pthread talloc tdb \
 	wbclient Xfixes Xt expat fontconfig freetype
 

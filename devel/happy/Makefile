@@ -1,18 +1,14 @@
-# $OpenBSD: Makefile,v 1.26 2012/10/11 13:31:29 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/11 10:50:06 espie Exp $
 
 COMMENT=		parser generator for Haskell
 
-DISTNAME=		happy-1.18.9
-REVISION=		0
+DISTNAME=		happy-1.18.10
 CATEGORIES=		devel
 
 HOMEPAGE=		http://www.haskell.org/happy/
 
 # BSD3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m
 
@@ -37,7 +33,7 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc
 	cd ${WRKBUILD}/doc && umask 022 && pax -rw happy ${PREFIX}/share/doc
 
-do-regress:
+do-test:
 	@cd ${WRKBUILD}/tests && exec ${SETENV} ${MAKE_ENV} \
 		${MAKE_PROGRAM} HAPPY=${WRKBUILD}/dist/build/happy/happy \
 		TEST_HAPPY_OPTS="-t ${WRKBUILD} --strict"

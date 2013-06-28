@@ -1,15 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/03/16 14:21:06 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/24 13:16:06 benoit Exp $
 
 COMMENT=		various subroutines to format text
 
-DISTNAME=		Text-Format-0.53
+DISTNAME =		Text-Format-0.58
 CATEGORIES=		textproc
 
 # perl
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		cpan
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.34 2010/11/19 07:23:06 espie Exp $
+# $OpenBSD: Makefile,v 1.36 2013/03/11 11:23:50 espie Exp $
 
 COMMENT=	DKIM milter
 
 DISTNAME=	dkim-milter-2.8.3
-REVISION =	0
+REVISION =	1
 CATEGORIES=	mail
 HOMEPAGE=	http://sourceforge.net/projects/dkim-milter/
 
@@ -14,8 +14,6 @@ MAINTAINER=	Jakob Schlyter <jakob@openbsd.org>
 # sendmail open source license
 PERMIT_PACKAGE_CDROM=		Patent
 PERMIT_PACKAGE_FTP=		Yes
-PERMIT_DISTFILES_CDROM=		Patent
-PERMIT_DISTFILES_FTP=		Yes
 
 WANTLIB=	c crypto milter pthread ssl
 

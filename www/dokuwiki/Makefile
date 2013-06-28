@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.8 2012/10/17 11:49:44 pea Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/09 13:42:02 rpe Exp $
 
 COMMENT =	standards compliant, simple to use Wiki
 
-VERSION =	2012-10-13
+VERSION =	2013-05-10
 DISTNAME = 	dokuwiki-${VERSION}
 PKGNAME = 	dokuwiki-${VERSION:S/-/./g}
 CATEGORIES =	www
@@ -12,28 +12,26 @@ MAINTAINER =	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://www.splitbrain.org/_media/projects/dokuwiki/
 
 EXTRACT_SUFX = 	.tgz
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 PKG_ARCH =	*
 
 MODULES=	lang/php
 
 PREFIX =	/var/www
 INSTDIR =	${PREFIX}/dokuwiki
-SUBST_VARS =	INSTDIR
-WRKDIST = 	${WRKDIR}/${DISTNAME:S/c//}
+TINSTDIR =	${TRUEPREFIX}/dokuwiki
+SUBST_VARS =	INSTDIR TINSTDIR
 
 RUN_DEPENDS =	lang/php/${MODPHP_VERSION},-gd
 
 do-install:
 	cp -Rp ${WRKDIST} ${INSTDIR}
+	${SUBST_CMD} -c ${FILESDIR}/dokuwiki.conf ${INSTDIR}/dokuwiki.conf.dist
 	chown -R ${SHAREOWN}:${SHAREGRP} ${INSTDIR}
 
 .include <bsd.port.mk>

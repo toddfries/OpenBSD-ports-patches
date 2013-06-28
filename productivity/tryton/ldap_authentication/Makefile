@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/28 10:42:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.12 2013/05/19 10:49:10 ajacoutot Exp $
 
 TRYTOND_MODULE =	ldap_authentication
 

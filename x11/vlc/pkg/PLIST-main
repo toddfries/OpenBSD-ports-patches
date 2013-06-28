@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.28 2012/10/22 20:18:44 brad Exp $
+@comment $OpenBSD: PLIST-main,v 1.32 2013/06/03 22:36:00 brad Exp $
 @pkgpath x11/vlc
 %%amd64%%
 %%i386%%
@@ -58,6 +58,7 @@ include/vlc/plugins/vlc_image.h
 include/vlc/plugins/vlc_inhibit.h
 include/vlc/plugins/vlc_input.h
 include/vlc/plugins/vlc_input_item.h
+include/vlc/plugins/vlc_keys.h
 include/vlc/plugins/vlc_main.h
 include/vlc/plugins/vlc_md5.h
 include/vlc/plugins/vlc_media_library.h
@@ -166,7 +167,6 @@ lib/vlc/plugins/audio_output/
 lib/vlc/plugins/audio_output/libadummy_plugin.so
 lib/vlc/plugins/audio_output/libamem_plugin.so
 lib/vlc/plugins/audio_output/libaout_file_plugin.so
-lib/vlc/plugins/audio_output/libportaudio_plugin.so
 lib/vlc/plugins/audio_output/libsndio_plugin.so
 lib/vlc/plugins/codec/
 lib/vlc/plugins/codec/liba52_plugin.so
@@ -252,8 +252,6 @@ lib/vlc/plugins/demux/libxa_plugin.so
 lib/vlc/plugins/gui/
 lib/vlc/plugins/gui/libqt4_plugin.so
 lib/vlc/plugins/gui/libskins2_plugin.so
-lib/vlc/plugins/media_library/
-lib/vlc/plugins/media_library/libmedia_library_plugin.so
 lib/vlc/plugins/meta_engine/
 lib/vlc/plugins/meta_engine/libfolder_plugin.so
 lib/vlc/plugins/meta_engine/libtaglib_plugin.so
@@ -265,7 +263,6 @@ lib/vlc/plugins/misc/libinhibit_plugin.so
 lib/vlc/plugins/misc/liblogger_plugin.so
 lib/vlc/plugins/misc/libmemcpy_plugin.so
 lib/vlc/plugins/misc/libosd_parser_plugin.so
-lib/vlc/plugins/misc/libsqlite_plugin.so
 lib/vlc/plugins/misc/libstats_plugin.so
 lib/vlc/plugins/misc/libvod_rtsp_plugin.so
 lib/vlc/plugins/misc/libxdg_screensaver_plugin.so
@@ -442,8 +439,10 @@ share/locale/ach/LC_MESSAGES/
 share/locale/ach/LC_MESSAGES/vlc.mo
 share/locale/af/LC_MESSAGES/vlc.mo
 share/locale/am/LC_MESSAGES/vlc.mo
+share/locale/an/LC_MESSAGES/vlc.mo
 share/locale/ar/LC_MESSAGES/vlc.mo
 share/locale/ast/LC_MESSAGES/vlc.mo
+share/locale/az/LC_MESSAGES/vlc.mo
 share/locale/be/LC_MESSAGES/vlc.mo
 share/locale/bg/LC_MESSAGES/vlc.mo
 share/locale/bn/LC_MESSAGES/vlc.mo
@@ -460,6 +459,7 @@ share/locale/co/
 share/locale/co/LC_MESSAGES/
 share/locale/co/LC_MESSAGES/vlc.mo
 share/locale/cs/LC_MESSAGES/vlc.mo
+share/locale/cy/LC_MESSAGES/vlc.mo
 share/locale/da/LC_MESSAGES/vlc.mo
 share/locale/de/LC_MESSAGES/vlc.mo
 share/locale/el/LC_MESSAGES/vlc.mo
@@ -473,8 +473,6 @@ share/locale/ff/LC_MESSAGES/
 share/locale/ff/LC_MESSAGES/vlc.mo
 share/locale/fi/LC_MESSAGES/vlc.mo
 share/locale/fr/LC_MESSAGES/vlc.mo
-share/locale/fur/
-share/locale/fur/LC_MESSAGES/
 share/locale/fur/LC_MESSAGES/vlc.mo
 share/locale/ga/LC_MESSAGES/vlc.mo
 share/locale/gd/
@@ -487,6 +485,7 @@ share/locale/hi/LC_MESSAGES/vlc.mo
 share/locale/hr/LC_MESSAGES/vlc.mo
 share/locale/hu/LC_MESSAGES/vlc.mo
 share/locale/hy/LC_MESSAGES/vlc.mo
+share/locale/ia/LC_MESSAGES/vlc.mo
 share/locale/id/LC_MESSAGES/vlc.mo
 share/locale/is/LC_MESSAGES/vlc.mo
 share/locale/it/LC_MESSAGES/vlc.mo
@@ -498,7 +497,7 @@ share/locale/kmr/
 share/locale/kmr/LC_MESSAGES/
 share/locale/kmr/LC_MESSAGES/vlc.mo
 share/locale/ko/LC_MESSAGES/vlc.mo
-share/locale/ku/LC_MESSAGES/vlc.mo
+share/locale/ky/LC_MESSAGES/vlc.mo
 share/locale/lg/LC_MESSAGES/vlc.mo
 share/locale/lt/LC_MESSAGES/vlc.mo
 share/locale/lv/LC_MESSAGES/vlc.mo
@@ -513,6 +512,9 @@ share/locale/ne/LC_MESSAGES/vlc.mo
 share/locale/nl/LC_MESSAGES/vlc.mo
 share/locale/nn/LC_MESSAGES/vlc.mo
 share/locale/oc/LC_MESSAGES/vlc.mo
+share/locale/or_IN/
+share/locale/or_IN/LC_MESSAGES/
+share/locale/or_IN/LC_MESSAGES/vlc.mo
 share/locale/pa/LC_MESSAGES/vlc.mo
 share/locale/pl/LC_MESSAGES/vlc.mo
 share/locale/ps/LC_MESSAGES/vlc.mo

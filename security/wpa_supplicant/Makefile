@@ -1,40 +1,40 @@
-# $OpenBSD: Makefile,v 1.5 2012/01/19 16:14:11 sthen Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/11 11:41:28 espie Exp $
 
 COMMENT=	IEEE 802.1X supplicant
 
-DISTNAME=	wpa_supplicant-0.7.3
+DISTNAME=	wpa_supplicant-2.0
+REVISION=	3
 CATEGORIES=	security net
 
 HOMEPAGE=	http://hostap.epitest.fi/wpa_supplicant/
 
-MAINTAINER=	Reyk Floeter <reyk@openbsd.org>
+MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 # Dual BSD/GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c ssl crypto pcap
+WANTLIB += c ssl crypto pcap pcsclite pthread
+
+LIB_DEPENDS=	security/pcsc-lite
 
 MASTER_SITES=	http://hostap.epitest.fi/releases/
 
 USE_GMAKE=	Yes
 USE_GROFF=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 MAKE_FLAGS=	V=1
+MAKE_ENV=	CFLAGS="${CFLAGS}" CC="${CC}"
 
 WRKSRC=		${WRKDIST}/wpa_supplicant
-
-MAN5=	wpa_supplicant.conf.5
-MAN8=	wpa_background.8 wpa_cli.8 wpa_passphrase.8 wpa_supplicant.8
 
 EXAMPLEDIR=	${PREFIX}/share/examples/wpa_supplicant
 
 post-extract:
-	cp ${FILESDIR}/config ${WRKSRC}/.config
+	@${SUBST_CMD} -c ${FILESDIR}/config ${WRKSRC}/.config
+	@cp ${FILESDIR}/driver_openbsd.c ${WRKSRC}/../src/drivers/
 
 post-install:
+	@#${INSTALL_PROGRAM} ${WRKBUILD}/wpa_priv ${PREFIX}/sbin
 	${INSTALL_MAN} ${WRKBUILD}/doc/docbook/*.5 ${PREFIX}/man/man5/
 	${INSTALL_MAN} ${WRKBUILD}/doc/docbook/*.8 ${PREFIX}/man/man8/
 	${INSTALL_DATA_DIR} ${EXAMPLEDIR}

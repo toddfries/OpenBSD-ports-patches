@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2012/10/07 20:09:44 landry Exp $
+# $OpenBSD: Makefile,v 1.21 2013/05/02 07:36:01 ajacoutot Exp $
 
 ONLY_FOR_ARCHS = ${GCC4_ARCHS}
+BROKEN-powerpc = Segmentation fault during build
 SYSV =		4.2.1
 
+BROKEN-hppa =	port not contributed
 COMMENT-main =	GNU fortran 77 and fortran 95 compiler
 COMMENT-lib =	GNU fortran library
 
@@ -12,14 +14,11 @@ PKGNAME-main =	gfortran-$V
 PKGNAME-lib =	libgfortran-$V
 SHARED_LIBS =	gfortran	2.0
 
-REVISION = 6
+REVISION = 7
 
 CATEGORIES =	lang math
 
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_FTP =	Yes
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_DISTFILES_CDROM =Yes
 
 HOMEPAGE =	http://gcc.gnu.org/wiki/GFortran
 
@@ -32,7 +31,6 @@ DISTNAME =   	gcc-$V
 DISTFILES =	${DISTNAME}.tar.bz2
 DIST_SUBDIR =	gcc
 
-USE_LIBTOOL =	Yes
 USE_GMAKE =	Yes
 
 MULTI_PACKAGES =	-main -lib
@@ -46,7 +44,7 @@ WANTLIB-lib =
 LIB_DEPENDS-lib =
 RUN_DEPENDS-main =	${BASE_PKGPATH},-lib
 
-REGRESS_DEPENDS = 	devel/dejagnu \
+TEST_DEPENDS = 	devel/dejagnu \
 			devel/autogen
 
 BUILD_DEPENDS += devel/bison

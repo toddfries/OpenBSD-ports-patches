@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.22 2012/10/30 15:09:53 sebastia Exp $
+# $OpenBSD: Makefile,v 1.30 2013/04/25 16:43:05 sebastia Exp $
 
 COMMENT = 	web based groupware server
 
-VERSION =	2.0.2
-DISTNAME =	SOGo-${VERSION}
-PKGNAME =	sogo-${VERSION}
+VERSION =	2.0.5
+DISTNAME =	SOGo-${VERSION}a
+PKGNAME =	sogo-${VERSION}.0
 
 SHARED_LIBS +=	GDLContentStore 2.0
 SHARED_LIBS +=	NGCards		2.0
@@ -19,9 +19,6 @@ MAINTAINER =	Sebastian Reitenbach <sebastia@openbsd.org>
 
 # LGPLv2/GPLv2
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MODULES =		x11/gnustep
 MODGNUSTEP_NEEDS_GUI =	No
@@ -72,5 +69,8 @@ post-install:
 	${INSTALL_SCRIPT} -c -o ${SHAREOWN} -g ${SHAREGRP} \
 		${WRKSRC}/Scripts/sql-update-1.3.16_to_1.3.17-mysql.sh \
 		${PREFIX}/share/doc/sogo/sql-update-1.3.16_to_1.3.17-mysql.sh
+	${INSTALL_SCRIPT} -c -o ${SHAREOWN} -g ${SHAREGRP} \
+		${WRKSRC}/Scripts/updates.php \
+		${PREFIX}/share/doc/sogo/updates.php
 
 .include <bsd.port.mk>

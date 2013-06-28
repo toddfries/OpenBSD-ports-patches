@@ -1,45 +1,58 @@
-# $OpenBSD: Makefile,v 1.2 2012/09/21 06:31:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2013/05/31 15:28:36 ajacoutot Exp $
 
-COMMENT=	text shaping library
+COMMENT-main=		text shaping library
+COMMENT-icu=		ICU support for libharfbuzz
 
-DISTNAME=	harfbuzz-0.9.4
-EXTRACT_SUFX=	.tar.bz2
-REVISION=	0
+V=			0.9.18
+DISTNAME=		harfbuzz-${V}
+EXTRACT_SUFX=		.tar.bz2
 
-SHARED_LIBS +=  harfbuzz                  0.0 # 904.0
+PKGNAME-main=		harfbuzz-${V}
+PKGNAME-icu=		harfbuzz-icu-${V}
 
-CATEGORIES=	devel x11
+SHARED_LIBS +=  harfbuzz             4.0    # 918.0
+SHARED_LIBS +=  harfbuzz-icu         0.0    # 918.0
 
-HOMEPAGE=	http://www.freedesktop.org/wiki/Software/HarfBuzz
+CATEGORIES=		devel graphics textproc
 
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
+HOMEPAGE=		http://www.freedesktop.org/wiki/Software/HarfBuzz
+
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://www.freedesktop.org/software/harfbuzz/release/
+WANTLIB += ffi freetype glib-2.0 gobject-2.0 graphite2 m pcre pthread
+WANTLIB += stdc++ z
 
-WANTLIB += GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm
-WANTLIB += c cairo drm expat ffi fontconfig freetype glib-2.0
-WANTLIB += gobject-2.0 gthread-2.0 icudata icule icuuc m pcre
-WANTLIB += pixman-1 png pthread pthread-stubs stdc++ xcb xcb-render
-WANTLIB += xcb-shm z
+MASTER_SITES=		http://www.freedesktop.org/software/harfbuzz/release/
 
-MODULES=	devel/gettext
+MULTI_PACKAGES=		-main -icu
 
-USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
+MODULES=		devel/gettext
 
-LIB_DEPENDS=	graphics/cairo \
-		textproc/icu4c
+USE_GMAKE=		Yes
 
-CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	${CONFIGURE_SHARED}
+WANTLIB-main += ${WANTLIB}
+WANTLIB-main += X11 Xext Xrender c cairo expat fontconfig pixman-1
+WANTLIB-main += png pthread-stubs xcb xcb-render xcb-shm
+
+WANTLIB-icu += ${WANTLIB}
+WANTLIB-icu += harfbuzz icudata icuuc
+
+LIB_DEPENDS-main=	${MODGETTEXT_LIB_DEPENDS} \
+			graphics/cairo \
+			graphics/graphite2
+
+LIB_DEPENDS-icu=	devel/harfbuzz,-main=${V} \
+			textproc/icu4c
+
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
+			--with-icu \
+			--with-graphite2
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/src/{check-internal-symbols,check-exported-symbols}.sh
+	${SUBST_CMD} ${WRKSRC}/src/check-symbols.sh
 
 .include <bsd.port.mk>

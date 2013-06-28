@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile.inc,v 1.18 2011/07/07 00:22:37 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.23 2013/03/11 12:27:54 sthen Exp $
 
 DISTNAME=	unison-$V
 CATEGORIES=	net
-REVISION=	1
+REVISION=	2
 
 HOMEPAGE=	http://www.cis.upenn.edu/~bcpierce/unison/
 MAINTAINER=	Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c m util
 
@@ -22,7 +19,7 @@ USE_GMAKE=	Yes
 FLAVORS=	no_x11
 FLAVOR?=
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 MAKE_FLAGS=	UISTYLE=text
 .else
 MODULES +=	devel/gettext
@@ -42,7 +39,7 @@ MAKE_FLAGS+=	NATIVE=${MODOCAML_NATIVE:S/Yes/true/:S/No/false/} \
 		OCAMLOPT=ocamlopt.opt \
 		CFLAGS=
 
-REGRESS_TARGET=	selftest
+TEST_TARGET=	selftest
 PORTHOME=	${WRKDIR}
 
 # Avoid multiple all:: entries and use the real target entry.

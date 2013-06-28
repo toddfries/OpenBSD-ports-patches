@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2012/10/12 09:46:46 kirby Exp $
+# $OpenBSD: Makefile,v 1.32 2013/06/03 19:45:31 kirby Exp $
 
 COMMENT-main =	flexible network host monitoring, client
 COMMENT-server =flexible network host monitoring, server
 
-V =		2.0.7
+V =		2.0.14
 DISTNAME =	munin-$V
 PKGNAME-main =	munin-node-$V
 PKGNAME-server =munin-server-$V
@@ -12,14 +12,11 @@ CATEGORIES =	net
 HOMEPAGE =	http://munin-monitoring.org/
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=munin/}
 
-# Mostly GPLv2. VeraMono.ttf has a non-restrictive license (copyright notice
-# embedded in the font or xenocara/font/bitstream-vera-ttf/COPYRIGHT.TXT).
+# Mostly GPLv2.
+# DejaVuSans.ttf and DejaVuSansMono.ttf has a non-restrictive license.
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
+MAINTAINER =		Kirill Bychkov <kirby@openbsd.org>
 
 MULTI_PACKAGES =	-main -server
 
@@ -72,10 +69,12 @@ SUBST_LIST += ${FILESDIR}/$i ${WRKSRC}/plugins/node.d.openbsd/$i.in
 
 post-extract:
 	cp -Rp ${WRKSRC}/plugins/node.d.freebsd ${WRKSRC}/plugins/node.d.openbsd
+	cp -p ${WRKSRC}/plugins/node.d.netbsd/uptime.in ${WRKSRC}/plugins/node.d.openbsd
+	cp -p ${WRKSRC}/plugins/node.d.netbsd/memory.in ${WRKSRC}/plugins/node.d.openbsd
 	${SUBST_CMD} -c ${SUBST_LIST}
 	chmod -R +x ${WRKSRC}/plugins/node.d.openbsd
-	rm ${WRKSRC}/plugins/node.d.openbsd/memory.in # not yet ported
-	rm ${WRKSRC}/plugins/node.d.openbsd/uptime.in # OpenBSD incompatible
+	rm ${WRKSRC}/plugins/node.d.openbsd/iostat.in # not yet ported
+	rm ${WRKSRC}/plugins/node.d.openbsd/swap.in # we have no in/out fields
 
 # Fixup hardcoded paths in plugins to use TRUEPREFIX/LOCALBASE as appropriate,
 # there are far too many to handle this via patches/SUBST_CMD, and this method

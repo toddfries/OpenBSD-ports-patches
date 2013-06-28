@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2011/09/16 11:13:40 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2013/06/12 20:36:34 brad Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		SNMP statistics monitoring system
 
 DISTNAME =		rtg-0.7.4
-REVISION =		6
+REVISION =		8
 CATEGORIES =		net	
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=rtg/}
 
@@ -15,9 +15,6 @@ MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		m crypto c z pthread fontconfig freetype \
 			netsnmp>=6 mysqlclient_r gd jpeg png

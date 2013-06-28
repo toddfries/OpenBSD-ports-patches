@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.72 2012/10/25 19:52:16 naddy Exp $
+# $OpenBSD: Makefile,v 1.79 2013/05/31 20:26:00 lteo Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		highly flexible sniffer/NIDS
 
-VERSION =		2.9.3.1
+VERSION =		2.9.4.6
 DISTNAME =		snort-${VERSION}
-REVISION =		0
 
 CATEGORIES =		net security
 
@@ -16,22 +15,17 @@ MAINTAINER =		Markus Lude <markus.lude@gmx.de>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		c daq dnet m pcap pcre pthread z
+WANTLIB =		c crypto daq dnet m pcap pcre pthread z
 
 MASTER_SITES =		http://www.snort.org/dl/snort-current/
 
-USE_LIBTOOL =		Yes
 USE_GROFF =		Yes
 
 SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--disable-static-daq
-CONFIGURE_ENV=		MKDIR_P="/bin/mkdir -p"
 
 LIB_DEPENDS =		devel/pcre \
 			net/libdnet \
@@ -67,6 +61,6 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/doc/${i} ${PREFIX}/share/doc/snort
 .endfor
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

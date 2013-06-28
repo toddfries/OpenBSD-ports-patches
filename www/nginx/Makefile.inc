@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.2 2012/09/24 19:29:05 jeremy Exp $
+# $OpenBSD: Makefile.inc,v 1.9 2013/05/25 23:00:49 jeremy Exp $
 
 COMMENT=	robust and small HTTP server and mail proxy server
 
@@ -7,6 +7,7 @@ CATEGORIES=	www
 
 MASTER_SITES=	http://nginx.org/download/
 MASTER_SITES0=	http://dropbox.eait.uq.edu.au/uqdgwynn/distfiles/
+MASTER_SITES1 =	http://naxsi.googlecode.com/files/
 
 HOMEPAGE=	http://nginx.org/
 
@@ -14,9 +15,6 @@ MAINTAINER=	William Yodlowsky <william@openbsd.org>
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	yes
-PERMIT_PACKAGE_FTP=	yes
-PERMIT_DISTFILES_CDROM=	yes
-PERMIT_DISTFILES_FTP=	yes
 
 WANTLIB=	c crypto pcre ssl z
 
@@ -25,8 +23,19 @@ LIB_DEPENDS+=	devel/pcre
 NGINX_DIR=	/var/nginx
 SUBST_VARS=	NGINX_DIR
 
+FLAVORS=		lua naxsi passenger
+FLAVOR?=
+
+# must be first option on configure line ?
+.if ${FLAVOR:Mnaxsi}
+DISTFILES +=		${NAXSIDISTFILES}
+CONFIGURE_ARGS =	--add-module=${WRKSRC}/../naxsi-core-0.49/naxsi_src/
+.else
+SUPDISTFILES+=		${NAXSIDISTFILES}
+.endif
+
 CONFIGURE_STYLE=	simple
-CONFIGURE_ARGS=		--prefix=${SYSCONFDIR}/nginx \
+CONFIGURE_ARGS+=	--prefix=${SYSCONFDIR}/nginx \
 			--conf-path=${SYSCONFDIR}/nginx/nginx.conf \
 			--sbin-path=${PREFIX}/sbin/nginx \
 			--pid-path=/var/run/nginx.pid \
@@ -46,51 +55,59 @@ CONFIGURE_ARGS=		--prefix=${SYSCONFDIR}/nginx \
 			--with-http_mp4_module \
 			--with-http_flv_module \
 			--with-http_realip_module \
+			--with-http_spdy_module \
 			--with-mail \
 			--with-mail_ssl_module \
 			--with-ipv6
 
-FLAVORS=		lua passenger
-FLAVOR?=
-
-DISTFILES=		${DISTNAME}${EXTRACT_SUFX}
+DISTFILES+=		${DISTNAME}${EXTRACT_SUFX}
+LUAV=			0.8.1
 LUADISTFILES+=		simpl-ngx_devel_kit-v0.2.17-0-gbc97eea.tar.gz:0
-LUADISTFILES+=		chaoslawful-lua-nginx-module-v0.6.1-0-ge282c1c.tar.gz:0
+LUADISTFILES+=		lua-nginx-module-${LUAV}.tar.gz:0
 SUBSTFILES=		conf/nginx.conf
+NAXSIDISTFILES +=	naxsi-core-0.49.tgz:1
 
-.if ${FLAVOR:L:Mpassenger}
+DISTNAME0=		nginx_upstream_check_module-20130212.tar.gz
+DISTFILES+=		${DISTNAME0}:0
+CONFIGURE_ARGS+=	--add-module=${WRKDIR}/nginx_upstream_check_module-master
+
+NGX_UPSTREAM_CHECK_PATCH= check_1.2.6+.patch
+
+.if ${FLAVOR:Mpassenger}
 CONFIGURE_ARGS+=	--add-module=${LOCALBASE}/lib/phusion-passenger19/ext/nginx
-BUILD_DEPENDS+=		www/ruby-passenger,-main,ruby19
+BUILD_DEPENDS+=		ruby19-passenger-*:www/ruby-passenger,-main
 RUN_DEPENDS+=		ruby-passenger-*|ruby19-passenger-*:www/ruby-passenger,-main
 WANTLIB+=		m pthread stdc++
 .endif
 
-.if ${FLAVOR:L:Mlua}
+.if ${FLAVOR:Mlua}
 CONFIGURE_ARGS+=	--add-module=${WRKSRC}/simpl-ngx_devel_kit
-CONFIGURE_ARGS+=	--add-module=${WRKSRC}/chaoslawful-lua-nginx-module
+CONFIGURE_ARGS+=	--add-module=${WRKSRC}/lua-nginx-module
 CONFIGURE_ENV+=		MODLUA_INCL_DIR=${MODLUA_INCL_DIR} \
 			MODLUA_LIB=${MODLUA_LIB}
 MODULES=		lang/lua
 WANTLIB+=		${MODLUA_WANTLIB} m
 PATCH_LIST=		patch-* lua-*
-SUBSTFILES+=		chaoslawful-lua-nginx-module/config
+SUBSTFILES+=		lua-nginx-module/config
 DISTFILES+=		${LUADISTFILES}
 .else
 SUPDISTFILES+=		${LUADISTFILES}
 .endif
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 ALL_TARGET=
 
-.if ${FLAVOR:L:Mlua}
+.if ${FLAVOR:Mlua}
 pre-patch:
 	cd ${WRKSRC} && \
 	    mv ../simpl-ngx_devel_kit-* simpl-ngx_devel_kit && \
-	    mv ../chaoslawful-lua-nginx-module-* chaoslawful-lua-nginx-module
+	    mv ../lua-nginx-module-${LUAV} lua-nginx-module
+
 .endif
 
 pre-configure:
 	@cd ${WRKSRC} && ${SUBST_CMD} ${SUBSTFILES}
+	@${PATCH} -d ${WRKSRC} -p1 < ${WRKDIR}/nginx_upstream_check_module-master/${NGX_UPSTREAM_CHECK_PATCH}
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/nginx/

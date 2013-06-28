@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2012/09/05 16:31:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.34 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=		tools to edit/modify/encode video streams
 
@@ -18,9 +18,6 @@ HOMEPAGE=		http://mjpeg.sourceforge.net/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		GL SDL SDL_gfx X11 Xau Xcomposite Xcursor Xdamage \
 			Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm \
@@ -39,7 +36,6 @@ LIB_DEPENDS=		devel/sdl \
 			multimedia/libdv \
 			x11/gtk+2 \
 
-USE_LIBTOOL=		Yes
 USE_GROFF=		Yes
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.68
@@ -52,11 +48,11 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 FLAVORS=		quicktime optimized
 FLAVOR?=
 
-.if !${FLAVOR:L:Moptimized}
+.if !${FLAVOR:Moptimized}
 CONFIGURE_ARGS+=	--disable-simd-accel
 .endif
 
-.if ${FLAVOR:L:Mquicktime}
+.if ${FLAVOR:Mquicktime}
 LIB_DEPENDS +=		multimedia/libquicktime
 WANTLIB+=		quicktime>=2
 .else

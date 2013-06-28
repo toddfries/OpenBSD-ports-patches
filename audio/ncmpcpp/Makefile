@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2012/10/25 13:43:42 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.19 2013/06/09 14:52:58 naddy Exp $
 
 COMMENT =		ncurses mpd client inspired by ncmpc
 
 DISTNAME =		ncmpcpp-0.5.10
-REVISION =		2
+REVISION =		4
 
 EXTRACT_SUFX =		.tar.bz2
 
@@ -15,9 +15,6 @@ MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${HOMEPAGE}stable/ \
 			http://distfiles.nl/
@@ -31,7 +28,7 @@ LIB_DEPENDS =		audio/libmpdclient>=2.4 \
 
 MODULES =		devel/gettext
 
-USE_LIBTOOL =		Yes
+FAKE_FLAGS =		docdir="${PREFIX}/share/examples/ncmpcpp/"
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--enable-clock \
@@ -42,6 +39,6 @@ CONFIGURE_ARGS =	--enable-clock \
 			--with-taglib \
 			--without-fftw
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

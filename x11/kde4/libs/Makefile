@@ -1,92 +1,142 @@
-# $OpenBSD: Makefile,v 1.18 2010/11/22 08:37:02 espie Exp $
+# $OpenBSD: Makefile,v 1.25 2013/06/20 06:54:38 ajacoutot Exp $
 
-COMMENT =		K Desktop Environment, libraries
-DISTNAME =		kdelibs-${VERSION}
+COMMENT =	KDE core libraries
+DISTNAME =	kdelibs-${MODKDE4_VERSION}
+PKGSPEC =	kdelibs->=4
+REVISION =	1
 
-SHARED_LIBS +=	kde3support          0.0      # .4.0
-SHARED_LIBS +=	kdecore              8.0      # .5.0
-SHARED_LIBS +=	kdefakes             8.0      # .5.0
-SHARED_LIBS +=	kdesu                8.0      # .5.0
-SHARED_LIBS +=	kdeui                9.0      # .5.0
-SHARED_LIBS +=	kdnssd               3.0      # .2.0
-SHARED_LIBS +=	khtml                8.0      # .5.0
-SHARED_LIBS +=	kimproxy             2.0      # .4.0
-SHARED_LIBS +=	kio                  8.0      # .5.0
-SHARED_LIBS +=	kjs                  6.0      # .2.0
-SHARED_LIBS +=	kjsembed             3.0      # .4.0
-SHARED_LIBS +=	kmediaplayer         2.0      # .4.0
-SHARED_LIBS +=	knotifyconfig        0.0      # .4.0
-SHARED_LIBS +=	kntlm                2.0      # .1.0
-SHARED_LIBS +=	kparts               5.0      # .4.0
-SHARED_LIBS +=	krosscore            0.0      # .4.0
-SHARED_LIBS +=	ktexteditor          2.0      # .4.0
-SHARED_LIBS +=	kunittest            3.0      # .4.0
-SHARED_LIBS +=	kutils               5.0      # .2.0
-SHARED_LIBS +=	solid                0.0      # .4.0
-SHARED_LIBS +=	threadweaver         0.0      # .4.0
-SHARED_LIBS +=	kfile                0.0      # .4.0
-SHARED_LIBS +=	knewstuff2           0.0      # .4.0
-SHARED_LIBS +=	krossui              0.0      # .4.0
-SHARED_LIBS +=  kpty                 0.0      # .4.0
-SHARED_LIBS +=  nepomuk              0.0      # .0.0
+SHARED_LIBS =	kde3support          50.0      # .4.0
+SHARED_LIBS +=	kdecore              50.0      # .5.0
+SHARED_LIBS +=	kdefakes             50.0      # .5.0
+SHARED_LIBS +=	kdesu                50.0      # .5.0
+SHARED_LIBS +=	kdeui                50.0      # .5.0
+SHARED_LIBS +=	kdnssd               50.0      # .2.0
+SHARED_LIBS +=	khtml                50.0      # .5.0
+SHARED_LIBS +=	kimproxy             50.0      # .4.0
+SHARED_LIBS +=	kio                  50.0      # .5.0
+SHARED_LIBS +=	kjs                  50.0      # .2.0
+SHARED_LIBS +=	kjsembed             50.0      # .4.0
+SHARED_LIBS +=	kmediaplayer         50.0      # .4.0
+SHARED_LIBS +=	knotifyconfig        50.0      # .4.0
+SHARED_LIBS +=	kntlm                50.0      # .1.0
+SHARED_LIBS +=	kparts               50.0      # .4.0
+SHARED_LIBS +=	krosscore            50.0      # .4.0
+SHARED_LIBS +=	ktexteditor          50.0      # .4.0
+SHARED_LIBS +=	kunittest            50.0      # .4.0
+SHARED_LIBS +=	kutils               50.0      # .2.0
+SHARED_LIBS +=	solid                50.0      # .4.0
+SHARED_LIBS +=	threadweaver         50.0      # .4.0
+SHARED_LIBS +=	kfile                50.0      # .4.0
+SHARED_LIBS +=	knewstuff2           50.0      # .4.0
+SHARED_LIBS +=	krossui              50.0      # .4.0
+SHARED_LIBS +=  kpty                 50.0      # .4.0
 
-SHARED_LIBS += 	krossqtsplugin 		0.0
-SHARED_LIBS +=  kjsapi 			0.0
-SHARED_LIBS +=	kdewebkit		0.0
-SHARED_LIBS +=	knewstuff3		0.0
-SHARED_LIBS +=	kunitconversion		0.0
-SHARED_LIBS +=	plasma			0.0
-SHARED_LIBS +=	nepomukquery         0.0      # .4.4
+SHARED_LIBS +=  kjsapi 			50.0
+SHARED_LIBS +=	kdewebkit		50.0
+SHARED_LIBS +=	knewstuff3		50.0
+SHARED_LIBS +=	kunitconversion		50.0
+SHARED_LIBS +=	plasma			50.0
 
+SHARED_LIBS +=  kcmutils		50.0 # 4.7
+SHARED_LIBS +=  kdeclarative		50.0 # 5.7
+SHARED_LIBS +=  kemoticons		50.0 # 4.7
+SHARED_LIBS +=  kidletime		50.0 # 4.7
+SHARED_LIBS +=  kprintutils		50.0 # 4.7
 
-BUILD_DEPENDS += misc/shared-mime-info \
-		x11/kde4/automoc \
-		misc/shared-desktop-ontologies
+SHARED_LIBS +=  nepomuk			50.0 # 4.9
+SHARED_LIBS +=  nepomukquery		50.0 # 4.9
+SHARED_LIBS +=  nepomukutils		50.0 # 4.9
 
-RUN_DEPENDS +=  misc/shared-mime-info \
+# Each lib is used by corresponding binary in libexec/,
+# so technically those are not plugins.
+SHARED_LIBS +=	kdeinit4_kbuildsycoca4		50.0
+SHARED_LIBS +=	kdeinit4_kconf_update		50.0
+SHARED_LIBS +=	kdeinit4_kded4			50.0
+SHARED_LIBS +=	kdeinit4_kio_http_cache_cleaner	50.0
+SHARED_LIBS +=	kdeinit4_klauncher		50.0
+
+WANTLIB =  c com_err crypto krb5 m pthread stdc++ util z
+WANTLIB += Half ICE Iex IlmImf IlmThread Imath SM X11 Xau Xcursor Xdmcp
+WANTLIB += Xext Xfixes Xft Xpm Xrender Xss Xtst
+WANTLIB += lib/qt4/Qt3Support lib/qt4/QtDBus lib/qt4/QtDeclarative
+WANTLIB += lib/qt4/QtGui lib/qt4/QtNetwork lib/qt4/QtOpenGL
+WANTLIB += lib/qt4/QtScript lib/qt4/QtSql lib/qt4/QtSvg
+WANTLIB += lib/qt4/QtWebKit lib/qt4/QtXml
+WANTLIB += asn1 aspell attica bz2 dbusmenu-qt enchant exslt fam
+WANTLIB += gif gssapi intl jasper jpeg lzma pcre pcreposix
+WANTLIB += png polkit-qt-core-1 qca2 soprano sopranoclient
+WANTLIB += streamanalyzer streams xml2 xslt
+WANTLIB += heimbase roken wind
+
+MODULES =	multimedia/phonon
+MODKDE4_USE =
+
+BUILD_DEPENDS =	misc/shared-desktop-ontologies>=0.10 \
+		misc/shared-mime-info \
+		net/avahi \
+		x11/grantlee
+
+RUN_DEPENDS =	devel/desktop-file-utils \
+		misc/shared-mime-info \
 		misc/shared-desktop-ontologies \
-		x11/kde4/oxygen-icons
+		net/cagibi \
+		sysutils/gamin \
+		${MODKDE4_DEP_DIR}/oxygen-icons>=${MODKDE4_DEP_VERSION} \
+		x11/dbus \
+		x11/grantlee
 
-LIB_DEPENDS +=	graphics/openexr \
-		graphics/libungif \
+LIB_DEPENDS =	archivers/bzip2 \
+		archivers/xz \
+		databases/soprano>=${MIN_SOPRANO_VERSION} \
+		databases/strigi \
+		devel/pcre \
 		graphics/jasper \
-		archivers/bzip2 \
+		graphics/libungif \
+		graphics/openexr \
+		security/qca2 \
+		sysutils/gamin \
 		textproc/aspell/core \
 		textproc/enchant \
 		textproc/libxslt \
-		devel/pcre \
-		databases/strigi \
-		x11/kde4/attica \
-		archivers/xz \
-		databases/soprano \
-		multimedia/phonon \
-		security/qca2
+		productivity/attica \
+		x11/dbusmenu-qt \
+		x11/polkit-qt4
 
-# we don't have krb5-config
-CONFIGURE_ARGS += -DGSSAPI_LIBS:STRING="-lgssapi -lkrb5 -lasn1 -lcom_err"
-CONFIGURE_ARGS += -DGSSAPI_INCS:STRING="/usr/include/kerberosV"
-CONFIGURE_ARGS += -DGSSAPI_FLAVOR:STRING="HEIMDAL"
-CONFIGURE_ARGS += -DGSSAPI_FOUND:BOOL=TRUE
+# and do not have this stuff at all
+CONFIGURE_ARGS +=	-DWITH_ACL:Bool=FALSE \
+			-DWITH_HSPELL:Bool=FALSE \
+			-DWITH_HUpnp:Bool=FALSE \
+			-DWITH_UDev:Bool=FALSE
 
-CONFIGURE_ARGS +=	-DKDE4_INCLUDE_INSTALL_DIR:String=${LOCALBASE}/include
-CONFIGURE_ARGS +=	-DKDE4_LIB_INSTALL_DIR:String=${LOCALBASE}/lib
-CONFIGURE_ARGS +=	-DKDESU_USE_SUDO_DEFAULT:BOOL=TRUE
-USE_GROFF =	Yes
+# some basic defines
+CONFIGURE_ARGS +=	-D_KDE_DEFAULT_HOME_POSTFIX:String="4" \
+			-DKDE_DISTRIBUTION_TEXT:String="OpenBSD packages" \
+			-DKDE4_AUTH_BACKEND_NAME:String="PolkitQt-1" \
+			-DKDESU_USE_SUDO_DEFAULT:Bool=TRUE
 
+# Reimplemented CMake modules, because previous were totally broken
+REWR_CMAKE_MODULES =	FindXine FindXKB FindPolkitQt
+
+# Contain (required) additional functionality compared to system ones
+WRAP_CMAKE_MODULES =	FindLibXslt
+
+MODKDE4_SYSCONF_FILES =	dbus-1	share/examples \
+			xdg	share/examples
+
+TEST_IS_INTERACTIVE =	X11
+TEST_DEPENDS =		${BUILD_PKGPATH} \
+			${MODKDE4_DEP_DIR}/kate>=${MODKDE4_DEP_VERSION} \
+			${MODKDE4_DEP_DIR}/konsole>=${MODKDE4_DEP_VERSION}
 
 post-extract:
-	@if pkg_info -e 'kdelibs-<4'; then \
-		echo "Error: don't try to build with kde3 around"; \
-		exit 1; \
-	fi
-
-WANTLIB += GL Half ICE Iex IlmImf IlmThread Imath SM X11 Xau Xcursor Xdmcp \
-	Xext Xfixes Xft Xpm Xrender Xss Xtst asn1 aspell attica bz2 c com_err \
-	enchant fam gif gssapi intl jasper jpeg krb5 lib/qt4/Qt3Support \
-	lib/qt4/QtDBus lib/qt4/QtDesigner lib/qt4/QtGui lib/qt4/QtNetwork \
-	lib/qt4/QtOpenGL lib/qt4/QtScript lib/qt4/QtSvg lib/qt4/QtWebKit \
-	lib/qt4/QtXml lzma m pcre pcreposix phonon png pthread qca>=3.0 \
-	soprano sopranoclient stdc++ streamanalyzer streams util xml2 xslt z
-
+.for M in ${REWR_CMAKE_MODULES}
+	cp ${FILESDIR}/${M}.cmake ${WRKSRC}/cmake/modules/${M}.cmake
+.endfor
+.for M in ${WRAP_CMAKE_MODULES}
+	${SUBST_CMD} -c ${FILESDIR}/${M}.cmake \
+	    ${WRKSRC}/cmake/modules/${M}.cmake
+.endfor
+	cp ${FILESDIR}/config-util.h.cmake ${WRKSRC}/kdecore/util/
+	cp ${FILESDIR}/ConfigureChecks.cmake ${WRKSRC}/kdecore/util/
 
 .include <bsd.port.mk>

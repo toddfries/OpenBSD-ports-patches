@@ -1,0 +1,26 @@
+$OpenBSD: patch-lib_puppet_defaults_rb,v 1.2 2013/06/10 14:46:34 jasper Exp $
+--- lib/puppet/defaults.rb.orig	Wed May 22 19:29:46 2013
++++ lib/puppet/defaults.rb	Mon Jun 10 14:04:56 2013
+@@ -734,11 +734,11 @@ EOT
+ 
+   define_settings(:master,
+     :user => {
+-      :default    => "puppet",
++      :default    => "_puppet",
+       :desc       => "The user puppet master should run as.",
+     },
+     :group => {
+-      :default    => "puppet",
++      :default    => "_puppet",
+       :desc       => "The group puppet master should run as.",
+     },
+     :manifestdir => {
+@@ -811,7 +811,7 @@ EOT
+       :desc       => "Whether the master should function as a certificate authority.",
+     },
+     :modulepath => {
+-      :default => "$confdir/modules#{File::PATH_SEPARATOR}/usr/share/puppet/modules",
++      :default => "$confdir/modules#{File::PATH_SEPARATOR}${TRUEPREFIX}/share/puppet/modules",
+       :type => :path,
+       :desc => "The search path for modules, as a list of directories separated by the system path separator character. " +
+           "(The POSIX path separator is ':', and the Windows path separator is ';'.)",

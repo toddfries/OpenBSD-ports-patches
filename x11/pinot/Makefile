@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.34 2012/08/28 05:50:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.44 2013/06/21 22:38:34 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	personal search and metasearch
 
-DISTNAME=	pinot-1.01
+DISTNAME=	pinot-1.03
+REVISION=	3
 
 SHARED_LIBS +=  xapianbackend             0.0 # 1.0
 
@@ -14,27 +15,24 @@ HOMEPAGE=	http://code.google.com/p/pinot-search/
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 atkmm-1.6
-WANTLIB += c cairo cairo-gobject cairomm-1.0 crypto curl dbus-1
-WANTLIB += dbus-glib-1 drm e2fs-uuid exiv2 expat ffi fontconfig
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atkmm-1.6
+WANTLIB += atspi c cairo cairo-gobject cairomm-1.0 crypto curl
+WANTLIB += dbus-1 dbus-glib-1 uuid exiv2 expat ffi fontconfig
 WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gdkmm-3.0 gio-2.0 giomm-2.4
 WANTLIB += glib-2.0 glibmm-2.4 gmime-2.6 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 gtkmm-3.0 idn m pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pangomm-1.4 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs sigc-2.0 sqlite3 ssl stdc++ tag textcat
-WANTLIB += xapian xcb xcb-render xcb-shm xml++-2.6 xml2 z
+WANTLIB += graphite2 gthread-2.0 gtk-3 gtkmm-3.0 harfbuzz idn
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4
+WANTLIB += pcre pixman-1 png pthread pthread-stubs sigc-2.0 sqlite3
+WANTLIB += ssl stdc++ tag textcat xapian xcb xcb-render xcb-shm
+WANTLIB += xml++-2.6 xml2 z
 
 MASTER_SITES=	http://pinot-search.googlecode.com/files/
 
 MODULES=	devel/gettext
 
 BUILD_DEPENDS=	devel/boost \
-		misc/shared-mime-info \
 		devel/desktop-file-utils \
 		devel/libexecinfo
 
@@ -64,7 +62,6 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 # pdftotext(1)
 RUN_DEPENDS +=	print/poppler,-utils
 
-USE_LIBTOOL=	yes
 USE_GROFF=	Yes
 
 CONFIGURE_STYLE= gnu
@@ -75,9 +72,6 @@ CONFIGURE_ARGS= ${CONFIGURE_SHARED} \
 		--with-http=curl \
 		--with-ssl=/usr \
 		--enable-gtkmm3
-
-# needs boost >= 1.48
-#CONFIGURE_ARGS += --disable-mempool
 
 .ifdef DEBUG
 CONFIGURE_ARGS+= --enable-debug

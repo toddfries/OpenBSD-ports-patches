@@ -1,28 +1,26 @@
-# $OpenBSD: Makefile,v 1.10 2012/05/15 08:05:19 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.12 2013/06/05 09:29:56 dcoppa Exp $
 
 COMMENT =		fast NTLM/NTLMv2 authenticating HTTP proxy
-DISTNAME =		cntlm-0.92.3
+DISTNAME =		cntlm-0.93beta5
 CATEGORIES =		www
-MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=cntlm/}
 HOMEPAGE =		http://awk.cz/cntlm/
+
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =  Yes
-PERMIT_PACKAGE_FTP =    Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =  Yes
 
 WANTLIB =		c pthread
 
-MAKE_FLAGS =		CC="${CC}" SYSCONFDIR="${SYSCONFDIR}/cntlm" \
-			LDFLAGS="-pthread"
+MASTER_SITES =		http://ftp.awk.cz/pub/
+
+MAKE_FLAGS =		CC="${CC}" SYSCONFDIR="${SYSCONFDIR}/cntlm"
 
 CONFIGURE_STYLE =	simple
 ALL_TARGET =		cntlm
 USE_GMAKE =		Yes
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/cntlm

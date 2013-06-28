@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2012/08/28 19:30:47 naddy Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/17 14:34:26 jturner Exp $
 
 ONLY_FOR_ARCHS=	${GCC4_ARCHS}
 
 COMMENT=	portable, easy to use, and efficient C++ crypto library
 
-DISTNAME=	Botan-1.10.3
+DISTNAME=	Botan-1.10.5
 PKGNAME=	${DISTNAME:L}
-REVISION=	1
 CATEGORIES=	security
 MASTER_SITES=	${HOMEPAGE}files/
 EXTRACT_SUFX=	.tbz
@@ -17,9 +16,6 @@ HOMEPAGE=	http://botan.randombit.net/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	bz2 crypto gmp m pthread stdc++ z
 
@@ -55,8 +51,8 @@ PKG_ARGS+=	-Damd64=1
 PKG_ARGS+=	-Damd64=0
 .endif
 
-do-regress:
-	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} ${ALL_REGRESS_FLAGS} \
+do-test:
+	@cd ${WRKBUILD} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} ${ALL_TEST_FLAGS} \
 	    check && env LD_LIBRARY_PATH=${WRKBUILD} ./check --test
 
 .include <bsd.port.mk>

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $OpenBSD: check-lib-depends,v 1.30 2011/12/01 11:20:19 espie Exp $
+# $OpenBSD: check-lib-depends,v 1.32 2013/02/07 08:19:54 zhuk Exp $
 # Copyright (c) 2004-2010 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
@@ -517,5 +517,7 @@ sub main
 	exit($state->{errors} ? 1 : 0);
 }
 
-$OpenBSD::Temp::tempbase = "/tmp";
+# XXX wrap line to avoid converting this to RCS keyword
+$OpenBSD::Temp::tempbase =
+    $ENV{'TMPDIR'} || "/tmp";
 __PACKAGE__->main;

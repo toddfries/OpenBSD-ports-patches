@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.18 2011/03/26 10:01:08 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2013/04/27 15:44:21 ajacoutot Exp $
 
 COMMENT=	ident daemon with custom responses and NAT support
 DISTNAME=	oidentd-2.0.7
-REVISION=	2
+REVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=ojnk/}
 
@@ -10,9 +10,6 @@ HOMEPAGE=	http://ojnk.sourceforge.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c
 

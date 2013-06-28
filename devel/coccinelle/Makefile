@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2012/10/29 12:14:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.22 2013/03/11 10:50:02 espie Exp $
 
 SHARED_ONLY =	Yes
 
@@ -7,7 +7,7 @@ COMMENT =	program matching and transformation engine
 # if updating, check for any additional use of diff/grep which
 # may need to be switched to gdiff/ggrep
 DISTNAME =	coccinelle-1.0.0-rc15
-REVISION =	0
+REVISION =	2
 PKGNAME =	${DISTNAME:S/-rc/rc/}
 EXTRACT_SUFX =	.tgz
 
@@ -17,9 +17,6 @@ HOMEPAGE =	http://coccinelle.lip6.fr/
 
 # GPLv2 only
 PERMIT_PACKAGE_CDROM =	 Yes
-PERMIT_PACKAGE_FTP =	 Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	 Yes
 
 WANTLIB += c curses m pthread util pcre ${MODPY_WANTLIB}
 
@@ -29,14 +26,14 @@ MODULES =		lang/ocaml \
 			lang/python
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
-REGRESS_DEPENDS =	${FULLPKGPATH}
 RUN_DEPENDS =		devel/ocaml-pcre \
 			sysutils/findlib \
 			sysutils/ggrep \
 			textproc/gdiff
+TEST_DEPENDS =	${FULLPKGPATH}
 
 # asks questions at the end if it does better than expected
-REGRESS_IS_INTERACTIVE = Yes
+TEST_IS_INTERACTIVE = Yes
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		MAKE_PROGRAM=${MAKE_PROGRAM}
@@ -46,7 +43,7 @@ CONFIGURE_ARGS =	--with-python=${MODPY_BIN}
 
 USE_GMAKE =		Yes
 
-REGRESS_TARGET =	test
+TEST_TARGET =	test
 
 .include <bsd.port.arch.mk>
 .if ${PROPERTIES:Mocaml_native_dynlink}
@@ -66,6 +63,5 @@ post-install:
 	mv \
 		${PREFIX}/share/coccinelle/dllpycaml_stubs.so \
 		${PREFIX}/lib/ocaml/stublibs/
-
 
 .include <bsd.port.mk>

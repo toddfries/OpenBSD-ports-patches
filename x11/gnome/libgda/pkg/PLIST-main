@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.27 2012/09/21 13:23:06 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.30 2013/03/28 20:03:29 jasper Exp $
 @conflict libgda-db4-*
 @conflict libgda-ldap-<4.2.8p0v0
 @conflict libgda-ui-<5.1.1
@@ -121,6 +121,7 @@ include/libgda-${GDA_MAJOR}/libgda/virtual/gda-virtual-provider.h
 include/libgda-${GDA_MAJOR}/libgda/virtual/gda-vprovider-data-model.h
 include/libgda-${GDA_MAJOR}/libgda/virtual/gda-vprovider-hub.h
 include/libgda-${GDA_MAJOR}/libgda/virtual/libgda-virtual.h
+lib/girepository-1.0/Gda-${GDA_MAJOR}.typelib
 lib/libgda-${GDA_MAJOR}/
 lib/libgda-${GDA_MAJOR}.la
 @lib lib/libgda-${GDA_MAJOR}.so.${LIBgda-5.0_VERSION}
@@ -147,6 +148,7 @@ share/examples/libgda/config
 @sample ${SYSCONFDIR}/libgda-${GDA_MAJOR}/config
 share/examples/libgda/sales_test.db
 @sample ${SYSCONFDIR}/libgda-${GDA_MAJOR}/sales_test.db
+share/gir-1.0/Gda-${GDA_MAJOR}.gir
 share/gnome/
 share/gnome/help/
 share/gnome/help/gda-sql/
@@ -215,6 +217,7 @@ share/gtk-doc/html/libgda-${GDA_MAJOR}/GdaVproviderHub.html
 share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiBasicForm.html
 share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiCloud.html
 share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiCombo.html
+share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiDataEntry.html
 share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiDataFilter.html
 share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiDataProxy.html
 share/gtk-doc/html/libgda-${GDA_MAJOR}/GdauiDataProxyInfo.html
@@ -497,6 +500,7 @@ share/libgda-${GDA_MAJOR}/php/gda-setup.php
 share/libgda-${GDA_MAJOR}/php/gda-tester.php
 share/libgda-${GDA_MAJOR}/php/gda-utils.php
 share/libgda-${GDA_MAJOR}/php/gda-worker.php
+share/libgda-${GDA_MAJOR}/server_operation.glade
 share/libgda-${GDA_MAJOR}/sqlcipher_specs_add_column.xml
 share/libgda-${GDA_MAJOR}/sqlcipher_specs_auth.xml
 share/libgda-${GDA_MAJOR}/sqlcipher_specs_create_db.xml

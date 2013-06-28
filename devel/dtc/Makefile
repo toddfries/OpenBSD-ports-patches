@@ -1,36 +1,39 @@
-# $OpenBSD: Makefile,v 1.7 2010/12/05 18:24:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2013/06/21 19:58:28 brad Exp $
 
 COMMENT=		Device Tree Compiler
 
-DISTNAME=		dtc-0.1
-REVISION=		0
-
+DISTNAME=		dtc-1.3.0
 CATEGORIES=		sysutils devel
+MASTER_SITES=		http://comstyle.com/source/
+EXTRACT_SUFX=		.tar.xz
+
+SHARED_LIBS=		fdt	1.0
 
 HOMEPAGE=		http://www.jdl.com/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
-
-MASTER_SITES=		http://distfiles.nl/
 
 WANTLIB += c
 
-BUILD_DEPENDS=		devel/bison
+BUILD_DEPENDS=		devel/bison \
+			devel/flex
+
+MAKE_ENV+=		V=1
+MAKE_FLAGS+=		PREFIX="${PREFIX}"
 
 USE_GMAKE=		Yes
-MAKE_ENV+=		V=1
 
-REGRESS_TARGET= 	check
+TEST_TARGET= 		check
 
-do-install:
-	${INSTALL_PROGRAM} ${WRKSRC}/{convert-dtsv0,ftdump,dtc} ${PREFIX}/bin
-	${INSTALL_DATA} ${WRKSRC}/libfdt/{lib,}fdt.h ${PREFIX}/include
-	${INSTALL_DATA} ${WRKSRC}/libfdt/libfdt.{a,so} ${PREFIX}/lib
+post-extract:
+	@ln -s ${LOCALBASE}/bin/gflex ${WRKDIR}/bin/flex
+	@perl -pi -e 's,#! /bin/bash,#!${LOCALBASE}/bin/bash,' \
+	    ${WRKSRC}/dtdiff
+
+post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/dtc
-	${INSTALL_DATA} ${WRKSRC}/Documentation/*.txt ${PREFIX}/share/doc/dtc
+	${INSTALL_DATA} ${WRKSRC}/Documentation/*.txt \
+	    ${PREFIX}/share/doc/dtc
 
 .include <bsd.port.mk>

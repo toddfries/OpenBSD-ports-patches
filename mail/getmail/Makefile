@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.85 2012/11/08 21:37:02 sthen Exp $
+# $OpenBSD: Makefile,v 1.88 2013/04/17 12:01:06 sthen Exp $
 
 COMMENT=	IMAP/POP3/SDPS mail retriever
 
-MODPY_EGG_VERSION=	4.35.0
+MODPY_EGG_VERSION=	4.39.1
 DISTNAME=	getmail-${MODPY_EGG_VERSION}
 CATEGORIES=	mail
 
@@ -12,15 +12,12 @@ MAINTAINER=	Tim van der Molen <tbvdm@xs4all.nl>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${HOMEPAGE}/old-versions/
 
 MODULES=	lang/python
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 EXDIR=		${PREFIX}/share/examples/getmail
 

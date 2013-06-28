@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2011/09/16 11:13:40 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2013/05/13 19:10:45 fgsch Exp $
 
 SHARED_ONLY=		Yes
 
@@ -16,19 +16,16 @@ HOMEPAGE=		http://pcs.sf.net
 
 # BSD
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB=		pcap
 
 BUILD_DEPENDS=		devel/pyrex
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 MODULES=		lang/python
 
 post-configure:
-	${_MODPY_CMD} config
+	${MODPY_CMD} config
 
 .include <bsd.port.mk>

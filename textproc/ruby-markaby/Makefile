@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.14 2012/09/23 16:57:35 jeremy Exp $
+# $OpenBSD: Makefile,v 1.16 2013/05/26 09:30:55 kirby Exp $
 
 COMMENT=	HTML templating language for Ruby
 
 DISTNAME=	markaby-0.5
-REVISION =	8
+REVISION =	9
 CATEGORIES=	textproc devel
 
-HOMEPAGE=	http://code.whytheluckystiff.net/markaby/
+HOMEPAGE=	http://markaby.github.io/
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	lang/ruby
 
@@ -21,6 +18,6 @@ CONFIGURE_STYLE=ruby gem
 BUILD_DEPENDS=	${RUN_DEPENDS}
 RUN_DEPENDS=	textproc/ruby-builder,${MODRUBY_FLAVOR}>=2.1.1
 
-MODRUBY_REGRESS=	rake
+MODRUBY_TEST=	rake
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2012/06/19 12:58:24 okan Exp $
+# $OpenBSD: Makefile,v 1.30 2013/03/11 11:35:48 espie Exp $
 # Much help came from Alexandre Anriot, Robert Nagy, Bernd Ahlers,
 # and, last but not least, Pedro la Peu.
 
@@ -22,9 +22,6 @@ MAINTAINER=	Matthias Kilian <kili@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 # "old" is required for setting --sysconfdir
 CONFIGURE_STYLE=	gnu old
@@ -46,7 +43,7 @@ SAMPLES_DIR=		${DESTDIR}${LOCALBASE}/share/examples/kismet
 FAKE_FLAGS+=		ETC=${SAMPLES_DIR}
 
 # They don't have tests.
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 PSEUDO_FLAVORS=         no_gpsmap
 FLAVOR?=
@@ -59,7 +56,7 @@ WANTLIB-gpsmap=		c expat m pthread stdc++ z \
 LIB_DEPENDS-gpsmap=	graphics/ImageMagick \
 			devel/gmp
 
-.if !${FLAVOR:L:Mno_gpsmap}
+.if !${FLAVOR:Mno_gpsmap}
 MULTI_PACKAGES+=	-gpsmap
 .else
 CONFIGURE_ARGS+=	--disable-gpsmap

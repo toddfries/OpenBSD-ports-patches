@@ -1,4 +1,4 @@
-$OpenBSD: README,v 1.12 2012/10/26 12:09:13 ajacoutot Exp $
+$OpenBSD: README,v 1.17 2013/06/01 20:30:41 stsp Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -11,11 +11,11 @@ Post-installation instructions
 ==============================
 With Apache, AllowOverride settings are required on the ${INSTDIR}
 directory. You can configure this as follows:
-    # ln -sf ${PREFIX}/conf/modules.sample/owncloud.conf ${PREFIX}/conf/modules
+    # ln -sf /var/www/conf/modules.sample/owncloud.conf /var/www/conf/modules
 
 "allow_url_fopen" needs to be enabled in PHP using _one_ of the
 following methods:
-    1. ${SYSCONFDIR}/php-{MODPHP_VERSION}.ini
+    1. ${SYSCONFDIR}/php-${MODPHP_VERSION}.ini
     allow_url_fopen = On
     2. /var/www/conf/httpd.conf (main server or VirtualHost)
     php_admin_value allow_url_fopen 1
@@ -26,7 +26,15 @@ The maximum upload size for files can be modified in
 When not using Apache, make _sure_ to set the data directory to a
 location outside of the document root.
 
-To finish the installation, point you browser to:
+ownCloud attempts to use the UTF-8 locale, which does not work inside
+the /var/www chroot by default. This causes warning messages in
+ownCloud's admin configuration page and log. To prevent this problem,
+run the following as root:
+  # mkdir -p /var/www/usr/share/locale/UTF-8/
+  # cp /usr/share/locale/UTF-8/LC_CTYPE \
+          /var/www/usr/share/locale/UTF-8/
+
+To finish the installation, point your browser to:
     http://<hostname>/owncloud/
 
 Database Configuration
@@ -37,8 +45,8 @@ another database, the corresponding package needs to be installed:
     php-pdo_pgsql or php-pdo_mysql
 
 When using SQLite, not further configuration is required. However, with
-MySQL or PostgreSQL, the file ${INSTADIR}/config/config.sample.php will
-need to be copied to ${INSTADIR}/config/config.php and configured
+MySQL or PostgreSQL, the file ${INSTDIR}/config/config.sample.php will
+need to be copied to ${INSTDIR}/config/config.php and configured
 accordingly.
 
 Cron job
@@ -73,7 +81,7 @@ WebDAV access
 The personnal WebDAV share can be accessed using the following URL (e.g.
 with Nautilus, Thunar or Doplhin) and the corresponding user and
 password for the share:
-    http://<hostname>/files/webdav.php
+    http://<hostname>/owncloud/remote.php/webdav/
 
 NOTE that it is highly recommended to use SSL on the webserver so that
 access is done over https instead of http.

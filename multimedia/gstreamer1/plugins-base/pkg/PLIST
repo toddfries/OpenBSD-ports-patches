@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.3 2012/09/22 07:34:44 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.5 2013/03/22 17:21:56 ajacoutot Exp $
 @bin bin/gst-discoverer-${VERSION}
 include/gstreamer-${VERSION}/gst/app/
 include/gstreamer-${VERSION}/gst/app/gstappsink.h
@@ -215,6 +215,7 @@ share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtp
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtpbasedepayload.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtpbasepayload.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtpbuffer.html
+share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtphdrext.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtppayloads.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtspconnection.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstrtspdefs.html
@@ -237,6 +238,7 @@ share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gsttag
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gsttagxmpwriter.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstvideo.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstvideofilter.html
+share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstvideometa.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstvideoorientation.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstvideooverlay.html
 share/gtk-doc/html/gst-plugins-base-libs-${VERSION}/gst-plugins-base-libs-gstvideooverlaycomposition.html
@@ -358,6 +360,7 @@ share/locale/eu/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
 share/locale/fi/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
 share/locale/fr/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
 share/locale/gl/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
+share/locale/hr/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
 share/locale/hu/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
 share/locale/id/LC_MESSAGES/gst-plugins-base-${VERSION}.mo
 share/locale/it/LC_MESSAGES/gst-plugins-base-${VERSION}.mo

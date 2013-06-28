@@ -1,0 +1,61 @@
+$OpenBSD: patch-src_api_python_speechd_config_config_py,v 1.2 2013/04/17 16:26:35 ajacoutot Exp $
+--- src/api/python/speechd_config/config.py.orig	Fri Jul 13 15:52:02 2012
++++ src/api/python/speechd_config/config.py	Wed Mar 27 16:08:30 2013
+@@ -184,6 +184,15 @@ class Options(object):
+             'command_line' : ('', '--test-pulse'),
+             },
+ 
++        'test_libao':
++            {
++            'descr' : "Test libao audio",
++            'doc' : None,
++            'type' : bool,
++            'default' : False,
++            'command_line' : ('', '--test-libao'),
++            },
++
+         'use_espeak_synthesis':
+             {
+             'descr' : "Use espeak to synthesize messages",
+@@ -431,6 +440,11 @@ is not installed.""")
+         report("Testing PULSE sound output")
+         return self.audio_try_play(type='pulse')
+ 
++    def test_libao(self):
++        """Test libao sound output"""
++        report("Testing libao sound output")
++        return self.audio_try_play(type='libao')
++
+     def diagnostics(self, speechd_running = True, output_modules=[], audio_output=[]):
+ 
+         """Perform a complete diagnostics"""
+@@ -482,6 +496,10 @@ what is wrong)""", True):
+             if self.test_pulse():
+                 working_audio += ["pulse"]
+ 
++        if decide_to_test('libao', "libao sound system", audio_output): 
++            if self.test_libao():
++                working_audio += ["libao"]
++
+         report("Testing whether Python Speech Dispatcher library is in path and importable")
+         python_speechd_working = test.python_speechd_in_path()
+         
+@@ -729,7 +747,7 @@ class Configure:
+ 
+         self.default_audio_method = question_with_suggested_answers(
+             "Default audio output method",
+-            "pulse",
++            "libao",
+             ["pulse", "libao", "alsa", "oss", "pulse,alsa"])
+ 
+         self.default_speech_rate = question(
+@@ -892,6 +910,9 @@ def main():
+ 
+     elif options.test_pulse:
+         test.audio_try_play(type='pulse')
++
++    elif options.test_libao:
++        test.audio_try_play(type='libao')
+ 
+     elif options.diagnostics:
+         ret = test.diagnostics()

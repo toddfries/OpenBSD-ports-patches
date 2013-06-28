@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.24 2012/05/17 21:39:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.32 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -17,22 +17,22 @@ PKGNAME-ldap=		powerdns-ldap-${V}
 CATEGORIES=		net
 HOMEPAGE=		http://www.powerdns.com/
 
-REVISION-main=		0
+REVISION-main=		2
+REVISION-mysql=		3
+REVISION-pgsql=		1
+REVISION-ldap=		1
 
 MULTI_PACKAGES=		-main
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		m stdc++ z
-WANTLIB-main=		c pthread sqlite3>=8 ${WANTLIB}
+WANTLIB=		m stdc++ z pthread
+WANTLIB-main=		c sqlite3>=8 ${WANTLIB}
 
 MASTER_SITES=		http://downloads.powerdns.com/releases/
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 BUILD_DEPENDS=		devel/boost
 
@@ -42,7 +42,7 @@ FLAVOR?=
 BACKENDS=		gsqlite3
 
 # MySQL
-.if ${FLAVOR:L:Mno_mysql}
+.if ${FLAVOR:Mno_mysql}
 CONFIGURE_ARGS+=	--without-mysql
 .else
 MULTI_PACKAGES+=	-mysql
@@ -54,7 +54,7 @@ BACKENDS+=		gmysql
 .endif
 
 # PostgreSQL
-.if ${FLAVOR:L:Mno_pgsql}
+.if ${FLAVOR:Mno_pgsql}
 CONFIGURE_ARGS+=	--without-pgsql
 .else
 MULTI_PACKAGES+=	-pgsql
@@ -62,12 +62,13 @@ CONFIGURE_ARGS+=	--with-pgsql=${LOCALBASE} \
 			--with-pgsql-includes=${LOCALBASE}/include/postgresql
 LIB_DEPENDS-pgsql=	databases/postgresql,-main
 RUN_DEPENDS-pgsql=	${FULLPKGNAME-main}:net/powerdns
-WANTLIB-pgsql=		com_err crypto pq>=2 ssl ${WANTLIB}
+WANTLIB-pgsql=		com_err crypto pq>=2 ssl asn1 heimbase krb5 \
+			roken wind ${WANTLIB}
 BACKENDS+=		gpgsql
 .endif
 
 # LDAP
-.if ${FLAVOR:L:Mno_ldap}
+.if ${FLAVOR:Mno_ldap}
 CONFIGURE_ARGS+=	--without-ldap
 .else
 MULTI_PACKAGES+=	-ldap
@@ -75,7 +76,8 @@ LIB_DEPENDS-ldap=	databases/openldap
 RUN_DEPENDS-ldap=	${FULLPKGNAME-main}:net/powerdns
 CONFIGURE_ARGS+=	--with-ldap=${LOCALBASE} \
 			--with-ldap-includes=${LOCALBASE}/include
-WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 lber-2.4 ldap_r-2.4 sasl2 ssl ${WANTLIB}
+WANTLIB-ldap+=		asn1 com_err crypto gssapi krb5 lber-2.4 ldap_r-2.4 \
+			heimbase roken wind sasl2 ssl ${WANTLIB}
 BACKENDS+=		ldap
 .endif
 
@@ -83,7 +85,6 @@ BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS}
 
 SYSCONFDIR=		${BASESYSCONFDIR}/pdns
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.65
 CONFIGURE_ARGS+=	--disable-shared \

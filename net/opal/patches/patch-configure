@@ -1,21 +1,21 @@
-$OpenBSD: patch-configure,v 1.5 2012/08/25 13:17:54 ajacoutot Exp $
---- configure.orig	Thu Aug 23 04:19:21 2012
-+++ configure	Fri Aug 24 08:24:54 2012
-@@ -4619,7 +4619,7 @@ fi
+$OpenBSD: patch-configure,v 1.8 2013/03/12 05:19:57 brad Exp $
+--- configure.orig	Tue Feb 19 21:18:59 2013
++++ configure	Mon Mar 11 19:55:11 2013
+@@ -4601,7 +4601,7 @@ fi
  
  WFLAGS=
  if test "x$ac_cv_c_compiler_gnu" = xyes; then
--  WFLAGS="-Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused"
-+  WFLAGS="-Wall -Wfloat-equal -Wno-comment -Wno-unused"
-   if test ${GXX_MAJOR} -ge 4 ; then
-     WFLAGS="$WFLAGS -Winit-self -Wno-missing-field-initializers"
-   fi
-@@ -5676,7 +5676,7 @@ case "$OSTYPE" in
+-  WFLAGS="-Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers"
++  WFLAGS="-Wall -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers"
+ fi
+ 
+ CFLAGS="$CFLAGS $WFLAGS"
+@@ -5662,7 +5662,7 @@ case "$OSTYPE" in
  
  
  
 -          LDSOOPTS="-shared -Wl,-soname,\$(LIB_FILENAME_SHARED_PAT)"
-+          LDSOOPTS="-shared -fPIC -Wl,-soname,\$(LIB_FILENAME_SHARED_PAT)"
++          LDSOOPTS="-shared -fPIC"
  
            HAVE_RANLIB=yes
          ;;

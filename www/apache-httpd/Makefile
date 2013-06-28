@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.32 2012/10/18 08:12:16 giovanni Exp $
+# $OpenBSD: Makefile,v 1.37 2013/06/20 06:54:37 ajacoutot Exp $
 
 COMMENT=	apache HTTP server
 
 V=		2.2.23
 PKGNAME=	apache-httpd-${V}
 DISTNAME=	httpd-${V}
+REVISION=	1
 
 CATEGORIES=	www net
 
@@ -12,13 +13,10 @@ HOMEPAGE=	http://httpd.apache.org/
 
 # Apache
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 SHARED_ONLY=		Yes
 USE_GROFF =		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 WANTLIB += c crypto m ssl expat apr-1 db>=4 z pcre pthread aprutil-1>=2
 
@@ -27,9 +25,10 @@ LIB_DEPENDS=		devel/pcre
 FLAVORS=		ldap
 FLAVOR?=
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 CONFIGURE_ARGS+=	--with-ldap --enable-ldap --enable-authnz-ldap
-WANTLIB+=		asn1 com_err gssapi krb5 sasl2 ldap lber
+WANTLIB+=		asn1 com_err gssapi krb5 sasl2
+WANTLIB+=		heimbase lber-2.4 ldap-2.4 roken wind
 LIB_DEPENDS+=		databases/openldap
 LIB_DEPENDS+=		apr-util-*-ldap:devel/apr-util,ldap
 .else
@@ -38,7 +37,6 @@ LIB_DEPENDS+=		apr-util-*-!ldap:devel/apr-util
 
 MODULES=		converters/libiconv
 
-USE_LIBTOOL=		Yes
 
 MASTER_SITES=		${MASTER_SITE_APACHE:=httpd/}
 
@@ -104,7 +102,7 @@ post-install:
 	mv ${PREFIX}/sbin/${i} ${PREFIX}/sbin/${i}2
 .endfor
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/ap2-mod_auth_ldap
 .for i in mod_ldap.html mod_authnz_ldap.html.en \
 	mod_authnz_ldap.html mod_ldap.html.en

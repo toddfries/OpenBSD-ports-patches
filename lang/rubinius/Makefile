@@ -1,8 +1,11 @@
-# $OpenBSD: Makefile,v 1.20 2011/12/30 10:42:20 sthen Exp $
+# $OpenBSD: Makefile,v 1.25 2013/04/22 19:13:40 landry Exp $
 
 SHARED_ONLY=	Yes
 
 BROKEN-sparc64 = vm segfaults when building openssl extension
+BROKEN-mips64 = no atomics for this arch
+BROKEN-hppa = no atomics for this arch
+BROKEN-mips64el = no atomics for this arch
 
 COMMENT =	Ruby virtual machine and core library
 
@@ -19,26 +22,22 @@ MAINTAINER =	Jeremy Evans <jeremy@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	c crypto curses db gdbm m pthread readline ssl stdc++ \
 		${MODRUBY_WANTLIB}
+MODRUBY_REV=	1.8
 
 MASTER_SITES =	http://asset.rubini.us/
 
 BUILD_DEPENDS =	devel/bison \
 		devel/ruby-rake \
-		devel/libffi \
-		devel/llvm>=3.0
+		devel/libffi
 LIB_DEPENDS =	databases/gdbm \
 		databases/db/v4 \
 		${MODRUBY_LIB_DEPENDS}
 MODULES =	lang/ruby
 
 USE_GMAKE =	Yes
-USE_LIBTOOL=	Yes
 
 RBX_ARCH =	${MACHINE_ARCH}-openbsd
 RAKE_VER =	0.8.7
@@ -74,10 +73,10 @@ do-install:
 
 # 45/56 failures in mspec on i386/amd64, most of which are due to lacking
 # Fiber support
-do-regress:
+do-test:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${RAKE} vm:test
 	cd ${WRKSRC} && RUBY=${RUBY} ${RUBY} mspec/bin/mspec ci -f s
 
-REGRESS_DEPENDS = ${FULLPKGNAME}:${BUILD_PKGPATH}
+TEST_DEPENDS = ${FULLPKGNAME}:${BUILD_PKGPATH}
 
 .include <bsd.port.mk>

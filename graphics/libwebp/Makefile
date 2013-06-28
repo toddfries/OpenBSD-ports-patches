@@ -1,35 +1,30 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/12/22 08:36:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2013/05/18 18:02:05 brad Exp $
 
 COMMENT=	Google WebP image format conversion tool
 
-DISTNAME=	libwebp-0.1.3
+DISTNAME=	libwebp-0.3.0
 
-SHARED_LIBS +=  webp                 0.0      # 2.0
+SHARED_LIBS=	webp		1.1	# 4.2
 
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://code.google.com/p/webp/
 
-# BSD-like
+# BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c jpeg m png z
+WANTLIB=	c jpeg m png pthread tiff z
 
 MASTER_SITES=	http://webp.googlecode.com/files/
 
 LIB_DEPENDS=	graphics/jpeg \
-		graphics/png
+		graphics/png \
+		graphics/tiff
 
-USE_LIBTOOL=	Yes
 USE_GROFF=	Yes
-
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng" \
-		LDFLAGS="-L${LOCALBASE}/lib -lm -lz"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 
 .include <bsd.port.mk>

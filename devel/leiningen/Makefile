@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2011/11/29 17:42:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:09 espie Exp $
 
 COMMENT=	tool for building of code, written in Clojure
 
@@ -11,14 +11,11 @@ HOMEPAGE=	https://github.com/technomancy/leiningen
 
 # EPLv1.0
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://distfiles.nl/
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 
 MODULES=	java
@@ -29,8 +26,6 @@ RUN_DEPENDS=	devel/apache-ant \
 		java/asm \
 		java/javaPathHelper \
 		shells/bash
-
-SUBST_VARS+=	MODJAVA_JAR_DIR
 
 do-configure:
 	${SUBST_CMD} ${WRKSRC}/lein-pkg

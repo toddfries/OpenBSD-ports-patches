@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2010/11/15 19:46:00 espie Exp $
+# $OpenBSD: Makefile,v 1.32 2013/03/21 08:45:16 ajacoutot Exp $
 
 # XXX This will panic any vax
 NOT_FOR_ARCHS=	vax
@@ -16,16 +16,12 @@ HOMEPAGE=	http://www.ossp.org/pkg/lib/mm/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-USE_LIBTOOL=	 Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --enable-static
 
-REGRESS_TARGET=	test
+TEST_TARGET=	test
 
 .include <bsd.port.mk>

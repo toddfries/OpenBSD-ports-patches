@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2012/02/16 21:26:55 sthen Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/01 14:18:40 ajacoutot Exp $
 
 COMMENT-main =	graphical tools for the MetaGeek Wi-spy spectrum analyser
 COMMENT-utils =	tools for the MetaGeek Wi-spy spectrum analyser
@@ -10,6 +10,8 @@ PKGNAME =	spectrum-tools-$V
 FULLPKGNAME-main =  spectrum-tools-${V:S/-//g}
 FULLPKGNAME-utils = spectrum-tools-utils-${V:S/-//g}
 
+REVISION-main=	0
+
 CATEGORIES =	net
 
 MASTER_SITES =	http://www.kismetwireless.net/code/
@@ -20,9 +22,6 @@ MAINTAINER =	Chris Kuethe <ckuethe@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MULTI_PACKAGES =	-main -utils
 
@@ -54,10 +53,7 @@ CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 USE_GMAKE =		Yes
 
-NO_REGRESS =		Yes
-
-pre-configure:
-	perl -pi -e 's,-lpthread,-pthread,g' ${WRKSRC}/configure
+NO_TEST =		Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/spectrum-tools

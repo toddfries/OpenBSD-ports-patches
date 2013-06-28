@@ -1,7 +1,7 @@
-$OpenBSD: patch-check_py,v 1.7 2012/06/26 06:17:11 ajacoutot Exp $
---- check.py.orig	Mon Jun 18 12:44:13 2012
-+++ check.py	Tue Jun 26 07:24:00 2012
-@@ -114,9 +114,9 @@ def get_comment(package, Inst_status, installed_ver):
+$OpenBSD: patch-check_py,v 1.12 2013/05/13 08:34:09 ajacoutot Exp $
+--- check.py.orig	Mon Apr  8 11:58:46 2013
++++ check.py	Mon May 13 10:23:18 2013
+@@ -142,9 +142,9 @@ def get_comment(package, Inst_status, installed_ver):
                  comment = "Python Programming is not supported if version is lessthan 2.2" 
      elif package == 'hpaio':
          if Inst_status == 'OK':
@@ -13,36 +13,66 @@ $OpenBSD: patch-check_py,v 1.7 2012/06/26 06:17:11 ajacoutot Exp $
      elif package == 'cupsext' or package == 'pcardext' or package == 'hpmudext':
          if Inst_status != 'OK':
              comment = "'Not Found or Failed to load, Please reinstall HPLIP'"
-@@ -506,9 +506,9 @@ try:
+@@ -217,7 +217,7 @@ class DependenciesCheck(CoreInstall):
+             'pyqt4':            (True,  ['gui_qt4'], "Python-Qt4", self.check_pyqt4,'4.0','FUNC#get_pyQt4_version'), # PyQt 4.x )
+             'pyqt4-dbus' :      (True,  ['gui_qt4'], "PyQt4-DBUS", self.check_pyqt4_dbus,'4.0','FUNC#get_pyQt4_version'), 
+             'pyqt':            (True,  ['gui_qt'], "Python-Qt", self.check_pyqt,'2.3','FUNC#get_pyQt_version'), 
+-            'python-devel' :    (True,  ['base'], "Python-SDK", self.check_python_devel,'2.2','python --version'),
++            'python-devel' :    (True,  ['base'], "Python-SDK", self.check_python_devel,'2.2','${MODPY_BIN} --version'),
+             'python-notify' :   (False, ['gui_qt4'], "Desktop-notifications", self.check_pynotify,'-','python-notify --version'), # Optional for libnotify style popups from hp-systray
+             'python-xml'  :     (True,  ['base'], "Python-XML-Lib", self.check_python_xml,'-','FUNC#get_python_xml_version'),
+             'pil':              (False, ['scan'], "Python-Image-Lib", self.check_pil,'-','FUNC#get_pil_version'), #required for commandline scanning with hp-scan
+@@ -228,7 +228,7 @@ class DependenciesCheck(CoreInstall):
+             COMPILEDEP:
+             { 'gcc' :             (True,  ['base'], 'gcc-Compiler', self.check_gcc, '-','gcc --version'),
+             'libtool':          (True,  ['base'], "Build-tools", self.check_libtool,'-','libtool --version'),
+-            'make' :            (True,  ['base'], "GNU-Build-tools", self.check_make,'3.0','make --version'),
++            'make' :            (True,  ['base'], "GNU-Build-tools", self.check_make,'-','-'),
+             },
+             PYEXT: 
+              { 'cupsext' :         (True,  ['base'], 'CUPS-Extension', self.check_cupsext,'-','FUNC#get_HPLIP_version'),
+@@ -310,9 +310,9 @@ class DependenciesCheck(CoreInstall):
+                      %(self.distro_name, self.distro_version, self.distro_name, supported_distro_vrs)))
+           
+         tui.header("SYSTEM INFO")
+-        Sts, Kernel_info =utils.run("uname -r -v -o")
++        Sts, Kernel_info =utils.run("uname -r -v -s")
+         Sts, Host_info =utils.run("uname -n")
+-        Sts, Proc_info =utils.run("uname -r -v -o")
++        Sts, Proc_info =utils.run("uname -r -v -s")
+         log.info(" Kernel: %s Host: %s Proc: %s Distribution: %s %s"\
+              %(Kernel_info,Host_info,Proc_info,self.distro_name, self.distro_version))
+         log.info(" Bitness: %s bit\n"%utils.getBitness())
+@@ -328,9 +328,9 @@ class DependenciesCheck(CoreInstall):
+                 log.warn("HPLIP-Installation: Auto installation is not supported for %s distro  %s version " %(self.distro_name, self.distro_version))
  
+             log.info()
+-            log.info(log.bold("Current contents of '/etc/hp/hplip.conf' file:"))
++            log.info(log.bold("Current contents of '${SYSCONFDIR}/hp/hplip.conf' file:"))
+             try:
+-                output = file('/etc/hp/hplip.conf', 'r').read()
++                output = file('${SYSCONFDIR}/hp/hplip.conf', 'r').read()
+             except (IOError, OSError), e:
+                 log.error("Could not access file: %s. Check HPLIP installation." % e.strerror)
+                 self.num_errors += 1
+@@ -338,9 +338,9 @@ class DependenciesCheck(CoreInstall):
+                 log.info(output)
  
-         log.info()
--        log.info(log.bold("Current contents of '/etc/hp/hplip.conf' file:"))
-+        log.info(log.bold("Current contents of '${SYSCONFDIR}/hp/hplip.conf' file:"))
-         try:
--            output = file('/etc/hp/hplip.conf', 'r').read()
-+            output = file('${SYSCONFDIR}/hp/hplip.conf', 'r').read()
-         except (IOError, OSError), e:
-             log.error("Could not access file: %s. Check HPLIP installation." % e.strerror)
-             num_errors += 1
-@@ -516,9 +516,9 @@ try:
-             log.info(output)
+             log.info()
+-            log.info(log.bold("Current contents of '/var/lib/hp/hplip.state' file:"))
++            log.info(log.bold("Current contents of '/var/db/hp/hplip.state' file:"))
+             try:
+-                output = file(os.path.expanduser('/var/lib/hp/hplip.state'), 'r').read()
++                output = file(os.path.expanduser('/var/db/hp/hplip.state'), 'r').read()
+             except (IOError, OSError), e:
+                 log.info("Plugins are not installed. Could not access file: %s" % e.strerror)
+             else:
+@@ -538,7 +538,7 @@ class DependenciesCheck(CoreInstall):
+                     #log.info("Installed in HPLIP?: %s" % x)
+                     log.info("Device URI: %s" % device_uri)
  
-         log.info()
--        log.info(log.bold("Current contents of '/var/lib/hp/hplip.state' file:"))
-+        log.info(log.bold("Current contents of '/var/db/hp/hplip.state' file:"))
-         try:
--            output = file(os.path.expanduser('/var/lib/hp/hplip.state'), 'r').read()
-+            output = file(os.path.expanduser('/var/db/hp/hplip.state'), 'r').read()
-         except (IOError, OSError), e:
-             log.info("Plugins are not installed. Could not access file: %s" % e.strerror)
-         else:
-@@ -716,7 +716,7 @@ try:
-                 #log.info("Installed in HPLIP?: %s" % x)
-                 log.info("Device URI: %s" % device_uri)
+-                    ppd = os.path.join('/etc/cups/ppd', printer_name + '.ppd')
++                    ppd = os.path.join('${SYSCONFDIR}/cups/ppd', printer_name + '.ppd')
  
--                ppd = os.path.join('/etc/cups/ppd', printer_name + '.ppd')
-+                ppd = os.path.join('${SYSCONFDIR}/cups/ppd', printer_name + '.ppd')
- 
-                 if os.path.exists(ppd):
-                     log.info("PPD: %s" % ppd)
+                     if os.path.exists(ppd):
+                         log.info("PPD: %s" % ppd)

@@ -1,8 +1,10 @@
-@comment $OpenBSD: PLIST,v 1.5 2012/05/09 11:56:49 dcoppa Exp $
+@comment $OpenBSD: PLIST,v 1.8 2013/06/02 11:24:06 dcoppa Exp $
 @conflict i3bar-<=0.6.21p1
 @pkgpath x11/i3bar
 @bin bin/i3
 @bin bin/i3-config-wizard
+bin/i3-dmenu-desktop
+@bin bin/i3-dump-log
 @bin bin/i3-input
 bin/i3-migrate-config-to-v4
 @bin bin/i3-msg
@@ -11,6 +13,8 @@ bin/i3-migrate-config-to-v4
 include/i3/
 include/i3/ipc.h
 @man man/man1/i3-config-wizard.1
+@man man/man1/i3-dmenu-desktop.1
+@man man/man1/i3-dump-log.1
 @man man/man1/i3-input.1
 @man man/man1/i3-migrate-config-to-v4.1
 @man man/man1/i3-msg.1

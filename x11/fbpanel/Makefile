@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.18 2012/03/29 08:17:41 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.20 2013/05/13 19:02:49 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	lightweight NETWM compliant desktop panel
 
 DISTNAME=	fbpanel-6.1
-REVISION=	4
+REVISION=	5
 CATEGORIES=	x11
 EXTRACT_SUFX=	.tbz2
 
@@ -13,16 +13,13 @@ HOMEPAGE=	http://fbpanel.sourceforge.net/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=fbpanel/}
 
 MODULES=	devel/gettext
 
 USE_GMAKE=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 CONFIGURE_STYLE=simple
 

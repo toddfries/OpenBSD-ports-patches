@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2011/07/10 09:40:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.32 2013/06/04 18:41:56 naddy Exp $
 
 COMMENT=	convert HTML pages to PDF/PS format
 
@@ -6,25 +6,20 @@ V=			1.8.27
 DISTNAME=		htmldoc-${V}
 CATEGORIES=     	print www
 
-REVISION=		6
+REVISION =		7
 
-HOMEPAGE=		http://www.htmldoc.org/
+HOMEPAGE =		http://www.msweet.org/projects.php?Z1
 
 MAINTAINER=		Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2 with OpenSSL exception.
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c crypto m ssl z jpeg png
 
 DISTFILES=		${DISTNAME}-source${EXTRACT_SUFX}
-MASTER_SITES=		ftp://ftp.easysw.com/pub/htmldoc/${V}/ \
-			ftp://ftp2.easysw.com/pub/htmldoc/${V}/ \
-			ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/${V}/ \
-			ftp://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub/htmldoc/${V}/
+MASTER_SITES =		http://www.msweet.org/files/project1/ \
+			ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/${V}/
 
 USE_GROFF =		Yes
 
@@ -34,8 +29,7 @@ LIB_DEPENDS=		graphics/jpeg \
 CONFIGURE_STYLE=	gnu dest
 CONFIGURE_ARGS+=	--without-gui
 CONFIGURE_ENV= 		LDFLAGS="-L${LOCALBASE}/lib" \
-			CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include \
-				-I${LOCALBASE}/include/libpng" \
+			CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include" \
 			CPPFLAGS="-I${LOCALBASE}/include"
 PORTHOME=		${WRKDIR}
 
@@ -45,6 +39,6 @@ post-extract:
 post-configure:
 	@perl -pi -e "s,\\$$\\{DESTDIR},," ${WRKSRC}/config.h
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 .include <bsd.port.mk>

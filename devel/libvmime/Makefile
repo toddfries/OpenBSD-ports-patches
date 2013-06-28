@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2012/10/08 10:39:24 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/21 08:45:16 ajacoutot Exp $
 
 COMMENT=	C++ class library for working with Internet mail
 
@@ -7,18 +7,19 @@ DISTNAME=	libvmime-${VMIME_V}+svn603
 EXTRACT_SUFX=	.tar.bz2
 
 PKGNAME=	libvmime-${VMIME_V}
-REVISION=	2
+REVISION=	3
 
 SHARED_LIBS+=  vmime    2.0     # 0.0
 
 ### needed for mail/zarafa (FLAVOR is possible if needed in the future)
 #MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=vmime/}
-MASTER_SITES_ZARAFA=http://download.zarafa.com/community/final/7.1/7.1.0-36420/sourcecode/
+MASTER_SITES_ZARAFA=http://download.zarafa.com/community/final/7.1/7.1.3-40304/sourcecode/
 MASTER_SITES=	${MASTER_SITES_ZARAFA}
 MASTER_SITES0=	${MASTER_SITES_ZARAFA:=/vmime-patches/}
 PATCH_DIST_STRIP= -p1
 PATCHFILES= \
 	vmime-0.9.2-header-value-on-next-line.diff:0 \
+	vmime-0.9.2-phf-stop-on-whitespace.diff:0 \
 	vmime-0.9.2-qp-in-buffers.diff:0 \
 	vmime-mixed-qp-in-parameter.diff:0
 ###
@@ -31,9 +32,6 @@ MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += m stdc++
 
@@ -42,7 +40,6 @@ WRKDIST=	${WRKDIR}/libvmime-${VMIME_V}
 # our old gcc is <cxx0x; so "-pedantic" warnings are turned into errors
 CFLAGS +=	-fpermissive
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 
 BUILD_DEPENDS=	archivers/bzip2

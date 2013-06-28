@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2011/12/20 18:59:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2013/03/11 23:04:32 fgsch Exp $
 
 COMMENT=	PDF-generating toolkit for Python
 
 VERSION=	2.1
 DISTNAME=	ReportLab_${VERSION:S/./_/}
 PKGNAME=	py-reportlab-${VERSION}
-REVISION =	7
+REVISION =	8
 EPOCH=		0
 CATEGORIES=	print graphics
 
@@ -18,9 +18,6 @@ MAINTAINER=	Aleksander Piotrowski <alek@openbsd.org>
 
 # BSD, LGPLv2, MPL1.0, MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://www.reportlab.org/ftp/
 MASTER_SITES0=	http://distfiles.bsdfrog.org/
@@ -33,13 +30,13 @@ RUN_DEPENDS=	graphics/py-Imaging
 WRKDIST=	${WRKDIR}/reportlab_${VERSION:S/./_/}
 WRKSRC=		${WRKDIST}/reportlab
 
-REGRESS_DEPENDS=${RUN_DEPENDS} \
+TEST_DEPENDS=${RUN_DEPENDS} \
 		print/py-reportlab/plugins/renderPM 
 
 post-extract:
 	@mv ${WRKDIR}/rl_accel-*/rl_accel ${WRKSRC}/rl_accel
 
-do-regress: fake
+do-test: fake
 	@cd ${WRKSRC}/test && \
 		${MAKE_ENV} PYTHONPATH=${WRKDIST}:${WRKINST}${MODPY_SITEPKG} \
 		${MODPY_BIN} ./runAll.py

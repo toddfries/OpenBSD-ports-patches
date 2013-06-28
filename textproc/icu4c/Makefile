@@ -1,12 +1,16 @@
-# $OpenBSD: Makefile,v 1.26 2012/09/26 19:49:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.34 2013/06/01 14:22:34 ajacoutot Exp $
+
+# avoid segfaults from icupkg compiled and then used during the build
+.if ${MACHINE_ARCH} == "arm"
+CFLAGS+=		-O1 -fno-stack-protector
+.endif
 
 COMMENT=		International Components for Unicode
 
-VERSION=		49.1.2
+VERSION=		51.2
 DISTNAME=		icu4c-${VERSION:S/./_/g}-src
 PKGNAME=		icu4c-${VERSION}
-REVISION =		2
-SO_VERSION=		5.0
+SO_VERSION=		6.2
 .for _lib in icudata icui18n icuio icule iculx icutest icutu icuuc
 SHARED_LIBS+=		${_lib} ${SO_VERSION}
 .endfor
@@ -21,9 +25,6 @@ MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 # ICU
 # http://source.icu-project.org/repos/icu/icu/trunk/license.html
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m pthread stdc++
 

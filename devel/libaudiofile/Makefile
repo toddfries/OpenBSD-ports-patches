@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.41 2012/05/01 06:04:48 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.47 2013/05/10 20:30:31 rpe Exp $
 
 COMMENT=	SGI audiofile library clone
 
-V=		0.3.4
+V=		0.3.6
 SUBST_VARS=	V
 
 DISTNAME=	audiofile-${V}
@@ -16,26 +16,24 @@ MASTER_SITES=	${HOMEPAGE}
 
 HOMEPAGE=	http://www.68k.org/~michael/audiofile/
 
-# GPLv2/LGPLv2
+# LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c m stdc++
+WANTLIB += FLAC c m ogg stdc++
 
-USE_LIBTOOL=	Yes
+LIB_DEPENDS=	audio/flac
+
 
 SEPARATE_BUILD=	Yes
 
-CONFIGURE_STYLE= gnu
+CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	ac_cv_path_ASCIIDOC=no
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}
 
 # audiofile-config is still needed by audio/normalize and devel/libspectrum
 post-install:
-	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -c ${FILESDIR}/audiofile-config \
+	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} -c \
+		${FILESDIR}/audiofile-config \
 		${PREFIX}/bin/audiofile-config
-	chmod ${BINMODE} ${PREFIX}/bin/audiofile-config
 
 .include <bsd.port.mk>

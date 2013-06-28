@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2012/09/01 14:36:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2013/04/20 02:50:16 bentley Exp $
 
 COMMENT =		suite of tools for electronic design automation
 DISTNAME =		geda-gaf-1.6.0
@@ -6,17 +6,13 @@ CATEGORIES =		cad
 HOMEPAGE =		http://geda.seul.org
 MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
-REVISION =		5
+REVISION =		6
 
 SHARED_LIBS = 		geda	0.0	# 38.0
-USE_LIBTOOL =		Yes
 USE_GROFF =	Yes
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext \
 			Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
@@ -37,13 +33,18 @@ LIB_DEPENDS =		devel/glib2 \
 			lang/guile \
 			devel/gmp
 
-BUILD_DEPENDS = 	${RUN_DEPENDS}
-RUN_DEPENDS = 		misc/shared-mime-info \
+# these are checked by configure
+BUILD_DEPENDS =		misc/shared-mime-info \
 			devel/desktop-file-utils
+
+RUN_DEPENDS = 		misc/shared-mime-info \
+			devel/desktop-file-utils \
+			x11/gtk+2,-guic
 
 USE_GMAKE =		Yes
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	${CONFIGURE_SHARED}
+CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
+			--disable-update-xdg-database
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/build-tools
 
 # This confuses update-patches.
@@ -51,8 +52,8 @@ post-extract:
 	@rm -f ${WRKSRC}/gnetlist/examples/vams/gschemrc.orig
 
 # MAKE_ENV hoses the regression test, so we do this manually
-do-regress:
-	cd ${WRKSRC} && ${MAKE_PROGRAM} ${ALL_REGRESS_FLAGS} \
-		-f ${MAKE_FILE} ${REGRESS_TARGET} ${REGRESS_LOG}
+do-test:
+	cd ${WRKSRC} && ${MAKE_PROGRAM} ${ALL_TEST_FLAGS} \
+		-f ${MAKE_FILE} ${TEST_TARGET} ${TEST_LOG}
 
 .include <bsd.port.mk>

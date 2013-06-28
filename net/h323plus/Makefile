@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.12 2012/08/25 13:16:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2013/03/11 11:35:47 espie Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	H.323 video conferencing library
 
-V=		1_24_0
+V=		1_25_0
 DISTNAME=	h323plus-v${V}
 PKGNAME=	h323plus-${V:S/_/./g}
 CATEGORIES=	net devel
-REVISION=	0
 
-SHARED_LIBS=	h323	3.0    # 1.21.0
+SHARED_LIBS=	h323	4.1    # 1.25.0
 
 HOMEPAGE=	http://www.h323plus.org/
 
@@ -18,37 +17,23 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # MPL (dlopen(3) GPL modules)
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += SDL avcodec avutil c crypto expat gsm lber ldap ldap_r
-WANTLIB += m pt pthread sasl2 speex ssl stdc++ x264
+WANTLIB += SDL c crypto expat lber ldap ldap_r m pt pthread ssl
+WANTLIB += stdc++
 
 MASTER_SITES=	${HOMEPAGE}source/download/
 
-LIB_DEPENDS=	devel/ptlib>=2.10.7 \
-		graphics/ffmpeg
+LIB_DEPENDS=	devel/ptlib>=2.10.0
 
 WRKDIST=	${WRKDIR}/h323plus
 
 USE_GMAKE=	Yes
 ALL_TARGET=	default
-NO_REGRESS=	Yes
-
-MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC} ${WRKSRC}/plugins
+NO_TEST=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
-# internal ilbc (port libilbc?)
-CONFIGURE_ARGS=	--with-plugin-installdir=h323plus
-
-# XXX break net/gnugk which depends on the latst h460p code from cvs;
-# enable it again on a future release.
-# h460presence.cxx:192: error: no matching function for call to
-# H323PresenceInstruction::H323PresenceInstruction(H323PresenceInstruction::Instruction, PString, const PString&, const PString&)'
-CONFIGURE_ARGS += --disable-h460p
 
 # http://www.tandberg.com/collateral/tandberg-ITU-license.pdf
 CONFIGURE_ARGS += --disable-h46018
@@ -66,18 +51,9 @@ MAKE_FLAGS=	MAJOR_VERSION=${LIBh323_VERSION:R} \
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/Makefile.in \
-		${WRKSRC}/plugins/audio/Speex/Makefile.in \
-		${WRKSRC}/plugins/audio/GSM0610/Makefile.in \
-		${WRKSRC}/openh323u.mak.in \
-		${WRKSRC}/plugins/video/H.263-ffmpeg/h263ffmpeg.cxx
-	perl -pi -e 's,h263p_encoder,ff_h263p_encoder,g;' \
-		-e 's,h264_decoder,ff_h264_decoder,g;' \
-		-e 's,mpeg4_encoder,ff_mpeg4_encoder,g' \
-		${WRKSRC}/plugins/configure
+		${WRKSRC}/openh323u.mak.in
 
 post-install:
-	cd ${WRKBUILD}/plugins && \
-		${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} ${ALL_FAKE_FLAGS} ${INSTALL_TARGET}
 	${INSTALL_DATA} ${WRKSRC}/version.h ${PREFIX}/share/openh323
 
 .include <bsd.port.mk>

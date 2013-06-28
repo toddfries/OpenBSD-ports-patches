@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2012/10/11 10:39:08 jeremy Exp $
+# $OpenBSD: Makefile,v 1.29 2013/05/07 23:20:11 jeremy Exp $
 
 COMMENT-main =		Nginx module for deploying ruby applications
 COMMENT-standalone =	ruby web application server
@@ -6,7 +6,7 @@ COMMENT-standalone =	ruby web application server
 PASS_VERSION =		3.0.11
 NGINX_VERSION =		1.2.3
 DISTNAME =		passenger-${PASS_VERSION}
-REVISION =		2
+REVISION =		5
 FULLPKGNAME-main =	${MODRUBY_PKG_PREFIX}-${DISTNAME}
 FULLPKGNAME-standalone = ${MODRUBY_PKG_PREFIX}-passenger-standalone-${PASS_VERSION}.${NGINX_VERSION}
 FULLPKGPATH-main =	${BASE_PKGPATH},-main
@@ -21,33 +21,35 @@ HOMEPAGE =	http://www.modrails.com/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
 
 MULTI_PACKAGES =	-main -standalone
 
 
-MODULES =		lang/ruby
+MODULES =		lang/ruby converters/libiconv
 
 SHARED_ONLY-main =	Yes
 SHARED_ONLY-standalone =	Yes
 
 CONFIGURE_STYLE =	gem ext
 
-WANTLIB-standalone =	c crypto m pthread stdc++ z ${MODRUBY_WANTLIB} 
+WANTLIB-main =	c crypto curl ev iconv idn intl m pthread  ssl stdc++ z \
+		${MODRUBY_WANTLIB} 
+WANTLIB-standalone =	c crypto curl ev iconv idn intl m pthread ssl stdc++ z
 
 # Make devel/gmake a BUILD_DEPEND instead of USE_GMAKE, as the port
 # also uses BSD make.
 BUILD_DEPENDS =		${RUN_DEPENDS-main} \
 			devel/gmake
 RUN_DEPENDS-main =	${MODRUBY_RAKE_DEPENDS} \
-			net/curl \
 			devel/ruby-fastthread,${MODRUBY_FLAVOR}>=1.0.1 \
 			devel/ruby-daemon_controller,${MODRUBY_FLAVOR}>=0.2.5 \
 			www/ruby-rack,${MODRUBY_FLAVOR}
-LIB_DEPENDS-standalone =	${MODRUBY_LIB_DEPENDS}
-RUN_DEPENDS-standalone =	${BUILD_PKGPATH}=${PASS_VERSION}
+LIB_DEPENDS-main =	${MODRUBY_LIB_DEPENDS} \
+			${LIB_DEPENDS-standalone}
+RUN_DEPENDS-standalone =${BUILD_PKGPATH}=${PASS_VERSION}
+LIB_DEPENDS-standalone =devel/libev \
+			devel/libidn \
+			net/curl
 
 BUILD_ENV +=            CC=${CC} CXX=${CXX} 
 
@@ -57,6 +59,7 @@ SUBST_VARS =		MODRUBY_FLAVOR
 
 pre-configure:
 	${SUBST_CMD} -DPASSENGER_ROOT='${PREFIX}/lib/phusion-passenger${GEM_MAN_SUFFIX}' \
+		${WRKSRC}/build/common_library.rb \
 		${WRKSRC}/bin/passenger-config \
 		${WRKSRC}/build/packaging.rb \
 		${WRKSRC}/ext/common/ResourceLocator.h \

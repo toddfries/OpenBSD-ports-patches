@@ -1,30 +1,27 @@
-# $OpenBSD: Makefile,v 1.4 2010/11/15 00:22:47 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/10 22:55:03 espie Exp $
 
 COMMENT =		Fasttracker II inspired MOD tracker
-DISTNAME =		milkytracker-0.90.80
 
+DISTNAME =		milkytracker-0.90.85
+REVISION =		0
 CATEGORIES =		audio
 
-HOMEPAGE =		http://www.milkytracker.net/
+HOMEPAGE =		http://www.milkytracker.org/
 
-MAINTAINER =		Jacob Meuser <jakemsr@openbsd.org>
-
-# GPL v3
+# GPLv3+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		SDL c m pthread stdc++
+WANTLIB =		SDL c m pthread stdc++ z
 
-MASTER_SITES =		${HOMEPAGE}/files/
+MASTER_SITES =		${HOMEPAGE}files/
 
 # libjack accessed via dlopen()
 RUN_DEPENDS =		audio/jack
 BUILD_DEPENDS =		${RUN_DEPENDS}
 LIB_DEPENDS =		devel/sdl
 
-CONFIGURE_STYLE =	gnu
+CONFIGURE_STYLE =	autoconf
+AUTOCONF_VERSION =	2.64
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 

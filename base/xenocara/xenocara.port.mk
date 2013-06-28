@@ -1,16 +1,13 @@
-# $OpenBSD: xenocara.port.mk,v 1.5 2012/11/06 14:49:28 espie Exp $
+# $OpenBSD: xenocara.port.mk,v 1.7 2013/03/11 12:05:19 espie Exp $
 
 CATEGORIES = base xenocara
 COMMENT = Xenocara ${COMPONENT}
 FLAT = ${COMPONENT:S/\//./g:C/-([0-9])/_\1/g}
-VERSION ?= 1
+VERSION ?= 2
 DISTNAME = xc-${FLAT}-${VERSION}
 DISTFILES =
 
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 LOCATION = ${PACKAGE_REPOSITORY}/${MACHINE_ARCH}/components
 REV = ${OSREV:S/.//}

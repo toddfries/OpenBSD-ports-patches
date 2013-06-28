@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2012/09/01 14:36:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2013/03/21 08:46:34 ajacoutot Exp $
 
 COMMENT=	implementation of Lotus Sametime Community Client protocol
 
@@ -10,10 +10,7 @@ CATEGORIES=	devel net
 HOMEPAGE=	http://meanwhile.sourceforge.net/
 
 # GPL
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB=	m pcre glib-2.0>=800
 
@@ -26,6 +23,5 @@ CONFIGURE_ARGS=	--enable-mailme=no \
 MODULES=	devel/gettext
 LIB_DEPENDS=	devel/glib2
 
-USE_LIBTOOL=	Yes
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2010/11/19 07:23:07 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2013/05/06 11:57:09 jasper Exp $
 
 COMMENT=	client for anonymous remailing
 
@@ -9,12 +9,11 @@ CATEGORIES=	mail security
 # custom
 PERMIT_PACKAGE_CDROM=	only with patch notice
 PERMIT_PACKAGE_FTP=	only with patch notice
-PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c crypto curses z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mixmaster/}
-MASTER_SITES0=	${MASTER_SITES_BACKUP}
+MASTER_SITES0=	http://distfiles.nl/
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
 		mixmaster-update.pl.gz:0 allpingers.txt.gz:0
 
@@ -25,7 +24,7 @@ CFLAGS+=	-DGLOBALMIXCONF="\"${SYSCONFDIR}/mixmaster/client.cfg\"" \
 		-DHOMEMIXDIR="\".Mix\""
 
 USE_GROFF =	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 MIXMASTER_FILES=${WRKDIST}/conf/* ${WRKDIST}/README \
 	${WRKDIR}/mixmaster-update.pl ${WRKDIR}/allpingers.txt

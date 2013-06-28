@@ -1,0 +1,14 @@
+temporary hack until libtool is fixed.
+
+$OpenBSD: patch-lib_Makefile_in,v 1.2 2013/01/18 19:09:08 steven Exp $
+--- lib/Makefile.in.orig	Thu Jan 17 10:27:17 2013
++++ lib/Makefile.in	Fri Jan 18 19:26:49 2013
+@@ -152,7 +152,7 @@ am_libsyslog_ng_la_OBJECTS = afinter.lo alarms.lo apph
+ 	rewrite-expr-grammar.lo $(am__objects_2)
+ libsyslog_ng_la_OBJECTS = $(am_libsyslog_ng_la_OBJECTS)
+ libsyslog_ng_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
++	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) -version-info 0:0:0 \
+ 	$(libsyslog_ng_la_LDFLAGS) $(LDFLAGS) -o $@
+ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
+ depcomp = $(SHELL) $(top_srcdir)/depcomp

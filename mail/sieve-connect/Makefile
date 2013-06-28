@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.3 2012/07/13 10:13:07 sthen Exp $
+# $OpenBSD: Makefile,v 1.6 2013/04/16 10:22:11 sthen Exp $
 
 COMMENT =	perl sieveshell-compatible ManageSieve client
 
-DISTNAME =	sieve-connect-0.83
+DISTNAME =	sieve-connect-0.85
 CATEGORIES =	mail
 PKG_ARCH =	*
 
@@ -15,14 +15,11 @@ EXTRACT_SUFX =	.tar.bz2
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 RUN_DEPENDS =	net/p5-Net-DNS \
 		net/p5-IO-Socket-INET6 \
-		security/p5-IO-Socket-SSL \
+		security/p5-IO-Socket-SSL>=1.14 \
 		security/p5-Authen-SASL \
 		devel/p5-Term-ReadKey
 

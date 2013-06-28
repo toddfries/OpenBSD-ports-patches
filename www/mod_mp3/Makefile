@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.20 2011/09/17 10:29:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.24 2013/06/12 20:36:34 brad Exp $
 
 COMMENT=	turns Apache into an MP3 or Ogg streaming server
 
-REVISION=	4
+REVISION=	6
 DISTNAME=	mod_mp3-0.40
 CATEGORIES=	www audio
 
@@ -13,9 +13,6 @@ MODULES+=	apache-module
 
 # Apache
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 FLAVORS=	mysql postgresql
 FLAVOR?=
@@ -27,16 +24,16 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--with-apxs=/usr/sbin/apxs \
 			--with-perl=/usr/bin/perl
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 EXAMPLESRC=	${WRKSRC}/support
 CONF=		${EXAMPLESRC}/mp3.conf
 
-.if ${FLAVOR:L:Mmysql} && ${FLAVOR:L:Mpostgresql}
+.if ${FLAVOR:Mmysql} && ${FLAVOR:Mpostgresql}
 ERRORS+= "Fatal: mutually exclusive flavors: ${FLAVORS}"
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 LIB_DEPENDS+=	databases/mysql
 CONFIGURE_ARGS+=--with-mysql="${LOCALBASE}/bin"
 CONF=		${EXAMPLESRC}/mp3_with_mysql.conf
@@ -44,7 +41,7 @@ EXAMPLES+=	${EXAMPLESRC}/mysql_schema
 WANTLIB+=	crypto lib/mysql/mysqlclient>=10 m ssl z
 .endif
 
-.if ${FLAVOR:L:Mpostgresql}
+.if ${FLAVOR:Mpostgresql}
 LIB_DEPENDS+=	databases/postgresql
 CONFIGURE_ARGS+=--with-postgres="${LOCALBASE}"
 CONF=		${FILESDIR}/mp3_with_postgresql.conf

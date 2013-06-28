@@ -1,13 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2012/01/12 03:17:08 bentley Exp $
+# $OpenBSD: Makefile,v 1.5 2013/05/03 07:32:34 bentley Exp $
 
 COMMENT =		BMP/ICO decoding library
 
 NETSURF_PROJECT =	libnsbmp
-NETSURF_VERSION =	0.0.3
-
-WRKDIST =		${WRKDIR}/${DISTNAME}
+NETSURF_VERSION =	0.1.0
 
 CATEGORIES =		graphics
-SHARED_LIBS =		nsbmp 0.0 #0.0.3
+SHARED_LIBS =		nsbmp 1.0 #0.1.0
 
 .include <bsd.port.mk>

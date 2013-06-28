@@ -1,9 +1,9 @@
-$OpenBSD: patch-etc_snort_conf,v 1.7 2012/10/11 02:40:48 lteo Exp $
+$OpenBSD: patch-etc_snort_conf,v 1.9 2013/04/23 02:04:13 lteo Exp $
 
 reputation preprocessor disabled, still experimental
 
---- etc/snort.conf.orig	Tue Jul 31 12:21:16 2012
-+++ etc/snort.conf	Sat Oct  6 22:13:19 2012
+--- etc/snort.conf.orig	Thu Mar 21 14:09:05 2013
++++ etc/snort.conf	Thu Apr  4 22:31:37 2013
 @@ -101,17 +101,17 @@ ipvar AIM_SERVERS [64.12.24.0/23,64.12.28.0/23,64.12.1
  # Path to your rules files (this can be a relative path)
  # Note for Windows users:  You are advised to make this an absolute path,
@@ -54,15 +54,18 @@ reputation preprocessor disabled, still experimental
  
  ###################################################
  # Step #6: Configure output plugins
-@@ -544,6 +545,7 @@ include reference.config
+@@ -542,8 +543,9 @@ include reference.config
+ ###################################################
+ 
  # site specific rules
- include $RULE_PATH/local.rules
+-include $RULE_PATH/local.rules
++#include $RULE_PATH/local.rules
  
 +# Official Sourcefire VRT rules from http://www.snort.org/snort-rules/
+ include $RULE_PATH/app-detect.rules
  include $RULE_PATH/attack-responses.rules
  include $RULE_PATH/backdoor.rules
- include $RULE_PATH/bad-traffic.rules
-@@ -598,6 +600,9 @@ include $RULE_PATH/web-iis.rules
+@@ -648,6 +650,9 @@ include $RULE_PATH/web-iis.rules
  include $RULE_PATH/web-misc.rules
  include $RULE_PATH/web-php.rules
  include $RULE_PATH/x11.rules

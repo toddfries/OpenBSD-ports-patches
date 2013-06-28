@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2011/09/16 12:29:17 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/19 13:07:14 nigel Exp $
 
 SHARED_ONLY =		Yes
 
@@ -7,7 +7,7 @@ DISTNAME =		qwt-5.2.1
 SHARED_LIBS =		qwt 6.0
 CATEGORIES =		x11
 EXTRACT_SUFX =		.tar.bz2
-REVISION =		1
+REVISION =		2
 
 HOMEPAGE =		http://qwt.sourceforge.net/
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=qwt/}
@@ -15,17 +15,15 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=qwt/}
 # Qwt License, Version 1.0
 # http://qwt.sourceforge.net/qwtlicense.html
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		x11/qt4
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 USE_GMAKE =		Yes
 
 MAKE_FLAGS =		LIBqwt_VERSION=${LIBqwt_VERSION}
 
-WANTLIB +=		m stdc++ QtDesigner QtGui QtScript QtXml
+WANTLIB +=	ICE QtDesigner QtGui QtScript QtXml SM X11 Xext Xi
+WANTLIB +=	Xinerama Xrender fontconfig freetype m pthread stdc++
 
 # svgmap example not included to prevent the need of svg dependencies
 EXAMPLES =	bode realtime_plot cpuplot dials radio event_filter \

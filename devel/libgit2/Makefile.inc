@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.3 2012/08/12 17:19:59 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.5 2013/04/22 06:33:28 jasper Exp $
 
 SHARED_ONLY?=		Yes
 
@@ -9,11 +9,8 @@ HOMEPAGE=		http://libgit2.github.com/
 # GPLv2 with linking exemption.
 PERMIT_PACKAGE_CDROM?=	Yes
 PERMIT_PACKAGE_FTP?=	Yes
-PERMIT_DISTFILES_CDROM?= Yes
 PERMIT_DISTFILES_FTP?=	Yes
 
-MASTER_SITES?=		http://distfiles.nl/
+MASTER_SITES=		http://github.com/libgit2/${PROJECT}/archive/v${V}.tar.gz?dummy=/
 DIST_SUBDIR=		libgit
-
-TAR?=			${LOCALBASE}/bin/gtar
-BUILD_DEPENDS+= 	archivers/gtar
+DISTNAME?=		${PROJECT}-${V}

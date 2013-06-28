@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2007/12/17 20:42:00 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/21 08:46:32 ajacoutot Exp $
 
 COMMENT=		Fast Artificial Neural Network Library
 
@@ -13,16 +13,12 @@ HOMEPAGE=		http://leenissen.dk/fann/
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=fann/}
 EXTRACT_SUFX=		.zip
 
 WRKDIST=		${WRKDIR}/fann-2.1.0
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 
 post-install:

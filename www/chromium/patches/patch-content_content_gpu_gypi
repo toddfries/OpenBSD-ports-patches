@@ -1,12 +1,12 @@
-$OpenBSD: patch-content_content_gpu_gypi,v 1.1 2012/10/12 16:46:10 robert Exp $
---- content/content_gpu.gypi.orig	Thu Oct 11 23:31:06 2012
-+++ content/content_gpu.gypi	Thu Oct 11 23:31:26 2012
-@@ -95,7 +95,7 @@
+$OpenBSD: patch-content_content_gpu_gypi,v 1.3 2013/04/03 08:19:10 robert Exp $
+--- content/content_gpu.gypi.orig.port	Fri Mar 22 02:13:17 2013
++++ content/content_gpu.gypi	Tue Apr  2 21:05:17 2013
+@@ -85,7 +85,7 @@
          '../third_party/amd/amd_videocard_info_win.cc',
        ],
      }],
 -    ['OS=="linux"', {
 +    ['OS=="linux" or os_bsd==1', {
        'dependencies': [
+         '../build/linux/system.gyp:libpci',
          '../third_party/libXNVCtrl/libXNVCtrl.gyp:libXNVCtrl',
-       ],

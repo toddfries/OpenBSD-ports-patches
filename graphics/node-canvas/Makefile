@@ -1,18 +1,16 @@
-# $OpenBSD: Makefile,v 1.6 2012/10/14 15:33:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/01 14:19:31 landry Exp $
 
 COMMENT =	Cairo-backed Canvas implementation for Node.js
 
-NPM_VERSION =	0.13.1
+NPM_VERSION =	1.0.0
 NPM_NAME =	canvas
 CATEGORIES =	graphics
+REVISION =	0
 
 HOMEPAGE =	https://github.com/learnboost/node-canvas
 
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += GL X11 Xrender cairo crypto expat fontconfig freetype
 WANTLIB += glib-2.0 gobject-2.0 pixman-1 png pthread pthread-stubs
@@ -31,6 +29,6 @@ LIB_DEPENDS =		devel/pango \
 CONFIGURE_STYLE =	npm ext
 
 # needs mocha
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

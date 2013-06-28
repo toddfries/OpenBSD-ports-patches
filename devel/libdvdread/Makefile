@@ -1,28 +1,25 @@
-#$OpenBSD: Makefile,v 1.21 2012/10/04 07:23:17 brad Exp $
-
-SHARED_ONLY =	Yes
+#$OpenBSD: Makefile,v 1.25 2013/03/13 00:28:05 brad Exp $
 
 COMMENT =	accessing DVD files
 
 DISTNAME =	libdvdread-4.2.0
-REVISION =	0
+REVISION =	2
 CATEGORIES =	devel
 MASTER_SITES =	${HOMEPAGE}releases/
 EXTRACT_SUFX =	.tar.bz2
 
-SHARED_LIBS +=	dvdread		5.0
+SHARED_LIBS +=	dvdread		5.1
 
 HOMEPAGE =	http://dvdnav.mplayerhq.hu/
 
 MAINTAINER =	Marc Espie <espie@openbsd.org>
 
 # GPLv2+
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
 
-RUN_DEPENDS =	converters/libdvdcss>=1.2.12
+WANTLIB += dvdcss
+
+LIB_DEPENDS =	converters/libdvdcss>=1.2.12p0
 
 MAKE_ENV =	LIBDVDREAD_VERSION=${LIBdvdread_VERSION}
 
@@ -32,6 +29,8 @@ CONFIGURE_SCRIPT = configure2
 CONFIGURE_ARGS =--prefix="${PREFIX}" \
 		--cc="${CC}" \
 		--extra-cflags="${CFLAGS}" \
+		--extra-cflags="-I${LOCALBASE}/include -DHAVE_DVDCSS_DVDCSS_H" \
+		--extra-ldflags="-L${LOCALBASE}/lib" \
 		--disable-debug \
 		--disable-opts
 

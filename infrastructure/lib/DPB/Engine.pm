@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Engine.pm,v 1.50 2012/10/08 12:41:03 espie Exp $
+# $OpenBSD: Engine.pm,v 1.82 2013/06/25 07:49:52 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -18,6 +18,7 @@
 use strict;
 use warnings;
 
+use DPB::Limiter;
 package DPB::SubEngine;
 sub new
 {
@@ -42,6 +43,12 @@ sub remove
 {
 	my ($self, $v) = @_;
 	$self->{queue}->remove($v);
+}
+
+sub is_done_quick
+{
+	my $self = shift;
+	return $self->is_done(@_);
 }
 
 sub sorted
@@ -83,6 +90,23 @@ sub start_install
 	return 0;
 }
 
+sub lock_and_start_build
+{
+	my ($self, $core, $v) = @_;
+
+	$self->remove($v);
+
+	if (my $lock = $self->{engine}{locker}->lock($v)) {
+		$self->{doing}{$self->key_for_doing($v)} = 1;
+		$self->start_build($v, $core, $lock);
+		return 1;
+	} else {
+		push(@{$self->{engine}{locks}}, $v);
+		$self->log('L', $v);
+		return 0;
+	}
+}
+
 sub start
 {
 	my $self = shift;
@@ -92,27 +116,70 @@ sub start
 		return;
 	}
 	if ($self->start_install($core)) {
-		return $core;
+		return;
 	}
 	my $o = $self->sorted($core);
+
+	# note we don't actually remove stuff from the queue until needed, 
+	# so mismatches holds a copy of stuff that's still there.
+	my @mismatches = ();
+
+	# first pass, try to find something we can build
 	while (my $v = $o->next) {
-		$self->remove($v);
+		# trim stuff that's done
 		if ($self->is_done($v)) {
 			$self->already_done($v);
 			$self->done($v);
 			next;
 		}
+		# ... and stuff that's related to other stuff building
 		if ($self->{doing}{$self->key_for_doing($v)}) {
+			$self->remove($v);
 			$self->{later}{$v} = $v;
 			$self->log('^', $v);
-		} elsif (my $lock = $self->{engine}{locker}->lock($v)) {
-			$self->{doing}{$self->key_for_doing($v)} = 1;
-			return $self->start_build($v, $core, $lock);
-		} else {
-			push(@{$self->{engine}{locks}}, $v);
-			$self->log('L', $v);
+			next;
+		}
+		if ($self->check_for_memory_hogs($v, $core)) {
+			push(@mismatches, $v);
+			next;
+		}
+		# keep affinity mismatches for later
+		if (defined $v->{affinity} && !$core->matches($v->{affinity})) {
+			$self->log('A', $v, 
+			    " ".$core->hostname." ".$v->{affinity});
+			# try to start them anyways, on the "right" core
+			my $core2 = DPB::Core->get_affinity($v->{affinity});
+			if (defined $core2) {
+				if ($self->lock_and_start_build($core2, $v)) {
+					next;
+				} else {
+					$core2->mark_ready;
+				}
+			}
+			push(@mismatches, $v);
+			next;
+		}
+		# if there's no external lock, we can build
+		if ($self->lock_and_start_build($core, $v)) {
+			return;
 		}
 	}
+	# let's make sure we don't have something else first
+	if (@mismatches > 0) {
+		if ($self->{engine}->check_buildable(1)) {
+			$core->mark_ready;
+			return $self->start;
+		}
+	}
+	# second pass, affinity mismatches
+	for my $v (@mismatches) {
+		if ($self->lock_and_start_build($core, $v)) {
+			$self->log('Y', $v, 
+			    " ".$core->hostname." ".$v->{affinity});
+			return;
+		}
+	}
+	# couldn't build anything, don't forget to give back the core.
 	$core->mark_ready;
 }
 
@@ -128,7 +195,7 @@ sub done
 		}
 	}
 	delete $self->{doing}{$self->key_for_doing($v)};
-	$self->{engine}{locker}->recheck_errors($self->{engine});
+	$self->{engine}->recheck_errors;
 }
 
 sub end
@@ -152,12 +219,18 @@ sub end
 		}
 	}
 	$self->done($v);
+	$self->{engine}->flush;
 }
 
 sub dump
 {
 	my ($self, $k, $fh) = @_;
 #	$self->{queue}->dump($k, $fh);
+}
+
+sub check_for_memory_hogs
+{
+	return 0;
 }
 
 package DPB::SubEngine::Build;
@@ -201,15 +274,42 @@ sub new_queue
 	return $engine->{heuristics}->new_queue;
 }
 
+sub mark_as_done
+{
+	my ($self, $v) = @_;
+	$self->{engine}{affinity}->unmark($v);
+	delete $self->{engine}{tobuild}{$v};
+	delete $v->{info}{DIST};
+#	$self->{heuristics}->done($v);
+	if (defined $self->{later}{$v}) {
+		$self->log('V', $v);
+		delete $self->{later}{$v};
+	}
+	if (!defined $self->{engine}{built}{$v}) {
+		$self->{engine}{built}{$v}= $v;
+		$self->log('B', $v);
+	}
+	$self->remove($v);
+}
+
 sub is_done
 {
 	my ($self, $v) = @_;
 	if ($self->{builder}->check($v)) {
-#		$self->{heuristics}->done($v);
-		$self->{engine}{built}{$v}= $v;
-		$self->log('B', $v);
-		delete $self->{engine}{tobuild}{$v};
-		delete $v->{new};
+		for my $w ($v->build_path_list) {
+			next if $v eq $w;
+			next unless $self->{builder}->check($w);
+			$self->mark_as_done($w);
+		}
+	}
+	return $self->is_done_quick($v);
+}
+
+sub is_done_quick
+{
+	my ($self, $v) = @_;
+	if ($self->{builder}->check($v)) {
+		$self->mark_as_done($v);
 		return 1;
 	} else {
 		return 0;
@@ -237,17 +337,29 @@ sub already_done
 sub start_build
 {
 	my ($self, $v, $core, $lock) = @_;
-	my $special = $self->{engine}{heuristics}->
-	    special_parameters($core->host, $v);
-	$self->log('J', $v, " ".$core->hostname." ".$special);
-	$self->{builder}->build($v, $core, $special,
-	    $lock, sub {$self->end($core, $v)});
+	$self->log('J', $v, " ".$core->hostname);
+	$self->{engine}{affinity}->start($v, $core);
+	$self->{builder}->build($v, $core, $lock, sub {$self->end($core, $v)});
 }
 
 sub end_build
 {
 	my ($self, $v) = @_;
+	$self->{engine}{affinity}->finished($v);
 	$self->{engine}{heuristics}->finish_special($v);
+}
+
+sub check_for_memory_hogs
+{
+	my ($self, $v, $core) = @_;
+	if ($v->{info}->has_property('memoryhog')) {
+		for my $job ($core->same_host_jobs) {
+			if ($job->{v}{info}->has_property('memoryhog')) {
+				return 1;
+			}
+		}
+	}
+	return 0;
 }
 
 # for fetch-only, we do the same as Build, except we're never happy
@@ -270,11 +382,10 @@ sub new_queue
 sub is_done
 {
 	my ($self, $v) = @_;
-	if ($v->checked_already) {
-		return 1;
-	}
+	return 1 if $v->{done};
 	if ($v->check($self->{engine}{logger})) {
 		$self->log('B', $v);
+		$v->{done} = 1;
 		return 1;
 	} else {
 		return 0;
@@ -299,6 +410,7 @@ sub end_build
 }
 
 package DPB::Engine;
+our @ISA = qw(DPB::Limiter);
 
 use DPB::Heuristics;
 use DPB::Util;
@@ -313,8 +425,10 @@ sub new
 	    heuristics => $state->heuristics,
 	    locker => $state->locker,
 	    logger => $state->logger,
+	    affinity => $state->{affinity},
 	    errors => [],
 	    locks => [],
+	    ts => time(),
 	    requeued => [],
 	    ignored => []}, $class;
 	$o->{buildable} = ($state->{fetch_only} ? "DPB::SubEngine::NoBuild"
@@ -322,7 +436,7 @@ sub new
 	if ($state->{want_fetchinfo}) {
 		$o->{tofetch} = DPB::SubEngine::Fetch->new($o);
 	}
-	$o->{log} = DPB::Util->make_hot($state->logger->open("engine"));
+	$o->{log} = $state->logger->open("engine");
 	$o->{stats} = DPB::Util->make_hot($state->logger->open("stats"));
 	return $o;
 }
@@ -352,6 +466,12 @@ sub log
 	$self->log_no_ts(@_);
 }
 
+sub flush
+{
+	my $self = shift;
+	$self->{log}->flush;
+}
+
 sub count
 {
 	my ($self, $field) = @_;
@@ -373,6 +493,9 @@ sub errors_string
 		my $s = $e->logname;
 		if (defined $e->{host} && !$e->{host}->is_localhost) {
 			$s .= "(".$e->{host}->name.")";
+		}
+		if (defined $e->{info} && $e->{info}->has_property('nojunk')) {
+			$s .= '!';
 		}
 		push(@l, $s);
 	}
@@ -486,7 +609,7 @@ sub adjust
 	return 0;
 }
 
-sub should_ignore
+sub missing_dep
 {
 	my ($self, $v, $kind) = @_;
 	return undef if !exists $v->{info}{$kind};
@@ -494,6 +617,34 @@ sub should_ignore
 		return $d if (defined $d->{info}) && $d->{info}{IGNORE};
 	}
 	return undef;
+}
+
+sub stub_out
+{
+	my ($self, $v) = @_;
+	my $i = $v->{info};
+	for my $w ($v->build_path_list) {
+		# don't fill in equiv lists if they don't matter.
+		next if !defined $w->{info};
+		if ($w->{info} eq $i) {
+			$w->{info} = DPB::PortInfo->stub;
+		}
+	}
+	push(@{$self->{ignored}}, $v);
+}
+
+# need to ignore $v because of some missing $kind dependency:
+# wipe out its info and put it in the right list
+sub should_ignore
+{
+	my ($self, $v, $kind) = @_;
+	if (my $d = $self->missing_dep($v, $kind)) {
+		$self->log_no_ts('!', $v, " because of ".$d->fullpkgpath);
+		$self->stub_out($v);
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 sub adjust_extra
@@ -524,6 +675,8 @@ sub adjust_distfiles
 	my $not_yet = 0;
 	for my $f (values %{$v->{info}{FDEPENDS}}) {
 		if ($self->{tofetch}->is_done($f)) {
+			$v->{info}{distsize} //= 0;
+			$v->{info}{distsize} += $f->{sz};
 			delete $v->{info}{FDEPENDS}{$f};
 			next;
 		}
@@ -544,19 +697,24 @@ sub adjust_built
 	for my $v (values %{$self->{built}}) {
 		if ($self->adjust($v, 'RDEPENDS') == 0) {
 			delete $self->{built}{$v};
+			# okay, thanks to equiv, some other path was marked
+			# as stub, and obviously we lost our deps
+			if ($v->{info}->is_stub) {
+				$self->log_no_ts('!', $v, 
+				    " equivalent to an ignored path");
+				# just drop it, it's already ignored as
+				# an equivalent path
+				next;
+			}
 			$self->{installable}{$v} = $v;
 			if ($v->{wantinstall}) {
 				$self->{buildable}->will_install($v);
 			}
 			$self->log_no_ts('I', $v);
 			$changes++;
-		} elsif (my $d = $self->should_ignore($v, 'RDEPENDS')) {
+		} elsif ($self->should_ignore($v, 'RDEPENDS')) {
 			delete $self->{built}{$v};
-			$self->log_no_ts('!', $v, 
-			    " because of ".$d->fullpkgpath);
 			$changes++;
-			$v->{info} = DPB::PortInfo->stub;
-			push(@{$self->{ignored}}, $v);
 		}
 	}
 	return $changes;
@@ -564,50 +722,65 @@ sub adjust_built
 
 sub adjust_tobuild
 {
-	my ($self, $quick) = @_;
+	my $self = shift;
 
-	my $changes = 0;
+	my $has = {};
 	for my $v (values %{$self->{tobuild}}) {
-		next if $quick && !$v->{new};
-		delete $v->{new};
-		my $has = $self->adjust($v, 'DEPENDS', 'BDEPENDS');
-		$has += $self->adjust_extra($v, 'EXTRA', 'BEXTRA');
+		$has->{$v} = $self->adjust($v, 'DEPENDS', 'BDEPENDS');
+	}
 
-		my $has2 = $self->adjust_distfiles($v);
-		# being buildable directly is a priority,
-		# but put the patch/dist/small stuff down the 
-		# line as otherwise we will tend to grab 
-		# patch files first
-		$v->{has} = 2 * ($has != 0) + ($has2 > 1);
-		if ($has + $has2 == 0) {
-			$self->{buildable}->add($v);
-			$self->log_no_ts('Q', $v);
-			delete $self->{tobuild}{$v};
-			$changes++;
-		} elsif (my $d = $self->should_ignore($v, 'DEPENDS')) {
-			delete $self->{tobuild}{$v};
-			$self->log_no_ts('!', $v, 
-			    " because of ".$d->fullpkgpath);
-			$changes++;
-			$v->{info} = DPB::PortInfo->stub;
-			push(@{$self->{ignored}}, $v);
+	for my $v (values %{$self->{tobuild}}) {
+		if ($has->{$v} != 0) {
+			if (my $d = $self->should_ignore($v, 'DEPENDS')) {
+				delete $self->{tobuild}{$v};
+			} else {
+				$v->{has} = 2;
+			}
+		} else {
+			# okay, thanks to equiv, some other path was marked
+			# as stub, and obviously we lost our deps
+			if ($v->{info}->is_stub) {
+				$self->log_no_ts('!', $v, 
+				    " equivalent to an ignored path");
+				# just drop it, it's already ignored as
+				# an equivalent path
+				delete $self->{tobuild}{$v};
+				next;
+			}
+			my $has = $has->{$v} + 
+			    $self->adjust_extra($v, 'EXTRA', 'BEXTRA');
+
+			my $has2 = $self->adjust_distfiles($v);
+			# being buildable directly is a priority,
+			# but put the patch/dist/small stuff down the 
+			# line as otherwise we will tend to grab 
+			# patch files first
+			$v->{has} = 2 * ($has != 0) + ($has2 > 1);
+			if ($has + $has2 == 0) {
+				delete $self->{tobuild}{$v};
+				if ($self->should_ignore($v, 'RDEPENDS')) {
+					$self->{buildable}->remove($v);
+				} else {
+					$self->{buildable}->add($v);
+					$self->log_no_ts('Q', $v);
+				}
+			} 
 		}
 	}
-	return $changes;
 }
 
 sub check_buildable
 {
-	my ($self, $quick) = @_;
-	$self->{ts} = time();
-	my $changes;
-	do {
-		$changes = 0;
-		$changes += $self->adjust_built if !$quick;
-		$changes += $self->adjust_tobuild($quick);
-
-	} while ($changes);
+	my ($self, $forced) = @_;
+	my $r = $self->limit($forced, 150, "ENG", 
+	    $self->{buildable}->count > 0,
+	    sub {
+		1 while $self->adjust_built;
+		$self->adjust_tobuild;
+		$self->flush;
+	    });
 	$self->stats;
+	return $r;
 }
 
 sub new_path
@@ -616,8 +789,7 @@ sub new_path
 	if (defined $v->{info}{IGNORE} && 
 	    !$self->{state}->{fetch_only}) {
 		$self->log('!', $v, " ".$v->{info}{IGNORE}->string);
-		$v->{info} = DPB::PortInfo->stub;
-		push(@{$self->{ignored}}, $v);
+		$self->stub_out($v);
 		return;
 	}
 	if (defined $v->{info}{MISSING_FILES}) {
@@ -629,8 +801,10 @@ sub new_path
 		return;
 	}
 #		$self->{heuristics}->todo($v);
-	$self->{tobuild}{$v} = $v;
-	$self->log('T', $v);
+	if (!$self->{buildable}->is_done_quick($v)) {
+		$self->{tobuild}{$v} = $v;
+		$self->log('T', $v);
+	}
 	return unless defined $v->{info}{FDEPENDS};
 	for my $f (values %{$v->{info}{FDEPENDS}}) {
 		if ($self->{tofetch}->contains($f) ||
@@ -638,6 +812,8 @@ sub new_path
 			next;
 		}
 		if ($self->{tofetch}->is_done($f)) {
+			$v->{info}{distsize} //= 0;
+			$v->{info}{distsize} += $f->{sz};
 			delete $v->{info}{FDEPENDS}{$f};
 			next;
 		}
@@ -696,12 +872,14 @@ sub start_new_job
 {
 	my $self = shift;
 	$self->{buildable}->start;
+	$self->flush;
 }
 
 sub start_new_fetch
 {
 	my $self = shift;
 	$self->{tofetch}->start;
+	$self->flush;
 }
 
 sub can_build

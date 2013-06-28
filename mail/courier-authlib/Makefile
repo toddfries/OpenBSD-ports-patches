@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.30 2012/10/18 08:04:01 giovanni Exp $
+# $OpenBSD: Makefile,v 1.40 2013/06/20 08:26:13 ajacoutot Exp $
 
 COMMENT-main=		authentication library for courier
 COMMENT-ldap=		ldap authentication module for courier-authLib
@@ -6,7 +6,11 @@ COMMENT-mysql=		mysql authentication module for courier-authLib
 COMMENT-pgsql=		pgsql authentication module for courier-authLib
 COMMENT-userdb=		userdb authentication module for courier-authLib
 
-DISTNAME=			courier-authlib-0.64.0
+DISTNAME=			courier-authlib-0.65.0
+REVISION-main=		1
+REVISION-mysql=		2
+REVISION-ldap=		2
+REVISION-pgsql=		2
 PKGNAME-main=		${DISTNAME}
 PKGNAME-ldap=		${DISTNAME:S/lib-/lib-ldap-/}
 PKGNAME-mysql=		${DISTNAME:S/lib-/lib-mysql-/}
@@ -23,6 +27,7 @@ SHARED_LIBS +=  authpgsql            0.0      # .0.0
 SHARED_LIBS +=  authldap             1.0      # .0.0
 SHARED_LIBS +=  authmysql            0.0      # .0.0
 SHARED_LIBS +=  authpipe             0.0      # .0.0
+SHARED_LIBS +=  authsqlite           0.0      # .0.0
 
 CATEGORIES=		mail security
 HOMEPAGE=		http://www.courier-mta.org/authlib/
@@ -31,15 +36,11 @@ MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=courier/}
 EXTRACT_SUFX=		.tar.bz2
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 
 CONFIGURE_ENV=		LIBS="-L${LOCALBASE}/lib" \
@@ -68,7 +69,7 @@ CONFIGURE_ARGS+=	--enable-static \
 			--with-ltdl-include=${LOCALBASE}/include \
 			--cache-file=${WRKDIR}/courier-authlib.cache
 
-RUN_DEPENDS-main=	lang/expect,no_tk
+RUN_DEPENDS-main=	lang/expect
 BUILD_DEPENDS=		${RUN_DEPENDS-main}
 
 DOCS=			COPYING COPYING.GPL INSTALL NEWS README
@@ -77,12 +78,13 @@ MULTI_PACKAGES=		-main -ldap -mysql -pgsql -userdb
 PSEUDO_FLAVORS=		no_ldap no_mysql no_pgsql no_userdb
 FLAVOR?=
 
-WANTLIB-main=		c ltdl
+WANTLIB-main=		c ltdl sqlite3
 
 LIB_DEPENDS-main=	devel/libtool,-ltdl
 
 WANTLIB-ldap=		crypto ssl asn1 com_err gssapi krb5 \
-			courierauthcommon courierauth ldap lber sasl2
+			courierauthcommon courierauth ldap-2.4 lber-2.4 sasl2 \
+			asn1 heimbase krb5 roken wind
 LIB_DEPENDS-ldap=	${BUILD_PKGPATH} \
 			databases/openldap \
 			security/cyrus-sasl2
@@ -91,11 +93,13 @@ WANTLIB-mysql=		crypto m ssl z courierauthcommon courierauth mysqlclient
 LIB_DEPENDS-mysql=	${BUILD_PKGPATH} \
 			databases/mysql
 
-WANTLIB-pgsql=		m courierauthcommon courierauth pq
+WANTLIB-pgsql=		m courierauthcommon courierauth pq com_err crypto ssl \
+			asn1 heimbase krb5 roken wind
 LIB_DEPENDS-pgsql=	${BUILD_PKGPATH} \
 			databases/postgresql
 
-WANTLIB-userdb=		c courierauthcommon courierauth gdbm>=3
+WANTLIB-userdb=		c courierauthcommon courierauth gdbm>=3 iconv intl
+MODULES-userdb=		textproc/intltool
 LIB_DEPENDS-userdb=	${BUILD_PKGPATH} \
 			databases/gdbm
 

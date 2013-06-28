@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/08/11 12:12:00 edd Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/11 16:23:48 benoit Exp $
 
 COMMENT =	Python library for pretty-printing tabular data
 
-MODPY_EGG_VERSION =	0.6
+MODPY_EGG_VERSION =	0.7.1
 DISTNAME =		prettytable-${MODPY_EGG_VERSION}
 PKGNAME =		py-${DISTNAME}
 CATEGORIES =		textproc devel
@@ -16,9 +16,6 @@ PKG_ARCH =	*
 
 # 3 clause BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/python
 MODPY_SETUPTOOLS =	Yes

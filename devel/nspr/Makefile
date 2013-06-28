@@ -1,18 +1,14 @@
-# $OpenBSD: Makefile,v 1.43 2012/09/17 20:00:09 landry Exp $
+# $OpenBSD: Makefile,v 1.49 2013/06/23 18:36:50 landry Exp $
 
 ONLY_FOR_ARCHS=	alpha amd64 arm i386 mips64 mips64el powerpc sparc sparc64 hppa
+SHARED_ONLY =	Yes
 
-COMMENT-main=		Netscape Portable Runtime
-COMMENT-docs=		HTML Documentation for NSPR
+COMMENT =		Netscape Portable Runtime
 
-VER=			4.9.2
+VER=			4.10
 DISTNAME=		nspr-${VER}
-PKGNAME-main=		${DISTNAME}
-PKGNAME-docs=		nspr-docs-${VER}
-DISTFILES=		${DISTNAME}${EXTRACT_SUFX} \
-			nspr-reference${EXTRACT_SUFX}:0
 
-SO_VERSION=		22.1
+SO_VERSION=		23.0
 .for _lib in nspr4 plc4 plds4
 SHARED_LIBS+=		${_lib} ${SO_VERSION}
 .endfor
@@ -23,55 +19,24 @@ HOMEPAGE=		http://www.mozilla.org/projects/nspr/index.html
 
 MAINTAINER=		Landry Breuil <landry@openbsd.org>
 
-WANTLIB-main=		c
+WANTLIB=		c pthread
 
 # MPL - Mozilla Public License
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		http://ftp.eu.mozilla.org/pub/mozilla.org/nspr/releases/v${VER}/src/ \
-			http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${VER}/src/
-MASTER_SITES0=		http://ftp.eu.mozilla.org/pub/mozilla.org/nspr/doc/ \
-			http://ftp.mozilla.org/pub/mozilla.org/nspr/doc/
-MULTI_PACKAGES= -main -docs
-
-PKG_ARCH-docs=	*
+MASTER_SITES =		http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${VER}/src/
 
 USE_GMAKE=		Yes
 AUTOCONF_VERSION=	2.13
 CONFIGURE_STYLE=	autoconf no-autoheader
-CONFIGURE_ARGS+=	--disable-debug \
-			--with-pthreads
 
 MAKE_ENV=		SO_VERSION="${SO_VERSION}"
 CONFIGURE_ENV=		${MAKE_ENV}
 
-WRKSRC=			${WRKDIST}/mozilla/nsprpub
+WRKSRC=			${WRKDIST}/nspr
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/build/autoconf
 
-pre-configure:
-	@cp ${FILESDIR}/nspr.pc.in ${WRKSRC}/config/
-
-do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/include/nspr
-	${INSTALL_DATA_DIR} ${PREFIX}/lib/pkgconfig
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/nspr/html
-	cd ${WRKSRC}/dist/include && \
-		find . -type d \
-			-exec ${INSTALL_DATA_DIR} ${PREFIX}/include/{} \; && \
-		find . ! -type d \
-			-exec ${INSTALL_DATA} {} ${PREFIX}/include/{} \;
-	cd ${WRKSRC}/dist/lib && tar cfL - . | \
-		(cd ${PREFIX}/lib && tar -xf -)
-	cd ${WRKDIR}/nspr/reference/html && \
-		pax -s ',.*/CVS.*,,' -rwvpe . ${PREFIX}/share/doc/nspr/html
-	${INSTALL_SCRIPT} ${WRKSRC}/config/nspr-config ${PREFIX}/bin
-	${INSTALL_DATA} ${WRKSRC}/config/nspr.pc ${PREFIX}/lib/pkgconfig
-	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/nspr/html
-
-do-regress:
+do-test:
 	${MAKE_PROGRAM} -C ${WRKSRC}/pr/tests
 	${MAKE_PROGRAM} -C ${WRKSRC}/lib/tests
 	@cd ${WRKSRC}/pr/tests && ulimit -Sn 192 && env TZ=gmt \

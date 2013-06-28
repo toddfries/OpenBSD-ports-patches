@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.20 2012/06/30 09:31:57 landry Exp $
+# $OpenBSD: Makefile,v 1.23 2013/05/31 15:35:20 ajacoutot Exp $
 
 COMMENT=	Xfce4 mpd client panel plugin
 
 XFCE_VERSION=	0.4.4
 XFCE_PLUGIN=	mpc
+REVISION =	1
 
 # BSD-ISC
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 MODULES=	x11/xfce4
 
@@ -23,5 +21,6 @@ WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0 m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pixman-1 png pthread-stubs
 WANTLIB += xcb xcb-render xcb-shm xfce4util z stdc++ xcb-aux xfce4ui-1
 WANTLIB += ICE SM X11-xcb Xau Xdmcp Xxf86vm drm ffi startup-notification-1
+WANTLIB += harfbuzz pthread
 
 .include <bsd.port.mk>

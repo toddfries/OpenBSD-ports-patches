@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.26 2011/12/09 10:01:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.30 2013/05/04 11:31:57 sthen Exp $
 
 COMMENT =	gateway to send and receive SMS through GSM mobile phones
 
-DISTNAME =	smstools3-3.1.14
-REVISION =	3
+DISTNAME =	smstools3-3.1.15
+REVISION =	0
 
 CATEGORIES =	comms
 
@@ -13,9 +13,6 @@ MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	c mm
 
@@ -26,7 +23,7 @@ RUN_DEPENDS =	mail/procmail
 LIB_DEPENDS =	devel/mm
 
 USE_GMAKE =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 WRKDIST =	${WRKDIR}/smstools3
 WRKSRC =	${WRKDIST}/src
 
@@ -46,10 +43,9 @@ do-install:
 	${INSTALL_DATA} ${WRKDIST}/scripts/* \
 		${PREFIX}/share/examples/smstools/scripts
 	rm ${PREFIX}/share/examples/smstools/scripts/*.orig
-	${SUBST_CMD} -c ${FILESDIR}/smsd.conf.openbsd \
-	       ${WRKDIR}/smsd.conf.openbsd
-	${INSTALL_DATA} ${WRKDIR}/smsd.conf.openbsd \
-	       ${PREFIX}/share/examples/smstools/smsd.conf.openbsd
+	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} \
+		-c ${FILESDIR}/smsd.conf.openbsd \
+		${PREFIX}/share/examples/smstools/smsd.conf.openbsd
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/smstools
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/smstools/slideshow
 	${INSTALL_DATA} ${WRKDIST}/doc/*html ${PREFIX}/share/doc/smstools

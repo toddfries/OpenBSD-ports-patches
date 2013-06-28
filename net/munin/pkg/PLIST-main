@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.10 2012/10/12 09:46:46 kirby Exp $
+@comment $OpenBSD: PLIST-main,v 1.14 2013/06/03 19:45:32 kirby Exp $
 @newgroup _munin:644
 @newgroup _munin-plugin:645
 @newuser _munin:644:_munin:daemon:munin user:/nonexistent:/sbin/nologin
@@ -121,7 +121,6 @@ libexec/munin/plugins/if_errcoll_
 libexec/munin/plugins/if_pps_
 libexec/munin/plugins/ifx_concurrent_sessions_
 libexec/munin/plugins/intr
-libexec/munin/plugins/iostat
 @comment libexec/munin/plugins/ipac-ng
 libexec/munin/plugins/ipmi_
 libexec/munin/plugins/ipmi_sensor_
@@ -133,6 +132,7 @@ libexec/munin/plugins/mailman
 libexec/munin/plugins/mailscanner
 @comment libexec/munin/plugins/mbmon_
 libexec/munin/plugins/memcached_
+libexec/munin/plugins/memory
 libexec/munin/plugins/mhttping
 libexec/munin/plugins/multiping
 libexec/munin/plugins/multips
@@ -254,7 +254,6 @@ libexec/munin/plugins/squid_objectsize
 libexec/munin/plugins/squid_requests
 libexec/munin/plugins/squid_traffic
 libexec/munin/plugins/surfboard
-libexec/munin/plugins/swap
 libexec/munin/plugins/sybase_space
 libexec/munin/plugins/systat
 libexec/munin/plugins/tomcat_
@@ -262,6 +261,7 @@ libexec/munin/plugins/tomcat_access
 libexec/munin/plugins/tomcat_jvm
 libexec/munin/plugins/tomcat_threads
 libexec/munin/plugins/tomcat_volume
+libexec/munin/plugins/uptime
 libexec/munin/plugins/users
 libexec/munin/plugins/varnish_
 libexec/munin/plugins/vmstat
@@ -271,43 +271,44 @@ libexec/munin/plugins/zimbra_
 @man man/man1/munin-run.1
 @man man/man1/munin-sched.1
 @man man/man1/munindoc.1
-@man man/man3/Munin::Common::Config.3p
-@man man/man3/Munin::Common::Defaults.3p
-@man man/man3/Munin::Common::TLS.3p
-@man man/man3/Munin::Common::TLSClient.3p
-@man man/man3/Munin::Common::TLSServer.3p
-@man man/man3/Munin::Common::Timeout.3p
-@man man/man3/Munin::Master::Config.3p
-@man man/man3/Munin::Master::Group.3p
-@man man/man3/Munin::Master::GroupRepository.3p
-@man man/man3/Munin::Master::HTMLOld.3p
-@man man/man3/Munin::Master::Host.3p
-@man man/man3/Munin::Master::Logger.3p
-@man man/man3/Munin::Master::Node.3p
-@man man/man3/Munin::Master::ProcessManager.3p
-@man man/man3/Munin::Master::Update.3p
-@man man/man3/Munin::Master::UpdateWorker.3p
-@man man/man3/Munin::Master::Utils.3p
-@man man/man3/Munin::Master::Worker.3p
-@man man/man3/Munin::Node::Config.3p
-@man man/man3/Munin::Node::Configure::Debug.3p
-@man man/man3/Munin::Node::Configure::History.3p
-@man man/man3/Munin::Node::Configure::HostEnumeration.3p
-@man man/man3/Munin::Node::Configure::Plugin.3p
-@man man/man3/Munin::Node::Configure::PluginList.3p
-@man man/man3/Munin::Node::Logger.3p
-@man man/man3/Munin::Node::OS.3p
-@man man/man3/Munin::Node::ProxySpooler.3p
-@man man/man3/Munin::Node::SNMPConfig.3p
-@man man/man3/Munin::Node::Server.3p
-@man man/man3/Munin::Node::Service.3p
-@man man/man3/Munin::Node::Session.3p
-@man man/man3/Munin::Node::SpoolReader.3p
-@man man/man3/Munin::Node::SpoolWriter.3p
-@man man/man3/Munin::Node::Utils.3p
-@man man/man3/Munin::Plugin.3p
-@man man/man3/Munin::Plugin::Pgsql.3p
-@man man/man3/Munin::Plugin::SNMP.3p
+@man man/man3p/Munin::Common::Config.3p
+@man man/man3p/Munin::Common::Defaults.3p
+@man man/man3p/Munin::Common::TLS.3p
+@man man/man3p/Munin::Common::TLSClient.3p
+@man man/man3p/Munin::Common::TLSServer.3p
+@man man/man3p/Munin::Common::Timeout.3p
+@man man/man3p/Munin::Master::Config.3p
+@man man/man3p/Munin::Master::Group.3p
+@man man/man3p/Munin::Master::GroupRepository.3p
+@man man/man3p/Munin::Master::HTMLOld.3p
+@man man/man3p/Munin::Master::Host.3p
+@man man/man3p/Munin::Master::LimitsOld.3p
+@man man/man3p/Munin::Master::Logger.3p
+@man man/man3p/Munin::Master::Node.3p
+@man man/man3p/Munin::Master::ProcessManager.3p
+@man man/man3p/Munin::Master::Update.3p
+@man man/man3p/Munin::Master::UpdateWorker.3p
+@man man/man3p/Munin::Master::Utils.3p
+@man man/man3p/Munin::Master::Worker.3p
+@man man/man3p/Munin::Node::Config.3p
+@man man/man3p/Munin::Node::Configure::Debug.3p
+@man man/man3p/Munin::Node::Configure::History.3p
+@man man/man3p/Munin::Node::Configure::HostEnumeration.3p
+@man man/man3p/Munin::Node::Configure::Plugin.3p
+@man man/man3p/Munin::Node::Configure::PluginList.3p
+@man man/man3p/Munin::Node::Logger.3p
+@man man/man3p/Munin::Node::OS.3p
+@man man/man3p/Munin::Node::ProxySpooler.3p
+@man man/man3p/Munin::Node::SNMPConfig.3p
+@man man/man3p/Munin::Node::Server.3p
+@man man/man3p/Munin::Node::Service.3p
+@man man/man3p/Munin::Node::Session.3p
+@man man/man3p/Munin::Node::SpoolReader.3p
+@man man/man3p/Munin::Node::SpoolWriter.3p
+@man man/man3p/Munin::Node::Utils.3p
+@man man/man3p/Munin::Plugin.3p
+@man man/man3p/Munin::Plugin::Pgsql.3p
+@man man/man3p/Munin::Plugin::SNMP.3p
 @man man/man5/munin-node.conf.5
 @man man/man8/munin-check.8
 @man man/man8/munin-update.8
@@ -319,6 +320,7 @@ sbin/munin-run
 sbin/munin-sched
 share/doc/munin/
 share/doc/munin/UPGRADING
+share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/munin/munin-node.conf
 @sample ${SYSCONFDIR}/munin/munin-node.conf
 share/examples/munin/plugin-conf.d/

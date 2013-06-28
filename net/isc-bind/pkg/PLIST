@@ -1,10 +1,9 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2012/07/19 08:36:45 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.4 2013/05/29 20:19:15 sthen Exp $
 @bin bin/dig
 @bin bin/host
 bin/isc-config.sh
 @bin bin/nslookup
 @bin bin/nsupdate
-%%SHARED%%
 include/bind9/
 include/bind9/check.h
 include/bind9/getaddresses.h
@@ -143,6 +142,7 @@ include/isc/radix.h
 include/isc/random.h
 include/isc/ratelimiter.h
 include/isc/refcount.h
+include/isc/regex.h
 include/isc/region.h
 include/isc/resource.h
 include/isc/result.h
@@ -205,16 +205,22 @@ include/lwres/result.h
 include/lwres/version.h
 lib/libbind9.a
 lib/libbind9.la
+@lib lib/libbind9.so.${LIBbind9_VERSION}
 lib/libdns.a
 lib/libdns.la
+@lib lib/libdns.so.${LIBdns_VERSION}
 lib/libisc.a
 lib/libisc.la
+@lib lib/libisc.so.${LIBisc_VERSION}
 lib/libisccc.a
 lib/libisccc.la
+@lib lib/libisccc.so.${LIBisccc_VERSION}
 lib/libisccfg.a
 lib/libisccfg.la
+@lib lib/libisccfg.so.${LIBisccfg_VERSION}
 lib/liblwres.a
 lib/liblwres.la
+@lib lib/liblwres.so.${LIBlwres_VERSION}
 @man man/man1/arpaname.1
 @man man/man1/dig.1
 @man man/man1/host.1
@@ -309,12 +315,15 @@ lib/liblwres.la
 @man man/man5/named.conf.5
 @man man/man5/rndc.conf.5
 @man man/man8/ddns-confgen.8
+@man man/man8/dnssec-checkds.8
+@man man/man8/dnssec-coverage.8
 @man man/man8/dnssec-dsfromkey.8
 @man man/man8/dnssec-keyfromlabel.8
 @man man/man8/dnssec-keygen.8
 @man man/man8/dnssec-revoke.8
 @man man/man8/dnssec-settime.8
 @man man/man8/dnssec-signzone.8
+@man man/man8/dnssec-verify.8
 @man man/man8/genrandom.8
 @man man/man8/isc-hmac-fixup.8
 @man man/man8/lwresd.8
@@ -328,12 +337,15 @@ lib/liblwres.la
 @man man/man8/rndc.8
 @bin sbin/arpaname
 @bin sbin/ddns-confgen
+sbin/dnssec-checkds
+sbin/dnssec-coverage
 @bin sbin/dnssec-dsfromkey
 @bin sbin/dnssec-keyfromlabel
 @bin sbin/dnssec-keygen
 @bin sbin/dnssec-revoke
 @bin sbin/dnssec-settime
 @bin sbin/dnssec-signzone
+@bin sbin/dnssec-verify
 @bin sbin/genrandom
 @bin sbin/isc-hmac-fixup
 @bin sbin/lwresd

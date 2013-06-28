@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2012/04/28 10:51:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/12 20:36:34 brad Exp $
 
 COMMENT =		filter, redirector and access controller for Squid
 
 DISTNAME =		squidGuard-1.4
-REVISION =		3
+REVISION =		6
 CATEGORIES =		www
 
 HOMEPAGE =		http://www.squidguard.org/
@@ -11,9 +11,6 @@ MAINTAINER =		Claudio Correa <correa@pucpcaldas.br>
 
 # GPLv2 only
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c lib/db4/db pthread
 
@@ -38,12 +35,12 @@ CONFIGURE_ARGS =	--with-squiduser='_squid' \
 			--with-db-lib=${LOCALBASE}/lib/db4 \
 			--with-db-inc=${LOCALBASE}/include/db4
 
-REGRESS_TARGET =	test
+TEST_TARGET =	test
 
 FLAVORS =	ldap mysql
 FLAVOR ?=
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 LIB_DEPENDS +=		databases/openldap
 WANTLIB +=		ldap
 CONFIGURE_ARGS +=	--with-ldap=yes
@@ -51,7 +48,7 @@ CONFIGURE_ARGS +=	--with-ldap=yes
 CONFIGURE_ARGS +=	--with-ldap=no
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 LIB_DEPENDS +=		databases/mysql
 CONFIGURE_ARGS +=	--with-mysql=${LOCALBASE}
 WANTLIB +=		mysqlclient z

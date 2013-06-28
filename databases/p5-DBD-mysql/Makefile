@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.33 2012/09/14 16:10:21 giovanni Exp $
+# $OpenBSD: Makefile,v 1.37 2013/06/12 20:36:33 brad Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		MySQL drivers for the Perl DBI
 
-DISTNAME=		DBD-mysql-4.022
+DISTNAME=		DBD-mysql-4.023
+REVISION=		0
 CATEGORIES=		databases
 
 MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
@@ -13,22 +14,19 @@ MODULES=		cpan
 
 # Perl
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c crypto m ssl z
+WANTLIB=		c crypto m pthread ssl z
 
 BUILD_DEPENDS=		databases/p5-DBI>=1.08
 RUN_DEPENDS=		databases/p5-DBI>=1.08
 LIB_DEPENDS=		databases/mysql
-REGRESS_DEPENDS=	databases/mysql,-server
+TEST_DEPENDS=		databases/mysql,-server
 WANTLIB +=		lib/mysql/mysqlclient>=10
 
-REGRESS_IS_INTERACTIVE=	Yes
+TEST_IS_INTERACTIVE=	Yes
 
-pre-regress:
-	@mysqladmin ping >/dev/null 2>&1 || (echo 'mysql needs to be running'; exit 1)
+pre-test:
+	@mysqladmin ping >/dev/null 2>&1 || (echo 'MySQL needs to be running'; exit 1)
 	-@mysqladmin create test >/dev/null 2>&1
 
 .include <bsd.port.mk>

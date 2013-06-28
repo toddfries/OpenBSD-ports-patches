@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2012/06/22 16:38:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/21 08:46:32 ajacoutot Exp $
 
 COMMENT=	open source COBOL compiler
 
@@ -11,9 +11,6 @@ HOMEPAGE=	http://www.opencobol.org/
 # compiler: GPL
 # run-time library: LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=open-cobol/}
 
@@ -21,7 +18,6 @@ LIB_DEPENDS=	databases/db/v4 \
 	 	devel/gmp
 
 MODULES=	devel/gettext
-USE_LIBTOOL=	Yes
 
 WANTLIB=	c db gmp m ncurses
 

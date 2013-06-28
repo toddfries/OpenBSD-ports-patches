@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.3 2012/10/28 23:29:50 kili Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:08 espie Exp $
 
 COMMENT =		efficient hashing-based container types
 
 DISTNAME =		unordered-containers-0.1.4.6
-REVISION =		1
+REVISION =		2
 CATEGORIES =		devel
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 

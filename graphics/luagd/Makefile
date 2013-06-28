@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/07/10 15:22:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.19 2013/05/30 16:05:26 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,7 +7,7 @@ COMMENT=	gd binding for the lua language
 V=		2.0.33r2
 PKGNAME=	luagd-$(V)
 DISTNAME=	lua-gd-$(V)
-REVISION=	8
+REVISION=	9
 CATEGORIES=	graphics
 
 HOMEPAGE=	http://lua-gd.luaforge.net/
@@ -15,15 +15,12 @@ MASTER_SITES=	http://luaforge.net/frs/download.php/1592/
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	lang/lua converters/libiconv
 WANTLIB=	freetype fontconfig z jpeg>=62 png>=2 gd>=20.33
 LIB_DEPENDS=	graphics/jpeg graphics/png graphics/gd
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 do-build:
 	$(CC) $(CFLAGS) -DGD_JPEG -DGD_FONTCONFIG -DGD_FREETYPE -DGD_PNG \

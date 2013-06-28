@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.94 2012/09/09 08:57:36 kili Exp $
+# $OpenBSD: Makefile,v 1.98 2013/06/17 19:28:37 ajacoutot Exp $
 
 COMMENT=	GNU PostScript interpreter
 
@@ -6,7 +6,7 @@ VERSION=	9.06
 DISTNAME=	ghostscript-${VERSION}
 CATEGORIES=	print lang
 SHARED_LIBS=	gs	15.0
-REVISION=	0
+REVISION=	2
 
 MASTER_SITES=	http://downloads.ghostscript.com/public/
 
@@ -23,10 +23,7 @@ SUBST_VARS=	VERSION FLAVOR_STRING
 
 # GPLv3, except for the included CMap files from Adobe, which may
 # only be redistributed without modifications.
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB=	c ijs m jbig2dec jpeg>=62 lcms2 png>=6 pthread tiff z
 
@@ -42,8 +39,7 @@ LIB_DEPENDS=	graphics/jbig2dec	\
 
 CFLAGS+=	-DSYS_TYPES_HAS_STDINT_TYPES	\
 		-I${LOCALBASE}/include		\
-		-I${LOCALBASE}/include/ijs	\
-		-I${LOCALBASE}/include/libpng
+		-I${LOCALBASE}/include/ijs
 USE_GROFF =	Yes
 
 STDLIBS=	-pthread -lm -liconv
@@ -146,7 +142,7 @@ FT_BRIDGE=	1
 FT_BRIDGE=	0
 .endif
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 # Simulate ./configure.
 post-configure:
@@ -319,7 +315,7 @@ DEVICES+=	ijs
 
 # Cups
 LIB_DEPENDS+=	print/cups,-libs
-WANTLIB += asn1 crypto cups cupsimage gssapi krb5 ssl
+WANTLIB += cups cupsimage
 DEVICES+=	cups
 ALL_TARGET_CUPS=cups
 INSTALL_TARGET_CUPS=	install-cups

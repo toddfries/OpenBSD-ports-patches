@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.23 2012/09/23 16:57:33 jeremy Exp $
+# $OpenBSD: Makefile,v 1.27 2013/06/12 20:36:33 brad Exp $
 
 COMMENT=	access a MySQL database from Ruby
 
 DISTNAME=	mysql-2.8.1
-REVISION=	10
+REVISION=	13
 CATEGORIES=	databases
 
 HOMEPAGE=	http://tmtm.org/mysql/ruby/
 
 # Ruby License
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	lang/ruby
 
@@ -22,12 +19,12 @@ LIB_DEPENDS=	databases/mysql
 
 CONFIGURE_STYLE=ruby gem ext
 
-REGRESS_DEPENDS=databases/mysql,-server
+TEST_DEPENDS=databases/mysql,-server
 
 # A running mysqld is required to run the regression tests.
-REGRESS_IS_INTERACTIVE = Yes
+TEST_IS_INTERACTIVE = Yes
 
-do-regress:
+do-test:
 	@cd ${WRKBUILD} && ${RUBY} test.rb
 
 .include <bsd.port.mk>

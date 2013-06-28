@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2012/10/18 13:17:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2013/03/11 10:50:32 espie Exp $
 
 # Does _not_ depend on desktop-file-utils, hicolor-icon-theme,
 # gtk-update-icon-cache, shared-mime-info... on purpose as it should
@@ -8,7 +8,7 @@ COMMENT=	utilities to assist desktop integration tasks
 
 DISTNAME=	xdg-utils-1.1.0-rc1
 PKGNAME=	xdg-utils-1.1.0rc1
-REVISION=	1
+REVISION=	3
 
 CATEGORIES=	devel
 
@@ -18,14 +18,11 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://portland.freedesktop.org/download/
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	ac_cv_path_XMLTO=""

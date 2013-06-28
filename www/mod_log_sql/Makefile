@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.18 2011/09/17 10:29:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.21 2013/06/12 20:36:34 brad Exp $
 
 COMMENT=	Apache module for logging to an SQL database
 
-REVISION=	7
+REVISION=	9
 DISTNAME=	mod_log_sql-1.18
 CATEGORIES=	www
 
@@ -12,9 +12,6 @@ MODULES+=	apache-module
 
 # Artistic
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += lib/mysql/mysqlclient>=10 z
 
@@ -27,7 +24,7 @@ EXTRACT_SUFX=	.tar.bz2
 
 LIB_DEPENDS=	databases/mysql
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 WRKSRC=		${WRKDIR}/mod_log_sql
 EXAMPLES=	create_tables.sql make_combined_log.pl

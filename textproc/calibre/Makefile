@@ -1,19 +1,16 @@
-# $OpenBSD: Makefile,v 1.15 2012/08/28 19:13:12 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2013/05/13 19:12:36 fgsch Exp $
 
 COMMENT =		ebook management application
 
 DISTNAME =		calibre-0.8.20
 CATEGORIES =		textproc
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=calibre/}
-REVISION =		3
+REVISION =		7
 
 HOMEPAGE =		http://calibre-ebook.com/
 
 # GPLv3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/python \
 			x11/qt4
@@ -21,7 +18,7 @@ MODULES =		lang/python \
 WANTLIB +=		ICE MagickCore MagickWand QtGui SM X11 Xext
 WANTLIB +=		Xi Xinerama Xrender c chm fontconfig freetype
 WANTLIB +=		icudata icui18n icuio icuuc m png poppler
-WANTLIB +=		stdc++
+WANTLIB +=		stdc++ pthread
 WANTLIB +=		${MODPY_WANTLIB}
 
 LIB_DEPENDS=		devel/chmlib \
@@ -29,7 +26,8 @@ LIB_DEPENDS=		devel/chmlib \
 			graphics/png \
 			print/poppler, \
 			textproc/icu4c
-RUN_DEPENDS =		devel/py-dateutil \
+
+COMMON_DEPENDS =	devel/py-dateutil \
 			devel/xdg-utils \
 			graphics/ImageMagick \
 			graphics/libwmf \
@@ -43,9 +41,14 @@ RUN_DEPENDS =		devel/py-dateutil \
 			www/py-CherryPy \
 			www/py-mechanize \
 			x11/py-qt4>=4.8.2p1 \
-			www/py-mechanize \
-			x11/gtk+2,-guic
-BUILD_DEPENDS =		${RUN_DEPENDS}
+			www/py-mechanize
+
+BUILD_DEPENDS =		${COMMON_DEPENDS}
+
+RUN_DEPENDS =		${COMMON_DEPENDS} \
+			devel/desktop-file-utils \
+			misc/shared-mime-info \
+			print/poppler,-utils
 
 CFLAGS +=		"-I${LOCALBASE}/include"
 LDFLAGS +=		"-L${LOCALBASE}/lib"
@@ -61,11 +64,11 @@ MAKE_ENV +=		WITH_USB=no
 
 WRKDIST =		${WRKDIR}/calibre
 PORTHOME =		${WRKDIR}
-NO_REGRESS = 		Yes
+NO_TEST =		Yes
 MODPY_SETUPTOOLS =	Yes
 
 ## setup.py doesn't like the options in our python module
-MODPY_DISTUTILS_BUILD = 	build
+MODPY_DISTUTILS_BUILD =		build
 MODPY_DISTUTILS_INSTALL =	install --prefix=${LOCALBASE} \
 				--root=${PREFIX}
 
@@ -77,7 +80,7 @@ pre-configure:
 		's,#!/usr/bin/env python(2)?,#!${MODPY_BIN},' )
 
 do-install:
-	${_MODPY_CMD} ${MODPY_DISTUTILS_INSTALL} ${MODPY_DISTUTILS_INSTALLARGS}
+	${MODPY_CMD} ${MODPY_DISTUTILS_INSTALL} ${MODPY_DISTUTILS_INSTALLARGS}
 	chmod 755 ${PREFIX}/bin/calibre-mount-helper
 	${INSTALL_DATA_DIR} ${PREFIX}/share/calibre/recipes
 	cd ${WRKSRC}/recipes && find . -type f -exec \

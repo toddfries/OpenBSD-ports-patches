@@ -1,6 +1,6 @@
-$OpenBSD: patch-clamav-unofficial-sigs_conf,v 1.2 2012/08/09 00:34:29 sthen Exp $
+$OpenBSD: patch-clamav-unofficial-sigs_conf,v 1.4 2013/04/22 11:32:29 sthen Exp $
 --- clamav-unofficial-sigs.conf.orig	Sun Jun  6 17:43:07 2010
-+++ clamav-unofficial-sigs.conf	Thu Aug  9 01:30:24 2012
++++ clamav-unofficial-sigs.conf	Mon Apr 22 12:10:25 2013
 @@ -31,18 +31,18 @@
  # and optionally socat.  It's been reported that on Sun systems, the GNU utilities
  # should be used rather than the default Sun OS versions of these utilities.
@@ -24,7 +24,7 @@ $OpenBSD: patch-clamav-unofficial-sigs_conf,v 1.2 2012/08/09 00:34:29 sthen Exp 
  
  # Set path to clamd.pid file (see clamd.conf for path location).
  clamd_pid="/var/run/clamd.pid"
-@@ -122,6 +122,7 @@ ss_dbs="
+@@ -122,21 +122,22 @@ ss_dbs="
     sanesecurity.ftm
     scam.ndb
     spamimg.hdb
@@ -32,7 +32,16 @@ $OpenBSD: patch-clamav-unofficial-sigs_conf,v 1.2 2012/08/09 00:34:29 sthen Exp 
     winnow_malware.hdb
     winnow_malware_links.ndb
  "
-@@ -137,6 +138,11 @@ ss_dbs="
+ 
+-# Additional Sanesecruity distributed database that can be used and
++# Additional Sanesecurity distributed database that can be used and
+ # their associated potential fales-positive ratings:
+ #
+-# USE 'ONLY' ONE OF THE FOLLOWING TWO SIGNATURE DATABASES:
+-#
+-# INetMsg-SpamDomains-2w.ndb    : MEDIUM false-positive rating
+-# INetMsg-SpamDomains-2m.ndb    : MEDIUM false-positive rating
+-#
  # ONE DATABASE CONTAINS THE LAST TWO WEEKS OF COLLECTED SPAM DOMAINS (2w), AND
  # THE OTHER DATABASE CONTAINS THE LAST TWO MONTHS OF COLLECTED SPAM DOMAINS (2m).
  #
@@ -44,7 +53,25 @@ $OpenBSD: patch-clamav-unofficial-sigs_conf,v 1.2 2012/08/09 00:34:29 sthen Exp 
  # jurlbla.ndb                   : MEDIUM false-positive rating
  # lott.ndb                      : MEDIUM false-positive rating
  # spam.ldb                      : MEDIUM false-positive rating
-@@ -183,11 +189,11 @@ si_update_hours="4"   # Default is 4 hours (6 update c
+@@ -154,6 +155,17 @@ ss_dbs="
+ #
+ # ONE CONTAINS THE COMPLETE URL PATH (MEDIUM RISK), AND THE OTHER
+ # CONTAINS ONLY THE URL, WITHOUT THE FULL PATH (HIGH RISK).
++#
++# Foxhole databases block certain filenames *inside* compressed files (zip, 7z,
++# rar). "Dangerous file types" are: pif scr exe com bat cmd vbs lnk cpl vbs.
++# See http://sanesecurity.com/foxhole-databases/ for more information.
++#
++# foxhole_generic.cdb           : MEDIUM false-positive rating
++#                                 (double extensions with dangerous file types)
++# foxhole_filename.cdb          : MEDIUM false-positive rating
++#                                 (certain commonly known malware filenames)
++# foxhole_all.cdb               : HIGH false-positive rating
++#                                 (all dangerous file types within archives)
+ 
+ # ========================
+ # SecuriteInfo Database(s)
+@@ -183,11 +195,11 @@ si_update_hours="4"   # Default is 4 hours (6 update c
  # =========================
  # Add or remove database file names between quote marks as needed.  To
  # disable any of the MalwarePatrol database file downloads, remove the
@@ -61,7 +88,7 @@ $OpenBSD: patch-clamav-unofficial-sigs_conf,v 1.2 2012/08/09 00:34:29 sthen Exp 
  
  # Since the MalwarePatrol database file is dynamically created,
  # there is no way to test for changes prior to downloading.  For this
-@@ -219,7 +225,7 @@ mbl_update_hours="6"   # Default is 6 hours (4 downloa
+@@ -219,7 +231,7 @@ mbl_update_hours="6"   # Default is 6 hours (4 downloa
  # Set working directory paths (edit to meet your own needs). If these
  # directories do not exist, the script will attempt to create them.
  # Top level working directory path:

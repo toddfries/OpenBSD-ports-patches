@@ -1,22 +1,21 @@
-# $OpenBSD: Makefile,v 1.14 2011/09/16 12:29:17 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/24 15:53:39 zhuk Exp $
 
 COMMENT=	terminal application that embeds Konsole for KDE
 
 DISTNAME=	quadkonsole-2.0
-REVISION=	7
+REVISION=	9
 CATEGORIES=	x11 x11/kde
 
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=  Yes
-PERMIT_PACKAGE_FTP=    Yes
-PERMIT_DISTFILES_CDROM=Yes
-PERMIT_DISTFILES_FTP=  Yes
 
-WANTLIB += ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c fam
-WANTLIB += idn jpeg m png pthread rpcsvc stdc++ util kdeui kdefx kdesu
-WANTLIB += z pthread-stubs xcb kdecore DCOP kwalletclient kio kparts
+WANTLIB =  ICE SM X11 Xext Xfixes Xrender Xt art_lgpl_2 c
+WANTLIB += expat fam fontconfig freetype idn m png pthread
+WANTLIB += pthread-stubs stdc++ util xcb z
+WANTLIB += ${KDE}/DCOP ${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdesu
+WANTLIB += ${KDE}/kdeui ${KDE}/kio ${KDE}/kparts ${KDE}/kwalletclient
 
 MASTER_SITES=	http://nomis80.org/quadkonsole/
 
@@ -30,7 +29,6 @@ MODKDE_VERSION=	3.3.0
 MAKE_FLAGS+=	${MODKDE_MAKE_FLAGS}
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.59
 CONFIGURE_ARGS+=${MODKDE_CONFIGURE_ARGS}

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2012/09/25 21:58:59 brad Exp $
+# $OpenBSD: Makefile,v 1.6 2013/03/21 08:46:33 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
@@ -17,8 +17,6 @@ EXTRACT_SUFX =		.tar.bz2
 # LGPL v2.1
 PERMIT_PACKAGE_CDROM =	Free speech issue
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Free speech issue
-PERMIT_DISTFILES_FTP =	Yes
 
 SHARED_LIBS +=		aacs	1.0	# 2.0
 
@@ -34,7 +32,6 @@ MAKE_FLAGS =		CFLAGS="${CFLAGS}"
 
 SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	gnu
-USE_LIBTOOL =		yes
 YACC =			${LOCALBASE}/bin/bison -y
 CONFIGURE_ENV =		ac_cv_prog_LEX="${LOCALBASE}/bin/gflex"
 

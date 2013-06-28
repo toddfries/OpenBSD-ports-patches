@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.8 2012/09/23 16:57:32 jeremy Exp $
-
-BROKEN-mips64el= hangs when compiling sqlite3.o
+# $OpenBSD: Makefile,v 1.11 2013/03/11 02:52:08 espie Exp $
 
 COMMENT =	ruby SQLite3 embedded database library
 
 DISTNAME =	amalgalite-1.1.2
 CATEGORIES =	databases
-REVISION =	1
+REVISION =	2
 
 HOMEPAGE =	http://copiousfreetime.rubyforge.org/amalgalite/
 
@@ -14,13 +12,13 @@ MAINTAINER =	Jeremy Evans <jeremy@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ruby
 
 CONFIGURE_STYLE =	ruby gem ext
+.if ${MACHINE_ARCH} == "mips64el"
+CONFIGURE_ARGS = --with-cflags="-O1"
+.endif
 
 BUILD_DEPENDS =		${RUN_DEPENDS}
 RUN_DEPENDS =		devel/ruby-arrayfields,${MODRUBY_FLAVOR}>=4.7.4,<4.8 \
@@ -30,8 +28,8 @@ AMALGALITE_SO_DIR =	amalgalite/${MODRUBY_REV}
 SUBST_VARS +=		AMALGALITE_SO_DIR
 
 # distfile doesn't include configuration directory necessary for testing.
-REGRESS_DEPENDS =	${FULLPKGNAME}:${BUILD_PKGPATH}
-MODRUBY_REGRESS =	rspec2
-MODRUBY_REGRESS_TARGET =	spec/*_spec.rb
+TEST_DEPENDS =	${FULLPKGNAME}:${BUILD_PKGPATH}
+MODRUBY_TEST =	rspec2
+MODRUBY_TEST_TARGET =	spec/*_spec.rb
 
 .include <bsd.port.mk>

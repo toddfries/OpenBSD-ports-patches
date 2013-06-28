@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2012/10/15 15:06:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/21 08:48:53 ajacoutot Exp $
 
 COMMENT = 	X.509 library
 
@@ -15,13 +15,9 @@ MAINTAINER = 	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM = 	Yes
-PERMIT_PACKAGE_FTP = 	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP = 	Yes
 
 EXTRACT_SUFX = 		.tar.bz2
 
-USE_LIBTOOL = 		Yes
 MODULES = 		devel/gettext
 
 LIB_DEPENDS = 		security/libgpg-error

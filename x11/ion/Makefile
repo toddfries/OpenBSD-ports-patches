@@ -1,21 +1,17 @@
-# $OpenBSD: Makefile,v 1.57 2012/09/19 08:15:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.59 2013/04/29 12:40:49 gonzalo Exp $
 
 COMMENT=	light, keyboard friendly window manager
 
-V=		20070318
-DISTNAME=	ion-3ds-${V}
+V=		20090110
+DISTNAME=	ion-3-${V}
 PKGNAME=	ion-${V}
-REVISION=	5
 CATEGORIES=	x11
 
 HOMEPAGE=	http://modeemi.cs.tut.fi/~tuomov/ion/
-MASTER_SITES=	http://modeemi.cs.tut.fi/~tuomov/dl/
+MASTER_SITES=	http://tuomov.iki.fi/software/dl/
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE X11 m c SM Xext ${MODLUA_WANTLIB}
 
@@ -27,7 +23,7 @@ LIB_DEPENDS=	${MODLUA_LIB_DEPENDS}
 
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/system.mk

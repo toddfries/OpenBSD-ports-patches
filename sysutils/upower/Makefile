@@ -1,25 +1,25 @@
-# $OpenBSD: Makefile,v 1.22 2012/09/27 17:26:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.29 2013/04/29 13:34:51 giovanni Exp $
 
 ONLY_FOR_ARCHS =${APM_ARCHS}
 
 COMMENT =	userland power management interface
 
-DISTNAME =	upower-0.9.18
+DISTNAME =	upower-0.9.20
 EXTRACT_SUFX =	.tar.xz
 CATEGORIES =	sysutils
-SHARED_LIBS +=  upower-glib               0.0 # 1.1
-REVISION =	0
+SHARED_LIBS +=  upower-glib               0.0 # 1.2
+REVISION =	2
 
 HOMEPAGE =	http://upower.freedesktop.org/
 MASTER_SITES =	${HOMEPAGE}/releases/
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 
-#GPLv2+
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+
+WANTLIB += c dbus-1 dbus-glib-1 glib-2.0 gobject-2.0 m polkit-gobject-1
+WANTLIB += pthread
 
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
@@ -31,7 +31,7 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--with-backend=openbsd \
 			--without-idevice
 
-CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
+CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include -DENABLE_DEPRECATED" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 # If one of these tools is found at configure stage, it might be used,
@@ -43,7 +43,6 @@ CONFIGURE_ENV +=ac_cv_path_GTKDOC_CHECK="" \
 FAKE_FLAGS =	sysconfdir=${PREFIX}/share/examples/upower
 
 USE_GMAKE =	Yes
-USE_LIBTOOL =	Yes
 
 MODULES =	textproc/intltool
 
@@ -52,7 +51,7 @@ LIB_DEPENDS =	sysutils/polkit>=0.101 \
 BUILD_DEPENDS =	devel/gobject-introspection \
 		textproc/docbook-xsl
 
-WANTLIB += c dbus-1 dbus-glib-1 glib-2.0 gobject-2.0 gthread-2.0
-WANTLIB += m polkit-gobject-1 pthread
+# polkit(8) almost always needs to know the "active" session
+RUN_DEPENDS +=	sysutils/consolekit
 
 .include <bsd.port.mk>

@@ -1,34 +1,31 @@
-# $OpenBSD: Makefile,v 1.11 2012/09/01 12:02:27 naddy Exp $
+# $OpenBSD: Makefile,v 1.13 2013/06/04 20:38:24 bcallah Exp $
 
 COMMENT=	load PNG graphics files and bind them to an OpenGL texture
 
 VERSION=	1.45
 DISTNAME=	glpng
-PKGNAME=	${DISTNAME}-${VERSION}
-REVISION =	3
+PKGNAME=	glpng-${VERSION}
+REVISION =	4
 SHARED_LIBS=	glpng 0.0
 CATEGORIES=	graphics
 
 EXTRACT_SUFX=	.zip
 
-HOMEPAGE=	http://www.wyatt100.freeserve.co.uk/
+HOMEPAGE=	http://www.fifi.org/doc/libglpng-dev/glpng.html
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}
+MASTER_SITES=	http://devio.us/~bcallah/source/
 
 WANTLIB=	GL png>=5
 
 LIB_DEPENDS=	graphics/png
 
 
-REGRESS_IS_INTERACTIVE=	x11
+TEST_IS_INTERACTIVE=	x11
 
-REGRESS_DEPENDS=	graphics/freeglut
+TEST_DEPENDS=	graphics/freeglut
 
 DIST_SUBDIR=	${DISTNAME}-${VERSION}
 WRKDIST=	${WRKDIR}
@@ -49,7 +46,7 @@ post-install:
 	${INSTALL_DATA} ${WRKDIR}/glpng.htm \
 		${PREFIX}/share/doc/glpng/glpng.html
 
-do-regress:
+do-test:
 	cd ${WRKDIR}/Example \
 	&& ${CC} ${CFLAGS} -o Test Test.c -lm -lz \
 		-L${X11BASE}/lib -lGLU -lXi -lXmu \

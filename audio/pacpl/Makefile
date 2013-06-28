@@ -1,35 +1,21 @@
-# $OpenBSD: Makefile,v 1.15 2012/10/09 17:13:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.17 2013/04/27 11:39:47 sthen Exp $
 
 PKG_ARCH=		*
 
-COMMENT-main=		PAC (Perl Audio Converter)
-COMMENT-konqueror=	PAC Konqueror service menu & mime types
-COMMENT-amarok=		PAC Amarok plugin
+COMMENT=		PAC (Perl Audio Converter)
 
-V=			4.0.4
-DISTNAME=		pacpl-${V}
-PKGNAME-main=		pacpl-${V}
-PKGNAME-konqueror=	pacpl-konqueror-${V}
-PKGNAME-amarok=		pacpl-amarok-${V}
+DISTNAME=		pacpl-4.0.5
 CATEGORIES=		audio converters perl5
-
-REVISION-main =		2
-REVISION =		0
 
 HOMEPAGE=		http://pacpl.sourceforge.net/
 
 # GPLv3
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=pacpl/}
 
 NO_BUILD=		Yes
-NO_REGRESS=		Yes
-
-MULTI_PACKAGES=		-main -konqueror -amarok
+NO_TEST=		Yes
 
 RUN_DEPENDS=		audio/bonk \
 			audio/lame \
@@ -51,11 +37,6 @@ RUN_DEPENDS=		audio/bonk \
 			x11/mplayer
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
-
-RUN_DEPENDS-konqueror=	${BUILD_PKGPATH} \
-			x11/kde/base3
-RUN_DEPENDS-amarok=	${BUILD_PKGPATH} \
-			audio/amarok
 
 USE_GMAKE=		Yes
 CONFIGURE_STYLE=	gnu

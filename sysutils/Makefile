@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.274 2012/10/26 18:07:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.295 2013/05/30 15:59:27 jasper Exp $
 
      SUBDIR =
-     SUBDIR += LPRng
      SUBDIR += accountsservice
      SUBDIR += anacron
+     SUBDIR += ansible
      SUBDIR += apachetop
      SUBDIR += apc-upsd
      SUBDIR += apcupsd
      SUBDIR += apcd
+     SUBDIR += augeas
      SUBDIR += autossh
-     SUBDIR += backintime
      SUBDIR += backuppc
      SUBDIR += bacula,mysql
      SUBDIR += bacula,pgsql
@@ -52,6 +52,9 @@
      SUBDIR += dwdiff
      SUBDIR += e2fsprogs
      SUBDIR += entr
+     SUBDIR += erchef
+     SUBDIR += erl-lager
+     SUBDIR += erl-stats_hero
      SUBDIR += eventlog
      SUBDIR += faubackup
      SUBDIR += fdupes
@@ -64,6 +67,7 @@
      SUBDIR += fsstress
      SUBDIR += gamin
      SUBDIR += ggrep
+     SUBDIR += gitolite
      SUBDIR += gkrellm
      SUBDIR += glastree
      SUBDIR += god
@@ -92,7 +96,9 @@
      SUBDIR += logtail
      SUBDIR += lsof
      SUBDIR += luastatgrab
+     SUBDIR += luastatgrab,lua52
      SUBDIR += mac-robber
+     SUBDIR += mcollective
      SUBDIR += memtest86+
      SUBDIR += memtester
      SUBDIR += mencal
@@ -106,14 +112,15 @@
      SUBDIR += ncdu
      SUBDIR += ndesk-dbus
      SUBDIR += ndesk-dbus-glib
-     SUBDIR += notification-daemon
      SUBDIR += node-always
      SUBDIR += node-daemon
+     SUBDIR += node-rmdir
      SUBDIR += node-syslog
      SUBDIR += ns4
      SUBDIR += nut
      SUBDIR += openpoppassd
      SUBDIR += p5-Capture-Tiny
+     SUBDIR += p5-File-Monitor
      SUBDIR += p5-File-NFSLock
      SUBDIR += p5-File-Which
      SUBDIR += p5-Filesys-Df
@@ -125,6 +132,7 @@
      SUBDIR += p5-Proc-ProcessTable
      SUBDIR += p5-Proc-Queue
      SUBDIR += p5-Proc-Wait3
+     SUBDIR += p5-Puppet-Tidy
      SUBDIR += p5-Quota
      SUBDIR += p5-Schedule-At
      SUBDIR += p5-Set-Crontab
@@ -156,13 +164,16 @@
      SUBDIR += rpl
      SUBDIR += rsyslog
      SUBDIR += rtty
+     SUBDIR += ruby-augeas
+     SUBDIR += ruby-augeas,ruby18
      SUBDIR += ruby-capistrano
      SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter
      SUBDIR += ruby-libvirt
+     SUBDIR += ruby-posix-spawn
      SUBDIR += ruby-puppet
      SUBDIR += ruby-puppet-lint
-     SUBDIR += ruby-thor
+     SUBDIR += ruby-puppet-lint,ruby18
      SUBDIR += ruby-vlad
      SUBDIR += runit
      SUBDIR += safecat

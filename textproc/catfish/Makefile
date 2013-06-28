@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2012/09/10 20:54:40 landry Exp $
+# $OpenBSD: Makefile,v 1.14 2013/05/30 10:38:11 sthen Exp $
 
 COMMENT =	versatile file searching tool
 
@@ -6,6 +6,7 @@ DISTNAME =	catfish-search-0.4.0.1
 PKGNAME =	${DISTNAME:S/-search//}
 CATEGORIES =	textproc
 EXTRACT_SUFX =	.tar.bz2
+REVISION =	1
 
 HOMEPAGE =	http://www.twotoasts.de/index.php?/pages/catfish_summary.html
 
@@ -13,9 +14,6 @@ MAINTAINER =	Landry Breuil <landry@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES =	https://launchpad.net/catfish-search/0.4/0.4.0.1/+download/
 
@@ -29,13 +27,8 @@ RUN_DEPENDS =	devel/py-gobject3 \
 		devel/py-xdg \
 		x11/gtk+2,-guic
 
-# nothing in the dep chain provides librsvg, so explicitely depend on it
-# so that the icon is correctly displayed
-RUN_DEPENDS+=	x11/gnome/librsvg
-
 pre-configure:
 	cd ${WRKSRC} && ${SUBST_CMD} -c Makefile.in Makefile
 	cd ${WRKSRC} && ${SUBST_CMD} -c catfish.in catfish
 
 .include <bsd.port.mk>
-

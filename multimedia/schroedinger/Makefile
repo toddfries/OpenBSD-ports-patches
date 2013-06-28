@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2012/08/27 09:34:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=	high-speed Dirac codec
 
@@ -15,15 +15,11 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	m orc-0.4>=4.0 pthread stdc++
 
 LIB_DEPENDS=	devel/orc>=0.4.16p0
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.68
 

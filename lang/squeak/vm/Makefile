@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.15 2012/03/29 13:38:40 sthen Exp $
-
+# $OpenBSD: Makefile,v 1.18 2013/03/21 08:33:52 landry Exp $
 
 COMMENT =	smalltalk system, vm
 
 SRCV =		1
-DISTFILES =	Squeak-$V-${SRCV}.src.tar.gz 
+DISTFILES =	Squeak-$V-${SRCV}.src.tar.gz
 
 PKGNAME =	squeak-vm-$V.${SRCV}
-REVISION =	1
+REVISION =	3
 
 WRKDIST =	${WRKDIR}/Squeak-$V-${SRCV}
 WRKSRC =	${WRKDIST}/platforms/unix/config
@@ -16,13 +15,16 @@ SEPARATE_BUILD =	Yes
 
 MASTER_SITES =	${SQUEAK_SITE}unix-linux/
 
+RUN_DEPENDS =		squeak-sources-${SOURCEV}:lang/squeak/sources
+
 CONFIGURE_STYLE =	gnu
 AUTOCONF_VERSION =	2.60
 DESTDIRNAME =		ROOT
-CONFIGURE_ENV =		RANLIB=ranlib \
+CONFIGURE_ENV =		LDFLAGS="-lpthread ${LDFLAGS}" RANLIB=ranlib \
 			ac_cv_socklen_t=yes
 USE_GMAKE =		Yes
 USE_GROFF =		Yes
+USE_LIBTOOL =		No
 
 WANTLIB =		GL X11 m c SM util Xext ICE Xrender Xt pthread \
 			pthread-stubs xcb
@@ -41,6 +43,8 @@ post-extract:
 	mkdir ${WRKDIST}/platforms/unix/vm-sound-OpenBSD
 	cd ${WRKDIST}/platforms/unix && cp vm-sound-Sun/acinclude.m4 vm-sound-OpenBSD && cp vm-sound-Sun/sqUnixSoundSun.c vm-sound-OpenBSD/sqUnixSoundOpenBSD.c
 
-RUN_DEPENDS =		squeak-sources-${SOURCEV}:lang/squeak/sources
+pre-build:
+	@perl -pi -e s,dprintf,debugprintf, ${WRKDIST}/platforms/unix/vm/*.c
+	@perl -pi -e s,"define dprintf","define debugprintf", ${WRKDIST}/platforms/unix/vm/debug.h
 
 .include <bsd.port.mk>

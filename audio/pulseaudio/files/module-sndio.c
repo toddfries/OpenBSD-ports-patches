@@ -1,4 +1,4 @@
-/* $OpenBSD: module-sndio.c,v 1.3 2012/11/12 12:27:00 eric Exp $ */
+/* $OpenBSD: module-sndio.c,v 1.6 2013/05/23 06:50:26 ajacoutot Exp $ */
 /*
  * Copyright (c) 2012 Eric Faurot <eric@openbsd.org>
  *
@@ -15,6 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include <stdlib.h>
 #include <sndio.h>
 
 #include "config.h"
@@ -190,10 +191,15 @@ sndio_midi_setup(struct userdata *u)
 		SYSEX_END
 	};
 	size_t		s;
-	int		r, n;
+	int		n;
 	unsigned char	buf[MSGMAX];
+	const char	*midi_port;
 
-	u->mio = mio_open("snd/0", MIO_IN | MIO_OUT, 0);
+	midi_port = getenv("AUDIODEVICE");
+	if (midi_port == NULL)
+		midi_port = "snd/0";
+
+	u->mio = mio_open(midi_port, MIO_IN | MIO_OUT, 0);
 	if (u->mio == NULL) {
 		pa_log("mio_open failed");
 		return (-1);
@@ -496,7 +502,7 @@ int
 pa__init(pa_module *m)
 {
 	pa_modargs		*ma = NULL;
-	pa_bool_t		 record = TRUE, playback = TRUE;
+	pa_bool_t		 record = FALSE, playback = TRUE;
 	pa_sample_spec		 ss;
 	pa_channel_map		 map;
 	pa_sink_new_data	 sink;

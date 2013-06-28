@@ -1,30 +1,29 @@
-# $OpenBSD: Makefile,v 1.26 2012/08/21 18:01:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.32 2013/06/25 22:41:41 bentley Exp $
 
 COMMENT=	open source clone of the game Transport Tycoon Deluxe
 
-V=		1.1.5
-DISTNAME=	openttd-${V}
+V =		1.3.1
+DISTNAME =	openttd-${V}
 EXTRACT_SUFX=	-source.tar.gz
-REVISION=	1
-GFX_V=		0.3.5
+GFX_V=		0.4.7
 SFX_V=		0.2.3
 MSX_V=		0.3.1
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
 		opengfx-${GFX_V}.zip:0 \
 		opensfx-${SFX_V}.zip:1 \
 		openmsx-${MSX_V}.zip:2
+DIST_SUBDIR=	openttd
 
 CATEGORIES=	games
 
 HOMEPAGE=	http://www.openttd.org/
 
+MAINTAINER =	Anthony J. Bentley <anthony@cathet.us>
+
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += SDL c expat fontconfig freetype icudata icui18n icuuc
+WANTLIB += SDL c fontconfig freetype icudata icui18n icuuc
 WANTLIB += lzma lzo2 m png pthread stdc++ z
 
 MASTER_SITES=		http://binaries.openttd.org/releases/${V}/
@@ -52,12 +51,14 @@ CONFIGURE_ARGS+=	--prefix-dir=${PREFIX} \
 			--with-png \
 			--with-zlib \
 			--without-allegro \
-			--without-libtimidity
+			--without-libtimidity \
+			--CFLAGS_BUILD="${CFLAGS}" \
+			--disable-strip
 
 MAKE_ENV+=		VERBOSE=1
 
 USE_GMAKE=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 DOCSDIR=		${PREFIX}/share/doc/openttd
 EXAMPLESDIR=		${PREFIX}/share/examples/openttd
@@ -72,9 +73,12 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/bin/scripts/* ${EXAMPLESDIR}
 	${INSTALL_DATA_DIR} ${DOCSDIR}
 	cd ${WRKSRC}/docs/ && umask 022 && pax -rw . ${DOCSDIR}
+	${INSTALL_DATA_DIR} ${GAMEDIR}/data
+	${INSTALL_DATA_DIR} ${GAMEDIR}/gm
 	${INSTALL_DATA} ${WRKDIR}/opengfx-${GFX_V}/*.{grf,obg} ${GAMEDIR}/data
 	${INSTALL_DATA} ${WRKDIR}/opensfx-${SFX_V}/*.{cat,obs} ${GAMEDIR}/data
 	${INSTALL_DATA} ${WRKDIR}/openmsx-${MSX_V}/*.{mid,obm} ${GAMEDIR}/gm
 	rm -rf ${WRKINST}/bundle
+	rm -rf ${GAMEDIR}/media/openttd.desktop*
 
 .include <bsd.port.mk>

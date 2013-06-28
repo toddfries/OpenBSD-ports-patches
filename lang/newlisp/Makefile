@@ -1,8 +1,8 @@
-#       $OpenBSD: Makefile,v 1.4 2012/03/29 13:38:40 sthen Exp $
-# Makefile prepared Sat Feb 13 11:r7:14 PST 2010 by Ted Walther <ted@reactor-core.org>
+#       $OpenBSD: Makefile,v 1.10 2013/05/29 15:46:05 jasper Exp $
 
 COMMENT=	newLISP is a LISP like, general purpose scripting language
-V=		10.3.2
+
+V=		10.5.0
 DISTNAME=	newlisp-$V
 CATEGORIES=	lang
 HOMEPAGE=	http://newlisp.org/
@@ -10,23 +10,25 @@ MAINTAINER=	Ted Walther <ted@reactor-core.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m ncurses readline
 
-MASTER_SITES=		http://dpkg.reactor-core.org/port/
+MASTER_SITES=		${HOMEPAGE}/downloads/
 EXTRACT_SUFX=		.tgz
+
+RUN_DEPENDS=		devel/xdg-utils
 
 SEPARATE_BUILD=		Yes
 CONFIGURE_STYLE=	simple
 CONFIGURE_SCRIPT=	configure-alt
 CONFIGURE_ARGS +=	--enable-readline
 
-REGRESS_TARGET=		check
+TEST_TARGET=		check
 
 WRKBUILD=		${WRKSRC}
 SUBST_VARS=		V
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/guiserver/newlisp-edit.lsp
 
 .include <bsd.port.mk>

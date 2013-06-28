@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.45 2011/08/31 22:28:59 espie Exp $
+# $OpenBSD: Makefile,v 1.47 2013/03/11 11:10:56 espie Exp $
 
 COMMENT=	X11 image display and modification tool
 
 DISTNAME=	xv-3.10a
-REVISION=	11
+REVISION=	12
 CATEGORIES=	graphics x11
 
 MASTER_SITES=	ftp://ftp.mirrorservice.org/sites/ftp.cis.upenn.edu/pub/xv/ \
@@ -18,8 +18,6 @@ HOMEPAGE=	http://www.trilon.com/xv/index.html
 
 PERMIT_PACKAGE_CDROM=	Must buy license
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Must buy license
-PERMIT_DISTFILES_FTP=	Yes
 
 LIB_DEPENDS=	graphics/jpeg \
 		graphics/jasper \
@@ -32,7 +30,7 @@ USE_GROFF =	Yes
 MAKE_ENV=	SYSCONFDIR="$(SYSCONFDIR)"
 
 DESTDIRNAME=	none
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 pre-patch:
 	@${PATCH} ${PATCH_DIST_ARGS} -p1 \

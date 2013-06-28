@@ -1,4 +1,7 @@
-# $OpenBSD: Makefile,v 1.30 2012/10/14 20:01:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.36 2013/06/09 09:40:19 ajacoutot Exp $
+
+# sync with ONLY_FOR_ARCHS in devel/spidermonkey
+ONLY_FOR_ARCHS-mozilla=	alpha amd64 i386 hppa mips64el mips64 powerpc sparc64
 
 SHARED_ONLY=		Yes
 
@@ -6,13 +9,16 @@ COMMENT-main=		library handling all the details of proxy configuration
 COMMENT-mozilla=	pacrunner libproxy plugin for mozilla-based (gecko) browsers
 COMMENT-webkit=		pacrunner libproxy plugin for webkit-based browsers
 
-VERSION=		0.4.9
-REVISION=		0
+VERSION=		0.4.11
 DISTNAME=		libproxy-${VERSION}
 
 PKGNAME-main=		libproxy-${VERSION}
 PKGNAME-mozilla=	libproxy-mozilla-${VERSION}
 PKGNAME-webkit=		libproxy-webkit-${VERSION}
+
+REVISION-main=		1
+REVISION-mozilla=	0
+REVISION-webkit=	0
 
 CATEGORIES=		net
 
@@ -22,28 +28,22 @@ HOMEPAGE=		http://libproxy.googlecode.com/
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}/files/
 
 # order matters: cmake must come before python
 MODULES=		devel/cmake \
-			lang/python \
-			devel/gettext
+			devel/gettext \
+			lang/python
 
 SUBST_VARS+=		VERSION
 
-# do not enable webkit support by default because of cyclic dependency:
-#     libproxy,-webkit -> webkit -> libsoup -> libproxy
-# do not enable mozilla support by default, xulrunner doesn't build on all arches
-PSEUDO_FLAVORS=		webkit
-# XXX needs mozilla-js>=2.0b12; re-enable in net/Makefile when FLAVOR is back
-#PSEUDO_FLAVORS +=	mozilla
-FLAVOR?=
+# webkit = cyclic dependency: libproxy,-webkit -> webkit -> libsoup -> libproxy
+# mozilla = devel/spidermonkey does not build on all arches
+PSEUDO_FLAVORS=		no_mozilla no_webkit bootstrap
+FLAVOR?=		no_mozilla no_webkit
 
-MULTI_PACKAGES=		-main
+MULTI_PACKAGES=		-main -mozilla -webkit
 
 BUILD_DEPENDS=		lang/vala
 
@@ -54,27 +54,21 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 
 RUN_DEPENDS-mozilla=	# empty
 LIB_DEPENDS-mozilla=	${BUILD_PKGPATH}>=${VERSION} \
-			devel/xulrunner/1.9 \
-			devel/nspr
+			devel/spidermonkey
 
 RUN_DEPENDS-webkit=	${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-webkit=	STEM->=${VERSION}:${BUILD_PKGPATH}, \
 			www/webkit,gtk3
 
-cWANTLIB += m stdc++
+cWANTLIB += m pthread stdc++
 
 WANTLIB-main += ${cWANTLIB} ${MODGETTEXT_WANTLIB}
-WANTLIB-main += c gio-2.0 glib-2.0 gobject-2.0 perl pthread
+WANTLIB-main += c gio-2.0 glib-2.0 gobject-2.0 perl
 
-WANTLIB-mozilla += ${cWANTLIB} c modman nspr4 plc4 plds4 proxy
-WANTLIB-mozilla += xulrunner1.9/mozjs
+WANTLIB-mozilla += ${cWANTLIB} mozjs185 nspr4 plc4 plds4 proxy
 
 WANTLIB-webkit += ${cWANTLIB} ${MODGETTEXT_WANTLIB}
-WANTLIB-webkit += GL X11 Xrender atk-1.0 cairo cairo-gobject expat fontconfig
-WANTLIB-webkit += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gobject-2.0
-WANTLIB-webkit += gtk-3 javascriptcoregtk-3.0 pango-1.0 pangocairo-1.0
-WANTLIB-webkit += pangoft2-1.0 pixman-1 png proxy pthread-stubs soup-2.4
-WANTLIB-webkit += webkitgtk-3.0 xcb xcb-render xcb-shm z
+WANTLIB-webkit += glib-2.0 javascriptcoregtk-3.0 proxy
 
 CONFIGURE_ARGS=		-DCMAKE_C_FLAGS="${CFLAGS}" \
 			-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
@@ -88,16 +82,14 @@ CONFIGURE_ARGS=		-DCMAKE_C_FLAGS="${CFLAGS}" \
 			-DWITH_NM:BOOL=OFF \
 			-DBIPR:BOOL=OFF
 
-.if ${FLAVOR:L:Mmozilla}
-BUILD_DEPENDS +=	devel/xulrunner/1.9,-devel>=1.9.1
-MULTI_PACKAGES +=	-mozilla
+.include <bsd.port.arch.mk>
+.if ${BUILD_PACKAGES:M-mozilla}
 CONFIGURE_ARGS +=	-DWITH_MOZJS:BOOL=ON
 .else
 CONFIGURE_ARGS +=	-DWITH_MOZJS:BOOL=OFF
 .endif
 
-.if ${FLAVOR:L:Mwebkit}
-MULTI_PACKAGES +=	-webkit
+.if ${BUILD_PACKAGES:M-webkit}
 CONFIGURE_ARGS +=	-DWITH_WEBKIT3:BOOL=ON
 .else
 CONFIGURE_ARGS +=	-DWITH_WEBKIT:BOOL=OFF

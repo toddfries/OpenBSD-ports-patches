@@ -1,4 +1,4 @@
-# $OpenBSD: ocaml.port.mk,v 1.20 2012/09/05 21:36:31 avsm Exp $
+# $OpenBSD: ocaml.port.mk,v 1.24 2013/03/11 11:20:28 espie Exp $
 
 # regular file usage for bytecode:
 # PLIST               -- bytecode base files
@@ -9,43 +9,36 @@
 # PFRAG.foo-native    -- nativecode files for FLAVOR == foo
 # PFRAG.no-foo-native -- nativecode files for FLAVOR != foo
 
-OCAML_VERSION=4.00.0
+OCAML_VERSION=4.00.1
 
 .include <bsd.port.arch.mk>
 
 .if ${PROPERTIES:Mocaml_native}
 MODOCAML_NATIVE=Yes
-
 # include nativecode base files
 PKG_ARGS+=-Dnative=1
-
-.if ${PROPERTIES:Mocaml_native_dynlink}
-MODOCAML_NATDYNLINK=Yes
-
-# include native dynlink base files
-PKG_ARGS+=-Ddynlink=1
-
 .else
-
-MODOCAML_NATDYNLINK=No
-
-# remove native dynlink base file entry from PLIST
-PKG_ARGS+=-Ddynlink=0
-.endif
-
-.else
-
 MODOCAML_NATIVE=No
-RUN_DEPENDS+=	lang/ocaml=${OCAML_VERSION}
-
 # remove native base file entry from PLIST
 PKG_ARGS+=-Dnative=0
 .endif
 
-BUILD_DEPENDS+=	lang/ocaml=${OCAML_VERSION}
-MAKE_ENV+= OCAMLFIND_DESTDIR=${DESTDIR}${TRUEPREFIX}/lib/ocaml
+.if ${PROPERTIES:Mocaml_native_dynlink}
+MODOCAML_NATDYNLINK=Yes
+MODOCAML_OCAMLDOC?=ocamldoc.opt
+# include native dynlink base files
+PKG_ARGS+=-Ddynlink=1
+.else
+MODOCAML_NATDYNLINK=No
+MODOCAML_OCAMLDOC?=ocamldoc
+# remove native dynlink base file entry from PLIST
+PKG_ARGS+=-Ddynlink=0
+.endif
 
-NAME ?= ${PKGNAME:C/-[0-9].*//}
+RUN_DEPENDS +=		lang/ocaml
+BUILD_DEPENDS +=	lang/ocaml
+MAKE_ENV +=		OCAMLFIND_DESTDIR=${DESTDIR}${TRUEPREFIX}/lib/ocaml \
+			OCAMLFIND_COMMANDS="ocamldoc=${MODOCAML_OCAMLDOC}"
 
 MODOCAML_pre-fake = \
   	${SUDO} ${INSTALL_DATA_DIR} ${WRKINST}${LOCALBASE}/lib/ocaml/stublibs
@@ -63,7 +56,7 @@ ALL_TARGET ?= -build -doc
 # XXX can't do ?= here, because INSTALL_TARGET is already initialized
 # with default value
 INSTALL_TARGET = -install
-REGRESS_TARGET ?= -test
+TEST_TARGET ?= -test
 _MODOASIS_SETUP = ${WRKDIR}/oasis_setup.byte
 
 ######################################################################
@@ -81,7 +74,7 @@ MODOASIS_configure = \
 	--destdir ${WRKINST} \
 	--mandir ${PREFIX}/man \
 	--infodir ${PREFIX}/info \
-	--override pkg_name ${NAME} \
+	--override pkg_name ${PKGNAME:C/-[0-9].*//} \
 	${CONFIGURE_ARGS}
 
 ######################################################################
@@ -110,15 +103,15 @@ do-install:
 . endif
 
 ######################################################################
-# REGRESS
-MODOASIS_REGRESS_TARGET = cd ${WRKSRC}
-. for TARGET in ${REGRESS_TARGET}
-MODOASIS_REGRESS_TARGET += \
+# TEST
+MODOASIS_TEST_TARGET = cd ${WRKSRC}
+. for TARGET in ${TEST_TARGET}
+MODOASIS_TEST_TARGET += \
 	&& ${SETENV} ${MAKE_ENV} ${_MODOASIS_SETUP} ${TARGET}
 . endfor
-. if !target(do-regress)
-do-regress: 
-	${MODOASIS_REGRESS_TARGET}
+. if !target(do-test)
+do-test: 
+	${MODOASIS_TEST_TARGET}
 . endif
 
 .endif

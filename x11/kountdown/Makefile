@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2011/09/16 12:29:16 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2013/06/24 15:53:39 zhuk Exp $
 
 COMMENT=	screen saver that displays a countdown to a selected date
 
 DISTNAME=	kountdown-0.4.1
-REVISION=	5
+REVISION=	7
 
 CATEGORIES=	x11
 
@@ -13,14 +13,14 @@ MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=  Yes
-PERMIT_PACKAGE_FTP=    Yes
-PERMIT_DISTFILES_CDROM=Yes
-PERMIT_DISTFILES_FTP=  Yes
 
-WANTLIB += ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c fam
-WANTLIB += idn jpeg m png pthread rpcsvc stdc++ util z
-WANTLIB += pthread-stubs xcb kdecore DCOP kdefx kdesu kdeui kio
-WANTLIB += kscreensaver kwalletclient
+WANTLIB =  GL ICE SM X11 Xcursor Xdamage Xext Xfixes Xft
+WANTLIB += Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2 c drm
+WANTLIB += expat fam fontconfig freetype idn jpeg lcms m mng png
+WANTLIB += pthread pthread-stubs stdc++ util xcb z
+WANTLIB += ${KDE}/DCOP ${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdesu
+WANTLIB += ${KDE}/kdeui ${KDE}/kio ${KDE}/kscreensaver
+WANTLIB += ${KDE}/kwalletclient
 
 MASTER_SITES=	http://www.lysator.liu.se/~erre/download/kountdown/
 
@@ -37,7 +37,6 @@ MAKE_ENV=	KDEDIR="${LOCALBASE}"
 MAKE_ENV+= 	UIC_PATH="${MODQT_UIC}" UIC="${MODQT_UIC}"
 MAKE_FLAGS=	${MODKDE_MAKE_FLAGS}
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= autoconf
 MODGNU_CONFIG_GUESS_DIRS= ${MODKDE_CONFIG_GUESS_DIRS}

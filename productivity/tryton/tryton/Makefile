@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2012/10/28 10:41:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2013/05/19 10:48:45 ajacoutot Exp $
 
 COMMENT=		client of the Tryton application platform
 
@@ -8,7 +8,6 @@ CATEGORIES=		x11
 
 RUN_DEPENDS=		devel/gettext \
 			x11/py-gtk2 \
-			x11/gnome/librsvg \
 			devel/py-dateutil \
 			devel/py-simplejson \
 			devel/py-tz \

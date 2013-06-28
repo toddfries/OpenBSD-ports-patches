@@ -1,0 +1,14 @@
+$OpenBSD: patch-lenses_shellvars_aug,v 1.6 2013/06/17 07:39:49 jasper Exp $
+
+- adduser.conf is not a shell script, so don't try to parse it as such.
+
+--- lenses/shellvars.aug.orig	Fri Jun 14 22:39:33 2013
++++ lenses/shellvars.aug	Sat Jun 15 14:47:07 2013
+@@ -204,7 +204,6 @@ module Shellvars =
+                      . incl "/etc/cron-apt/config"
+                      . incl "/etc/environment"
+                      . incl "/etc/blkid.conf"
+-                     . incl "/etc/adduser.conf"
+                      . incl "/etc/cowpoke.conf"
+                      . incl "/etc/cvs-cron.conf"
+                      . incl "/etc/cvs-pserver.conf"

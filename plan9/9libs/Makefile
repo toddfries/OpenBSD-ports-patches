@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/03/29 13:38:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/21 08:46:35 ajacoutot Exp $
 
 # varargs misuse, and unportable software
 ONLY_FOR_ARCHS= 	i386 sparc sparc64
@@ -21,9 +21,6 @@ MAINTAINER=		rich cannings <cannings@cvs.openbsd.org>
 
 # BSD licence
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB =		ICE SM X11 Xau Xdmcp Xt m pthread-stubs xcb
 
@@ -31,7 +28,6 @@ MASTER_SITES=		${HOMEPAGE}
 
 SEPARATE_BUILD=		Yes
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 
@@ -39,9 +35,9 @@ CONFIGURE_ARGS+=        ${CONFIGURE_SHARED} \
 			--includedir=${PREFIX}/include/9libs
 
 # broken on colorinit() in test.c
-REGRESSION_IS_INTERACTIVE=Yes
+TEST_IS_INTERACTIVE=	Yes
 SETENV=			env
-REGRESS_TARGET=		check
+TEST_TARGET=		check
 
 
 .include <bsd.port.mk>

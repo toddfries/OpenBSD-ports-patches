@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.29 2012/06/29 14:02:54 landry Exp $
+# $OpenBSD: Makefile,v 1.33 2013/05/31 15:34:50 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	groupware plugin for Claws-mail
 
 VERSION=	2.0.13
+REVISION=	1
 DISTNAME=	vcalendar-${VERSION}
 PKGNAME=	claws-mail-vcalendar-${VERSION}
 MASTER_SITES=	http://www.claws-mail.org/downloads/plugins/
@@ -15,11 +16,7 @@ HOMEPAGE=	http://www.claws-mail.org/plugin.php?plugin=vcalendar
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 
 MODULES=	devel/gettext
@@ -37,6 +34,7 @@ WANTLIB += gobject-2.0 gthread-2.0 idn m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread-stubs ssl xcb
 WANTLIB += xcb-render z gdk_pixbuf-2.0 GL Xxf86vm drm xcb-shm
 WANTLIB += gdk-x11-2.0 gtk-x11-2.0 curl
+WANTLIB += ffi harfbuzz pthread stdc++
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

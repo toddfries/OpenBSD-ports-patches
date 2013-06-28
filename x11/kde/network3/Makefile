@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.71 2012/06/15 08:30:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.73 2013/01/23 21:10:38 zhuk Exp $
 
 COMMENT = 		K Desktop Environment, network applications
 CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdenetwork-${VERSION}
 MODKDE_VERSION =	3.5.8
-FLAVORS =		debug
 SHARED_LIBS +=	kopete               2.0      # .1.0
 SHARED_LIBS +=	kopete_videodevice   1.0      # .0.0
 SHARED_LIBS +=	kopete_msn_shared    1.0      # .0.0
@@ -24,7 +23,7 @@ RUN_DEPENDS +=	security/qca-tls
 
 SEPARATE_BUILD =	flavored
 
-REVISION = 	8
+REVISION = 	9
 WANTLIB = GL ICE SM X11 Xau Xcursor Xdamage Xdmcp Xext Xfixes Xft Xi Xinerama \
 	Xmu Xrandr Xrender Xss Xt Xtst Xxf86vm art_lgpl_2 c crypto drm expat \
 	fam fontconfig freetype gdk glib glib-2.0 gmodule gmodule-2.0 gtk idn \

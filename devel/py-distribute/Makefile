@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2012/06/27 19:00:50 rpointel Exp $
+# $OpenBSD: Makefile,v 1.6 2013/05/30 13:09:20 ajacoutot Exp $
 
 COMMENT =		fork of setuptools Python packages
 
 MODPY_EGG_VERSION =	0.6.27
 DISTNAME =		distribute-${MODPY_EGG_VERSION}
 PKGNAME =		py-${DISTNAME}
+REVISION =		0
 
 CATEGORIES =		devel
 
@@ -14,9 +15,6 @@ MAINTAINER =		Remi Pointel <rpointel@openbsd.org>
 
 # PSFL
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${MASTER_SITE_PYPI:=d/distribute/}
 
@@ -24,7 +22,7 @@ MODULES =		lang/python
 FLAVORS =		python3
 FLAVOR ?=
 
-do-regress:
+do-test:
 	cd ${WRKSRC} && PYTHONPATH=. \
                 ${MODPY_BIN} setup.py test
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2012/11/09 16:39:51 sthen Exp $
+# $OpenBSD: Makefile,v 1.66 2013/06/12 20:36:34 brad Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,8 @@ COMMENT-main=		network backup solution (client)
 COMMENT-server=		network backup solution (server)
 COMMENT-bat=		network backup solution (gui-client)
 
-V=			5.2.11
+V=			5.2.13
+REVISION-main=		0
 DISTNAME=		bacula-$V
 FULLPKGNAME-main=	bacula-client-$V
 FULLPKGPATH-main=	${PKGPATH},-main
@@ -15,7 +16,7 @@ FULLPKGNAME-bat=	bacula-bat-$V
 FULLPKGPATH-bat=	${PKGPATH},-bat
 CATEGORIES=		sysutils
 
-REVISION-server=	0
+REVISION-server=	6
 
 # XXX build fails if a previous version is installed
 SHARED_LIBS +=  bac                  4.0
@@ -29,7 +30,7 @@ SHARED_LIBS +=  baccats              ${BACCATS_LIBV}
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=bacula/}
 HOMEPAGE=		http://www.bacula.org/
 
-MAINTAINER=		Michael Erdely <merdely@openbsd.org>
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 WANTLIB += c pthread crypto ssl z m stdc++
 
@@ -37,9 +38,8 @@ WANTLIB += c pthread crypto ssl z m stdc++
 # FDL (docs), LGPL (some libraries), and PD
 # http://bacula.org/en/dev-manual/main/main/Bacula_Copyright_Trademark_.html
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+
+MODULES=		devel/gettext
 
 BACULACONF=		/etc/bacula
 BACULASTATE=		/var/bacula
@@ -49,7 +49,7 @@ CONFIGURE_STYLE=	simple
 USE_GMAKE=		yes
 USE_GROFF=		yes
 USE_LIBTOOL=		gnu# ports libtool passes libtool-only parameters to linker
-NO_REGRESS=		yes
+NO_TEST=		yes
 
 PSEUDO_FLAVORS=		no_bat no_server
 FLAVORS=		pgsql mysql sqlite3
@@ -112,7 +112,8 @@ CONFIGURE_ENV+=		ac_cv_func_${ac_func}=no
 .include <bsd.port.arch.mk>
 
 WANTLIB-server += ${WANTLIB} bac baccfg bacfind bacpy lzo2
-LIB_DEPENDS-server=	sysutils/bacula,-main
+LIB_DEPENDS-server=	${LIB_DEPENDS} \
+			sysutils/bacula,-main
 
 .if !${BUILD_PACKAGES:M-server}
 CONFIGURE_ARGS+=	--enable-client-only \
@@ -159,13 +160,16 @@ ERRORS+=		"Fatal: choose one of pgsql or mysql or sqlite3"
 .endif # server
 
 WANTLIB-main += ${WANTLIB} lzo2 ncurses readline
-LIB_DEPENDS-main=	archivers/lzo2
+LIB_DEPENDS-main=	${LIB_DEPENDS} \
+			archivers/lzo2
 
 WANTLIB-bat += ${WANTLIB}
 WANTLIB-bat += ICE QtCore QtGui SM X11 Xext Xi Xinerama Xrender bac
-WANTLIB-bat += baccfg bacfind expat fontconfig freetype xcb
-RUN_DEPENDS-bat=	devel/desktop-file-utils
-LIB_DEPENDS-bat=	x11/qt4 \
+WANTLIB-bat += baccfg bacfind expat fontconfig freetype xcb pthread-stubs
+RUN_DEPENDS-bat=	${RUN_DEPENDS} \
+			devel/desktop-file-utils
+LIB_DEPENDS-bat=	${LIB_DEPENDS} \
+			x11/qt4 \
 			sysutils/bacula,-main
 
 .if !${BUILD_PACKAGES:M-bat}

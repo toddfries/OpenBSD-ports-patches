@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2008/12/31 12:15:45 pea Exp $
+# $OpenBSD: Makefile,v 1.5 2013/06/28 08:39:04 jasper Exp $
 
 COMMENT=	YAML 1.1 parser and emitter written in C
 
-DISTNAME=	yaml-0.1.2
+DISTNAME=	yaml-0.1.4
 PKGNAME=	lib${DISTNAME}
 CATEGORIES=	devel
 
@@ -15,13 +15,9 @@ MAINTAINER=	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://pyyaml.org/download/libyaml/
 
-USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED}

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2012/09/25 19:51:31 kili Exp $
+# $OpenBSD: Makefile,v 1.6 2013/04/05 07:02:08 ajacoutot Exp $
 
 COMMENT=	ICC compatible color management system
 
 V=		1.1.0-20100201
 DISTNAME=	hargyllcms-${V}
 PKGNAME=	argyll-${V:S/-/./}
-REVISION=	1
+REVISION=	2
 
 CATEGORIES=	graphics sysutils
 
@@ -13,9 +13,6 @@ HOMEPAGE=	http://www.argyllcms.com/
 
 # AGPLv3 (GNU Affero Public License)
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xext Xinerama Xrandr Xrender Xss Xxf86vm c jpeg
 WANTLIB += m pthread tiff usb xcb z usb-1.0
@@ -30,7 +27,6 @@ MASTER_SITES=	http://pkgs.fedoraproject.org/repo/pkgs/argyllcms/${DISTNAME}${EXT
 LIB_DEPENDS=	devel/libusb-compat \
 		graphics/tiff
 
-USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
@@ -45,8 +41,10 @@ AUTOMAKE_VERSION=1.11
 MAKE_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} \
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
 
+BUILD_DEPENDS+=	textproc/gsed
+
 pre-configure:
-	perl -pi -e 's,sed -i,perl -pi -e,' ${WRKSRC}/legal.sh
+	perl -pi -e 's,sed -i,gsed -i,' ${WRKSRC}/legal.sh
 	cd ${WRKSRC} && /bin/sh ./legal.sh
 	perl -pi -e 's,-lpthread,-pthread,g' ${WRKSRC}/configure
 	perl -pi -e 's,/var/lib,/var/db,g;' \

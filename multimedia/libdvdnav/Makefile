@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2012/09/26 00:04:09 brad Exp $
-
-SHARED_ONLY=	Yes
+# $OpenBSD: Makefile,v 1.22 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=	DVD navigation library
 
@@ -17,10 +15,7 @@ SHARED_LIBS=	dvdnav		6.2 \
 HOMEPAGE=	http://dvdnav.mplayerhq.hu/
 
 # GPLv2
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB=	dvdread pthread
 
@@ -34,7 +29,6 @@ BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
 
 LIB_DEPENDS=	devel/libdvdread>=4.2.0
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 
 post-patch:

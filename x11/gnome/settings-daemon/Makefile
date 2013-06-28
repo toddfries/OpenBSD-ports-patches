@@ -1,46 +1,44 @@
-# $OpenBSD: Makefile,v 1.86 2012/11/08 13:17:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.112 2013/06/20 06:54:37 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GNOME settings daemon
 
 GNOME_PROJECT=	gnome-settings-daemon
-GNOME_VERSION=	3.6.2
+GNOME_VERSION=	3.8.3
+REVISION=	3
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm asn1
-WANTLIB += atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
-WANTLIB += canberra canberra-gtk3 colord crypto cups dbus-1 dbus-glib-1
-WANTLIB += drm execinfo expat ffi fontconfig freetype gdbm gdk-3
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3
-WANTLIB += gobject-2.0 gssapi gthread-2.0 gtk-3 harfbuzz icudata
-WANTLIB += icule icuuc json krb5 lcms2 ltdl m notify nspr4 nss3
-WANTLIB += nssutil3 ogg pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += pcre pixman-1 plc4 plds4 png pthread pthread-stubs
-WANTLIB += pulse pulse-mainloop-glib smime3 sndfile softokn3 sqlite3
-WANTLIB += ssl ssl3 stdc++ upower-glib vorbis vorbisfile xcb xcb-render
-WANTLIB += xcb-shm xkbfile z
+WANTLIB += FLAC ICE SM X11 X11-xcb Xcomposite Xcursor Xdamage
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xtst asn1 atk-1.0
+WANTLIB += atk-bridge-2.0 atspi avahi-client avahi-common c cairo
+WANTLIB += cairo-gobject canberra canberra-gtk3 colord colordprivate
+WANTLIB += crypto cups dbus-1 dbus-glib-1 execinfo expat ffi fontconfig
+WANTLIB += freetype gdbm gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gnome-desktop-3 gobject-2.0 graphite2 gssapi
+WANTLIB += gthread-2.0 gtk-3 harfbuzz ibus-1.0 z
+WANTLIB += json-c krb5 lcms2 ltdl m notify ogg pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
+WANTLIB += pulse pulse-mainloop-glib sndfile ssl upower-glib vorbis
+WANTLIB += vorbisenc vorbisfile xcb xcb-render xcb-shm xkbfile
+WANTLIB += com_err heimbase roken wind
 
 MODULES=	devel/gettext \
 		x11/gnome
 
 LIB_DEPENDS=	devel/libnotify \
-		x11/gnome/desktop>=3.6.0 \
-		security/nss \
+		x11/gnome/desktop \
 		print/cups,-libs \
-		audio/pulseaudio>=2.1 \
+		audio/pulseaudio \
 		audio/libcanberra,-gtk3 \
 		sysutils/upower \
-		graphics/colord
+		graphics/colord \
+		inputmethods/ibus
 
-BUILD_DEPENDS=	devel/gsettings-desktop-schemas>=3.6.0
-RUN_DEPENDS=	devel/gsettings-desktop-schemas>=3.6.0
+BUILD_DEPENDS=	devel/gsettings-desktop-schemas
+RUN_DEPENDS=	devel/gsettings-desktop-schemas
 
 # man pages
 BUILD_DEPENDS += textproc/docbook-xsl
@@ -48,11 +46,15 @@ BUILD_DEPENDS += textproc/docbook-xsl
 # share/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 RUN_DEPENDS +=	sysutils/polkit
 
+# polkit(8) almost always needs to know the "active" session
+RUN_DEPENDS +=	sysutils/consolekit
+
 # plugins/mouse/gsd-mouse-manager.c
 RUN_DEPENDS += x11/gnome/mousetweaks
 
-# otherwise we end up without icons on minimal install
-RUN_DEPENDS +=	x11/gnome/icon-theme
+# plugins/power/gsd-power-manager.c; optional dependency
+# cyclic dep: gnome-session -> gnome-settings-daemon -> gnome-session
+#RUN_DEPENDS +=	x11/gnome/session
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
@@ -63,18 +65,20 @@ MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 
 CONFIGURE_ARGS=	--disable-static \
-		--disable-packagekit \
-		--disable-gudev \
-		--disable-systemd
-
-# XXX requires ibus >= 1.4.99
-CONFIGURE_ARGS += --disable-ibus
+		--disable-gudev
 
 FAKE_FLAGS=	desktopdir=${PREFIX}/share/examples/gnome-settings-daemon/xdg/autostart \
 		sysconfdir=${PREFIX}/share/examples/gnome-settings-daemon \
 		DBUS_SYS_DIR=${PREFIX}/share/examples/gnome-settings-daemon/dbus-1/system.d
 
+pre-configure:
+	perl -pi -e 's,/etc/xdg,${SYSCONFDIR}/xdg,g;' \
+		-e 's,/usr/share,${LOCALBASE}/share,g' \
+		${WRKSRC}/man/gnome-settings-daemon.xml
+
 post-install:
+	${INSTALL_DATA} ${FILESDIR}/*.gschema.override \
+		${PREFIX}/share/glib-2.0/schemas
 	rm ${PREFIX}/lib/gnome-settings-daemon-3.0/*.la
 
 .include <bsd.port.mk>

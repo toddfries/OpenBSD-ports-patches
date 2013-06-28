@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/25 14:07:22 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.13 2013/06/21 22:38:43 sthen Exp $
 
 COMMENT=	web search application
 
 V=		1.2.12
+REVISION=	0
 DISTNAME=	xapian-omega-${V}
 
 CATEGORIES=	www textproc
@@ -10,16 +11,12 @@ CATEGORIES=	www textproc
 HOMEPAGE=	http://xapian.org/
 
 # GPLv2
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
-WANTLIB += c m e2fs-uuid stdc++ z xapian pcre magic
+WANTLIB += c m uuid stdc++ z xapian pcre magic
 
 MASTER_SITES=	http://oligarchy.co.uk/xapian/${V}/
 
-USE_LIBTOOL=	Yes
 
 LIB_DEPENDS=	databases/xapian-core>=${V} \
 		devel/pcre \

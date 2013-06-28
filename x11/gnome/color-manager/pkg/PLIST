@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.8 2012/09/28 08:29:41 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.10 2013/03/29 16:54:37 ajacoutot Exp $
 @bin bin/gcm-calibrate
 @bin bin/gcm-import
 @bin bin/gcm-inspect
@@ -20,26 +20,12 @@ share/gnome-color-manager/icons/calibration-long.svg
 share/gnome-color-manager/icons/calibration-normal.svg
 share/gnome-color-manager/icons/calibration-short.svg
 share/gnome-color-manager/icons/clock.svg
-share/gnome-color-manager/icons/colorhug-attach.svg
 share/gnome-color-manager/icons/crt.svg
-share/gnome-color-manager/icons/dtp94-attach.svg
-share/gnome-color-manager/icons/hcfr-attach.svg
-share/gnome-color-manager/icons/huey-attach.svg
-share/gnome-color-manager/icons/i1-display3-attach.svg
-share/gnome-color-manager/icons/i1-monitor-attach.svg
-share/gnome-color-manager/icons/i1-pro-attach.svg
 share/gnome-color-manager/icons/lcd.svg
-share/gnome-color-manager/icons/munki-ambient.svg
-share/gnome-color-manager/icons/munki-attach.svg
-share/gnome-color-manager/icons/munki-calibrate.svg
-share/gnome-color-manager/icons/munki-projector.svg
-share/gnome-color-manager/icons/munki-screen.svg
 share/gnome-color-manager/icons/projector.svg
 share/gnome-color-manager/icons/scan-target-bad.svg
 share/gnome-color-manager/icons/scan-target-good.svg
 share/gnome-color-manager/icons/scan-target.svg
-share/gnome-color-manager/icons/spyder2-attach.svg
-share/gnome-color-manager/icons/spyder3-attach.svg
 share/gnome-color-manager/targets/
 share/gnome-color-manager/targets/CMP-DigitalTarget3.png
 share/gnome-color-manager/targets/CMP_DT_003.png
@@ -66,6 +52,12 @@ share/help/C/gnome-color-manager/color-import-linux.page
 share/help/C/gnome-color-manager/color-import-osx.page
 share/help/C/gnome-color-manager/color-import-windows.page
 share/help/C/gnome-color-manager/legal.xml
+share/help/cs/
+share/help/cs/gnome-color-manager/
+share/help/cs/gnome-color-manager/color-import-linux.page
+share/help/cs/gnome-color-manager/color-import-osx.page
+share/help/cs/gnome-color-manager/color-import-windows.page
+share/help/cs/gnome-color-manager/legal.xml
 share/help/de/
 share/help/de/gnome-color-manager/
 share/help/de/gnome-color-manager/color-import-linux.page
@@ -84,6 +76,30 @@ share/help/es/gnome-color-manager/color-import-linux.page
 share/help/es/gnome-color-manager/color-import-osx.page
 share/help/es/gnome-color-manager/color-import-windows.page
 share/help/es/gnome-color-manager/legal.xml
+share/help/fr/
+share/help/fr/gnome-color-manager/
+share/help/fr/gnome-color-manager/color-import-linux.page
+share/help/fr/gnome-color-manager/color-import-osx.page
+share/help/fr/gnome-color-manager/color-import-windows.page
+share/help/fr/gnome-color-manager/legal.xml
+share/help/ml/
+share/help/ml/gnome-color-manager/
+share/help/ml/gnome-color-manager/color-import-linux.page
+share/help/ml/gnome-color-manager/color-import-osx.page
+share/help/ml/gnome-color-manager/color-import-windows.page
+share/help/ml/gnome-color-manager/legal.xml
+share/help/pt_BR/
+share/help/pt_BR/gnome-color-manager/
+share/help/pt_BR/gnome-color-manager/color-import-linux.page
+share/help/pt_BR/gnome-color-manager/color-import-osx.page
+share/help/pt_BR/gnome-color-manager/color-import-windows.page
+share/help/pt_BR/gnome-color-manager/legal.xml
+share/help/zh_CN/
+share/help/zh_CN/gnome-color-manager/
+share/help/zh_CN/gnome-color-manager/color-import-linux.page
+share/help/zh_CN/gnome-color-manager/color-import-osx.page
+share/help/zh_CN/gnome-color-manager/color-import-windows.page
+share/help/zh_CN/gnome-color-manager/legal.xml
 share/icons/hicolor/16x16/apps/gnome-color-manager.png
 share/icons/hicolor/16x16/mimetypes/application-vnd.iccprofile.png
 share/icons/hicolor/22x22/apps/gnome-color-manager.png
@@ -103,6 +119,7 @@ share/icons/hicolor/scalable/mimetypes/application-vnd.iccprofile.svg
 share/locale/ar/LC_MESSAGES/gnome-color-manager.mo
 share/locale/as/LC_MESSAGES/gnome-color-manager.mo
 share/locale/bg/LC_MESSAGES/gnome-color-manager.mo
+share/locale/bn_IN/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ca/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ca@valencia/LC_MESSAGES/gnome-color-manager.mo
 share/locale/cs/LC_MESSAGES/gnome-color-manager.mo
@@ -132,18 +149,23 @@ share/locale/lv/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ml/LC_MESSAGES/gnome-color-manager.mo
 share/locale/mr/LC_MESSAGES/gnome-color-manager.mo
 share/locale/nb/LC_MESSAGES/gnome-color-manager.mo
+share/locale/or/LC_MESSAGES/gnome-color-manager.mo
 share/locale/pa/LC_MESSAGES/gnome-color-manager.mo
 share/locale/pl/LC_MESSAGES/gnome-color-manager.mo
 share/locale/pt/LC_MESSAGES/gnome-color-manager.mo
 share/locale/pt_BR/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ro/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ru/LC_MESSAGES/gnome-color-manager.mo
+share/locale/sk/LC_MESSAGES/gnome-color-manager.mo
 share/locale/sl/LC_MESSAGES/gnome-color-manager.mo
 share/locale/sr/LC_MESSAGES/gnome-color-manager.mo
 share/locale/sr@latin/LC_MESSAGES/gnome-color-manager.mo
 share/locale/sv/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ta/LC_MESSAGES/gnome-color-manager.mo
+share/locale/te/LC_MESSAGES/gnome-color-manager.mo
+share/locale/tg/LC_MESSAGES/gnome-color-manager.mo
 share/locale/th/LC_MESSAGES/gnome-color-manager.mo
+share/locale/tr/LC_MESSAGES/gnome-color-manager.mo
 share/locale/ug/LC_MESSAGES/gnome-color-manager.mo
 share/locale/uk/LC_MESSAGES/gnome-color-manager.mo
 share/locale/vi/LC_MESSAGES/gnome-color-manager.mo

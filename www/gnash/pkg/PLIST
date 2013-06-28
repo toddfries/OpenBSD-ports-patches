@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.13 2012/06/15 08:32:18 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.15 2013/03/08 00:58:26 brad Exp $
 bin/gnash
 bin/gnash-gtk-launcher
 @bin bin/gprocessor
@@ -232,8 +232,6 @@ share/locale/fi/LC_MESSAGES/gnash.mo
 share/locale/fr/LC_MESSAGES/gnash.mo
 share/locale/it/LC_MESSAGES/gnash.mo
 share/locale/ja/LC_MESSAGES/gnash.mo
-share/locale/km/
-share/locale/km/LC_MESSAGES/
 share/locale/km/LC_MESSAGES/gnash.mo
 share/locale/ne/LC_MESSAGES/gnash.mo
 share/locale/ru/LC_MESSAGES/gnash.mo

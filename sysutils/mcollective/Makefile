@@ -1,44 +1,44 @@
-# $OpenBSD: Makefile,v 1.2 2011/12/21 19:34:28 jasper Exp $
-
-PKG_ARCH=	*
+# $OpenBSD: Makefile,v 1.12 2013/06/11 14:58:46 jasper Exp $
 
 COMMENT=	framework for server orchestration/parallel job execution
 
-DISTNAME=	mcollective-1.3.0
-REVISION=	0
+DISTNAME=	mcollective-2.3.0
+EXTRACT_SUFX=	.tgz
+REVISION=	5
 
 CATEGORIES=	sysutils
 
 HOMEPAGE=	http://www.puppetlabs.com/mcollective
-MASTER_SITES=	http://downloads.puppetlabs.com/mcollective/
-EXTRACT_SUFX=	.tgz
 
-# GFDL
+MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
+
+# Apache 2.0
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-RUN_DEPENDS=	net/ruby-stomp \
-		converters/ruby-json \
-		devel/ruby-systemu
-
-NO_BUILD=	Yes
-NO_REGRESS=	Yes
+MASTER_SITES=	http://downloads.puppetlabs.com/mcollective/
 
 MODULES=	lang/ruby
+MODRUBY_REV=	1.9
 
-MODRUBY_ADJ_FILES=mco mcollectived.rb mc-*
+RUN_DEPENDS=	net/ruby-stomp,${MODRUBY_FLAVOR}
 
-# Makefile is in ext/
+PKG_ARCH=	*
+NO_BUILD=	Yes
+NO_TEST=	Yes
+SUBST_VARS +=	RUBY
+
+MODRUBY_ADJ_FILES=mco mcollectived mc-call-agent
+
 MAKE_FILE=	ext/Makefile
 
-post-configure:
-.for i in json systemu
-	@rm -rf ${WRKSRC}/lib/mcollective/vendor/${i}/ \
-		${WRKSRC}/lib/mcollective/vendor/load_${i}.rb
-.endfor
-	${SUBST_CMD} ${WRKSRC}/etc/server.cfg.dist \
-		${WRKSRC}/etc/client.cfg.dist
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/ext/Makefile \
+		${WRKSRC}/etc/server.cfg.dist \
+		${WRKSRC}/etc/client.cfg.dist \
+
+post-install:
+	chown -R ${SHAREOWN}:${SHAREGRP} \
+		${PREFIX}/{libexec,share/doc}/mcollective \
+		${PREFIX}/${MODRUBY_SITEDIR}
 
 .include <bsd.port.mk>

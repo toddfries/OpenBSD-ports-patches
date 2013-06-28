@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.12 2012/10/31 13:21:07 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/05 08:10:57 dcoppa Exp $
 
 COMMENT =	gnome-mplayer toolkit
-DISTNAME =	gmtk-1.0.7
+DISTNAME =	gmtk-1.0.8
+REVISION =	1
 
-SHARED_LIBS =	gmlib	1.0 \
-		gmtk	1.0
+SHARED_LIBS =	gmlib	2.0 \
+		gmtk	2.0
 
 CATEGORIES =	x11 devel
 
@@ -14,31 +15,26 @@ MAINTAINER =	David Coppa <dcoppa@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://gmtk.googlecode.com/files/
 
 MODULES =	devel/gettext \
 		textproc/intltool
 
-WANTLIB =	GL ICE SM X11 Xau Xcomposite Xcursor Xdamage \
-		Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender \
-		Xxf86vm atk-1.0 atk-bridge-2.0 atspi cairo \
-		cairo-gobject dbus-1 drm expat ffi \
-		fontconfig freetype gdk-3 gdk_pixbuf-2.0 \
-		gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 \
-		gthread-2.0 gtk-3 harfbuzz icudata icule \
-		icuuc m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 png pthread \
-		pthread-stubs stdc++ xcb xcb-render xcb-shm z
+WANTLIB =	ICE SM X11 Xcomposite Xcursor Xdamage Xext \
+		Xfixes Xi Xinerama Xrandr Xrender atk-1.0 \
+		atk-bridge-2.0 atspi cairo cairo-gobject \
+		dbus-1 expat ffi fontconfig freetype gdk-3 \
+		gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 \
+		gobject-2.0 graphite2 gthread-2.0 gtk-3 \
+		harfbuzz m pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png \
+		pthread pthread-stubs xcb xcb-render xcb-shm z
 
 LIB_DEPENDS =		x11/gtk+3
 
 RUN_DEPENDS =		x11/mplayer
 
-USE_LIBTOOL =		yes
 
 CONFIGURE_STYLE =	gnu
 
@@ -54,6 +50,6 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--without-alsa \
 			--without-pulseaudio
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 .include <bsd.port.mk>

@@ -1,19 +1,16 @@
-# $OpenBSD: Makefile,v 1.26 2012/08/26 16:57:58 stu Exp $
+# $OpenBSD: Makefile,v 1.31 2013/06/28 06:13:04 stu Exp $
 
 COMMENT =		graphical toolkit for Tcl
 
-DISTNAME =		tk8.5.12
-PKGNAME =		tk-8.5.12
-SHARED_LIBS =		tk85 0.9
+DISTNAME =		tk8.5.14
+PKGNAME =		tk-8.5.14
+SHARED_LIBS =		tk85 0.11
 CATEGORIES =		x11 x11/tk
 HOMEPAGE =		http://www.tcl.tk/
 MAINTAINER =		Stuart Cassoff <stwo@users.sourceforge.net>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		X11 Xext Xft Xss c m tcl85
 
@@ -35,7 +32,7 @@ FAKE_FLAGS =		INSTALL_DATA_DIR="${INSTALL_DATA_DIR}" \
 			DEMO_INSTALL_DIR="${WRKINST}${TRUEPREFIX}/share/examples/tk8.5" \
 			TK_PKG_DIR='tcl/tk$$(VERSION)'
 
-REGRESS_FLAGS =		HOME=${TESTHOME} TESTFLAGS="${TESTFLAGS}"
+TEST_FLAGS =		HOME=${TESTHOME} TESTFLAGS="${TESTFLAGS}"
 SEPARATE_BUILD =	Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE =	gnu old
@@ -54,12 +51,12 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 FLAVORS =		threaded
 FLAVOR ?=
 
-.if ${FLAVOR:L:Mthreaded}
+.if ${FLAVOR:Mthreaded}
 CONFIGURE_ARGS +=	--enable-threads
 WANTLIB +=		pthread
-LIB_DEPENDS +=		tcl->=8.5.12,<8.5.13-threaded:lang/tcl/8.5,threaded
+LIB_DEPENDS +=		tcl->=8.5.14,<8.5.15-threaded:lang/tcl/8.5,threaded
 .else
-LIB_DEPENDS +=		tcl->=8.5.12,<8.5.13-!threaded:lang/tcl/8.5
+LIB_DEPENDS +=		tcl->=8.5.14,<8.5.15-!threaded:lang/tcl/8.5
 .endif
 
 .include <bsd.port.arch.mk>
@@ -71,15 +68,15 @@ CONFIGURE_ARGS +=	EXTRA_INSTALL_BINARIES='@echo "Installing libtk85.a to $$(LIB_
 			&& (cd $$(LIB_INSTALL_DIR) ; $$(RANLIB) libtk85.a)'
 .endif
 
-REGRESS_IS_INTERACTIVE = X11
+TEST_IS_INTERACTIVE = X11
 WRKSRC =		${WRKDIST}/unix
-REGRESS_TARGET =	test
+TEST_TARGET =	test
 
 TESTHOME =		${WRKDIR}/testhome
 # Use TESTFLAGS to control the Tk tests
 TESTFLAGS =
 
-pre-regress:
+pre-test:
 	mkdir -p ${TESTHOME}
 
 post-install:

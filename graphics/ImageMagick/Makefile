@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.125 2012/08/28 15:20:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.128 2013/06/04 18:41:46 naddy Exp $
 
 SHARED_ONLY=		Yes
 
@@ -27,9 +27,6 @@ MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=imagemagick/} \
 
 # http://www.imagemagick.org/script/license.php
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB =		c bz2>=10 djvulibre fftw3 jasper>=1 jbig>=1.2 jpeg \
 			lcms2 lzma ltdl m perl png>=4 pthread stdc++ \
@@ -58,7 +55,6 @@ BUILD_DEPENDS =		${RUN_DEPENDS}
 
 ALL_TARGET=		all perl-build
 
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
@@ -78,7 +74,7 @@ CONFIGURE_ARGS+=	--with-quantum-depth=16 \
 			--with-ltdl-lib=${LOCALBASE}/lib \
 			--disable-ltdl-install
 
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
+CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
 			LDFLAGS="-L${WRKBUILD}/magick/.libs -L${WRKBUILD}/wand/.libs -L${LOCALBASE}/lib" \
 			PTHREAD_CFLAGS="-pthread" PTHREAD_LIBS="-pthread" \
 			ac_cv_path_LaunchDelegate=no \

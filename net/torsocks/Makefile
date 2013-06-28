@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/12/01 11:49:27 pascal Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/21 08:46:35 ajacoutot Exp $
 
 COMMENT =		socks proxy for use with tor
 
@@ -14,9 +14,6 @@ MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		http://torsocks.googlecode.com/files/
 
@@ -24,11 +21,10 @@ RUN_DEPENDS =		net/tor
 
 FAKE_FLAGS =		CONFDIR=${PREFIX}/share/examples/torsocks
 
-USE_LIBTOOL =		Yes
 
 CONFIGURE_STYLE =	gnu
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/torsocks.in

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.85 2012/10/18 08:06:27 giovanni Exp $
+# $OpenBSD: Makefile,v 1.88 2013/05/07 08:12:09 giovanni Exp $
 
 COMMENT-main=		imap server for maildir format mailboxes
 COMMENT-pop3=		pop3 server for maildir format mailboxes
 
-V=			4.11.0
+V=			4.13
 DISTNAME=		courier-imap-${V}
 PKGNAME-main=		${DISTNAME}
 FULLPKGNAME-pop3=	courier-pop3-${V}
@@ -19,15 +19,11 @@ MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c courierauth courierauthsasl gdbm idn
 WANTLIB-pop3=		c courierauth courierauthsasl idn ${MODGETTEXT_WANTLIB}
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF=		Yes
 CONFIGURE_STYLE=	gnu
 
@@ -106,8 +102,8 @@ CNFFILES=		etc/courier/imapd-ssl.dist etc/courier/imapd.dist \
 # with no_trashquota and imap_bugs flavors.
 # If those flavors are not built you can do regress tests with
 # ulimit -p 256
-# make regress NO_REGRESS=NO
-NO_REGRESS=		Yes
+# make test NO_TEST=NO
+NO_TEST=		Yes
 
 post-extract:
 	@perl -pi -e 's,\@datadir\@\/imapd.rand,\/dev\/urandom,g' \

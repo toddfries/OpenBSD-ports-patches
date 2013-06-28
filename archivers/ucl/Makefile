@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2012/03/29 13:38:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2013/04/04 16:03:56 brad Exp $
 
 COMMENT=	portable lossless data compression library
 
 DISTNAME=	ucl-1.03
+REVISION=	1
 CATEGORIES=	archivers devel
 SHARED_LIBS +=	ucl                  1.0      # .1.0
 
@@ -12,11 +13,7 @@ MAINTAINER=	Wilbern Cobb <wcobb@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-REVISION = 	0
 MASTER_SITES=	${HOMEPAGE}/download/
 
 .if ${MACHINE_ARCH} == "i386"
@@ -28,9 +25,8 @@ SEPARATE_BUILD=		Yes
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} --enable-static
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/acconfig
 MAKE_FLAGS=		CFLAGS_O=""
-USE_LIBTOOL=		Yes
 
-do-regress:
+do-test:
 	${WRKBUILD}/examples/simple
 
 .include <bsd.port.mk>

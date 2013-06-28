@@ -1,36 +1,29 @@
-# $OpenBSD: Makefile,v 1.32 2012/03/16 16:42:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2013/06/12 20:36:33 brad Exp $
 
+ONLY_FOR_ARCHS=		${GCC4_ARCHS}
 SHARED_ONLY =		Yes
 
-COMMENT-main =		C++ API for MySQL
-COMMENT-docs =		C++ API for MySQL documentation
+COMMENT =		C++ API for MySQL
 
-VERSION =		3.1.0
-DISTNAME =		mysql++-${VERSION}
-PKGNAME-main =		${DISTNAME}
-PKGNAME-docs =		mysql++-docs-${VERSION}
+DISTNAME =		mysql++-3.1.0
+REVISION =		4
+
 SHARED_LIBS += mysqlpp	4.0	# 3
+
 CATEGORIES =		devel
 
 HOMEPAGE =		http://tangentsoft.net/mysql++/
 
-MAINTAINER =		Peter Stromberg <wilfried@openbsd.org>
-
-# LPGL
+# LPGLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
+
+WANTLIB += m mysqlclient stdc++
 
 MASTER_SITES =		${HOMEPAGE}releases/
 
-MULTI_PACKAGES =	-main -docs
+LIB_DEPENDS =		databases/mysql
 
-LIB_DEPENDS-main =	databases/mysql
-WANTLIB-main =		m mysqlclient stdc++
-PKG_ARCH-docs =		*
-
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 USE_GMAKE =		Yes
 AUTOCONF_VERSION =	2.59
 CONFIGURE_STYLE =	autoconf

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cd ${TRUEPREFIX}/share/renpy/ && ${MODPY_BIN} ./renpy.py "$@"

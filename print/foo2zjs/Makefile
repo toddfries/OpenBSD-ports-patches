@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.36 2012/10/19 09:34:48 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2013/05/30 17:56:35 ajacoutot Exp $
 
 COMMENT=	driver for ZjStream wire protocol compatible printers
 
-VERSION=	20120909
+VERSION=	20130527
 DISTNAME=	foo2zjs-${VERSION}
-
-REVISION=	0
 
 CATEGORIES=	print
 
@@ -15,9 +13,6 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c cups m pthread
 
@@ -36,7 +31,11 @@ RUN_DEPENDS +=	print/foomatic-db-engine
 
 MAKE_FLAGS+=	CUPS_SERVERBIN=`cups-config --serverbin`
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
+
+# remove CVS ID
+post-extract:
+	perl -pi -e "s,^VERSION=.*,VERSION=\'${VERSION}\'," ${WRKSRC}/getweb.in
 
 post-patch:
 	ln -sf ${WRKSRC}/modify-ppd ${WRKDIR}/bin/modify-ppd
@@ -44,7 +43,6 @@ post-patch:
 pre-configure:
 	perl -pi -e 's,/usr/bin,${PREFIX}/bin,g' \
 		${WRKSRC}/*.1in
-	perl -pi -e 's,\$\(shell ,\$\(,g' ${WRKSRC}/{,icc2ps}/Makefile
 	${SUBST_CMD} ${WRKSRC}/getweb.in
 
 post-install:

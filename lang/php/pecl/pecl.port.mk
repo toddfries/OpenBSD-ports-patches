@@ -1,4 +1,4 @@
-# $OpenBSD: pecl.port.mk,v 1.2 2012/08/23 19:35:31 sthen Exp $
+# $OpenBSD: pecl.port.mk,v 1.4 2013/03/21 08:46:32 ajacoutot Exp $
 # PHP PECL module
 
 MODULES +=	lang/php
@@ -19,7 +19,6 @@ EXTRACT_SUFX ?=	.tgz
 AUTOCONF_VERSION ?= 2.62
 AUTOMAKE_VERSION ?= 1.9
 
-USE_LIBTOOL ?=	Yes
 LIBTOOL_FLAGS += --tag=disable-static
 
 DESTDIRNAME ?=	INSTALL_ROOT
@@ -31,9 +30,9 @@ BUILD_DEPENDS += www/pear \
 MODPHP_DO_SAMPLE ?= ${_PECLMOD}
 MODPHP_DO_PHPIZE ?= Yes
 
-.if !target(do-regress) && ${NO_REGRESS:L:Mno}
-REGRESS_TARGET = test
-REGRESS_FLAGS =  NO_INTERACTION=1
+.if !target(do-test) && ${NO_TEST:L:Mno}
+TEST_TARGET = test
+TEST_FLAGS =  NO_INTERACTION=1
 .endif
 
 .if ${SHARED_ONLY:L} == "yes"

@@ -1,78 +1,73 @@
-# $OpenBSD: Makefile,v 1.55 2012/10/16 18:22:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.64 2013/06/28 11:14:38 naddy Exp $
 
 # XXX: Remember to bump MODCLANG_VERSION in lang/clang/clang.port.mk when
 # updating this port.
 
-SHARED_LIBS +=  libclang                  0.0 # 3.0
+ONLY_FOR_ARCHS = ${LLVM_ARCHS}
+DPB_PROPERTIES = parallel
 
 COMMENT =	modular, fast C/C++/ObjC compiler, static analyzer and tools
 
-LLVM_V =	3.1
+LLVM_V =	3.3
 DISTNAME =	llvm-${LLVM_V}.src
 PKGNAME =	llvm-${LLVM_V}
-REVISION =	9
 CATEGORIES =	devel
+MASTER_SITES =	http://llvm.org/releases/${LLVM_V}/
+
+DISTFILES =	${DISTNAME}${EXTRACT_SUFX} cfe-${LLVM_V}.src${EXTRACT_SUFX}
+
+SHARED_LIBS =	clang		0.0 # 3.2
 
 # packager notes in http://llvm.org/docs/Packaging.html
 HOMEPAGE =	http://www.llvm.org/
 
-VMEM_WARNING =	Yes
-
-ONLY_FOR_ARCHS = ${LLVM_ARCHS}
-#
-# there is some chance of building on other GCC4 arch, but is known to be
-# broken on alpha/sparc.
-
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =	c m pthread stdc++
+WANTLIB =	c m pthread stdc++ z
 
-MASTER_SITES =	http://llvm.org/releases/${LLVM_V}/
-
-DISTFILES =	${DISTNAME}${EXTRACT_SUFX} clang-${LLVM_V}.src${EXTRACT_SUFX}
 WRKDIST =	${WRKDIR}/llvm-${LLVM_V}.src
-
-post-extract:
-	@mv ${WRKDIR}/clang-${LLVM_V}.src ${WRKDIST}/tools/clang
 
 MODULES =	devel/cmake \
 		lang/python
 
-REGRESS_DEPENDS = devel/dejagnu
+TEST_DEPENDS = devel/dejagnu
+BUILD_DEPENDS +=	textproc/py-sphinx
+
+VMEM_WARNING =	Yes
 
 MAKE_FLAGS =	OPTIMIZE_OPTION="${CFLAGS}" \
 		VERBOSE=Yes \
 		INSTALL="install -c"
 
-REGRESS_FLAGS =	RUNTESTFLAGS=
+TEST_FLAGS =	RUNTESTFLAGS=
 
 SEPARATE_BUILD =	Yes
-USE_LIBTOOL =		Yes
-
-CONFIGURE_STYLE =	cmake
 CONFIGURE_ARGS =	-DLLVM_ENABLE_FFI:Bool=False \
 			-DLLVM_REQUIRES_RTTI:Bool=True \
-			-DCMAKE_BUILD_TYPE:String=Release
+			-DCMAKE_BUILD_TYPE:String=Release \
+			-DCMAKE_DISABLE_FIND_PACKAGE_LibXml2:Bool=True
+
+# Workaround relocation overflow
+.if ${MACHINE_ARCH} == "powerpc"
+CONFIGURE_ARGS +=	-DCMAKE_EXE_LINKER_FLAGS=-Wl,--relax
+.endif
 
 CLANG_INCLUDE_PATH =	lib/clang/${LLVM_V}/include
-SUBST_VARS +=		CLANG_INCLUDE_PATH
+SUBST_VARS +=		CLANG_INCLUDE_PATH LLVM_V
+
+post-extract:
+	@mv ${WRKDIR}/cfe-${LLVM_V}.src ${WRKDIST}/tools/clang
 
 pre-configure:
 	@${SUBST_CMD} ${WRKSRC}/tools/clang/tools/scan-build/scan-build
 	-@ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
 post-build:
-	cd ${WRKSRC}/docs/CommandGuide && for i in *.pod; do \
-	pod2man --release=CVS --center="LLVM Command Guide" \
-	    $$i man/man1/$${i%.pod}.1; \
-	done
-	pod2man --release=CVS --center="LLVM Command Guide" \
+	cd ${WRKSRC}/docs && make -f Makefile.sphinx man
+	pod2man --release=CVS --center="LLVM" \
 	    ${WRKSRC}/tools/clang/docs/tools/clang.pod \
-	    ${WRKSRC}/docs/CommandGuide/man/man1/clang.1
+	    ${WRKSRC}/docs/_build/man/clang.1
 
 post-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/tools/clang/tools/scan-build/ccc-analyzer \
@@ -81,7 +76,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/tools/clang/tools/scan-build/sorttable.js \
 	    ${WRKSRC}/tools/clang/tools/scan-build/scanview.css \
 	    ${PREFIX}/share/llvm
-	${INSTALL_DATA} ${WRKSRC}/docs/CommandGuide/man/man1/* \
+	${INSTALL_DATA} ${WRKSRC}/docs/_build/man/* \
 	    ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

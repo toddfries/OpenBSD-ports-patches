@@ -1,4 +1,4 @@
-# $OpenBSD: pkgpath.mk,v 1.50 2012/10/10 10:55:33 espie Exp $
+# $OpenBSD: pkgpath.mk,v 1.53 2013/03/10 22:27:15 espie Exp $
 # ex:ts=4 sw=4 filetype=make:
 #	pkgpath.mk - 2003 Marc Espie
 #	This file is in the public domain.
@@ -123,21 +123,21 @@ REPORT_PROBLEM ?= exit 1
 _recursive_targets = \
 	all build checksum configure deinstall distclean extract fake fetch \
 	fetch-all full-all-depends full-build-depends \
-	full-regress-depends full-run-depends \
+	full-test-depends full-run-depends \
 	install install-all lib-depends-check \
 	license-check link-categories manpages-check package patch \
-	prepare show-prepare-results repackage regress reinstall \
+	prepare show-prepare-results repackage test regress reinstall \
 	unlink-categories update update-or-install update-or-install-all \
 	describe dump-vars homepage-links print-plist print-plist-all \
 	print-plist-contents print-plist-libs \
 	show verbose-show show-size show-fake-size \
-	check-register check-register-all
+	check-register check-register-all lock unlock list-distinfo
 
 _dangerous_recursive_targets = \
-	makesum plist update-patches update-plist
+	makesum plist update-patches update-plist 
 
 _recursive_depends_targets = \
-	all-dir-depends build-dir-depends regress-dir-depends run-dir-depends
+	all-dir-depends build-dir-depends test-dir-depends run-dir-depends
 _recursive_cache_targets = \
 	print-plist-with-depends print-plist-libs-with-depends \
 	print-plist-all-with-depends print-package-signature \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2010/11/20 19:56:48 espie Exp $
+# $OpenBSD: Makefile,v 1.30 2013/05/30 10:51:23 sthen Exp $
 
 COMMENT=	LaTeX to HTML converter
 
@@ -9,9 +9,6 @@ HOMEPAGE=	http://www.latex2html.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_TEX_CTAN:=support/latex2html/}
 
@@ -26,7 +23,7 @@ CONFIGURE_ARGS=	--shlibdir=${PREFIX}/share/latex2html \
 
 PKG_ARCH=	*
 
-REGRESS_TARGET=	test
+TEST_TARGET=	test
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/latex2hmtl
@@ -35,4 +32,3 @@ post-install:
 	cp -R ${WRKSRC}/example/* ${PREFIX}/share/examples/latex2html
 
 .include <bsd.port.mk>
-

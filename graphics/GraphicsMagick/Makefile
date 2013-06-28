@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.26 2012/08/28 15:18:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.32 2013/06/04 18:41:46 naddy Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	image processing tools with stable ABI
 
-DISTNAME=	GraphicsMagick-1.3.15
-REVISION=	0
+DISTNAME=	GraphicsMagick-1.3.18
 CATEGORIES=	graphics devel
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=graphicsmagick/}
 EXTRACT_SUFX=	.tar.xz
 
-SHARED_LIBS=	GraphicsMagick		4.0 \
+SHARED_LIBS=	GraphicsMagick		4.1 \
 		GraphicsMagick++	3.0 \
-		GraphicsMagickWand	3.0 \
+		GraphicsMagickWand	3.1 \
 
 HOMEPAGE=	http://www.graphicsmagick.org/
 
@@ -20,9 +19,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # http://www.graphicsmagick.org/www/Copyright.html
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		ICE SM X11 Xext bz2 c freetype jasper jbig jpeg lcms2 \
 			ltdl lzma m png pthread stdc++ tiff wmflite-0.2 \
@@ -44,7 +40,6 @@ RUN_DEPENDS=		print/ghostscript/gnu \
 			print/transfig
 BUILD_DEPENDS=		${RUN_DEPENDS}
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-ltdl-include=${LOCALBASE}/include \
@@ -57,9 +52,8 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--without-gslib \
 			--without-trio \
 			--disable-ltdl-install
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
+CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libxml2 -I${LOCALBASE}/include" \
 			LDFLAGS="-L${WRKBUILD}/magick/.libs -L${WRKBUILD}/wand/.libs -L${LOCALBASE}/lib" \
-			PTHREAD_LIBS="-pthread" \
 			ac_cv_path_LaunchDelegate=no
 
 post-build:

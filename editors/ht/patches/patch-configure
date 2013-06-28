@@ -1,12 +1,12 @@
-$OpenBSD: patch-configure,v 1.6 2012/04/15 18:38:53 gonzalo Exp $
---- configure.orig	Sat Mar  3 12:16:47 2012
-+++ configure	Fri Apr 13 09:49:30 2012
-@@ -2571,7 +2571,7 @@ fi
+$OpenBSD: patch-configure,v 1.8 2013/06/16 13:52:55 benoit Exp $
+--- configure.orig	Sat Apr  6 01:32:12 2013
++++ configure	Sun Jun 16 14:13:11 2013
+@@ -2602,7 +2602,7 @@
  
  if test "x$enable_maintainermode" = "xno"; then
  if test "x$enable_release" = "xyes"; then
--    FLAGS_ALL="-O3 -fomit-frame-pointer -Wall -fsigned-char"
-+    FLAGS_ALL="${CFLAGS} -fomit-frame-pointer -Wall -fsigned-char"
+-    default_user_CFLAGS="-O3 -Wall -fomit-frame-pointer"
++    default_user_CFLAGS="${CFLAGS}"
  else
-     FLAGS_ALL="-ggdb -g3 -O0 -Wall -fsigned-char"
+     default_user_CFLAGS="-ggdb3 -O0 -Wall"
  fi

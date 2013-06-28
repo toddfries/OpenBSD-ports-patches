@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.18 2012/11/10 15:01:15 stsp Exp $
+# $OpenBSD: Makefile,v 1.26 2013/05/09 17:03:55 rpe Exp $
 
 COMMENT =		implementations of freedesktop.org specifications
-DISTNAME =		efreet-1.7.1
 
+DISTNAME =		efreet-1.7.6
 EPOCH =			2
 
-SO_VERSION =		2.0	# 8.1
+SO_VERSION =		3.0	# 8.6
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 .for _lib in efreet efreet_mime efreet_trash
@@ -14,23 +14,14 @@ SHARED_LIBS +=		${_lib} ${SO_VERSION}
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c cares crypto curl ecore ecore_con ecore_file eet
 WANTLIB += eina glib-2.0 idn jpeg m pcre pthread ssl z
 
 MODULES =		devel/gettext
 
-LIB_DEPENDS =		x11/e17/ecore>=2.0
-
-USE_LIBTOOL =		Yes
+LIB_DEPENDS =		x11/e17/ecore>=1.7.6v2
 
 CONFIGURE_ARGS =	--disable-doc
-# enable strict specification compliance
-#			--enable-strict-spec
-# disable sloppy specification compliance
-#			--disable-sloppy-spec
 
 .include <bsd.port.mk>

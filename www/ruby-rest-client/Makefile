@@ -1,23 +1,25 @@
-# $OpenBSD: Makefile,v 1.9 2012/09/23 16:57:36 jeremy Exp $
+# $OpenBSD: Makefile,v 1.12 2013/06/26 14:03:26 sthen Exp $
 
 COMMENT =	simple REST client for Ruby
 
-DISTNAME =	rest-client-1.0.3
-REVISION =	5
+DISTNAME =	rest-client-1.6.7
+REVISION =	0
 CATEGORIES =	www
 
-HOMEPAGE =	http://rest-client.heroku.com/
+HOMEPAGE =	https://github.com/rest-client/rest-client
 
 # MIT
 PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
 
 MODULES =		lang/ruby
 
 CONFIGURE_STYLE =	ruby gem
 
-MODRUBY_REGRESS =	rake rspec
+# needs webmock, which needs crack
+#MODRUBY_TEST =	rake rspec
+NO_TEST=	Yes
+
+RUN_DEPENDS =	mail/ruby-mime-types,${MODRUBY_FLAVOR}>=1.16
+BUILD_DEPENDS =	${RUN_DEPENDS}
 
 .include <bsd.port.mk>

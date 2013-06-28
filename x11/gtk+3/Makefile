@@ -1,112 +1,105 @@
-# $OpenBSD: Makefile,v 1.52 2012/11/11 09:13:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.81 2013/06/20 06:54:38 ajacoutot Exp $
 
-SHARED_ONLY=	Yes
+SHARED_ONLY=		Yes
 
-COMMENT-main=	multi-platform graphical toolkit
-COMMENT-cups=	gtk+3 CUPS print backend
+COMMENT-main=		multi-platform graphical toolkit
+COMMENT-cups=		gtk+3 CUPS print backend
 
-V=		3.6.2
-DISTNAME=	gtk+-${V}
-EXTRACT_SUFX=	.tar.xz
+GNOME_VERSION=		3.8.2
+GNOME_PROJECT=		gtk+
 
-PKGNAME-main=	gtk+3-${V}
-PKGNAME-cups=	gtk+3-cups-${V}
+PKGNAME-main=		gtk+3-${GNOME_VERSION}
+PKGNAME-cups=		gtk+3-cups-${GNOME_VERSION}
 
-# grep ^GTK_BINARY_VERSION ${WRKSRC}/Makefile (after do-configure)
-GTK_BINARY_VERSION=3.0.0
-SUBST_VARS=	GTK_BINARY_VERSION
-# XXX temporary, remove the following line from PLIST-main
-# (immodules.cache file moved, so give a change for people to update)
-# @unexec rm -f ${SYSCONFDIR}/gtk-3.0/gtk.immodules
+REVISION-main=		2
+REVISION-cups=		3
 
-CATEGORIES=	x11 devel
+CATEGORIES=		x11 devel
 
-SHARED_LIBS +=  gdk-3                600.0    # 600.0
-SHARED_LIBS +=  gtk-3                600.0    # 600.0
+SHARED_LIBS +=  gdk-3                800.0    # 800.0
+SHARED_LIBS +=  gtk-3                800.0    # 800.0
 SHARED_LIBS +=  gailutil-3           0.0      # 0.0
 
-HOMEPAGE=	http://www.gtk.org/
+HOMEPAGE=		http://www.gtk.org/
 
-MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 cairo cairo-gobject
-WANTLIB += drm expat ffi fontconfig freetype gdk_pixbuf-2.0 gio-2.0
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes graphite2
+WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo cairo-gobject
+WANTLIB += expat ffi fontconfig freetype gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 m pango-1.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs
-WANTLIB += ICE SM dbus-1 harfbuzz icudata icule icuuc pthread
-WANTLIB += xcb xcb-render xcb-shm z stdc++ atk-bridge-2.0 atspi
+WANTLIB += ICE SM dbus-1 harfbuzz pthread
+WANTLIB += xcb xcb-render xcb-shm z atk-bridge-2.0 atspi
 
-MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gtk+/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
+MULTI_PACKAGES=		-main -cups
 
-MULTI_PACKAGES=	-main -cups
-
-MODULES=	devel/gettext \
-		devel/dconf
-
-BUILD_DEPENDS=	devel/gobject-introspection
+MODULES=		devel/gettext \
+			devel/dconf \
+			x11/gnome
 
 # man pages
-BUILD_DEPENDS +=textproc/docbook \
-		textproc/libxslt
+BUILD_DEPENDS +=	textproc/docbook-xsl
 
-RUN_DEPENDS-main= ${RUN_DEPENDS} \
-		x11/hicolor-icon-theme \
-		misc/shared-mime-info
+RUN_DEPENDS=		x11/hicolor-icon-theme
 
-LIB_DEPENDS-main= ${LIB_DEPENDS} \
-		devel/pango>=1.32.0 \
-		graphics/gdk-pixbuf2 \
-		x11/gnome/at-spi2-atk>=2.6.0
+LIB_DEPENDS-main=	${LIB_DEPENDS} \
+			devel/pango>=1.34.0 \
+			graphics/gdk-pixbuf2>=2.28.0 \
+			x11/gnome/at-spi2-atk>=2.8.0
+
+RUN_DEPENDS-main=	${RUN_DEPENDS}
+
+# convenient dependency to prevent hunting what needs what:
+# some apps need more icons than the stock ones
+# some apps require symbolic icons with no fallback
+# some apps needs the svg version of the icon
+RUN_DEPENDS-main +=	x11/gnome/icon-theme-symbolic #pulls in gnome-icon-theme+librsvg
 
 WANTLIB-main += ${WANTLIB}
 WANTLIB-main += c
 
-RUN_DEPENDS-cups= # empty
-LIB_DEPENDS-cups= ${LIB_DEPENDS} \
-		print/cups,-libs \
-		graphics/colord \
-		STEM->=${V}:${BASE_PKGPATH},-main
+RUN_DEPENDS-cups=	${MODGETTEXT_RUN_DEPENDS}
+LIB_DEPENDS-cups=	${LIB_DEPENDS} \
+			print/cups,-libs \
+			${BASE_PKGPATH},-main=${GNOME_VERSION}
 
 WANTLIB-cups += ${WANTLIB}
-WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl colord lcms2
+WANTLIB-cups += asn1 crypto cups gdk-3 gssapi gtk-3 krb5 ssl
+WANTLIB-cups += avahi-client avahi-common colordprivate
+WANTLIB-cups += com_err heimbase roken wind
 
-USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
-REGRESS_IS_INTERACTIVE= x11
+MODGNOME_TOOLS=		gi
+MODGNOME_CPPFLAGS=	-I${X11BASE}/include/freetype2
+MODGNOME_ICON_CACHE=	Yes
 
-CONFIGURE_STYLE= gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include/freetype2/ \
-			-I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-gtk-doc \
-		--disable-papi \
-		--disable-packagekit \
-		--enable-introspection
+TEST_IS_INTERACTIVE=	x11
 
-# If one of these tools is found at configure stage, it might be used,
-# no matter whether we use --disable-gtk-doc or not.
-CONFIGURE_ENV +=ac_cv_path_GTKDOC_CHECK="" \
-		ac_cv_path_GTKDOC_REBASE="" \
-		ac_cv_path_GTKDOC_MKPDF=""
+CONFIGURE_STYLE=	gnu
 
-# Do not build gtk-update-icon-cache and other shared tools.
-CONFIGURE_ARGS += --enable-gtk2-dependency
-BUILD_DEPENDS += x11/gtk+2,-guic
-RUN_DEPENDS +=	x11/gtk+2,-guic
+# sync archs list with devel/spidermonkey
+# colord depends on polkit which depends on spidermonkey
+.if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "amd64" || \
+    ${MACHINE_ARCH} == "alpha" || ${MACHINE_ARCH} == "hppa" || \
+    ${MACHINE_ARCH} == "powerpc" || ${MACHINE_ARCH} == "sparc64" || \
+    ${MACHINE_ARCH} == "mips64el" || ${MACHINE_ARCH} == "mips64"
+LIB_DEPENDS-cups +=	graphics/colord
+WANTLIB-cups +=	colord lcms2
+.else
+CONFIGURE_ARGS +=	--disable-colord
+.endif
+
+# do not build gtk-update-icon-cache and other shared tools
+CONFIGURE_ARGS +=	--enable-gtk2-dependency
+BUILD_DEPENDS +=	x11/gtk+2,-guic
 
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gtk+3
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/gtk-3.0/modules
-	rm ${PREFIX}/lib/gtk-3.0/${GTK_BINARY_VERSION}/{printbackends,immodules}/*.{a,la}
+	rm ${PREFIX}/lib/gtk-3.0/3.0.0/{printbackends,immodules}/*.{a,la}
 
 .include <bsd.port.mk>

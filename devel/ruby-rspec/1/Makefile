@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2012/09/23 16:57:34 jeremy Exp $
+# $OpenBSD: Makefile,v 1.5 2013/04/23 07:22:57 jasper Exp $
 
 COMMENT =		ruby framework for Behaviour Driven Development
 DISTNAME =		rspec-1.3.2
-REVISION =		0
+REVISION =		2
 SUBST_VARS =            MODRUBY_FLAVOR MODRUBY_PREFIX
+
+HOMEPAGE =		http://old.rspec.info/
 
 # When you have two different versions of a ruby gem installed, the
 # binaries will always select the latest version installed, even if
@@ -17,7 +19,7 @@ post-install:
 
 # Requires heckle and quite a few other libraries to run its own
 # specs, so this is currently broken.
-REGRESS_DEPENDS =	devel/ruby-bundler,${MODRUBY_FLAVOR}>=1.0.21
-MODRUBY_REGRESS =	rake rspec
+TEST_DEPENDS =	devel/ruby-bundler,${MODRUBY_FLAVOR}>=1.0.21
+MODRUBY_TEST =	rake rspec
 
 .include <bsd.port.mk>

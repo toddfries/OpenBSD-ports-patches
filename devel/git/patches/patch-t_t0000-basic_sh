@@ -1,0 +1,12 @@
+$OpenBSD: patch-t_t0000-basic_sh,v 1.4 2013/05/02 10:01:34 dcoppa Exp $
+--- t/t0000-basic.sh.orig	Sat Apr 27 01:54:17 2013
++++ t/t0000-basic.sh	Tue Apr 30 12:16:43 2013
+@@ -590,7 +590,7 @@ test_expect_success 'update-index D/F conflict' '
+ 	test $numpath0 = 1
+ '
+ 
+-test_expect_success 'very long name in the index handled sanely' '
++test_expect_failure 'very long name in the index handled sanely' '
+ 
+ 	a=a && # 1
+ 	a=$a$a$a$a$a$a$a$a$a$a$a$a$a$a$a$a && # 16

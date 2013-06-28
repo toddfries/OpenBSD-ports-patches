@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2011/09/16 12:29:16 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2013/03/21 08:48:56 ajacoutot Exp $
 
 COMMENT=	.NET language binding for the GTK+2 toolkit
 
@@ -17,16 +17,12 @@ HOMEPAGE=	http://mono-project.com/GtkSharp
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	ftp://ftp.novell.com/pub/mono/sources/gtk-sharp2${MAJOR}/ \
 		http://ftp.novell.com/pub/mono/sources/gtk-sharp2${MAJOR}/
 EXTRACT_SUFX=	.tar.bz2
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 
 WANTLIB=	X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes \
 		Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig \

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2012/10/28 23:27:58 kili Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/11 10:50:07 espie Exp $
 
 COMMENT =		Haskell API search engine
 
 DISTNAME =		hoogle-4.2.11
-REVISION =		1
+REVISION =		3
 CATEGORIES =		devel
 HOMEPAGE =		http://www.haskell.org/hoogle/
 
@@ -11,9 +11,6 @@ MAINTAINER =		Matthias Kilian <kili@openbsd.org>
 
 # GPLv2, some files are MIT and/or BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc converters/libiconv
 

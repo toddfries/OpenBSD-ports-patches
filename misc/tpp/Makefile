@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/09 10:20:05 jeremy Exp $
+# $OpenBSD: Makefile,v 1.13 2013/06/23 16:37:53 jasper Exp $
 
 COMMENT =		text-based presentation program
 
 DISTNAME =		tpp-1.3.1
-REVISION =		5
+REVISION =		6
 
 CATEGORIES =		misc productivity
 
@@ -11,13 +11,11 @@ HOMEPAGE =		http://synflood.at/tpp.html
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		http://synflood.at/tpp/
 
 MODULES =		lang/ruby
+MODRUBY_REV=		1.8
 RUN_DEPENDS =		devel/ruby-ncurses,${MODRUBY_FLAVOR} \
 			misc/figlet
 

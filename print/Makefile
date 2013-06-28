@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.102 2012/08/28 19:13:11 espie Exp $
+# $OpenBSD: Makefile,v 1.106 2013/05/21 17:20:51 ajacoutot Exp $
 
     SUBDIR =
     SUBDIR += a2ps
@@ -35,6 +35,8 @@
     SUBDIR += ijs
     SUBDIR += l2a
     SUBDIR += latex-mk
+    SUBDIR += libXp
+    SUBDIR += libharu
     SUBDIR += libpaper
     SUBDIR += libspectre
     SUBDIR += lilypond
@@ -55,17 +57,17 @@
     SUBDIR += psutils
     SUBDIR += psutils,a4
     SUBDIR += ptouch-driver
-    SUBDIR += py-cups
     SUBDIR += py-poppler
     SUBDIR += py-relatorio
     SUBDIR += py-reportlab
     SUBDIR += qpdf
     SUBDIR += scribus
     SUBDIR += splix
-    SUBDIR += system-config-printer
     SUBDIR += t1utils
     SUBDIR += texlive
     SUBDIR += transfig
     SUBDIR += unpaper
+    SUBDIR += xournal
+    SUBDIR += xprintproto
 
 .include <bsd.port.subdir.mk>

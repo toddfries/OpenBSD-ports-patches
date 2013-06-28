@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.38 2011/11/03 17:46:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.41 2013/06/24 15:53:38 zhuk Exp $
 
 COMMENT-main=	multilingual input method library
 COMMENT-gtk=	uim for GTK
@@ -20,13 +20,10 @@ PKGNAME-kde=	uim-kde-$V
 REVISION-main=	8
 REVISION-gtk=	10
 REVISION-qt=	5
-REVISION-kde=	5
+REVISION-kde=	6
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 SHARED_LIBS +=	gcroots              0.0      # .1.0
 SHARED_LIBS +=	uim-scm              0.0      # .0.0
@@ -43,7 +40,6 @@ MODULES=	converters/libiconv \
 		textproc/intltool
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 AUTOCONF_VERSION=	2.62
 SUBST_VARS=	MODQT_PLUGINS
@@ -82,7 +78,8 @@ LIB_DEPENDS-kde	=	inputmethods/uim \
 			${MODLIBICONV_LIB_DEPENDS} \
 			${MODGETTEXT_LIB_DEPENDS} \
 			x11/kde/libs3
-WANTLIB-kde =	${Wqt} idn util art_lgpl_2 kdecore>=7 DCOP kdefx kdeui \
+WANTLIB-kde =	${Wqt} idn util art_lgpl_2 lib/kde3/DCOP \
+		lib/kde3/kdecore>=7 lib/kde3/kdefx lib/kde3/kdeui
 
 
 LIB_DEPENDS-gtk =	${LIB_DEPENDS-main} ${uim_LIB_DEPENDS} \

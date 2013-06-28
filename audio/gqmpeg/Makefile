@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2011/10/12 12:54:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.56 2013/06/04 18:41:40 naddy Exp $
 
 COMMENT=		front-end to various audio players
 
@@ -10,9 +10,6 @@ HOMEPAGE=		http://gqmpeg.sourceforge.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
@@ -31,8 +28,7 @@ LIB_DEPENDS=		x11/gtk+2
 
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include/libpng \
-			-I${LOCALBASE}/include" \
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
 			ac_cv_path_GNOME_CONFIG=no
 

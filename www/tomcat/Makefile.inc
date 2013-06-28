@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.1 2012/11/09 08:17:54 dcoppa Exp $
+# $OpenBSD: Makefile.inc,v 1.4 2013/04/29 11:35:07 dcoppa Exp $
 
 COMMENT-main =	Java servlet 2.5 and Java server pages 2.1 server
 COMMENT-examples =example applications and full documentation
@@ -26,8 +26,6 @@ MODULES =	java
 MODJAVA_VER =	1.6+
 MODJAVA_JRERUN =Yes
 
-BUILD_DEPENDS =	archivers/gtar
-
 RUN_DEPENDS =	java/javaPathHelper
 
 RUN_DEPENDS-examples ?=www/tomcat/v${MAJ_VER},-main>=${MAJ_VER}
@@ -36,14 +34,9 @@ PREFIX-examples =${CATALINA_BASE}
 
 # Apache Software License 2.0
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
-
-TAR =		${LOCALBASE}/bin/gtar
 
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 CONFDIR =	${SYSCONFDIR}/tomcat
 CATALINA_BASE =	/var/tomcat

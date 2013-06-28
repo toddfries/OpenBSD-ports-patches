@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2012/10/15 15:18:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/21 08:48:56 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -12,9 +12,6 @@ CATEGORIES=		x11
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 THEMES_DISTNAME=rezlooks-themes-0.1
 
@@ -36,7 +33,6 @@ WANTLIB += pangoft2-1.0 pcre png
 
 LIB_DEPENDS =	x11/gtk+2
 
-USE_LIBTOOL =	Yes
 
 WRKDIST= 	${WRKDIR}/rezlooks-$V
 

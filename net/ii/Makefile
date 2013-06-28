@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.8 2011/03/11 09:00:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/11 11:35:47 espie Exp $
 
 COMMENT=		minimalist IRC client
 
-DISTNAME=		ii-1.6
+DISTNAME=		ii-1.7
 CATEGORIES=		net
 
 HOMEPAGE=		http://tools.suckless.org/ii
@@ -12,13 +12,10 @@ MAINTAINER=		Gleydson Soares <gsoares@trusted.com.br>
 
 # MIT/X
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/ii ${PREFIX}/bin

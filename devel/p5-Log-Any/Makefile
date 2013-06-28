@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.3 2012/10/15 15:06:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:18 espie Exp $
 
 COMMENT=		bringing loggers and listeners together
 
 MODULES=		cpan
-DISTNAME=		Log-Any-0.13
+DISTNAME=		Log-Any-0.14
 CATEGORIES=		devel
 
-MAINTAINER=		David Hill <dhill@openbsd.org>
+MAINTAINER=		David Hill <dhill@mindcry.org>
 
 # perl
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 CONFIGURE_STYLE=	perl
 

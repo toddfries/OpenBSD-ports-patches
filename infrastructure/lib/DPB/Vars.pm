@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Vars.pm,v 1.30 2012/10/06 15:38:14 espie Exp $
+# $OpenBSD: Vars.pm,v 1.35 2013/06/21 09:05:18 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -49,6 +49,7 @@ sub get
 	pipe(my $rh, my $wh);
 	my $pid = fork();
 	if ($pid == 0) {
+		$DB::inhibit_exit = 0;
 		print $wh "print-data:\n";
 		for my $_ (@names) {
 			print $wh "\t\@echo \${$_}\n";
@@ -58,9 +59,6 @@ COMMENT = test
 CATEGORIES = test
 PKGPATH = test/a
 PERMIT_PACKAGE_CDROM=Yes
-PERMIT_PACKAGE_FTP=Yes
-PERMIT_DISTFILES_CDROM=Yes
-PERMIT_DISTFILES_FTP=Yes
 WRKOBJDIR=
 IGNORE=Yes
 _MAKEFILE_INC_DONE=Yes
@@ -112,16 +110,17 @@ sub grab_list
 	my $subdir;
 	my $category;
 	my $reset = sub {
-			$h = DPB::PkgPath->handle_equivalences($grabber->{state}, $h, $subdirs);
-			$grabber->{fetch}->build_distinfo($h, 
-			    $grabber->{state}->{fetch_only});
-			DPB::PkgPath->merge_depends($h);
-			&$code($h);
-			$h = {};
-		    };
+	    $h = DPB::PkgPath->handle_equivalences($grabber->{state}, 
+	    	$h, $subdirs);
+	    $grabber->{fetch}->build_distinfo($h, $grabber->{state}{mirror});
+	    DPB::PkgPath->merge_depends($h);
+	    &$code($h);
+	    $h = {};
+	};
 
 	my @current = ();
-	my ($previous, $info);
+	my ($o, $info);
+	my $previous = '';
 	while(<$fh>) {
 		push(@current, $_);
 		chomp;
@@ -149,6 +148,7 @@ sub grab_list
 				$category->{category} = 1;
 			}
 			$category = $subdir;
+			$previous = '';
 			&$reset;
 		} elsif (my ($pkgpath, $var, $value) =
 		    m/^(.*?)\.([A-Z][A-Z_0-9]*)\=\s*(.*)\s*$/) {
@@ -158,12 +158,11 @@ sub grab_list
 			if ($value =~ m/^\"(.*)\"$/) {
 				$value = $1;
 			}
-			my $o = DPB::PkgPath->compose($pkgpath, $subdir);
-			if (!defined $previous || $previous != $o) {
-				$seen->{$o} = DPB::PortInfo->new($o);
-				$previous = $o;
-				$info = $seen->{$o};
+			if ($pkgpath ne $previous) {
+				$o = DPB::PkgPath->compose($pkgpath, $subdir);
+				$info = $seen->{$o} = DPB::PortInfo->new($o);
 				$h->{$o} = $o;
+				$previous = $pkgpath;
 			}
 			eval { $info->add($var, $value, $o); };
 			if ($@) {
@@ -214,7 +213,7 @@ sub clean
 	$core->start_pipe(sub {
 		my $shell = shift;
 		$class->run_command($core, $shell, $grabber, {$subdir => 1},
-			'clean=packages')
+			'clean=package')
 	}, "CLEAN-PACKAGES");
 	my $fh = $core->fh;
 	while (<$fh>) {

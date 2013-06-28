@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.23 2011/09/16 12:29:16 espie Exp $
+# $OpenBSD: Makefile,v 1.27 2013/06/24 15:53:39 zhuk Exp $
 
 COMMENT=	graphical disk usage utility for KDE
 
 DISTNAME=	kdirstat-2.4.0
-REVISION=	5
+REVISION=	7
 
 CATEGORIES=	x11
 
@@ -13,17 +13,18 @@ MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=  Yes
-PERMIT_PACKAGE_FTP=    Yes
-PERMIT_DISTFILES_CDROM=Yes
-PERMIT_DISTFILES_FTP=  Yes
 
-WANTLIB += ICE SM X11 Xau Xdmcp Xext Xrender art_lgpl_2 c fam
-WANTLIB += idn jpeg m png pthread rpcsvc stdc++ util z kwalletclient
-WANTLIB += pthread-stubs xcb kdecore DCOP kdesu kdeui kio kdefx
+WANTLIB =  GL ICE SM X11 Xcursor Xdamage Xext Xfixes Xft
+WANTLIB += Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2 c drm
+WANTLIB += expat fam fontconfig freetype idn jpeg lcms m mng png
+WANTLIB += pthread pthread-stubs stdc++ util xcb z
+WANTLIB += ${KDE}/DCOP ${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdesu
+WANTLIB += ${KDE}/kdeui ${KDE}/kio ${KDE}/kwalletclient
 
 MASTER_SITES=	${HOMEPAGE}/download/
 EXTRACT_SUFX=	.tar.bz2
 
+RUN_DEPENDS=	x11/gtk+2,-guic
 LIB_DEPENDS=	x11/kde/libs3
 
 MODULES=	devel/gettext \
@@ -37,7 +38,6 @@ MAKE_ENV=	${MODKDE_CONFIGURE_ENV}
 MAKE_FLAGS=	${MODKDE_MAKE_FLAGS}
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION=	2.57
 MODGNU_CONFIG_GUESS_DIRS=	${MODKDE_CONFIG_GUESS_DIRS}

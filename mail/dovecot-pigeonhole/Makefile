@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.18 2012/09/25 20:07:12 brad Exp $
+# $OpenBSD: Makefile,v 1.27 2013/05/29 21:11:45 sthen Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Sieve mail filtering for Dovecot
 
-V_SIEVE=	0.3.3
+V_SIEVE=	0.3.5
 V_DOVECOT=	2.1
-V_DOVECOT_FULL=	2.1.10
+V_DOVECOT_FULL=	2.1.16
 
 DISTNAME=	dovecot-${V_DOVECOT}-pigeonhole-${V_SIEVE}
 EPOCH=		0
@@ -22,9 +22,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	${MODLIBICONV_WANTLIB} c crypto ssl \
 		lib/dovecot/dovecot-lda lib/dovecot/dovecot-login \
@@ -33,7 +30,6 @@ WANTLIB=	${MODLIBICONV_WANTLIB} c crypto ssl \
 MODULES=	converters/libiconv
 LIB_DEPENDS=	mail/dovecot=${V_DOVECOT_FULL}
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--docdir=${PREFIX}/share/doc
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

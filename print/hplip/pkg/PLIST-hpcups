@@ -1,7 +1,8 @@
-@comment $OpenBSD: PLIST-hpcups,v 1.4 2012/01/17 09:54:27 ajacoutot Exp $
+@comment $OpenBSD: PLIST-hpcups,v 1.6 2013/01/04 18:21:54 ajacoutot Exp $
+@conflict hpijs-<=3.2.11
 @bin libexec/cups/filter/hpcups
 @bin libexec/cups/filter/hpcupsfax
-@bin libexec/cups/filter/hpps
+libexec/cups/filter/hpps
 share/cups/drv/hp/hpcups.drv
 share/doc/pkg-readmes/${FULLPKGNAME}
 share/foomatic/
@@ -11,3 +12,5 @@ share/foomatic/db/source/PPD/
 share/foomatic/db/source/PPD/HP/
 share/foomatic/db/source/PPD/HP/HP-Fax-hpcups.ppd.gz
 share/foomatic/db/source/PPD/HP/HP-Fax2-hpcups.ppd.gz
+share/foomatic/db/source/PPD/HP/HP-Fax3-hpcups.ppd.gz
+share/foomatic/db/source/PPD/HP/HP-Fax4-hpcups.ppd.gz

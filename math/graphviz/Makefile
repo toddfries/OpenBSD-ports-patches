@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.49 2012/08/31 19:50:01 edd Exp $
+# $OpenBSD: Makefile,v 1.52 2013/05/06 18:50:47 zhuk Exp $
 
 COMMENT-main=	graph drawing software
 
@@ -43,9 +43,6 @@ HOMEPAGE=	http://www.graphviz.org/
 MAINTAINER =	Edd Barrett <edd@openbsd.org>
 
 # Common public licence
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 
 MODULES=	devel/gettext \
@@ -62,7 +59,7 @@ LIB_DEPENDS=	graphics/jpeg \
 RUN_DEPENDS=	lang/guile
 BUILD_DEPENDS=	devel/swig \
 		lang/guile
-REGRESS_DEPENDS=math/graphviz
+TEST_DEPENDS=math/graphviz
 
 WANTLIB += GL ICE SM X11 Xau Xaw Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xmu Xpm Xrandr Xrender Xt Xxf86vm
@@ -73,7 +70,6 @@ WANTLIB += ltdl m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png pthread pthread-stubs rsvg-2 stdc++ xcb xcb-render
 WANTLIB += xcb-shm xml2 z ${MODTK_LIB} Xft Xss perl util
 
-USE_LIBTOOL=	Yes
 USE_GMAKE =	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
@@ -123,9 +119,6 @@ FAKE_FLAGS=	htmldir="${DOCBASE}/html" \
 		undirecteddir="${EXBASE}/graphs/undirected" \
 		pkgtcldir="${MODTCL_TCLDIR}/graphviz"
 
-pre-configure:
-	${MODTCL_TCLSH_ADJ} ${WRKDIST}/tclpkg/gv/gv_doc_writer.tcl
-
 post-build:
 .for CMD in dotty lneato
 	echo "#! /bin/ksh" >${WRKBUILD}/cmd/${CMD}/${CMD}
@@ -143,7 +136,7 @@ post-install:
 # Can't run built in tests, as requires ksh93 (some specific arguments
 # to the typeset builtin). Currently, there is no port.
 TEST_TMP=${WRKDIR}/test_tmp
-do-regress:
+do-test:
 	mkdir -p ${TEST_TMP}
 	cd ${FILESDIR}/tests && for i in *-test.* run_tests.sh; do \
 		${SUBST_CMD} -c $${i} ${TEST_TMP}/$${i}; \

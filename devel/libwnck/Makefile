@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2011/10/13 16:26:33 jasper Exp $
+# $OpenBSD: Makefile,v 1.54 2013/04/16 13:17:00 ajacoutot Exp $
 
 COMMENT=		window navigator construction kit
 
@@ -15,9 +15,6 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 EXTRACT_SUFX=		.tar.bz2
 
@@ -33,7 +30,7 @@ WANTLIB += z
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS= 	goi
+MODGNOME_TOOLS= 	gi
 LIB_DEPENDS=		x11/gtk+2 \
 			devel/startup-notification
 

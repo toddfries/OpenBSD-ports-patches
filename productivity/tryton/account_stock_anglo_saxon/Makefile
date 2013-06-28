@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2012/09/12 06:59:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2013/05/19 10:49:10 ajacoutot Exp $
 
 TRYTOND_MODULE =	account_stock_anglo_saxon
 

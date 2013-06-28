@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.216 2012/10/27 08:11:00 landry Exp $
+# $OpenBSD: Makefile,v 1.234 2013/06/26 19:29:13 landry Exp $
 
 COMMENT =	Mozilla web browser
 BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
@@ -6,40 +6,49 @@ BROKEN-sparc64 =	https://bugzilla.mozilla.org/show_bug.cgi?id=577056
 # Don't forget to bump www/firefox-i18n after updates.
 # Don't forget to update devel/xulrunner/2.0 if patches changes.
 
-MOZILLA_VERSION =	16.0.2
+MOZILLA_VERSION =	22.0
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	firefox
 MOZILLA_CODENAME =	browser
 
-SO_VERSION =	35.0
+#MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build1/source/
+SO_VERSION =	41.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
-MOZILLA_LIBS =	browsercomps mozalloc \
-		xpcom xul
+MOZILLA_LIBS =	browsercomps mozalloc mozgnome xul
 
 CATEGORIES =	www
 
 # mozilla public license
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 # lots of logic in mozilla.port.mk
 MODULES =	www/mozilla devel/gettext lang/python
 
 MODPY_RUNDEP =	No
 
+# necessary glue to build with the correct compiler after fx 17
+MODULES +=		gcc4 lang/clang
+MODGCC4_ARCHS =		powerpc
+MODGCC4_LANGS =		c c++
+MODCLANG_ARCHS =	amd64 i386
+MODCLANG_LANGS =	c c++
+
 USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
-NO_REGRESS =	Yes
-SEPARATE_BUILD =	Yes
+NO_TEST =	Yes
 
 CONFIGURE_STYLE =	autoconf no-autoheader
-CONFIGURE_ARGS +=	--enable-official-branding
-CONFIGURE_ARGS +=	--with-system-libevent=/usr/ --disable-gconf
-CONFIGURE_ARGS +=	--with-system-zlib=/usr/ --with-system-bz2=${LOCALBASE}
-WANTLIB +=	event
+WANTLIB +=	kvm
+
+# to be able to link when building with clang on i386
+.if ${MACHINE_ARCH} == "i386"
+CONFIGURE_ARGS +=	--disable-debug-symbols
+.endif
+
+# XXX remove in 24
+CONFIGURE_ENV+=	TERM=xterm
+MAKE_ENV+=	TERM=xterm
 
 CONFIGURE_ARGS +=	--enable-gstreamer
 LIB_DEPENDS +=	multimedia/gstreamer-0.10/plugins-base
@@ -49,21 +58,9 @@ WANTLIB += gstvideo-0.10 xml2
 
 RUN_DEPENDS +=	multimedia/gstreamer-0.10/plugins-good
 
-.if ${MACHINE_ARCH:Msparc64}
-CONFIGURE_ARGS +=	--disable-tracejit --disable-methodjit
-.endif
+# needs 3.0.10 when not using gcc
+# CONFIGURE_ARGS += --with-system-ffi
 
-# XXX needed since 15.0b5, relocation overflow otherwise...
-# replaces -g by -Os
-.if ${MACHINE_ARCH} == "powerpc"
-CONFIGURE_ENV +=	MOZ_DEBUG_FLAGS="-Os"
-.endif
-
-# needed during make install
-BUILD_DEPENDS +=	archivers/unzip
-
-# ensure we depend on cairo with tee backend enabled
-LIB_DEPENDS +=	graphics/cairo>=1.10.2p0
 # --with-system-png=${LOCALBASE}
 # no system png : apng support not bundled in
 
@@ -80,14 +77,14 @@ post-install:
 		${PREFIX}/share/applications/${MOZILLA_PROJECT}.desktop
 	# install icon for desktop file
 	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps/
-	${INSTALL_DATA} ${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/icons/mozicon128.png \
+	${INSTALL_DATA} ${PREFIX}/lib/${MOZILLA_PROJECT}-${MOZILLA_VER}/browser/icons/mozicon128.png \
 		${PREFIX}/share/pixmaps/firefox.png
 
 	# link default48.png to default.png to be used by default by non-icccm compliant wm
-	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/chrome/icons/default/default{48,}.png
+	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/browser/chrome/icons/default/default{48,}.png
 
-	# cleanup useless dirs from #717616
-	rm -Rf ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/js{sub,}loader
+	# cleanup useless dirs from #798450 (fx 18?)
+#	rm -Rf ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/modules
 
 
 .include <bsd.port.mk>

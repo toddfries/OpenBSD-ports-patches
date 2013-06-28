@@ -1,20 +1,17 @@
-# $OpenBSD: Makefile,v 1.16 2012/09/01 12:02:27 naddy Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/13 21:23:48 miod Exp $
 
-V =		3.3.5
+V =		3.3.6
 CONFIG = 	${MACHINE_ARCH}-unknown-openbsd${OSREV}
 SUBST_VARS += 	CONFIG V
 PKGNAME =	libf2c-$V
-REVISION =	9
+REVISION =	1
 DISTFILES = 	libf2c-openbsd.tgz
 MASTER_SITES =	http://spacehopper.org/mirrors/
 
 NOT_FOR_ARCHS =	${GCC2_ARCHS}
 COMMENT =	GNU fortran 77 libraries
 CATEGORIES =	devel math
-PERMIT_DISTFILES_CDROM = Yes
 PERMIT_PACKAGE_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
-PERMIT_PACKAGE_FTP =	Yes
 
 MAJOR=	8
 MINOR=  1

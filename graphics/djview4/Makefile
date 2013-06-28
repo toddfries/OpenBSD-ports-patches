@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.16 2012/06/15 08:32:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/21 08:45:18 ajacoutot Exp $
 
 COMMENT=	portable DjVu viewer and browser plugin
 
-DISTNAME=	djview-4.8
+DISTNAME=	djview-4.9
 PKGNAME=	${DISTNAME:S/djview/djview4/}
 CATEGORIES=	graphics print
-REVISION=	2
 
 HOMEPAGE=	http://djvu.sourceforge.net/djview4.html
 
@@ -13,13 +12,11 @@ MAINTAINER=	Alexandr Shadchin <shadchin@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
+
+WANTLIB += ICE QtGui QtNetwork SM X11 Xext Xi Xinerama Xrender
+WANTLIB += c djvulibre fontconfig freetype m pthread stdc++ tiff
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=djvu/}
-
-WANTLIB += QtGui QtNetwork X11 Xext c djvulibre m pthread stdc++ tiff
 
 MODULES=	x11/qt4
 
@@ -29,13 +26,14 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 		x11/gtk+2,-guic
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--with-tiff=${LOCALBASE}
-CONFIGURE_ENV+= QTDIR="${MODQT4_QTDIR}" \
+CONFIGURE_ENV+=	QTDIR="${MODQT4_QTDIR}" \
 		CPPFLAGS="-I${X11BASE}/include"
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
+
+WRKDIST=	${WRKDIR}/${DISTNAME:S/djview/djview4/}
 
 .include <bsd.port.mk>

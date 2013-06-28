@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.11 2012/06/15 08:32:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2013/04/29 11:27:44 landry Exp $
 
 COMMENT =	2D arcade game
 
 DISTNAME =	blobwars-1.19
-REVISION=	3
+REVISION=	4
 
 CATEGORIES =	games
 
@@ -14,9 +14,6 @@ MAINTAINER =	Matthias Kilian <kili@openbsd.org>
 # GPLv2+ except for some audios licensed CC-BY-SA 3.0, CC-BY 3.0,
 # LGPLv2.1, BSD, GPLv2, "Public Domain", "Fair use".
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 WANTLIB =	SDL SDL_image SDL_mixer SDL_net SDL_ttf c m pthread stdc++ z
 
@@ -39,7 +36,7 @@ MAKE_ENV +=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include" \
 USE_X11 =	Yes
 USE_GMAKE =	Yes
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 MAKE_FILE =	makefile
 

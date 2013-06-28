@@ -1,22 +1,19 @@
-# $OpenBSD: Makefile,v 1.46 2011/10/12 12:54:30 jasper Exp $
+# $OpenBSD: Makefile,v 1.49 2013/05/26 09:30:55 kirby Exp $
 
 COMMENT=	front-end to external cd audio rippers and mp3 encoders
 
-DISTNAME=	grip-3.2.0
-REVISION=	24
+DISTNAME=	grip-3.3.1
 CATEGORIES=	audio
+REVISION=	0
 
-HOMEPAGE=	http://www.nostatic.org/grip/
+HOMEPAGE=	http://sourceforge.net/projects/grip/
 
 MAINTAINER=	Steve Shockley <steve.shockley@shockley.net>
 
-# GPL: http://www.nostatic.org/grip/doc/ar01s09.html
+# GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE ORBit-2 SM X11 Xcomposite Xcursor Xdamage Xext
+WANTLIB += ICE ORBit-2 SM X11 Xcomposite Xcursor Xdamage Xext
 WANTLIB += Xfixes Xi Xinerama Xrandr Xrender art_lgpl_2 atk-1.0
 WANTLIB += bonobo-2 bonobo-activation bonoboui-2 c cairo cdda_interface
 WANTLIB += cdda_paranoia crypto curl expat fontconfig freetype
@@ -31,21 +28,22 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=grip/}
 
 MODULES=	devel/gettext
 
-BUILD_DEPENDS=	textproc/rarian
-
-LIB_DEPENDS=	x11/gnome/libgnomeui \
+LIB_DEPENDS=	audio/cdparanoia \
 		audio/id3lib \
-		net/curl \
 		devel/vte \
-		audio/cdparanoia
-RUN_DEPENDS=	x11/gnome/yelp \
-		audio/vorbis-tools \
+		net/curl \
+		x11/gnome/libgnomeui
+
+RUN_DEPENDS=	audio/vorbis-tools \
 		devel/desktop-file-utils
 
 CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		${CONFIGURE_SHARED}
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-USE_LIBTOOL=	Yes
+# see patch-src_grip_c
+post-install:
+	rm -rf ${PREFIX}/share/gnome
 
 .include <bsd.port.mk>

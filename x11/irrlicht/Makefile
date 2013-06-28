@@ -1,11 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2011/05/04 11:34:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.6 2013/06/04 18:41:58 naddy Exp $
 
 COMMENT =		fast, real time 3D engine
-DISTNAME =		irrlicht-1.7.2
+DISTNAME =		irrlicht-1.8
 
-REVISION =		0
-
-SO_VERSION =		0.0
+SO_VERSION =		1.0
 SHARED_LIBS =		Irrlicht ${SO_VERSION}
 
 CATEGORIES =		x11 games
@@ -16,9 +14,6 @@ MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
 # BSD-style (zlib/libpng)
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += 		GL Xxf86vm bz2 jpeg m png stdc++>=51.0 z
 
@@ -36,11 +31,16 @@ MAKE_ENV +=		CC="${CC}" \
 			CFLAGS="${CFLAGS}" \
 			CXX="${CXX}" \
 			CXXFLAGS="${CXXFLAGS}" \
+			CPPFLAGS="-DNO_IRR_USE_NON_SYSTEM_JPEG_LIB_ \
+				  -DNO_IRR_USE_NON_SYSTEM_LIB_PNG_ \
+				  -DNO_IRR_USE_NON_SYSTEM_ZLIB_ \
+				  -DNO_IRR_USE_NON_SYSTEM_BZLIB_ \
+				  -DNO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_" \
 			NDEBUG=1 \
 			SO_VERSION="${SO_VERSION}"
-MAKE_FLAGS +=		CXXINCS="-I../../include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng -I${X11BASE}/include" \
+MAKE_FLAGS +=		CXXINCS="-I../../include -I${LOCALBASE}/include -I${X11BASE}/include" \
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 WRKSRC =		${WRKDIST}/source/Irrlicht
 
@@ -64,7 +64,7 @@ pre-patch:
 		"{}" \;
 .	endfor
 	cd ${WRKDIST}/doc && perl -pi -e 's/\015//g' aesGladman.txt \
-		bzip2-license.txt index.html readme.txt upgrade-guide.txt
+		bzip2-license.txt readme.txt upgrade-guide.txt
 	cd ${WRKDIST}/media && perl -pi -e 's/\015//g' config.xml d3d8.[pv]sh \
 		d3d9.{hlsl,psh,vsh} dwarf-Read-Me.txt earth.x map-20kdm2.txt \
 		ninja\ animation\ ranges.txt opengl.{frag,psh,vert,vsh}
@@ -81,7 +81,7 @@ do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/irrlicht/doc
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/irrlicht/doc/html
 	cd ${WRKDIST}/doc && ${INSTALL_DATA} aesGladman.txt bzip2-license.txt \
-		index.html readme.txt upgrade-guide.txt \
+		readme.txt upgrade-guide.txt \
 		${PREFIX}/share/doc/irrlicht/doc
 	find ${WRKDIST}/doc/html -type f -exec ${INSTALL_DATA} "{}" \
 		${PREFIX}/share/doc/irrlicht/doc/html/ \;

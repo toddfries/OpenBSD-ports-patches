@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/06/26 10:14:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/11 11:35:54 espie Exp $
 
 COMMENT=	tool to mirror contents of HTTP and FTP servers
 
@@ -10,9 +10,6 @@ HOMEPAGE=	http://www.pavuk.org/
 
 # GPLv2+, OpenSSL exception
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c crypto ssl z
 
@@ -30,7 +27,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 USE_GROFF =	Yes
 
-.if !${FLAVOR:L:Mno_x11}
+.if !${FLAVOR:Mno_x11}
 LIB_DEPENDS+=	x11/gtk+2
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xmu Xrandr Xrender atk-1.0 cairo expat
@@ -42,7 +39,7 @@ WANTLIB += gtk-x11-2.0 gdk-x11-2.0
 CONFIGURE_ARGS+= --disable-gtk
 .endif
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/pavuk

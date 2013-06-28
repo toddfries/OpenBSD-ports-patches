@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2012/06/18 07:56:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/21 08:46:33 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -13,17 +13,13 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=ffmpeg-php/}
 HOMEPAGE=	http://ffmpeg-php.sourceforge.net/
 
 # GPL
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 AUTOCONF_VERSION=2.62
 AUTOMAKE_VERSION=1.9
 FAKE_FLAGS=	INSTALL_ROOT=${WRKINST}
 PREFIX=	/var/www
-NO_REGRESS=	Yes
-USE_LIBTOOL=	Yes
+NO_TEST=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 
 MODULES=	converters/libiconv lang/php

@@ -1,4 +1,4 @@
-# $OpenBSD: Var.pm,v 1.15 2012/05/22 12:04:02 espie Exp $
+# $OpenBSD: Var.pm,v 1.21 2013/06/23 08:58:07 espie Exp $
 #
 # Copyright (c) 2006-2010 Marc Espie <espie@openbsd.org>
 #
@@ -31,7 +31,7 @@ sub keyword_table() { undef }
 sub new
 {
 	my ($class, $var, $value, $arch) = @_;
-	die "No arch fo $var" if defined $arch;
+	die "No arch for $var" if defined $arch;
 	bless [$var, $value], $class;
 }
 
@@ -113,6 +113,17 @@ sub normal_insert
     	$ins->insert($self->table, $ins->ref, @_);
 }
 
+# for variables we want to know about, but not register in the db
+package IgnoredVar;
+our @ISA = qw(AnyVar);
+sub add
+{
+}
+
+sub prepare_tables
+{
+}
+
 package KeyVar;
 our @ISA = qw(AnyVar);
 sub columntype() { 'ValueColumn' }
@@ -127,6 +138,10 @@ sub add
 package ArchKeyVar;
 our @ISA = qw(KeyVar);
 sub keyword_table() { 'Arch' }
+
+package PrefixKeyVar;
+our @ISA = qw(KeyVar);
+sub keyword_table() { 'Prefix' }
 
 package OptKeyVar;
 our @ISA = qw(KeyVar);
@@ -302,9 +317,9 @@ package BuildDependsVar;
 our @ISA = qw(DependsVar);
 sub depends_type() { 'Build' }
 
-package RegressDependsVar;
+package TestDependsVar;
 our @ISA = qw(DependsVar);
-sub depends_type() { 'Regress' }
+sub depends_type() { 'Test' }
 
 # Stuff that gets stored in another table
 package SecondaryVar;
@@ -448,6 +463,11 @@ our @ISA = qw(ListKeyVar);
 sub table() { 'Targets' }
 sub keyword_table() { 'TargetKeys' }
 
+package DPBPropertiesVar;
+our @ISA = qw(DefinedListKeyVar);
+sub table() { 'DPBProperties' }
+sub keyword_table() { 'DPBKeys' }
+
 package MultiVar;
 our @ISA = qw(ListVar);
 sub table() { 'Multi' }
@@ -541,7 +561,6 @@ sub keyword_table() { 'Arches' }
 
 package FileVar;
 our @ISA = qw(SecondaryVar);
-sub table() { 'Descr' }
 
 sub add
 {
@@ -551,6 +570,36 @@ sub add
 	local $/ = undef;
 	$self->add_value($ins, <$file>);
 }
+
+package ReadmeVar;
+our @ISA = qw(FileVar);
+sub table() { 'ReadMe' }
+sub columntype() { 'OptTextColumn' }
+
+package DescrVar;
+our @ISA = qw(FileVar);
+sub table() { 'Descr' }
+use File::Basename;
+
+# README does not exist as an actual variable, but it's trivial
+# to add it as a subsidiary of DESCR when the file exists.
+
+sub new
+{
+	my ($class, $var, $value, $arch, $path) = @_;
+	my $dir = dirname($value);
+	my $readme = "$dir/README";
+	my $multi = $path->multi;
+	if (defined $multi) {
+		$readme .= $multi;
+	}
+	if (-e $readme) {
+		$path->{info}->create('README', $readme, $arch, $path);
+	}
+
+	return $class->SUPER::new($var, $value, $arch, $path);
+}
+
 
 package SharedLibsVar;
 our @ISA = qw(KeyVar);
@@ -588,16 +637,5 @@ sub keyword_table() { 'Keywords2' }
 package AutoVersionVar;
 our @ISA = qw(OptKeyVar);
 sub keyword_table() { 'AutoVersion' }
-
-package IgnoredVar;
-our @ISA = qw(AnyVar);
-
-sub add
-{
-}
-
-sub prepare_tables
-{
-}
 
 1;

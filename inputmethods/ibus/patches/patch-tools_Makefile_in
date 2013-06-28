@@ -1,0 +1,11 @@
+$OpenBSD: patch-tools_Makefile_in,v 1.2 2013/05/07 07:59:25 fgsch Exp $
+--- tools/Makefile.in.orig	Wed Apr 17 02:31:37 2013
++++ tools/Makefile.in	Fri May  3 09:57:54 2013
+@@ -456,7 +456,6 @@ AM_CFLAGS = \
+ 	-DG_LOG_DOMAIN=\"IBUS\" \
+ 	-DIBUS_DISABLE_DEPRECATED \
+ 	-Wno-unused-variable \
+-	-Wno-unused-but-set-variable \
+ 	-Wno-unused-function \
+ 	$(NULL)
+ 

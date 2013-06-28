@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2011/06/23 22:50:29 naddy Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/11 11:42:42 espie Exp $
 #
 
 COMMENT=	powerful command-line front end to diff
 
 DISTNAME=	idiff-1.0
-REVISION=	0
+REVISION=	1
 CATEGORIES=	textproc
 MASTER_SITES=	http://www.darwinsys.com/freeware/
 
@@ -12,9 +12,7 @@ MAINTAINER=	Ian Darwin <ian@openbsd.org>
 
 # BSD-like, badly worded
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+
 WANTLIB=		c
 
 do-install:

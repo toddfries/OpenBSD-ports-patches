@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile.inc,v 1.11 2012/08/29 17:50:55 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.15 2013/05/14 07:17:06 jasper Exp $
 
 SHARED_ONLY?=	Yes
 
-CATEGORIES +=	net/telepathy
+CATEGORIES +=	net
 
 HOMEPAGE_TP=	http://telepathy.freedesktop.org/wiki/
 
@@ -17,14 +17,10 @@ DIST_SUBDIR=		telepathy
 
 # BSD/GPL/LGPL
 PERMIT_PACKAGE_CDROM?=	Yes
-PERMIT_PACKAGE_FTP?=	Yes
-PERMIT_DISTFILES_CDROM?=Yes
-PERMIT_DISTFILES_FTP?=	Yes
 
 MAINTAINER?=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 USE_GMAKE?=	Yes
 
-USE_LIBTOOL?=	Yes
 
 CONFIGURE_STYLE?=gnu

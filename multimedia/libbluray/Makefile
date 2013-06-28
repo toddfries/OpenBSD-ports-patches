@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2012/09/25 22:00:00 brad Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/21 08:46:33 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
@@ -18,9 +18,6 @@ EXTRACT_SUFX =		.tar.bz2
 
 # LGPL v2.1
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 SHARED_LIBS +=		bluray		1.0	# 3.0
 WANTLIB +=		c m pthread xml2 z
@@ -35,7 +32,6 @@ MAKE_FLAGS =		CFLAGS="${CFLAGS}"
 
 SEPARATE_BUILD =	Yes
 CONFIGURE_STYLE =	gnu
-USE_LIBTOOL =		yes
 YACC =			${LOCALBASE}/bin/bison -y
 CONFIGURE_ENV =		ac_cv_prog_LEX="${LOCALBASE}/bin/gflex"
 CONFIGURE_ARGS +=	--disable-doxygen-doc

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2012/08/28 19:13:12 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2013/03/21 08:59:29 fgsch Exp $
 
 COMMENT-main =		easy to use LaTeX and ConTeXt editor
 COMMENT-python =	Python scripting for TeXworks
@@ -12,6 +12,7 @@ PKGNAME-main =		texworks-${V}
 PKGNAME-lua =		texworks-lua-${V}
 PKGNAME-python =	texworks-python-${V}
 
+REVISION-main =		0
 REVISION-lua =		0
 
 WRKDIST =		${WRKDIR}/texworks-${V}
@@ -22,9 +23,6 @@ MAINTAINER =		Edd Barrett <edd@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 CONFIGURE_STYLE =	simple
 MODULES =		x11/qt4 \
@@ -34,7 +32,7 @@ MODULES =		x11/qt4 \
 SHARED_ONLY =		Yes
 
 WANTLIB += ICE QtDBus QtGui QtScript QtScriptTools QtXml SM X11
-WANTLIB += Xext Xi Xinerama Xrender c fontconfig freetype hunspell-1.2
+WANTLIB += Xext Xi Xinerama Xrender c fontconfig freetype hunspell-1.3
 WANTLIB += m poppler-qt4 pthread stdc++ z
 
 WANTLIB-lua =	${MODLUA_WANTLIB}
@@ -66,7 +64,7 @@ RUN_DEPENDS-python =	editors/texworks,-main
 MODLUA_SA =		Yes
 
 USE_GMAKE =		Yes
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 VMEM_WARNING = 		Yes
 
 SUBST_VARS +=		WRKINST

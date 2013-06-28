@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.50 2012/11/11 09:12:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2013/03/21 08:46:35 ajacoutot Exp $
 
 COMMENT=	format files for printing on PostScript printers
 
@@ -15,9 +15,7 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 # GPLv3 or later, includes AFM files from Adobe with still unclear
 # terms (see ${WRKSRC}/afm/MustRead.html).
 PERMIT_PACKAGE_CDROM=	without charge
-PERMIT_DISTFILES_CDROM=	without charge
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m
 
@@ -25,22 +23,22 @@ MASTER_SITES=	${MASTER_SITE_GNU:=a2ps/}
 
 MODULES=	devel/gettext
 
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC} ${WRKSRC}/auxdir
 
-BUILD_DEPENDS=	print/psutils \
-		devel/gperf
+BUILD_DEPENDS=	devel/gperf
 
 FLAVORS=	a4
 FLAVOR?=
 
-.if ${FLAVOR:L} == "a4"
+.if ${FLAVOR} == "a4"
 PAPERSIZE=	A4
+BUILD_DEPENDS+=	print/psutils,a4
 RUN_DEPENDS+=	psutils-*-a4:print/psutils,a4
 .else
 PAPERSIZE=	Letter
+BUILD_DEPENDS+=	print/psutils
 RUN_DEPENDS+=	print/psutils
 .endif
 

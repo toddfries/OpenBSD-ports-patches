@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.51 2012/10/05 08:29:39 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.54 2013/03/21 08:45:12 ajacoutot Exp $
 
 COMMENT =		Music Player Daemon
-DISTNAME =		mpd-0.17.2
+DISTNAME =		mpd-0.17.3
 CATEGORIES =		audio
 HOMEPAGE =		http://www.musicpd.org/
 MAINTAINER =		David Coppa <dcoppa@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		FLAC ao audiofile c cdio cdio_cdda cdio_paranoia \
 			curl glib-2.0 gthread-2.0 id3tag m mad \
@@ -96,7 +93,6 @@ CONFIGURE_ARGS +=	--enable-aac \
 			--enable-vorbis-encoder
 .endif
 
-USE_LIBTOOL =		Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/mpd

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.40 2012/09/25 21:39:40 bluhm Exp $
+# $OpenBSD: Makefile,v 1.45 2013/06/08 22:04:54 bluhm Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		perl module for using OpenSSL
 
-DISTNAME =		Net-SSLeay-1.49
+DISTNAME =		Net-SSLeay-1.55
 
 CATEGORIES =		security
 
@@ -14,14 +14,11 @@ MAINTAINER =		Alexander Bluhm <bluhm@openbsd.org>
 
 # same terms as OpenSSL
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c crypto ssl z
 
 MODULES =		cpan
-REGRESS_DEPENDS =	devel/p5-Test-Exception \
+TEST_DEPENDS =		devel/p5-Test-Exception \
 			devel/p5-Test-Warn \
 			devel/p5-Test-NoWarnings \
 			devel/p5-Test-Pod \

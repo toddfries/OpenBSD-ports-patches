@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.8 2012/10/25 14:01:07 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2013/06/20 15:23:54 jasper Exp $
 
 COMMENT=		bad elements for GStreamer
 
-V=			1.0.2
+V=			1.0.7
 DISTNAME=		gst-plugins-bad-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-bad-${V}
+REVISION=		0
 
-SHARED_LIBS +=  gstbasecamerabinsrc-1.0   0.0 # 0.0
-SHARED_LIBS +=  gstbasevideo-1.0          0.0 # 0.0
-SHARED_LIBS +=  gstcodecparsers-1.0       0.0 # 0.0
-SHARED_LIBS +=  gstphotography-1.0        0.0 # 0.0
-SHARED_LIBS +=  gstsignalprocessor-1.0    0.0 # 0.0
+SHARED_LIBS +=  gstbasecamerabinsrc-1.0   0.0 # 6.0
+SHARED_LIBS +=  gstbasevideo-1.0          0.0 # 6.0
+SHARED_LIBS +=  gstcodecparsers-1.0       0.0 # 6.0
+SHARED_LIBS +=  gstphotography-1.0        0.0 # 6.0
+SHARED_LIBS +=  gstsignalprocessor-1.0    0.0 # 6.0
 
 MASTER_SITES =		${MASTER_SITE_GST:=gst-plugins-bad/}
 
@@ -18,8 +19,8 @@ WANTLIB += BPM SoundTouch ass bz2 enca expat ffi fontconfig freetype
 WANTLIB += fribidi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gstapp-1.0
 WANTLIB += gstaudio-1.0 gstbase-1.0 gstfft-1.0 gstpbutils-1.0
 WANTLIB += gstreamer-1.0 gstrtp-1.0 gstsdp-1.0 gsttag-1.0 gstvideo-1.0
-WANTLIB += gthread-2.0 m mms orc-0.4 pcre pthread schroedinger-1.0
-WANTLIB += stdc++ z
+WANTLIB += gthread-2.0 m mms opus orc-0.4 pcre pthread schroedinger-1.0
+WANTLIB += stdc++ z pthread-stubs
 
 MODULES =		devel/dconf
 
@@ -27,6 +28,7 @@ MODULES =		devel/dconf
 BUILD_DEPENDS +=	graphics/libexif
 
 LIB_DEPENDS=		${P}/plugins-base \
+			audio/opus \
 			audio/soundtouch \
 			multimedia/libass \
 			multimedia/libmms \
@@ -60,12 +62,10 @@ CONFIGURE_ARGS=		--disable-cdaudio \
 			--disable-ofa \
 			--disable-openal \
 			--disable-opencv \
-			--disable-opus \
 			--disable-pvr \
 			--disable-resindvd \
 			--disable-rtmp \
 			--disable-sndfile \
-			--disable-shm \
 			--disable-spandsp \
 			--disable-spc \
 			--disable-swfdec \

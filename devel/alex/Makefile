@@ -1,18 +1,14 @@
-# $OpenBSD: Makefile,v 1.26 2012/10/11 13:31:28 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/11 10:50:00 espie Exp $
 
 COMMENT =	lexical analyser generator for Haskell
 
-DISTNAME =	alex-3.0.1
-REVISION =	0
+DISTNAME =	alex-3.0.2
 CATEGORIES =	devel
 
 HOMEPAGE =	http://www.haskell.org/alex/
 
 # BSD3
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 WANTLIB =		c m pthread util
 
@@ -39,9 +35,8 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc
 	cd ${WRKBUILD}/doc && umask 022 && pax -rw alex ${PREFIX}/share/doc
 
-# Skip the tokens_bytestring.x test, it's missing from the distfile.
-do-regress:
+do-test:
 	cd ${WRKBUILD}/tests && exec ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
-		all TESTS="simple.x tokens.x tokens_posn.x tokens_gscan.x"
+		all
 
 .include <bsd.port.mk>

@@ -1,20 +1,17 @@
-# $OpenBSD: Makefile,v 1.7 2011/05/11 12:03:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2013/04/27 15:44:21 ajacoutot Exp $
 
 COMMENT =	IRC-friendly instant messaging client
 
 DISTNAME=	minbif-1.0.3
 CATEGORIES=	net
 
-REVISION=	3
+REVISION=	4
 
 HOMEPAGE =	http://minbif.im/
 MASTER_SITES=	${HOMEPAGE}attachments/download/50/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES =	devel/gettext devel/cmake
 
@@ -23,13 +20,13 @@ WANTLIB =	purple c glib-2.0 gthread-2.0 m pthread stdc++
 CONFIGURE_ENV+=	CPPFLAGS+="-I${X11BASE}/include"
 
 USE_GROFF =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 # commented out atm, needs testing
 #FLAVORS = full
 #FLAVOR ?=
 #
-#.if ${FLAVOR:L:Mfull}
+#.if ${FLAVOR:Mfull}
 #LIB_DEPENDS=	net/pidgin,-libpurple,audio \
 #		multimedia/gstreamer-0.10/core \
 #		net/farsight2 \

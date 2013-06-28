@@ -1,0 +1,30 @@
+$OpenBSD: patch-config_hiawatha_conf_in,v 1.2 2013/04/14 20:21:15 sthen Exp $
+--- config/hiawatha.conf.in.orig	Sat Mar 30 22:41:13 2013
++++ config/hiawatha.conf.in	Sun Apr 14 21:06:01 2013
+@@ -4,7 +4,7 @@
+ 
+ # GENERAL SETTINGS
+ #
+-#ServerId = www-data
++ServerId = _hiawatha:_hiawatha
+ ConnectionsTotal = 250
+ ConnectionsPerIP = 25
+ SystemLogfile = @LOG_DIR@/system.log
+@@ -43,12 +43,13 @@ Binding {
+ # COMMON GATEWAY INTERFACE (CGI) SETTINGS
+ # These settings can be used to run CGI applications.
+ #
+-#CGIhandler = /usr/bin/perl:pl
+-#CGIhandler = /usr/bin/php-cgi:php
+-#CGIhandler = /usr/bin/python:py
+-#CGIhandler = /usr/bin/ruby:rb
++#CGIhandler = ${LOCALBASE}/bin/php-fastcgi:php
++#CGIhandler = ${LOCALBASE}/bin/python:py
++#CGIhandler = ${LOCALBASE}/bin/ruby:rb
+ #CGIhandler = /usr/bin/ssi-cgi:shtml
+ #CGIextension = cgi
++#
++#CGIwrapper = ${LOCALBASE}/sbin/cgi-wrapper
+ #
+ #FastCGIserver {
+ #	FastCGIid = PHP5

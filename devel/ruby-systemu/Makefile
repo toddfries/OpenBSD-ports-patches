@@ -1,18 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2012/09/23 16:57:34 jeremy Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/18 10:24:08 jasper Exp $
 
 COMMENT=		portable replacement for popen4
 
-DISTNAME=		systemu-2.4.2
-REVISION =		0
+DISTNAME=		systemu-2.5.2
 CATEGORIES=		devel
 
-HOMEPAGE=		http://rubyforge.org/projects/codeforpeople/
+HOMEPAGE=		https://github.com/ahoward/systemu
 
 # Ruby license
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		lang/ruby
 

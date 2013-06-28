@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2011/05/08 20:14:54 kili Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/11 11:07:40 espie Exp $
 
 COMMENT =		kart racing game with OSS mascots
 
-BASENAME =		supertuxkart-0.7
+V =			0.8
+BASENAME =		supertuxkart-${V}
 DISTNAME =		${BASENAME}-src
 PKGNAME =		${BASENAME}
 
@@ -12,44 +13,38 @@ HOMEPAGE =		http://supertuxkart.sourceforge.net
 
 MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
-# GPLv3
+# GPLv3+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		GL GLU Irrlicht SDL X11 Xi Xmu c fribidi m ogg openal \
-			pthread stdc++ vorbis vorbisfile glut
+WANTLIB += GL GLU ICE SM X11 Xext Xxf86vm c curl fribidi
+WANTLIB += m ogg openal pthread stdc++ vorbis vorbisfile
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=supertuxkart/SuperTuxKart/}
 EXTRACT_SUFX =		.tar.bz2
 
-MODULES =		devel/gettext
+MODULES =		devel/cmake
 
 RUN_DEPENDS =		devel/desktop-file-utils
-LIB_DEPENDS =		devel/sdl \
-			graphics/freeglut \
-			audio/openal>=0.0.8p7 \
+LIB_DEPENDS =		audio/openal>=0.0.8p7 \
 			audio/libvorbis \
-			x11/irrlicht \
-			devel/fribidi
+			devel/fribidi \
+			net/curl
 
 USE_GMAKE =		Yes
 
-CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	--with-libintl-prefix=${LOCALBASE} \
-			--with-libiconv-prefix=${LOCALBASE} \
-			--with-irrlicht=${LOCALBASE}
-CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib -liconv \
-				-lGL -lGLU -lIrrlicht -lSDL -lXi -lXmu -lX11 \
-				-lglut -lm -logg -pthread -lvorbis -lvorbisfile"
+WRKDIST =		${WRKDIR}/SuperTuxKart-${V}
 
-WRKDIST =		${WRKDIR}/${BASENAME}
+NO_TEST =		Yes
 
-pre-configure:
-	find ${WRKSRC} -name Makefile.in | xargs perl -pi \
-		-e 's,\$\(datadir\)/games,\$\(datadir\),g;' \
-		-e 's,\$\(prefix\)/games,\$\(prefix\)/bin,g'
+# now needs a modified, internal version of Irrlicht.  glorious.
+pre-build:
+	cd ${WRKSRC}/lib/irrlicht/source/Irrlicht && env -i \
+		CC="${CC}" \
+		CFLAGS="${CFLAGS}" \
+		CXX="${CXX}" \
+		CXXFLAGS="${CXXFLAGS}" \
+		NDEBUG=1 \
+		CPPFLAGS="-DNO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_" \
+		${MAKE_PROGRAM}
 
 .include <bsd.port.mk>

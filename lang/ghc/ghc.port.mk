@@ -1,4 +1,4 @@
-# $OpenBSD: ghc.port.mk,v 1.26 2012/11/08 22:21:45 kili Exp $
+# $OpenBSD: ghc.port.mk,v 1.28 2013/03/11 11:20:27 espie Exp $
 # Module for Glasgow Haskell Compiler
 
 # Not yet ported to other architectures
@@ -55,6 +55,7 @@ MODGHC_SETUP_CONF_ENV ?=
 MODGHC_SETUP_CONF_ARGS +=	--datasubdir=hs-\$$pkgid
 MODGHC_SETUP_CONF_ARGS +=	--docdir=\$$datadir/doc/hs-\$$pkgid
 MODGHC_SETUP_CONF_ARGS +=	--libsubdir=ghc/\$$pkgid
+MODGHC_SETUP_CONF_ARGS +=	--enable-library-profiling
 .  endif
 
 .  if ${MODGHC_BUILD:L:Mhaddock}
@@ -109,8 +110,8 @@ do-install:
 .   endif
 .  endif
 
-.  if !target(do-regress)
-do-regress:
+.  if !target(do-test)
+do-test:
 	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
 		${MODGHC_SETUP_PROG} test
 .  endif

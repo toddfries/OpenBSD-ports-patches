@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.18 2012/10/16 08:34:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.30 2013/06/11 06:41:34 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		terminal emulation library
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.34.1
+GNOME_VERSION=		0.34.6
 
 PKGNAME=		vte3-${GNOME_VERSION}
 
-SHARED_LIBS +=  vte2_90                   1.0 # 3009.0
+SHARED_LIBS +=  vte2_90                   1.0 # 3409.3
 
 CATEGORIES=		devel
 
@@ -20,32 +20,36 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 c cairo
-WANTLIB += cairo-gobject drm expat ffi fontconfig freetype gdk-3
-WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 m ncurses pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += stdc++ util xcb xcb-render xcb-shm z
-WANTLIB += icule icuuc
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += c cairo cairo-gobject dbus-1 expat ffi fontconfig freetype
+WANTLIB += gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += graphite2 gthread-2.0 gtk-3 harfbuzz
+WANTLIB += m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs util xcb xcb-render
+WANTLIB += xcb-shm z
 
 LIB_DEPENDS=		x11/gtk+3>=3.3.18
 
-MODGNOME_TOOLS= 	goi
+MODGNOME_TOOLS= 	gi
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		--disable-Bsymbolic \
-			--disable-gnome-pty-helper
+CONFIGURE_ARGS=		--disable-gnome-pty-helper
+
+# error: -Bsymbolic requested but not supported by ld
+CONFIGURE_ARGS +=	--disable-Bsymbolic
+
+TEST_DEPENDS +=		shells/bash
 
 # XXX: https://bugzilla.gnome.org/show_bug.cgi?id=675987
 post-install:
 	rm -r ${WRKINST}${SYSCONFDIR}/profile.d
+
+pre-test:
+	${SUBST_CMD} ${WRKSRC}/src/test-vte-sh.sh
 
 .include <bsd.port.mk>

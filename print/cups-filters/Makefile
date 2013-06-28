@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.4 2012/09/14 15:36:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/06/20 06:54:37 ajacoutot Exp $
 
 # XXX remove @exec-update when we branch 5.4-current
 
 COMMENT=	OpenPrinting CUPS filters
 
-DISTNAME=	cups-filters-1.0.24
+DISTNAME=	cups-filters-1.0.34
+REVISION=	2
 CATEGORIES=	print
-REVISION=	0
 
 SHARED_LIBS +=  cupsfilters               0.0 # 1.0
 SHARED_LIBS +=  fontembed                 0.0 # 1.0
@@ -17,13 +17,12 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv3 - LGPLv2 - GPLv2+ - MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += asn1 c crypto cups cupsimage expat fontconfig freetype
-WANTLIB += gssapi ijs jpeg krb5 lcms2 m openjpeg png poppler pthread
-WANTLIB += ssl stdc++ tiff z pcre qpdf
+WANTLIB += asn1 avahi-client avahi-common avahi-glib c crypto
+WANTLIB += cups cupsimage dbus-1 expat fontconfig freetype glib-2.0
+WANTLIB += gssapi ijs jpeg krb5 lcms2 m openjpeg pcre
+WANTLIB += png poppler pthread qpdf ssl stdc++ tiff z pthread-stubs
+WANTLIB += com_err heimbase roken wind
 
 MASTER_SITES=	http://www.openprinting.org/download/cups-filters/
 
@@ -31,14 +30,14 @@ MASTER_SITES=	http://www.openprinting.org/download/cups-filters/
 MODULES +=	gcc4
 MODGCC4_ARCHS=	*
 MODGCC4_LANGS=	c++
-MODGCC4_VERSION=4.6
 
 BUILD_DEPENDS=	print/ghostscript/gnu
 
+MODULES +=	devel/gettext
 LIB_DEPENDS=	print/cups,-libs \
 		print/ijs \
 		print/poppler \
-		print/qpdf>=3.0.2
+		print/qpdf
 
 # make it easier for users: bring in foomatic-filters, ghostscript
 # (with gstoraster) and allow the regeneration of PPD files from
@@ -46,23 +45,29 @@ LIB_DEPENDS=	print/cups,-libs \
 RUN_DEPENDS +=	print/foomatic-db-engine
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 
-FAKE_FLAGS=	pkgfontconfigdir=${PREFIX}/share/examples/cups-filters
+MAKE_FLAGS=	DLOPEN_LIBS=""
+
+FAKE_FLAGS=	pkgfontconfigdir=${PREFIX}/share/examples/cups-filters \
+		pkgcupsserverrootdir=${PREFIX}/share/examples/cups-filters/cups
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include \
-			-I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib"
 
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
+		--with-browseremoteprotocols=DNSSD,CUPS \
 		--with-test-font-path=${X11BASE}/lib/X11/fonts/TTF/DejaVuSans.ttf \
+		--with-acroread-path=${LOCALBASE}/bin/acroread \
+		--with-gs-path=${LOCALBASE}/bin/gs \
 		--without-php
 
 # prefer pdftops over gs -- see README under ${WRKSRC}
 CONFIGURE_ARGS +=	--with-pdftops=pdftops
 BUILD_DEPENDS +=	print/poppler,-utils
 RUN_DEPENDS +=		print/poppler,-utils # print/ghostscript/gnu
+
+post-install:
+	rm -rf ${WRKINST}/rc?.d
 
 .include <bsd.port.mk>

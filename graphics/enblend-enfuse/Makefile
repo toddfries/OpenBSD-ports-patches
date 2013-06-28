@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2011/09/16 10:02:36 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2013/06/04 18:41:47 naddy Exp $
 
 VMEM_WARNING =	Yes
 ONLY_FOR_ARCHS = ${GCC4_ARCHS}
@@ -7,12 +7,14 @@ ONLY_FOR_ARCHS = ${GCC4_ARCHS}
 MAKE_ENV +=	CXXNOOPT=-O0
 .endif
 
+BROKEN-hppa =	linking fails with 'cannot handle R_PARISC_PCREL17F'
+
 COMMENT =	blend seams in panoramic image mosaics
 
 DISTNAME =	enblend-enfuse-4.0
 PKGNAME =	${DISTNAME:L}
 WRKDIST =	${WRKDIR}/enblend-enfuse-4.0-753b534c819d
-REVISION =	2
+REVISION =	3
 CATEGORIES =	graphics
 
 HOMEPAGE =	http://enblend.sourceforge.net/
@@ -21,9 +23,6 @@ MAINTAINER =	Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2+, MIT
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	GL GLEW GLU Half ICE Iex IlmImf IlmThread Imath SM X11 Xi Xmu
 WANTLIB +=	boost_filesystem boost_system c glut>=4 jpeg lcms m png pthread
@@ -44,14 +43,14 @@ LIB_DEPENDS =	devel/boost \
 		graphics/png \
 		graphics/tiff
 
-CONFIGURE_STYLE = gnu
+CONFIGURE_STYLE = autoconf gnu
+AUTOCONF_VERSION = 2.61
 MODGNU_CONFIG_GUESS_DIRS = ${WRKSRC}
 USE_GMAKE = Yes
 USE_GROFF =	Yes
 
 CPPFLAGS +=	-I${WRKSRC}/src/vigra_impex \
 		-I${LOCALBASE}/include \
-		-I${LOCALBASE}/include/libpng \
 		-I${X11BASE}/include
 
 LDFLAGS +=	-L${LOCALBASE}/lib \

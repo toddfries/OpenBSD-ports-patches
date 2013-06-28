@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.48 2012/10/15 15:18:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.52 2013/06/12 20:36:34 brad Exp $
 
 COMMENT-main=	parallelized login hacker
 COMMENT-gui=	GTK frontend for hydra
@@ -8,15 +8,13 @@ DISTNAME=	hydra-${VERSION}-src
 PKGNAME-main=	hydra-${VERSION}
 PKGNAME-gui=	hydra-gui-${VERSION}
 CATEGORIES=    	security
-REVISION-main =	0
+REVISION-main=	2
 
 HOMEPAGE=	http://thc.org/thc-hydra/
 
 # GPLv3 + restrictions in LICENCE.HYDRA
 PERMIT_PACKAGE_CDROM=	no charge
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	no charge
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c m
 
@@ -31,11 +29,11 @@ MULTI_PACKAGES=	-main
 CONFIGURE_STYLE=gnu dest
 
 USE_GMAKE= 	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 MAKE_FLAGS=	CC=${CC}
 CFLAGS +=	-I${LOCALBASE}/include
 
-.if ${FLAVOR:L:Mno_x11}
+.if ${FLAVOR:Mno_x11}
 ALL_TARGET=	hydra pw-inspector
 
 do-install:

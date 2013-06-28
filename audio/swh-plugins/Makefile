@@ -1,23 +1,19 @@
-# $OpenBSD: Makefile,v 1.5 2011/09/16 08:26:11 espie Exp $
+# $OpenBSD: Makefile,v 1.9 2013/06/01 12:15:48 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		LADSPA plugins from Steve Harris
+
 DISTNAME =		swh-plugins-0.4.15
+REVISION =		2
 CATEGORIES =		audio
-REVISION =		0
 
 HOMEPAGE =		http://plugin.org.uk/
 
-MAINTAINER =		Jacob Meuser <jakemsr@openbsd.org>
-
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		fftw3f m
+WANTLIB =		fftw3f m pthread
 
 MASTER_SITES =		${HOMEPAGE}/releases/0.4.15/ \
 			http://distfiles.nl/
@@ -26,7 +22,6 @@ BUILD_DEPENDS =		audio/ladspa \
 			devel/libtool
 LIB_DEPENDS =		math/fftw3,float
 
-USE_LIBTOOL =		Yes
 
 AUTOMAKE_VERSION =	1.9
 AUTOCONF_VERSION =	2.59

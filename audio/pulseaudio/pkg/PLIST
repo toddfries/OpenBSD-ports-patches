@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.11 2012/09/29 09:32:05 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.15 2013/06/04 15:32:05 ajacoutot Exp $
 @newgroup _pulse:683
 @newgroup _pulse-access:684
 @newuser _pulse:683:683:daemon:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
@@ -12,7 +12,10 @@ bin/paplay
 bin/parec
 bin/parecord
 @bin bin/pasuspender
+@bin bin/pax11publish
 @bin bin/pulseaudio
+bin/start-pulseaudio-kde
+bin/start-pulseaudio-x11
 include/pulse/
 include/pulse/cdecl.h
 include/pulse/channelmap.h
@@ -77,6 +80,8 @@ lib/pulse-${VERSION}/modules/module-cli-protocol-unix.so
 lib/pulse-${VERSION}/modules/module-cli.so
 lib/pulse-${VERSION}/modules/module-combine-sink.so
 lib/pulse-${VERSION}/modules/module-combine.so
+lib/pulse-${VERSION}/modules/module-console-kit.so
+lib/pulse-${VERSION}/modules/module-dbus-protocol.so
 lib/pulse-${VERSION}/modules/module-default-device-restore.so
 lib/pulse-${VERSION}/modules/module-detect.so
 lib/pulse-${VERSION}/modules/module-device-manager.so
@@ -100,10 +105,13 @@ lib/pulse-${VERSION}/modules/module-pipe-source.so
 lib/pulse-${VERSION}/modules/module-position-event-sounds.so
 lib/pulse-${VERSION}/modules/module-raop-sink.so
 lib/pulse-${VERSION}/modules/module-remap-sink.so
+lib/pulse-${VERSION}/modules/module-remap-source.so
 lib/pulse-${VERSION}/modules/module-rescue-streams.so
 lib/pulse-${VERSION}/modules/module-role-cork.so
+lib/pulse-${VERSION}/modules/module-role-ducking.so
 lib/pulse-${VERSION}/modules/module-rtp-recv.so
 lib/pulse-${VERSION}/modules/module-rtp-send.so
+lib/pulse-${VERSION}/modules/module-rygel-media-server.so
 lib/pulse-${VERSION}/modules/module-simple-protocol-tcp.so
 lib/pulse-${VERSION}/modules/module-simple-protocol-unix.so
 lib/pulse-${VERSION}/modules/module-sine-source.so
@@ -119,6 +127,10 @@ lib/pulse-${VERSION}/modules/module-virtual-sink.so
 lib/pulse-${VERSION}/modules/module-virtual-source.so
 lib/pulse-${VERSION}/modules/module-virtual-surround-sink.so
 lib/pulse-${VERSION}/modules/module-volume-restore.so
+lib/pulse-${VERSION}/modules/module-x11-bell.so
+lib/pulse-${VERSION}/modules/module-x11-cork-request.so
+lib/pulse-${VERSION}/modules/module-x11-publish.so
+lib/pulse-${VERSION}/modules/module-x11-xsmp.so
 lib/pulseaudio/
 lib/pulseaudio/libpulsecommon-${VERSION}.la
 lib/pulseaudio/libpulsecommon-${VERSION}.so
@@ -135,6 +147,14 @@ libexec/pulse/
 @man man/man5/pulse-client.conf.5
 @man man/man5/pulse-daemon.conf.5
 share/examples/pulseaudio/
+share/examples/pulseaudio/bash_completion.d/
+@sample ${SYSCONFDIR}/bash_completion.d/
+share/examples/pulseaudio/bash_completion.d/pulseaudio-bash-completion.sh
+@sample ${SYSCONFDIR}/bash_completion.d/pulseaudio-bash-completion.sh
+share/examples/pulseaudio/dbus-1/
+share/examples/pulseaudio/dbus-1/system.d/
+share/examples/pulseaudio/dbus-1/system.d/pulseaudio-system.conf
+@sample ${SYSCONFDIR}/dbus-1/system.d/pulseaudio-system.conf
 share/examples/pulseaudio/pulse/
 @sample ${SYSCONFDIR}/pulse/
 share/examples/pulseaudio/pulse/client.conf
@@ -145,6 +165,14 @@ share/examples/pulseaudio/pulse/default.pa
 @sample ${SYSCONFDIR}/pulse/default.pa
 share/examples/pulseaudio/pulse/system.pa
 @sample ${SYSCONFDIR}/pulse/system.pa
+share/examples/pulseaudio/xdg/
+@sample ${SYSCONFDIR}/xdg/
+share/examples/pulseaudio/xdg/autostart/
+@sample ${SYSCONFDIR}/xdg/autostart/
+share/examples/pulseaudio/xdg/autostart/pulseaudio-kde.desktop
+@sample ${SYSCONFDIR}/xdg/autostart/pulseaudio-kde.desktop
+share/examples/pulseaudio/xdg/autostart/pulseaudio.desktop
+@sample ${SYSCONFDIR}/xdg/autostart/pulseaudio.desktop
 share/locale/as/LC_MESSAGES/pulseaudio.mo
 share/locale/bn_IN/LC_MESSAGES/pulseaudio.mo
 share/locale/ca/LC_MESSAGES/pulseaudio.mo
@@ -161,6 +189,7 @@ share/locale/gu/LC_MESSAGES/pulseaudio.mo
 share/locale/he/LC_MESSAGES/pulseaudio.mo
 share/locale/hi/LC_MESSAGES/pulseaudio.mo
 share/locale/hu/LC_MESSAGES/pulseaudio.mo
+share/locale/id/LC_MESSAGES/pulseaudio.mo
 share/locale/it/LC_MESSAGES/pulseaudio.mo
 share/locale/ja/LC_MESSAGES/pulseaudio.mo
 share/locale/kn/LC_MESSAGES/pulseaudio.mo

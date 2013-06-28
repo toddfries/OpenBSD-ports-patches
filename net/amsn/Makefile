@@ -1,11 +1,11 @@
-#$OpenBSD: Makefile,v 1.25 2012/09/30 07:49:04 jasper Exp $
+#$OpenBSD: Makefile,v 1.28 2013/06/04 18:41:54 naddy Exp $
 
 COMMENT=	open source MSN Messenger clone
 
 V=		0.98.9
 DISTNAME=	amsn-$V-src
 PKGNAME=	${DISTNAME:S/-src//}
-REVISION=	2
+REVISION=	3
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.amsn-project.net/
@@ -14,9 +14,6 @@ MAINTAINER=	Azwaw OUSADOU <bsdmaniak@gmail.com>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=project/amsn/amsn/${V}/}
 EXTRACT_SUFX=	.tar.bz2
@@ -44,15 +41,14 @@ CONFIGURE_ARGS+=--disable-libv4l \
 		--with-tcl="${MODTCL_LIBDIR}" \
 		--with-tk="${MODTK_LIBDIR}"
 
-CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include \
-		    -I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV+=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 		LDFLAGS="-lm -L${LOCALBASE}/lib" \
 		TK_INC_SPEC="${MODTK_INCDIR}/generic" \
 		TCLSH="${MODTCL_BIN}"
 
 WRKDIST=	${WRKDIR}/amsn-$V/
 
-NO_REGRESS=	Yes # Generic tcl/tk tests.
+NO_TEST=	Yes # Generic tcl/tk tests.
 
 pre-configure:
 	@${SUBST_CMD} ${WRKSRC}/amsn*

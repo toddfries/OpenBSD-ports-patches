@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.101 2012/07/10 15:22:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.116 2013/06/20 08:26:14 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	secure, fast, compliant, and very flexible web-server
 
-DISTNAME=	lighttpd-1.4.31
-REVISION=	0
+DISTNAME=	lighttpd-1.4.32
+REVISION=	8
 CATEGORIES=	www net
 MASTER_SITES=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
 
@@ -15,9 +15,7 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+
 WANTLIB=		c crypto ${MODLUA_WANTLIB} m pcre ssl z
 
 MODULES=	lang/lua
@@ -27,7 +25,6 @@ LIB_DEPENDS+=	devel/pcre \
 		${MODLUA_LIB_DEPENDS}
 RUN_DEPENDS+=	www/spawn-fcgi
 
-USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.69
@@ -44,13 +41,14 @@ CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 FLAVORS=	ldap mysql
 FLAVOR?=
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 CONFIGURE_ARGS+= --with-ldap
 LIB_DEPENDS+=	databases/openldap
-WANTLIB+=	sasl2 asn1 com_err gssapi krb5 lber ldap
+WANTLIB+=	sasl2 asn1 com_err gssapi krb5 wind
+WANTLIB+=	heimbase lber-2.4 ldap-2.4 roken
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 CONFIGURE_ARGS+= --with-mysql
 LIB_DEPENDS+=	databases/mysql
 WANTLIB +=	mysqlclient>=10

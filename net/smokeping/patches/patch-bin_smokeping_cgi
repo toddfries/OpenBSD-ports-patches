@@ -1,0 +1,12 @@
+$OpenBSD: patch-bin_smokeping_cgi,v 1.2 2013/05/24 14:45:54 sthen Exp $
+--- bin/smokeping_cgi.orig	Sat Dec  8 22:26:02 2012
++++ bin/smokeping_cgi	Sat Dec  8 22:30:35 2012
+@@ -18,7 +18,7 @@ use Smokeping;
+ 
+ use CGI::Fast;
+ 
+-my $cfg = (shift @ARGV) || "$FindBin::Bin/../etc/config";
++my $cfg = (shift @ARGV) || "${SYSCONFDIR}/config";
+ 
+ 
+ while (my $q = new CGI::Fast) {

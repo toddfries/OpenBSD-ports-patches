@@ -1,23 +1,22 @@
-# $OpenBSD: Makefile,v 1.89 2012/06/15 08:32:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.95 2013/05/31 15:34:45 ajacoutot Exp $
 
 COMMENT-main=	Civilization clone for X11; multiplayer; game server
 COMMENT-client=	Freeciv client
 COMMENT-share=	shared data files for Freeciv
 
-VERSION=	2.2.7
+VERSION=	2.3.4
 DISTNAME=	freeciv-${VERSION}
 PKGNAME-main=	freeciv-server-${VERSION}
 PKGNAME-client=	freeciv-client-${VERSION}
 PKGNAME-share=	freeciv-share-${VERSION}
-REVISION-client=2
 CATEGORIES=	games
 HOMEPAGE=	http://www.freeciv.org/
 
+REVISION-main=	0
+REVISION-client=0
+
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=freeciv/}
 EXTRACT_SUFX=	.tar.bz2
@@ -29,7 +28,9 @@ USE_GROFF =	Yes
 MULTI_PACKAGES=	-main -share
 
 MODULES=	devel/gettext
-WANTLIB=	bz2 c m z ncurses readline
+WANTLIB-main +=	X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB-main +=	Xrandr Xrender expat fontconfig freetype graphite2
+WANTLIB-main +=	pixman-1 pthread pthread-stubs xcb xcb-render xcb-shm
 
 CONFIGURE_ARGS=	--with-ggz-client=no
 
@@ -45,18 +46,23 @@ PKG_ARCH-share=	*
 LIB_DEPENDS-share=
 WANTLIB-share=
 
-LIB_DEPENDS=	archivers/bzip2
+LIB_DEPENDS =	archivers/bzip2 \
+		x11/gtk+2
 
-WANTLIB-client = ${WANTLIB}
-WANTLIB-client += GL Xau Xcomposite Xcursor Xdamage Xdmcp Xfixes Xi Xinerama
-WANTLIB-client += Xrandr Xxf86vm X11 Xext Xrender atk-1.0 cairo drm expat
-WANTLIB-client += fontconfig freetype gdk_pixbuf-2.0 gdk-x11-2.0 gio-2.0
-WANTLIB-client += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
-WANTLIB-client += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB-client += png pthread pthread-stubs xcb xcb-render xcb-shm
+WANTLIB +=		bz2 c m z
+WANTLIB +=		atk-1.0 cairo ffi gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
+WANTLIB +=		glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
+WANTLIB +=		harfbuzz pango-1.0 pangocairo-1.0
+WANTLIB +=		pangoft2-1.0 pcre png
 
-LIB_DEPENDS-main= ${LIB_DEPENDS}
-LIB_DEPENDS-client= ${LIB_DEPENDS} x11/gtk+2
+WANTLIB-main +=		${WANTLIB}
+WANTLIB-main +=		ncurses readline
+
+WANTLIB-client +=	${WANTLIB}
+WANTLIB-client +=	X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB-client +=	Xinerama Xrandr Xrender expat fontconfig freetype graphite2
+WANTLIB-client +=	pixman-1 pthread pthread-stubs xcb xcb-render xcb-shm
+
 RUN_DEPENDS-client= devel/desktop-file-utils \
 		    freeciv-share-${VERSION}:${BUILD_PKGPATH},-share \
 		    x11/gtk+2,-guic
@@ -64,6 +70,7 @@ RUN_DEPENDS-client= devel/desktop-file-utils \
 RUN_DEPENDS-main=   freeciv-share-${VERSION}:${BUILD_PKGPATH},-share
 
 USE_GMAKE=	Yes
+USE_LIBTOOL =	No
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

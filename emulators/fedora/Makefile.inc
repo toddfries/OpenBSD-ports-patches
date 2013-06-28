@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.9 2012/10/22 11:41:56 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.11 2013/03/11 12:27:54 sthen Exp $
 
 # Note that PLIST with shared libs requires the following cleaning:
 # perl -pi -e "s,^\@lib ,," pkg/PLIST
@@ -12,9 +12,6 @@ FEDORADIR ?=	${PREFIX}/emul/fedora
 CATEGORIES=	emulators
 
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITE_FEDORA=	http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/${FEDORA_V}/Fedora/i386/os/Packages/
 MASTER_SITE_FEDORA0=	http://archives.fedoraproject.org/pub/archive/fedora/linux/updates/${FEDORA_V}/i386/
@@ -32,7 +29,7 @@ BUILD_DEPENDS+=	rpm-*|rpm2cpio-*:converters/rpm2cpio \
 		archivers/gcpio
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .if !target(do-install)
 do-install:

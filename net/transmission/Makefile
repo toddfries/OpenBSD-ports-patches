@@ -1,14 +1,17 @@
-# $OpenBSD: Makefile,v 1.79 2012/10/27 10:55:53 naddy Exp $
+# $OpenBSD: Makefile,v 1.87 2013/05/31 15:34:53 ajacoutot Exp $
 
 COMMENT-main=	BitTorrent command line and daemon client
 COMMENT-gtk=	BitTorrent client with GTK+ interface
 COMMENT-qt=	BitTorrent client with Qt interface
 
-VER=		2.73
+VER=		2.77
 DISTNAME=	transmission-${VER}
 PKGNAME-main=	transmission-${VER}
 PKGNAME-gtk=	transmission-gtk-${VER}
 PKGNAME-qt=	transmission-qt-${VER}
+REVISION-main=	1
+REVISION-gtk=	1
+REVISION-qt=	1
 CATEGORIES=	net
 HOMEPAGE=	http://www.transmissionbt.com/
 
@@ -16,9 +19,6 @@ MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://download.transmissionbt.com/files/
 EXTRACT_SUFX=	.tar.xz
@@ -36,14 +36,14 @@ FLAVOR?=
 
 WANTLIB=	c crypto curl event_core event_extra idn m miniupnpc \
 		natpmp pthread ssl z
-WANTLIB-gtk=	${WANTLIB} ICE SM X11 Xau Xcomposite Xcursor Xdamage \
-		Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm \
-		GL atk-1.0 atk-bridge-2.0 atspi cairo cairo-gobject \
-		dbus-1 drm expat ffi fontconfig freetype \
+WANTLIB-gtk=	${WANTLIB} ICE SM X11 Xcomposite Xcursor Xdamage \
+		Xext Xfixes Xi Xinerama Xrandr Xrender \
+		atk-1.0 atk-bridge-2.0 atspi cairo cairo-gobject \
+		dbus-1 expat ffi fontconfig freetype \
 		gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 \
-		gobject-2.0 gthread-2.0 gtk-3 \
-		harfbuzz icudata icule icuuc pango-1.0 pangoft2-1.0 \
-		pangocairo-1.0 pixman-1 png pcre pthread-stubs stdc++ xcb \
+		gobject-2.0 graphite2 gthread-2.0 gtk-3 \
+		harfbuzz pango-1.0 pangoft2-1.0 \
+		pangocairo-1.0 pixman-1 png pcre pthread-stubs xcb \
 		xcb-render xcb-shm
 WANTLIB-qt=	${WANTLIB} ICE SM QtCore QtDBus QtGui QtNetwork QtXml \
 		X11 Xext Xi Xinerama Xrender \
@@ -66,11 +66,7 @@ RUN_DEPENDS-gtk=${PKGNAME-main}:net/transmission,-main \
 RUN_DEPENDS-qt=	${PKGNAME-main}:net/transmission,-main \
 		devel/desktop-file-utils
 
-BUILD_DEPENDS=	archivers/gtar
-TAR=		${LOCALBASE}/bin/gtar
-
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--disable-shared \
 		--enable-external-natpmp

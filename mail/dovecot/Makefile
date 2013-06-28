@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.193 2012/09/25 20:05:46 brad Exp $
+# $OpenBSD: Makefile,v 1.208 2013/06/20 08:26:13 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -9,14 +9,18 @@ COMMENT-postgresql= PostgreSQL authentication / dictionary support for Dovecot
 
 # Bump dovecot-pigeonhole every time you update to a new Dovecot version.
 V_MAJOR=	2.1
-V_DOVECOT=	2.1.10
+V_DOVECOT=	2.1.16
 
 DISTNAME=	dovecot-${V_DOVECOT}
 PKGNAME=	dovecot-${V_DOVECOT}
 PKGNAME-server=	dovecot-${V_DOVECOT}
+REVISION-server=2
 PKGNAME-ldap=	dovecot-ldap-${V_DOVECOT}
+REVISION-ldap=	2
 PKGNAME-mysql=	dovecot-mysql-${V_DOVECOT}
+REVISION-mysql=	3
 PKGNAME-postgresql= dovecot-postgresql-${V_DOVECOT}
+REVISION-postgresql=1
 CATEGORIES=	mail
 MASTER_SITES=	${HOMEPAGE}releases/${V_MAJOR}/
 
@@ -33,15 +37,14 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # LGPLv2.1 and MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-server=	asn1 bz2 c crypto gssapi krb5 sqlite3 ssl z \
+		com_err heimbase roken wind \
 		${MODLIBICONV_WANTLIB}
-WANTLIB-ldap=	asn1 com_err crypto gssapi krb5 lber ldap sasl2 ssl
+WANTLIB-ldap=	asn1 com_err crypto gssapi krb5 lber ldap sasl2 ssl \
+		com_err heimbase roken wind
 WANTLIB-mysql=	crypto m lib/mysql/mysqlclient>=10 ssl z
-WANTLIB-postgresql= com_err crypto pq>=4 ssl
+WANTLIB-postgresql= pq>=4
 
 MODULES=	converters/libiconv
 LIB_DEPENDS+=	archivers/bzip2
@@ -76,15 +79,15 @@ FLAVOR+=	no_ldap no_mysql no_postgresql
 MULTI_PACKAGES= -server
 SUBPACKAGE?=	-server
 
-.if !${FLAVOR:L:Mno_ldap}
+.if !${FLAVOR:Mno_ldap}
 MULTI_PACKAGES+=-ldap
 .endif
 
-.if !${FLAVOR:L:Mno_mysql}
+.if !${FLAVOR:Mno_mysql}
 MULTI_PACKAGES+=-mysql
 .endif
 
-.if !${FLAVOR:L:Mno_postgresql}
+.if !${FLAVOR:Mno_postgresql}
 MULTI_PACKAGES+=-postgresql
 .endif
 
@@ -101,9 +104,6 @@ CONFIGURE_ARGS+=--with-mysql
 .if ${BUILD_PACKAGES:M-postgresql}
 CONFIGURE_ARGS+=--with-pgsql
 .endif
-
-post-extract:
-	@${INSTALL} -m 555 ${FILESDIR}/krb5-config ${WRKDIR}/bin
 
 pre-build:
 	@${SUBST_CMD} ${WRKSRC}/doc/example-config/conf.d/10-mail.conf

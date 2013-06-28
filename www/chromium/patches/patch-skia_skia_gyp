@@ -1,56 +1,21 @@
-$OpenBSD: patch-skia_skia_gyp,v 1.6 2012/11/07 06:59:45 robert Exp $
---- skia/skia.gyp.orig	Wed Oct 31 20:01:43 2012
-+++ skia/skia.gyp	Tue Nov  6 22:45:36 2012
-@@ -339,7 +339,7 @@
-             '__ARM_HAVE_NEON',
-           ],
-         }],
--        [ 'target_arch == "arm"', {
-+        [ 'target_arch == "arm" or disable_sse2 == 1', {
-           'sources!': [
-             '../third_party/skia/src/opts/opts_check_SSE2.cpp'
-           ],
-@@ -664,7 +664,7 @@
+$OpenBSD: patch-skia_skia_gyp,v 1.10 2013/05/30 18:42:18 robert Exp $
+--- skia/skia.gyp.orig.port	Fri May 17 22:44:24 2013
++++ skia/skia.gyp	Thu May 30 00:10:49 2013
+@@ -652,7 +652,7 @@
              'SK_BUILD_FOR_ANDROID_NDK',
            ],
          }],
--        [ 'target_arch != "arm"', {
-+        [ 'target_arch != "arm" and disable_sse2 != 1', {
+-        [ 'target_arch != "arm" and target_arch != "mipsel"', {
++        [ 'target_arch != "arm" and target_arch != "mipsel" or disable_sse2 != 1', {
            'sources': [
              '../third_party/skia/src/opts/SkBitmapProcState_opts_SSE2.cpp',
              '../third_party/skia/src/opts/SkBlitRect_opts_SSE2.cpp',
-@@ -679,8 +679,14 @@
-               ],
-             }],
+@@ -733,7 +733,7 @@
+             '../third_party/skia/src/opts/opts_check_arm.cpp',
            ],
--        },
--        {  # arm
-+        },{ #disable_sse2 == 1
-+          'sources': [
-+            '../third_party/skia/src/opts/SkBitmapProcState_opts_none.cpp',
-+            '../third_party/skia/src/opts/SkBlitRow_opts_none.cpp',
-+            '../third_party/skia/src/opts/SkUtils_opts_none.cpp',
-+          ],
-+        }],
-+        [ 'target_arch == "arm"', {
-           'conditions': [
-             ['order_profiling != 0', {
-               'target_conditions' : [
-@@ -768,7 +774,7 @@
-         '../third_party/skia/src/core',
-       ],
-       'conditions': [
--        [ 'OS in ["linux", "freebsd", "openbsd", "solaris"]', {
-+        [ 'OS in ["linux", "freebsd", "solaris"]', {
-           'cflags': [
-             '-mssse3',
-           ],
-@@ -795,7 +801,7 @@
-             ],
-           },
          }],
--        [ 'target_arch != "arm"', {
-+        [ 'target_arch != "arm" and OS != "openbsd"', {
-           'sources': [
-             '../third_party/skia/src/opts/SkBitmapProcState_opts_SSSE3.cpp',
+-        [ 'target_arch == "mipsel"',{
++        [ 'target_arch == "mipsel" or disable_sse2 == 1',{
+           'cflags': [
+             '-fomit-frame-pointer',
            ],

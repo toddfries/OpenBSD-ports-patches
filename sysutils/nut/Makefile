@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2012/11/09 20:50:17 sthen Exp $
+# $OpenBSD: Makefile,v 1.72 2013/06/20 06:54:37 ajacoutot Exp $
 
 COMMENT-main=		UPS monitoring program supporting many brands
 COMMENT-cgi=		CGIs for monitoring Nut-based UPSs
@@ -6,7 +6,9 @@ COMMENT-snmp=		driver for monitoring UPS via SNMP
 COMMENT-xml=		driver for monitoring UPS via XML/HTTP
 
 DISTNAME=		nut-2.6.5
-REVISION-main=		1
+REVISION-main=		2
+REVISION-cgi=		1
+REVISION-xml=		1
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-cgi=		${DISTNAME:S/-/-cgi-/}
@@ -23,13 +25,11 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2+, some scripts (not packaged) are GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 COMMON +=	c crypto pthread
 WANTLIB-main +=	${COMMON} ltdl m ssl usb usb-1.0 wrap
 WANTLIB-xml +=	${COMMON} ${MODGETTEXT_WANTLIB} asn1 expat gssapi krb5 neon ssl z proxy
+WANTLIB-xml +=	com_err heimbase roken wind
 WANTLIB-cgi +=	${COMMON} ${MODGETTEXT_WANTLIB} X11 expat fontconfig
 WANTLIB-cgi +=	freetype gd jpeg m png ssl upsclient xcb z
 WANTLIB-snmp +=	${COMMON} m netsnmp
@@ -39,7 +39,7 @@ MASTER_SITES=		${HOMEPAGE}source/2.6/
 MODULES=		devel/gettext \
 			lang/python
 MODPY_RUNDEP=		No
-BUILD_DEPENDS+=		textproc/asciidoc \
+BUILD_DEPENDS+=		textproc/asciidoc>=8.6.8 \
 			textproc/docbook-xsl
 
 WEB_ROOT=		/var/www
@@ -58,7 +58,6 @@ CONFIGURE_ARGS+=	--datadir=${PREFIX}/share/ups \
 			--with-statepath=/var/db/nut \
 			--with-user=${NUT_USER} \
 			--with-group=${NUT_USER} \
-			A2X=${LOCALBASE}/bin/a2x.py \
 			CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="${LDFLAGS}"
 
@@ -66,13 +65,13 @@ PSEUDO_FLAVORS=		no_snmp no_xml
 FLAVOR?=
 MULTI_PACKAGES=		-main -cgi
 
-.if ${FLAVOR:L:Mno_snmp}
+.if ${FLAVOR:Mno_snmp}
 CONFIGURE_ARGS+=	--without-snmp
 .else
 MULTI_PACKAGES+=	-snmp
 .endif
 
-.if ${FLAVOR:L:Mno_xml}
+.if ${FLAVOR:Mno_xml}
 CONFIGURE_ARGS+=	--without-neon
 .else
 MULTI_PACKAGES+=	-xml
@@ -111,7 +110,7 @@ USE_GMAKE=		Yes
 USE_LIBTOOL=		gnu# -all-static
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/nut
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/conf/upssched.conf.sample.in

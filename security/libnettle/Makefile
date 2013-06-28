@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2012/09/05 07:14:47 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/09 14:25:12 ajacoutot Exp $
 
 COMMENT=	cryptographic library
 
-DISTNAME=	nettle-2.5
+DISTNAME=	nettle-2.7.1
 PKGNAME=	lib${DISTNAME}
 
-SHARED_LIBS +=  hogweed                   1.0 # 2.4
-SHARED_LIBS +=  nettle                    1.0 # 4.3
+SHARED_LIBS +=  hogweed                   1.1 # 2.3
+SHARED_LIBS +=  nettle                    1.2 # 4.5
 
 CATEGORIES=	security devel
 
@@ -14,14 +14,11 @@ HOMEPAGE=	http://www.lysator.liu.se/~nisse/nettle/
 
 # LGPLv2.1+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c gmp
 
 MASTER_SITES=	http://www.lysator.liu.se/~nisse/archive/ \
-		ftp://ftp.lysator.liu.se/pub/security/lsh
+		ftp://ftp.lysator.liu.se/pub/security/lsh/
 
 BUILD_DEPENDS=	devel/m4
 

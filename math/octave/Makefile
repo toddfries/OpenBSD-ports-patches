@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.60 2012/06/30 07:44:34 steven Exp $
+# $OpenBSD: Makefile,v 1.63 2013/04/03 07:01:32 ajacoutot Exp $
 
 # vax:   no IEEE arithmetic
 # sparc: fPIC version of libgcc.a needed but not available
@@ -8,7 +8,7 @@ COMMENT =	high-level language for numerical computations
 
 VERSION =	3.0.5
 DISTNAME =	octave-${VERSION}
-REVISION =	9
+REVISION =	10
 CATEGORIES =	math
 
 SHARED_LIBS =	cruft		5.0 \
@@ -21,9 +21,6 @@ MAINTAINER =	Steven Mestdagh <steven@openbsd.org>
 
 # GPL v3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB=	c m ncurses readline stdc++ z ${MODFORTRAN_WANTLIB} \
 		fftw3>=3 lapack>=3 blas>=1 amd umfpack pcre>=1 curl>=6
@@ -33,10 +30,14 @@ MASTER_SITES =	${MASTER_SITE_GNU:=octave/}
 MODULES =	fortran
 MODFORTRAN_COMPILER = g77
 
-BUILD_DEPENDS =	${MODFORTRAN_BUILD_DEPENDS} \
-		devel/desktop-file-utils
+BUILD_DEPENDS =	${MODFORTRAN_BUILD_DEPENDS}
+
+# configure checks for desktop-file-install(1)
+BUILD_DEPENDS +=devel/desktop-file-utils
+
 RUN_DEPENDS =	devel/gmake \
 		devel/desktop-file-utils
+
 LIB_DEPENDS =	${MODFORTRAN_LIB_DEPENDS} \
 		math/fftw3 \
 		math/lapack \
@@ -78,14 +79,14 @@ post-configure:
 	@perl -pi -e 's#(gcc-lib/${GCC_ARCH}/[\d.]+)\s#\1/fpic #' \
 		${WRKBUILD}/Makeconf
 
-.ifmake regress
+.ifmake test
 # some tests need HOME to be writable
 PORTHOME =	/tmp
 # define some user for tilde expansion test
 MAKE_ENV +=	USER=nobody
 .endif
 
-post-regress:
+post-test:
 	@rm -f /tmp/oct-*
 
 # fix ls-R and install HTML documentation

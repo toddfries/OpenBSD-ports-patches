@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/21 14:48:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/04/02 16:16:47 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	addressbook manager
 
 DISTNAME=	rubrica2-2.0.7
-REVISION=	5
+REVISION=	7
 EPOCH=		0
 
 CATEGORIES=	productivity x11
@@ -18,9 +18,6 @@ SHARED_LIBS +=  ral                  0.0      # .1.0
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_BERLIOS:=rubrica/}
 
@@ -38,7 +35,6 @@ MODULES=	devel/gettext \
 		devel/gconf2
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 
 MODGCONF2_SCHEMAS_DIR= rubrica2
 
@@ -55,8 +51,7 @@ CONFIGURE_ENV +=ac_cv_path_GTKDOC_CHECK="" \
 		ac_cv_path_GTKDOC_MKPDF=""
 
 RUN_DEPENDS=	devel/desktop-file-utils \
-		misc/shared-mime-info \
-		x11/gnome/icon-theme
+		misc/shared-mime-info
 
 LIB_DEPENDS=	devel/libnotify>=0.7.2 \
 		devel/libglade2

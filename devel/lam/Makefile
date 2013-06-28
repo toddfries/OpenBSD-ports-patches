@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2010/11/15 19:45:59 espie Exp $
+# $OpenBSD: Makefile,v 1.24 2013/03/21 08:45:15 ajacoutot Exp $
 # Original from: Yannick Cote
 
 DISTNAME=		lam-6.5.9
@@ -13,9 +13,6 @@ COMMENT=		great implementation of the message passing interface
 MAINTAINER=		Todd T. Fries <todd@openbsd.org>
 
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c util
 
 MASTER_SITES=		http://www.lam-mpi.org/download/files/ \
@@ -27,7 +24,6 @@ MASTER_SITES=		http://www.lam-mpi.org/download/files/ \
 HOMEPAGE=		http://www.lam-mpi.org/
 
 USE_GROFF =		Yes
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config ${WRKSRC}/mpi2c++
 CONFIGURE_ARGS+=	--with-rsh="ssh -x"

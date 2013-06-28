@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.49 2012/09/08 08:00:45 rpointel Exp $
+# $OpenBSD: Makefile,v 1.54 2013/06/03 07:55:02 rpointel Exp $
 
 COMMENT =		fast, lightweight source control management
 
-MODPY_EGG_VERSION =	2.3.1
+MODPY_EGG_VERSION =	2.6.2
 DISTNAME =		mercurial-${MODPY_EGG_VERSION}
 CATEGORIES =     	devel
 
@@ -12,9 +12,6 @@ MAINTAINER =		Remi Pointel <rpointel@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		http://mercurial.selenic.com/release/
 
@@ -22,7 +19,7 @@ MODULES =		lang/python
 USE_GROFF =		Yes
 
 BUILD_DEPENDS =		devel/gettext
-REGRESS_DEPENDS =	${RUN_DEPENDS} \
+TEST_DEPENDS =	${RUN_DEPENDS} \
 			archivers/unzip \
 			devel/git
 
@@ -63,7 +60,7 @@ post-install:
 			${PREFIX}/share/mercurial
 .	endfor
 
-do-regress:
+do-test:
 	@cd ${WRKSRC}/tests && ${MODPY_BIN} run-tests.py -v 1>&2
 
 .include <bsd.port.mk>

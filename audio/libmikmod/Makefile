@@ -1,31 +1,25 @@
-# $OpenBSD: Makefile,v 1.22 2012/08/10 20:11:41 naddy Exp $
+# $OpenBSD: Makefile,v 1.26 2013/03/21 08:45:12 ajacoutot Exp $
 
 COMMENT=	mikmod sound library
 
-VERSION=	3.1.10
-DISTNAME=	libmikmod-${VERSION}
-REVISION=	9
-SHARED_LIBS +=	mikmod               2.4      # .2.4
-CATEGORIES=    	audio devel
+DISTNAME=	libmikmod-3.2.0
+SHARED_LIBS +=	mikmod               3.0      # .3.0
+CATEGORIES=	audio devel
 
-HOMEPAGE=	http://mikmod.raphnet.net/
+HOMEPAGE=	http://mikmod.shlomifish.org/
 
 MAINTAINER=	Peter Valchev <pvalchev@openbsd.org>
 
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}/files/libmikmod/ \
-		${MASTER_SITE_SUNSITE:=apps/sound/libs/}
+MASTER_SITES=	${HOMEPAGE}files/
 
-WANTLIB=	sndio
+WANTLIB=	m sndio
 
 SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
-USE_LIBTOOL=	Yes
-CONFIGURE_ENV=	CFLAGS="-DDRV_SNDIO" LIBRARY_LIB="-lsndio"
+CFLAGS +=	-DDRV_SNDIO
+CONFIGURE_ENV=	LIBRARY_LIB="-lsndio"
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --disable-dl \
 		 --disable-oss \

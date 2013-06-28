@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2011/08/21 14:37:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2013/03/21 08:45:13 ajacoutot Exp $
 
 COMMENT=	tempo/pitch audio processing library
 
@@ -12,9 +12,6 @@ HOMEPAGE=	http://www.surina.net/soundtouch/
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${HOMEPAGE}
 
@@ -24,7 +21,6 @@ BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
 		${MODGNU_AUTOMAKE_DEPENDS} \
 		devel/libtool
 
-USE_LIBTOOL=	Yes
 
 AUTOCONF_VERSION=2.61
 AUTOMAKE_VERSION=1.9

@@ -1,19 +1,17 @@
-# $OpenBSD: Makefile,v 1.32 2012/10/05 02:27:50 brad Exp $
+# $OpenBSD: Makefile,v 1.34 2013/04/02 11:38:12 sthen Exp $
 
 COMMENT=		FTP daemon which aims to be secure
 
 DISTNAME=		vsftpd-3.0.2
+REVISION=		0
 CATEGORIES=		net
 
-HOMEPAGE =		http://vsftpd.beasts.org/
+HOMEPAGE=		http://vsftpd.beasts.org/
 
-MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
+MAINTAINER=		Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2+OpenSSL exemption
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c crypto ssl util wrap
 
@@ -24,14 +22,14 @@ ALL_TARGET=		vsftpd
 MAKE_FLAGS=		CC="${CC}" \
 			CFLAGS="${CFLAGS}"
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 do-configure:
-	@perl -pi -e "s,%%SYSCONFDIR%%,${SYSCONFDIR}," ${WRKSRC}/defs.h
 	@perl -pi -e "s,/usr/share/ssl/certs/,/etc/ssl/private/,g" \
 		${WRKSRC}/tunables.c \
 		${WRKSRC}/README.ssl
 	@perl -pi -e "s,/etc/vsftpd,${SYSCONFDIR}/vsftpd,g" \
+		${WRKSRC}/defs.h \
 		${WRKSRC}/vsftpd.conf.5 \
 		${WRKSRC}/vsftpd.8
 

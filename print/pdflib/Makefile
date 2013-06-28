@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2010/11/20 09:48:39 espie Exp $
+# $OpenBSD: Makefile,v 1.23 2013/06/04 18:41:56 naddy Exp $
 
 COMMENT=		C library to produce PDF files
 
@@ -11,8 +11,6 @@ HOMEPAGE=		http://www.pdflib.com/pdflib/
 
 PERMIT_PACKAGE_CDROM=	No
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	No
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://www.pdflib.com/pdflib/download/
 
@@ -21,7 +19,6 @@ WANTLIB=		m z jpeg png>=2 tiff>=35
 LIB_DEPENDS=		graphics/png \
 			graphics/tiff
 
-USE_LIBTOOL=		Yes
 
 FAKE=			lib
 CONFIGURE_STYLE=	autoconf dest
@@ -36,12 +33,12 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--without-py \
 			--without-tcl
 
-CONFIGURE_ENV=		LDFLAGS="-L${DEPBASE}/lib" \
-			CPPFLAGS="-I${DEPBASE}/include/libpng -I${DEPBASE}/include" \
+CONFIGURE_ENV=		LDFLAGS="-L${LOCALBASE}/lib" \
+			CPPFLAGS="-I${LOCALBASE}/include" \
 			LIBS="-lm"
 MAKE_ENV=		${CONFIGURE_ENV}
 
-REGRESS_TARGET=		test
+TEST_TARGET=		test
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/pdflib

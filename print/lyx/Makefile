@@ -1,21 +1,18 @@
-# $OpenBSD: Makefile,v 1.63 2012/03/29 13:38:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.67 2013/04/06 12:29:45 sthen Exp $
 
 COMMENT=	graphical frontend for LaTeX (nearly WYSIWYG)
 
-DISTNAME=	lyx-1.6.6.1
-REVISION=	3
+DISTNAME=	lyx-2.0.4
+REVISION=	0
 CATEGORIES=	print editors
 
 HOMEPAGE=	http://www.lyx.org/
 
-MASTER_SITES=	ftp://ftp.lyx.org/pub/lyx/stable/1.6.x/ \
-		ftp://ftp.lip6.fr/pub/lyx/stable/1.6.x/
+MASTER_SITES=	ftp://ftp.lyx.org/pub/lyx/stable/2.0.x/ \
+		ftp://ftp.lip6.fr/pub/lyx/stable/2.0.x/
 
-# GPLv2
+# GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	devel/gettext lang/python x11/qt4
 
@@ -24,14 +21,14 @@ RUN_DEPENDS=	print/texlive/base \
 
 LIB_DEPENDS=	${MODQT4_LIB_DEPENDS}>=4.5.3 \
 		devel/boost \
+		textproc/enchant \
 		textproc/aspell/core
 
-WANTLIB += QtGui>=8 X11 aspell c m pthread stdc++ z
-WANTLIB += boost_filesystem-mt>=1 boost_iostreams-mt>=1
+WANTLIB += QtGui>=8 aspell c m pthread stdc++ z
 WANTLIB += boost_regex-mt>=1 boost_signals-mt>=1
+WANTLIB += glib-2.0 gmodule-2.0 enchant
 
 SEPARATE_BUILD=	Yes
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
 
@@ -40,6 +37,7 @@ CONFIGURE_STYLE=		gnu
 CONFIGURE_ARGS=	--with-extra-lib="${X11BASE}/lib ${LOCALBASE}/lib" \
 		--with-extra-inc="${X11BASE}/include ${LOCALBASE}/include" \
 		--without-aiksaurus \
+		--without-hunspell \
 		--without-included-boost \
 		--enable-threads=posix
 CONFIGURE_ENV+=	PYTHON=${MODPY_BIN} MOC4=${MODQT4_MOC} UIC4=${MODQT4_UIC} \

@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.5 2012/09/27 23:46:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/19 13:03:02 sthen Exp $
 
 PKG_ARCH =      *
 
-COMMENT=	scripts libquvi uses for parsing the media details
+COMMENT =	scripts libquvi uses for parsing the media details
 
-DISTNAME=	libquvi-scripts-0.4.1
-REVISION=	2
+DISTNAME =	libquvi-scripts-0.4.13
 
-MODULES=	lang/lua
+MODULES =	lang/lua
+
+EXTRACT_SUFX =	.tar.xz
 
 CONFIGURE_ARGS+=--with-nsfw
 

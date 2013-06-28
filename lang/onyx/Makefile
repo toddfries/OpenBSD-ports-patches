@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/03/07 19:26:28 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2013/06/01 14:28:28 ajacoutot Exp $
 
 COMMENT=		powerful stack-based, multi-threaded language
 
 V=			5.1.2
 DISTNAME=		onyx-$V
 CATEGORIES=		lang
+REVISION=		0
 
 SHARED_LIBS +=		onyx 0.0
 
@@ -14,9 +15,6 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # 2-clause BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c curses edit m pcre pthread
 
@@ -39,7 +37,7 @@ do-build:
 do-install:
 	@cd ${WRKSRC} && ${LOCALBASE}/bin/cook PREFIX=${PREFIX} install
 
-do-regress:
+do-test:
 	@cd ${WRKSRC} && ${LOCALBASE}/bin/cook check
 
 .include <bsd.port.mk>

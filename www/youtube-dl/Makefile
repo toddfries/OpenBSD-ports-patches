@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.31 2012/10/11 10:30:23 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.41 2013/06/03 23:11:52 pirofti Exp $
 
 COMMENT =	command-line program to download videos from YouTube.com
 
-MODPY_EGG_VERSION = 2012.10.09
+MODPY_EGG_VERSION = 2013.05.23
 
 DISTNAME =	youtube-dl-${MODPY_EGG_VERSION}
 CATEGORIES =	www
@@ -13,11 +13,8 @@ MAINTAINER =	Paul Irofti <pirofti@openbsd.org>
 
 # Public Domain
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
-MASTER_SITES =	http://spacehopper.org/mirrors/
+MASTER_SITES =	http://youtube-dl.org/downloads/${MODPY_EGG_VERSION}/
 
 MODULES =	lang/python
 
@@ -25,11 +22,12 @@ MODPY_SETUPTOOLS = Yes
 
 MODPY_BADEGGS =	youtube-dl
 
-NO_REGRESS =	Yes
+USE_GROFF =	Yes
+
+NO_TEST =	Yes
 
 PKG_ARCH =	*
 
-pre-configure:
-	@cp ${FILESDIR}/setup.py ${WRKSRC}/
+WRKDIST =	${WRKDIR}/youtube-dl
 
 .include <bsd.port.mk>

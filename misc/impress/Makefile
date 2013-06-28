@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2010/11/19 07:23:11 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/11 11:23:57 espie Exp $
 
 COMMENT=	publishing and presentation tool
 
 VERSION=	1.1b9
 DISTNAME=	impress-${VERSION}
+REVISION=	0
 DISTFILES=	imp${VERSION}.tar.gz
 CATEGORIES=	misc
 
@@ -14,12 +15,13 @@ HOMEPAGE=	http://www.ntlug.org/~ccox/impress/
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
-RUN_DEPENDS=    x11/tk/8.4
+MODULES=	x11/tk
+RUN_DEPENDS=	${MODTK_RUN_DEPENDS}
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
+
+pre-configure:
+	@${MODTCL_WISH_ADJ} ${WRKSRC}/src/impress.tcl
 
 .include <bsd.port.mk>

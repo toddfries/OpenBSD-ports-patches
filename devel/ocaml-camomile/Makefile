@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.2 2012/08/18 22:13:17 avsm Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 10:50:12 espie Exp $
 
 COMMENT =	unicode library for objective caml
 
 CATEGORIES =	devel
 
 V =		0.8.3
-REVISION =	0
+REVISION =	1
 DISTNAME =	camomile-${V}
 PKGNAME =	ocaml-camomile-${V}
 EXTRACT_SUFX =	.tar.bz2
@@ -17,10 +17,7 @@ HOMEPAGE =	http://camomile.sourceforge.net/
 MAINTAINER =	Christopher Zimmermann <madroach@gmerlin.de>
 
 # LGPL >= 2
-PERMIT_PACKAGE_FTP =		Yes
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_DISTFILES_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
 
 MODULES =	lang/ocaml
 
@@ -28,7 +25,7 @@ BUILD_DEPENDS =	sysutils/findlib
 
 CONFIGURE_STYLE = gnu dest
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 USE_GMAKE =	Yes
 
 ALL_TARGET =	all dochtml

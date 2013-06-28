@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile.inc,v 1.24 2012/10/28 21:51:08 robert Exp $
+# $OpenBSD: Makefile.inc,v 1.28 2013/05/16 20:50:04 rpe Exp $
 
 SHARED_ONLY=	Yes
 
-V?=		7.1.1
-BUILD?=		37812
+V?=		7.1.4
+BUILD?=		41394
 DISTNAME?=	zcp-${V}
 
-CATEGORIES+=	mail/zarafa
+CATEGORIES+=	mail
 
 HOMEPAGE?=	http://community.zarafa.com/
 
@@ -15,7 +15,6 @@ MAINTAINER?=	Robert Nagy <robert@openbsd.org>
 # AGPLv3 (GNU Affero Public License) with exceptions
 PERMIT_PACKAGE_CDROM?=	Yes
 PERMIT_PACKAGE_FTP?=	Yes
-PERMIT_DISTFILES_CDROM?=Yes
 PERMIT_DISTFILES_FTP?=	Yes
 
 DIST_SUBDIR?=	zarafa

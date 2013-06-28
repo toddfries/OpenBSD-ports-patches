@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.85 2012/10/15 09:48:31 jasper Exp $
+# $OpenBSD: Makefile,v 1.96 2013/05/31 15:34:47 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,7 +8,7 @@ COMMENT-dvi=	evince document viewer backend for dvi documents
 COMMENT-nautilus= evince plugin for nautilus
 
 GNOME_PROJECT=	evince
-GNOME_VERSION=	3.6.1
+GNOME_VERSION=	3.8.2
 
 MAJ_V=		3.0
 SUBST_VARS=	MAJ_V
@@ -20,7 +20,12 @@ PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
 PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
 PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
-SHARED_LIBS +=  evdocument3               0.0 # 3.0
+REVISION-main=	0
+REVISION-djvu=	0
+REVISION-dvi=	0
+REVISION-nautilus=	0
+
+SHARED_LIBS +=  evdocument3               0.1 # 4.0
 SHARED_LIBS +=  evview3                   0.0 # 3.0
 
 HOMEPAGE=	http://www.gnome.org/projects/evince/
@@ -29,10 +34,7 @@ MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 MODULES=	devel/gettext \
 		x11/gnome \
@@ -40,48 +42,43 @@ MODULES=	devel/gettext \
 
 USE_GROFF =	Yes
 
-BUILD_DEPENDS=	x11/gnome/icon-theme \
-		devel/gsettings-desktop-schemas
+BUILD_DEPENDS=	devel/gsettings-desktop-schemas
 
-WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes drm stdc++
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes gtk-3 pango-1.0
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo expat fontconfig
-WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gtk-3 pango-1.0 Xau Xdmcp Xxf86vm
+WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gobject-2.0
 WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread-stubs
-WANTLIB += GL xcb-shm xcb xcb-render z gthread-2.0 cairo-gobject m ffi
-WANTLIB += atk-bridge-2.0 atspi harfbuzz icudata icule icuuc
+WANTLIB += xcb-shm xcb xcb-render z gthread-2.0 cairo-gobject m ffi
+WANTLIB += atk-bridge-2.0 atspi harfbuzz
+WANTLIB += gmodule-2.0 graphite2
 
-MODGNOME_TOOLS= goi yelp
+MODGNOME_TOOLS= gi yelp
 
 LIB_DEPENDS=	x11/gtk+3
 
 WANTLIB-main=	${WANTLIB} ICE SM c dbus-1 gailutil-3 \
-		gnome-keyring gs gcrypt gpg-error \
+		gs gcrypt gpg-error stdc++ secret-1 \
 		jpeg pthread tiff xml2 lcms2 openjpeg \
-		poppler poppler-glib spectre gnome-keyring
+		poppler poppler-glib spectre avahi-common
 LIB_DEPENDS-main= print/poppler \
 		print/libspectre \
-		x11/gnome/libgnome-keyring \
 		${LIB_DEPENDS}
 RUN_DEPENDS-main= ${RUN_DEPENDS} \
+		archivers/unrar \
+		archivers/unzip \
 		devel/gsettings-desktop-schemas \
 		misc/shared-mime-info \
 		print/ghostscript/gnu \
-		x11/gnome/icon-theme \
 		${MODGNOME_RUN_DEPENDS_yelp}
 
 WANTLIB-djvu=	${WANTLIB} jpeg evdocument3 djvulibre ICE SM \
-		 dbus-1 pthread
-# port-lib-depends-check misses these ones because the depending lib
-# is under lib/evince/3/backends/
+		dbus-1 pthread
 LIB_DEPENDS-djvu= ${LIB_DEPENDS} \
 		${BASE_PKGPATH} \
 		graphics/djvulibre
 
 WANTLIB-dvi=	${WANTLIB} gs evdocument3 kpathsea spectre ICE SM \
-		jpeg
-# port-lib-depends-check misses these ones because the depending lib
-# is under lib/evince/3/backends/
+		jpeg avahi-common dbus-1 pthread
 LIB_DEPENDS-dvi= ${LIB_DEPENDS} \
 		${BASE_PKGPATH} \
 		print/texlive/base \
@@ -100,8 +97,7 @@ MODGNOME_ICON_CACHE=	Yes
 LIBTOOL_FLAGS=	--tag=disable-static
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS+= --disable-static \
-		--disable-comics
+CONFIGURE_ARGS+= --disable-static
 
 MODGNOME_CPPFLAGS=${CFLAGS}
 CONFIGURE_ENV=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include"
@@ -124,7 +120,11 @@ CONFIGURE_ARGS+= --disable$s
 .endfor
 
 post-install:
+# This will fail if no_nautilus is found in FLAVOR, so make sure we don't
+# do it if it is.
+.if ${BUILD_PACKAGES:M-nautilus}
 	rm ${PREFIX}/lib/nautilus/extensions-${MAJ_V}/*.la
+.endif
 	rm ${PREFIX}/lib/evince/4/backends/*.la
 
 .include <bsd.port.mk>

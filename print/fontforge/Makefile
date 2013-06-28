@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.31 2011/09/16 11:13:41 espie Exp $
+# $OpenBSD: Makefile,v 1.34 2013/06/04 18:41:55 naddy Exp $
 
 SHARED_ONLY=		Yes
 
@@ -21,10 +21,7 @@ HOMEPAGE=		http://fontforge.sourceforge.net/
 MAINTAINER=		Matthias Kilian <kili@openbsd.org>
 
 # BSD
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=fontforge/}
 
@@ -50,8 +47,7 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS}	\
 WRKDIST=		${WRKDIR}/${DISTNAME:S,_full,,}
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include		\
-				  -I${LOCALBASE}/include/libpng"	\
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include"		\
 			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib	\
 				 -lintl -liconv -lz"
 CONFIGURE_ARGS=		--without-freetype-src \
@@ -59,10 +55,9 @@ CONFIGURE_ARGS=		--without-freetype-src \
 			--with-python-lib="$$(python${MODPY_VERSION}-config --libs)" \
 			--with-regular-link
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 post-extract:
 	find ${WRKSRC} -name \*.orig -o -name \*.rej | xargs rm

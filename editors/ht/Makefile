@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.20 2012/04/15 18:38:53 gonzalo Exp $
+# $OpenBSD: Makefile,v 1.23 2013/06/16 13:52:55 benoit Exp $
 
 COMMENT =		file editor/viewer/analyzer for executables
 
-DISTNAME =		ht-2.0.20
+DISTNAME =		ht-2.0.22
 CATEGORIES =		editors
 
 HOMEPAGE =		http://hte.sourceforge.net/
@@ -11,9 +11,6 @@ MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m ncursesw stdc++
 

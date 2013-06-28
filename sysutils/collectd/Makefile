@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/25 11:37:35 naddy Exp $
+# $OpenBSD: Makefile,v 1.19 2013/06/12 20:36:34 brad Exp $
 
 COMMENT-main =		system metrics collection engine
 COMMENT-mysql =		collectd mysql plugin
@@ -16,7 +16,7 @@ PKGNAME-snmp =		collectd-snmp-$V
 CATEGORIES =		sysutils
 
 REVISION-main=		3
-REVISION-mysql =	1
+REVISION-mysql =	3
 REVISION-pgsql =	1
 REVISION-rrdtool =	1
 REVISION-snmp =		1
@@ -27,9 +27,6 @@ SHARED_ONLY =		Yes
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${HOMEPAGE}/files/
 
@@ -63,7 +60,6 @@ WANTLIB += c crypto gpg-error idn kvm curl xml2 ltdl
 WANTLIB += m pcap pthread ssl xml2 z statgrab gcrypt ${MODGETTEXT_WANTLIB}
 
 CONFIGURE_STYLE =	gnu
-USE_LIBTOOL =		Yes
 LIBTOOL_FLAGS =	--tag=disable-static
 USE_GROFF =	Yes
 CONFIGURE_ARGS +=--with-ltdl-include=${LOCALBASE}/include \

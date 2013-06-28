@@ -1,23 +1,20 @@
-# $OpenBSD: Makefile,v 1.20 2010/11/22 08:36:47 espie Exp $
+# $OpenBSD: Makefile,v 1.23 2013/03/13 21:44:35 jasper Exp $
 
 COMMENT=	html editor designed for the experienced web designer
 
 DISTNAME=	august0.63b.src
 PKGNAME=	august-0.63b
-REVISION=	0
+REVISION=	1
 CATEGORIES=	www
 
-HOMEPAGE=	http://www.bostream.nu/johanb/august/
+HOMEPAGE=	http://www.erjobe.info/index.php?n=Main.August
 
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}
+MASTER_SITES=	${HOMEPAGE:=../mainwiki/pmwiki/uploads/Main/August/}
 
 MODULES=	x11/tk
 
@@ -26,7 +23,7 @@ RUN_DEPENDS=	www/weblint \
 		${MODTK_RUN_DEPENDS}
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 
 do-install:

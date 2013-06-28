@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.4 2012/11/08 10:06:04 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/14 11:16:02 dcoppa Exp $
 
 COMMENT = 	C++ library of cryptographic algorithms
 CATEGORIES = 	devel security
 
 HOMEPAGE = 	http://www.cryptopp.com/
 MASTER_SITES = 	${HOMEPAGE}
-DISTNAME = 	cryptopp561
-PKGNAME = 	cryptopp-5.6.1
-REVISION =	1
+DISTNAME = 	cryptopp562
+PKGNAME = 	cryptopp-5.6.2
 
 EXTRACT_SUFX = 	.zip
 WRKDIST = 	${WRKDIR}
@@ -17,13 +16,10 @@ MAINTAINER =	David Coppa <dcoppa@openbsd.org>
 # individual files are public domain
 # compilation just has supplementary disclaimers (patents dreck)
 PERMIT_PACKAGE_CDROM = 		Yes
-PERMIT_DISTFILES_CDROM = 	Yes
-PERMIT_PACKAGE_FTP = 		Yes
-PERMIT_DISTFILES_FTP = 		Yes
+
+WANTLIB +=	m pthread stdc++
 
 SHARED_LIBS = 	cryptopp	1.0
-
-WANTLIB +=	m stdc++
 
 USE_GMAKE = 	Yes
 MAKE_FLAGS +=	CXXFLAGS="${CXXFLAGS} -Wno-deprecated \
@@ -33,13 +29,13 @@ MAKE_FLAGS +=	CXXFLAGS="${CXXFLAGS} -Wno-deprecated \
 			-DCRYPTOPP_DISABLE_SSSE3 \
 			-DCRYPTOPP_DISABLE_AESNI \
 			-DNDEBUG -fPIC" \
-		LDFLAGS="-pthread" \
+		LDFLAGS="-lpthread" \
 		PREFIX=${PREFIX} \
 		LIBcryptopp_VERSION=${LIBcryptopp_VERSION}
 MAKE_FILE = 	${WRKDIR}/GNUmakefile
 
-REGRESS_FLAGS += WRKDIST=${WRKDIST}
-REGRESS_TARGET = test
+TEST_FLAGS += WRKDIST=${WRKDIST}
+TEST_TARGET = test
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/include/cryptopp

@@ -1,8 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2011/11/02 09:57:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.35 2013/04/08 15:25:43 sthen Exp $
 
 COMMENT=	read and manipulate raw images from digital cameras
 
-DISTNAME=	ufraw-0.18
+DISTNAME=	ufraw-0.19.2
+# rerolled tarball, we can zap DIST_SUBDIR when it's time for 0.19.3
+DIST_SUBDIR=	ufraw-0.19.2a
 REVISION=	0
 
 CATEGORIES=	graphics
@@ -13,19 +15,18 @@ MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
-WANTLIB += Xinerama Xrandr Xrender atk-1.0 c cairo expat
-WANTLIB += fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gthread-2.0 gtk-x11-2.0
-WANTLIB += jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
-WANTLIB += png pthread pthread-stubs stdc++ tiff xcb xcb-render 
-WANTLIB += xcb-shm z lensfun lcms bz2 exiv2 gtkimageview
-WANTLIB += gimp-2.0 gimpbase-2.0 gimpcolor-2.0 gimpconfig-2.0
-WANTLIB += gimpmath-2.0 gimpui-2.0 gimpwidgets-2.0 gimpmodule-2.0
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender atk-1.0 bz2 c cairo cfitsio exiv2 expat
+WANTLIB += fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gimp-2.0
+WANTLIB += gimpbase-2.0 gimpcolor-2.0 gimpconfig-2.0 gimpmath-2.0
+WANTLIB += gimpmodule-2.0 gimpui-2.0 gimpwidgets-2.0 gio-2.0 glib-2.0
+WANTLIB += gobject-2.0 gthread-2.0 gtk-x11-2.0 gtkimageview jasper
+WANTLIB += jpeg lcms m pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += png pthread stdc++ tiff z
+
+# don't remove unless you are sure:
+WANTLIB += lensfun
 
 LIB_DEPENDS=	gimp->=2,<3:graphics/gimp/stable \
 		graphics/lcms \
@@ -38,11 +39,12 @@ LIB_DEPENDS=	gimp->=2,<3:graphics/gimp/stable \
 MODULES=	devel/gettext
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -pthread"
+		LDFLAGS="-L${LOCALBASE}/lib -pthread" \
+		CFITSIO_CFLAGS="-I${LOCALBASE}/include" \
+		CFITSIO_LIBS="-lcfitsio"
 CONFIGURE_ARGS=	--enable-extras
 
 .include <bsd.port.mk>

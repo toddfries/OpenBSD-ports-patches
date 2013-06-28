@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2011/11/11 15:57:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/11 11:46:09 espie Exp $
 
 PKG_ARCH=		*
 
@@ -6,10 +6,8 @@ COMMENT=		gui to configure devilspie rules
 
 MODPY_EGG_VERSION=	0.5
 DISTNAME=		gdevilspie-${MODPY_EGG_VERSION}
-REVISION=		4
+REVISION=		5
 EPOCH=			0
-
-MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 CATEGORIES=		x11 sysutils
 
@@ -17,9 +15,6 @@ HOMEPAGE=		http://code.google.com/p/gdevilspie/
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://gdevilspie.googlecode.com/files/
 EXTRACT_SUFX=		.tar.bz2
@@ -31,6 +26,6 @@ RUN_DEPENDS=		devel/desktop-file-utils \
 			x11/devilspie \
 			x11/py-gtk2
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 .include <bsd.port.mk>

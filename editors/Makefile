@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.91 2012/10/13 22:25:26 rpe Exp $
+# $OpenBSD: Makefile,v 1.99 2013/05/17 19:11:41 jasper Exp $
 
      SUBDIR =
      SUBDIR += abiword
@@ -12,13 +12,11 @@
      SUBDIR += ee
      SUBDIR += elvis
      SUBDIR += elvis,no_x11
+     SUBDIR += emacs
+     SUBDIR += emacs,no_x11
+     SUBDIR += emacs,gtk2
      SUBDIR += emacs21
      SUBDIR += emacs21,no_x11
-     SUBDIR += emacs22
-     SUBDIR += emacs22,no_x11
-     SUBDIR += emacs22,gtk
-     SUBDIR += emacs23
-     SUBDIR += emacs23,no_x11
      SUBDIR += focuswriter
      SUBDIR += fte
      SUBDIR += ged
@@ -40,19 +38,23 @@
      SUBDIR += nano
      SUBDIR += nedit
      SUBDIR += nvi
+     SUBDIR += nvi,iconv
      SUBDIR += nvi-m17n
      SUBDIR += nvi-m17n,canna
      SUBDIR += py-qscintilla
      SUBDIR += qscintilla
      SUBDIR += scintilla
      SUBDIR += scite
+     SUBDIR += se
      SUBDIR += subtitleeditor
      SUBDIR += tea
      SUBDIR += teaqt
      SUBDIR += ted
      SUBDIR += texmaker
      SUBDIR += texworks
+     SUBDIR += tpad
      SUBDIR += traditional-vi
+     SUBDIR += tweak
      SUBDIR += uemacs
      SUBDIR += vim
      SUBDIR += vim,gtk2,perl,python,ruby

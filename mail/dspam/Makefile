@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.38 2012/04/23 17:15:18 espie Exp $
+# $OpenBSD: Makefile,v 1.46 2013/06/20 08:26:13 ajacoutot Exp $
 
 COMMENT=	anti-spam filter
 
 VERSION=	3.8.0
 DISTNAME=	dspam-${VERSION}
-REVISION=	3
+REVISION=	9
 SHARED_LIBS=	dspam	8.0
 CATEGORIES=	mail
 
@@ -16,12 +16,9 @@ MAINTAINER=     Todd T. Fries <todd@OpenBSD.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c m
 
-USE_LIBTOOL=		Yes
+WANTLIB += c m
+
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 SEPARATE_BUILD=		Yes
@@ -65,7 +62,6 @@ DRIVER = sqlite3
 FLAVOR += sqlite3
 .endif
 
-
 .if ${DRIVER} == "mysql"
 CONFIGURE_ARGS+=	--with-storage-driver=mysql_drv \
 			--with-mysql-includes=${LOCALBASE}/include/mysql \
@@ -79,7 +75,7 @@ CONFIGURE_ARGS+=	--with-storage-driver=pgsql_drv \
 			--with-pgsql-libraries=${LOCALBASE}/lib \
 			--enable-virtual-users
 LIB_DEPENDS+=		databases/postgresql
-WANTLIB +=		pq>=4
+WANTLIB +=		pq>=4 com_err crypto ssl
 .elif ${DRIVER} == "hash"
 CONFIGURE_ARGS+=	--with-storage-driver=hash_drv
 .elif ${DRIVER} == "sqlite"
@@ -114,7 +110,8 @@ CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 LIB_DEPENDS+=		databases/openldap
 WANTLIB+=		crypto ssl sasl2 asn1 com_err gssapi krb5 \
-			ldap>=8 lber>=8
+			ldap-2.4 lber-2.4 heimbase \
+			roken wind
 .endif
 
 .if ${FLAVOR:Mpreferences}

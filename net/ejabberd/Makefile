@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.29 2012/06/26 20:23:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.31 2013/05/05 16:17:19 gonzalo Exp $
 
 COMMENT=		jabber server written in Erlang
 
-V=			2.1.11
+V=			2.1.12
 DISTNAME=		ejabberd-$V
 
 CATEGORIES=		net
@@ -13,9 +13,6 @@ MAINTAINER=		Wiktor Izdebski <vicviq@gmail.com>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		expat crypto ssl z
 
@@ -59,7 +56,7 @@ EJLOGDIR=		/var/log/ejabberd
 
 WRKSRC=			${WRKDIST}/src
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 SUBST_VARS=		EJDBDIR EJLOGDIR JABBERDUSER
 
@@ -82,4 +79,3 @@ post-install:
 	@find ${WRKINST} -type f -name '*.beforesubst' -exec rm {} \;
 
 .include <bsd.port.mk>
-

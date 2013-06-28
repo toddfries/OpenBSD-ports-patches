@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.13 2012/10/06 09:17:23 landry Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/12 20:36:34 brad Exp $
 
 BROKEN-hppa =		lack of atomic ops
+BROKEN-mips64 =		lack of atomic ops
 
 SHARED_ONLY =		Yes
 
@@ -18,16 +19,13 @@ PKGNAME-pgsql =		rsyslog-pgsql-$V
 CATEGORIES =		sysutils
 
 REVISION-main =		5
-REVISION-mysql =	2
+REVISION-mysql =	4
 REVISION-pgsql =	2
 
 HOMEPAGE =		http://www.rsyslog.com/
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		devel/gettext
 
@@ -48,7 +46,6 @@ MASTER_SITES =		http://www.rsyslog.com/files/download/rsyslog/ \
 
 CONFIGURE_STYLE =	autoconf
 AUTOCONF_VERSION =	2.65
-USE_LIBTOOL =		Yes
 LIBTOOL_FLAGS = 	--tag=disable-static
 USE_GROFF =	Yes
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \

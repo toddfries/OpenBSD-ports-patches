@@ -1,0 +1,12 @@
+$OpenBSD: patch-CMakeLists_txt,v 1.2 2013/06/06 08:36:48 zhuk Exp $
+--- CMakeLists.txt.orig	Tue May 28 22:46:58 2013
++++ CMakeLists.txt	Wed Jun  5 18:01:06 2013
+@@ -29,6 +29,8 @@ add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS}
+ include_directories (${QDBUS_INCLUDE_DIRS}  ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
+ 
+ # ...to here
++find_package(Boost)
++include_directories(${Boost_INCLUDE_DIRS})
+ find_package(BoostPython)
+ 
+ kde4_no_enable_final(kig)

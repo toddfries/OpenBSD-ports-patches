@@ -1,22 +1,17 @@
-# $OpenBSD: Makefile,v 1.34 2011/09/16 10:31:22 espie Exp $
+# $OpenBSD: Makefile,v 1.36 2013/03/11 11:23:56 espie Exp $
 
 COMMENT=		fast array and numeric programming library for Python
 
 MODPY_EGG_VERSION=	1.6.0
 DISTNAME=		numpy-${MODPY_EGG_VERSION}
 PKGNAME=		py-${DISTNAME}
-REVISION =		2
+REVISION =		3
 CATEGORIES=		math devel
 
 HOMEPAGE=		http://numpy.scipy.org/
 
-MAINTAINER=		Damien Miller <djm@openbsd.org>
-
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		blas m lapack ${MODFORTRAN_WANTLIB} ${MODPY_WANTLIB}
 
@@ -28,7 +23,7 @@ MODULES=		lang/python \
 MODPY_SETUPTOOLS=	Yes
 MODPY_SETUP=		setupegg.py
 
-REGRESS_DEPENDS=	devel/py-nose
+TEST_DEPENDS=	devel/py-nose
 
 MODFORTRAN_COMPILER =	g77
 
@@ -47,7 +42,7 @@ MODPY_BADEGGS = numpy
 pre-build:
 	cp -f ${WRKSRC}/numpy/distutils/site.cfg ${WRKSRC}/site.cfg
 
-do-regress: fake
+do-test: fake
 	${MAKE_ENV} PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} -c \
 	    'import numpy ; numpy.test()'
 

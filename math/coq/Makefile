@@ -1,68 +1,64 @@
-# $OpenBSD: Makefile,v 1.16 2010/11/19 07:23:10 espie Exp $
-
-BROKEN=			requires update due to ocaml 3.08
+# $OpenBSD: Makefile,v 1.23 2013/05/16 09:16:43 sthen Exp $
 
 COMMENT=		proof assistant based on a typed lambda calculus
 
-DISTNAME=		coq-7.3.1
+V=			8.4pl1
+DISTNAME=		coq-$V
 REVISION=		0
 CATEGORIES=		math
 HOMEPAGE=		http://coq.inria.fr/
 
 MAINTAINER=		Yozo Toda <yozo@v007.vaio.ne.jp>
 
+# LGPL 2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c curses m pthread
 
-MASTER_SITES=		ftp://ftp.inria.fr/INRIA/coq/V7.3.1/
-MASTER_SITES0=		${MASTER_SITES:S@$@doc/@}
-MASTER_SITES1=		http://coq.inria.fr/
-MASTER_SITES2=		http://coq.inria.fr/ps/
-MASTER_SITES3=		ftp://quatramaran.ens.fr/pub/espie/coq/
-DISTFILES=		${DISTNAME}.tar.gz \
-			doc-html-20040711.tar.gz:3 \
-			Changes.html:0 \
-			Reference-Manual-all.ps.gz:0 \
-			library.tar.gz:1 \
-			RecTutorial.v.ps:2
-PATCHFILES=		patch-coq-7.3.1-ocaml-3.07
+WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender atk-1.0 c cairo expat fontconfig freetype
+WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gobject-2.0
+WANTLIB += gtk-x11-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pixman-1 png pthread pthread-stubs
+WANTLIB += xcb xcb-render xcb-shm z
 
-DIST_SUBDIR=		coq
-EXTRACT_ONLY=		${DISTNAME}.tar.gz \
-			doc-html-20040711.tar.gz \
-			library.tar.gz  \
+MASTER_SITES=	${HOMEPAGE}distrib/V${V}/files/
 
-DESTDIRNAME=		COQINSTALLPREFIX
+RUN_DEPENDS=	x11/lablgtk2
+BUILD_DEPENDS=	${RUN_DEPENDS} \
+		sysutils/findlib
 
-USE_GMAKE=		Yes
-USE_GROFF =		Yes
+DESTDIRNAME=	COQINSTALLPREFIX
 
-MODULES=		lang/ocaml
+USE_GMAKE=	Yes
+USE_GROFF=	Yes
 
-CONFIGURE_STYLE=	simple
-CONFIGURE_ARGS=		-prefix ${PREFIX} \
-			-emacslib ${PREFIX}/share/emacs/site-lisp \
-			${MODOCAML_NATIVE:S/Yes/-opt/:S/No/-byteonly/}
+MODULES=	devel/gettext \
+		lang/ocaml
+
+CONFIGURE_STYLE= simple
+CONFIGURE_ARGS=	-emacslib ${PREFIX}/share/emacs/site-lisp \
+		-makecmd ${GMAKE} \
+		-prefix ${PREFIX} \
+		-mandir ${PREFIX}/man \
+		-configdir ${SYSCONFDIR}/xdg/coq \
+		-usecamlp4
+
+.include <bsd.port.arch.mk>
+.if ${PROPERTIES:Mocaml_native_dynlink}
+CONFIGURE_ARGS+=	-opt
+.else
+CONFIGURE_ARGS+=	-byteonly
+.endif
 
 ALL_TARGET=		world
-REGRESS_TARGET=		check
-
-COQ_DOCHTMLFILES=       Changes.html
-COQ_DOCPSFILES=         RecTutorial.v.ps Reference-Manual-all.ps.gz
+# Order is important!
+INSTALL_TARGET=		install-byte install-ide-byte install
+TEST_TARGET=		check
 
 post-install:
-	@${INSTALL_DATA_DIR} ${PREFIX}/share/doc/coq/html/library
-	@${INSTALL_DATA} ${WRKDIR}/coq-docs-html/* ${PREFIX}/share/doc/coq/html
-	@${INSTALL_DATA} ${WRKDIR}/library/* ${PREFIX}/share/doc/coq/html/library
-	@for ff in ${COQ_DOCHTMLFILES} ; do \
-	  ${INSTALL_DATA} ${FULLDISTDIR}/$${ff} ${PREFIX}/share/doc/coq/html ; \
-	done
-	@${INSTALL_DATA_DIR} ${PREFIX}/share/doc/coq/ps
-	@for ff in ${COQ_DOCPSFILES} ; do \
-	  ${INSTALL_DATA} ${FULLDISTDIR}/$${ff} ${PREFIX}/share/doc/coq/ps ; \
-	done
+	cd ${WRKDIST}; ${INSTALL_DATA} LICENSE COPYRIGHT CREDITS CHANGES \
+	    COMPATIBILITY ${PREFIX}/share/doc/coq/
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/coq/
+	mv ${WRKINST}${SYSCONFDIR}/xdg/coq/* ${PREFIX}/share/examples/coq/
+	rmdir ${WRKINST}${SYSCONFDIR}/xdg/coq/ ${WRKINST}${SYSCONFDIR}/xdg/
 
 .include <bsd.port.mk>

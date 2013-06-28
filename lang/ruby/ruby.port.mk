@@ -1,4 +1,4 @@
-# $OpenBSD: ruby.port.mk,v 1.52 2012/10/24 22:51:26 jeremy Exp $
+# $OpenBSD: ruby.port.mk,v 1.65 2013/06/12 11:03:07 sthen Exp $
 
 # ruby module
 
@@ -24,7 +24,7 @@ MODRUBY_HANDLE_FLAVORS ?= No
 # If ruby.pork.mk should handle FLAVORs, define a separate FLAVOR
 # for each ruby interpreter
 .    if !defined(FLAVORS)
-FLAVORS?=		ruby18 ruby19 rbx jruby
+FLAVORS?=		ruby18 ruby19 ruby20 rbx jruby
 .    endif
 
 # Instead of adding flavors to the end of the package name, we use
@@ -47,49 +47,36 @@ SUBST_VARS+=		GEM_BIN_SUFFIX GEM_MAN_SUFFIX
 
 FLAVOR?=
 # Without a FLAVOR, assume the use of ruby 1.9.
-.     if empty(FLAVOR)
+.    if empty(FLAVOR)
 FLAVOR =		ruby19
-.     endif
+.    endif
 
 # Check for conflicting FLAVORs and set MODRUBY_REV appropriately based
 # on the FLAVOR.
-.    if ${FLAVOR:L:Mruby18}
-.      if ${FLAVOR:L:Mruby19} || ${FLAVOR:L:Mjruby} || ${FLAVOR:L:Mrbx}
-ERRORS+=		"Fatal: Conflicting flavors used: ${FLAVOR}"
+.    for i in ruby18 ruby19 ruby20 jruby rbx
+.      if ${FLAVOR:M$i}
+MODRUBY_REV = ${i:C/ruby([0-9])/\1./}
+.        if ${FLAVOR:N$i:Mruby18} || ${FLAVOR:N$i:Mruby19} || \
+            ${FLAVOR:N$i:Mruby20} || ${FLAVOR:N$i:Mjruby} || \
+	    ${FLAVOR:N$i:Mrbx}
+ERRORS += "Fatal: Conflicting flavors used: ${FLAVOR}"
+.        endif
 .      endif
-MODRUBY_REV=		1.8
+.    endfor
 
+.    if ${FLAVOR:Mruby18}
 # Handle updates from older ruby 1.8 ports that didn't use the ruby18
 # FLAVOR by adding a @pkgpath entry to the PLIST.
 SUBST_VARS+=	PKGPATH
 PKG_ARGS+=	-f ${PORTSDIR}/lang/ruby/ruby18.PLIST
-
-.    elif ${FLAVOR:L:Mruby19}
-.      if ${FLAVOR:L:Mruby18} || ${FLAVOR:L:Mjruby} || ${FLAVOR:L:Mrbx}
-ERRORS+=		"Fatal: Conflicting flavors used: ${FLAVOR}"
-.      endif
-MODRUBY_REV=		1.9
-
-.    elif ${FLAVOR:L:Mjruby}
-.      if ${FLAVOR:L:Mruby18} || ${FLAVOR:L:Mruby19} || ${FLAVOR:L:Mrbx}
-ERRORS+=		"Fatal: Conflicting flavors used: ${FLAVOR}"
-.      endif
-MODRUBY_REV=		jruby
-
-.    elif ${FLAVOR:L:Mrbx}
-.      if ${FLAVOR:L:Mruby18} || ${FLAVOR:L:Mruby19} || ${FLAVOR:L:Mjruby}
-ERRORS+=		"Fatal: Conflicting flavors used: ${FLAVOR}"
-.      endif
-MODRUBY_REV=		rbx
 .    endif
 .  endif
 .endif
 
-# Other non-gem and non-extconf based ruby ports should default to
-# using ruby 1.8.  Ports that require a different ruby version such
-# set MODRUBY_REV in their makefile with either 1.9 or jruby to
-# build on ruby 1.9 or jruby respectively.
-MODRUBY_REV?=		1.8
+# The default ruby version to use for non-gem/extconf ports.
+# Defaults to ruby 1.9 for consistency with the default ruby19
+# FLAVOR for gem/extconf ports.
+MODRUBY_REV?=		1.9
 
 # Have the man pages for the rbx and jruby versions of a gem file
 # use an -rbx or -jruby suffix to avoid conflicts with the
@@ -104,20 +91,25 @@ MODRUBY_PKG_PREFIX =	${MODRUBY_FLAVOR}
 GEM_BIN_SUFFIX =	
 
 .if ${MODRUBY_REV} == 1.8
-MODRUBY_LIBREV=		1.8
-MODRUBY_BINREV=		18
-MODRUBY_PKG_PREFIX=	ruby
+MODRUBY_LIBREV =	1.8
+MODRUBY_BINREV =	18
+MODRUBY_PKG_PREFIX =	ruby
 MODRUBY_FLAVOR =	ruby18
-GEM_MAN_SUFFIX =	
+GEM_MAN_SUFFIX =
 .elif ${MODRUBY_REV} == 1.9
-MODRUBY_LIBREV=		1.9.1
-MODRUBY_BINREV=		19
+MODRUBY_LIBREV =	1.9.1
+MODRUBY_BINREV =	19
 MODRUBY_FLAVOR =	ruby19
-GEM_BIN_SUFFIX=		19
-# Have the ruby 1.9 manpage match the binary name.
+GEM_BIN_SUFFIX =	19
+GEM_MAN_SUFFIX =	${GEM_BIN_SUFFIX}
+.elif ${MODRUBY_REV} == 2.0
+MODRUBY_LIBREV =	2.0
+MODRUBY_BINREV =	20
+MODRUBY_FLAVOR =	ruby20
+GEM_BIN_SUFFIX =	20
 GEM_MAN_SUFFIX =	${GEM_BIN_SUFFIX}
 .elif ${MODRUBY_REV} == jruby
-MODRUBY_LIBREV=		1.8
+MODRUBY_LIBREV =	1.9
 
 # Set these during development of ruby.port.mk to make sure
 # nothing is broken.  However, turn them off before committing,
@@ -139,7 +131,7 @@ MODRUBY_RSPEC_DEPENDS =	devel/ruby-rspec/1,${MODRUBY_FLAVOR}<2.0
 MODRUBY_RSPEC2_DEPENDS = devel/ruby-rspec/rspec,${MODRUBY_FLAVOR}>=2.0
 
 # Set the path for the ruby interpreter and the rake and rspec
-# commands used by MODRUBY_REGRESS and manually in some port
+# commands used by MODRUBY_TEST and manually in some port
 # targets.
 .if ${MODRUBY_REV} == jruby
 RUBY=			${LOCALBASE}/jruby/bin/jruby
@@ -147,9 +139,6 @@ RAKE=			${RUBY} -S rake
 RSPEC=			${RUBY} -S spec
 MODRUBY_BIN_RSPEC =	${RUBY} -S rspec
 MODRUBY_BIN_TESTRB =	${RUBY} -S testrb
-
-# Without this, JRuby often fails with a memory error.
-MAKE_ENV+=		JAVA_MEM='-Xms256m -Xmx256m'
 .elif ${MODRUBY_REV} == rbx
 RUBY=			${LOCALBASE}/bin/rbx
 RAKE=			${RUBY} -S rake
@@ -170,28 +159,27 @@ MODRUBY_BIN_RSPEC =	${LOCALBASE}/bin/rspec${MODRUBY_BINREV}
 .  endif
 .endif
 
-.if defined(MODRUBY_REGRESS)
-.  if !${MODRUBY_REGRESS:L:Mrspec} && \
-     !${MODRUBY_REGRESS:L:Mrspec2} && !${MODRUBY_REGRESS:L:Mrake} && \
-     !${MODRUBY_REGRESS:L:Mruby} && !${MODRUBY_REGRESS:L:Mtestrb}
-ERRORS += "Fatal: Unsupported MODRUBY_REGRESS value: ${MODRUBY_REGRESS}"
+.if defined(MODRUBY_TEST)
+.  if !${MODRUBY_TEST:L:Mrspec} && \
+     !${MODRUBY_TEST:L:Mrspec2} && !${MODRUBY_TEST:L:Mrake} && \
+     !${MODRUBY_TEST:L:Mruby} && !${MODRUBY_TEST:L:Mtestrb}
+ERRORS += "Fatal: Unsupported MODRUBY_TEST value: ${MODRUBY_TEST}"
 .  endif
 .else
 .  if ${CONFIGURE_STYLE:L:Mextconf} || ${CONFIGURE_STYLE:L:Mgem} || \
 	${CONFIGURE_STYLE:L:Msetup}
-.    if !target(do-regress)
+.    if !target(do-test)
 # Disable regress for extconf, gem, and setup based ports, since they
 # won't use make check for regress.
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 .    endif
 .  endif
-MODRUBY_REGRESS?=
+MODRUBY_TEST?=
 .endif
 
 .if ${MODRUBY_REV} == jruby
 .  if ${CONFIGURE_STYLE:L:Mext} || ${CONFIGURE_STYLE:L:Mextconf}
-# Only jruby 1.6.0+ can build C extensions
-MODRUBY_RUN_DEPENDS=	lang/jruby>=1.6.0
+ERRORS += "Fatal: Ruby C extensions are unsupported on JRuby"
 .  else
 MODRUBY_RUN_DEPENDS=	lang/jruby
 .  endif
@@ -254,27 +242,27 @@ BUILD_DEPENDS+=		${MODRUBY_BUILD_DEPENDS}
 RUN_DEPENDS+=		${MODRUBY_RUN_DEPENDS}
 .endif
 
-.if ${MODRUBY_REGRESS:L:Mrake}
-REGRESS_DEPENDS+=	${MODRUBY_RAKE_DEPENDS}
+.if ${MODRUBY_TEST:L:Mrake}
+TEST_DEPENDS+=	${MODRUBY_RAKE_DEPENDS}
 .endif
-.if ${MODRUBY_REGRESS:L:Mrspec}
-REGRESS_DEPENDS+=	${MODRUBY_RSPEC_DEPENDS}
+.if ${MODRUBY_TEST:L:Mrspec}
+TEST_DEPENDS+=	${MODRUBY_RSPEC_DEPENDS}
 .endif
-.if ${MODRUBY_REGRESS:L:Mrspec2}
-REGRESS_DEPENDS+=	${MODRUBY_RSPEC2_DEPENDS}
+.if ${MODRUBY_TEST:L:Mrspec2}
+TEST_DEPENDS+=	${MODRUBY_RSPEC2_DEPENDS}
 .endif
 
-MODRUBY_RUBY_ADJ=	perl -pi -e 's,/usr/bin/env ruby,${RUBY},'
+MODRUBY_RUBY_ADJ =	perl -pi \
+		-e '$$. == 1 && s|^.*env ruby.*$$|\#!${RUBY}|;' \
+		-e '$$. == 1 && s|^.*bin/ruby.*$$|\#!${RUBY}|;' \
+		-e 'close ARGV if eof;'
 MODRUBY_ADJ_FILES?=
 .if !empty(MODRUBY_ADJ_FILES)
 MODRUBY_ADJ_REPLACE=	for pat in ${MODRUBY_ADJ_FILES:QL}; do \
 			 find ${WRKSRC} -type f -name "$$pat" -print0 | \
 			  xargs -0r ${MODRUBY_RUBY_ADJ} ; \
 			done
-.  if !target(pre-configure)
-pre-configure:
-	${MODRUBY_ADJ_REPLACE}
-.  endif
+MODRUBY_pre-configure += ${MODRUBY_ADJ_REPLACE}
 .endif
 
 .if ${CONFIGURE_STYLE:L:Mext} || ${CONFIGURE_STYLE:L:Mextconf}
@@ -293,6 +281,9 @@ WANTLIB+=	c ${MODRUBY_WANTLIB}
 MODRUBY_WANTLIB_m?=	Yes
 .  if ${MODRUBY_WANTLIB_m:L:Myes}
 WANTLIB+=	m
+.  endif
+.  if ${MODRUBY_REV} == 1.9
+WANTLIB+=	pthread
 .  endif
 LIB_DEPENDS+=	${MODRUBY_LIB_DEPENDS}
 
@@ -341,7 +332,7 @@ SUBST_VARS+=	^GEM_LIB ^GEM_BIN DISTNAME
 .  if ${MODRUBY_REV} == jruby
 GEM=		${RUBY} -S gem
 GEM_BIN =	jruby/bin
-GEM_LIB =	jruby/lib/ruby/gems/${MODRUBY_LIBREV}
+GEM_LIB =	jruby/lib/ruby/gems/1.8
 GEM_BASE_LIB=	${GEM_BASE}/jruby/${MODRUBY_LIBREV}
 .  elif ${MODRUBY_REV} == rbx
 GEM=		${RUBY} -S gem
@@ -357,6 +348,7 @@ GEM_BASE_LIB=	${GEM_BASE}/ruby/${MODRUBY_LIBREV}
 GEM_BASE=	${WRKDIR}/gem-tmp/.gem
 GEM_ABS_PATH=	${PREFIX}/${GEM_LIB}
 GEM_BASE_BIN=	${GEM_BASE_LIB}/bin
+
 # We purposely do not install documentation for ruby gems, because
 # the filenames are generated differently on different ruby versions,
 # and most use 1 file per method, which is insane.
@@ -373,9 +365,9 @@ _GEM_PATCHED=	${DISTNAME}${EXTRACT_SUFX}
 MODRUBY_EXTRACT_TARGET = \
     mkdir -p ${WRKDIST} ${_GEM_CONTENT}; \
     cd ${_GEM_CONTENT} && tar -xf ${FULLDISTDIR}/${DISTNAME}${EXTRACT_SUFX}; \
-    cd ${WRKDIST} && tar -xzf ${_GEM_DATAFILE} && rm ${_GEM_DATAFILE}; \
+    cd ${WRKDIST} && tar -xzf ${_GEM_DATAFILE} && rm -f ${_GEM_DATAFILE}; \
     gzcat ${_GEM_CONTENT}/metadata.gz > ${WRKDIST}/.metadata; \
-    rm -f ${_GEM_CONTENT}/*.gz.sig
+    rm -f ${_GEM_CONTENT}/*.gz.sig ${_GEM_CONTENT}/checksums.yaml.gz
 
 # Rebuild the gem manually after possible patching, then install it to a
 # temporary directory (not the final directory under fake, since that would
@@ -383,13 +375,13 @@ MODRUBY_EXTRACT_TARGET = \
 MODRUBY_BUILD_TARGET = \
     if [ -f ${WRKDIST}/.metadata ]; then \
 	    cd ${WRKDIST} && gzip .metadata && \
-		    mv .metadata.gz ${_GEM_CONTENT}/metadata.gz; \
+		    mv -f .metadata.gz ${_GEM_CONTENT}/metadata.gz; \
     fi; \
-    cd ${WRKDIST} && find . -type f \! -name '*.orig'  -print | \
-	    pax -wz -s '/^\.\///' -f ${_GEM_DATAFILE}; \
+    cd ${WRKDIST} && pax -wz -s '/.*${PATCHORIG:S@.@\.@g}$$//' \
+	    -x ustar -o write_opt=nodir . >${_GEM_DATAFILE}; \
     cd ${_GEM_CONTENT} && tar -cf ${WRKDIR}/${_GEM_PATCHED} *.gz; \
     mkdir -p ${GEM_BASE}; \
-    env -i ${MAKE_ENV} HOME=${GEM_BASE}/.. GEM_HOME=${GEM_BASE} \
+    env -i ${MAKE_ENV} HOME=`dirname ${GEM_BASE}` GEM_HOME=${GEM_BASE} \
 	    make="make V=1" \
 	    ${GEM} install ${GEM_FLAGS} ${WRKDIR}/${_GEM_PATCHED} \
 	    -- ${CONFIGURE_ARGS}
@@ -450,35 +442,33 @@ SUBST_VARS+=		^MODRUBY_SITEARCHDIR ^MODRUBY_SITEDIR MODRUBY_LIBREV \
 
 # regression stuff
 
-.if !empty(MODRUBY_REGRESS)
-.  if !target(do-regress)
+.if !empty(MODRUBY_TEST)
+.  if !target(do-test)
 
-.    if ${MODRUBY_REGRESS:L:Mrake}
-MODRUBY_REGRESS_BIN ?=	${RAKE} --trace
-.    elif ${MODRUBY_REGRESS:L:Mrspec}
-MODRUBY_REGRESS_BIN ?=	${RSPEC}
-.    elif ${MODRUBY_REGRESS:L:Mrspec2}
-MODRUBY_REGRESS_BIN ?=	${MODRUBY_BIN_RSPEC}
-.    elif ${MODRUBY_REGRESS:L:Mtestrb}
-MODRUBY_REGRESS_BIN ?=	${MODRUBY_BIN_TESTRB}
-.    elif ${MODRUBY_REGRESS:L:Mruby}
-MODRUBY_REGRESS_BIN ?=	${RUBY}
+.    if ${MODRUBY_TEST:L:Mrake}
+MODRUBY_TEST_BIN ?=	${RAKE} --trace
+.    elif ${MODRUBY_TEST:L:Mrspec}
+MODRUBY_TEST_BIN ?=	${RSPEC}
+.    elif ${MODRUBY_TEST:L:Mrspec2}
+MODRUBY_TEST_BIN ?=	${MODRUBY_BIN_RSPEC}
+.    elif ${MODRUBY_TEST:L:Mtestrb}
+MODRUBY_TEST_BIN ?=	${MODRUBY_BIN_TESTRB}
+.    elif ${MODRUBY_TEST:L:Mruby}
+MODRUBY_TEST_BIN ?=	${RUBY}
 .    endif
 
-.    if ${MODRUBY_REGRESS:L:Mrspec} || ${MODRUBY_REGRESS:L:Mrspec2}
-MODRUBY_REGRESS_TARGET ?=	spec
+.    if ${MODRUBY_TEST:L:Mrspec} || ${MODRUBY_TEST:L:Mrspec2}
+MODRUBY_TEST_TARGET ?=	spec
 .    else
-MODRUBY_REGRESS_TARGET ?=	test
+MODRUBY_TEST_TARGET ?=	test
 .    endif
 
-MODRUBY_REGRESS_ENV ?= 
-.    if ${MODRUBY_REV} == 1.9
-MODRUBY_REGRESS_ENV += RUBYLIB=.:"$$RUBYLIB"
-.    endif
-MODRUBY_REGRESS_DIR ?= ${WRKSRC}
-do-regress:
-	cd ${MODRUBY_REGRESS_DIR} && ${SETENV} ${MAKE_ENV} HOME=${WRKBUILD} \
-		${MODRUBY_REGRESS_ENV} ${MODRUBY_REGRESS_BIN} \
-		${MODRUBY_REGRESS_TARGET}
+MODRUBY_TEST_ENV ?= 
+MODRUBY_TEST_ENV += RUBYLIB=.:"$$RUBYLIB"
+MODRUBY_TEST_DIR ?= ${WRKSRC}
+do-test:
+	cd ${MODRUBY_TEST_DIR} && ${SETENV} ${MAKE_ENV} HOME=${WRKBUILD} \
+		${MODRUBY_TEST_ENV} ${MODRUBY_TEST_BIN} \
+		${MODRUBY_TEST_TARGET}
 .  endif
 .endif

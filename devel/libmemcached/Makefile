@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2011/07/11 14:04:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/21 08:45:15 ajacoutot Exp $
 
 COMMENT=		C C++ API for memcached
 
@@ -12,7 +12,6 @@ MASTER_SITES=		http://launchpad.net/libmemcached/1.0/${VERSION}/+download/
 
 MAINTAINER=		Sebastian Reitenbach <sebastia@openbsd.org>
 
-USE_LIBTOOL=		Yes
 SHARED_LIBS +=  memcached                 0.0 # 0.0
 SHARED_LIBS +=  hashkit                   0.0 # 0.0
 SHARED_LIBS +=  memcachedprotocol         0.0 # 0.0
@@ -20,14 +19,11 @@ SHARED_LIBS +=  memcachedutil             0.0 # 1.0
 
 # BSD
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 USE_GROFF =	Yes
 WANTLIB += c event m pthread sasl2
 LIB_DEPENDS= 		security/cyrus-sasl2
-REGRESS_DEPENDS=	misc/memcached
+TEST_DEPENDS=	misc/memcached
 
 # XXX Build memslap (benchmark tool) only on systems with GCC atomic built-ins. 
 .if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "i386" || \

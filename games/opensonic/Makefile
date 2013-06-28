@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2011/11/08 09:30:52 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.8 2013/06/23 17:51:31 dcoppa Exp $
 
 COMMENT =		game based on the Sonic the Hedgehog universe
 
@@ -16,8 +16,6 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=opensnc/}
 # GPLv2 or later
 PERMIT_PACKAGE_CDROM=	contains potentially copyrighted artwork
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= contains potentially copyrighted artwork
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES =		devel/cmake
 
@@ -29,16 +27,18 @@ LIB_DEPENDS =		games/allegro \
 
 WANTLIB =		alleg c ogg m pthread vorbis vorbisfile
 
-do-configure:
+CONFIGURE_ENV =		OPENSNC_ALLEGRO_CFLAGS="`allegro-config --cflags`" \
+			OPENSNC_ALLEGRO_LIBS="`allegro-config --libs`" \
+			OPENSNC_ALLEGRO_VERSION="`allegro-config --version`"
+
+pre-configure:
 	${SUBST_CMD} ${WRKSRC}/CMakeLists.txt
-	cd ${WRKBUILD} && env OPENSNC_ALLEGRO_LIBS="`allegro-config --libs`" \
-	    OPENSNC_ALLEGRO_VERSION="`allegro-config --version`" cmake ${WRKSRC}
 
 post-install:
 	echo "#!/bin/sh\ncd ${TRUEPREFIX}/share/opensonic\n./opensonic_launcher" > \
 	    ${PREFIX}/bin/opensonic
 	chmod 755 ${PREFIX}/bin/opensonic
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

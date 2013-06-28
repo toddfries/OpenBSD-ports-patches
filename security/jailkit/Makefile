@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.9 2012/10/15 15:18:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2013/04/24 12:47:39 gonzalo Exp $
 
 COMMENT=		utilities for jailing a user or process
 
-DISTNAME=		jailkit-2.15
+DISTNAME=		jailkit-2.16
 CATEGORIES=		security sysutils
 
 HOMEPAGE=		http://olivier.sessink.nl/jailkit/
@@ -12,14 +12,11 @@ MASTER_SITES=		${HOMEPAGE}
 
 # BSD - LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		lang/python
 WANTLIB += c pthread
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		PYTHONINTERPRETER=${MODPY_BIN} \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.33 2012/08/18 12:41:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2013/03/11 11:35:48 espie Exp $
 
 COMMENT=	internet relay chat (irc) server
 
@@ -13,10 +13,8 @@ EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	Brian Caswell <bmc@openbsd.org>
 
+# GPLv1+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m z
 
 LOCALSTATEDIR=	${BASELOCALSTATEDIR}/run
@@ -31,7 +29,7 @@ USE_GROFF =	Yes
 FLAVORS=	ipv6 hub
 FLAVOR?=	
 
-.if ${FLAVOR:L:Mipv6}
+.if ${FLAVOR:Mipv6}
 CONFIGURE_ARGS+=	--enable-ip6
 .endif
 
@@ -45,12 +43,12 @@ WRKBUILD=	${WRKSRC}/support
 SUBST_VARS=	CONFDIR
 
 pre-configure:
-.if ${FLAVOR:L:Mhub}
+.if ${FLAVOR:Mhub}
 	@perl -pi -e 's,^/\* #define\tHUB \*/,#define\tHUB,g' ${WRKSRC}/support/config.h.dist
 .endif
 	@cp $(WRKSRC)/support/config.h.dist $(WRKSRC)/support/config.h
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 do-install:	
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/ircd

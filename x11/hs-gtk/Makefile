@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/28 23:31:50 kili Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/11 11:46:13 espie Exp $
 
 COMMENT =		Haskell bindings to gtk+2
 
 DISTNAME =		gtk-0.12.3.1
-REVISION =		0
+REVISION =		1
 CATEGORIES =		devel x11
 
 HOMEPAGE =		http://www.haskell.org/gtk2hs/
@@ -12,9 +12,6 @@ MAINTAINER =		Matthias Kilian <kili@openbsd.org>
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 

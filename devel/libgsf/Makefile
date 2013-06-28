@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.69 2012/09/03 19:37:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.74 2013/06/23 17:03:27 ajacoutot Exp $
 
 COMMENT=		GNOME Structured File library
 
 GNOME_PROJECT=		libgsf
-GNOME_VERSION=		1.14.24
+GNOME_VERSION=		1.14.27
 
 CATEGORIES=		devel
 
-SHARED_LIBS+=		gsf-1		114.12
+SHARED_LIBS +=  gsf-1                114.12   # 114.27
 
 HOMEPAGE=		http://www.gnome.org/
 
@@ -16,25 +16,19 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 
 # LGPL 2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += bz2 c ffi gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gthread-2.0 m pcre png pthread xml2 z
+WANTLIB += gobject-2.0 m pcre png pthread xml2 z
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS=		goi
+MODGNOME_TOOLS=		gi
 
 LIB_DEPENDS=		archivers/bzip2 \
 			graphics/gdk-pixbuf2 \
 			textproc/libxml
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		--without-python \
-			--with-bz2 \
-			--with-gio
 
 .include <bsd.port.mk>

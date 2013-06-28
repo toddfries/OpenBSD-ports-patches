@@ -1,16 +1,19 @@
-# $OpenBSD: Makefile,v 1.61 2012/10/18 21:23:51 espie Exp $
+# $OpenBSD: Makefile,v 1.68 2013/06/04 18:41:57 naddy Exp $
 
 COMMENT =		base binaries for TeXLive typesetting distribution
 
 DISTNAME =		texlive-${DIST_V}-source
 PKGNAME =		texlive_base-${V}
-REVISION =		6
+REVISION =		0
 
-SHARED_LIBS =		kpathsea	4.0
-SHARED_LIBS +=		ptexenc		1.0
+DISTFILES =		${DISTNAME}${EXTRACT_SUFX} \
+			texlive-${DIST_V}-extra${EXTRACT_SUFX}
+
+SHARED_LIBS =		kpathsea	5.0
+SHARED_LIBS +=		ptexenc		2.0
 
 WANTLIB +=		ICE SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt c expat
-WANTLIB +=		fontconfig freetype gd jpeg lcms2 m ncurses
+WANTLIB +=		fontconfig freetype gd jpeg lcms2 m
 WANTLIB +=		openjpeg png>=3 poppler pthread pthread-stubs stdc++
 WANTLIB +=		t1>=4 tiff ttf xcb z
 
@@ -27,34 +30,110 @@ LIB_DEPENDS =		devel/t1lib \
 			graphics/png \
 			graphics/gd \
 			print/freetype \
-			print/poppler \
-			textproc/libxml
+			print/poppler
 
 MODULES =		textproc/intltool converters/libiconv
-# These following two modules are just for variable substitution in patches
+# These following modules are mostly for variable substitution in patches
 # They are not real dependencies of _base, but of _texmf-full
-MODULES +=		lang/ruby lang/python
+MODULES +=		lang/lua lang/ruby lang/python x11/tk perl
+MODLUA_RUNDEP =		No
+MODRUBY_REV =		1.8
 MODRUBY_BUILDDEP =	No
 MODRUBY_RUNDEP =	No
 MODPY_BUILDDEP =	No
 MODPY_RUNDEP =		No
-SUBST_VARS +=		MODRUBY_BINREV MODPY_VERSION
+SUBST_VARS +=		MODRUBY_BINREV MODPY_VERSION MODTK_VERSION
+
+MODPY_ADJ_FILES =	texk/texlive/linked_scripts/de-macro/de-macro \
+			texk/texlive/linked_scripts/dviasm/dviasm.py \
+			texk/texlive/linked_scripts/ebong/ebong.py \
+			texk/texlive/linked_scripts/texliveonfly/texliveonfly.py
+
+MODRUBY_ADJ_FILES =	convbkmk.rb \
+			epspdf.rb \
+			match_parens
+
+MODPERL_ADJ_FILES =	texk/tetex/updmap.pl \
+			texk/tetex/updmap-single.pl \
+			texk/tex4htk/mk4ht.pl \
+			texk/texlive/linked_scripts/authorindex/authorindex \
+			texk/texlive/linked_scripts/bundledoc/arlatex \
+			texk/texlive/linked_scripts/bundledoc/bundledoc \
+			texk/texlive/linked_scripts/ctanify/ctanify \
+			texk/texlive/linked_scripts/dosepsbin/dosepsbin.pl \
+			texk/texlive/linked_scripts/epstopdf/epstopdf.pl \
+			texk/texlive/linked_scripts/fig4latex/fig4latex \
+			texk/texlive/linked_scripts/fontools/afm2afm \
+			texk/texlive/linked_scripts/fontools/autoinst \
+			texk/texlive/linked_scripts/fontools/ot2kpx \
+			texk/texlive/linked_scripts/glossaries/makeglossaries \
+			texk/texlive/linked_scripts/jfontmaps/updmap-setup-kanji.pl \
+			texk/texlive/linked_scripts/latex2man/latex2man \
+			texk/texlive/linked_scripts/latexmk/latexmk.pl \
+			texk/texlive/linked_scripts/mkgrkindex/mkgrkindex \
+			texk/texlive/linked_scripts/mkjobtexmf/mkjobtexmf.pl \
+			texk/texlive/linked_scripts/oberdiek/pdfatfi.pl \
+			texk/texlive/linked_scripts/pax/pdfannotextractor.pl \
+			texk/texlive/linked_scripts/pdfcrop/pdfcrop.pl \
+			texk/texlive/linked_scripts/pedigree-perl/pedigree.pl \
+			texk/texlive/linked_scripts/perltex/perltex.pl \
+			texk/texlive/linked_scripts/pkfix-helper/pkfix-helper \
+			texk/texlive/linked_scripts/purifyeps/purifyeps \
+			texk/texlive/linked_scripts/sty2dtx/sty2dtx.pl \
+			texk/texlive/linked_scripts/tetex/e2pall.pl \
+			texk/texlive/linked_scripts/tetex/texdoctk.pl \
+			texk/texlive/linked_scripts/texcount/texcount.pl \
+			texk/texlive/linked_scripts/texdef/texdef.pl \
+			texk/texlive/linked_scripts/texdiff/texdiff \
+			texk/texlive/linked_scripts/texlive/tlmgr.pl \
+			texk/texlive/linked_scripts/texloganalyser/texloganalyser \
+			utils/xindy/xindy-2.4/user-commands/texindy.in \
+			utils/xindy/xindy-2.4/user-commands/xindy.in
+
+LUA_ADJ_SCRIPTS =	utils/mtx/m-tx.lua
+
+TEXLUA_ADJ_SCRIPTS =	texk/texlive/context/mtxrun \
+			texk/texlive/linked_scripts/checkcites/checkcites.lua \
+			texk/texlive/linked_scripts/cachepic/cachepic.tlu \
+			texk/texlive/linked_scripts/luaotfload/mkluatexfontdb.lua \
+			texk/texlive/linked_scripts/musixtex/musixflx.lua \
+			texk/texlive/linked_scripts/musixtex/musixtex.lua \
+			texk/texlive/linked_scripts/texdoc/texdoc.tlu \
+			texk/texlive/linked_scripts/texlive/rungs.tlu \
+			utils/pmx/pmx2pdf.lua
+
+SH_ADJ_SCRIPTS =	texk/texlive/linked_scripts/typeoutfileinfo/typeoutfileinfo.sh
 
 # Never set SEPARATE_BUILD
 CONFIGURE_STYLE =	gnu
 
 # Don't put ${PREFIX}/include in CPPFLAGS or system icu .h's are picked up
 # TeX Live uses a modified version of icu.
-CONFIGURE_ENV +=	TL_MAKE=${GMAKE} \
-			CPPFLAGS="-I${TRUEPREFIX}/include/poppler -I${X11BASE}/include"
+CPPFLAGS =	-I${X11BASE}/include \
+		-I${TRUEPREFIX}/include/poppler
 
-WRKBUILD =              ${WRKSRC}/Work# Can't build in same dir
+# Bug in ICU build system
+# http://tug.org/pipermail/tlbuild/2012q2/002348.html
+CPPFLAGS +=	-DU_PLATFORM=U_PF_BSD
+
+# Big endian ICU bug
+# http://tug.org/pipermail/tlbuild/2012q2/002266.html
+.include <bsd.port.arch.mk>
+.if ${PROPERTIES:Mbe}
+CPPFLAGS +=	-DU_IS_BIG_ENDIAN=1
+.endif
+
+CONFIGURE_ENV +=	TL_MAKE=${GMAKE} \
+			CPPFLAGS="${CPPFLAGS}"
+
+# Can't build in same dir
+WRKBUILD =              ${WRKSRC}/Work
 CONFIGURE_SCRIPT =      ../configure
 MAKE_ENV =		${CONFIGURE_ENV}
-NO_REGRESS =		Yes # not worth the effort.
+# Not worth the effort.
+NO_TEST =		Yes
 
 USE_GMAKE =	Yes
-USE_LIBTOOL =	Yes
 
 .if ${MACHINE_ARCH} == "sparc64"
 CFLAGS +=	-fPIC
@@ -67,7 +146,7 @@ BUILD_DEPENDS +=	lang/clisp
 RUN_DEPENDS +=		lang/clisp
 CONFIGURE_ARGS +=	--enable-xindy \
 			--disable-xindy-rules
-PKG_ARGS +=		-Dxindy=1 # Note. texmf-full required for xindy
+PKG_ARGS +=		-Dxindy=1
 .else
 PKG_ARGS +=		-Dxindy=0
 .endif
@@ -83,12 +162,12 @@ CONFIGURE_ARGS +=	--mandir=${PREFIX}/man \
 			--with-system-gd \
 			--with-gd-libdir=${LOCALBASE}/lib \
 			--with-system-libpng \
-			--with-libpng-includes=${LOCALBASE}/include/libpng \
+			--with-libpng-includes=${LOCALBASE}/include \
 			--with-libpng-libdir=${LOCALBASE}/lib \
 			--with-system-ncurses \
 			--with-system-pnglib \
 			--with-pnglib-libdir=${LOCALBASE}/lib \
-			--with-pnglib-include=${LOCALBASE}/include/libpng \
+			--with-pnglib-include=${LOCALBASE}/include \
 			--with-system-zlib \
 			--with-system-t1lib \
 			--with-t1lib-libdir=${LOCALBASE}/lib \
@@ -108,12 +187,25 @@ CONFIGURE_ARGS +=	--mandir=${PREFIX}/man \
 			--disable-multiplatform \
 			--disable-native-texlive-build \
 			--with-banner-add="-OpenBSD_Ports" \
-			--with-system-xpdf # link poppler instead of internal xpdf
+			--with-system-xpdf #link poppler
 
 SUBST_VARS +=		TRUEPREFIX LOCALBASE
 
-# substitute ruby and python binary names
+# substitute paths to script interpreters
 pre-configure:
+	${MODTCL_WISH_ADJ} ${WRKSRC}/texk/texlive/linked_scripts/epspdf/epspdftk.tcl
+	cd ${WRKSRC} && \
+	    for F in ${LUA_ADJ_SCRIPTS}; do \
+	        perl -pi -e '($$. == 1) && s@^.*$$@#!${MODLUA_BIN}@' $$F; \
+	    done
+	cd ${WRKSRC} && \
+	    for F in ${TEXLUA_ADJ_SCRIPTS}; do \
+	        perl -pi -e '($$. == 1) && s@^.*$$@#!${PREFIX}/bin/texlua@' $$F; \
+	    done
+	cd ${WRKSRC} && \
+	    for F in ${SH_ADJ_SCRIPTS}; do \
+	        perl -pi -e '($$. == 1) && s@^.*$$@#!/bin/sh@' $$F; \
+	    done
 	${SUBST_CMD} ${WRKSRC}/texk/texlive/context/mtxrun
 
 # just to silence error - never used
@@ -131,13 +223,12 @@ PDFTEX_LN =	amstex cslatex csplain eplain etex jadetex latex mex \
 		xmltex
 EPTEX_LN =	platex
 XETEX_LN =	xelatex
+EUPTEX_LN =	uplatex
+
+EXTRA_ROOT =	${WRKDIR}/texlive-${DIST_V}-extra
 
 post-install:
 	rm -Rf ${WRKSRC}/inst
-
-	# following tradition, texmf is in ${PREFIX}/share
-	mv ${PREFIX}/texmf ${PREFIX}/share/texmf
-	mv ${PREFIX}/texmf-dist ${PREFIX}/share/texmf-dist
 
 	# translate some sylinks from ../texmf* to ../share/texmf*
 	for link in `find ${PREFIX}/bin -type l`; do \
@@ -147,6 +238,13 @@ post-install:
 			ln -sf $${newdest} $${link}; \
 		fi \
 	done
+
+	# Updmap needs these perl bits from the extra tarball
+	${INSTALL} -d ${PREFIX}/libdata/perl5/site_perl/TeXLive/
+	${INSTALL} ${EXTRA_ROOT}/tlpkg/TeXLive/TLUtils.pm \
+		${PREFIX}/libdata/perl5/site_perl/TeXLive/
+	${INSTALL} ${EXTRA_ROOT}/tlpkg/TeXLive/TLConfig.pm \
+		${PREFIX}/libdata/perl5/site_perl/TeXLive/
 
 	# emulate texlinks
 	for i in ${ALEPH_LN}; do \
@@ -167,6 +265,10 @@ post-install:
 	for i in ${XETEX_LN}; do \
 		ln -s ${TRUEPREFIX}/bin/xetex ${PREFIX}/bin/$$i; \
 	done
+	for i in ${EUPTEX_LN}; do \
+		ln -s ${TRUEPREFIX}/bin/euptex ${PREFIX}/bin/$$i; \
+	done
+
 
 .include <bsd.port.mk>
 

@@ -1,10 +1,9 @@
-@comment $OpenBSD: PLIST,v 1.9 2012/06/22 07:07:14 ajacoutot Exp $
-%%SHARED%%
+@comment $OpenBSD: PLIST,v 1.13 2013/06/01 14:22:34 ajacoutot Exp $
 @bin bin/derb
 @bin bin/genbrk
 @bin bin/gencfu
 @bin bin/gencnval
-@bin bin/genctd
+@bin bin/gendict
 @bin bin/genrb
 bin/icu-config
 @bin bin/icuinfo
@@ -18,6 +17,7 @@ include/layout/LEInsertionList.h
 include/layout/LELanguages.h
 include/layout/LEScripts.h
 include/layout/LESwaps.h
+include/layout/LETableReference.h
 include/layout/LETypes.h
 include/layout/LayoutEngine.h
 include/layout/ParagraphLayout.h
@@ -29,8 +29,6 @@ include/unicode/
 include/unicode/alphaindex.h
 include/unicode/appendable.h
 include/unicode/basictz.h
-include/unicode/bms.h
-include/unicode/bmsearch.h
 include/unicode/brkiter.h
 include/unicode/bytestream.h
 include/unicode/bytestrie.h
@@ -41,7 +39,7 @@ include/unicode/chariter.h
 include/unicode/choicfmt.h
 include/unicode/coleitr.h
 include/unicode/coll.h
-include/unicode/colldata.h
+include/unicode/compactdecimalformat.h
 include/unicode/curramt.h
 include/unicode/currpinf.h
 include/unicode/currunit.h
@@ -56,15 +54,18 @@ include/unicode/dtitvfmt.h
 include/unicode/dtitvinf.h
 include/unicode/dtptngen.h
 include/unicode/dtrule.h
+include/unicode/enumset.h
 include/unicode/errorcode.h
 include/unicode/fieldpos.h
 include/unicode/fmtable.h
 include/unicode/format.h
 include/unicode/fpositer.h
+include/unicode/gender.h
 include/unicode/gregocal.h
 include/unicode/icudataver.h
 include/unicode/icuplug.h
 include/unicode/idna.h
+include/unicode/listformatter.h
 include/unicode/localpointer.h
 include/unicode/locdspnm.h
 include/unicode/locid.h
@@ -88,6 +89,7 @@ include/unicode/rbbi.h
 include/unicode/rbnf.h
 include/unicode/rbtz.h
 include/unicode/regex.h
+include/unicode/region.h
 include/unicode/rep.h
 include/unicode/resbund.h
 include/unicode/schriter.h
@@ -135,7 +137,9 @@ include/unicode/udat.h
 include/unicode/udata.h
 include/unicode/udateintervalformat.h
 include/unicode/udatpg.h
+include/unicode/udisplaycontext.h
 include/unicode/uenum.h
+include/unicode/ugender.h
 include/unicode/uidna.h
 include/unicode/uiter.h
 include/unicode/uldnames.h
@@ -191,13 +195,21 @@ lib/icu/Makefile.inc
 lib/icu/current
 lib/icu/pkgdata.inc
 lib/libicudata.a
+@lib lib/libicudata.so.${LIBicudata_VERSION}
 lib/libicui18n.a
+@lib lib/libicui18n.so.${LIBicui18n_VERSION}
 lib/libicuio.a
+@lib lib/libicuio.so.${LIBicuio_VERSION}
 lib/libicule.a
+@lib lib/libicule.so.${LIBicule_VERSION}
 lib/libiculx.a
+@lib lib/libiculx.so.${LIBiculx_VERSION}
 lib/libicutest.a
+@lib lib/libicutest.so.${LIBicutest_VERSION}
 lib/libicutu.a
+@lib lib/libicutu.so.${LIBicutu_VERSION}
 lib/libicuuc.a
+@lib lib/libicuuc.so.${LIBicuuc_VERSION}
 lib/pkgconfig/
 lib/pkgconfig/icu-i18n.pc
 lib/pkgconfig/icu-io.pc
@@ -206,8 +218,9 @@ lib/pkgconfig/icu-lx.pc
 lib/pkgconfig/icu-uc.pc
 @man man/man1/derb.1
 @man man/man1/genbrk.1
+@man man/man1/gencfu.1
 @man man/man1/gencnval.1
-@man man/man1/genctd.1
+@man man/man1/gendict.1
 @man man/man1/genrb.1
 @man man/man1/icu-config.1
 @man man/man1/makeconv.1

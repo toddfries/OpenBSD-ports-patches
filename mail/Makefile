@@ -1,5 +1,5 @@
-# $OpenBSD: Makefile,v 1.285 2012/09/28 14:08:59 ajacoutot Exp $
- 
+# $OpenBSD: Makefile,v 1.296 2013/06/26 16:23:31 sthen Exp $
+
      SUBDIR =
      SUBDIR += abook
      SUBDIR += adcomplain
@@ -76,6 +76,7 @@
      SUBDIR += ldapvacation
      SUBDIR += libetpan
      SUBDIR += libspf2
+     SUBDIR += lumail
      SUBDIR += mailcrypt
      SUBDIR += maildrop
      SUBDIR += mailgraph
@@ -92,6 +93,7 @@
      SUBDIR += milter-regex
      SUBDIR += milter-spamd
      SUBDIR += mimedefang
+     SUBDIR += mimetic
      SUBDIR += mini_sendmail
      SUBDIR += mixmaster
      SUBDIR += mlmmj
@@ -99,13 +101,14 @@
      SUBDIR += mozilla-thunderbird
      SUBDIR += msmtp
      SUBDIR += mutt
-     SUBDIR += nail
+     SUBDIR += s-nail
      SUBDIR += nmh
      SUBDIR += nmh,sasl
      SUBDIR += nmzmail
      SUBDIR += offlineimap
      SUBDIR += openwebmail
      SUBDIR += osbf-lua
+     SUBDIR += osbf-lua,lua52
      SUBDIR += p5-Catalyst-Plugin-Email
      SUBDIR += p5-Email-Abstract
      SUBDIR += p5-Email-Address
@@ -120,6 +123,7 @@
      SUBDIR += p5-Email-MIME-ContentType
      SUBDIR += p5-Email-MIME-Encodings
      SUBDIR += p5-Email-MessageID
+     SUBDIR += p5-Email-Received
      SUBDIR += p5-Email-Reply
      SUBDIR += p5-Email-Send
      SUBDIR += p5-Email-Sender
@@ -168,6 +172,7 @@
      SUBDIR += poppassd
      SUBDIR += poppy
      SUBDIR += postfix
+     SUBDIR += postfwd
      SUBDIR += postgrey
      SUBDIR += prepop
      SUBDIR += procmail
@@ -177,11 +182,13 @@
      SUBDIR += py-spf
      SUBDIR += pyzor
      SUBDIR += razor-agents
+     SUBDIR += rcube-contextmenu
      SUBDIR += rcube-sieverules
+     SUBDIR += rcube-yubikey-plugin
      SUBDIR += re-alpine
      SUBDIR += relaydb
      SUBDIR += roundcubemail
-     SUBDIR += ruby-actionmailer
+     SUBDIR += rss2email
      SUBDIR += ruby-mail
      SUBDIR += ruby-mailfactory
      SUBDIR += ruby-mime
@@ -205,6 +212,7 @@
      SUBDIR += tkrat
      SUBDIR += tmda
      SUBDIR += tnef
+     SUBDIR += trojita
      SUBDIR += vrfy
      SUBDIR += wmbiff
      SUBDIR += wmmail

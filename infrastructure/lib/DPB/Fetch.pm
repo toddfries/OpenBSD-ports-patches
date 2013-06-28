@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.43 2012/08/15 09:02:52 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.54 2013/06/21 09:05:18 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -53,6 +53,15 @@ sub distdir
 	return join('/', $self->{repo}->distdir, @rest);
 }
 
+sub debug_dump
+{
+	my $self = shift;
+	my $msg = $self->logname;
+	if ($self->{okay}) {
+		$msg .= "(okay)";
+	}
+}
+
 sub cached
 {
 	my $self = shift;
@@ -61,18 +70,12 @@ sub cached
 
 sub new
 {
-	my ($class, $file, $dir, @r) = @_;
+	my ($class, $file, $url, $dir, @r) = @_;
 	my $full = (defined $dir) ? join('/', $dir->string, $file) : $file;
-	$cache->{$full} //= $class->create($full, $file, @r);
-}
-
-sub dump
-{
-	my ($class, $logger) = @_;
-	my $log = $logger->create("fetch/distfiles");
-	for my $f (sort map {$_->{name}} grep {defined $_} values %$cache) {
-		print $log $f, "\n";
+	if (!defined $url) {
+		$url = $file;
 	}
+	$cache->{$full} //= $class->create($full, $url, @r);
 }
 
 sub logname
@@ -119,12 +122,6 @@ sub filename
 {
 	my $self = shift;
 	return $self->distdir($self->{name});
-}
-
-sub checked_already
-{
-	my $self = shift;
-	return $self->{okay} || $self->{checked};
 }
 
 # this is the entry point from the Engine, this is run as soon as the path
@@ -203,7 +200,6 @@ sub checksize
 		print $fh "size does not match\n";
 		return 0;
 	}
-	$self->{checked} = 1;
 	return 1;
 }
 
@@ -315,6 +311,27 @@ sub checksum
 		return 1;
 	}
 	print "BAD\n";
+	return 0;
+}
+
+sub cached_checksum
+{
+	my ($self, $fh, $name) = @_;
+	# XXX if we matched once, then we match "forever"
+	return 1 if $self->{okay};
+	print $fh "checksum for $name: ";
+	if (!defined $self->{sha}) {
+		print $fh "NONE\n";
+		return 0;
+	}
+	if (defined $self->cached->{$self->{name}}) {
+		if ($self->cached->{$self->{name}}->equals($self->{sha})) {
+			print $fh "OK (cached)\n";
+			$self->{okay} = 1;
+			return 1;
+		}
+	}
+	print $fh "UNKNOWN (uncached)\n";
 	return 0;
 }
 
@@ -443,21 +460,24 @@ sub expire_old
 	my $self = shift;
 	my $ts = time();
 	my $distdir = $self->distdir;
+	open my $fh2, ">", "$distdir/history.new" or return;
 	if (open(my $fh, '<', "$distdir/history")) {
 		my $_;
 		while (<$fh>) {
 			if (m/^\d+\s+SHA256\s*\((.*)\) \= (.*\=)$/) {
 				my ($file, $sha) = ($1, $2);
-				$self->mark_sha($sha, $file);
-				$self->{known_file}{$file} = 1;
+				if (!$self->{known_sha}{$sha}{$file}) {
+					$self->mark_sha($sha, $file);
+					$self->{known_file}{$file} = 1;
+					print $fh2 $_;
+				}
 			}
 		}
 		close $fh;
 	}
-	open my $fh, ">>", "$distdir/history" or return;
 	while (my ($sha, $file) = each %{$self->{reverse}}) {
 		next if $self->{known_sha}{$sha}{$file};
-		print $fh "$ts SHA256 ($file) = $sha\n";
+		print $fh2 "$ts SHA256 ($file) = $sha\n";
 		$self->{known_file}{$file} = 1;
 	}
 	for my $special (qw(Makefile distinfo history)) {
@@ -469,6 +489,7 @@ sub expire_old
 	File::Find::find(sub {
 		if (-d $_ && 
 		    ($File::Find::name eq "$distdir/by_cipher" || 
+		     $File::Find::name eq "$distdir/list" ||
 		    $File::Find::name eq "$distdir/build-stats")) {
 			$File::Find::prune = 1;
 			return;
@@ -479,7 +500,7 @@ sub expire_old
 		$actual =~ s/^\Q$distdir\E\/?//;
 		return if $self->{known_file}{$actual};
 		my $sha = OpenBSD::sha->new($_)->stringize;
-		print $fh "$ts SHA256 ($actual) = $sha\n";
+		print $fh2 "$ts SHA256 ($actual) = $sha\n";
 		$self->mark_sha($sha, $actual);
 	}, $distdir);
 
@@ -493,12 +514,13 @@ sub expire_old
 				my $sha = $1;
 				return if $self->{known_sha}{$sha}{$_};
 				return if $self->{known_short}{$sha}{$_};
-				print $fh "$ts SHA256 ($_) = ", $sha, "\n";
+				print $fh2 "$ts SHA256 ($_) = ", $sha, "\n";
 			}
 		}, $c);
 	}
 
-	close $fh;
+	close $fh2;
+	rename("$distdir/history.new", "$distdir/history");
 }
 
 sub distdir
@@ -528,7 +550,7 @@ sub read_checksums
 
 sub build_distinfo
 {
-	my ($self, $h, $fetch_only) = @_;
+	my ($self, $h, $mirror) = @_;
 	my $distinfo = {};
 	for my $v (values %$h) {
 		my $info = $v->{info};
@@ -552,15 +574,20 @@ sub build_distinfo
 		my $build = sub {
 			my $arg = shift;
 			my $site = 'MASTER_SITES';
+			my $url;
 			if ($arg =~ m/^(.*)\:(\d)$/) {
 				$arg = $1;
 				$site.= $2;
+			}
+			if ($arg =~ m/^(.*)\{(.*)\}$/) {
+				$arg = $1;
+				$url = $2;
 			}
 			if (!defined $info->{$site}) {
 				$v->break("Can't find $site for $arg");
 				return;
 			}
-			return DPB::Distfile->new($arg, $dir,
+			return DPB::Distfile->new($arg, $url, $dir,
 			    $info->{$site}, $checksums, $v, $self);
 		};
 
@@ -568,9 +595,9 @@ sub build_distinfo
 			my $file = &$build($d);
 			$files->{$file} = $file if defined $file;
 		}
-		for my $d (keys %{$info->{SUPDISTFILES}}) {
-			my $file = &$build($d);
-			if ($fetch_only) {
+		if ($mirror) {
+			for my $d (keys %{$info->{SUPDISTFILES}}) {
+				my $file = &$build($d);
 				$files->{$file} = $file if defined $file;
 			}
 		}
@@ -617,7 +644,7 @@ sub run
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
-	$self->redirect($job->{log});
+	$self->redirect_fh($job->{logfh}, $job->{log});
 	exit(!$job->{file}->checksum($job->{file}->tempfilename));
 }
 
@@ -638,6 +665,7 @@ sub finalize
 		return $job->bad_file($self->{fetcher}, $core);
 	}
 	rename($job->{file}->tempfilename, $job->{file}->filename);
+	print {$job->{logfh}} "Renamed to ", $job->{file}->filename, "\n";
 	$job->{file}->cache;
 	my $sz = $job->{file}->{sz};
 	if (defined $self->{fetcher}->{initial_sz}) {
@@ -786,10 +814,8 @@ sub new
 		logger => $logger,
 		log => $logger->make_distlogs($file),
 	}, $class;
-	if (open my $fh, '>>', $job->{log}) {
-		print $fh ">>> From ", $file->fullpkgpath, "\n";
-		close $fh;
-	}
+	open $job->{logfh}, '>>', $job->{log};
+	print {$job->{logfh}} ">>> From ", $file->fullpkgpath, "\n";
 	File::Path::mkpath(File::Basename::dirname($file->filename));
 	$job->{watched} = DPB::Watch->new($file->tempfilename,
 		$file->{sz}, undef, $job->{started});
@@ -808,6 +834,15 @@ sub watched
 	my ($self, $current, $core) = @_;
 	my $diff = $self->{watched}->check_change($current);
 	my $msg = $self->{watched}->change_message($diff);
+	my $to = $core->fetch_timeout;
+	if (defined $to) {
+		if ($diff > $to) {
+			$self->{stuck} =
+			    "KILLED: $self->{current} stuck at $msg";
+			kill 9, $core->{pid};
+			return $self->{stuck};
+		}
+	}
 	return $msg;
 }
 

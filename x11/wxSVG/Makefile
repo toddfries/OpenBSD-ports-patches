@@ -1,45 +1,43 @@
-# $OpenBSD: Makefile,v 1.17 2011/11/24 08:08:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2013/05/31 15:35:15 ajacoutot Exp $
 
 COMMENT=		C++ library to create, manipulate and render SVG files
 
-DISTNAME=		wxsvg-1.1.4
+DISTNAME=		wxsvg-1.1.14
 EPOCH=			0
 CATEGORIES=		x11 graphics
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=wxsvg/}
 EXTRACT_SUFX=		.tar.bz2
+REVISION=		0
 
-SHARED_LIBS+=		wxsvg	1.0	# .2.1
+SHARED_LIBS+=		wxsvg	2.0	# .5.4
 
 HOMEPAGE=		http://wxsvg.sourceforge.net/
 
 # Modified LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB+=	GL ICE SDL SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB+=	Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 avcodec
-WANTLIB+=	avformat avutil bz2 c cairo drm expat ffi fontconfig
+WANTLIB+=	ICE SDL SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
+WANTLIB+=	Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 avcodec
+WANTLIB+=	avformat avutil bz2 c cairo crypto expat ffi fontconfig
 WANTLIB+=	freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB+=	gmodule-2.0 gobject-2.0 gsm gthread-2.0 gtk-x11-2.0 iodbc
-WANTLIB+=	jpeg m mp3lame mspack ogg orc-0.4 pango-1.0 pangocairo-1.0
-WANTLIB+=	pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB+=	schroedinger-1.0 sndio speex stdc++ swscale theoradec
-WANTLIB+=	theoraenc tiff usbhid vorbis vorbisenc vpx wx_base
-WANTLIB+=	wx_base_net wx_base_odbc wx_base_xml wx_gtk2_adv wx_gtk2_aui
-WANTLIB+=	wx_gtk2_core wx_gtk2_dbgrid wx_gtk2_html wx_gtk2_qa
-WANTLIB+=	wx_gtk2_richtext wx_gtk2_xrc x264 xcb xcb-render xcb-shm z
+WANTLIB+=	gmodule-2.0 gobject-2.0 graphite2 gsm gthread-2.0 gtk-x11-2.0
+WANTLIB+=	harfbuzz iodbc jpeg m mp3lame mspack
+WANTLIB+=	ogg opus orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB+=	pcre pixman-1 png pthread pthread-stubs schroedinger-1.0
+WANTLIB+=	sndio speex ssl stdc++ swscale theoradec theoraenc
+WANTLIB+=	tiff usbhid vorbis vorbisenc vpx wx_base wx_base_net
+WANTLIB+=	wx_base_odbc wx_base_xml wx_gtk2_adv wx_gtk2_aui wx_gtk2_core
+WANTLIB+=	wx_gtk2_dbgrid wx_gtk2_html wx_gtk2_qa wx_gtk2_richtext
+WANTLIB+=	wx_gtk2_xrc x264 xcb xcb-render xcb-shm xvidcore z
 
 MODULES=	devel/gettext
-LIB_DEPENDS =	graphics/ffmpeg>=20110408 \
+LIB_DEPENDS =	graphics/ffmpeg>=20121026 \
 		graphics/cairo \
 		x11/wxWidgets
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

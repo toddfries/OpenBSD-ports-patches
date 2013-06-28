@@ -1,22 +1,20 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/20 19:56:48 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/22 09:31:51 espie Exp $
 
 COMMENT =	spelling, stemming, morphological analysis and generation
 
-DISTNAME =	hunspell-1.2.12
+DISTNAME =	hunspell-1.3.2
+REVISION =	0
 
-SHARED_LIBS =	hunspell-1.2 	0.0 #	.0.0
+SHARED_LIBS =	hunspell-1.3 	0.0 #	.0.0
 
 CATEGORIES =	textproc
 
-HOMEPAGE =	http://hunspell.sourceforge.net
+HOMEPAGE =	http://hunspell.sourceforge.net/
 
 MAINTAINER =	Edd Barrett <edd@openbsd.org>
 
 # GPL/LGPL/MPL
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c m ncurses ncursesw readline stdc++
 
@@ -31,13 +29,10 @@ CONFIGURE_ARGS =	${CONFIGURE_SHARED} \
 			--with-ui \
 			--with-readline
 
-USE_LIBTOOL =		yes
-USE_GROFF =		Yes
-
 # default dictionary
-RUN_DEPENDS =		textproc/mozilla-dicts,-en-GB
+RUN_DEPENDS =		textproc/mozilla-dicts/en-GB
 
-REGRESS_DEPENDS =	shells/bash
+TEST_DEPENDS =	shells/bash
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/tests/test.sh \

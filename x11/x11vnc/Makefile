@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.36 2011/09/19 21:33:42 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.38 2013/03/11 11:46:17 espie Exp $
 
 COMMENT =		VNC server for real X displays
 
 DISTNAME =		x11vnc-0.9.13
-REVISION =		1
+REVISION =		2
 
 CATEGORIES =		x11
 HOMEPAGE =		http://www.karlrunge.com/x11vnc/
@@ -12,9 +12,6 @@ MAINTAINER =		Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += X11 Xdamage Xext Xfixes Xinerama Xrandr Xtst c crypto
 WANTLIB += pthread ssl z jpeg avahi-client avahi-common
@@ -28,12 +25,15 @@ RUN_DEPENDS =		devel/desktop-file-utils \
 LIB_DEPENDS =		graphics/jpeg \
 			net/avahi
 
-CONFIGURE_STYLE =	gnu
+AUTOCONF_VERSION =	2.59
+CONFIGURE_STYLE =	autoconf
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--with-x \
 			--with-avahi
 CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
+
+REORDER_DEPENDENCIES =	${FILESDIR}/automake.dep
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/x11vnc/gui.c

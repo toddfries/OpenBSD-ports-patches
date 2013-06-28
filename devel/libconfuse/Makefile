@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2011/06/28 09:10:32 rpointel Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/21 08:45:15 ajacoutot Exp $
 
 COMMENT=		configuration file parser library
 DISTNAME=		confuse-2.7
@@ -11,9 +11,6 @@ HOMEPAGE=		http://www.nongnu.org/confuse/
 
 # ISC
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SAVANNAH:=confuse/}
 
@@ -24,7 +21,6 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV+=		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include"
 
-USE_LIBTOOL=		Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/libconfuse/tutorial/

@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.22 2011/11/04 09:18:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.26 2013/06/04 18:41:40 naddy Exp $
 
 COMMENT =	C++ toolkit for GUI
 CATEGORIES =	devel
 
-DISTNAME =	fox-1.6.37
-REVISION =	0
+DISTNAME =	fox-1.6.49
 
-SHARED_LIBS +=	FOX-1.6              2.0      # .0.37
-SHARED_LIBS +=	CHART-1.6            1.0      # .0.28
-MASTER_SITES =	${HOMEPAGE}/ftp/
+SHARED_LIBS +=	FOX-1.6              2.1      # .0.49
+SHARED_LIBS +=	CHART-1.6            1.1      # .0.49
+MASTER_SITES =	http://ftp.fox-toolkit.org/pub/
 HOMEPAGE =	http://www.fox-toolkit.org/
 MAINTAINER =	Marc Espie <espie@openbsd.org>
 
@@ -20,19 +19,15 @@ LIB_DEPENDS =	archivers/bzip2 \
 		graphics/tiff
 
 CONFIGURE_ENV += \
-	CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
+	CPPFLAGS="-I${LOCALBASE}/include" \
 	LDFLAGS="-L${LOCALBASE}/lib" 
 CONFIGURE_ARGS += \
-	--x-includes=${X11BASE}/include \
+	--x-includes="${X11BASE}/include -I${X11BASE}/include/freetype2" \
 	--x-libraries=${X11BASE}/lib \
 	--with-xft
 
 # LGPL or looser
-PERMIT_DISTFILES_FTP = Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
 PERMIT_PACKAGE_CDROM = Yes
-USE_LIBTOOL =	Yes
 USE_GROFF =	Yes
 
 FOX =		fox-1.6

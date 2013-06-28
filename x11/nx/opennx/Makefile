@@ -1,16 +1,14 @@
-# $OpenBSD: Makefile,v 1.29 2012/08/04 14:49:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.32 2013/05/31 15:35:14 ajacoutot Exp $
 
 COMMENT=		OSS replacement for the Nomachine nxclient
 
-DISTNAME=		opennx-0.16.0.709
-REVISION=		1
-
+DISTNAME=		opennx-0.16.0.724
 CATEGORIES=		sysutils
+REVISION=		0
 
 HOMEPAGE=		http://opennx.sourceforge.net/
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=opennx/}
 
-USE_LIBTOOL=		Yes
 
 WANTLIB += GL ICE SDL SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
 WANTLIB += Xext Xfixes Xi Xinerama Xmu Xrandr Xrender Xt Xxf86vm
@@ -21,7 +19,7 @@ WANTLIB += jpeg m mspack pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs sndio ssl stdc++
 WANTLIB += tiff usbhid wx_base wx_base_net wx_base_xml wx_gtk2_adv
 WANTLIB += wx_gtk2_core wx_gtk2_html wx_gtk2_qa wx_gtk2_richtext
-WANTLIB += wx_gtk2_xrc xcb xcb-render xcb-shm z
+WANTLIB += wx_gtk2_xrc xcb xcb-render xcb-shm z harfbuzz
 
 MODULES=		devel/gettext
 

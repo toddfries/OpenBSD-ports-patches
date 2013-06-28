@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.41 2012/11/09 09:52:50 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.54 2013/05/16 16:05:49 dcoppa Exp $
 
 COMMENT =		persistent key-value database
-DISTNAME =		redis-2.6.4
+DISTNAME =		redis-2.6.13
 CATEGORIES =		databases
 HOMEPAGE =		http://redis.io/
 
@@ -9,21 +9,15 @@ MAINTAINER = 		David Coppa <dcoppa@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += 		c m pthread
+WANTLIB += 		c ${MODLUA_WANTLIB} m pthread
 
 MASTER_SITES =		http://redis.googlecode.com/files/
 
-# XXX: Should use lang/lua, with new dependencies on
-# lua-cmsgpack, lua-cjson, and lua-struct
-MODULES =		lang/tcl
+MODULES =		lang/lua \
+			lang/tcl
 
 MAKE_FLAGS =		CC=${CC} \
-			DEBUG="" \
-			OPTIMIZATION="" \
 			V=1
 
 FAKE_FLAGS =		INSTALL="${INSTALL_PROGRAM}" \
@@ -32,19 +26,20 @@ FAKE_FLAGS =		INSTALL="${INSTALL_PROGRAM}" \
 
 USE_GMAKE =		Yes
 
-CFLAGS +=		-I${LOCALBASE}/include
-
 # Warning: running the test suite can take a long time and will
 # consume a lot of cpu cycles
-REGRESS_DEPENDS =       ${MODTCL_BUILD_DEPENDS}
-REGRESS_FLAGS =		TCL_BIN="${MODTCL_BIN}"
-REGRESS_TARGET =	test
+TEST_DEPENDS =       ${MODTCL_BUILD_DEPENDS}
+TEST_FLAGS =		TCL_BIN="${MODTCL_BIN}"
+TEST_TARGET =	test
 
 DBDIR =			/var/redis
 SUBST_VARS +=		DBDIR
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/src/redis.c
+	cp ${WRKSRC}/deps/lua/src/strbuf.? ${WRKSRC}/src/
+	cp ${WRKSRC}/deps/lua/src/lua_*.c ${WRKSRC}/src/
+	${SUBST_CMD} ${WRKSRC}/src/Makefile \
+		${WRKSRC}/src/redis.c
 
 post-install:
 	${INSTALL_PROGRAM} ${WRKBUILD}/src/redis-sentinel ${PREFIX}/bin/

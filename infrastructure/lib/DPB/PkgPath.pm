@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PkgPath.pm,v 1.35 2012/10/11 17:35:19 espie Exp $
+# $OpenBSD: PkgPath.pm,v 1.41 2013/06/25 20:21:52 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -42,6 +42,29 @@ sub clone_properties
 	$n->{info} //= $o->{info};
 }
 
+sub sanity_check
+{
+	my ($class, $state) = @_;
+
+	open my $quicklog, '>>', $state->logger->logfile('equiv');
+	for my $p ($class->seen) {
+		next if defined $p->{category};
+		next unless defined $p->{info};
+		for my $w ($p->build_path_list) {
+			if (!defined $w->{info}) {
+				print $quicklog $w->fullpkgpath, 
+				    " has no info(", $p->fullpkgpath, ")\n";
+				$w->{info} = DPB::PortInfo->stub;
+			} elsif (!defined $w->{info}{FULLPKGNAME}) {
+				print $quicklog $w->fullpkgpath,
+				    " has no fullpkgname(", 
+				    $p->fullpkgpath, ")\n";
+				$w->{info} = DPB::PortInfo->stub;
+			}
+		}
+	}
+}
+
 # XXX All this code knows too much about PortInfo for proper OO
 
 sub fullpkgname
@@ -54,7 +77,7 @@ sub fullpkgname
 		if (defined $self->{info}) {
 			say STDERR "But info is defined"; 
 			require Data::Dumper;
-			say STDERR Dumper($self->{info});
+			say STDERR Data::Dumper::Dumper($self->{info});
 		}
 		die;
 	}
@@ -137,6 +160,7 @@ sub requeue
 sub simplifies_to
 {
 	my ($self, $simpler, $state) = @_;
+	$state->{affinity}->simplifies_to($self, $simpler);
 	open my $quicklog, '>>', $state->logger->logfile('equiv');
 	print $quicklog $self->fullpkgpath, " -> ", $simpler->fullpkgpath, "\n";
 }
@@ -157,7 +181,10 @@ sub merge_depends
 	my $global3 = bless {}, "AddDepends";
 	my $global4 = bless {}, "AddDepends";
 	my $multi;
+	my $extra;
+	my $path;
 	for my $v (values %$h) {
+		$path //= $v; # one for later
 		my $info = $v->{info};
 		if (defined $info->{DIST} && !defined $info->{DISTIGNORE}) {
 			for my $f (values %{$info->{DIST}}) {
@@ -168,6 +195,10 @@ sub merge_depends
 		# share !
 		if (defined $info->{BUILD_PACKAGES}) {
 			$multi = $info->{BUILD_PACKAGES};
+		}
+		# and this one is special
+		if (defined $info->{MULTI_PACKAGES}) {
+			$extra = $info->{MULTI_PACKAGES};
 		}
 		# XXX don't grab dependencies for IGNOREd stuff
 		next if defined $info->{IGNORE};
@@ -200,7 +231,7 @@ sub merge_depends
 			
 		for my $k (qw(LIB_DEPENDS BUILD_DEPENDS RUN_DEPENDS 
 		    SUBPACKAGE FLAVOR EXTRA PERMIT_DISTFILES_FTP 
-		    PERMIT_DISTFILES_CDROM)) {
+		    MULTI_PACKAGES PERMIT_DISTFILES_CDROM)) {
 			delete $info->{$k};
 		}
 	}
@@ -221,6 +252,29 @@ sub merge_depends
 	if (defined $multi) {
 		for my $v (values %$h) {
 			$v->{info}{BUILD_PACKAGES} = $multi;
+		}
+	}
+	# in case BUILD_PACKAGES "erases" some multi, we need to
+	# stub out the correspond paths, so that dependent ports
+	# will vanish
+	if (defined $extra) {
+		for my $m (keys %$extra) {
+			# okay those are present
+
+			next if exists $multi->{$m};
+			# make a dummy path that will get ignored
+			my $stem = $path->pkgpath_and_flavors;
+			my $w = DPB::PkgPath->new("$stem,$m");
+			if (!defined $w->{info}) {
+				$w->{info} = DPB::PortInfo->new($w);
+				$w->{info}->stub_name;
+			}
+			delete $w->{info}->{IGNORE};
+			if (!defined $w->{info}->{IGNORE}) {
+				$w->{info}->add('IGNORE', 
+				    "vanishes from BUILD_PACKAGES");
+			}
+			$h->{$w} = $w;
 		}
 	}
 }
@@ -248,6 +302,7 @@ sub build_path_list
 
 sub break
 {
+
 	my ($self, $why) = @_;
 	if (defined $self->{broken}) {
 		$self->{broken} .= " $why";

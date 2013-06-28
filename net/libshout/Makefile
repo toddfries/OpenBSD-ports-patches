@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2012/03/29 13:38:48 sthen Exp $
+# $OpenBSD: Makefile,v 1.21 2013/03/21 08:46:34 ajacoutot Exp $
 
 COMMENT=	library for communicating with an icecast server
 
@@ -11,9 +11,6 @@ HOMEPAGE=	http://www.icecast.org/
 
 # LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	m ogg vorbis>=4 theora>=1
 
@@ -29,6 +26,5 @@ CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 
 SEPARATE_BUILD=	Yes
-USE_LIBTOOL=	Yes
 
 .include <bsd.port.mk>

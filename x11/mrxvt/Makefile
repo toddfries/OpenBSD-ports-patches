@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.22 2011/10/06 10:00:02 giovanni Exp $
+# $OpenBSD: Makefile,v 1.24 2013/03/11 11:46:14 espie Exp $
 
 COMMENT=	multi-tabbed terminal emulator
 
 DISTNAME=	mrxvt-0.5.4
-REVISION=	5
+REVISION=	6
 
 CATEGORIES=	x11
 
@@ -13,9 +13,6 @@ MAINTAINER=	Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=materm/}
  
@@ -31,7 +28,7 @@ AUTOCONF_VERSION=2.61
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ARGS+=--enable-menubar \
 		--with-x \
-		--enable-ttygid=utmp \
+		--disable-ttygid \
 		--enable-xim \
 		--enable-xft
 

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2011/06/02 13:41:39 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2013/05/09 01:50:12 landry Exp $
 
 COMMENT =		mail server storing messages in a database
 
 DISTNAME =		archiveopteryx-3.1.3
-REVISION =		6
+REVISION =		8
 CATEGORIES =		mail databases
 
 HOMEPAGE =		http://www.archiveopteryx.org/
@@ -11,9 +11,6 @@ MAINTAINER =		Landry Breuil <gaston@gcu.info>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c crypto m pthread ssl stdc++ z
 
@@ -22,7 +19,7 @@ MASTER_SITES =		${HOMEPAGE}/download/
 EXTRACT_SUFX =		.tar.bz2
 
 BUILD_DEPENDS =		devel/jam
-NO_REGRESS =		yes
+NO_TEST =		yes
 
 JAMDEBUG =	-d x	# display command-lines
 JAMDEBUG +=	-q	# die quickly on build failure

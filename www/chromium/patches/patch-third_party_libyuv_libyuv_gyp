@@ -1,0 +1,22 @@
+$OpenBSD: patch-third_party_libyuv_libyuv_gyp,v 1.4 2013/06/21 21:59:13 sthen Exp $
+
+insufficient registers on i386
+
+--- third_party/libyuv/libyuv.gyp.orig.port	Wed May 29 08:19:50 2013
++++ third_party/libyuv/libyuv.gyp	Fri Jun 21 17:03:00 2013
+@@ -21,11 +21,15 @@
+              '<(DEPTH)/third_party/libjpeg_turbo/libjpeg.gyp:libjpeg',
+           ],
+         }, {
++          'include_dirs': [ '/usr/local/include' ],
+           'link_settings': {
+             'libraries': [
+               '-ljpeg',
+             ],
+           },
++        }],
++         ['target_arch == "ia32"', {
++          'cflags': [ '-fomit-frame-pointer' ],
+         }],
+       ],
+       'defines': [

@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.10 2010/10/18 18:36:45 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/11 11:35:45 espie Exp $
 
 COMMENT=	Atmel/NWN wireless access point configuration tools
 
 DISTNAME=	ap-utils-1.5
+REVISION=	0
 CATEGORIES=	net
 EXTRACT_SUFX=	.tar.bz2
 
@@ -10,10 +11,8 @@ HOMEPAGE=	http://ap-utils.polesye.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c curses menu
+
+WANTLIB += c ncurses menu
 
 MASTER_SITES=	ftp://linux.zhitomir.net/ap-utils/
 

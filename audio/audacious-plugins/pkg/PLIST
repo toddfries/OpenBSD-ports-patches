@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.6 2012/10/01 07:56:40 brad Exp $
+@comment $OpenBSD: PLIST,v 1.8 2013/01/14 02:26:20 brad Exp $
 @pkgpath audio/audacious-plugins,-main
 lib/audacious/
 lib/audacious/Container/
@@ -39,6 +39,7 @@ lib/audacious/Input/
 lib/audacious/Input/aac.so
 lib/audacious/Input/cdaudio-ng.so
 lib/audacious/Input/console.so
+lib/audacious/Input/ffaudio.so
 lib/audacious/Input/flacng.so
 lib/audacious/Input/madplug.so
 lib/audacious/Input/metronom.so
@@ -197,6 +198,7 @@ share/locale/be/LC_MESSAGES/audacious-plugins.mo
 share/locale/ca/LC_MESSAGES/audacious-plugins.mo
 share/locale/cs/LC_MESSAGES/audacious-plugins.mo
 share/locale/de/LC_MESSAGES/audacious-plugins.mo
+share/locale/el/LC_MESSAGES/audacious-plugins.mo
 share/locale/es/LC_MESSAGES/audacious-plugins.mo
 share/locale/es_AR/LC_MESSAGES/audacious-plugins.mo
 share/locale/es_MX/LC_MESSAGES/audacious-plugins.mo
@@ -205,9 +207,11 @@ share/locale/eu/LC_MESSAGES/audacious-plugins.mo
 share/locale/fr/LC_MESSAGES/audacious-plugins.mo
 share/locale/gl/LC_MESSAGES/audacious-plugins.mo
 share/locale/hu/LC_MESSAGES/audacious-plugins.mo
+share/locale/id_ID/LC_MESSAGES/audacious-plugins.mo
 share/locale/it/LC_MESSAGES/audacious-plugins.mo
 share/locale/ja/LC_MESSAGES/audacious-plugins.mo
 share/locale/ko/LC_MESSAGES/audacious-plugins.mo
+share/locale/ky/LC_MESSAGES/audacious-plugins.mo
 share/locale/lt/LC_MESSAGES/audacious-plugins.mo
 share/locale/lv/LC_MESSAGES/audacious-plugins.mo
 share/locale/pl/LC_MESSAGES/audacious-plugins.mo

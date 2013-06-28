@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2012/04/26 19:18:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.46 2013/06/04 18:41:57 naddy Exp $
 
 COMMENT=	window manager, continuation of the Bowman NeXTSTEP clone
 
@@ -13,9 +13,6 @@ HOMEPAGE=	http://www.afterstep.org/
 
 # MIT
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
 WANTLIB += Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat
@@ -41,7 +38,7 @@ CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--with-helpcommand="urxvt -e man" \
 		--with-jpeg-includes=${LOCALBASE}/include \
 		--with-jpeg-library=${LOCALBASE}/lib \
-		--with-png-includes=${LOCALBASE}/include/libpng \
+		--with-png-includes=${LOCALBASE}/include \
 		--with-png-library=${LOCALBASE}/lib \
 		--disable-send-postcard-to-developer \
 		--enable-i18n \
@@ -50,7 +47,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib" \
 		CFLAGS+="${CFLAGS} -fsigned-char"
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/configure ${WRKSRC}/tools/importasmenu

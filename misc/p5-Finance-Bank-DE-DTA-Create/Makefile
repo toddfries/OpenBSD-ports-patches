@@ -1,19 +1,14 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/11/14 14:02:05 henning Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/22 13:52:04 benoit Exp $
 
 COMMENT=	create DTA/DTAUS files for german banking
 
-DISTNAME=	Finance-Bank-DE-DTA-Create-1.02
+DISTNAME =	Finance-Bank-DE-DTA-Create-1.03
 WRKDIST=	${WRKDIR}/Finance-Bank-DE-DTA-Create/
 CATEGORIES=	misc
 
 # perl
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 MODULES=	cpan
-
-NO_REGRESS=	Yes
 
 .include <bsd.port.mk>

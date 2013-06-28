@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.112 2012/09/06 12:38:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.117 2013/03/21 08:46:35 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,14 +6,11 @@ COMMENT-main=	multi-protocol instant messaging client
 COMMENT-finch=	multi-protocol instant messaging client, console client
 COMMENT-libpurple= multi-protocol instant messaging library
 
-VERSION=	2.10.6
+VERSION=	2.10.7
 DISTNAME=	pidgin-${VERSION}
 PKGNAME-main=	pidgin-${VERSION}
-REVISION-main=	2
 PKGNAME-finch=	finch-${VERSION}
-REVISION-finch=	2
 PKGNAME-libpurple= libpurple-${VERSION}
-REVISION-libpurple= 2
 .for i in -finch -libpurple
 FULLPKGNAME$i= ${PKGNAME$i}${FLAVOR_EXT:S/-gtkspell//}
 FULLPKGPATH$i= ${PKGPATH},$i${FLAVOR_EXT:S/-gtkspell//:S/-/,/g}
@@ -35,9 +32,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c dbus-1 dbus-glib-1 ffi gio-2.0 glib-2.0 gmodule-2.0 \
 		gobject-2.0 gthread-2.0 idn m pcre pthread util xml2 z
@@ -78,7 +72,6 @@ MODGCONF2_SCHEMAS_DIR=	pidgin
 MODGCONF2_LIBDEP=	No
 
 SEPARATE_BUILD=	Yes
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.68
@@ -106,7 +99,7 @@ FLAVOR?=
 
 MULTI_PACKAGES= -main -finch -libpurple
 
-.if ${FLAVOR:L:Maudio}
+.if ${FLAVOR:Maudio}
 LIB_DEPENDS+=		multimedia/gstreamer-0.10/core>=0.10,<=0.11 \
 			multimedia/gstreamer-0.10/plugins-base
 WANTLIB+=		gstreamer-0.10 gstinterfaces-0.10
@@ -118,12 +111,12 @@ LIB_DEPENDS-main+=	libpurple-${VERSION}:${BUILD_PKGPATH},-libpurple
 LIB_DEPENDS-finch+=	libpurple-${VERSION}:${BUILD_PKGPATH},-libpurple
 .endif
 
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 CONFIGURE_ARGS+=	--enable-debug
 DEBUG=			-O0 -g
 .endif
 
-.if ${FLAVOR:L:Mgtkspell}
+.if ${FLAVOR:Mgtkspell}
 LIB_DEPENDS-main+=	textproc/gtkspell
 WANTLIB-main+=		enchant gtkspell
 .else

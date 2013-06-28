@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.29 2012/10/24 22:49:05 jeremy Exp $
+# $OpenBSD: Makefile,v 1.37 2013/05/17 20:08:35 jeremy Exp $
+
+BROKEN-sparc64 =	doesnt reliably build, and depending ports randomly fail to build
 
 COMMENT-main =		object oriented script language with threads
 COMMENT-gdbm =		gdbm interface for ruby
@@ -7,7 +9,7 @@ COMMENT-tk =		tk interface for ruby
 COMMENT-ri_docs =	ri documentation files for ruby
 
 VERSION =		1.9.3
-PATCHLEVEL =		286
+PATCHLEVEL =		429
 RUBYLIBREV =		1.9.1
 
 SHARED_LIBS =		ruby19 1.0
@@ -57,12 +59,11 @@ MULTI_PACKAGES =	-main -gdbm -dbm
 
 WANTLIB-gdbm =		c m gdbm pthread ruby19
 LIB_DEPENDS-gdbm =	databases/gdbm \
-			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL}
+			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL},<1.10
 RUN_DEPENDS-gdbm =	
 
-WANTLIB-dbm =		c m db pthread ruby19
-LIB_DEPENDS-dbm =	databases/db/v4 \
-			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL}
+WANTLIB-dbm =		c m pthread ruby19
+LIB_DEPENDS-dbm =	lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL},<1.10
 RUN_DEPENDS-dbm =	
  
 .if !${FLAVOR:Mno_x11}
@@ -72,7 +73,7 @@ CONFIGURE_ARGS+=	--with-tcl-include=${PREFIX}/include/tcl8.5 \
 			--with-X11-dir=${X11BASE}
 WANTLIB-tk =		X11 c m pthread ruby19 tcl85 tk85
 LIB_DEPENDS-tk =	tk->=8.5,<8.6:x11/tk/8.5 \
-			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL}
+			lang/ruby/${REV},-main>=${VERSION}.${PATCHLEVEL},<1.10
 RUN_DEPENDS-tk =	
 .endif
 
@@ -85,12 +86,12 @@ VMEM_WARNING =		Yes
 
 SUBST_VARS +=		RUBYLIBREV
 
-REGRESS_DEPENDS =	${FULLPKGNAME-main}:${BUILD_PKGPATH}
+TEST_DEPENDS =	${FULLPKGNAME-main}:${BUILD_PKGPATH}
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/ruby
 
-do-regress:
+do-test:
 	-cd ${WRKSRC} && make test-sample
 	-cd ${WRKSRC} && make btest-ruby
 	cd ${WRKSRC} && make test-all

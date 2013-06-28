@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.48 2012/06/02 13:17:19 jasper Exp $
+# $OpenBSD: Makefile,v 1.51 2013/03/11 11:41:29 espie Exp $
 
 COMMENT=	extended C-shell with many useful features
 
 DISTNAME=	tcsh-6.18.01
+REVISION=	0
 CATEGORIES=	shells
 HOMEPAGE=	http://www.tcsh.org/
 
@@ -10,9 +11,6 @@ MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	ftp://ftp.astron.com/pub/tcsh/ \
 		ftp://ftp.astron.com/pub/tcsh/old/
@@ -22,15 +20,15 @@ WANTLIB=	c termlib
 FLAVORS=	static
 FLAVOR?=
 
-.if ${FLAVOR:L} == "static"
+.if ${FLAVOR} == "static"
 CONFIGURE_ENV=	LDFLAGS="-static"
 .endif
 
 CONFIGURE_STYLE=gnu
 
 AUTOCONF_VERSION=2.59
-REGRESS_DEPENDS=${MODGNU_AUTOCONF_DEPENDS}
-REGRESS_FLAGS=	AUTOCONF_VERSION=${AUTOCONF_VERSION}
+TEST_DEPENDS=${MODGNU_AUTOCONF_DEPENDS}
+TEST_FLAGS=	AUTOCONF_VERSION=${AUTOCONF_VERSION}
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/tcsh ${PREFIX}/bin/tcsh

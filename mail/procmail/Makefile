@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2012/03/17 10:47:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.39 2013/03/11 11:23:53 espie Exp $
 
 COMMENT=	filtering local mail delivery agent
 
@@ -18,22 +18,19 @@ HOMEPAGE=	http://www.procmail.org/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c m
 
 FLAVORS=	lmtp
 FLAVOR?=
 
 USE_GROFF =	Yes
-.if ${FLAVOR:L:Mlmtp}
+.if ${FLAVOR:Mlmtp}
 CFLAGS+=	-DLMTP
 .endif
 
 MAKE_FLAGS=	BASENAME="${PREFIX}" CC="${CC}" CFLAGS0="${CFLAGS}" LOCKINGTEST="110"
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/procmail

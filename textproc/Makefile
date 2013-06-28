@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.373 2012/11/12 13:37:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.388 2013/06/26 06:35:35 jasper Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -30,6 +30,8 @@
      SUBDIR += docx2txt
      SUBDIR += ebook-tools
      SUBDIR += enchant
+     SUBDIR += erl-edown
+     SUBDIR += erl-neotoma
      SUBDIR += eruby
      SUBDIR += exempi
      SUBDIR += fcbanner
@@ -94,6 +96,8 @@
      SUBDIR += linuxdoc
      SUBDIR += lq-sp
      SUBDIR += luaexpat
+     SUBDIR += luasoldout
+     SUBDIR += luasoldout,lua52
      SUBDIR += makefaq
      SUBDIR += markdown
      SUBDIR += meld
@@ -102,6 +106,7 @@
      SUBDIR += mupdf
      SUBDIR += mxml
      SUBDIR += namazu
+     SUBDIR += naturaldocs
      SUBDIR += ocaml-csv
      SUBDIR += ocaml-rss
      SUBDIR += ocaml-text
@@ -252,7 +257,6 @@
      SUBDIR += p5-XML-SAX-Expat-Incremental
      SUBDIR += p5-XML-SAX-ExpatXS
      SUBDIR += p5-XML-SAX-Writer
-     SUBDIR += p5-XML-Sablotron
      SUBDIR += p5-XML-Simple
      SUBDIR += p5-XML-Smart
      SUBDIR += p5-XML-Stream
@@ -269,6 +273,7 @@
      SUBDIR += p5-tkispell
      SUBDIR += palm-bookmarks
      SUBDIR += par
+     SUBDIR += patchutils
      SUBDIR += pdftk
      SUBDIR += pear-File
      SUBDIR += pear-File-Find
@@ -307,12 +312,12 @@
      SUBDIR += rarian
      SUBDIR += rasqal
      SUBDIR += redland
+     SUBDIR += redland-bindings
      SUBDIR += rman
      SUBDIR += rubber
      SUBDIR += ruby-ascii85
      SUBDIR += ruby-builder
      SUBDIR += ruby-classifier
-     SUBDIR += ruby-erubis
      SUBDIR += ruby-fastercsv,ruby18
      SUBDIR += ruby-fastri,ruby18
      SUBDIR += ruby-fast-stemmer
@@ -324,6 +329,7 @@
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-hyperestraier,ruby19
      SUBDIR += ruby-icalendar
+     SUBDIR += ruby-kramdown
      SUBDIR += ruby-liquid
      SUBDIR += ruby-markaby
      SUBDIR += ruby-maruku
@@ -331,6 +337,7 @@
      SUBDIR += ruby-nokogiri
      SUBDIR += ruby-nokogiri,ruby18
      SUBDIR += ruby-pdf-reader
+     SUBDIR += ruby-pygments.rb
      SUBDIR += ruby-randexp
      SUBDIR += ruby-rdiscount
      SUBDIR += ruby-rdiscount,ruby18
@@ -338,12 +345,15 @@
      SUBDIR += ruby-redcarpet,ruby18
      SUBDIR += ruby-redcloth
      SUBDIR += ruby-redcloth,ruby18
+     SUBDIR += ruby-rexical
+     SUBDIR += ruby-rexical,ruby18
      SUBDIR += ruby-ronn
      SUBDIR += ruby-rss
      SUBDIR += ruby-rtex
      SUBDIR += ruby-syntax
      SUBDIR += ruby-templater
      SUBDIR += ruby-treetop
+     SUBDIR += ruby-yard
      SUBDIR += rxp
      SUBDIR += sablotron
      SUBDIR += sgmlformat
@@ -354,9 +364,11 @@
      SUBDIR += sphinx,pgsql
      SUBDIR += spiff
      SUBDIR += stringtemplate
+     SUBDIR += svndumptool
      SUBDIR += swish-e
      SUBDIR += tcpdf
      SUBDIR += texi2html
+     SUBDIR += tinyxml
      SUBDIR += tre
      SUBDIR += txt2tags
      SUBDIR += uncrustify
@@ -371,7 +383,6 @@
      SUBDIR += xerces
      SUBDIR += xerces-c
      SUBDIR += xml2rfc
-     SUBDIR += xml2rfc,no_x11
      SUBDIR += xmlcatmgr
      SUBDIR += xmlto
      SUBDIR += xmlwf

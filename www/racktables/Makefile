@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/05/18 19:51:35 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2013/04/17 14:25:51 sthen Exp $
 
 COMMENT=	web-based rack/IP management
 
-DISTNAME=	RackTables-0.19.12
+DISTNAME=	RackTables-0.20.4
 PKGNAME=	${DISTNAME:L}
 CATEGORIES=	www
 
@@ -11,9 +11,6 @@ MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=racktables/}
 
@@ -26,7 +23,7 @@ RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-gd \
 
 USE_GMAKE=	Yes
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 
 PREFIX=		/var/www
@@ -35,13 +32,15 @@ FAKE_FLAGS=     DESTDIR=${WRKINST} prefix=${PREFIX} \
 		datadir=/var/www \
 		docdir=/var/www/racktables \
 		scriptdir=/var/www/racktables \
-		staticdir=/var/www/htdocs/racktables \
-		applibdir=/var/www/htdocs/racktables/inc \
-		indexdir=/var/www/htdocs/racktables
+		indexdir=/var/www/racktables/wwwroot \
+		staticdir=/var/www/racktables/wwwroot \
+		applibdir=/var/www/racktables/wwwroot/inc
 INSTALL_TARGET=	install install-docs
 
 post-install:
 	cd ${WRKINST}/var/www; \
-	    chown -R ${SHAREOWN}:${SHAREGRP} racktables htdocs/racktables
+	${INSTALL_DATA_DIR} htdocs/racktables racktables/plugins; \
+	echo "<?php require '../../racktables/wwwroot/index.php'; ?>" > htdocs/racktables/index.php; \
+	chown -R ${SHAREOWN}:${SHAREGRP} racktables htdocs/racktables
 
 .include <bsd.port.mk>

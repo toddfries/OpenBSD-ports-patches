@@ -1,0 +1,21 @@
+$OpenBSD: patch-nss_coreconf_OpenBSD_mk,v 1.1 2013/06/23 18:40:01 landry Exp $
+--- nss/coreconf/OpenBSD.mk.orig	Tue May 28 23:43:24 2013
++++ nss/coreconf/OpenBSD.mk	Wed Jun 12 22:01:11 2013
+@@ -24,7 +24,7 @@ OS_LIBS			+= -pthread
+ DSO_LDOPTS		+= -pthread
+ endif
+ 
+-DLL_SUFFIX		= so.1.0
++DLL_SUFFIX		= so.${SO_VERSION}
+ 
+ OS_CFLAGS		= $(DSO_CFLAGS) $(OS_REL_CFLAGS) -ansi -Wall -Wno-switch -pipe -DOPENBSD
+ 
+@@ -35,7 +35,7 @@ ARCH			= openbsd
+ DSO_CFLAGS		= -fPIC -DPIC
+ DSO_LDOPTS		= -shared -fPIC -Wl,-soname,lib$(LIBRARY_NAME)$(LIBRARY_VERSION).$(DLL_SUFFIX)
+ 
+-MKSHLIB			= $(CC) $(DSO_LDOPTS)
++MKSHLIB			= $(CC) -Wl,-Bsymbolic $(DSO_LDOPTS)
+ 
+ USE_SYSTEM_ZLIB		= 1
+ ZLIB_LIBS		= -lz

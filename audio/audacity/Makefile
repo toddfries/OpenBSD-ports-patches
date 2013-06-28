@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.35 2012/09/03 09:09:34 stsp Exp $
+# $OpenBSD: Makefile,v 1.38 2013/03/21 08:45:11 ajacoutot Exp $
 
 COMMENT=	free audio editor
 
 V=		1.3.9
 DISTNAME=	audacity-minsrc-${V}
 PKGNAME=	audacity-${V}
-REVISION=	4
+REVISION=	5
 CATEGORIES=	audio
 
 EXTRACT_SUFX=	.tar.bz2
@@ -14,13 +14,8 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=audacity/}
 
 HOMEPAGE=	http://audacity.sourceforge.net/
 
-MAINTAINER=	Jacob Meuser <jakemsr@openbsd.org>
-
 # GPLv2
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 WANTLIB += c expat glib-2.0 gobject-2.0 gtk-x11-2.0 m ogg pthread
 WANTLIB += sndfile sndio stdc++ wx_base_xml wx_base_odbc wx_gtk2_aui
@@ -45,7 +40,6 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 		misc/shared-mime-info
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 			CFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
@@ -87,7 +81,7 @@ WRKDIST=		${WRKDIR}/audacity-src-${V}
 # Regression tests are in the source tarball but as of 2007, they have
 # not been updated for 3 years ; as they're completely out-of-sync with
 # the ongoing development, there's no point in running them 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps

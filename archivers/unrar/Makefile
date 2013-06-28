@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.56 2012/04/08 17:04:20 naddy Exp $
+# $OpenBSD: Makefile,v 1.58 2013/03/10 22:28:05 espie Exp $
 
 COMMENT=	extract, list, and test RAR archives
 
@@ -9,20 +9,15 @@ COMMENT=	extract, list, and test RAR archives
 # to 0 for a non-beta release, e.g., "4.00 beta 6" was succeeded
 # by "4.00".
 
-PKGNAME=	unrar-4.10
+PKGNAME=	unrar-4.20
 EPOCH=		1
-DISTNAME=	unrarsrc-4.1.4
+DISTNAME=	unrarsrc-4.2.4
 CATEGORIES=	archivers
 
 HOMEPAGE=	http://www.rarlab.com/
 
-MAINTAINER=	Amit Kulkarni <amitkulz@gmail.com>
-
 # nonstandard
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c crypto m stdc++
 
@@ -39,6 +34,6 @@ do-install:
 	${INSTALL_MAN} ${WRKSRC}/readme.txt ${WRKSRC}/license.txt \
 		${PREFIX}/share/doc/unrar
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

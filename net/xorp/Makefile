@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2011/11/16 00:20:09 sthen Exp $
+# $OpenBSD: Makefile,v 1.27 2013/03/21 08:46:35 ajacoutot Exp $
 
 COMMENT-main=	eXtensible Open Router Platform
 
@@ -11,9 +11,6 @@ HOMEPAGE=	http://www.xorp.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://www.xorp.org/releases/${VERSION}/ \
 		http://www2.xorp.org/releases/${VERSION}/ \
@@ -26,7 +23,6 @@ PREFIX-main=	${LOCALBASE}
 WANTLIB=	c crypto curses m pcap stdc++
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-shared
 
 MODULES=	lang/python
@@ -36,13 +32,13 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--enable-optimize --disable-debug
 MODGNU_CONFIG_GUESS_DIRS=	${WRKSRC}/config ${WRKSRC}/cli/libtecla
 
-REGRESS_DEPENDS=	shells/bash
+TEST_DEPENDS=	shells/bash
 
 # some regression tests must be run as root
-do-regress:
+do-test:
 	@ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 	@cd ${WRKBUILD}; ${SUDO} ${SETENV} ${MAKE_ENV} \
-		${MAKE_PROGRAM} ${ALL_REGRESS_FLAGS} ${REGRESS_TARGET}
+		${MAKE_PROGRAM} ${ALL_TEST_FLAGS} ${TEST_TARGET}
 
 post-install:
 	${INSTALL_DATA_DIR} ${WRKINST}/${PREFIX-main}/share/examples/xorp

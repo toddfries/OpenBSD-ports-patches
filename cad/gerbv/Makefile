@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2012/06/15 08:32:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2013/04/03 06:53:07 ajacoutot Exp $
 
 COMMENT=		viewer for Gerber (RS-274X) files
 DISTNAME=		gerbv-2.5.0
@@ -13,9 +13,6 @@ SHARED_LIBS +=  gerbv                     0.1 # 1.5
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig
@@ -32,15 +29,12 @@ MODULES=		devel/gettext
 BUILD_DEPENDS=		shells/bash
 LIB_DEPENDS=		x11/gtk+2
 
-# configure complains otherwise
-BUILD_DEPENDS +=	devel/desktop-file-utils
-
 RUN_DEPENDS=		devel/desktop-file-utils \
 			x11/gtk+2,-guic
 
-USE_LIBTOOL =		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--disable-update-desktop-database
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/icon-theme-installer

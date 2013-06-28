@@ -1,36 +1,15 @@
-$OpenBSD: patch-src_libpiano_crypt_c,v 1.5 2012/09/23 10:18:21 dcoppa Exp $
+$OpenBSD: patch-src_libpiano_crypt_c,v 1.7 2013/06/18 13:17:45 dcoppa Exp $
 
-Work around libgcrypt deprecation warnings. See:
-http://lists.gnupg.org/pipermail/gcrypt-devel/2011-July/001830.html
+Zap useless include
+(upstream git commit a1e73fc8d72a5253cae29c9bab5b260ad297c5e2)
 
-Fix memory leak pointed out by clang
-(upstream git commit fe1ffbd7257b4c0dd43a825912bcd65732df6db2)
-
---- src/libpiano/crypt.c.orig	Fri Sep  7 16:44:39 2012
-+++ src/libpiano/crypt.c	Sun Sep 23 12:11:36 2012
-@@ -23,7 +23,9 @@ THE SOFTWARE.
+--- src/libpiano/crypt.c.orig	Sun May 19 12:58:18 2013
++++ src/libpiano/crypt.c	Tue Jun 18 14:58:00 2013
+@@ -23,7 +23,6 @@ THE SOFTWARE.
  
  #include <string.h>
  #include <assert.h>
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
- #include <gcrypt.h>
-+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+-#include <gcrypt.h>
  #include <stdio.h>
  #include <stdlib.h>
  #include <stdint.h>
-@@ -57,6 +59,7 @@ char *PianoDecryptString (gcry_cipher_hd_t h, const ch
- 
- 	gret = gcry_cipher_decrypt (h, output, outputLen, NULL, 0);
- 	if (gret) {
-+		free (output);
- 		return NULL;
- 	}
- 
-@@ -82,6 +85,7 @@ char *PianoEncryptString (gcry_cipher_hd_t h, const ch
- 
- 	gret = gcry_cipher_encrypt (h, paddedInput, paddedInputLen, NULL, 0);
- 	if (gret) {
-+		free (paddedInput);
- 		return NULL;
- 	}
- 

@@ -1,18 +1,24 @@
-# $OpenBSD: Makefile,v 1.7 2012/04/30 07:11:58 bentley Exp $
+# $OpenBSD: Makefile,v 1.12 2013/05/16 20:48:53 rpe Exp $
 
 COMMENT =		HTML parser
 
-NETSURF_PROJECT =	hubbub
-NETSURF_VERSION =	0.1.2
+NETSURF_PROJECT =	libhubbub
+NETSURF_VERSION =	0.2.0
+PKGNAME =		hubbub-${NETSURF_VERSION}
+HOMEPAGE =		http://www.netsurf-browser.org/projects/hubbub/
+REVISION =		0
 
-CATEGORIES =		www
-SHARED_LIBS =		hubbub 1.0 #0.1.2
+SHARED_LIBS =		hubbub 1.1 #0.2.0
 
-LIB_DEPENDS =		www/netsurf/libparserutils
-WANTLIB =		parserutils
+MODULES =		converters/libiconv
 
-# regress broken - needs an old version of json-c
-# REGRESS_DEPENDS =	devel/json-c
-NO_REGRESS =		Yes
+LIB_DEPENDS =		www/netsurf/libparserutils>=0.1.2
+WANTLIB += parserutils
+
+TEST_DEPENDS =		devel/json-c>=0.10
+
+pre-build:
+	echo "CFLAGS += -I${LOCALBASE}/include" \
+		> ${WRKSRC}/Makefile.config.override
 
 .include <bsd.port.mk>

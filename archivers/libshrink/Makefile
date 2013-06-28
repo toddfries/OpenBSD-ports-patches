@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2012/10/15 14:55:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2013/04/04 16:03:55 brad Exp $
 
 COMMENT=	compression wrapper library
 
-DISTNAME=	shrink-0.5.1
+DISTNAME=	shrink-0.5.2
 PKGNAME=	lib${DISTNAME}
 REVISION=	0
 CATEGORIES=    	archivers devel
@@ -19,9 +19,6 @@ LIB_DEPENDS=	archivers/lzo2 \
 
 # ISC
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 do-configure:
 	printf "major=${LIBshrink_VERSION:R}\nminor=${LIBshrink_VERSION:E}\n" \

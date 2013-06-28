@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile,v 1.12 2012/10/28 23:28:49 kili Exp $
+# $OpenBSD: Makefile,v 1.15 2013/03/11 10:50:08 espie Exp $
 
 COMMENT =		DrIFT with pugs-specific rules
 
 DISTNAME =		pugs-DrIFT-2.2.3.20120203
-REVISION =		1
+REVISION =		3
 CATEGORIES =		devel
 HOMEPAGE =		http://pugscode.org/
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m
 

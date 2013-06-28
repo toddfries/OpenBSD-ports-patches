@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2011/06/09 15:28:40 shadchin Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/21 08:48:57 ajacoutot Exp $
 
 COMMENT=	displays text on your screen
 
@@ -9,9 +9,6 @@ HOMEPAGE=	http://libxosd.sourceforge.net/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xau Xdmcp Xext Xinerama c pthread pthread-stubs
 WANTLIB += xcb
@@ -25,7 +22,6 @@ CONFIGURE_ARGS+=	--disable-new-plugin \
 			--disable-gdk_pixbuftest \
 			--disable-beep_media_player_plugin
 
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
 .include <bsd.port.mk>

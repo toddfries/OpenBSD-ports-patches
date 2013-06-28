@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2012/10/28 21:49:58 robert Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/11 11:23:54 espie Exp $
 
 COMMENT=	next generation web interface for Zarafa
 
-WAPP_BUILD=	37967
-WAPP_VERSION=	1.2.1
+WAPP_BUILD=	41348
+WAPP_VERSION=	1.3.1
 EPOCH=		0
 
 DISTNAME=	zarafa-webapp-${WAPP_VERSION}-${WAPP_BUILD}.noarch.rpm
@@ -24,7 +24,7 @@ BUILD_DEPENDS=	rpm-*|rpm2cpio-*:converters/rpm2cpio
 RUN_DEPENDS=	mail/zarafa/zarafa,-web # php-mapi
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 
 WRKDIST=	${WRKDIR}

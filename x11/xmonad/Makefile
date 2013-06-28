@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.37 2012/10/28 23:31:50 kili Exp $
+# $OpenBSD: Makefile,v 1.41 2013/06/17 10:07:40 dcoppa Exp $
 
 COMMENT-main =		tiling window manager
 COMMENT-lib =		libraries for runtime configuration
 
-DISTNAME =		xmonad-0.10
+DISTNAME =		xmonad-0.11
 PKGNAME-main =		${DISTNAME}
 PKGNAME-lib =		${DISTNAME:S,-,-lib-,}
-REVISION-main =		1
-REVISION-lib =		2
+REVISION =		0
+REVISION-lib =		0
 CATEGORIES =		x11
 HOMEPAGE =		http://www.xmonad.org/
 
@@ -15,9 +15,6 @@ MULTI_PACKAGES =		-main -lib
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB-main =		${WANTLIB} X11 Xext Xinerama Xrandr c m \
 			pthread util
@@ -38,6 +35,7 @@ LIB_DEPENDS-main =	${LIB_DEPENDS}
 # causes xmonad-lib to be installed in the wrong place.
 MODGHC_SETUP_CONF_ARGS +=	--docdir=\$$datadir/doc/hs-\$$pkgid
 MODGHC_SETUP_CONF_ARGS +=	--libsubdir=ghc/\$$pkgid
+MODGHC_SETUP_CONF_ARGS +=	--enable-library-profiling
 RUN_DEPENDS-lib +=		lang/ghc=${MODGHC_VER}
 
 USE_GROFF =		Yes
@@ -47,9 +45,9 @@ post-install:
 	@${INSTALL_DATA} ${WRKSRC}/CONFIG ${PREFIX}/share/doc/hs-${DISTNAME}
 	@${INSTALL_DATA} ${WRKSRC}/man/xmonad.hs ${PREFIX}/share/doc/hs-${DISTNAME}/xmonad.hs
 	@# Don't know why, but it installs the xmonad.hs into that directory:
-	@rm -rf ${PREFIX}/share/hs-${DISTNAME}
+	@rm -rf ${PREFIX}/share/${DISTNAME}
 
 # Needs to be built with different configuration.
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 .include <bsd.port.mk>

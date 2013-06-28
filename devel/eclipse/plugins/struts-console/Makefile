@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.5 2012/06/09 11:26:02 sthen Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/11 10:50:03 espie Exp $
 
-COMMENT=		Configuration tool for Struts web framework
+COMMENT=		configuration tool for Struts web framework
 
 V=4.8
 DISTNAME=		struts-console-${V}
 PKGNAME=		eclipse-plugin-struts-console-${V}
-REVISION =		0
+REVISION =		1
 
-CATEGORIES=		devel/eclipse/plugins java
+CATEGORIES?=		java
 
 HOMEPAGE=		http://www.jamesholmes.com/struts/console/
 
@@ -16,18 +16,11 @@ MAINTAINER=		Ian Darwin <ian@openbsd.org>
 # Free for use, but no redistribution. 
 PERMIT_PACKAGE_CDROM=	no redistribution
 PERMIT_PACKAGE_FTP=	no redistribution
-PERMIT_DISTFILES_CDROM=	no redistribution
 PERMIT_DISTFILES_FTP=	no redistribution
 
 MASTER_SITES=		http://www.jamesholmes.com/struts/
 
-TAR=			${LOCALBASE}/bin/gtar
-
-BUILD_DEPENDS=		archivers/gtar
-RUN_DEPENDS=		devel/eclipse/sdk>=3.2
-
-NO_BUILD=		Yes
-NO_REGRESS=		Yes
+WRKDIST=		${WRKDIR}/${DISTNAME}
 
 PKG_ARCH=		*
 

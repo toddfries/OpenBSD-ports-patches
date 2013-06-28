@@ -1,15 +1,12 @@
-# $OpenBSD: Makefile,v 1.2 2012/09/03 18:05:25 jeremy Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 02:52:08 espie Exp $
 
 COMMENT =	access an H2 database from JRuby
 
-DISTNAME =	jdbc-h2-1.1.107
+DISTNAME =	jdbc-h2-1.3.170.1
 CATEGORIES =	databases
 
 # MIT
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MODULES =	lang/ruby
 FLAVORS =	jruby

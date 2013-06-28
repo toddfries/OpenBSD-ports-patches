@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2012/06/16 12:52:04 sthen Exp $
+# $OpenBSD: Makefile,v 1.59 2013/05/30 15:43:06 jasper Exp $
 
      SUBDIR =
      SUBDIR += arc
@@ -23,6 +23,7 @@
      SUBDIR += libtar
      SUBDIR += libzip
      SUBDIR += luazlib
+     SUBDIR += luazlib,lua52
      SUBDIR += lxsplit
      SUBDIR += lzo
      SUBDIR += lzo2
@@ -41,6 +42,7 @@
      SUBDIR += pecl-lzf
      SUBDIR += pecl-rar
      SUBDIR += py-lzo
+     SUBDIR += quazip
      SUBDIR += ripole
      SUBDIR += ruby-archive-tar-minitar
      SUBDIR += rzip

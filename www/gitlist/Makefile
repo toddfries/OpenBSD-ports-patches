@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/11/07 07:53:02 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2013/06/22 06:39:45 jasper Exp $
 
 COMMENT=		elegant and modern git repository browser
 
-DISTNAME=		gitlist-0.3
+DISTNAME=		gitlist-0.4.0
 CATEGORIES=		www
 
 HOMEPAGE=		http://gitlist.org/
@@ -11,33 +11,26 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =  Yes
-PERMIT_PACKAGE_FTP =    Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =  Yes
 
 MASTER_SITES=		https://s3.amazonaws.com/gitlist/
 
 MODULES=		lang/php
 
 NO_BUILD=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 PKG_ARCH=		*
 
 PREFIX=			/var/www
 INSTDIR=		${PREFIX}/gitlist/
 TINSTDIR=		${TRUEPREFIX}/gitlist/
 SUBST_VARS=		INSTDIR TINSTDIR
-WRKDIST=		${WRKDIR}/${DISTNAME}/
-
-do-extract:
-	mkdir -p ${WRKDIST}
-	${GZIP_CMD} -dc ${FULLDISTDIR}/${DISTFILES} | ${TAR} xf - -C ${WRKDIST}
+WRKDIST=		${WRKDIR}/gitlist/
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/config.ini
+	${SUBST_CMD} ${WRKSRC}/config.ini-example
 
 do-install:
-	rm ${WRKSRC}/config.ini.*
+	rm -f ${WRKSRC}/config.ini-example.*
 	cp -Rp ${WRKDIST} ${INSTDIR}
 	${SUBST_CMD} -c ${FILESDIR}/gitlist.conf \
 	    ${INSTDIR}/gitlist.conf.dist

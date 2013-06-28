@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/07/11 09:38:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT=	find the country where IP address/hostname originates from
 
@@ -13,9 +13,6 @@ MASTER_SITES=	http://www.maxmind.com/download/geoip/api/c/ \
 
 # LGPL, GPL (parts of GeoIPUpdate)
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c z
 
@@ -24,7 +21,6 @@ SEPARATE_BUILD=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--datadir=/var/db \
 		${CONFIGURE_SHARED}
-USE_LIBTOOL=	Yes
 USE_GROFF=	Yes
 
 EXAMPLESDIR=	${PREFIX}/share/examples/GeoIP

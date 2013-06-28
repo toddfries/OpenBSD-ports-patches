@@ -1,20 +1,17 @@
-# $OpenBSD: Makefile,v 1.9 2012/04/28 10:51:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2013/04/29 11:35:29 sthen Exp $
 
 BROKEN-sparc64=	SIGBUS on sparc64 when starting
 
 COMMENT=	graphical roguelike game
 
 DISTNAME=	ivan-0.50
-REVISION =	1
+REVISION =	2
 CATEGORIES=	games
 
 HOMEPAGE=	http://ivan.sourceforge.net/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=ivan/}
 

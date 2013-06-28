@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/06/13 14:03:03 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/11 10:50:31 espie Exp $
 
 COMMENT =	VHDL tags generator
 
@@ -10,12 +10,9 @@ HOMEPAGE =	http://www.peterantoine.me.uk/vtags.html
 
 # Artistic License
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =	http://www.peterantoine.me.uk/downloads/
-TAR =		gtar
+TAR =		${LOCALBASE}/bin/gtar
 
 BUILD_DEPENDS = archivers/gtar
 
@@ -23,7 +20,7 @@ MAKE_FILE =	makefile
 USE_GMAKE =	Yes
 
 ALL_TARGET =	vtags
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 WRKDIST =	${WRKDIR}/vtags
 

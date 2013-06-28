@@ -1,0 +1,17 @@
+$OpenBSD: patch-sample_sample-config-files_static-home_conf,v 1.1 2013/04/20 16:22:55 sthen Exp $
+--- sample/sample-config-files/static-home.conf.orig	Mon Sep 10 17:01:08 2012
++++ sample/sample-config-files/static-home.conf	Thu Mar  7 14:02:35 2013
+@@ -37,10 +37,10 @@ secret static.key
+ ; port 1194
+ 
+ # Downgrade UID and GID to
+-# "nobody" after initialization
++# "_openvpn" after initialization
+ # for extra security.
+-; user nobody
+-; group nobody
++user _openvpn
++group _openvpn
+ 
+ # If you built OpenVPN with
+ # LZO compression, uncomment

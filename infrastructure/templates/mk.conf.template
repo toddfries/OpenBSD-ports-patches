@@ -1,4 +1,4 @@
-# $OpenBSD: mk.conf.template,v 1.9 2012/11/02 01:44:19 sthen Exp $
+# $OpenBSD: mk.conf.template,v 1.11 2013/04/01 15:28:47 zhuk Exp $
 
 # This file contains some mk.conf entries suitable for ports work.
 #
@@ -16,9 +16,6 @@
 #WARNINGS=Yes
 #CDIAGFLAGS=-Wall
 
-# Accept Java research license, useful for bulk builds
-#ACCEPT_JRL_LICENSE=Yes
-
 # Common(ish) misspellings:
 .poison BUILD_DEPEND
 .poison DISTFLIES
@@ -27,7 +24,6 @@
 .poison MODGCC3_ARCHES
 .poison MODGCC4_ARCHES
 .poison MODPY_BUILDEP
-.poison NO_REGRSS
 .poison NOT_FOR_ARCH
 .poison NOT_FOR_ARCHES
 .poison ONLY_FOR_ARCH

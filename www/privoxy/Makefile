@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.26 2012/04/20 09:27:29 pascal Exp $
+# $OpenBSD: Makefile,v 1.28 2013/06/13 08:47:46 benoit Exp $
 
 COMMENT=	web proxy with advanced filtering capabilities
 
-V=		3.0.19
+V=		3.0.21
 DISTNAME=	privoxy-${V}-stable
 PKGNAME=	privoxy-${V}
 CATEGORIES=	www
@@ -13,18 +13,14 @@ MAINTAINER=	Michael Erdely <merdely@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c pcre pcreposix pthread z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=ijbswa/}
 EXTRACT_SUFX=	-src.tar.gz
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
-USE_GMAKE=	Yes
 MAKE_FILE=	GNUmakefile
 
 LIB_DEPENDS=	devel/pcre

@@ -1,24 +1,18 @@
-# $OpenBSD: Makefile,v 1.8 2012/09/28 01:47:02 brad Exp $
+# $OpenBSD: Makefile,v 1.10 2013/03/10 22:55:06 espie Exp $
 
 COMMENT =		audio plugin API
 
 DISTNAME =		vamp-plugin-sdk-2.0
-REVISION =		0
+REVISION =		1
+CATEGORIES =		audio
 
 SHARED_LIBS +=		vamp-sdk	1.0
 SHARED_LIBS +=		vamp-hostsdk	1.0
 
-CATEGORIES =		audio
-
 HOMEPAGE =		http://www.vamp-plugins.org/
-
-MAINTAINER =		Jacob Meuser <jakemsr@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m stdc++
 
@@ -36,7 +30,7 @@ CONFIGURE_STYLE =	gnu
 CONFIGURE_ENV =		SNDFILE_CFLAGS="-I${LOCALBASE}/include" \
 			SNDFILE_LIBS="-L${LOCALBASE}/lib -lsndfile"
 
-REGRESS_TARGET =	test
-REGRESS_DEPENDS =	audio/libsndfile
+TEST_TARGET =		test
+TEST_DEPENDS =		audio/libsndfile
 
 .include <bsd.port.mk>

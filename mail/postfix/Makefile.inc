@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.85 2012/05/16 14:40:08 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.89 2013/06/12 20:36:33 brad Exp $
 
 COMMENT=	fast, secure sendmail replacement
 
@@ -23,7 +23,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 PERMIT_PACKAGE_CDROM=	cannot be sold, see section 4 of license
 PERMIT_PACKAGE_FTP=	yes
-PERMIT_DISTFILES_CDROM=	cannot be sold, see section 4 of license
 PERMIT_DISTFILES_FTP=	yes
 
 LIB_DEPENDS+=	devel/pcre
@@ -41,40 +40,40 @@ WANTLIB=	c crypto pcre pthread sqlite3 ssl
 
 ALL_TARGET=	default
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 FLAVORS+=	sasl2 ldap mysql pgsql db4
 FLAVOR?=
 
-.if ${FLAVOR:L:Msasl2}
+.if ${FLAVOR:Msasl2}
 LIB_DEPENDS+=	security/cyrus-sasl2
 WANTLIB+=	sasl2
 MAKE_CCARGS+=	-DUSE_CYRUS_SASL -I${LOCALBASE}/include -I${LOCALBASE}/include/sasl
 MAKE_AUXLIBS+=	-L${LOCALBASE}/lib -lsasl2
 .endif
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 LIB_DEPENDS+=	databases/openldap>=2,<3
 WANTLIB+=	ldap>=2 lber
 MAKE_CCARGS+=	-DHAS_LDAP -I${LOCALBASE}/include
 MAKE_AUXLIBS+=	-L${LOCALBASE}/lib -lldap -llber
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 LIB_DEPENDS+=	databases/mysql
 WANTLIB+=	lib/mysql/mysqlclient>=10
 MAKE_CCARGS+=	-DHAS_MYSQL -I${LOCALBASE}/include/mysql
 MAKE_AUXLIBS+=	-L${LOCALBASE}/lib/mysql -lmysqlclient
 .endif
 
-.if ${FLAVOR:L:Mpgsql}
+.if ${FLAVOR:Mpgsql}
 LIB_DEPENDS+=	databases/postgresql
 WANTLIB+=	pq>=3
 MAKE_CCARGS+=	-DHAS_PGSQL -I${LOCALBASE}/include/postgresql
 MAKE_AUXLIBS+=	-L${LOCALBASE}/lib -lpq
 .endif
 
-.if ${FLAVOR:L:Mdb4}
+.if ${FLAVOR:Mdb4}
 LIB_DEPENDS+=	databases/db/v4>=4,<5
 WANTLIB+=	lib/db4/db>=4
 MAKE_CCARGS+=	-I${LOCALBASE}/include/db4

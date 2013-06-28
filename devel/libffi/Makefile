@@ -1,16 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/01 18:15:06 miod Exp $
-
-# XXX: cannot be updated to a newer version before the binutils in base
-# is updated to 2.17.
-
-# m68k - needs ELF and serious tinkering
-# m88k - missing code
-# vax - libffi hasn't been ported to vax, and most likely never will.
-NOT_FOR_ARCHS= 		m68k m88k vax
+# $OpenBSD: Makefile,v 1.21 2013/05/01 10:11:54 miod Exp $
 
 COMMENT=		Foreign Function Interface
 
 DISTNAME=		libffi-3.0.9
+REVISION=		3
 SHARED_LIBS +=  ffi                  0.0      # .5.9
 CATEGORIES=		devel
 
@@ -20,19 +13,24 @@ HOMEPAGE=		http://sources.redhat.com/libffi/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		ftp://sourceware.org/pub/libffi/
 
-REGRESS_DEPENDS=	devel/dejagnu
-
-USE_LIBTOOL=		Yes
+TEST_DEPENDS=		devel/dejagnu
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}
 
 FAKE_FLAGS+=		includesdir="${PREFIX}/include"
+
+post-patch:
+	@mkdir ${WRKSRC}/src/m88k
+	@cp ${FILESDIR}/m88k_ffi.c ${WRKSRC}/src/m88k/ffi.c
+	@cp ${FILESDIR}/m88k_ffitarget.h ${WRKSRC}/src/m88k/ffitarget.h
+	@cp ${FILESDIR}/m88k_obsd.S ${WRKSRC}/src/m88k/obsd.S
+	@mkdir ${WRKSRC}/src/vax
+	@cp ${FILESDIR}/vax_ffi.c ${WRKSRC}/src/vax/ffi.c
+	@cp ${FILESDIR}/vax_ffitarget.h ${WRKSRC}/src/vax/ffitarget.h
+	@cp ${FILESDIR}/vax_aoutbsd.S ${WRKSRC}/src/vax/aoutbsd.S
 
 .include <bsd.port.mk>

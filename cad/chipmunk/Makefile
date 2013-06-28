@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.15 2012/05/17 10:36:34 landry Exp $
+# $OpenBSD: Makefile,v 1.17 2013/04/03 15:35:54 naddy Exp $
 
 COMMENT=	electronic CAD system
 BROKEN-sparc64 =	Assembler messages: Error: Illegal operands
 
 PKGNAME=	chipmunk-1.57
-REVISION=	3
+REVISION=	4
 DISTNAME=	psys-1.57
 DISTFILES=	psys-1.57.tar.gz webdoc1.46.tar.gz log-5.61.tar.gz \
 		view-1.13.tar.gz until-1.13.tar.gz wol-1.13.tar.gz \
@@ -17,11 +17,8 @@ MAINTAINER=	Peter Valchev <pvalchev@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		X11 c m
+WANTLIB=	X11 c m
 
 #MASTER_SITES=	http://www.cs.berkeley.edu/~lazzaro/chipmunk/pickup/sources/
 MASTER_SITES=	http://www.sightly.net/distfiles/
@@ -39,7 +36,7 @@ MAKE_FLAGS=	CHIPMUNKCC="${CC} ${CFLAGS}" XINCLUDEDIR="${X11BASE}/include" \
 		WOLLIBDIR="${LDIR}" \
 		UNTILPSMAP="${LDIR}/pensps.map"
 		
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 post-extract:
 	@cp ${FILESDIR}/Makefile ${WRKDIR}

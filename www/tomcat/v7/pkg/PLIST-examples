@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-examples,v 1.9 2012/10/11 10:17:27 dcoppa Exp $
+@comment $OpenBSD: PLIST-examples,v 1.15 2013/06/17 11:52:29 dcoppa Exp $
 @conflict jakarta-tomcat-examples-*
 @pkgpath www/jakarta-tomcat/v7,-examples
 @owner _tomcat
@@ -239,6 +239,8 @@ webapps/docs/api/org/apache/catalina/filters/
 webapps/docs/api/org/apache/catalina/filters/AddDefaultCharsetFilter.ResponseWrapper.html
 webapps/docs/api/org/apache/catalina/filters/AddDefaultCharsetFilter.html
 webapps/docs/api/org/apache/catalina/filters/Constants.html
+webapps/docs/api/org/apache/catalina/filters/CorsFilter.CORSRequestType.html
+webapps/docs/api/org/apache/catalina/filters/CorsFilter.html
 webapps/docs/api/org/apache/catalina/filters/CsrfPreventionFilter.CsrfResponseWrapper.html
 webapps/docs/api/org/apache/catalina/filters/CsrfPreventionFilter.LruCache.html
 webapps/docs/api/org/apache/catalina/filters/CsrfPreventionFilter.html
@@ -760,6 +762,8 @@ webapps/docs/api/org/apache/catalina/valves/AccessLogValve.AccessLogElement.html
 webapps/docs/api/org/apache/catalina/valves/AccessLogValve.ByteSentElement.html
 webapps/docs/api/org/apache/catalina/valves/AccessLogValve.CookieElement.html
 webapps/docs/api/org/apache/catalina/valves/AccessLogValve.DateAndTimeElement.html
+webapps/docs/api/org/apache/catalina/valves/AccessLogValve.DateFormatCache.Cache.html
+webapps/docs/api/org/apache/catalina/valves/AccessLogValve.DateFormatCache.html
 webapps/docs/api/org/apache/catalina/valves/AccessLogValve.ElapsedTimeElement.html
 webapps/docs/api/org/apache/catalina/valves/AccessLogValve.HeaderElement.html
 webapps/docs/api/org/apache/catalina/valves/AccessLogValve.HostElement.html
@@ -816,7 +820,6 @@ webapps/docs/api/org/apache/catalina/websocket/
 webapps/docs/api/org/apache/catalina/websocket/Constants.html
 webapps/docs/api/org/apache/catalina/websocket/MessageInbound.html
 webapps/docs/api/org/apache/catalina/websocket/StreamInbound.html
-webapps/docs/api/org/apache/catalina/websocket/Utf8Decoder.html
 webapps/docs/api/org/apache/catalina/websocket/WebSocketServlet.html
 webapps/docs/api/org/apache/catalina/websocket/WsFrame.html
 webapps/docs/api/org/apache/catalina/websocket/WsHttpServletRequestWrapper.html
@@ -1029,6 +1032,9 @@ webapps/docs/api/org/apache/jasper/compiler/AttributeParser.html
 webapps/docs/api/org/apache/jasper/compiler/BeanRepository.html
 webapps/docs/api/org/apache/jasper/compiler/Compiler.html
 webapps/docs/api/org/apache/jasper/compiler/ELFunctionMapper.html
+webapps/docs/api/org/apache/jasper/compiler/ELInterpreter.html
+webapps/docs/api/org/apache/jasper/compiler/ELInterpreterFactory.DefaultELInterpreter.html
+webapps/docs/api/org/apache/jasper/compiler/ELInterpreterFactory.html
 webapps/docs/api/org/apache/jasper/compiler/ELParser.html
 webapps/docs/api/org/apache/jasper/compiler/ErrorDispatcher.html
 webapps/docs/api/org/apache/jasper/compiler/ErrorHandler.html
@@ -1071,6 +1077,7 @@ webapps/docs/api/org/apache/jasper/el/ELResolverImpl.html
 webapps/docs/api/org/apache/jasper/el/ExpressionEvaluatorImpl.html
 webapps/docs/api/org/apache/jasper/el/ExpressionImpl.html
 webapps/docs/api/org/apache/jasper/el/FunctionMapperImpl.html
+webapps/docs/api/org/apache/jasper/el/JasperELResolver.html
 webapps/docs/api/org/apache/jasper/el/JspELException.html
 webapps/docs/api/org/apache/jasper/el/JspMethodExpression.html
 webapps/docs/api/org/apache/jasper/el/JspMethodNotFoundException.html
@@ -1489,9 +1496,27 @@ webapps/docs/api/org/apache/tomcat/util/buf/StringCache.CharEntry.html
 webapps/docs/api/org/apache/tomcat/util/buf/StringCache.html
 webapps/docs/api/org/apache/tomcat/util/buf/UDecoder.html
 webapps/docs/api/org/apache/tomcat/util/buf/UEncoder.html
+webapps/docs/api/org/apache/tomcat/util/buf/Utf8Decoder.html
 webapps/docs/api/org/apache/tomcat/util/buf/package-frame.html
 webapps/docs/api/org/apache/tomcat/util/buf/package-summary.html
 webapps/docs/api/org/apache/tomcat/util/buf/package-tree.html
+webapps/docs/api/org/apache/tomcat/util/codec/
+webapps/docs/api/org/apache/tomcat/util/codec/BinaryDecoder.html
+webapps/docs/api/org/apache/tomcat/util/codec/BinaryEncoder.html
+webapps/docs/api/org/apache/tomcat/util/codec/Decoder.html
+webapps/docs/api/org/apache/tomcat/util/codec/DecoderException.html
+webapps/docs/api/org/apache/tomcat/util/codec/Encoder.html
+webapps/docs/api/org/apache/tomcat/util/codec/EncoderException.html
+webapps/docs/api/org/apache/tomcat/util/codec/binary/
+webapps/docs/api/org/apache/tomcat/util/codec/binary/Base64.html
+webapps/docs/api/org/apache/tomcat/util/codec/binary/BaseNCodec.html
+webapps/docs/api/org/apache/tomcat/util/codec/binary/StringUtils.html
+webapps/docs/api/org/apache/tomcat/util/codec/binary/package-frame.html
+webapps/docs/api/org/apache/tomcat/util/codec/binary/package-summary.html
+webapps/docs/api/org/apache/tomcat/util/codec/binary/package-tree.html
+webapps/docs/api/org/apache/tomcat/util/codec/package-frame.html
+webapps/docs/api/org/apache/tomcat/util/codec/package-summary.html
+webapps/docs/api/org/apache/tomcat/util/codec/package-tree.html
 webapps/docs/api/org/apache/tomcat/util/collections/
 webapps/docs/api/org/apache/tomcat/util/collections/ConcurrentCache.html
 webapps/docs/api/org/apache/tomcat/util/collections/package-frame.html
@@ -1575,6 +1600,7 @@ webapps/docs/api/org/apache/tomcat/util/http/fileupload/ParameterParser.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/ProgressListener.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/RequestContext.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/ThresholdingOutputStream.html
+webapps/docs/api/org/apache/tomcat/util/http/fileupload/UploadContext.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/disk/
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/disk/DiskFileItem.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/disk/DiskFileItemFactory.html
@@ -1595,6 +1621,11 @@ webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/Closeable.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/FileItemHeadersImpl.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/LimitedInputStream.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/Streams.html
+webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/mime/
+webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/mime/MimeUtility.html
+webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/mime/package-frame.html
+webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/mime/package-summary.html
+webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/mime/package-tree.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/package-frame.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/package-summary.html
 webapps/docs/api/org/apache/tomcat/util/http/fileupload/util/package-tree.html
@@ -1614,24 +1645,9 @@ webapps/docs/api/org/apache/tomcat/util/http/package-frame.html
 webapps/docs/api/org/apache/tomcat/util/http/package-summary.html
 webapps/docs/api/org/apache/tomcat/util/http/package-tree.html
 webapps/docs/api/org/apache/tomcat/util/http/parser/
-webapps/docs/api/org/apache/tomcat/util/http/parser/AstAttribute.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/AstMediaType.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/AstParameter.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/AstSubType.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/AstType.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/AstValue.html
 webapps/docs/api/org/apache/tomcat/util/http/parser/HttpParser.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/HttpParserConstants.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/HttpParserTokenManager.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/HttpParserTreeConstants.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/JJTHttpParserState.html
+webapps/docs/api/org/apache/tomcat/util/http/parser/MediaType.html
 webapps/docs/api/org/apache/tomcat/util/http/parser/MediaTypeCache.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/Node.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/ParseException.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/SimpleCharStream.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/SimpleNode.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/Token.html
-webapps/docs/api/org/apache/tomcat/util/http/parser/TokenMgrError.html
 webapps/docs/api/org/apache/tomcat/util/http/parser/package-frame.html
 webapps/docs/api/org/apache/tomcat/util/http/parser/package-summary.html
 webapps/docs/api/org/apache/tomcat/util/http/parser/package-tree.html
@@ -1656,6 +1672,7 @@ webapps/docs/api/org/apache/tomcat/util/modeler/OperationInfo.html
 webapps/docs/api/org/apache/tomcat/util/modeler/ParameterInfo.html
 webapps/docs/api/org/apache/tomcat/util/modeler/Registry.html
 webapps/docs/api/org/apache/tomcat/util/modeler/RegistryMBean.html
+webapps/docs/api/org/apache/tomcat/util/modeler/Util.html
 webapps/docs/api/org/apache/tomcat/util/modeler/modules/
 webapps/docs/api/org/apache/tomcat/util/modeler/modules/MbeansDescriptorsDOMSource.html
 webapps/docs/api/org/apache/tomcat/util/modeler/modules/MbeansDescriptorsDigesterSource.html
@@ -1812,6 +1829,7 @@ webapps/docs/cgi-howto.html
 webapps/docs/changelog.html
 webapps/docs/class-loader-howto.html
 webapps/docs/cluster-howto.html
+webapps/docs/comments.html
 webapps/docs/config/
 webapps/docs/config/ajp.html
 webapps/docs/config/cluster-channel.html
@@ -1905,6 +1923,7 @@ webapps/docs/images/
 webapps/docs/images/add.gif
 webapps/docs/images/asf-logo.gif
 webapps/docs/images/code.gif
+webapps/docs/images/cors-flowchart.png
 webapps/docs/images/design.gif
 webapps/docs/images/docs.gif
 webapps/docs/images/fix.gif

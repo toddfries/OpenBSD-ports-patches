@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2012/09/06 12:38:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2013/03/21 08:45:19 ajacoutot Exp $
 
 COMMENT=	flash rendering library
 
@@ -11,10 +11,7 @@ CATEGORIES=	graphics
 HOMEPAGE=	http://swfdec.freedesktop.org/
 
 # LGPLv2.1
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}download/swfdec/0.8/
 
@@ -39,7 +36,6 @@ RUN_DEPENDS=	multimedia/gstreamer-0.10/plugins-good \
 		multimedia/gstreamer-0.10/plugins-ffmpeg
 MODULES=	devel/gettext
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--with-audio=sndio \
 			--enable-gtk \

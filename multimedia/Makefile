@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2012/10/10 10:45:35 sthen Exp $
+# $OpenBSD: Makefile,v 1.69 2013/04/24 09:16:23 zhuk Exp $
 
      SUBDIR =
      SUBDIR += atomicparsley
@@ -10,7 +10,6 @@
      SUBDIR += devede
      SUBDIR += dvdauthor
      SUBDIR += dvdbackup
-     SUBDIR += dvdcpy
      SUBDIR += dvdstyler
      SUBDIR += ffmpeg-php
      SUBDIR += ffmpeg2theora
@@ -19,6 +18,7 @@
      SUBDIR += gstreamer-0.10
      SUBDIR += gstreamer1
      SUBDIR += hdhomerun
+     SUBDIR += imagination
      SUBDIR += k3b
      SUBDIR += kaffeine
      SUBDIR += kguitar
@@ -51,10 +51,12 @@
      SUBDIR += p5-AMF-Connection
      SUBDIR += p5-Data-AMF
      SUBDIR += p5-Storable-AMF
-     SUBDIR += pspvc
+     SUBDIR += phonon
+     SUBDIR += phonon-backend
      SUBDIR += recordmydesktop
      SUBDIR += regionset
      SUBDIR += schroedinger
+     SUBDIR += shrip
      SUBDIR += streamdvd
      SUBDIR += subrip
      SUBDIR += subtitleripper

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2012/10/15 15:18:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2013/05/04 10:00:52 sthen Exp $
 
 COMMENT=		Visual Tcl development environment
 
@@ -11,9 +11,6 @@ HOMEPAGE=		http://vtcl.sourceforge.net/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=vtcl/}
 
@@ -33,9 +30,9 @@ do-install:
 	     ${WRKSRC}/demo ${PREFIX}/lib/vtcl
 	cp -R ${WRKSRC}/sample ${PREFIX}/share/examples/vtcl
 	cp -R ${WRKSRC}/doc ${PREFIX}/share/doc/vtcl
-	${SUBST_CMD} -c ${FILESDIR}/vtcl ${WRKDIST}/vtcl
-	${INSTALL_SCRIPT} ${WRKDIST}/vtcl ${PREFIX}/bin
+	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} -c \
+	    ${FILESDIR}/vtcl ${PREFIX}/bin/vtcl
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 .include <bsd.port.mk>

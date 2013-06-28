@@ -1,12 +1,53 @@
-$OpenBSD: patch-lib_facter_memory_rb,v 1.3 2012/05/05 19:29:49 robert Exp $
---- lib/facter/memory.rb.orig	Sat May  5 21:25:21 2012
-+++ lib/facter/memory.rb	Sat May  5 21:25:35 2012
-@@ -93,7 +93,7 @@ if Facter.value(:kernel) == "AIX" and Facter.value(:id
+$OpenBSD: patch-lib_facter_memory_rb,v 1.7 2013/06/27 19:04:23 jasper Exp $
+--- lib/facter/memory.rb.orig	Mon May 13 21:30:15 2013
++++ lib/facter/memory.rb	Thu Jun 27 20:53:44 2013
+@@ -82,6 +82,16 @@ end
+   end
  end
  
- if Facter.value(:kernel) == "OpenBSD"
--  swap = Facter::Util::Resolution.exec('swapctl -s')
-+  swap = Facter::Util::Resolution.exec('swapctl -s') || ""
-   swapfree, swaptotal = 0, 0
-   if swap =~ /^total: (\d+)k bytes allocated = \d+k used, (\d+)k available$/
-     swaptotal = $1.to_i
++if Facter.value(:kernel) == "OpenBSD"
++  Facter.add("SwapEncrypted") do
++    confine :kernel => :openbsd
++    setcode do
++      encrypted = !Facter::Util::Resolution.exec("/sbin/sysctl -n vm.swapencrypt.enable").to_i.zero?
++      encrypted
++    end
++  end
++end
++
+ if Facter.value(:kernel) == "Darwin"
+   Facter.add("SwapEncrypted") do
+     confine :kernel => :Darwin
+@@ -157,6 +167,32 @@ Facter.add("swapfree_mb") do
+     swap_anon_use = Facter::Util::Resolution.exec("/sbin/sysctl -n vm.swap_anon_use").to_f * page_size
+     swap_cache_use = Facter::Util::Resolution.exec("/sbin/sysctl -n vm.swap_cache_use").to_f * page_size
+     swapfree = swaptotal - swap_anon_use - swap_cache_use
++    "%.2f" % [(swapfree.to_f / 1024.0) / 1024.0]
++  end
++end
++
++Facter.add("swapsize_mb") do
++  confine :kernel => :openbsd
++  setcode do
++    swap = Facter::Util::Resolution.exec('swapctl -s') || ""
++    swapfree, swaptotal, sbsize = 0, 0, 0
++    if swap =~ /^total: (\d+) (\d+)-blocks allocated, (\d+) used, (\d+) available$/
++      sbsize = $2.to_i
++      swaptotal = ($1.to_i * sbsize)
++    end
++    "%.2f" % [(swaptotal.to_f / 1024.0) / 1024.0]
++  end
++end
++
++Facter.add("swapfree_mb") do
++  confine :kernel => :openbsd
++  setcode do
++    swap = Facter::Util::Resolution.exec('swapctl -s') || ""
++    swapfree, swaptotal, sbsize = 0, 0, 0
++    if swap =~ /^total: (\d+) (\d+)-blocks allocated, (\d+) used, (\d+) available$/
++      sbsize = $2.to_i
++      swapfree  = ($4.to_i * sbsize)
++    end
+     "%.2f" % [(swapfree.to_f / 1024.0) / 1024.0]
+   end
+ end

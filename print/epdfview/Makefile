@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.28 2012/08/04 14:40:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2013/06/17 19:28:37 ajacoutot Exp $
 
 COMMENT=	lightweight PDF document viewer
 
 DISTNAME=	epdfview-0.1.8
-REVISION=	4
+REVISION=	5
 CATEGORIES=	print
 HOMEPAGE=	http://trac.emma-soft.com/epdfview/
 
@@ -15,17 +15,12 @@ EXTRACT_SUFX=	.tar.bz2
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
-WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
-WANTLIB += Xrandr Xrender asn1 atk-1.0 c cairo crypto cups expat
-WANTLIB += fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
-WANTLIB += glib-2.0 gobject-2.0 gssapi gthread-2.0 gtk-x11-2.0
-WANTLIB += krb5 m pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1
-WANTLIB += png poppler-glib pthread pthread-stubs ssl stdc++ xcb
-WANTLIB += xcb-render xcb-shm z
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender atk-1.0 c cairo cups fontconfig freetype
+WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gobject-2.0
+WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 poppler-glib pthread stdc++ z
 
 MODULES=	devel/gettext
 

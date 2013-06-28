@@ -1,34 +1,30 @@
-# $OpenBSD: Makefile,v 1.11 2012/08/22 20:14:06 naddy Exp $
+# $OpenBSD: Makefile,v 1.16 2013/03/21 08:45:13 ajacoutot Exp $
 
 COMMENT=		portable cross-platform audio API
-DISTNAME=		portaudio-svn-1406
-REVISION=		3
+
+DISTNAME=		portaudio-svn-1851
+CATEGORIES=		audio
+MASTER_SITES=		http://comstyle.com/source/
+EXTRACT_SUFX=		.tar.xz
+REVISION=		0
 
 SHARED_LIBS=		portaudio	1.0
 
-CATEGORIES=		audio
 HOMEPAGE=		http://www.portaudio.com/
-MAINTAINER=		Jacob Meuser <jakemsr@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		c m pthread sndio
-
-MASTER_SITES=		http://jakemsr.trancell.org/distfiles/
+WANTLIB=		m pthread sndio
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
-AUTOCONF_VERSION=	2.61
+AUTOCONF_VERSION=	2.68
 CONFIGURE_STYLE=	autoconf no-autoheader
 CONFIGURE_ARGS=		--without-alsa --without-oss --without-jack
 
 # builds non-automated, interactive tests in ${WRKBUILD}/bin
-REGRESS_TARGET=		tests
-REGRESS_IS_INTERACTIVE=	Yes
+TEST_TARGET=		tests
+TEST_IS_INTERACTIVE=	Yes
 
 CFLAGS+=		-DALLOW_SMP_DANGERS
 

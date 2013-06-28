@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2012/08/06 08:47:00 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2013/06/12 20:36:34 brad Exp $
 
 COMMENT =			network discovery tool
 
-DISTNAME =			nedi-bsd-1.0.7
-PKGNAME =			nedi-1.0.7
+DISTNAME =			nedi-bsd-1.0.8
+PKGNAME =			nedi-1.0.8
 REVISION =			1
 EXTRACT_SUFX =			.tgz
 CATEGORIES =			net
@@ -13,9 +13,6 @@ MAINTAINER =			Marcus Glocker <marcus@nazgul.ch>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =			${HOMEPAGE}/pub/
 

@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.103 2012/09/19 08:15:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.107 2013/05/10 12:27:45 giovanni Exp $
 
 COMMENT-main=	scan ports and fingerprint stack of network hosts
 COMMENT-zenmap=	graphical frontend for nmap
 
-MODPY_EGG_VERSION=	6.01
+MODPY_EGG_VERSION=	6.25
 DISTNAME=		nmap-${MODPY_EGG_VERSION}
 PKGNAME-main=		${DISTNAME}
+REVISION-main=		0
 PKGNAME-zenmap=		nmap-zenmap-${MODPY_EGG_VERSION}
-
-REVISION-main=	0
-REVISION-zenmap=0
 
 CATEGORIES=	net security
 MASTER_SITES=	http://nmap.org/dist/
@@ -21,15 +19,14 @@ MAINTAINER=	Giovanni Bechis <giovanni@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MULTI_PACKAGES=	-main -zenmap
 
 USE_GMAKE=	yes
+MODLUA_SA=	Yes
+MODLUA_VERSION=5.2
 MODULES=	lang/python \
-		lang/lua
+			lang/lua
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
@@ -55,7 +52,7 @@ RUN_DEPENDS-zenmap=	x11/py-gtk2 \
 			devel/desktop-file-utils \
 			net/nmap
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 post-extract:
 	@cd ${WRKSRC} && rm -rf libpcap/ liblua/ libpcre/

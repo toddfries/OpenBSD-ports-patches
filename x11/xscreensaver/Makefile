@@ -1,12 +1,8 @@
-# $OpenBSD: Makefile,v 1.75 2012/09/02 10:04:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.78 2013/06/01 19:57:34 ajacoutot Exp $
 
-COMMENT-main=		screen saver and locker for the X Window System
-COMMENT-data=		graphical demos (savers) for screensavers
+COMMENT=		screen saver and locker for the X Window System
 
-V=			5.19
-DISTNAME=		xscreensaver-${V}
-PKGNAME-main=		${DISTNAME}
-PKGNAME-data=		xscreensaver-data-${V}
+DISTNAME=		xscreensaver-5.21
 
 CATEGORIES=		x11
 
@@ -14,41 +10,22 @@ HOMEPAGE=		http://www.jwz.org/xscreensaver/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MULTI_PACKAGES=	-main -data
-
-WANTLIB=	GL GLU ICE SM X11 Xext Xmu Xpm Xt Xxf86vm c glib-2.0 \
-		gmodule-2.0 gobject-2.0 m pthread
-
-WANTLIB-main=	${WANTLIB} Xcomposite Xcursor Xdamage Xfixes \
-		Xi Xinerama Xrandr Xrender Xxf86misc atk-1.0 cairo \
-		expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 \
-		gdk_pixbuf_xlib-2.0 gio-2.0 gtk-x11-2.0 jpeg \
-		pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png \
-		pthread-stubs xcb xml2 z xcb-render glade-2.0 \
-		xcb-shm
-
-WANTLIB-data=	${WANTLIB} jpeg util gdk_pixbuf-2.0 gdk_pixbuf_xlib-2.0 \
-		gle
+WANTLIB += GL GLU ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
+WANTLIB += Xi Xinerama Xmu Xpm Xrandr Xrender Xt Xxf86misc Xxf86vm
+WANTLIB += atk-1.0 c cairo fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
+WANTLIB += gdk_pixbuf_xlib-2.0 gio-2.0 glade-2.0 gle glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gtk-x11-2.0 jpeg m pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pthread util xml2 z
 
 MASTER_SITES=		${HOMEPAGE}
 
 MODULES=		devel/gettext \
 			textproc/intltool
 
-# note that we don't need desktop-file-utils for the -data subpackage
-# because the desktop files it installs are under a subdirectory of
-# ${LOCALBASE}/share/applications/
-RUN_DEPENDS-main=	devel/desktop-file-utils \
-			x11/xscreensaver,-data
+RUN_DEPENDS=		devel/desktop-file-utils
 
-LIB_DEPENDS-main=	${MODGETTEXT_LIB_DEPENDS} \
-			devel/libglade2
-
-LIB_DEPENDS-data=	${MODGETTEXT_LIB_DEPENDS} \
+LIB_DEPENDS=		devel/libglade2 \
 			graphics/gdk-pixbuf2 \
 			graphics/gle
 
@@ -57,19 +34,22 @@ BUILD_DEPENDS +=	textproc/libxslt
 
 # see pre-configure
 BUILD_DEPENDS +=	devel/xdg-utils
-RUN_DEPENDS-main +=	devel/xdg-utils
+RUN_DEPENDS +=		devel/xdg-utils
 
 USE_GMAKE=		Yes
 USE_GROFF=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-hackdir="${PREFIX}/libexec/xscreensaver" \
-			--with-x-app-defaults="${PREFIX}/lib/X11/app-defaults"
+			--with-x-app-defaults="${PREFIX}/lib/X11/app-defaults" \
+			--without-pam
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			CFLAGS="${CFLAGS} -I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib -liconv -lintl"
 
+# Create desktop files from xscreensaver xml files for use by
+# freedesktop compliant screensavers.
 post-extract:
 	cp ${FILESDIR}/migrate-xscreensaver-config.sh ${WRKSRC}/hacks/config
 	cp ${FILESDIR}/xscreensaver-config.xsl ${WRKSRC}/hacks/config
@@ -90,8 +70,6 @@ post-install:
 	cd ${WRKSRC}/hacks/config && \
 		for i in ${WRKSRC}/hacks/config/*.xml; do \
 			/bin/sh migrate-xscreensaver-config.sh $${i} ; done
-# conflict with x11/gnome/screensaver and is not needed by xscreensaver per se
-	rm ${WRKSRC}/hacks/config/popsquares.desktop
 	${INSTALL_DATA_DIR} ${PREFIX}/share/applications/screensavers/
 	${INSTALL_DATA} ${WRKSRC}/hacks/config/*.desktop \
 		${PREFIX}/share/applications/screensavers/

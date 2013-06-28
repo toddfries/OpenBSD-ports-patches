@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2012/10/11 13:57:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2012/12/12 22:02:50 ajacoutot Exp $
 
 BROKEN=		needs an update to Fedora 10
 

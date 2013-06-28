@@ -1,5 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2012/09/06 13:02:08 ajacoutot Exp $
-lib/gstreamer-${VERSION}/libgsta52dec.so
+@comment $OpenBSD: PLIST,v 1.3 2013/03/14 13:24:32 brad Exp $
 lib/gstreamer-${VERSION}/libgstasf.so
 lib/gstreamer-${VERSION}/libgstdvdlpcmdec.so
 lib/gstreamer-${VERSION}/libgstdvdread.so
@@ -28,6 +27,7 @@ share/locale/eu/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/fi/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/fr/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/gl/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
+share/locale/hr/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/hu/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/id/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo
 share/locale/it/LC_MESSAGES/gst-plugins-ugly-${VERSION}.mo

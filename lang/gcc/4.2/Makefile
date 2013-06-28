@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.87 2012/11/06 00:57:43 tobiasu Exp $
+# $OpenBSD: Makefile,v 1.95 2013/03/21 08:46:32 ajacoutot Exp $
 
-ONLY_FOR_ARCHS = alpha i386 m68k sparc sparc64 powerpc vax amd64
-#BROKEN=adjust for types changes
+# TODO: hppa mips64 mips64el sparc
+ONLY_FOR_ARCHS = alpha i386 sparc64 powerpc amd64 arm sh
+
 DPB_PROPERTIES = parallel
 
 V = 4.2.4
@@ -23,13 +24,13 @@ PKGNAME-java =  gcj-${FULL_PKGVERSION}
 PKGNAME-objc =  gobjc-${FULL_PKGVERSION}
 PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 
-REVISION-main = 14
-REVISION-c++ = 17
+REVISION-main = 15
+REVISION-c++ = 18
 REVISION-estdc = 5
-REVISION-f95 = 15
-REVISION-java = 15
-REVISION-objc = 14
-REVISION-ada = 12
+REVISION-f95 = 16
+REVISION-java = 16
+REVISION-objc = 15
+REVISION-ada = 13
 EPOCH = 0
 
 SHARED_LIBS =	estdc++		13.0 \
@@ -68,12 +69,11 @@ SUPDISTFILES =	${ADASTRAP-i386}:0 ${ADASTRAP-amd64}:0 ${ADASTRAP-sparc64}:0
 
 BUILD_DEPENDS += devel/autoconf/2.59
 BUILD_DEPENDS += devel/metaauto
-USE_LIBTOOL =	Yes
 
 BUILD_DEPENDS += devel/bison
 
 
-REGRESS_DEPENDS = 	devel/dejagnu \
+TEST_DEPENDS = 	devel/dejagnu \
 			devel/autogen
 
 DISTNAME =   	gcc-${FULL_VERSION}
@@ -88,7 +88,7 @@ MODGNU_CONFIG_GUESS_DIRS =	${WRKSRC} ${WRKSRC}/gcc
 LANGS = c
 .if ${BUILD_PACKAGES:M-c++}
 LANGS := ${LANGS},c++
-REGRESS_DEPENDS += 	libstdc++->=4.2,<4.3|libstdc++->=4.2v0,<4.3v0:${BUILD_PKGPATH},-estdc
+TEST_DEPENDS += 	libstdc++->=4.2,<4.3|libstdc++->=4.2v0,<4.3v0:${BUILD_PKGPATH},-estdc
 .endif
 .if ${BUILD_PACKAGES:M-f95}
 LANGS := ${LANGS},fortran
@@ -108,7 +108,7 @@ DISTFILES += ${ADASTRAP-${MACHINE_ARCH}}:0
 CONFIGURE_ENV = ADAC=${WRKDIR}/bin/egcc GNATBIND=${WRKDIR}/bin/gnatbind
 MAKE_ENV = ADAC=${WRKDIR}/bin/egcc GNATBIND=${WRKDIR}/bin/gnatbind
 CC = ${WRKDIR}/bin/egcc
-REGRESS_DEPENDS += ${BUILD_PKGPATH},-ada
+TEST_DEPENDS += ${BUILD_PKGPATH},-ada
 .endif
 
 post-extract:
@@ -129,8 +129,15 @@ post-install:
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/lib/gcc/*/$V/adalib
 .endif
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/lib/gcc/*/$V/include
-CONFIGURE_ENV += am_cv_func_iconv=no
-CONFIGURE_ENV += ac_cv_prog_M4=/usr/bin/m4
+
+EXTRA_ENV += am_cv_func_iconv=no JAR=no
+EXTRA_ENV += ac_cv_prog_M4=/usr/bin/m4
+EXTRA_ENV += ac_cv_header_magic_h=no
+EXTRA_ENV += lt_cv_path_SED=/usr/bin/sed
+MAKE_FLAGS +=	ac_cv_path_mkdir=/bin/mkdir
+
+CONFIGURE_ENV +=  ${EXTRA_ENV}
+MAKE_ENV += ${EXTRA_ENV}
 
 # Note: the configure target passes CFLAGS to the configure script anyways.
 
@@ -162,6 +169,11 @@ CONFIGURE_ARGS += --enable-cpp
 CONFIGURE_ARGS += --with-gnu-as
 CONFIGURE_ARGS += --with-gnu-ld
 CONFIGURE_ARGS += ${CONFIGURE_SHARED}
+
+.if ${MACHINE_ARCH} == "sh"
+CONFIGURE_ARGS += -disable-multilib
+CONFIGURE_ARGS += --with-endian=little
+.endif
 
 post-patch:
 	cd ${WRKDIST}/libstdc++-v3 && AUTOCONF_VERSION=2.59 autoconf

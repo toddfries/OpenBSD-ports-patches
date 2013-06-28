@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.195 2012/11/10 07:37:06 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.207 2013/06/10 05:56:15 ajacoutot Exp $
 
 COMMENT=		general-purpose utility library
 
-V=			2.34.2
-DISTNAME=		glib-${V}
+GNOME_PROJECT=		glib
+GNOME_VERSION=		2.36.3
 PKGNAME=		${DISTNAME:S/glib/glib2/}
-EXTRACT_SUFX=		.tar.xz
 
 CATEGORIES=		devel
 
@@ -13,32 +12,23 @@ HOMEPAGE=		http://www.gtk.org/
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  glib-2.0             3400.0   # 3400.1
-SHARED_LIBS +=  gmodule-2.0          3400.0   # 3400.1
-SHARED_LIBS +=  gthread-2.0          3400.0   # 3400.1
-SHARED_LIBS +=  gobject-2.0          3400.0   # 3400.1
-SHARED_LIBS +=  gio-2.0              3400.0   # 3400.1
+SHARED_LIBS +=  glib-2.0             3600.1   # 3600.3
+SHARED_LIBS +=  gmodule-2.0          3600.1   # 3600.3
+SHARED_LIBS +=  gthread-2.0          3600.1   # 3600.3
+SHARED_LIBS +=  gobject-2.0          3600.1   # 3600.3
+SHARED_LIBS +=  gio-2.0              3600.1   # 3600.3
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c elf ffi pcre pthread z
 
-MASTER_SITES=		${MASTER_SITE_GNOME:=sources/glib/${V:C/^([0-9]+\.[0-9]+).*/\1/}/}
-
 MODULES=		devel/gettext \
-			lang/python
-
-MODPY_ADJ_FILES=	glib/gtester-report \
-			gio/gdbus-2.0/codegen/gdbus-codegen.in \
-			gio/tests/gdbus-testserver.py
+			lang/python \
+			x11/gnome
 
 # man pages
-BUILD_DEPENDS +=	textproc/docbook>=4.5p1 \
-			textproc/libxslt
+BUILD_DEPENDS +=	textproc/docbook-xsl
 
 LIB_DEPENDS=		devel/pcre \
 			devel/libelf \
@@ -47,50 +37,14 @@ LIB_DEPENDS=		devel/pcre \
 # need X11 because DBus is used in the GDBus test cases;
 # also requires bumped limits (stack >= 24576)
 BUILD_DEPENDS +=	x11/dbus
-REGRESS_IS_INTERACTIVE=	x11
-REGRESS_DEPENDS=	devel/desktop-file-utils \
-			devel/py-gobject \
-			devel/py-gobject3 \
-			x11/dbus-python
-
-USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
+TEST_IS_INTERACTIVE=	x11
+TEST_DEPENDS=		devel/desktop-file-utils \
+			x11/dbus
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--enable-static \
+CONFIGURE_ARGS=		--enable-static \
 			--with-pcre=system \
-			--disable-gtk-doc \
-			--disable-fam \
-			--disable-selinux \
-			--disable-systemtap \
-			--disable-xattr
-
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
-
-# If one of these tools is found at configure stage, it might be used,
-# no matter whether we use --disable-gtk-doc or not.
-CONFIGURE_ENV +=ac_cv_path_GTKDOC_CHECK="" \
-		ac_cv_path_GTKDOC_REBASE="" \
-		ac_cv_path_GTKDOC_MKPDF=""
-
-### kqueue(2) backend ##################################################
-# https://bugzilla.gnome.org/show_bug.cgi?id=679793
-AUTOMAKE_VERSION=	1.11
-AUTOCONF_VERSION=	2.68
-BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
-			${MODGNU_AUTOMAKE_DEPENDS} \
-			devel/libtool
-#MASTER_SITES0=		http://dmitrymatveev.co.uk/files/
-MASTER_SITES0=		http://distfiles.bsdfrog.org/
-PATCHFILES=		glib-gio-kqueue-2.32.4-v3.patch:0
-PATCH_DIST_STRIP=	-p1
-AUTO_ENV=		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-			AUTOCONF_VERSION=${AUTOCONF_VERSION}
-post-patch:
-	cd ${WRKSRC} && ${AUTO_ENV} autoreconf --force --install
-### end of kqueue(1) backend ###########################################
+			--disable-fam --disable-maintainer-mode
 
 pre-configure:
 	perl -pi -e "s,/usr/local,${LOCALBASE},g;" \

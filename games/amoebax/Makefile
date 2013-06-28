@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.6 2010/11/16 11:23:25 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2013/03/11 11:07:37 espie Exp $
 
 COMMENT=	cute and addictive action-puzzle game
 
-DISTNAME= 	amoebax-0.2.0
-REVISION =	0
+DISTNAME= 	amoebax-0.2.1
 
 CATEGORIES=	games
 EXTRACT_SUFX=	.tar.bz2
@@ -15,10 +14,7 @@ MASTER_SITES=	${HOMEPAGE}download/
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>
 
 # GPL/LAL
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB=	SDL c m pthread stdc++ SDL_image SDL_mixer
 

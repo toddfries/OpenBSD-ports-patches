@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.62 2012/02/20 22:20:51 sthen Exp $
+# $OpenBSD: Makefile,v 1.65 2013/03/11 11:23:58 espie Exp $
 # Please adjust www/faq/faq15.html if updating.
 
 COMMENT=	multi-screen window manager
 
 VERSION=	4.0.3
 DISTNAME=	screen-${VERSION}
-REVISION=	2
+REVISION=	3
 CATEGORIES=	misc
 MASTER_SITES=	${MASTER_SITE_GNU:=screen/}
 
@@ -13,9 +13,6 @@ HOMEPAGE=	http://www.gnu.org/software/screen/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 SUBST_VARS=	VERSION
 
@@ -28,12 +25,12 @@ USE_GROFF =	Yes
 FLAVORS=	static shm
 FLAVOR?=
 
-.if ${FLAVOR:L} == "static"
+.if ${FLAVOR} == "static"
 CONFIGURE_ENV=	LDFLAGS="-static"
 .else
 WANTLIB=	c curses util
 .endif
-.if ${FLAVOR:L} == "shm"
+.if ${FLAVOR} == "shm"
 PATCH_LIST=	patch-* shmpatch-*
 .endif
 

@@ -1,44 +1,56 @@
-# $OpenBSD: Makefile,v 1.43 2012/11/12 12:29:07 eric Exp $
+# $OpenBSD: Makefile,v 1.51 2013/06/01 12:11:52 ajacoutot Exp $
 
 COMMENT=		vector graphics library
 
-DISTNAME=		cairo-1.12.8
-SHARED_LIBS+=		cairo 12.1
+DISTNAME=		cairo-1.12.14
+SHARED_LIBS+=		cairo 12.2
 SHARED_LIBS+=		cairo-gobject 1.0
-SHARED_LIBS+=		cairo-script-interpreter 1.0
+SHARED_LIBS+=		cairo-script-interpreter 1.1
 CATEGORIES=		graphics
 DPB_PROPERTIES=		parallel
 EXTRACT_SUFX=		.tar.xz
+REVISION=		0
 
 HOMEPAGE=		http://cairographics.org/
 
 MAINTAINER=		Eric Faurot <eric@openbsd.org>
 
-WANTLIB=		GL X11 Xau Xdamage Xdmcp Xext Xfixes Xrender Xxf86vm \
-			drm expat ffi fontconfig freetype glib-2.0 gobject-2.0 \
-			gthread-2.0 m pcre pixman-1 png pthread-stubs pthread \
-			stdc++ xcb xcb-render xcb-shm z
+WANTLIB += X11 Xau Xdmcp Xext Xrender c expat ffi fontconfig freetype
+WANTLIB += glib-2.0 gobject-2.0 lzo2 m pcre pixman-1 png pthread
+WANTLIB += pthread-stubs xcb xcb-render xcb-shm z
 
 # LGPLv2.1 / MPL 1.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://cairographics.org/releases/
 
 MODULES=		devel/gettext
 
-USE_LIBTOOL=		Yes
 USE_GMAKE=		Yes
 
-LIB_DEPENDS=		graphics/png \
-			devel/glib2
+LIB_DEPENDS=		archivers/lzo2 \
+			devel/glib2 \
+			graphics/png
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--enable-gl \
-			--enable-tee \
-			--enable-xml
+			--disable-gtk-doc
+
+# needed for firefox
+CONFIGURE_ARGS +=	--enable-tee
+
+# If one of these tools is found at configure stage, it might be used,
+# no matter whether we use --disable-gtk-doc or not.
+CONFIGURE_ENV += CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		ac_cv_path_GTKDOC_CHECK="" \
+		ac_cv_path_GTKDOC_REBASE="" \
+		ac_cv_path_GTKDOC_MKPDF=""
+
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/src/cairo.pc.in
+
+post-install:
+	rm ${PREFIX}/lib/cairo/*.{a,la}
 
 .include <bsd.port.mk>

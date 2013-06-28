@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2012/09/23 17:19:51 jeremy Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/20 19:13:50 jeremy Exp $
 
 COMMENT-main = 	penetration testing resources
 COMMENT-mysql = penetration testing resources (mysql backend)
@@ -21,14 +21,12 @@ MAINTAINER =	Stephan A. Rickauer <stephan@openbsd.org>
 
 # 3-clause BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =	lang/ruby
+MODRUBY_REV =	1.8
 PKG_ARCH =	*
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 MULTI_PACKAGES =-main -mysql -pgsql
 

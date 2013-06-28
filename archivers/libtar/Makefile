@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2011/12/18 09:01:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2013/04/04 21:45:03 naddy Exp $
 
 COMMENT=	C library for manipulating tar files
 
 DISTNAME=	libtar-1.2.11
+REVISION=	1
 
 SHARED_LIBS=	tar	0.0	# .1.2
 
@@ -12,18 +13,13 @@ HOMEPAGE=	http://www.feep.net/libtar/
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-REVISION =	0
 WANTLIB=	c z
 
 MASTER_SITES=	http://distfiles.nl/ \
 		ftp://ftp.feep.net/pub/software/libtar/
 
-USE_LIBTOOL=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 CONFIGURE_STYLE=gnu
 

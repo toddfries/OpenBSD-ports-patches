@@ -1,24 +1,21 @@
-# $OpenBSD: Makefile,v 1.9 2012/01/08 10:48:55 benoit Exp $
+# $OpenBSD: Makefile,v 1.14 2013/03/21 08:46:32 ajacoutot Exp $
 
 COMMENT =	elliptic curve method (ECM) factorization library
 
-DISTNAME =	ecm-6.4
-SHARED_LIBS =	ecm	0.0
+DISTNAME =	ecm-6.4.4
+SHARED_LIBS =	ecm	0.1
 CATEGORIES =	math
 
 HOMEPAGE =	http://gforge.inria.fr/projects/ecm/
 
 MAINTAINER =	Benoit Lecocq <benoit@openbsd.org>
 
-# GPLv2 / LGLPv2.1
+# GPLv3 / LGLPv3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c m gmp
 
-MASTER_SITES =		http://gforge.inria.fr/frs/download.php/30052/
+MASTER_SITES =		http://gforge.inria.fr/frs/download.php/32159/
 
 LIB_DEPENDS =		devel/gmp
 

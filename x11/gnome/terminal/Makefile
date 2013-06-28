@@ -1,42 +1,41 @@
-# $OpenBSD: Makefile,v 1.85 2012/10/16 08:40:39 jasper Exp $
+# $OpenBSD: Makefile,v 1.104 2013/06/21 22:38:34 sthen Exp $
+
+SHARED_ONLY=	Yes
 
 COMMENT=	GNOME terminal
 
 GNOME_PROJECT=	gnome-terminal
-GNOME_VERSION=	3.6.1
+GNOME_VERSION=	3.8.3
+REVISION=	0
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 drm expat
-WANTLIB += ffi fontconfig freetype gdk-3 gdk_pixbuf-2.0 gio-2.0
-WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 gtk-3
-WANTLIB += m ncurses pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
-WANTLIB += pixman-1 png pthread pthread-stubs stdc++ util vte2_90
-WANTLIB += xcb xcb-render xcb-shm z
-WANTLIB += atk-bridge-2.0 atspi harfbuzz icudata icule icuuc
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += c cairo cairo-gobject dbus-1 dbus-glib-1 dconf uuid
+WANTLIB += expat ffi fontconfig freetype gconf-2 gdk-3 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 graphite2
+WANTLIB += gthread-2.0 gtk-3 harfbuzz m ncurses
+WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs util vte2_90 xcb xcb-render
+WANTLIB += xcb-shm z
 
-MODULES=	devel/gconf2 \
+MODULES=	devel/dconf \
 		devel/gettext \
 		x11/gnome
 
-BUILD_DEPENDS=	${RUN_DEPENDS}
+BUILD_DEPENDS=	devel/gsettings-desktop-schemas
 RUN_DEPENDS=	devel/gsettings-desktop-schemas
-LIB_DEPENDS=	devel/vte3
+
+LIB_DEPENDS=	devel/gconf2 \
+		devel/vte3>=0.34.6 \
+		sysutils/e2fsprogs>=1.42.7
+
+# configure checks for desktop-file-validate(1)
+BUILD_DEPENDS +=devel/desktop-file-utils
 
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=	Yes
-MODGCONF2_SCHEMAS_DIR=	gnome-terminal
-
-# XXX check on update if this is still needed
-# gtk-builder-convert is needed at build time to convert glade files to ui
-MODULES +=		lang/python
-MODPY_RUNDEP =		No
-BUILD_DEPENDS +=	x11/gtk+2
 
 .include <bsd.port.mk>

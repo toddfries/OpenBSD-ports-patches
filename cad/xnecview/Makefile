@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.18 2011/11/01 19:00:25 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2013/04/17 08:51:01 pirofti Exp $
 
 COMMENT=	NEC2 antenna simulator visualizer
 
 BROKEN-hppa=	makedepend infinite loop
 BROKEN-arm=	makedepend infinite loop
+BROKEN-sh=	makedepend infinite loop
 
 VERSION=	1.35
 DISTNAME=	xnecview-${VERSION}
-REVISION=	9
+REVISION=	10
 EXTRACT_SUFX=	.tgz
 
 MASTER_SITES=	http://wwwhome.cs.utwente.nl/~ptdeboer/ham/xnecview/
@@ -18,9 +19,6 @@ HOMEPAGE=	http://www.cs.utwente.nl/~ptdeboer/ham/xnecview/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 c cairo expat fontconfig

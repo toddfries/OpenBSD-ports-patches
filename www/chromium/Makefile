@@ -1,11 +1,13 @@
-# $OpenBSD: Makefile,v 1.110 2012/11/07 06:59:45 robert Exp $
+# $OpenBSD: Makefile,v 1.143 2013/06/21 21:59:13 sthen Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
+DPB_PROPERTIES=		parallel
 
 COMMENT=		Chromium browser
 
-V=			23.0.1271.64
+V=			27.0.1453.110
 DISTNAME=		chromium-${V}
+REVISION=		0
 
 CATEGORIES=		www
 
@@ -13,49 +15,59 @@ HOMEPAGE=		http://code.google.com/chromium/
 
 MAINTAINER=		Robert Nagy <robert@openbsd.org>
 
-EXTRACT_SUFX=		.tar.bz2
+EXTRACT_SUFX=		.tar.xz
+
+# The proprietary flavor compiles and enables patented codecs like H.264
+FLAVORS=	proprietary
+FLAVOR?=
 
 # BSD-like
+.if ${FLAVOR:Mproprietary}
+PERMIT_PACKAGE_CDROM=	patents
+PERMIT_PACKAGE_FTP =	Yes
+.else
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+.endif
 
 MASTER_SITES=	http://commondatastorage.googleapis.com/chromium-browser-official/
 
-MODULES=	gcc4 lang/python
+MODULES=	lang/clang lang/python
 
-MODGCC4_ARCHS=	*
-MODGCC4_LANGS=	c++
-MODGCC4_VERSION=4.6
+MODCLANG_ARCHS=	*
+MODCLANG_LANGS=	c++
 
 MODPY_RUNDEP=	No
+
+PATCHORIG=	.orig.port
 
 WANTLIB += X11 Xext Xfixes Xrender Xss bz2 c cairo cups dbus-1 event
 WANTLIB += execinfo expat fontconfig freetype gconf-2 gcrypt gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 glib-2.0 gobject-2.0 gtk-x11-2.0
 WANTLIB += jpeg m nspr4 nss3 nssutil3 pango-1.0 pangocairo-1.0
-WANTLIB += plc4 png pthread pthread-stubs smime3 speex estdc++
+WANTLIB += plc4 png pthread smime3 speex
 WANTLIB += xml2 xslt
-WANTLIB += Xcomposite atk-1.0 usb usb-1.0
+WANTLIB += atk-1.0 usb-1.0 Xrandr sndio
+WANTLIB += Xcomposite
+WANTLIB += stdc++
 
 RUN_DEPENDS=	devel/xdg-utils \
 		devel/desktop-file-utils \
-		x11/gnome/icon-theme \
 		x11/gnome/libgnome-keyring \
 		x11/gtk+2,-guic
 BUILD_DEPENDS=	archivers/bzip2 \
+		audio/pulseaudio \
 		devel/gperf \
 		devel/bison \
 		devel/flex \
+		devel/yasm \
 		shells/bash \
 		sysutils/flock \
+		sysutils/pciutils \
 		x11/gnome/libgnome-keyring
-# required for parallel building
-BUILD_DEPENDS+= gmake->=3.82p2:devel/gmake
+BUILD_DEPENDS+=	devel/ninja
 LIB_DEPENDS=	devel/libexecinfo \
 		archivers/bzip2 \
-		devel/libusb-compat \
+		devel/libusb1 \
 		security/nss \
 		devel/gconf2 \
 		textproc/libxslt \
@@ -65,17 +77,15 @@ LIB_DEPENDS=	devel/libexecinfo \
 
 .include <bsd.own.mk>
 
-# Set BUILDTYPE to Debug (or omit it) for a debug build
+# Set BUILDTYPE to Debug for a debug build
 BUILDTYPE=	Release
-MAKE_ENV=	BUILDTYPE=${BUILDTYPE} V=1
 
-USE_GMAKE=	Yes
-
-REGRESS_TARGET=	base_unittests
+TEST_TARGET=	base_unittests
 
 CONFIGURE_STYLE=none # prevent python MODULE from overriding do-build
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
+		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib" \
+		GYP_GENERATORS=ninja
 
 ALL_TARGET=	chrome
 
@@ -86,37 +96,57 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Duse_system_libjpeg=1 \
 		-Duse_system_libpng=1 \
 		-Duse_system_libusb=1 \
+		-Duse_system_libvpx=0 \
 		-Duse_system_libxml=1 \
 		-Duse_system_speex=1 \
 		-Duse_system_sqlite=0 \
-		-Duse_system_vpx=0 \
-		-Duse_system_yasm=0 \
+		-Duse_system_yasm=1 \
 		-Duse_system_zlib=0 \
 		-Ddisable_nacl=1 \
-		-Ddisable_sse2=1 \
+		-Dlinux_breakpad=0 \
 		-Dlinux_use_tcmalloc=0 \
 		-Dlinux_strip_binary=1 \
 		-Denable_webrtc=0 \
 		-Denable_one_click_signin=1 \
 		-Duse_kerberos=0 \
+		-Duse_sndio=1 \
+		-Dclang=1 \
+		-Dclang_use_chrome_plugins=0 \
 		-DOS=openbsd
+
+# Note: these keys are for OpenBSD use ONLY. For your own distribution,
+# please get your own set of keys. It's free!
+GYP_DEFS+=	-Dgoogle_api_key='AIzaSyA015yecfJyWi8UQpneQVrNzIKlxjv4MhI' \
+		-Dgoogle_default_client_id='451220141585.apps.googleusercontent.com' \
+		-Dgoogle_default_client_secret='nQcDyaBvDyCeDrsRqKIWSHJn'
+
+.if ${FLAVOR:Mproprietary}
+GYP_DEFS+=	-Dffmpeg_branding=Chrome \
+		-Dproprietary_codecs=1
+.endif
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/webkit/plugins/npapi/plugin_list_posix.cc
 	@ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
 .for _arch in x64 ia32
-	@cp -pR ${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/linux/${_arch}/libavcodec \
-		${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/openbsd/${_arch}/libavcodec
+	@cp -pR ${WRKSRC}/third_party/ffmpeg/chromium/config/Chrome/linux/${_arch}/libavutil \
+		${WRKSRC}/third_party/ffmpeg/chromium/config/Chrome/openbsd/${_arch}/libavutil
+
+	@cp -pR ${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/linux/${_arch}/libavutil \
+		${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/openbsd/${_arch}/libavutil
 .endfor
-	@cp -R ${WRKSRC}/third_party/libvpx/source/config/linux \
-		${WRKSRC}/third_party/libvpx/source/config/openbsd
+	@mkdir -p ${WRKSRC}/media/audio/sndio
+	@cp files/sndio_output.{cc,h} ${WRKSRC}/media/audio/sndio
 
 # gyp_chromium generates all the Makefiles from gyp
 do-configure:
-	@cd ${WRKSRC} && \
-	env -i ${CONFIGURE_ENV} ${MODPY_BIN} build/gyp_chromium -fmake --ignore-environment \
-	${GYP_DEFS} \
-	"--depth=${WRKSRC}"
+	cd ${WRKSRC} && \
+	env -i ${CONFIGURE_ENV} ${MODPY_BIN} build/gyp_chromium \
+	${GYP_DEFS} "--depth=${WRKSRC}"
+
+do-build:
+	@cd ${WRKSRC} && env -i ${MAKE_ENV} ninja \
+		-j ${MAKE_JOBS} -C out/${BUILDTYPE} chrome
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/chrome

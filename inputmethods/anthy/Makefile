@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/12/02 14:36:14 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2013/03/21 08:46:31 ajacoutot Exp $
 
 COMMENT-main =	japanese input method
 COMMENT-emacs =	emacs files for anthy
@@ -18,9 +18,6 @@ HOMEPAGE = 	http://anthy.sourceforge.jp/
 
 # GPL, part LGPL
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB-main =	c m
 
@@ -28,7 +25,6 @@ MASTER_SITES =	${MASTER_SITE_SOURCEFORGE_JP:=anthy/37536/}
 
 FAKE_FLAGS =	sysconfdir=$(PREFIX)/share/examples/anthy
 
-USE_LIBTOOL =	Yes
 CONFIGURE_STYLE = gnu
 CONFIGURE_ENV =	CPPFLAGS='-I${LOCALBASE}/include' \
 		LDFLAGS='-L${LOCALBASE}/lib' \
@@ -44,6 +40,6 @@ BUILD_DEPENDS =	editors/emacs21
 .endif
 
 # can't make sense of any of these tests
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 .include <bsd.port.mk>

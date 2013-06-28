@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.56 2012/09/02 15:54:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.59 2013/06/13 11:43:02 sthen Exp $
 
      SUBDIR =
      SUBDIR += amtterm
      SUBDIR += birda
      SUBDIR += bottlerocket
      SUBDIR += c3270
+     SUBDIR += chirp
      SUBDIR += colrdx
      SUBDIR += conserver
      SUBDIR += dfu-util
      SUBDIR += efax
+     SUBDIR += fldigi
      SUBDIR += flipit
      SUBDIR += gmfsk
      SUBDIR += gnokii
@@ -32,6 +34,7 @@
      SUBDIR += picocom
      SUBDIR += pilot-link
      SUBDIR += qpage
+     SUBDIR += rtl-sdr
      SUBDIR += scmxx
      SUBDIR += seyon
      SUBDIR += smstools

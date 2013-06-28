@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.299 2012/10/10 08:27:49 robert Exp $
+# $OpenBSD: Makefile,v 1.315 2013/06/07 13:33:24 dcoppa Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -29,8 +29,8 @@
      SUBDIR += corkscrew
      SUBDIR += cracklib
      SUBDIR += cryptcat
-     SUBDIR += ocaml-cryptokit
      SUBDIR += ctunnel
+     SUBDIR += cvechecker
      SUBDIR += cyrus-sasl2
      SUBDIR += cyrus-sasl2,db4
      SUBDIR += cyrus-sasl2,ldap
@@ -41,6 +41,9 @@
      SUBDIR += despoof
      SUBDIR += dsniff
      SUBDIR += dsniff,no_x11
+     SUBDIR += easy-rsa
+     SUBDIR += erl-bcrypt
+     SUBDIR += erl-oauth
      SUBDIR += fcrackzip
      SUBDIR += fragroute
      SUBDIR += fragrouter
@@ -79,6 +82,7 @@
      SUBDIR += keepassx
      SUBDIR += keychain
      SUBDIR += klaxon
+     SUBDIR += kqoauth
      SUBDIR += l0phtcrack
      SUBDIR += libassuan
      SUBDIR += libfprint
@@ -102,22 +106,24 @@
      SUBDIR += logsurfer
      SUBDIR += luacrypto
      SUBDIR += luasec
+     SUBDIR += luasec,lua52
      SUBDIR += lxnb
      SUBDIR += mcrypt
      SUBDIR += metasploit
      SUBDIR += mhash
      SUBDIR += nbaudit
      SUBDIR += nessus
+     SUBDIR += netpgp
      SUBDIR += nfsshell
      SUBDIR += nikto
      SUBDIR += nipper
      SUBDIR += node-bcrypt
      SUBDIR += nss
      SUBDIR += oath-toolkit
+     SUBDIR += ocaml-cryptokit
      SUBDIR += ocaml-ssl
      SUBDIR += onesixtyone
      SUBDIR += opencdk
-     SUBDIR += openct
      SUBDIR += openpam
      SUBDIR += opensc
      SUBDIR += ophcrack
@@ -203,7 +209,9 @@
      SUBDIR += ppgen
      SUBDIR += pwgen
      SUBDIR += pwsafe
+     SUBDIR += py-M2Crypto
      SUBDIR += py-Rijndael
+     SUBDIR += py-bcrypt
      SUBDIR += py-crack
      SUBDIR += py-cryptkit
      SUBDIR += py-crypto
@@ -214,8 +222,10 @@
      SUBDIR += py-sslwrapper
      SUBDIR += qca
      SUBDIR += qca2
+     SUBDIR += qca-gnupg
      SUBDIR += qca-ossl
      SUBDIR += qca-tls
+     SUBDIR += qoauth
      SUBDIR += radiusniff
      SUBDIR += rarcrack
      SUBDIR += rdp
@@ -241,7 +251,9 @@
      SUBDIR += smtpscan
      SUBDIR += smurflog
      SUBDIR += snort2pf
+     SUBDIR += spiped
      SUBDIR += ssh-askpass-fullscreen
+     SUBDIR += ssh-ldap-helper
      SUBDIR += sshguard
      SUBDIR += sshguard,tcpd
      SUBDIR += sslscan
@@ -252,11 +264,14 @@
      SUBDIR += swatch
      SUBDIR += tcltls
      SUBDIR += tempwatch
+     SUBDIR += tinyca
      SUBDIR += towitoko
      SUBDIR += vomit
      SUBDIR += vpnc
      SUBDIR += wpa_supplicant
+     SUBDIR += xca
      SUBDIR += xmlsec
+     SUBDIR += yubikey-personalization-gui
      SUBDIR += yubiserve
      SUBDIR += zebedee
      SUBDIR += zkt

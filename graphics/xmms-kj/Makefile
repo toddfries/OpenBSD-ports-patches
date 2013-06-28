@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2011/11/02 09:57:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2013/06/04 18:41:51 naddy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -15,9 +15,6 @@ MAINTAINER=	Wilbern Cobb <wcobb@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		X11 Xext Xi gdk glib gmodule gtk  m \
 			z xmms>=2 png>=3
 
@@ -32,9 +29,8 @@ MODULES=	devel/gettext
 WRKDIST=	${WRKDIR}/xmms-kj
 MAKE_FILE=      makefile
 ALL_TARGET=	vislib
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
-CFLAGS+=	-I${LOCALBASE}/include/libpng
 MAKE_FLAGS=	CC="${CC}"
 MTREE_FILE=	${FILESDIR}/mtree
 

@@ -1,15 +1,13 @@
-$OpenBSD: patch-base_debug_stack_trace_posix_cc,v 1.7 2012/10/12 17:34:17 robert Exp $
---- base/debug/stack_trace_posix.cc.orig	Fri Oct 12 21:20:33 2012
-+++ base/debug/stack_trace_posix.cc	Fri Oct 12 21:21:03 2012
-@@ -148,9 +148,13 @@ bool GetBacktraceStrings(void *const *trace, int size,
- }  // namespace
+$OpenBSD: patch-base_debug_stack_trace_posix_cc,v 1.9 2013/04/03 08:19:10 robert Exp $
+--- base/debug/stack_trace_posix.cc.orig.port	Fri Mar 22 02:13:43 2013
++++ base/debug/stack_trace_posix.cc	Tue Apr  2 21:05:17 2013
+@@ -471,7 +471,11 @@ StackTrace::StackTrace() {
  
- StackTrace::StackTrace() {
+   // Though the backtrace API man page does not list any possible negative
+   // return values, we take no chance.
 +#if defined(OS_BSD)
 +  count_ = 0;
 +#else
-   // Though the backtrace API man page does not list any possible negative
-   // return values, we take no chance.
    count_ = std::max(backtrace(trace_, arraysize(trace_)), 0);
 +#endif
  }

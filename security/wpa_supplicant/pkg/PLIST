@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.2 2012/01/19 16:14:11 sthen Exp $
+@comment $OpenBSD: PLIST,v 1.4 2013/02/06 17:27:13 sthen Exp $
+@comment @bin sbin/wpa_priv
 @man man/man5/wpa_supplicant.conf.5
 @man man/man8/wpa_background.8
 @man man/man8/wpa_cli.8
@@ -9,7 +10,9 @@
 @bin sbin/wpa_cli
 @bin sbin/wpa_passphrase
 @bin sbin/wpa_supplicant
+share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/wpa_supplicant/
 share/examples/wpa_supplicant/wpa_supplicant.conf
 @sample ${SYSCONFDIR}/wpa_supplicant.conf
 share/examples/wpa_supplicant/wpa_supplicant.conf.dist
+@rcscript ${RCDIR}/wpa_supplicant

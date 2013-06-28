@@ -1,11 +1,8 @@
-# $OpenBSD: Makefile,v 1.21 2012/11/09 08:17:54 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.23 2013/05/17 12:42:34 dcoppa Exp $
 
 MAJ_VER =	6
 MIN_VER =	0
-MICRO_VER =	36
-
-REVISION-main =1
-REVISION-examples =1
+MICRO_VER =	37
 
 RUN_DEPENDS-examples =www/tomcat/v${MAJ_VER},-main>=${MAJ_VER},<7
 

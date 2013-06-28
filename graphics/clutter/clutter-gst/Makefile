@@ -1,26 +1,26 @@
-# $OpenBSD: Makefile,v 1.17 2012/09/29 13:04:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2013/05/31 15:34:46 ajacoutot Exp $
 
 COMMENT=		clutter GStreamer integration library
 
 GNOME_PROJECT=		clutter-gst
-GNOME_VERSION=		1.9.92
-REVISION=		1
+GNOME_VERSION=		2.0.4
+REVISION=		0
 
 API_VERSION=		2.0
 
-SHARED_LIBS +=  clutter-gst-2.0    0.0      # 999.0
+SHARED_LIBS +=  clutter-gst-2.0    0.1      # 2.0
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 cairo cairo-gobject
-WANTLIB += clutter-1.0 cogl cogl-pango drm expat ffi fontconfig
-WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gstaudio-1.0 gstbase-1.0 gstreamer-1.0
-WANTLIB += gsttag-1.0 gstvideo-1.0 gthread-2.0 harfbuzz icudata
-WANTLIB += icule icuuc json-glib-1.0 m orc-0.4 pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += stdc++ xcb xcb-render xcb-shm z
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender atk-1.0 cairo cairo-gobject clutter-1.0
+WANTLIB += cogl cogl-pango expat ffi fontconfig freetype gdk-3
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += graphite2 gstaudio-1.0 gstbase-1.0 gstreamer-1.0 gsttag-1.0
+WANTLIB += gstvideo-1.0 gthread-2.0 harfbuzz
+WANTLIB += json-glib-1.0 m orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
+WANTLIB += xcb-shm z
 
-MODGNOME_TOOLS=		goi
+MODGNOME_TOOLS=		gi
 
 LIB_DEPENDS=		graphics/clutter/core>=${MAJOR} \
 			multimedia/gstreamer1/plugins-base>=1.0.0

@@ -1,27 +1,25 @@
-# $OpenBSD: Makefile,v 1.14 2012/01/03 07:03:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2013/05/16 09:09:50 sthen Exp $
 
 COMMENT =		SoundFont2 software synthesizer
-DISTNAME =		fluidsynth-1.0.9
-REVISION =		1
+DISTNAME =		fluidsynth-1.1.6
+REVISION =		2
 
-SHARED_LIBS =		fluidsynth	0.1
+SHARED_LIBS +=	fluidsynth           1.0      # 6.2
 
 CATEGORIES =		audio
-HOMEPAGE =		http://fluidsynth.resonance.org/trac
+HOMEPAGE =		http://www.fluidsynth.org/
 
-MAINTAINER =		Jacob Meuser <jakemsr@openbsd.org>
-
-# LGPL
+# LGPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =		c jack m ncurses pthread readline sndio
+WANTLIB += FLAC c glib-2.0 gthread-2.0 m ncurses ogg
+WANTLIB += pcre pthread readline sndfile sndio vorbis vorbisenc
 
-MASTER_SITES =		${MASTER_SITE_SAVANNAH:=fluid/}
+MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=fluidsynth/}
 
-LIB_DEPENDS =		audio/jack
+MODULES =		devel/gettext
+LIB_DEPENDS =		audio/libsndfile \
+			devel/glib2
 
 AUTOCONF_VERSION =	2.61
 AUTOMAKE_VERSION =	1.9
@@ -31,17 +29,24 @@ BUILD_DEPENDS +=	${MODGNU_AUTOCONF_DEPENDS} \
 # autogen.sh needs libtoolize
 BUILD_DEPENDS +=        devel/libtool
 
-USE_LIBTOOL =		Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
+			--disable-coreaudio \
+			--disable-coremidi \
+			--disable-dart \
+			--disable-dbus-support \
 			--disable-lash \
 			--disable-ladcca \
+			--disable-midishare \
 			--disable-oss-support \
 			--disable-portaudio-support \
 			--disable-pulse-support
 
+# broken
+CONFIGURE_ARGS +=	--disable-jack-support
+
 post-patch:
-	cp ${FILESDIR}/fluid_sndio.c ${WRKSRC}/src/
+	cp ${FILESDIR}/fluid_sndio.c ${WRKSRC}/src/drivers/
 
 pre-configure:
 	cd ${WRKSRC} && AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \

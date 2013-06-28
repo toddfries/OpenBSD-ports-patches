@@ -1,26 +1,25 @@
-# $OpenBSD: Makefile,v 1.13 2012/10/15 15:06:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.15 2013/04/06 18:36:21 stsp Exp $
 
 COMMENT=	full featured DVD copy program
 
-VERSION=	0.98.6
+VERSION=	0.98.11
 DISTNAME=	dvdrip-${VERSION}
-REVISION =	0
 CATEGORIES=	graphics audio multimedia perl5
 
 HOMEPAGE=	http://www.exit1.org/dvdrip/
 
 # Artistic and GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c
 
 MASTER_SITES=	http://www.exit1.org/dvdrip/dist/
 
 RUN_DEPENDS=	graphics/ImageMagick \
+		devel/desktop-file-utils \
 		devel/p5-Event-ExecFlow \
 		multimedia/transcode \
+		multimedia/subtitleripper \
+		multimedia/xine-ui \
 		net/fping \
 		net/p5-Event-RPC \
 		x11/p5-Gtk2-Ex-FormFactory \
@@ -34,8 +33,8 @@ CONFIGURE_STYLE=perl
 USE_GROFF =	Yes
 CONFIGURE_ENV=	SKIP_UNPACK_REQUIRED_MODULES=1
 
-REGRESS_DEPENDS=x11/p5-Gtk2-Ex-FormFactory
-REGRESS_FLAGS=	HOME=${TMPDIR}
+TEST_DEPENDS=x11/p5-Gtk2-Ex-FormFactory
+TEST_FLAGS=	HOME=${TMPDIR}
 
 pre-build:
 	@perl -pi -e "s,/usr/sbin/fping,${LOCALBASE}/sbin/fping,g" \
@@ -44,5 +43,9 @@ pre-build:
 
 post-install:
 	mv ${PREFIX}/${P5SITE}/LocaleData ${PREFIX}/share/locale
+	${INSTALL_DATA_DIR} ${PREFIX}/share/applications/
+	${INSTALL_DATA} ${WRKSRC}/dvdrip.desktop ${PREFIX}/share/applications
+	rm -f ${PREFIX}/${P5SITE}/Video/DVDRip/Config.pm.orig
+	rm -f ${PREFIX}/${P5SITE}/Video/DVDRip/GUI/Project/Title.pm.orig
 
 .include <bsd.port.mk>

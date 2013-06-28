@@ -1,4 +1,4 @@
-$OpenBSD: patch-apps_gnome-mplayer_preferences_gschema_xml,v 1.8 2012/10/31 13:22:03 dcoppa Exp $
+$OpenBSD: patch-apps_gnome-mplayer_preferences_gschema_xml,v 1.10 2013/05/27 11:43:08 dcoppa Exp $
 
 Set some sane defaults:
 use xv as default video output
@@ -12,7 +12,7 @@ use English as default language
 disable nautilus plugin
 
 --- apps.gnome-mplayer.preferences.gschema.xml.orig	Wed Jan  4 21:12:33 2012
-+++ apps.gnome-mplayer.preferences.gschema.xml	Tue Oct 16 11:12:53 2012
++++ apps.gnome-mplayer.preferences.gschema.xml	Mon May 27 12:18:43 2013
 @@ -1,7 +1,7 @@
  <schemalist>
    <schema id="apps.gnome-mplayer.preferences" path="/apps/gnome-mplayer/preferences/">

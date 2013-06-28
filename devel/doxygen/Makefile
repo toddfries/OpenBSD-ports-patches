@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2012/08/27 13:50:15 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/11 10:50:03 espie Exp $
 
 # Memory hog, stuck for days on the same file during build.
 # XXX check with different optimizer level? see doc/install.doc
@@ -7,20 +7,17 @@ NOT_FOR_ARCHS=	sh
 COMMENT-main=	source code documentation generator tool
 COMMENT-gui=	GUI front-end for doxygen
 
-VERSION=	1.7.2
+VERSION=	1.8.2
+REVISION-gui=	0
 DISTNAME=	doxygen-${VERSION}.src
 PKGNAME-main=	doxygen-${VERSION}
 FULLPKGNAME-gui=doxygen-gui-${VERSION}
-REVISION-main=	3
 CATEGORIES=	devel textproc
 
 HOMEPAGE=	http://www.doxygen.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://ftp.stack.nl/pub/users/dimitri/ \
 		ftp://ftp.stack.nl/pub/users/dimitri/
@@ -56,7 +53,8 @@ COMMON_LIB_DEPENDS =	${MODLIBICONV_LIB_DEPENDS}
 WANTLIB-main = ${COMMON_WANTLIB} z
 LIB_DEPENDS-main = ${COMMON_LIB_DEPENDS}
 
-WANTLIB-gui=	${COMMON_WANTLIB} ${MODQT_WANTLIB} QtGui QtXml
+WANTLIB-gui=	${COMMON_WANTLIB} ${MODQT_WANTLIB} QtGui QtXml \
+		ICE SM X11 Xext Xi Xinerama Xrender fontconfig freetype
 LIB_DEPENDS-gui=${COMMON_LIB_DEPENDS} ${MODQT_LIB_DEPENDS}
 RUN_DEPENDS-gui=doxygen-${VERSION}:${BUILD_PKGPATH}
 
@@ -67,7 +65,7 @@ MAKE_FLAGS+=	CXX=${CXX} CC=${CC} \
 FAKE_FLAGS+=	DESTDIR=
 WRKDIST=	${WRKDIR}/doxygen-${VERSION}
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 VMEM_WARNING=	Yes
 
 .include <bsd.port.mk>

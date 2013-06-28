@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.3 2012/10/28 23:27:24 kili Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:07 espie Exp $
 
 COMMENT =		utilities for Data.Lens
 
 DISTNAME =		data-lens-template-2.1.5
-REVISION =		0
+REVISION =		1
 CATEGORIES =		devel
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 

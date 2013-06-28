@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.16 2012/04/23 17:15:18 espie Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/21 08:46:34 ajacoutot Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	advanced, stable and fast irc server
 
-DISTNAME =	ircd-ratbox-3.0.7
+DISTNAME =	ircd-ratbox-3.0.8
 CATEGORIES =	net
 MASTER_SITES =	${HOMEPAGE}download/
 EXTRACT_SUFX =	.tar.bz2
-REVISION =	0
 
 HOMEPAGE =	http://www.ratbox.org/
 
@@ -16,9 +15,6 @@ MAINTAINER =	Simon Bertrang <simon@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 WANTLIB =		c crypto ltdl sqlite3 ssl z
 
@@ -29,7 +25,6 @@ LOGDIR =		/var/log/ircd-ratbox
 
 SUBST_VARS +=		CONFDIR LOGDIR
 
-USE_LIBTOOL =		Yes
 LIBTOOL_FLAGS =		--tag=disable-static
 CONFIGURE_STYLE =	autoconf
 AUTOCONF_VERSION =	2.68
@@ -44,7 +39,7 @@ CONFIGURE_ARGS =	--enable-openssl=/usr \
 CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 # Hack to make the nick length configurable at build time
 NICKLEN ?=

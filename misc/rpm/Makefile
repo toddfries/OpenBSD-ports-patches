@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/03/29 13:38:40 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT =	Red Hat package manager
 
@@ -9,9 +9,6 @@ SHARED_LIBS =	rpm		0.1 \
 CATEGORIES =	misc archivers emulators
 
 # GPLv2
-PERMIT_DISTFILES_FTP =	Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
 PERMIT_PACKAGE_CDROM =	Yes
 
 HOMEPAGE =	http://www.rpm.org/
@@ -23,7 +20,6 @@ WANTLIB += 	bz2 c popt z
 LIB_DEPENDS +=	archivers/bzip2 \
 		devel/popt
 
-USE_LIBTOOL =		Yes
 CONFIGURE_STYLE =	autoconf
 AUTOCONF_VERSION =	2.13
 

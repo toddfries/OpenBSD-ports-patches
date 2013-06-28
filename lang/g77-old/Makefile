@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2012/06/22 11:59:51 naddy Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/11 11:20:27 espie Exp $
 
 ONLY_FOR_ARCHS =	${GCC2_ARCHS}
 
 V =			2.95.3
 PKGNAME =		g77-$V
-REVISION =		5
+REVISION =		6
 DISTFILES = 		g77-openbsd-2.95.3.tgz \
 			libiberty-includes-openbsd.tgz
 
@@ -16,10 +16,7 @@ COMMENT =		GNU fortran 77 compiler
 CATEGORIES =		lang math
 MASTER_SITES =		http://spacehopper.org/mirrors/
 
-PERMIT_DISTFILES_CDROM = Yes
 PERMIT_PACKAGE_CDROM = 	Yes
-PERMIT_DISTFILES_FTP =	Yes
-PERMIT_PACKAGE_FTP =	Yes
 
 WRKDIST =		${WRKDIR}/g77
 CONFIGURE_SCRIPT =	${WRKDIST}/gcc/configure

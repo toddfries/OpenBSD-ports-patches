@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.31 2011/11/15 23:11:55 sthen Exp $
+# $OpenBSD: Makefile,v 1.37 2013/05/10 11:40:02 mpi Exp $
 
 COMMENT-main=	portable low-level networking library
 COMMENT-python= python interface to libdnet
 
-MODPY_EGG_VERSION=1.12
+MODPY_EGG_VERSION= 1.12
 DISTNAME=	libdnet-${MODPY_EGG_VERSION}
 PKGNAME-main=	${DISTNAME}
 PKGNAME-python= py-${DISTNAME}
-REVISION-main=	4
-REVISION-python= 4
+REVISION=	7
 
 SHARED_LIBS=	dnet	1.0
 
@@ -17,9 +16,6 @@ HOMEPAGE=	http://code.google.com/p/libdnet/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c
 
@@ -27,28 +23,28 @@ MASTER_SITES=		http://libdnet.googlecode.com/files/
 EXTRACT_SUFX=		.tgz
 
 PSEUDO_FLAVORS=		no_python
+NOT_FOR_ARCHS-python=	${NO_SHARED_ARCHS}
 FLAVOR?=
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/config
-MULTI_PACKAGES=		-main
-USE_GROFF =		Yes
+MULTI_PACKAGES=		-main -python
 
 # override python.port.mk's RUN_DEPENDS
 RUN_DEPENDS-main=
 
 CONFIGURE_ARGS +=	--without-check
-.if ${FLAVOR:L:Mno_python}
-CONFIGURE_ARGS+=	--without-python
-.else
+
+.include <bsd.port.arch.mk>
+.if ${BUILD_PACKAGES:M-python}
 MODULES+=		lang/python
-MULTI_PACKAGES+=	-python
 CONFIGURE_ARGS+=	--with-python
 MAKE_FLAGS=		PYTHON=${MODPY_BIN}
-REGRESS_DEPENDS=	net/libdnet,-python
-REGRESS_FLAGS=		TESTS_ENVIRONMENT=${MODPY_BIN}
+TEST_DEPENDS=		net/libdnet,-python
+TEST_FLAGS=		TESTS_ENVIRONMENT=${MODPY_BIN}
 WANTLIB-python=
+.else
+CONFIGURE_ARGS+=	--without-python
 .endif
 
 .include <bsd.port.mk>

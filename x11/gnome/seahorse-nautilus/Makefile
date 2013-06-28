@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.7 2012/10/16 07:08:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2013/05/31 15:35:09 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GnuPG extension for nautilus(1)
 
 GNOME_PROJECT=	seahorse-nautilus
-GNOME_VERSION=	3.6.1
+GNOME_VERSION=	3.8.0
+REVISION=	0
 
 CATEGORIES=	security
 
@@ -13,23 +14,20 @@ HOMEPAGE=	http://projects.gnome.org/seahorse/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm assuan
-WANTLIB += atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
-WANTLIB += cryptui dbus-1 dbus-glib-1 drm expat ffi fontconfig
-WANTLIB += freetype gck-1 gcr-3 gcr-base-3 gcrypt gdk-3 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gnome-keyring gobject-2.0
-WANTLIB += gpg-error gpgme gthread-2.0 gtk-3 harfbuzz icudata
-WANTLIB += icule icuuc m nautilus-extension notify p11-kit pango-1.0
-WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs stdc++ xcb xcb-render xcb-shm z
+WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+WANTLIB += Xfixes Xi Xinerama Xrandr Xrender assuan atk-1.0 atk-bridge-2.0
+WANTLIB += atspi c cairo cairo-gobject cryptui dbus-1 dbus-glib-1
+WANTLIB += expat ffi fontconfig freetype gck-1 gcr-3 gcr-base-3
+WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gnome-keyring gobject-2.0 gpg-error gpgme graphite2
+WANTLIB += gthread-2.0 gtk-3 harfbuzz m nautilus-extension
+WANTLIB += notify p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs stdc++ xcb
+WANTLIB += xcb-render xcb-shm z
 
-LIB_DEPENDS=	x11/gnome/gcr>=3.6.0 \
-		x11/gnome/nautilus>=3.6.0 \
+LIB_DEPENDS=	x11/gnome/gcr \
+		x11/gnome/nautilus \
 		x11/gnome/libcryptui
 
 MODULES=	devel/gettext \

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.57 2011/09/25 14:42:51 naddy Exp $
+# $OpenBSD: Makefile,v 1.60 2013/06/19 03:40:23 lteo Exp $
 
 COMMENT=	sniffing tools for penetration testing
 
 DISTNAME=	dsniff-2.3
-REVISION=	13
+REVISION=	14
 CATEGORIES=	security
 
 MASTER_SITES=	http://monkey.org/~dugsong/dsniff/
@@ -17,9 +17,6 @@ WANTLIB=	c crypto pcap ssl rpcsvc lib/db/db=3 lib/libnet-1.0/net=0
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 AUTOCONF_VERSION=	2.13
 CONFIGURE_STYLE=	autoconf
@@ -30,13 +27,13 @@ USE_GROFF =		Yes
 FLAVORS=	no_x11
 FLAVOR?=
 
-.if ${FLAVOR:L} == "no_x11"
+.if ${FLAVOR} == "no_x11"
 CONFIGURE_ARGS+=	--without-x
 .else
 WANTLIB+=	ICE SM X11 Xmu
 .endif
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 DESTDIRNAME=	install_prefix
 

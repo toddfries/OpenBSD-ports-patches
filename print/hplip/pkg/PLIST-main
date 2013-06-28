@@ -1,12 +1,13 @@
-@comment $OpenBSD: PLIST-main,v 1.15 2012/09/11 10:52:16 ajacoutot Exp $
+@comment $OpenBSD: PLIST-main,v 1.22 2013/05/11 11:15:53 ajacoutot Exp $
 @conflict hplip-docs-*
 @conflict hplip-gui-<3.11.3p0
 @extraunexec rm -rf /var/log/hp/tmp/*
-@extraunexec rm -f /var/log/hp/*
+@extraunexec rm -f /var/log/hp/* 2>/dev/null || true
 bin/hp-check
 bin/hp-clean
 bin/hp-config_usb_printer
 bin/hp-diagnose_queues
+bin/hp-doctor
 bin/hp-logcapture
 bin/hp-makeuri
 @bin bin/hp-mkuri
@@ -18,15 +19,10 @@ bin/hp-timedate
 bin/hp-uninstall
 bin/hp-unload
 bin/hp-upgrade
-@comment lib/python${MODPY_VERSION}/site-packages/cupsext.la
 lib/python${MODPY_VERSION}/site-packages/cupsext.so
-@comment lib/python${MODPY_VERSION}/site-packages/hpmudext.la
 lib/python${MODPY_VERSION}/site-packages/hpmudext.so
-@comment lib/python${MODPY_VERSION}/site-packages/pcardext.la
 lib/python${MODPY_VERSION}/site-packages/pcardext.so
-@comment lib/python${MODPY_VERSION}/site-packages/scanext.la
 lib/python${MODPY_VERSION}/site-packages/scanext.so
-@comment lib/sane/libsane-hpaio.la
 lib/sane/libsane-hpaio.so
 @bin libexec/cups/backend/hp
 libexec/cups/backend/hpfax
@@ -79,6 +75,8 @@ share/examples/hplip/cups/pstotiff.types
 @sample ${SYSCONFDIR}/cups/pstotiff.types
 share/examples/hplip/db/
 @sample /var/db/hp/
+share/examples/hplip/db/hplip.state
+@sample /var/db/hp/hplip.state
 share/examples/hplip/dbus-1/
 share/examples/hplip/dbus-1/system.d/
 share/examples/hplip/dbus-1/system.d/com.hp.hplip.conf
@@ -125,14 +123,24 @@ share/hplip/base/models.py
 share/hplip/base/models.pyc
 share/hplip/base/module.py
 share/hplip/base/module.pyc
+share/hplip/base/os_utils.py
+share/hplip/base/os_utils.pyc
+share/hplip/base/password.py
+share/hplip/base/password.pyc
 share/hplip/base/pexpect.py
 share/hplip/base/pexpect.pyc
 share/hplip/base/pkit.py
 share/hplip/base/pkit.pyc
 share/hplip/base/pml.py
 share/hplip/base/pml.pyc
+share/hplip/base/queues.py
+share/hplip/base/queues.pyc
+share/hplip/base/services.py
+share/hplip/base/services.pyc
 share/hplip/base/slp.py
 share/hplip/base/slp.pyc
+share/hplip/base/smart_install.py
+share/hplip/base/smart_install.pyc
 share/hplip/base/status.py
 share/hplip/base/status.pyc
 share/hplip/base/strings.py
@@ -207,6 +215,8 @@ share/hplip/diagnose_plugin.py
 share/hplip/diagnose_plugin.pyc
 share/hplip/diagnose_queues.py
 share/hplip/diagnose_queues.pyc
+share/hplip/doctor.py
+share/hplip/doctor.pyc
 share/hplip/fab.py
 share/hplip/fab.pyc
 share/hplip/fax/
@@ -249,6 +259,8 @@ share/hplip/installer/core_install.pyc
 share/hplip/installer/dcheck.py
 share/hplip/installer/dcheck.pyc
 share/hplip/installer/distros.dat
+share/hplip/installer/pluginhandler.py
+share/hplip/installer/pluginhandler.pyc
 share/hplip/levels.py
 share/hplip/levels.pyc
 share/hplip/linefeedcal.py

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2012/05/16 07:47:21 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/21 08:48:53 ajacoutot Exp $
 
 COMMENT =	replacement for the syslog() API
 
@@ -14,15 +14,11 @@ DISTFILES =	eventlog_${V}.tar.gz
 
 # BSD
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =	http://www.balabit.com/downloads/files/eventlog/0.2/
 
 WANTLIB =		c
 
-USE_LIBTOOL =		Yes
 CONFIGURE_STYLE =	gnu
 
 post-install:

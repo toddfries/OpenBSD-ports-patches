@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2012/08/23 17:42:27 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/21 08:48:54 ajacoutot Exp $
 
 COMMENT=	DSP library for telephony
 
@@ -16,9 +16,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # LGPLv2/GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c jpeg m tiff z
 
@@ -26,7 +23,6 @@ WRKDIST=	${WRKDIR}/spandsp-0.0.6
 
 LIB_DEPENDS+=	graphics/tiff
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
@@ -34,7 +30,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 
 # Test suite included, but requires many build dependencies
 # and proprietary files from standards bodies.
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 DOCS=		README DueDiligence
 

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/10/12 18:13:38 bentley Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/11 11:07:37 espie Exp $
 
 COMMENT =		3D light cycle game
 
 DISTNAME =		armagetronad-0.2.8.3.2.src
 PKGNAME =		${DISTNAME:S/.src//}
+REVISION =		0
 
 CATEGORIES =		games
 
@@ -11,9 +12,6 @@ HOMEPAGE =		http://armagetronad.org/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 WANTLIB +=		GL GLU SDL SDL_image SDL_mixer c jpeg m png pthread
 WANTLIB +=		stdc++ xml2 z
@@ -33,8 +31,7 @@ CONFIGURE_ARGS +=	--enable-games=no \
 			--disable-useradd \
 			--disable-initscripts \
 			--disable-sysinstall \
-			--disable-binreloc \
-			--enable-music
+			--disable-binreloc
 
 WRKDIST =		${WRKDIR}/${DISTNAME:S/.src//}
 

@@ -1,18 +1,13 @@
-# $OpenBSD: Makefile,v 1.9 2011/05/15 15:04:51 gsoares Exp $
+# $OpenBSD: Makefile,v 1.11 2013/03/11 10:50:20 espie Exp $
 
 COMMENT=	simple parallel processing fork manager
 
 MODULES=	cpan
-DISTNAME=	Parallel-ForkManager-0.7.9
+DISTNAME=	Parallel-ForkManager-1.02
 CATEGORIES=	devel
-
-HOMEPAGE=	http://hacks.dlux.hu/Parallel-ForkManager/
 
 # perl
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 MODCPAN_EXAMPLES=	Yes
 

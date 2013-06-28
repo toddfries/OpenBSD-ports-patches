@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.60 2012/10/12 14:53:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.66 2013/03/27 16:37:09 naddy Exp $
 
 COMMENT=	GNU gettext
 
-DISTNAME=	gettext-0.18.1
-REVISION=	5
-SHARED_LIBS +=  intl                 6.0      # .9.1
+DISTNAME=	gettext-0.18.2
+REVISION=	2
+SHARED_LIBS +=  intl                 6.0      # .9.2
 SHARED_LIBS +=  asprintf             1.0      # .0.0
-SHARED_LIBS +=  gettextlib           3.0      # .0.0
+SHARED_LIBS +=  gettextlib           3.1      # .0.0
 SHARED_LIBS +=  gettextsrc           3.0      # .0.0
-SHARED_LIBS +=  gettextpo            4.0      # .5.1
+SHARED_LIBS +=  gettextpo            5.0      # .5.2
 
 CATEGORIES=	devel
 # DPB: parallel-safe, not worth it. Too much time in configure
@@ -19,16 +19,12 @@ HOMEPAGE=	http://www.gnu.org/software/gettext/
 
 MAINTAINER=	Christian Weisgerber <naddy@openbsd.org>
 
-# LGPL, GPLv3
+# LGPLv2.1, GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=	converters/libiconv
 WANTLIB=	c expat m ncurses stdc++
 
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-csharp \
@@ -40,16 +36,13 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-included-libunistring \
 		--with-included-libxml \
 		--without-emacs \
-		--without-git
+		--without-git \
+		--without-bzip2 \
+		--without-xz
 
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/build-aux
 
-EXTRA_LOCALES=	en he hr hu lv no
-
-# avoid triggering autotools rebuild cascade
-post-patch:
-	touch -r ${WRKSRC}/gettext-runtime/m4/fcntl-o.m4.orig \
-	    ${WRKSRC}/gettext-runtime/m4/fcntl-o.m4
+EXTRA_LOCALES=	en he hu lv no
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/emacs/site-lisp

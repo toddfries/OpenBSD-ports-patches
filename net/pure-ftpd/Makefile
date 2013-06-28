@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.61 2012/10/30 14:18:25 giovanni Exp $
+# $OpenBSD: Makefile,v 1.65 2013/06/12 20:36:34 brad Exp $
 
 COMMENT=	small, easy to set up, fast and very secure FTP server
 
 DISTNAME=	pure-ftpd-1.0.36
+REVISION=	1
 CATEGORIES=	net
 MASTER_SITES=	http://download.pureftpd.org/pub/pure-ftpd/releases/ \
 		ftp://ftp.pureftpd.org/pub/pure-ftpd/releases/ \
@@ -17,9 +18,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c crypto ssl
 
 SEPARATE_BUILD=	Yes
@@ -34,7 +32,7 @@ MODULES=	converters/libiconv
 FLAVORS=	ldap mysql postgresql virtual_chroot
 FLAVOR?=
 
-.if ${FLAVOR:L:Mldap}
+.if ${FLAVOR:Mldap}
 LIB_DEPENDS+= 	openldap-client->=2,<3:databases/openldap
 WANTLIB +=	ldap>=2 lber
 CONFIGURE_ARGS+= --with-ldap="${LOCALBASE}"
@@ -42,7 +40,7 @@ DOCS+=	README.LDAP pureftpd.schema
 CONF_FILE+= pureftpd-ldap.conf
 .endif
 
-.if ${FLAVOR:L:Mmysql}
+.if ${FLAVOR:Mmysql}
 LIB_DEPENDS+=	databases/mysql
 WANTLIB +=	lib/mysql/mysqlclient>=10
 CONFIGURE_ARGS+= --with-mysql="${LOCALBASE}"
@@ -51,7 +49,7 @@ CONF_FILE+= pureftpd-mysql.conf
 WANTLIB+=	m z
 .endif
 
-.if ${FLAVOR:L:Mpostgresql}
+.if ${FLAVOR:Mpostgresql}
 LIB_DEPENDS+=	databases/postgresql
 WANTLIB +=	pq>=2
 CONFIGURE_ARGS+= --with-pgsql="${LOCALBASE}"
@@ -60,7 +58,7 @@ CONF_FILE+= pureftpd-pgsql.conf
 WANTLIB+=	m z
 .endif
 
-.if ${FLAVOR:L:Mvirtual_chroot}
+.if ${FLAVOR:Mvirtual_chroot}
 CONFIGURE_ARGS+= --with-virtualchroot
 .endif
 

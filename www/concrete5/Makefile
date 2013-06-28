@@ -1,25 +1,21 @@
-# $OpenBSD: Makefile,v 1.10 2012/10/24 09:06:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/20 10:38:07 jasper Exp $
 
 COMMENT=	building material for websites
 
-V=		5.6.0.2
+V=		5.6.1.1
 DISTNAME=	concrete${V}
 PKGNAME=	concrete5-${V}
-REVISION=	1
 EXTRACT_SUFX=	.zip
 CATEGORIES=	www
 HOMEPAGE=	http://www.concrete5.org/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	http://www.concrete5.org/download_file/-/view/44326/8497/
+MASTER_SITES=	http://www.concrete5.org/download_file/-/view/51531/8497/
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 EXTRACT_ONLY=
 

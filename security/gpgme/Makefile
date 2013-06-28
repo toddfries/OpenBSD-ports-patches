@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.26 2012/08/19 13:30:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2013/03/21 08:48:53 ajacoutot Exp $
 
 COMMENT=		GnuPG Made Easy
 
@@ -13,9 +13,6 @@ HOMEPAGE=		http://www.gnupg.org/gpgme.html
 
 # GPLv2 - LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += assuan gpg-error
 
@@ -40,6 +37,5 @@ LIB_DEPENDS=		security/libgpg-error>=1.4 \
 # needed for the regression tests
 USE_GMAKE=		Yes
 
-USE_LIBTOOL=		Yes
 
 .include <bsd.port.mk>

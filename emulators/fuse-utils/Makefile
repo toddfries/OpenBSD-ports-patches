@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2010/11/15 23:22:08 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2013/03/21 08:45:17 ajacoutot Exp $
 
 COMMENT=		Free Unix Spectrum Emulator utilities
 
@@ -8,9 +8,6 @@ HOMEPAGE=		http://fuse-emulator.sourceforge.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		devel/gettext
 
@@ -23,7 +20,6 @@ LIB_DEPENDS=		devel/libspectrum
 WANTLIB +=		spectrum>=5
 
 CONFIGURE_STYLE=	gnu
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 
 .include <bsd.port.mk>

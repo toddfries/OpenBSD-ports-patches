@@ -1,31 +1,23 @@
-# $OpenBSD: Makefile,v 1.24 2012/08/18 12:41:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2013/04/25 16:38:40 sthen Exp $
 
-COMMENT= 		cd player for Afterstep or Window Maker
+COMMENT=		cd player for Afterstep or Window Maker
 DISTNAME=		ascd-0.13.2
-REVISION=		3
+REVISION=		5
 CATEGORIES=		audio x11 x11/windowmaker
-
-HOMEPAGE=		http://worldserver.oleane.com/rsn/ascd-en.html
-
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		X11 Xau Xdmcp Xext Xpm c workman>=1
 
 MASTER_SITES=		http://spacehopper.org/mirrors/
-#MASTER_SITES=		http://worldserver.oleane.com/rsn/Archives/
 DISTFILES=		${DISTNAME}-src.tgz ${DATAFILES}
 DATAFILES=		ascd-0.13pr6-themes.tgz
 
 LIB_DEPENDS=		audio/libworkman
 
-USE_GROFF =		Yes
-NO_REGRESS=		Yes
+USE_GROFF=		Yes
+NO_TEST=		Yes
 CONFIGURE_STYLE=	imake
 
 post-extract:

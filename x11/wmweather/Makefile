@@ -1,20 +1,15 @@
-# $OpenBSD: Makefile,v 1.23 2010/11/22 08:37:05 espie Exp $
+# $OpenBSD: Makefile,v 1.25 2013/03/11 11:46:17 espie Exp $
 
 COMMENT=		wm-dockapp; weather monitor
 
 DISTNAME=		wmweather-2.4.3
-REVISION=		2
+REVISION=		3
 CATEGORIES=		x11 x11/windowmaker
 
 HOMEPAGE=		http://people.debian.org/~godisch/wmweather/
 
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
-
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		X11 Xext Xpm c curl
 
@@ -24,7 +19,7 @@ LIB_DEPENDS=		net/curl
 
 USE_GMAKE=		Yes
 USE_GROFF =		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-xmessage

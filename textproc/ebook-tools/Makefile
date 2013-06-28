@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2012/03/29 13:39:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.11 2013/06/24 19:04:11 espie Exp $
 
-V =			0.2.1
 COMMENT =		accessing and converting various ebook file formats
+V =			0.2.1
 DISTNAME =		ebook-tools-${V}
+REVISION =		2
 
 SHARED_LIBS +=		epub		0.0	# 0.2
 
@@ -10,28 +11,25 @@ CATEGORIES =		textproc devel
 
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB +=		c xml2 zip
+WANTLIB +=		c xml2 zip z
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=ebook-tools/${V}/}
 
 MODULES =		devel/cmake
-BUILD_DEPENDS =		devel/doxygen
+BUILD_DEPENDS =		devel/doxygen \
+			math/graphviz
 LIB_DEPENDS =		textproc/libxml \
 			archivers/libzip \
 
-SEPARATE_BUILD =	Yes
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 MAKE_ENV=		DOXYGEN_ENCODE_PATH_STRIP=${WRKSRC}
 
 DOCSDIR =		${PREFIX}/share/doc/ebook-tools
 
 post-build:
-	cd ${WRKBUILD} && ${MAKE_ENV} make doc
+	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} ${BUILD_COMMAND} doc
 
 post-install:
 	${INSTALL_DATA_DIR} ${DOCSDIR}
@@ -40,3 +38,9 @@ post-install:
 	@find ${DOCSDIR} -type f -print0 | xargs -0t chmod ${DOCMODE}
 
 .include <bsd.port.mk>
+USE_NINJA ?= No
+.if ${USE_NINJA:L} == "yes"
+BUILD_COMMAND = ${NINJA} ${NINJA_FLAGS}
+.else
+BUILD_COMMAND = ${MAKE_PROGRAM} ${MAKE_FLAGS}
+.endif

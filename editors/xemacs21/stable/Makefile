@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.26 2012/08/30 20:54:59 pascal Exp $
+# $OpenBSD: Makefile,v 1.29 2013/06/03 02:46:57 naddy Exp $
 
 BRANCH=		21.4
 VERSION=	22
-REVISION =	6
+REVISION=	7
 
 WANTLIB=	c m ncurses util
 
@@ -48,8 +48,7 @@ CONFIGURE_ARGS+=--with-menubars=lucid \
 		--with-widgets=athena \
 		--with-jpeg \
 		--with-png \
-		--with-tiff \
-		--site-includes="${LOCALBASE}/include/libpng"
+		--with-tiff
 
 LIB_DEPENDS+=	graphics/jpeg \
 		graphics/png \

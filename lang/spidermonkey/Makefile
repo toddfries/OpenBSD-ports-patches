@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2012/04/08 17:21:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2013/03/11 11:20:28 espie Exp $
 
 SHARED_ONLY=	Yes
 
@@ -12,6 +12,7 @@ DISTNAME =		firefox-${FFX_VERSION}.source
 PKGNAME =	${MOZILLA_PROJECT}-${MOZILLA_VERSION}
 PKGSPEC =	spidermonkey->=1.9v0,<1.10v0
 EPOCH =		0
+REVISION =	0
 
 SO_VERSION =	0.0
 SHARED_LIBS =	mozjs ${SO_VERSION}
@@ -20,9 +21,6 @@ CATEGORIES =	lang
 MAINTAINER =	Martynas Venckus <martynas@openbsd.org>
 # MPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 .if ${MACHINE_ARCH} == "i386"
 PKG_ARGS+=	-Djit=1 -Damd64=0

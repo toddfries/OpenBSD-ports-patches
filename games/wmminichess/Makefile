@@ -1,28 +1,23 @@
-# $OpenBSD: Makefile,v 1.17 2010/12/03 07:27:02 jasper Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/11 11:07:41 espie Exp $
 
 COMMENT=		wm-dockapp; chess game
 
 DISTNAME=		miniCHESS-0.8
 PKGNAME=		wm${DISTNAME:L}
-REVISION =		0
+REVISION =		1
 CATEGORIES=		games x11 x11/windowmaker
 
 HOMEPAGE=		http://www.foobargeek.com/miniCHESS/
 
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
-
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		X11 Xext Xpm c pthread-stubs xcb
 
 MASTER_SITES=		${HOMEPAGE}
 
 RUN_DEPENDS=		games/gnuchess
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 ALL_TARGET=		minichess
 

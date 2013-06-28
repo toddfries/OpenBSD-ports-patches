@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.142 2012/10/28 21:51:08 robert Exp $
+# $OpenBSD: Makefile,v 1.156 2013/06/26 17:28:57 naddy Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
@@ -6,6 +6,9 @@ COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
 PKGNAME=	zarafa-${V}
 PKGNAME-main=	zarafa-${V}
 PKGNAME-web=	zarafa-webaccess-${V}
+
+REVISION-main=	6
+REVISION-web=	2
 
 CATEGORIES=	mail www productivity
 
@@ -33,18 +36,20 @@ MODPHP_DO_SAMPLE=mapi
 MESSAGE-main=	# empty
 UNMESSAGE-main=	# empty
 
-BUILD_DEPENDS=	textproc/xmlto
+BUILD_DEPENDS=	devel/swig \
+		textproc/xmlto
 
 # libcurl is searched by configure but unused
 BUILD_DEPENDS += net/curl
 
 WANTLIB += ${MODGETTEXT_WANTLIB}
-WANTLIB += m pthread stdc++ z vmime execinfo icudata icui18n icuuc uuid
-WANTLIB += boost_filesystem-mt boost_system-mt
+WANTLIB += m pthread stdc++ z vmime execinfo icudata icui18n icuuc
+WANTLIB += boost_filesystem-mt boost_system-mt uuid
 
 WANTLIB-main += ${WANTLIB} ${MODPY_WANTLIB}
-WANTLIB-main += asn1 c com_err crypto gssapi ical icalss krb5 lber-2.4 ldap-2.4
-WANTLIB-main += mysqlclient ncursesw sasl2 ssl util uuid xml2 kyotocabinet
+WANTLIB-main += asn1 c com_err crypto gssapi ical icalss krb5 lber-2.4
+WANTLIB-main += mysqlclient ncursesw sasl2 ssl util xml2 kyotocabinet
+WANTLIB-main += heimbase ldap_r-2.4 roken wind
 WANTLIB-main += clucene-core clucene-shared
 
 RUN_DEPENDS-main=${MODGETTEXT_RUN_DEPENDS} \
@@ -57,7 +62,7 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 		devel/boost \
 		devel/libexecinfo \
 		devel/libvmime>=0.9.2p1 \
-		devel/uuid \
+		sysutils/e2fsprogs>=1.42.7 \
 		textproc/clucene>=2.3.3.4 \
 		textproc/icu4c \
 		textproc/libical \
@@ -71,7 +76,6 @@ LIB_DEPENDS-web= ${BASE_PKGPATH}>=${V}
 RUN_DEPENDS-web= ${MODPHP_RUN_DEPENDS} \
 		${MODGETTEXT_RUN_DEPENDS}
 
-USE_LIBTOOL=	yes
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
 
@@ -116,9 +120,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-clucene-include-prefix=${LOCALBASE}/include \
 		--with-python=${MODPY_BIN} \
 		--with-php-config=${MODPHP_PHP_CONFIG}
-
-# XXX in-tree heimdal does not provide krb5_free_unparsed_name()
-CONFIGURE_ARGS+= --with-krb5-config=/usr/bin/true
 
 # force build with clucene >= 2.x
 CONFIGURE_ENV +=ac_cv_lib_clucene__ZN6lucene5index11IndexReader4openEPKc=yes

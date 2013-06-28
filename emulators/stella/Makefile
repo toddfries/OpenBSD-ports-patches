@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.18 2012/04/27 14:33:23 gonzalo Exp $
+# $OpenBSD: Makefile,v 1.22 2013/06/04 18:41:41 naddy Exp $
 
 COMMENT =		Atari 2600 VCS emulator
 
-DISTNAME =		stella-3.6.1
+DISTNAME =		stella-3.8.1
 CATEGORIES =		emulators
 DISTFILES =		${DISTNAME}-src.tar.gz
 
@@ -12,9 +12,6 @@ MAINTAINER =		Benoit Lecocq <benoit@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =		c stdc++ m z pthread SDL>=1.2 png
 
@@ -23,15 +20,14 @@ MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=stella/}
 LIB_DEPENDS =		devel/sdl \
 			graphics/png
 
-CXXFLAGS +=		-I${LOCALBASE}/include/libpng \
-			-I${X11BASE}/include \
+CXXFLAGS +=		-I${X11BASE}/include \
 			-L${LOCALBASE}/lib
 CONFIGURE_STYLE =	simple
 CONFIGURE_ARGS +=	--disable-gl
 
 USE_GMAKE =		Yes
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 DOCSBASE =		${WRKDIST}/docs
 HTMLDOCS =		${DOCSBASE}/*.html

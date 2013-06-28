@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.114 2012/10/30 07:53:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.129 2013/06/17 06:35:56 ajacoutot Exp $
 
 COMMENT=		GNOME file manager
 
@@ -8,14 +8,13 @@ COMMENT=		GNOME file manager
 # graphics/evince
 # sysutils/deja-dup
 # x11/gnome/file-roller
-# x11/gnome/main-menu
-# x11/gnome/nautilus-open-terminal
 # x11/gnome/seahorse-nautilus
 # x11/gnome/totem
 # x11/gnome/tracker
+# x11/gnome/user-share
 
 GNOME_PROJECT=		nautilus
-GNOME_VERSION=		3.6.2
+GNOME_VERSION=		3.8.2
 
 SHARED_LIBS +=  nautilus-extension   3.0      # 5.0
 
@@ -25,31 +24,22 @@ HOMEPAGE=		http://www.gnome.org/projects/nautilus/
 
 # GPLv2 - LGPLv2 - GFPLv1.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0
-WANTLIB += c cairo cairo-gobject drm exempi exif expat
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += c cairo cairo-gobject dbus-1 exempi exif expat ffi
 WANTLIB += fontconfig freetype gailutil-3 gdk-3 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3 gobject-2.0
-WANTLIB += gthread-2.0 gtk-3 m notify pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += xcb xcb-render xcb-shm xml2 z ffi stdc++
-WANTLIB += ICE SM atk-bridge-2.0 atspi dbus-1 harfbuzz icudata
-WANTLIB += icule icuuc xkbfile
+WANTLIB += graphite2 gthread-2.0 gtk-3 harfbuzz
+WANTLIB += m notify pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
+WANTLIB += xcb-shm xkbfile xml2 z
 
 MODULES=		devel/gettext \
 			x11/gnome \
 			devel/dconf
 
-BUILD_DEPENDS=		misc/shared-mime-info \
-			devel/gobject-introspection \
-			devel/gsettings-desktop-schemas
-
 RUN_DEPENDS=		misc/shared-mime-info \
-			x11/gnome/icon-theme \
 			x11/gnome/gvfs \
 			devel/gsettings-desktop-schemas
 
@@ -58,13 +48,10 @@ LIB_DEPENDS=		x11/gnome/desktop \
 			graphics/libexif \
 			textproc/exempi
 
-MODGNOME_TOOLS= 	goi
+MODGNOME_TOOLS= 	gi
 MODGNOME_DESKTOP_FILE=	Yes
 
-CONFIGURE_ARGS+= 	--disable-update-mimedb \
-			--disable-packagekit \
-			--enable-libexif \
-			--enable-xmp
+CONFIGURE_ARGS+= 	--disable-update-mimedb
 
 # it would introduce a cyclic dependency with x11/gnome/tracker; also it
 # is better to keep the regular search for nautilus so that we can get
@@ -77,8 +64,8 @@ MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/nautilus
 
 # needs 'org.gnome.nautilus.preferences'
-REGRESS_DEPENDS=	${BASE_PKGPATH}
-REGRESS_IS_INTERACTIVE=	x11
+TEST_DEPENDS=		${BASE_PKGPATH}
+TEST_IS_INTERACTIVE=	x11
 
 post-install:
 	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.{a,la}

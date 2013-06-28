@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.17 2012/05/23 18:02:09 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/11 11:37:55 espie Exp $
 
 COMMENT =	simple CalDAV calendar server
 
-MODPY_EGG_VERSION = 0.7
+MODPY_EGG_VERSION = 0.7.1
 DISTNAME =	Radicale-${MODPY_EGG_VERSION}
 PKGNAME =	${DISTNAME:L}
 CATEGORIES =	productivity net
@@ -13,16 +13,13 @@ MAINTAINER =	Sergey Bronnikov <estetus@gmail.com>
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${MASTER_SITE_PYPI:=R/Radicale/}
 
 MODULES =		lang/python
 MODPY_ADJ_FILES =	radicale.py
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 pre-configure:
 	@${SUBST_CMD} ${WRKSRC}/radicale/config.py

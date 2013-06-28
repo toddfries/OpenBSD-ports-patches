@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.72 2012/07/13 16:59:15 jasper Exp $
+# $OpenBSD: Makefile,v 1.79 2013/03/21 08:46:32 ajacoutot Exp $
 
 COMMENT=	cross platform, open source .NET developement framework
 
 DISTNAME=	mono-2.10.9
-REVISION=	0
+REVISION=	2
 
 CATEGORIES=	lang devel
 
@@ -19,10 +19,7 @@ HOMEPAGE=	http://www.mono-project.com/
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
 # GPLv2, LGPL, MIT X11, MPL
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 WANTLIB=	c m pthread z stdc++
 
@@ -35,7 +32,6 @@ MODULES=	lang/mono \
 
 MODMONO_DEPS=	No
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 USE_GROFF =	Yes
 
@@ -50,13 +46,14 @@ WANTLIB +=	gc
 AUTOCONF_VERSION=2.68
 CONFIGURE_STYLE=autoconf
 CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib" \
-		CPPFLAGS="-I${LOCALBASE}/include"
+		CPPFLAGS="-I${LOCALBASE}/include" \
+		ac_cv_header_execinfo_h=no
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-gc=boehm \
 		--enable-quiet-build=no \
 		--disable-shared-handles
 
-REGRESS_TARGET=check
+TEST_TARGET=check
 
 DLLMAP_FILES=	mcs/class/Managed.Windows.Forms/System.Windows.Forms/MimeIcon.cs \
 		mcs/tools/mono-shlib-cop/mono-shlib-cop.exe.config \

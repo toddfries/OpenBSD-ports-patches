@@ -1,24 +1,19 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/22 08:56:47 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/21 08:45:14 ajacoutot Exp $
 
 COMMENT=		ANSI C command line parser
 
-DISTNAME=		argtable2-12
-PKGNAME=		argtable-2.12
-REVISION=		0
-SHARED_LIBS +=	argtable2            1.2      # .1.7
+DISTNAME=		argtable2-13
+PKGNAME=		argtable-2.13
+SHARED_LIBS +=	argtable2            1.2      # .1.8
 CATEGORIES=		devel
 
 HOMEPAGE=		http://argtable.sourceforge.net/
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=argtable/}
 
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 FAKE_FLAGS=		exampledir=${PREFIX}/share/examples/argtable2

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.67 2012/07/13 16:16:18 espie Exp $
+# $OpenBSD: Makefile,v 1.71 2013/03/21 08:45:14 ajacoutot Exp $
 
 COMMENT-main=	embedded SQL implementation
 COMMENT-tcl=	TCL bindings for Sqlite3
 COMMENT-lemon=	LEMON LALR(1) parser generator
-V=		3.7.13
-DISTNAME=	sqlite-src-3071300
+V=		3.7.15.2
+DISTNAME=	sqlite-src-3071502
 EXTRACT_SUFX =	.zip
 PKGNAME-main=	sqlite3-${V}
 PKGNAME-tcl=	sqlite3-tcl-${V}
@@ -12,7 +12,6 @@ PKGNAME-lemon=	lemon-${V}
 CATEGORIES=	databases
 IGNORE-main = "--${FULLPKGNAME-main} comes with OpenBSD as of release 5.2"
 SUBPACKAGE ?= -lemon
-REVISION-tcl =	0
 
 MASTER_SITES=	${HOMEPAGE}
 
@@ -20,14 +19,10 @@ HOMEPAGE=	http://www.sqlite.org/
 
 # PD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main=	c ncurses pthread readline
 WANTLIB-lemon=	c
 
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
 CFLAGS+=	-DSQLITE_ENABLE_COLUMN_METADATA \
@@ -61,13 +56,13 @@ CONFIGURE_ARGS+=--with-tcl=${MODTCL_LIBDIR}
 CONFIGURE_ARGS+=TCLSH_CMD="${MODTCL_BIN}"
 CONFIGURE_ENV += TCLLIBDIR=${MODTCL_TCLDIR}/sqlite3
 
-REGRESS_TARGET=	test
+TEST_TARGET=	test
 
 .else
 CONFIGURE_ARGS+=--disable-tcl
 CONFIGURE_ARGS+=TCLSH_CMD=none
 CONFIGURE_ENV += CFLAGS=-I"${WRKSRC}/ext/fts3"
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 .endif
 
 # Don't include dependency on pthreads, weak pthread functions are

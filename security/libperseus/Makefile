@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2011/03/29 12:14:21 pea Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/21 08:48:53 ajacoutot Exp $
 
 COMMENT = 	library to secure any kind of communication streams
 
@@ -15,21 +15,17 @@ MAINTAINER = 	Pierre-Emmanuel Andre <pea@openbsd.org>
 
 # GPL/LGPL/MPL
 PERMIT_PACKAGE_CDROM = 	Yes
-PERMIT_PACKAGE_FTP = 	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP = 	Yes
 
 WANTLIB = 	c m
 
 EXTRACT_SUFX = 	.tgz
 
-USE_LIBTOOL = 	Yes
 
 WRKDIST = 	${WRKDIR}
 
 CFLAGS += 	-fPIC
 
-do-regress:
+do-test:
 	@cd ${WRKBUILD} && ./perseus_test2
 
 do-install:

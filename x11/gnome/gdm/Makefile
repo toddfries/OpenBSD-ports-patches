@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.140 2012/10/26 07:34:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.168 2013/06/17 13:22:50 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
-GNOME_VERSION=		3.6.1
-REVISION=		2
+GNOME_VERSION=		3.8.3.1
 
 HOMEPAGE=		http://projects.gnome.org/gdm/
 
@@ -15,35 +14,32 @@ SHARED_LIBS +=  gdmsimplegreeter          0.0 # 1.0
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
-WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm accountsservice
-WANTLIB += atk-1.0 c cairo cairo-gobject canberra canberra-gtk3
-WANTLIB += dbus-1 dbus-glib-1 drm execinfo expat ffi fontconfig
+WANTLIB += ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
+WANTLIB += Xfixes Xi Xinerama Xrandr Xrender accountsservice atk-1.0
+WANTLIB += atk-bridge-2.0 atspi c cairo cairo-gobject canberra
+WANTLIB += canberra-gtk3 dbus-1 dbus-glib-1 expat ffi fontconfig
 WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gobject-2.0 gthread-2.0 gtk-3 ltdl m nspr4 nss3 nssutil3
-WANTLIB += ogg pam pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
-WANTLIB += pixman-1 plc4 plds4 png pthread pthread-stubs smime3
-WANTLIB += softokn3 sqlite3 ssl3 stdc++ upower-glib util vorbis
-WANTLIB += vorbisfile xcb xcb-render xcb-shm z icuuc
-WANTLIB += ICE SM atk-bridge-2.0 atspi harfbuzz icudata icule
+WANTLIB += gobject-2.0 graphite2 gthread-2.0 gtk-3 harfbuzz ltdl
+WANTLIB += m nspr4 nss3 nssutil3 ogg pam pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
+WANTLIB += smime3 softokn3 sqlite3 ssl3 upower-glib util vorbis
+WANTLIB += vorbisfile xcb xcb-render xcb-shm z
 
 MODULES=		devel/gettext \
 			x11/gnome \
 			devel/dconf
 
+BUILD_DEPENDS=		devel/check
+
 # cyclic dependency, see pkg/DESCR
-# bring _all_ runtime dependencies (including sysutils/consolekit and zenity)
+# bring _all_ runtime dependencies (including consolekit and zenity)
 #RUN_DEPENDS +=		x11/gnome/session
 
 # orca-autostart.desktop
 RUN_DEPENDS +=		x11/gnome/orca
 
 LIB_DEPENDS=		audio/libcanberra,-gtk3 \
-			devel/libexecinfo \
 			security/nss \
 			security/openpam \
 			sysutils/accountsservice \
@@ -51,7 +47,7 @@ LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 
 LIBTOOL_FLAGS=		--tag=disable-static
 
-MODGNOME_TOOLS= 	goi yelp
+MODGNOME_TOOLS= 	gi yelp
 MODGNOME_ICON_CACHE=	Yes
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include -DHAS_SA_LEN
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib
@@ -68,32 +64,20 @@ CONFIGURE_ARGS=		--disable-static \
 			--with-pid-file=/var/run/gdm.pid \
 			--with-dmconfdir="${LOCALBASE}/share/xsessions" \
 			--with-screenshot-dir=/var/run/gdm/greeter \
-			--with-incomplete-locales \
 			--with-user=_gdm \
 			--with-group=_gdm \
 			--with-console-kit \
 			--with-xauth-dir=/var/run/gdm \
 			--with-initial-vt=05 \
-			--without-systemd \
-			--without-tcp-wrappers \
-			--disable-console-helper
+			--without-tcp-wrappers
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/Makefile.in \
-		${WRKSRC}/data/{Init.in,PreSession.in,Xsession.in,gdm.schemas}
 	perl -pi -e 's,root:root,root:wheel,g;' \
 		-e 's,root:gdm,root:676,g;' \
 		-e 's,gdm:gdm,676:676,g' ${WRKSRC}/data/Makefile.in
-	perl -pi -e 's,/usr/local,${LOCALBASE},g' \
+	perl -pi -e 's,/usr/local,${LOCALBASE},g;' \
+		-e 's,/bin/bash,/bin/ksh,g' \
 		${WRKSRC}/daemon/gdm-session-worker.c
-	perl -pi -e 's,/bin/true,/usr/bin/true,g' \
-		${WRKSRC}/data/applications/mime-dummy-handler.desktop \
-		${WRKSRC}/configure \
-		${WRKSRC}/data/00-upstream-settings
-.for i in gdm-simple-greeter gnome-session-check-accelerated gnome-settings-daemon
-	perl -pi -e 's,/usr/libexec,${PREFIX},g' \
-		${WRKSRC}/data/applications/gdm-simple-greeter.desktop.in
-.endfor
 
 post-install:
 	rm ${PREFIX}/lib/gdm/simple-greeter/extensions/*.la
@@ -101,12 +85,15 @@ post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gdm/{etc/pam.d,var/db}
 	${INSTALL_DATA} ${FILESDIR}/gdm-* \
 		${PREFIX}/share/examples/gdm/etc/pam.d
-	${INSTALL_DATA} ${FILESDIR}/org.gnome.login-screen.gschema.override \
+	${INSTALL_DATA} ${FILESDIR}/10_org.gnome.login-screen.gschema.override \
 		${PREFIX}/share/glib-2.0/schemas
 	mv ${WRKINST}/etc/gdm ${PREFIX}/share/examples/gdm/etc
 	mv ${WRKINST}/etc/dbus-1 ${PREFIX}/share/examples/gdm/etc
 	mv ${WRKINST}/etc/dconf ${PREFIX}/share/examples/gdm/etc
 	mv ${WRKINST}/var/db/gdm ${PREFIX}/share/examples/gdm/var/db
+	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gdm/var/db/gdm/.pulse
+	${INSTALL_DATA} ${FILESDIR}/client.conf \
+		${PREFIX}/share/examples/gdm/var/db/gdm/.pulse
 	${INSTALL_DATA} ${FILESDIR}/i18n \
 		${PREFIX}/share/examples/gdm/etc/gdm/i18n
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/examples/gdm/*

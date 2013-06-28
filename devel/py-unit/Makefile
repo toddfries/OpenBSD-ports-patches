@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.23 2011/09/16 09:24:56 espie Exp $
+# $OpenBSD: Makefile,v 1.25 2013/03/11 10:50:27 espie Exp $
 
 COMMENT=		unit testing framework for Python
 
@@ -12,9 +12,6 @@ HOMEPAGE=		http://pyunit.sourceforge.net/
 
 # Python License
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=pyunit/}
 
@@ -23,11 +20,11 @@ FLAVOR?=
 
 MODULES=	lang/python
 
-.if !${FLAVOR:L:Mno_x11}
+.if !${FLAVOR:Mno_x11}
 BUILD_DEPENDS=	${MODPY_TKINTER_DEPENDS}
 RUN_DEPENDS=	${MODPY_TKINTER_DEPENDS}
 .endif
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2012/09/01 14:36:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2013/03/21 08:46:34 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -15,9 +15,6 @@ MAINTAINER=	Martynas Venckus <martynas@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	http://martynas.blarzwurst.de/distfiles/
 
@@ -31,7 +28,6 @@ RUN_DEPENDS=	net/irssi>=0.8.15
 MAKE_FLAGS=	libfe_common_silc_la_LDFLAGS=-avoid-version \
 		libsilc_core_la_LDFLAGS=-avoid-version
 
-USE_LIBTOOL=	  Yes
 LIBTOOL_FLAGS+=	  --tag=disable-static
 USE_GROFF =	Yes
 CONFIGURE_STYLE=  autoconf

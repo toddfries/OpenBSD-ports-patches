@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2011/09/01 14:34:22 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2013/06/03 02:46:57 naddy Exp $
 
 COMMENT =		downhill racing game
 
@@ -13,9 +13,6 @@ MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB = GL GLU ICE SDL SDL_mixer SM X11 Xext Xi Xmu Xt c freetype
 WANTLIB += m png pthread stdc++ z ${MODTCL_WANTLIB}
@@ -34,9 +31,9 @@ CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--with-tcl="${MODTCL_LIBDIR}" \
 			--with-tcl-inc="${MODTCL_INCDIR}"
 CONFIGURE_ENV =		LDFLAGS="-L${LOCALBASE}/lib" \
-			CPPFLAGS="-I${LOCALBASE}/include/libpng"
+			CPPFLAGS="-I${LOCALBASE}/include"
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 post-build:
 	cd ${WRKSRC}; unzip etracericons.zip

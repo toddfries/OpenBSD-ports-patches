@@ -1,0 +1,35 @@
+$OpenBSD: patch-nspr_pr_include_md__openbsd_h,v 1.1 2013/06/23 18:36:50 landry Exp $
+--- nspr/pr/include/md/_openbsd.h.orig	Tue May 28 23:39:29 2013
++++ nspr/pr/include/md/_openbsd.h	Wed Jun 12 21:26:27 2013
+@@ -24,6 +24,10 @@
+ #define _PR_SI_ARCHITECTURE "sparc"
+ #elif defined(__arm__)
+ #define _PR_SI_ARCHITECTURE "arm"
++#elif defined(__hppa__)
++#define _PR_SI_ARCHITECTURE "hppa"
++#elif defined(__mips64__) || defined(__mips64el__)
++#define _PR_SI_ARCHITECTURE "mips64"
+ #endif
+ 
+ #define PR_DLL_SUFFIX		".so"
+@@ -33,7 +37,11 @@
+ #define _MD_DEFAULT_STACK_SIZE	65536L
+ #define _MD_MMAP_FLAGS          MAP_PRIVATE
+ 
++#if defined(__hppa__)
++#define HAVE_STACK_GROWING_UP
++#else
+ #undef  HAVE_STACK_GROWING_UP
++#endif
+ #define HAVE_DLL
+ #define USE_DLFCN
+ #define _PR_HAVE_SOCKADDR_LEN
+@@ -69,6 +77,8 @@
+ #define JB_SP_INDEX 6
+ #elif defined(__arm__)
+ #define JB_SP_INDEX 23
++#elif defined(__mips64__) || defined(__mips64el__)
++#define JB_SP_INDEX 29
+ #else
+ #error "Need to define SP index in jmp_buf here"
+ #endif

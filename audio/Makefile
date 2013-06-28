@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.292 2012/10/11 14:18:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.308 2013/06/19 15:57:42 shadchin Exp $
 
      SUBDIR =
      SUBDIR += abcde
-     SUBDIR += abcde,lame
      SUBDIR += ac3dec
      SUBDIR += akode
      SUBDIR += alac_decoder
      SUBDIR += amarok
      SUBDIR += aqualung
      SUBDIR += ardour
+     SUBDIR += ario
      SUBDIR += ascd
      SUBDIR += aubio
      SUBDIR += aucatctl
@@ -17,13 +17,15 @@
      SUBDIR += audacity
      SUBDIR += aumix
      SUBDIR += bladeenc
-     SUBDIR += bmp
      SUBDIR += bonk
      SUBDIR += calf
      SUBDIR += caps-plugins
+     SUBDIR += cd-discid
      SUBDIR += cdparanoia
      SUBDIR += celt
      SUBDIR += celt051
+     SUBDIR += chromaprint
+     SUBDIR += clementine
      SUBDIR += cmixer
      SUBDIR += cmt
      SUBDIR += cmu-sphinx3
@@ -47,9 +49,10 @@
      SUBDIR += fluidsynth
      SUBDIR += fookebox
      SUBDIR += freealut
+     SUBDIR += generaluser-gs-soundfont
      SUBDIR += gimmix
+     SUBDIR += gogglesmm
      SUBDIR += gmpc
-     SUBDIR += gmpc-libnotify
      SUBDIR += gmpc-plugins
      SUBDIR += gnomad2
      SUBDIR += gogo
@@ -67,7 +70,6 @@
      SUBDIR += ksmp3play
      SUBDIR += ladspa
      SUBDIR += lame
-     SUBDIR += last.fm
      SUBDIR += liba52
      SUBDIR += libao
      SUBDIR += libcanberra
@@ -78,6 +80,7 @@
      SUBDIR += libdca
      SUBDIR += libgpod
      SUBDIR += libid3tag
+     SUBDIR += liblastfm
      SUBDIR += liblo
      SUBDIR += libmad
      SUBDIR += libmikmod
@@ -93,14 +96,17 @@
      SUBDIR += libsamplerate
      SUBDIR += libsidplay
      SUBDIR += libsndfile
+     SUBDIR += libsoxr
      SUBDIR += libvorbis
      SUBDIR += libworkman
+     SUBDIR += libxmp
      SUBDIR += lmms
      SUBDIR += mac
      SUBDIR += madplay
      SUBDIR += mcp-plugins
      SUBDIR += metronome
      SUBDIR += midish
+     SUBDIR += mikmod
      SUBDIR += milkytracker
      SUBDIR += mixer.app
      SUBDIR += mkplaylist
@@ -124,9 +130,11 @@
      SUBDIR += mpegaudio
      SUBDIR += mpg123
      SUBDIR += mpg321
+     SUBDIR += mscore
      SUBDIR += mt-daapd
      SUBDIR += multimux
      SUBDIR += musepack
+     SUBDIR += musique
      SUBDIR += nap
      SUBDIR += ncmpc
      SUBDIR += ncmpcpp
@@ -201,7 +209,6 @@
      SUBDIR += snack
      SUBDIR += sonata
      SUBDIR += sound-theme-freedesktop
-     SUBDIR += soundconverter
      SUBDIR += soundtouch
      SUBDIR += soundtracker
      SUBDIR += sox

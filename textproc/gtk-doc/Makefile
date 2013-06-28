@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.33 2012/09/27 17:59:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.38 2013/06/05 12:27:48 ajacoutot Exp $
 
 COMMENT=	GTK C code documentation system
 
-GNOME_VERSION=	1.18
+GNOME_VERSION=	1.19
 GNOME_PROJECT=	gtk-doc
-REVISION=	3
 
 CATEGORIES=    	textproc devel
 
@@ -12,9 +11,6 @@ HOMEPAGE=	http://www.gtk.org/gtk-doc/
 
 # GPLv3 - GFDLv1.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		x11/gnome \
 			lang/python
@@ -23,20 +19,19 @@ MODPY_RUNDEP=		No
 MODGNOME_TOOLS= 	yelp
 
 CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--with-highlight=source-highlight
+CONFIGURE_ENV=		ac_cv_path_DBLATEX= \
+			ac_cv_path_FOP=
 
 # only files under tests/ are compiled but not installed
 PKG_ARCH=		*
 
-BUILD_DEPENDS=		${RUN_DEPENDS}
-RUN_DEPENDS=		textproc/openjade \
-			textproc/docbook-xsl \
-			editors/vim,no_x11
+BUILD_DEPENDS=		textproc/docbook-xsl \
+			textproc/openjade \
+			textproc/source-highlight
 
-REGRESS_DEPENDS=	shells/bash
-
-pre-configure:
-	perl -pi -e "s,/bin/bash,${LOCALBASE}/bin/bash," \
-		${WRKSRC}/tests/fail.sh \
-		${WRKSRC}/tests/tools.sh.in
+RUN_DEPENDS=		textproc/docbook-xsl \
+			textproc/openjade \
+			textproc/source-highlight
 
 .include <bsd.port.mk>

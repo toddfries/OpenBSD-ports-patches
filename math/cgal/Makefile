@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.5 2012/01/20 14:48:50 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.8 2013/03/11 11:23:54 espie Exp $
 
 # vax:	no fenv.h support
 NOT_FOR_ARCHS =		vax
 
+BROKEN-mips64 =		ICE on Interval_nt.h:98
+
 COMMENT =		Computational Geometry Algorithms Library
 
-DISTNAME =		CGAL-3.8
+DISTNAME =		CGAL-4.1
 PKGNAME =		${DISTNAME:L}
-REVISION =		2
 
 SHARED_ONLY =		Yes
 SHARED_LIBS =		CGAL		0.0 \
@@ -21,9 +22,6 @@ HOMEPAGE =		http://www.cgal.org/
 
 # mix of LGPLv2.1 and QPL; see http://www.cgal.org/license.html
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 # m>=5.3 for fenv.h support
 WANTLIB =		GL GLU ICE SM X11 Xext boost_thread-mt gmp gmpxx \
@@ -37,6 +35,9 @@ MODULES =		devel/cmake \
 LIB_DEPENDS =		devel/boost \
 			devel/gmp \
 			devel/mpfr
+
+# wow, forgot to change version?
+WRKDIST =		${WRKDIR}/CGAL-3.8
 
 CFLAGS +=		-I${X11BASE}/include
 

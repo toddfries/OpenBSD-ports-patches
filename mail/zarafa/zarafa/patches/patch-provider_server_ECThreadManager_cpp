@@ -1,6 +1,6 @@
-$OpenBSD: patch-provider_server_ECThreadManager_cpp,v 1.2 2012/05/05 16:56:17 ajacoutot Exp $
---- provider/server/ECThreadManager.cpp.orig	Thu May  3 16:37:11 2012
-+++ provider/server/ECThreadManager.cpp	Sat May  5 17:42:32 2012
+$OpenBSD: patch-provider_server_ECThreadManager_cpp,v 1.4 2013/06/17 20:54:06 ajacoutot Exp $
+--- provider/server/ECThreadManager.cpp.orig	Thu Feb 28 17:13:17 2013
++++ provider/server/ECThreadManager.cpp	Mon Jun 17 21:55:21 2013
 @@ -164,7 +164,7 @@ void *ECWorkerThread::Work(void *lpParam)
      bool fStop = false;
  	int err = 0;

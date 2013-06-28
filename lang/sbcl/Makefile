@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.15 2012/08/30 20:54:59 pascal Exp $
+# $OpenBSD: Makefile,v 1.18 2013/06/26 17:44:03 krw Exp $
 
 # not yet ported to other arches
 ONLY_FOR_ARCHS =	amd64 i386 powerpc
 
 COMMENT=		compiler and runtime system for ANSI Common Lisp
 
-V =			1.0.58
+V =			1.1.8
 DISTNAME=		sbcl-${V}-source
 PKGNAME=		sbcl-${V}
 WRKDIST=		${WRKDIR}/sbcl-${V}
@@ -17,9 +17,6 @@ MAINTAINER =		Joshua Elsasser <joshe@openbsd.org>
 
 # Public domain and BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		c m util
 
@@ -80,7 +77,7 @@ do-install:
 post-install:
 	chown -R 0:0 ${PREFIX}/lib/sbcl
 
-do-regress:
+do-test:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} RUN_CONTRIB_TESTS=1 \
 	    /bin/sh make-target-contrib.sh
 	cd ${WRKSRC}/tests && ${SETENV} ${MAKE_ENV} /bin/sh run-tests.sh

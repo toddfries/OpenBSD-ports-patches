@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2012/04/28 12:16:29 espie Exp $
+# $OpenBSD: Makefile,v 1.37 2013/03/11 11:37:54 espie Exp $
 
 COMMENT=	utilities for manipulating PostScript documents
 
@@ -18,9 +18,6 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 # see LICENSE in WRKSRC
 # Apple copyrighted files have been removed from the package
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB +=	c
 
@@ -30,7 +27,7 @@ USE_GROFF =	Yes
 FLAVORS=	a4
 FLAVOR?=
 
-.if ${FLAVOR:L} == a4
+.if ${FLAVOR} == a4
 PAPERSIZE=	a4
 .else
 PAPERSIZE=	letter
@@ -41,6 +38,6 @@ FAKE_FLAGS=	PAPER=${PAPERSIZE}
 
 MAKE_FILE=	Makefile.unix
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

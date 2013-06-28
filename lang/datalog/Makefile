@@ -1,24 +1,19 @@
-# $OpenBSD: Makefile,v 1.7 2012/09/19 08:15:09 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2013/03/11 11:20:27 espie Exp $
 
 COMMENT=	deductive database system similar to Prolog
 
-DISTNAME=	datalog-2.2
-REVISION=	1
+DISTNAME=	datalog-2.3
 SHARED_LIBS +=  datalog                   0.0 # 0.0
 CATEGORIES=	lang
 
-HOMEPAGE=	http://www.ccs.neu.edu/home/ramsdell/tools/datalog/
+HOMEPAGE=	http://datalog.sourceforge.net/
 
 # LGPLv2.1+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c m readline termcap
 
-MASTER_SITES=		${HOMEPAGE} \
-			${MASTER_SITE_SOURCEFORGE:=datalog/}
+MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=datalog/}
 
 # perl libtool loses -llua somewhere along the way
 USE_LIBTOOL=		gnu
@@ -29,7 +24,7 @@ MODLUA_SA=		Yes
 CONFIGURE_STYLE=	gnu
 
 # Some extra checks in addition to the check target
-post-regress:
+post-test:
 	cd ${WRKSRC} && /bin/sh try.sh
 
 .include <bsd.port.mk>

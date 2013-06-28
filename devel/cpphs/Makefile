@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2012/10/28 23:26:01 kili Exp $
+# $OpenBSD: Makefile,v 1.34 2013/03/11 10:50:02 espie Exp $
 
 COMMENT-main =	liberalised reimplementation of cpp in Haskell
 COMMENT-lib =	cpphs library
@@ -9,15 +9,12 @@ DISTNAME =	cpphs-1.13.3
 PKGNAME-main =	${DISTNAME}
 PKGNAME-lib =	hs-${DISTNAME}
 REVISION-main =	0
-REVISION-lib =	0
+REVISION-lib =	1
 CATEGORIES =	devel
 MAINTAINER =	Matthias Kilian <kili@openbsd.org>
 
 # LGPL2.1
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MULTI_PACKAGES =	-main -lib
 WANTLIB-main =		${WANTLIB} c m pthread
@@ -54,7 +51,7 @@ do-install:
 post-install:
 	${INSTALL_MAN}     ${WRKSRC}/docs/cpphs.1 ${PREFIX}/man/man1
 
-do-regress:
+do-test:
 	cd ${WRKSRC}/tests && /bin/sh ./runtests
 
 .include <bsd.port.mk>

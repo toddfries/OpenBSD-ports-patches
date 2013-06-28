@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2012/11/05 12:12:36 gonzalo Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/04 14:00:20 naddy Exp $
 
 COMMENT=		small tiling window manager
 
 SHARED_LIBS=		swmhack 1.0
 
-DISTNAME=		spectrwm-2.1.0
+DISTNAME=		spectrwm-2.3.0
+REVISION=		0
 EXTRACT_SUFX=		.tgz
 CATEGORIES=		x11
 
@@ -13,16 +14,13 @@ MAINTAINER=		Gonzalo L. R. <gonzalo@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 X11-xcb Xcursor Xft c util xcb xcb-aux xcb-icccm
 WANTLIB += xcb-keysyms xcb-randr xcb-xtest
 
 MASTER_SITES=	http://opensource.conformal.com/snapshots/spectrwm/
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 RUN_DEPENDS=	x11/dmenu>=4.5
 
@@ -43,8 +41,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/spectrwm.conf ${PREFIX}/share/examples/spectrwm
 
 .for i in es cz fr fr_ch se us
-	${INSTALL_DATA_DIR} ${WRKSRC}/spectrwm_$i.conf
-	mv ${WRKSRC}/spectrwm_$i.conf ${PREFIX}/share/examples/spectrwm
+	${INSTALL_DATA} ${WRKSRC}/spectrwm_$i.conf ${PREFIX}/share/examples/spectrwm
 .endfor
 
 .include <bsd.port.mk>

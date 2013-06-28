@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.146 2012/09/30 12:22:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.150 2013/04/17 13:55:42 sthen Exp $
 
 COMMENT-main=		XML parsing library
 COMMENT-python=		Python bindings for libxml
 
-VERSION=		2.8.0
+VERSION=		2.9.0
+REVISION=		0
 DISTNAME=		libxml2-${VERSION}
 PKGNAME-main=		libxml-${VERSION}
 PKGNAME-python=		py-libxml-${VERSION}
-SHARED_LIBS +=	xml2                 14.0     # 10.0
+SHARED_LIBS +=	xml2                 15.0     # 11.0
 CATEGORIES=		textproc
 MASTER_SITES=		http://gd.tuwien.ac.at/pub/libxml/ \
 			ftp://xmlsoft.org/libxml/
@@ -17,15 +18,11 @@ HOMEPAGE=		http://xmlsoft.org/
 
 # BSD-like
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		m z
 
 MODULES=		converters/libiconv
 
-USE_LIBTOOL=		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--enable-static \
@@ -59,7 +56,7 @@ CONFIGURE_ARGS+=	--with-python
 CONFIGURE_ARGS+=	--without-python
 .endif
 
-REGRESS_DEPENDS=	devel/gmake
+TEST_DEPENDS=	devel/gmake
 
 post-configure:
 	sed -e 's,@PREFIX@,${PREFIX},' <${FILESDIR}/rebuild >${WRKBUILD}/rebuild
@@ -71,8 +68,8 @@ post-install:
 	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py ${WRKINST}${MODPY_SITEPKG}
 .endif
 
-do-regress:
+do-test:
 	@cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} ${GMAKE} \
-		${ALL_REGRESS_FLAGS} -f ${MAKE_FILE} ${REGRESS_TARGET}
+		${ALL_TEST_FLAGS} -f ${MAKE_FILE} ${TEST_TARGET}
 
 .include <bsd.port.mk>

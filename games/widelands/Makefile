@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2010/11/16 11:23:28 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2013/06/04 18:41:45 naddy Exp $
 
 COMMENT=	economic and military simulation game
 
@@ -15,10 +15,7 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=widelands/}
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>
 
 # GPLv2
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 WANTLIB=	SDL c m png pthread stdc++ z SDL_gfx SDL_image SDL_mixer \
 		SDL_net SDL_ttf
 
@@ -35,14 +32,14 @@ MODPY_RUNDEP=	No
 
 WRKDIST=	${WRKDIR}/widelands
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 MODSCONS_FLAGS=	\
 	install_prefix=${PREFIX} \
 	bindir=${PREFIX}/bin \
 	datadir=${PREFIX}/share/widelands \
 	localedir=${PREFIX}/share \
-	extra_compile_flags="-I${LOCALBASE}/include/libpng ${CXXFLAGS}" \
+	extra_compile_flags="${CXXFLAGS}" \
 	extra_include_path=${LOCALBASE}/include \
 	extra_lib_path="${LOCALBASE}/lib"
 

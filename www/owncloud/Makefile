@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.28 2012/10/26 12:10:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2013/06/06 21:13:18 ajacoutot Exp $
 
 COMMENT=	easy and universal access to shared and/or personnal files
 
-V=		4.5.1
+V=		5.0.7
 DISTNAME=	owncloud-${V}
 EXTRACT_SUFX=	.tar.bz2
-REVISION=	1
 
 CATEGORIES=	www
 
@@ -21,21 +20,13 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 # XML/RPC: MIT / PHP
 # Silk icons: Creative Commons Attribution
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=	${HOMEPAGE}releases/
-
-# Yubikey support
-MASTER_SITES0=		http://nerd.hu/
-PATCHFILES=		owncloud-${V}-yubikey.patch:0
-PATCH_DIST_STRIP=	-p1
+MASTER_SITES=	http://download.owncloud.org/community/
 
 MODULES=	lang/php
 
 NO_BUILD=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 PKG_ARCH=	*
 
 WRKDIST=	${WRKDIR}/owncloud
@@ -52,6 +43,7 @@ RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-curl \
 
 do-install:
 	cp -Rp ${WRKSRC} ${INSTDIR}
+	find ${INSTDIR} -name '*.orig' -print0 | xargs -r0 rm
 	${SUBST_CMD} -c ${FILESDIR}/owncloud.conf \
 		${INSTDIR}/owncloud.conf.dist
 	mv ${INSTDIR}/.htaccess ${INSTDIR}/.htaccess.dist

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2011/12/20 16:00:26 shadchin Exp $
+# $OpenBSD: Makefile,v 1.8 2013/03/10 22:55:02 espie Exp $
 
 COMMENT-main=		ncurses-based music player
 COMMENT-flac=		FLAC input plugin for cmus
 COMMENT-wavpack=	Wavpack input plugin for cmus
 
-V=			2.4.3
+V=			2.5.0
 DISTNAME=		cmus-v$(V)
 PKGNAME-main=		cmus-$(V)
 PKGNAME-flac=		cmus-flac-$(V)
@@ -17,9 +17,6 @@ MAINTAINER=		Donovan Watteau <tsoomi@gmail.com>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 EXTRACT_SUFX=		.tar.bz2
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=cmus/}
@@ -29,9 +26,10 @@ MULTI_PACKAGES=		-main -flac -wavpack
 
 MODULES=		converters/libiconv
 
-WANTLIB-main=		c m pthread sndio ncursesw mad>=2 ${MODLIBICONV_WANTLIB}
+WANTLIB-main=		c cdio cdio_cdda cue m mad>=2 ncursesw pthread sndio
+WANTLIB-main+=		${MODLIBICONV_WANTLIB}
 
-LIB_DEPENDS=		audio/libmad
+LIB_DEPENDS=		audio/libcdio audio/libcue audio/libmad
 
 LIB_DEPENDS-flac=	audio/flac audio/libogg
 RUN_DEPENDS-flac=	audio/cmus
@@ -44,6 +42,7 @@ USE_GMAKE=		Yes
 
 CONFIGURE_STYLE=	simple
 CONFIGURE_ENV=		HOSTCC="${CC}" HOSTLD="${CC}" HOST_CFLAGS="${CFLAGS}"
+# Note: We're explicitly disabling CONFIG_CDDB as it gets undef'd in cdio.c
 CONFIGURE_ARGS=		prefix=${PREFIX} \
 			exampledir=${PREFIX}/share/examples/cmus \
 			mandir=${PREFIX}/man \
@@ -59,7 +58,9 @@ CONFIGURE_ARGS=		prefix=${PREFIX} \
 			CONFIG_PULSE=n \
 			CONFIG_ALSA=n \
 			CONFIG_ROAR=n \
-			CONFIG_SNDIO=y
+			CONFIG_SNDIO=y \
+			CONFIG_DISCID=n \
+			CONFIG_CDDB=n
 
 .if ${MACHINE_ARCH} == "arm"
 CONFIGURE_ARGS+=	CONFIG_TREMOR=y
@@ -70,7 +71,7 @@ LIB_DEPENDS+=		audio/libvorbis
 WANTLIB-main+=		ogg vorbis>=0 vorbisfile>=1
 .endif
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 post-patch:
 	@cp ${FILESDIR}/sndio.c ${WRKSRC}

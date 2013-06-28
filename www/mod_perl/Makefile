@@ -1,13 +1,15 @@
-# $OpenBSD: Makefile,v 1.38 2012/06/13 12:41:14 okan Exp $
+# $OpenBSD: Makefile,v 1.41 2013/04/20 13:55:48 sthen Exp $
 
 COMMENT=	module that embeds a Perl interpreter into Apache
 
-DISTNAME=	mod_perl-1.31
-PKGNAME=	${DISTNAME}
-REVISION=	6
+DISTNAME=	mod_perl-1.32pre20130312
+REVISION=	0
 CATEGORIES=	www perl5
-MASTER_SITES=	http://perl.apache.org/dist/ \
-		${MASTER_SITE_PERL_CPAN:=Apache/}
+
+# svn checkout; upstream is at http://perl.apache.org/dist/
+# or ${MASTER_SITE_PERL_CPAN:=Apache/} but is now mostly dead
+# for apache 1.x
+MASTER_SITES=	http://spacehopper.org/mirrors/
 
 HOMEPAGE=	http://perl.apache.org/
 
@@ -19,10 +21,8 @@ MODAPACHE_FILE=	${MODAPACHE_LOCATION}/libperl.so
 
 # Apache
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-WANTLIB=		c m perl util 
+
+WANTLIB=		c m perl util
 
 RUN_DEPENDS=		devel/p5-Devel-Symdump \
 			www/p5-libwww \
@@ -31,11 +31,10 @@ BUILD_DEPENDS=		${RUN_DEPENDS}
 
 SUBST_VARS=	PKGNAME
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 CONFIGURE_STYLE= perl
 CONFIGURE_ARGS=	USE_APXS="1" EVERYTHING="1" WITH_APXS="/usr/sbin/apxs"
-USE_GROFF =	Yes
 
 INSTALL_TARGET=	pure_install doc_install
 

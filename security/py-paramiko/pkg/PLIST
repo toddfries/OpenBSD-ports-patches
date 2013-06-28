@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.15 2011/10/22 07:29:01 rpointel Exp $
+@comment $OpenBSD: PLIST,v 1.18 2013/04/06 06:40:03 benoit Exp $
 lib/python${MODPY_VERSION}/site-packages/paramiko/
 lib/python${MODPY_VERSION}/site-packages/paramiko-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/
 lib/python${MODPY_VERSION}/site-packages/paramiko-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/PKG-INFO
@@ -48,6 +48,8 @@ lib/python${MODPY_VERSION}/site-packages/paramiko/pkey.py
 lib/python${MODPY_VERSION}/site-packages/paramiko/pkey.pyc
 lib/python${MODPY_VERSION}/site-packages/paramiko/primes.py
 lib/python${MODPY_VERSION}/site-packages/paramiko/primes.pyc
+lib/python${MODPY_VERSION}/site-packages/paramiko/proxy.py
+lib/python${MODPY_VERSION}/site-packages/paramiko/proxy.pyc
 lib/python${MODPY_VERSION}/site-packages/paramiko/resource.py
 lib/python${MODPY_VERSION}/site-packages/paramiko/resource.pyc
 lib/python${MODPY_VERSION}/site-packages/paramiko/rsakey.py
@@ -105,6 +107,8 @@ share/doc/py-paramiko/paramiko.Message-class.html
 share/doc/py-paramiko/paramiko.MissingHostKeyPolicy-class.html
 share/doc/py-paramiko/paramiko.PKey-class.html
 share/doc/py-paramiko/paramiko.PasswordRequiredException-class.html
+share/doc/py-paramiko/paramiko.ProxyCommand-class.html
+share/doc/py-paramiko/paramiko.ProxyCommandFailure-class.html
 share/doc/py-paramiko/paramiko.RSAKey-class.html
 share/doc/py-paramiko/paramiko.RejectPolicy-class.html
 share/doc/py-paramiko/paramiko.SFTP-class.html
@@ -125,6 +129,13 @@ share/doc/py-paramiko/paramiko.Transport-class.html
 share/doc/py-paramiko/paramiko.WarningPolicy-class.html
 share/doc/py-paramiko/paramiko.agent-module.html
 share/doc/py-paramiko/paramiko.agent-pysrc.html
+share/doc/py-paramiko/paramiko.agent.AgentClientProxy-class.html
+share/doc/py-paramiko/paramiko.agent.AgentLocalProxy-class.html
+share/doc/py-paramiko/paramiko.agent.AgentProxyThread-class.html
+share/doc/py-paramiko/paramiko.agent.AgentRemoteProxy-class.html
+share/doc/py-paramiko/paramiko.agent.AgentRequestHandler-class.html
+share/doc/py-paramiko/paramiko.agent.AgentSSH-class.html
+share/doc/py-paramiko/paramiko.agent.AgentServerProxy-class.html
 share/doc/py-paramiko/paramiko.auth_handler-module.html
 share/doc/py-paramiko/paramiko.auth_handler-pysrc.html
 share/doc/py-paramiko/paramiko.ber-module.html
@@ -148,6 +159,7 @@ share/doc/py-paramiko/paramiko.compress.ZlibCompressor-class.html
 share/doc/py-paramiko/paramiko.compress.ZlibDecompressor-class.html
 share/doc/py-paramiko/paramiko.config-module.html
 share/doc/py-paramiko/paramiko.config-pysrc.html
+share/doc/py-paramiko/paramiko.config.LazyFqdn-class.html
 share/doc/py-paramiko/paramiko.dsskey-module.html
 share/doc/py-paramiko/paramiko.dsskey-pysrc.html
 share/doc/py-paramiko/paramiko.file-module.html
@@ -155,6 +167,7 @@ share/doc/py-paramiko/paramiko.file-pysrc.html
 share/doc/py-paramiko/paramiko.hostkeys-module.html
 share/doc/py-paramiko/paramiko.hostkeys-pysrc.html
 share/doc/py-paramiko/paramiko.hostkeys.HostKeyEntry-class.html
+share/doc/py-paramiko/paramiko.hostkeys.InvalidHostKey-class.html
 share/doc/py-paramiko/paramiko.kex_gex-module.html
 share/doc/py-paramiko/paramiko.kex_gex-pysrc.html
 share/doc/py-paramiko/paramiko.kex_gex.KexGex-class.html
@@ -181,6 +194,8 @@ share/doc/py-paramiko/paramiko.pkey-pysrc.html
 share/doc/py-paramiko/paramiko.primes-module.html
 share/doc/py-paramiko/paramiko.primes-pysrc.html
 share/doc/py-paramiko/paramiko.primes.ModulusPack-class.html
+share/doc/py-paramiko/paramiko.proxy-module.html
+share/doc/py-paramiko/paramiko.proxy-pysrc.html
 share/doc/py-paramiko/paramiko.resource-module.html
 share/doc/py-paramiko/paramiko.resource-pysrc.html
 share/doc/py-paramiko/paramiko.rsakey-module.html
@@ -214,6 +229,7 @@ share/doc/py-paramiko/paramiko.util.PFilter-class.html
 share/doc/py-paramiko/paramiko.util.enumerate-class.html
 share/doc/py-paramiko/paramiko.win_pageant-module.html
 share/doc/py-paramiko/paramiko.win_pageant-pysrc.html
+share/doc/py-paramiko/paramiko.win_pageant.COPYDATASTRUCT-class.html
 share/doc/py-paramiko/paramiko.win_pageant.PageantConnection-class.html
 share/doc/py-paramiko/redirect.html
 share/doc/py-paramiko/since-index.html
@@ -239,6 +255,7 @@ share/doc/py-paramiko/toc-paramiko.packet-module.html
 share/doc/py-paramiko/toc-paramiko.pipe-module.html
 share/doc/py-paramiko/toc-paramiko.pkey-module.html
 share/doc/py-paramiko/toc-paramiko.primes-module.html
+share/doc/py-paramiko/toc-paramiko.proxy-module.html
 share/doc/py-paramiko/toc-paramiko.resource-module.html
 share/doc/py-paramiko/toc-paramiko.rsakey-module.html
 share/doc/py-paramiko/toc-paramiko.server-module.html
@@ -256,6 +273,7 @@ share/doc/py-paramiko/toc-paramiko.win_pageant-module.html
 share/doc/py-paramiko/toc.html
 share/examples/py-paramiko/
 share/examples/py-paramiko/demo.py
+share/examples/py-paramiko/demo_keygen.py
 share/examples/py-paramiko/demo_server.py
 share/examples/py-paramiko/demo_sftp.py
 share/examples/py-paramiko/demo_simple.py

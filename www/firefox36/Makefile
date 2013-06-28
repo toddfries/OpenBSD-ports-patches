@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.28 2012/10/06 07:55:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2013/06/26 19:31:57 landry Exp $
 
 COMMENT =	Mozilla web browser
 
 # Don't forget to update devel/xulrunner/1.9 if patches changes.
 
 MOZILLA_VERSION =	3.6.28
-REVISION =		6
+REVISION =		12
 MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	firefox36
 MOZILLA_DIST =		firefox
@@ -21,9 +21,6 @@ CATEGORIES =	www
 
 # mozilla public license
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 # needed for convert xpm icon to png
 BUILD_DEPENDS +=	graphics/netpbm
@@ -35,7 +32,7 @@ MODPY_RUNDEP =	No
 
 USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 CONFIGURE_STYLE =	autoconf no-autoheader
 CONFIGURE_ARGS +=	--enable-official-branding

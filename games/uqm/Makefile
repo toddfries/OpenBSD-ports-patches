@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2012/10/21 16:38:24 espie Exp $
+# $OpenBSD: Makefile,v 1.39 2013/03/11 11:07:41 espie Exp $
 
 COMMENT-main=		ur-quan masters: sdl port of star control 2; multiplayer
 COMMENT-content=	ur-quan masters: game content
@@ -30,24 +30,24 @@ PKGNAME-remix2=		uqm-remix2-${VER}
 PKGNAME-remix3=		uqm-remix3-${VER}
 PKGNAME-threedomusic=	uqm-threedomusic-${VER}
 PKGNAME-voice=		uqm-voice-${VER}
-REVISION-main=		0
-REVISION-content=	0
-REVISION-remix1=	0
-REVISION-remix2=	0
-REVISION-remix3=	0
-REVISION-threedomusic=	0
-REVISION-voice=		0
+REVISION-main=		1
+REVISION-content=	1
+REVISION-remix1=	1
+REVISION-remix2=	1
+REVISION-remix3=	1
+REVISION-threedomusic=	1
+REVISION-voice=		1
 EXTRACT_ONLY=		${PDIST}
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=sc2/}
 
 HOMEPAGE=		http://sc2.sourceforge.net/
 
+MAINTAINER =		Anthony J. Bentley <anthony@cathet.us>
+
 # code GPLv2+, data Creative Commons Attribution-NonCommercial-ShareAlike 2.5
 # NC does not apply to unmodified uqm distributions, but mark it to be safe
 PERMIT_PACKAGE_CDROM=	NonCommercial
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	NonCommercial
-PERMIT_DISTFILES_FTP=	Yes
 
 LIB_DEPENDS-main=	audio/libmikmod \
 			audio/tremor>=20120410 \
@@ -64,7 +64,7 @@ RUN_DEPENDS-main=	${PKGNAME-content}v0:games/uqm,-content
 WANTLIB-main=		c m pthread z SDL mikmod>=2.4 vorbisidec>=3 \
 			SDL_image
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 USE_GMAKE=	Yes
 
 PSEUDO_FLAVORS=	no_remix1 no_remix2 no_remix3 no_threedomusic no_voice

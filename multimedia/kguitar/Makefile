@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2012/08/27 09:34:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/24 15:53:38 zhuk Exp $
 
 COMMENT =		guitar tab editor
 
 DISTNAME =		kguitar-0.5.1
-REVISION=		3
+REVISION=		4
 
 CATEGORIES =		multimedia kde
 
@@ -13,14 +13,13 @@ MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
 # GPLv2+; for MusicXML copyright see licenseMusicXML.html
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB += DCOP ICE SM X11 Xext Xfixes Xrender Xt art_lgpl_2 c
-WANTLIB += expat fontconfig freetype idn jpeg kdecore kdefx kdeprint
-WANTLIB += kdesu kdeui kio kparts kwalletclient m png pthread
-WANTLIB += stdc++ util xcb z
+WANTLIB =  ICE SM X11 Xext Xfixes Xrender Xt art_lgpl_2 c expat
+WANTLIB += fontconfig freetype idn jpeg m png pthread stdc++ util
+WANTLIB += xcb z
+WANTLIB += ${KDE}/DCOP ${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdeprint
+WANTLIB += ${KDE}/kdesu ${KDE}/kdeui ${KDE}/kio ${KDE}/kparts
+WANTLIB += ${KDE}/kwalletclient
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=kguitar/}
 EXTRACT_SUFX =		.tar.bz2
@@ -30,17 +29,18 @@ MODULES =		devel/gettext \
 LIB_DEPENDS =		x11/kde/libs3
 RUN_DEPENDS =		x11/gtk+2,-guic
 
-USE_LIBTOOL =		Yes
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	--disable-midisupport \
 			--with-qt-dir="${LOCALBASE}" \
 			--with-qt-libraries="${LOCALBASE}/lib/qt3" \
 			--with-qt-includes="${LOCALBASE}/include/X11/qt3" \
 			--with-extra-libs="${LOCALBASE}/lib" \
-			--with-extra-includes="${LOCALBASE}/include/libpng"
+			--with-extra-includes="${LOCALBASE}/include"
+
+CONFIGURE_ENV =		KDEDIR=${LOCALBASE}
 
 PORTHOME=		${WRKDIR}
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 .include <bsd.port.mk>

@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.195 2012/10/11 21:51:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.214 2013/04/06 08:19:08 ajacoutot Exp $
 
      SUBDIR =
+     SUBDIR += alacarte
      SUBDIR += anjuta
      SUBDIR += anjuta-extras
      SUBDIR += at-spi2-atk
@@ -9,6 +10,7 @@
      SUBDIR += banshee
      SUBDIR += baker
      SUBDIR += baobab
+     SUBDIR += calculator
      SUBDIR += caribou
      SUBDIR += clocks
      SUBDIR += color-manager
@@ -27,8 +29,6 @@
      SUBDIR += eog-plugins
      SUBDIR += file-roller
      SUBDIR += font-viewer
-     SUBDIR += games
-     SUBDIR += gcalctool
      SUBDIR += gcr
      SUBDIR += gdl
      SUBDIR += gdlmm
@@ -39,15 +39,13 @@
      SUBDIR += gedit-latex
      SUBDIR += gedit-plugins
      SUBDIR += ghex
-     SUBDIR += gitg
      SUBDIR += gjs
-     SUBDIR += glom
      SUBDIR += gnote
      SUBDIR += grilo
      SUBDIR += grilo-mediaserver2
      SUBDIR += grilo-plugins
      SUBDIR += gucharmap
-     SUBDIR += gvfs
+     SUBDIR += gvfs,
      SUBDIR += icon-theme
      SUBDIR += icon-theme-extras
      SUBDIR += icon-theme-symbolic
@@ -57,12 +55,10 @@
      SUBDIR += libbonoboui
      SUBDIR += libcryptui
      SUBDIR += libgda
-     SUBDIR += libgdamm
      SUBDIR += libgnome
      SUBDIR += libgnome-keyring
      SUBDIR += libgnomecanvas
      SUBDIR += libgnomecanvasmm
-     SUBDIR += libgnomekbd
      SUBDIR += libgnomeui
      SUBDIR += libgweather
      SUBDIR += librsvg
@@ -70,25 +66,21 @@
      SUBDIR += libxklavier
      SUBDIR += libzapojit
      SUBDIR += menus
-     SUBDIR += metacity
      SUBDIR += mime-data
      SUBDIR += mono-gnome
      SUBDIR += moserial
      SUBDIR += mousetweaks
      SUBDIR += mutter
      SUBDIR += nautilus
-     SUBDIR += nautilus-open-terminal
      SUBDIR += nautilus-sendto
-     SUBDIR += nettool
+     SUBDIR += nemiver
      SUBDIR += online-accounts
      SUBDIR += orca
-     SUBDIR += panel
+     SUBDIR += photos
      SUBDIR += planner
      SUBDIR += power-manager
      SUBDIR += py-atspi
-     SUBDIR += py-gnome
      SUBDIR += rygel
-     SUBDIR += screensaver
      SUBDIR += screenshot
      SUBDIR += seahorse
      SUBDIR += seahorse-nautilus
@@ -97,6 +89,7 @@
      SUBDIR += session
      SUBDIR += settings-daemon
      SUBDIR += shell
+     SUBDIR += shell-extensions
      SUBDIR += sushi
      SUBDIR += system-log
      SUBDIR += system-monitor
@@ -107,11 +100,11 @@
      SUBDIR += tracker
      SUBDIR += tweak-tool
      SUBDIR += user-docs
+     SUBDIR += user-share
      SUBDIR += vfs2
-     SUBDIR += video-arcade
-     SUBDIR += video-effects
      SUBDIR += vinagre
      SUBDIR += vino
+     SUBDIR += weather
      SUBDIR += yelp
      SUBDIR += yelp-tools
      SUBDIR += yelp-xsl

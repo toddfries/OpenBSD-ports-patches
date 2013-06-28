@@ -1,35 +1,35 @@
-# $OpenBSD: Makefile,v 1.2 2012/10/30 17:26:59 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2013/06/16 15:08:04 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	bidirectional directories synchronizer (owncloud version)
 
-DISTNAME=	ocsync-0.60.1
+DISTNAME=	ocsync-0.70.7
+REVISION=	1
 EXTRACT_SUFX=	.tar.bz2
+
+SHARED_LIBS +=	ocsync                    0.0 # 0.2
 
 CATEGORIES=	net
 
-HOMEPAGE=	http://www.csync.org/
+HOMEPAGE=	http://owncloud.org/sync-clients/
 
 MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += c iniparser log4c neon pthread smbclient sqlite3 ssh
+WANTLIB += c iniparser neon pthread smbclient sqlite3 ssh
 
 MASTER_SITES=	http://download.owncloud.com/download/
 
-MODULES=	devel/cmake
+MODULES=	devel/cmake \
+		converters/libiconv
 
 BUILD_DEPENDS=	devel/check \
 		devel/doxygen
 
 LIB_DEPENDS=	devel/iniparser \
-		devel/log4c \
 		net/neon \
 		net/samba \
 		security/libssh
@@ -40,14 +40,14 @@ BUILD_DEPENDS+=	archivers/gtar
 
 # csync_owncloud requires -pthread:
 #     dlopen: failed to open libpthread.so.XX.X
-CONFIGURE_ARGS=	-DCMAKE_C_FLAGS="${CFLAGS} -pthread" \
-		-DCMAKE_SKIP_RPATH=ON \
+CONFIGURE_ARGS=	-DCMAKE_C_FLAGS="${CFLAGS} -I${LOCALBASE}/include -pthread" \
+		-DCMAKE_SKIP_RPATH=YES \
 		-DMAN_INSTALL_DIR=${PREFIX}/man \
 		-DSYSCONFDIR=${SYSCONFDIR} \
 		-DSYSCONF_INSTALL_DIR=${PREFIX}/share/examples \
 		-DCMAKE_BUILD_TYPE=Release
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 USE_GROFF=	Yes
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2011/11/03 20:13:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.21 2013/03/11 11:42:47 espie Exp $
 
 COMMENT=	curses-based URL ripper
 
@@ -12,20 +12,17 @@ MASTER_SITES=	ftp://ftp.fu-berlin.de/pub/unix/mail/mutt/contrib/ \
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c
 
 CONFIGURE_STYLE= gnu
 
 USE_GROFF =	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 FLAVORS=	slang
 FLAVOR?=
 
-.if ${FLAVOR:L:Mslang}
+.if ${FLAVOR:Mslang}
 WANTLIB+=	slang curses m
 LIB_DEPENDS=	devel/libslang
 CONFIGURE_ARGS=	--with-slang=${LOCALBASE}

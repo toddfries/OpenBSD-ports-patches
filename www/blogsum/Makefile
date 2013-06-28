@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2012/09/09 20:56:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2013/05/05 19:24:13 jasper Exp $
 
 COMMENT =		simple weblog
 
 DISTNAME =		blogsum-1.1
-REVISION =		2
+REVISION =		3
 CATEGORIES =		www
 HOMEPAGE =		http://blogsum.obfuscurity.com/
 
@@ -11,13 +11,10 @@ MAINTAINER =		Jason Dixon <jdixon@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =	http://www.dixongroup.net/
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 PKG_ARCH =	*
 
 PREFIX =	/var/www

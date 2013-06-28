@@ -1,19 +1,14 @@
-# $OpenBSD: Makefile,v 1.3 2012/08/23 15:50:06 sthen Exp $
-
-SHARED_ONLY =	Yes
+# $OpenBSD: Makefile,v 1.6 2013/03/25 23:29:55 sthen Exp $
 
 COMMENT	= 	RFC 2553 getaddrinfo and getnameinfo functions
 
 MODULES =	cpan
-DISTNAME =	Socket-GetAddrInfo-0.21
+DISTNAME =	Socket-GetAddrInfo-0.22
 REVISION =	0
 CATEGORIES =	net
 
 # perl
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c
 

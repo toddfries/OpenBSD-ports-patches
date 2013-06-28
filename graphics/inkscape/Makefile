@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2012/08/26 07:19:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2013/06/28 12:02:30 ajacoutot Exp $
 
 COMMENT=	SVG vector drawing application
 
 DISTNAME=	inkscape-0.48.2
-REVISION=	3
+REVISION=	7
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=inkscape/}
 
@@ -17,19 +17,15 @@ HOMEPAGE=	http://www.inkscape.org/
 
 # GPLv2 and LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=	GL Magick++ MagickCore X11 Xcomposite Xcursor Xdamage \
-		Xext Xfixes Xi Xinerama Xrandr Xrender \
-		aspell atk-1.0 atkmm-1.6 c cairo cairomm-1.0 expat \
-		fontconfig freetype gc gdk-x11-2.0 gdk_pixbuf-2.0 gdkmm-2.4 \
-		gio-2.0 giomm-2.4 glib-2.0 glibmm-2.4 gobject-2.0 \
-		gsl gslcblas gthread-2.0 gtk-x11-2.0 gtkmm-2.4 gtkspell \
-		lcms m pango-1.0 pangocairo-1.0 pangoft2-1.0 pangomm-1.4 \
-		pixman-1 png poppler poppler-glib popt pthread pthread-stubs \
-		sigc-2.0 stdc++ xcb xcb-render xcb-shm xml2 xslt z
+WANTLIB += Magick++ MagickCore X11 Xcomposite Xcursor Xdamage
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender aspell atk-1.0
+WANTLIB += atkmm-1.6 c cairo cairomm-1.0 fontconfig freetype gc
+WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gdkmm-2.4 gio-2.0 giomm-2.4
+WANTLIB += glib-2.0 glibmm-2.4 gobject-2.0 gsl gslcblas gthread-2.0
+WANTLIB += gtk-x11-2.0 gtkmm-2.4 gtkspell lcms m pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pangomm-1.4 png poppler poppler-glib popt
+WANTLIB += pthread sigc-2.0 stdc++ xml2 xslt z
 
 MODULES=	devel/gettext \
 		textproc/intltool
@@ -37,7 +33,6 @@ MODULES=	devel/gettext \
 BUILD_DEPENDS=	devel/boost
 LIB_DEPENDS=	devel/boehm-gc \
 		devel/gsl \
-		devel/pangomm \
 		devel/popt \
 		graphics/ImageMagick \
 		graphics/lcms \
@@ -46,21 +41,19 @@ LIB_DEPENDS=	devel/boehm-gc \
 		textproc/aspell/core \
 		textproc/gtkspell \
 		textproc/libxslt \
-		x11/gtk2mm \
-		x11/gtk+2
+		x11/gtk2mm>=2.24.4
 RUN_DEPENDS=	devel/desktop-file-utils \
 		textproc/py-lxml
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF=	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.68
 CONFIGURE_ARGS=	--without-gnome-vfs
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/libpng -I${LOCALBASE}/include/ImageMagick \
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include/ImageMagick \
 			  -I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

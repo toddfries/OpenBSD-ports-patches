@@ -1,8 +1,8 @@
-@comment $OpenBSD: PLIST,v 1.16 2012/11/09 16:05:13 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.18 2013/05/07 07:00:01 ajacoutot Exp $
 @newgroup _dbus:572
 @newuser _dbus:572:_dbus:daemon:dbus user:/nonexistent:/sbin/nologin
 @extra /var/db/dbus/machine-id
-%%SHARED%%
+@extra ${SYSCONFDIR}/machine-id
 @bin bin/dbus-cleanup-sockets
 @bin bin/dbus-daemon
 @bin bin/dbus-launch
@@ -35,6 +35,7 @@ lib/dbus-1.0/include/dbus/dbus-arch-deps.h
 @comment lib/dbus-1.0/test/
 lib/libdbus-1.a
 lib/libdbus-1.la
+@lib lib/libdbus-1.so.${LIBdbus-1_VERSION}
 lib/pkgconfig/
 lib/pkgconfig/dbus-1.pc
 @mode 4750
@@ -72,5 +73,5 @@ share/examples/dbus/dbus-1/system.conf
 share/examples/dbus/dbus-1/system.d/
 @sample ${SYSCONFDIR}/dbus-1/system.d/
 @sample /var/db/dbus/
-@exec ${PREFIX}/bin/dbus-uuidgen --ensure
+@exec ${PREFIX}/bin/dbus-uuidgen --ensure=${SYSCONFDIR}/machine-id
 @rcscript ${RCDIR}/dbus_daemon

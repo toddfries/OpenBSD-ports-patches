@@ -1,22 +1,22 @@
-# $OpenBSD: Makefile,v 1.18 2012/03/29 13:38:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.21 2013/06/18 21:27:42 sthen Exp $
 
 COMMENT=	threaded newsreader
 
 CATEGORIES=	news
-MAINTAINER= 	Marc Espie <espie@openbsd.org>
+MAINTAINER=	Marc Espie <espie@openbsd.org>
 
 MASTER_SITES=${MASTER_SITE_SOURCEFORGE:=trn/}
 V=77
 DISTNAME=	trn-4.0-test$V
 PKGNAME=	trn-4.0.$V
+REVISION=	1
 
 PERMIT_PACKAGE_FTP=Yes
-PERMIT_DISTFILES_FTP=Yes
-PERMIT_DISTFILES_CDROM=Yes
 # Technically, we could put trn on CD-Rom, provided we include the distfile
 # as well...
 PERMIT_PACKAGE_CDROM=No
-WANTLIB=c curses m 
+
+WANTLIB=c curses m
 
 
 CONFIGURE_STYLE=simple
@@ -37,6 +37,6 @@ FAKE_FLAGS= \
 post-install:
 	find ${PREFIX}/lib/trn/HelpFiles | xargs chown ${SHAREOWN}:${SHAREGRP} 
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

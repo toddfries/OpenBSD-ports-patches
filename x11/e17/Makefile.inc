@@ -1,27 +1,19 @@
-# $OpenBSD: Makefile.inc,v 1.14 2012/10/23 09:36:19 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.21 2013/05/09 17:03:55 rpe Exp $
 
 CATEGORIES ?=		x11
 
 HOMEPAGE ?=		http://www.enlightenment.org/
 
-MASTER_SITES ?=		http://download.enlightenment.org/releases/ \
-			http://download.enlightenment.org/snapshots/LATEST/ \
-			http://download.enlightenment.org/snapshots/2010-11-12/ \
-			http://download.enlightenment.org/snapshots/2009-06-14/ \
-			http://distfiles.nl/ \
-			http://www.itee.uq.edu.au/~dlg/openbsd/
+MASTER_SITES ?=		http://download.enlightenment.org/releases/
 
 DIST_SUBDIR ?=		e17
 
 CONFIGURE_STYLE ?=	gnu
 
-MAINTAINER ?=		Laurent FANIS <laurent@openbsd.org>
+NO_TEST ?=		Yes
 
-NO_REGRESS ?=		Yes
+SHARED_ONLY ?=		Yes
+LIBTOOL_FLAGS ?=	--tag=disable-static
 
-#FLAVORS = debug
-#FLAVOR ?=
-#.if ${FLAVOR:L:Mdebug}
-#CFLAGS +=		-O0 -g
-#INSTALL_STRIP =
-#.endif
+FULLARCH =		${MACHINE_ARCH:S/amd64/x86_64/}
+SUBST_VARS +=		FULLARCH OSREV VERSION

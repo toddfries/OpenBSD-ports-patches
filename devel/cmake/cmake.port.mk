@@ -1,11 +1,46 @@
-# $OpenBSD: cmake.port.mk,v 1.14 2012/07/10 18:55:58 dcoppa Exp $
+# $OpenBSD: cmake.port.mk,v 1.20 2013/06/25 08:34:10 dcoppa Exp $
 
-BUILD_DEPENDS+=	devel/cmake>=2.8.0
+BUILD_DEPENDS+=	devel/cmake>=2.8.11.1p0
 
 .for _n _v in ${SHARED_LIBS}
 CONFIGURE_ENV+=LIB${_n}_VERSION=${_v}
 MAKE_ENV+=LIB${_n}_VERSION=${_v}
 .endfor
+
+USE_NINJA ?= Yes
+
+.if ${USE_NINJA:L} == "yes"
+BUILD_DEPENDS += devel/ninja
+_MODCMAKE_GEN = Ninja
+NINJA ?= ninja
+NINJA_FLAGS ?= -v -j ${MAKE_JOBS}
+MODCMAKE_BUILD_TARGET = cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
+	${NINJA} ${NINJA_FLAGS} ${ALL_TARGET}
+MODCMAKE_INSTALL_TARGET = cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
+	${FAKE_SETUP} ${NINJA} ${NINJA_FLAGS} ${FAKE_TARGET}
+MODCMAKE_TEST_TARGET = cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
+	${NINJA} ${NINJA_FLAGS} ${TEST_FLAGS} ${TEST_TARGET}
+
+.if !target(do-build)
+do-build:
+	@${MODCMAKE_BUILD_TARGET}
+.endif
+
+.if !target(do-install)
+do-install:
+	@${MODCMAKE_INSTALL_TARGET}
+.endif
+
+.if !target(do-test)
+do-test:
+	@${MODCMAKE_TEST_TARGET}
+.endif
+
+.else
+_MODCMAKE_GEN = "Unix Makefiles"
+# XXX cmake include parser is bogus
+DPB_PROPERTIES += nojunk
+.endif
 
 CONFIGURE_ENV +=	MODJAVA_VER=${MODJAVA_VER} \
 			MODLUA_VERSION=${MODLUA_VERSION} \
@@ -32,11 +67,11 @@ MODCMAKE_configure=	cd ${WRKBUILD} && ${_SYSTRACE_CMD} ${SETENV} \
 	CXX="${CXX}" CXXFLAGS="${CXXFLAGS}" \
 	${CONFIGURE_ENV} ${LOCALBASE}/bin/cmake \
 		-DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY:Bool=True \
-			${CONFIGURE_ARGS} ${WRKSRC}
+		-G ${_MODCMAKE_GEN} ${CONFIGURE_ARGS} ${WRKSRC}
 
 SEPARATE_BUILD ?=	Yes
 
-REGRESS_TARGET ?=	test
+TEST_TARGET ?=	test
 
 MODCMAKE_WANTCOLOR ?= No
 MODCMAKE_VERBOSE ?= Yes
@@ -48,3 +83,4 @@ MAKE_ENV += TERM=${TERM}
 .if ${MODCMAKE_VERBOSE:L} == "yes"
 MAKE_ENV += VERBOSE=1
 .endif
+

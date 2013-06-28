@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.28 2012/11/01 23:20:26 brad Exp $
+# $OpenBSD: Makefile,v 1.34 2013/05/14 01:57:55 brad Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	multimedia player
 
 DISTNAME=	xine-ui-0.99.7
-REVISION=	0
+REVISION=	4
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=xine/}
 EXTRACT_SUFX=	.tar.xz
@@ -14,12 +14,9 @@ HOMEPAGE=	http://www.xine-project.org/
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	X11 Xext Xft Xinerama Xss Xtst Xv Xxf86vm c curl jpeg m ncurses \
-		png pthread readline xine z
+		png pthread readline xine
 
 MODULES=	devel/gettext
 RUN_DEPENDS=	devel/desktop-file-utils \
@@ -33,7 +30,6 @@ LIB_DEPENDS=	graphics/jpeg \
 MAKE_FLAGS=	V=1
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 USE_GROFF=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+=--disable-lirc \
@@ -41,7 +37,8 @@ CONFIGURE_ARGS+=--disable-lirc \
 		--disable-vdr-keys \
 		--without-aalib \
 		--without-caca
-CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib"
+CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
+		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
+		ac_cv_header_execinfo_h=no
 
 .include <bsd.port.mk>

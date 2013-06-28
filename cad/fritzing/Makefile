@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/12 10:54:57 jasper Exp $
+# $OpenBSD: Makefile,v 1.17 2013/05/10 20:30:30 rpe Exp $
 
 COMMENT=	interactive electronics designing software
 
@@ -12,9 +12,6 @@ HOMEPAGE=	http://fritzing.org/
 # Code: GPLv3+
 # Rest: CreativeCommons:BY-SA
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES=	${HOMEPAGE}download/$Vb/source-tarball/
 EXTRACT_SUFX=	.tar.bz2
@@ -23,7 +20,7 @@ WANTLIB += QtGui QtNetwork QtSql QtSvg QtXml c m pthread stdc++ z
 WANTLIB += ICE SM X11 Xext Xi Xinerama Xrender fontconfig freetype
 
 MODULES=        x11/qt4
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 BUILD_DEPENDS=	devel/boost
 RUN_DEPENDS=	devel/desktop-file-utils
@@ -43,9 +40,8 @@ do-configure:
 		${LOCALBASE}/bin/qmake4 -o Makefile phoenix.pro
 
 do-install:
-	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -c ${FILESDIR}/fritzing.sh \
-		${PREFIX}/bin/fritzing
-	chmod ${BINMODE} ${PREFIX}/bin/fritzing
+	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} -c \
+		${FILESDIR}/fritzing.sh ${PREFIX}/bin/fritzing
 	${INSTALL_PROGRAM} ${WRKSRC}/Fritzing ${PREFIX}/bin
 	${INSTALL_DATA_DIR} ${PREFIX}/share/fritzing/
 	cd ${WRKSRC}; tar cf - bins parts resources sketches tools translations | \

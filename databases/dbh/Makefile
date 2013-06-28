@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2010/09/01 09:17:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.14 2013/03/21 08:45:14 ajacoutot Exp $
 
 COMMENT=	library to create disk based hashtables
 DISTNAME=	dbh-1.0.24
@@ -12,11 +12,7 @@ HOMEPAGE=	http://dbh.sourceforge.net/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=gnu
 

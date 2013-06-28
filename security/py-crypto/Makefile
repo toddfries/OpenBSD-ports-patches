@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2012/07/02 16:36:33 mpi Exp $
+# $OpenBSD: Makefile,v 1.31 2013/05/30 13:09:21 ajacoutot Exp $
 
 SHARED_ONLY =		Yes
 
@@ -8,7 +8,7 @@ MODPY_EGG_VERSION =	2.6
 DISTNAME =		pycrypto-${MODPY_EGG_VERSION}
 PKGNAME =		py-crypto-${MODPY_EGG_VERSION}
 CATEGORIES =    	security devel
-REVISION =		0
+REVISION =		1
 
 HOMEPAGE =		https://www.dlitz.net/software/pycrypto/
 
@@ -16,9 +16,6 @@ MAINTAINER =		Martin Pieuchot <mpi@openbsd.org>
 
 # Public domain (patented algorithms removed by patch)
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	http://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/
 
@@ -51,11 +48,11 @@ do-configure:
 post-install:
 	${INSTALL_DATA_DIR} ${DOCSDIR}
 	${INSTALL_DATA} ${WRKSRC}/README ${DOCSDIR}
-.if ${FLAVOR:L:Mpython3}
+.if ${FLAVOR:Mpython3}
 	mv ${PREFIX}/share/doc/py-crypto ${PREFIX}/share/doc/py3-crypto
 .endif
 
-do-regress: fake
+do-test: fake
 	cd ${WRKSRC} && ${MAKE_ENV} \
 	PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} setup.py test
 

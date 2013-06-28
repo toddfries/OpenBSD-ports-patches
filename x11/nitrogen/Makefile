@@ -1,24 +1,20 @@
-# $OpenBSD: Makefile,v 1.9 2012/09/21 08:51:47 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.13 2013/04/02 16:16:47 ajacoutot Exp $
 
 COMMENT=		background browser and setter for X11
 
 DISTNAME=		nitrogen-1.5.2
-REVISION=		4
+REVISION=		6
 CATEGORIES=		x11 graphics
 
 HOMEPAGE=		http://projects.l3ib.org/nitrogen/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${HOMEPAGE}/files/
 
 MODULES=		devel/gettext
 
-USE_LIBTOOL=		Yes
 
 WANTLIB += GL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
 WANTLIB += Xrandr Xrender atk-1.0 atkmm-1.6 c cairo cairomm-1.0
@@ -30,8 +26,7 @@ WANTLIB += pthread pthread-stubs sigc-2.0 stdc++ xcb xcb-render
 WANTLIB += xcb-shm z
 
 LIB_DEPENDS=		x11/gtk2mm
-RUN_DEPENDS=		x11/gnome/icon-theme \
-			x11/gtk+2,-guic
+RUN_DEPENDS=		x11/gtk+2,-guic
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--disable-inotify

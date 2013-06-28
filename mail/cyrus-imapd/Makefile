@@ -1,18 +1,12 @@
-# $OpenBSD: Makefile,v 1.74 2012/08/28 08:06:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.80 2013/06/20 06:54:36 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
-COMMENT-main=	Cyrus IMAP server
-COMMENT-perl=	perl utils for the Cyrus IMAP server
+COMMENT=	Cyrus IMAP server
 
-V=		2.4.16
+V=		2.4.17
 DISTNAME=	cyrus-imapd-${V}
-PKGNAME-main=	${DISTNAME}
-FULLPKGNAME-perl=cyrus-imapd-perl-${V}
-FULLPKGPATH-perl=mail/cyrus-imapd,-perl
-
-REVISION-main=	1
-REVISION-perl=	0
+REVISION=	3
 
 CATEGORIES=	mail
 
@@ -22,34 +16,26 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # CMU - see COPYRIGHT file in package
 PERMIT_PACKAGE_CDROM=	yes
-PERMIT_PACKAGE_FTP=	yes
-PERMIT_DISTFILES_CDROM=	yes
-PERMIT_DISTFILES_FTP=	yes
+
+WANTLIB += asn1 c com_err crypto lib/db4/db>=4 gssapi heimbase
+WANTLIB += krb5 pcre pcreposix pthread roken sasl2 ssl wind z
 
 MASTER_SITES=	http://cyrusimap.org/releases/ \
 		ftp://ftp.cyrusimap.org/cyrus-imapd/ \
 		ftp://ftp.cyrusimap.org/cyrus-imapd/OLD-VERSIONS/
 
-MULTI_PACKAGES=	-main -perl
+LIB_DEPENDS=	databases/db/v4 \
+		devel/pcre \
+		security/cyrus-sasl2
 
-WANTLIB +=	crypto ssl z sasl2 lib/db4/db>=4
-WANTLIB-main += ${WANTLIB} asn1 c com_err gssapi krb5 pthread
-WANTLIB-main += pcre pcreposix
-WANTLIB-perl += ${WANTLIB}
-
-LIB_DEPENDS=	security/cyrus-sasl2 \
-		databases/db/v4
-LIB_DEPENDS-main=${LIB_DEPENDS} \
-		devel/pcre
-RUN_DEPENDS-main=${RUN_DEPENDS}
-
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 PATCH_LIST=	patch-*
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I/usr/include/kerberosV" \
-		LDFLAGS="-L${LOCALBASE}/lib"
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include $$(krb5-config --cflags)" \
+		LDFLAGS="-L${LOCALBASE}/lib" \
+		LIBS="$$(krb5-config --libs gssapi)"
 CONFIGURE_ARGS=	--with-service-path=${LOCALBASE}/libexec/cyrus-imapd \
 		--with-bdb \
 		--with-bdb-libdir=${LOCALBASE}/lib/db4 \
@@ -57,13 +43,7 @@ CONFIGURE_ARGS=	--with-service-path=${LOCALBASE}/libexec/cyrus-imapd \
 		--with-cyrus-group=_cyrus \
 		--with-cyrus-user=_cyrus \
 		--with-sasl=${LOCALBASE} \
-		--with-pidfile=/var/run/cyrus-master.pid \
-		--with-syslogfacility=LOCAL6 \
-		--with-openssl=/usr \
-		--with-lock=fcntl \
-		--with-com_err=/usr \
-		--with-gss_impl=heimdal \
-		--enable-gssapi=/usr \
+		--with-com_err \
 		--enable-idled \
 		--enable-murder \
 		--enable-nntp \
@@ -94,10 +74,10 @@ SIEVEREF=	lib/imapoptions man/imapd.conf.5 \
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/{lib/imapoptions,man/imapd.conf.5}
 .for i in ${MAN8}
-	@perl -pi -e "s,${i}\(8\),cyrus-${i}\(8\),g" ${WRKSRC}/man/*.[0-9]
+	perl -pi -e "s,${i}\(8\),cyrus-${i}\(8\),g" ${WRKSRC}/man/*.[0-9]
 .endfor
 .for i in ${SIEVEREF}
-	@perl -pi -e "s,/usr/sieve,/var/sieve,g" ${WRKSRC}/${i}
+	perl -pi -e "s,/usr/sieve,/var/sieve,g" ${WRKSRC}/${i}
 .endfor
 
 post-install:

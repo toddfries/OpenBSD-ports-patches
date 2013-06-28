@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2011/11/02 09:57:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/21 08:45:18 ajacoutot Exp $
 
 COMMENT=	free MPEG-2 video stream decoder
 
@@ -12,13 +12,9 @@ MASTER_SITES=	${HOMEPAGE}files/
 HOMEPAGE=	http://libmpeg2.sourceforge.net/
 
 # GPLv2+
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 WANTLIB=	ICE SM X11 Xext Xv c xcb
 
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION= 2.61
@@ -28,7 +24,7 @@ CONFIGURE_ARGS+=${CONFIGURE_SHARED} \
 		--disable-sdl
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/.auto
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/libmpeg2

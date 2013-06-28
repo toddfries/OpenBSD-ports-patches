@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.336 2012/09/23 17:20:41 jeremy Exp $
+# $OpenBSD: Makefile,v 1.347 2013/05/30 16:06:37 jasper Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -20,7 +20,6 @@
      SUBDIR += cairo
      SUBDIR += cairomm
      SUBDIR += cal3d
-     SUBDIR += ocaml-camlimages
      SUBDIR += cfdg
      SUBDIR += clutter
      SUBDIR += colord
@@ -70,17 +69,18 @@
      SUBDIR += gimp
      SUBDIR += gle
      SUBDIR += glew
+     SUBDIR += glm
      SUBDIR += glpng
      SUBDIR += gmt
      SUBDIR += gnofract4d
      SUBDIR += gocr
      SUBDIR += goocanvas
      SUBDIR += goocanvas2
-     SUBDIR += goocanvasmm2
      SUBDIR += gphoto2
      SUBDIR += gpicview
      SUBDIR += gracula
      SUBDIR += grap
+     SUBDIR += graphite2
      SUBDIR += gthumb
      SUBDIR += gtkam
      SUBDIR += gtkimageview
@@ -108,6 +108,7 @@
      SUBDIR += kimdaba
      SUBDIR += kipi-plugins
      SUBDIR += l2p
+     SUBDIR += lasem
      SUBDIR += lcms
      SUBDIR += lcms2
      SUBDIR += lensfun
@@ -121,6 +122,7 @@
      SUBDIR += libexif-gtk
      SUBDIR += libgexiv2
      SUBDIR += libgphoto2
+     SUBDIR += libiptcdata
      SUBDIR += libkdcraw
      SUBDIR += libkexif
      SUBDIR += libkexiv2
@@ -129,6 +131,7 @@
      SUBDIR += libmng
      SUBDIR += libmpeg2
      SUBDIR += libpano13
+     SUBDIR += libpgf
      SUBDIR += libqrencode
      SUBDIR += libraw
      SUBDIR += libungif
@@ -138,6 +141,7 @@
      SUBDIR += libxmi
      SUBDIR += lsys
      SUBDIR += luagd
+     SUBDIR += luagd,lua52
      SUBDIR += luvcview
      SUBDIR += makehuman
      SUBDIR += mandelbulber
@@ -153,6 +157,7 @@
      SUBDIR += mscgen
      SUBDIR += netpbm
      SUBDIR += node-canvas
+     SUBDIR += ocaml-camlimages
      SUBDIR += ocrad
      SUBDIR += opencsg
      SUBDIR += opencv
@@ -194,8 +199,10 @@
      SUBDIR += pngcrush
      SUBDIR += potrace
      SUBDIR += povray
+     SUBDIR += prison
      SUBDIR += pstoedit
      SUBDIR += py-Imaging
+     SUBDIR += py-Pillow
      SUBDIR += py-cairo
      SUBDIR += py-dot
      SUBDIR += py-gd
@@ -206,9 +213,11 @@
      SUBDIR += py-pyx
      SUBDIR += py3-cairo
      SUBDIR += pycha
+     SUBDIR += qimageblitz
      SUBDIR += qiv
      SUBDIR += quesoglc
      SUBDIR += rawstudio
+     SUBDIR += rawtherapee
      SUBDIR += ruby-color
      SUBDIR += ruby-gruff
      SUBDIR += ruby-mini_magick
@@ -220,7 +229,6 @@
      SUBDIR += sane-frontends
      SUBDIR += scratch
      SUBDIR += scrot
-     SUBDIR += shared-color-profiles
      SUBDIR += shared-color-targets
      SUBDIR += shotwell
      SUBDIR += simple-scan

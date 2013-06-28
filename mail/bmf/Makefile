@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.15 2011/12/02 14:36:15 espie Exp $
+# $OpenBSD: Makefile,v 1.19 2013/06/12 20:36:33 brad Exp $
 
 COMMENT=		easy to use Bayesian spam filter
 DISTNAME=		bmf-0.9.4
-REVISION =		2
+REVISION=		4
 CATEGORIES=		mail
 HOMEPAGE=		http://sourceforge.net/projects/bmf/
 
@@ -10,9 +10,6 @@ MAINTAINER=		Jim Razmus <jim@bonetruck.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=bmf/}
@@ -37,11 +34,10 @@ INSTALL_TARGET=		MANDIR=${PREFIX}/man \
 			BINDIR=${PREFIX}/bin \
 			install
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/bmf
 	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/bmf
 
 .include <bsd.port.mk>
-

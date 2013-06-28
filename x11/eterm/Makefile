@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2012/10/23 09:51:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.41 2013/03/21 08:48:56 ajacoutot Exp $
 
 COMMENT=	color X11 terminal emulator with transparency support
 COMMENT-kanji=	color japanese terminal emulator with transparency support
@@ -6,18 +6,17 @@ COMMENT-kanji=	color japanese terminal emulator with transparency support
 V=		0.9.5
 DISTNAME=	Eterm-$V
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
-PKGNAME=	eterm-$V# also see below
+# also see below
+PKGNAME=	eterm-$V
 SHARED_LIBS +=	Eterm                1.0      # .0.0
 CATEGORIES=	x11
-REVISION=	1
+REVISION=	2
 
 HOMEPAGE=	http://www.eterm.org/
 
 # GPL with some custom licenses
 PERMIT_PACKAGE_CDROM=	may not sell
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	may not sell
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${HOMEPAGE}/download/ \
 		${MASTER_SITE_SOURCEFORGE:=eterm/}
@@ -30,14 +29,15 @@ MODULES+=	converters/libiconv
 LIB_DEPENDS=	devel/libast \
 		print/freetype
 
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 
-CONFIGURE_STYLE=gnu
+AUTOCONF_VERSION=2.59
+CONFIGURE_STYLE=autoconf
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-trans \
 		--enable-utmp \
 		--enable-xim \
+		--without-pty-group \
 		--with-theme-update \
 		--with-backspace=bs \
 		--without-terminfo
@@ -47,7 +47,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 FLAVORS=	kanji
 FLAVOR?=
 
-.if ${FLAVOR:L:Mkanji}
+.if ${FLAVOR:Mkanji}
 FULLPKGNAME=	ja-eterm-$V
 CATEGORIES+=	japanese
 CONFIGURE_ARGS+=--enable-multi-charset=kanji

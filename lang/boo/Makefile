@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2012/09/18 16:53:17 espie Exp $
+# $OpenBSD: Makefile,v 1.8 2013/04/17 13:52:07 ajacoutot Exp $
+
+BROKEN =	hangs every 2 builds
 
 COMMENT = 	Python-like language for the .NET/Mono platform
 
 PNAME =		boo
 V =		0.9.4
 BUILD_NUM =	9
-BROKEN =	hangs every 2 builds
 
 DISTNAME = 	${PKGNAME}.${BUILD_NUM}
 PKGNAME = 	${PNAME}-${V}
@@ -20,9 +21,6 @@ MAINTAINER = 	Ryan Boggs <rmboggs@gmail.com>
 
 # MIT/BSD
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES = 		http://dist.codehaus.org/boo/distributions/
 
@@ -44,7 +42,7 @@ NANT_FLAGS =		-D:install.prefix=${PREFIX} \
 			-D:skip.vs=true \
 			-D:skip.antlr=true
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${DOCDIR} ${EXAMPLEDIR}

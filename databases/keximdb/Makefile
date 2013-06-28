@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2011/11/04 08:16:23 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2013/06/24 15:53:38 zhuk Exp $
 
 CATEGORIES=	databases x11 x11/kde
 COMMENT=	MDB (access) file migration driver for kexi
@@ -7,14 +7,14 @@ VERSION=	1.6.1
 MASTER_SITES=	${MASTER_SITE_KDE:S@$@stable/koffice-${VERSION}/src/@}
 DISTNAME=	keximdb-1.1.0
 DIST_SUBDIR=	kde
-REVISION=	5
+REVISION=	7
 HOMEPAGE=	http://www.kexi-project.org/wiki/wikiview/index.php?MDBDriver
 
 SHARED_ONLY=	Yes
 
 MODULES=		devel/gettext \
 			x11/kde
-MODKDE_VERSION=		3.5.7
+MODKDE_VERSION=		3.5.3
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.60
 CONFIGURE_ARGS+=	${MODKDE_CONFIGURE_ARGS} \
@@ -25,9 +25,6 @@ MAKE_ENV=		${CONFIGURE_ENV}
 MAKE_FLAGS+=		${MODKDE_MAKE_FLAGS}
 MAKE_FLAGS+=		LIBRESOLV=
 
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 
 LIB_DEPENDS +=	x11/kde/libs3 \
@@ -36,13 +33,17 @@ LIB_DEPENDS +=	x11/kde/libs3 \
 
 WANTLIB += ICE SM X11 Xext Xrender jpeg m png
 WANTLIB += stdc++ util z art_lgpl_2 glib-2.0 idn
-WANTLIB += pcre xcb kdecore>=7 DCOP kabc kdefx
-WANTLIB += kdeprint kdesu kdeui kparts kutils kwalletclient kio
-WANTLIB += kmdi knewstuff kresources ktexteditor vcard kofficecore>=3
-WANTLIB += kexicore kexidatatable kexidb kexidbparser kexiextendedwidgets
-WANTLIB += kexiguiutils keximain keximigrate kexiutils kofficeui
-WANTLIB += koproperty kowmf kstore kwmf mdb
+WANTLIB += pcre xcb
 WANTLIB += GL Xcursor Xdamage Xfixes Xft Xi Xinerama Xmu Xrandr
-WANTLIB += Xt Xxf86vm drm expat fontconfig freetype lcms mng
+WANTLIB += Xt Xxf86vm drm expat fontconfig freetype lcms mdb mng
+WANTLIB += ${KDE}/kdecore>=7 ${KDE}/DCOP ${KDE}/kabc ${KDE}/kdefx
+WANTLIB += ${KDE}/kdeprint ${KDE}/kdesu ${KDE}/kdeui ${KDE}/kparts
+WANTLIB += ${KDE}/kutils ${KDE}/kwalletclient ${KDE}/kio ${KDE}/kmdi
+WANTLIB += ${KDE}/knewstuff ${KDE}/kresources ${KDE}/ktexteditor
+WANTLIB += ${KDE}/vcard ${KDE}/kofficecore>=3 ${KDE}/kexicore
+WANTLIB += ${KDE}/kexidatatable ${KDE}/kexidb ${KDE}/kexidbparser
+WANTLIB += ${KDE}/kexiextendedwidgets ${KDE}/kexiguiutils ${KDE}/keximain
+WANTLIB += ${KDE}/keximigrate ${KDE}/kexiutils ${KDE}/kofficeui
+WANTLIB += ${KDE}/koproperty ${KDE}/kowmf ${KDE}/kstore ${KDE}/kwmf
 
 .include <bsd.port.mk>

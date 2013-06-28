@@ -1,7 +1,26 @@
-$OpenBSD: patch-base_process_util_openbsd_cc,v 1.9 2012/04/15 10:40:44 robert Exp $
---- base/process_util_openbsd.cc.orig	Sat Apr 14 12:10:29 2012
-+++ base/process_util_openbsd.cc	Sat Apr 14 16:55:59 2012
-@@ -30,39 +30,59 @@
+$OpenBSD: patch-base_process_util_openbsd_cc,v 1.11 2013/04/03 08:19:10 robert Exp $
+--- base/process_util_openbsd.cc.orig.port	Fri Mar 22 02:13:44 2013
++++ base/process_util_openbsd.cc	Tue Apr  2 21:05:17 2013
+@@ -10,6 +10,7 @@
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <sys/param.h>
++#include <sys/proc.h>
+ #include <sys/sysctl.h>
+ #include <sys/time.h>
+ #include <sys/types.h>
+@@ -20,49 +21,69 @@
+ 
+ #include "base/file_util.h"
+ #include "base/logging.h"
+-#include "base/string_tokenizer.h"
+ #include "base/string_util.h"
+ #include "base/strings/string_number_conversions.h"
+ #include "base/strings/string_split.h"
++#include "base/strings/string_tokenizer.h"
+ #include "base/sys_info.h"
+ #include "base/threading/thread_restrictions.h"
+ 
  namespace base {
  
  ProcessId GetParentProcessId(ProcessHandle process) {
@@ -76,7 +95,7 @@ $OpenBSD: patch-base_process_util_openbsd_cc,v 1.9 2012/04/15 10:40:44 robert Ex
  }
  
  ProcessIterator::ProcessIterator(const ProcessFilter* filter)
-@@ -194,20 +214,28 @@ ProcessMetrics* ProcessMetrics::CreateProcessMetrics(P
+@@ -194,20 +215,28 @@ ProcessMetrics* ProcessMetrics::CreateProcessMetrics(P
  }
  
  size_t ProcessMetrics::GetPagefileUsage() const {
@@ -110,7 +129,7 @@ $OpenBSD: patch-base_process_util_openbsd_cc,v 1.9 2012/04/15 10:40:44 robert Ex
  }
  
  size_t ProcessMetrics::GetPeakPagefileUsage() const {
-@@ -216,20 +244,28 @@ size_t ProcessMetrics::GetPeakPagefileUsage() const {
+@@ -216,20 +245,28 @@ size_t ProcessMetrics::GetPeakPagefileUsage() const {
  }
  
  size_t ProcessMetrics::GetWorkingSetSize() const {
@@ -144,7 +163,7 @@ $OpenBSD: patch-base_process_util_openbsd_cc,v 1.9 2012/04/15 10:40:44 robert Ex
  }
  
  size_t ProcessMetrics::GetPeakWorkingSetSize() const {
-@@ -270,20 +306,27 @@ bool ProcessMetrics::GetIOCounters(IoCounters* io_coun
+@@ -270,20 +307,27 @@ bool ProcessMetrics::GetIOCounters(IoCounters* io_coun
  }
  
  static int GetProcessCPU(pid_t pid) {

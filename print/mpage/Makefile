@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2012/02/18 09:08:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2013/03/11 11:37:54 espie Exp $
 
 COMMENT=	print multiple pages per sheet on PostScript printer
 
@@ -10,7 +10,6 @@ MAINTAINER=	Ian McWilliam <kaosagnt@tpg.com.au>
 
 PERMIT_PACKAGE_CDROM=	incomplete license
 PERMIT_PACKAGE_FTP=	incomplete license
-PERMIT_DISTFILES_CDROM=	Yes
 PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c
 
@@ -25,13 +24,13 @@ ALL_TARGET=	default
 MAKE_FLAGS=	CC='${CC}' CFLAGS='${CFLAGS} $${DEFS}' PREFIX='${PREFIX}'
 USE_GROFF =	Yes
 
-.if ${FLAVOR:L} == "a4"
+.if ${FLAVOR} == "a4"
 MAKE_FLAGS+=	PAGESIZE=A4
 .else
 MAKE_FLAGS+=	PAGESIZE=Letter
 .endif
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKBUILD}/mpage ${PREFIX}/bin

@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.7 2012/10/28 23:31:14 kili Exp $
+# $OpenBSD: Makefile,v 1.10 2013/05/04 21:17:17 kili Exp $
 
 COMMENT=		convert an Attoparsec parser into an iteratee
 
 DISTNAME=		attoparsec-enumerator-0.3
-REVISION=		0
+REVISION=		2
 CATEGORIES=		textproc
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES=		lang/ghc
 

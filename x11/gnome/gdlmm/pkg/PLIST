@@ -1,5 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2012/04/13 15:18:07 ajacoutot Exp $
-%%SHARED%%
+@comment $OpenBSD: PLIST,v 1.4 2013/03/31 13:37:57 ajacoutot Exp $
 include/gdlmm-3.0/
 include/gdlmm-3.0/gdlmm/
 include/gdlmm-3.0/gdlmm.h
@@ -27,6 +26,7 @@ lib/gdlmm-3.0/include/
 lib/gdlmm-3.0/include/gdlmmconfig.h
 lib/libgdlmm-3.0.a
 lib/libgdlmm-3.0.la
+@lib lib/libgdlmm-3.0.so.${LIBgdlmm-3.0_VERSION}
 lib/pkgconfig/
 lib/pkgconfig/gdlmm-3.0.pc
 share/devhelp/
@@ -39,6 +39,7 @@ share/doc/gdlmm-3.0/reference/gdlmm-3.0.tag
 share/doc/gdlmm-3.0/reference/html/
 share/doc/gdlmm-3.0/reference/html/annotated.html
 share/doc/gdlmm-3.0/reference/html/bc_s.png
+share/doc/gdlmm-3.0/reference/html/bdwn.png
 share/doc/gdlmm-3.0/reference/html/classGdl_1_1Dock-members.html
 share/doc/gdlmm-3.0/reference/html/classGdl_1_1Dock.html
 share/doc/gdlmm-3.0/reference/html/classGdl_1_1DockBar-members.html
@@ -79,8 +80,25 @@ share/doc/gdlmm-3.0/reference/html/classGtk_1_1Container.html
 share/doc/gdlmm-3.0/reference/html/classGtk_1_1Container__inherit__graph.png
 share/doc/gdlmm-3.0/reference/html/classes.html
 share/doc/gdlmm-3.0/reference/html/closed.png
+share/doc/gdlmm-3.0/reference/html/dir_2dc17638efef71968dee94be736ebd9d.html
 share/doc/gdlmm-3.0/reference/html/doxygen.css
 share/doc/gdlmm-3.0/reference/html/doxygen.png
+share/doc/gdlmm-3.0/reference/html/ftv2blank.png
+share/doc/gdlmm-3.0/reference/html/ftv2cl.png
+share/doc/gdlmm-3.0/reference/html/ftv2doc.png
+share/doc/gdlmm-3.0/reference/html/ftv2folderclosed.png
+share/doc/gdlmm-3.0/reference/html/ftv2folderopen.png
+share/doc/gdlmm-3.0/reference/html/ftv2lastnode.png
+share/doc/gdlmm-3.0/reference/html/ftv2link.png
+share/doc/gdlmm-3.0/reference/html/ftv2mlastnode.png
+share/doc/gdlmm-3.0/reference/html/ftv2mnode.png
+share/doc/gdlmm-3.0/reference/html/ftv2mo.png
+share/doc/gdlmm-3.0/reference/html/ftv2node.png
+share/doc/gdlmm-3.0/reference/html/ftv2ns.png
+share/doc/gdlmm-3.0/reference/html/ftv2plastnode.png
+share/doc/gdlmm-3.0/reference/html/ftv2pnode.png
+share/doc/gdlmm-3.0/reference/html/ftv2splitbar.png
+share/doc/gdlmm-3.0/reference/html/ftv2vertline.png
 share/doc/gdlmm-3.0/reference/html/functions.html
 share/doc/gdlmm-3.0/reference/html/functions_func.html
 share/doc/gdlmm-3.0/reference/html/graph_legend.html
@@ -101,8 +119,11 @@ share/doc/gdlmm-3.0/reference/html/namespacemembers_eval.html
 share/doc/gdlmm-3.0/reference/html/namespacemembers_func.html
 share/doc/gdlmm-3.0/reference/html/namespaces.html
 share/doc/gdlmm-3.0/reference/html/nav_f.png
+share/doc/gdlmm-3.0/reference/html/nav_g.png
 share/doc/gdlmm-3.0/reference/html/nav_h.png
 share/doc/gdlmm-3.0/reference/html/open.png
+share/doc/gdlmm-3.0/reference/html/sync_off.png
+share/doc/gdlmm-3.0/reference/html/sync_on.png
 share/doc/gdlmm-3.0/reference/html/tab_a.png
 share/doc/gdlmm-3.0/reference/html/tab_b.png
 share/doc/gdlmm-3.0/reference/html/tab_h.png

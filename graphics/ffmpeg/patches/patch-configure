@@ -1,23 +1,24 @@
-$OpenBSD: patch-configure,v 1.31 2012/09/12 08:15:57 ajacoutot Exp $
---- configure.orig	Sun Jun 10 00:59:57 2012
-+++ configure	Tue Sep 11 22:47:01 2012
-@@ -1092,7 +1092,6 @@ HAVE_LIST="
-     lzo1x_999_compress
+$OpenBSD: patch-configure,v 1.36 2013/04/08 17:06:56 brad Exp $
+--- configure.orig	Tue Mar 12 22:35:42 2013
++++ configure	Wed Mar 13 01:50:12 2013
+@@ -1438,7 +1438,6 @@ HAVE_LIST="
      machine_ioctl_bt848_h
      machine_ioctl_meteor_h
+     makeinfo
 -    malloc_h
      MapViewOfFile
      memalign
      mkstemp
-@@ -2425,6 +2424,7 @@ case $target_os in
-         enable pic
+@@ -3229,7 +3228,7 @@ case $target_os in
+     openbsd|bitrig)
          disable symver
          SHFLAGS='-shared'
-+        SLIBNAME_WITH_MAJOR='$(SLIBNAME).$(LIBVERSION)'
+-        SLIB_INSTALL_NAME='$(SLIBNAME).$(LIBMAJOR).$(LIBMINOR)'
++        SLIB_INSTALL_NAME='$(SLIBNAME).$(LIBVERSION)'
+         SLIB_INSTALL_LINKS=
          oss_indev_extralibs="-lossaudio"
          oss_outdev_extralibs="-lossaudio"
-         ;;
-@@ -2601,7 +2601,7 @@ die_license_disabled version3 libvo_amrwbenc
+@@ -3516,7 +3515,7 @@ die_license_disabled version3 libvo_amrwbenc
  
  enabled version3 && { enabled gpl && enable gplv3 || enable lgplv3; }
  
@@ -26,35 +27,23 @@ $OpenBSD: patch-configure,v 1.31 2012/09/12 08:15:57 ajacoutot Exp $
  
  enable_pic() {
      enable pic
-@@ -2931,7 +2931,7 @@ enabled libdirac   && require_pkg_config dirac        
-     "dirac_decoder_init dirac_encoder_init"
- enabled libfaac    && require2 libfaac "stdint.h faac.h" faacEncGetVersion -lfaac
- enabled libfreetype && require_pkg_config freetype2 "ft2build.h freetype/freetype.h" FT_Init_FreeType
--enabled libgsm     && require  libgsm gsm/gsm.h gsm_create -lgsm
-+enabled libgsm     && require  libgsm gsm.h gsm_create -lgsm
- enabled libmp3lame && require  "libmp3lame >= 3.98.3" lame/lame.h lame_set_VBR_quality -lmp3lame
- enabled libnut     && require  libnut libnut.h nut_demuxer_init -lnut
- enabled libopencore_amrnb  && require libopencore_amrnb opencore-amrnb/interf_dec.h Decoder_Interface_init -lopencore-amrnb
-@@ -3075,10 +3075,6 @@ fi
+@@ -4080,7 +4079,6 @@ enabled extra_warnings && check_cflags -Winline
+ # add some linker flags
+ check_ldflags -Wl,--warn-common
+ check_ldflags -Wl,-rpath-link=libpostproc:libswresample:libswscale:libavfilter:libavdevice:libavformat:libavcodec:libavutil:libavresample
+-test_ldflags -Wl,-Bsymbolic && append SHFLAGS -Wl,-Bsymbolic
  
- if enabled small; then
-     add_cflags $size_cflags
--elif enabled optimizations; then
--    add_cflags $speed_cflags
--else
--    add_cflags $noopt_cflags
- fi
- check_cflags -fno-math-errno
- check_cflags -fno-signed-zeros
-@@ -3506,6 +3502,7 @@ comment=$2
- version=$3
- libs=$4
- requires=$5
-+linkflags=$6
- enabled ${name#lib} || return 0
- cat <<EOF > $name/$name.pc
- prefix=$prefix
-@@ -3519,7 +3516,7 @@ Version: $version
+ enabled xmm_clobber_test &&
+     check_ldflags -Wl,--wrap,avcodec_open2              \
+@@ -4547,6 +4545,7 @@ pkgconfig_generate(){
+     version=$3
+     libs=$4
+     requires=$5
++    linkflags=$6
+     enabled ${name#lib} || return 0
+     mkdir -p $name
+     cat <<EOF > $name/$name${build_suffix}.pc
+@@ -4561,7 +4560,7 @@ Version: $version
  Requires: $(enabled shared || echo $requires)
  Requires.private: $(enabled shared && echo $requires)
  Conflicts:
@@ -63,21 +52,28 @@ $OpenBSD: patch-configure,v 1.31 2012/09/12 08:15:57 ajacoutot Exp $
  Libs.private: $(enabled shared && echo $libs)
  Cflags: -I\${includedir}
  EOF
-@@ -3539,10 +3536,10 @@ Cflags: -I\${includedir}
- EOF
- }
+@@ -4597,15 +4596,15 @@ libavfilter_pc_deps=${libavfilter_pc_deps%, }
+ libavdevice_pc_deps="libavformat${build_suffix} = $LIBAVFORMAT_VERSION"
+ enabled lavfi_indev && prepend libavdevice_pc_deps "libavfilter${build_suffix} = $LIBAVFILTER_VERSION,"
  
 -pkgconfig_generate libavutil "FFmpeg utility library" "$LIBAVUTIL_VERSION" "$LIBM"
--pkgconfig_generate libavcodec "FFmpeg codec library" "$LIBAVCODEC_VERSION" "$extralibs" "libavutil = $LIBAVUTIL_VERSION"
--pkgconfig_generate libavformat "FFmpeg container format library" "$LIBAVFORMAT_VERSION" "$extralibs" "libavcodec = $LIBAVCODEC_VERSION"
--pkgconfig_generate libavdevice "FFmpeg device handling library" "$LIBAVDEVICE_VERSION" "$extralibs" "libavformat = $LIBAVFORMAT_VERSION"
--pkgconfig_generate libavfilter "FFmpeg video filtering library" "$LIBAVFILTER_VERSION" "$extralibs"
--pkgconfig_generate libpostproc "FFmpeg post processing library" "$LIBPOSTPROC_VERSION" "" "libavutil = $LIBAVUTIL_VERSION"
--pkgconfig_generate libswscale "FFmpeg image rescaling library" "$LIBSWSCALE_VERSION" "$LIBM" "libavutil = $LIBAVUTIL_VERSION"
-+pkgconfig_generate libavutil "FFmpeg utility library" "$LIBAVUTIL_VERSION" "$LIBavutil_EXTRALIBS" "" "$LIBavutil_LINKFLAGS"
-+pkgconfig_generate libavcodec "FFmpeg codec library" "$LIBAVCODEC_VERSION" "$LIBavcodec_EXTRALIBS" "libavutil" "$LIBavcodec_LINKFLAGS"
-+pkgconfig_generate libavformat "FFmpeg container format library" "$LIBAVFORMAT_VERSION" "$LIBavformat_EXTRALIBS" "libavcodec libavutil" "$LIBavformat_LINKFLAGS"
-+pkgconfig_generate libavdevice "FFmpeg device handling library" "$LIBAVDEVICE_VERSION" "$LIBavdevice_EXTRALIBS" "libavformat libavcodec libavutil" "$LIBavdevice_LINKFLAGS"
-+pkgconfig_generate libavfilter "FFmpeg video filtering library" "$LIBAVFILTER_VERSION" "$LIBavfilter_EXTRALIBS" "libavformat libavcodec libavutil libswscale" "$LIBavfilter_LINKFLAGS"
-+pkgconfig_generate libpostproc "FFmpeg post processing library" "$LIBPOSTPROC_VERSION" "$LIBpostproc_EXTRALIBS" "libavutil" "$LIBpostproc_LINKFLAGS"
-+pkgconfig_generate libswscale "FFmpeg image rescaling library" "$LIBSWSCALE_VERSION" "$LIBswscale_EXTRALIBS" "libavutil" "$LIBswscale_LINKFLAGS"
+-pkgconfig_generate libavcodec "FFmpeg codec library" "$LIBAVCODEC_VERSION" "$extralibs" "libavutil${build_suffix} = $LIBAVUTIL_VERSION"
+-pkgconfig_generate libavformat "FFmpeg container format library" "$LIBAVFORMAT_VERSION" "$extralibs" "libavcodec${build_suffix} = $LIBAVCODEC_VERSION"
+-pkgconfig_generate libavdevice "FFmpeg device handling library" "$LIBAVDEVICE_VERSION" "$extralibs" "$libavdevice_pc_deps"
+-pkgconfig_generate libavfilter "FFmpeg audio/video filtering library" "$LIBAVFILTER_VERSION" "$extralibs" "$libavfilter_pc_deps"
+-pkgconfig_generate libpostproc "FFmpeg postprocessing library" "$LIBPOSTPROC_VERSION" "" "libavutil${build_suffix} = $LIBAVUTIL_VERSION"
+-pkgconfig_generate libavresample "Libav audio resampling library" "$LIBAVRESAMPLE_VERSION" "$extralibs" "libavutil${build_suffix} = $LIBAVUTIL_VERSION"
+-pkgconfig_generate libswscale "FFmpeg image rescaling library" "$LIBSWSCALE_VERSION" "$LIBM" "libavutil${build_suffix} = $LIBAVUTIL_VERSION"
+-pkgconfig_generate libswresample "FFmpeg audio resampling library" "$LIBSWRESAMPLE_VERSION" "$LIBM" "libavutil${build_suffix} = $LIBAVUTIL_VERSION"
++pkgconfig_generate libavutil "FFmpeg utility library" "$LIBAVUTIL_VERSION" "$LIBavutil_EXTRALIBS" "$LIBavutil_REQUIRES" "$LIBavutil_LINKFLAGS"
++pkgconfig_generate libavcodec "FFmpeg codec library" "$LIBAVCODEC_VERSION" "$LIBavcodec_EXTRALIBS" "$LIBavcodec_REQUIRES" "$LIBavcodec_LINKFLAGS"
++pkgconfig_generate libavformat "FFmpeg container format library" "$LIBAVFORMAT_VERSION" "$LIBavformat_EXTRALIBS" "$LIBavformat_REQUIRES" "$LIBavformat_LINKFLAGS"
++pkgconfig_generate libavdevice "FFmpeg device handling library" "$LIBAVDEVICE_VERSION" "$LIBavdevice_EXTRALIBS" "$LIBavdevice_REQUIRES" "$LIBavdevice_LINKFLAGS"
++pkgconfig_generate libavfilter "FFmpeg video filtering library" "$LIBAVFILTER_VERSION" "$LIBavfilter_EXTRALIBS" "$LIBavfilter_REQUIRES" "$LIBavfilter_LINKFLAGS"
++pkgconfig_generate libpostproc "FFmpeg post processing library" "$LIBPOSTPROC_VERSION" "$LIBpostproc_EXTRALIBS" "$LIBpostproc_REQUIRES" "$LIBpostproc_LINKFLAGS"
++pkgconfig_generate libavresample "Libav audio resampling library" "$LIBAVRESAMPLE_VERSION" "$extralibs" "libavutil = $LIBAVUTIL_VERSION"
++pkgconfig_generate libswscale "FFmpeg image rescaling library" "$LIBSWSCALE_VERSION" "$LIBswscale_EXTRALIBS" "$LIBswscale_REQUIRES" "$LIBswscale_LINKFLAGS"
++pkgconfig_generate libswresample "FFmpeg audio rescaling library" "$LIBSWRESAMPLE_VERSION" "$LIBswresample_EXTRALIBS" "$LIBswresample_REQUIRES" "$LIBswresample_LINKFLAGS"
+ 
+ fix_ffmpeg_remote(){
+     git_remote_from=$1

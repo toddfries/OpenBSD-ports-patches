@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/11/06 20:52:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/28 23:21:02 jturner Exp $
 
 COMMENT=		extended standard library for OCaml
 
 DISTNAME=		extlib-1.5.3
+REVISION=		1
 PKGNAME=		ocaml-${DISTNAME}
 CATEGORIES=		devel
 
@@ -10,9 +11,6 @@ HOMEPAGE=		http://ocaml-extlib.googlecode.com/
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 MASTER_SITES=		${HOMEPAGE}/files/
 
@@ -20,7 +18,7 @@ MODULES=		lang/ocaml
 
 BUILD_DEPENDS=		sysutils/findlib
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 
 ALL_TARGET =		doc all
 

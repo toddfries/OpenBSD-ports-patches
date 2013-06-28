@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.84 2012/08/09 09:30:27 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.88 2013/06/04 18:42:00 naddy Exp $
 
 COMMENT-main=		window manager that emulates NEXTSTEP(tm)
 COMMENT-lang=		language subpackage for Window Maker
@@ -6,28 +6,22 @@ COMMENT-lang=		language subpackage for Window Maker
 V=			0.92.0
 DISTNAME=		WindowMaker-${V}
 PKGNAME-main=		${DISTNAME:L}
-REVISION-main=		12
+REVISION-main=		13
 FULLPKGNAME-lang=       windowmaker-lang-${V}
-REVISION-lang=		2
+REVISION-lang=		3
 SHARED_LIBS=		wraster 5.0
 CATEGORIES=		x11 x11/windowmaker
 
 HOMEPAGE=		http://www.windowmaker.info/
 
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
-
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_WINDOWMAKER:=source/release/}
 EXTRACT_SUFX=		.tar.bz2
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 SEPARATE_BUILD=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
@@ -36,7 +30,7 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-datadir="${LOCALBASE}/share/WindowMaker" \
 			--with-nlsdir="${LOCALBASE}/share/locale"
 
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${LOCALBASE}/include/libpng" LIBS="-L${LOCALBASE}/lib" \
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" LIBS="-L${LOCALBASE}/lib" \
 			LINGUAS='be bg bs ca cs da de el es et fi fr gl hr hu it ja ko ms nl no pl pt ro ru sk sv tr zh_CN zh_TW'
 
 MULTI_PACKAGES=         -main -lang

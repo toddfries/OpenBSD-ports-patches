@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2011/07/06 21:09:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2013/03/21 08:48:53 ajacoutot Exp $
 
 COMMENT=		Open Crypto Development Kit
 
@@ -13,9 +13,6 @@ HOMEPAGE=		http://www.gnutls.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=		gpg-error z gcrypt>=13
 
@@ -29,7 +26,6 @@ MODULES=	devel/gettext
 
 LIB_DEPENDS=	security/libgcrypt
 
-USE_LIBTOOL=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \

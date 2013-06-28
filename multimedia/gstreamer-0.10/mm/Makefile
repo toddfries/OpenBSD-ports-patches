@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/21 13:23:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2013/01/11 13:44:25 ajacoutot Exp $
 
 COMMENT=	C++ bindings for GStreamer
 
@@ -6,6 +6,7 @@ V=		0.10.11
 NAME=		gstreamermm
 DISTNAME=	${NAME}-${V}
 EXTRACT_SUFX=	.tar.xz
+REVISION=	0
 
 SHARED_LIBS +=  gstreamermm_get_plugin_defs-0.10 1.0 # .2.1
 SHARED_LIBS +=  gstreamermm-0.10                 1.0 # .2.1
@@ -24,6 +25,9 @@ BUILD_DEPENDS=	devel/doxygen
 LIB_DEPENDS=	devel/glib2mm>=2.33.12 \
 		multimedia/gstreamer-0.10/plugins-base \
 		textproc/libxml++
+
+# needed for the examples
+BUILD_DEPENDS += x11/gtk3mm
 
 CONFIGURE_STYLE=	gnu
 

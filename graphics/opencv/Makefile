@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2012/09/06 12:38:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/03/21 08:45:19 ajacoutot Exp $
 
 ONLY_FOR_ARCHS=		${GCC4_ARCHS}
 
+BROKEN-sparc64 = 	error: cannot convert 'int*' to 'volatile _Atomic_word*'
 SHARED_ONLY=		Yes
 
 COMMENT-main=		library of programming functions for real time cv
@@ -10,8 +11,9 @@ COMMENT-docs=		documentation for OpenCV
 V=			2.2.0
 DISTNAME=		OpenCV-$V
 PKGNAME-main=		opencv-$V
-REVISION-main=		7
+REVISION-main=		8
 PKGNAME-docs=		opencv-docs-$V
+REVISION-docs=		1
 CATEGORIES=		graphics devel
 
 SHARED_LIBS +=		opencv_calib3d			0.0
@@ -33,24 +35,19 @@ MAINTAINER=		Rafael Sadowski <rafael@sizeofvoid.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=opencvlibrary/}
 EXTRACT_SUFX=		.tar.bz2
 
-WANTLIB += GL Half Iex IlmImf Imath X11 Xcomposite Xcursor
-WANTLIB += Xdamage Xext Xfixes Xi Xinerama Xrandr Xrender
-WANTLIB += atk-1.0 avcodec avformat avutil bz2 c cairo
-WANTLIB += expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gsm gstapp-0.10
-WANTLIB += gstbase-0.10 gstreamer-0.10 gstvideo-0.10 gthread-2.0
-WANTLIB += gtk-x11-2.0 jasper jpeg m mp3lame ogg orc-0.4 pango-1.0
-WANTLIB += pangocairo-1.0 pangoft2-1.0 pixman-1 png pthread pthread-stubs
-WANTLIB += schroedinger-1.0 speex stdc++ swscale theoradec theoraenc
-WANTLIB += tiff vorbis vorbisenc vpx x264 xcb xcb-render xcb-shm
-WANTLIB += xml2 z ${MODPY_WANTLIB}
+WANTLIB += GL Half Iex IlmImf Imath X11 Xcomposite Xcursor Xdamage
+WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 avcodec
+WANTLIB += avformat avutil bz2 c cairo expat fontconfig freetype
+WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gstapp-0.10 gstbase-0.10 gstreamer-0.10
+WANTLIB += gstvideo-0.10 gthread-2.0 gtk-x11-2.0 jasper jpeg m
+WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pixman-1 png
+WANTLIB += pthread pthread-stubs stdc++ swscale tiff xcb
+WANTLIB += xcb-render xcb-shm xml2 z ${MODPY_WANTLIB}
 
 MODULES=		devel/cmake \
 			devel/gettext \
@@ -63,14 +60,13 @@ LIB_DEPENDS-main=	multimedia/gstreamer-0.10/plugins-base \
 			x11/gtk+2 \
 			graphics/ilmbase \
 			graphics/openexr \
-			graphics/ffmpeg
+			graphics/ffmpeg>=20121026
 
 WANTLIB-docs=		# empty
 LIB_DEPENDS-docs=	# empty
 RUN_DEPENDS-docs=	# empty
 PKG_ARCH-docs=		*
 
-USE_LIBTOOL=		Yes
 
 VMEM_WARNING=		Yes
 
@@ -91,6 +87,8 @@ CONFIGURE_ARGS+=	-DBUILD_EXAMPLES:Bool=Off \
 			-DWITH_GSTREAMER:Bool=On \
 			-DWITH_1394:Bool=Off \
 			-DWITH_FFMPEG:Bool=On
+
+MAKE_ENV+=		DOXYGEN_ENCODE_PATH_STRIP=${WRKSRC}
 
 pre-patch:
 	perl -i -pe 's/\r$$//' ${WRKSRC}/CMakeLists.txt

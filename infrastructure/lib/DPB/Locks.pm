@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Locks.pm,v 1.15 2012/03/02 17:14:41 espie Exp $
+# $OpenBSD: Locks.pm,v 1.20 2013/02/03 21:45:52 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -32,49 +32,77 @@ sub new
 		dpb_pid => $$, 
 		dpb_host => DPB::Core::Local->hostname}, $class;
 	if (!$state->defines("DONT_CLEAN_LOCKS")) {
-		$o->clean_old_locks($state);
+		$o->{stalelocks} = $o->clean_old_locks($state);
 	}
 	return $o;
 }
 
 sub clean_old_locks
 {
-	my $self = shift;
+	my ($self, $state) = @_;
+	my $hostpaths = {};
+	START:
+	my $info = {};
+	my @problems = ();
 	my $locks = {};
 	opendir(my $dir, $self->{lockdir});
 	DIR: while (my $e = readdir($dir)) {
+		next if $e eq '..' or $e eq '.';
 		my $f = "$self->{lockdir}/$e";
-		next if -d $f;
-		open my $fh, '<', $f or next;
-		my ($pid, $host);
-		while(<$fh>) {
-			if (m/^dpb\=(\d+)\s+on\s+(\S+)$/) {
-				($pid, $host) = ($1, $2);
-				next DIR unless $host eq $self->{dpb_host};
+		if (open my $fh, '<', $f) {
+			my ($pid, $host);
+			my $client = DPB::Core::Local->hostname;
+			my $path;
+			while(<$fh>) {
+				if (m/^dpb\=(\d+)\s+on\s+(\S+)$/) {
+					($pid, $host) = ($1, $2);
+					next DIR 
+					    unless $host eq $self->{dpb_host};
+				} elsif (m/^(?:error|status|todo)\=/) {
+					next DIR;
+				} elsif (m/^host=(.*)$/) {
+					$client = $1;
+				} elsif (m/^locked=(.*)$/) {
+					$path = $1;
+				}
 			}
-			if (m/^(?:error|status|todo)\=/) {
-				next DIR;
+			$info->{$f} = [$host, $path] if defined $path;
+			if (defined $pid) {
+				push(@{$locks->{$pid}}, $f);
+			} else {
+				push(@problems, $f);
 			}
-		}
-		push(@{$locks->{$pid}}, $f) if defined $pid;
-	}
-	return if keys %$locks == 0;
-
-	open(my $ps, "-|", "ps", "-axww", "-o", "pid args");
-	my $junk = <$ps>;
-	while (<$ps>) {
-		if (m/^(\d+)\s+(.*)$/) {
-			my ($pid, $cmd) = ($1, $2);
-			if ($locks->{$pid} && $cmd =~ m/\bdpb\b/) {
-				delete $locks->{$pid};
-			}
-		}
-	}
-	for my $list (values %$locks) {
-		for my $l (@$list) {
-			unlink($l);
+		} else {
+			push(@problems, $f);
 		}
 	}
+	if (keys %$locks != 0) {
+		open(my $ps, "-|", "ps", "-axww", "-o", "pid args");
+		my $junk = <$ps>;
+		while (<$ps>) {
+			if (m/^(\d+)\s+(.*)$/) {
+				my ($pid, $cmd) = ($1, $2);
+				if ($locks->{$pid} && $cmd =~ m/\bdpb\b/) {
+					delete $locks->{$pid};
+				}
+			}
+		}
+		for my $list (values %$locks) {
+			for my $l (@$list) {
+				my ($host, $path) = @{$info->{$l}};
+				push(@{$hostpaths->{$host}}, $path);
+				unlink($l);
+			}
+		}
+	}
+	if (@problems) {
+		$state->say("Problematic lockfiles I can't parse:\n\t#1\n".
+			"Waiting for ten seconds",
+			join(' ', @problems));
+		sleep 10;
+		goto START;
+	}
+	return $hostpaths;
 }
 
 sub build_lockname
@@ -164,22 +192,32 @@ sub find_dependencies
 		next if -d $fullname;
 		next if $name =~ m/^host:/;
 		open(my $f, '<', $fullname);
+		my $nojunk = 0;
 		my $host;
+		my $path;
 		my @d;
 		while (<$f>) {
-			if (m/^host=(.*)/) {
+			if (m/^locked=(.*)/) {
+				$path = $1;
+			} elsif (m/^host=(.*)/) {
 				$host = $1;
 			} elsif (m/^needed=(.*)/) {
 				@d = split(/\s/, $1);
+			} elsif (m/^nojunk$/) {
+				$nojunk = 1;
 			}
 		}
 		if (defined $host && $host eq $hostname) {
+			if ($nojunk) {
+				print "Can't run junk because of lock on $path\n";
+				return undef;
+			}
 			for my $k (@d) {
 				$h->{$k} = 1;
 			}
 		}
 	}
-	return sort keys %$h;
+	return $h;
 }
 
 1;

@@ -1,28 +1,25 @@
-# $OpenBSD: Makefile,v 1.15 2012/09/23 16:57:34 jeremy Exp $
+# $OpenBSD: Makefile,v 1.17 2013/04/26 12:18:20 jasper Exp $
 
 COMMENT =	Ruby library for mocking and stubbing
 
-DISTNAME =	mocha-0.9.12
-REVISION =	0
+DISTNAME =	mocha-0.13.3
 CATEGORIES =	devel
 
 HOMEPAGE =	http://mocha.rubyforge.org/
 
 # MIT License
 PERMIT_PACKAGE_CDROM =   Yes
-PERMIT_PACKAGE_FTP =     Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP =   Yes
 
 MODULES =	lang/ruby
 
 BUILD_DEPENDS =	${RUN_DEPENDS}
-RUN_DEPENDS =	${MODRUBY_RAKE_DEPENDS}
+RUN_DEPENDS =	${MODRUBY_RAKE_DEPENDS} \
+		devel/ruby-metaclass,${MODRUBY_FLAVOR}
 
 CONFIGURE_STYLE = ruby gem
 
 # 7 failures on ruby 1.8, passes on ruby 1.9
-MODRUBY_REGRESS = rake
-MODRUBY_REGRESS_TARGET = test:acceptance test:units
+MODRUBY_TEST = rake
+MODRUBY_TEST_TARGET = test:acceptance test:units
 
 .include <bsd.port.mk>

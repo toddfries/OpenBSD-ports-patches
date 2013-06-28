@@ -1,19 +1,14 @@
-# $OpenBSD: Makefile,v 1.16 2010/11/22 08:36:55 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2013/03/11 11:46:08 espie Exp $
 
 COMMENT=		X11 file manager. Dockable in Window Maker
 
 DISTNAME=		ASFiles-1.0
 PKGNAME=		${DISTNAME:L}
-REVISION=		1
+REVISION=		2
 CATEGORIES=		x11 x11/windowmaker
-
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		ICE SM X11 Xaw Xext Xmu Xpm Xt c m Dnd
 
 MASTER_SITES=		${MASTER_SITE_AFTERSTEP:=apps/ASFiles/}
@@ -24,7 +19,7 @@ FAKE_FLAGS=		NORMAL_INSTALL="" \
 			mandir=${WRKINST}${PREFIX}/man
 
 USE_GROFF =		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 CONFIGURE_STYLE=	gnu
 
 post-configure:

@@ -1,35 +1,36 @@
-# $OpenBSD: Makefile,v 1.13 2012/08/25 11:41:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2013/06/04 19:59:37 landry Exp $
 
 COMMENT=		webbased rss reader with standalone look and feel
 
-DISTNAME=		tt-rss-1.5.11
+V=			1.7.9
+DISTNAME=		Tiny-Tiny-RSS-$V
+PKGNAME=		tt-rss-$V
 CATEGORIES=		www
-REVISION =		1
 
 HOMEPAGE=		http://tt-rss.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-MASTER_SITES=		${HOMEPAGE}/download/
+MASTER_SITES=		https://github.com/gothfox/Tiny-Tiny-RSS/archive/${V}.tar.gz?dummy=/
 
 NO_BUILD=		Yes
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 PKG_ARCH=		*
 
 PREFIX=			/var/www
 INSTDIR=		${PREFIX}/tt-rss
 SUBST_VARS=		INSTDIR MODPHP_BIN
 
-MODULES=	lang/php
-RUN_DEPENDS=	lang/php/${MODPHP_VERSION},-pgsql \
-		lang/php/${MODPHP_VERSION},-curl \
-		lang/php/${MODPHP_VERSION},-xmlrpc
+MODULES=		lang/php
+RUN_DEPENDS=		lang/php/${MODPHP_VERSION},-pgsql \
+			lang/php/${MODPHP_VERSION},-curl \
+			lang/php/${MODPHP_VERSION},-xmlrpc
+
+WRKDIST=		${WRKDIR}/Tiny-Tiny-RSS-$V
 
 do-install:
+	find ${WRKDIST}/lib/ -name '*.js.uncompressed.js' -exec rm {} +
 	cp -Rp ${WRKDIST} ${INSTDIR}
 	${SUBST_CMD} ${INSTDIR}/{update.php,config.php-dist}
 	rm -Rf ${INSTDIR}/{*.{beforesubst,orig},.*,debian}

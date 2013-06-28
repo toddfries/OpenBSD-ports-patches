@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.5 2012/04/30 07:11:58 bentley Exp $
+# $OpenBSD: Makefile,v 1.8 2013/05/03 07:32:34 bentley Exp $
 
 COMMENT =		string internment library
 
 NETSURF_PROJECT =	libwapcaplet
-NETSURF_VERSION =	0.1.1
+NETSURF_VERSION =	0.2.0
 
 CATEGORIES=		devel
-SHARED_LIBS =		wapcaplet 1.0 #0.1.1
+SHARED_LIBS =		wapcaplet 2.0 #0.2.0
 
-NO_REGRESS =	Yes #failing test on gcc3 archs
-REGRESS_DEPENDS +=	devel/check
+TEST_DEPENDS +=		devel/check
 
 .include <bsd.port.mk>

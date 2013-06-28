@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.51 2012/08/25 17:10:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.53 2013/03/21 08:45:12 ajacoutot Exp $
 
 COMMENT-main=	MPEG-2 and MPEG-4 AAC decoder
 COMMENT-xmms=	XMMS input plugin for AAC files
@@ -20,8 +20,6 @@ HOMEPAGE=	http://www.audiocoding.com/
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Patents
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Patents
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main=	c m
 WANTLIB-xmms=	X11 Xext Xi faad gdk glib gmodule gtk m mp4ff pthread \
@@ -42,7 +40,6 @@ LIB_DEPENDS-xmms=	${BUILD_PKGPATH} \
 RUN_DEPENDS-xmms=	${MODGETTEXT_RUN_DEPENDS}
 
 USE_GMAKE=	Yes
-USE_LIBTOOL=	Yes
 CONFIGURE_STYLE= gnu
 AUTOCONF_VERSION= 2.61
 AUTOMAKE_VERSION= 1.9

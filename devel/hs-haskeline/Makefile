@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.4 2012/10/28 23:27:58 kili Exp $
+# $OpenBSD: Makefile,v 1.6 2013/03/11 10:50:07 espie Exp $
 
 COMMENT =		command-line interface for user input
 
 DISTNAME =		haskeline-0.6.4.7
-REVISION =		0
+REVISION =		1
 CATEGORIES =		devel
 
 MAINTAINER =		Matthias Kilian <kili@openbsd.org>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		lang/ghc
 

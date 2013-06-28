@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2011/09/16 09:24:48 espie Exp $
+# $OpenBSD: Makefile,v 1.17 2013/03/21 08:45:14 ajacoutot Exp $
 
 COMMENT=automatic text creation from templates
 CATEGORIES=devel
@@ -12,10 +12,7 @@ HOMEPAGE=http://autogen.sourceforge.net/
 MASTER_SITES=${MASTER_SITE_GNU:=autogen/rel${V}/}
 
 # GPLv2
-PERMIT_PACKAGE_FTP=Yes
 PERMIT_PACKAGE_CDROM=Yes
-PERMIT_DISTFILES_FTP=Yes
-PERMIT_DISTFILES_CDROM=Yes
 
 MODULES=	devel/gettext
 
@@ -28,6 +25,5 @@ CONFIGURE_ARGS=	--without-libregex \
 		${ENABLE_SHARED}
 
 MAKE_FLAGS+=	INFO_DEPS=
-USE_LIBTOOL=	Yes
 USE_GROFF =	Yes
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.85 2012/11/05 20:20:07 kili Exp $
+# $OpenBSD: Makefile,v 1.97 2013/06/04 22:02:33 kili Exp $
 
 COMMENT-main =		compiler for the functional language Haskell
 COMMENT-doc =		documentation for GHC
@@ -11,7 +11,7 @@ COMMENT-doc =		documentation for GHC
 
 DISTNAME =		ghc-${MODGHC_VER}
 PKGNAME-main =		ghc-${MODGHC_VER}
-REVISION-main =		2
+REVISION-main =		4
 PKGNAME-doc =		ghc-doc-${MODGHC_VER}
 CATEGORIES =		lang devel
 HOMEPAGE =		http://www.haskell.org/ghc/
@@ -25,20 +25,17 @@ XHTML_VER =		3000.2.1
 SUBST_VARS +=		XHTML_VER
 
 # Pull in lang/ghc to get MODGHC_VER and ONLY_FOR_ARCHS, which is maintained
-# in ghc.port.mk. lang/python needed for regress.
+# in ghc.port.mk. lang/python needed for regression tests.
 MODULES =		lang/ghc lang/python converters/libiconv
 
 PSEUDO_FLAVORS =	no_doc
 FLAVOR ?=
 MULTI_PACKAGES =	-main -doc
 
-# BSD w/o advertising clause.
-# Distfile is bundled with other stuff like libffi, libgmp, mingw
+# BSD w/o advertising clause + LGPLv3 (from libgmp).
+# Distfile is bundled with other stuff like libffi, mingw
 # binaries, with BSD, GPLv2 and Perl artistic license.
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 PKG_ARCH-doc =		*
 BUILD_DEPENDS =		archivers/gtar \
@@ -122,9 +119,10 @@ FAKE_FLAGS +=		CREATE_SCRIPT="${INSTALL_SCRIPT} /dev/null " \
 # For mktexpk (via dvips when building the PostScript documentation):
 PORTHOME =		${WRKDIR}
 
-REGRESS_DEPENDS =	print/ghostscript/gnu
+TEST_DEPENDS =	print/ghostscript/gnu
 
-post-extract:
+post-patch:
+	${SUBST_CMD} ${WRKSRC}/docs/index.html
 # - Install a precompiled binary.
 	cd ${WRKDIR}/ghc-${BIN_VER} && \
 	./configure --prefix=${WRKDIR} && \
@@ -137,9 +135,6 @@ post-extract:
 	mv ${WRKDIR}/xhtml-${XHTML_VER} ${WRKSRC}/libraries/xhtml
 	perl -pi -e 's/(\S+ \S+)/\1 -optl -nopie/ if /^exec /' \
 		${WRKDIR}/bin/ghc
-
-post-patch:
-	${SUBST_CMD} ${WRKSRC}/docs/index.html
 
 post-install:
 	cd ${PREFIX}/lib/ghc && \
@@ -165,7 +160,7 @@ post-install:
 	rm package.conf.d/* && \
 	$$GHC_PKG recache
 
-do-regress:
+do-test:
 	ulimit -c 0 && \
 	cd ${WRKSRC}/testsuite/tests && \
 	exec ${SETENV} ${MAKE_ENV} HS_ENCODING=utf-8 \
@@ -182,7 +177,16 @@ BOOTSTRAP_DATE =	20120917
 # Create a bootstrapper. This compiles a stripped-down version of
 # ghc and creates a `bindist', i.e. a tarball with binaries that
 # can be used for bootstrapping.
+# Note: this needs autoconf-2.61 as an additional dependency.
 bootstrap: patch
+	@if [ ! -x ${LOCALBASE}/bin/autoconf-2.61 ]; then \
+		echo Please install autoconf-2.61.; \
+		false; \
+	fi
+	@if [ ! -x ${LOCALBASE}/bin/automake-1.4 ]; then \
+		echo Please install automake-1.4.; \
+		false; \
+	fi
 	echo HSCOLOUR_SRCS=NO > ${WRKSRC}/mk/build.mk
 	echo GhcLibHcOpts=-O -fasm >> ${WRKSRC}/mk/build.mk
 	echo GhcStage1HcOpts=-O -fasm >> ${WRKSRC}/mk/build.mk
@@ -206,6 +210,6 @@ bootstrap: patch
 	env CONFIGURE_ENV=RELEASE=NO ${MAKE} configure
 
 	env MAKE_ENV="AUTOCONF_VERSION=2.61 AUTOMAKE_VERSION=1.4" \
-	${MAKE} build ALL_TARGET="all binary-dist" \
+	${MAKE} build ALL_TARGET="all binary-dist"
 
 .include <bsd.port.mk>

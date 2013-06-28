@@ -1,22 +1,18 @@
-# $OpenBSD: Makefile,v 1.3 2012/10/03 08:16:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.6 2013/03/21 08:46:34 ajacoutot Exp $
 
 COMMENT=		library implementing the OAuth Core RFC 5849 standard
 
-DISTNAME=		liboauth-0.9.7
+DISTNAME=		liboauth-1.0.0
 SHARED_LIBS +=  oauth                8.3      # 8.4
 CATEGORIES=		net
 
 HOMEPAGE=		http://liboauth.sourceforge.net/
 
 # MIT or GPLv2+
-PERMIT_PACKAGE_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=liboauth/}
 
-USE_LIBTOOL=		Yes
 
 WANTLIB+=		curl nss3
 LIB_DEPENDS=		net/curl \

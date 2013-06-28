@@ -1,4 +1,4 @@
-# $OpenBSD: kde.port.mk,v 1.35 2010/11/22 08:37:01 espie Exp $
+# $OpenBSD: kde.port.mk,v 1.39 2013/03/21 08:48:56 ajacoutot Exp $
 
 SHARED_ONLY ?=	Yes
 
@@ -15,11 +15,12 @@ FLAVOR ?=
 
 MODKDE_CONFIGURE_ARGS =${MODQT_CONFIGURE_ARGS}
 MODKDE_CONFIGURE_ARGS +=	--with-extra-libs="${LOCALBASE}/lib/kde3:${LOCALBASE}/lib/db4:${LOCALBASE}/lib/samba:${LOCALBASE}/lib"
-MODKDE_CONFIGURE_ARGS +=	--with-extra-includes="${LOCALBASE}/include/db4:${LOCALBASE}/include/libpng:${LOCALBASE}/include"
+MODKDE_CONFIGURE_ARGS +=	--with-extra-includes="${LOCALBASE}/include/avahi-compat-libdns_sd:${LOCALBASE}/include/db4:${LOCALBASE}/include/libpng:${LOCALBASE}/include"
+MODKDE_CONFIGURE_ARGS +=	--includedir=${PREFIX}/include/kde
 MODKDE_CONFIGURE_ARGS +=	--with-xdmdir=/var/X11/kdm
 MODKDE_CONFIGURE_ARGS +=	--enable-mitshm
 MODKDE_CONFIGURE_ARGS +=	--with-xinerama
-.if ${FLAVOR:L:Mdebug}
+.if ${FLAVOR:Mdebug}
 MODKDE_CONFIGURE_ARGS +=	--enable-debug=yes
 .else
 MODKDE_CONFIGURE_ARGS +=	--disable-debug
@@ -75,6 +76,5 @@ WANTLIB +=	lib/qt3/qt-mt>=3.33
 PATCH_LIST =	${PORTSDIR}/x11/kde/patches-3.5.7/patch-* patch-* ${SUP_PATCH_LIST}
 AUTOCONF ?=	/bin/sh ${WRKDIST}/admin/cvs.sh configure
 WANTLIB +=	lib/qt3/qt-mt>=3.33
-USE_LIBTOOL ?=	Yes
 LIBTOOL_FLAGS =	--tag=disable-static
 .endif

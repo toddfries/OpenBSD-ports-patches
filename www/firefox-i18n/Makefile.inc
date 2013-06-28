@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile.inc,v 1.12 2012/10/27 08:11:00 landry Exp $
+# $OpenBSD: Makefile.inc,v 1.25 2013/06/26 19:29:16 landry Exp $
 
 # keep in sync with working archs.. sigh
 ONLY_FOR_ARCHS =	amd64 i386 powerpc
 
 PKG_ARCH =	*
 
-FV =		16.0.2
+FV =		22.0
 V =		${FV:C/b.$//}
 NAME =		firefox-i18n
 
@@ -17,9 +17,6 @@ MAINTAINER =	Landry Breuil <landry@openbsd.org>
 
 # Mozilla public license
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =	https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${FV}/linux-i686/xpi/ \
 		http://releases.mozilla.org/pub/mozilla.org/firefox/releases/${FV}/linux-i686/xpi/ \
@@ -37,7 +34,7 @@ RUN_DEPENDS =	firefox-${FV:S/b/beta/}:www/mozilla-firefox
 
 DIST_SUBDIR =	mozilla/${NAME}-${FV}
 NO_BUILD =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 EXTRACT_ONLY =
 
 .for i in ${LANGUAGES}
@@ -57,5 +54,5 @@ MESSAGE=	${PKGDIR}/MESSAGE
 SUBST_VARS =	V L
 
 do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/lib/firefox-$V/extensions
-	${INSTALL_DATA} ${FULLDISTDIR}/$L.xpi ${PREFIX}/lib/firefox-$V/extensions/langpack-$L@firefox.mozilla.org.xpi
+	${INSTALL_DATA_DIR} ${PREFIX}/lib/firefox-$V/browser/extensions
+	${INSTALL_DATA} ${FULLDISTDIR}/$L.xpi ${PREFIX}/lib/firefox-$V/browser/extensions/langpack-$L@firefox.mozilla.org.xpi

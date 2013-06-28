@@ -1,33 +1,22 @@
-# $OpenBSD: Makefile,v 1.9 2011/09/16 09:24:49 espie Exp $
+# $OpenBSD: Makefile,v 1.14 2013/03/11 10:50:03 espie Exp $
 
 COMMENT=		Perl plugin for Eclipse IDE
 
 V=			0.5.33
 DISTNAME=		org.epic.updatesite_${V}_20070406
 PKGNAME=		eclipse-plugin-epic-${V}
-REVISION=		1
-CATEGORIES=		devel/eclipse/plugins perl5
+REVISION=		2
+CATEGORIES+=		perl5
 
 HOMEPAGE=		http://e-p-i-c.sourceforge.net/
 
 MAINTAINER=		Carlos Valiente <yo@virutass.net>
 
-EXTRACT_SUFX=		.zip
-
 # Common Public License Version 1.0 (http://www.eclipse.org/legal/cpl-v10.html)
 PERMIT_PACKAGE_CDROM=	commercial distribution defend and indemnify clauses
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	commercial distribution defend and indemnify clauses
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=e-p-i-c/}
-
-RUN_DEPENDS=		devel/eclipse/sdk>=3.1
-
-NO_BUILD=		Yes
-NO_REGRESS=		Yes
-
-WRKDIST=		${WRKDIR}
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/eclipse

@@ -1,10 +1,15 @@
-# $OpenBSD: Makefile,v 1.24 2012/08/25 13:19:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2013/06/12 20:36:34 brad Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	H.323 gatekeeper
 
-DISTNAME=	gnugk-3.1
+V=		3.3
+DISTNAME=	gnugk-${V}-2
+PKGNAME=	gnugk-${V}
+REVISION=	0
+
+WRKDIST=	${WRKDIR}/gnugk-${V}
 
 CATEGORIES=	net telephony
 
@@ -14,26 +19,25 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += SDL c crypto expat h323 kvm lber ldap ldap_r m netsnmp
-WANTLIB += netsnmpagent netsnmpmibs pt pthread sasl2 ssh ssl stdc++
-WANTLIB += wrap
+WANTLIB += SDL c crypto expat h323 kvm lber ldap ldap_r lua5.1
+WANTLIB += m netsnmp netsnmpagent netsnmpmibs pt pthread ssh ssl
+WANTLIB += stdc++ wrap
+
+MODULES=	lang/lua
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=openh323gk/}
 
 BUILD_DEPENDS=	databases/mysql \
 		databases/postgresql
 
-LIB_DEPENDS=	net/h323plus>=1.24.0p0 \
+LIB_DEPENDS=	net/h323plus>=1.24.99 \
 		net/net-snmp \
 		security/libssh
 
 USE_GMAKE=	Yes
 ALL_TARGET=	optshared # XXX gkdefault
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
@@ -41,7 +45,9 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		PTLIBDIR=`ptlib-config --ptlibdir`
 CONFIGURE_ARGS=	--disable-firebird \
 		--disable-unixodbc \
-		--with-pgsql-include-dir=${LOCALBASE}/include/postgresql
+		--with-pgsql-include-dir=${LOCALBASE}/include/postgresql \
+		--with-lua-include-dir=${MODLUA_INCL_DIR} \
+		--with-lua-lib-dir=${LOCALBASE}/lib
 
 # patented
 CONFIGURE_ARGS += --disable-h46018
@@ -52,6 +58,7 @@ MAKE_ENV=	CC=${CC} CPLUS=${CXX} \
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/docs/gnugk.1 ${WRKSRC}/configure
+	perl -pi -e 's,-llua,-llua${MODLUA_DEFAULT_VERSION} -lm,g' ${WRKSRC}/configure
 
 post-build:
 	cd ${WRKSRC}/addpasswd && \

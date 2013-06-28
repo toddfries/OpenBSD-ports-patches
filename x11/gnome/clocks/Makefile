@@ -1,39 +1,42 @@
-# $OpenBSD: Makefile,v 1.2 2012/10/16 07:11:43 ajacoutot Exp $
-
-PKG_ARCH=		*
+# $OpenBSD: Makefile,v 1.10 2013/06/01 18:56:08 ajacoutot Exp $
 
 COMMENT=		clock application for GNOME
 
 GNOME_PROJECT=		gnome-clocks
-GNOME_VERSION=		0.1.4
-MODPY_EGG_VERSION=	${GNOME_VERSION}
+GNOME_VERSION=		3.8.2
+REVISION=		0
 
 HOMEPAGE=		https://live.gnome.org/GnomeClocks
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
+
+WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
+WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
+WANTLIB += c cairo cairo-gobject canberra dbus-1 expat ffi fontconfig
+WANTLIB += freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gnome-desktop-3 gobject-2.0 graphite2 gthread-2.0 gtk-3
+WANTLIB += gweather-3 harfbuzz ltdl m notify
+WANTLIB += ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs soup-2.4 sqlite3 vorbis vorbisfile
+WANTLIB += xcb xcb-render xcb-shm xkbfile xml2 z
 
 MODULES=		devel/dconf \
-			lang/python \
+			devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		devel/py-distutils-extra
-
-RUN_DEPENDS=		devel/libnotify \
-			devel/py-gobject3 \
-			graphics/clutter/clutter-gtk \
+LIB_DEPENDS=		audio/libcanberra \
+			devel/libnotify \
+			devel/libtool,-ltdl \
+			x11/gnome/desktop \
 			x11/gnome/libgweather
 
+MODGNOME_TOOLS=		gi vala
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
-NO_REGRESS=		Yes
-
-CONFIGURE_STYLE=	# empty
 
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/gnome-clocks
+	perl -pi -e 's,.-Wno-unused-but-set-variable,,' \
+		${WRKSRC}/Makefile.in
 
 .include <bsd.port.mk>

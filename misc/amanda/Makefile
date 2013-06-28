@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2012/04/28 10:52:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2013/04/27 15:44:21 ajacoutot Exp $
 
 COMMENT-main=	network-capable tape backup (client and tape server)
 COMMENT-client=	network-capable tape backup (client only)
@@ -16,8 +16,8 @@ DISTNAME=	amanda-${DISTVERSION}
 PKGNAME-main=	amanda-${PKGVERSION}
 PKGNAME-client=	amanda-client-${PKGVERSION}
 PKGNAME-doc=	amanda-doc-${PKGVERSION}
-REVISION-main=	2
-REVISION-client=1
+REVISION-main=	3
+REVISION-client=2
 
 CATEGORIES=	misc
 
@@ -27,9 +27,6 @@ MAINTAINER=	Olivier Cherrier <oc@symacx.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=amanda/}
 
@@ -70,19 +67,18 @@ USE_GROFF =	Yes
 
 # Use this flavor to speed things up if you have large AMANDA
 # databases.
-.if ${FLAVOR:L:Mdb}
+.if ${FLAVOR:Mdb}
 WANTLIB+=	lib/db4/db
 LIB_DEPENDS+=	databases/db/v4
 CONFIGURE_ARGS+= --with-db=db
 CFLAGS+=	 -L${LOCALBASE}/lib
 .endif
 
-.if ${FLAVOR:L:Mgpg}
+.if ${FLAVOR:Mgpg}
 BUILD_DEPENDS+=  security/gnupg
 CONFIGURE_ENV+=  GZIP=${LOCALBASE}/bin/gpgzip
 .endif
 
-USE_LIBTOOL=	Yes
 LIBTOOL_FLAGS=	--tag=disable-shared
 
 OLD_DOC_DIR=	${PREFIX}/share/amanda

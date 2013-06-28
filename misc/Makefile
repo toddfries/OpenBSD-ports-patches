@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.155 2012/11/05 22:21:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.157 2013/05/24 19:08:43 edd Exp $
 
      SUBDIR =
      SUBDIR += WordGenerator
@@ -12,6 +12,7 @@
      SUBDIR += ccze
      SUBDIR += cdrdao
      SUBDIR += cdrdao,audio
+     SUBDIR += chemical-mime-data
      SUBDIR += clex
      SUBDIR += cmdpack
      SUBDIR += deco
@@ -93,6 +94,7 @@
      SUBDIR += splitvt
      SUBDIR += srcpd
      SUBDIR += supercat
+     SUBDIR += tapclean
      SUBDIR += teseq
      SUBDIR += tkcron
      SUBDIR += tkinfo

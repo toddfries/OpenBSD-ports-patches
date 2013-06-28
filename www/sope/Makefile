@@ -1,14 +1,16 @@
-# $OpenBSD: Makefile,v 1.24 2012/10/30 14:57:18 sebastia Exp $
+# $OpenBSD: Makefile,v 1.33 2013/06/12 20:36:34 brad Exp $
 
 COMMENT-main=		Skyrix Object Publishing Environment
 COMMENT-mysql=		SOPE MySQL adaptor
 COMMENT-postgres=	SOPE PostgreSQL adaptor
 
-VERSION =		2.0.2
-DISTNAME =		SOPE-${VERSION}
-PKGNAME-main =		sope-${VERSION}
-PKGNAME-mysql =		sope-mysql-${VERSION}
-PKGNAME-postgres =	sope-postgres-${VERSION}
+VERSION =		2.0.5
+DISTNAME =		SOPE-${VERSION}a
+PKGNAME-main =		sope-${VERSION}.0
+PKGNAME-mysql =		sope-mysql-${VERSION}.0
+PKGNAME-postgres =	sope-postgres-${VERSION}.0
+
+REVISION-mysql =	1
 
 SO_MAJOR=	2
 SO_MINOR=	0
@@ -25,9 +27,6 @@ MAINTAINER=	Sebastian Reitenbach <sebastia@openbsd.org>
 
 # LGPLv2 or later
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 MULTI_PACKAGES=	-main -mysql -postgres
 
@@ -45,9 +44,9 @@ LIB_DEPENDS-main=	x11/gnustep/base \
 			databases/openldap \
 			x11/gnustep/libobjc2 \
 			${MODLIBICONV_LIB_DEPENDS}
-LIB_DEPENDS-mysql =	${BASE_PKGPATH}=${VERSION} \
+LIB_DEPENDS-mysql =	${BASE_PKGPATH}=${VERSION}.0 \
 			databases/mysql,-main
-LIB_DEPENDS-postgres =	${BASE_PKGPATH}=${VERSION} \
+LIB_DEPENDS-postgres =	${BASE_PKGPATH}=${VERSION}.0 \
 			databases/postgresql,-main
 
 CONFIGURE_STYLE=simple dest
@@ -59,7 +58,9 @@ MAKE_ENV+=	OBJC_INCLUDE_PATH="${LOCALBASE}/include/postgresql;${LOCALBASE}/inclu
 MAKE_FLAGS+=	MAJOR_VERSION=${SO_MAJOR} MINOR_VERSION=${SO_MINOR}
 MAKE_FLAGS+=	SOPE_MAJOR_VERSION=4 SOPE_MINOR_VERSION=9
 CONFIGURE_ENV+=	${MAKE_ENV}
-NO_REGRESS=	Yes
+NO_TEST=	Yes
+
+WRKDIST =	${WRKDIR}/SOPE
 
 post-extract:
 	# those fhs.make files are not needed and may cause harm if they exist

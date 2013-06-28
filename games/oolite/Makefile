@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.7 2012/08/22 07:17:02 sebastia Exp $
+# $OpenBSD: Makefile,v 1.9 2013/04/25 16:40:44 sebastia Exp $
 
 COMMENT=	space combat and trading game in the style of Elite
 
 VERSION=	1.73.4
-REVISION =	3
+REVISION =	4
 DISTNAME=	oolite-dev-source-${VERSION}
 PKGNAME=	oolite-${VERSION}
 CATEGORIES=	games
@@ -14,9 +14,6 @@ MAINTAINER=	Nicholas Marriott <nicm@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_BERLIOS:=oolite-linux/}
 EXTRACT_SUFX=	.tar.bz2

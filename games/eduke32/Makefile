@@ -1,21 +1,21 @@
-# $OpenBSD: Makefile,v 1.2 2012/10/15 15:06:42 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2013/03/11 11:07:38 espie Exp $
 
 COMMENT =	Enhanced Duke Nukem 3D engine
 RDATE =		20120301
 RTAG =		2394
 DISTNAME =	eduke32_src_${RDATE}-${RTAG}
 PKGNAME =	eduke32-2.0.0.${RTAG}
+REVISION =	0
 EXTRACT_SUFX =	.tar.bz2
-CATEGORIES =	games x11 wip
+CATEGORIES =	games x11
 
 HOMEPAGE =	http://www.eduke32.com/
 
-MAINTAINER =	Ryan Freeman <ryan@slipgate.org>
+MAINTAINER =	Ryan Freeman <rfreeman@openbsd.org>
 
 # GPLv2, BUILD license and shareware data
 PERMIT_PACKAGE_CDROM =  "BUILD engine license is not compatible with GPLv2."
 PERMIT_PACKAGE_FTP =    "BUILD engine license is not compatible with GPLv2."
-PERMIT_DISTFILES_CDROM ="BUILD engine license is not compatible with GPLv2."
 PERMIT_DISTFILES_FTP =  "BUILD engine license is not compatible with GPLv2."
 
 BUILD_DEPENDS = archivers/unzip \
@@ -32,14 +32,19 @@ LIB_DEPENDS =	audio/libvorbis \
 		devel/sdl \
 		devel/sdl-mixer
 
+# dlopen()'d; shows as Extra in check-lib-depends but it is used
+LIB_DEPENDS +=	x11/gtk+2
+WANTLIB +=	gtk-x11-2.0
+
 RUN_DEPENDS =	games/duke3ddata
 
-MASTER_SITES =	http://dukeworld.duke4.net/eduke32/synthesis/${RDATE}-${RTAG}/
+MASTER_SITES =	http://dukeworld.duke4.net/eduke32/synthesis/old/${RDATE}-${RTAG}/ \
+		http://dukeworld.duke4.net/eduke32/synthesis/${RDATE}-${RTAG}/
 
 # make sure we can see compilation output, respect CC/CXX, don't strip!
 MAKE_FLAGS =	PRETTY_OUTPUT=0 CC="${CC}" CXX="${CXX}" DEBUGANYWAY=1
 USE_GMAKE =	Yes
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 WRKDIST =	${WRKDIR}/eduke32_${RDATE}-${RTAG}/
 

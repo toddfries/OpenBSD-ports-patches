@@ -1,0 +1,11 @@
+$OpenBSD: patch-ui_gtk3_Makefile_in,v 1.2 2013/05/07 07:59:25 fgsch Exp $
+--- ui/gtk3/Makefile.in.orig	Wed Apr 17 02:31:37 2013
++++ ui/gtk3/Makefile.in	Fri May  3 09:57:54 2013
+@@ -475,7 +475,6 @@ AM_CFLAGS = \
+ 	-DIBUS_DISABLE_DEPRECATED \
+ 	-DSWITCHER_USE_SYMBOL_ICON=$(USE_SYMBOL_ICON) \
+ 	-Wno-unused-variable \
+-	-Wno-unused-but-set-variable \
+ 	-Wno-unused-function \
+ 	$(NULL)
+ 

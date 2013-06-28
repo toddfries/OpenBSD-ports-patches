@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.14 2012/03/29 13:38:30 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2013/04/05 20:36:27 naddy Exp $
 
 COMMENT=	The Dungeons of Moria
 
 V=		5.5.2
 DISTNAME=	um$V
 PKGNAME=	moria-$V
-REVISION =	1
+REVISION=	2
 CATEGORIES=	games
 MASTER_SITES=	ftp://ftp.funet.fi/pub/unix/games/moria/source/ \
 		ftp://alge.anart.no/pub/games/RPG/moria/
@@ -15,11 +15,9 @@ HOMEPAGE=	http://www-math.bgsu.edu/~grabine/moria.html
 
 PERMIT_PACKAGE_CDROM=	not-for-profit redistribution only
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	not-for-profit redistribution only
-PERMIT_DISTFILES_FTP=	Yes
 WANTLIB=		c curses termcap
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 WRKDIST=	${WRKDIR}/umoria
 WRKSRC=		${WRKDIST}

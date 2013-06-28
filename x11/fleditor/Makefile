@@ -1,24 +1,19 @@
-# $OpenBSD: Makefile,v 1.24 2010/11/22 08:36:56 espie Exp $
+# $OpenBSD: Makefile,v 1.26 2013/03/11 11:46:09 espie Exp $
 
 COMMENT=		text editor widget for FLTK
 
 V=			0.4.5
 DISTNAME=		fl_editor-${V}
 PKGNAME=		fleditor-${V}
-REVISION=		3
+REVISION=		4
 
 SHARED_LIBS=		fleditor 3.0
 CATEGORIES=		x11
 
 HOMEPAGE=		http://www.robertk.com/source/
 
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
-
 # LPGL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += m stdc++
 
@@ -28,7 +23,7 @@ EXTRACT_SUFX=		.tgz
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		x11/fltk
 
-REGRESS_TARGET=		test
+TEST_TARGET=		test
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		LDFLAGS="${LDFLAGS} -L${LOCALBASE}/lib"
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
@@ -37,7 +32,7 @@ MAKE_ENV=		LIBfleditor_VERSION=${LIBfleditor_VERSION}
 
 WRKDIST=		${WRKDIR}/fl_editor
 
-REGRESS_IS_INTERACTIVE= x11
+TEST_IS_INTERACTIVE= x11
 
 post-patch:
 	@rmdir ${WRKSRC}/obj

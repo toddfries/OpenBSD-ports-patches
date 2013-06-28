@@ -1,19 +1,16 @@
-# $OpenBSD: Makefile,v 1.11 2011/12/20 19:03:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.13 2013/03/11 23:01:31 fgsch Exp $
 
 COMMENT=		powerful descriptive vector graphics language
 
 DISTNAME=		asymptote-2.10.src
 PKGNAME=		${DISTNAME:S/.src//g}
-REVISION =		4
+REVISION =		5
 CATEGORIES=		graphics
 
 HOMEPAGE=		http://asymptote.sourceforge.net/
 
 # LGPLv3
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=asymptote/}
 EXTRACT_SUFX=		.tgz

@@ -1,9 +1,12 @@
-# $OpenBSD: Makefile,v 1.163 2012/11/08 09:34:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.183 2013/06/20 08:26:14 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
+
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			10.10.0
+VER=			11.4.0
+REVISION-main=		2
+REVISION-calendar=	4
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
 
@@ -19,13 +22,14 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 # notes in codecs/ilbc/LICENSE_ADDENDUM.
 PERMIT_PACKAGE_CDROM=	patent licensing clauses
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= patent licensing clauses
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB-main +=	c crypto curl execinfo gsm idn iksemel
 WANTLIB-main += m ogg pthread spandsp sqlite3 ssl stdc++ termcap
 WANTLIB-main += tiff vorbis vorbisenc vorbisfile xml2 z
+WANTLIB-main += avcodec avformat avutil opencore-amrnb swscale
 WANTLIB-main += ${MODGETTEXT_WANTLIB}
+
+SHARED_LIBS=		asteriskssl 0.0		# 1
 
 MODULES=		devel/gettext
 
@@ -37,7 +41,9 @@ PSEUDO_FLAVORS=		no_calendar no_http_post no_ldap no_odbc \
 LIB_DEPENDS-main=	audio/gsm \
 			audio/libogg \
 			audio/libvorbis \
+			audio/opencore-amr \
 			devel/libexecinfo \
+			graphics/ffmpeg \
 			graphics/tiff \
 			net/curl \
 			telephony/spandsp \
@@ -56,7 +62,6 @@ EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
 AUTOCONF_VERSION=	2.68
@@ -70,16 +75,17 @@ LDFLAGS+=		-L${X11BASE}/lib -L${LOCALBASE}/lib
 CONFIGURE_ENV+=		CPPFLAGS="${CPPFLAGS}" \
 			CFLAGS="${CFLAGS}" \
 			LDFLAGS="${LDFLAGS}" \
-			LIBS="-pthread"
+			LIBS="-lpthread" \
+			ac_cv_path_LDCONFIG=:
 MAKE_FLAGS+=		ASTCFLAGS="${CFLAGS}" \
 			ASTLDFLAGS="${LDFLAGS}" \
+			ASTSSL_SO_VERSION="${LIBasteriskssl_VERSION}" \
 			NOISY_BUILD="Yes" \
 			OPTIMIZE=
 
 CONFIGURE_ARGS+=	--localstatedir=/var
 
 CONFIGURE_ARGS+=	--with-asound=no \
-			--with-avcodec=no \
 			--with-cap=no \
 			--with-dahdi=no \
 			--with-gtk2=no \
@@ -122,7 +128,7 @@ FLAVORS=		imap
 CONFIGURE_ARGS+=	--with-imap=yes
 MAKE_FLAGS+=		MENUSELECT_OPTS_app_voicemail=IMAP_STORAGE
 CPPFLAGS+=		-I${LOCALBASE}/include/c-client
-LIB_DEPENDS-main+=	mail/imap-uw,-c-client
+LIB_DEPENDS-main+=	mail/re-alpine,-c-client
 WANTLIB-main+=		c-client gssapi krb5
 .else
 CONFIGURE_ARGS+=	--with-imap=no
@@ -134,7 +140,8 @@ CONFIGURE_ARGS+=	--with-imap=no
 # calendar
 COMMENT-calendar=	calendar support for Asterisk
 WANTLIB-calendar=	${MODGETTEXT_WANTLIB} asn1 crypto expat gssapi \
-			ical iksemel krb5 m neon proxy ssl xml2 z
+			ical iksemel krb5 m neon proxy ssl xml2 z wind \
+			com_err heimbase roken
 LIB_DEPENDS-calendar=	net/neon \
 			textproc/libical \
 			${MODGETTEXT_LIB_DEPENDS}
@@ -204,7 +211,7 @@ LIB_DEPENDS-speex=	audio/speex>=1.2rc1
 CONFIGURE_ARGS+=	--with-speex=no
 .endif
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 INSTALL_TARGET=		install samples
 EXAMPLEDIR=		${PREFIX}/share/examples/asterisk
 EXAMPLEFILES=		cdr.conf extensions.ael extensions.conf logger.conf \
@@ -214,7 +221,7 @@ EXAMPLEFILES=		cdr.conf extensions.ael extensions.conf logger.conf \
 # subpackages aren't flavoured, so overwrite the default name/path
 FULLPKGNAME$i ?=	asterisk$i-${VER}
 FULLPKGPATH$i ?=	${PKGPATH},$i
-RUN_DEPENDS$i +=	asterisk-${VER}:${BUILD_PKGPATH}
+RUN_DEPENDS$i +=	asterisk-${VER}:telephony/asterisk
 .endfor
 
 post-patch:

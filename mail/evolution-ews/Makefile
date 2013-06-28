@@ -1,68 +1,67 @@
-# $OpenBSD: Makefile,v 1.14 2012/11/11 19:00:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2013/06/20 06:54:36 ajacoutot Exp $
 
-SHARED_ONLY=	Yes
+SHARED_ONLY=		Yes
 
-COMMENT=	evolution connector for MS Exchange via EWS
+COMMENT=		evolution connector for MS Exchange via EWS
 
-GNOME_PROJECT=	evolution-ews
-GNOME_VERSION=	3.6.1
+GNOME_PROJECT=		evolution-ews
+GNOME_VERSION=		3.8.3
+REVISION=		3
 
-CATEGORIES=	mail
+CATEGORIES=		mail
 
-SHARED_LIBS +=  eews-1.2                  1.0 # 0.0
-SHARED_LIBS +=  ewsutils                  1.0 # 0.0
-SHARED_LIBS +=  lzx                       1.0 # 0.0
+SHARED_LIBS +=  eews-1.2             1.0      # unknown
+SHARED_LIBS +=  ewsutils             1.0      # unknown
+SHARED_LIBS +=  lzx                  1.0      # unknown
 
-EVO_VERSION=	3.6
-SUBST_VARS=	EVO_VERSION
+EVO_VERSION=		3.8
+SUBST_VARS=		EVO_VERSION
 
-HOMEPAGE=	http://projects.gnome.org/evolution/
+HOMEPAGE=		http://projects.gnome.org/evolution/
 
-MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
-		Antoine Jacoutot <ajacoutot@openbsd.org>
+MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
+			Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL ICE SM X11 Xau Xcomposite Xcursor Xdamage Xdmcp
-WANTLIB += Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xxf86vm asn1
-WANTLIB += atk-1.0 atk-bridge-2.0 atspi cairo cairo-gobject camel-1.2
-WANTLIB += canberra canberra-gtk3 com_err crypto db dbus-1 dbus-glib-1
-WANTLIB += drm ebackend-1.2 ebook-1.2 ecal-1.2 edata-book-1.2
-WANTLIB += edata-cal-1.2 edataserver-1.2 edataserverui-3.0 enchant
-WANTLIB += expat ffi fontconfig freetype gailutil-3 gck-1 gcr-base-3
-WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 geoclue gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gnome-desktop-3 gnome-keyring goa-1.0 gobject-2.0
-WANTLIB += gpg-error gssapi gstapp-0.10 gstaudio-0.10 gstbase-0.10
-WANTLIB += gstfft-0.10 gstinterfaces-0.10 gstpbutils-0.10 gstreamer-0.10
-WANTLIB += gstvideo-0.10 gthread-2.0 gtk-3 gtkhtml-4.0 gtkhtml-editor-4.0
-WANTLIB += harfbuzz ical icalss icalvcal icudata icui18n icule
-WANTLIB += icuuc javascriptcoregtk-3.0 jpeg krb5 ltdl m nspr4
-WANTLIB += nss3 nssutil3 ogg orc-0.4 p11-kit pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 plc4 plds4 png pthread pthread-stubs
-WANTLIB += smime3 softokn3 soup-2.4 soup-gnome-2.4 sqlite3 ssl3
-WANTLIB += stdc++ vorbis vorbisfile webkitgtk-3.0 xcb xcb-render
-WANTLIB += xcb-shm xkbfile xml2 xslt z
+WANTLIB += GL ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
+WANTLIB += Xi Xinerama Xrandr Xrender Xt asn1 atk-1.0 atk-bridge-2.0
+WANTLIB += atspi cairo cairo-gobject camel-1.2 canberra canberra-gtk3
+WANTLIB += com_err crypto db dbus-1 dbus-glib-1 ebackend-1.2 ebook-1.2
+WANTLIB += ebook-contacts-1.2 ecal-1.2 edata-book-1.2 edata-cal-1.2
+WANTLIB += edataserver-1.2 enchant expat ffi fontconfig freetype
+WANTLIB += gailutil-3 gck-1 gcr-base-3 gcrypt gdk-3 gdk_pixbuf-2.0
+WANTLIB += geoclue gio-2.0 glib-2.0 gmodule-2.0 gnome-desktop-3
+WANTLIB += gobject-2.0 gpg-error graphite2 gssapi gstapp-1.0 gstaudio-1.0
+WANTLIB += gstbase-1.0 gstfft-1.0 gstpbutils-1.0 gstreamer-1.0
+WANTLIB += gsttag-1.0 gstvideo-1.0 gthread-2.0 gtk-3 gtkhtml-4.0
+WANTLIB += gtkhtml-editor-4.0 harfbuzz ical icalss icalvcal
+WANTLIB += icui18n javascriptcoregtk-3.0 jpeg krb5
+WANTLIB += ltdl m nspr4 nss3 nssutil3 ogg orc-0.4 p11-kit pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 plc4 plds4
+WANTLIB += pthread pthread-stubs secret-1 smime3 softokn3
+WANTLIB += soup-2.4 soup-gnome-2.4 sqlite3 ssl3 stdc++ vorbis
+WANTLIB += vorbisfile webkitgtk-3.0 webp xcb xcb-render xcb-shm
+WANTLIB += harfbuzz-icu icudata icuuc png xkbfile xml2 xslt z
+WANTLIB += heimbase roken wind
 
-MODULES=	devel/gettext \
-		x11/gnome
+MODULES=		devel/gettext \
+			x11/gnome
 
 # XXX should be a LIB_DEPENDS+WANTLIB but check-lib-depends(1) does not
 # work with unversioned solibs (LOCALBASE/lib/evolution/*/*.so).
 BUILD_DEPENDS +=	mail/evolution,-main
 RUN_DEPENDS +=		mail/evolution,-main
 
-LIBTOOL_FLAGS=	--tag=disable-static
+LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS=	--disable-static \
-		--with-krb5=/usr \
-		--with-krb5-includes=/usr/include/kerberosV
+CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--disable-static \
+			--with-krb5
 
-MODGNOME_LDFLAGS=-Wl,-rpath,${TRUEPREFIX}/lib/evolution-data-server-${EVO_VERSION}
+MODGNOME_CPPFLAGS=	$$(krb5-config --cflags)
+MODGNOME_LDFLAGS=	-Wl,-rpath,${TRUEPREFIX}/lib/evolution-data-server-${EVO_VERSION}
 
 post-install:
 	rm ${PREFIX}/lib/evolution-data-server/*/*.la

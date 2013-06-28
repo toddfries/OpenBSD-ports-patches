@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.17 2012/08/25 13:15:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/11 10:50:25 espie Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	portable tools library
 
-DISTNAME=	ptlib-2.10.7
+DISTNAME=	ptlib-2.10.10
 
-SHARED_LIBS=	pt	4.0	# 2.10.3
+SHARED_LIBS=	pt	5.1	# 2.10.10
 
 EXTRACT_SUFX=	.tar.bz2
 
@@ -18,12 +18,9 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # MPL 1.0
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += SDL c crypto expat lber ldap ldap_r m pthread sasl2
-WANTLIB += sndio ssl stdc++
+WANTLIB += SDL c crypto expat lber ldap ldap_r m pthread sndio
+WANTLIB += ssl stdc++
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=opalvoip/}
 
@@ -62,7 +59,7 @@ MAKE_FLAGS=	MAJOR_VERSION=${LIBpt_VERSION:R} \
 		DEBUG_SONAME=libpt_d.so.${LIBpt_VERSION}
 
 USE_GMAKE=	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 post-extract:
 	@mkdir ${WRKSRC}/plugins/sound_sndio

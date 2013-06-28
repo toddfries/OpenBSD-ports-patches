@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.61 2012/08/30 20:54:59 pascal Exp $
+# $OpenBSD: Makefile,v 1.66 2013/06/04 18:41:41 naddy Exp $
 
 COMMENT-main=		GNU editor: extensible, customizable, self documenting
 COMMENT-el=		elisp sources for those who want to read/modify them
@@ -11,7 +11,7 @@ FULLPKGNAME-el=		emacs-el-${VERSION}
 FULLPKGPATH-el=		editors/emacs21,-el
 FULLPKGNAME-leim=	emacs-leim-${VERSION}
 FULLPKGPATH-leim=	editors/emacs21,-leim
-REVISION-main=		19
+REVISION-main=		22
 REVISION-el=		6
 REVISION-leim=		6
 
@@ -21,15 +21,11 @@ HOMEPAGE=		http://www.gnu.org/software/emacs/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		${MASTER_SITE_GNU:=emacs/}
 DISTFILES=		emacs-${VERSION}a.tar.gz leim-${VERSION}.tar.gz
 
 MULTI_PACKAGES=		-main -el -leim
-USE_GROFF =		Yes
 
 FLAVORS=		no_x11
 FLAVOR?=
@@ -40,11 +36,17 @@ MODGNU_EMACS_YOURE_WEIRD = Oh yes
 
 CONFIGURE_STYLE=	gnu dest
 CONFIGURE_ARGS=		${GCCARCH} --with-pop --with-system-malloc
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include \
-				  -I${LOCALBASE}/include/libpng" \
-			LDFLAGS="${ELF_TOOLCHAIN:L:S/yes/-Z/:S/no//} \
-				 -L${LOCALBASE}/lib -nopie"
+LDFLAGS=		${ELF_TOOLCHAIN:L:S/yes/-Z/:S/no//} \
+			-L${LOCALBASE}/lib
+
+.include <bsd.port.arch.mk>
+.if ! ${PROPERTIES:Mgcc2}
+LDFLAGS +=		-nopie
 CFLAGS +=		-fno-pie
+.endif
+
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="${LDFLAGS}"
 
 MAKE_ENV=		INSTALL_EMACS="${INSTALL_SCRIPT}"
 
@@ -67,6 +69,10 @@ RUN_DEPENDS-main=
 
 PKG_ARCH-el=		*
 
-NO_REGRESS=		Yes
+NO_TEST=		Yes
+
+post-build:
+	cd ${WRKSRC}; src/emacs -batch -f batch-byte-compile \
+	    lisp/mail/mh-{funcs,utils}.el
 
 .include <bsd.port.mk>

@@ -1,20 +1,17 @@
-# $OpenBSD: Makefile,v 1.33 2011/12/02 14:36:14 espie Exp $
+# $OpenBSD: Makefile,v 1.35 2013/06/01 17:59:55 naddy Exp $
 
 COMMENT=	Japanese-capable xterm
 
 VERSION=	6.2.0
 DISTNAME=	kterm-${VERSION}
 PKGNAME=	ja-kterm-${VERSION}
-REVISION=	7
+REVISION=	8
 CATEGORIES=	japanese x11
 
 MASTER_SITES=	${MASTER_SITE_XCONTRIB:=applications/}
 
 # License: X
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	ICE SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt curses c \
 		util
@@ -41,6 +38,6 @@ pre-configure:
 	  ${WRKSRC}/kterm.h
 .endif
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 .include <bsd.port.mk>

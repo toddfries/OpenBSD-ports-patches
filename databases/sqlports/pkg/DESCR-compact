@@ -39,9 +39,10 @@ stored in specialized tables, e.g.,:
     PKGNAME 
     PKGSPEC
     PKG_ARCH 
+    PREFIX
     PSEUDO_FLAVOR
     PSEUDO_FLAVORS 
-    REGRESS_IS_INTERACTIVE 
+    TEST_IS_INTERACTIVE 
     REVISION
     SEPARATE_BUILD 
     SHARED_ONLY 
@@ -49,9 +50,13 @@ stored in specialized tables, e.g.,:
     SUBPACKAGE 
     SUPDISTFILES 
     USE_*
+    README
 
 This information is mostly unchanged, except for replacing Yes/No variables
 with 1/0. Variables not present in a given port are left undefined.
+
+README corresponds to README files (full text value) and only exists when
+such files are present.
 
 Note that USE_LIBTOOL is 3-valued: 2 is gnu, 1 is yes, undef is no.
 
@@ -81,7 +86,7 @@ All depends are stored in a single table, including the type:
 0 -> library
 1 -> run
 2 -> build
-3 -> regress
+3 -> test
 with FULLDEPENDS the full text of the dependency, DEPENDSPATH the PKGPATH
 we depend upon, PKGSPEC the spec we depend upon (if explicit), and REST
 the rest.
@@ -107,6 +112,7 @@ MAINTAINER -> EMAIL
 CATEGORIES -> CATEGORYKEYS
 CONFIGURE -> CONFIGURE_KEYS
 MODULES -> MODULEKEYS
+PREFIX -> PREFIX
 WANTLIB.VALUE, SHARED_LIBS.LIBNAME -> LIBRARY
 PERMIT_*, SEPARATE_BUILD -> KEYWORDS2
 FLAVORS, PSEUDO_FLAVORS -> KEYWORDS

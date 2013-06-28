@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.112 2012/10/20 04:36:45 bentley Exp $
+# $OpenBSD: Makefile,v 1.114 2013/06/20 14:57:21 bcallah Exp $
 
      SUBDIR =
      SUBDIR += R
@@ -41,6 +41,7 @@
      SUBDIR += kst
      SUBDIR += lapack
      SUBDIR += libneural
+     SUBDIR += libqalculate
      SUBDIR += logic2cnf
      SUBDIR += lpsolve
      SUBDIR += lrs
@@ -106,6 +107,7 @@
      SUBDIR += udunits
      SUBDIR += ufconfig
      SUBDIR += umfpack
+     SUBDIR += veusz
      SUBDIR += wcalc
      SUBDIR += wmcalc
      SUBDIR += wxMaxima

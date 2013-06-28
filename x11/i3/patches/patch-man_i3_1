@@ -1,6 +1,6 @@
-$OpenBSD: patch-man_i3_1,v 1.4 2012/09/21 17:16:14 dcoppa Exp $
---- man/i3.1.orig	Wed Sep 19 18:08:20 2012
-+++ man/i3.1	Thu Sep 20 14:12:10 2012
+$OpenBSD: patch-man_i3_1,v 1.6 2013/06/02 11:24:06 dcoppa Exp $
+--- man/i3.1.orig	Mon Mar 18 22:43:47 2013
++++ man/i3.1	Thu May 23 11:36:28 2013
 @@ -240,7 +240,7 @@ When starting, i3 looks for configuration files in the
  .sp -1
  .IP "  2." 4.2

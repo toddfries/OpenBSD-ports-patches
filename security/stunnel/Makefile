@@ -1,17 +1,14 @@
-# $OpenBSD: Makefile,v 1.66 2012/10/20 15:37:40 gsoares Exp $
+# $OpenBSD: Makefile,v 1.70 2013/04/02 12:34:31 gsoares Exp $
 
 COMMENT=	SSL encryption wrapper for standard network daemons
 
-DISTNAME=	stunnel-4.54
+DISTNAME=	stunnel-4.56
 CATEGORIES=	security
 
 MAINTAINER=	Gleydson Soares <gsoares@openbsd.org>
 
 # GPLv2+ with OpenSSL exemption
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += c crypto pthread ssl util wrap z
 
@@ -27,9 +24,8 @@ CONFIGURE_ARGS+=	${CONFIGURE_SHARED} \
 			--with-ssl=/usr \
 			--with-threads=fork
 MODGNU_CONFIG_GUESS_DIRS=${WRKSRC}/auto
-NO_REGRESS=		Yes
+NO_TEST=		Yes
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 USE_GROFF =		Yes
 
 do-install:

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.12 2012/08/23 15:52:47 sthen Exp $
+# $OpenBSD: Makefile,v 1.16 2013/06/20 08:26:14 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	perl interface to the GSSAPIv2 library
 
 MODULES=	cpan
 DISTNAME=	GSSAPI-0.28
-REVISION=	0
+REVISION=	3
 CATEGORIES=	security
 USE_GROFF =	Yes
 
@@ -14,21 +14,15 @@ HOMEPAGE=	http://perlgssapi.sourceforge.net/
 
 # perl
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += asn1 c crypto gssapi krb5
+WANTLIB += asn1 com_err crypto gssapi heimbase
+WANTLIB += krb5 roken wind
 
 CPAN_AUTHOR=	AGROLMS
 
 MODCPAN_EXAMPLES=	Yes
 
-CONFIGURE_ARGS=	--gssapi_libs="-lgssapi -lkrb5 -lasn1 -lcrypto" \
-		--gssapi_inc="-I/usr/include/kerberosV" \
-		CCFLAGS="-DHEIMDAL"
-
 # Need to have a Kerberos ticket
-REGRESS_IS_INTERACTIVE= Yes
+TEST_IS_INTERACTIVE= Yes
 
 .include <bsd.port.mk>

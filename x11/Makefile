@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.504 2012/11/01 14:49:25 zinke Exp $
+# $OpenBSD: Makefile,v 1.517 2013/06/15 11:47:30 bcallah Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -32,6 +32,7 @@
      SUBDIR += dbus
      SUBDIR += dbus-glib
      SUBDIR += dbus-intf
+     SUBDIR += dbusmenu-qt
      SUBDIR += dbus-python
      SUBDIR += dbus-tcl
      SUBDIR += dclock
@@ -55,7 +56,6 @@
      SUBDIR += fbpanel
      SUBDIR += fleditor
      SUBDIR += fltk
-     SUBDIR += fltk2
      SUBDIR += fluxbox
      SUBDIR += fluxter
      SUBDIR += flvw
@@ -68,7 +68,6 @@
      SUBDIR += gammapage
      SUBDIR += gbdfed
      SUBDIR += gcolor2
-     SUBDIR += gdesklets
      SUBDIR += gdevilspie
      SUBDIR += gentoo
      SUBDIR += gigolo
@@ -82,6 +81,7 @@
      SUBDIR += goggles
      SUBDIR += golem
      SUBDIR += gpointing-device-settings
+     SUBDIR += grantlee
      SUBDIR += gromit
      SUBDIR += gtk+
      SUBDIR += gtk+2
@@ -129,6 +129,7 @@
      SUBDIR += jwm
      SUBDIR += kde
      SUBDIR += kdirstat
+     SUBDIR += keybinder
      SUBDIR += keynav
      SUBDIR += klavaro
      SUBDIR += kmplayer
@@ -166,6 +167,7 @@
      SUBDIR += openmotif
      SUBDIR += oroborus
      SUBDIR += osd_clock
+     SUBDIR += p5-Clipboard
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
      SUBDIR += p5-Gtk2-Ex-PodViewer
@@ -190,7 +192,6 @@
      SUBDIR += piewm
      SUBDIR += pinot
      SUBDIR += podbrowser
-     SUBDIR += polkit-gnome
      SUBDIR += polkit-qt4
      SUBDIR += pwm
      SUBDIR += py-Xlib
@@ -198,7 +199,6 @@
      SUBDIR += py-kiwi
      SUBDIR += py-osd
      SUBDIR += py-pyglet
-     SUBDIR += py-qt3
      SUBDIR += py-qt4
      SUBDIR += py-wxPython
      SUBDIR += pypanel
@@ -223,6 +223,7 @@
      SUBDIR += ruby-qt4
      SUBDIR += rxvt
      SUBDIR += rxvt-unicode
+     SUBDIR += sakura
      SUBDIR += sawfish
      SUBDIR += sclock
      SUBDIR += sisctrl
@@ -232,6 +233,7 @@
      SUBDIR += slim-themes
      SUBDIR += slock
      SUBDIR += smplayer
+     SUBDIR += smtube
      SUBDIR += spectrwm
      SUBDIR += spice-gtk
      SUBDIR += sselp
@@ -260,6 +262,7 @@
      SUBDIR += treewm
      SUBDIR += tvtwm
      SUBDIR += type1inst
+     SUBDIR += uwm
      SUBDIR += unclutter
      SUBDIR += vdesk
      SUBDIR += viewfax
@@ -267,6 +270,8 @@
      SUBDIR += vlc
      SUBDIR += waimea
      SUBDIR += wampager
+     SUBDIR += wbar
+     SUBDIR += windowlab
      SUBDIR += windowmaker
      SUBDIR += windowmaker-extra
      SUBDIR += winwrangler
@@ -304,6 +309,7 @@
      SUBDIR += xautolock
      SUBDIR += xawtv
      SUBDIR += xbae
+     SUBDIR += xbanish
      SUBDIR += xbindkeys
      SUBDIR += xcalib
      SUBDIR += xcb

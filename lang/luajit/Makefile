@@ -1,14 +1,19 @@
-# $OpenBSD: Makefile,v 1.2 2012/11/02 02:08:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2013/05/09 22:35:17 abieber Exp $
 
-ONLY_FOR_ARCHS = powerpc arm i386 amd64 mips64 mips64el
+ONLY_FOR_ARCHS = powerpc arm i386 amd64
+# for mips64* gcc 4.6 is needed, but that doesn't build on this arch (yet)
 
 SHARED_ONLY =	Yes
 SHARED_LIBS +=	luajit-${MODLUA_VERSION} 0.0 # 2.0.0
 
 COMMENT =	just-in-time compiler for Lua
-V =		2.0.0-beta11
+V =		2.0.1
+REVISION =	0
 DISTNAME =	LuaJIT-${V}
-PKGNAME =	${DISTNAME:L:S/-beta/beta/}
+PKGNAME =	${DISTNAME:L}
+
+PATCHFILES =		LuaJIT-2.0.1_hotfix1.patch{v2.0.1_hotfix1.patch}
+PATCH_DIST_STRIP =	-p1
 
 CATEGORIES =	lang
 
@@ -18,9 +23,6 @@ MAINTAINER =	Aaron Bieber <abieber@openbsd.org>
 
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB =	c m
 
@@ -29,7 +31,6 @@ MASTER_SITES =	${HOMEPAGE}download/
 MODULES =	lang/lua
 
 MODULES +=	gcc4
-MODGCC4_VERSION = 4.6
 MODGCC4_ARCHS =	powerpc
 MODGCC4_LANGS =	c
 
@@ -47,7 +48,7 @@ USE_GMAKE =	Yes
 post-install:
 	mv ${PREFIX}/bin/luajit-$V ${PREFIX}/bin/luajit${MODLUA_DEP_VERSION}
 
-do-regress:
+do-test:
 	${WRKSRC}/src/luajit -e "print('hello world')" | grep "^hello world$$"
 
 .include <bsd.port.mk>

@@ -1,12 +1,24 @@
 #-*- mode: Fundamental; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-# $OpenBSD: perl.port.mk,v 1.20 2012/08/15 09:38:11 espie Exp $
+# $OpenBSD: perl.port.mk,v 1.23 2013/05/24 14:58:45 zhuk Exp $
 #	Based on bsd.port.mk, originally by Jordan K. Hubbard.
 #	This file is in the public domain.
 
-REGRESS_TARGET ?=	test
+TEST_TARGET ?=	test
 MODPERL_BUILD ?= Build
 SHARED_ONLY ?= No
+
+# set /usr/bin/perl for executable scripts
+MODPERL_BIN_ADJ =	perl -pi \
+	-e '$$. == 1 && s|^.*env perl([0-9.]*)([\s].*)?$$|\#!/usr/bin/perl$$2|;' \
+	-e '$$. == 1 && s|^.*bin/perl([0-9.]*)([\s].*)?$$|\#!/usr/bin/perl$$2|;' \
+	-e 'close ARGV if eof;'
+
+MODPERL_ADJ_FILES ?=
+.if !empty(MODPERL_ADJ_FILES)
+MODPERL_pre-configure = for f in ${MODPERL_ADJ_FILES}; do \
+	${MODPERL_BIN_ADJ} ${WRKSRC}/$${f}; done
+.endif
 
 .if ${CONFIGURE_STYLE:L:Mmodbuild}
 MODPERL_configure = \
@@ -56,9 +68,9 @@ MODPERL_BUILD_TARGET = \
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} perl \
 		${MODPERL_BUILD} build
 
-MODPERL_REGRESS_TARGET = \
+MODPERL_TEST_TARGET = \
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} perl \
-		${MODPERL_BUILD} ${REGRESS_TARGET}
+		${MODPERL_BUILD} ${TEST_TARGET}
 MODPERL_INSTALL_TARGET = \
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} perl \
 		${MODPERL_BUILD} destdir=${WRKINST} ${FAKE_TARGET}
@@ -67,9 +79,9 @@ MODPERL_INSTALL_TARGET = \
 do-build: 
 	@${MODPERL_BUILD_TARGET}
 .  endif
-.  if !target(do-regress)
-do-regress:
-	@${MODPERL_REGRESS_TARGET}
+.  if !target(do-test)
+do-test:
+	@${MODPERL_TEST_TARGET}
 .  endif
 .  if !target(do-install)
 do-install:

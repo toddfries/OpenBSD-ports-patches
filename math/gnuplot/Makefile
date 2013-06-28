@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.53 2011/12/05 22:36:54 espie Exp $
+# $OpenBSD: Makefile,v 1.56 2013/06/04 18:41:52 naddy Exp $
 
 COMMENT =	command-driven interactive function plotting program
 
-V =		4.4
+V =		4.6
 PATCHLEVEL =	3
-REVISION =	3
 DISTNAME =	gnuplot-${V}.${PATCHLEVEL}
 CATEGORIES =	math graphics
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=gnuplot/}
@@ -12,12 +11,12 @@ MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=gnuplot/}
 HOMEPAGE =	http://www.gnuplot.info/
 
 # see Copyright in source
+# http://gnuplot.cvs.sourceforge.net/gnuplot/gnuplot/Copyright
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
-WANTLIB =	c m ncurses readline stdc++ termcap z
+WANTLIB =	c m ncurses readline stdc++ z
+
+BUILD_DEPENDS =	editors/emacs21
 
 FLAVORS =	no_cairo no_x11
 FLAVOR ?=
@@ -29,15 +28,15 @@ CONFIGURE_ARGS =	--without-linux-vga \
 			--with-readline \
 			--with-lasergnu \
 			--disable-wxwidgets \
+			--disable-qt \
 			--without-lua \
-			--without-lisp-files \
 			--without-pdf
-CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
 FAKE_FLAGS =		appdefaultdir="${PREFIX}/lib/X11/app-defaults/"
 
-REGRESS_IS_INTERACTIVE =	x11
+TEST_IS_INTERACTIVE =	x11
 
 SUBST_VARS =	V
 
@@ -47,8 +46,7 @@ CONFIGURE_ARGS += --without-x \
 .else
 MODULES +=	converters/libiconv
 LIB_DEPENDS +=	graphics/gd
-USE_GROFF =	Yes
-WANTLIB +=	X11 fontconfig freetype ${MODLIBICONV_WANTLIB} jpeg png gd>=20
+WANTLIB +=	X11 fontconfig freetype jpeg png gd>=20 ${MODLIBICONV_WANTLIB}
 CONFIGURE_ARGS += --with-x
 .endif
 
@@ -58,10 +56,7 @@ CONFIGURE_ARGS += --without-cairo
 MODULES +=	devel/gettext
 LIB_DEPENDS +=	devel/pango	\
 		graphics/cairo
-WANTLIB +=	GL Xrender \
-		expat gmodule-2.0 gobject-2.0 gthread-2.0 pixman-1 \
-		pthread pthread-stubs xcb xcb-render xcb-shm \
-		pangocairo-1.0 cairo glib-2.0 pango-1.0 pangoft2-1.0
+WANTLIB +=	gobject-2.0 pangocairo-1.0 cairo glib-2.0 pango-1.0 pangoft2-1.0
 .endif
 
 post-install:

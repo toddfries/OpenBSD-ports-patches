@@ -1,11 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2012/03/15 20:01:03 landry Exp $
+# $OpenBSD: Makefile,v 1.5 2013/04/26 13:04:14 bcallah Exp $
 
+V =		2.1
 COMMENT =	scrabble game
-DISTNAME =	eliot-1.14
+DISTNAME =	eliot-${V}
 CATEGORIES =	games
 
 HOMEPAGE =	http://nongnu.org/eliot/
-MASTER_SITES =	${MASTER_SITE_SAVANNAH:=eliot/releases/}
+MAINTAINER =	Brian Callahan <bcallah@openbsd.org>
+
+MASTER_SITES =	${MASTER_SITE_SAVANNAH:=eliot/releases/${V}/}
 
 EXTRACT_ONLY =	${DISTNAME}${EXTRACT_SUFX}
 DISTFILES +=	${DISTNAME}${EXTRACT_SUFX}
@@ -18,9 +21,6 @@ MASTER_SITES0 =	${MASTER_SITE_SAVANNAH:=eliot/dict/}
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =	x11/qt4 devel/gettext
 
@@ -29,10 +29,11 @@ CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \
 			 LDFLAGS="-L${X11BASE}/lib -pthread -L${LOCALBASE}/lib -liconv"
 USE_GMAKE =	Yes
 
-BUILD_DEPENDS =	devel/boost
+BUILD_DEPENDS =	devel/boost \
+		devel/libexecinfo
 RUN_DEPENDS =	devel/desktop-file-utils
 LIB_DEPENDS =	textproc/arabica devel/libconfig
-WANTLIB +=	QtGui c m pthread stdc++
+WANTLIB +=	lib/qt4/QtGui lib/qt4/QtNetwork c m pthread stdc++
 WANTLIB +=	arabica config++ expat ncursesw
 
 post-configure:

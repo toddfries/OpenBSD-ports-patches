@@ -1,19 +1,14 @@
-# $OpenBSD: Makefile,v 1.19 2012/08/18 22:47:00 avsm Exp $
+# $OpenBSD: Makefile,v 1.22 2013/03/11 11:42:41 espie Exp $
 
 COMMENT=	LaTeX to html translator
 
 CATEGORIES=	textproc print
 
 # Q Licence 1.0 + LGPL for parts of the runtime
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-WANTLIB=		c m 
+WANTLIB=		c m
 
-BUILD_DEPENDS=	lang/ocaml
-
-DISTNAME =	hevea-1.10
+DISTNAME =	hevea-2.00
 MASTER_SITES =	http://para.inria.fr/~maranget/hevea/distri/
 
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} ${DISTNAME}-manual${EXTRACT_SUFX}
@@ -21,7 +16,7 @@ DISTFILES=	${DISTNAME}${EXTRACT_SUFX} ${DISTNAME}-manual${EXTRACT_SUFX}
 MAINTAINER=	Marc Espie <espie@openbsd.org>
 HOMEPAGE=	http://para.inria.fr/%7Emaranget/hevea/
 
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 MODULES +=	lang/ocaml
 

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.9 2012/07/14 12:41:49 edd Exp $
+# $OpenBSD: Makefile,v 1.11 2013/03/11 11:23:50 espie Exp $
 
 COMMENT =		robust sending of e-mail to external commands
 
-DISTNAME =		extsmail-1.5
+DISTNAME =		extsmail-1.6
 CATEGORIES =		mail
 
 HOMEPAGE =		http://tratt.net/laurie/src/extsmail/
@@ -11,15 +11,12 @@ MAINTAINER =		Laurence Tratt <laurie@tratt.net>
 
 # BSD / MIT
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MASTER_SITES =		${HOMEPAGE}releases/
 
 CONFIGURE_STYLE =	gnu
 
-NO_REGRESS =		Yes
+NO_TEST =		Yes
 
 WANTLIB =		c
 

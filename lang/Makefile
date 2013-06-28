@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.142 2012/10/31 19:27:29 kili Exp $
+# $OpenBSD: Makefile,v 1.153 2013/06/19 22:39:01 jturner Exp $
 
      SUBDIR =
      SUBDIR += STk
+     SUBDIR += abcl
      SUBDIR += antlr3
      SUBDIR += arena
      SUBDIR += boo
@@ -18,9 +19,8 @@
      SUBDIR += eltclsh
      SUBDIR += erlang
      SUBDIR += expect
-     SUBDIR += expect,no_tk
-     SUBDIR += ezm3
      SUBDIR += feldspar
+     SUBDIR += fpc
      SUBDIR += freehdl
      SUBDIR += gambit
      SUBDIR += gawk
@@ -38,6 +38,7 @@
      SUBDIR += hs-HsParrot
      SUBDIR += hs-syntactic
      SUBDIR += hugs
+     SUBDIR += io
      SUBDIR += icon
      SUBDIR += intel2gas
      SUBDIR += iverilog
@@ -45,6 +46,7 @@
      SUBDIR += jikes
      SUBDIR += jimtcl
      SUBDIR += jruby
+     SUBDIR += kawa
      SUBDIR += libv8
      SUBDIR += librep
      SUBDIR += lua
@@ -57,6 +59,7 @@
      SUBDIR += newlisp
      SUBDIR += nhc98
      SUBDIR += node
+     SUBDIR += node-typescript
      SUBDIR += nqp
      SUBDIR += obc
      SUBDIR += ocaml
@@ -70,9 +73,9 @@
      SUBDIR += petite-chez
      SUBDIR += pfe
      SUBDIR += php
-     SUBDIR += pm3
      SUBDIR += processing
      SUBDIR += pugs
+     SUBDIR += pypy
      SUBDIR += python
      SUBDIR += railo
      SUBDIR += rakudo

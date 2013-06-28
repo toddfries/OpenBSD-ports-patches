@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.17 2012/09/11 23:41:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2013/03/21 08:48:55 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -15,9 +15,6 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 AUTOCONF_VERSION=	2.59
 
@@ -30,7 +27,6 @@ BUILD_DEPENDS+=		${MODGNU_AUTOCONF_DEPENDS} \
 WEBROOT=		/var/www
 SUBST_VARS=		WEBROOT
 
-USE_LIBTOOL=		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--enable-xcache
@@ -38,12 +34,12 @@ CONFIGURE_ENV=		AUTOCONF_VERSION=${AUTOCONF_VERSION}
 
 DESTDIRNAME=	INSTALL_ROOT
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 FLAVORS=	coverager
 FLAVOR?=
 
-.if ${FLAVOR:L:Mcoverager}
+.if ${FLAVOR:Mcoverager}
 CONFIGURE_ARGS+=	--enable-xcache-coverager
 .endif
 
@@ -62,7 +58,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/xcache.ini \
 		${PREFIX}/share/examples/php-${MODPHP_VERSION}
 
-.if ${FLAVOR:L:Mcoverager}
+.if ${FLAVOR:Mcoverager}
 	${INSTALL_DATA_DIR} ${WRKINST}${WEBROOT}/xcache/coverager
 	cd ${WRKSRC}/coverager && ${INSTALL_DATA} * ${WRKINST}${WEBROOT}/xcache/coverager
 .endif

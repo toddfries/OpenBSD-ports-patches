@@ -11,3 +11,4 @@ distfiles
 packages
 plist
 update
+obj.*.*

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.43 2012/09/27 09:47:42 jasper Exp $
+# $OpenBSD: Makefile,v 1.45 2013/04/16 13:17:02 ajacoutot Exp $
 
 COMMENT=		utility library for XKB
 
@@ -11,9 +11,6 @@ HOMEPAGE=		http://www.freedesktop.org/wiki/Software/LibXklavier
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += X11 Xext Xi ffi glib-2.0 gobject-2.0 gthread-2.0 m
 WANTLIB += pcre xcb xkbfile xml2 z pthread
@@ -21,7 +18,7 @@ WANTLIB += pcre xcb xkbfile xml2 z pthread
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS=		goi
+MODGNOME_TOOLS=		gi
 
 BUILD_DEPENDS=		${RUN_DEPENDS}
 RUN_DEPENDS=		devel/iso-codes

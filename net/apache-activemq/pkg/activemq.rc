@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# $OpenBSD: activemq.rc,v 1.3 2013/03/13 16:30:11 ajacoutot Exp $
+
+daemon="${TRUEPREFIX}/activemq/bin/activemq"
+daemon_user="_activemq"
+
+. /etc/rc.d/rc.subr
+
+rc_reload=NO
+
+rc_start() {
+	${rcexec} "PATH=$PATH:$(dirname $(${LOCALBASE}/bin/javaPathHelper -c apache-activemq)) ${daemon} start"
+}
+ 
+rc_check() {
+	PATH=$PATH:$(dirname $(${LOCALBASE}/bin/javaPathHelper -c apache-activemq)) ${daemon} status
+}
+
+rc_stop() {
+	PATH=$PATH:$(dirname $(${LOCALBASE}/bin/javaPathHelper -c apache-activemq)) ${daemon} stop
+}
+
+rc_cmd $1

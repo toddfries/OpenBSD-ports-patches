@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2011/09/28 09:51:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.10 2013/04/16 13:17:01 ajacoutot Exp $
 
 COMMENT =	library for writing single instance GTK+3 applications
 
@@ -15,9 +15,6 @@ HOMEPAGE =	http://live.gnome.org/LibUnique
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =		devel/gettext \
 			x11/gnome
@@ -30,7 +27,7 @@ WANTLIB += gthread-2.0 gtk-3 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread-stubs xcb xcb-render xcb-shm
 WANTLIB += z
 
-MODGNOME_TOOLS= 	goi
+MODGNOME_TOOLS= 	gi
 
 LIB_DEPENDS =		x11/dbus-glib \
 			x11/gtk+3

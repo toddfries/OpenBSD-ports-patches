@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2012/04/23 06:40:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.91 2013/06/04 18:41:40 naddy Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,7 +8,7 @@ VERSION=	2.8.6
 MAJORVER=	${VERSION:C/..$//}
 DISTNAME=	abiword-${VERSION}
 
-REVISION=	5
+REVISION=	7
 
 # Merge a patch from Fedora to change default font from Times Roman to
 # DejaVu Serif.: fixes font corruption issue on machines where
@@ -33,9 +33,6 @@ LIB_DEPENDS=	devel/fribidi \
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB += GL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xxf86vm atk-1.0 bz2 c cairo
@@ -45,10 +42,10 @@ WANTLIB += gmodule-2.0 gobject-2.0 gsf-1 gthread-2.0 gtk-x11-2.0
 WANTLIB += jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png pthread pthread-stubs rsvg-2 stdc++ wmf-0.2 wmflite-0.2
 WANTLIB += wv-1.2 xcb xcb-render xcb-shm xml2 z
+WANTLIB += harfbuzz
 
 MASTER_SITES=   ${HOMEPAGE}/downloads/abiword/${VERSION}/source/
 
-USE_LIBTOOL=	Yes
 USE_GMAKE=	Yes
 USE_GROFF=	Yes
 
@@ -71,8 +68,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 #		--disable-collab-backend-tcp
 #		--disable-collab-backend-service
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include \
-			-I${LOCALBASE}/include/libpng" \
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 SUBST_VARS=	MAJORVER

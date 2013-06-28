@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2010/10/18 18:13:15 espie Exp $
+# $OpenBSD: Makefile,v 1.17 2013/03/21 08:46:32 ajacoutot Exp $
 # FreeBSD Id: Makefile,v 1.14 1998/04/05 04:46:33 max Exp $
 
 COMMENT=	Kanji -> kana converter
@@ -12,17 +12,13 @@ HOMEPAGE=	http://kakasi.namazu.org/
 
 MAINTAINER=	Marc Espie <espie@openbsd.org>
 
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB=		c
 
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS+= ${CONFIGURE_SHARED}
 CONFIGURE_ARGS+= --enable-static
-USE_LIBTOOL=		Yes
 USE_GROFF =	Yes
 
 post-install:

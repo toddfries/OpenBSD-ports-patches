@@ -1,18 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2012/03/29 13:38:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 10:50:00 espie Exp $
 
 COMMENT=		Standalone version of arguments parsing functions from GLIBC
 
 DISTNAME=		argp-standalone-1.3
+REVISION=		0
 
 CATEGORIES=		devel
 
-MAINTAINER=		Peter Stromberg <wilfried@openbsd.org>
-
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=		http://www.lysator.liu.se/~nisse/misc/
 

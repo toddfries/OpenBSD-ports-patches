@@ -1,28 +1,23 @@
-# $OpenBSD: Makefile,v 1.9 2011/09/16 09:24:55 espie Exp $
+# $OpenBSD: Makefile,v 1.12 2013/03/13 16:09:17 benoit Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	Radix tree implementation for Python
 
-DISTNAME=	py-radix-0.4
-REVISION =	6
+DISTNAME =	py-radix-0.5
 CATEGORIES=	devel net
-MAINTAINER=	Damien Miller <djm@openbsd.org>
 
 MASTER_SITES=	http://www2.mindrot.org/files/py-radix/
 HOMEPAGE=	http://www.mindrot.org/py-radix.html
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MODULES=		lang/python
 
-WANTLIB +=		${MODPY_WANTLIB}
+WANTLIB +=		${MODPY_WANTLIB} pthread
 
-do-regress: fake
+do-test: fake
 	@cd ${WRKSRC} && ${MAKE_ENV} \
 	    PYTHONPATH=${WRKINST}${MODPY_SITEPKG} ${MODPY_BIN} ./test.py
 

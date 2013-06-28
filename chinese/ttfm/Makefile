@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.23 2012/10/23 09:44:02 sthen Exp $
+# $OpenBSD: Makefile,v 1.25 2013/03/11 20:59:04 sthen Exp $
 
 COMMENT=	big5/gb enhanced truetype font manager
 
 DISTNAME=	ttfm-0.9.5
 PKGNAME=	zh-${DISTNAME}
-REVISION=	0
+REVISION=	1
 CATEGORIES=	chinese
 
 MAINTAINER=	Kevin Lo <kevlo@openbsd.org>
 
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 WANTLIB=	c freetype z
 
@@ -21,7 +18,7 @@ MASTER_SITES=	${MASTER_SITE_BACKUP}
 MAKE_FLAGS=	CC="${CC}" CFLAGS='${CFLAGS} `freetype-config --cflags`'
 
 USE_GROFF =	Yes
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 DOCS=	README USAGE
 SCRIPTS=	gscjk.ttfm xttfm.ttfm

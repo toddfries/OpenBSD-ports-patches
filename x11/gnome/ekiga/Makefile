@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.59 2012/10/16 11:56:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.70 2013/06/20 06:54:37 ajacoutot Exp $
 
 # if ekiga ever moves to gstreamer, detect_sndiosink_devices() will need
 # to be implemented in:
@@ -9,10 +9,11 @@ SHARED_ONLY=	Yes
 COMMENT=	SIP and H.323 compatible conferencing application
 
 GNOME_PROJECT=	ekiga
-GNOME_VERSION=	3.9.90
-REVISION=	2
+GNOME_VERSION=	4.0.1
+REVISION=	4
 
-SUBST_VARS +=	GNOME_VERSION # pkg/PLIST
+# pkg/PLIST
+SUBST_VARS +=	GNOME_VERSION
 
 CATEGORIES=	net multimedia
 
@@ -20,34 +21,31 @@ HOMEPAGE=	http://www.ekiga.org/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB += GL SDL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender Xv Xxf86vm asn1 atk-1.0
-WANTLIB += avahi-client avahi-common avahi-glib boost_signals-mt
-WANTLIB += c cairo camel-1.2 com_err crypto dbus-1 dbus-glib-1
-WANTLIB += drm ebook-1.2 edataserver-1.2 expat ffi fontconfig
-WANTLIB += freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gmodule-2.0 gobject-2.0 gssapi gthread-2.0 gtk-x11-2.0
-WANTLIB += krb5 lber-2.4 ldap-2.4 ldap_r-2.4 m notify nspr4 nss3
-WANTLIB += opal pango-1.0 pangocairo-1.0 pangoft2-1.0 gnome-keyring
-WANTLIB += pcre pixman-1 plc4 plds4 png pt pthread pthread-stubs
-WANTLIB += sasl2 smime3 sndio softokn3 soup-2.4 speexdsp sqlite3
+WANTLIB += SDL X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender Xv asn1 atk-1.0 boost_signals-mt c cairo
+WANTLIB += camel-1.2 com_err crypto db dbus-1 dbus-glib-1 ebackend-1.2
+WANTLIB += ebook-1.2 ebook-contacts-1.2 edata-book-1.2 edataserver-1.2
+WANTLIB += expat ffi fontconfig freetype gck-1 gcr-base-3 gcrypt
+WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
+WANTLIB += gobject-2.0 gpg-error graphite2 gssapi gthread-2.0
+WANTLIB += gtk-x11-2.0 harfbuzz krb5 lber-2.4
+WANTLIB += ldap-2.4 ldap_r-2.4 m notify nspr4 nss3 nssutil3 opal
+WANTLIB += p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 plc4 plds4 png pt pthread pthread-stubs sasl2
+WANTLIB += secret-1 smime3 sndio softokn3 soup-2.4 speexdsp sqlite3
 WANTLIB += ssl ssl3 stdc++ usbhid xcb xcb-render xcb-shm xml2
-WANTLIB += gck-1 gcr-base-3 gcrypt gpg-error harfbuzz icudata
-WANTLIB += icule icuuc nssutil3 p11-kit z
+WANTLIB += heimbase roken wind
+WANTLIB += z
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/gconf2
 
-LIB_DEPENDS=	net/avahi \
-		net/opal>=3.10.7 \
+LIB_DEPENDS=	net/opal>=3.10.10 \
 		devel/sdl \
-		databases/evolution-data-server>=3.6.0p3 \
-		devel/libnotify>=0.7.2 \
+		databases/evolution-data-server \
+		devel/libnotify \
 		devel/boost \
 		x11/gtk+2
 
@@ -59,7 +57,7 @@ MODGCONF2_SCHEMAS_DIR= ekiga
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS=	yelp
+MODGNOME_TOOLS=		yelp
 MODGNOME_LDFLAGS=-L${X11BASE}/lib
 
 LIBTOOL_FLAGS=	--tag=disable-static

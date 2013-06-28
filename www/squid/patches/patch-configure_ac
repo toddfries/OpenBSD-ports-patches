@@ -1,0 +1,18 @@
+$OpenBSD: patch-configure_ac,v 1.7 2013/05/25 12:33:05 sthen Exp $
+--- configure.ac.orig	Mon May 20 12:50:55 2013
++++ configure.ac	Sat May 25 12:08:28 2013
+@@ -3166,6 +3166,14 @@ if test "x$squid_host_os" = "xmingw" ; then
+   ac_cv_func_statfs='yes'
+ fi
+ 
++dnl Some systems (mostly BSDs) require -lexecinfo for backtrace_symbols_fd()
++AC_CHECK_LIB(execinfo,backtrace_symbols_fd,[BACKTRACE_LIB="-lexecinfo"])
++oLIBS=$LIBS
++LIBS="$BACKTRACE_LIB"
++AC_CHECK_FUNCS(backtrace_symbols_fd)
++LIBS=$oLIBS
++AC_SUBST(BACKTRACE_LIB)
++
+ dnl Check for library functions
+ AC_CHECK_FUNCS(\
+ 	backtrace_symbols_fd \

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2011/08/31 15:15:25 mpi Exp $
+@comment $OpenBSD: PLIST,v 1.3 2013/04/01 07:27:19 ajacoutot Exp $
 @bin bin/gpointing-device-settings
 include/gpointing-device-settings/
 include/gpointing-device-settings/gpds-gconf.h
@@ -10,6 +10,7 @@ include/gpointing-device-settings/gpds-xinput-ui.h
 include/gpointing-device-settings/gpds-xinput-utils.h
 include/gpointing-device-settings/gpds-xinput.h
 include/gpointing-device-settings/gpointing-device-settings.h
+lib/gnome-settings-daemon-2.0/
 @comment lib/gnome-settings-daemon-2.0/libpointing-device.la
 lib/gnome-settings-daemon-2.0/libpointing-device.so
 lib/gnome-settings-daemon-2.0/pointing-device.gnome-settings-plugin
@@ -49,9 +50,9 @@ share/locale/pt/LC_MESSAGES/gpointing-device-settings.mo
 share/locale/sl/LC_MESSAGES/gpointing-device-settings.mo
 share/locale/sv/LC_MESSAGES/gpointing-device-settings.mo
 share/locale/zh_CN/LC_MESSAGES/gpointing-device-settings.mo
-@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+@unexec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-uninstall-rule %D/${SCHEMAS_INSTDIR}/*.schemas >/dev/null 2>&1
 ${SCHEMAS_INSTDIR}/
 ${SCHEMAS_INSTDIR}/gpointing-device-settings_gnome_settings_daemon.schemas
-@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas > /dev/null
+@exec GCONF_CONFIG_SOURCE=`%D/bin/gconftool-2 --get-default-source` %D/bin/gconftool-2 --makefile-install-rule %D/${SCHEMAS_INSTDIR}/*.schemas >/dev/null 2>&1
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database

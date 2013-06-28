@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.27 2012/08/26 12:42:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2013/04/24 07:41:33 ajacoutot Exp $
 
 COMMENT=	free open source planetarium
 
-DISTNAME=	stellarium-0.11.4a
-WRKDIST=	${WRKDIR}/stellarium-0.11.4
+DISTNAME=	stellarium-0.12.1
 
 CATEGORIES=	astro x11
 
@@ -13,9 +12,6 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=stellarium/}
 
@@ -28,7 +24,8 @@ MODULES=	devel/gettext \
 
 # used to download more stars definitions
 RUN_DEPENDS=	net/curl \
-		devel/desktop-file-utils
+		devel/desktop-file-utils \
+		x11/gtk+2,-guic
 
 CONFIGURE_STYLE=cmake
 CONFIGURE_ENV=	HOME=${WRKDIR}
@@ -38,7 +35,7 @@ CONFIGURE_ARGS=	-Wno-dev \
 
 PORTHOME=	${WRKDIR}
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 pre-configure:
 	perl -pi -e 's,/usr/local,${LOCALBASE},g' \

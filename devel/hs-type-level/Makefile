@@ -1,18 +1,15 @@
-# $OpenBSD: Makefile,v 1.4 2012/10/28 23:29:50 kili Exp $
+# $OpenBSD: Makefile,v 1.6 2013/03/11 10:50:08 espie Exp $
 
 COMMENT =		type-level programming library
 
 DISTNAME =		type-level-0.2.4
-REVISION=		2
+REVISION=		3
 CATEGORIES =		devel
 
 MAINTAINER =		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 VMEM_WARNING =		Yes
 

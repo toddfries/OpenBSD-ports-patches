@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.11 2012/04/28 10:52:08 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.13 2013/03/11 12:27:54 sthen Exp $
 
 V=		2.2.9
 CATEGORIES=	security
@@ -6,10 +6,7 @@ CATEGORIES=	security
 HOMEPAGE=	http://www.nessus.org/
 
 # GPL
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
 
 MASTER_SITES=	ftp://ftp.gwdg.de/pub/linux/misc/nessus/nessus-${V}/src/
 
@@ -20,6 +17,6 @@ CONFIGURE_ARGS+=--sharedstatedir=/var	\
 		--enable-bpf-sharing	\
 		--enable-shared
 
-NO_REGRESS=	Yes
+NO_TEST=	Yes
 
 WRKDIST=	${WRKDIR}/${DISTNAME:S/-${V}//:S/-GPL//}

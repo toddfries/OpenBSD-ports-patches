@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2012/09/07 06:15:06 jasper Exp $
+# $OpenBSD: Makefile,v 1.3 2013/03/21 08:48:54 ajacoutot Exp $
 
 COMMENT=	open source SIP User-Agent library
 
@@ -14,9 +14,6 @@ HOMEPAGE=	http://sofia-sip.sourceforge.net/
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=sofia-sip/}
 
@@ -28,7 +25,6 @@ BUILD_DEPENDS=		devel/check
 LIB_DEPENDS=		devel/glib2
 
 USE_GMAKE=		Yes
-USE_LIBTOOL=		Yes
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	${CONFIGURE_SHARED}

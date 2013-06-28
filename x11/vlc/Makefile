@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.158 2012/10/22 20:18:44 brad Exp $
+# $OpenBSD: Makefile,v 1.173 2013/06/04 18:42:00 naddy Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	VideoLAN client; multimedia player
 COMMENT-jack=	JACK audio output module for VLC
 
-V=		2.0.4
+V=		2.0.7
 DISTNAME=	vlc-${V}
 PKGNAME-main=	${DISTNAME}
 PKGNAME-jack=	vlc-jack-${V}
@@ -23,36 +23,31 @@ MAINTAINER=	Brad Smith <brad@comstyle.com>
 # LGPLv2.1+ and GPLv2+
 PERMIT_PACKAGE_CDROM=	patents
 PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB-common=	dbus-1 m ${MODGETTEXT_WANTLIB}
-WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 \
-		Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama \
-		Xpm Xrandr Xrender ass atk-1.0 avcodec avformat \
-		avutil bluray bz2 c cairo cddb dvbpsi dvdnav dvdread \
-		ebml stdc++ expat ffi fontconfig freetype fribidi gcrypt \
-		gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 \
-		gmp gnutls gobject-2.0 gpg-error gsm gthread-2.0 gtk-x11-2.0 \
-		harfbuzz hogweed icudata icule icuuc jpeg matroska mp3lame \
-		nettle notify opus orc-0.4 ogg p11-kit pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pcre pixman-1 png portaudio postproc pthread-stubs \
-		pthread samplerate schroedinger-1.0>=2.0 sndio speex speexdsp \
-		sqlite3 swscale tag tar tasn1 tiff theoradec theoraenc usbhid \
-		vorbis vorbisenc vpx webp x264 xcb-composite xcb-keysyms xcb-randr \
-		xcb-render xcb-shape xcb-shm xcb-xfixes xcb-xv xcb xml2 xvidcore z \
-		${WANTLIB-common}
+WANTLIB-common=	c dbus-1 m pthread ${MODGETTEXT_WANTLIB}
+WANTLIB-main=	GL ICE lib/qt4/QtGui QtCore SM SDL SDL_image X11 Xcomposite \
+		Xcursor Xdamage Xext Xfixes Xi Xinerama Xpm Xrandr Xrender \
+		ass atk-1.0 avcodec avformat avutil bluray cairo cddb dvbpsi \
+		dvdnav dvdread ebml stdc++ expat ffi fontconfig freetype \
+		fribidi gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
+		gmodule-2.0 gmp gnutls gobject-2.0 gpg-error graphite2 \
+		gthread-2.0 gtk-x11-2.0 harfbuzz hogweed \
+		jpeg matroska nettle notify opus orc-0.4 ogg p11-kit pango-1.0 \
+		pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png postproc \
+		pthread-stubs samplerate schroedinger-1.0>=2.0 sndio speex \
+		speexdsp swscale tag tar tasn1 tiff usbhid vorbis vorbisenc \
+		webp x264 xcb-composite xcb-keysyms xcb-randr xcb-render \
+		xcb-shape xcb-shm xcb-xfixes xcb-xv xcb xml2 z ${WANTLIB-common}
 WANTLIB-jack=	jack vlccore ${WANTLIB-common}
 
 AUTOCONF_VERSION= 2.69
 AUTOMAKE_VERSION= 1.11
 
 MODULES=	devel/gettext \
-		x11/qt4 \
-		gcc4
-MODGCC4_VERSION= 4.6
-MODGCC4_ARCHS=	amd64 i386
-MODGCC4_LANGS=	c
+		lang/clang \
+		x11/qt4
+MODCLANG_ARCHS=	amd64 i386
+MODCLANG_LANGS=	c
 LIB_DEPENDS-main= ${MODQT4_LIB_DEPENDS} \
 		${MODGETTEXT_LIB_DEPENDS} \
 		archivers/libtar \
@@ -60,7 +55,6 @@ LIB_DEPENDS-main= ${MODQT4_LIB_DEPENDS} \
 		audio/libsamplerate \
 		audio/libvorbis \
 		audio/opus \
-		audio/portaudio-svn \
 		audio/speex \
 		audio/taglib \
 		devel/fribidi \
@@ -68,7 +62,7 @@ LIB_DEPENDS-main= ${MODQT4_LIB_DEPENDS} \
 		devel/libnotify>=0.7.2 \
 		devel/sdl \
 		devel/sdl-image \
-		graphics/ffmpeg>=20110408 \
+		graphics/ffmpeg>=20121026 \
 		graphics/libdvbpsi \
 		graphics/png \
 		multimedia/libass \
@@ -96,7 +90,7 @@ RUN_DEPENDS-jack= ${BUILD_PKGPATH}
 
 MAKE_ENV=	AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSION}
 
-CPPFLAGS=	-I${X11BASE}/include -I${LOCALBASE}/include -I${LOCALBASE}/include/libpng
+CPPFLAGS=	-I${X11BASE}/include -I${LOCALBASE}/include
 
 USE_GMAKE=	Yes
 # Fails to link _pic libs properly resulting in undefined symbols in the live555 plugin
@@ -132,6 +126,7 @@ CONFIGURE_ARGS+=--disable-a52 \
 		--disable-mtp \
 		--disable-neon \
 		--disable-projectm \
+		--disable-portaudio \
 		--disable-pulse \
 		--disable-shout \
 		--disable-sid \
@@ -144,7 +139,6 @@ CONFIGURE_ARGS+=--disable-a52 \
 		--disable-upnp \
 		--disable-v4l2 \
 		--disable-zvbi \
-		--enable-media-library \
 		--enable-real \
 		--enable-realrtsp \
 		--without-contrib \
@@ -162,7 +156,7 @@ FLAVOR?=
 
 MULTI_PACKAGES=	-main
 
-.if !${FLAVOR:L:Mno_jack}
+.if !${FLAVOR:Mno_jack}
 MULTI_PACKAGES+=-jack
 .endif
 

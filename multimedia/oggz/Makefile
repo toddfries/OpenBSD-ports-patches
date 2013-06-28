@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2010/11/19 07:23:15 espie Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/21 08:46:33 ajacoutot Exp $
 
 COMMENT =	inspect, edit and validate Ogg files
 
@@ -14,9 +14,6 @@ SHARED_LIBS =	oggz	0.0
 
 # BSD
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 
 MASTER_SITES =	http://downloads.xiph.org/releases/liboggz/
 
@@ -25,6 +22,5 @@ WANTLIB =	c ogg m
 LIB_DEPENDS =	audio/libogg
 
 CONFIGURE_STYLE =	gnu
-USE_LIBTOOL =		Yes
 
 .include <bsd.port.mk>

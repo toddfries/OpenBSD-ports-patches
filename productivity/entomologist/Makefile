@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.5 2012/06/15 08:32:17 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.7 2013/03/11 11:37:54 espie Exp $
 
 COMMENT =	bug tracker client
 DISTNAME =	entomologist-0.6
-REVISION=	3
+REVISION=	4
 CATEGORIES =	productivity
 
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=entomologist/}
@@ -10,21 +10,19 @@ HOMEPAGE =	http://entomologist.sourceforge.net
 
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
-PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =Yes
-PERMIT_DISTFILES_FTP =	Yes
 
 MODULES =	x11/qt4
 RUN_DEPENDS =	devel/desktop-file-utils \
 		x11/gtk+2 \
 		x11/gtk+2,-guic
 WANTLIB +=	QtGui QtNetwork QtSql QtXml c m pthread stdc++
+WANTLIB +=	ICE SM X11 Xext Xi Xinerama Xrender fontconfig freetype
 
 MAKE_FLAGS =	CXX=${CXX} \
 		QMAKE_CXXFLAGS="${CXXFLAGS} -g"
 FAKE_FLAGS =	INSTALL_ROOT=${DESTDIR}
 CONFIGURE_ARGS =	PREFIX=${PREFIX}
-NO_REGRESS =	Yes
+NO_TEST =	Yes
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/main.cpp

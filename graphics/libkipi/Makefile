@@ -1,29 +1,29 @@
-# $OpenBSD: Makefile,v 1.20 2011/11/02 09:57:22 jasper Exp $
+# $OpenBSD: Makefile,v 1.25 2013/06/24 15:53:38 zhuk Exp $
 
 COMMENT =		kde image plugins api
 CATEGORIES =		graphics devel x11 x11/kde
 V =			0.1.6
 DISTNAME =		libkipi-$V
-REVISION =		3
+REVISION =		5
 SHARED_LIBS +=	kipi                 1.4      # .2.0
 EXTRACT_SUFX =		.tar.bz2
 HOMEPAGE =		http://extragear.kde.org/apps/kipi/
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=kipi/}
 
 SHARED_ONLY =		Yes
-LIB_DEPENDS +=		x11/kde/libs3
 
-WANTLIB =		ICE Xrender SM Xext X11 util m z \
-			jpeg png art_lgpl_2 idn \
-			stdc++ xcb lib/qt3/qt-mt>=3.33 \
-			kdecore>=6 kwalletclient DCOP kio kdeui kdefx kdesu
-WANTLIB += GL Xcursor Xdamage Xfixes Xft Xi Xinerama Xmu Xrandr
-WANTLIB += Xt Xxf86vm drm expat fontconfig freetype lcms mng
+RUN_DEPENDS =		x11/gtk+2,-guic
+LIB_DEPENDS =		x11/kde/libs3
 
-FLAVORS =	debug
+WANTLIB =  GL ICE SM X11 Xcursor Xdamage Xext Xfixes Xft Xi Xinerama
+WANTLIB += Xmu Xrandr Xrender Xt Xxf86vm art_lgpl_2 drm expat
+WANTLIB += fontconfig freetype idn jpeg lcms lib/qt3/qt-mt>=3.33 m mng
+WANTLIB += png stdc++ util xcb z 
+WANTLIB += ${KDE}/DCOP ${KDE}/kdecore>=6 ${KDE}/kdefx ${KDE}/kdesu
+WANTLIB += ${KDE}/kdeui ${KDE}/kio ${KDE}/kwalletclient
+
 MODULES =	x11/kde devel/gettext
 
-USE_LIBTOOL =		Yes
 LIBTOOL_FLAGS +=	--tag=disable-static
 CONFIGURE_STYLE =	autoconf
 AUTOCONF_VERSION =	2.61
@@ -39,9 +39,6 @@ MAKE_FLAGS +=		LIBRESOLV=
 SUBST_VARS +=		V
 
 # GPL
-PERMIT_DISTFILES_CDROM =	Yes
-PERMIT_DISTFILES_FTP =		Yes
 PERMIT_PACKAGE_CDROM =		Yes
-PERMIT_PACKAGE_FTP =		Yes
 
 .include <bsd.port.mk>

@@ -1,0 +1,20 @@
+$OpenBSD: patch-lib_facter_kernelrelease_rb,v 1.2 2013/04/26 12:15:55 robert Exp $
+
+http://projects.puppetlabs.com/issues/19293
+
+--- lib/facter/kernelrelease.rb.orig	Mon Apr 15 20:13:14 2013
++++ lib/facter/kernelrelease.rb	Fri Apr 26 14:04:32 2013
+@@ -20,6 +20,13 @@ Facter.add(:kernelrelease) do
+   setcode 'oslevel -s'
+ end
+ 
++Facter.add("kernelrelease") do
++  confine :kernel => :openbsd
++  setcode do
++    Facter::Util::Resolution.exec("/sbin/sysctl -n kern.version").split(' ')[1]
++  end
++end
++
+ Facter.add(:kernelrelease) do
+   confine :kernel => "hp-ux"
+   setcode do

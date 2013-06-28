@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.33 2012/09/27 16:45:51 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.44 2013/06/20 06:54:38 ajacoutot Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -10,7 +10,7 @@ COMMENT-fastcgi=	stand-alone FastCGI version of PHP
 PKGNAME-main?=		php-${V}
 PKGNAME-fastcgi?=	php-fastcgi-${V}
 
-DISTFILES=		php-${V}.tar.gz
+DISTFILES?=		php-${V}.tar.bz2
 
 DISTNAME?=		php-${V}
 CATEGORIES=		lang www
@@ -25,16 +25,14 @@ MASTER_SITES=		http://se.php.net/distributions/ \
 			http://us.php.net/distributions/ \
 			http://no.php.net/distributions/ \
 			http://uk.php.net/distributions/
-MASTER_SITES0=		http://download.suhosin.org/ \
+MASTER_SITES0=		http://spacehopper.org/mirrors/ \
+			http://download.suhosin.org/ \
 			http://blade2k.humppa.hu/ \
 			${_MASTER_SITE_FREEBSD}
 
 # UPGRADERS: please read BOTH the PHP and Zend licenses
 # and make sure they are safe before an upgrade
 PERMIT_PACKAGE_CDROM=   Yes
-PERMIT_PACKAGE_FTP=     Yes
-PERMIT_DISTFILES_CDROM= Yes
-PERMIT_DISTFILES_FTP=   Yes
 
 SHARED_ONLY=		Yes
 
@@ -73,7 +71,7 @@ CONFIGURE_ARGS+=	--enable-shared \
 			--with-pdo-sqlite \
 			--enable-sqlite-utf8
 
-.if ${FLAVOR:L:Map2}
+.if ${FLAVOR:Map2}
 CONFIGURE_ARGS+=	--with-apxs2=${LOCALBASE}/sbin/apxs2
 BUILD_DEPENDS=		www/apache-httpd
 .else
@@ -103,8 +101,8 @@ CONFIGURE_ARGS+= 	--with-openssl \
 			--enable-zend-multibyte \
 			--enable-fastcgi
 
-REGRESS_TARGET=		test
-REGRESS_FLAGS=		NO_INTERACTION=1
+TEST_TARGET=		test
+TEST_FLAGS=		NO_INTERACTION=1
 
 MULTI_PACKAGES+=	-main -fastcgi
 
@@ -140,7 +138,6 @@ LIB_DEPENDS-gd=		graphics/jpeg \
 			graphics/png \
 			devel/t1lib
 WANTLIB-gd=		z jpeg>=62 png>=3 t1>=5 c pthread X11 Xpm freetype
-CONFIGURE_ENV+=		CPPFLAGS="-I${LOCALBASE}/include/libpng"
 CONFIGURE_ARGS+=	--with-gd=shared \
 			--with-jpeg-dir=${LOCALBASE} \
 			--with-png-dir=${LOCALBASE} \
@@ -160,9 +157,10 @@ WANTLIB-gmp=		c gmp>=4 pthread
 MULTI_PACKAGES+=	-imap
 COMMENT-imap=		imap, pop3 and nntp extensions for php5
 CONFIGURE_ARGS+=	--with-imap=shared,${LOCALBASE} \
-			--with-kerberos=/usr --with-imap-ssl
+			--with-imap-ssl --with-kerberos
 LIB_DEPENDS-imap=	mail/re-alpine,-c-client
-WANTLIB-imap=		c pthread crypto gssapi krb5 ssl c-client>=5
+WANTLIB-imap=		c pthread crypto gssapi krb5 ssl c-client>=5 \
+			asn1 com_err heimbase roken wind
 
 # ldap
 MULTI_PACKAGES+=	-ldap
@@ -308,14 +306,15 @@ PHPXS_SUBST+= -e 's,${i},${${i}},'
 MODULES=		converters/libiconv devel/gettext
 
 WANTLIB-main=		c crypto ssl z pthread gssapi krb5 xml2>=8 \
-			m ${MODGETTEXT_WANTLIB}
+			m asn1 com_err heimbase roken \
+			wind ${MODGETTEXT_WANTLIB}
 WANTLIB-fastcgi=	${WANTLIB-main}
 LIB_DEPENDS-main=	textproc/libxml
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
 			mail/femail,-chroot
 LIB_DEPENDS-fastcgi=	${LIB_DEPENDS-main}
 
-.if ${FLAVOR:L:Mno_suhosin}
+.if ${FLAVOR:Mno_suhosin}
 SUPDISTFILES=		suhosin-${SUHOSIN_V}.tgz:0 \
 			suhosin-patch-${SUHOSIN_PHPV}-${SUHOSIN_P_V}.patch.gz:0
 .else
@@ -340,12 +339,19 @@ pre-configure:
 		${WRKSRC}/scripts/phpize.in \
 		${WRKSRC}/scripts/php-config.in
 
+.if ${FLAVOR:Map2}
+MULTI_PACKAGES :=       ${MULTI_PACKAGES:N-fpm:N-fastcgi}
+.endif
+
 .for i in ${MULTI_PACKAGES:N-main:N-fastcgi:N-fpm:N-pcntl:S/-//g}
 MODULE_NAME-${i}=	${i}
 DESCR-${i}=		${.CURDIR}/../files/DESCR-${i}
 MESSAGE-${i}=		${.CURDIR}/../files/MESSAGE-ext
 UNMESSAGE-${i}=		${.CURDIR}/../files/UNMESSAGE-ext
 PKGNAME-${i}=		php-${i}-${V}
+# don't build separate plugins for -ap2
+FULLPKGNAME-${i}=	php-${i}-${V}${FLAVOR_EXT:S/-ap2//}
+FULLPKGPATH-${i}=	${PKGPATH},-${i}${FLAVOR_EXT:S/-ap2//:S/-/,/g}
 .if ${V:M5.2*}
 PKGSPEC-${i}=		php-${i}->=5.2,<5.3
 .else if ${V:M5.3*}

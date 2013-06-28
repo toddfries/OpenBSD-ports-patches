@@ -1,9 +1,6 @@
-@comment $OpenBSD: PFRAG.shared,v 1.2 2010/12/25 20:51:07 naddy Exp $
-@lib lib/libmpg123.so.${LIBmpg123_VERSION}
+@comment $OpenBSD: PFRAG.shared,v 1.4 2013/03/22 16:31:36 naddy Exp $
 lib/mpg123/
-@comment lib/mpg123/output_dummy.a
 @comment lib/mpg123/output_dummy.la
 lib/mpg123/output_dummy.so
-@comment lib/mpg123/output_sndio.a
 @comment lib/mpg123/output_sndio.la
 lib/mpg123/output_sndio.so

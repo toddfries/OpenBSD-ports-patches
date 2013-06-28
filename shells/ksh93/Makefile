@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.2 2012/11/01 19:49:22 pascal Exp $
+# $OpenBSD: Makefile,v 1.4 2013/03/11 11:41:29 espie Exp $
+
+BROKEN-mips64 =		libast is not built
 
 COMMENT =		AT&T Korn Shell
 
@@ -15,8 +17,6 @@ MAINTAINER =		Pascal Stumpf <Pascal.Stumpf@cubes.de>
 # EPL
 PERMIT_PACKAGE_CDROM =	commercial distribution defend and indemnify clauses
 PERMIT_PACKAGE_FTP =	Yes
-PERMIT_DISTFILES_CDROM =commercial distribution defend and indemnify clauses
-PERMIT_DISTFILES_FTP =	Yes
 
 WANTLIB += c m util
 
@@ -58,7 +58,7 @@ do-install:
 		${PREFIX}/include/ast
 	${INSTALL_DATA} ${AST_INC}/prototyped.h ${PREFIX}/include/ast
 	
-do-regress:
+do-test:
 	cd ${WRKSRC}/src/cmd/ksh93/tests && env -i \
 		SHELL=${AST_ARCH}/bin/ksh \
 		TMPDIR=${WRKDIR} \

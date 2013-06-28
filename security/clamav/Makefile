@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.79 2012/09/17 21:13:44 sthen Exp $
+# $OpenBSD: Makefile,v 1.84 2013/05/08 20:25:17 sthen Exp $
 
 COMMENT=		virus scanner
-DISTNAME=		clamav-0.97.6
+DISTNAME=		clamav-0.97.8
+REVISION=		0
 
 CATEGORIES=		security
-SHARED_LIBS=		clamav 19.0 \
+SHARED_LIBS=		clamav 20.0 \
 			clamunrar 2.0 \
 			clamunrar_iface 2.0
 
@@ -14,11 +15,8 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 
 # GPLv2/LGPL
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
-WANTLIB=		bz2 c ltdl m milter ncurses pthread stdc++ z
+WANTLIB=		bz2 c ltdl m milter ncurses pthread z
 
 BUILD_DEPENDS=		devel/check \
 			devel/libexecinfo
@@ -30,9 +28,6 @@ RUN_DEPENDS=		archivers/lha \
 			archivers/zoo \
 			archivers/arc \
 			archivers/unzip
-
-USE_LIBTOOL=		Yes
-USE_GROFF =		Yes
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=clamav/}
 
@@ -50,7 +45,7 @@ CONFIGURE_ARGS+=        --disable-clamav \
 			--with-ltdl-include=${LOCALBASE}/include \
 			--with-ltdl-lib=${LOCALBASE}/lib
 
-REGRESS_TARGET=	check
+TEST_TARGET=	check
 MODULES=	lang/python converters/libiconv
 MODPY_RUNDEP=	no
 
@@ -77,7 +72,7 @@ post-install:
 	cd ${WRKSRC}/examples; ${INSTALL_DATA} ex1.c \
 		${PREFIX}/share/examples/clamav
 
-pre-regress:
+pre-test:
 	ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
 .include <bsd.port.mk>

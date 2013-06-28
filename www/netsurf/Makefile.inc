@@ -1,30 +1,38 @@
-# $OpenBSD: Makefile.inc,v 1.3 2012/01/12 03:17:08 bentley Exp $
+# $OpenBSD: Makefile.inc,v 1.8 2013/05/16 20:48:53 rpe Exp $
 
-CATEGORIES +=	www/netsurf
+CATEGORIES +=	www
 
 # child ports MUST define NETSURF_{PROJECT,VERSION}
 
-PKGNAME ?=	${DISTNAME:S/-src//}
+PKGNAME ?=	${NETSURF_PROJECT}-${NETSURF_VERSION}
 DISTNAME ?=	${NETSURF_PROJECT}-${NETSURF_VERSION}-src
 
+MAINTAINER ?=	Anthony J. Bentley <anthony@cathet.us>
 HOMEPAGE ?=	http://www.netsurf-browser.org/projects/${NETSURF_PROJECT}/
-MASTER_SITES ?=	http://www.netsurf-browser.org/projects/releases/
+MASTER_SITES ?=	http://download.netsurf-browser.org/libs/releases/
 
 WRKDIST ?=	${WRKDIR}/${DISTNAME:S/-src//}
 
 # MIT for libs / GPLv2 for netsurf
 PERMIT_PACKAGE_CDROM=	Yes
-PERMIT_PACKAGE_FTP=	Yes
-PERMIT_DISTFILES_CDROM=	Yes
-PERMIT_DISTFILES_FTP=	Yes
 
 DESTDIRNAME =	${DESTDIR}
 
-REGRESS_TARGET =test
+TEST_TARGET =test
 USE_GMAKE =	Yes
 
 # not used for browser
 .for _l _v in ${SHARED_LIBS}
 MAKE_FLAGS +=	COMPONENT_TYPE=lib-shared \
-		LIB${_l}_VERSION=${_v}
+		NS_LIB_VERSION=${_v}
 .endfor
+
+.if ${NETSURF_PROJECT} != "buildsystem"
+BUILD_DEPENDS +=	www/netsurf/buildsystem
+MAKE_FLAGS +=		Q= \
+			VQ= \
+			CCOPT= \
+			CXXOPT= \
+			CCACHE= \
+			NSSHARED=${LOCALBASE}/share/netsurf-buildsystem
+.endif
