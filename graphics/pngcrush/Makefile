@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.65 2013/06/13 07:23:51 benoit Exp $
+# $OpenBSD: Makefile,v 1.67 2013/07/19 08:39:09 benoit Exp $
 
 COMMENT =		optimizer for PNG files
 
-DISTNAME =		pngcrush-1.7.62
+DISTNAME =		pngcrush-1.7.66
 CATEGORIES =		graphics
 
 HOMEPAGE =		http://pmt.sourceforge.net/pngcrush/

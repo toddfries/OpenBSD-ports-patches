@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.13 2013/06/13 12:20:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.15 2013/07/12 20:46:28 jasper Exp $
 
 COMMENT=		tool/library for managing platform virtualization
 
-DISTNAME=		libvirt-1.0.5.2
+DISTNAME=		libvirt-1.0.5.4
 CATEGORIES=		sysutils devel
 
 SHARED_LIBS +=  virt-qemu                 0.2 # 1000.5
@@ -23,7 +23,7 @@ MODULES=		devel/gettext \
 			lang/python
 
 WANTLIB += avahi-client avahi-common c crypto curl dbus-1 gcrypt
-WANTLIB += gmp gnutls gpg-error hogweed idn m ncurses nettle p11-kit
+WANTLIB += gnutls gpg-error hogweed idn m ncurses nettle p11-kit
 WANTLIB += pthread readline ssh2 ssl tasn1 util xml2 z
 
 BUILD_DEPENDS=		textproc/docbook

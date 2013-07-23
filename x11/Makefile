@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.517 2013/06/15 11:47:30 bcallah Exp $
+# $OpenBSD: Makefile,v 1.520 2013/07/14 00:37:50 pascal Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -45,6 +45,7 @@
      SUBDIR += e16keyedit
      SUBDIR += e17
      SUBDIR += echinus
+     SUBDIR += ede
      SUBDIR += emelfm2
      SUBDIR += emiclock
      SUBDIR += enlightenment
@@ -128,6 +129,7 @@
      SUBDIR += iwidgets
      SUBDIR += jwm
      SUBDIR += kde
+     SUBDIR += kde4
      SUBDIR += kdirstat
      SUBDIR += keybinder
      SUBDIR += keynav
@@ -137,12 +139,14 @@
      SUBDIR += krusader
      SUBDIR += lablgtk2
      SUBDIR += libdnd
+     SUBDIR += libfm
      SUBDIR += libgdiplus
      SUBDIR += libsexy
      SUBDIR += libxdg-basedir
      SUBDIR += lsw
      SUBDIR += lupe
      SUBDIR += lxrandr
+     SUBDIR += menu-cache
      SUBDIR += mlterm
      SUBDIR += mono-gtk2
      SUBDIR += mouseclock
@@ -220,7 +224,6 @@
      SUBDIR += roxterm
      SUBDIR += ruby-dbus
      SUBDIR += ruby-profligacy
-     SUBDIR += ruby-qt4
      SUBDIR += rxvt
      SUBDIR += rxvt-unicode
      SUBDIR += sakura

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2013/03/10 23:04:45 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2013/07/01 17:00:40 dcoppa Exp $
 
 COMMENT=	CAD program for designing model railroad layouts
 

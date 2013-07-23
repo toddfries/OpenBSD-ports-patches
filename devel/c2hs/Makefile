@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.24 2013/03/11 10:50:02 espie Exp $
+# $OpenBSD: Makefile,v 1.26 2013/07/19 06:47:04 kili Exp $
 
 COMMENT=		interface generator for Haskell to C bindings
 
-V=			0.16.3
+V=			0.16.4
 DISTNAME=		c2hs-${V}
-REVISION=		3
 CATEGORIES=		devel
 MAINTAINER=		Matthias Kilian <kili@openbsd.org>
 HOMEPAGE=		http://www.cse.unsw.edu.au/~chak/haskell/c2hs/
@@ -19,9 +18,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB=		c m pthread util
 
-BUILD_DEPENDS=		devel/alex \
-			devel/happy \
-			devel/hs-language-c \
+BUILD_DEPENDS=		devel/hs-language-c>=0.3.1.1,<0.4.0 \
 			textproc/docbook-xsl \
 			textproc/sgmlformat
 
@@ -39,7 +36,7 @@ post-install:
 
 # Note: tests are still broken (not maintained by upstream?)
 # Note 2: and (at least) the tests don't work with ghc-7 (because ghc
-# now defaults to Haskell-1010).
+# now defaults to Haskell-2010).
 do-test:
 	@cd ${WRKDIST}/tests/system && ${MAKE_PROGRAM}
 

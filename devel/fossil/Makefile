@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.38 2013/06/22 17:59:27 jturner Exp $
+# $OpenBSD: Makefile,v 1.40 2013/07/15 04:34:44 espie Exp $
 
 COMMENT =		simple distributed software configuration management
 
@@ -6,6 +6,7 @@ DISTNAME =		fossil-src-20130618210923
 PKGNAME =		fossil-1.26
 EPOCH =			0
 CATEGORIES =		devel www
+NOT_FOR_ARCHS =		${GCC2_ARCHS}
 
 MAINTAINER =		James Turner <james@calminferno.net>
 
@@ -30,7 +31,7 @@ CONFLICT_MARKER =	fossil-*-!static
 
 .if ${FLAVOR} == "static"
 CONFIGURE_ARGS +=	--static --with-openssl=none
-PREFIX =		/var/www
+PREFIX =		${VARBASE}/www
 CONFLICT_MARKER =	fossil-*-static
 .endif
 

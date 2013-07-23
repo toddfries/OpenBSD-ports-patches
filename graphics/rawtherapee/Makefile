@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2013/05/16 09:16:43 sthen Exp $
+# $OpenBSD: Makefile,v 1.5 2013/07/10 15:10:27 dcoppa Exp $
 
 COMMENT =		RAW image processing application
 

@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.4 2013/05/17 20:11:43 jeremy Exp $
+# $OpenBSD: Makefile,v 1.6 2013/07/17 15:52:55 jeremy Exp $
 
 BROKEN-sparc64	=	segfaults during build
+BROKEN-hppa =		miniruby abort trap when generating rdoc
 
 COMMENT-main =		object oriented script language with threads
 COMMENT-gdbm =		gdbm interface for ruby
@@ -8,11 +9,11 @@ COMMENT-tk =		tk interface for ruby
 COMMENT-ri_docs =	ri documentation files for ruby
 
 VERSION =		2.0.0
-PATCHLEVEL =		195
+PATCHLEVEL =		247
 RUBYLIBREV =		2.0
 DISTNAME =		ruby-${VERSION}-p${PATCHLEVEL}
 
-SHARED_LIBS =		ruby20	0.0
+SHARED_LIBS =		ruby20	0.1
 PKGNAME-main =		ruby-${VERSION}.${PATCHLEVEL}
 PKGNAME-gdbm =		ruby20-gdbm-${VERSION}.${PATCHLEVEL}
 PKGNAME-tk =		ruby20-tk-${VERSION}.${PATCHLEVEL}

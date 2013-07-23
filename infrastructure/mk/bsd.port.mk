@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1238 2013/06/25 20:21:03 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1244 2013/07/09 19:48:56 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -393,6 +393,9 @@ BUILD_DEPENDS += devel/ccache
 
 ALL_FAKE_FLAGS=	${MAKE_FLAGS:N-j[0-9]*} ${DESTDIRNAME}=${WRKINST} ${FAKE_FLAGS}
 
+.if ${LOCALBASE:L} != "/usr/local"
+_PKG_ADD += -L ${LOCALBASE}
+.endif
 
 PARALLEL_BUILD ?= Yes
 PARALLEL_INSTALL ?= ${PARALLEL_BUILD}
@@ -720,7 +723,7 @@ BZIP2 ?= bzip2
 
 
 # copy selected info from bsd.own.mk
-MAKE_ENV += ELF_TOOLCHAIN=${ELF_TOOLCHAIN} COMPILER_VERSION=${COMPILER_VERSION} \
+MAKE_ENV += ELF_TOOLCHAIN=Yes COMPILER_VERSION=${COMPILER_VERSION} \
 	PICFLAG="${PICFLAG}" ASPICFLAG=${ASPICFLAG} \
 	BINGRP=bin BINOWN=root BINMODE=555 NONBINMODE=444 DIRMODE=755 \
 	INSTALL_COPY=-c INSTALL_STRIP=${INSTALL_STRIP} \
@@ -1373,8 +1376,16 @@ _resolve_lib += -noshared
 PKG_CREATE_NO_CHECKS ?= No
 .if ${PKG_CREATE_NO_CHECKS:L} == "yes"
 _pkg_wantlib_args = fake-wantlib-args
+.elif ${PKG_CREATE_NO_CHECKS:L} == "warn"
+_pkg_wantlib_args = wantlib-args
+_check_msg = Warning
+# ignore diff error
+_check_error = || true
 .else
 _pkg_wantlib_args = wantlib-args
+_check_msg = Error
+# let diff error out
+_check_error = 
 .endif
 wantlib_args ?= port-wantlib-args
 lib_depends_args ?= lib-depends-args
@@ -1483,6 +1494,11 @@ _DEP${_DEP}_COOKIES =
 _DEP${_DEP}_COOKIES += ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=],-,g}
 .  endfor
 .endfor
+
+LIBM_CHECK ?=
+.if ${MACHINE_ARCH} == "vax" && !empty(LIBM_CHECK)
+_DEPBUILDLIB_COOKIES += ${WRKDIR}/.libm-check
+.endif
 
 # Normal user-mode targets are PHONY targets, e.g., don't create the
 # corresponding file. However, there is nothing phony about the cookie.
@@ -1750,9 +1766,6 @@ _check_lib_depends =:
 
 _CHECK_LIB_DEPENDS = PORTSDIR=${PORTSDIR} ${_PERLSCRIPT}/check-lib-depends
 _CHECK_LIB_DEPENDS += -d ${_PKG_REPO} -B ${WRKINST}
-.  if ${ELF_TOOLCHAIN:L} == "no"
-_CHECK_LIB_DEPENDS += -o
-.  endif
 
 .for _s in ${MULTI_PACKAGES}
 .  if ${STATIC_PLIST${_s}:L} == "no"
@@ -2083,6 +2096,14 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 	@${_MAKE_COOKIE} $@
 .  endif
 .endfor
+
+${WRKDIR}/.libm-check:
+	@nm /usr/lib/libm.a >${WRKDIR}/.libm-list
+.for f in ${LIBM_CHECK}
+	@${ECHO_MSG} "===> checking for $f in libm"
+	@fgrep -wq $f ${WRKDIR}/.libm-list
+.endfor
+	@touch $@
 
 show-prepare-results: prepare
 	@sort -u ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES} /dev/null
@@ -3094,15 +3115,13 @@ wantlib-args:
 	if cd ${.CURDIR} && \
 	${MAKE} port-wantlib-args >$$a && \
 	${MAKE} fake-wantlib-args >$$b; then \
-		if cmp -s $$a $$b; \
+		if ! cmp -s $$a $$b; \
 		then \
-			cat $$a; \
-		else \
-			echo 1>&2 "Error: Libraries in packing-lists in the ports tree"; \
+			echo 1>&2 "${_check_msg}: Libraries in packing-lists in the ports tree"; \
 			echo 1>&2 "       and libraries from installed packages don't match"; \
-			diff 1>&2 -u $$a $$b; \
-			exit 1; \
+			diff 1>&2 -u $$a $$b ${_check_error}; \
 		fi; \
+		cat $$b; \
 	else \
 		exit 1; \
 	fi

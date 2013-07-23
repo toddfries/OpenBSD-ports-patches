@@ -1,23 +1,22 @@
-# $OpenBSD: Makefile,v 1.30 2013/03/11 10:50:13 espie Exp $
+# $OpenBSD: Makefile,v 1.32 2013/07/14 22:59:59 bluhm Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		BSD process resource limit and priority functions
 
-DISTNAME =		BSD-Resource-1.2904
-REVISION =		0
+DISTNAME =		BSD-Resource-1.2907
 
 CATEGORIES =		devel
 
 MAINTAINER =		Alexander Bluhm <bluhm@openbsd.org>
 
-# perl
+# Artistic 2.0 or LGPL 2.0
 PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB += c
 
 MODULES =		cpan
-
-USE_GROFF =		Yes
+TEST_DEPENDS =		devel/p5-Test-Pod \
+			devel/p5-Test-Pod-Coverage
 
 .include <bsd.port.mk>

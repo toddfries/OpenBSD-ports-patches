@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2013/06/06 08:36:49 zhuk Exp $
+# $OpenBSD: Makefile,v 1.5 2013/07/06 09:46:29 zhuk Exp $
 
 CATEGORIES =	devel x11/kde4
 COMMENT =	programming language wrapper generator
 DISTNAME =	smokegen-${MODKDE4_VERSION}
+REVISION =	1
 
 # https://bugs.kde.org/show_bug.cgi?id=283677
 

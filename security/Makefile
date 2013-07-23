@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.315 2013/06/07 13:33:24 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.319 2013/07/01 16:51:02 jasper Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -109,7 +109,6 @@
      SUBDIR += luasec,lua52
      SUBDIR += lxnb
      SUBDIR += mcrypt
-     SUBDIR += metasploit
      SUBDIR += mhash
      SUBDIR += nbaudit
      SUBDIR += nessus
@@ -184,6 +183,7 @@
      SUBDIR += p5-IO-Socket-SSL
      SUBDIR += p5-MD5
      SUBDIR += p5-Module-Signature
+     SUBDIR += p5-Mozilla-CA
      SUBDIR += p5-Net-SSLGlue
      SUBDIR += p5-Net_SSLeay
      SUBDIR += p5-PGP-Sign
@@ -229,10 +229,12 @@
      SUBDIR += radiusniff
      SUBDIR += rarcrack
      SUBDIR += rdp
-     SUBDIR += ruby-bcrypt
      SUBDIR += ruby-bcrypt,rbx
      SUBDIR += ruby-bcrypt,ruby18
+     SUBDIR += ruby-bcrypt,ruby19
+     SUBDIR += ruby-bcrypt,ruby20
      SUBDIR += ruby-ezcrypto
+     SUBDIR += ruby-hmac
      SUBDIR += ruby-openid
      SUBDIR += ruby-yadis
      SUBDIR += samdump2
