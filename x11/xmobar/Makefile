@@ -1,18 +1,19 @@
-# $OpenBSD: Makefile,v 1.22 2013/06/18 20:58:53 sthen Exp $
+# $OpenBSD: Makefile,v 1.25 2013/07/12 19:07:24 dcoppa Exp $
 
 COMMENT =		minimalistic text based status bar
 
 DISTNAME =		xmobar-0.18
+REVISION =		2
 CATEGORIES =		x11
 HOMEPAGE =		http://projects.haskell.org/xmobar
 
-MAINTAINER =		Jona Joachim <jaj@hcl-club.lu>
+MAINTAINER =		Jona Joachim <jona@joachim.cc>
 
 # BSD3
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB =		X11 Xext Xft Xinerama Xrandr c m pthread \
-			util xml2
+WANTLIB =		X11 Xext Xft Xinerama Xrandr Xss \
+			c m pthread util xml2
 
 MODULES =		lang/ghc converters/libiconv
 
@@ -21,7 +22,7 @@ MODGHC_SETUP_CONF_ARGS = --flags="with_xft with_mpd with_mpris"
 
 BUILD_DEPENDS =		devel/hs-mtl \
 			devel/hs-parsec \
-			devel/hs-regex-compat \
+			devel/hs-regex-pcre-builtin \
 			devel/hs-stm>=2.3,<2.5 \
 			x11/hs-X11>=1.6.1 \
 			x11/hs-X11-xft>=0.2,<0.4 \
@@ -31,6 +32,8 @@ BUILD_DEPENDS =		devel/hs-mtl \
 LIB_DEPENDS =		textproc/libxml
 
 EXAMPLEDIR =		${PREFIX}/share/examples/xmobar
+
+NO_TEST =		Yes
 
 post-patch:
 	@cp ${FILESDIR}/Batt.hs ${WRKBUILD}/src/Plugins/Monitors
@@ -42,7 +45,5 @@ post-patch:
 post-install:
 	${INSTALL_DATA_DIR} ${EXAMPLEDIR}
 	${INSTALL_DATA} ${WRKSRC}/samples/xmobar.config ${EXAMPLEDIR}/xmobarrc
-
-NO_TEST =		Yes
 
 .include <bsd.port.mk>

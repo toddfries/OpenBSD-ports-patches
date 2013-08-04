@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.388 2013/06/26 06:35:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.391 2013/07/11 21:05:41 matthieu Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -78,6 +78,7 @@
      SUBDIR += iso8879
      SUBDIR += ispell
      SUBDIR += itstool
+     SUBDIR += jq
      SUBDIR += latex2html
      SUBDIR += latexmk
      SUBDIR += lgrind
@@ -128,6 +129,7 @@
      SUBDIR += p5-Catalyst-View-XSLT
      SUBDIR += p5-Email-Find
      SUBDIR += p5-Encode-Detect
+     SUBDIR += p5-Encode-Locale
      SUBDIR += p5-Font-AFM
      SUBDIR += p5-Font-TTF
      SUBDIR += p5-HTML-Summary
@@ -320,31 +322,38 @@
      SUBDIR += ruby-classifier
      SUBDIR += ruby-fastercsv,ruby18
      SUBDIR += ruby-fastri,ruby18
-     SUBDIR += ruby-fast-stemmer
      SUBDIR += ruby-fast-stemmer,ruby18
+     SUBDIR += ruby-fast-stemmer,ruby19
+     SUBDIR += ruby-fast-stemmer,ruby20
      SUBDIR += ruby-haml
-     SUBDIR += ruby-hpricot
      SUBDIR += ruby-hpricot,ruby18
+     SUBDIR += ruby-hpricot,ruby19
+     SUBDIR += ruby-hpricot,ruby20
      SUBDIR += ruby-htmlentities
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-hyperestraier,ruby19
+     SUBDIR += ruby-hyperestraier,ruby20
      SUBDIR += ruby-icalendar
      SUBDIR += ruby-kramdown
      SUBDIR += ruby-liquid
      SUBDIR += ruby-markaby
      SUBDIR += ruby-maruku
      SUBDIR += ruby-mustache
-     SUBDIR += ruby-nokogiri
      SUBDIR += ruby-nokogiri,ruby18
+     SUBDIR += ruby-nokogiri,ruby19
+     SUBDIR += ruby-nokogiri,ruby20
      SUBDIR += ruby-pdf-reader
      SUBDIR += ruby-pygments.rb
      SUBDIR += ruby-randexp
-     SUBDIR += ruby-rdiscount
      SUBDIR += ruby-rdiscount,ruby18
-     SUBDIR += ruby-redcarpet
+     SUBDIR += ruby-rdiscount,ruby19
+     SUBDIR += ruby-rdiscount,ruby20
      SUBDIR += ruby-redcarpet,ruby18
-     SUBDIR += ruby-redcloth
+     SUBDIR += ruby-redcarpet,ruby19
+     SUBDIR += ruby-redcarpet,ruby20
      SUBDIR += ruby-redcloth,ruby18
+     SUBDIR += ruby-redcloth,ruby19
+     SUBDIR += ruby-redcloth,ruby20
      SUBDIR += ruby-rexical
      SUBDIR += ruby-rexical,ruby18
      SUBDIR += ruby-ronn

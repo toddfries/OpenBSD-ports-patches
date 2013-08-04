@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.347 2013/05/30 16:06:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.351 2013/07/19 07:16:38 kili Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -15,6 +15,7 @@
      SUBDIR += autopano-sift-c
      SUBDIR += babl
      SUBDIR += barcode
+     SUBDIR += birdfont
      SUBDIR += blender
      SUBDIR += cadubi
      SUBDIR += cairo
@@ -32,6 +33,7 @@
      SUBDIR += darktable
      SUBDIR += dcmtk
      SUBDIR += dcraw
+     SUBDIR += delaboratory
      SUBDIR += dia
      SUBDIR += digikam
      SUBDIR += digikam-doc
@@ -86,8 +88,10 @@
      SUBDIR += gtkimageview
      SUBDIR += gwenview
      SUBDIR += gwenview-i18n
+     SUBDIR += hs-GLURaw
      SUBDIR += hs-GLUT
      SUBDIR += hs-OpenGL
+     SUBDIR += hs-OpenGLRaw
      SUBDIR += hs-cairo
      SUBDIR += hugin
      SUBDIR += ilmbase
@@ -221,8 +225,9 @@
      SUBDIR += ruby-color
      SUBDIR += ruby-gruff
      SUBDIR += ruby-mini_magick
-     SUBDIR += ruby-rmagick
      SUBDIR += ruby-rmagick,ruby18
+     SUBDIR += ruby-rmagick,ruby19
+     SUBDIR += ruby-rmagick,ruby20
      SUBDIR += s10sh
      SUBDIR += sane-backends
      SUBDIR += sane-backends,snmp

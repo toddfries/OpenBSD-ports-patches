@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.610 2013/05/29 20:44:52 jasper Exp $
+# $OpenBSD: Makefile,v 1.615 2013/07/19 07:17:12 kili Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -75,6 +75,7 @@
      SUBDIR += hs-cgi
      SUBDIR += hs-clientsession
      SUBDIR += hs-html
+     SUBDIR += hs-http-attoparsec
      SUBDIR += hs-http-types
      SUBDIR += hs-snap
      SUBDIR += hs-snap-core
@@ -118,7 +119,6 @@
      SUBDIR += midori
      SUBDIR += midori,gtk3
      SUBDIR += mimetex
-     SUBDIR += mindterm
      SUBDIR += minitube
      SUBDIR += mod_auth_bsd
      SUBDIR += mod_auth_kerb
@@ -297,6 +297,7 @@
      SUBDIR += p5-HTTP-Server-Simple-PSGI
      SUBDIR += p5-HTTP-Server-Simple-Recorder
      SUBDIR += p5-HTTPD-Log-Filter
+     SUBDIR += p5-IO-HTML
      SUBDIR += p5-JavaScript-Minifier
      SUBDIR += p5-LWP-Authen-Wsse
      SUBDIR += p5-LWP-Protocol-socks
@@ -445,28 +446,35 @@
      SUBDIR += rt
      SUBDIR += ruby-addressable
      SUBDIR += ruby-capybara
-     SUBDIR += ruby-capybara-webkit
-     SUBDIR += ruby-fcgi
+     SUBDIR += ruby-capybara-webkit,ruby19
+     SUBDIR += ruby-capybara-webkit,ruby20
+     SUBDIR += ruby-fcgi,ruby18
+     SUBDIR += ruby-fcgi,ruby19
+     SUBDIR += ruby-fcgi,ruby20
      SUBDIR += ruby-httpclient
      SUBDIR += ruby-jekyll
      SUBDIR += ruby-mechanize
      SUBDIR += ruby-mongrel
-     SUBDIR += ruby-passenger
      SUBDIR += ruby-passenger,ruby18
+     SUBDIR += ruby-passenger,ruby19
      SUBDIR += ruby-rack
      SUBDIR += ruby-rack-test
-     SUBDIR += ruby-rainbows
      SUBDIR += ruby-rainbows,ruby18
-     SUBDIR += ruby-raindrops
+     SUBDIR += ruby-rainbows,ruby19
+     SUBDIR += ruby-rainbows,ruby20
      SUBDIR += ruby-raindrops,ruby18
+     SUBDIR += ruby-raindrops,ruby19
+     SUBDIR += ruby-raindrops,ruby20
      SUBDIR += ruby-rest-client
      SUBDIR += ruby-sanitize
      SUBDIR += ruby-sinatra
-     SUBDIR += ruby-thin
      SUBDIR += ruby-thin,ruby18
+     SUBDIR += ruby-thin,ruby19
+     SUBDIR += ruby-thin,ruby20
      SUBDIR += ruby-thin_http
-     SUBDIR += ruby-unicorn
      SUBDIR += ruby-unicorn,ruby18
+     SUBDIR += ruby-unicorn,ruby19
+     SUBDIR += ruby-unicorn,ruby20
      SUBDIR += ruby-vegas
      SUBDIR += ruby-vegas,ruby18
      SUBDIR += ruby-xpath
@@ -519,6 +527,7 @@
      SUBDIR += webacula
      SUBDIR += webalizer
      SUBDIR += webcollab
+     SUBDIR += webgui
      SUBDIR += webkit
      SUBDIR += webkit,gtk3
      SUBDIR += weblint

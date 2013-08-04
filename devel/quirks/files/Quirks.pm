@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.91 2013/06/23 17:24:29 jasper Exp $
+# $OpenBSD: Quirks.pm,v 1.94 2013/07/19 07:11:34 kili Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -143,7 +143,6 @@ my $stem_extensions = {
 	'openh323' => 'h323plus',
 	'pwlib' => 'ptlib',
 	'e2fs-uuid' => 'e2fsprogs',
-	'puppet' => 'ruby-puppet',
 	'xmame+xmess' => ['sdlmame', 'sdlmess'],
 	'xmame' => 'sdlmame',
 	'xmess' => 'sdlmess',
@@ -314,7 +313,10 @@ my $stem_extensions = {
 	'mariadb-server' => 'mysql-server',
 	'mariadb-tests' => 'mysql-tests',
 	'coxpcall' => 'lua-coxpcall',
-	'lpeg' => 'lua-lpeg'
+	'lpeg' => 'lua-lpeg',
+	'ruby-facter' => 'facter',
+	'ruby-puppet' => 'puppet',
+	'hs-monads-fd' => 'hs-mtl'
 };
 
 # ->is_base_system($handle, $state):

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.89 2013/05/07 06:53:26 jasper Exp $
+# $OpenBSD: Makefile,v 1.91 2013/07/16 19:25:38 jasper Exp $
 
 COMMENT=	get files from FTP, Gopher, HTTP or HTTPS servers
 
 DISTNAME=	curl-7.26.0
-REVISION=	2
+REVISION=	3
 SHARED_LIBS=	curl                 23.0     # .6.0
 CATEGORIES=	net
 MASTER_SITES=	http://curl.haxx.se/download/ \
@@ -40,5 +40,11 @@ post-install:
 
 # Note:
 # use ulimit -p 256 for test
+
+# curl_fnmatch.c triggers an ICE in output_operand() when compiled -fPIC unless
+# -fno-gcse is used.
+.if ${MACHINE_ARCH} == "m68k"
+CFLAGS+=	-fno-gcse
+.endif
 
 .include <bsd.port.mk>

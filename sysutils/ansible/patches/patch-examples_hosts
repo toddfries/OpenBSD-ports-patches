@@ -1,0 +1,20 @@
+$OpenBSD: patch-examples_hosts,v 1.2 2013/07/08 09:53:47 rpe Exp $
+--- examples/hosts.orig	Sat May 25 04:53:51 2013
++++ examples/hosts	Mon Jul  8 11:48:17 2013
+@@ -42,3 +42,16 @@ db02.intranet.mydomain.net
+ 
+ db-[99:101]-node.example.com
+ 
++# ansible modules expects python to be in /usr/bin/python or a
++# location set with the ansible_python_interpreter variable.
++# On OpenBSD, python is in ${LOCALBASE}, so you have to set it.
++#
++# Setting the python path for a single host.
++#server.my.domain ansible_python_interpreter=${MODPY_BIN}
++#
++# Setting the python path for all hosts in the group 'openbsd'.
++#[openbsd]
++#server.my.domain
++#
++#[openbsd:vars]
++#ansible_python_interpreter=${MODPY_BIN}

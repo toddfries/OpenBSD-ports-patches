@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: PortBuilder.pm,v 1.46 2013/06/21 23:13:37 espie Exp $
+# $OpenBSD: PortBuilder.pm,v 1.48 2013/07/21 16:24:32 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -132,6 +132,11 @@ sub check
 	return -f $self->pkgfile($v);
 }
 
+sub end_check
+{
+	&check;
+}
+
 sub checks_rebuild
 {
 }
@@ -156,15 +161,15 @@ sub report
 	}
 	print $log "$pkgpath $host ", $job->totaltime, " ", $sz, " ",
 	    $job->timings;
-	if ($self->check($v)) {
+	if ($job->{failed}) {
+		open my $fh, '>>', $job->{log};
+		print $fh "Error: job failed $job->{failed}\n";
+		print $log  "!\n";
+	} else {
 		print $log  "\n";
 		open my $fh, '>>', $self->{state}{permanent_log};
 		print $fh join(' ', $pkgpath, $host, $job->totaltime, $sz),
 		    "\n";
-	} else {
-		open my $fh, '>>', $job->{log};
-		print $fh "Error: ", $self->pkgfile($v), " does not exist\n";
-		print $log  "!\n";
 	}
 }
 
@@ -206,7 +211,7 @@ sub build
 	    	close($fh); 
 		$self->end_lock($lock, $core, $job); 
 		$self->report($v, $job, $core); 
-		&$final_sub;
+		&$final_sub($job->{failed});
 	    });
 	$core->start_job($job, $v);
 	if ($job->{parallel}) {
@@ -295,11 +300,27 @@ sub register_package
 	$uptodate->{$v->fullpkgname} = 1;
 }
 
+sub end_check
+{
+	my ($self, $v) = @_;
+	return 0 unless $self->SUPER::end_check($v);
+	$self->register_package($v);
+	return 1;
+}
+
 sub check
 {
 	my ($self, $v) = @_;
 	return 0 unless $self->SUPER::check($v);
 	return $uptodate->{$v->fullpkgname};
+}
+
+sub register_updates
+{
+	my ($self, $v) = @_;
+	for my $w ($v->build_path_list) {
+		$self->end_check($w);
+	}
 }
 
 sub checks_rebuild

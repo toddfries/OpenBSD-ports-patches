@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.805 2013/05/30 16:17:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.809 2013/07/12 10:27:08 sthen Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -40,6 +40,7 @@
      SUBDIR += btpd
      SUBDIR += bwm-ng
      SUBDIR += cadaver
+     SUBDIR += cagibi
      SUBDIR += castget
      SUBDIR += centerim
      SUBDIR += cftp
@@ -199,6 +200,7 @@
      SUBDIR += libtorrent
      SUBDIR += libupnp
      SUBDIR += livemedia
+     SUBDIR += lldpd
      SUBDIR += loudmouth
      SUBDIR += luasocket
      SUBDIR += luasocket,lua52
@@ -503,8 +505,9 @@
      SUBDIR += ruby-agcaldav
      SUBDIR += ruby-amqp
      SUBDIR += ruby-bunny
-     SUBDIR += ruby-eventmachine
      SUBDIR += ruby-eventmachine,ruby18
+     SUBDIR += ruby-eventmachine,ruby19
+     SUBDIR += ruby-eventmachine,ruby20
      SUBDIR += ruby-macaddr
      SUBDIR += ruby-macaddr,ruby18
      SUBDIR += ruby-minion
@@ -516,8 +519,6 @@
      SUBDIR += ruby-net-ssh
      SUBDIR += ruby-net-ssh-gateway
      SUBDIR += ruby-nmap-parser
-     SUBDIR += ruby-pcap
-     SUBDIR += ruby-pcaprub-msf
      SUBDIR += ruby-snmp
      SUBDIR += ruby-stomp
      SUBDIR += ruby-xmpp4r

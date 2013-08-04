@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.14 2013/06/28 12:05:18 espie Exp $
+# $OpenBSD: Makefile,v 1.17 2013/07/09 20:32:52 espie Exp $
 
 COMMENT=		open-source JPEG 2000 codec library
 
 DISTNAME=		openjpeg-1.5.0
-REVISION=		4
+REVISION=		6
 
 SHARED_LIBS +=	openjpeg             5.0      # 6.0
 
@@ -17,6 +17,7 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += c jpeg lcms2 m png tiff z
+LIBM_CHECK = lrintf
 
 MASTER_SITES=		http://openjpeg.googlecode.com/files/
 
@@ -24,11 +25,13 @@ CONFIGURE_STYLE=	gnu
 SEPARATE_BUILD=		Yes
 
 LIB_DEPENDS=		graphics/lcms2 \
-			graphics/png
-
-# LIB_DEPENDS do not propagate on non shared architectures
-LIB_DEPENDS +=		graphics/jpeg \
+			graphics/png \
 			graphics/tiff
+
+# XXX Yes, really, libtiff by itself won't be detected
+LIB_DEPENDS +=		graphics/jpeg
+CONFIGURE_ENV += TIFF_LIBS='-L${LOCALBASE}/lib -ltiff -ljpeg' \
+	TIFF_CFLAGS='-I${LOCALBASE}/include'
 
 pre-patch:
 	perl -i -pe 's/\r$$//; s/\t*$$//;' ${WRKSRC}/libopenjpeg/opj_malloc.h

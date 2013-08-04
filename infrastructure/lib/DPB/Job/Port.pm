@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.105 2013/06/04 03:20:36 espie Exp $
+# $OpenBSD: Port.pm,v 1.111 2013/07/21 16:24:32 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -115,56 +115,6 @@ sub run
 
 sub notime { 0 }
 
-# this code is only necessary thanks to NFS's brain-damage...
-sub make_sure_we_have_packages
-{
-	my ($self, $core) = @_;
-	my $job = $core->job;
-	my $check = 1;
-	# check ALL BUILD_PACKAGES
-	for my $w ($job->{v}->build_path_list) {
-		if (!defined $w->{info}) {
-			print {$job->{logfh}} ">>> ", $w->fullpkgpath,
-			 " may be missing\n", 
-			 ">>> but it has no associated info so we don't care\n";
-			next;
-		}
-		if ($w->{info}->is_stub) {
-			print {$job->{logfh}} ">>> ", $w->fullpkgpath,
-			 " may be missing\n", 
-			 ">>> but it can't be installed, so we don't care\n";
-			next;
-		}
-		if (!$w->has_fullpkgname) {
-			print {$job->{logfh}} ">>> ", $w->fullpkgpath,
-			 " may be missing\n", 
-			 ">>> but it has no fullpkgname, so we don't care\n";
-			next;
-		}
-		my $f = $job->{builder}->pkgfile($w);
-		if (-f $f) {
-			$job->{builder}->register_package($w);
-		} else {
-			$check = 0;
-			print {$job->{logfh}} ">>> Missing $f\n";
-		}
-	}
-	return if $check;
-	if (!defined $job->{waiting}) {
-		$job->{waiting} = 0;
-	}
-	if ($core->prop->{wait_timeout}) {
-		if ($job->{waiting}*10 > $core->prop->{wait_timeout}) {
-			print {$job->{logfh}} ">>> giving up\n";
-		} else {
-			print {$job->{logfh}} ">>> waiting 10 seconds\n";
-			$job->insert_tasks(
-			    DPB::Task::Port::VerifyPackages->new(
-				'waiting-for-nfs '.$job->{waiting}++));
-		}
-	}
-}
-
 package DPB::Task::Port;
 our @ISA = qw(DPB::Task::BasePort);
 
@@ -180,8 +130,9 @@ sub finalize
 	if ($core->{status} == 0) {
 		return 1;
 	}
+	$core->job->{failed} = $core->{status};
 	if ($core->prop->{always_clean}) {
-		$core->job->insert_tasks(DPB::Task::Port::BaseClean->new(
+		$core->job->replace_tasks(DPB::Task::Port::BaseClean->new(
 			'clean'));
 		return 1;
 	}
@@ -189,7 +140,7 @@ sub finalize
 }
 
 package DPB::Task::Port::Signature;
-our @ISA =qw(DPB::Task::Port);
+our @ISA =qw(DPB::Task::BasePort);
 
 sub notime { 1 }
 
@@ -213,12 +164,7 @@ sub finalize
 		    $core);
 	} else {
 		$job->{signature_only} = 1;
-		for my $w ($job->{v}->build_path_list) {
-			my $f = $job->{builder}->pkgfile($w);
-			if (-f $f) {
-				$job->{builder}->register_package($w);
-			}
-		}
+		$job->{builder}->register_updates($job->{v});
 	}
 	return 1;
 }
@@ -407,6 +353,9 @@ sub run
 	if ($job->{builder}{forceupdate}) {
 		push(@cmd,  "-Dinstalled");
 	}
+	if ($job->{builder}{state}{localbase} ne '/usr/local') {
+		push(@cmd, "-L", $job->{builder}{state}{localbase});
+	}
 	print join(' ', @cmd, (sort keys %$dep)), "\n";
 	my $path = $job->{builder}{fullrepo}.'/';
 	$core->shell->env(PKG_PATH => $path)
@@ -594,6 +543,9 @@ sub run
 	if ($job->{builder}->{forceupdate}) {
 		push(@cmd,  "-Dinstalled");
 	}
+	if ($job->{builder}{state}{localbase} ne '/usr/local') {
+		push(@cmd, "-L", $job->{builder}{state}{localbase});
+	}
 	print join(' ', @cmd, $v->fullpkgname, "\n");
 	my $path = $job->{builder}->{fullrepo}.'/';
 	$ENV{PKG_PATH} = $path;
@@ -640,6 +592,7 @@ sub finalize
 	if ($self->requeue($core)) {
 		return 1;
 	}
+	print {$core->job->{lock}} "cleaned\n";
 	$self->SUPER::finalize($core);
 	return 1;
 }
@@ -667,9 +620,7 @@ our @ISA = qw(DPB::Task::Port::BaseClean);
 sub finalize
 {
 	my ($self, $core) = @_;
-	if (!$self->requeue($core)) {
-		$self->make_sure_we_have_packages($core);
-	}
+	$self->requeue($core);
 	$self->SUPER::finalize($core);
 }
 
@@ -681,7 +632,6 @@ sub finalize
 	if ($core->{status} != 0) {
 		return 0;
 	}
-	$self->make_sure_we_have_packages($core);
 }
 
 sub run

@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Locks.pm,v 1.20 2013/02/03 21:45:52 espie Exp $
+# $OpenBSD: Locks.pm,v 1.22 2013/07/18 05:36:54 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -156,32 +156,6 @@ sub locked
 	return -e $self->lockname($v);
 }
 
-sub recheck_errors
-{
-	my ($self, $engine) = (@_);
-
-	for my $name (qw(errors locks)) {
-		my $e = $engine->{$name};
-		$engine->{$name} = [];
-		while (my $v = shift @$e) {
-			if ($v->unlock_conditions($engine)) {
-				$self->unlock($v);
-				$v->requeue($engine);
-				next;
-			}
-			if ($self->locked($v)) {
-				push(@{$engine->{$name}}, $v);
-			} else {
-				if ($name eq 'errors') {
-					$engine->rescan($v);
-				} else {
-					$v->requeue($engine);
-				}
-			}
-		}
-	}
-}
-
 sub find_dependencies
 {
 	my ($self, $hostname) = @_;
@@ -195,6 +169,7 @@ sub find_dependencies
 		my $nojunk = 0;
 		my $host;
 		my $path;
+		my $cleaned;
 		my @d;
 		while (<$f>) {
 			if (m/^locked=(.*)/) {
@@ -205,8 +180,11 @@ sub find_dependencies
 				@d = split(/\s/, $1);
 			} elsif (m/^nojunk$/) {
 				$nojunk = 1;
+			} elsif (m/^cleaned$/) {
+				$cleaned = 1;
 			}
 		}
+		next if $cleaned;
 		if (defined $host && $host eq $hostname) {
 			if ($nojunk) {
 				print "Can't run junk because of lock on $path\n";
