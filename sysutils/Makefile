@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.297 2013/06/29 15:56:10 jeremy Exp $
+# $OpenBSD: Makefile,v 1.299 2013/08/10 14:55:14 robert Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -143,7 +143,6 @@
      SUBDIR += p5-Unix-Statgrab
      SUBDIR += p5-Unix-Syslog
      SUBDIR += parallel
-     SUBDIR += pecl-fileinfo
      SUBDIR += pciutils
      SUBDIR += pftop
      SUBDIR += pkg_mgr
@@ -180,6 +179,7 @@
      SUBDIR += ruby-vlad
      SUBDIR += runit
      SUBDIR += safecat
+     SUBDIR += salt
      SUBDIR += sdd
      SUBDIR += sec
      SUBDIR += setquota

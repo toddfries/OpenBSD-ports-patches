@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.809 2013/07/12 10:27:08 sthen Exp $
+# $OpenBSD: Makefile,v 1.812 2013/08/12 12:02:20 pascal Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -44,6 +44,7 @@
      SUBDIR += castget
      SUBDIR += centerim
      SUBDIR += cftp
+     SUBDIR += cgo
      SUBDIR += charm
      SUBDIR += cjc
      SUBDIR += climm
@@ -278,6 +279,7 @@
      SUBDIR += openvpn_bsdauth
      SUBDIR += osrtspproxy
      SUBDIR += owamp
+     SUBDIR += p5-AnyEvent-IRC
      SUBDIR += p5-BSD-Socket-Splice
      SUBDIR += p5-Bot-BasicBot
      SUBDIR += p5-Business-PayPal
@@ -367,6 +369,7 @@
      SUBDIR += p5-Net-Telnet-Cisco
      SUBDIR += p5-Net-Traceroute
      SUBDIR += p5-Net-Twitter
+     SUBDIR += p5-Net-Twitter-Lite
      SUBDIR += p5-Net-UPnP
      SUBDIR += p5-Net-Wake
      SUBDIR += p5-Net-Whois
@@ -476,6 +479,7 @@
      SUBDIR += py-irclib
      SUBDIR += py-libpcap
      SUBDIR += py-medusa
+     SUBDIR += py-msgpack
      SUBDIR += py-nmap
      SUBDIR += py-pcapy
      SUBDIR += py-pcs

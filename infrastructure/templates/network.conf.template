@@ -1,4 +1,4 @@
-# $OpenBSD: network.conf.template,v 1.183 2013/07/12 00:49:23 jca Exp $
+# $OpenBSD: network.conf.template,v 1.185 2013/08/09 20:20:29 naddy Exp $
 
 #
 # NEVER EDIT THIS FILE DIRECTLY!!!!
@@ -24,8 +24,8 @@ _MASTER_SITE_FREEBSD?=	\
 
 # Default NetBSD backup site
 _MASTER_SITE_NETBSD?=	\
-	http://ftp.netbsd.org/pub/NetBSD/packages/distfiles/${DIST_SUBDIR}/ \
-	ftp://ftp.netbsd.org/pub/NetBSD/packages/distfiles/${DIST_SUBDIR}/
+	http://ftp.netbsd.org/pub/pkgsrc/distfiles/${DIST_SUBDIR}/ \
+	ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/${DIST_SUBDIR}/
 
 # Uncomment to retrieve from the OpenBSD sites only
 # MASTER_SITE_OPENBSD=	Yes
@@ -56,7 +56,7 @@ MASTER_SITE_BACKUP?=	\
 # Popular master sites, most useful sites come first.
 MASTER_SITE_GNU+=	\
 	http://ftpmirror.gnu.org/ \
-	http://ftp.gnu.org/gnu/ \
+	https://ftp.gnu.org/gnu/ \
 	http://ftp.funet.fi/pub/gnu/prep/ \
 	ftp://ftp.gnu.org/gnu/ \
 	ftp://ftp.cs.tu-berlin.de/pub/gnu/ \

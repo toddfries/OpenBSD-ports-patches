@@ -1,6 +1,7 @@
-$OpenBSD: patch-ctypes_libffi_src_mips_ffitarget_h,v 1.1 2012/08/13 11:08:51 jasper Exp $
---- ctypes/libffi/src/mips/ffitarget.h.orig	Mon Aug 13 04:34:58 2012
-+++ ctypes/libffi/src/mips/ffitarget.h	Mon Aug 13 04:35:23 2012
+$OpenBSD: patch-ctypes_libffi_src_mips_ffitarget_h,v 1.3 2013/08/11 09:09:04 landry Exp $
+Fix build on mips64
+--- ctypes/libffi/src/mips/ffitarget.h.orig	Sat Aug 10 22:30:16 2013
++++ ctypes/libffi/src/mips/ffitarget.h	Sat Aug 10 22:30:35 2013
 @@ -29,7 +29,7 @@
  
  #ifdef linux
