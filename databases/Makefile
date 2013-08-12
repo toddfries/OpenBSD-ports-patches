@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.252 2013/06/30 20:09:56 jasper Exp $
+# $OpenBSD: Makefile,v 1.255 2013/08/11 15:12:09 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
      SUBDIR += architect
+     SUBDIR += barman
      SUBDIR += db
      SUBDIR += dbh
      SUBDIR += dbic++
@@ -135,12 +136,12 @@
      SUBDIR += pear-MDB2-mysql
      SUBDIR += pear-MDB2-mysqli
      SUBDIR += pear-MDB2-pgsql
-     SUBDIR += pear-MDB2-sqlite
      SUBDIR += percona-toolkit
      SUBDIR += pg-toolbox
      SUBDIR += pg_top
      SUBDIR += pgadmin3
      SUBDIR += pgbouncer
+     SUBDIR += pgbadger
      SUBDIR += pgfouine
      SUBDIR += pgloader
      SUBDIR += pgpool
@@ -181,6 +182,7 @@
      SUBDIR += qdbm
      SUBDIR += qt3-sqlite3-plugin
      SUBDIR += redis
+     SUBDIR += repmgr
      SUBDIR += riak
      SUBDIR += ruby-amalgalite,ruby18
      SUBDIR += ruby-amalgalite,ruby19

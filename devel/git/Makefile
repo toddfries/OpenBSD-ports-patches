@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.100 2013/07/17 07:53:11 benoit Exp $
+# $OpenBSD: Makefile,v 1.102 2013/08/11 11:48:43 benoit Exp $
 
 COMMENT-main =	GIT - Tree History Storage Tool
 COMMENT-svn =	GIT - subversion interoperability tools
 COMMENT-x11 =	GIT - graphical tools
 
-V =		1.8.3.3
+V =		1.8.3.4
 DISTNAME =	git-${V}
 PKGNAME-main =	${DISTNAME}
 PKGNAME-svn =	git-svn-${V}
@@ -22,7 +22,7 @@ DOC_DISTFILE =		git-manpages-${V}${EXTRACT_SUFX}
 DISTFILES =		${DISTNAME}${EXTRACT_SUFX} ${DOC_DISTFILE}
 EXTRACT_ONLY =		${DISTNAME}${EXTRACT_SUFX}
 
-MASTER_SITES =		http://git-core.googlecode.com/files/
+MASTER_SITES =		https://git-core.googlecode.com/files/
 
 MODULES =		devel/gettext x11/tk
 

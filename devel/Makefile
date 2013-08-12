@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1152 2013/07/19 07:15:04 kili Exp $
+# $OpenBSD: Makefile,v 1.1158 2013/08/12 12:01:14 pascal Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -134,7 +134,6 @@
      SUBDIR += git-cola
      SUBDIR += git-cvs
      SUBDIR += glade
-     SUBDIR += glade3
      SUBDIR += glib
      SUBDIR += glib2
      SUBDIR += glib2mm
@@ -346,7 +345,6 @@
      SUBDIR += libexecinfo
      SUBDIR += libexude
      SUBDIR += libf2c
-     SUBDIR += libf2c-old
      SUBDIR += libffi
      SUBDIR += libfmt
      SUBDIR += libftdi
@@ -711,6 +709,8 @@
      SUBDIR += p5-File-CreationTime
      SUBDIR += p5-File-DesktopEntry
      SUBDIR += p5-File-DirCompare
+     SUBDIR += p5-File-Find-Object
+     SUBDIR += p5-File-Find-Object-Rule
      SUBDIR += p5-File-Find-Rule
      SUBDIR += p5-File-Find-Rule-Filesys-Virtual
      SUBDIR += p5-File-Find-Rule-Perl
@@ -854,6 +854,7 @@
      SUBDIR += p5-Number-Compare-Date
      SUBDIR += p5-OLE-Storage_Lite
      SUBDIR += p5-Object-Declare
+     SUBDIR += p5-Object-Event
      SUBDIR += p5-Object-Pluggable
      SUBDIR += p5-Object-Realize
      SUBDIR += p5-Object-Signature
@@ -1009,6 +1010,7 @@
      SUBDIR += p5-Test-Taint
      SUBDIR += p5-Test-TempDir
      SUBDIR += p5-Test-Tester
+     SUBDIR += p5-Test-TrailingSpace
      SUBDIR += p5-Test-Trap
      SUBDIR += p5-Test-URI
      SUBDIR += p5-Test-Unit
@@ -1106,6 +1108,8 @@
      SUBDIR += py-SOAPpy
      SUBDIR += py-addons
      SUBDIR += py-altgraph
+     SUBDIR += py-argh
+     SUBDIR += py-argcomplete
      SUBDIR += py-asn1
      SUBDIR += py-async
      SUBDIR += py-babel

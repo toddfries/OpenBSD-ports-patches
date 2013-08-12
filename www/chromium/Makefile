@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.144 2013/07/15 14:59:30 robert Exp $
+# $OpenBSD: Makefile,v 1.147 2013/08/08 11:52:51 naddy Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 DPB_PROPERTIES=		parallel
 
 COMMENT=		Chromium browser
 
-V=			28.0.1500.45
+V=			28.0.1500.95
 DISTNAME=		chromium-${V}
 
 CATEGORIES=		www
 
-HOMEPAGE=		http://code.google.com/chromium/
+HOMEPAGE=		https://code.google.com/chromium/
 
 MAINTAINER=		Robert Nagy <robert@openbsd.org>
 
@@ -28,7 +28,7 @@ PERMIT_PACKAGE_FTP =	Yes
 PERMIT_PACKAGE_CDROM=	Yes
 .endif
 
-MASTER_SITES=	http://commondatastorage.googleapis.com/chromium-browser-official/
+MASTER_SITES=	https://commondatastorage.googleapis.com/chromium-browser-official/
 
 MODULES=	lang/clang lang/python
 

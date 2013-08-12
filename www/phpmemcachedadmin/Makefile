@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.3 2013/07/05 09:34:35 jasper Exp $
+# $OpenBSD: Makefile,v 1.5 2013/08/12 04:11:22 robert Exp $
 
 COMMENT=	memcached server admin in PHP
 
 V=		1.2.1
 DISTNAME=	phpMemcachedAdmin-$V-r233
 PKGNAME=	phpmemcachedadmin-$V
+REVISION=	1
 
 CATEGORIES=	www databases
 
-HOMEPAGE=	http://phpmemcacheadmin.googlecode.com/
+HOMEPAGE=	https://phpmemcacheadmin.googlecode.com/
 
 # Apache 2.0
 PERMIT_PACKAGE_CDROM=	Yes
