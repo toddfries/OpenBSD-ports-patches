@@ -1,12 +1,7 @@
-# $OpenBSD: sparc,v 1.25 2010/01/09 02:48:04 sthen Exp $
+# $OpenBSD: sparc,v 1.26 2013/08/15 15:09:18 naddy Exp $
 # This is the master list of subdirs used to choose sparc packages.
 # Use with ${PORTSDIR}/infrastructure/package/check-plist
 # to create actual SUBDIRLIST to pass to ports main Makefile.
-databases/pkglocatedb
 net/rsync
-#textproc/gdiff
-#editors/vim,no_x11 XXX
-editors/emacs21
-misc/screen
-#archivers/unzip
-#archivers/bzip2
+archivers/bzip2
+archivers/unzip

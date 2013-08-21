@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.42 2012/06/12 17:40:35 okan Exp $
+@comment $OpenBSD: PLIST,v 1.44 2013/08/12 10:03:00 sthen Exp $
 @conflict p5-PerlMagick-*
 @pkgpath graphics/ImageMagick,no_x11
 bin/Magick++-config

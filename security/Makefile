@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.319 2013/07/01 16:51:02 jasper Exp $
+# $OpenBSD: Makefile,v 1.321 2013/08/12 22:24:01 rpe Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -209,6 +209,7 @@
      SUBDIR += ppgen
      SUBDIR += pwgen
      SUBDIR += pwsafe
+     SUBDIR += pwsafe,no_x11
      SUBDIR += py-M2Crypto
      SUBDIR += py-Rijndael
      SUBDIR += py-bcrypt
@@ -218,6 +219,7 @@
      SUBDIR += py-gnupg
      SUBDIR += py-openssl
      SUBDIR += py-paramiko
+     SUBDIR += py-pefile
      SUBDIR += py-pykpass
      SUBDIR += py-sslwrapper
      SUBDIR += qca

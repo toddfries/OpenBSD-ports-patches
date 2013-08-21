@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.3 2013/03/21 08:48:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2013/08/09 11:23:25 naddy Exp $
 
 COMMENT = 	library to secure any kind of communication streams
 
 DISTNAME = 	libperseus-1.0.2
+REVISION =	0
 CATEGORIES = 	security
 
 SHARED_LIBS = 	perseus 0.0	
 
 MASTER_SITES = 	${HOMEPAGE}/files/
 
-HOMEPAGE = 	http://libperseus.googlecode.com/
+HOMEPAGE = 	https://libperseus.googlecode.com/
 
 MAINTAINER = 	Pierre-Emmanuel Andre <pea@openbsd.org>
 
@@ -30,7 +31,7 @@ do-test:
 
 do-install:
 	${INSTALL_DATA} ${WRKBUILD}/perseus.h ${PREFIX}/include
-	${INSTALL_DATA} ${WRKBUILD}/${FULLPKGNAME}.so ${PREFIX}/lib/libperseus.so.${LIBperseus_VERSION}
+	${INSTALL_DATA} ${WRKBUILD}/${DISTNAME}.so ${PREFIX}/lib/libperseus.so.${LIBperseus_VERSION}
 	${INSTALL_PROGRAM} ${WRKBUILD}/perseus_test ${PREFIX}/bin
 
 .include <bsd.port.mk>

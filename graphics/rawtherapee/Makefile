@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.5 2013/07/10 15:10:27 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.7 2013/08/20 22:05:56 zhuk Exp $
 
 COMMENT =		RAW image processing application
 
 DISTNAME =		rawtherapee-4.0.9
-REVISION =		0
+REVISION =		1
 
 CATEGORIES =		graphics
 
@@ -23,12 +23,13 @@ WANTLIB += iptcdata jpeg lcms2 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pangomm-1.4 pixman-1 png pthread pthread-stubs
 WANTLIB += sigc-2.0 stdc++ tiff xcb xcb-render xcb-shm z
 
-MASTER_SITES =		http://rawtherapee.googlecode.com/files/
+MASTER_SITES =		https://rawtherapee.googlecode.com/files/
 EXTRACT_SUFX = 		.tar.xz
 
 MODULES =		devel/cmake \
 			devel/gettext
-RUN_DEPENDS =		devel/desktop-file-utils
+RUN_DEPENDS =		devel/desktop-file-utils \
+			x11/gtk+2,-guic
 
 LIB_DEPENDS =		devel/libsigc++-2 \
 			graphics/libiptcdata \

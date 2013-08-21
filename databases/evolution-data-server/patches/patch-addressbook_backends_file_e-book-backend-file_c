@@ -1,4 +1,4 @@
-$OpenBSD: patch-addressbook_backends_file_e-book-backend-file_c,v 1.19 2013/03/29 15:17:01 ajacoutot Exp $
+$OpenBSD: patch-addressbook_backends_file_e-book-backend-file_c,v 1.21 2013/08/15 16:07:27 ajacoutot Exp $
 
 XXX remove when we have a 64-bit time_t
 

@@ -1,4 +1,4 @@
-$OpenBSD: patch-camel_providers_local_camel-maildir-summary_c,v 1.11 2013/03/29 15:17:01 ajacoutot Exp $
+$OpenBSD: patch-camel_providers_local_camel-maildir-summary_c,v 1.13 2013/08/15 16:07:27 ajacoutot Exp $
 
 XXX remove when we have a 64-bit time_t
 

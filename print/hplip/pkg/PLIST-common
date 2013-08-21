@@ -1,0 +1,32 @@
+@comment $OpenBSD: PLIST-common,v 1.1 2013/08/21 14:51:41 ajacoutot Exp $
+@pkgpath print/hplip,-libs
+@conflict hplip-libs-*
+@conflict hplip-<3.13.7p4
+@extraunexec rm -rf /var/log/hp/tmp/*
+@extraunexec rm -f /var/log/hp/* 2>/dev/null || true
+@newgroup _cups:541
+lib/libhpip.la
+@lib lib/libhpip.so.${LIBhpip_VERSION}
+lib/libhpmud.la
+@lib lib/libhpmud.so.${LIBhpmud_VERSION}
+share/cups/drv/
+share/cups/drv/hp/
+share/doc/pkg-readmes/${FULLPKGNAME}
+share/examples/hplip/
+share/examples/hplip/db/
+@sample /var/db/hp/
+share/examples/hplip/db/hplip.state
+@sample /var/db/hp/hplip.state
+share/examples/hplip/hp/
+@sample ${SYSCONFDIR}/hp/
+share/examples/hplip/hp/hplip.conf
+@sample ${SYSCONFDIR}/hp/hplip.conf
+share/hplip/
+share/hplip/data/
+share/hplip/data/models/
+share/hplip/data/models/models.dat
+@mode 0774
+@group _cups
+@sample /var/log/hp/
+@mode 1774
+@sample /var/log/hp/tmp/

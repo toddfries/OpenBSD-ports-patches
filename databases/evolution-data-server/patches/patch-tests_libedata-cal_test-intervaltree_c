@@ -1,4 +1,4 @@
-$OpenBSD: patch-tests_libedata-cal_test-intervaltree_c,v 1.4 2012/10/18 13:54:56 ajacoutot Exp $
+$OpenBSD: patch-tests_libedata-cal_test-intervaltree_c,v 1.6 2013/08/15 16:07:27 ajacoutot Exp $
 
 XXX remove when we have a 64-bit time_t
 

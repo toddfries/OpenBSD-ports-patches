@@ -1,4 +1,4 @@
-$OpenBSD: patch-calendar_alarm-notify_alarm_c,v 1.4 2012/11/11 18:51:25 ajacoutot Exp $
+$OpenBSD: patch-calendar_alarm-notify_alarm_c,v 1.6 2013/08/15 16:07:27 ajacoutot Exp $
 
 XXX remove when we have a 64-bit time_t
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2013/07/04 16:34:05 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.89 2013/08/20 14:22:58 dcoppa Exp $
 
 VMEM_WARNING =	Yes
 DPB_PROPERTIES =parallel
@@ -12,6 +12,7 @@ HOMEPAGE =	http://www.cmake.org/
 CATEGORIES =	devel
 COMMENT =	portable build system
 DISTNAME =	cmake-2.8.11.2
+REVISION =	1
 MASTER_SITES =	${HOMEPAGE}files/v2.8/
 
 MAINTAINER =	David Coppa <dcoppa@openbsd.org>
@@ -65,12 +66,14 @@ do-build:
 do-install:
 	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} \
 		${FAKE_SETUP} ninja -v -j ${MAKE_JOBS} ${FAKE_TARGET}
-	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/*.{beforesubst,orig}
-	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Compiler/*.orig
-	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Platform/*.orig
 
 do-test:
 	cd ${WRKBUILD} && exec ${SETENV} ${MAKE_ENV} ninja -v -j \
 		${MAKE_JOBS} ${TEST_FLAGS} ${TEST_TARGET}
+
+post-install:
+	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/*.{beforesubst,orig}
+	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Compiler/*.orig
+	rm ${WRKINST}/${LOCALBASE}/share/cmake/Modules/Platform/*.orig
 
 .include <bsd.port.mk>

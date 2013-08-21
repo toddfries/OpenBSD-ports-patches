@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.7 2013/03/21 08:45:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.9 2013/08/12 10:03:00 sthen Exp $
 
 COMMENT =		geometry viewer for OOGL file formats
 
 V =			1.9.4
 DISTNAME =		geomview-$V
-REVISION=		1
+REVISION =		3
 CATEGORIES =		graphics
 
 HOMEPAGE =		http://www.geomview.org
@@ -53,5 +53,7 @@ post-install:
 	mv ${PREFIX}/man/man5/${i}gv ${PREFIX}/man/man5/${i}
 .endfor
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/doc/geomview/html/
+	# avoid conflict with graphics/ImageMagick
+	mv ${PREFIX}/man/man1/animate.1 ${PREFIX}/man/man1/geomview-animate.1
 
 .include <bsd.port.mk>

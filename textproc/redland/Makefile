@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2013/08/12 06:32:20 robert Exp $
+# $OpenBSD: Makefile,v 1.13 2013/08/13 20:10:45 robert Exp $
 
 MULTI_PACKAGES=		-main -mysql -pgsql
 
@@ -12,6 +12,7 @@ PKGNAME-main=		redland-$V
 PKGNAME-mysql=		redland-mysql-$V
 PKGNAME-pgsql=		redland-pgsql-$V
 CATEGORIES=		textproc
+REVISION=		1
 
 SHARED_LIBS +=	rdf                  1.0      # 0.0
 
@@ -38,7 +39,7 @@ CONFIGURE_ARGS=	--with-raptor=system \
 		--with-datadirect=no \
 		--with-unixodbc=no \
 		--with-threestore=no \
-		--with-virtuoso=yes \
+		--with-virtuoso=no \
 		--with-iodbc=no \
 		--with-mysql=yes \
 		--with-postgresql=yes \
