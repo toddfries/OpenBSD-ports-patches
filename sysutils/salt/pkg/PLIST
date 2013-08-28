@@ -1,11 +1,10 @@
-@comment $OpenBSD: PLIST,v 1.1.1.1 2013/08/10 13:39:27 landry Exp $
-@newgroup _salt:721
-@newuser _salt-master:721:721:daemon:Salt-Master Daemon:/nonexistent:/sbin/nologin
+@comment $OpenBSD: PLIST,v 1.4 2013/08/22 18:14:49 kirby Exp $
+@newgroup _salt:722
+@newuser _salt-master:722:722:daemon:Salt-Master Daemon:/nonexistent:/sbin/nologin
 @owner _salt-master
 @group _salt
 @sample /var/cache/salt/
 @sample /var/log/salt/
-@sample ${SYSCONFDIR}/salt/
 @owner
 @group
 bin/salt
@@ -17,7 +16,7 @@ bin/salt-minion
 bin/salt-run
 bin/salt-syndic
 lib/python${MODPY_VERSION}/site-packages/salt/
-lib/python${MODPY_VERSION}/site-packages/${FULLPKGNAME}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/salt-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
 lib/python${MODPY_VERSION}/site-packages/salt/__init__.py
 lib/python${MODPY_VERSION}/site-packages/salt/__init__.pyc
 lib/python${MODPY_VERSION}/site-packages/salt/_compat.py
@@ -758,5 +757,13 @@ lib/python${MODPY_VERSION}/site-packages/salt/wheel/pillar_roots.pyc
 @man man/man1/salt.1
 @man man/man7/salt.7
 share/doc/pkg-readmes/${FULLPKGNAME}
+share/examples/salt/
+@sample ${SYSCONFDIR}/salt/
+share/examples/salt/master.sample
+@sample ${SYSCONFDIR}/salt/master
+share/examples/salt/minion.sample
+@sample ${SYSCONFDIR}/salt/minion
+@sample ${SYSCONFDIR}/salt/master.d/
+@sample ${SYSCONFDIR}/salt/minion.d/
 @rcscript ${RCDIR}/salt_master
 @rcscript ${RCDIR}/salt_minion

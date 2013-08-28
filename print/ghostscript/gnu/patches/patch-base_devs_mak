@@ -1,4 +1,4 @@
-$OpenBSD: patch-base_devs_mak,v 1.6 2013/02/15 12:40:01 kili Exp $
+$OpenBSD: patch-base_devs_mak,v 1.8 2013/08/22 09:14:32 ajacoutot Exp $
 --- base/devs.mak.orig	Wed Aug  8 10:01:36 2012
 +++ base/devs.mak	Thu Feb 14 19:52:13 2013
 @@ -1831,14 +1831,11 @@ $(DD)plibk.dev : $(DEVS_MAK) $(plib_) $(GLD)page.dev $
