@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1159 2013/08/20 08:12:36 pascal Exp $
+# $OpenBSD: Makefile,v 1.1163 2013/09/12 07:00:17 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -85,6 +85,7 @@
      SUBDIR += dbus-sharp-glib
      SUBDIR += dconf
      SUBDIR += ddd
+     SUBDIR += dee
      SUBDIR += dejagnu
      SUBDIR += desktop-file-utils
      SUBDIR += dfu-programmer
@@ -1112,6 +1113,7 @@
      SUBDIR += py-asn1
      SUBDIR += py-async
      SUBDIR += py-babel
+     SUBDIR += py-babel,python3
      SUBDIR += py-blinker
      SUBDIR += py-buildbot
      SUBDIR += py-buildslave
@@ -1148,6 +1150,7 @@
      SUBDIR += py-html5lib
      SUBDIR += py-iniparse
      SUBDIR += py-isodate
+     SUBDIR += py-isodate,python3
      SUBDIR += py-jsonrpclib
      SUBDIR += py-kid
      SUBDIR += py-liblarch
@@ -1161,6 +1164,7 @@
      SUBDIR += py-mox
      SUBDIR += py-mxDateTime
      SUBDIR += py-nose
+     SUBDIR += py-nose,python3
      SUBDIR += py-notify
      SUBDIR += py-openbsd
      SUBDIR += py-optik
@@ -1197,6 +1201,7 @@
      SUBDIR += py-turbokid
      SUBDIR += py-twisted
      SUBDIR += py-tz
+     SUBDIR += py-tz,python3
      SUBDIR += py-unit
      SUBDIR += py-unit,no_x11
      SUBDIR += py-unittest2

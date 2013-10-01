@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Clock.pm,v 1.3 2012/03/02 19:33:43 espie Exp $
+# $OpenBSD: Clock.pm,v 1.5 2013/09/18 13:26:39 espie Exp $
 #
 # Copyright (c) 2011 Marc Espie <espie@openbsd.org>
 #
@@ -27,6 +27,7 @@ package DPB::Clock;
 # users will register/unregister, they must have a
 # stopped_clock($gap) method to adjust.
 my $items = {};
+
 sub register
 {
 	my ($class, $o) = @_;
@@ -51,7 +52,7 @@ sub restart
 	my $gap = time() - $stopped_clock;
 
 	for my $o (values %$items) {
-		$o->stopped_clock($gap);
+		$o->stopped_clock($gap, $stopped_clock);
 	}
 }
 
@@ -127,9 +128,9 @@ sub check_change
 	return $d;
 }
 
-sub change_message
+sub percent_message
 {
-	my ($self, $diff) = @_;
+	my $self = shift;
 	my $progress = '';
 	if (defined $self->{sz}) {
 		if (defined $self->{expected} &&
@@ -140,17 +141,22 @@ sub change_message
 			$progress = ' '.$self->{sz};
 	    	}
 	}
-	my $unchanged = " unchanged for ";
+	return $progress;
+}
+sub frozen_message
+{
+	my ($self, $diff) = @_;
+	my $unchanged = " frozen for ";
 	if ($diff > 7200) {
-		$unchanged .= int($diff/3600)." hours";
+		$unchanged .= int($diff/3600)." HOURS!";
 	} elsif ($diff > 300) {
-		$unchanged .= int($diff/60)." minutes";
+		$unchanged .= int($diff/60)."mn";
 	} elsif ($diff > 10) {
-		$unchanged .= int($diff)." seconds";
+		$unchanged .= int($diff)."s";
 	} else {
 		$unchanged = "";
 	}
-	return $progress.$unchanged;
+	return $unchanged;
 }
 
 sub reset_offset

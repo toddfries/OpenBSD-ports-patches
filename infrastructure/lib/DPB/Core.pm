@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Core.pm,v 1.38 2013/08/28 11:55:06 espie Exp $
+# $OpenBSD: Core.pm,v 1.54 2013/09/24 10:07:27 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -22,14 +22,30 @@ package DPB::Host;
 
 my $hosts = {};
 
+sub shell
+{
+	my $self = shift;
+	return $self->{shell};
+}
+
 sub new
 {
 	my ($class, $name, $prop) = @_;
-#	if ($class->name_is_localhost($name)) {
-#		delete $prop->{wait_timeout};
-#	}
-	$hosts->{$name} //= bless {host => $name, 
-		prop => DPB::HostProperties->finalize($prop) }, $class;
+	if ($class->name_is_localhost($name)) {
+		$class = "DPB::Host::Localhost";
+		$name = 'localhost';
+	} else {
+		require DPB::Core::Distant;
+		$class = "DPB::Host::Distant";
+	}
+	if (!defined $hosts->{$name}) {
+		my $h = bless {host => $name, 
+			prop => DPB::HostProperties->finalize($prop) }, $class;
+		# XXX have to register *before* creating the shell
+		$hosts->{$name} = $h;
+		$h->{shell} = $h->shellclass->new($h);
+	}
+	return $hosts->{$name};
 }
 
 sub name
@@ -58,12 +74,28 @@ sub name_is_localhost
 	}
 }
 
+package DPB::Host::Localhost;
+our @ISA = qw(DPB::Host);
+
 sub is_localhost
 {
-	my $o = shift;
-	return $o->name_is_localhost($o->{host});
+	return 1;
 }
 
+sub is_alive
+{
+	return 1;
+}
+
+sub shellclass
+{
+	my $self = shift;
+	if ($self->{prop}->{chroot}) {
+		return "DPB::Shell::Local::Chroot";
+	} else {
+		return "DPB::Shell::Local";
+	}
+}
 
 # here, a "core" is an entity responsible for scheduling cpu, such as
 # running a job, which is a collection of tasks.
@@ -116,25 +148,20 @@ sub handle_events
 
 sub is_alive
 {
-	return 1;
-}
-
-sub shellclass
-{
-	"DPB::Shell::Abstract"
+	my $self = shift;
+	return $self->host->is_alive;
 }
 
 sub shell
 {
 	my $self = shift;
-	return $self->{shell};
+	return $self->host->shell;
 }
 
 sub new
 {
 	my ($class, $host, $prop) = @_;
 	my $c = bless {host => DPB::Host->new($host, $prop)}, $class;
-	$c->{shell} = $class->shellclass->new($c->host);
 	$allhosts{$c->hostname} = 1;
 	return $c;
 }
@@ -470,13 +497,20 @@ sub one_core
 {
 	my ($core, $time) = @_;
 	my $hostname = $core->hostname;
-		
-	my $s = $core->job->name." [$core->{pid}]".
-	    (DPB::Host->name_is_localhost($hostname) ? "" : " on ".$hostname).
-	    $core->job->watched($time, $core);
+	my $s = $core->job->name;
+    	if ($core->{squiggle}) {
+		$s = '~'.$s;
+	}
 	if (defined $core->{swallowed}) {
 		$s = (scalar(@{$core->{swallowed}})+1).'*'.$s;
 	}
+	if ($core->{inmem}) {
+		$s .= '+';
+	}
+		
+	$s .= " [$core->{pid}]".
+	    (DPB::Host->name_is_localhost($hostname) ? "" : " on ".$hostname).
+	    $core->job->watched($time, $core);
     	return $s;
 }
 
@@ -577,8 +611,9 @@ sub mark_available
 
 		# if this host has cores that swallow things, let us 
 		# be swallowed
-		if (defined $core->host->{swallow}) {
+		if ($core->can_be_swallowed) {
 			for my $c (values %{$core->host->{swallow}}) {
+				$core->unsquiggle;
 				push(@{$c->{swallowed}}, $core);
 				if (--$c->{swallow} == 0) {
 					delete $core->host->{swallow}{$c};
@@ -602,7 +637,50 @@ sub get
 	if (@$a > 1) {
 		@$a = sort {$b->sf <=> $a->sf} @$a;
 	}
-	return shift @$a;
+	my $core = shift @$a;
+	if ($core->may_unsquiggle) {
+		return $core;
+	}
+	if (!$core->{squiggle} && $core->host->{wantsquiggles}) {
+		if ($core->host->{wantsquiggles} < 1) {
+			if (rand() <= $core->host->{wantsquiggles}) {
+				$core->{squiggle} = $core->host->{wantsquiggles};
+				$core->host->{wantsquiggles} = 0;
+			}
+		} else {
+			$core->host->{wantsquiggles}--;
+			$core->{squiggle} = 1;
+		}
+	}
+	return $core;
+}
+
+sub can_be_swallowed
+{
+	my $core = shift;
+	return defined $core->host->{swallow};
+}
+
+sub may_unsquiggle
+{
+	my $core = shift;
+	if ($core->{squiggle} && $core->{squiggle} < 1) {
+		if (rand() >= $core->{squiggle}) {
+			$core->unsquiggle;
+			return 1;
+		}
+	}
+	return 0;
+}
+
+sub unsquiggle
+{
+	my $core = shift;
+	if ($core->{squiggle}) {
+		$core->host->{wantsquiggles} += $core->{squiggle};
+		delete $core->{squiggle};
+	}
+	return $core;
 }
 
 sub get_affinity
@@ -677,11 +755,6 @@ sub is_local
 	return 1;
 }
 
-sub shellclass
-{
-	"DPB::Shell::Local"
-}
-
 package DPB::Core::Fetcher;
 our @ISA = qw(DPB::Core::Local);
 
@@ -692,16 +765,25 @@ sub available
 	return $fetchcores;
 }
 
+sub may_unsquiggle
+{
+	return 1;
+}
+
+sub can_be_swallowed
+{
+	return 0;
+}
+
 package DPB::Core::Clock;
 our @ISA = qw(DPB::Core::Special);
 
 sub start
 {
-	my ($class, $timeout) = @_;
+	my ($class, $reporter) = @_;
 	my $core = $class->new('localhost');
-	$timeout //= 10;
 	$core->start_job(DPB::Job::Infinite->new(DPB::Task::Fork->new(sub {
-		sleep($timeout);
+		sleep($reporter->timeout);
 		exit(0);
 		}), 'clock'));
 }
@@ -714,7 +796,14 @@ package DPB::Shell::Abstract;
 sub new
 {
 	my ($class, $host) = @_;
-	bless {}, $class;
+	$host //= {}; # this makes it possible to build "localhost" shells
+	bless {sudo => 0, prop => $host->{prop}}, $class;
+}
+
+sub prop
+{
+	my $self = shift;
+	return $self->{prop};
 }
 
 sub chdir
@@ -733,8 +822,24 @@ sub env
 	return $self;
 }
 
+sub sudo
+{
+	my ($self, $val) = @_;
+	# XXX calling sudo without parms is equivalent to saying "1"
+	if (@_ == 1) {
+		$val = 1;
+	}
+	$self->{sudo} = $val;
+	return $self;
+}
+
 package DPB::Shell::Local;
 our @ISA = qw(DPB::Shell::Abstract);
+
+sub is_alive
+{
+	return 1;
+}
 
 sub chdir
 {
@@ -755,7 +860,62 @@ sub env
 sub exec
 {
 	my ($self, @argv) = @_;
+	if ($self->{sudo}) {
+		unshift(@argv, OpenBSD::Paths->sudo, "-E");
+	}
 	exec {$argv[0]} @argv;
+}
+
+package DPB::Shell::Chroot;
+our @ISA = qw(DPB::Shell::Abstract);
+sub exec
+{
+	my ($self, @argv) = @_;
+	my $chroot = $self->prop->{chroot};
+	if ($self->{env}) {
+		unshift @argv, 'exec' unless $self->{sudo} && !$chroot;
+		while (my ($k, $v) = each %{$self->{env}}) {
+			$v //= '';
+			unshift @argv, "$k=\'$v\'";
+		}
+	}
+	if ($self->{sudo} && !$chroot) {
+		unshift(@argv, 'exec', OpenBSD::Paths->sudo, "-E");
+	}
+	my $cmd = join(' ', @argv);
+	if ($self->{dir}) {
+		$cmd = "cd $self->{dir} && $cmd";
+	}
+	my $umask = $self->prop->{umask};
+	$cmd = "umask $umask && $cmd";
+	if ($chroot) {
+		my @cmd2 = (OpenBSD::Paths->sudo, "-E", "chroot");
+		if (!$self->{sudo}) {
+			push(@cmd2, "-u", $self->prop->{chroot_user});
+		}
+		$self->_run(@cmd2, $chroot, "/bin/sh", "-c", $self->quote($cmd));
+	} else {
+		$self->_run($cmd);
+	}
+}
+
+package DPB::Shell::Local::Chroot;
+our @ISA = qw(DPB::Shell::Chroot);
+sub _run
+{
+	my ($self, @argv) = @_;
+	exec {$argv[0]} @argv;
+}
+
+sub quote
+{
+	my ($self, $cmd) = @_;
+	return $cmd;
+}
+
+sub is_alive
+{
+	return 1;
 }
 
 1;

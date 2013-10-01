@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.5 2013/03/11 11:07:38 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2013/09/25 12:43:11 kirby Exp $
 
 COMMENT =		free OpenGl billard game
 
@@ -18,5 +18,6 @@ LIB_DEPENDS =		graphics/png \
 
 USE_GMAKE =		Yes
 CONFIGURE_STYLE =	automake
+CFLAGS += 		-DNO_NV_BUMPREF
 
 .include <bsd.port.mk>

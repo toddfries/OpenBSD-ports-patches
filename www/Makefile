@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.616 2013/08/12 20:25:39 brad Exp $
+# $OpenBSD: Makefile,v 1.627 2013/09/29 18:36:29 rpe Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -32,9 +32,7 @@
      SUBDIR += chromium
      SUBDIR += chromium,proprietary
      SUBDIR += clearsilver
-     SUBDIR += cms-ms
      SUBDIR += cntlm
-     SUBDIR += concrete5
      SUBDIR += conkeror
      SUBDIR += cronolog
      SUBDIR += dansguardian
@@ -49,19 +47,16 @@
      SUBDIR += epiphany
      SUBDIR += erl-mochiweb
      SUBDIR += erl-webmachine
-     SUBDIR += ezpublish
      SUBDIR += fcgi
      SUBDIR += fcgi-cgi
      SUBDIR += fennec
      SUBDIR += ffproxy
      SUBDIR += firefox-i18n
-     SUBDIR += firefox36
      SUBDIR += fluxbb
      SUBDIR += flyspray
      SUBDIR += gcap
      SUBDIR += gecko-mediaplayer
      SUBDIR += gitlist
-     SUBDIR += glpi
      SUBDIR += gnash
      SUBDIR += gtkhtml3
      SUBDIR += gtkhtml4
@@ -111,7 +106,6 @@
      SUBDIR += llgal
      SUBDIR += luakit
      SUBDIR += man2web
-     SUBDIR += mantis
      SUBDIR += mediawiki
      SUBDIR += mediawiki-CategoryTree
      SUBDIR += mediawiki-httpauth
@@ -148,7 +142,6 @@
      SUBDIR += mollify
      SUBDIR += mongrel2
      SUBDIR += mono-xsp
-     SUBDIR += moodle
      SUBDIR += mozilla-firefox
      SUBDIR += mozilla-sync
      SUBDIR += mozplugger
@@ -366,20 +359,16 @@
      SUBDIR += pecl-chroot
      SUBDIR += pecl-geoip
      SUBDIR += pecl-memcache
-     SUBDIR += pecl-phar
      SUBDIR += pecl-proctitle
      SUBDIR += pecl-ssh2
      SUBDIR += pecl-swish
      SUBDIR += pecl-uploadprogress
      SUBDIR += perlbal
-     SUBDIR += photoshow
      SUBDIR += php-markdown
      SUBDIR += php-openid
      SUBDIR += php-predis
      SUBDIR += phpicalendar
      SUBDIR += phpldapadmin
-     SUBDIR += phplist
-     SUBDIR += phpmemcachedadmin
      SUBDIR += phpmyadmin
      SUBDIR += phppgadmin
      SUBDIR += phpvirtualbox
@@ -392,6 +381,7 @@
      SUBDIR += puppet-dashboard
      SUBDIR += py-CherryPy
      SUBDIR += py-beaker
+     SUBDIR += py-beaker,python3
      SUBDIR += py-beautifulsoup
      SUBDIR += py-beautifulsoup4
      SUBDIR += py-cherrypy2
@@ -407,6 +397,7 @@
      SUBDIR += py-jinja2
      SUBDIR += py-jonpy
      SUBDIR += py-mako
+     SUBDIR += py-mako,python3
      SUBDIR += py-mechanize
      SUBDIR += py-meld3
      SUBDIR += py-nevow
@@ -511,12 +502,10 @@
      SUBDIR += trac-ldapplugin
      SUBDIR += tracnav
      SUBDIR += tt-rss
-     SUBDIR += twiki
      SUBDIR += twill
      SUBDIR += varnish
      SUBDIR += visitors
      SUBDIR += vteplugin
-     SUBDIR += vtigercrm
      SUBDIR += w3m
      SUBDIR += w3m,image
      SUBDIR += w3m,japanese
@@ -524,7 +513,6 @@
      SUBDIR += w3mir
      SUBDIR += wApua
      SUBDIR += wbox
-     SUBDIR += webacula
      SUBDIR += webalizer
      SUBDIR += webcollab
      SUBDIR += webgui
@@ -543,6 +531,5 @@
      SUBDIR += youtube-dl
      SUBDIR += yui
      SUBDIR += zendframework
-     SUBDIR += zurmo
 
 .include <bsd.port.subdir.mk>

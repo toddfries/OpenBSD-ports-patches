@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.154 2013/08/09 10:59:31 naddy Exp $
+# $OpenBSD: Makefile,v 1.156 2013/09/19 14:56:13 sthen Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -76,6 +76,7 @@
      SUBDIR += pugs
      SUBDIR += pypy
      SUBDIR += python
+     SUBDIR += racket
      SUBDIR += railo
      SUBDIR += rakudo
      SUBDIR += rubinius
@@ -86,6 +87,7 @@
      SUBDIR += scheme48
      SUBDIR += scm
      SUBDIR += scm,no_x11
+     SUBDIR += seed7
      SUBDIR += smlnj
      SUBDIR += spidermonkey
      SUBDIR += squeak

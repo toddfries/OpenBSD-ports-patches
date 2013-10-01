@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.14 2013/07/13 06:50:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.19 2013/09/30 15:49:48 ajacoutot Exp $
 
 COMMENT=		ffmpeg elements for GStreamer
 
-V=			1.0.8
 DISTNAME=		gst-libav-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-libav-${V}
+REVISION=		1
 
 # sync with graphics/ffmpeg
 PERMIT_PACKAGE_CDROM=	patents
@@ -12,11 +12,11 @@ PERMIT_PACKAGE_FTP=	Yes
 
 WANTLIB += bz2 ffi glib-2.0 gmodule-2.0 gobject-2.0 gstaudio-1.0
 WANTLIB += gstbase-1.0 gstpbutils-1.0 gstreamer-1.0 gsttag-1.0
-WANTLIB += gstvideo-1.0 gthread-2.0 m orc-0.4 pcre pthread z
+WANTLIB += gstvideo-1.0 m pcre pthread z
 
 MASTER_SITES=		${MASTER_SITE_GST:=gst-libav/}
 
-LIB_DEPENDS=		${P}/plugins-base
+LIB_DEPENDS=		${P}/plugins-base=${V}
 
 .if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "i386"
 BUILD_DEPENDS +=	devel/yasm
@@ -45,9 +45,12 @@ libav_CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 
 CONFIGURE_ARGS=		--with-libav-extra-configure="${libav_CONFIGURE_ARGS}"
 
+# needs orc >= 0.4.16
+CONFIGURE_ARGS +=	--disable-orc
+
 MAKE_ENV=		V=1
 
 # make sure bundled libav headers are chosen over the system FFmpeg ones
-CPPFLAGS +=		-I../../gst-libs -I../../gst-libs/ext/libav
+CPPFLAGS +=		-I${WRKBUILD}/gst-libs/ext/libav
 
 .include <bsd.port.mk>

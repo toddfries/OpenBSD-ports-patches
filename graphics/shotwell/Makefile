@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2013/08/11 13:52:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2013/09/24 10:24:43 jasper Exp $
 
 # needs to allocate 512M
 VMEM_WARNING =	Yes
@@ -7,6 +7,7 @@ COMMENT =	digital photo organizer
 
 V =		0.14.1
 DISTNAME =	shotwell-${V}
+REVISION =	0
 EXTRACT_SUFX =	.tar.xz
 CATEGORIES =	graphics
 MASTER_SITES =	http://yorba.org/download/shotwell/${V:C/^([0-9]+\.[0-9]+).*/\1/}/
@@ -30,11 +31,9 @@ MODULES =	devel/dconf \
 		devel/gettext \
 		x11/gnome
 
-MODGNOME_TOOLS = 	yelp
+MODGNOME_TOOLS = 	vala yelp
 MODGNOME_DESKTOP_FILE =	Yes
 MODGNOME_ICON_CACHE =	Yes
-
-BUILD_DEPENDS =	lang/vala
 
 LIB_DEPENDS =	devel/json-glib \
 		devel/libgee06 \

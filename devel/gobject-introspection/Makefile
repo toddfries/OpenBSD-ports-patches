@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.71 2013/08/15 14:53:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.73 2013/09/28 08:50:44 ajacoutot Exp $
 
 COMMENT=		GObject Introspection
 
-GNOME_VERSION=		1.36.0
+GNOME_VERSION=		1.38.0
 GNOME_PROJECT=		gobject-introspection
 REVISION=		0
 
@@ -12,8 +12,6 @@ SHARED_LIBS +=  girepository-1.0     3.0      # 1.0
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 			Antoine Jacoutot <ajacoutot@openbsd.org>
-
-HOMEPAGE=		http://live.gnome.org/GObjectIntrospection
 
 # Library: LGPLv2+
 # Tools: GPLv2+

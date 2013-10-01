@@ -1,0 +1,17 @@
+$OpenBSD: patch-ProxyChannel_cxx,v 1.2 2013/09/20 09:21:00 ajacoutot Exp $
+
+http://openh323gk.cvs.sourceforge.net/viewvc/openh323gk/openh323gk/ProxyChannel.cxx?r1=1.877&r2=1.878
+
+--- ProxyChannel.cxx.orig	Fri Sep 20 09:02:15 2013
++++ ProxyChannel.cxx	Fri Sep 20 09:01:48 2013
+@@ -57,6 +57,10 @@
+ 	#include "h235/h235crypto.h"
+ #endif
+ 
++#ifdef P_OPENBSD
++#include <sys/uio.h>
++#endif
++
+ #ifdef _WIN32
+ #include <mswsock.h>
+ #endif

@@ -1,14 +1,12 @@
-# $OpenBSD: Makefile,v 1.67 2013/03/11 10:50:03 espie Exp $
+# $OpenBSD: Makefile,v 1.70 2013/09/29 12:06:40 ajacoutot Exp $
 
 COMMENT=	editor for the GConf configuration system
 
 GNOME_PROJECT=	gconf-editor
 GNOME_VERSION=	3.0.1
-REVISION=	2
+REVISION=	5
 
 CATEGORIES=	devel x11
-
-HOMEPAGE=	http://www.gnome.org/projects/gconf/
 
 MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 		Antoine Jacoutot <ajacoutot@openbsd.org>
@@ -30,9 +28,7 @@ MODULES=	devel/gettext \
 
 LIB_DEPENDS=	x11/gtk+3
 
-RUN_DEPENDS=	devel/gconf2,-polkit
-
-USE_GROFF=	Yes
+USE_GROFF=		Yes
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
 MODGNOME_TOOLS= yelp

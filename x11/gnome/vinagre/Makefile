@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.72 2013/05/14 06:53:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.74 2013/09/28 08:51:32 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	remote desktop viewer for GNOME
 
 GNOME_PROJECT=	vinagre
-GNOME_VERSION=	3.8.2
+GNOME_VERSION=	3.10.0
+REVISION=	0
 
 CATEGORIES=	net
-
-HOMEPAGE=	http://projects.gnome.org/vinagre/
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes

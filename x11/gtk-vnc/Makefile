@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.43 2013/05/31 15:35:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2013/09/28 08:50:37 ajacoutot Exp $
 
 COMMENT=		VNC viewer widget for GTK
 
 GNOME_PROJECT=		gtk-vnc
-GNOME_VERSION=		0.5.2
+GNOME_VERSION=		0.5.3
 REVISION=		0
 
 PKGNAME=		${DISTNAME}
@@ -13,20 +13,18 @@ SHARED_LIBS +=  gtk-vnc-2.0          0.1      # 0.2
 
 CATEGORIES=		x11 net
 
-HOMEPAGE=		http://live.gnome.org/gtk-vnc
-
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
-WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
-WANTLIB += c cairo cairo-gobject dbus-1 expat ffi fontconfig freetype
-WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
-WANTLIB += gmp gnutls gobject-2.0 gpg-error gthread-2.0 gtk-3
-WANTLIB += harfbuzz hogweed m nettle p11-kit
-WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB += png pthread pthread-stubs sasl2 tasn1 xcb xcb-render
-WANTLIB += xcb-shm z
+WANTLIB += Xinerama Xrandr Xrender asn1 atk-1.0 atk-bridge-2.0
+WANTLIB += atspi c cairo cairo-gobject com_err crypto dbus-1 expat
+WANTLIB += ffi fontconfig freetype gcrypt gdk-3 gdk_pixbuf-2.0
+WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gmp gnutls gobject-2.0
+WANTLIB += gpg-error graphite2 gssapi gthread-2.0 gtk-3 harfbuzz
+WANTLIB += heimbase hogweed krb5 m nettle p11-kit pango-1.0 pangocairo-1.0
+WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
+WANTLIB += roken sasl2 tasn1 wind xcb xcb-render xcb-shm z
 
 MODULES=		devel/gettext \
 			x11/gnome

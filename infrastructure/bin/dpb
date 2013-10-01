@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: dpb,v 1.93 2013/07/04 17:45:34 jasper Exp $
+# $OpenBSD: dpb,v 1.95 2013/09/18 15:30:40 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -111,6 +111,7 @@ use DPB::Affinity;
 use DPB::Config;
 use File::Path;
 use File::Basename;
+use DPB::Core;
 
 sub define_present
 {
@@ -127,7 +128,7 @@ sub init
 	$self->{make} = $ENV{MAKE} || OpenBSD::Paths->make;
 	($self->{ports}, $self->{portspath}, $self->{repo}, $self->{localarch},
 	    $self->{distdir}, $self->{localbase}) =
-		DPB::Vars->get($self->make,
+		DPB::Vars->get(DPB::Shell::Local->new, $self->make,
 		"PORTSDIR", "PORTSDIR_PATH", "PACKAGE_REPOSITORY", 
 		"MACHINE_ARCH", "DISTDIR", "LOCALBASE");
 	$self->{arch} = $self->{localarch};
@@ -651,7 +652,7 @@ if ($state->{scan_only}) {
 	}
 } else {
 	# and let's wait for all jobs now.
-	DPB::Core->start_clock($state->{display_timeout});
+	DPB::Core->start_clock($reporter);
 	main_loop();
 }
 

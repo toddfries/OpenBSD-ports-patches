@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.63 2013/08/20 22:30:36 zhuk Exp $
+# $OpenBSD: Makefile,v 1.66 2013/09/26 13:46:28 sthen Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,16 +6,18 @@ COMMENT-main=		mail and news client
 COMMENT-bogofilter=	bogofilter plugin
 COMMENT-clamav=		clamav plugin
 COMMENT-spamassassin=	spamassassin plugin
+COMMENT-htmlviewer=	fancy htmlviewer plugin
+COMMENT-pdfviewer=	pdfviewer plugin
 
-V=			3.8.1
+V=			3.9.2
+REVISION=		0
 DISTNAME=		claws-mail-${V}
-REVISION-main=		6
-REVISION-bogofilter=	5
-REVISION-clamav=	0
-REVISION-spamassassin=	5
 PKGNAME-main=		${DISTNAME}
 PKGNAME-bogofilter=	claws-mail-bogofilter-${V}
 PKGNAME-spamassassin=	claws-mail-spamassassin-${V}
+PKGNAME-htmlviewer=	claws-mail-htmlviewer-${V}
+PKGNAME-pdfviewer=	claws-mail-pdfviewer-${V}
+
 CATEGORIES=		mail news
 
 HOMEPAGE=		http://www.claws-mail.org/
@@ -28,7 +30,7 @@ EXTRACT_SUFX=		.tar.bz2
 
 DIST_SUBDIR=		claws
 
-MULTI_PACKAGES=		-main -bogofilter -spamassassin
+MULTI_PACKAGES=		-main -bogofilter -spamassassin -htmlviewer -pdfviewer
 FLAVORS=		jpilot compface ldap debug
 FLAVOR?=
 
@@ -40,28 +42,40 @@ RUN_DEPENDS-bogofilter=	${BUILD_PKGPATH} \
 RUN_DEPENDS-spamassassin=${BUILD_PKGPATH} \
 			mail/p5-Mail-SpamAssassin
 
-WANTLIB=		X11 Xcomposite Xcursor Xdamage Xext Xfixes \
-			Xi Xinerama Xrandr Xrender atk-1.0 cairo crypto curl \
-			expat fontconfig freetype gio-2.0 glib-2.0 gthread-2.0 \
-			gmodule-2.0 gobject-2.0 idn m pango-1.0 pangocairo-1.0 \
-			pangoft2-1.0 pcre pixman-1 png pthread-stubs ssl \
-			xcb z gdk_pixbuf-2.0 pthread \
-			gdk-x11-2.0 gtk-x11-2.0 execinfo etpan>=13 sasl2 \
-			xcb-render xcb-shm \
-			ffi harfbuzz
+WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB += Xrandr Xrender archive atk-1.0 bz2 cairo crypto curl
+WANTLIB += etpan execinfo expat ffi fontconfig freetype gdk-x11-2.0
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += gthread-2.0 gtk-x11-2.0 harfbuzz idn lzma m pango-1.0
+WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
+WANTLIB += pthread-stubs sasl2 ssl xcb xcb-render xcb-shm z
 
-WANTLIB-main=		${WANTLIB} ICE SM X11-xcb c dbus-1 gmp hogweed nettle \
-			tasn1 xcb-aux assuan startup-notification-1 stdc++ \
-			enchant gnutls gpgme dbus-glib-1 gpg-error p11-kit
+WANTLIB-main =  ${WANTLIB}
+WANTLIB-main += ICE SM X11-xcb assuan c dbus-1 dbus-glib-1 enchant
+WANTLIB-main += gmp gnutls gpg-error gpgme hogweed nettle p11-kit perl
+WANTLIB-main += startup-notification-1 stdc++ tasn1 util xcb-aux xml2
+
+WANTLIB-htmlviewer =  ${WANTLIB}
+WANTLIB-htmlviewer += EGL GL ICE SM Xt asn1 com_err dbus-1 dbus-glib-1 enchant
+WANTLIB-htmlviewer += gailutil gcrypt geoclue gpg-error graphite2 gssapi
+WANTLIB-htmlviewer += gstapp-1.0 gstaudio-1.0 gstbase-1.0 gstfft-1.0 gstpbutils-1.0
+WANTLIB-htmlviewer += gstreamer-1.0 gsttag-1.0 gstvideo-1.0 harfbuzz-icu
+WANTLIB-htmlviewer += heimbase icudata icui18n icuuc javascriptcoregtk-1.0
+WANTLIB-htmlviewer += jpeg krb5 roken secret-1 soup-2.4 soup-gnome-2.4 sqlite3
+WANTLIB-htmlviewer += stdc++ webkitgtk-1.0 webp wind xml2 xslt
+
+WANTLIB-pdfviewer =  ${WANTLIB}
+WANTLIB-pdfviewer += asn1 com_err graphite2 gssapi heimbase jpeg krb5 lcms2
+WANTLIB-pdfviewer += openjpeg poppler poppler-glib roken tiff wind
 
 WANTLIB-docs=
 
-# XXX libgcrypt shouldn't be needed:
-BUILD_DEPENDS+=		security/libgcrypt
-LIB_DEPENDS=		x11/gtk+2 \
+LIB_DEPENDS=		archivers/libarchive \
+			archivers/xz \
 			devel/libexecinfo \
 			mail/libetpan \
-			security/cyrus-sasl2
+			security/cyrus-sasl2 \
+			x11/gtk+2
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
 			devel/desktop-file-utils \
@@ -74,9 +88,19 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			security/gpgme \
 			x11/dbus-glib
 
-CONFIGURE_ARGS+=	--disable-gnomeprint \
-			--disable-networkmanager-support \
-			--disable-dillo-viewer-plugin
+LIB_DEPENDS-htmlviewer=	${LIB_DEPENDS} \
+			www/webkit>=2.0.0
+
+LIB_DEPENDS-pdfviewer=	${LIB_DEPENDS} \
+			print/poppler
+
+#geolocation looks for champlain <= 0.10
+#python tries to dlopen libpython2.7.so
+CONFIGURE_ARGS+=	--disable-acpi_notifier-plugin \
+			--disable-geolocation-plugin \
+			--disable-python-plugin \
+			--enable-new-addrbook
+
 
 MODULES=		devel/gettext
 USE_GMAKE=		Yes
@@ -84,7 +108,7 @@ USE_GROFF =		Yes
 LIBTOOL_FLAGS=		--tag=disable-static
 CONFIGURE_STYLE=	autoconf
 
-AUTOCONF_VERSION=	2.68
+AUTOCONF_VERSION=	2.69
 CONFIGURE_ENV+=		CPPFLAGS="-I${X11BASE}/include" \
 			LDFLAGS="-L${X11BASE}/lib"
 

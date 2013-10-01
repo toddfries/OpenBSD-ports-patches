@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.214 2013/04/06 08:19:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.220 2013/09/30 13:30:19 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += alacarte
@@ -8,8 +8,8 @@
      SUBDIR += at-spi2-core
      SUBDIR += backgrounds
      SUBDIR += banshee
-     SUBDIR += baker
      SUBDIR += baobab
+     SUBDIR += bijiben
      SUBDIR += calculator
      SUBDIR += caribou
      SUBDIR += clocks
@@ -42,13 +42,13 @@
      SUBDIR += gjs
      SUBDIR += gnote
      SUBDIR += grilo
-     SUBDIR += grilo-mediaserver2
      SUBDIR += grilo-plugins
      SUBDIR += gucharmap
      SUBDIR += gvfs,
      SUBDIR += icon-theme
      SUBDIR += icon-theme-extras
      SUBDIR += icon-theme-symbolic
+     SUBDIR += initial-setup
      SUBDIR += keyring
      SUBDIR += latexila
      SUBDIR += libbonobo
@@ -65,16 +65,19 @@
      SUBDIR += libsecret
      SUBDIR += libxklavier
      SUBDIR += libzapojit
+     SUBDIR += maps
      SUBDIR += menus
      SUBDIR += mime-data
      SUBDIR += mono-gnome
      SUBDIR += moserial
      SUBDIR += mousetweaks
+     SUBDIR += music
      SUBDIR += mutter
      SUBDIR += nautilus
      SUBDIR += nautilus-sendto
      SUBDIR += nemiver
      SUBDIR += online-accounts
+     SUBDIR += online-miners
      SUBDIR += orca
      SUBDIR += photos
      SUBDIR += planner

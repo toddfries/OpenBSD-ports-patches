@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.65 2013/06/18 11:48:14 jasper Exp $
+# $OpenBSD: Makefile,v 1.69 2013/09/28 08:51:18 ajacoutot Exp $
 
 COMMENT=		plugins for Gedit
 
 GNOME_PROJECT=		gedit-plugins
-GNOME_VERSION=		3.8.3
+GNOME_VERSION=		3.10.0
+REVISION=		1
 
 CATEGORIES=		editors
-
-HOMEPAGE=		http://live.gnome.org/Gedit/Plugins
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -29,6 +28,7 @@ MODULES=		devel/gettext \
 MODPY_VERSION=		${MODPY_DEFAULT_VERSION_3}
 
 BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/libgit2/libgit2-glib>=0.0.6p0 \
 			devel/vte3 \
 			textproc/gsed \
 			x11/gnome/gedit \
@@ -38,18 +38,23 @@ LIB_DEPENDS=		devel/libpeas \
 			x11/gtksourceview3
 
 RUN_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/libgit2/libgit2-glib>=0.0.6p0 \
 			devel/py-gobject3${MODPY_FLAVOR} \
 			devel/vte3 \
+			x11/dbus-python${MODPY_FLAVOR} \
 			x11/gnome/gedit \
 			x11/gnome/gucharmap
 
+MODGNOME_TOOLS=		yelp
+
+# dashboard plugin
+RUN_DEPENDS +=		productivity/zeitgeist
+
 LIBTOOL_FLAGS=		--tag=disable-static
 
-CONFIGURE_ARGS+=	--disable-static
+CONFIGURE_ARGS=		--disable-static
 
 post-install:
 	rm ${PREFIX}/lib/gedit/plugins/*.la
-	# XXX dbus-python does not work with py3; must be ported to gi/GDBus
-	rm -rf ${PREFIX}/lib/gedit/plugins/{dashboard,synctex}{.plugin,/}
 
 .include <bsd.port.mk>

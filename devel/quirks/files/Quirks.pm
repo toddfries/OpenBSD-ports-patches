@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.97 2013/08/12 20:26:36 brad Exp $
+# $OpenBSD: Quirks.pm,v 1.99 2013/09/25 07:57:38 sthen Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -325,6 +325,8 @@ my $stem_extensions = {
 	'thttpd' => 'sthttpd',
 	'pecl-fileinfo' => 'php',
 	'thttpd' => 'sthttpd',
+	'dbus-python' => 'py-dbus',
+	'libungif' => 'giflib',
 };
 
 # ->is_base_system($handle, $state):

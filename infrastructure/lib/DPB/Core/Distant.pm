@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Distant.pm,v 1.8 2013/01/04 21:19:18 espie Exp $
+# $OpenBSD: Distant.pm,v 1.14 2013/09/25 08:49:49 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -20,26 +20,40 @@ use warnings;
 use DPB::Core;
 use OpenBSD::Paths;
 
+package DPB::Host::Distant;
+our @ISA = (qw(DPB::Host));
+sub shellclass
+{
+	return "DPB::Ssh";
+}
+
+sub is_localhost
+{
+	return 0;
+}
+
+sub is_alive
+{
+	my $self = shift;
+	return $self->shell->is_alive;
+}
+
 package DPB::Ssh;
-our @ISA = qw(DPB::Shell::Abstract);
+our @ISA = qw(DPB::Shell::Chroot);
 
 sub ssh
 {
-	my ($class, $socket, $timeout) = @_;
-	return ('ssh', '-o', "connectTimeout=$timeout",
-	    '-o', "serverAliveInterval=$timeout",
-	    '-S', $socket);
+	my ($class, $socket) = @_;
+	return ('ssh', '-S', $socket);
 }
-
-#	    '-o', 'clearAllForwardings=yes',
-#	    '-o', 'EscapeChar=none',
 
 sub new
 {
 	my ($class, $host) = @_;
 	bless {
 	    master => DPB::Ssh::Master->find($host->name, 
-	    	$host->{prop}->{timeout})
+	    	$host->{prop}->{timeout}),
+	    prop => $host->{prop}
 	    }, $class;
 }
 
@@ -53,11 +67,6 @@ sub socket
 	shift->{master}->socket;
 }
 
-sub timeout
-{
-	shift->{master}->timeout;
-}
-
 sub hostname
 {
 	shift->{master}->hostname;
@@ -65,27 +74,15 @@ sub hostname
 
 sub _run
 {
-	my ($self, $cmd) = @_;
+	my ($self, @cmd) = @_;
 	exec {OpenBSD::Paths->ssh}
-	    ($self->ssh($self->socket, $self->timeout),
-	    $self->hostname, $cmd);
+	    ($self->ssh($self->socket), $self->hostname, join(' ', @cmd));
 }
 
-sub exec
+sub quote
 {
-	my ($self, @argv) = @_;
-	if ($self->{env}) {
-		while (my ($k, $v) = each %{$self->{env}}) {
-			$v //= '';
-			unshift @argv, "$k=\'$v\'";
-		}
-	}
-	my $cmd = join(' ', @argv);
-	if ($self->{dir}) {
-		$cmd = "cd $self->{dir} && $cmd";
-	}
-	my $umask = $self->{master}{host}{prop}{umask};
-	$self->_run("umask $umask && $cmd");
+	my ($self, $cmd) = @_;
+	return "\"$cmd\"";
 }
 
 package DPB::Task::SshMaster;
@@ -102,7 +99,13 @@ sub run
 	open STDOUT, '>/dev/null';
 	open STDERR, '>&STDOUT';
 	exec {OpenBSD::Paths->ssh}
-	    (DPB::Ssh->ssh($socket, $timeout),
+	    (DPB::Ssh->ssh($socket),
+	    	'-o', "connectTimeout=$timeout",
+		'-o', "serverAliveInterval=$timeout",
+		#'-o', "ClearAllForwardings=yes",
+		'-o', "ForwardX11=no",
+		'-o', "ForwardAgent=no",
+		'-o', "GatewayPorts=no",
 		'-N', '-M', $host);
 	exit(1);
 }
@@ -213,17 +216,6 @@ DPB::Core->register_report(\&alive_hosts, \&changed_hosts);
 package DPB::Core::Distant;
 our @ISA = qw(DPB::Core);
 my @dead_cores = ();
-
-sub shellclass
-{
-	"DPB::Ssh"
-}
-
-sub is_alive
-{
-	my $self = shift;
-	return $self->{shell}->is_alive;
-}
 
 sub mark_ready
 {

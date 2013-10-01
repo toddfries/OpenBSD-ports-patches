@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2013/06/26 17:44:03 krw Exp $
+# $OpenBSD: Makefile,v 1.20 2013/09/15 16:34:00 jca Exp $
 
 # not yet ported to other arches
 ONLY_FOR_ARCHS =	amd64 i386 powerpc
@@ -6,6 +6,7 @@ ONLY_FOR_ARCHS =	amd64 i386 powerpc
 COMMENT=		compiler and runtime system for ANSI Common Lisp
 
 V =			1.1.8
+REVISION=		0
 DISTNAME=		sbcl-${V}-source
 PKGNAME=		sbcl-${V}
 WRKDIST=		${WRKDIR}/sbcl-${V}

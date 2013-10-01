@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.321 2013/08/12 22:24:01 rpe Exp $
+# $OpenBSD: Makefile,v 1.323 2013/09/23 11:50:55 sthen Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -155,6 +155,7 @@
      SUBDIR += p5-Crypt-OpenSSL-DSA
      SUBDIR += p5-Crypt-OpenSSL-RSA
      SUBDIR += p5-Crypt-OpenSSL-Random
+     SUBDIR += p5-Crypt-OpenSSL-X509
      SUBDIR += p5-Crypt-PasswdMD5
      SUBDIR += p5-Crypt-Primes
      SUBDIR += p5-Crypt-RC4
@@ -185,6 +186,7 @@
      SUBDIR += p5-Module-Signature
      SUBDIR += p5-Mozilla-CA
      SUBDIR += p5-Net-SSLGlue
+     SUBDIR += p5-Net-SSL-ExpireDate
      SUBDIR += p5-Net_SSLeay
      SUBDIR += p5-PGP-Sign
      SUBDIR += p5-PGP-Sign,pgp
@@ -216,6 +218,7 @@
      SUBDIR += py-crack
      SUBDIR += py-cryptkit
      SUBDIR += py-crypto
+     SUBDIR += py-crypto,python3
      SUBDIR += py-gnupg
      SUBDIR += py-openssl
      SUBDIR += py-paramiko
@@ -261,6 +264,7 @@
      SUBDIR += sshguard
      SUBDIR += sshguard,tcpd
      SUBDIR += sslscan
+     SUBDIR += sslScanner
      SUBDIR += stegdetect
      SUBDIR += steghide
      SUBDIR += strobe

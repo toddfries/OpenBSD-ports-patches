@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Fetch.pm,v 1.54 2013/06/21 09:05:18 espie Exp $
+# $OpenBSD: Fetch.pm,v 1.58 2013/09/21 08:44:32 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -437,6 +437,7 @@ sub known_file
 sub run_expire_old
 {
 	my ($self, $core, $opt_e) = @_;
+	$core->unsquiggle;
 	$core->start_job(DPB::Job::Normal->new(
 	    sub {
 		$self->expire_old;
@@ -714,7 +715,7 @@ sub run
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
-	my $shell = $core->{shell};
+	my $shell = $core->shell;
 	my $site = $self->{site};
 	$self->redirect($job->{log});
 	if ($job->{file}{sz} == 0) {
@@ -832,8 +833,9 @@ sub name
 sub watched
 {
 	my ($self, $current, $core) = @_;
-	my $diff = $self->{watched}->check_change($current);
-	my $msg = $self->{watched}->change_message($diff);
+	my $w = $self->{watched};
+	my $diff = $w->check_change($current);
+	my $msg = $w->percent_message . $w->frozen_message($diff);
 	my $to = $core->fetch_timeout;
 	if (defined $to) {
 		if ($diff > $to) {

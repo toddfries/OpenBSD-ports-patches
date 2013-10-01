@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.97 2013/06/20 06:54:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.99 2013/09/27 14:09:57 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		versatile IDE for GNOME
 
 GNOME_PROJECT=		anjuta
-GNOME_VERSION=		3.8.4
-REVISION=		1
+GNOME_VERSION=		3.10.0
 
 SHARED_LIBS +=  anjuta-3             0.0      # 0.0
 
@@ -28,14 +27,14 @@ WANTLIB += gstapp-1.0 gstaudio-1.0 gstbase-1.0 gstfft-1.0 gstpbutils-1.0
 WANTLIB += gstreamer-1.0 gsttag-1.0 gstvideo-1.0 gthread-2.0 gtk-3
 WANTLIB += gtksourceview-3.0 harfbuzz icudata icui18n icuuc
 WANTLIB += javascriptcoregtk-3.0 jpeg krb5 m magic ncurses neon
-WANTLIB += orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
 WANTLIB += pixman-1 png proxy pthread pthread-stubs sasl2 secret-1
 WANTLIB += soup-2.4 sqlite3 ssl stdc++ svn_client-1 svn_delta-1
 WANTLIB += svn_diff-1 svn_fs-1 svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1
 WANTLIB += svn_ra-1 svn_ra_local-1 svn_ra_neon-1 svn_ra_svn-1
 WANTLIB += svn_repos-1 svn_subr-1 svn_wc-1 util vte2_90 webkitgtk-3.0
-WANTLIB += webp xcb xcb-render xcb-shm xml2 xslt z vala-0.20 wind
-WANTLIB += com_err harfbuzz-icu heimbase roken
+WANTLIB += webp xcb xcb-render xcb-shm xml2 xslt z vala-0.22 wind
+WANTLIB += com_err harfbuzz-icu heimbase roken EGL
 WANTLIB += ${MODPY_WANTLIB}
 
 MODULES=		devel/dconf \
@@ -53,7 +52,7 @@ LIB_DEPENDS=		${MODPY_LIB_DEPENDS} \
 			devel/glade \
 			devel/subversion \
 			devel/vte3 \
-			lang/vala>=0.20.0 \
+			lang/vala>=0.22.0 \
 			textproc/icu4c \
 			x11/gnome/devhelp \
 			x11/gnome/gdl \

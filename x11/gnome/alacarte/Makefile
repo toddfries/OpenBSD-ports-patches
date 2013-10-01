@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.45 2013/04/16 10:21:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.47 2013/09/28 08:51:10 ajacoutot Exp $
 
 COMMENT=		fd.o menu editor for GNOME
 
 GNOME_PROJECT=		alacarte
-GNOME_VERSION=		3.7.90
+GNOME_VERSION=		3.10.0
 REVISION=		0
 
 CATEGORIES=		sysutils

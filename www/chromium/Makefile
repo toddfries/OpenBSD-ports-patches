@@ -1,12 +1,13 @@
-# $OpenBSD: Makefile,v 1.147 2013/08/08 11:52:51 naddy Exp $
+# $OpenBSD: Makefile,v 1.152 2013/09/30 14:21:46 robert Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 DPB_PROPERTIES=		parallel
 
 COMMENT=		Chromium browser
 
-V=			28.0.1500.95
+V=			29.0.1547.76
 DISTNAME=		chromium-${V}
+REVISION=		0
 
 CATEGORIES=		www
 
@@ -105,7 +106,7 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Dlinux_breakpad=0 \
 		-Dlinux_use_tcmalloc=0 \
 		-Dlinux_strip_binary=1 \
-		-Denable_webrtc=1 \
+		-Denable_webrtc=0 \
 		-Denable_one_click_signin=1 \
 		-Duse_kerberos=0 \
 		-Duse_sndio=1 \

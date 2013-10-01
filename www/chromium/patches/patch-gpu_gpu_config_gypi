@@ -1,0 +1,12 @@
+$OpenBSD: patch-gpu_gpu_config_gypi,v 1.1 2013/09/29 19:04:03 robert Exp $
+--- gpu/gpu_config.gypi.orig.port	Sun Sep 22 16:21:36 2013
++++ gpu/gpu_config.gypi	Sun Sep 22 16:21:55 2013
+@@ -67,7 +67,7 @@
+         '../third_party/amd/amd_videocard_info_win.cc',
+       ],
+     }],
+-    ['OS=="linux" and use_x11==1', {
++    ['(OS=="linux" or os_bsd==1) and use_x11==1', {
+       'dependencies': [
+         '../build/linux/system.gyp:libpci',
+         '../third_party/libXNVCtrl/libXNVCtrl.gyp:libXNVCtrl',

@@ -1,12 +1,10 @@
-# $OpenBSD: Makefile,v 1.58 2013/08/10 12:48:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.60 2013/09/28 08:51:29 ajacoutot Exp $
 
 COMMENT=		next generation GNOME shell
 
 GNOME_PROJECT=		gnome-shell
-GNOME_VERSION=		3.8.4
+GNOME_VERSION=		3.10.0.1
 REVISION=		0
-
-HOMEPAGE=		http://live.gnome.org/GnomeShell
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
@@ -29,7 +27,7 @@ WANTLIB += pthread pthread-stubs pulse pulse-mainloop-glib readline
 WANTLIB += roken secret-1 smime3 sndfile softokn3 soup-2.4 sqlite3
 WANTLIB += ssl3 startup-notification-1 stdc++ telepathy-glib vorbis
 WANTLIB += vorbisenc vorbisfile wind xcb xcb-aux xcb-render xcb-shm
-WANTLIB += xml2 z
+WANTLIB += xml2 z gnome-desktop-3 upower-glib xkbfile
 
 MODULES=		devel/dconf \
 			devel/gettext \

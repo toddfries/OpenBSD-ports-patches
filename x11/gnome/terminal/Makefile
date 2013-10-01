@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.106 2013/08/27 16:53:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.109 2013/09/28 08:51:30 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	GNOME terminal
 
 GNOME_PROJECT=	gnome-terminal
-GNOME_VERSION=	3.8.4
-REVISION=	0
+GNOME_VERSION=	3.10.0
+REVISION=	1
 
 # GPLv3+
 PERMIT_PACKAGE_CDROM=	Yes

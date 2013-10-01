@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.391 2013/07/11 21:05:41 matthieu Exp $
+# $OpenBSD: Makefile,v 1.394 2013/09/20 12:47:45 bcallah Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -289,6 +289,7 @@
      SUBDIR += py-Chart
      SUBDIR += py-HappyDoc
      SUBDIR += py-MarkupSafe
+     SUBDIR += py-MarkupSafe,python3
      SUBDIR += py-chardet
      SUBDIR += py-cssutils
      SUBDIR += py-docutils
@@ -303,6 +304,7 @@
      SUBDIR += py-prettytable
      SUBDIR += py-pygments
      SUBDIR += py-rdflib
+     SUBDIR += py-rdflib,python3
      SUBDIR += py-rtf
      SUBDIR += py-sphinx
      SUBDIR += py-vatnumber
@@ -377,6 +379,7 @@
      SUBDIR += swish-e
      SUBDIR += tcpdf
      SUBDIR += texi2html
+     SUBDIR += the_silver_searcher
      SUBDIR += tinyxml
      SUBDIR += tre
      SUBDIR += txt2tags

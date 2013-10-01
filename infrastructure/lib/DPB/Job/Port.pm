@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.111 2013/07/21 16:24:32 espie Exp $
+# $OpenBSD: Port.pm,v 1.116 2013/09/23 12:32:59 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -29,6 +29,8 @@ sub setup
 }
 
 sub is_serialized { 0 }
+sub want_frozen { 1 }
+sub want_percent { 1 }
 
 sub finalize
 {
@@ -76,7 +78,7 @@ sub run
 	$self->handle_output($job);
 	close STDIN;
 	open STDIN, '</dev/null';
-	my @args = ($t, "TRUST_PACKAGES=Yes",
+	my @args = ($t, 
 	    "FETCH_PACKAGES=No",
 	    "PREPARE_CHECK_ONLY=Yes",
 	    "REPORT_PROBLEM='exit 1'", "BULK=No");
@@ -92,23 +94,22 @@ sub run
 
 	my @l = $builder->make_args;
 	my $make = $builder->make;
+	my @env = ();
 	if (defined $builder->{rsslog}) {
 		unless ($self->notime) {
 			$make = $builder->{wrapper};
 			$l[0] = $make;
+			push(@env, WRAPPER_OUTPUT => $builder->{rsslog});
 		}
 	}
 
 	unshift(@args, @l);
-	if ($self->{sudo}) {
-		unshift(@args, OpenBSD::Paths->sudo, "-E");
-	}
-
 	$core->shell
 	    ->chdir($ports)
+	    ->sudo($self->{sudo})
 	    ->env(SUBDIR => $fullpkgpath, 
 		PHASE => $t, 
-		WRAPPER_OUTPUT => $builder->{rsslog})
+		@env)
 	    ->exec(@args);
 	exit(1);
 }
@@ -238,6 +239,7 @@ package DPB::Task::Port::Serialized;
 our @ISA = qw(DPB::Task::Port);
 
 sub is_serialized { 1 }
+sub want_percent { 0 }
 
 sub setup
 {
@@ -305,6 +307,8 @@ sub setup
 	return $_[0];
 }
 
+sub want_frozen { 0 }
+
 sub run
 {
 	my ($self, $core) = @_;
@@ -353,13 +357,16 @@ sub run
 	if ($job->{builder}{forceupdate}) {
 		push(@cmd,  "-Dinstalled");
 	}
+	if ($core->prop->{repair}) {
+		push(@cmd, "-Drepair");
+	}
 	if ($job->{builder}{state}{localbase} ne '/usr/local') {
 		push(@cmd, "-L", $job->{builder}{state}{localbase});
 	}
 	print join(' ', @cmd, (sort keys %$dep)), "\n";
 	my $path = $job->{builder}{fullrepo}.'/';
-	$core->shell->env(PKG_PATH => $path)
-	    ->exec(OpenBSD::Paths->sudo, @cmd, (sort keys %$dep));
+	$core->shell->env(PKG_PATH => $path)->sudo
+	    ->exec(@cmd, (sort keys %$dep));
 	exit(1);
 }
 
@@ -464,9 +471,13 @@ sub run
 	    $core->hostname);
 	if (defined $h && $self->add_live_depends($h, $core)) {
 		$self->add_dontjunk($job, $h);
-		my @cmd = ('/usr/sbin/pkg_delete', '-aIX', sort keys %$h);
+		my $opt = '-aiX';
+		if ($core->prop->{nochecksum}) {
+			$opt .= 'q';
+		}
+		my @cmd = ('/usr/sbin/pkg_delete', $opt, sort keys %$h);
 		print join(' ', @cmd, "\n");
-		$core->shell->exec(OpenBSD::Paths->sudo, @cmd);
+		$core->shell->sudo->exec(@cmd);
 		exit(1);
 	} else {
 		exit(2);
@@ -488,6 +499,8 @@ sub finalize
 
 package DPB::Task::Port::ShowSize;
 our @ISA = qw(DPB::Task::Port);
+
+sub want_percent { 0 }
 
 sub fork
 {
@@ -529,6 +542,8 @@ our @ISA=qw(DPB::Task::Port);
 
 sub notime { 1 }
 
+sub want_percent { 0 }
+
 sub run
 {
 	my ($self, $core) = @_;
@@ -549,8 +564,8 @@ sub run
 	print join(' ', @cmd, $v->fullpkgname, "\n");
 	my $path = $job->{builder}->{fullrepo}.'/';
 	$ENV{PKG_PATH} = $path;
-	$core->shell->env(PKG_PATH => $path)
-	    ->exec(OpenBSD::Paths->sudo, @cmd, $v->fullpkgname);
+	$core->shell->env(PKG_PATH => $path)->sudo
+	    ->exec(@cmd, $v->fullpkgname);
 	exit(1);
 }
 
@@ -585,6 +600,7 @@ package DPB::Task::Port::BaseClean;
 our @ISA = qw(DPB::Task::BasePort);
 
 sub notime { 1 }
+sub want_percent { 0 }
 
 sub finalize
 {
@@ -738,7 +754,7 @@ sub save_depends
 	print {$job->{lock}} "needed=", join(' ', sort @$l), "\n";
 }
 
-sub has_depends
+sub need_depends
 {
 	my ($self, $core) = @_;
 	my $dep = $self->{v}{info}->solve_depends;
@@ -797,7 +813,7 @@ sub add_normal_tasks
 	$hostprop->{junk_count} //= 0;
 	$hostprop->{depends_count} //= 0;
 	$hostprop->{ports_count} //= 0;
-	my $c = $self->has_depends($core);
+	my $c = $self->need_depends($core);
 	$hostprop->{ports_count}++;
 	$hostprop->{depends_count} += $c;
 	if ($c) {
@@ -931,9 +947,16 @@ sub set_watch
 sub watched
 {
 	my ($self, $current, $core) = @_;
-	return "" unless defined $self->{watched};
-	my $diff = $self->{watched}->check_change($current);
-	my $msg = $self->{watched}->change_message($diff);
+	my $w = $self->{watched};
+	return "" unless defined $w;
+	my $diff = $w->check_change($current);
+	my $msg = '';
+	if ($self->{task}->want_percent) {
+		$msg .= $w->percent_message;
+	}
+	if ($self->{task}->want_frozen) {
+		$msg .= $w->frozen_message($diff);
+	}
 	my $stuck = $core->stuck_timeout;
 	if (defined $stuck) {
 		if ($diff > $stuck) {

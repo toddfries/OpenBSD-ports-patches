@@ -1,15 +1,15 @@
-# $OpenBSD: Makefile,v 1.61 2013/04/08 13:13:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.63 2013/09/28 08:50:40 ajacoutot Exp $
 
 COMMENT=		compiler for the GObject type system
 
 GNOME_PROJECT=		vala
-GNOME_VERSION=		0.20.1
-API_V=			0.20
-SHARED_LIBS +=  vala-0.20            0.0      # 0.0
+GNOME_VERSION=		0.22.0
+REVISION=		0
+
+API_V=			0.22
+SHARED_LIBS +=  vala-0.22            0.0      # 0.0
 
 CATEGORIES=		lang
-
-HOMEPAGE=		http://live.gnome.org/Vala
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 			Antoine Jacoutot <ajacoutot@openbsd.org>

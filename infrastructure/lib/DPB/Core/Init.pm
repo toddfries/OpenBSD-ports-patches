@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Init.pm,v 1.1 2013/06/21 09:05:18 espie Exp $
+# $OpenBSD: Init.pm,v 1.4 2013/09/21 08:46:06 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -63,6 +63,11 @@ sub finalize
 	my ($self, $core) = @_;
 	$self->{signature}->print_out($core, $self->{logger});
 	if ($self->{signature}->matches($core, $self->{logger})) {
+		if (defined $core->prop->{squiggles}) {
+			$core->host->{wantsquiggles} = $core->prop->{squiggles};
+		} elsif ($core->prop->{jobs} > 3) {
+			$core->host->{wantsquiggles} = 1;
+		}
 		for my $i (1 .. $core->prop->{jobs}) {
 			ref($core)->new($core->hostname, $core->prop)->mark_ready;
 		}
@@ -81,11 +86,9 @@ sub new
 {
 	my ($class, $host, $prop) = @_;
 	if (DPB::Host->name_is_localhost($host)) {
-		return $init->{localhost} //= DPB::Core::Local->new_noreg($host, $prop);
-	} else {
-		require DPB::Core::Distant;
-		return $init->{$host} //= DPB::Core::Distant->new_noreg($host, $prop);
+		$host = 'localhost';
 	}
+	return $init->{$host} //= DPB::Core->new_noreg($host, $prop);
 }
 
 
@@ -104,7 +107,6 @@ sub init_cores
 		}
 		if (defined $startup) {
 			my @args = split(/\s+/, $startup);
-			unshift(@args, OpenBSD::Paths->sudo, "-E");
 			$job->add_tasks(DPB::Task::Fork->new(
 			    sub {
 				my $shell = shift;
@@ -112,6 +114,7 @@ sub init_cores
 				    $core->hostname));
 				$shell
 				    ->chdir($state->ports)
+				    ->sudo
 				    ->env(PORTSDIR => $state->ports,
 				    	MAKE => $state->make)
 				    ->exec(@args);

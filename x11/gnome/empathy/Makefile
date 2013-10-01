@@ -1,19 +1,18 @@
-# $OpenBSD: Makefile,v 1.135 2013/06/17 14:15:09 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.142 2013/09/28 08:51:15 ajacoutot Exp $
 
 COMMENT= 		Telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
-GNOME_VERSION=		3.8.3
-REVISION=		2
+GNOME_VERSION=		3.10.0
+SUBST_VARS=		GNOME_VERSION
+REVISION=		1
 
 CATEGORIES=		net
-
-HOMEPAGE=		http://live.gnome.org/Empathy
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += FLAC GL ICE SM X11 X11-xcb Xau Xcomposite Xcursor Xdamage
+WANTLIB += EGL FLAC GL ICE SM X11 X11-xcb Xau Xcomposite Xcursor Xdamage
 WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xt Xtst
 WANTLIB += atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
 WANTLIB += canberra canberra-gtk3 champlain-0.12 champlain-gtk-0.12
@@ -28,12 +27,12 @@ WANTLIB += gstreamer-1.0 gsttag-1.0 gstvideo-1.0 gthread-2.0 gtk-3
 WANTLIB += harfbuzz harfbuzz-icu hogweed icudata icui18n icuuc
 WANTLIB += javascriptcoregtk-3.0 jpeg json-c json-glib-1.0 ltdl
 WANTLIB += m memphis-0.2 mission-control-plugins nettle notify
-WANTLIB += ogg orc-0.4 p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += ogg p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs pulse pulse-mainloop-glib
 WANTLIB += secret-1 sndfile soup-2.4 soup-gnome-2.4 sqlite3 stdc++
 WANTLIB += tasn1 telepathy-farstream telepathy-glib telepathy-logger
 WANTLIB += vorbis vorbisenc vorbisfile webkitgtk-3.0 webp xcb
-WANTLIB += xcb-render xcb-shm xml2 xslt z zeitgeist-1.0
+WANTLIB += xcb-render xcb-shm xml2 xslt z zeitgeist-2.0 geocode-glib
 
 MODULES=		devel/dconf \
 			devel/gettext \
@@ -48,7 +47,7 @@ BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
 LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 			audio/pulseaudio>=2.1 \
 			devel/libnotify \
-			geo/geoclue \
+			geo/geocode-glib \
 			geo/libchamplain>=0.12.2 \
 			graphics/clutter/clutter-gst \
 			net/telepathy/folks \
@@ -66,6 +65,10 @@ RUN_DEPENDS=		devel/gsettings-desktop-schemas \
 			net/telepathy/telepathy-salut \
 			x11/gnome/contacts
 
+# libempathy-gtk/empathy-geoclue-helper.c
+BUILD_DEPENDS +=	geo/geoclue2
+RUN_DEPENDS +=		geo/geoclue2
+
 # gst-pulse (src/empathy-audio-sink.c)
 RUN_DEPENDS +=		multimedia/gstreamer1/plugins-good,-pulse
 
@@ -77,10 +80,7 @@ CONFIGURE_ARGS+=	--disable-gudev \
 			--disable-Werror \
 			--without-cheese
 
-# XXX needs geocode-glib
-CONFIGURE_ARGS +=	--disable-geocode
-
-# XXX needs signond, libsignon-glib
+# needs signond, libsignon-glib -- Ubuntu/Meego
 CONFIGURE_ARGS +=	--disable-ubuntu-online-accounts
 
 # needs connman or network-manager

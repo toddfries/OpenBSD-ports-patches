@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.13 2013/03/10 22:55:04 espie Exp $
+# $OpenBSD: Makefile,v 1.15 2013/09/24 14:30:33 dcoppa Exp $
 
 COMMENT=		command line client for mpd
 
-DISTNAME=		mpc-0.22
+VER=			0.23
+DISTNAME=		mpc-${VER}
 CATEGORIES=		audio
 
-HOMEPAGE=		http://mpd.wikia.com/wiki/Client:Mpc
+HOMEPAGE=		http://www.musicpd.org/clients/mpc/
 
 MAINTAINER=		David Coppa <dcoppa@openbsd.org>
 
@@ -15,7 +16,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 WANTLIB=		c mpdclient
 LIB_DEPENDS=		audio/libmpdclient>=2.2
 
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=musicpd/}
+MASTER_SITES=		http://www.musicpd.org/download/mpc/${VER:R}/
 
 MODULES=		converters/libiconv
 

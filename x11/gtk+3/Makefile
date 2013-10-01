@@ -1,23 +1,22 @@
-# $OpenBSD: Makefile,v 1.83 2013/07/09 10:15:09 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.86 2013/09/28 09:37:44 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		multi-platform graphical toolkit
 COMMENT-cups=		gtk+3 CUPS print backend
 
-GNOME_VERSION=		3.8.2
+GNOME_VERSION=		3.10.0
 GNOME_PROJECT=		gtk+
 
 PKGNAME-main=		gtk+3-${GNOME_VERSION}
 PKGNAME-cups=		gtk+3-cups-${GNOME_VERSION}
 
-REVISION-main=		3
-REVISION-cups=		4
+REVISION-main=		0
 
 CATEGORIES=		x11 devel
 
-SHARED_LIBS +=  gdk-3                800.0    # 800.0
-SHARED_LIBS +=  gtk-3                800.0    # 800.0
+SHARED_LIBS +=  gdk-3                1000.0   # 1000.0
+SHARED_LIBS +=  gtk-3                1000.0   # 1000.0
 SHARED_LIBS +=  gailutil-3           0.0      # 0.0
 
 HOMEPAGE=		http://www.gtk.org/
@@ -47,9 +46,9 @@ BUILD_DEPENDS +=	textproc/docbook-xsl
 RUN_DEPENDS=		x11/hicolor-icon-theme
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
-			devel/pango>=1.34.0 \
-			graphics/gdk-pixbuf2>=2.28.0 \
-			x11/gnome/at-spi2-atk>=2.8.0
+			devel/pango>=1.36.0 \
+			graphics/gdk-pixbuf2>=2.30.0 \
+			x11/gnome/at-spi2-atk>=2.10.0
 
 RUN_DEPENDS-main=	${RUN_DEPENDS}
 
@@ -79,6 +78,8 @@ MODGNOME_ICON_CACHE=	Yes
 TEST_IS_INTERACTIVE=	x11
 
 CONFIGURE_STYLE=	gnu
+CONFIGURE_ARGS=		--enable-x11-backend \
+			--disable-wayland-backend
 
 # sync archs list with devel/spidermonkey
 # colord depends on polkit which depends on spidermonkey

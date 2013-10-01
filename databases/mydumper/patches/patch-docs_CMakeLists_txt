@@ -1,0 +1,48 @@
+$OpenBSD: patch-docs_CMakeLists_txt,v 1.2 2013/09/25 09:02:09 giovanni Exp $
+--- docs/CMakeLists.txt.orig	Tue Sep 24 23:24:55 2013
++++ docs/CMakeLists.txt	Tue Sep 24 23:25:38 2013
+@@ -112,43 +112,9 @@ if(GENERATE_DOC)
+     doc_html
+   )
+   install(FILES "${SPHINX_MAN_DIR}/mydumper.1" "${SPHINX_MAN_DIR}/myloader.1"
+-    DESTINATION "share/man/man1"
++    DESTINATION "man/man1"
+   )
+ 
+-  # This target builds PDF documentation using Sphinx and LaTeX.
+-  if(PDFLATEX_COMPILER)
+-    # PDF output directory
+-    set(SPHINX_PDF_DIR "${CMAKE_CURRENT_BINARY_DIR}/pdf")
+-
+-    add_custom_target(doc_pdf ALL
+-      ${SPHINX_EXECUTABLE}
+-	-q -b latex
+-	-c "${BINARY_BUILD_DIR}"
+-	-d "${SPHINX_CACHE_DIR}"
+-	"${SOURCES_DIR}"
+-	"${SPHINX_PDF_DIR}"
+-      COMMENT "Building PDF documentation with Sphinx"
+-    )
+-    add_custom_command(TARGET doc_pdf POST_BUILD
+-      COMMAND ${CMAKE_MAKE_PROGRAM} LATEXOPTS=-interaction=batchmode
+-      WORKING_DIRECTORY "${SPHINX_PDF_DIR}"
+-    )
+-    list(APPEND CLEAN_FILES
+-      "${SPHINX_PDF_DIR}"
+-    )
+-    add_dependencies(doc_pdf
+-      doc_sources
+-    )
+-    # serialize Sphinx targets to avoid cache conflicts in parallel builds
+-    add_dependencies(doc_pdf
+-      doc_man
+-    )
+-    install(FILES "${SPHINX_PDF_DIR}/mydumper.pdf"
+-      DESTINATION "share/doc/mydumper"
+-    )
+-  endif(PDFLATEX_COMPILER)
+-
+-  # Add output directories to clean target.
+   set_directory_properties(PROPERTIES
+     ADDITIONAL_MAKE_CLEAN_FILES "${CLEAN_FILES}"
+   )

@@ -1,15 +1,13 @@
-# $OpenBSD: Makefile,v 1.27 2013/03/11 11:35:57 espie Exp $
+# $OpenBSD: Makefile,v 1.29 2013/09/28 08:50:38 ajacoutot Exp $
 
 COMMENT=		Gtk-based GUI client for Twitter
 
 GNOME_PROJECT=		twitux
 GNOME_VERSION=		0.69
-REVISION=		5
+REVISION=		7
 EPOCH=			0
 
 CATEGORIES=     	net
-
-HOMEPAGE=		http://live.gnome.org/DanielMorales/Twitux
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes

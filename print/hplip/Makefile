@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.97 2013/08/26 14:55:45 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.100 2013/09/22 19:00:42 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,7 +9,7 @@ COMMENT-hpcups=		HP native CUPS driver
 COMMENT-hpijs=		HP ghostscript driver (spooler independent)
 COMMENT-gui=		HPLIP graphical tools
 
-V=			3.13.8
+V=			3.13.9
 DISTNAME=		hplip-${V}
 SUBST_VARS=		V
 
@@ -19,8 +19,6 @@ PKGNAME-hpaio=		hpaio-${V}
 PKGNAME-hpcups=		hpcups-${V}
 PKGNAME-hpijs=		hpijs-${V}
 PKGNAME-gui=		hplip-gui-${V}
-
-REVISION-common=	1
 
 SHARED_LIBS +=  hpmud		2.0 # 0.6
 SHARED_LIBS +=  hpip		2.0 # 0.1
@@ -88,8 +86,8 @@ RUN_DEPENDS-hpaio=	${MODGETTEXT_RUN_DEPENDS}
 ### -hpcups
 WANTLIB-hpcups += ${WANTLIB} ${cWANTLIB} z asn1 gssapi krb5 ssl
 WANTLIB-hpcups += c jpeg stdc++ hpip cups cupsimage dbus-1
-WANTLIB-hpcups += com_err heimbase roken wind
-WANTLIB-hpcups += avahi-client avahi-common
+WANTLIB-hpcups += com_err heimbase roken wind usb-1.0
+WANTLIB-hpcups += avahi-client avahi-common hpmud netsnmp
 
 LIB_DEPENDS-hpcups=	graphics/jpeg \
 			print/hplip,-common \
@@ -190,6 +188,7 @@ post-install:
 	${MODPY_BIN} ${MODPY_LIBDIR}/compileall.py \
 		${PREFIX}/share/hplip
 	rm -r ${WRKINST}/usr/lib
+	rm -r ${WRKINST}/etc/udev
 	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.la
 	rm ${PREFIX}/lib/sane/*.la
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.109 2013/07/08 14:03:30 zhuk Exp $
+# $OpenBSD: Makefile,v 1.111 2013/09/26 09:16:52 sthen Exp $
 
 COMMENT-main =		K Desktop Environment, graphic applications
 COMMENT-kamera =	KDE interface to digital cameras
@@ -8,6 +8,11 @@ CATEGORIES =		x11 x11/kde
 VERSION =		3.5.10
 DISTNAME =		kdegraphics-${VERSION}
 MODKDE_VERSION =	3.5.8
+
+REVISION-main =		19
+REVISION-kamera =	9
+REVISION-kpov =		8
+REVISION-sane =		12
 
 SEPARATE_BUILD =	flavored
 MULTI_PACKAGES =	-main -kpov -kamera -sane
@@ -40,7 +45,7 @@ RUN_DEPENDS-main =	${RUN_DEPENDS} \
 			x11/gtk+2,-guic
 LIB_DEPENDS-main = 	${LIB_DEPENDS} \
 			graphics/imlib \
-			graphics/libungif \
+			graphics/giflib \
 			devel/fribidi>=0.19.2 \
 			print/poppler, \
 			print/poppler,,-qt
@@ -67,17 +72,12 @@ WANTLIB-kpov =		${WANTLIB}
 WANTLIB-kamera =	${WANTLIB}
 WANTLIB-sane =		${WANTLIB}
 
-REVISION-main = 18
-REVISION-kamera = 9
-REVISION-kpov = 8
-REVISION-sane = 12
-
 WANTLIB-main +=	 GL Half ICE Iex IlmImf IlmThread Imath Imlib SM \
 	Xcursor Xdamage Xext Xfixes Xft Xi Xinerama Xmu Xrandr Xrender Xt \
 	Xxf86vm c drm expat fontconfig freetype fribidi lcms lib/kde3/kdeprint \
 	lib/kde3/khtml lib/kde3/kjs lib/kde3/kparts lib/kde3/kutils \
 	lib/kde3/kwalletclient mng openjpeg pcre pcreposix poppler \
-	poppler-qt pthread tiff ungif
+	poppler-qt pthread tiff gif
 
 WANTLIB-kpov += GL GLU Xdamage Xfixes Xi Xmu Xrender Xt Xxf86vm c \
 	drm freetype lib/kde3/kparts lib/kde3/kwalletclient pthread \

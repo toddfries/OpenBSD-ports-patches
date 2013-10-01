@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Reporter.pm,v 1.15 2013/01/11 13:22:25 espie Exp $
+# $OpenBSD: Reporter.pm,v 1.20 2013/09/30 19:08:35 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -107,10 +107,33 @@ sub new
 	if ($dotty) {
 		$class->ttyclass->new($state, @_);
 	} else {
-		$singleton //= bless {msg => '', tty => $dotty,
-		    producers => $class->filter_can(\@_, 'important'),
-		    continued => 0}, $class;
+		$class->make_singleton($state, @_);
 	}
+}
+
+sub make_singleton
+{
+	my $class = shift;
+	my $state = shift;
+	return if defined $singleton;
+	$singleton = bless {msg => '',
+	    producers => $class->filter_can(\@_, $class->filter),
+	    timeout => $state->{display_timeout} // 10,
+	    continued => 0}, $class;
+    	if (defined $state->{record}) {
+		open $singleton->{record}, '>>', $state->{record};
+	}
+	return $singleton;
+}
+
+sub filter
+{
+	'important';
+}
+sub timeout
+{
+	my $self = shift;
+	return $self->{timeout};
 }
 
 sub report
@@ -191,13 +214,16 @@ sub set_sig_handlers
 		$self->reset_cursor; });
 }
 
+sub filter
+{
+	'report';
+}
+
 sub new
 {
 	my $class = shift;
 	my $state = shift;
-	$singleton //= bless {msg => '',
-	    producers => $class->filter_can(\@_, 'report'),
-	    continued => 0}, $class;
+	$class->make_singleton($state, @_);
 	my $oldfh = select(STDOUT);
 	$| = 1;
 	# XXX go back to totally non-buffered raw shit
@@ -353,6 +379,10 @@ sub report
 		}
 		$msg .= $extra;
 		if ($msg ne $self->{msg} || $self->{continued}) {
+			if (defined $self->{record}) {
+				print {$self->{record}} "@@@", time(), "\n";
+				print {$self->{record}} $msg;
+			}
 			$self->{continued} = 0;
 			my $method = $self->{write};
 			$self->$method($msg);

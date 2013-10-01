@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Heuristics.pm,v 1.21 2013/06/21 09:05:18 espie Exp $
+# $OpenBSD: Heuristics.pm,v 1.23 2013/09/25 08:49:07 espie Exp $
 #
 # Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 #
@@ -282,6 +282,40 @@ sub next
 	return pop @$self;
 }
 
+# that's the queue used by squiggles
+# "squiggles" will build small ports preferentially,
+# trying to do stuff which has depends first, up to a point.
+package DPB::Heuristics::ReverseSorter;
+our @ISA = (qw(DPB::Heuristics::SimpleSorter));
+sub new
+{
+	my ($class, $o) = @_;
+	bless {l => $o->sorted_values, l2 => []}, $class;
+}
+
+# return smallest stuff with depends preferably
+sub next
+{
+	my $self = shift;
+	# grab stuff from the normal queue
+	while (my $v = shift @{$self->{l}}) {
+		my $dep = $v->{info}->solve_depends;
+
+		# it has depends, return it
+		if (%$dep) {
+			return $v;
+		} else {
+		# otherwise keep it for later.
+			push(@{$self->{l2}}, $v);
+			# XXX but when the diff grows too much, give up!
+			# 200 is completely arbitrary
+			last if DPB::Heuristics->measure($v) >
+			    200 * DPB::Heuristics->measure($self->{l2}[0]);
+		}
+	}
+	return shift @{$self->{l2}};
+}
+
 package DPB::Heuristics::Sorter;
 sub new
 {
@@ -385,7 +419,16 @@ our @ISA = qw(DPB::Heuristics::Bin);
 
 sub sorted
 {
-	my $self = shift;
+	my ($self, $core) = @_;
+	if ($core->{squiggle}) {
+		return DPB::Heuristics::ReverseSorter->new($self);
+	}
+	return $self->find_sorter($core);
+}
+
+sub find_sorter
+{
+	my ($self, $core) = @_;
 	return DPB::Heuristics::SimpleSorter->new($self);
 }
 
@@ -423,12 +466,12 @@ sub remove
 	$self->{bins}[find_bin($v->{weight})]->remove($v);
 }
 
-sub sorted
+sub find_sorter
 {
 	my ($self, $core) = @_;
 	my $all = DPB::Core->all_sf;
 	if ($core->sf > $all->[-1] - 1) {
-		return $self->SUPER::sorted($core);
+		return $self->SUPER::find_sorter($core);
 	} else {
 		return DPB::Heuristics::Sorter->new($self->bin_part($core->sf,
 		    $all));

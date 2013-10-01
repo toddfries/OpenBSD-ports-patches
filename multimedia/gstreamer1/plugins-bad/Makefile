@@ -1,32 +1,38 @@
-# $OpenBSD: Makefile,v 1.16 2013/07/13 06:49:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2013/09/26 09:27:51 sthen Exp $
 
 COMMENT=		bad elements for GStreamer
 
-V=			1.0.8
 DISTNAME=		gst-plugins-bad-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-bad-${V}
 
-SHARED_LIBS +=  gstbasecamerabinsrc-1.0   0.0 # 6.0
-SHARED_LIBS +=  gstbasevideo-1.0          0.0 # 6.0
-SHARED_LIBS +=  gstcodecparsers-1.0       0.0 # 6.0
-SHARED_LIBS +=  gstphotography-1.0        0.0 # 6.0
-SHARED_LIBS +=  gstsignalprocessor-1.0    0.0 # 6.0
+SHARED_LIBS +=  gstphotography-1.0      1.0    # 200.0
+SHARED_LIBS +=  gstbasecamerabinsrc-1.0 1.0    # 200.0
+SHARED_LIBS +=  gstcodecparsers-1.0     1.0    # 200.0
+SHARED_LIBS +=  gstinsertbin-1.0        0.0    # 200.0
+SHARED_LIBS +=  gsturidownloader-1.0    0.0    # 200.0
+SHARED_LIBS +=  gstmpegts-1.0           0.0    # 200.0
+SHARED_LIBS +=  gstegl-1.0              0.0    # 200.0
+
+WANTLIB += BPM EGL GLESv2 SoundTouch X11 X11-xcb Xau Xdmcp Xext
+WANTLIB += Xrender ass bz2 cairo croco-0.6 drm enca expat ffi
+WANTLIB += fontconfig freetype fribidi gdk_pixbuf-2.0 gio-2.0
+WANTLIB += glapi glib-2.0 gmodule-2.0 gmp gnutls gobject-2.0 graphite2
+WANTLIB += gstapp-1.0 gstaudio-1.0 gstbase-1.0 gstfft-1.0 gstpbutils-1.0
+WANTLIB += gstreamer-1.0 gstrtp-1.0 gstsdp-1.0 gsttag-1.0 gstvideo-1.0
+WANTLIB += gthread-2.0 harfbuzz hogweed m mms nettle opus orc-0.4
+WANTLIB += p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread pthread-stubs rsvg-2 schroedinger-1.0
+WANTLIB += stdc++ tasn1 xcb xcb-dri2 xcb-render xcb-shape xcb-shm
+WANTLIB += xcb-xfixes xml2 z
 
 MASTER_SITES =		${MASTER_SITE_GST:=gst-plugins-bad/}
-
-WANTLIB += BPM SoundTouch ass bz2 enca expat ffi fontconfig freetype
-WANTLIB += fribidi gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gstapp-1.0
-WANTLIB += gstaudio-1.0 gstbase-1.0 gstfft-1.0 gstpbutils-1.0
-WANTLIB += gstreamer-1.0 gstrtp-1.0 gstsdp-1.0 gsttag-1.0 gstvideo-1.0
-WANTLIB += gthread-2.0 m mms opus orc-0.4 pcre pthread schroedinger-1.0
-WANTLIB += stdc++ z pthread-stubs X11 xcb
 
 MODULES =		devel/dconf
 
 # needed for ${WRKSRC}/tests/
 BUILD_DEPENDS +=	graphics/libexif
 
-LIB_DEPENDS=		${P}/plugins-base \
+LIB_DEPENDS=		${P}/plugins-base=${V} \
 			audio/opus \
 			audio/soundtouch \
 			multimedia/libass \
@@ -44,6 +50,7 @@ CONFIGURE_ARGS=		--disable-cdaudio \
 			--disable-faac \
 			--disable-faad \
 			--disable-flite \
+			--disable-fluidsynth \
 			--disable-gme \
 			--disable-gsm \
 			--disable-kate \
@@ -61,6 +68,7 @@ CONFIGURE_ARGS=		--disable-cdaudio \
 			--disable-ofa \
 			--disable-openal \
 			--disable-opencv \
+			--disable-openjpeg \
 			--disable-pvr \
 			--disable-resindvd \
 			--disable-rtmp \
@@ -74,6 +82,7 @@ CONFIGURE_ARGS=		--disable-cdaudio \
 			--disable-vdpau \
 			--disable-voaacenc \
 			--disable-voamrwbenc \
+			--disable-webp \
 			--disable-wildmidi \
 			--disable-xvid \
 			--disable-zbar
@@ -84,6 +93,9 @@ CONFIGURE_ARGS +=	--disable-sndio
 
 # this add some build dependencies (e.g. gtk+2, gtk+3) for no real use
 CONFIGURE_ARGS +=	--disable-examples
+
+# needs orc >= 0.4.16
+CONFIGURE_ARGS +=	--disable-orc
 
 pre-configure:
 	perl -pi -e 's,/dev/dvd,/dev/rcd0c,g' \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.8 2013/06/04 18:41:53 naddy Exp $
+# $OpenBSD: Makefile.inc,v 1.10 2013/09/24 18:28:22 ajacoutot Exp $
 
 # Most frequent usage of the GStreamer packages:
 # core		base library
@@ -17,6 +17,10 @@
 
 SHARED_ONLY=		Yes
 
+V ?=			1.2.0
+API=			1.0
+SUBST_VARS +=		API
+
 CATEGORIES ?=		multimedia devel
 
 HOMEPAGE ?=		http://gstreamer.freedesktop.org/
@@ -29,9 +33,6 @@ GST_PKGNAME_PREFIX=	gstreamer1
 PERMIT_PACKAGE_CDROM ?=	Yes
 PERMIT_PACKAGE_FTP ?=	Yes
 PERMIT_DISTFILES_FTP ?=	Yes
-
-VERSION=		1.0
-SUBST_VARS +=		VERSION
 
 DIST_SUBDIR=		gstreamer
 MASTER_SITE_GST=	http://gstreamer.freedesktop.org/src/
@@ -46,7 +47,11 @@ TEST_DEPENDS +=	${BASE_PKGPATH},${i}
 TEST_DEPENDS +=	${BASE_PKGPATH}
 .endif
 
-MODULES +=		devel/gettext
+MODULES +=		devel/gettext \
+			lang/python
+
+# python is only used to generate documentation
+MODPY_RUNDEP=		No
 
 USE_GMAKE ?=		Yes
 LIBTOOL_FLAGS ?=	--tag=disable-static
@@ -57,8 +62,7 @@ BUILD_DEPENDS +=	devel/bison \
 
 CONFIGURE_STYLE ?=	autoconf
 CONFIGURE_ENV +=	CPPFLAGS="${CPPFLAGS}" \
-			LDFLAGS="${LDFLAGS}" \
-			ac_cv_path_PYTHON="" # only used to generate documentation
+			LDFLAGS="${LDFLAGS}"
 CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--with-package-name="OpenBSD ${DISTNAME} package" \
 			--with-package-origin="http://www.openbsd.org/" \
@@ -85,5 +89,5 @@ LDFLAGS +=		-L${LOCALBASE}/lib \
 
 .if !target(post-install)
 post-install:
-	rm ${PREFIX}/lib/gstreamer-${VERSION}/*.la
+	rm ${PREFIX}/lib/gstreamer-${API}/*.la
 .endif

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.813 2013/08/15 21:55:47 stsp Exp $
+# $OpenBSD: Makefile,v 1.816 2013/09/23 13:50:37 sthen Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -154,6 +154,7 @@
      SUBDIR += ipfreely
      SUBDIR += iplog
      SUBDIR += ipsvd
+     SUBDIR += ipv6-toolkit
      SUBDIR += ipv6calc
      SUBDIR += irc
      SUBDIR += ircII
@@ -165,7 +166,6 @@
      SUBDIR += irssi-silc
      SUBDIR += irssi-xmpp
      SUBDIR += isc-bind
-     SUBDIR += isc-bind,ratelimit
      SUBDIR += isc-dhcp
      SUBDIR += jabberd,mysql
      SUBDIR += jabberd,mysql,ldap
@@ -418,6 +418,7 @@
      SUBDIR += pear-HTTP
      SUBDIR += pear-HTTP-Request
      SUBDIR += pear-Net-DNS
+     SUBDIR += pear-Net-DNS2
      SUBDIR += pear-Net-IMAP
      SUBDIR += pear-Net-IPv4
      SUBDIR += pear-Net-IPv6

@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.27 2013/07/07 21:25:27 naddy Exp $
+# $OpenBSD: Makefile,v 1.29 2013/09/26 10:18:59 ajacoutot Exp $
 
 COMMENT-main=		Python bindings for GLib and GObject
 COMMENT-common=		common files for py-gobject3
 
 GNOME_PROJECT=		pygobject
-GNOME_VERSION=		3.8.3
+GNOME_VERSION=		3.10.0
 MODPY_EGG_VERSION=	${GNOME_VERSION}
 
 PKGNAME-main=		py-gobject3-${GNOME_VERSION}
-REVISION-main=		0
 FULLPKGNAME-common=	py-gobject3-common-${GNOME_VERSION}
 FULLPKGPATH-common=	devel/py-gobject3,-common
+
+REVISION-main=		0
 
 CATEGORIES=		devel
 
@@ -47,7 +48,7 @@ LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/gobject-introspection
 
 RUN_DEPENDS-main=	${RUN_DEPENDS} \
-			devel/py-gobject3,-common
+			devel/py-gobject3,-common=${GNOME_VERSION}
 
 .if ${FLAVOR:Mpython3}
 FULLPKGNAME-main=	${PKGNAME-main:S/^py-/py3-/}

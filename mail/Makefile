@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.296 2013/06/26 16:23:31 sthen Exp $
+# $OpenBSD: Makefile,v 1.299 2013/09/25 08:04:54 landry Exp $
 
      SUBDIR =
      SUBDIR += abook
@@ -21,11 +21,6 @@
      SUBDIR += clamsmtp
      SUBDIR += claws-mail
      SUBDIR += claws-mail,ldap
-     SUBDIR += claws-mail-attremover
-     SUBDIR += claws-mail-htmlviewer
-     SUBDIR += claws-mail-notification
-     SUBDIR += claws-mail-rssyl
-     SUBDIR += claws-mail-vcalendar
      SUBDIR += cmail
      SUBDIR += courier-authlib
      SUBDIR += courier-imap
@@ -39,11 +34,9 @@
      SUBDIR += dovecot-pigeonhole
      SUBDIR += drac
      SUBDIR += dspam
-     SUBDIR += dspam,hash
-     SUBDIR += dspam,hash,domainscale
+     SUBDIR += dspam,clamav
+     SUBDIR += dspam,domainscale
      SUBDIR += dspam,ldap
-     SUBDIR += dspam,mysql
-     SUBDIR += dspam,pgsql
      SUBDIR += elm
      SUBDIR += evolution
      SUBDIR += evolution-ews
@@ -106,7 +99,6 @@
      SUBDIR += nmh,sasl
      SUBDIR += nmzmail
      SUBDIR += offlineimap
-     SUBDIR += openwebmail
      SUBDIR += osbf-lua
      SUBDIR += osbf-lua,lua52
      SUBDIR += p5-Catalyst-Plugin-Email

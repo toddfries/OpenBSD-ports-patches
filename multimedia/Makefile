@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.69 2013/04/24 09:16:23 zhuk Exp $
+# $OpenBSD: Makefile,v 1.71 2013/09/25 07:06:14 jasper Exp $
 
      SUBDIR =
      SUBDIR += atomicparsley
@@ -34,6 +34,7 @@
      SUBDIR += libtheora
      SUBDIR += libvpx
      SUBDIR += lives
+     SUBDIR += livestreamer
      SUBDIR += lsdvd
      SUBDIR += mediatomb
      SUBDIR += ming
@@ -53,7 +54,6 @@
      SUBDIR += p5-Storable-AMF
      SUBDIR += phonon
      SUBDIR += phonon-backend
-     SUBDIR += recordmydesktop
      SUBDIR += regionset
      SUBDIR += schroedinger
      SUBDIR += shrip

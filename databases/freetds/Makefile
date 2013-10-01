@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.59 2013/03/21 08:45:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.62 2013/09/20 21:12:44 sthen Exp $
 
 COMMENT=	database drivers for Sybase/Microsoft SQL Server
 
-DISTNAME=	freetds-0.91.49
+DISTNAME=	freetds-0.92.79
 
 SHARED_LIBS += ct                   5.0      # .4.0
 SHARED_LIBS += sybdb                7.0      # .5.0
@@ -22,14 +22,14 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += c crypto iodbc iodbcinst ncurses pthread readline ssl
 
-MASTER_SITES=	http://mirrors.ibiblio.org/freetds/stable/git/ \
-		ftp://ftp.freetds.org/pub/freetds/stable/
+MASTER_SITES=	ftp://ftp.freetds.org/pub/freetds/stable/
 
 AUTOCONF_VERSION=2.65
 AUTOMAKE_VERSION=1.11
 MODULES=	devel/gettext
 BUILD_DEPENDS=  devel/doxygen,no_gui,bootstrap>=1.7.2 \
-		devel/libtool,-ltdl \
+		devel/libtool,-main \
+		textproc/docbook \
 		textproc/docbook-dsssl \
 		textproc/openjade \
 		${MODGNU_AUTOCONF_DEPENDS} \
@@ -58,6 +58,9 @@ FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/freetds
 DOC=		share/doc/freetds
 SUBST_VARS=	DOC V
 
+post-extract:
+	rm -r ${WRKSRC}/doc/doc/freetds-*
+
 pre-configure:
 	cd ${WRKSRC}; \
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
@@ -67,7 +70,7 @@ pre-configure:
 
 post-install:
 	cd ${PREFIX}/lib && ln -s libtdsodbc.so.${LIBtdsodbc_VERSION} \
-		libtdsodbc.so; \
+		libtdsodbc.so
 	mv ${PREFIX}/share/doc/freetds-* ${PREFIX}/share/doc/freetds
 
 .include <bsd.port.mk>

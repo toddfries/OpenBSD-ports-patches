@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.97 2013/07/09 09:40:53 jasper Exp $
+# $OpenBSD: Makefile,v 1.100 2013/09/28 08:50:41 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT-main=	viewer for multiple document formats
-COMMENT-djvu=	evince document viewer backend for djvu documents
 COMMENT-dvi=	evince document viewer backend for dvi documents
 COMMENT-nautilus= evince plugin for nautilus
 
 GNOME_PROJECT=	evince
-GNOME_VERSION=	3.8.3
+GNOME_VERSION=	3.10.0
 
 MAJ_V=		3.0
 SUBST_VARS=	MAJ_V
@@ -16,14 +15,15 @@ SUBST_VARS=	MAJ_V
 CATEGORIES=	graphics print
 
 PKGNAME-main=	${DISTNAME}
-PKGNAME-djvu=	evince-djvu-${GNOME_VERSION}
 PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
 PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
-SHARED_LIBS +=  evdocument3               0.1 # 4.0
-SHARED_LIBS +=  evview3                   0.0 # 3.0
+REVISION-main=		1
+REVISION-nautilus=	1
+REVISION-dvi=		0
 
-HOMEPAGE=	http://www.gnome.org/projects/evince/
+SHARED_LIBS +=  evdocument3               0.2 # 4.0
+SHARED_LIBS +=  evview3                   0.0 # 3.0
 
 MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 		Antoine Jacoutot <ajacoutot@openbsd.org>
@@ -54,9 +54,11 @@ LIB_DEPENDS=	x11/gtk+3
 WANTLIB-main=	${WANTLIB} ICE SM c dbus-1 gailutil-3 \
 		gs gcrypt gpg-error stdc++ secret-1 \
 		jpeg pthread tiff xml2 lcms2 openjpeg \
-		poppler poppler-glib spectre avahi-common
+		poppler poppler-glib spectre avahi-common \
+		djvulibre
 LIB_DEPENDS-main= print/poppler \
 		print/libspectre \
+		graphics/djvulibre \
 		${LIB_DEPENDS}
 RUN_DEPENDS-main= ${RUN_DEPENDS} \
 		archivers/unrar \
@@ -65,12 +67,6 @@ RUN_DEPENDS-main= ${RUN_DEPENDS} \
 		misc/shared-mime-info \
 		print/ghostscript/gnu \
 		${MODGNOME_RUN_DEPENDS_yelp}
-
-WANTLIB-djvu=	${WANTLIB} jpeg evdocument3 djvulibre ICE SM \
-		dbus-1 pthread
-LIB_DEPENDS-djvu= ${LIB_DEPENDS} \
-		${BASE_PKGPATH} \
-		graphics/djvulibre
 
 WANTLIB-dvi=	${WANTLIB} gs evdocument3 kpathsea spectre ICE SM \
 		jpeg avahi-common dbus-1 pthread
@@ -97,16 +93,16 @@ CONFIGURE_ARGS+= --disable-static
 MODGNOME_CPPFLAGS=${CFLAGS}
 CONFIGURE_ENV=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include"
 
-MULTI_PACKAGES=	-main -djvu -dvi -nautilus
-PSEUDO_FLAVORS=	no_djvu no_dvi no_nautilus light
+MULTI_PACKAGES=	-main -dvi -nautilus
+PSEUDO_FLAVORS=	no_dvi no_nautilus light
 FLAVOR?=
 .if ${FLAVOR:Mlight}
-FLAVOR += no_djvu no_dvi no_nautilus
+FLAVOR += no_dvi no_nautilus
 .endif
 
 .include <bsd.port.arch.mk>
 
-.for s in -nautilus -djvu -dvi
+.for s in -nautilus -dvi
 .  if ${BUILD_PACKAGES:M$s}
 CONFIGURE_ARGS+= --enable$s
 .  else

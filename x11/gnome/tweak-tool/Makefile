@@ -1,33 +1,37 @@
-# $OpenBSD: Makefile,v 1.32 2013/07/18 08:34:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2013/09/28 08:51:31 ajacoutot Exp $
 
-PKG_ARCH=	*
+PKG_ARCH=		*
 
-COMMENT=	tweak hidden GTK/GNOME settings
+COMMENT=		tweak hidden GTK/GNOME settings
 
-GNOME_PROJECT=	gnome-tweak-tool
-GNOME_VERSION=	3.8.1
+GNOME_PROJECT=		gnome-tweak-tool
+GNOME_VERSION=		3.10.0
+REVISION=		2
 
-CATEGORIES=	sysutils
-
-HOMEPAGE=	https://live.gnome.org/GnomeTweakTool
+CATEGORIES=		sysutils
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
 
-MODULES=	x11/gnome \
-		lang/python
+MODULES=		x11/gnome \
+			lang/python
 
-BUILD_DEPENDS=	devel/gsettings-desktop-schemas \
-		devel/gconf2 \
-		devel/gettext \
-		devel/py-gobject3
+BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/gettext \
+			devel/py-gobject3 \
+			x11/gtk+3
 
-RUN_DEPENDS=	devel/gsettings-desktop-schemas \
-		devel/gconf2 \
-		devel/gettext \
-		devel/py-gobject3
+RUN_DEPENDS=		devel/gsettings-desktop-schemas \
+			devel/gettext \
+			devel/py-gobject3 \
+			x11/gtk+3
 
-MODPY_ADJ_FILES=gnome-tweak-tool
+RUN_DEPENDS +=		x11/gnome/shell
+
+# Notify introspection libs: site-packages/gtweak/utils.py
+RUN_DEPENDS +=		devel/libnotify
+
+MODPY_ADJ_FILES=	gnome-tweak-tool
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
