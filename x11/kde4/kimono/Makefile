@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.2 2013/05/14 09:16:26 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/10/07 17:30:14 zhuk Exp $
 
 CATEGORIES =	devel
 COMMENT =	KDE bindings for .NET
 DISTNAME =	kimono-${MODKDE4_VERSION}
+REVISION =	0
 
 SHARED_LIBS =	kimono			50.0 # 2.0
 SHARED_LIBS +=	akonadi-sharp		50.0
@@ -35,7 +36,7 @@ WANTLIB += ${KDE4LIB}/smokesoprano
 WANTLIB += gc mono-2.0 soprano sopranoclient sopranoserver sopranoindex
 
 MODULES =		lang/mono
-MODKDE4_USE =
+MODKDE4_USE =		libs
 
 BUILD_DEPENDS =		misc/shared-desktop-ontologies \
 			productivity/akonadi>=${MIN_AKONADI_VERSION} \

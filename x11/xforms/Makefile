@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.43 2013/03/11 11:46:18 espie Exp $
+# $OpenBSD: Makefile,v 1.45 2013/10/11 21:21:06 naddy Exp $
 
 COMMENT=	GUI toolkit for X11
 
 DISTNAME=	xforms-1.0
-REVISION=	2
+REVISION=	3
 SHARED_LIBS=	flimage	1.0 \
 		forms	1.0 \
 		formsGL	1.0
@@ -18,7 +18,6 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB=		GL X11 Xau Xdmcp Xext Xpm c jpeg m tiff
 
-USE_GROFF =		Yes
 CONFIGURE_STYLE=	imake
 MAKE_FLAGS=		LIBflimage_VERSION=${LIBflimage_VERSION} \
 			LIBforms_VERSION=${LIBforms_VERSION} \

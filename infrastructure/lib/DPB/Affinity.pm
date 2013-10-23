@@ -1,7 +1,7 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Affinity.pm,v 1.4 2012/12/30 14:04:17 espie Exp $
+# $OpenBSD: Affinity.pm,v 1.8 2013/10/17 08:34:03 espie Exp $
 #
-# Copyright (c) 2012 Marc Espie <espie@openbsd.org>
+# Copyright (c) 2012-2013 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -58,6 +58,9 @@ sub start
 		$w->{affinity} = $host;
 		print $fh "host=$host\n";
 		print $fh "path=", $w->fullpkgpath, "\n";
+		if ($core->{inmem}) {
+			print $fh "mem=$core->{inmem}\n";
+		}
 		close $fh;
 	}
 }
@@ -69,6 +72,7 @@ sub unmark
 	my ($self, $v) = @_;
 	unlink($self->affinity_marker($v));
 	delete $v->{affinity};
+	delete $v->{mem_affinity};
 }
 
 # on the other hand, when we finish building a port, we can unmark all paths.
@@ -88,7 +92,7 @@ sub retrieve_existing_markers
 	while (my $e = readdir $d) {
 		next unless -f "$self->{dir}/$e";
 		open my $fh, '<', "$self->{dir}/$e" or return;
-		my ($hostname, $pkgpath);
+		my ($hostname, $pkgpath, $memory);
 		while (<$fh>) {
 			chomp;
 			if (m/^host\=(.*)/) {
@@ -97,12 +101,18 @@ sub retrieve_existing_markers
 			if (m/^path\=(.*)/) {
 				$pkgpath = $1;
 			}
+			if (m/^mem\=(.*)/) {
+				$memory = $1;
+			}
 		}
 		close $fh;
 		next unless (defined $pkgpath) && (defined $hostname);
 
 		my $v = DPB::PkgPath->new($pkgpath);
 		$v->{affinity} = $hostname;
+		if ($memory) {
+			$v->{mem_affinity} = $memory;
+		}
 		print $log "$$:", $v->fullpkgpath, " => ", $hostname, "\n";
 	}
 	close $log;
@@ -111,12 +121,66 @@ sub retrieve_existing_markers
 sub simplifies_to
 {
 	my ($self, $v, $w) = @_;
+	for my $tag ("affinity", "mem_affinity") {
+		if (defined $v->{$tag}) {
+			$w->{$tag} //= $v->{$tag};
+		}
+		if (defined $w->{$tag}) {
+			$v->{$tag} //= $w->{$tag};
+		}
+	}
+}
+
+my $queued = {};
+
+sub sorted
+{
+	my ($self, $queue, $core) = @_;
+	# okay, we know we have affinity stuff in the queue (maybe, so we want to do something special here
+	# maybe...
+	my $n = $core->hostname;
+	if ($queued->{$n}) {
+		# XXX for now, look directly inside the queue
+		my @l = grep 
+		    { defined($_->{affinity}) && $_->{affinity} eq $n } 
+		    values %{$queue->{o}};
+		if (@l == 0) {
+			delete $queued->{$n};
+		} else {
+			return DPB::AffinityQueue->new(\@l, $queue, $core);
+		}
+	}
+	return $queue->sorted($core);
+}
+
+sub has_in_queue
+{
+	my ($self, $v) = @_;
 	if (defined $v->{affinity}) {
-		$w->{affinity} //= $v->{affinity};
+		$queued->{$v->{affinity}} = 1;
 	}
-	if (defined $w->{affinity}) {
-		$v->{affinity} //= $w->{affinity};
+}
+
+package DPB::AffinityQueue;
+sub new
+{
+	my ($class, $l, $queue, $core) = @_;
+	bless { l => $l, 
+	    queue => $queue, 
+	    core => $core}, $class;
+}
+
+sub next
+{
+	my $self = shift;
+	if (@{$self->{l}} > 0) {
+		return pop @{$self->{l}};
 	}
+	if (!defined $self->{sorted}) {
+		$self->{sorted} = 
+		    $self->{queue}->sorted($self->{core});
+	}
+	return $self->{sorted}->next;
 }
 
 1;

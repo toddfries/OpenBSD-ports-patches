@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.273 2013/08/23 11:17:19 pascal Exp $
+# $OpenBSD: Makefile,v 1.277 2013/10/20 17:38:54 bentley Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -23,6 +23,7 @@
      SUBDIR += beret
      SUBDIR += blobby
      SUBDIR += blobwars
+     SUBDIR += blockrage
      SUBDIR += bomberclone
      SUBDIR += boswars
      SUBDIR += braincurses
@@ -51,6 +52,7 @@
      SUBDIR += crossfire-client
      SUBDIR += csmash
      SUBDIR += dangerdeep
+     SUBDIR += dd2
      SUBDIR += defendguin
      SUBDIR += doomdata
      SUBDIR += dopewars
@@ -213,6 +215,7 @@
      SUBDIR += valyriatear
      SUBDIR += vectoroids
      SUBDIR += vitetris
+     SUBDIR += vms-empire
      SUBDIR += vodovod
      SUBDIR += wanderer
      SUBDIR += warmux
@@ -220,6 +223,7 @@
      SUBDIR += wesnoth
      SUBDIR += wesnoth,lite
      SUBDIR += widelands
+     SUBDIR += wizznic
      SUBDIR += wmminichess
      SUBDIR += wmtictactoe
      SUBDIR += wordwarvi
@@ -241,6 +245,7 @@
      SUBDIR += xdeblock
      SUBDIR += xdino
      SUBDIR += xevil
+     SUBDIR += xgalaga-sdl
      SUBDIR += xgolgo
      SUBDIR += xinvaders
      SUBDIR += xjewel

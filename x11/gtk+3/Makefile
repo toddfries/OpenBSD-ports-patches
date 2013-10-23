@@ -1,22 +1,20 @@
-# $OpenBSD: Makefile,v 1.86 2013/09/28 09:37:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.89 2013/10/16 08:19:02 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		multi-platform graphical toolkit
 COMMENT-cups=		gtk+3 CUPS print backend
 
-GNOME_VERSION=		3.10.0
+GNOME_VERSION=		3.10.2
 GNOME_PROJECT=		gtk+
 
 PKGNAME-main=		gtk+3-${GNOME_VERSION}
 PKGNAME-cups=		gtk+3-cups-${GNOME_VERSION}
 
-REVISION-main=		0
-
 CATEGORIES=		x11 devel
 
-SHARED_LIBS +=  gdk-3                1000.0   # 1000.0
-SHARED_LIBS +=  gtk-3                1000.0   # 1000.0
+SHARED_LIBS +=  gdk-3                1000.0   # 1000.2
+SHARED_LIBS +=  gtk-3                1000.0   # 1000.2
 SHARED_LIBS +=  gailutil-3           0.0      # 0.0
 
 HOMEPAGE=		http://www.gtk.org/
@@ -56,6 +54,7 @@ RUN_DEPENDS-main=	${RUN_DEPENDS}
 # some apps need more icons than the stock ones
 # some apps require symbolic icons with no fallback
 # some apps needs the svg version of the icon
+# (+see settings.ini in post-install)
 RUN_DEPENDS-main +=	x11/gnome/icon-theme-symbolic #pulls in gnome-icon-theme+librsvg
 
 WANTLIB-main += ${WANTLIB}
@@ -100,6 +99,8 @@ BUILD_DEPENDS +=	x11/gtk+2,-guic
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/gtk+3
 
 post-install:
+	@printf "[Settings]\ngtk-icon-theme-name = gnome\n" > \
+		${PREFIX}/share/gtk-3.0/settings.ini
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/gtk-3.0/modules
 	rm ${PREFIX}/lib/gtk-3.0/3.0.0/{printbackends,immodules}/*.{a,la}
 

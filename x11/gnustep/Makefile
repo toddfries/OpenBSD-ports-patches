@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2013/05/14 11:05:14 sebastia Exp $
+# $OpenBSD: Makefile,v 1.41 2013/10/21 11:10:50 sebastia Exp $
 
      SUBDIR =
      SUBDIR += aclock
@@ -7,11 +7,14 @@
      SUBDIR += back
      SUBDIR += base
      SUBDIR += batmon
+     SUBDIR += camera
+     SUBDIR += camerakit
      SUBDIR += cdplayer
      SUBDIR += corebase
      SUBDIR += cynthiune
      SUBDIR += databasin
      SUBDIR += dbuskit
+     SUBDIR += displaycalibrator
      SUBDIR += edenmath
      SUBDIR += examples
      SUBDIR += fisicalab
@@ -30,6 +33,7 @@
      SUBDIR += gworkspace
      SUBDIR += highlighterkit
      SUBDIR += imageviewer
+     SUBDIR += impersonatortoolkit
      SUBDIR += jigsaw
      SUBDIR += lapispuzzle
      SUBDIR += laternamagica
@@ -37,9 +41,11 @@
      SUBDIR += make
      SUBDIR += matharray
      SUBDIR += mpdcon
+     SUBDIR += neos-theme
      SUBDIR += netclasses
      SUBDIR += paje
      SUBDIR += pantomime
+     SUBDIR += pcapkit
      SUBDIR += pdfkit
      SUBDIR += performance
      SUBDIR += price
@@ -47,6 +53,7 @@
      SUBDIR += remotedesk
      SUBDIR += renaissance
      SUBDIR += rsskit
+     SUBDIR += silver-theme
      SUBDIR += simpleagenda
      SUBDIR += sqlclient
      SUBDIR += sudoku

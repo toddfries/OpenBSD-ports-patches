@@ -1,7 +1,7 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Heuristics.pm,v 1.23 2013/09/25 08:49:07 espie Exp $
+# $OpenBSD: Heuristics.pm,v 1.31 2013/10/17 08:12:28 espie Exp $
 #
-# Copyright (c) 2010 Marc Espie <espie@openbsd.org>
+# Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -25,7 +25,8 @@ package DPB::Heuristics;
 # for now, we don't create a separate object, we assume everything here is
 # "global"
 
-my (%weight, %bad_weight, %wrkdir, %needed_by, %pkgname);
+my (%bad_weight, %needed_by);
+our %weight;
 
 sub new
 {
@@ -37,12 +38,6 @@ sub random
 {
 	my $self = shift;
 	bless $self, "DPB::Heuristics::random";
-}
-
-sub set_logger
-{
-	my ($self, $logger) = @_;
-	$self->{logger} = $logger;
 }
 
 # we set the "unknown" weight as max if we parsed a file.
@@ -78,59 +73,6 @@ sub equates
 	}
 }
 
-sub add_size_info
-{
-	my ($self, $path, $pkgname, $sz) = @_;
-	$wrkdir{$path->pkgpath_and_flavors} = $sz;
-	if (defined $pkgname) {
-		$pkgname{$path->fullpkgpath} = $pkgname;
-	}
-}
-
-sub match_pkgname
-{
-	my ($self, $v) = @_;
-	my $p = $pkgname{$v->fullpkgpath};
-	if (!defined $p) {
-		return 0;
-	}
-	if ($p eq $v->fullpkgname) {
-		return 1;
-	}
-	return 0;
-}
-
-my $used_memory = {};
-my $used_per_host = {};
-
-sub special_parameters
-{
-	my ($self, $core, $v) = @_;
-	my $t = $core->memory;
-	return 0 if !defined $t;
-	my $p = $v->pkgpath_and_flavors;
-	# we build in memory if we know this port and it's light enough
-	if (defined $wrkdir{$p}) {
-		my $hostname = $core->hostname;
-		$used_per_host->{$hostname} //= 0;
-		if ($used_per_host->{$hostname} + $wrkdir{$p} <= $t) {
-			$used_per_host->{$hostname} += $wrkdir{$p};
-			$used_memory->{$p} = $hostname;
-			return 1;
-		}
-	}
-	return 0;
-}
-
-sub finish_special
-{
-	my ($self, $v) = @_;
-	my $p = $v->pkgpath_and_flavors;
-	if (defined $used_memory->{$p}) {
-		my $hostname = $used_memory->{$p};
-		$used_per_host->{$hostname} -= $wrkdir{$p};
-	}
-}
 
 sub set_weight
 {
@@ -194,11 +136,13 @@ my $max_sf;
 
 sub calibrate
 {
-	my ($self, $core) = @_;
-	$sf_per_host->{$core->fullhostname} = $core->sf;
-	$max_sf //= $core->sf;
-	if ($core->sf > $max_sf) {
-		$max_sf = $core->sf;
+	my ($self, @cores) = @_;
+	for my $core (@cores) {
+		$sf_per_host->{$core->fullhostname} = $core->sf;
+		$max_sf //= $core->sf;
+		if ($core->sf > $max_sf) {
+			$max_sf = $core->sf;
+		}
 	}
 }
 
@@ -224,6 +168,7 @@ sub new_queue
 {
 	my $self = shift;
 	if (DPB::HostProperties->has_sf) {
+		require DPB::Heuristics::SpeedFactor;
 		return DPB::Heuristics::Queue::Part->new($self);
 	} else {
 		return DPB::Heuristics::Queue->new($self);
@@ -389,29 +334,13 @@ sub count
 sub non_empty
 {
 	my $self = shift;
-	return scalar keys %{$self->{o}};
+	return scalar(keys %{$self->{o}}) != 0;
 }
 
 sub sorted_values
 {
 	my $self = shift;
 	return [sort {$self->{h}->compare($a, $b)} values %{$self->{o}}];
-}
-
-package DPB::Heuristics::Bin::Heavy;
-our @ISA = qw(DPB::Heuristics::Bin);
-sub add
-{
-	my ($self, $v) = @_;
-	$self->SUPER::add($v);
-	$self->{weight} += $weight{$v};
-}
-
-sub remove
-{
-	my ($self, $v) = @_;
-	$self->{weight} -= $weight{$v};
-	$self->SUPER::remove($v);
 }
 
 package DPB::Heuristics::Queue;
@@ -432,105 +361,6 @@ sub find_sorter
 	return DPB::Heuristics::SimpleSorter->new($self);
 }
 
-package DPB::Heuristics::Queue::Part;
-our @ISA = qw(DPB::Heuristics::Queue);
-
-# 20 bins, binary....
-sub find_bin
-{
-	my $w = shift;
-	return 10 if !defined $w;
-	if ($w > 65536) {
-		if ($w > 1048576) { 9 } else { 8 }
-	} elsif ($w > 256) {
-		if ($w > 4096) {
-			if ($w > 16384) { 7 } else { 6 }
-		} elsif ($w > 1024) { 5 } else { 4 }
-	} elsif ($w > 16) {
-		if ($w > 64) { 3 } else { 2 }
-	} elsif ($w > 4) { 1 } else { 0 }
-}
-
-sub add
-{
-	my ($self, $v) = @_;
-	$self->SUPER::add($v);
-	$v->{weight} = $weight{$v};
-	$self->{bins}[find_bin($v->{weight})]->add($v);
-}
-
-sub remove
-{
-	my ($self, $v) = @_;
-	$self->SUPER::remove($v);
-	$self->{bins}[find_bin($v->{weight})]->remove($v);
-}
-
-sub find_sorter
-{
-	my ($self, $core) = @_;
-	my $all = DPB::Core->all_sf;
-	if ($core->sf > $all->[-1] - 1) {
-		return $self->SUPER::find_sorter($core);
-	} else {
-		return DPB::Heuristics::Sorter->new($self->bin_part($core->sf,
-		    $all));
-	}
-}
-
-# simpler partitioning
-sub bin_part
-{
-	my ($self, $wanted, $all_sf) = @_;
-
-	# note that all_sf is sorted
-
-	# compute totals
-	my $sum_sf = 0;
-	for my $i (@$all_sf) {
-		$sum_sf += $i;
-	}
-	my @bins = @{$self->{bins}};
-	my $sum_weight = 0.0;
-	for my $bin (@bins) {
-		$sum_weight += $bin->weight;
-	}
-
-	# setup for the main loop
-	my $partial_weight = 0.0;
-	my $partial_sf = 0.0;
-	my $result = [];
-
-	# go through speed factors until we've gone thru the one we want
-	while (my $sf = shift @$all_sf) {
-		# passed it -> give result
-		last if $sf > $wanted+1;
-
-		# compute threshold for total weight
-		$partial_sf += $sf;
-		my $thr = $sum_weight * $partial_sf / $sum_sf;
-		# grab weights until we reach the desired amount
-		while (my $bin = shift @bins) {
-			$partial_weight += $bin->weight;
-			push(@$result, $bin);
-			last if $partial_weight > $thr;
-		}
-	}
-	return $result;
-}
-
-sub new
-{
-	my ($class, $h) = @_;
-	my $o = $class->SUPER::new($h);
-	my $bins = $o->{bins} = [];
-	for my $i (0 .. 9) {
-		push(@$bins, DPB::Heuristics::Bin::Heavy->new($h));
-	}
-	push(@$bins, DPB::Heuristics::Bin->new($h));
-	return $o;
-}
-
 package DPB::Heuristics::random;
 our @ISA = qw(DPB::Heuristics);
 my %any;
@@ -545,87 +375,6 @@ sub new_queue
 {
 	my $self = shift;
 	return DPB::Heuristics::Queue->new($self);
-}
-
-package DPB::Heuristics::FetchQueue;
-our @ISA = qw(DPB::Heuristics::Queue);
-sub new
-{
-	my ($class, $h) = @_;
-	$class->SUPER::new($h)->set_h1;
-}
-
-sub set_h1
-{
-	bless shift, "DPB::Heuristics::FetchQueue1";
-}
-
-sub set_h2
-{
-	bless shift, "DPB::Heuristics::FetchQueue2";
-}
-
-sub set_fetchonly
-{
-	bless shift, "DPB::Heuristics::FetchOnlyQueue";
-}
-
-sub sorted
-{
-	my $self = shift;
-	if ($self->{results}++ > 50 ||
-	    defined $self->{sorted} && @{$self->{sorted}} < 10) {
-		$self->{results} = 0;
-		undef $self->{sorted};
-	}
-	return $self->{sorted} //= DPB::Heuristics::SimpleSorter->new($self);
-}
-
-package DPB::Heuristics::FetchQueue1;
-our @ISA = qw(DPB::Heuristics::FetchQueue);
-
-# heuristic 1: grab the smallest distfiles that can build directly
-# so that we avoid queue starvation
-sub sorted_values
-{
-	my $self = shift;
-	my @l = grep {$_->{path}{has} == 0} values %{$self->{o}};
-	if (!@l) {
-		@l = grep {$_->{path}{has} < 2} values %{$self->{o}};
-		if (!@l) {
-			@l = values %{$self->{o}};
-		}
-	}
-	return [sort {$b->{sz} <=> $a->{sz}} @l];
-}
-
-package DPB::Heuristics::FetchQueue2;
-our @ISA = qw(DPB::Heuristics::FetchQueue);
-
-# heuristic 2: assume we're running good enough, grab distfiles that allow
-# build to proceed as usual
-# we don't care so much about multiple distfiles
-sub sorted_values
-{
-	my $self = shift;
-	my @l = grep {$_->{path}{has} < 2} values %{$self->{o}};
-	if (!@l) {
-		@l = values %{$self->{o}};
-	}
-	my $h = $self->{h};
-	return [sort
-	    {$h->measure($a->{path}) <=> $h->measure($b->{path})}
-	    @l];
-}
-
-package DPB::Heuristics::FetchOnlyQueue;
-our @ISA = qw(DPB::Heuristics::FetchQueue);
-
-# for fetch-only, grab all files, largest ones first.
-sub sorted_values
-{
-	my $self = shift;
-	return [sort {$a->{sz} <=> $b->{sz}} values %{$self->{o}}];
 }
 
 1;

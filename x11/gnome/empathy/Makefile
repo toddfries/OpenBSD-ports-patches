@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.142 2013/09/28 08:51:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.144 2013/10/21 18:16:16 jasper Exp $
 
 COMMENT= 		Telepathy based messenger for GNOME
 
 GNOME_PROJECT=		empathy
-GNOME_VERSION=		3.10.0
+GNOME_VERSION=		3.10.1
 SUBST_VARS=		GNOME_VERSION
-REVISION=		1
 
 CATEGORIES=		net
 
@@ -18,7 +17,7 @@ WANTLIB += atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
 WANTLIB += canberra canberra-gtk3 champlain-0.12 champlain-gtk-0.12
 WANTLIB += clutter-1.0 clutter-gst-2.0 clutter-gtk-1.0 cogl cogl-pango
 WANTLIB += dbus-1 dbus-glib-1 enchant execinfo expat farstream-0.2
-WANTLIB += ffi folks folks-telepathy fontconfig freetype gailutil-3
+WANTLIB += ffi folks folks-telepathy fontconfig freetype
 WANTLIB += gck-1 gcr-3 gcr-base-3 gcrypt gdbm gdk-3 gdk_pixbuf-2.0
 WANTLIB += gee-0.8 geoclue gio-2.0 glib-2.0 gmodule-2.0 gmp gnutls
 WANTLIB += goa-1.0 gobject-2.0 gpg-error graphite2 gstapp-1.0
@@ -27,7 +26,7 @@ WANTLIB += gstreamer-1.0 gsttag-1.0 gstvideo-1.0 gthread-2.0 gtk-3
 WANTLIB += harfbuzz harfbuzz-icu hogweed icudata icui18n icuuc
 WANTLIB += javascriptcoregtk-3.0 jpeg json-c json-glib-1.0 ltdl
 WANTLIB += m memphis-0.2 mission-control-plugins nettle notify
-WANTLIB += ogg p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += ogg orc-0.4 p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs pulse pulse-mainloop-glib
 WANTLIB += secret-1 sndfile soup-2.4 soup-gnome-2.4 sqlite3 stdc++
 WANTLIB += tasn1 telepathy-farstream telepathy-glib telepathy-logger

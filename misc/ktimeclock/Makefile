@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.21 2013/06/24 15:53:38 zhuk Exp $
+# $OpenBSD: Makefile,v 1.23 2013/10/22 11:34:20 zhuk Exp $
 
 COMMENT=	task-based timeclock for KDE
 
 VERSION=	2.0.2
 DISTNAME=	ktimeclock-${VERSION}
-REVISION=	5
+REVISION=	7
 CATEGORIES=	misc x11
 
 HOMEPAGE=	http://www.howlingfrog.com/opensource/ktimeclock/
@@ -33,5 +33,7 @@ CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	${MODKDE_CONFIGURE_ARGS} --with-xinerama
 CONFIGURE_ENV=	${MODKDE_CONFIGURE_ENV}
 MAKE_ENV=	${CONFIGURE_ENV}
+
+MODKDE_FIXUP_DATADIR=	Yes
 
 .include <bsd.port.mk>

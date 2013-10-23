@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.27 2013/08/20 22:05:54 zhuk Exp $
+# $OpenBSD: Makefile,v 1.29 2013/10/22 11:34:15 zhuk Exp $
 
 COMMENT=	silly little game based on Spacetaxi for the C64
 
 DISTNAME=	taxipilot-0.7.2
-REVISION =	7
+REVISION =	9
 CATEGORIES=	games
 
 HOMEPAGE=	http://taxipilot.sourceforge.net/
@@ -27,6 +27,7 @@ RUN_DEPENDS=	x11/gtk+2,-guic
 LIB_DEPENDS=	x11/kde/libs3
 
 MODULES=	x11/qt3 devel/gettext
+DPB_PROPERTIES =	tag:kde3
 
 PORTHOME=	${WRKDIR}
 

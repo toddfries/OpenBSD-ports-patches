@@ -1,4 +1,4 @@
-# $OpenBSD: kde4.port.mk,v 1.7 2013/07/04 00:44:21 zhuk Exp $
+# $OpenBSD: kde4.port.mk,v 1.12 2013/10/10 11:53:24 zhuk Exp $
 
 # The version of KDE SC in x11/kde4
 _MODKDE4_STABLE =	4.10.5
@@ -101,7 +101,6 @@ MODKDE4_RESOURCES ?=	No
 MODKDE4_USE ?=		runtime
 .else
 MODKDE4_USE ?=		libs
-MODKDE4_NO_QT ?=	Yes
 .endif
 
 _MODKDE4_USE_ALL =	libs runtime workspace pim games
@@ -135,6 +134,22 @@ FLAVOR ?=
 MODKDE4_USE +=		libs
 .endif
 
+.if empty(MODKDE4_USE)
+KDE4_ONLY ?= No
+.else
+KDE4_ONLY ?= Yes
+.endif
+
+.if ${KDE4_ONLY:L} == "yes"
+DPB_PROPERTIES +=	tag:kde4
+.endif
+
+# Small hack, until automoc4 will be gone
+PKGNAME ?= ${DISTNAME}
+.if !${PKGNAME:Mautomoc4-*}
+MODKDE4_BUILD_DEPENDS +=	devel/automoc
+.endif
+
 .if ${MODKDE4_RESOURCES:L} != "no"
 PKG_ARCH ?=		*
 MODKDE4_NO_QT ?=	Yes	# resources usually don't need Qt
@@ -145,12 +160,6 @@ MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION}
 MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/libs>=${MODKDE4_DEP_VERSION}
 .   endif
 .else
-# Small hack, until automoc4 will be gone
-PKGNAME ?= ${DISTNAME}
-.   if !${PKGNAME:Mautomoc4-*}
-MODKDE4_BUILD_DEPENDS +=	devel/automoc
-.   endif
-
 MODKDE4_NO_QT ?=	No
 .   if ${MODKDE4_USE:L:Mlibs}
 .       if ${MODKDE4_NO_QT:L} == "yes"
@@ -219,6 +228,8 @@ SUBST_VARS +=		KDE4LIB
 . if "${NO_TEST:L}" != "yes"
 # Enable regression tests if any
 MODKDE4_CONF_ARGS +=	-DKDE4_BUILD_TESTS:Bool=Yes
+. else
+MODKDE4_CONF_ARGS +=	-DKDE4_BUILD_TESTS:Bool=No
 . endif
 
 MODKDE4_CONF_ARGS +=	-DINCLUDE_INSTALL_DIR:Path=${MODKDE4_INCLUDE_DIR} \
@@ -230,6 +241,10 @@ MODKDE4_CONF_ARGS +=	-DINCLUDE_INSTALL_DIR:Path=${MODKDE4_INCLUDE_DIR} \
 			-DKDE4_INFO_INSTALL_DIR:Path=${PREFIX}/info \
 			-DKDE4_MAN_INSTALL_DIR:Path=${PREFIX}/man \
 			-DKDE4_SYSCONF_INSTALL_DIR:Path=${SYSCONFDIR}
+
+# Make sure that KDE4-specific places are searched first
+MODKDE4_CONF_ARGS +=	-DCMAKE_INCLUDE_PATH=${LOCALBASE}/${MODKDE4_INCLUDE_DIR} \
+			-DCMAKE_LIBRARY_PATH=${LOCALBASE}/${MODKDE4_LIB_DIR}
 .endif
 
 # FIXME

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.28 2013/09/22 19:55:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2013/10/18 08:22:57 ajacoutot Exp $
 
 COMMENT=	graphical diff and merge tool
 
-GNOME_VERSION=	1.8.1
+GNOME_VERSION=	1.8.2
 GNOME_PROJECT=	meld
 
 CATEGORIES=	textproc x11
@@ -18,11 +18,11 @@ MODULES=	lang/python \
 MODGNOME_TOOLS= 	yelp
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
+MODGNOME_MIME_FILE=	Yes
 
-MODPY_ADJ_FILES=bin/meld
+MODPY_ADJ_FILES=	bin/meld
 
-RUN_DEPENDS=	misc/shared-mime-info \
-		x11/dbus-python \
+RUN_DEPENDS=	x11/dbus-python \
 		x11/py-gtk2
 
 NO_TEST=	yes

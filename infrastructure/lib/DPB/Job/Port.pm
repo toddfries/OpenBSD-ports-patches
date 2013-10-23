@@ -1,7 +1,7 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.116 2013/09/23 12:32:59 espie Exp $
+# $OpenBSD: Port.pm,v 1.138 2013/10/17 18:09:42 espie Exp $
 #
-# Copyright (c) 2010 Marc Espie <espie@openbsd.org>
+# Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -19,6 +19,27 @@ use warnings;
 
 use DPB::Job;
 use DPB::Clock;
+
+package DPB::Junk;
+sub want
+{
+	my ($class, $core, $job) = @_;
+	# job is normally attached to core, unless it's not attached,
+	# and then we pass it as an extra parameter
+	$job //= $core->job;
+	return 2 if $job->{v}{forcejunk};
+	# XXX let's wipe the slates at the start of the first tagged
+	# job, as we don't know the exact state of the host.
+	return 2 if $job->{v}{info}->has_property('tag') &&
+	    !defined $core->prop->{last_junk};
+	return 0 unless defined $core->prop->{junk};
+	if ($core->prop->{depends_count} >= $core->prop->{junk}) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 package DPB::Task::BasePort;
 our @ISA = qw(DPB::Task::Clocked);
 use OpenBSD::Paths;
@@ -64,6 +85,24 @@ sub handle_output
 	print ">>> Running $self->{phase} in $job->{path} at ", time(), "\n";
 }
 
+sub tweak_args
+{
+	my ($self, $args, $job, $builder) = @_;
+	push(@$args,
+	    "FETCH_PACKAGES=No",
+	    "PREPARE_CHECK_ONLY=Yes",
+	    "REPORT_PROBLEM='exit 1'", "BULK=No");
+	if ($job->{parallel}) {
+		push(@$args, "MAKE_JOBS=$job->{parallel}");
+	}
+	if ($job->{special}) {
+		push(@$args, "USE_MFS=Yes");
+	}
+	if ($builder->{fetch}) {
+		push(@$args, "NO_CHECKSUM=Yes");
+	}
+}
+
 sub run
 {
 	my ($self, $core) = @_;
@@ -78,19 +117,8 @@ sub run
 	$self->handle_output($job);
 	close STDIN;
 	open STDIN, '</dev/null';
-	my @args = ($t, 
-	    "FETCH_PACKAGES=No",
-	    "PREPARE_CHECK_ONLY=Yes",
-	    "REPORT_PROBLEM='exit 1'", "BULK=No");
-	if ($job->{parallel}) {
-		push(@args, "MAKE_JOBS=$job->{parallel}");
-	}
-	if ($job->{special}) {
-		push(@args, "USE_MFS=Yes");
-	}
-	if ($builder->{fetch}) {
-		push(@args, "NO_CHECKSUM=Yes");
-	}
+	my @args = ($t);
+	$self->tweak_args(\@args, $job, $builder);
 
 	my @l = $builder->make_args;
 	my $make = $builder->make;
@@ -136,6 +164,15 @@ sub finalize
 		$core->job->replace_tasks(DPB::Task::Port::BaseClean->new(
 			'clean'));
 		return 1;
+	}
+	# XXX in case we taint the core, we will mark ourselves as cleaned
+	# so the tag and dependencies may vanish.
+	#
+	# this is a bit of a pain for fixing errors, but this ensures bulks
+	# *will* finish anyhow
+	#
+	if ($core->job->{v}{info}->has_property('tag')) {
+		print {$core->job->{lock}} "cleaned\n";
 	}
 	return 0;
 }
@@ -241,6 +278,8 @@ our @ISA = qw(DPB::Task::Port);
 sub is_serialized { 1 }
 sub want_percent { 0 }
 
+# note that serialized's setup will return its task only if lock
+# happened succesfully, so we can use that in serialized taks
 sub setup
 {
 	my ($task, $core) = @_;
@@ -350,6 +389,10 @@ sub run
 	}
 
 	$self->handle_output($job);
+	if (defined $core->prop->{last_junk}) {
+		print "   last junk was in ",
+		    $core->prop->{last_junk}->fullpkgpath, "\n";
+	}
 	my @cmd = ('/usr/sbin/pkg_add', '-aI');
 	if ($job->{builder}{update}) {
 		push(@cmd, "-rqU", "-Dupdate", "-Dupdatedepends");
@@ -408,6 +451,13 @@ sub finalize
 		}
 		close $fh;
 		$job->save_depends(\@r);
+		# XXX we ran junk before us, so retaint *now* before losing the lock
+		if ($job->{v}{info}->has_property('tag') && 
+		    !defined $core->prop->{tainted}) {
+			$core->prop->{tainted} = $job->{v}{info}->has_property('tag');
+                        print {$job->{logfh}} "Forced junk, retainting: ", 
+			    $core->prop->{tainted}, "\n";
+		}
 	} else {
 		$core->{status} = 1;
 	}
@@ -419,15 +469,47 @@ our @ISA=qw(DPB::Task::Port::Serialized);
 
 sub notime { 1 }
 
+# uninstall is actually a "tentative" junk case
+# it might not happen for various reasons:
+# - a port that's building on the same host that says "nojunk"
+# - something else went thru simultaneously and junked already
+
+
 sub setup
 {
 	my ($task, $core) = @_;
-	# zap things HERE
-	if ($core->prop->{depends_count} < $core->prop->{junk}) {
+	# we got pre-empted
+	if (!DPB::Junk->want($core)) {
 		$task->junk_unlock($core);
 		return $core->job->next_task($core);
 	}
-	return $task->SUPER::setup($core);
+	# okay we have to make sure we're locked first
+	my $t2 = $task->SUPER::setup($core);
+	if ($t2 != $task) {
+		return $t2;
+	}
+	my $fh = $core->job->{logfh};
+	# so we're locked, let's boogie
+	my $still_tainted = 0;
+	for my $job ($core->same_host_jobs) {
+		if ($job->{nojunk}) {
+			print $fh "Don't run junk because nojunk in ",
+			    $job->{path}, "\n";
+			$task->junk_unlock($core);
+			return $core->job->next_task($core);
+		}
+		if ($job->{v}{info}->has_property('tag')) {
+			$still_tainted = 1;
+		}
+	}
+	if (defined $core->job->{builder}->locker ->find_tag($core->hostname)) {
+		$still_tainted = 1;
+	}
+	print $fh "Still tainted: $still_tainted\n";
+	if (!$still_tainted) {
+		delete $core->prop->{tainted};
+	}
+	return $task;
 }
 
 sub add_dontjunk
@@ -443,10 +525,6 @@ sub add_live_depends
 {
 	my ($self, $h, $core) = @_;
 	for my $job ($core->same_host_jobs) {
-		if ($job->{nojunk}) {
-			print "Don't run junk because nojunk in $job->{path}\n";
-			return 0;
-		}
 		next unless defined $job->{live_depends};
 		for my $d (@{$job->{live_depends}}) {
 			$h->{$d} = 1;
@@ -462,13 +540,8 @@ sub run
 	my $v = $job->{v};
 
 	$self->handle_output($job);
-	# we got pre-empted
-	if ($core->prop->{depends_count} < $core->prop->{junk}) {
-		exit(2);
-	}
 
-	my $h = $job->{builder}->locker->find_dependencies(
-	    $core->hostname);
+	my $h = $job->{builder}->locker->find_dependencies($core->hostname);
 	if (defined $h && $self->add_live_depends($h, $core)) {
 		$self->add_dontjunk($job, $h);
 		my $opt = '-aiX';
@@ -487,7 +560,10 @@ sub run
 sub finalize
 {
 	my ($self, $core) = @_;
+
+	# did we really run ? then clean up stuff
 	if ($core->{status} == 0) {
+		$core->prop->{last_junk} = $core->job->{v};
 		$core->prop->{junk_count} = 0;
 		$core->prop->{ports_count} = 0;
 		$core->prop->{depends_count} = 0;
@@ -495,6 +571,20 @@ sub finalize
 	$core->{status} = 0;
 	$self->SUPER::finalize($core);
 	return 1;
+}
+
+# there's nothing to run here, just where we get committed to affinity
+package DPB::Task::Port::InBetween;
+our @ISA = qw(DPB::Task::BasePort);
+sub setup
+{
+	my ($self, $core) = @_;
+
+	my $job = $core->job;
+
+	$job->{builder}{state}{affinity}->start($job->{v}, $core);
+
+	return $job->next_task($core);
 }
 
 package DPB::Task::Port::ShowSize;
@@ -564,7 +654,7 @@ sub run
 	print join(' ', @cmd, $v->fullpkgname, "\n");
 	my $path = $job->{builder}->{fullrepo}.'/';
 	$ENV{PKG_PATH} = $path;
-	$core->shell->env(PKG_PATH => $path)->sudo
+	$core->shell->nochroot->env(PKG_PATH => $path)->sudo
 	    ->exec(@cmd, $v->fullpkgname);
 	exit(1);
 }
@@ -602,13 +692,18 @@ our @ISA = qw(DPB::Task::BasePort);
 sub notime { 1 }
 sub want_percent { 0 }
 
+sub setup
+{
+	my ($task, $core) = @_;
+	print {$core->job->{lock}} "cleaned\n";
+	return $task;
+}
 sub finalize
 {
 	my ($self, $core) = @_;
 	if ($self->requeue($core)) {
 		return 1;
 	}
-	print {$core->job->{lock}} "cleaned\n";
 	$self->SUPER::finalize($core);
 	return 1;
 }
@@ -640,22 +735,6 @@ sub finalize
 	$self->SUPER::finalize($core);
 }
 
-package DPB::Task::Port::VerifyPackages;
-our @ISA = qw(DPB::Task::Port);
-sub finalize
-{
-	my ($self, $core) = @_;
-	if ($core->{status} != 0) {
-		return 0;
-	}
-}
-
-sub run
-{
-	sleep 10;
-	exit(0);
-}
-
 package DPB::Port::TaskFactory;
 my $repo = {
 	default => 'DPB::Task::Port',
@@ -665,7 +744,8 @@ my $repo = {
 	fetch => 'DPB::Task::Port::Fetch',
 	depends => 'DPB::Task::Port::Depends',
 	'show-size' => 'DPB::Task::Port::ShowSize',
-	'junk' => 'DPB::Task::Port::Uninstall',
+	junk => 'DPB::Task::Port::Uninstall',
+	inbetween => 'DPB::Task::Port::InBetween',
 };
 
 sub create
@@ -816,21 +896,26 @@ sub add_normal_tasks
 	my $c = $self->need_depends($core);
 	$hostprop->{ports_count}++;
 	$hostprop->{depends_count} += $c;
+	my $junk = DPB::Junk->want($core, $self);
+	if ($junk == 2) {
+		push(@todo, 'junk');
+		my $fh = $self->{builder}->logger->open("junk");
+		print $fh "$$@", CORE::time(), ": ", $core->hostname,
+		    ": forced junking -> $self->{path}\n";
+	}
 	if ($c) {
 		$hostprop->{junk_count}++;
 		push(@todo, qw(depends show-prepare-results));
 	}
 	# gc stuff we will no longer need
 	delete $self->{v}{info}{solved};
-	if ($hostprop->{junk}) {
-		if ($hostprop->{depends_count} >= $hostprop->{junk}) {
-			my $fh = $self->{builder}->logger->open("junk");
-			print $fh "$$@", CORE::time(), ": ", $core->hostname,
-			    ": depends=$hostprop->{depends_count} ",
-			    " ports=$hostprop->{ports_count} ",
-			    " junk=$hostprop->{junk_count} -> $self->{path}\n";
-			push(@todo, 'junk');
-		}
+	if ($junk == 1) {
+		my $fh = $self->{builder}->logger->open("junk");
+		print $fh "$$@", CORE::time(), ": ", $core->hostname,
+		    ": depends=$hostprop->{depends_count} ",
+		    " ports=$hostprop->{ports_count} ",
+		    " junk=$hostprop->{junk_count} -> $self->{path}\n";
+		push(@todo, 'junk');
 	}
 	if ($builder->{fetch}) {
 		push(@todo, qw(checksum));
@@ -838,6 +923,7 @@ sub add_normal_tasks
 		push(@todo, qw(fetch));
 	}
 
+	push(@todo, qw(inbetween));
 	if (!$small) {
 		push(@todo, qw(patch configure));
 	}
@@ -847,7 +933,7 @@ sub add_normal_tasks
 		push(@todo, qw(fake));
 	}
 	push(@todo, qw(package));
-	if ($builder->want_size($self->{v})) {
+	if ($builder->want_size($self->{v}, $core)) {
 		push @todo, 'show-size';
 	}
 	if (!$dontclean) {

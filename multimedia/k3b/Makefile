@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.25 2013/06/24 15:53:38 zhuk Exp $
+# $OpenBSD: Makefile,v 1.27 2013/10/22 11:34:21 zhuk Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		CD/DVD creator
 
 DISTNAME =		k3b-1.0.4
-REVISION=		18
+REVISION=		20
 CATEGORIES =		multimedia
 
 SHARED_LIBS =		k3b	0.0	# 3.0
@@ -65,7 +65,9 @@ CONFIGURE_ARGS +=	--with-qt-dir=${MODQT_QTDIR} \
 			--without-hal \
 			--without-alsa \
 			--without-cdrecord-suid-root
-CONFIGURE_ENV =		CPPFLAGS="-I${LOCALBASE}/include" \
+
+CONFIGURE_ENV =		${MODKDE_CONFIGURE_ENV} \
+			CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 
 # For QSettings to write its setup

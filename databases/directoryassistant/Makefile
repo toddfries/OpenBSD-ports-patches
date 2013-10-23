@@ -1,14 +1,11 @@
-# $OpenBSD: Makefile,v 1.17 2013/07/17 03:27:01 bentley Exp $
+# $OpenBSD: Makefile,v 1.19 2013/10/19 10:02:11 jung Exp $
 
 COMMENT=	small application for managing a LDAP address book
 
-DISTNAME=	directoryassistant-2.0
-REVISION=	9
+DISTNAME=	directoryassistant-2.1
 CATEGORIES=	databases
 
 HOMEPAGE=	http://olivier.sessink.nl/directoryassistant/
-
-MAINTAINER =	Joerg Jung <jung@openbsd.org>
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,7 +19,6 @@ RUN_DEPENDS=	x11/py-gtk2 \
 
 NO_BUILD=	Yes
 NO_TEST=	Yes
-USE_GROFF =	Yes
 PKG_ARCH=	*
 
 pre-install:

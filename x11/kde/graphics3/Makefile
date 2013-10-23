@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.111 2013/09/26 09:16:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.113 2013/10/22 11:33:59 zhuk Exp $
 
 COMMENT-main =		K Desktop Environment, graphic applications
 COMMENT-kamera =	KDE interface to digital cameras
@@ -9,10 +9,10 @@ VERSION =		3.5.10
 DISTNAME =		kdegraphics-${VERSION}
 MODKDE_VERSION =	3.5.8
 
-REVISION-main =		19
-REVISION-kamera =	9
-REVISION-kpov =		8
-REVISION-sane =		12
+REVISION-main =		21
+REVISION-kamera =	11
+REVISION-kpov =		10
+REVISION-sane =		14
 
 SEPARATE_BUILD =	flavored
 MULTI_PACKAGES =	-main -kpov -kamera -sane
@@ -101,6 +101,6 @@ CONFIGURE_ENV +=	TIFF_LIBS='-L${LOCALBASE}/lib -ltiff -ljpeg -lz' \
 CONFIGURE_ENV +=	ac_cv_header_paper_h=no
 
 post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/HTML/en/common
+	${INSTALL_DATA_DIR} ${PREFIX}/${MODKDE_HTML_SUBDIR}/en/common
 
 .include <bsd.port.mk>

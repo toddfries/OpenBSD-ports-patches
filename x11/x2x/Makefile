@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.21 2013/03/11 11:46:17 espie Exp $
+# $OpenBSD: Makefile,v 1.23 2013/10/11 21:21:01 naddy Exp $
 
 COMMENT=	one keyboard/mouse to multiple X displays
 
 DISTNAME=	x2x-1.27
-REVISION=	4
+REVISION=	5
 CATEGORIES=    	x11
 
 MAINTAINER=	Jasper Lievisse Adriaanse <jasper@openbsd.org>
@@ -21,6 +21,6 @@ CONFIGURE_STYLE=imake
 NO_TEST=	Yes
 
 pre-build:
-	@mandoc -man ${WRKSRC}/x2x.1 > ${WRKSRC}/x2x.man
+	@ln ${WRKSRC}/x2x.1 ${WRKSRC}/x2x.man
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.43 2013/08/07 21:32:05 naddy Exp $
+# $OpenBSD: Makefile,v 1.46 2013/10/22 11:34:19 zhuk Exp $
 
 COMMENT-main=	multilingual input method library
 COMMENT-gtk=	uim for GTK
@@ -17,10 +17,10 @@ PKGNAME-gtk=	uim-gtk-$V
 PKGNAME-qt=	uim-qt-$V
 PKGNAME-kde=	uim-kde-$V
 
-REVISION-main=	9
+REVISION-main=	10
 REVISION-gtk=	12
 REVISION-qt=	6
-REVISION-kde=	7
+REVISION-kde=	9
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
@@ -38,9 +38,9 @@ MODULES=	converters/libiconv \
 		devel/gettext \
 		x11/qt3 \
 		textproc/intltool
+DPB_PROPERTIES =	tag:kde3
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
 AUTOCONF_VERSION=	2.62
 SUBST_VARS=	MODQT_PLUGINS
 

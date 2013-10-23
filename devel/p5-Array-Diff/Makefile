@@ -1,14 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:13 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2013/10/11 23:48:26 naddy Exp $
 
 COMMENT= 	perform diffs on arrays
 
 MODULES=	cpan
 DISTNAME=	Array-Diff-0.05002
-REVISION=	0
+REVISION=	1
 CATEGORIES=	devel
-USE_GROFF =	Yes
-
-MAINTAINER=	Chris Kuethe <ckuethe@openbsd.org>
 
 # Artistic
 PERMIT_PACKAGE_CDROM=	Yes

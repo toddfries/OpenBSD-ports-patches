@@ -1,7 +1,7 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Config.pm,v 1.11 2013/09/25 07:01:35 espie Exp $
+# $OpenBSD: Config.pm,v 1.21 2013/10/17 14:20:44 espie Exp $
 #
-# Copyright (c) 2010 Marc Espie <espie@openbsd.org>
+# Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -65,7 +65,16 @@ sub parse_command_line
     "[-I pathlist] [-J p] [-j n] [-p parallel] [-P pathlist] [-h hosts]",
     "[-L logdir] [-l lockdir] [-b log] [-M threshold] [-X pathlist]",
     "[pathlist ...]");
-    	$state->{fullrepo} = join("/", $state->{repo}, $state->arch, "all");
+    	$state->{chroot} = $state->opt('B');
+	($state->{ports}, $state->{portspath}, $state->{repo}, $state->{localarch},
+	    $state->{distdir}, $state->{localbase}) =
+		DPB::Vars->get(DPB::Host::Localhost->getshell($state->{chroot}), 
+		$state->make,
+		"PORTSDIR", "PORTSDIR_PATH", "PACKAGE_REPOSITORY", 
+		"MACHINE_ARCH", "DISTDIR", "LOCALBASE");
+	$state->{arch} //= $state->{localarch};
+	$state->{portspath} = [ map {$state->anchor($_)} split(/:/, $state->{portspath}) ];
+	$state->{realdistdir} = $state->anchor($state->{distdir});
 	$state->{logdir} = $state->{flogdir} // $ENV{LOGDIR} // '%p/logs/%a';
 	$state->{lockdir} //= $state->{flockdir} // "%L/locks";
 	if (defined $state->{opt}{F}) {
@@ -74,8 +83,6 @@ sub parse_command_line
 		}
 		$state->{fetch_only} = 1;
 		$state->{opt}{f} = $state->{opt}{F};
-		$state->{opt}{j} = 1;
-		$state->{opt}{e} = 1;
 	}
 	if (defined $state->opt('j')) {
 		if ($state->localarch ne $state->arch) {
@@ -86,6 +93,7 @@ sub parse_command_line
 			$state->usage("-j takes a numerical argument");
 		}
 	}
+	$state->{realports} = $state->anchor($state->{ports});
 	if (defined $state->{config_files}) {
 		for my $f (@{$state->{config_files}}) {
 			$f = $state->expand_path($f);
@@ -93,7 +101,6 @@ sub parse_command_line
 	}
 
 	$state->{logdir} = $state->expand_path($state->{logdir});
-	$state->{size_log} = "%f/build-stats/%a-size";
 
 	# keep cmdline subst values
 	my %cmdline = %{$state->{subst}};
@@ -103,14 +110,33 @@ sub parse_command_line
 		$state->{subst}->{$k} = $v;
 	}
 
+	$state->{size_log} = "%f/build-stats/%a-size";
+
 	if ($state->define_present("STARTUP")) {
 		$state->{startup_script} = $state->{subst}->value("STARTUP");
 	}
 	if ($state->define_present('LOGDIR')) {
 		$state->{logdir} = $state->subst->value('LOGDIR');
 	}
-	if ($state->define_present('WANTSIZE')) {
+	if ($state->{opt}{s}) {
+		$state->{wantsize} = 1;
+	} elsif ($state->define_present('WANTSIZE')) {
 		$state->{wantsize} = $state->{subst}->value('WANTSIZE');
+	} elsif (DPB::HostProperties->has_mem) {
+		$state->{wantsize} = 1;
+	}
+	if ($state->define_present('COLOR')) {
+		$state->{color} = $state->{subst}->value('COLOR');
+	}
+	if ($state->define_present('NO_CURSOR')) {
+		$state->{nocursor} = $state->{subst}->value('NO_CURSOR');
+	}
+	if (DPB::HostProperties->has_mem || $state->{wantsize}) {
+		require DPB::Heuristics::Size;
+		$state->{sizer} = DPB::Heuristics::Size->new($state);
+	} else {
+		require DPB::Heuristics::Nosize;
+		$state->{sizer} = DPB::Heuristics::Nosize->new($state);
 	}
 	if ($state->define_present('FETCH_JOBS') && !defined $state->{opt}{f}) {
 		$state->{opt}{f} = $state->{subst}->value('FETCH_JOBS');
@@ -129,9 +155,6 @@ sub parse_command_line
 	}
 	if ($state->{opt}{t}) {
 		$state->{tests} = 1;
-	}
-	if ($state->{opt}{s}) {
-		$state->{wantsize} = 1;
 	}
 
 	$state->{opt}{f} //= 2;
@@ -156,8 +179,10 @@ sub parse_command_line
 	$state->{logdir} = $state->expand_path($state->{logdir});
 
 	if ($state->define_present("RECORD")) {
-		$state->{record} = $state->expand_path($state->{subst}->value("RECORD"));
+		$state->{record} = $state->{subst}->value("RECORD");
 	}
+	$state->{record} //= "%L/term-report.log";
+	$state->{record} = $state->expand_path($state->{record});
 	$state->{size_log} = $state->expand_path($state->{size_log});
 	$state->{lockdir} = $state->expand_path($state->{lockdir});
 	if (!$state->{subst}->value("NO_BUILD_STATS")) {
@@ -181,6 +206,7 @@ sub parse_command_line
 	} else {
 		$state->{mirror} = $state->{fetch_only};
 	}
+    	$state->{fullrepo} = join("/", $state->{repo}, $state->arch, "all");
 }
 
 sub command_line_overrides
@@ -291,14 +317,14 @@ sub parse_hosts_file
 			next;
 		}
 		$prop->add_overrides($override);
-		$state->heuristics->calibrate(DPB::Core::Init->new($host,
-		    $prop));
+		DPB::Core::Init->new($host, $prop);
 	}
 }
 
 package DPB::HostProperties;
 
 my $has_sf = 0;
+my $has_mem = 0;
 my $sf;
 
 sub new
@@ -323,6 +349,11 @@ sub add_overrides
 sub has_sf
 {
 	return $has_sf;
+}
+
+sub has_mem
+{
+	return $has_mem;
 }
 
 my $default_user;
@@ -359,6 +390,9 @@ sub finalize
 			$_ *= 1024 * 1024;
 		}
 		$prop->{memory} = $_;
+		if ($prop->{memory} > 0) {
+			$has_mem = 1;
+		}
 	}
 	$prop->{small} //= 120;
 	$prop->{small_timeout} = $prop->{small} * $prop->{sf};

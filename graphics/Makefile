@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.353 2013/09/25 07:53:00 sthen Exp $
+# $OpenBSD: Makefile,v 1.356 2013/10/07 06:51:30 espie Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -170,6 +170,7 @@
      SUBDIR += openexr-viewers
      SUBDIR += openimageio
      SUBDIR += openjpeg
+     SUBDIR += optipng
      SUBDIR += p5-Cairo
      SUBDIR += p5-Captcha-reCAPTCHA
      SUBDIR += p5-Chart
@@ -231,8 +232,6 @@
      SUBDIR += s10sh
      SUBDIR += sane-backends
      SUBDIR += sane-backends,snmp
-     SUBDIR += sane-frontends
-     SUBDIR += sane-frontends,gimp
      SUBDIR += scratch
      SUBDIR += scrot
      SUBDIR += shared-color-targets
@@ -244,6 +243,7 @@
      SUBDIR += sxiv
      SUBDIR += synaesthesia
      SUBDIR += tesseract
+     SUBDIR += tesseract-langs
      SUBDIR += tgif
      SUBDIR += tiff
      SUBDIR += tiff2png

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.25 2013/09/28 08:51:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.28 2013/10/16 11:34:44 ajacoutot Exp $
 
 TRACKER_VERSION=0.16
 
@@ -8,7 +8,7 @@ COMMENT=	document manager for GNOME
 
 GNOME_PROJECT=	gnome-documents
 GNOME_VERSION=	3.10.0
-REVISION=	0
+REVISION=	2
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
@@ -24,7 +24,7 @@ WANTLIB += gstapp-1.0 gstaudio-1.0 gstbase-1.0 gstfft-1.0 gstpbutils-1.0
 WANTLIB += gstreamer-1.0 gsttag-1.0 gstvideo-1.0 gthread-2.0 gtk-3
 WANTLIB += harfbuzz harfbuzz-icu icudata icui18n icuuc idn javascriptcoregtk-3.0
 WANTLIB += jpeg json-glib-1.0 kvm m mozjs-17.0 ncursesw nspr4
-WANTLIB += nss3 oauth p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB += nss3 oauth orc-0.4 p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 plc4 plds4 png pthread pthread-stubs
 WANTLIB += readline rest-0.7 secret-1 smime3 softokn3 soup-2.4
 WANTLIB += soup-gnome-2.4 sqlite3 ssl ssl3 stdc++ tracker-miner-0.16
@@ -38,9 +38,6 @@ MODULES=	devel/gettext \
 		devel/dconf \
 		x11/gnome
 
-# desktop-file-validate(1), needed for 'make test'
-BUILD_DEPENDS +=devel/desktop-file-utils
-
 # man pages
 BUILD_DEPENDS += textproc/docbook-xsl
 
@@ -49,6 +46,9 @@ LIB_DEPENDS=	devel/libgdata \
 		x11/gnome/gjs \
 		x11/gnome/libzapojit \
 		x11/gnome/tracker
+
+# src/application.js
+RUN_DEPENDS +=	x11/gnome/online-miners
 
 MODGNOME_TOOLS=		gi vala
 MODGNOME_ICON_CACHE=	Yes

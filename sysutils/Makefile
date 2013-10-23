@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.300 2013/09/17 11:22:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.302 2013/10/08 17:27:46 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -180,6 +180,7 @@
      SUBDIR += runit
      SUBDIR += safecat
      SUBDIR += salt
+     SUBDIR += salt-testing
      SUBDIR += sdd
      SUBDIR += sec
      SUBDIR += setquota
@@ -207,6 +208,7 @@
      SUBDIR += tentakel
      SUBDIR += testdisk
      SUBDIR += tkdvd
+     SUBDIR += toad
      SUBDIR += toprump
      SUBDIR += torture
      SUBDIR += tpb

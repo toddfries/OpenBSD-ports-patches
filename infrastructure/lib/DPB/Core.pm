@@ -1,7 +1,7 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Core.pm,v 1.54 2013/09/24 10:07:27 espie Exp $
+# $OpenBSD: Core.pm,v 1.68 2013/10/17 18:09:41 espie Exp $
 #
-# Copyright (c) 2010 Marc Espie <espie@openbsd.org>
+# Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -87,6 +87,7 @@ sub is_alive
 	return 1;
 }
 
+
 sub shellclass
 {
 	my $self = shift;
@@ -95,6 +96,16 @@ sub shellclass
 	} else {
 		return "DPB::Shell::Local";
 	}
+}
+
+sub getshell
+{
+	my ($class, $chroot) = @_;
+	my $h = bless { prop => {}}, $class;
+	if ($chroot) {
+		$h->{prop}{chroot} = $chroot;
+	}
+	return $h->shellclass->new($h);
 }
 
 # here, a "core" is an entity responsible for scheduling cpu, such as
@@ -164,6 +175,12 @@ sub new
 	my $c = bless {host => DPB::Host->new($host, $prop)}, $class;
 	$allhosts{$c->hostname} = 1;
 	return $c;
+}
+
+sub clone
+{
+	my $self = shift;
+	return ref($self)->new($self->hostname, $self->prop);
 }
 
 sub host
@@ -395,6 +412,11 @@ sub start_task
 sub mark_ready
 {
 	my $self = shift;
+	if ($self->{pid}) {
+		require Data::Dumper;
+		print Data::Dumper::Dumper($self), "\n";
+		die "Marking ready an incomplete process";
+	}
 	delete $self->{job};
 	return $self;
 }
@@ -465,7 +487,8 @@ sub set_logdir
 
 sub is_local
 {
-	return 0;
+	my $self = shift;
+	return $self->host->is_localhost;
 }
 
 my @extra_report = ();
@@ -488,6 +511,8 @@ sub same_host_jobs
 	my @jobs = ();
 	for my $core (values %{$self->repository}) {
 		next if $core->hostname ne $self->hostname;
+		# XXX only interested in "real" jobs now
+		next if !defined $core->job->{v};
 		push(@jobs, $core->job);
 	}
 	return @jobs;
@@ -497,6 +522,7 @@ sub one_core
 {
 	my ($core, $time) = @_;
 	my $hostname = $core->hostname;
+
 	my $s = $core->job->name;
     	if ($core->{squiggle}) {
 		$s = '~'.$s;
@@ -507,10 +533,13 @@ sub one_core
 	if ($core->{inmem}) {
 		$s .= '+';
 	}
-		
-	$s .= " [$core->{pid}]".
-	    (DPB::Host->name_is_localhost($hostname) ? "" : " on ".$hostname).
-	    $core->job->watched($time, $core);
+	$s .= " [$core->{pid}]";
+	if (!DPB::Host->name_is_localhost($hostname)) {
+		$s .= " on ".$hostname;
+	}
+	if ($core->job) {
+	    	$s .= $core->job->watched($time, $core);
+	}
     	return $s;
 }
 
@@ -750,11 +779,6 @@ sub hostname
 	return $host;
 }
 
-sub is_local
-{
-	return 1;
-}
-
 package DPB::Core::Fetcher;
 our @ISA = qw(DPB::Core::Local);
 
@@ -806,6 +830,11 @@ sub prop
 	return $self->{prop};
 }
 
+sub stringize_master_pid
+{
+	return "";
+}
+
 sub chdir
 {
 	my ($self, $dir) = @_;
@@ -830,6 +859,13 @@ sub sudo
 		$val = 1;
 	}
 	$self->{sudo} = $val;
+	return $self;
+}
+
+sub nochroot
+{
+	my $self = shift;
+	$self->{nochroot} = 1;
 	return $self;
 }
 
@@ -872,8 +908,11 @@ sub exec
 {
 	my ($self, @argv) = @_;
 	my $chroot = $self->prop->{chroot};
+	if ($self->{nochroot}) {
+		undef $chroot;
+	}
+	unshift @argv, 'exec' unless $self->{sudo} && !$chroot;
 	if ($self->{env}) {
-		unshift @argv, 'exec' unless $self->{sudo} && !$chroot;
 		while (my ($k, $v) = each %{$self->{env}}) {
 			$v //= '';
 			unshift @argv, "$k=\'$v\'";
@@ -886,11 +925,13 @@ sub exec
 	if ($self->{dir}) {
 		$cmd = "cd $self->{dir} && $cmd";
 	}
-	my $umask = $self->prop->{umask};
-	$cmd = "umask $umask && $cmd";
+	if (defined $self->prop->{umask}) {
+		my $umask = $self->prop->{umask};
+		$cmd = "umask $umask && $cmd";
+	}
 	if ($chroot) {
 		my @cmd2 = (OpenBSD::Paths->sudo, "-E", "chroot");
-		if (!$self->{sudo}) {
+		if (!$self->{sudo} && defined $self->prop->{chroot_user}) {
 			push(@cmd2, "-u", $self->prop->{chroot_user});
 		}
 		$self->_run(@cmd2, $chroot, "/bin/sh", "-c", $self->quote($cmd));
@@ -916,6 +957,12 @@ sub quote
 sub is_alive
 {
 	return 1;
+}
+
+sub nochroot
+{
+	my $self = shift;
+	bless $self, 'DPB::Shell::Local';
 }
 
 1;

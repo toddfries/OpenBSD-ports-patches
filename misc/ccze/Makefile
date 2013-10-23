@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.16 2013/03/11 11:23:56 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2013/10/11 23:50:09 naddy Exp $
 
 COMMENT=	log colorizer
 
@@ -8,7 +8,7 @@ CATEGORIES=	misc
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
 
-MASTER_SITES=	http://distfiles.bsdfrog.org/
+MASTER_SITES=	https://distfiles.bsdfrog.org/
 
 # GPL
 PERMIT_PACKAGE_CDROM=	Yes
@@ -18,7 +18,6 @@ WANTLIB=		c ncurses pcre
 LIB_DEPENDS=	devel/pcre
 
 USE_GMAKE=	Yes
-USE_GROFF=	Yes
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--with-builtins=all

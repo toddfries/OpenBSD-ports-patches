@@ -1,0 +1,17 @@
+$OpenBSD: patch-sysdeps_openbsd_netload_c,v 1.2 2013/10/16 15:11:12 ajacoutot Exp $
+
+From 250666219659d721377613a916d8f166c2df93ee Mon Sep 17 00:00:00 2001
+From: Antoine Jacoutot <ajacoutot@gnome.org>
+Date: Wed, 16 Oct 2013 15:09:16 +0000
+Subject: OpenBSD: add missing header
+
+--- sysdeps/openbsd/netload.c.orig	Sat Jul 27 14:40:23 2013
++++ sysdeps/openbsd/netload.c	Fri Sep  6 19:11:28 2013
+@@ -42,6 +42,7 @@
+ 
+ #include <netinet/in.h>
+ #include <netinet/in_var.h>
++#include <netinet6/in6_var.h>
+ 
+ static const unsigned long _glibtop_sysdeps_netload =
+ (1L << GLIBTOP_NETLOAD_IF_FLAGS) +

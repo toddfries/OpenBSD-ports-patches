@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2013/08/11 14:11:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.34 2013/10/18 16:43:50 landry Exp $
 
 ONLY_FOR_ARCHS =${APM_ARCHS}
 
 COMMENT =	userland power management interface
 
-DISTNAME =	upower-0.9.21
+DISTNAME =	upower-0.9.23
 EXTRACT_SUFX =	.tar.xz
 CATEGORIES =	sysutils
 SHARED_LIBS +=  upower-glib               0.0 # 1.2
@@ -29,7 +29,12 @@ CONFIGURE_ARGS +=	${CONFIGURE_SHARED} \
 			--with-backend=openbsd \
 			--without-idevice
 
-CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include -DENABLE_DEPRECATED" \
+# XXX enable deprecated features such as hibernate/suspend trigger
+# see http://lists.freedesktop.org/archives/devkit-devel/2013-January/001339.html
+# unrelated to G*DEPRECATED macros
+CONFIGURE_ARGS +=	--enable-deprecated
+
+CONFIGURE_ENV+=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 # If one of these tools is found at configure stage, it might be used,

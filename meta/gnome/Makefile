@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.78 2013/09/30 13:31:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.80 2013/10/16 11:35:24 ajacoutot Exp $
 
 COMMENT-main=		GNOME desktop meta-package (base installation)
 COMMENT-extra=		GNOME desktop meta-package (full installation)
 
-V=			3.10.0
+V=			3.10.1
 PKGNAME=		gnome-${V}
 
 PKGNAME-main=		gnome-${V}
 PKGNAME-extra=		gnome-extra-${V}
 
-REVISION-main=		2
-REVISION-extra=		0
+REVISION-main=		0
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 			Antoine Jacoutot <ajacoutot@openbsd.org>
@@ -70,7 +69,6 @@ RUN_DEPENDS-main +=	x11/gnome/alacarte \
 			x11/gnome/maps \
 			x11/gnome/music \
 			x11/gnome/nautilus-sendto \
-			x11/gnome/online-miners \
 			x11/gnome/photos \
 			x11/gnome/seahorse \
 			x11/gnome/seahorse-nautilus \

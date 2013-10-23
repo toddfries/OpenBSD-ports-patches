@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.11 2013/06/04 13:31:48 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.13 2013/10/01 11:56:45 sthen Exp $
 
 # Warning: CELT is experimental software. Neither the API/ABI, nor
 # the bit-stream are stable. Compatibility between different releases
@@ -6,17 +6,16 @@
 
 COMMENT =	experimental ultra-low delay audio codec
 
-DISTNAME =	celt-0.11.3
+# XXX audio/mumble (at least as of 1.2.4) requires *exactly* 0.11.1
+DISTNAME =	celt-0.11.1
 
-REVISION =	1
+EPOCH =		1
 
-EPOCH =		0
-
-CATEGORIES =   	audio
+CATEGORIES =	audio
 
 HOMEPAGE =	http://www.celt-codec.org/
 
-SHARED_LIBS +=	celt0	1.0	# 2.0
+SHARED_LIBS +=	celt0	2.0	# 2.0
 
 # BSD
 PERMIT_PACKAGE_CDROM =	Yes

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.84 2013/06/03 20:07:39 zhuk Exp $
+# $OpenBSD: Makefile,v 1.86 2013/10/22 11:33:58 zhuk Exp $
 
 COMMENT = 		K Desktop Environment bindings for scripting languages
 CATEGORIES =		x11 x11/kde devel
 VERSION =		3.5.10
 DISTNAME =		kdebindings-${VERSION}
 MODKDE_VERSION =	3.5.8
-REVISION =		22
+REVISION =		24
 
 SHARED_LIBS +=	kjsembed             2.0      # .1.0
 SHARED_LIBS +=	smokeqt              4.0      # .3.2

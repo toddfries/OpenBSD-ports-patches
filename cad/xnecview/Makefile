@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.20 2013/04/17 08:51:01 pirofti Exp $
+# $OpenBSD: Makefile,v 1.22 2013/10/11 21:20:54 naddy Exp $
 
 COMMENT=	NEC2 antenna simulator visualizer
 
@@ -8,7 +8,7 @@ BROKEN-sh=	makedepend infinite loop
 
 VERSION=	1.35
 DISTNAME=	xnecview-${VERSION}
-REVISION=	10
+REVISION=	11
 EXTRACT_SUFX=	.tgz
 
 MASTER_SITES=	http://wwwhome.cs.utwente.nl/~ptdeboer/ham/xnecview/
@@ -33,6 +33,5 @@ MODULES=		devel/gettext
 LIB_DEPENDS =		x11/gtk+2
 
 CONFIGURE_STYLE=	imake
-USE_GROFF =		Yes
 
 .include <bsd.port.mk>

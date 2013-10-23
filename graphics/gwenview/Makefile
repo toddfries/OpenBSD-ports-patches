@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.57 2013/08/12 06:53:57 zhuk Exp $
+# $OpenBSD: Makefile,v 1.60 2013/10/22 11:34:16 zhuk Exp $
 
 COMMENT=	image viewer for KDE
 
 DISTNAME=	gwenview-1.4.2
-REVISION =	13
+REVISION =	15
+
 SHARED_LIBS +=	gwenviewcore         5.0      # .1.0
 CATEGORIES=	graphics x11 x11/kde
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gwenview/}
@@ -39,7 +40,6 @@ MAKE_ENV=	KDEDIR="${LOCALBASE}"
 MAKE_FLAGS=	${MODKDE_MAKE_FLAGS}
 
 USE_GMAKE=	Yes
-USE_GROFF =	Yes
 CONFIGURE_STYLE= autoconf
 AUTOCONF_VERSION=	2.61
 AUTOCONF?=		/bin/sh ${WRKDIST}/admin/cvs.sh configure

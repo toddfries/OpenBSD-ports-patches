@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.74 2013/09/28 08:51:32 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.76 2013/10/15 09:43:55 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	remote desktop viewer for GNOME
 
 GNOME_PROJECT=	vinagre
-GNOME_VERSION=	3.10.0
+GNOME_VERSION=	3.10.1
 REVISION=	0
 
 CATEGORIES=	net
@@ -25,8 +25,7 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
-RUN_DEPENDS=	misc/shared-mime-info \
-		x11/rdesktop
+RUN_DEPENDS=	x11/rdesktop
 
 LIB_DEPENDS=	devel/vte3 \
 		net/avahi,-gtk3,no_mono,no_qt3,no_qt4 \
@@ -37,6 +36,7 @@ LIB_DEPENDS=	devel/vte3 \
 
 MODGNOME_DESKTOP_FILE=	Yes
 MODGNOME_ICON_CACHE=	Yes
+MODGNOME_MIME_FILE=	Yes
 MODGNOME_TOOLS= 	yelp
 
 .include <bsd.port.mk>

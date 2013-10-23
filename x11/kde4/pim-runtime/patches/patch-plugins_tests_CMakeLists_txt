@@ -1,0 +1,32 @@
+$OpenBSD: patch-plugins_tests_CMakeLists_txt,v 1.2 2013/10/11 07:52:56 zhuk Exp $
+Missing dependencies.
+--- plugins/tests/CMakeLists.txt.orig	Fri Jun 28 21:35:42 2013
++++ plugins/tests/CMakeLists.txt	Thu Oct 10 18:28:44 2013
+@@ -8,21 +8,22 @@ include_directories(
+ )
+ 
+ # convenience macro to add akonadi qtestlib unit-tests
+-macro(add_akonadiplugin_test _source _libs)
++macro(add_akonadiplugin_test _source _libs _depends)
+   set(_test ${_source})
+   get_filename_component(_name ${_source} NAME_WE)
+   kde4_add_unit_test(${_name} TESTNAME akonadiplugin-${_name} ${_test})
+   target_link_libraries(${_name} ${KDEPIMLIBS_AKONADI_LIBS} ${KDEPIMLIBS_AKONADI_KMIME_LIBS} ${KDE4_KDECORE_LIBS}
+                         ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${AKONADI_COMMON_LIBRARIES}
+                         ${AKONADI_COMMON_LIBRARIES} ${_libs})
++  add_dependencies(${_name} ${_depends})
+ endmacro(add_akonadiplugin_test)
+ 
+ # qtestlib unit tests
+-add_akonadiplugin_test(mailserializertest.cpp "${KDEPIMLIBS_KMIME_LIBS}")
+-add_akonadiplugin_test(mailserializerplugintest.cpp "${KDEPIMLIBS_KMIME_LIBS}")
++add_akonadiplugin_test(mailserializertest.cpp "${KDEPIMLIBS_KMIME_LIBS}" akonadi_serializer_mail)
++add_akonadiplugin_test(mailserializerplugintest.cpp "${KDEPIMLIBS_KMIME_LIBS}" akonadi_serializer_mail)
+ 
+-add_akonadiplugin_test(kcalcoreserializertest.cpp "${KDEPIMLIBS_KCALCORE_LIBS}")
++add_akonadiplugin_test(kcalcoreserializertest.cpp "${KDEPIMLIBS_KCALCORE_LIBS}" akonadi_serializer_kcalcore)
+ 
+ if (KDEPIMLIBS_KCAL_LIBS)
+-  add_akonadiplugin_test(kcalserializertest.cpp "${KDEPIMLIBS_KCAL_LIBS}")
++  add_akonadiplugin_test(kcalserializertest.cpp "${KDEPIMLIBS_KCAL_LIBS}" akonadi_serializer_kcal)
+ endif ()

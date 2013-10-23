@@ -1,12 +1,14 @@
-# $OpenBSD: Makefile,v 1.72 2013/09/19 13:47:05 landry Exp $
+# $OpenBSD: Makefile,v 1.74 2013/10/20 14:28:23 landry Exp $
 
 MOZILLA_VERSION =	1.9.2.28
 MOZILLA_BRANCH =	1.9.2
 MOZILLA_PROJECT =	xulrunner1.9
 MOZILLA_DIST =		firefox
 MOZILLA_DIST_VERSION =	3.6.28
-REVISION-devel =	4
-REVISION-main =		11
+REVISION-devel =	6
+REVISION-main =		13
+PKGSPEC-devel =		xulrunner-devel->=1.9,<24.0
+PKGSPEC-main =		xulrunner->=1.9,<24.0
 
 SO_VERSION =		3.2
 # NOTE: Must bump minor version if any shlib's are removed from the
@@ -37,6 +39,13 @@ PCFILES =		libxul.pc libxul-embedding.pc mozilla-js.pc \
 
 WANTLIB-devel =		${MOZILLA_PROJECT}/mozjs ${MOZILLA_PROJECT}/xpcom \
 			${MOZILLA_PROJECT}/xul
+
+LIB_DEPENDS-devel =	${MODGETTEXT_LIB_DEPENDS} \
+			devel/libIDL \
+			${PKGNAME-main}:${BASE_PKGPATH},-main
+WANTLIB-devel +=	IDL-2 c glib-2.0 gobject-2.0 intl m nspr4 plc4 plds4
+WANTLIB-devel +=	pthread stdc++
+WANTLIB-main +=		pixman-1 pthread-stubs
 
 post-build:
 	cd ${WRKSRC}/xulrunner/installer && env -i ${MAKE_ENV} \

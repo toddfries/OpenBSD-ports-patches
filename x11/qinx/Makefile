@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.21 2013/06/24 15:53:39 zhuk Exp $
+# $OpenBSD: Makefile,v 1.23 2013/10/22 11:34:25 zhuk Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	QNX Photon inspired theme for KDE
 
 DISTNAME=	qinx-1.4
-REVISION=	4
+REVISION=	6
 
 CATEGORIES=	x11 x11/kde
 MASTER_SITES=	http://www.usermode.org/code/

@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.30 2013/03/10 22:55:06 espie Exp $
+# $OpenBSD: Makefile,v 1.32 2013/10/15 20:38:05 schwarze Exp $
 
 COMMENT=	X11-based audio mixer
 DISTNAME=	xmix-2.1
-REVISION=	3
+REVISION=	4
 CATEGORIES=	audio
 
 PERMIT_PACKAGE_CDROM=	Yes
@@ -16,7 +16,6 @@ CONFIGURE_STYLE=	imake
 
 WRKDIST=	$(WRKDIR)/xmix
 
-USE_GROFF =	Yes
 NO_TEST=	Yes
 
 pre-build:

@@ -1,7 +1,7 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Init.pm,v 1.4 2013/09/21 08:46:06 espie Exp $
+# $OpenBSD: Init.pm,v 1.14 2013/10/17 08:12:28 espie Exp $
 #
-# Copyright (c) 2010 Marc Espie <espie@openbsd.org>
+# Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -67,9 +67,11 @@ sub finalize
 			$core->host->{wantsquiggles} = $core->prop->{squiggles};
 		} elsif ($core->prop->{jobs} > 3) {
 			$core->host->{wantsquiggles} = 1;
+		} elsif ($core->prop->{jobs} > 1) {
+			$core->host->{wantsquiggles} = 0.8;
 		}
 		for my $i (1 .. $core->prop->{jobs}) {
-			ref($core)->new($core->hostname, $core->prop)->mark_ready;
+			$core->clone->mark_ready;
 		}
 		return 1;
 	} else {
@@ -91,6 +93,60 @@ sub new
 	return $init->{$host} //= DPB::Core->new_noreg($host, $prop);
 }
 
+sub hostcount
+{
+	return scalar(keys %$init);
+}
+
+sub taint
+{
+	my ($class, $host, $tag) = @_;
+	if (defined $init->{$host}) {
+		$init->{$host}->prop->{tainted} = $tag;
+	}
+}
+
+sub alive_hosts
+{
+	my @l = ();
+	while (my ($host, $c) = each %$init) {
+		if ($c->prop->{tainted}) {
+			$host = "$host(".$c->prop->{tainted}.")";
+		}
+		if ($c->is_alive) {
+			push(@l, $host.$c->shell->stringize_master_pid);
+		} else {
+			push(@l, $host.'-');
+		}
+	}
+	return "Hosts: ".join(' ', sort(@l))."\n";
+}
+
+sub changed_hosts
+{
+	my @l = ();
+	while (my ($host, $c) = each %$init) {
+		my $was_alive = $c->{is_alive};
+		if ($c->is_alive) {
+			$c->{is_alive} = 1;
+		} else {
+			$c->{is_alive} = 0;
+		}
+		if ($was_alive && !$c->{is_alive}) {
+			push(@l, "$host went down\n");
+		} elsif (!$was_alive && $c->{is_alive}) {
+			push(@l, "$host came up\n");
+		}
+	}
+	return join('', sort(@l));
+}
+
+DPB::Core->register_report(\&alive_hosts, \&changed_hosts);
+
+sub cores
+{
+	return values %$init;
+}
 
 sub init_cores
 {
@@ -120,6 +176,10 @@ sub init_cores
 				    ->exec(@args);
 			    }
 			));
+		}
+		my $tag = $state->locker->find_tag($core->hostname);
+		if (defined $tag) {
+			$core->prop->{tainted} = $tag;
 		}
 		if (defined $stale->{$core->hostname}) {
 			my $subdirlist=join(' ', @{$stale->{$core->hostname}});

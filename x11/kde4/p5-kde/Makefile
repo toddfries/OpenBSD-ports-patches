@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.2 2013/06/06 08:36:49 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/10/14 14:03:01 zhuk Exp $
 
 COMMENT =	KDE bindings for Perl
 DISTNAME =	perlkde-${MODKDE4_VERSION}
 PKGNAME =	p5-kde-${MODKDE4_VERSION}
+REVISION =	0
 
 WANTLIB =  c m perl pthread stdc++ util
 WANTLIB += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtNetwork
 WANTLIB += lib/qt4/QtOpenGL lib/qt4/QtSql lib/qt4/QtSvg lib/qt4/QtXml
-WANTLIB += ${KDE4LIB}/smokeattica ${KDE4LIB}/smokebase ${KDE4LIB}/smokekate
+WANTLIB += ${KDE4LIB}/smokebase ${KDE4LIB}/smokekate
 WANTLIB += ${KDE4LIB}/smokekdecore ${KDE4LIB}/smokekdeui
 WANTLIB += ${KDE4LIB}/smokekfile ${KDE4LIB}/smokekhtml ${KDE4LIB}/smokekio
 WANTLIB += ${KDE4LIB}/smokeknewstuff2 ${KDE4LIB}/smokeknewstuff3
@@ -22,14 +23,15 @@ WANTLIB += ${KDE4LIB}/smokeakonadi
 
 MODKDE4_USE =	libs
 
-BUILD_DEPENDS =	productivity/attica \
-		${MODKDE4_DEP_DIR}/okular>=${MODKDE4_DEP_VERSION} \
+BUILD_DEPENDS =	${MODKDE4_DEP_DIR}/okular>=${MODKDE4_DEP_VERSION} \
 		${MODKDE4_DEP_DIR}/p5-qt>=${MODKDE4_DEP_VERSION} \
 		${MODKDE4_DEP_DIR}/pimlibs>=${MODKDE4_DEP_VERSION}
 
 RUN_DEPENDS =	${MODKDE4_DEP_DIR}/p5-qt>=${MODKDE4_DEP_VERSION}
 
 LIB_DEPENDS = 	${MODKDE4_DEP_DIR}/smokekde>=${MODKDE4_DEP_VERSION}
+
+CONFIGURE_ARGS =	-DCMAKE_DISABLE_FIND_PACKAGE_LibAttica=Yes
 
 # Avoid clashing Perl do_open and do_close with GCC's locale_facets.h
 post-patch:

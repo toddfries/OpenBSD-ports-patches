@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.26 2013/09/06 22:18:03 sthen Exp $
+# $OpenBSD: Makefile,v 1.28 2013/10/22 11:34:22 zhuk Exp $
 
 COMMENT=	project management tool
 BROKEN-i386=	self-checks fail with 64-bit time_t
 
 DISTNAME=	taskjuggler-2.4.1
-REVISION=	7
+REVISION=	9
 
 CATEGORIES=	productivity
 

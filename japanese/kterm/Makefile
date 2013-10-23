@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.35 2013/06/01 17:59:55 naddy Exp $
+# $OpenBSD: Makefile,v 1.37 2013/10/11 21:20:58 naddy Exp $
 
 COMMENT=	Japanese-capable xterm
 
 VERSION=	6.2.0
 DISTNAME=	kterm-${VERSION}
 PKGNAME=	ja-kterm-${VERSION}
-REVISION=	8
+REVISION=	9
 CATEGORIES=	japanese x11
 
 MASTER_SITES=	${MASTER_SITE_XCONTRIB:=applications/}
@@ -22,7 +22,6 @@ PATCH_DIST_STRIP=	-p1
 
 CONFIGURE_STYLE=imake
 MAKE_FLAGS=	CDEBUGFLAGS=-O2
-USE_GROFF =	Yes
 
 FLAVORS=xaw3d tek
 FLAVOR?=

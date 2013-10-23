@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.35 2013/06/24 15:53:38 zhuk Exp $
+# $OpenBSD: Makefile,v 1.37 2013/10/22 11:34:13 zhuk Exp $
 
 SHARED_ONLY=	Yes
 COMMENT=	graphical debugger for KDE
 
 DISTNAME=	kdbg-1.2.5
-REVISION =	7
+REVISION =	9
 CATEGORIES=	devel
 HOMEPAGE=	http://www.kdbg.org/
 
@@ -27,6 +27,8 @@ LIB_DEPENDS=	x11/kde/libs3
 CONFIGURE_STYLE= autoconf autoheader
 CONFIGURE_ARGS+= ${MODKDE_CONFIGURE_ARGS}
 CONFIGURE_ARGS+= --with-kde-version=3
-CONFIGURE_ENV=	KDEDIR=${LOCALBASE}
+CONFIGURE_ENV=	${MODKDE_CONFIGURE_ENV}
+
+MODKDE_FIXUP_DATADIR=	Yes
 
 .include <bsd.port.mk>

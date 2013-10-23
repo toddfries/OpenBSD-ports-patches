@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.23 2013/03/11 11:46:19 espie Exp $
+# $OpenBSD: Makefile,v 1.25 2013/10/11 21:21:07 naddy Exp $
 
 COMMENT=		snowy and Santa-y desktop
 
 DISTNAME=		xsnow-1.42
-REVISION=		1
+REVISION=		2
 CATEGORIES=		x11
 
 HOMEPAGE=		http://dropmix.xs4all.nl/rick/Xsnow/
@@ -18,7 +18,6 @@ WANTLIB=		X11 Xau Xdmcp Xext Xpm c m
 
 MASTER_SITES=		${HOMEPAGE}
 
-USE_GROFF =		Yes
 CONFIGURE_STYLE=	imake
 
 NO_TEST=		Yes

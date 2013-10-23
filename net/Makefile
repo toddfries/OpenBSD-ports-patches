@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.816 2013/09/23 13:50:37 sthen Exp $
+# $OpenBSD: Makefile,v 1.818 2013/10/19 16:35:24 jturner Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -47,6 +47,7 @@
      SUBDIR += cgo
      SUBDIR += charm
      SUBDIR += cjc
+     SUBDIR += clamz
      SUBDIR += climm
      SUBDIR += clive
      SUBDIR += clog
@@ -477,6 +478,7 @@
      SUBDIR += py-flowtools
      SUBDIR += py-ftpdlib
      SUBDIR += py-impacket
+     SUBDIR += py-ipaddr
      SUBDIR += py-irclib
      SUBDIR += py-libpcap
      SUBDIR += py-medusa

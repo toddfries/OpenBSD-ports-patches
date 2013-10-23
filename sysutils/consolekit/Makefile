@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.33 2013/09/24 08:52:43 jca Exp $
+# $OpenBSD: Makefile,v 1.36 2013/10/15 13:31:14 ajacoutot Exp $
 
 COMMENT=	framework for defining and tracking users
 
 DISTNAME=	ConsoleKit-0.4.6
 EXTRACT_SUFX=	.tar.xz
 PKGNAME=	${DISTNAME:L}
-REVISION=	0
+REVISION=	3
 
 CATEGORIES=	sysutils	
 
@@ -35,7 +35,7 @@ CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-pid-file=/var/run/ConsoleKit/pid \
-		--disable-pam-module \
+		--disable-pam-module
 
 USE_GMAKE=	Yes
 

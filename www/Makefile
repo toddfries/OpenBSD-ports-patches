@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.627 2013/09/29 18:36:29 rpe Exp $
+# $OpenBSD: Makefile,v 1.631 2013/10/20 17:46:06 fgsch Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -121,7 +121,6 @@
      SUBDIR += mod_auth_pgsql
      SUBDIR += mod_auth_radius
      SUBDIR += mod_bandwidth
-     SUBDIR += mod_dav
      SUBDIR += mod_encoding
      SUBDIR += mod_fastcgi
      SUBDIR += mod_geoip
@@ -148,6 +147,7 @@
      SUBDIR += mycalendar
      SUBDIR += myreview
      SUBDIR += netsurf
+     SUBDIR += newsbeuter
      SUBDIR += nginx
      SUBDIR += nostromo
      SUBDIR += opera
@@ -425,7 +425,6 @@
      SUBDIR += py-webtest
      SUBDIR += py-werkzeug
      SUBDIR += py-wsgiproxy
-     SUBDIR += py-zine
      SUBDIR += pyblosxom
      SUBDIR += rackmonkey
      SUBDIR += racktables
@@ -503,6 +502,7 @@
      SUBDIR += tracnav
      SUBDIR += tt-rss
      SUBDIR += twill
+     SUBDIR += urlwatch
      SUBDIR += varnish
      SUBDIR += visitors
      SUBDIR += vteplugin

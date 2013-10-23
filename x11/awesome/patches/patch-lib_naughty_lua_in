@@ -1,6 +1,9 @@
-$OpenBSD: patch-lib_naughty_lua_in,v 1.7 2013/09/23 14:14:29 dcoppa Exp $
+$OpenBSD: patch-lib_naughty_lua_in,v 1.9 2013/10/15 09:28:44 dcoppa Exp $
+
+Fixes for LDoc>=1.4.0
+
 --- lib/naughty.lua.in.orig	Mon Apr  1 13:44:46 2013
-+++ lib/naughty.lua.in	Mon Sep 23 15:59:56 2013
++++ lib/naughty.lua.in	Mon Oct  7 14:54:32 2013
 @@ -33,35 +33,39 @@ local naughty = {}
  
  --- Naughty configuration - a table containing common popup settings.

@@ -1,6 +1,6 @@
-.\"	$OpenBSD: dpb.1,v 1.88 2013/09/24 09:46:44 espie Exp $
+.\"	$OpenBSD: dpb.1,v 1.95 2013/10/06 13:33:26 espie Exp $
 .\"
-.\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
+.\" Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 .\"
 .\" Permission to use, copy, modify, and distribute this software for any
 .\" purpose with or without fee is hereby granted, provided that the above
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: September 24 2013 $
+.Dd $Mdocdate: October 6 2013 $
 .Dt DPB 1
 .Os
 .Sh NAME
@@ -243,6 +243,9 @@ Define a file which will save all terminal output.
 Mostly useful for presentations, as a way to save
 .Nm dpb
 output and replay it later at a faster rate.
+Defaults to
+.Pa %L/term-reports.log ,
+can be set to nothing to disable.
 .It Ar STARTUP
 Define a start-up script on the command-line, override any host file contents.
 .It Ar STUCK_TIMEOUT
@@ -406,7 +409,8 @@ Defaults to 120 seconds.
 Number of squiggles on this host (see
 .Sq the squiggle heuristics
 below).
-Defaults to 1 squiggle for hosts with 4 jobs or more, 0 otherwise.
+Defaults to 1 squiggle for hosts with 4 jobs or more, 0.7 for hosts with more than 1 job,
+0 for single job hosts.
 .It stuck=s
 Stuck timeout (in seconds * sf) after which tasks which show no progress
 will get killed.
@@ -635,9 +639,8 @@ running dpb: for distributed builds, it will be an
 .Xr ssh 1
 to another machine),
 .It
-the current size of the log file (displayed as a percentage if option
-.Fl b
-has been used),
+the current size of the log file (displayed as a percentage if previous
+build statistics are available).
 .It
 and a possible notice that things might be stuck when
 the log file doesn't change for long periods.
@@ -664,7 +667,15 @@ process (note that fetch jobs are always local).
 a progress percentage.
 .El
 .Pp
-This is followed by a summary display:
+This is followed by a host line, containing the name
+of each host used by dpb.
+Host names may be tagged with kde3 or kde4.
+They are followed by a
+.Sq `-'
+for unresponsive hosts, and the pid of the ssh master
+for distant hosts.
+.Pp
+This ends with a summary display:
 .Bl -tag -width BB=
 .It I=
 number of built packages that can be installed.
@@ -726,6 +737,13 @@ big machines devote some of their cores to
 jobs that walk the queue in reverse, thus building smallest ports first.
 As a result, small ports are built as a trickle alongside the largest ports,
 thus offsetting the negative effect of the exponential queue for a large part.
+.Pp
+Note that
+.Sq squiggles
+can be a non-integral value, usually lower than 1, in which case they
+represent the fraction of cores that should be affected to squiggles,
+as decided randomly at the start of each build.
+0.7 or 0.8 might be a good choice for dual core machines.
 .Sh LOCKS AND ERRORS
 .Nm
 still uses the normal ports tree mechanism while building, which includes
@@ -806,7 +824,7 @@ machines sharing their logs through NFS.
 .Nm
 now maintains a list of pkgpath-per-host that are currently building in the
 .Pa affinity
-directory of its log directory.
+directory of its log directory, along with building-in-memory status.
 .Pp
 That information is only wiped out when a given build finishes successfully.
 .Pp
@@ -817,6 +835,35 @@ interrupt
 .Nm
 while it is building a large port, or if you remove a lock after fixing a
 problem.
+.Sh TAGS FOR BUILDING KDE
+Currently, kde3 and kde4 can't be built simultaneously.
+Conflicting ports have been annotated with
+DPB_PROPERTIES=tag:kde3 ,
+DPB_PROPERTIES=tag:kde4
+respectively.
+.Pp
+.Nm
+now keeps track of those tags, and will postpone ports with the wrong
+tag while a given host is used by the other tag.
+.Pp
+This heavily relies on the
+.Ar junk
+stage to clean-up hosts periodically,
+and it can even forcibly provoke a
+.Ar junk
+stage even if junk=0.
+.Pp
+In order for builds to proceed gracefully, machines should start
+in a clean slate, without kde3 or kde4 installed.
+.Pp
+As a special-case, failing ports with a kde3 or kde4 tag will not
+interfere with clean-up, so that hosts do not get locked down to
+a specific tag.
+This also means that their dependencies
+may vanish before human intervention addresses the problem.
+.Pp
+This is supposed to be a temporary hack, as kde4 is large and
+having official packages helps a great deal in debugging it.
 .Sh SHUTTING DOWN GRACEFULLY
 .Nm
 periodically checks for a file named
@@ -946,6 +993,7 @@ lock contention happened around
 and
 .xr pkg_delete 1
 usage.
+Plotting cumulated time may help in fine-tuning squiggles parameters.
 .It Pa build.log
 Actual build log.
 Each line summarizes build of a single pkgpath, as:
@@ -994,6 +1042,8 @@ affinity mismatch: path considered for build, but not the right host,
 followed by the affinity information.
 .It B
 pkgpath built / distfile found.
+.It C
+forcible clean-up before building a port with a kde tag.
 .It E
 error in build or fetch.
 .It F
@@ -1005,6 +1055,8 @@ pkgpath can be installed.
 .It J
 job to build pkgpath started.
 Also records the host used for the build.
+.It K
+kde mismatch, no build until host has been cleaned up.
 .It L
 job did not start, existing lock detected.
 .It N
@@ -1113,6 +1165,9 @@ creating new jobs.
 .It Pa stop-<hostname>
 Not a logfile at all, but created by the user to stop hostname creating
 new jobs.
+.It Pa term-reports.log
+Saves all terminal output, so that it can be replayed at hi speed with
+.Xr dpb-replay 1 .
 .It Pa vars.log
 Logs the directories that were walked in the ports tree for dependency
 information, including the path to a dependency that triggered this
@@ -1218,6 +1273,7 @@ Just kill
 and restart it.
 .Sh SEE ALSO
 .Xr clean-old-distfiles 1 ,
+.Xr dpb-replay 1 ,
 .Xr pkgpath 7
 .Sh AUTHOR
 Marc Espie

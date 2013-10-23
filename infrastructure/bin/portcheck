@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# $OpenBSD: portcheck,v 1.36 2013/08/27 07:52:15 zhuk Exp $
+# $OpenBSD: portcheck,v 1.39 2013/10/19 20:06:14 zhuk Exp $
 # Copyright (c) 2013 Vadim Zhukov
 # 
 # Permission to use, copy, modify, and distribute this software for any
@@ -585,6 +585,12 @@ check_trailing_whitespace() {
 		err "trailing whitespace in $1"
 }
 
+# Checks made: obvious
+check_newline_at_eof() {
+	(( $(tail -1 -- "$1" | wc -l) == 0)) &&
+		err "no newline at EOF in $1"
+}
+
 # Checks made:
 #   * Every library in SHARED_LIBS has 0.0 version.
 check_shlibs() {
@@ -690,7 +696,10 @@ sub_checks() {
 #   * If package installs system-wide icons, it should have the
 #     x11/gtk+2,-guic dependency and @exec/@unexec-delete with
 #     %D/bin/gtk-update-icon-cache -q -t %D/share/icons/$theme
-#     for each icon theme used in package.
+#     for each icon theme used in package. If there is an
+#     index.theme provided, then, instead of gtk-update-icon-cache,
+#     @unexec-delete should contain the following command:
+#     rm -f %D/share/icons/$theme/icon-theme.cache
 #
 #   * If package adds a MIME type handler, it should have the
 #     devel/desktop-file-utils dependency and @exec/@unexec-delete with
@@ -708,8 +717,6 @@ sub_checks() {
 #
 #   * Each .py should have corresponding .pyc files, to avoid
 #     generation of the latter at run-time.
-#
-#   * Each .pyc and .pyo should have corresponding .py file.
 check_plist() {
 	$debugging && echo "CALLED: check_plist($*)" >&2
 
@@ -741,6 +748,9 @@ check_plist() {
 	# @file, @exec and @unexec lines, accordingly.
 	local icon_themes= exec_icon_themes= unexec_icon_themes=
 
+	# List of icon themes that remove cache file
+	local rm_cache_themes=
+
 	local gettext_dep=false
 	local translation_found=false
 
@@ -768,6 +778,11 @@ check_plist() {
 			# wrap with the '/' characters to avoid erroneous matching
 			echo "$icon_themes" | fgrep -q "/$theme/" ||
 				icon_themes="$icon_themes /$theme/"
+			if [[ "$l" = "share/icons/$theme/index.theme" ]]; then
+				echo "$rm_cache_themes" | fgrep -q "/$theme/" ||
+					err "missing @unexec-delete rm -f" \
+					    "%D/share/icons/$theme/icon-theme.cache"
+			fi
 			;;
 		share/icons/*(*/))
 			# Do not match intermediate directories to avoid false
@@ -788,16 +803,14 @@ check_plist() {
 			varname=$(echo "$theme" | sed -e 's/[^a-zA-Z_]/_/g')
 			((++guic_exec_cnt))
 			eval "((++guic_exec_cnt_$varname))"
-			echo "$exec_icon_themes" | fgrep -q "/$theme/" ||
-				exec_icon_themes="$exec_icon_themes /$theme/"
+			exec_icon_themes="$exec_icon_themes /$theme/"
 			;;
 		"@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/"*)
 			theme=${l##*/}
 			varname=$(echo "$theme" | sed -e 's/[^a-zA-Z_]/_/g')
 			((++guic_unexec_cnt))
 			eval "((++guic_unexec_cnt_$varname))"
-			echo "$unexec_icon_themes" | fgrep -q "/$theme/" ||
-				unexec_icon_themes="$unexec_icon_themes /$theme/"
+			unexec_icon_themes="$unexec_icon_themes /$theme/"
 			;;
 		"@unexec-delete rm -f "%D/share/icons/*/icon-theme.cache)
 			# as an alternative, port could zap the theme entirely
@@ -806,8 +819,14 @@ check_plist() {
 			varname=$(echo "$theme" | sed -e 's/[^a-zA-Z_]/_/g')
 			((++guic_unexec_cnt))
 			eval "((++guic_unexec_cnt_$varname))"
-			echo "$unexec_icon_themes" | fgrep -q "/$theme/" ||
-				unexec_icon_themes="$unexec_icon_themes /$theme/"
+			unexec_icon_themes="$unexec_icon_themes /$theme/"
+			rm_cache_themes="$rm_cache_themes /$theme/"
+			if echo "$icon_themes" | fgrep -q "/$theme/"; then
+				err "the @unexec-delete line removing" \
+				    "%D/share/icons/$theme/icon-theme.cache" \
+				    "does not preceed all of the icon theme" \
+				    "$theme files"
+			fi
 			;;
 		@?(un)exec?(-delete|-update)" %D/bin/gtk-update-icon-cache"*)
 			err "${portref}incorrect gtk-update-icon-cache" \
@@ -983,8 +1002,9 @@ check_plist() {
 	if ((${#py_files[@]} > 0)); then for py in "${py_files[@]}"; do
 		while [[ $ic -lt ${#pyc_files[@]} ]]; do
 			[[ ${pyc_files[$ic]} < "$py"c ]] || break
-			err "${portref}compiled Python module without" \
-			    "source, expected: ${pyc_files[$ic]%c}"
+			# allowed behaviour
+			#err "${portref}compiled Python module without" \
+			#    "source, expected: ${pyc_files[$ic]%c}"
 			((++ic))
 		done
 		if [[ $ic -lt ${#pyc_files[@]} &&
@@ -992,34 +1012,40 @@ check_plist() {
 			((++ic))
 		else
 			err "${portref}Python module without" \
-			    "compiled version: $py"
+			    "compiled version, consider using" \
+			    "\${MODPY_LIBDIR}/compileall.py: $py"
 		fi
 
 		while [[ $io -lt ${#pyo_files[@]} ]]; do
 			[[ ${pyo_files[$io]} < "$py"o ]] || break
-			err "${portref}optimized Python module without" \
-			    "source, expected: ${pyo_files[$io]%o}"
+			# allowed behaviour
+			#err "${portref}optimized Python module without" \
+			#    "source, expected: ${pyo_files[$io]%o}"
 			((++io))
 		done
 		if [[ $io -lt ${#pyo_files[@]} &&
 		      ${pyo_files[$io]} == "$py"o ]]; then
 			((++io))
-		# XXX too much noise
+		# too much noise, maybe enable in the future
 		#else
 		#	err "${portref}Python module without" \
 		#	    "optimized version: $py"
 		fi
 	done; fi
-	while (($ic < ${#pyc_files[@]})); do
-		err "${portref}compiled Python module without source," \
-		    "expected: ${pyc_files[$ic]%c}"
-		((++ic))
-	done
-	while (($io < ${#pyo_files[@]})); do
-		err "${portref}optimized Python module without source," \
-		    "expected: ${pyo_files[$io]%o}"
-		((++io))
-	done
+
+	# allowed behaviour
+	#while (($ic < ${#pyc_files[@]})); do
+	#	err "${portref}compiled Python module without source," \
+	#	    "expected: ${pyc_files[$ic]%c}"
+	#	((++ic))
+	#done
+
+	# allowed behaviour
+	#while (($io < ${#pyo_files[@]})); do
+	#	err "${portref}optimized Python module without source," \
+	#	    "expected: ${pyo_files[$io]%o}"
+	#	((++io))
+	#done
 }
 
 # Checks made:
@@ -1184,6 +1210,7 @@ check_pkg_dir() {
 		[[ -f $F ]] ||
 			err "$F is not a file"
 		check_trailing_whitespace "$F"
+		check_newline_at_eof "$F"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
@@ -1220,6 +1247,7 @@ check_pkg_dir() {
 			err "$F is not a file"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		check_trailing_whitespace "$F"
+		check_newline_at_eof "$F"
 		head -n 1 -- "$F" |
 			egrep -q '^(#[[:space:]]*)?\$OpenBSD(:.*)?\$$' ||
 			err "$F does not have \$OpenBSD\$ RCS tag at the top"
@@ -1239,6 +1267,7 @@ check_pkg_dir() {
 			err "$F is not a file"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		check_trailing_whitespace "$F"
+		check_newline_at_eof "$F"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
 		;;

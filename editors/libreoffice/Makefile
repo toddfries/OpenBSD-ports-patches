@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.91 2013/08/20 22:05:51 zhuk Exp $
+# $OpenBSD: Makefile,v 1.93 2013/10/13 08:11:21 espie Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -15,9 +15,10 @@ PKGNAME-main=	libreoffice-${VERSION}
 PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
 CATEGORIES=	editors productivity
-DPB_PROPERTIES=	parallel
+DPB_PROPERTIES=	parallel tag:kde3
 
 REVISION-main=	0
+REVISION-kde =	0
 EPOCH=		0
 
 MAINTAINER=	Robert Nagy <robert@openbsd.org>
@@ -308,8 +309,12 @@ CONFIGURE_ARGS+=--enable-ext-wiki-publisher \
 CONFIGURE_ARGS+=--without-java
 .endif
 
-.if ${FLAVOR:Mparallel}
-NCPU!=		echo $$((`sysctl -n hw.ncpu`+1))
+# XXX libreoffice has its own way to build things in parallel
+PARALLEL_BUILD = No
+.if defined(MAKE_JOBS)
+NCPU=		${MAKE_JOBS}
+.elif ${FLAVOR:Mparallel}
+NCPU=		$$(expr $$(sysctl hw.ncpu + 1))
 .else
 NCPU=		1
 .endif

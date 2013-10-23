@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.37 2013/08/12 13:49:08 zhuk Exp $
+# $OpenBSD: Makefile,v 1.40 2013/10/22 11:34:17 zhuk Exp $
 
 COMMENT-main =		kde image plugins
 COMMENT-cal =		kde image calendar plugin
@@ -6,8 +6,9 @@ CATEGORIES =		graphics x11 x11/kde
 DISTNAME =		kipi-plugins-0.1.6
 PKGNAME-main =		${DISTNAME}
 PKGNAME-cal =		kipi-kcal-plugin-0.1.6
-REVISION-main =		7
-REVISION-cal =		5
+REVISION-main =		9
+REVISION-cal =		7
+
 HOMEPAGE =		http://extragear.kde.org/apps/kipi/
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=kipi/}
 EXTRACT_SUFX =		.tar.bz2
@@ -52,7 +53,6 @@ WANTLIB-main += ${KDE}/kutils
 WANTLIB-cal =  ${WANTLIB} ${KDE}/kabc ${KDE}/kcal kipiplugins
 WANTLIB-cal += ${KDE}/kmime ${KDE}/kresources ${KDE}/ktnef ${KDE}/vcard
 
-USE_GROFF =		Yes
 LIBTOOL_FLAGS =		--tag=disable-static
 CONFIGURE_STYLE =	autoconf
 AUTOCONF_VERSION =	2.61
