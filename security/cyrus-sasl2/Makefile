@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.79 2013/06/20 09:48:28 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.81 2013/10/31 19:42:45 schwarze Exp $
 
 COMMENT=	RFC 2222 SASL (Simple Authentication and Security Layer)
 
 DISTNAME=	cyrus-sasl-2.1.26
-REVISION=	8
+REVISION=	10
 
 SHARED_LIBS += sasl2           3.0 # 3.0
 
@@ -20,9 +20,6 @@ MASTER_SITES=	ftp://ftp.cyrusimap.org/cyrus-sasl/
 
 WANTLIB += asn1 c com_err crypto gssapi heimbase
 WANTLIB += krb5 roken wind
-
-# uses nroff(1)
-USE_GROFF=	Yes
 
 CFLAGS +=	-fPIC
 

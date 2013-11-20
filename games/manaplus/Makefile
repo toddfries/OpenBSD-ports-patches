@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.24 2013/10/12 19:15:01 bcallah Exp $
+# $OpenBSD: Makefile,v 1.26 2013/10/28 17:32:31 bcallah Exp $
 
 COMMENT =	extended client for The Mana World
 
-V =		1.3.10.12
-DISTNAME =	manaplus-${V}
+V =		1.3.10.27
+DISTNAME =	manaplus-${V}.2
 EXTRACT_SUFX =	.tar.xz
 
 CATEGORIES =	games x11
@@ -43,6 +43,8 @@ FAKE_FLAGS +=		desktopdir=${PREFIX}/share/applications/
 
 AUTOCONF_VERSION =	2.69
 AUTOMAKE_VERSION =	1.9
+
+WRKDIST =	${WRKDIR}/manaplus-${V}
 
 pre-configure:
 	cd ${WRKSRC} && \

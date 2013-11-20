@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2013/03/11 11:44:49 espie Exp $
+# $OpenBSD: Makefile,v 1.13 2013/11/14 17:04:37 jeremy Exp $
 
 COMMENT =	ruby-rack HTTP server for Unix and fast clients
 
-DISTNAME =	unicorn-4.4.0
-REVISION =	0
+DISTNAME =	unicorn-4.7.0
 CATEGORIES =	www
 
 HOMEPAGE =	http://unicorn.bogomips.org/
@@ -16,9 +15,9 @@ PERMIT_PACKAGE_CDROM = Yes
 MODULES =	lang/ruby
 
 BUILD_DEPENDS =	${RUN_DEPENDS}
-RUN_DEPENDS =	devel/ruby-kgio,${MODRUBY_FLAVOR}>=2.4,<3.0 \
+RUN_DEPENDS =	devel/ruby-kgio,${MODRUBY_FLAVOR}>=2.6,<3.0 \
 		www/ruby-rack,${MODRUBY_FLAVOR} \
-		www/ruby-raindrops,${MODRUBY_FLAVOR}>=0.6,<1.0
+		www/ruby-raindrops,${MODRUBY_FLAVOR}>=0.7,<1.0
 
 CONFIGURE_STYLE = ruby gem ext
 

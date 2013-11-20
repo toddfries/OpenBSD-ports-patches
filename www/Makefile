@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.631 2013/10/20 17:46:06 fgsch Exp $
+# $OpenBSD: Makefile,v 1.643 2013/11/20 20:59:33 landry Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -19,7 +19,6 @@
      SUBDIR += blogsum
      SUBDIR += bluefish
      SUBDIR += bozohttpd
-     SUBDIR += bricolage
      SUBDIR += c-icap
      SUBDIR += calamaris
      SUBDIR += canto
@@ -51,13 +50,14 @@
      SUBDIR += fcgi-cgi
      SUBDIR += fennec
      SUBDIR += ffproxy
+     SUBDIR += firefox-esr
+     SUBDIR += firefox-esr-i18n
      SUBDIR += firefox-i18n
-     SUBDIR += fluxbb
-     SUBDIR += flyspray
      SUBDIR += gcap
      SUBDIR += gecko-mediaplayer
      SUBDIR += gitlist
      SUBDIR += gnash
+     SUBDIR += goaccess
      SUBDIR += gtkhtml3
      SUBDIR += gtkhtml4
      SUBDIR += haserl
@@ -89,7 +89,6 @@
      SUBDIR += japana
      SUBDIR += jesred
      SUBDIR += junkbuster
-     SUBDIR += ktdms
      SUBDIR += larbin
      SUBDIR += libcroco
      SUBDIR += libghttp
@@ -106,9 +105,6 @@
      SUBDIR += llgal
      SUBDIR += luakit
      SUBDIR += man2web
-     SUBDIR += mediawiki
-     SUBDIR += mediawiki-CategoryTree
-     SUBDIR += mediawiki-httpauth
      SUBDIR += mhonarc
      SUBDIR += midori
      SUBDIR += midori,gtk3
@@ -144,12 +140,11 @@
      SUBDIR += mozilla-firefox
      SUBDIR += mozilla-sync
      SUBDIR += mozplugger
-     SUBDIR += mycalendar
-     SUBDIR += myreview
      SUBDIR += netsurf
      SUBDIR += newsbeuter
      SUBDIR += nginx
      SUBDIR += nostromo
+     SUBDIR += opengroupware
      SUBDIR += opera
      SUBDIR += owncloud
      SUBDIR += p5-Alien-Tidyp
@@ -328,6 +323,7 @@
      SUBDIR += p5-WWW-Google-SiteMap
      SUBDIR += p5-WWW-IndexParser
      SUBDIR += p5-WWW-Mechanize
+     SUBDIR += p5-WWW-Mechanize-GZip
      SUBDIR += p5-WWW-Mechanize-TreeBuilder
      SUBDIR += p5-WWW-Robot
      SUBDIR += p5-WWW-Search
@@ -367,14 +363,11 @@
      SUBDIR += php-markdown
      SUBDIR += php-openid
      SUBDIR += php-predis
-     SUBDIR += phpicalendar
      SUBDIR += phpldapadmin
      SUBDIR += phpmyadmin
      SUBDIR += phppgadmin
      SUBDIR += phpvirtualbox
      SUBDIR += piwik
-     SUBDIR += plans
-     SUBDIR += pmwiki
      SUBDIR += polipo
      SUBDIR += pound
      SUBDIR += privoxy
@@ -425,13 +418,11 @@
      SUBDIR += py-webtest
      SUBDIR += py-werkzeug
      SUBDIR += py-wsgiproxy
-     SUBDIR += pyblosxom
      SUBDIR += rackmonkey
      SUBDIR += racktables
      SUBDIR += raggle
      SUBDIR += ratproxy
      SUBDIR += rawdog
-     SUBDIR += reportmagic
      SUBDIR += retawq
      SUBDIR += rt
      SUBDIR += ruby-addressable
@@ -482,7 +473,6 @@
      SUBDIR += spawn-fcgi
      SUBDIR += sqtop
      SUBDIR += squid
-     SUBDIR += squid27
      SUBDIR += squidclamav
      SUBDIR += squidguard
      SUBDIR += squidguard,ldap
@@ -514,7 +504,6 @@
      SUBDIR += wApua
      SUBDIR += wbox
      SUBDIR += webalizer
-     SUBDIR += webcollab
      SUBDIR += webgui
      SUBDIR += webkit
      SUBDIR += webkit,gtk3

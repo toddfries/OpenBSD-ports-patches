@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.29 2013/10/02 10:46:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.31 2013/11/02 16:23:55 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,6 +8,7 @@ V=		3.10.11
 DISTNAME=	opal-${V}
 EXTRACT_SUFX=	.tar.bz2
 SUBST_VARS=	V
+REVISION=	1
 
 SHARED_LIBS=	opal	3.1	# 3.10.11
 
@@ -20,20 +21,20 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 # MPL 1.0
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += c celt0 crypto gsm m pt spandsp speex speexdsp stdc++
-WANTLIB += theora tiff x264
+WANTLIB += avutil c celt0 crypto gsm m pt spandsp speex speexdsp
+WANTLIB += stdc++ theora tiff x264
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=opalvoip/}
 
 LIB_DEPENDS=	audio/celt \
-		devel/ptlib>=2.10.11 \
+		devel/ptlib \
+		graphics/ffmpeg \
 		telephony/spandsp
 
 # dlopen(3) libavcodec.so.X.Y; shows as "Extra:" in check-lib-depends
 # but we want to be sure we track ABI and shared lib version changes
 # see LIBAVCODEC_LIB_NAME in plugins/configure
-WANTLIB+=	avcodec
-LIB_DEPENDS+=	graphics/ffmpeg
+WANTLIB += avcodec
 
 ALL_TARGET=	default_target
 USE_GMAKE=	Yes

@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.27 2013/09/01 09:29:45 pascal Exp $
+# $OpenBSD: Makefile,v 1.29 2013/11/09 23:19:02 naddy Exp $
 
 COMMENT=	GNU debugger
 CATEGORIES=	devel
 
 DISTNAME=	gdb-7.6.1
+REVISION=	0
 
-HOMEPAGE=	http://www.gnu.org/software/gdb/
+HOMEPAGE=	https://www.gnu.org/software/gdb/
 
 MAINTAINER=	Pascal Stumpf <Pascal.Stumpf@cubes.de>
 
@@ -23,6 +24,7 @@ WANTLIB = c expat kvm m ncurses pthread ${MODPY_WANTLIB} util z
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--program-transform-name=s,^,e, \
 		--disable-nls \
+		--without-lzma \
 	 	--enable-target=all \
 		--with-python=${MODPY_BIN}
 

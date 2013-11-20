@@ -1,20 +1,19 @@
-$OpenBSD: patch-texmaker_pro,v 1.10 2013/06/01 08:27:57 shadchin Exp $
---- texmaker.pro.orig	Tue May  7 16:36:02 2013
-+++ texmaker.pro	Wed May  8 23:17:40 2013
-@@ -6,7 +6,8 @@ QT += xml webkit network
- ## QT5
- #QT += xml webkitwidgets network widgets printsupport concurrent
- 
--CONFIG	+= qt warn_off release
-+CONFIG	+= qt warn_off release link_pkgconfig
-+PKGCONFIG = hunspell poppler-qt4
- TEXMAKERVERSION=4.0.2
- DEFINES += TEXMAKERVERSION=\\\"$${TEXMAKERVERSION}\\\"
- DEFINES += HAVE_SPLASH
-@@ -71,25 +72,6 @@ HEADERS	+= texmaker.h \
- 	synctex_parser_utils.h \
- 	usertagslistwidget.h \
- 	addtagdialog.h \
+$OpenBSD: patch-texmaker_pro,v 1.12 2013/11/10 12:31:45 shadchin Exp $
+--- texmaker.pro.orig	Mon Oct 28 19:47:24 2013
++++ texmaker.pro	Sat Nov  2 15:08:09 2013
+@@ -23,7 +23,7 @@ PKGCONFIG 	= poppler-qt5
+ DEFINES += POPPLER24
+ } else {
+ CONFIG		+= link_pkgconfig
+-PKGCONFIG 	= poppler-qt4
++PKGCONFIG 	= poppler-qt4 hunspell
+ DETECTEDPOPPLER=$$system(pkg-config --modversion poppler)
+ contains( DETECTEDPOPPLER, "^0.18.*" ){
+ DEFINES += OLDPOPPLER
+@@ -96,25 +96,6 @@ HEADERS	+= texmaker.h \
+ 	unicodedialog.h \
+ 	unicodeview.h \
+ 	quickbeamerdialog.h \
 -	hunspell/affentry.hxx \
 -	hunspell/affixmgr.hxx \
 -	hunspell/atypes.hxx \
@@ -37,10 +36,10 @@ $OpenBSD: patch-texmaker_pro,v 1.10 2013/06/01 08:27:57 shadchin Exp $
  	singleapp/qtlocalpeer.h \
  	singleapp/qtlockedfile.h \
  	singleapp/qtsingleapplication.h \
-@@ -177,18 +159,6 @@ SOURCES	+= main.cpp \
- 	synctex_parser_utils.c \
- 	usertagslistwidget.cpp \
- 	addtagdialog.cpp \
+@@ -206,18 +187,6 @@ SOURCES	+= main.cpp \
+ 	unicodedialog.cpp \
+ 	unicodeview.cpp \
+ 	quickbeamerdialog.cpp \
 -	hunspell/affentry.cxx \
 -	hunspell/affixmgr.cxx \
 -	hunspell/csutil.cxx \
@@ -56,11 +55,11 @@ $OpenBSD: patch-texmaker_pro,v 1.10 2013/06/01 08:27:57 shadchin Exp $
  	singleapp/qtlocalpeer.cpp \
  	singleapp/qtlockedfile.cpp \
  	singleapp/qtsingleapplication.cpp \
-@@ -396,35 +366,7 @@ utilities.files = doc/doc1.png \
- 	locale/texmaker_el.qm \
+@@ -428,35 +397,7 @@ utilities.files = doc/doc1.png \
  	locale/texmaker_se.qm \
  	locale/texmaker_ar.qm \
--	locale/texmaker_lv.qm \
+ 	locale/texmaker_lv.qm \
+-	locale/texmaker_uk.qm \
 -	dictionaries/nl_NL.aff \
 -	dictionaries/nl_NL.dic \
 -	dictionaries/de_DE.aff \
@@ -89,7 +88,7 @@ $OpenBSD: patch-texmaker_pro,v 1.10 2013/06/01 08:27:57 shadchin Exp $
 -	dictionaries/README_DIC_fr_FR.txt \
 -	dictionaries/README_es_ES.txt \
 -	dictionaries/README_en_US.txt
-+	locale/texmaker_lv.qm
++	locale/texmaker_uk.qm
  INSTALLS += utilities
  
- desktop.path = $${DESKTOPDIR}
+ desktop.files = utilities/texmaker.desktop

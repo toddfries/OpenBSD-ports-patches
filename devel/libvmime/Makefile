@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.19 2013/03/21 08:45:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2013/11/06 13:40:33 ajacoutot Exp $
 
 COMMENT=	C++ class library for working with Internet mail
 
@@ -7,13 +7,13 @@ DISTNAME=	libvmime-${VMIME_V}+svn603
 EXTRACT_SUFX=	.tar.bz2
 
 PKGNAME=	libvmime-${VMIME_V}
-REVISION=	3
+REVISION=	4
 
 SHARED_LIBS+=  vmime    2.0     # 0.0
 
 ### needed for mail/zarafa (FLAVOR is possible if needed in the future)
 #MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=vmime/}
-MASTER_SITES_ZARAFA=http://download.zarafa.com/community/final/7.1/7.1.3-40304/sourcecode/
+MASTER_SITES_ZARAFA=http://download.zarafa.com/community/final/7.1/7.1.7-42779/sourcecode/
 MASTER_SITES=	${MASTER_SITES_ZARAFA}
 MASTER_SITES0=	${MASTER_SITES_ZARAFA:=/vmime-patches/}
 PATCH_DIST_STRIP= -p1
@@ -56,9 +56,5 @@ CONFIGURE_ARGS += --disable-sasl
 # XXX Apache crashes with php-mapi from mail/zarafa/zarafa,-webaccess
 # /usr/sbin/httpd:/usr/local/lib/libvmime.so.2.0: undefined symbol '_ZN5vmime3net12serviceInfosD2Ev'
 CONFIGURE_ARGS += --disable-tls
-
-pre-configure:
-	perl -pi -e 's,-l\$${ost_cv_thread_library},-\$${ost_cv_thread_library},g;' \
-		-e 's,-lpthread,-pthread,g' ${WRKSRC}/configure
 
 .include <bsd.port.mk>

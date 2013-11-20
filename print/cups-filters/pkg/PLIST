@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.8 2013/08/22 08:03:59 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.10 2013/11/03 15:47:04 ajacoutot Exp $
 @conflict cups-<1.6.0
 @conflict ghostscript-<9.06p3
 @bin bin/ttfread
@@ -33,6 +33,7 @@ libexec/cups/filter/gstopxl
 libexec/cups/filter/imagetops
 @bin libexec/cups/filter/imagetoraster
 @bin libexec/cups/filter/pdftoijs
+@bin libexec/cups/filter/pdftoippprinter
 @bin libexec/cups/filter/pdftoopvp
 @bin libexec/cups/filter/pdftopdf
 @bin libexec/cups/filter/pdftops

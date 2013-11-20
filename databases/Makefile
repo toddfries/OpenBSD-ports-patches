@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.258 2013/10/04 06:25:09 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.261 2013/11/08 22:53:22 sthen Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -140,6 +140,8 @@
      SUBDIR += pear-MDB2-pgsql
      SUBDIR += percona-toolkit
      SUBDIR += pg-toolbox
+     SUBDIR += pg_stats_reporter
+     SUBDIR += pg_statsinfo
      SUBDIR += pg_top
      SUBDIR += pgadmin3
      SUBDIR += pgbouncer
@@ -160,6 +162,8 @@
      SUBDIR += postgresql-plv8
      SUBDIR += postgresql_autodoc
      SUBDIR += puppetdb
+     SUBDIR += py-apsw
+     SUBDIR += py-apsw,python3
      SUBDIR += py-axiom
      SUBDIR += py-carbon
      SUBDIR += py-cdb
@@ -173,6 +177,7 @@
      SUBDIR += py-psycopg2
      SUBDIR += py-pygresql
      SUBDIR += py-redis
+     SUBDIR += py-sql
      SUBDIR += py-sqlalchemy
      SUBDIR += py-sqlalchemy-migrate
      SUBDIR += py-sqlite

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.174 2013/10/16 15:05:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.179 2013/11/13 09:30:53 ajacoutot Exp $
 
 # XXX configuring GDM from gnome-cc does not work
 
@@ -8,6 +8,7 @@ COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
 GNOME_VERSION=		3.10.0.1
+REVISION=		3
 
 SHARED_LIBS +=  gdm                  0.0      # 1.0
 
@@ -33,6 +34,9 @@ BUILD_DEPENDS=		devel/check
 # cyclic dependency, see pkg/DESCR
 # bring _all_ runtime dependencies (including consolekit and zenity)
 #RUN_DEPENDS +=		x11/gnome/session
+
+# gnome-initial-setup is an opt-in handled in meta/gnome
+#RUN_DEPENDS +=		x11/gnome/initial-setup
 
 # orca-autostart.desktop
 RUN_DEPENDS +=		x11/gnome/orca

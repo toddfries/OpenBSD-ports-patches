@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.239 2013/09/25 23:39:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.243 2013/11/04 21:15:42 landry Exp $
 
 COMMENT =	Mozilla web browser
 
 # Don't forget to bump www/firefox-i18n after updates.
 # Don't forget to update devel/xulrunner/2.0 if patches changes.
 
-MOZILLA_VERSION =	24.0
-REVISION =		0
+MOZILLA_VERSION =	25.0
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	firefox
 MOZILLA_CODENAME =	browser
 
-#MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build1/source/
-SO_VERSION =	43.0
+#MASTER_SITES=	ftp://ftp.mozilla.org/pub/mozilla.org/${MOZILLA_PROJECT}/nightly/${MOZILLA_VERSION}-candidates/build2/source/
+SO_VERSION =	44.0
 # NOTE: Must bump minor version if any shlib's are removed from the
 # components dir to avoid pkg_add -r issues.
 MOZILLA_LIBS =	browsercomps mozalloc mozgnome xul
@@ -29,12 +28,11 @@ MODPY_RUNDEP =	No
 
 # necessary glue to build with the correct compiler after fx 17
 MODULES +=		gcc4 lang/clang
-MODGCC4_ARCHS =		powerpc sparc64 alpha
+MODGCC4_ARCHS =		powerpc sparc64 alpha i386
 MODGCC4_LANGS =		c c++
-MODCLANG_ARCHS =	amd64 i386
+MODCLANG_ARCHS =	amd64
 MODCLANG_LANGS =	c c++
 
-USE_GROFF =	Yes
 # Regression tests are too hard to adapt to run here
 NO_TEST =	Yes
 
@@ -47,11 +45,14 @@ CONFIGURE_ARGS +=	--disable-debug-symbols
 .endif
 
 CONFIGURE_ARGS +=	--enable-gstreamer
-LIB_DEPENDS +=	multimedia/gstreamer-0.10/plugins-base
 
-WANTLIB += gmodule-2.0 gstapp-0.10 gstbase-0.10 gstreamer-0.10
-WANTLIB += gstvideo-0.10 xml2
+# libxul doesnt link directly with gst but dlopens it at runtime
+# see content/media/gstreamer/GStreamerLoader.cpp
+#LIB_DEPENDS +=	multimedia/gstreamer-0.10/plugins-base
+#WANTLIB += gmodule-2.0 gstapp-0.10 gstbase-0.10 gstreamer-0.10
+#WANTLIB += gstvideo-0.10 xml2
 
+BUILD_DEPENDS +=	multimedia/gstreamer-0.10/plugins-base
 RUN_DEPENDS +=	multimedia/gstreamer-0.10/plugins-good
 
 # needs 3.0.10 when not using gcc
@@ -77,10 +78,6 @@ post-install:
 		${PREFIX}/share/pixmaps/firefox.png
 
 	# link default48.png to default.png to be used by default by non-icccm compliant wm
-	ln ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/browser/chrome/icons/default/default{48,}.png
-
-	# cleanup useless dirs from #798450 (fx 18?)
-#	rm -Rf ${PREFIX}/lib/firefox-${MOZILLA_VERSION:C/b.//}/modules
-
+	ln ${PREFIX}/lib/firefox-${MOZILLA_VER}/browser/chrome/icons/default/default{48,}.png
 
 .include <bsd.port.mk>

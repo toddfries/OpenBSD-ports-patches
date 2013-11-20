@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.395 2013/10/04 06:03:00 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.397 2013/11/11 13:37:35 zhuk Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -95,6 +95,7 @@
      SUBDIR += libxml++
      SUBDIR += libxmlsd
      SUBDIR += libxslt
+     SUBDIR += link-grammar
      SUBDIR += linuxdoc
      SUBDIR += lq-sp
      SUBDIR += luaexpat
@@ -292,6 +293,7 @@
      SUBDIR += py-MarkupSafe
      SUBDIR += py-MarkupSafe,python3
      SUBDIR += py-chardet
+     SUBDIR += py-cssselect
      SUBDIR += py-cssutils
      SUBDIR += py-docutils
      SUBDIR += py-enchant

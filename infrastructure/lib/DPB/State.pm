@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: State.pm,v 1.5 2013/10/17 12:48:10 espie Exp $
+# $OpenBSD: State.pm,v 1.7 2013/11/16 16:39:28 espie Exp $
 #
 # Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
@@ -32,6 +32,7 @@ use File::Basename;
 use DPB::Core;
 use DPB::Core::Init;
 use DPB::Locks;
+use DPB::Serialize;
 
 sub define_present
 {
@@ -258,12 +259,11 @@ sub parse_build_file
 	open my $fh, '<', $fname or return;
 	my $_;
 	while (<$fh>) {
-		chomp;
-		next if $_ =~ m/!$/;
-		my ($pkgpath, $host, $time, $sz, @rest) = parse_build_line($_);
-		next if !defined $sz;
-		my $o = DPB::PkgPath->new($pkgpath);
-		push(@{$o->{stats}}, {host => $host, time => $time, sz => $sz});
+		next if m/!$/;
+		my $s = DPB::Serialize::Build->read($_);
+		next if !defined $s->{size};
+		my $o = DPB::PkgPath->new($s->{pkgpath});
+		push(@{$o->{stats}}, $s);
 	}
 }
 
@@ -275,7 +275,7 @@ sub add_build_info
 		my ($i, $time, $sz, $host);
 		for my $s (@{$p->{stats}}) {
 			$time += $s->{time};
-			$sz += $s->{sz};
+			$sz += $s->{size};
 			$i++;
 			$host = $s->{host}; # XXX
 		}
@@ -295,8 +295,7 @@ sub rewrite_build_info
 		next unless defined $p->{stats};
 		shift @{$p->{stats}} while @{$p->{stats}} > 10;
 		for my $s (@{$p->{stats}}) {
-			print $f join(' ', $p->fullpkgpath, $s->{host},
-			    $s->{time}, $s->{sz}), "\n";
+			print $f DPB::Serialize::Build->write($s), "\n";
 		}
 		delete $p->{stats};
 	}

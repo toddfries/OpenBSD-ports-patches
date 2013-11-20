@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.302 2013/10/08 17:27:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.304 2013/11/01 14:18:34 syl Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -15,6 +15,7 @@
      SUBDIR += bacula,pgsql
      SUBDIR += bacula,sqlite3
      SUBDIR += bchunk
+     SUBDIR += binwalk
      SUBDIR += bubblemon-dockapp
      SUBDIR += cdrtools
      SUBDIR += cfengine
@@ -117,6 +118,7 @@
      SUBDIR += node-rmdir
      SUBDIR += node-syslog
      SUBDIR += ns4
+     SUBDIR += ntfs-3g
      SUBDIR += nut
      SUBDIR += openpoppassd
      SUBDIR += p5-Capture-Tiny
@@ -194,6 +196,7 @@
      SUBDIR += snapdl
      SUBDIR += socket
      SUBDIR += socklog
+     SUBDIR += sshfs-fuse
      SUBDIR += stan
      SUBDIR += stow
      SUBDIR += stress

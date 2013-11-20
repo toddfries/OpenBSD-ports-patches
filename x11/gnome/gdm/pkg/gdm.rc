@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $OpenBSD: gdm.rc,v 1.21 2013/09/28 16:22:40 ajacoutot Exp $
+# $OpenBSD: gdm.rc,v 1.23 2013/11/13 09:30:53 ajacoutot Exp $
 
 daemon="${TRUEPREFIX}/sbin/gdm"
 
@@ -14,7 +14,14 @@ rc_pre() {
 }
 
 rc_start() {
-	${rcexec} "sleep 5; ${daemon} ${daemon_flags}" &
+	( i=0
+	while [ $i -le 10 ]; do
+		pgrep -qf "^/usr/libexec/getty " && break
+		sleep 1
+		i=$((i+1))
+	done
+	[[ $i -gt 10 ]] && return 1
+	${rcexec} "${daemon} ${daemon_flags}" ) &
 }
 
 rc_stop() {

@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.106 2013/05/21 17:20:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.109 2013/11/02 09:04:16 ajacoutot Exp $
 
     SUBDIR =
     SUBDIR += a2ps
-    SUBDIR += a2ps,a4
     SUBDIR += acroread
     SUBDIR += afm
     SUBDIR += apsfilter
@@ -16,7 +15,6 @@
     SUBDIR += detex
     SUBDIR += dvi2tty
     SUBDIR += enscript
-    SUBDIR += enscript,a4
     SUBDIR += epdfview
     SUBDIR += foiltex
     SUBDIR += fontforge
@@ -44,7 +42,6 @@
     SUBDIR += lss
     SUBDIR += lyx
     SUBDIR += mpage
-    SUBDIR += mpage,a4
     SUBDIR += openclipart
     SUBDIR += p5-PostScript-MailLabels
     SUBDIR += pdflib
@@ -55,7 +52,6 @@
     SUBDIR += pscal
     SUBDIR += psdim
     SUBDIR += psutils
-    SUBDIR += psutils,a4
     SUBDIR += ptouch-driver
     SUBDIR += py-poppler
     SUBDIR += py-relatorio

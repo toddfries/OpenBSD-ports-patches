@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.29 2013/09/06 16:27:52 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.31 2013/11/03 00:31:20 ajacoutot Exp $
 @bin bin/certtool
 @bin bin/danetool
 @bin bin/gnutls-cli
@@ -86,6 +86,7 @@ lib/pkgconfig/gnutls.pc
 @man man/man3/gnutls_certificate_free_credentials.3
 @man man/man3/gnutls_certificate_free_crls.3
 @man man/man3/gnutls_certificate_free_keys.3
+@man man/man3/gnutls_certificate_get_crt_raw.3
 @man man/man3/gnutls_certificate_get_issuer.3
 @man man/man3/gnutls_certificate_get_ours.3
 @man man/man3/gnutls_certificate_get_peers.3
@@ -416,6 +417,7 @@ lib/pkgconfig/gnutls.pc
 @man man/man3/gnutls_pkcs11_token_get_flags.3
 @man man/man3/gnutls_pkcs11_token_get_info.3
 @man man/man3/gnutls_pkcs11_token_get_mechanism.3
+@man man/man3/gnutls_pkcs11_token_get_random.3
 @man man/man3/gnutls_pkcs11_token_get_url.3
 @man man/man3/gnutls_pkcs11_token_init.3
 @man man/man3/gnutls_pkcs11_token_set_pin.3

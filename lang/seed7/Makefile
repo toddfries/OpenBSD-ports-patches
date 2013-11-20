@@ -1,9 +1,6 @@
-# $OpenBSD: Makefile,v 1.5 2013/10/14 21:59:36 bcallah Exp $
+# $OpenBSD: Makefile,v 1.8 2013/11/13 03:30:26 bcallah Exp $
 
-# Fails for me on macppc, sgi, and sparc64.
-NOT_FOR_ARCHS =	${BE_ARCHS}
-
-V =		20131013
+V =		20131110
 COMMENT =	high-level, extensible programming language
 DISTNAME =	seed7_05_${V}
 PKGNAME =	seed7-${V}
@@ -53,6 +50,6 @@ do-install:
 
 # chkexc fails with our make; use gmake
 do-test:
-	cd ${WRKSRC} && gmake test
+	cd ${WRKSRC} && ${MAKE_PROGRAM} ${TEST_TARGET}
 
 .include <bsd.port.mk>

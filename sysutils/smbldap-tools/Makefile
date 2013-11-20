@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.8 2013/03/11 11:41:32 espie Exp $
+# $OpenBSD: Makefile,v 1.11 2013/11/01 08:23:06 landry Exp $
 
 COMMENT=	tools for managing samba ldap
 
 DISTNAME=	smbldap-tools-0.9.2a
-REVISION =	2
+REVISION =	3
 CATEGORIES=	sysutils
 EXTRACT_SUFX=	.tgz
 
-HOMEPAGE=	http://samba.idealx.org/
+HOMEPAGE=	http://gna.org/projects/smbldap-tools/
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -41,6 +41,8 @@ pre-configure:
 		perl -pi -e 's|%%LOCALBASE%%|${LOCALBASE}|g' ${WRKSRC}/$$f; \
 		perl -pi -e 's|%%SYSCONFDIR%%|${SYSCONFDIR}|g' ${WRKSRC}/$$f; \
 	done
+	perl -pi -e 's|^# ..Source: .*$$||' ${WRKSRC}/configure.pl
+	perl -pi -e 's|^# ..Id: .*$$||' ${WRKSRC}/configure.pl
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/smbldap-tools/

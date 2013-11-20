@@ -1,4 +1,4 @@
-$OpenBSD: patch-panels_common_cc-common-language_c,v 1.2 2013/10/17 19:16:00 ajacoutot Exp $
+$OpenBSD: patch-panels_common_cc-common-language_c,v 1.4 2013/10/26 15:57:25 ajacoutot Exp $
 
 https://bugzilla.gnome.org/show_bug.cgi?id=710412
 

@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile.inc,v 1.15 2013/08/10 18:46:11 ajacoutot Exp $
+# $OpenBSD: Makefile.inc,v 1.18 2013/10/28 08:58:02 ajacoutot Exp $
 
-MODPY_EGG_VERSION ?=	2.8.0
+REVISION ?=		0
+
+MODPY_EGG_VERSION ?=	3.0.0
 
 PKG_ARCH=		*
 
-CATEGORIES +=		productivity
+CATEGORIES +=		productivity productivity/tryton
 
 HOMEPAGE=		http://www.tryton.org/
 
@@ -20,7 +22,7 @@ MODULES +=		lang/python
 
 MODPY_SETUPTOOLS=	Yes
 
-TEST_DEPENDS ?=	${RUN_DEPENDS}
+TEST_DEPENDS ?=		${RUN_DEPENDS}
 
 # needs py-dateutil>=2 (downloaded automatically)
 # Some regression tests need read access to /etc/trytond.conf (not
@@ -31,5 +33,8 @@ TEST_IS_INTERACTIVE=	Yes
 COMMENT ?=		trytond ${TRYTOND_MODULE} module
 DISTNAME ?=		trytond_${TRYTOND_MODULE}-${MODPY_EGG_VERSION}
 PKGNAME ?=		trytond-module-${TRYTOND_MODULE}-${MODPY_EGG_VERSION}
+DESCR ?=		${.CURDIR}/../DESCR-module
 RUN_DEPENDS +=		productivity/tryton/trytond
+TEST_DEPENDS +=		productivity/tryton/proteus
+SUBST_VARS +=		^TRYTOND_MODULE
 .endif

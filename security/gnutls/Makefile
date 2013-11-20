@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.82 2013/09/06 16:27:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.86 2013/11/08 10:44:30 ajacoutot Exp $
 
 COMMENT=	GNU Transport Layer Security library
 
-V=		3.2.4
+V=		3.2.6
 DISTNAME=	gnutls-${V}
 EXTRACT_SUFX=	.tar.xz
+REVISION=	0
 
 CATEGORIES=	security
 
-SHARED_LIBS +=  gnutls               40.0     # 53.0
+SHARED_LIBS +=  gnutls               41.0     # 55.0
 SHARED_LIBS +=  gnutlsxx             29.1     # 29.0
 SHARED_LIBS +=  gnutls-xssl          0.0      # 0.0
 SHARED_LIBS +=  gnutls-openssl       27.2     # 27.2
@@ -27,8 +28,7 @@ MASTER_SITES=	ftp://ftp.gnutls.org/gcrypt/gnutls/v${V:R}/
 
 MODULES=	devel/gettext
 
-LIB_DEPENDS=	devel/libffi \
-		security/libtasn1 \
+LIB_DEPENDS=	security/libtasn1 \
 		security/libnettle \
 		security/p11-kit
 
@@ -41,8 +41,7 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--disable-guile \
-		--disable-valgrind-tests \
-		--with-packager="OpenBSD Ports"
+		--disable-valgrind-tests
 
 # add dependency on net/unbound; see post-install as well
 CONFIGURE_ARGS += --disable-libdane

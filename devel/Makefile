@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1165 2013/10/04 06:03:00 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.1176 2013/11/14 09:45:19 stu Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -323,7 +323,6 @@
      SUBDIR += kdiff3
      SUBDIR += lam
      SUBDIR += legit
-     SUBDIR += leiningen
      SUBDIR += libIDL
      SUBDIR += libJudy
      SUBDIR += libast
@@ -440,7 +439,6 @@
      SUBDIR += m4
      SUBDIR += maven
      SUBDIR += mcs
-     SUBDIR += mentry
      SUBDIR += mercurial
      SUBDIR += metaauto
      SUBDIR += mico
@@ -664,6 +662,7 @@
      SUBDIR += p5-Declare-Constraints-Simple
      SUBDIR += p5-Devel-Caller
      SUBDIR += p5-Devel-Cover
+     SUBDIR += p5-Devel-Cover-Report-Clover
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-Declare
      SUBDIR += p5-Devel-FastProf
@@ -947,7 +946,9 @@
      SUBDIR += p5-Switch
      SUBDIR += p5-Sys-SigAction
      SUBDIR += p5-System-Command
+     SUBDIR += p5-TAP-Formatter-JUnit
      SUBDIR += p5-TAP-Harness-Archive
+     SUBDIR += p5-TAP-Harness-JUnit
      SUBDIR += p5-TAP-Harness-Multiple
      SUBDIR += p5-TAP-Parser
      SUBDIR += p5-Taint-Runtime
@@ -1157,6 +1158,7 @@
      SUBDIR += py-kid
      SUBDIR += py-liblarch
      SUBDIR += py-liblarch_gtk
+     SUBDIR += py-libmagic
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
      SUBDIR += py-minimock
@@ -1184,6 +1186,7 @@
      SUBDIR += py-rcsparse
      SUBDIR += py-rope
      SUBDIR += py-ruledispatch
+     SUBDIR += py-send2trash
      SUBDIR += py-serial
      SUBDIR += py-setproctitle
      SUBDIR += py-setuptools
@@ -1339,6 +1342,12 @@
      SUBDIR += sdl-pango
      SUBDIR += sdl-sound
      SUBDIR += sdl-ttf
+     SUBDIR += sdl2
+     SUBDIR += sdl2-gfx
+     SUBDIR += sdl2-image
+     SUBDIR += sdl2-mixer
+     SUBDIR += sdl2-net
+     SUBDIR += sdl2-ttf
      SUBDIR += sdlmm
      SUBDIR += sfio
      SUBDIR += shapelib
@@ -1389,7 +1398,6 @@
      SUBDIR += vte
      SUBDIR += vte3
      SUBDIR += waf
-     SUBDIR += wcb
      SUBDIR += xdg-user-dirs
      SUBDIR += xdg-utils
      SUBDIR += xmake

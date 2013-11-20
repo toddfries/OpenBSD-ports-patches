@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2013/03/11 11:41:26 espie Exp $
+# $OpenBSD: Makefile,v 1.20 2013/11/03 22:14:06 jca Exp $
 
 SHARED_ONLY =	Yes
 
@@ -6,10 +6,8 @@ COMMENT =	RSA encoding and decoding using OpenSSL
 
 MODULES =	cpan
 
-DISTNAME =	Crypt-OpenSSL-RSA-0.26
-REVISION =	2
+DISTNAME =	Crypt-OpenSSL-RSA-0.28
 CATEGORIES =	security
-HOMEPAGE =	http://perl-openssl.sourceforge.net/
 
 # Perl
 PERMIT_PACKAGE_CDROM = Yes

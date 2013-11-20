@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.522 2013/10/08 18:38:12 jasper Exp $
+# $OpenBSD: Makefile,v 1.524 2013/11/18 21:52:50 edd Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -8,6 +8,7 @@
      SUBDIR += aewm
      SUBDIR += afterstep
      SUBDIR += amiwm
+     SUBDIR += arandr
      SUBDIR += asapm
      SUBDIR += asclock
      SUBDIR += asfiles
@@ -377,6 +378,7 @@
      SUBDIR += xzoom
      SUBDIR += yad
      SUBDIR += yakuake
+     SUBDIR += yeahconsole
      SUBDIR += yeahlaunch
 
 .include <bsd.port.subdir.mk>

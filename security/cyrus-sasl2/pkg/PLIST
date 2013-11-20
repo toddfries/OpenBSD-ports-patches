@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.27 2013/05/11 06:21:15 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.29 2013/10/31 19:42:45 schwarze Exp $
 @conflict cyrus-sasl-*
 @extraunexec rm -rf /var/sasl2/*
 include/sasl/

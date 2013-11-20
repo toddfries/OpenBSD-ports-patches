@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.312 2013/10/01 10:33:07 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.315 2013/11/16 17:58:56 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -129,6 +129,7 @@
      SUBDIR += mpd,tremor
      SUBDIR += mpd-add-similar
      SUBDIR += mpdBrowser
+     SUBDIR += mpdscribble
      SUBDIR += mpegaudio
      SUBDIR += mpg123
      SUBDIR += mpg321
@@ -179,6 +180,7 @@
      SUBDIR += picard
      SUBDIR += pms
      SUBDIR += portaudio-svn
+     SUBDIR += potamus
      SUBDIR += pulseaudio
      SUBDIR += py-ao
      SUBDIR += py-audio
@@ -206,6 +208,7 @@
      SUBDIR += ruby-vorbis_comment,ruby18
      SUBDIR += ruby-vorbis_comment,ruby19
      SUBDIR += ruby-vorbis_comment,ruby20
+     SUBDIR += schismtracker
      SUBDIR += scmpc
      SUBDIR += shell-fm
      SUBDIR += shntool

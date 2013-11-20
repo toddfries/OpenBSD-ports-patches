@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.818 2013/10/19 16:35:24 jturner Exp $
+# $OpenBSD: Makefile,v 1.821 2013/11/16 13:24:14 jca Exp $
 
      SUBDIR =
      SUBDIR += BitTorrent
@@ -183,10 +183,10 @@
      SUBDIR += libbgpdump
      SUBDIR += libcares
      SUBDIR += libdnet
-     SUBDIR += libdnsres
      SUBDIR += libepc
      SUBDIR += libgadu
      SUBDIR += libircclient
+     SUBDIR += libktorrent
      SUBDIR += libnet
      SUBDIR += libnice
      SUBDIR += libnids
@@ -197,7 +197,6 @@
      SUBDIR += librsync
      SUBDIR += libshout
      SUBDIR += libsmi
-     SUBDIR += libsocialweb
      SUBDIR += libst
      SUBDIR += libtorrent
      SUBDIR += libupnp
@@ -278,6 +277,7 @@
      SUBDIR += openvpn
      SUBDIR += openvpn-auth-ldap
      SUBDIR += openvpn_bsdauth
+     SUBDIR += ortp
      SUBDIR += osrtspproxy
      SUBDIR += owamp
      SUBDIR += p5-AnyEvent-IRC

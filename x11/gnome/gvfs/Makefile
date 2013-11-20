@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.101 2013/10/03 12:36:27 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.105 2013/11/08 14:51:32 ajacoutot Exp $
 
 COMMENT-main=	GNOME Virtual File System
 COMMENT-smb=	GVFS mount module for samba
 COMMENT-goa=	GVFS volume monitor for gnome-online-account
 
 GNOME_PROJECT=	gvfs
-GNOME_VERSION=	1.18.2
+GNOME_VERSION=	1.18.3
 
 PKGNAME-main=	${DISTNAME}
 PKGNAME-smb=	${GNOME_PROJECT}-smb-${GNOME_VERSION}
@@ -28,8 +28,8 @@ WANTLIB-main += ICE SM X11 Xcomposite Xcursor Xdamage xcb-shm
 WANTLIB-main += Xext Xfixes Xi Xinerama Xrandr Xrender graphite2 xml2
 WANTLIB-main += atk-1.0 atk-bridge-2.0 atspi avahi-client avahi-common
 WANTLIB-main += avahi-glib bz2 cairo cairo-gobject dbus-1 expat
-WANTLIB-main += fontconfig freetype gdk-3 gdk_pixbuf-2.0 xml2 archive
-WANTLIB-main += gtk-3 harfbuzz lzma m pango-1.0
+WANTLIB-main += fontconfig freetype fuse gdk-3 gdk_pixbuf-2.0 xml2
+WANTLIB-main += archive gtk-3 harfbuzz lzma m pango-1.0
 WANTLIB-main += pangocairo-1.0 pangoft2-1.0 pixman-1 png pthread-stubs
 WANTLIB-main += soup-2.4 soup-gnome-2.4 sqlite3 gthread-2.0 xcb xcb-render
 WANTLIB-main += gcrypt gpg-error secret-1
@@ -48,7 +48,7 @@ BUILD_DEPENDS += textproc/docbook-xsl
 
 LIB_DEPENDS-main= ${LIB_DEPENDS} \
 		archivers/libarchive \
-		devel/libsoup,-gnome \
+		devel/libsoup \
 		net/avahi \
 		x11/gnome/libsecret \
 		x11/gtk+3

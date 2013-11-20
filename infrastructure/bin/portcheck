@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# $OpenBSD: portcheck,v 1.39 2013/10/19 20:06:14 zhuk Exp $
+# $OpenBSD: portcheck,v 1.45 2013/11/12 11:24:21 zhuk Exp $
 # Copyright (c) 2013 Vadim Zhukov
 # 
 # Permission to use, copy, modify, and distribute this software for any
@@ -113,12 +113,12 @@ shift $(($OPTIND - 1))
 (($# == 0)) && set -- .
 
 ############################################################
-# Detect path to root of directory tree of current port(-s) and put it
+# Detect path to root of directory tree of current port(s) and put it
 # in $portsdir, unless it was set by user above. As a last resort, we
 # use some heuristics based on the commonly used names.
 #
 # We also have a $pkgpath variable, that represents subdirectory under
-# root ports directory where the port(-s) will be imported. In case we
+# root ports directory where the port(s) will be imported. In case we
 # use heuristics for determining $portsdir, we'll set up $pkgpath, too,
 # since we would get this info anyway.
 #
@@ -192,10 +192,6 @@ err_duplicated() {
 	err "both $2 and some of its parents has $1"
 }
 
-err_core_found() {
-	err "file or directory \"$1\" found, CVS will ignore it"
-}
-
 err_coredump_found() {
 	err "core dump file found: $1"
 }
@@ -241,8 +237,6 @@ handle_extra_file() {
 		if ! $ignore_cvs || [[ ${1##*/} != CVS ]]; then
 			err "VCS item detected: $1"
 		fi
-	elif [[ ${1##*/} == core ]]; then
-		$existing_port || err_core_found "${1%/*}"
 	elif [[ -f $1 && $1 == *.core ]]; then
 		err_coredump_found "$1"
 	elif [[ -d $1 ]]; then
@@ -339,7 +333,7 @@ check_port_hier() {
 	local plist_exists=false
 	ls $dir/pkg/PLIST* >/dev/null 2>&1 && plist_exists=true
 	$plist_lives_upper && $plist_exists &&
-		err_duplicated "packing list(-s)" "$dir"
+		err_duplicated "packing list(s)" "$dir"
 
 	$distinfo_lives_upper && distinfo_exists=true
 	$plist_lives_upper && plist_exists=true
@@ -354,9 +348,6 @@ check_port_hier() {
 	for F in "$dir"/* "$dir"/.*; do
 		F=${F#./}
 		ignoring "$F" && continue
-
-		[[ ${F##*/} == core ]] && ! $existing_port &&
-			err_core_found "$F"
 
 		if is_vcs_item "$F"; then
 			if ! $ignore_cvs || [[ ${F##*/} != CVS ]]; then
@@ -494,7 +485,7 @@ check_port_dir() {
 				ls "$F"/PLIST* >/dev/null 2>&1 &&
 					plist_exists=true
 				$plist_lives_upper && $plist_exists &&
-					err_duplicated "packing list(-s)" "$dir"
+					err_duplicated "packing list(s)" "$dir"
 			else
 				err "$F" is not a directory
 			fi
@@ -662,7 +653,7 @@ sub_checks() {
 	local dir=$1; shift
 	local subpkg=$1; shift
 	local fullpkgname=$1; shift
-	local flavor
+	local flavor pkg_arch
 	for flavor in "$@"; do
 		# avoid extra noise
 		[[ ${flavor#no_} != ${flavor} &&
@@ -674,10 +665,15 @@ sub_checks() {
 			portref=$(portref "$dir" "$subpkg" "$flavor" "$*")
 			export SUBPACKAGE="$subpkg" FLAVOR="$flavor"
 
-			make "${make_args[@]}" show="MODULES WANTLIB$subpkg" | {
+			make "${make_args[@]}" show="MODULES PKG_ARCH$subpkg WANTLIB$subpkg" | {
 				local modules wantlib
 				read -r modules
+				read -r pkg_arch
 				read -r wantlib
+				if [[ $pkg_arch = "*" && -n $wantlib ]]; then
+					err "non-empty WANTLIB$subpkg for" \
+					    "arch-independent package"
+				fi
 				check_wantlib "$portref" "$modules" $wantlib
 			} || error=true
 
@@ -991,7 +987,7 @@ check_plist() {
 	# gettext
 	$translation_found && ! $gettext_dep && ! $is_static &&
 		[[ $fullpkgname != gettext-* ]] &&
-		err "${portref}translation file(-s) found without" \
+		err "${portref}translation file(s) found without" \
 		    "devel/gettext dependency"
 
 	# Python modules
@@ -1125,7 +1121,6 @@ check_wantlib() {
 # Checks made:
 #   * Directory is not empty
 #   * No '*.core' files present
-#   * No 'core' files present (until updating)
 check_files_dir() {
 	$debugging && echo "CALLED: check_files_dir($*)" >&2
 
@@ -1140,8 +1135,6 @@ check_files_dir() {
 			empty=false
 			[[ $F == *.core ]] &&
 				err_coredump_found "$F"
-			[[ ${F##*/} == core ]] && ! $existing_port &&
-				err_core_found "$F"
 		done
 		$empty && "there are no files, please remove the $1 directory"
 		! $error
@@ -1183,11 +1176,11 @@ check_patches_dir() {
 
 # Checks made:
 #   * Directory is not empty and consist only of plain files with fixed names.
-#   * PFRAG, PLIST, README, SECURITY and .rc files contain appropriate
-#     OpenBSD RCS tags; other files should NOT contain OpenBSD RCS tag.
+#   * PFRAG, PLIST, README and .rc files contain appropriate OpenBSD RCS
+#     tags; other files should NOT contain OpenBSD RCS tag.
 #   * PFRAG.shared should be merged in PLIST if it contains @lib items only.
-#   * No trailing whitespace for DESCR, MESSAGE, README, SECURITY, UNMESSAGE
-#     and .rc files (PLIST and PFRAG are better checked with "make package").
+#   * No trailing whitespace for DESCR, MESSAGE, README, UNMESSAGE and
+#     .rc files (PLIST and PFRAG are better checked with "make package").
 #   * See also check_plist_file().
 check_pkg_dir() {
 	$debugging && echo "CALLED: check_pkg_dir($*)" >&2
@@ -1211,6 +1204,7 @@ check_pkg_dir() {
 			err "$F is not a file"
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
+		check_long_lines 72 "$F"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
@@ -1242,12 +1236,13 @@ check_pkg_dir() {
 		check_plist_file "$F"
 		;;
 
-	README?(-*)|SECURITY?(-*))
+	README?(-*))
 		[[ -f $F ]] ||
 			err "$F is not a file"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
+		check_long_lines 80 "$F"
 		head -n 1 -- "$F" |
 			egrep -q '^(#[[:space:]]*)?\$OpenBSD(:.*)?\$$' ||
 			err "$F does not have \$OpenBSD\$ RCS tag at the top"
@@ -1257,6 +1252,7 @@ check_pkg_dir() {
 		[[ -f $F ]] ||
 			err "$F is not a file"
 		check_trailing_whitespace "$F"
+		check_long_lines 80 "$F"
 		head -n 5 -- "$F" |
 			egrep -q '^#[[:space:]]*\$OpenBSD(:.*)?\$$' ||
 			err "$F does not have \$OpenBSD\$ RCS tag at the top"
@@ -1268,6 +1264,7 @@ check_pkg_dir() {
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
+		check_long_lines 72 "$F"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
 		;;
@@ -1278,6 +1275,20 @@ check_pkg_dir() {
 	esac; done
 
 	$empty && err "$dir directory does not contain either DESCR, PFRAG or PLIST files"
+}
+
+# Checks made:
+#   * There are no lines longer than given number of characters that
+#     have at least one space (avoids warnings on long URLs etc.).
+check_long_lines() {
+	$debugging && echo "CALLED: check_long_lines($*)" >&2
+	local max_width=$1; shift;
+	local file=$1; shift
+
+	local n=$(awk <"$file" -v max="$max_width" \
+		  '/[[:space:]]/ && length > max { n++ } END { print n+0 }')
+	(($n > 0 )) &&
+		err "$n line(s) longer than $max_width chars in $file"
 }
 
 # Checks made:
@@ -1298,7 +1309,7 @@ check_plist_file() {
 	#    ${FULLPKGNAME}
 	egrep -v '^(share/doc/pkg-readmes/\$\{FULLPKGNAME\}|@comment .*)$' "$1" |
 		egrep '.\$\{FULLPKGNAME\}|\$\{FULLPKGNAME\}.' >&2 &&
-		err "$1 contains item(-s) with \${FULLPKGNAME} in it, see above"
+		err "$1 contains item(s) with \${FULLPKGNAME} in it, see above"
 }
 
 # Checks made:
@@ -1324,6 +1335,7 @@ check_makefile() {
 	$debugging && echo "CALLED: check_makefile($*)" >&2
 
 	check_trailing_whitespace "$1"
+	check_long_lines 80 "$1"
 	head -n 1 -- "$1" |
 		egrep -q '^#[[:space:]]*\$OpenBSD.*\$' ||
 		err "$F does not have \$OpenBSD\$ RCS tag at the top"

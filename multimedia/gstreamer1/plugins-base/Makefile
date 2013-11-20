@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.18 2013/10/12 08:11:19 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2013/11/17 11:45:17 ajacoutot Exp $
 
 COMMENT=		base elements for GStreamer
 
 DISTNAME=		gst-plugins-base-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-base-${V}
-REVISION=		0
+REVISION=		1
 
 SHARED_LIBS +=  gsttag-1.0           1.0      # 200.0
 SHARED_LIBS +=  gstaudio-1.0         1.0      # 200.0
@@ -41,6 +41,7 @@ LIB_DEPENDS=		${P}/core=${V} \
 			multimedia/libtheora
 
 # needed for the gio plugin
+BUILD_DEPENDS +=	x11/gnome/gvfs #needed at build time g-ir-compiler(1)
 RUN_DEPENDS +=		x11/gnome/gvfs
 
 CONFIGURE_ARGS=		--enable-sndio \

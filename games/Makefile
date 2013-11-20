@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.277 2013/10/20 17:38:54 bentley Exp $
+# $OpenBSD: Makefile,v 1.279 2013/11/12 20:13:49 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -24,6 +24,7 @@
      SUBDIR += blobby
      SUBDIR += blobwars
      SUBDIR += blockrage
+     SUBDIR += bluemoon
      SUBDIR += bomberclone
      SUBDIR += boswars
      SUBDIR += braincurses
@@ -193,6 +194,7 @@
      SUBDIR += speyes
      SUBDIR += spider
      SUBDIR += starlanes
+     SUBDIR += stepmania
      SUBDIR += stone-soup
      SUBDIR += stone-soup,no_x11
      SUBDIR += sudognu
