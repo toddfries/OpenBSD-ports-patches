@@ -12,3 +12,7 @@ packages
 plist
 update
 obj.*.*
+openbsd-wip
+mystuff
+wipstuff
+fdcstuff
