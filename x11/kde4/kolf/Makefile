@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/05/14 09:16:27 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	mini-golf simulator game for KDE
 DISTNAME =	kolf-${MODKDE4_VERSION}

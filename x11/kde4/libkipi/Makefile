@@ -1,21 +1,31 @@
-# $OpenBSD: Makefile,v 1.3 2013/08/24 17:33:48 zhuk Exp $
+# $OpenBSD: Makefile,v 1.11 2014/01/15 19:42:11 zhuk Exp $
 
-COMMENT =	KDE image plugins infrastructure
+COMMENT-main =	KDE image plugins infrastructure
+COMMENT-icons =	icons for libkipi
+CATEGORIES =	graphics devel
 DISTNAME =	libkipi-${MODKDE4_VERSION}
-REVISION =	0
+PKGNAME-main =	${DISTNAME}
+PKGNAME-icons =	kde4-libkipi-icons-${MODKDE4_VERSION}
 
-SHARED_LIBS =	kipi		50.0
+SHARED_LIBS =	kipi		50.1
 
-WANTLIB =  c m pthread stdc++
-WANTLIB += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtNetwork
-WANTLIB += lib/qt4/QtSvg lib/qt4/QtXml
-WANTLIB += ${KDE4LIB}/kdeui ${KDE4LIB}/kio ${KDE4LIB}/kfile
-WANTLIB += ${KDE4LIB}/kparts ${KDE4LIB}/nepomuk ${KDE4LIB}/nepomukutils
-WANTLIB += soprano
+WANTLIB-icons =
+WANTLIB-main =  ${WANTLIB} c m pthread stdc++
+WANTLIB-main += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtNetwork
+WANTLIB-main += lib/qt4/QtSvg lib/qt4/QtXml
+WANTLIB-main += ${KDE4LIB}/kdeui ${KDE4LIB}/kio ${KDE4LIB}/kfile
+WANTLIB-main += ${KDE4LIB}/kparts ${KDE4LIB}/nepomuk ${KDE4LIB}/nepomukutils
+WANTLIB-main += soprano
 
-MODKDE4_USE =	libs
+MULTI_PACKAGES =	-main -icons
 
-RUN_DEPENDS =	x11/gtk+2,-guic
+MODKDE4_USE =		libs
+
+RUN_DEPENDS-icons =	x11/gtk+2,-guic
+RUN_DEPENDS-main =	${RUN_DEPENDS} \
+			${BUILD_PKGPATH},-icons
+
+LIB_DEPENDS-icons =
 
 post-patch:
 	cd ${WRKSRC}; \

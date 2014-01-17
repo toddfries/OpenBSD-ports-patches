@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.64 2013/09/19 21:14:56 tobiasu Exp $
+# $OpenBSD: Makefile,v 1.69 2014/01/15 20:16:03 brad Exp $
 
 ONLY_FOR_ARCHS = alpha amd64 hppa i386 powerpc sparc64
 DPB_PROPERTIES = parallel
@@ -24,14 +24,14 @@ PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 PKGNAME-go =	gccgo-${FULL_PKGVERSION}
 PKGSPEC-main = gcc->=4.6,<4.7
 
-REVISION-main =	3
-REVISION-c++ =	0
+REVISION-main =	7
+REVISION-c++ =	4
 #REVISION-estdc =
-REVISION-f95 =	0
-REVISION-java =	0
-REVISION-objc =	0
-REVISION-ada =	2
-REVISION-go =	0
+REVISION-f95 =	4
+REVISION-java =	4
+REVISION-objc =	3
+REVISION-ada =	6
+REVISION-go =	4
 
 SHARED_LIBS =	estdc++		14.0 \
 		gfortran	3.0 \
@@ -95,7 +95,6 @@ LANGS := ${LANGS},java
 DISTFILES +=		${ECJ}:1
 BUILD_DEPENDS +=	archivers/zip>=2.3p0
 CONFIGURE_ARGS +=	--enable-libgcj --without-jar
-VMEM_WARNING =		Yes
 .endif
 .if ${BUILD_PACKAGES:M-ada}
 LANGS := ${LANGS},ada

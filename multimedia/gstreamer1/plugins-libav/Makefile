@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2013/10/06 09:08:19 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.22 2013/12/29 10:36:44 ajacoutot Exp $
 
 COMMENT=		ffmpeg elements for GStreamer
 
 DISTNAME=		gst-libav-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-libav-${V}
-REVISION=		2
 
 # sync with graphics/ffmpeg
 PERMIT_PACKAGE_CDROM=	patents
@@ -39,9 +38,8 @@ libav_CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 			--disable-armv5te \
 			--disable-armv6 \
 			--disable-armv6t2 \
-			--disable-armvfp \
-			--disable-debug \
-			--disable-iwmmxt
+			--disable-vfp \
+			--disable-debug
 
 CONFIGURE_ARGS=		--with-libav-extra-configure="${libav_CONFIGURE_ARGS}"
 

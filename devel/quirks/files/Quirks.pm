@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.101 2013/11/14 09:44:34 stu Exp $
+# $OpenBSD: Quirks.pm,v 1.116 2014/01/07 15:06:38 sthen Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -328,6 +328,34 @@ my $stem_extensions = {
 	'libungif' => 'giflib',
 	'mentry' =>'tklib',
 	'wcb' =>'tklib',
+	'foomatic-filters' =>'cups-filters',
+	'faad-xmms' => 'xmms-faad',
+};
+
+# reasons for obsolete packages
+my @msg = (
+	"ancient software that doesn't work", #0
+	"web application with no benefit being packaged", #1
+	"no longer maintained and full of security holes", #2
+	"no longer maintained upstream", #3
+);
+
+my $obsolete_reason = {
+	'BitTorrent' => 0,
+	'BitTorrent-gui' => 0,
+	'sgmlformat' => 0,
+	'parse' => 0,
+	'spice' => 0,
+	'mshell' => 0,
+	'splitvt' => 0,
+	'bricolage' => 1,
+	'xinha' => 1,
+	'py-cups' => 0,
+	'system-config-printer' => 0,
+	'ruby-postgres' => 3,
+	'metasploit' => 2,
+	'childsplay-plugins' => 3,
+	'ez-ipupdate' => 3,
 };
 
 # ->is_base_system($handle, $state):
@@ -358,6 +386,28 @@ sub is_base_system
 		return 0;
 	}
 }
+
+# ->filter_obsolete(\@list)
+# explicitly mark packages as no longer there. Remove them from the
+# list of "normal" stuff.
+
+sub filter_obsolete
+{
+	my ($self, $list, $state) = @_;
+	my @in = @$list;
+	@$list = ();
+	for my $pkgname (@in) {
+		my $stem = OpenBSD::PackageName::splitstem($pkgname);
+		my $reason = $obsolete_reason->{$stem};
+		if (defined $reason) {
+			$state->say("Obsolete package: #1 (#2)", $pkgname, 
+			    $msg[$reason]);
+		} else {
+			push(@$list, $pkgname);
+	    	}
+	}
+}
+
 
 # ->tweak_search(\@s, $handle, $state):
 #	tweaks the normal search for a given handle, in case (for instance)

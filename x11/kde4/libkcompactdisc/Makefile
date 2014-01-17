@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.3 2013/07/04 00:46:23 zhuk Exp $
+# $OpenBSD: Makefile,v 1.5 2013/12/08 19:13:32 zhuk Exp $
 
 COMMENT =	KDE compact discs interface library
+CATEGORIES =	audio net devel
 DISTNAME =	libkcompactdisc-${MODKDE4_VERSION}
 
 SHARED_LIBS =	kcompactdisc		50.0

@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.2 2013/10/15 13:48:59 naddy Exp $
+# $OpenBSD: Makefile,v 1.8 2013/12/27 09:14:02 ajacoutot Exp $
 
 COMMENT=		hotplugd(8) automounter (Toad Opens All Devices)
 
-DISTNAME=		toad-0.3
-REVISION=		0
+DISTNAME=		toad-0.9
 
 CATEGORIES=		sysutils
 
@@ -25,10 +24,5 @@ RUN_DEPENDS=		devel/xdg-utils \
 MAKE_FLAGS=		PREFIX=${TRUEPREFIX} \
 			MANDIR=${TRUEPREFIX}/man/man
 NO_TEST=		Yes
-
-post-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/toad
-	${SUBST_CMD} -o ${BINOWN} -g ${BINGRP} \
-		-c ${FILESDIR}/hotplug-scripts ${PREFIX}/share/examples/toad/hotplug-scripts
 
 .include <bsd.port.mk>

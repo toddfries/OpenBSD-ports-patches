@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2013/06/06 08:36:48 zhuk Exp $
+# $OpenBSD: Makefile,v 1.5 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	strategy game for KDE
 DISTNAME =	ksirk-${MODKDE4_VERSION}

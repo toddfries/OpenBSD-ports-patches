@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/07/04 00:47:07 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:34 zhuk Exp $
 
 COMMENT =	KDE interactive physics simulator
 DISTNAME =	step-${MODKDE4_VERSION}

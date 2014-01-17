@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.100 2013/08/19 14:38:29 brad Exp $
+# $OpenBSD: Makefile,v 1.102 2013/12/28 00:40:05 brad Exp $
 
 COMMENT=	audio/video converter and streamer
 
-V=		20130718
+V=		20131216
 DISTNAME=	ffmpeg-git-${V}
 PKGNAME=	ffmpeg-${V}
+REVISION=	0
 CATEGORIES=	graphics multimedia
 MASTER_SITES=	http://comstyle.com/source/
 EXTRACT_SUFX=	.tar.xz
@@ -13,6 +14,7 @@ SHARED_LIBS=	avcodec		19.1 \
 		avdevice	7.1 \
 		avfilter	5.1 \
 		avformat	17.1 \
+		avresample	0.0 \
 		avutil		11.1 \
 		postproc	15.1 \
 		swresample	0.1 \
@@ -52,6 +54,7 @@ LIBavcodec_EXTRALIBS=-L${LOCALBASE}/lib -lgsm -lmp3lame -lopus -lschroedinger-1.
 LIBavdevice_EXTRALIBS=-L${X11BASE}/lib -lX11 -lXext -lXfixes -lsndio
 LIBavfilter_EXTRALIBS=
 LIBavformat_EXTRALIBS=-L${LOCALBASE}/lib -lbz2 -lssl -lcrypto -pthread
+LIBavresample_EXTRALIBS=
 LIBavutil_EXTRALIBS=-lm
 LIBpostproc_EXTRALIBS=
 LIBswresample_EXTRALIBS=-lm
@@ -92,6 +95,7 @@ CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--disable-outdev=oss \
 		--disable-outdev=sdl \
 		--disable-vfp \
+		--enable-avresample \
 		--enable-gpl \
 		--enable-libgsm \
 		--enable-libmp3lame \
@@ -115,6 +119,7 @@ CONFIGURE_ENV+=	LIBavcodec_EXTRALIBS="${LIBavcodec_EXTRALIBS}" \
 		LIBavdevice_EXTRALIBS="${LIBavdevice_EXTRALIBS}" \
 		LIBavfilter_EXTRALIBS="${LIBavfilter_EXTRALIBS}" \
 		LIBavformat_EXTRALIBS="${LIBavformat_EXTRALIBS}" \
+		LIBavresample_EXTRALIBS="${LIBavresample_EXTRALIBS}" \
 		LIBavutil_EXTRALIBS="${LIBavutil_EXTRALIBS}" \
 		LIBpostproc_EXTRALIBS="${LIBpostproc_EXTRALIBS}" \
 		LIBswresample_EXTRALIBS="${LIBswresample_EXTRALIBS}" \
@@ -123,14 +128,16 @@ CONFIGURE_ENV+=	LIBavcodec_EXTRALIBS="${LIBavcodec_EXTRALIBS}" \
 		LIBavdevice_LINKFLAGS="-Wl,-rpath-link,${X11BASE}/lib" \
 		LIBavfilter_LINKFLAGS="" \
 		LIBavformat_LINKFLAGS="" \
+		LIBavresample_LINKFLAGS="" \
 		LIBavutil_LINKFLAGS="" \
 		LIBpostproc_LINKFLAGS="" \
 		LIBswresample_LINKFLAGS="" \
 		LIBswscale_LINKFLAGS="" \
 		LIBavcodec_REQUIRES="libavutil opus schroedinger-1.0 speex theoraenc vpx x264" \
 		LIBavdevice_REQUIRES="libavcodec libavfilter libavformat libavutil" \
-		LIBavfilter_REQUIRES="libavcodec libavformat libavutil libpostproc libswresample libswscale" \
+		LIBavfilter_REQUIRES="libavcodec libavformat libavresample libavutil libpostproc libswresample libswscale" \
 		LIBavformat_REQUIRES="libavcodec libavutil" \
+		LIBavresample_REQUIRES="libavutil" \
 		LIBavutil_REQUIRES="" \
 		LIBpostproc_REQUIRES="libavutil" \
 		LIBswresample_REQUIRES="libavutil" \
@@ -141,6 +148,7 @@ VERSION_FLAGS=	libavcodec_VERSION=${LIBavcodec_VERSION} \
 		libavdevice_VERSION=${LIBavdevice_VERSION} \
 		libavfilter_VERSION=${LIBavfilter_VERSION} \
 		libavformat_VERSION=${LIBavformat_VERSION} \
+		libavresample_VERSION=${LIBavresample_VERSION} \
 		libavutil_VERSION=${LIBavutil_VERSION} \
 		libpostproc_VERSION=${LIBpostproc_VERSION} \
 		libswresample_VERSION=${LIBswresample_VERSION} \
@@ -151,8 +159,9 @@ MAKE_ENV=	V=1
 MAKE_FLAGS=	${VERSION_FLAGS} \
 		LIBavcodec_EXTRALIBS="-lavutil ${LIBavcodec_EXTRALIBS}" \
 		LIBavdevice_EXTRALIBS="-lavcodec -lavfilter -lavformat -lavutil ${LIBavdevice_EXTRALIBS}" \
-		LIBavfilter_EXTRALIBS="-lavcodec -lavformat -lavutil -lpostproc -lswresample -lswscale ${LIBavfilter_EXTRALIBS}" \
+		LIBavfilter_EXTRALIBS="-lavcodec -lavformat -lavresample -lavutil -lpostproc -lswresample -lswscale ${LIBavfilter_EXTRALIBS}" \
 		LIBavformat_EXTRALIBS="-lavcodec -lavutil ${LIBavformat_EXTRALIBS}" \
+		LIBavresample_EXTRALIBS="-lavutil ${LIBavresample_EXTRALIBS}" \
 		LIBavutil_EXTRALIBS="${LIBavutil_EXTRALIBS}" \
 		LIBpostproc_EXTRALIBS="-lavutil ${LIBpostproc_EXTRALIBS}" \
 		LIBswresample_EXTRALIBS="-lavutil ${LIBswresample_EXTRALIBS}" \

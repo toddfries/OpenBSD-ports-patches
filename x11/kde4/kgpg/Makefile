@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 12:03:38 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:30 zhuk Exp $
 
 COMMENT =	KDE interface to GnuPG
 DISTNAME =	kgpg-${MODKDE4_VERSION}

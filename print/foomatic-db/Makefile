@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.33 2013/10/01 09:07:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2013/12/27 13:32:35 ajacoutot Exp $
 
 PKG_ARCH=		*
 
 COMMENT=		Foomatic PPD data
 
-V=			20130712
+V=			20131001
 DISTNAME=		foomatic-db-4.0-${V}
 PKGNAME=		foomatic-db-4.0.${V}
 
@@ -19,15 +19,13 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 # tarballs are only available for a 24 hour period
 #MASTER_SITES=		http://www.openprinting.org/download/foomatic/
-MASTER_SITES=		https://distfiles.bsdfrog.org/
+#MASTER_SITES=		https://distfiles.bsdfrog.org/
+MASTER_SITES=		https://bsdistfiles.googlecode.com/files/
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--disable-ppds-to-cups
 
 WRKDIST=		${WRKDIR}/foomatic-db-${V}
-
-# share/foomatic/db/source/*/*.xml
-RUN_DEPENDS +=		print/foomatic-db-engine
 
 NO_BUILD=		Yes
 NO_TEST=		Yes

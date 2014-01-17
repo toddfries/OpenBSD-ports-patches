@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2013/10/21 15:29:37 jeremy Exp $
+# $OpenBSD: Makefile,v 1.14 2014/01/10 14:47:10 dcoppa Exp $
 
 SHARED_ONLY =	Yes
 ONLY_FOR_ARCHS =i386 amd64
@@ -7,7 +7,7 @@ COMMENT =	embeddable prototype-based language
 
 DISTNAME =	stevedekorte-io-2011.09.12-106-g02f9800
 PKGNAME =	io-20110905
-REVISION =	7
+REVISION =	9
 
 CATEGORIES =	lang
 
@@ -25,13 +25,11 @@ MAINTAINER =	Jeremy Evans <jeremy@openbsd.org>
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += X11 Xext Xrender atk-1.0 c cairo clutter-1.0 curses uuid
-WANTLIB += edit event_core event_extra expat fontconfig freetype
-WANTLIB += glib-2.0 gmp gobject-2.0 jpeg lzo2 m memcached
-WANTLIB += mysqlclient ogg pango-1.0 pcre pcreposix pixman-1 png
-WANTLIB += pthread pthread-stubs python2.7 qdbm readline sndfile
-WANTLIB += sqlite3 theora tiff vorbis xcb xcb-render xcb-shm xml2
-WANTLIB += yajl z
+WANTLIB += GL GLU ICE SM X11 Xext Xi Xmu atk-1.0 c cairo clutter-1.0
+WANTLIB += curses dbi edit event_core event_extra freetype glib-2.0
+WANTLIB += glut gmp jpeg lzo2 m memcached mysqlclient ogg pango-1.0
+WANTLIB += pcre pcreposix png pthread ${MODPY_WANTLIB} qdbm readline
+WANTLIB += sndfile sqlite3 theora tiff uuid vorbis xml2 yajl z
 
 LIB_DEPENDS =	archivers/lzo2 \
 		audio/libsndfile \
@@ -47,6 +45,7 @@ LIB_DEPENDS =	archivers/lzo2 \
 		devel/pcre \
 		graphics/cairo \
 		graphics/clutter/core \
+		graphics/freeglut \
 		graphics/jpeg \
 		graphics/png \
 		graphics/tiff \
@@ -56,7 +55,8 @@ LIB_DEPENDS =	archivers/lzo2 \
 		textproc/libxml,no_python
 
 MODULES =	devel/cmake \
-		devel/gettext
+		devel/gettext \
+		lang/python
 
 WRKDIST = ${WRKDIR}/stevedekorte-io-02f9800
 WRKBUILD = ${WRKSRC}/build
@@ -77,11 +77,18 @@ pre-configure:
 	perl -pi -e 's/\#include \<event\.h\>/#include <event.h>\n#include <event_struct.h>\n#include <buffer_compat.h>/' \
 		${WRKSRC}/addons/Socket/source/Io*.h
 	${SUBST_CMD} ${WRKSRC}/addons/Clutter/CMakeLists.txt
+# Remove obsolete local FindFreetype.cmake module which is not
+# compatible with Freetype 2.5
+	rm ${WRKSRC}/modules/FindFreetype.cmake
 
 pre-install:
 	cp -R ${WRKBUILD}/_build/headers ${PREFIX}/include/io
 	find ${WRKDIST} -name '*.orig' -or -name '*.beforesubst' -print0 | \
 		xargs -r0 rm
+
+post-install:
+	rm ${WRKINST}/${LOCALBASE}/lib/io/addons/*/*.orig
+	rm ${WRKINST}/${LOCALBASE}/lib/io/addons/*/source/*.orig
 
 do-test:
 	cd ${WRKBUILD} && _build/binaries/io \

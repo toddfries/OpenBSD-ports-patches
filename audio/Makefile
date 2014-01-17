@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.315 2013/11/16 17:58:56 bcallah Exp $
+# $OpenBSD: Makefile,v 1.320 2014/01/15 01:53:21 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -25,6 +25,7 @@
      SUBDIR += celt
      SUBDIR += celt051
      SUBDIR += celt07
+     SUBDIR += checkmate
      SUBDIR += chromaprint
      SUBDIR += clementine
      SUBDIR += cmixer
@@ -178,6 +179,7 @@
      SUBDIR += pacpl
      SUBDIR += pianobar
      SUBDIR += picard
+     SUBDIR += pithos
      SUBDIR += pms
      SUBDIR += portaudio-svn
      SUBDIR += potamus
@@ -189,10 +191,13 @@
      SUBDIR += py-id3
      SUBDIR += py-last
      SUBDIR += py-mpd
+     SUBDIR += py-mpd2
+     SUBDIR += py-mpd2,python3
      SUBDIR += py-mutagen
      SUBDIR += py-ogg
      SUBDIR += py-tagger
      SUBDIR += py-tagpy
+     SUBDIR += py-tagpy,python3
      SUBDIR += py-vorbis
      SUBDIR += py-xmms
      SUBDIR += pykaraoke
@@ -205,9 +210,11 @@
      SUBDIR += ruby-id3lib,ruby18
      SUBDIR += ruby-id3lib,ruby19
      SUBDIR += ruby-id3lib,ruby20
+     SUBDIR += ruby-id3lib,ruby21
      SUBDIR += ruby-vorbis_comment,ruby18
      SUBDIR += ruby-vorbis_comment,ruby19
      SUBDIR += ruby-vorbis_comment,ruby20
+     SUBDIR += ruby-vorbis_comment,ruby21
      SUBDIR += schismtracker
      SUBDIR += scmpc
      SUBDIR += shell-fm

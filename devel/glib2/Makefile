@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.215 2013/11/12 16:17:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.220 2014/01/13 08:54:39 ajacoutot Exp $
 
 COMMENT=		general-purpose utility library
 
 GNOME_PROJECT=		glib
 GNOME_VERSION=		2.38.2
 PKGNAME=		${DISTNAME:S/glib/glib2/}
+REVISION=		4
 
 CATEGORIES=		devel
 
@@ -53,13 +54,16 @@ PATCH_LIST=	patch-* gcc3-*
 
 pre-configure:
 	perl -pi -e "s,/usr/local,${LOCALBASE},g;" \
-		-e "s,/usr/share/locale,${LOCALBASE}/share/locale,g;" \
-		-e "s,/usr/share/applications,${LOCALBASE}/share/applications,g;" \
 		-e "s,/etc/xdg,${SYSCONFDIR}/xdg,g" \
-		${WRKSRC}/glib/gutils.c ${WRKSRC}/gio/xdgmime/xdgmime.c \
-		${WRKSRC}/gio/tests/desktop-app-info.c \
+		${WRKSRC}/glib/gutils.c \
+		${WRKSRC}/gio/xdgmime/xdgmime.c
+	perl -pi -e "s,/usr/share/locale,${LOCALBASE}/share/locale,g" \
+		${WRKSRC}/glib/gcharset.c
+	perl -pi -e "s,/usr/share/applications,${LOCALBASE}/share/applications,g" \
+		${WRKSRC}/gio/tests/desktop-app-info.c
+	perl -pi -e "s,/usr/share,${PREFIX}/share,g" \
 		${WRKSRC}/docs/reference/gio/html/glib-compile-schemas.html \
-		${WRKSRC}/docs/reference/gio/glib-compile-schemas.1
+		${WRKSRC}/docs/reference/gio/glib-compile-schemas.xml
 	perl -pi -e "s,/var/lib/dbus,/var/db/dbus,g" \
 		${WRKSRC}/gio/gdbusconnection.c \
 		${WRKSRC}/gio/gdbusprivate.c \

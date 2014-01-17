@@ -1,6 +1,4 @@
-# $OpenBSD: Makefile,v 1.45 2013/06/04 18:41:50 naddy Exp $
-
-VMEM_WARNING=	Yes
+# $OpenBSD: Makefile,v 1.48 2014/01/10 19:05:07 landry Exp $
 
 COMMENT=	Python charting and plotting API
 
@@ -19,7 +17,7 @@ WANTLIB += Xi Xinerama Xrandr Xrender atk-1.0 cairo ffi
 WANTLIB += fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0
 WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 gtk-x11-2.0 harfbuzz
 WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB += png pthread pthread-stubs python2.7 stdc++ tcl85 tk85
+WANTLIB += png pthread pthread-stubs ${MODPY_WANTLIB} stdc++ tcl85 tk85
 WANTLIB += xcb xcb-render xcb-shm z
 
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=matplotlib/}
@@ -43,6 +41,7 @@ MAKE_ENV+=	EXTRA_INCLUDES="${WRKSRC} ${MODTCL_INCDIR} ${MODTK_INCDIR}" \
 
 pre-configure:
 	@find ${WRKSRC}/examples -name \*.py | xargs ${MODPY_BIN_ADJ}
+	${SUBST_CMD} ${WRKSRC}/setupext.py
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/py-matplotlib

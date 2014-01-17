@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.102 2013/11/14 14:58:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.104 2014/01/14 08:39:40 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,7 +9,7 @@ COMMENT-hpcups=		HP native CUPS driver
 COMMENT-hpijs=		HP ghostscript driver (spooler independent)
 COMMENT-gui=		HPLIP graphical tools
 
-V=			3.13.11
+V=			3.14.1
 DISTNAME=		hplip-${V}
 SUBST_VARS=		V
 
@@ -104,7 +104,8 @@ LIB_DEPENDS-hpijs=	print/hplip,-common \
 			graphics/jpeg \
 			x11/dbus
 
-RUN_DEPENDS-hpijs= print/foomatic-filters #print/ghostscript/gnu
+# foomatic-rip(1), foomatic-db(-engine)
+RUN_DEPENDS-hpijs +=	print/cups-filters
 
 ### -gui
 WANTLIB-gui +=		#empty

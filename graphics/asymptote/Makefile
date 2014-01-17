@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2013/03/11 23:01:31 fgsch Exp $
+# $OpenBSD: Makefile,v 1.15 2013/12/19 18:13:48 shadchin Exp $
 
 COMMENT=		powerful descriptive vector graphics language
 
-DISTNAME=		asymptote-2.10.src
-PKGNAME=		${DISTNAME:S/.src//g}
-REVISION =		5
+DISTNAME=		asymptote-2.24.src
+PKGNAME=		asymptote-2.24
 CATEGORIES=		graphics
 
 HOMEPAGE=		http://asymptote.sourceforge.net/
@@ -17,8 +16,8 @@ EXTRACT_SUFX=		.tgz
 
 MODULES=		lang/python
 
-WANTLIB += GL GLU c m ncurses pthread readline stdc++ z
-WANTLIB += gc glut gsl gslcblas sigsegv fftw3
+WANTLIB += GL GLU c fftw3 gc glut gsl gslcblas m ncurses pthread
+WANTLIB += pthread-stubs readline sigsegv stdc++ z
 
 BUILD_DEPENDS=		print/texlive/base
 RUN_DEPENDS=		graphics/py-Imaging \
@@ -33,7 +32,6 @@ LIB_DEPENDS=		devel/boehm-gc \
 
 USE_GMAKE=		Yes
 USE_GROFF =		Yes
-VMEM_WARNING=		Yes
 
 # XXX eats all memory
 .if ${MACHINE_ARCH:Msparc64}
@@ -46,7 +44,7 @@ CONFIGURE_ARGS+=	--enable-gc=${LOCALBASE} \
 			--enable-gl \
 			--enable-gsl
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include -I${X11BASE}/include" \
-			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -pthread" \
+			LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib" \
 			ac_cv_prog_kpsewhich="${LOCALBASE}/bin/kpsewhich"
 
 FAKE_FLAGS+=		exampledir="${WRKINST}${PREFIX}/share/examples/asymptote"

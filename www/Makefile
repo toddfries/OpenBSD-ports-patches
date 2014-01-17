@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.643 2013/11/20 20:59:33 landry Exp $
+# $OpenBSD: Makefile,v 1.652 2014/01/13 23:47:59 dlg Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -48,7 +48,6 @@
      SUBDIR += erl-webmachine
      SUBDIR += fcgi
      SUBDIR += fcgi-cgi
-     SUBDIR += fennec
      SUBDIR += ffproxy
      SUBDIR += firefox-esr
      SUBDIR += firefox-esr-i18n
@@ -89,6 +88,7 @@
      SUBDIR += japana
      SUBDIR += jesred
      SUBDIR += junkbuster
+     SUBDIR += kwebkitpart
      SUBDIR += larbin
      SUBDIR += libcroco
      SUBDIR += libghttp
@@ -354,12 +354,16 @@
      SUBDIR += pecl-APC
      SUBDIR += pecl-chroot
      SUBDIR += pecl-geoip
+     SUBDIR += pecl-http
      SUBDIR += pecl-memcache
      SUBDIR += pecl-proctitle
+     SUBDIR += pecl-propro
+     SUBDIR += pecl-raphf
      SUBDIR += pecl-ssh2
      SUBDIR += pecl-swish
      SUBDIR += pecl-uploadprogress
      SUBDIR += perlbal
+     SUBDIR += phantomjs
      SUBDIR += php-markdown
      SUBDIR += php-openid
      SUBDIR += php-predis
@@ -372,6 +376,7 @@
      SUBDIR += pound
      SUBDIR += privoxy
      SUBDIR += puppet-dashboard
+     SUBDIR += puppetboard
      SUBDIR += py-CherryPy
      SUBDIR += py-beaker
      SUBDIR += py-beaker,python3
@@ -381,12 +386,14 @@
      SUBDIR += py-clientform
      SUBDIR += py-django
      SUBDIR += py-flask
+     SUBDIR += py-flask-wtf
      SUBDIR += py-flup
      SUBDIR += py-formencode
      SUBDIR += py-genshi
      SUBDIR += py-gunicorn
      SUBDIR += py-htmltmpl
      SUBDIR += py-httplib2
+     SUBDIR += py-itsdangerous
      SUBDIR += py-jinja2
      SUBDIR += py-jonpy
      SUBDIR += py-mako
@@ -417,6 +424,7 @@
      SUBDIR += py-webpy
      SUBDIR += py-webtest
      SUBDIR += py-werkzeug
+     SUBDIR += py-wtforms
      SUBDIR += py-wsgiproxy
      SUBDIR += rackmonkey
      SUBDIR += racktables
@@ -429,9 +437,11 @@
      SUBDIR += ruby-capybara
      SUBDIR += ruby-capybara-webkit,ruby19
      SUBDIR += ruby-capybara-webkit,ruby20
+     SUBDIR += ruby-capybara-webkit,ruby21
      SUBDIR += ruby-fcgi,ruby18
      SUBDIR += ruby-fcgi,ruby19
      SUBDIR += ruby-fcgi,ruby20
+     SUBDIR += ruby-fcgi,ruby21
      SUBDIR += ruby-httpclient
      SUBDIR += ruby-jekyll
      SUBDIR += ruby-mechanize
@@ -446,16 +456,19 @@
      SUBDIR += ruby-raindrops,ruby18
      SUBDIR += ruby-raindrops,ruby19
      SUBDIR += ruby-raindrops,ruby20
+     SUBDIR += ruby-raindrops,ruby21
      SUBDIR += ruby-rest-client
      SUBDIR += ruby-sanitize
      SUBDIR += ruby-sinatra
      SUBDIR += ruby-thin,ruby18
      SUBDIR += ruby-thin,ruby19
      SUBDIR += ruby-thin,ruby20
+     SUBDIR += ruby-thin,ruby21
      SUBDIR += ruby-thin_http
      SUBDIR += ruby-unicorn,ruby18
      SUBDIR += ruby-unicorn,ruby19
      SUBDIR += ruby-unicorn,ruby20
+     SUBDIR += ruby-unicorn,ruby21
      SUBDIR += ruby-vegas
      SUBDIR += ruby-vegas,ruby18
      SUBDIR += ruby-xpath
@@ -492,6 +505,7 @@
      SUBDIR += tracnav
      SUBDIR += tt-rss
      SUBDIR += twill
+     SUBDIR += uriparser
      SUBDIR += urlwatch
      SUBDIR += varnish
      SUBDIR += visitors

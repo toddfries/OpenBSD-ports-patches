@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 18:36:48 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:33 zhuk Exp $
 
 COMMENT =	single player puzzle game for KDE
 DISTNAME =	picmi-${MODKDE4_VERSION}

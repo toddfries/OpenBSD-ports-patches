@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.24 2013/10/26 23:55:36 jeremy Exp $
+# $OpenBSD: Makefile,v 1.26 2014/01/15 02:13:58 jeremy Exp $
 
 COMMENT =	Ruby interface to ImageMagick
 
 DISTNAME =	rmagick-2.13.1
-REVISION =	5
+REVISION =	7
 CATEGORIES =	graphics
 
 HOMEPAGE =	http://rmagick.rubyforge.org/

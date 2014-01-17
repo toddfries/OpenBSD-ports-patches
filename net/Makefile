@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.821 2013/11/16 13:24:14 jca Exp $
+# $OpenBSD: Makefile,v 1.827 2014/01/11 22:56:04 jeremy Exp $
 
      SUBDIR =
-     SUBDIR += BitTorrent
      SUBDIR += GeoIP
      SUBDIR += adns
      SUBDIR += adsuck
@@ -62,6 +61,7 @@
      SUBDIR += darkstat
      SUBDIR += dclib
      SUBDIR += ddclient
+     SUBDIR += dhcdrop
      SUBDIR += dhcping
      SUBDIR += dictd
      SUBDIR += dlint
@@ -89,7 +89,6 @@
      SUBDIR += etherape
      SUBDIR += ettercap
      SUBDIR += ettercap,no_x11
-     SUBDIR += ez-ipupdate
      SUBDIR += ezstream
      SUBDIR += farstream
      SUBDIR += filezilla
@@ -187,6 +186,7 @@
      SUBDIR += libgadu
      SUBDIR += libircclient
      SUBDIR += libktorrent
+     SUBDIR += libmygpo-qt
      SUBDIR += libnet
      SUBDIR += libnice
      SUBDIR += libnids
@@ -500,7 +500,6 @@
      SUBDIR += quvi
      SUBDIR += rabbitmq
      SUBDIR += radiusd-cistron
-     SUBDIR += radiusd-lucent
      SUBDIR += rbldnsd
      SUBDIR += retroshare
      SUBDIR += rrdtool
@@ -516,6 +515,7 @@
      SUBDIR += ruby-eventmachine,ruby18
      SUBDIR += ruby-eventmachine,ruby19
      SUBDIR += ruby-eventmachine,ruby20
+     SUBDIR += ruby-eventmachine,ruby21
      SUBDIR += ruby-macaddr
      SUBDIR += ruby-macaddr,ruby18
      SUBDIR += ruby-minion

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.106 2013/11/07 07:06:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.109 2014/01/06 17:36:33 ajacoutot Exp $
 
 # DPB: not parallel-safe
 
@@ -6,6 +6,7 @@ COMMENT=	message bus system
 
 DISTNAME=	dbus-1.6.18
 EPOCH=		0
+REVISION=	1
 
 SHARED_LIBS +=  dbus-1               10.2     # 10.3
 
@@ -48,7 +49,7 @@ CONFIGURE_ENV+=	ac_cv_header_execinfo_h=no \
 
 # Full test coverage is disabled:
 # * changes the final dbus binaries
-# * requires glib2 and dbus-python (which creates 2 dependency loops)
+# * requires py-gobject and dbus-python (dependency loop)
 # * requires the python MODULE
 #CONFIGURE_ARGS+=	--enable-tests=yes
 #CONFIGURE_ARGS+=	--enable-verbose-mode

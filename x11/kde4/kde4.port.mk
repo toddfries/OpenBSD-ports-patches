@@ -1,7 +1,7 @@
-# $OpenBSD: kde4.port.mk,v 1.13 2013/11/11 14:13:29 zhuk Exp $
+# $OpenBSD: kde4.port.mk,v 1.18 2014/01/15 19:42:08 zhuk Exp $
 
 # The version of KDE SC in x11/kde4
-_MODKDE4_STABLE =	4.10.5
+_MODKDE4_STABLE =	4.11.5
 
 # List of currently supported KDE SC versions, except "stable"
 _MODKDE4_OTHERS =
@@ -28,7 +28,7 @@ ERRORS += "Fatal: cannot use more than one kde4* FLAVOR\n"
 
 .      for _v in ${_MODKDE4_OTHERS}
 .         if "kde${_v:S/.//g}" == "${_f}"
-MODKDE4_VERSION =	${_v}
+MODKDE4_VERSION ?=	${_v}
 MODKDE4_DEP_VERSION ?=	${_v}
 .         endif
 .      endfor
@@ -118,10 +118,8 @@ MODKDE4_USE +=		runtime
 MODKDE4_USE +=		runtime
 .endif
 
-# Force CMake which has merged KDE modules.
 # Almost all KDE ports use docbook.
-MODKDE4_BUILD_DEPENDS =	STEM->=2.8.9:devel/cmake \
-			textproc/docbook \
+MODKDE4_BUILD_DEPENDS =	textproc/docbook \
 			textproc/docbook-xsl
 MODKDE4_LIB_DEPENDS =
 MODKDE4_RUN_DEPENDS =
@@ -154,10 +152,10 @@ MODKDE4_BUILD_DEPENDS +=	devel/automoc
 PKG_ARCH ?=		*
 MODKDE4_NO_QT ?=	Yes	# resources usually don't need Qt
 .   if ${MODKDE4_USE:L:Mworkspace}
-MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION}
+MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION},<5
 .   endif
 .   if ${MODKDE4_USE:L:Mlibs}
-MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/libs>=${MODKDE4_DEP_VERSION}
+MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/libs,-main>=${MODKDE4_DEP_VERSION},<5
 .   endif
 .else
 MODKDE4_NO_QT ?=	No
@@ -166,26 +164,26 @@ MODKDE4_NO_QT ?=	No
 ERRORS +=	"Fatal: KDE libraries require Qt."
 .       endif
 
-MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/libs>=${MODKDE4_DEP_VERSION}
+MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/libs,-main>=${MODKDE4_DEP_VERSION},<5
 MODKDE4_WANTLIB +=		${MODKDE4_LIB_DIR}/kdecore>=8
 .       if ${MODKDE4_USE:L:Mpim}
-MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/pimlibs>=${MODKDE4_DEP_VERSION}
+MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/pimlibs>=${MODKDE4_DEP_VERSION},<5
 MODKDE4_BUILD_DEPENDS +=	devel/boost
 .       endif
 
 .       if ${MODKDE4_USE:L:Mgames}
-MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/libkdegames>=${MODKDE4_DEP_VERSION}
+MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/libkdegames>=${MODKDE4_DEP_VERSION},<5
 MODKDE4_WANTLIB +=		${MODKDE4_LIB_DIR}/kdegames
 .       endif
 
 .       if ${MODKDE4_USE:L:Mruntime}
-MODKDE4_RUN_DEPENDS +=		${MODKDE4_DEP_DIR}/runtime>=${MODKDE4_DEP_VERSION}
+MODKDE4_RUN_DEPENDS +=		${MODKDE4_DEP_DIR}/runtime,-main>=${MODKDE4_DEP_VERSION},<5
 .           if ${MODKDE4_USE:L:Mpim}
-MODKDE4_RUN_DEPENDS +=		${MODKDE4_DEP_DIR}/pim-runtime>=${MODKDE4_DEP_VERSION}
+MODKDE4_RUN_DEPENDS +=		${MODKDE4_DEP_DIR}/pim-runtime>=${MODKDE4_DEP_VERSION},<5
 .           endif
 
 .           if ${MODKDE4_USE:L:Mworkspace}
-MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION}
+MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION},<5
 .           endif
 .       endif
 .   endif    # ${MODKDE4_USE:L:Mlibs}
@@ -245,6 +243,9 @@ MODKDE4_CONF_ARGS +=	-DINCLUDE_INSTALL_DIR:Path=${MODKDE4_INCLUDE_DIR} \
 # Make sure that KDE4-specific places are searched first
 MODKDE4_CONF_ARGS +=	-DCMAKE_INCLUDE_PATH=${LOCALBASE}/${MODKDE4_INCLUDE_DIR} \
 			-DCMAKE_LIBRARY_PATH=${LOCALBASE}/${MODKDE4_LIB_DIR}
+
+# KDE 4.11 doesn't play well with NEW CMP0022
+MODKDE4_CONF_ARGS +=	-DCMAKE_POLICY_DEFAULT_CMP0022=OLD
 .endif
 
 # FIXME

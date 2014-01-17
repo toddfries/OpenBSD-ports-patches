@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 11:56:30 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:30 zhuk Exp $
 
 COMMENT =	hide and seek game for KDE
 DISTNAME =	kblackbox-${MODKDE4_VERSION}

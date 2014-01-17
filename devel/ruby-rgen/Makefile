@@ -1,15 +1,11 @@
-# $OpenBSD: Makefile,v 1.4 2013/10/26 23:55:36 jeremy Exp $
+# $OpenBSD: Makefile,v 1.6 2013/12/21 10:28:47 jasper Exp $
 
 COMMENT=		framework for Model Driven Software Development
 
-DISTNAME=		rgen-0.6.2
-REVISION=		1
+DISTNAME=		rgen-0.6.6
 CATEGORIES=		devel textproc
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
-
-#Does not resolve at the moment.
-#HOMEPAGE=		http://ruby-gen.org/
 
 # MIT
 PERMIT_PACKAGE_CDROM=	Yes

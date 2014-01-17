@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.4 2013/10/16 19:22:36 juanfra Exp $
+# $OpenBSD: Makefile,v 1.8 2014/01/16 01:49:32 juanfra Exp $
 
 SHARED_ONLY =		Yes
 # Racket only supports i386 and amd64 on OpenBSD
@@ -10,7 +10,7 @@ ONLY_FOR_ARCHS =	i386 amd64
 COMMENT =		descendant of scheme with IDE and teaching resources
 
 V =			5.3.6
-REVISION =		1
+REVISION =		3
 PKGNAME =		racket-$V
 # The project uses racket-* for stable and plt-* for development releases
 DISTNAME =		racket-$V-src-unix
@@ -40,7 +40,18 @@ MASTER_SITES =		https://download.racket-lang.org/installers/${V}/racket/ \
 			ftp://download.tuxfamily.org/jod/lang/racket/
 EXTRACT_SUFX =		.tgz
 
-MODULES +=		converters/libiconv
+MODULES +=		converters/libiconv \
+			gcc4
+
+# udp.rktl test crashes with system gcc
+# clang 3.3 on i386 can't build racket with the default cflags
+# (without -fheinous-gnu-extensions) because the assembler code used by
+# gmplonglong.h is incorrect. The broken code was changed to the C
+# code used on amd64, it fixed the build but broke the racket math lib.
+# GCC 4.6 fixes also the crash with udp.rktl and doesn't break the
+# math lib like clang does.
+MODGCC4_ARCHS = *
+MODGCC4_LANGS = c c++
 
 # http://docs.racket-lang.org/draw/libs.html
 # http://docs.racket-lang.org/gui/libs.html
@@ -59,7 +70,6 @@ WRKDIST =		${WRKDIR}/racket-$V
 WRKSRC =		${WRKDIST}/src
 
 NO_TEST =		Yes
-VMEM_WARNING =		Yes
 SEPARATE_BUILD =	Yes
 
 CONFIGURE_STYLE =	gnu

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.261 2013/11/08 22:53:22 sthen Exp $
+# $OpenBSD: Makefile,v 1.264 2014/01/11 22:56:03 jeremy Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -175,6 +175,7 @@
      SUBDIR += py-odbc
      SUBDIR += py-pgsql
      SUBDIR += py-psycopg2
+     SUBDIR += py-puppetdb
      SUBDIR += py-pygresql
      SUBDIR += py-redis
      SUBDIR += py-sql
@@ -194,6 +195,7 @@
      SUBDIR += ruby-amalgalite,ruby18
      SUBDIR += ruby-amalgalite,ruby19
      SUBDIR += ruby-amalgalite,ruby20
+     SUBDIR += ruby-amalgalite,ruby21
      SUBDIR += ruby-bdb
      SUBDIR += ruby-couchrest
      SUBDIR += ruby-data_objects,ruby18
@@ -204,17 +206,24 @@
      SUBDIR += ruby-do_mysql,ruby18
      SUBDIR += ruby-do_mysql,ruby19
      SUBDIR += ruby-do_mysql,ruby20
+     SUBDIR += ruby-do_mysql,ruby21
      SUBDIR += ruby-do_mysql,rbx
      SUBDIR += ruby-do_postgres,ruby18
      SUBDIR += ruby-do_postgres,ruby19
      SUBDIR += ruby-do_postgres,ruby20
+     SUBDIR += ruby-do_postgres,ruby21
      SUBDIR += ruby-do_postgres,rbx
      SUBDIR += ruby-do_sqlite3,ruby18
      SUBDIR += ruby-do_sqlite3,ruby19
      SUBDIR += ruby-do_sqlite3,ruby20
+     SUBDIR += ruby-do_sqlite3,ruby21
      SUBDIR += ruby-do_sqlite3,rbx
-     SUBDIR += ruby-hiera
      SUBDIR += ruby-hiera,ruby18
+     SUBDIR += ruby-hiera,ruby19
+     SUBDIR += ruby-hiera,ruby20
+     SUBDIR += ruby-hiera-file,ruby18
+     SUBDIR += ruby-hiera-file,ruby19
+     SUBDIR += ruby-hiera-file,ruby20
      SUBDIR += ruby-jdbc-h2
      SUBDIR += ruby-jdbc-mysql
      SUBDIR += ruby-jdbc-postgres
@@ -223,16 +232,20 @@
      SUBDIR += ruby-ldap,ruby18
      SUBDIR += ruby-ldap,ruby19
      SUBDIR += ruby-ldap,ruby20
+     SUBDIR += ruby-ldap,ruby21
      SUBDIR += ruby-mysql,ruby18
      SUBDIR += ruby-mysql,ruby19
      SUBDIR += ruby-mysql,ruby20
+     SUBDIR += ruby-mysql,ruby21
      SUBDIR += ruby-mysql,rbx
      SUBDIR += ruby-mysql2,ruby18
      SUBDIR += ruby-mysql2,ruby19
      SUBDIR += ruby-mysql2,ruby20
+     SUBDIR += ruby-mysql2,ruby21
      SUBDIR += ruby-pg,ruby18
      SUBDIR += ruby-pg,ruby19
      SUBDIR += ruby-pg,ruby20
+     SUBDIR += ruby-pg,ruby21
      SUBDIR += ruby-pg,rbx
      SUBDIR += ruby-redis
      SUBDIR += ruby-redis,ruby18
@@ -246,20 +259,26 @@
      SUBDIR += ruby-sequel_pg,ruby18
      SUBDIR += ruby-sequel_pg,ruby19
      SUBDIR += ruby-sequel_pg,ruby20
+     SUBDIR += ruby-sequel_pg,ruby21
      SUBDIR += ruby-sqlite3,ruby18
      SUBDIR += ruby-sqlite3,ruby19
      SUBDIR += ruby-sqlite3,ruby20
+     SUBDIR += ruby-sqlite3,ruby21
      SUBDIR += ruby-sqlite3,rbx
      SUBDIR += ruby-swift
      SUBDIR += ruby-swift-db-mysql,ruby19
      SUBDIR += ruby-swift-db-mysql,ruby20
+     SUBDIR += ruby-swift-db-mysql,ruby21
      SUBDIR += ruby-swift-db-postgres,ruby19
      SUBDIR += ruby-swift-db-postgres,ruby20
+     SUBDIR += ruby-swift-db-postgres,ruby21
      SUBDIR += ruby-swift-db-sqlite3,ruby19
      SUBDIR += ruby-swift-db-sqlite3,ruby20
+     SUBDIR += ruby-swift-db-sqlite3,ruby21
      SUBDIR += ruby-tiny_tds,ruby18
      SUBDIR += ruby-tiny_tds,ruby19
      SUBDIR += ruby-tiny_tds,ruby20
+     SUBDIR += ruby-tiny_tds,ruby21
      SUBDIR += ruby-tiny_tds,rbx
      SUBDIR += ruby-validatable
      SUBDIR += sharedance

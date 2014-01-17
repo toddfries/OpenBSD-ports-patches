@@ -1,12 +1,11 @@
-# $OpenBSD: Makefile,v 1.132 2013/10/14 22:13:21 juanfra Exp $
+# $OpenBSD: Makefile,v 1.134 2014/01/08 10:23:12 sthen Exp $
 
 COMMENT-main=	vi clone, many additional features
 COMMENT-lang=	vi clone, NLS subpackage
 
-VERSION=	7.4.45
+VERSION=	7.4.135
 DISTNAME=	vim-${VERSION}
 PKGNAME-main=	vim-${VERSION}
-REVISION-main=	1
 PKGNAME-lang=	vim-lang-${VERSION}
 P=		vim${VERSION:R:S/.//}
 CATEGORIES=	editors
@@ -151,6 +150,17 @@ post-configure:
 post-install:
 	${INSTALL_DATA} ${FILESDIR}/pf.vim ${FILESDIR}/openbsd.vim \
 	    ${PREFIX}/share/vim/${P}/syntax/
+
+.if ! ${FLAVOR:Mno_x11}
+	${INSTALL_DATA_DIR} ${PREFIX}/share/applications
+	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -m ${SHAREMODE} -c \
+		${FILESDIR}/gvim.desktop \
+		${PREFIX}/share/applications/gvim.desktop
+	${INSTALL_DATA_DIR} ${PREFIX}/share/pixmaps
+	${INSTALL_DATA} ${WRKDIST}/runtime/vim48x48.png ${PREFIX}/share/pixmaps/vim.png
+
+RUN_DEPENDS+= devel/desktop-file-utils
+.endif
 
 # convenience targets
 hg:

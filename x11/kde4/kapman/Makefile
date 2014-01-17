@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 11:50:18 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:30 zhuk Exp $
 
 COMMENT =	Pac-Man clone for KDE
 DISTNAME =	kapman-${MODKDE4_VERSION}

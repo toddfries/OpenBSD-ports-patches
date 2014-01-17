@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.304 2013/11/01 14:18:34 syl Exp $
+# $OpenBSD: Makefile,v 1.309 2014/01/11 22:56:04 jeremy Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -33,6 +33,7 @@
      SUBDIR += consolekit
      SUBDIR += coreutils
      SUBDIR += crashme
+     SUBDIR += curlftpfs
      SUBDIR += cyphertite
      SUBDIR += d-feet
      SUBDIR += dcfldd
@@ -100,6 +101,7 @@
      SUBDIR += luastatgrab,lua52
      SUBDIR += mac-robber
      SUBDIR += mcollective
+     SUBDIR += mcollective-plugins
      SUBDIR += memtest86+
      SUBDIR += memtester
      SUBDIR += mencal
@@ -168,16 +170,22 @@
      SUBDIR += ruby-augeas,ruby18
      SUBDIR += ruby-augeas,ruby19
      SUBDIR += ruby-augeas,ruby20
+     SUBDIR += ruby-augeas,ruby21
      SUBDIR += ruby-capistrano
      SUBDIR += ruby-directory_watcher
      SUBDIR += ruby-facter
      SUBDIR += ruby-libvirt,ruby19
      SUBDIR += ruby-libvirt,ruby20
+     SUBDIR += ruby-libvirt,ruby21
      SUBDIR += ruby-posix-spawn,ruby19
      SUBDIR += ruby-posix-spawn,ruby20
+     SUBDIR += ruby-posix-spawn,ruby21
      SUBDIR += ruby-puppet
      SUBDIR += ruby-puppet-lint
      SUBDIR += ruby-puppet-lint,ruby18
+     SUBDIR += ruby-shadow
+     SUBDIR += ruby-shadow,ruby19
+     SUBDIR += ruby-shadow,ruby20
      SUBDIR += ruby-vlad
      SUBDIR += runit
      SUBDIR += safecat
@@ -218,6 +226,7 @@
      SUBDIR += tphdisk
      SUBDIR += tray-app
      SUBDIR += tree
+     SUBDIR += ttyload
      SUBDIR += upower
      SUBDIR += upsd
      SUBDIR += uptimed

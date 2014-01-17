@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2013/07/09 10:41:36 pascal Exp $
+# $OpenBSD: Makefile,v 1.11 2014/01/10 14:47:10 dcoppa Exp $
 
 BROKEN-mips64 =		missing atomic ops
 BROKEN-mips64el =	missing atomic ops
@@ -47,8 +47,6 @@ EXTRACT_SUFX =		.tar.bz2
 CONFIGURE_ARGS +=	-DCMAKE_BUILD_TYPE:STRING=Release \
 			-DOGRE_INSTALL_SAMPLES=1
 
-VMEM_WARNING =		Yes
-
 MODULES =		devel/cmake
 LIB_DEPENDS =		graphics/freeimage \
 			archivers/zziplib \
@@ -58,5 +56,10 @@ LIB_DEPENDS-samples =	${LIB_DEPENDS} \
 			x11/ogre,-main
 
 NO_TEST =		Yes
+
+pre-configure:
+# Remove obsolete local FindFreetype.cmake module which is not
+# compatible with Freetype 2.5
+	rm ${WRKSRC}/CMake/Packages/FindFreetype.cmake
 
 .include <bsd.port.mk>

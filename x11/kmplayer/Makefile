@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.18 2013/10/22 11:34:24 zhuk Exp $
+# $OpenBSD: Makefile,v 1.21 2014/01/13 19:06:24 zhuk Exp $
 
 COMMENT=	front-end/embeddable KPart for MPlayer
 CATEGORIES=	x11 x11/kde
 DISTNAME=	kmplayer-0.6.4
 EXTRACT_SUFX=	.tar.bz2
 
-REVISION=	6
+REVISION=	9
 
 SHARED_LIBS=	kparts_kmplayer  0.0 \
 		kdeinit_kmplayer 0.0
@@ -24,6 +24,7 @@ MODGNU_CONFIG_GUESS_DIRS=	${MODKDE_CONFIG_GUESS_DIRS}
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.52
 CONFIGURE_ARGS+=	${MODKDE_CONFIGURE_ARGS}
+CONFIGURE_ENV=		LDFLAGS="${LDFLAGS} -L${LOCALBASE}/${KDE}"
 USE_GMAKE=		Yes
 USE_LIBTOOL =		No
 PORTHOME=${WRKDIR}
@@ -39,7 +40,7 @@ PERMIT_PACKAGE_CDROM=Yes
 WANTLIB =  ICE SM X11 Xext Xfixes Xrender Xt art_lgpl_2 audiofile c
 WANTLIB += expat fam fontconfig freetype glib-2.0 gmodule-2.0
 WANTLIB += gthread-2.0 idn m mad mcop ogg pcre png pthread sndio
-WANTLIB += stdc++ util vorbis vorbisenc vorbisfile xcb z 
+WANTLIB += stdc++ util vorbis vorbisenc vorbisfile xcb z
 WANTLIB += ${KDE}/DCOP ${KDE}/artsflow ${KDE}/artsflow_idl
 WANTLIB += ${KDE}/artskde ${KDE}/kdecore ${KDE}/kdefx ${KDE}/kdesu
 WANTLIB += ${KDE}/kdeui ${KDE}/kio ${KDE}/kmedia2_idl
@@ -48,8 +49,7 @@ WANTLIB += ${KDE}/qtmcop ${KDE}/soundserver_idl
 
 LIB_DEPENDS=x11/kde/libs3
 
-RUN_DEPENDS=	devel/desktop-file-utils \
-		x11/mplayer
+RUN_DEPENDS=	x11/mplayer
 
 SEPARATE_BUILD=flavored
 

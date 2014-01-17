@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-hr,v 1.3 2013/07/04 00:46:09 zhuk Exp $
+@comment $OpenBSD: PLIST-hr,v 1.5 2014/01/15 19:42:11 zhuk Exp $
 share/locale/hr/LC_MESSAGES/adblock.mo
 share/locale/hr/LC_MESSAGES/akonadi_birthdays_resource.mo
 share/locale/hr/LC_MESSAGES/akonadi_contacts_resource.mo
@@ -90,7 +90,6 @@ share/locale/hr/LC_MESSAGES/kcm_nepomuk.mo
 share/locale/hr/LC_MESSAGES/kcm_pci.mo
 share/locale/hr/LC_MESSAGES/kcm_phonon.mo
 share/locale/hr/LC_MESSAGES/kcm_platform.mo
-share/locale/hr/LC_MESSAGES/kcm_solid.mo
 share/locale/hr/LC_MESSAGES/kcm_solid_actions.mo
 share/locale/hr/LC_MESSAGES/kcm_standard_actions.mo
 share/locale/hr/LC_MESSAGES/kcmaccess.mo
@@ -374,7 +373,6 @@ share/locale/hr/LC_MESSAGES/mplayerthumbs.mo
 share/locale/hr/LC_MESSAGES/mplayerthumbsconfig.mo
 share/locale/hr/LC_MESSAGES/nepomukbackup.mo
 share/locale/hr/LC_MESSAGES/nepomukfileindexer.mo
-share/locale/hr/LC_MESSAGES/nepomukqueryservice.mo
 share/locale/hr/LC_MESSAGES/nepomukserver.mo
 share/locale/hr/LC_MESSAGES/nepomukservicestub.mo
 share/locale/hr/LC_MESSAGES/nepomukstorage.mo
@@ -486,7 +484,6 @@ share/locale/hr/LC_MESSAGES/plasma_containmentactions_contextmenu.mo
 share/locale/hr/LC_MESSAGES/plasma_containmentactions_switchactivity.mo
 share/locale/hr/LC_MESSAGES/plasma_containmentactions_switchdesktop.mo
 share/locale/hr/LC_MESSAGES/plasma_containmentactions_switchwindow.mo
-share/locale/hr/LC_MESSAGES/plasma_engine_calendar.mo
 share/locale/hr/LC_MESSAGES/plasma_engine_kalzium.mo
 share/locale/hr/LC_MESSAGES/plasma_engine_kdeobservatory.mo
 share/locale/hr/LC_MESSAGES/plasma_engine_keystate.mo
@@ -553,9 +550,7 @@ share/locale/hr/LC_MESSAGES/rocscore.mo
 share/locale/hr/LC_MESSAGES/rocsvisualeditor.mo
 share/locale/hr/LC_MESSAGES/searchbarplugin.mo
 share/locale/hr/LC_MESSAGES/solid-hardware.mo
-share/locale/hr/LC_MESSAGES/solid-network.mo
 share/locale/hr/LC_MESSAGES/solid_qt.mo
-share/locale/hr/LC_MESSAGES/solidcontrol.mo
 share/locale/hr/LC_MESSAGES/soliduiserver.mo
 share/locale/hr/LC_MESSAGES/step.mo
 share/locale/hr/LC_MESSAGES/step_qt.mo

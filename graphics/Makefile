@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.358 2013/10/29 09:27:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.364 2014/01/11 22:56:03 jeremy Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -172,6 +172,7 @@
      SUBDIR += openimageio
      SUBDIR += openjpeg
      SUBDIR += openjp2
+     SUBDIR += openscenegraph
      SUBDIR += optipng
      SUBDIR += p5-Cairo
      SUBDIR += p5-Captcha-reCAPTCHA
@@ -184,6 +185,7 @@
      SUBDIR += p5-GD-SVG
      SUBDIR += p5-GD-SecurityImage
      SUBDIR += p5-GD-TextUtil
+     SUBDIR += p5-Goo-Canvas
      SUBDIR += p5-Graphics-ColorNames
      SUBDIR += p5-Graphics-ColorNames-WWW
      SUBDIR += p5-Image-BioChrome
@@ -198,14 +200,18 @@
      SUBDIR += p5-Imager-QRCode
      SUBDIR += p5-SVG
      SUBDIR += p5-SVG-Graph
+     SUBDIR += p5-Sane
+     SUBDIR += pdf2djvu
      SUBDIR += pdfmod
      SUBDIR += pecl-imagick
+     SUBDIR += pho
      SUBDIR += pigment
      SUBDIR += png
      SUBDIR += png2ico
      SUBDIR += pngcrush
      SUBDIR += potrace
      SUBDIR += povray
+     SUBDIR += pqiv
      SUBDIR += prison
      SUBDIR += pstoedit
      SUBDIR += py-Imaging
@@ -231,6 +237,7 @@
      SUBDIR += ruby-rmagick,ruby18
      SUBDIR += ruby-rmagick,ruby19
      SUBDIR += ruby-rmagick,ruby20
+     SUBDIR += ruby-rmagick,ruby21
      SUBDIR += s10sh
      SUBDIR += sane-backends
      SUBDIR += sane-backends,snmp
@@ -238,6 +245,7 @@
      SUBDIR += scrot
      SUBDIR += shared-color-targets
      SUBDIR += shotwell
+     SUBDIR += simgear
      SUBDIR += simple-scan
      SUBDIR += sketch
      SUBDIR += smpeg-xmms

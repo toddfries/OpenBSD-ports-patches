@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.524 2013/11/18 21:52:50 edd Exp $
+# $OpenBSD: Makefile,v 1.526 2013/12/19 16:45:50 bcallah Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -177,6 +177,7 @@
      SUBDIR += p5-Gtk2-Ex-PodViewer
      SUBDIR += p5-Gtk2-Ex-Simple-List
      SUBDIR += p5-Gtk2-GladeXML
+     SUBDIR += p5-Gtk2-ImageView
      SUBDIR += p5-Tk
      SUBDIR += p5-Tk-ProgressBar-Mac
      SUBDIR += p5-Tk-TableMatrix
@@ -299,6 +300,7 @@
      SUBDIR += wmtz
      SUBDIR += wmweather
      SUBDIR += wmx
+     SUBDIR += worker
      SUBDIR += wterm
      SUBDIR += wxSVG
      SUBDIR += wxWidgets

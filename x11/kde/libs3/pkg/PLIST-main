@@ -1,4 +1,6 @@
-@comment $OpenBSD: PLIST-main,v 1.20 2013/10/22 11:34:05 zhuk Exp $
+@comment $OpenBSD: PLIST-main,v 1.25 2013/12/25 15:47:30 zhuk Exp $
+@option no-default-conflict
+@conflict kdelibs-<4
 @conflict kdebase-<3.5
 @conflict kdeartwork-<3.4
 @conflict kdeaddons-<3.4
@@ -62,7 +64,7 @@ bin/kfmexec
 @bin bin/make_driver_db_lpr
 @bin bin/makekdewidgets
 @bin bin/meinproc
-bin/preparetips
+@comment bin/preparetips
 @bin bin/start_kdeinit
 @bin bin/start_kdeinit_wrapper
 include/kde/arts/artskde.h
@@ -3079,25 +3081,24 @@ share/apps.kde3/kde-conf-sample/xdg/menus/applications.menu
 @sample ${SYSCONFDIR}/xdg/menus/kde3-applications.menu
 share/autostart/
 share/autostart/kab2kabc.desktop
-share/config/
-share/config/colors/
-share/config/colors/40.colors
-share/config/colors/Rainbow.colors
-share/config/colors/Royal.colors
-share/config/colors/Web.colors
-share/config/ipv6blacklist
-share/config/katefiletyperc
-share/config/katesyntaxhighlightingrc
-share/config/kdebug.areas
-share/config/kdebugrc
-share/config/kdeprintrc
-share/config/khotnewstuffrc
-share/config/ksslcalist
-share/config/kthemestylerc
-share/config/language.codes
-share/config/ui/
-share/config/ui/kprintpreviewui.rc
-share/config/ui/ui_standards.rc
+share/config.kde3/colors/
+share/config.kde3/colors/40.colors
+share/config.kde3/colors/Rainbow.colors
+share/config.kde3/colors/Royal.colors
+share/config.kde3/colors/Web.colors
+share/config.kde3/ipv6blacklist
+share/config.kde3/katefiletyperc
+share/config.kde3/katesyntaxhighlightingrc
+share/config.kde3/kdebug.areas
+share/config.kde3/kdebugrc
+share/config.kde3/kdeprintrc
+share/config.kde3/khotnewstuffrc
+share/config.kde3/ksslcalist
+share/config.kde3/kthemestylerc
+share/config.kde3/language.codes
+share/config.kde3/ui/
+share/config.kde3/ui/kprintpreviewui.rc
+share/config.kde3/ui/ui_standards.rc
 share/doc/HTML.kde3/
 share/doc/HTML.kde3/en/
 share/doc/HTML.kde3/en/common/
@@ -5287,7 +5288,6 @@ share/icons/crystalsvg/scalable/mimetypes/wordprocessing.svgz
 share/icons/crystalsvg/scalable/mimetypes/zip.svgz
 share/icons/default.kde
 @comment share/icons/hicolor/index.theme
-share/locale/all_languages
 share/mimelnk/
 share/mimelnk/all/
 share/mimelnk/all/all.desktop

@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2013/08/24 17:33:45 zhuk Exp $
+# $OpenBSD: Makefile,v 1.6 2014/01/15 19:42:10 zhuk Exp $
 
 COMMENT =	screen capture program for KDE
 DISTNAME =	ksnapshot-${MODKDE4_VERSION}
-REVISION =	0
 
 WANTLIB =  c m pthread stdc++
 WANTLIB += ICE SM X11 Xext Xfixes

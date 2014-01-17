@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.3 2013/10/26 23:55:36 jeremy Exp $
+# $OpenBSD: Makefile,v 1.5 2014/01/15 02:13:58 jeremy Exp $
 
 COMMENT =	numerical N-dimensional Array class
 
 DISTNAME =	narray-0.6.0.4
-REVISION =	0
+REVISION =	2
 CATEGORIES =	devel
 
 HOMEPAGE=	http://narray.rubyforge.org/

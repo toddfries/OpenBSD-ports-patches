@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.14 2013/11/03 00:13:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2013/12/18 12:02:56 kirby Exp $
+
+# XXX updating requires Thread Local Storage support
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +8,7 @@ COMMENT=	bidirectional directories synchronizer (owncloud version)
 
 DISTNAME=	ocsync-0.90.4
 EXTRACT_SUFX=	.tar.bz2
+REVISION=	0
 
 SHARED_LIBS +=	ocsync                    0.0 # 0.2
 
@@ -32,10 +35,6 @@ LIB_DEPENDS=	devel/iniparser \
 		net/neon \
 		net/samba \
 		security/libssh
-
-# XXX tar: Invalid header, starting valid header search.
-TAR=		${LOCALBASE}/bin/gtar
-BUILD_DEPENDS+=	archivers/gtar
 
 # csync_owncloud requires -pthread:
 #     dlopen: failed to open libpthread.so.XX.X

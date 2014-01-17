@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.86 2013/11/08 10:44:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.89 2014/01/06 08:50:47 ajacoutot Exp $
 
 COMMENT=	GNU Transport Layer Security library
 
-V=		3.2.6
+V=		3.2.8
 DISTNAME=	gnutls-${V}
 EXTRACT_SUFX=	.tar.xz
-REVISION=	0
 
 CATEGORIES=	security
 
-SHARED_LIBS +=  gnutls               41.0     # 55.0
+SHARED_LIBS +=  gnutls               41.2     # 55.0
 SHARED_LIBS +=  gnutlsxx             29.1     # 29.0
 SHARED_LIBS +=  gnutls-xssl          0.0      # 0.0
 SHARED_LIBS +=  gnutls-openssl       27.2     # 27.2
@@ -46,8 +45,8 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 # add dependency on net/unbound; see post-install as well
 CONFIGURE_ARGS += --disable-libdane
 
-# requires security/trousers: not committed, needs kernel support for tpm(4):
-# http://bsssd.sourceforge.net/
+# requires security/trousers: not committed (aja@), needs kernel support
+# for tpm(4): http://bsssd.sourceforge.net/
 CONFIGURE_ARGS += --without-tpm
 
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \

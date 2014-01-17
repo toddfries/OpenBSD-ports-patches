@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.3 2013/11/12 19:03:10 bcallah Exp $
+@comment $OpenBSD: PLIST,v 1.6 2014/01/06 03:37:38 bcallah Exp $
 @bin bin/s7
 @bin bin/s7c
 lib/seed7/
@@ -38,6 +38,7 @@ lib/seed7/lib/crc32.s7i
 lib/seed7/lib/cronos16.s7i
 lib/seed7/lib/cronos27.s7i
 lib/seed7/lib/deflate.s7i
+lib/seed7/lib/des.s7i
 lib/seed7/lib/dialog.s7i
 lib/seed7/lib/dir.s7i
 lib/seed7/lib/draw.s7i
@@ -90,10 +91,12 @@ lib/seed7/lib/null_file.s7i
 lib/seed7/lib/osfiles.s7i
 lib/seed7/lib/pic16.s7i
 lib/seed7/lib/pic32.s7i
+lib/seed7/lib/pic_util.s7i
 lib/seed7/lib/pixmap_file.s7i
 lib/seed7/lib/pixmapfont.s7i
 lib/seed7/lib/pkcs1.s7i
 lib/seed7/lib/poll.s7i
+lib/seed7/lib/process.s7i
 lib/seed7/lib/progs.s7i
 lib/seed7/lib/propertyfile.s7i
 lib/seed7/lib/rational.s7i
@@ -130,6 +133,7 @@ lib/seed7/lib/tee.s7i
 lib/seed7/lib/text.s7i
 lib/seed7/lib/time.s7i
 lib/seed7/lib/tls.s7i
+lib/seed7/lib/unicode.s7i
 lib/seed7/lib/upper.s7i
 lib/seed7/lib/utf16.s7i
 lib/seed7/lib/utf8.s7i

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.279 2013/11/12 20:13:49 bcallah Exp $
+# $OpenBSD: Makefile,v 1.283 2013/12/19 19:24:12 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -34,7 +34,6 @@
      SUBDIR += castle-combat
      SUBDIR += cgoban
      SUBDIR += childsplay
-     SUBDIR += childsplay-plugins
      SUBDIR += chocolate-doom
      SUBDIR += choria
      SUBDIR += chroma
@@ -74,6 +73,7 @@
      SUBDIR += falconseye
      SUBDIR += fire
      SUBDIR += flare
+     SUBDIR += flightgear
      SUBDIR += foobillard
      SUBDIR += forcedattack
      SUBDIR += fotaq
@@ -205,6 +205,7 @@
      SUBDIR += taxipilot
      SUBDIR += teeworlds
      SUBDIR += tetrinetx
+     SUBDIR += tong
      SUBDIR += toppler
      SUBDIR += tornado
      SUBDIR += tutris
@@ -276,6 +277,7 @@
      SUBDIR += xteddy
      SUBDIR += xwelltris
      SUBDIR += xwelltris,no_sdl
+     SUBDIR += xye
      SUBDIR += xzip
      SUBDIR += zangband
      SUBDIR += zangband,no_x11

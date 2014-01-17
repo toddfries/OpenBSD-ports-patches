@@ -1,6 +1,7 @@
-# $OpenBSD: Makefile,v 1.3 2013/06/06 08:36:49 zhuk Exp $
+# $OpenBSD: Makefile,v 1.7 2014/01/15 19:42:11 zhuk Exp $
 
 COMMENT =	KDE exiv2 wrapper
+CATEGORIES =	graphics devel
 DISTNAME =	libkexiv2-${MODKDE4_VERSION}
 
 SHARED_LIBS =	kexiv2			50.0	# 10.0
@@ -13,5 +14,8 @@ WANTLIB += exiv2
 MODKDE4_USE =	libs
 
 LIB_DEPENDS = 	graphics/exiv2>=0.22
+
+post-extract:
+	cp ${FILESDIR}/Kexiv2Config.cmake.in ${WRKDIST}/
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 12:02:51 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:30 zhuk Exp $
 
 COMMENT =	GoldRunner clone for KDE
 DISTNAME =	kgoldrunner-${MODKDE4_VERSION}

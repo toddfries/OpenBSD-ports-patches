@@ -1,23 +1,7 @@
-$OpenBSD: patch-sql_CMakeLists_txt,v 1.3 2013/09/22 14:28:13 dcoppa Exp $
---- sql/CMakeLists.txt.orig	Wed Jul 17 16:51:28 2013
-+++ sql/CMakeLists.txt	Fri Sep 20 14:02:31 2013
-@@ -25,7 +25,6 @@ ${CMAKE_BINARY_DIR}/sql
- SET(GEN_SOURCES
- ${CMAKE_CURRENT_BINARY_DIR}/sql_yacc.h 
- ${CMAKE_CURRENT_BINARY_DIR}/sql_yacc.cc
--${CMAKE_CURRENT_BINARY_DIR}/sql_builtin.cc
- ${CMAKE_CURRENT_BINARY_DIR}/lex_hash.h 
- )
- 
-@@ -60,6 +59,7 @@ SET (SQL_SOURCE
-                sql_cursor.cc sql_db.cc sql_delete.cc sql_derived.cc sql_do.cc 
-                sql_error.cc sql_handler.cc sql_help.cc sql_insert.cc sql_lex.cc 
-                sql_list.cc sql_load.cc sql_manager.cc sql_parse.cc
-+               ${CMAKE_CURRENT_BINARY_DIR}/sql_builtin.cc
-                sql_partition.cc sql_plugin.cc sql_prepare.cc sql_rename.cc 
-                debug_sync.cc debug_sync.h
-                sql_repl.cc sql_select.cc sql_show.cc sql_state.c sql_string.cc
-@@ -268,7 +268,7 @@ ADD_CUSTOM_TARGET(distclean
+$OpenBSD: patch-sql_CMakeLists_txt,v 1.5 2014/01/11 19:28:41 brad Exp $
+--- sql/CMakeLists.txt.orig	Mon Dec 23 04:35:04 2013
++++ sql/CMakeLists.txt	Fri Dec 27 19:21:02 2013
+@@ -277,7 +277,7 @@ ADD_CUSTOM_TARGET(distclean
    VERBATIM
    )
  
@@ -26,7 +10,7 @@ $OpenBSD: patch-sql_CMakeLists_txt,v 1.3 2013/09/22 14:28:13 dcoppa Exp $
  
  # Copy db.opt into data/test/
  SET(DBOPT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/db.opt ) 
-@@ -310,7 +310,7 @@ ELSE()
+@@ -319,7 +319,7 @@ ELSE()
    # Not windows or cross compiling, just install an empty directory
    INSTALL(FILES ${DUMMY_FILE} DESTINATION data/mysql COMPONENT DataFiles)
  ENDIF(WIN32 AND MYSQLD_EXECUTABLE)

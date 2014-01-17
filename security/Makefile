@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.325 2013/10/30 16:35:11 benoit Exp $
+# $OpenBSD: Makefile,v 1.329 2014/01/17 13:30:49 stsp Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -42,6 +42,7 @@
      SUBDIR += dsniff
      SUBDIR += dsniff,no_x11
      SUBDIR += easy-rsa
+     SUBDIR += encfs
      SUBDIR += erl-bcrypt
      SUBDIR += erl-oauth
      SUBDIR += fcrackzip
@@ -194,7 +195,6 @@
      SUBDIR += p5-POE-Component-SSLify
      SUBDIR += p5-Text-Password-Pronounceable
      SUBDIR += p5-Tie-EncryptedHash
-     SUBDIR += parse
      SUBDIR += passwdqc
      SUBDIR += password-gorilla
      SUBDIR += pcsc-lite
@@ -240,6 +240,7 @@
      SUBDIR += ruby-bcrypt,ruby18
      SUBDIR += ruby-bcrypt,ruby19
      SUBDIR += ruby-bcrypt,ruby20
+     SUBDIR += ruby-bcrypt,ruby21
      SUBDIR += ruby-ezcrypto
      SUBDIR += ruby-hmac
      SUBDIR += ruby-openid
@@ -265,8 +266,9 @@
      SUBDIR += ssh-ldap-helper
      SUBDIR += sshguard
      SUBDIR += sshguard,tcpd
-     SUBDIR += sslscan
      SUBDIR += sslScanner
+     SUBDIR += sslscan
+     SUBDIR += sslsplit
      SUBDIR += stegdetect
      SUBDIR += steghide
      SUBDIR += strobe

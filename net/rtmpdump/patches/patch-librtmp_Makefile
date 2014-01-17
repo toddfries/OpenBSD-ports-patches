@@ -1,12 +1,27 @@
-$OpenBSD: patch-librtmp_Makefile,v 1.2 2013/04/24 09:33:41 sthen Exp $
---- librtmp/Makefile.orig	Fri Jan  4 10:01:01 2013
-+++ librtmp/Makefile	Fri Jan  4 10:04:43 2013
-@@ -36,7 +36,7 @@ CRYPTO_LIB=$(LIB_$(CRYPTO)) $(PRIVATE_LIBS)
- CRYPTO_REQ=$(REQ_$(CRYPTO))
+$OpenBSD: patch-librtmp_Makefile,v 1.4 2014/01/14 00:18:35 jca Exp $
+--- librtmp/Makefile.orig	Tue Jan 14 00:33:30 2014
++++ librtmp/Makefile	Tue Jan 14 01:12:10 2014
+@@ -38,7 +38,7 @@ CRYPTO_REQ=$(REQ_$(CRYPTO))
  CRYPTO_DEF=$(DEF_$(CRYPTO))
+ PUBLIC_LIBS=$(PUB_$(CRYPTO))
  
--SO_VERSION=0
-+SO_VERSION?=0
+-SO_VERSION=1
++SO_VERSION?=1
  SOX_posix=so
  SOX_darwin=dylib
  SOX_mingw=dll
+@@ -53,7 +53,7 @@ SODIR_darwin=$(LIBDIR)
+ SODIR_mingw=$(BINDIR)
+ SODIR=$(SODIR_$(SYS))
+ 
+-SO_LDFLAGS_posix=-shared -Wl,-soname,$@
++SO_LDFLAGS_posix=-shared
+ SO_LDFLAGS_darwin=-dynamiclib -twolevel_namespace -undefined dynamic_lookup \
+ 	-fno-common -headerpad_max_install_names -install_name $(libdir)/$@
+ SO_LDFLAGS_mingw=-shared -Wl,--out-implib,librtmp.dll.a
+@@ -117,5 +117,4 @@ install_base:	librtmp.a librtmp.pc
+ install_so:	librtmp$(SO_EXT)
+ 	cp librtmp$(SO_EXT) $(SODIR)
+ 	$(INSTALL_IMPLIB)
+-	cd $(SODIR); ln -sf librtmp$(SO_EXT) librtmp.$(SOX)
+ 

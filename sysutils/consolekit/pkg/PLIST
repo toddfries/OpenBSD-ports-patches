@@ -1,4 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.7 2013/09/24 08:39:06 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.9 2013/12/30 08:52:08 ajacoutot Exp $
+@extra /var/log/ConsoleKit/history
 @bin bin/ck-history
 @bin bin/ck-launch-session
 @bin bin/ck-list-sessions
@@ -8,7 +9,6 @@ include/ConsoleKit/ck-connector/ck-connector.h
 lib/ConsoleKit/
 lib/ConsoleKit/run-seat.d/
 lib/ConsoleKit/run-session.d/
-lib/ConsoleKit/run-session.d/pam-foreground-compat.ck
 lib/ConsoleKit/scripts/
 lib/ConsoleKit/scripts/ck-system-restart
 lib/ConsoleKit/scripts/ck-system-stop

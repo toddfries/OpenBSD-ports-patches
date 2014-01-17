@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.43 2012/10/06 10:00:43 landry Exp $
+# $OpenBSD: Makefile,v 1.45 2013/12/30 11:48:53 landry Exp $
 
      SUBDIR =
      SUBDIR += exo
@@ -22,6 +22,7 @@
      SUBDIR += xfce4-battery
      SUBDIR += xfce4-clipman
      SUBDIR += xfce4-cpugraph
+     SUBDIR += xfce4-datetime
      SUBDIR += xfce4-dev-tools
      SUBDIR += xfce4-dict
      SUBDIR += xfce4-diskperf
@@ -50,6 +51,7 @@
      SUBDIR += xfce4-verve
      SUBDIR += xfce4-wavelan
      SUBDIR += xfce4-weather
+     SUBDIR += xfce4-whiskermenu
      SUBDIR += xfce4-wmdock
      SUBDIR += xfce4-xkb
      SUBDIR += xfconf

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.97 2013/11/17 11:45:52 robert Exp $
+# $OpenBSD: Makefile,v 1.104 2014/01/14 15:38:23 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,7 +7,7 @@ COMMENT-kde=	optional integration of LibreOffice to the KDE environment
 COMMENT-java=	optional integration of LibreOffice java features
 
 BV=		4.1
-VERSION=	4.1.3.2
+VERSION=	4.1.4.2
 DISTNAME=	libreoffice-${VERSION}
 WRKDIST=	${WRKDIR}/libreoffice-${VERSION}
 PKGNAME=	libreoffice-${VERSION}
@@ -16,9 +16,6 @@ PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 DPB_PROPERTIES=	parallel tag:kde3
-
-REVISION-main=	0
-REVISION-java=	0
 
 EPOCH=		0
 
@@ -95,6 +92,8 @@ DISTFILES+=	${EDISTFILES} \
 		f94d9870737518e3b597f9265f4e9803-libserializer-1.1.6.zip:0 \
 		c48827713e93539dc7285f9e86ffbdc5-harfbuzz-0.9.17.tar.bz2:0 \
 		8473296c671b6e3dd8197f4145e0854b-libodfgen-0.0.2.tar.bz2:0 \
+		368f114c078f94214a308a74c7e991bc-crosextrafonts-20130214.tar.gz:0 \
+		c74b7223abe75949b4af367942d96c7a-crosextrafonts-carlito-20130920.tar.gz:0 \
 		libcdr-0.0.14.tar.bz2:0 \
 		libmspub-0.0.6.tar.bz2:0 \
 		libmwaw-0.1.11.tar.bz2:0 \
@@ -108,10 +107,13 @@ MULTI_PACKAGES=		-main -java -kde
 
 PSEUDO_FLAVORS=	parallel no_lang
 FLAVORS=	debug no_java
+.if ${MACHINE_ARCH:Mi386}
+# XXX hack to fix i386 builds for now which don't have working java
+# XXX N.B. no_java is a *flavour* not a pseudo-flavour
+FLAVOR?=	no_java
+.else
 FLAVOR?=
-
-# jdk is unreliable on i386.
-NOT_FOR_ARCHS-java = i386
+.endif
 
 .if !${FLAVOR:Mno_lang}
 LANGS=			ar bg ca de es fa fi fr hu it \
@@ -228,7 +230,6 @@ WANTLIB-java=		c estdc++ m pthread
 
 USE_GMAKE=	Yes
 NO_TEST=	Yes
-VMEM_WARNING=	Yes
 
 PATCHORIG=	.orig.port
 
@@ -378,5 +379,18 @@ post-install:
 
 	${INSTALL_DATA} ${WRKSRC}/workdir/unxobsd.pro/CustomTarget/sysui/share/libreoffice/openoffice.org.xml \
 		${PREFIX}/share/mime/packages
+
+# If the -java package does not get build use stub libraries for
+# libjvmaccesslo.so and libjvmfwklo.so so that they can get included
+# in the -main package because they are needed even if the -java
+# subpackage is not installed.
+.if !${BUILD_PACKAGES:M-java}
+	echo "int main(void) { return 0; }" > ${WRKSRC}/stub.c
+	${CC} -shared -o ${WRKBUILD}/stub.o ${WRKSRC}/stub.c
+.  for i in jvmaccess jvmfwk
+	${INSTALL_PROGRAM} ${WRKBUILD}/stub.o \
+		${PREFIX}/lib/libreoffice/ure/lib/lib${i}lo.so
+.  endfor
+.endif
 
 .include <bsd.port.mk>

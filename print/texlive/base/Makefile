@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.69 2013/11/09 18:22:02 zhuk Exp $
+# $OpenBSD: Makefile,v 1.72 2014/01/14 14:42:00 edd Exp $
 
 COMMENT =		base binaries for TeXLive typesetting distribution
 
 DISTNAME =		texlive-${DIST_V}-source
 PKGNAME =		texlive_base-${V}
-REVISION =		1
+REVISION =		0
 
 DISTFILES =		${DISTNAME}${EXTRACT_SUFX} \
 			texlive-${DIST_V}-extra${EXTRACT_SUFX}
 
-SHARED_LIBS =		kpathsea	5.0
-SHARED_LIBS +=		ptexenc		2.0
+SHARED_LIBS =		kpathsea	6.0
+SHARED_LIBS +=		ptexenc		3.0
 
 WANTLIB +=		ICE SM X11 Xau Xaw Xdmcp Xext Xmu Xpm Xt c expat
 WANTLIB +=		fontconfig freetype gd jpeg lcms2 m
@@ -24,7 +24,7 @@ RUN_DEPENDS =		print/ghostscript/gnu \
 			print/psutils \
 			print/t1utils \
 			print/latex-mk \
-			texlive_texmf-minimal-${V}:print/texlive/texmf,-main
+			texlive_texmf-buildset-${V}:print/texlive/texmf,-buildset
 
 LIB_DEPENDS =		devel/t1lib \
 			graphics/png \
@@ -50,10 +50,9 @@ MODPY_ADJ_FILES =	texk/texlive/linked_scripts/de-macro/de-macro \
 			texk/texlive/linked_scripts/texliveonfly/texliveonfly.py
 
 MODRUBY_ADJ_FILES =	convbkmk.rb \
-			epspdf.rb \
 			match_parens
 
-MODPERL_ADJ_FILES =	texk/tetex/updmap.pl \
+MODPERL_ADJ_FILES =	texk/texlive/linked_scripts/texlive/updmap.pl \
 			texk/tetex/updmap-single.pl \
 			texk/tex4htk/mk4ht.pl \
 			texk/texlive/linked_scripts/authorindex/authorindex \
@@ -81,28 +80,47 @@ MODPERL_ADJ_FILES =	texk/tetex/updmap.pl \
 			texk/texlive/linked_scripts/purifyeps/purifyeps \
 			texk/texlive/linked_scripts/sty2dtx/sty2dtx.pl \
 			texk/texlive/linked_scripts/tetex/e2pall.pl \
-			texk/texlive/linked_scripts/tetex/texdoctk.pl \
+			utils/texdoctk/texdoctk.pl \
 			texk/texlive/linked_scripts/texcount/texcount.pl \
 			texk/texlive/linked_scripts/texdef/texdef.pl \
 			texk/texlive/linked_scripts/texdiff/texdiff \
 			texk/texlive/linked_scripts/texlive/tlmgr.pl \
+			texk/texlive/tl_scripts/e2pall.pl \
 			texk/texlive/linked_scripts/texloganalyser/texloganalyser \
 			utils/xindy/xindy-2.4/user-commands/texindy.in \
-			utils/xindy/xindy-2.4/user-commands/xindy.in
+			utils/xindy/xindy-2.4/user-commands/xindy.in \
+			texk/texlive/linked_scripts/jfontmaps/kanji-fontmap-creator.pl \
+			texk/texlive/linked_scripts/jfontmaps/kanji-config-updmap.pl \
+			texk/texlive/linked_scripts/latexdiff/latexdiff.pl \
+			texk/texlive/linked_scripts/latexdiff/latexdiff-vc.pl \
+			texk/texlive/linked_scripts/latexdiff/latexrevise.pl
 
-LUA_ADJ_SCRIPTS =	utils/mtx/m-tx.lua
+# None this year, but there have been in the past.
+LUA_ADJ_SCRIPTS =
 
-TEXLUA_ADJ_SCRIPTS =	texk/texlive/context/mtxrun \
+TEXLUA_ADJ_SCRIPTS =	texk/texlive/linked_scripts/cachepic/cachepic.tlu \
 			texk/texlive/linked_scripts/checkcites/checkcites.lua \
-			texk/texlive/linked_scripts/cachepic/cachepic.tlu \
+			texk/texlive/linked_scripts/context/stubs/unix/mtxrun \
+			texk/texlive/linked_scripts/epspdf/epspdf.tlu \
+			texk/texlive/linked_scripts/luaotfload/luaotfload-tool.lua \
 			texk/texlive/linked_scripts/luaotfload/mkluatexfontdb.lua \
 			texk/texlive/linked_scripts/musixtex/musixflx.lua \
 			texk/texlive/linked_scripts/musixtex/musixtex.lua \
+			texk/texlive/linked_scripts/pfarrei/a5toa4.tlu \
+			texk/texlive/linked_scripts/pfarrei/pfarrei.tlu \
+			texk/texlive/linked_scripts/pmx/pmx2pdf.lua \
+			texk/texlive/linked_scripts/ptex2pdf/ptex2pdf.lua \
 			texk/texlive/linked_scripts/texdoc/texdoc.tlu \
 			texk/texlive/linked_scripts/texlive/rungs.tlu \
-			utils/pmx/pmx2pdf.lua
+			utils/pmx/pmx2pdf.lua \
 
-SH_ADJ_SCRIPTS =	texk/texlive/linked_scripts/typeoutfileinfo/typeoutfileinfo.sh
+SH_ADJ_SCRIPTS =	texk/texlive/linked_scripts/typeoutfileinfo/typeoutfileinfo.sh \
+			texk/texlive/linked_scripts/lua2dox/lua2dox_filter \
+			texk/texlive/linked_scripts/ltxfileinfo/ltxfileinfo \
+			texk/texlive/linked_scripts/arara/arara.sh \
+			texk/texlive/linked_scripts/dtxgen/dtxgen \
+			texk/texlive/linked_scripts/listbib/listbib
+
 
 # Never set SEPARATE_BUILD
 CONFIGURE_STYLE =	gnu
@@ -112,16 +130,13 @@ CONFIGURE_STYLE =	gnu
 CPPFLAGS =	-I${X11BASE}/include \
 		-I${TRUEPREFIX}/include/poppler
 
-# Bug in ICU build system
-# http://tug.org/pipermail/tlbuild/2012q2/002348.html
-CPPFLAGS +=	-DU_PLATFORM=U_PF_BSD
-
 # Big endian ICU bug
 # http://tug.org/pipermail/tlbuild/2012q2/002266.html
-.include <bsd.port.arch.mk>
-.if ${PROPERTIES:Mbe}
-CPPFLAGS +=	-DU_IS_BIG_ENDIAN=1
-.endif
+# XXX still needed?
+#.include <bsd.port.arch.mk>
+#.if ${PROPERTIES:Mbe}
+#CPPFLAGS +=	-DU_IS_BIG_ENDIAN=1
+#.endif
 
 CONFIGURE_ENV +=	TL_MAKE=${GMAKE} \
 			CPPFLAGS="${CPPFLAGS}"
@@ -206,21 +221,22 @@ pre-configure:
 	    for F in ${SH_ADJ_SCRIPTS}; do \
 	        perl -pi -e '($$. == 1) && s@^.*$$@#!/bin/sh@' $$F; \
 	    done
-	${SUBST_CMD} ${WRKSRC}/texk/texlive/context/mtxrun
+	${SUBST_CMD} ${WRKSRC}/texk/texlive/linked_scripts/context/stubs/unix/mtxrun
 
 # just to silence error - never used
 pre-install:
 	mkdir -p ${WRKSRC}/inst
 
-# symlinks that would have been installed by texlinks.
+# Symlinks that would have been installed by texlinks.
 # texlinks can not do this itself in the fake dir, as it requires
 # a fully hashed texmf tree and working kpse configuration.
+# Run 'texlinks -u' and then observe the output of 
+# 'texlinks -v'. Don't forget to check the links are in the PLIST.
 ALEPH_LN =	lamed
 LUATEX_LN =	dvilualatex dviluatex lualatex
-PDFTEX_LN =	amstex cslatex csplain eplain etex jadetex latex mex \
-		mllatex mltex pdfcslatex pdfcsplain pdfetex pdfjadetex \
-		pdflatex pdfmex pdfxmltex physe phyzzx texsis utf8mex \
-		xmltex
+PDFTEX_LN =	amstex cslatex pdfcslatex csplain pdfcsplain eplain jadetex \
+		pdfjadetex latex pdflatex mex pdfmex utf8mex mllatex mltex \
+		etex pdfetex texsis xmltex pdfxmltex
 EPTEX_LN =	platex
 XETEX_LN =	xelatex
 EUPTEX_LN =	uplatex
@@ -268,7 +284,6 @@ post-install:
 	for i in ${EUPTEX_LN}; do \
 		ln -s ${TRUEPREFIX}/bin/euptex ${PREFIX}/bin/$$i; \
 	done
-
 
 .include <bsd.port.mk>
 

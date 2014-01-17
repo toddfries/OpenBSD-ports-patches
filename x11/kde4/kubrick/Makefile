@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 18:20:52 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:32 zhuk Exp $
 
 COMMENT =	Rubik's cube simulator for KDE
 DISTNAME =	kubrick-${MODKDE4_VERSION}

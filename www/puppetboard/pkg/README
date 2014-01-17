@@ -1,0 +1,31 @@
+$OpenBSD: README,v 1.2 2013/12/27 11:06:33 jasper Exp $
+
++-----------------------------------------------------------------------
+| Running ${FULLPKGNAME} on OpenBSD
++-----------------------------------------------------------------------
+
+puppetboard has been installed into ${INSTDIR}
+
+Please be aware that this is still highly experimental software and
+may not be production ready.
+
+Configuration
+-------------
+You can configure the PuppetDB host and port through
+${INSTDIR}/puppetboard/default_settings.py
+Please note that there is currently no SSL support. It is therefore
+recommended you run puppetboard on the same host as PuppetDB is running.
+
+PuppetDB
+--------
+Puppetboard will only function when PuppetDB is available. PuppetDB
+can be installed with:
+
+    pkg_add puppetdb
+
+Starting puppetboard
+--------------------
+
+By default Puppetboard will bind to 127.0.0.1:8000, to adjust this
+puppetboard_flags will need to be set in /etc/rc.conf.local. Please refer to the
+gunicorn documentation for the available options.

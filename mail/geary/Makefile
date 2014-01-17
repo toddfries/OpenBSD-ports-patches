@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2013/11/17 11:21:38 landry Exp $
+# $OpenBSD: Makefile,v 1.11 2013/12/14 08:43:30 landry Exp $
 
 COMMENT =	lightweight mail user agent
 
-DISTNAME =	geary-0.4.1
+GNOME_PROJECT =	geary
+GNOME_VERSION =	0.4.3
 
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
 CATEGORIES =	mail
@@ -10,9 +11,7 @@ CATEGORIES =	mail
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
 
-HOMEPAGE =	http://yorba.org/geary/
-MASTER_SITES =	http://yorba.org/download/geary/stable/
-EXTRACT_SUFX =	.tar.xz
+HOMEPAGE =	http://yorba.org/projects/geary/
 MODULES =	devel/cmake devel/dconf x11/gnome devel/gettext
 
 MODGNOME_TOOLS =	gi yelp vala
@@ -31,12 +30,11 @@ LIB_DEPENDS =	mail/gmime \
 		devel/libunique3 \
 		devel/libgee
 
-WANTLIB += atk-1.0 c cairo cairo-gobject sqlite3
-WANTLIB += fontconfig freetype gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0
-WANTLIB += gobject-2.0 gthread-2.0 gtk-3
-WANTLIB += javascriptcoregtk-3.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
-WANTLIB += soup-2.4 webkitgtk-3.0 gee-0.8 secret-1 xml2
-WANTLIB += z canberra gmime-2.6 notify unique-3.0
+WANTLIB += atk-1.0 c cairo cairo-gobject canberra fontconfig freetype
+WANTLIB += gdk-3 gdk_pixbuf-2.0 gee-0.8 gio-2.0 glib-2.0 gmime-2.6
+WANTLIB += gobject-2.0 gthread-2.0 gtk-3 javascriptcoregtk-3.0
+WANTLIB += m notify pango-1.0 pangocairo-1.0 pangoft2-1.0 secret-1
+WANTLIB += soup-2.4 sqlite3 unique-3.0 webkitgtk-3.0 xml2 z
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/client/geary-application.vala

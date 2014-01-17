@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/06/06 08:36:49 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:33 zhuk Exp $
 
 COMMENT =	memory and pairs game for KDE
 DISTNAME =	pairs-${MODKDE4_VERSION}

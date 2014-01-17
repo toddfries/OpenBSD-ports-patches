@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.66 2013/10/31 21:12:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.70 2013/12/16 20:34:46 brad Exp $
 
 # XXX: Remember to bump MODCLANG_VERSION in lang/clang/clang.port.mk when
 # updating this port.
@@ -9,7 +9,7 @@ DPB_PROPERTIES = parallel
 COMMENT =	modular, fast C/C++/ObjC compiler, static analyzer and tools
 
 LLVM_V =	3.3
-REVISION =	1
+REVISION =	3
 DISTNAME =	llvm-${LLVM_V}.src
 PKGNAME =	llvm-${LLVM_V}
 CATEGORIES =	devel
@@ -32,16 +32,9 @@ WRKDIST =	${WRKDIR}/llvm-${LLVM_V}.src
 MODULES =	devel/cmake \
 		lang/python
 
-TEST_DEPENDS = devel/dejagnu
+TEST_DEPENDS =	devel/dejagnu \
+		shells/bash
 BUILD_DEPENDS +=	textproc/py-sphinx
-
-VMEM_WARNING =	Yes
-
-MAKE_FLAGS =	OPTIMIZE_OPTION="${CFLAGS}" \
-		VERBOSE=Yes \
-		INSTALL="install -c"
-
-TEST_FLAGS =	RUNTESTFLAGS=
 
 SEPARATE_BUILD =	Yes
 CONFIGURE_ARGS =	-DLLVM_ENABLE_FFI:Bool=False \
@@ -54,6 +47,8 @@ CONFIGURE_ARGS =	-DLLVM_ENABLE_FFI:Bool=False \
 .if ${MACHINE_ARCH} == "powerpc"
 CONFIGURE_ARGS +=	-DCMAKE_EXE_LINKER_FLAGS=-Wl,--relax
 .endif
+
+TEST_TARGET =		check
 
 CLANG_INCLUDE_PATH =	lib/clang/${LLVM_V}/include
 SUBST_VARS +=		CLANG_INCLUDE_PATH LLVM_V
@@ -79,6 +74,8 @@ post-install:
 	    ${WRKSRC}/tools/clang/tools/scan-build/scanview.css \
 	    ${PREFIX}/share/llvm
 	${INSTALL_DATA} ${WRKSRC}/docs/_build/man/* \
+	    ${PREFIX}/man/man1
+	${INSTALL_DATA} ${WRKSRC}/tools/clang/tools/scan-build/scan-build.1 \
 	    ${PREFIX}/man/man1
 
 .include <bsd.port.mk>

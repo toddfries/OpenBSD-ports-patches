@@ -1,20 +1,21 @@
-# $OpenBSD: Makefile,v 1.20 2013/11/15 17:37:50 brad Exp $
+# $OpenBSD: Makefile,v 1.27 2014/01/15 20:18:36 brad Exp $
 
 ONLY_FOR_ARCHS = alpha amd64 i386 powerpc sparc64
+DPB_PROPERTIES = parallel
 
-V = 4.8.1
+V = 4.8.2
 FULL_VERSION = $V
 FULL_PKGVERSION = $V
 
-ADASTRAP_LIBC-i386 = 70.0
+ADASTRAP_LIBC-i386 = 71.0
 ADASTRAP_LIBM-i386 = 9.0
-ADASTRAP-i386 = adastrap-i386-$V-3.tar.xz
-ADASTRAP_LIBC-amd64 = 70.0
+ADASTRAP-i386 = adastrap-i386-$V-0.tar.xz
+ADASTRAP_LIBC-amd64 = 71.0
 ADASTRAP_LIBM-amd64 = 9.0
-ADASTRAP-amd64 = adastrap-amd64-$V-3.tar.xz
-ADASTRAP_LIBC-sparc64 = 70.0
+ADASTRAP-amd64 = adastrap-amd64-$V-0.tar.xz
+ADASTRAP_LIBC-sparc64 = 71.0
 ADASTRAP_LIBM-sparc64 = 9.0
-ADASTRAP-sparc64 = adastrap-sparc64-$V-3.tar.xz
+ADASTRAP-sparc64 = adastrap-sparc64-$V-0.tar.xz
 
 PKGNAME-main =  gcc-${FULL_PKGVERSION}
 PKGNAME-c++ =   g++-${FULL_PKGVERSION}
@@ -27,12 +28,12 @@ PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 #PKGNAME-go =	gccgo-${FULL_PKGVERSION}
 PKGSPEC-main = gcc->=4.8,<4.9
 
-REVISION-main	= 5
-REVISION-c++	= 1
+REVISION-main	= 2
+REVISION-c++	= 2
 #REVISION-estdc	=
-REVISION-f95	= 0
-REVISION-java	= 0
-REVISION-objc	= 1
+REVISION-f95	= 2
+REVISION-java	= 2
+REVISION-objc	= 2
 REVISION-ada	= 2
 #REVISION-go	=
 
@@ -103,7 +104,6 @@ LANGS := ${LANGS},java
 DISTFILES +=		${ECJ}:1
 BUILD_DEPENDS +=	archivers/zip>=2.3p0
 CONFIGURE_ARGS +=	--enable-libgcj --without-jar
-VMEM_WARNING =		Yes
 .endif
 .if ${BUILD_PACKAGES:M-ada}
 LANGS := ${LANGS},ada

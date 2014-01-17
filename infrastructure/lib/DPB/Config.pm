@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Config.pm,v 1.24 2013/11/17 09:43:09 espie Exp $
+# $OpenBSD: Config.pm,v 1.26 2014/01/10 11:26:43 espie Exp $
 #
 # Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
@@ -73,15 +73,21 @@ sub parse_command_line
 	} else {
 		$state->usage("Can't figure out who I am");
 	}
+	my $p;
 	($state->{ports}, $state->{portspath}, $state->{repo}, $state->{localarch},
-	    $state->{distdir}, $state->{localbase}, $state->{xenocara}) =
+	    $state->{distdir}, $state->{localbase}, $state->{xenocara}, $p) =
 		DPB::Vars->get(DPB::Host::Localhost->getshell($state), 
 		$state->make,
 		"PORTSDIR", "PORTSDIR_PATH", "PACKAGE_REPOSITORY", 
 		"MACHINE_ARCH", "DISTDIR", "LOCALBASE", 
-		"PORTS_BUILD_XENOCARA_TOO");
+		"PORTS_BUILD_XENOCARA_TOO", "SIGNING_PARAMETERS");
     	if (!defined $state->{portspath}) {
 		$state->usage("Can't obtain vital information from the ports tree");
+	}
+	if ($p =~ m/^\s*$/) {
+		$state->{signer} = '-Dunsigned';
+	} elsif ($p =~ m/\-DSIGNER\=\S+/) {
+		$state->{signer} = $&;
 	}
 	if ($state->{xenocara} =~ m/Yes/i) {
 		$state->{xenocara} = 1;

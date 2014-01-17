@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.34 2013/10/19 13:26:21 sebastia Exp $
+# $OpenBSD: Makefile,v 1.37 2014/01/11 12:56:41 ajacoutot Exp $
 
 COMMENT = 	web based groupware server
 
-VERSION =	2.0.7
-REVISION =	1
-DISTNAME =	SOGo-${VERSION}
-PKGNAME =	sogo-${VERSION}
+VERSION =	2.1.1
+DISTNAME =	SOGo-${VERSION}b
+PKGNAME =	sogo-${VERSION}.1
+REVISION =	0
 
 SHARED_LIBS +=	GDLContentStore 2.0
 SHARED_LIBS +=	NGCards		2.0
 SHARED_LIBS +=	OGoContentStore	2.0
-SHARED_LIBS +=	SOGo		2.0
+SHARED_LIBS +=	SOGo		2.1
 SHARED_LIBS +=	SOGoUI		2.0
 
 CATEGORIES =	www
@@ -34,6 +34,10 @@ LIB_DEPENDS +=		devel/libmemcached \
 			www/sope
 RUN_DEPENDS +=		sope-postgres-*|sope-mysql-*:www/sope,-postgres \
 			archivers/zip
+
+.if ${MACHINE_ARCH} == "powerpc"
+PATCH_LIST =		patch-* gcc-*
+.endif
 
 CONFIGURE_STYLE =	simple dest
 CONFIGURE_ARGS +=	--gsmake=`gnustep-config --variable=GNUSTEP_MAKEFILES` \

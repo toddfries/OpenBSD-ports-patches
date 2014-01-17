@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 12:31:08 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	two-players games based on Snake and Tron for KDE
 DISTNAME =	ksnakeduel-${MODKDE4_VERSION}

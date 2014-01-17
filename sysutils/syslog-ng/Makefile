@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.37 2013/06/19 20:26:05 steven Exp $
+# $OpenBSD: Makefile,v 1.42 2014/01/12 20:41:11 steven Exp $
 
 COMMENT=	syslogd replacement
 
 SHARED_ONLY =	Yes
 
-V =		3.3.11
+V =		3.4.7
 DISTNAME =	syslog-ng-$V
 CATEGORIES =	sysutils
 
@@ -23,12 +23,11 @@ SHARED_LIBS =	syslog-ng		0.0 \
 
 MODULES =	devel/gettext
  
-WANTLIB =	c m pcre wrap crypto ssl z evtlog dbi ffi ivykis pthread \
-		gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 \
-		json-glib-1.0
+WANTLIB =	c m pcre wrap crypto ssl evtlog dbi ivykis pthread \
+		glib-2.0 gmodule-2.0 gthread-2.0 json-c
  
 LIB_DEPENDS = 	devel/glib2 \
- 		devel/json-glib \
+ 		devel/json-c \
  		devel/libivykis \
  		sysutils/eventlog \
 		databases/libdbi
@@ -36,9 +35,12 @@ LIB_DEPENDS = 	devel/glib2 \
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS +=	--enable-tcp-wrapper \
 			--with-pidfile-dir=/var/run \
-			--with-json=json-glib \
+			--enable-json \
 			--with-libmongo-client=no \
+			--with-librabbitmq-client=no \
 			--disable-mongodb \
+			--disable-amqp \
+			--without-libnet \
 			--with-ivykis=system \
 			--enable-sql
 CONFIGURE_ENV +=	OPENSSL_CFLAGS="-I/usr/include/openssl" \
@@ -59,10 +61,11 @@ pre-install:
 	cd ${WRKSRC}/doc/man && perl -pi -e 's@/opt/syslog\\-ng/etc/syslog\\-ng/@${SYSCONFDIR:S/-/\\-/g}/@g' *.[158]
  
 post-install:
-	${INSTALL_DATA_DIR} ${EXAMPLES}
+	mv ${WRKINST}/etc/syslog-ng ${EXAMPLES}
 	${INSTALL_DATA} ${FILESDIR}/syslog-ng.conf \
-		${EXAMPLES}/syslog-ng.conf.sample
+		${EXAMPLES}/syslog-ng.conf.openbsd
 	rm -rf ${PREFIX}/share/{include,tools,xsd}
+	rm -f ${PREFIX}/lib/syslog-ng/*.{a,la}
 # XXX hack for libtool dropping -rpath
 	ln -s syslog-ng/libsyslog-ng-crypto.so ${PREFIX}/lib/libsyslog-ng-crypto.so
 

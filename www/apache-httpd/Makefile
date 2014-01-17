@@ -1,17 +1,16 @@
-# $OpenBSD: Makefile,v 1.40 2013/10/17 14:05:41 stsp Exp $
+# $OpenBSD: Makefile,v 1.42 2013/12/01 02:58:30 brad Exp $
 
 COMMENT=	apache HTTP server
 
-V=		2.2.25
+V=		2.2.26
 PKGNAME=	apache-httpd-${V}
 DISTNAME=	httpd-${V}
-REVISION=	2
 
 CATEGORIES=	www net
 
 HOMEPAGE=	http://httpd.apache.org/
 
-# Apache
+# Apache 2.0
 PERMIT_PACKAGE_CDROM=	Yes
 
 SHARED_ONLY=		Yes

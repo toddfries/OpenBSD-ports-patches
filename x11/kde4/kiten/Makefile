@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/05/14 09:16:26 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:30 zhuk Exp $
 
 COMMENT =	Japanese reference tool for KDE
 DISTNAME =	kiten-${MODKDE4_VERSION}

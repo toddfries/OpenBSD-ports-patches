@@ -1,4 +1,6 @@
-# $OpenBSD: Makefile,v 1.4 2013/11/03 10:11:35 espie Exp $
+# $OpenBSD: Makefile,v 1.6 2013/12/22 10:51:38 landry Exp $
+
+BROKEN-alpha=	libtomcrypt/src/headers/tomcrypt_cfg.h:130:6: error: #error You must specify a word size as well as endianess in tomcrypt_cfg.h
 
 COMMENT = 	dance music game
 CATEGORIES = 	games emulators
@@ -21,7 +23,6 @@ CONFIGURE_ARGS += 	--disable-lua-binaries
 CONFIGURE_ENV += 	CPPFLAGS=-I${LOCALBASE}/include  \
 			LDFLAGS="-L${LOCALBASE}/lib -L${X11BASE}/lib"
 NO_TESTS =	Yes
-VMEM_WARNING =	Yes
 
 MODULES =	devel/gettext
 

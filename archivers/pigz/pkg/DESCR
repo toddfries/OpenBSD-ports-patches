@@ -1,0 +1,2 @@
+Parallel implementation of gzip for modern multi-processor, multi-core
+machines.

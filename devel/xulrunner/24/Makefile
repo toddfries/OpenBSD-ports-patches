@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.5 2013/11/10 07:30:17 landry Exp $
+# $OpenBSD: Makefile,v 1.8 2013/12/12 19:53:51 landry Exp $
 
 MOZILLA_VERSION =	24.0
 MOZILLA_BRANCH =	release
 MOZILLA_PROJECT =	xulrunner
 PKGSPEC-devel =		xulrunner-devel->=24.0,<31.0
 PKGSPEC-main =		xulrunner->=24.0,<31.0
-REVISION =		0
-REVISION-devel =	2
+REVISION =		1
+REVISION-devel =	4
 
 SO_VERSION =		0.0
 MOZILLA_LIBS =		mozgnome mozalloc xul
@@ -22,6 +22,8 @@ MODCLANG_LANGS =	c c++
 .if ${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "powerpc"
 CONFIGURE_ARGS +=	--disable-debug-symbols
 .endif
+
+RUN_DEPENDS-devel =	${PKGNAME-main}:${BASE_PKGPATH},-main
 
 CONFIGURE_ENV +=	MOZ_OFFICIAL_BRANDING_DIRECTORY=browser/branding
 

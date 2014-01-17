@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 12:09:50 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	Color Lines remake, tactical game for KDE
 DISTNAME =	klines-${MODKDE4_VERSION}

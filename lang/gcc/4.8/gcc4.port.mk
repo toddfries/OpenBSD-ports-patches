@@ -1,4 +1,4 @@
-# $OpenBSD: gcc4.port.mk,v 1.1.1.1 2013/04/08 08:20:19 pascal Exp $
+# $OpenBSD: gcc4.port.mk,v 1.3 2013/12/01 20:05:41 zhuk Exp $
 
 MODGCC4_ARCHS ?=
 MODGCC4_LANGS ?=
@@ -70,8 +70,18 @@ _MODGCC4_LINKS += egcj gcj egcjh gcjh egjar gjar egij gij
 .endif
 
 .if !empty(_MODGCC4_LINKS)
-.  for _src _dest in ${_MODGCC4_LINKS}
+.  if "${USE_CCACHE:L}" == "yes" && "${NO_CCACHE:L}" != "yes"
+.    for _src _dest in ${_MODGCC4_LINKS}
+MODGCC4_post-patch +=	rm -f ${WRKDIR}/bin/${_dest};
+MODGCC4_post-patch +=	echo '\#!/bin/sh' >${WRKDIR}/bin/${_dest};
+MODGCC4_post-patch +=	echo exec ccache ${LOCALBASE}/bin/${_src} \"\$$@\"
+MODGCC4_post-patch +=	>>${WRKDIR}/bin/${_dest};
+MODGCC4_post-patch +=	chmod +x ${WRKDIR}/bin/${_dest};
+.    endfor
+.  else
+.    for _src _dest in ${_MODGCC4_LINKS}
 MODGCC4_post-patch += ln -sf ${LOCALBASE}/bin/${_src} ${WRKDIR}/bin/${_dest};
-.  endfor
+.    endfor
+.  endif
 .endif
 

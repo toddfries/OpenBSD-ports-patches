@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# $OpenBSD: portcheck,v 1.45 2013/11/12 11:24:21 zhuk Exp $
+# $OpenBSD: portcheck,v 1.60 2014/01/13 11:47:31 zhuk Exp $
 # Copyright (c) 2013 Vadim Zhukov
 # 
 # Permission to use, copy, modify, and distribute this software for any
@@ -37,7 +37,7 @@ portsdir=
 rootrun=false
 debugging=false
 
-ignore_list=; unset ignorelist[0]
+ignore_list=; unset ignore_list[0]
 
 while getopts "ACdPp:Ux:" OPT; do
 	case $OPT in
@@ -216,6 +216,7 @@ has_subdirs_only() {
 }
 
 ignoring() {
+	((${#ignore_list[*]} > 0)) || return 1
 	local iglob
 	for iglob in "${ignore_list[@]}"; do
 		[[ ${1#./} == $iglob ]] && return 0
@@ -228,7 +229,7 @@ is_vcs_item() {
 }
 
 handle_extra_file() {
-	ignoring "$1" || return 0
+	ignoring "$1" && return 0
 
 	# avoid warning, e.g., about ".*"
 	test -e "$1" || return 0
@@ -516,10 +517,10 @@ check_port_dir() {
 	local show_items="$show_items MASTER_SITES MULTI_PACKAGES PKGPATH"
 	local show_items="$show_items PSEUDO_FLAVOR PSEUDO_FLAVORS"
 	local show_items="$show_items SHARED_LIBS SUBST_CMD"
+	local read_ok=false
 
 	local read_failed=false
 	(cd -- "$dir"; make "${make_args[@]}" show="$show_items" || true) </dev/null |&
-	read_ok=false
 	read -pr dist_subdir &&
 	read -pr distfiles &&
 	read -pr flavor &&
@@ -536,6 +537,7 @@ check_port_dir() {
 	if $read_ok; then
 		exec 3<&p
 		exec 3<&-
+		wait
 	else
 		error=true
 		return
@@ -560,7 +562,7 @@ check_port_dir() {
 	check_distfiles "$dir" "$dist_subdir" $distfiles
 	check_master_sites "$dir" $master_sites
 	$pkg_exists && check_pkg_dir "$dir"/pkg "$subst_cmd"
-	$existing_port || check_shlibs "$dir" $shared_libs
+	$existing_port || check_shlibs_versions "$dir" $shared_libs
 
 	for _s in $multi_packages; do
 		sub_checks "$dir" "$_s" "$fullpkgname" "${check_flavors[@]}"
@@ -584,8 +586,8 @@ check_newline_at_eof() {
 
 # Checks made:
 #   * Every library in SHARED_LIBS has 0.0 version.
-check_shlibs() {
-	$debugging && echo "CALLED: check_shlibs($*)" >&2
+check_shlibs_versions() {
+	$debugging && echo "CALLED: check_shlibs_versions($*)" >&2
 
 	local dir=$1; shift
 	local lib
@@ -641,7 +643,7 @@ check_master_sites() {
 		esac
 		[[ -n $name ]] && err "$portref$name does not hold real" \
 			"releases, please host the distfiles somewhere" \
-			"somewhere else or ask someone to do this for you"
+			"else or ask someone to do this for you"
 		shift
 	done
 }
@@ -671,7 +673,7 @@ sub_checks() {
 				read -r pkg_arch
 				read -r wantlib
 				if [[ $pkg_arch = "*" && -n $wantlib ]]; then
-					err "non-empty WANTLIB$subpkg for" \
+					err "${portref}non-empty WANTLIB$subpkg for" \
 					    "arch-independent package"
 				fi
 				check_wantlib "$portref" "$modules" $wantlib
@@ -681,11 +683,13 @@ sub_checks() {
 				(make "${make_args[@]}" print-plist-with-depends ||
 				    true) </dev/null |&
 				check_plist "$portref" "$fullpkgname" "$flavor"
+				wait
 			fi
 
 			! $error
 		) || error=true
 	done
+	wait
 }
 
 # Checks made:
@@ -776,7 +780,7 @@ check_plist() {
 				icon_themes="$icon_themes /$theme/"
 			if [[ "$l" = "share/icons/$theme/index.theme" ]]; then
 				echo "$rm_cache_themes" | fgrep -q "/$theme/" ||
-					err "missing @unexec-delete rm -f" \
+					err "${portref}missing @unexec-delete rm -f" \
 					    "%D/share/icons/$theme/icon-theme.cache"
 			fi
 			;;
@@ -818,7 +822,7 @@ check_plist() {
 			unexec_icon_themes="$unexec_icon_themes /$theme/"
 			rm_cache_themes="$rm_cache_themes /$theme/"
 			if echo "$icon_themes" | fgrep -q "/$theme/"; then
-				err "the @unexec-delete line removing" \
+				err "${portref}the @unexec-delete line removing" \
 				    "%D/share/icons/$theme/icon-theme.cache" \
 				    "does not preceed all of the icon theme" \
 				    "$theme files"
@@ -1054,17 +1058,22 @@ check_wantlib() {
 
 	local iconv_wantlib=false
 	local intl_wantlib=false
+	local phonon_s_wantlib=false
+
 	local gettext_module=false
 	local iconv_module=false
 	local qt3_module=false
 	local qt4_module=false
 	local kde3_module=false
 	local kde4_module=false
+	local phonon_module=false
+
 	local v
 
 	for v in $modules; do case $v in
 		devel/gettext)		gettext_module=true;;
 		converters/libiconv)	iconv_module=true;;
+		multimedia/phonon)	phonon_module=true;;
 		x11/qt3)		qt3_module=true;;
 		x11/qt4)		qt4_module=true;;
 		x11/kde)		kde3_module=true;;
@@ -1080,6 +1089,10 @@ check_wantlib() {
 			intl_wantlib=true
 			;;
 
+		phonon_s?(?(">")=+([0-9])))
+			phonon_s_wantlib=true
+			;;
+
 		@(Qt+([A-Za-z0-9])|phonon)?(?('>')=+([0-9])))
 			err "$portref$v instead of lib/qt4/$v" \
 			    "in WANTLIB"
@@ -1090,7 +1103,12 @@ check_wantlib() {
 			    "in WANTLIB"
 			;;
 
-		DCOP?(?('>')=+([0-9])))
+		@(smbclient|wbclient)?(?('>')=+([0-9])))
+			err "$portref$v instead of lib/samba/$v" \
+			    "in WANTLIB"
+			;;
+
+		@(DCOP|soundserver_idl|vcard)?(?('>')=+([0-9])))
 			err "$portref$v instead of \${KDE}/$v" \
 			    "in WANTLIB (check other libs, too!)"
 			;;
@@ -1113,6 +1131,10 @@ check_wantlib() {
 		err "${portref}missing devel/gettext in MODULES"
 	elif $iconv_wantlib && ! $gettext_module && ! $iconv_module; then
 		err "${portref}missing converters/libiconv in MODULES"
+	fi
+
+	if $phonon_s_wantlib && ! $phonon_module; then
+		err "${portref}missing multimedia/phonon in MODULES"
 	fi
 
 	! $error
@@ -1205,6 +1227,7 @@ check_pkg_dir() {
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
 		check_long_lines 72 "$F"
+		check_hardcoded "$F"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
@@ -1243,6 +1266,7 @@ check_pkg_dir() {
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
 		check_long_lines 80 "$F"
+		check_hardcoded "$F"
 		head -n 1 -- "$F" |
 			egrep -q '^(#[[:space:]]*)?\$OpenBSD(:.*)?\$$' ||
 			err "$F does not have \$OpenBSD\$ RCS tag at the top"
@@ -1253,6 +1277,7 @@ check_pkg_dir() {
 			err "$F is not a file"
 		check_trailing_whitespace "$F"
 		check_long_lines 80 "$F"
+		check_hardcoded "$F"
 		head -n 5 -- "$F" |
 			egrep -q '^#[[:space:]]*\$OpenBSD(:.*)?\$$' ||
 			err "$F does not have \$OpenBSD\$ RCS tag at the top"
@@ -1265,6 +1290,7 @@ check_pkg_dir() {
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
 		check_long_lines 72 "$F"
+		check_hardcoded "$F"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
 		;;
@@ -1275,6 +1301,16 @@ check_pkg_dir() {
 	esac; done
 
 	$empty && err "$dir directory does not contain either DESCR, PFRAG or PLIST files"
+}
+
+# Checks made:
+#   * There are no hardcoded /usr/local or /var paths in file
+check_hardcoded() {
+	$debugging && echo "CALLED: check_hardcoded($*)" >&2
+
+	egrep -q '(/usr/local|/var)[[:>:]]' "$1" &&
+		err "hardcoded paths detected in $1, consider using" \
+		    "SUBST_VARS and PREFIX/LOCALBASE/LOCALSTATEDIR"
 }
 
 # Checks made:
@@ -1329,27 +1365,75 @@ check_subst_vars() {
 # Checks made:
 #   * Contains OpenBSD RCS tag at the top line.
 #   * No REVISION marks present in given file (unless in update mode).
+#   * Each REVISION mark presents only once.
 #   * BUILD_DEPENDS and MODULES are not defined in VAR-subpkg manner.
 #   * No trailing whitespace.
+#   * SHARED_LIBS are not defined inside ".if" statements.
+#   * Variables are not assigned via "=" twice outside of .if statemets.
 check_makefile() {
 	$debugging && echo "CALLED: check_makefile($*)" >&2
 
-	check_trailing_whitespace "$1"
-	check_long_lines 80 "$1"
-	head -n 1 -- "$1" |
+	local F="$1"
+	check_trailing_whitespace "$F"
+	check_long_lines 80 "$F"
+	head -n 1 -- "$F" |
 		egrep -q '^#[[:space:]]*\$OpenBSD.*\$' ||
 		err "$F does not have \$OpenBSD\$ RCS tag at the top"
 
-	local l lnum=0
-	while read -r l; do ((++lnum)); case $l in
-	*(" ")REVISION*)
-		$existing_port ||
-			err "REVISION mark found at $1:$lnum"
-		;;
-	*(" ")@(BUILD_DEPENDS|MODULES)-*)
-		err "${l%%-*} is not a subpackageble variable, see $1:$lnum"
-		;;
-	esac; done <"$1"
+	local iflevel=0 l lnum=0 revs= t r mkvars= var dupfound
+	# do not unset mkvars, having empty element(-s) is fine
+	unset revs[0]
+	local tab="$(print '\t')"
+	while read -r l; do ((++lnum))
+		set -A t -- $l
+		dupfound=false
+
+		case $l in
+		*(" ")REVISION*)
+			$existing_port ||
+				err "REVISION mark found at $F:$lnum"
+			var=${t[0]%=}
+			if ((${#revs[@]} > 0)); then
+				for r in "${revs[@]}"; do
+					if [[ $var == "$r" ]]; then
+						err "duplicated $r in $F"
+						# avoid dup error messages
+						dupfound=true
+						break
+					fi
+				done
+			fi
+			revs[${#revs[@]}]=${t[0]}
+			;;
+		*(" ")@(BUILD_DEPENDS|MODULES)-*)
+			err "${l%%-*} is not a subpackageble variable, see $F:$lnum"
+			;;
+		*(" ").*(" "|"$tab")if*)
+			((++iflevel))
+			;;
+		*(" ").*(" "|"$tab")endif*)
+			((iflevel--))
+			;;
+		*(" ")SHARED_LIBS*(" "|"$tab")*(+|:|!)=*)
+			if ((iflevel > 0)); then
+				err "should not be inside .if block ($F:$lnum): $l"
+			fi
+			;;
+		esac
+
+		if [[ $l == *(" ")+([A-Za-z0-9_-])*(" "|"$tab")?(\?)=* ]] &&
+		   ((iflevel == 0)) && ! $dupfound; then
+			var=${t[0]%?(\?)=}
+			for v in "${mkvars[@]}"; do
+				if [[ $v == "$var" ]]; then
+					err "duplicated assignment of $v" \
+					    "at $F:$lnum"
+					break
+				fi
+			done
+			mkvars[${#mkvars[@]}]=$var
+		fi
+	done <"$F"
 }
 
 # Checks made:

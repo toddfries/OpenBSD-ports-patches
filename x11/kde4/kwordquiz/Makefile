@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2013/08/24 17:33:46 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:32 zhuk Exp $
 
 COMMENT =	general purpose flash card program for KDE
 DISTNAME =	kwordquiz-${MODKDE4_VERSION}
-REVISION =	0
 
 WANTLIB =  c m pthread stdc++
 WANTLIB += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtNetwork

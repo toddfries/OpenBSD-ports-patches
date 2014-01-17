@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.22 2013/11/14 15:10:16 naddy Exp $
+# $OpenBSD: Makefile,v 1.24 2013/12/21 07:32:42 ajacoutot Exp $
 
 COMMENT=		webbased rss reader with standalone look and feel
 
-GH_VER=			1.10
+GH_VER=			1.11
 DISTNAME=		Tiny-Tiny-RSS-${GH_VER}
 PKGNAME=		tt-rss-${GH_VER}
 CATEGORIES=		www
@@ -13,7 +13,7 @@ HOMEPAGE=		http://tt-rss.org/
 PERMIT_PACKAGE_CDROM=	Yes
 
 MASTER_SITES=		https://github.com/gothfox/Tiny-Tiny-RSS/archive/
-DISTFILES =		${DISTNAME}${EXTRACT_SUFX}{${GH_VER}${EXTRACT_SUFX}}
+DISTFILES =		${DISTNAME}{${GH_VER}}${EXTRACT_SUFX}
 
 NO_BUILD=		Yes
 NO_TEST=		Yes

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/06/06 08:36:48 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	speech tool for mute persons for KDE
 DISTNAME =	kmouth-${MODKDE4_VERSION}

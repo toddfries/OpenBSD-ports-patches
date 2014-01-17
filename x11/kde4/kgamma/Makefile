@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2013/08/24 17:33:42 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:30 zhuk Exp $
 
 COMMENT =	KDE screen gamma management
 DISTNAME =	kgamma-${MODKDE4_VERSION}
-REVISION =	0
 
 WANTLIB =  c m pthread stdc++
 WANTLIB += ICE SM X11 Xext Xxf86vm

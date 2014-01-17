@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.156 2013/09/19 14:56:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.158 2014/01/07 15:04:29 sthen Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -58,6 +58,7 @@
      SUBDIR += newlisp
      SUBDIR += nhc98
      SUBDIR += node
+     SUBDIR += node-java
      SUBDIR += node-typescript
      SUBDIR += nqp
      SUBDIR += obc
@@ -69,7 +70,6 @@
      SUBDIR += otcl
      SUBDIR += parrot
      SUBDIR += pcc
-     SUBDIR += petite-chez
      SUBDIR += pfe
      SUBDIR += php
      SUBDIR += processing

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.157 2013/05/24 19:08:43 edd Exp $
+# $OpenBSD: Makefile,v 1.162 2014/01/05 18:43:48 bcallah Exp $
 
      SUBDIR =
      SUBDIR += WordGenerator
@@ -38,10 +38,12 @@
      SUBDIR += gtk3mm-documentation
      SUBDIR += gutenpy
      SUBDIR += hfsplus
+     SUBDIR += hwdata
      SUBDIR += impress
      SUBDIR += jive
      SUBDIR += ktimeclock
      SUBDIR += lfm
+     SUBDIR += libosinfo
      SUBDIR += lifelines
      SUBDIR += logjam
      SUBDIR += magicpoint
@@ -51,7 +53,6 @@
      SUBDIR += migrationtools
      SUBDIR += mmv
      SUBDIR += most
-     SUBDIR += mshell
      SUBDIR += nyancat
      SUBDIR += omconsole
      SUBDIR += openbabel
@@ -91,7 +92,6 @@
      SUBDIR += shared-desktop-ontologies
      SUBDIR += shared-mime-info
      SUBDIR += spdrs60
-     SUBDIR += splitvt
      SUBDIR += srcpd
      SUBDIR += supercat
      SUBDIR += tapclean
@@ -99,6 +99,7 @@
      SUBDIR += tkcron
      SUBDIR += tkinfo
      SUBDIR += tkman
+     SUBDIR += toilet
      SUBDIR += tpp
      SUBDIR += tpwireless
      SUBDIR += ttyrec

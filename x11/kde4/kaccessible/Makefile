@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 11:39:30 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:29 zhuk Exp $
 
 COMMENT =	KDE screenreader and focus tracking
 DISTNAME =	kaccessible-${MODKDE4_VERSION}

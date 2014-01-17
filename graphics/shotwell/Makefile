@@ -1,11 +1,8 @@
-# $OpenBSD: Makefile,v 1.35 2013/10/10 15:40:39 ajacoutot Exp $
-
-# needs to allocate 512M
-VMEM_WARNING =	Yes
+# $OpenBSD: Makefile,v 1.37 2013/11/26 08:25:57 ajacoutot Exp $
 
 COMMENT =	digital photo organizer
 
-V =		0.15.0
+V =		0.15.1
 DISTNAME =	shotwell-${V}
 EXTRACT_SUFX =	.tar.xz
 CATEGORIES =	graphics

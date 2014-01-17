@@ -1,11 +1,16 @@
-# $OpenBSD: Makefile,v 1.38 2013/10/31 08:29:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.43 2013/12/31 16:14:53 ajacoutot Exp $
+
+# NOTE: spam in /var/log/authlog is "expected"
+# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=678506
+# https://bugzilla.redhat.com/show_bug.cgi?id=810052#c8
+# https://bugzilla.redhat.com/show_bug.cgi?id=809213
 
 COMMENT=	framework for defining and tracking users
 
 DISTNAME=	ConsoleKit-0.4.6
 EXTRACT_SUFX=	.tar.xz
 PKGNAME=	${DISTNAME:L}
-REVISION=	5
+REVISION=	9
 
 CATEGORIES=	sysutils	
 
@@ -46,10 +51,5 @@ pre-patch:
 	@cd ${WRKSRC}/tools && \
 		cp -R freebsd openbsd && \
 		perl -pi -e "s,freebsd,openbsd,g" openbsd/Makefile.in
-
-# from Slackware Linux
-post-install:
-	${INSTALL_SCRIPT} ${FILESDIR}/pam-foreground-compat.ck \
-		${PREFIX}/lib/ConsoleKit/run-session.d/pam-foreground-compat.ck
 
 .include <bsd.port.mk>

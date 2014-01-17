@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.14 2013/07/15 17:09:16 landry Exp $
+# $OpenBSD: Makefile,v 1.17 2014/01/10 19:36:18 landry Exp $
 
 COMMENT =	toolkit for developing mapping applications
 
@@ -12,6 +12,7 @@ CATEGORIES =	graphics geo
 
 HOMEPAGE =	http://mapnik.org/
 MAINTAINER =	Landry Breuil <landry@openbsd.org>
+DPB_PROPERTIES = nojunk
 
 # LGPLv2.1
 PERMIT_PACKAGE_CDROM =	Yes
@@ -20,7 +21,6 @@ MASTER_SITES =	http://mapnik.s3.amazonaws.com/dist/v2.2.0/
 MODULES =	devel/scons \
 		lang/python
 
-VMEM_WARNING =	Yes
 TEST_DEPENDS =	devel/py-nose \
 		${BUILD_PKGPATH}
 
@@ -44,7 +44,7 @@ WANTLIB =	cairo icuuc png>=17.0 pq proj jpeg \
 
 MODSCONS_FLAGS =	PREFIX="${TRUEPREFIX}" \
 			DESTDIR="${WRKINST}" \
-			PNG_INCLUDES="${LOCALBASE}/include" \
+			PNG_INCLUDES="${LOCALBASE}/include ${X11BASE}/include/freetype2" \
 			PNG_LIBS="${LOCALBASE}/lib" \
 			SYSTEM_FONTS="${X11BASE}/lib/X11/fonts/TTF/" \
 			FAST=yes \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/04/24 12:46:13 zhuk Exp $
+# $OpenBSD: Makefile,v 1.3 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	planetarium simulator for KDE
 DISTNAME =	kstars-${MODKDE4_VERSION}
@@ -12,15 +12,20 @@ DISTNAME =	kstars-${MODKDE4_VERSION}
 #   6. Enable showing satellites;
 #   7. Click "OK".
 
-WANTLIB =  c m pthread stdc++ z
+WANTLIB =  c m pthread z
 WANTLIB += GL GLU ICE SM X11 Xext
-WANTLIB += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtNetwork lib/qt4/QtOpenGL
-WANTLIB += lib/qt4/QtSvg lib/qt4/QtXml
-WANTLIB += ${KDE4LIB}/kdeui ${KDE4LIB}/kio ${KDE4LIB}/knewstuff3
+WANTLIB += lib/qt4/QtDBus lib/qt4/QtDeclarative lib/qt4/QtGui
+WANTLIB += lib/qt4/QtNetwork lib/qt4/QtOpenGL
+WANTLIB += lib/qt4/QtScript lib/qt4/QtSql lib/qt4/QtSvg lib/qt4/QtXml
+WANTLIB += ${KDE4LIB}/kdeclarative ${KDE4LIB}/kdeui ${KDE4LIB}/kio
+WANTLIB += ${KDE4LIB}/knewstuff3
 WANTLIB += cfitsio wcs
 
-MODULES =	lang/python
-MODPY_BUILDDEP =No
+# base GCC miscompiles (at least) one object file, Clang fails to compile
+MODULES =		gcc4 lang/python
+MODPY_BUILDDEP =	No
+MODGCC4_ARCHS =		*
+MODGCC4_LANGS =		c++
 
 LIB_DEPENDS = 	astro/wcslib \
 		math/cfitsio

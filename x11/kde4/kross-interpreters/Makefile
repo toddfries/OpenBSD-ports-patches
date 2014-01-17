@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/07/04 00:45:35 zhuk Exp $
+# $OpenBSD: Makefile,v 1.5 2013/12/25 13:40:30 zhuk Exp $
 
 COMMENT-main =	KDE bindings for running interpreters
 COMMENT-java =	KDE Java bindings
@@ -29,24 +29,22 @@ CONFIGURE_ARGS =	-DCMAKE_DISABLE_FIND_PACKAGE_FALCON:Bool=Yes
 
 # TODO: Ruby 2.0 should be acceptable choice probably, too
 MODULES =		lang/python lang/ruby
-MODRUBY_REV =		1.9
+MODRUBY_REV =		2.0
 CONFIGURE_ARGS +=	-DRUBY_EXECUTABLE=${RUBY}
 
 .if ${FLAVOR:Mno_java}
 CONFIGURE_ARGS +=	-DBUILD_java:Bool=No
 .else
 MODULES +=		java
-MODJAVA_VER =		1.7
+MODJAVA_VER =		1.6+
 MODJAVA_JRERUN =	Yes
 .endif
 
 LIB_DEPENDS-main =	${LIB_DEPENDS}
 
-RUN_DEPENDS-main =	${RUN_DEPENDS-common} \
-			${MODPY_RUN_DEPENDS} \
+RUN_DEPENDS-main =	${MODPY_RUN_DEPENDS} \
 			${MODRUBY_RUN_DEPENDS}
 
-RUN_DEPENDS-java =	${RUN_DEPENDS-common} \
-			${MODJAVA_RUN_DEPENDS}
+RUN_DEPENDS-java =	${MODJAVA_RUN_DEPENDS}
 
 .include <bsd.port.mk>

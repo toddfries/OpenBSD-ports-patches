@@ -1,18 +1,17 @@
-# $OpenBSD: Makefile,v 1.21 2013/10/06 09:08:18 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.26 2013/12/29 10:36:17 ajacoutot Exp $
 
 COMMENT=		bad elements for GStreamer
 
 DISTNAME=		gst-plugins-bad-${V}
 PKGNAME=		${GST_PKGNAME_PREFIX}-plugins-bad-${V}
-REVISION=		0
 
-SHARED_LIBS +=  gstphotography-1.0      1.0    # 200.0
-SHARED_LIBS +=  gstbasecamerabinsrc-1.0 1.0    # 200.0
-SHARED_LIBS +=  gstcodecparsers-1.0     1.0    # 200.0
-SHARED_LIBS +=  gstinsertbin-1.0        0.0    # 200.0
-SHARED_LIBS +=  gsturidownloader-1.0    0.0    # 200.0
-SHARED_LIBS +=  gstmpegts-1.0           0.0    # 200.0
-SHARED_LIBS +=  gstegl-1.0              0.0    # 200.0
+SHARED_LIBS +=  gstphotography-1.0      1.0    # 202.0
+SHARED_LIBS +=  gstbasecamerabinsrc-1.0 1.0    # 202.0
+SHARED_LIBS +=  gstcodecparsers-1.0     1.0    # 202.0
+SHARED_LIBS +=  gstinsertbin-1.0        0.0    # 202.0
+SHARED_LIBS +=  gsturidownloader-1.0    0.0    # 202.0
+SHARED_LIBS +=  gstmpegts-1.0           0.0    # 202.0
+SHARED_LIBS +=  gstegl-1.0              0.0    # 202.0
 
 WANTLIB += BPM EGL GLESv2 SoundTouch X11 X11-xcb Xau Xdmcp Xext
 WANTLIB += Xrender ass bz2 cairo croco-0.6 drm enca expat ffi
@@ -42,11 +41,9 @@ LIB_DEPENDS=		${P}/plugins-base=${V} \
 
 # each plugin that has an external dependency is disabled unless proved useful
 CONFIGURE_ARGS=		--disable-cdaudio \
-			--disable-celt \
 			--disable-curl \
 			--disable-chromaprint \
 			--disable-decklink \
-			--disable-dirac \
 			--disable-dts \
 			--disable-faac \
 			--disable-faad \
@@ -76,7 +73,7 @@ CONFIGURE_ARGS=		--disable-cdaudio \
 			--disable-sndfile \
 			--disable-spandsp \
 			--disable-spc \
-			--disable-swfdec \
+			--disable-srtp \
 			--disable-teletextdec \
 			--disable-timidity \
 			--disable-vcd \
@@ -94,6 +91,9 @@ CONFIGURE_ARGS +=	--disable-sndio
 
 # this add some build dependencies (e.g. gtk+2, gtk+3) for no real use
 CONFIGURE_ARGS +=	--disable-examples
+
+# XXX needed by g-ir-scanner(1)
+CFLAGS +=		-I${X11BASE}/include
 
 pre-configure:
 	perl -pi -e 's,/dev/dvd,/dev/rcd0c,g' \

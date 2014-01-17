@@ -1,5 +1,5 @@
-@comment $OpenBSD: PLIST,v 1.2 2013/07/04 00:44:40 zhuk Exp $
-@conflict kmultimedia-<4
+@comment $OpenBSD: PLIST,v 1.4 2014/01/16 13:48:03 zhuk Exp $
+@conflict kdemultimedia-<4
 @bin bin/juk
 share/applications/kde4/juk.desktop
 share/apps/juk/
@@ -21,6 +21,7 @@ share/doc/HTML/en/juk/index.docbook
 share/doc/HTML/en/juk/juk-adv-search.png
 share/doc/HTML/en/juk/juk-file-renamer.png
 share/doc/HTML/en/juk/juk-main.png
+share/doc/HTML/en/juk/juk-manage-folders.png
 share/doc/HTML/en/juk/juk-tag-guesser.png
 share/doc/HTML/en/juk/normal-playlist.png
 share/doc/HTML/en/juk/search-playlist.png

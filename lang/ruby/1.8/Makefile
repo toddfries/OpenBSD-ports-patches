@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2013/07/17 15:48:25 jeremy Exp $
+# $OpenBSD: Makefile,v 1.30 2013/11/25 14:16:23 sthen Exp $
 
 COMMENT-main=		object oriented script language with threads
 COMMENT-iconv=		libiconv interface for ruby
@@ -18,6 +18,8 @@ PKGNAME-ri_docs=	ruby-ri_docs-${VERSION}.${PATCHLEVEL}
 
 PKG_ARCH-ri_docs=	*
 PKGSPEC-main=		ruby->=1.8,<1.9
+
+REVISION-main=		0
 
 CONFIGURE_ARGS=		--program-suffix=18 \
 			--enable-ipv6 \
@@ -69,7 +71,6 @@ RUN_DEPENDS-tk =
 MULTI_PACKAGES +=	-ri_docs
 ALL_TARGET =		all rdoc
 INSTALL_TARGET =	install install-doc
-VMEM_WARNING =		Yes
 .endif
 
 # Known regression failures in OpenSSL extension on sparc64

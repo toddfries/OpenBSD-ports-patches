@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.24 2013/08/09 11:02:28 naddy Exp $
+# $OpenBSD: Makefile,v 1.27 2014/01/12 22:16:02 pascal Exp $
 
 V =			3.3.6
 PKGNAME =		g77-$V
-REVISION =		2
+REVISION =		5
 EPOCH =			1
 DISTFILES = 		g77-openbsd-3.3.6.tgz
 

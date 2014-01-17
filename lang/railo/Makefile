@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.11 2013/07/09 20:26:03 sthen Exp $
+# $OpenBSD: Makefile,v 1.13 2013/12/24 15:33:36 sthen Exp $
 
 COMMENT=		open-source CFML engine
 
-V=			4.0.4.001
+V=			4.1.2.005
 EPOCH=			0
 DISTNAME=		railo-$V
 EXTRACT_SUFX=		.war

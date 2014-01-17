@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.54 2013/05/30 13:09:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2013/11/25 20:11:24 landry Exp $
 
 COMMENT =	3D creation software
 BROKEN-sparc64 = error: cast from 'ccl::uchar*' to 'CUdeviceptr' loses precision
+BROKEN-powerpc = build stuck on makesrna/intern/rna_nodetree_gen.c
 
 DISTNAME =	blender-2.67
 REVISION =	0
@@ -11,8 +12,6 @@ CATEGORIES =	graphics
 HOMEPAGE =	http://www.blender.org/
 
 MAINTAINER =	Pascal Stumpf <Pascal.Stumpf@cubes.de>
-
-VMEM_WARNING =	Yes
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM =	Yes

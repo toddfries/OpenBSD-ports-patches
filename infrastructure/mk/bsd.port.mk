@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1247 2013/11/07 01:23:19 juanfra Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1255 2014/01/09 10:44:33 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -135,7 +135,7 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
 	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS \
-	VMEM_WARNING PKG_ARCH 
+	PKG_ARCH
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
@@ -208,8 +208,17 @@ PKG_CREATE ?= /usr/sbin/pkg_create
 PKG_DELETE ?= /usr/sbin/pkg_delete
 
 _PKG_ADD = ${PKG_ADD} ${_PROGRESS} -I
-_PKG_CREATE = ${PKG_CREATE} ${_PROGRESS}
+_PKG_CREATE = ${PKG_CREATE} ${_PROGRESS} ${SIGNING_PARAMETERS}
+_PKG_ADD_LOCAL = PKG_PATH=${_PKG_REPO} ${_PKG_ADD} 
 _PKG_DELETE = ${PKG_DELETE} ${_PROGRESS}
+
+SIGNING_PARAMETERS ?=
+.if empty(SIGNING_PARAMETERS)
+_PKG_ADD_LOCAL += -Dunsigned
+.else
+_PKG_ADD_LOCAL += ${SIGNING_PARAMETERS:M-DSIGNER=*}
+.endif
+
 
 .if !defined(_ARCH_DEFINES_INCLUDED)
 _ARCH_DEFINES_INCLUDED = Done
@@ -497,6 +506,9 @@ BASE_PKGPATH := ${PKGPATH}
 _FLAVOR_EXT2 :=
 BUILD_PKGPATH := ${PKGPATH}
 _PKG_ARGS =
+.if !empty(PLIST_DB)
+_PKG_ARGS += -DHISTORY_DIR=${PLIST_DB}/history
+.endif
 _README_DIR = ${LOCALBASE}/share/doc/pkg-readmes
 
 PSEUDO_FLAVOR =
@@ -1157,7 +1169,7 @@ _FILES=
 .for v in DISTFILES PATCHFILES SUPDISTFILES
 .  if defined($v)
 .    for e in ${$v}
-.      for f m u in ${e:C/:[0-9]$//:C/\{.*\}$//} MASTER_SITES${e:M*\:[0-9]:C/.*:([0-9])/\1/} ${e:C/:[0-9]$//:C/.*\{(.*)\}$/\1/}
+.      for f m u in ${e:C/:[0-9]$//:C/(.*)\{.*\}(.*)/\1\2/} MASTER_SITES${e:M*\:[0-9]:C/.*:([0-9])/\1/} ${e:C/:[0-9]$//:C/.*\{(.*)\}(.*)/\1\2/}
 .        if empty(_FILES:M$f)
 _FILES += $f
 .          if empty(DIST_SUBDIR)
@@ -1525,8 +1537,6 @@ MODSIMPLE_configure = \
 		INSTALL_SCRIPT="${INSTALL_SCRIPT}" INSTALL_DATA="${INSTALL_DATA}" \
 		YACC="${YACC}" \
 		${CONFIGURE_ENV} ${_CONFIGURE_SCRIPT} ${CONFIGURE_ARGS}
-
-VMEM_WARNING ?= No
 
 FAKE_SETUP = TRUEPREFIX=${PREFIX} PREFIX=${WRKINST}${PREFIX} \
 	${DESTDIRNAME}=${WRKINST}
@@ -1912,7 +1922,7 @@ ${_INSTALL_COOKIE${_S}}:
 	@if ${PKG_INFO} -e ${FULLPKGNAME${_S}}; then \
 		echo "Package ${FULLPKGNAME${_S}} is already installed"; \
 	else \
-		${SUDO} ${SETENV} ${_TERM_ENV} PKG_PATH=${_PKG_REPO} ${_PKG_ADD} ${_PKG_ADD_AUTO} ${PKGFILE${_S}}; \
+		${SUDO} ${SETENV} ${_TERM_ENV} ${_PKG_ADD_LOCAL} ${_PKG_ADD_AUTO} ${PKGFILE${_S}}; \
 	fi
 	@-${SUDO} ${_MAKE_COOKIE} $@
 
@@ -1933,7 +1943,7 @@ ${_UPDATE_COOKIE${_S}}:
 		     ${MAKE} _internal-run-depends _internal-runlib-depends \
 			   _internal-runwantlib-depends; \
 		   ${ECHO_MSG} "Upgrading from $$a"; \
-		   ${SUDO} ${SETENV} PKG_PATH=${_PKG_REPO} PKG_TMPDIR=${PKG_TMPDIR} ${_PKG_ADD} ${_PKG_ADD_AUTO} -r ${_PKG_ADD_FORCE} ${PKGFILE${_S}};; \
+		   ${SUDO} ${SETENV} ${_TERM_ ENV} ${_PKG_ADD_LOCAL} ${_PKG_ADD_AUTO} -r ${_PKG_ADD_FORCE} ${PKGFILE${_S}};; \
 	esac
 	@${_MAKE_COOKIE} $@
 
@@ -1948,7 +1958,7 @@ ${_FUPDATE_COOKIE${_S}}:
 	@mkdir -p ${UPDATE_COOKIES_DIR}
 .  endif
 	@${ECHO_MSG} "===> Updating/installing for ${FULLPKGNAME${_S}}"
-	@${SUDO} ${SETENV} ${_TERM_ENV} PKG_PATH=${_PKG_REPO} ${_PKG_ADD} ${_PKG_ADD_AUTO} -r ${_PKG_ADD_FORCE} ${PKGFILE${_S}}
+	@${SUDO} ${SETENV} ${_TERM_ENV} ${_PKG_ADD_LOCAL} ${_PKG_ADD_AUTO} -r ${_PKG_ADD_FORCE} ${PKGFILE${_S}}
 	@${_MAKE_COOKIE} $@
 .endfor
 
@@ -2112,6 +2122,9 @@ ${WRKDIR}/.libm-check:
 
 show-prepare-results: prepare
 	@sort -u ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES} /dev/null
+
+show-prepare-test-results: prepare test-depends
+	@sort -u ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES} ${_DEPTEST_COOKIES} /dev/null
 
 _internal-build-depends: ${_DEPBUILD_COOKIES}
 _internal-run-depends: ${_DEPRUN_COOKIES}
@@ -2649,19 +2662,6 @@ ${_CONFIGURE_COOKIE}: ${_PATCH_COOKIE}
 ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 .if ${NO_BUILD:L} == "no"
 	@${ECHO_MSG} "===>  Building for ${FULLPKGNAME}${_MASTER}"
-.  if ${VMEM_WARNING:L} == "yes"
-	@echo ""; \
-	echo "*** WARNING: you may see an error such as"; \
-	echo "***       virtual memory exhausted"; \
-	echo "*** when building this package.  If you do you must increase"; \
-	echo "*** your limits.  See the man page for your shell and look"; \
-	echo "*** for the 'limit' or 'ulimit' command. You may also want to"; \
-	echo "*** see the login.conf(5) manual page."; \
-	echo "*** Some examples are: "; \
-	echo "*** 	csh(1) and tcsh(1): limit datasize <kbytes of memory>"; \
-	echo "***	ksh(1), zsh(1) and bash(1): ulimit -d <kbytes of memory>"; \
-	echo ""
-.  endif
 .  if target(pre-build)
 	@${_MAKESYS} pre-build
 .  endif
@@ -2858,7 +2858,7 @@ ${DISTDIR}/$p:
 		file=$@.part; \
 		${ECHO_MSG} ">> Fetch $${site}$u"; \
 		if ${FETCH_CMD} -o $$file $${site}$u; then \
-				ck=`${_size_fragment} $$file $f`; \
+				ck=`${_size_fragment} $$file $p`; \
 				if [ ! -f ${CHECKSUM_FILE} ]; then \
 					${ECHO_MSG} ">> Checksum file does not exist"; \
 					mv $$file $@; \
@@ -2867,11 +2867,11 @@ ${DISTDIR}/$p:
 					mv $$file $@; \
 					exit 0; \
 				else \
-					if grep -q "SIZE ($f)" ${CHECKSUM_FILE}; then \
-						${ECHO_MSG} ">> Size does not match for $f"; \
+					if grep -q "SIZE ($p)" ${CHECKSUM_FILE}; then \
+						${ECHO_MSG} ">> Size does not match for $p"; \
 						rm -f $$file; \
 					else \
-						${ECHO_MSG} ">> No size recorded for $f"; \
+						${ECHO_MSG} ">> No size recorded for $p"; \
 						mv $$file $@; \
 						exit 0; \
 					fi; \

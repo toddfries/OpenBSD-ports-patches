@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.13 2013/03/10 22:55:05 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2013/12/25 08:51:24 ajacoutot Exp $
 
 COMMENT=		Python bindings to TagLib audio file tag library
 
 MODPY_EGG_VERSION =	2013.1
 DISTNAME =		tagpy-${MODPY_EGG_VERSION}
 PKGNAME =		py-${DISTNAME}
+REVISION =		1
 
 CATEGORIES =		audio devel
 
@@ -13,25 +14,31 @@ HOMEPAGE =		http://mathema.tician.de/software/tagpy
 # MIT
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB += boost_python-mt m pthread stdc++ tag>=10 ${MODPY_WANTLIB}
+WANTLIB += boost_python-mt m pthread stdc++ tag ${MODPY_WANTLIB}
 
 MASTER_SITES =		${MASTER_SITE_PYPI:=t/tagpy/}
-
-VMEM_WARNING=		Yes
 
 MODULES =		lang/python
 MODPY_SETUPTOOLS =	Yes
 
-LIB_DEPENDS =		${MODPY_LIB_DEPENDS} \
-			audio/taglib>=1.8p4 \
-			devel/boost
+FLAVORS=		python3
+FLAVOR?=
 
-CONFIGURE_ARGS +=	--boost-python-libname=boost_python-mt \
-			--boost-compiler=gcc42 \
+LIB_DEPENDS =		lang/python/${MODPY_VERSION} \
+			audio/taglib \
+			devel/boost>=1.53.0p5
+
+CONFIGURE_ARGS +=	--boost-compiler=gcc42 \
 			--boost-lib-dir=${LOCALBASE}/lib \
 			--boost-inc-dir=${LOCALBASE}/include \
 			--taglib-lib-dir=${LOCALBASE}/lib \
 			--taglib-inc-dir=${LOCALBASE}/include/taglib \
+
+.if ${FLAVOR:Mpython3}
+CONFIGURE_ARGS +=	--boost-python-libname=boost_python${MODPY_MAJOR_VERSION}-mt
+.else
+CONFIGURE_ARGS +=	--boost-python-libname=boost_python-mt
+.endif
 
 do-configure:
 		cd ${WRKSRC} && env ${CONFIGURE_ENV} ${MODPY_BIN} ./configure.py ${CONFIGURE_ARGS}

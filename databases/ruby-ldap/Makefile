@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.31 2013/10/26 23:55:35 jeremy Exp $
+# $OpenBSD: Makefile,v 1.33 2014/01/15 02:13:57 jeremy Exp $
 
 COMMENT=	Ruby interface to some common LDAP libraries
 
 PKGNAME=	ldap-0.9.12
-REVISION =	2
+REVISION =	4
 DISTNAME=	ruby-${PKGNAME}
 CATEGORIES=	databases
 

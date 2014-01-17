@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/08/24 17:33:50 zhuk Exp $
+# $OpenBSD: Makefile,v 1.5 2014/01/16 11:21:00 zhuk Exp $
 
 COMMENT =	KDE MPlayer-based thumbnail generator for video files
 DISTNAME =	mplayerthumbs-${MODKDE4_VERSION}

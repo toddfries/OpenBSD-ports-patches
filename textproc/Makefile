@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.397 2013/11/11 13:37:35 zhuk Exp $
+# $OpenBSD: Makefile,v 1.401 2014/01/11 22:56:04 jeremy Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -110,6 +110,7 @@
      SUBDIR += mxml
      SUBDIR += namazu
      SUBDIR += naturaldocs
+     SUBDIR += nfoview
      SUBDIR += ocaml-csv
      SUBDIR += ocaml-rss
      SUBDIR += ocaml-text
@@ -330,15 +331,20 @@
      SUBDIR += ruby-fast-stemmer,ruby18
      SUBDIR += ruby-fast-stemmer,ruby19
      SUBDIR += ruby-fast-stemmer,ruby20
+     SUBDIR += ruby-fast-stemmer,ruby21
      SUBDIR += ruby-haml
      SUBDIR += ruby-hpricot,ruby18
      SUBDIR += ruby-hpricot,ruby19
      SUBDIR += ruby-hpricot,ruby20
+     SUBDIR += ruby-hpricot,ruby21
      SUBDIR += ruby-htmlentities
      SUBDIR += ruby-hyperestraier
      SUBDIR += ruby-hyperestraier,ruby19
      SUBDIR += ruby-hyperestraier,ruby20
+     SUBDIR += ruby-hyperestraier,ruby21
      SUBDIR += ruby-icalendar
+     SUBDIR += ruby-icalendar,ruby19
+     SUBDIR += ruby-icalendar,ruby20
      SUBDIR += ruby-kramdown
      SUBDIR += ruby-liquid
      SUBDIR += ruby-markaby
@@ -347,18 +353,22 @@
      SUBDIR += ruby-nokogiri,ruby18
      SUBDIR += ruby-nokogiri,ruby19
      SUBDIR += ruby-nokogiri,ruby20
+     SUBDIR += ruby-nokogiri,ruby21
      SUBDIR += ruby-pdf-reader
      SUBDIR += ruby-pygments.rb
      SUBDIR += ruby-randexp
      SUBDIR += ruby-rdiscount,ruby18
      SUBDIR += ruby-rdiscount,ruby19
      SUBDIR += ruby-rdiscount,ruby20
+     SUBDIR += ruby-rdiscount,ruby21
      SUBDIR += ruby-redcarpet,ruby18
      SUBDIR += ruby-redcarpet,ruby19
      SUBDIR += ruby-redcarpet,ruby20
+     SUBDIR += ruby-redcarpet,ruby21
      SUBDIR += ruby-redcloth,ruby18
      SUBDIR += ruby-redcloth,ruby19
      SUBDIR += ruby-redcloth,ruby20
+     SUBDIR += ruby-redcloth,ruby21
      SUBDIR += ruby-rexical
      SUBDIR += ruby-rexical,ruby18
      SUBDIR += ruby-ronn
@@ -370,7 +380,6 @@
      SUBDIR += ruby-yard
      SUBDIR += rxp
      SUBDIR += sablotron
-     SUBDIR += sgmlformat
      SUBDIR += sim
      SUBDIR += source-highlight
      SUBDIR += sp

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1176 2013/11/14 09:45:19 stu Exp $
+# $OpenBSD: Makefile,v 1.1188 2014/01/17 15:04:57 stsp Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -26,6 +26,7 @@
      SUBDIR += automake
      SUBDIR += automoc
      SUBDIR += avr
+     SUBDIR += avr32
      SUBDIR += avrdude
      SUBDIR += beediff
      SUBDIR += bison
@@ -63,6 +64,7 @@
      SUBDIR += coxpcall
      SUBDIR += cppcheck
      SUBDIR += cpphs
+     SUBDIR += cpptest
      SUBDIR += cppunit
      SUBDIR += cryptopp
      SUBDIR += cscope
@@ -156,7 +158,6 @@
      SUBDIR += gtest
      SUBDIR += gtk2hs-buildtools
      SUBDIR += gtkparasite
-     SUBDIR += guichan
      SUBDIR += guilib
      SUBDIR += gwenhywfar
      SUBDIR += gyp
@@ -312,7 +313,6 @@
      SUBDIR += ipython
      SUBDIR += iso-codes
      SUBDIR += itcl
-     SUBDIR += ivy
      SUBDIR += jakarta-servletapi
      SUBDIR += jam
      SUBDIR += jdk
@@ -405,6 +405,7 @@
      SUBDIR += lpc21isp
      SUBDIR += lpeg
      SUBDIR += lpeg,lua52
+     SUBDIR += ltcltk
      SUBDIR += lua-cjson
      SUBDIR += lua-cjson,lua52
      SUBDIR += lua-cmsgpack
@@ -473,6 +474,7 @@
      SUBDIR += npth
      SUBDIR += nspr
      SUBDIR += ocaml-batteries
+     SUBDIR += ocaml-bitstring
      SUBDIR += ocaml-calendar
      SUBDIR += ocaml-camomile
      SUBDIR += ocaml-curses
@@ -1157,7 +1159,6 @@
      SUBDIR += py-jsonrpclib
      SUBDIR += py-kid
      SUBDIR += py-liblarch
-     SUBDIR += py-liblarch_gtk
      SUBDIR += py-libmagic
      SUBDIR += py-logilab-astng
      SUBDIR += py-logilab-common
@@ -1240,6 +1241,7 @@
      SUBDIR += readline
      SUBDIR += rebar
      SUBDIR += remake
+     SUBDIR += rlog
      SUBDIR += ruby-abstract
      SUBDIR += ruby-arrayfields
      SUBDIR += ruby-bacon
@@ -1262,6 +1264,7 @@
      SUBDIR += ruby-ffi,ruby18
      SUBDIR += ruby-ffi,ruby19
      SUBDIR += ruby-ffi,ruby20
+     SUBDIR += ruby-ffi,ruby21
      SUBDIR += ruby-ffi-inliner
      SUBDIR += ruby-flexmock
      SUBDIR += ruby-gem_plugin
@@ -1274,6 +1277,10 @@
      SUBDIR += ruby-highline
      SUBDIR += ruby-hoe
      SUBDIR += ruby-home_run,ruby18
+     SUBDIR += ruby-hub,ruby18
+     SUBDIR += ruby-hub,ruby19
+     SUBDIR += ruby-hub,ruby20
+     SUBDIR += ruby-hub,ruby21
      SUBDIR += ruby-i18n
      SUBDIR += ruby-indentation
      SUBDIR += ruby-isolate
@@ -1282,6 +1289,7 @@
      SUBDIR += ruby-kgio,ruby18
      SUBDIR += ruby-kgio,ruby19
      SUBDIR += ruby-kgio,ruby20
+     SUBDIR += ruby-kgio,ruby21
      SUBDIR += ruby-locale
      SUBDIR += ruby-metaclass
      SUBDIR += ruby-minitest
@@ -1289,8 +1297,10 @@
      SUBDIR += ruby-mspec
      SUBDIR += ruby-narray,ruby19
      SUBDIR += ruby-narray,ruby20
+     SUBDIR += ruby-narray,ruby21
      SUBDIR += ruby-ncurses,ruby19
      SUBDIR += ruby-ncurses,ruby20
+     SUBDIR += ruby-ncurses,ruby21
      SUBDIR += ruby-needle
      SUBDIR += ruby-ole
      SUBDIR += ruby-open4
@@ -1319,10 +1329,12 @@
      SUBDIR += ruby-subset_sum,ruby18
      SUBDIR += ruby-subset_sum,ruby19
      SUBDIR += ruby-subset_sum,ruby20
+     SUBDIR += ruby-subset_sum,ruby21
      SUBDIR += ruby-systemu
      SUBDIR += ruby-term-ansicolor
      SUBDIR += ruby-therubyracer,ruby19
      SUBDIR += ruby-therubyracer,ruby20
+     SUBDIR += ruby-therubyracer,ruby21
      SUBDIR += ruby-tilt
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-trollop
@@ -1331,6 +1343,7 @@
      SUBDIR += ruby-uuid,ruby18
      SUBDIR += ruby-yajl,ruby19
      SUBDIR += ruby-yajl,ruby20
+     SUBDIR += ruby-yajl,ruby21
      SUBDIR += ruby-zentest
      SUBDIR += scons
      SUBDIR += sdcc
@@ -1355,9 +1368,9 @@
      SUBDIR += silc-toolkit
      SUBDIR += simulavr
      SUBDIR += slib
-     SUBDIR += slib-guile
      SUBDIR += smarty
      SUBDIR += smpeg
+     SUBDIR += smpeg2
      SUBDIR += sparsehash
      SUBDIR += spe
      SUBDIR += spice-protocol

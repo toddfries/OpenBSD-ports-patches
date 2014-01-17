@@ -1,8 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2013/08/24 17:33:45 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:31 zhuk Exp $
 
 COMMENT =	2D space arcade game for KDE
 DISTNAME =	kspaceduel-${MODKDE4_VERSION}
-REVISION =	0
 
 WANTLIB =  c m pthread stdc++
 WANTLIB += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtSvg

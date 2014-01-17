@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2013/05/14 09:16:25 zhuk Exp $
+# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:29 zhuk Exp $
 
 COMMENT =	KDE FFmpeg-based thumbnail generator for video files
 CATEGORIES =	multimedia

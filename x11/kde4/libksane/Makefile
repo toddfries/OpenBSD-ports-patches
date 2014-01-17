@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2013/08/24 17:33:49 zhuk Exp $
+# $OpenBSD: Makefile,v 1.6 2013/12/08 19:13:32 zhuk Exp $
 
 COMMENT =	KDE SANE (scanner) wrapper library
+CATEGORIES =	graphics devel
 DISTNAME =	libksane-${MODKDE4_VERSION}
-REVISION =	0
 
 SHARED_LIBS =	ksane			50.0	# 0.2
 

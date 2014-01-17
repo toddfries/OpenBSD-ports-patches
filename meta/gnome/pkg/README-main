@@ -1,4 +1,4 @@
-$OpenBSD: README-main,v 1.22 2013/09/27 16:30:03 ajacoutot Exp $
+$OpenBSD: README-main,v 1.25 2014/01/08 10:37:25 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -14,22 +14,6 @@ The "gnome" package is focused on generic usage to give the user the
 choice to install his favorite applications for daily usage (i.e. PIM,
 WWW browser, office and development applications have been left out on
 purpose).
-
-OpenGL and drm(4)
-=================
-GNOME requires a 3D accelerated display. By default, the drm(4) devices
-are only accessible by "root" and members of the "wheel" group. Both GDM
-(when used to login) and users need access to /dev/drmX which can be
-done by running the following command as root (note that there may be
-some security implications in doing this):
-    chmod 0666 /dev/drm0
-
-In case the machine has multiple video cards, it may be necessary to do
-the same with /dev/drm{1,2,3}.
-
-Another solution would be to create a new group (e.g. "video"), change
-the group ownership of /dev/drmX accordingly and put the users and
-"_gdm" into that group.
 
 Starting GNOME
 ==============
@@ -47,11 +31,16 @@ key features like screen locking will not work properly. To do so, "gdm"
 must be added at the end of "pkg_scripts" in rc.conf.local(8) (and
 "xdm_flags" commented or removed).
 
-Alternatively, to start GNOME without GDM (not recommended), the
-following line needs to be added:
+Changing the GDM greeter language is done in:
+    ${SYSCONFDIR}/gdm/locale.conf
+
+*** NOT RECOMMENDED ***
+Alternative (non-GDM) GNOME startup
+-----------------------------------
+To start GNOME without GDM, the following line needs to be added:
     exec ${LOCALBASE}/bin/ck-launch-session ${TRUEPREFIX}/bin/gnome-session
-in ~/.xinitrc when using startx(1) (console login)
-in ~/.xsession when using xdm(1) (xdm(1) or similar login)
+to ~/.xinitrc when using startx(1) (console login)
+to ~/.xsession when using xdm(1) (xdm(1) or similar login)
 
 mDNS/DNS-SD support
 ===================
@@ -67,7 +56,6 @@ _after_ "dbus_daemon".
 
 Cheat sheet
 ===========
-# echo 'chmod 0666 /dev/drm*' >> /etc/rc.local
-# echo 'multicast_host=YES' >> /etc/rc.conf.local
-# echo 'pkg_scripts="${pkg_scripts} dbus_daemon avahi_daemon gdm"' >> /etc/rc.conf.local
+# echo 'multicast_host=YES' >>/etc/rc.conf.local
+# echo 'pkg_scripts="${pkg_scripts} dbus_daemon avahi_daemon gdm"' >>/etc/rc.conf.local
 # reboot
