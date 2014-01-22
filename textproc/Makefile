@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.401 2014/01/11 22:56:04 jeremy Exp $
+# $OpenBSD: Makefile,v 1.403 2014/01/21 22:43:42 landry Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -160,7 +160,7 @@
      SUBDIR += p5-Lingua-Stem-Snowball-Se
      SUBDIR += p5-Lingua-Treebank
      SUBDIR += p5-List-UtilsBy
-     SUBDIR += p5-MojoX-Renderer-TT
+     SUBDIR += p5-Mojolicious-Plugin-TtRenderer
      SUBDIR += p5-Number-Format
      SUBDIR += p5-Object-MultiType
      SUBDIR += p5-PDF-API2
@@ -332,6 +332,9 @@
      SUBDIR += ruby-fast-stemmer,ruby19
      SUBDIR += ruby-fast-stemmer,ruby20
      SUBDIR += ruby-fast-stemmer,ruby21
+     SUBDIR += ruby-gyoku,ruby19
+     SUBDIR += ruby-gyoku,ruby20
+     SUBDIR += ruby-gyoku,ruby21
      SUBDIR += ruby-haml
      SUBDIR += ruby-hpricot,ruby18
      SUBDIR += ruby-hpricot,ruby19
@@ -354,6 +357,9 @@
      SUBDIR += ruby-nokogiri,ruby19
      SUBDIR += ruby-nokogiri,ruby20
      SUBDIR += ruby-nokogiri,ruby21
+     SUBDIR += ruby-nori,ruby19
+     SUBDIR += ruby-nori,ruby20
+     SUBDIR += ruby-nori,ruby21
      SUBDIR += ruby-pdf-reader
      SUBDIR += ruby-pygments.rb
      SUBDIR += ruby-randexp

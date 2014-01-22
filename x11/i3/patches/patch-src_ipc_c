@@ -1,9 +1,9 @@
-$OpenBSD: patch-src_ipc_c,v 1.9 2012/12/13 12:10:14 dcoppa Exp $
+$OpenBSD: patch-src_ipc_c,v 1.11 2014/01/22 13:48:38 dcoppa Exp $
 
 Add missing header
 
---- src/ipc.c.orig	Wed Dec 12 00:08:17 2012
-+++ src/ipc.c	Thu Dec 13 09:45:54 2012
+--- src/ipc.c.orig	Sun Dec 22 21:12:41 2013
++++ src/ipc.c	Sat Jan 18 23:05:20 2014
 @@ -12,6 +12,7 @@
  #include "all.h"
  #include "yajl_utils.h"

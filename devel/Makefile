@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1188 2014/01/17 15:04:57 stsp Exp $
+# $OpenBSD: Makefile,v 1.1192 2014/01/22 16:12:48 jasper Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -737,6 +737,7 @@
      SUBDIR += p5-File-Type
      SUBDIR += p5-File-chdir
      SUBDIR += p5-FileHandle-Unget
+     SUBDIR += p5-Filesys-Statvfs
      SUBDIR += p5-Filter-Template
      SUBDIR += p5-FormValidator-Simple
      SUBDIR += p5-Fortran-Format
@@ -1059,6 +1060,7 @@
      SUBDIR += p5-Universal-isa
      SUBDIR += p5-Universal-moniker
      SUBDIR += p5-Universal-require
+     SUBDIR += p5-Unix-Mknod
      SUBDIR += p5-VCP-autrijus
      SUBDIR += p5-Variable-Magic
      SUBDIR += p5-Want
@@ -1247,6 +1249,7 @@
      SUBDIR += ruby-bacon
      SUBDIR += ruby-bundler
      SUBDIR += ruby-bundler,ruby18
+     SUBDIR += ruby-bundler,ruby19
      SUBDIR += ruby-cicphash
      SUBDIR += ruby-clio
      SUBDIR += ruby-color-tools
@@ -1335,6 +1338,9 @@
      SUBDIR += ruby-therubyracer,ruby19
      SUBDIR += ruby-therubyracer,ruby20
      SUBDIR += ruby-therubyracer,ruby21
+     SUBDIR += ruby-thor,ruby19
+     SUBDIR += ruby-thor,ruby20
+     SUBDIR += ruby-thor,ruby21
      SUBDIR += ruby-tilt
      SUBDIR += ruby-transaction-simple
      SUBDIR += ruby-trollop

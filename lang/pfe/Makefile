@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.19 2013/12/30 11:46:16 landry Exp $
+# $OpenBSD: Makefile,v 1.21 2014/01/21 20:45:43 miod Exp $
 
 BROKEN-powerpc=	does not build, error: lvalue required as increment operand
-BROKEN-alpha=	pfe segfaults when called with --help during build
 
 COMMENT=	Portable Forth Environment
 
@@ -10,7 +9,7 @@ SHARED_LIBS +=  pfe                  33.69    # .33.69
 SHARED_LIBS +=  pfemodule            33.69    # .33.69
 SHARED_LIBS +=  pfe-0-forth          33.69    # .33.69
 CATEGORIES=    	lang
-REVISION=	0
+REVISION=	1
 
 HOMEPAGE=	http://pfe.sourceforge.net/
 
