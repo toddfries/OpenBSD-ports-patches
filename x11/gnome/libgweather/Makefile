@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.54 2013/10/26 08:02:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2014/02/03 13:00:29 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		weather information access library
 
 GNOME_PROJECT=		libgweather
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.10.2
 REVISION=		0
 
 SHARED_LIBS +=		gweather-3             2.0      # 2.0
@@ -35,6 +35,7 @@ MODGNOME_ICON_CACHE=	Yes
 LIB_DEPENDS=		devel/libsoup>=2.42.0 \
 			x11/gtk+3
 
-CONFIGURE_ARGS+=	--with-zoneinfo-dir="/usr/share/zoneinfo"
+CONFIGURE_ARGS+=	--with-zoneinfo-dir="/usr/share/zoneinfo" \
+			--disable-glade-catalog
 
 .include <bsd.port.mk>

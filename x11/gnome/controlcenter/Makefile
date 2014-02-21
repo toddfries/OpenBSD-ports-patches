@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.117 2013/11/13 07:24:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.120 2014/02/09 08:48:33 ajacoutot Exp $
 
 # XXX change proxy settings without network-manager?
 
@@ -8,6 +8,7 @@ COMMENT=		GNOME control center
 
 GNOME_PROJECT=		gnome-control-center
 GNOME_VERSION=		3.10.2
+REVISION=		1
 
 CATEGORIES=		x11
 
@@ -93,5 +94,9 @@ MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/gnome-control-center
+
+# XXX https://bugzilla.gnome.org/show_bug.cgi?id=650342
+pre-configure:
+	echo >${WRKSRC}/shell/hostnames-test.txt
 
 .include <bsd.port.mk>

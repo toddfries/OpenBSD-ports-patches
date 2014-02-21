@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.16 2013/03/11 11:23:51 espie Exp $
+# $OpenBSD: Makefile,v 1.18 2014/01/23 16:56:15 ajacoutot Exp $
 
 COMMENT=	return 'I am not here' indication stored in a LDAP tree
 
 DISTNAME=	ldapvacation-1.1.3
-REVISION =	2
+REVISION =	4
 
 CATEGORIES=    	mail
 
@@ -19,12 +19,15 @@ WANTLIB=	c pthread ldap_r>=8 lber>=8
 MASTER_SITES=  	${HOMEPAGE}
 EXTRACT_SUFX=	.tgz
 
+NO_TEST=	Yes
+
 LIB_DEPENDS=	databases/openldap
 
 FAKE_FLAGS=	BINDIR=${PREFIX}/bin \
 		MANDIR=${PREFIX}/man/man \
 		SPATH=${PREFIX}/share/examples/ldapvacation
 
-NO_TEST=	Yes
+post-install:
+	chmod a+r ${PREFIX}/share/examples/ldapvacation/ldapvacation.conf
 
 .include <bsd.port.mk>

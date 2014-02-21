@@ -1,16 +1,13 @@
-# $OpenBSD: Makefile,v 1.20 2014/01/08 20:46:18 kirby Exp $
+# $OpenBSD: Makefile,v 1.22 2014/02/04 18:34:14 kirby Exp $
 
 COMMENT-main =		daemon for controlling APC UPSes
 COMMENT-cgi =		CGI scripts for web monitoring
 COMMENT-x11 =		gapcmon - GUI for apcupsd
 
-DISTNAME =		apcupsd-3.14.10
+DISTNAME =		apcupsd-3.14.11
 PKGNAME-main =		${DISTNAME}
 PKGNAME-cgi =		${DISTNAME:S/-/-cgi-/}
 PKGNAME-x11 =		${DISTNAME:S/-/-x11-/}
-REVISION-main =		2
-REVISION-cgi =		1
-REVISION-x11 =		2
 
 CATEGORIES =		sysutils
 
@@ -32,7 +29,7 @@ USE_GMAKE =		Yes
 NO_TEST =		Yes
 MAKE_FLAGS =		VERBOSE=2
 
-WEB_ROOT =		/var/www
+WEB_ROOT =		${VARBASE}/www
 SUBST_VARS +=		WEB_ROOT ^BASESYSCONFDIR
 SYSCONFDIR =		${BASESYSCONFDIR}/apcupsd
 

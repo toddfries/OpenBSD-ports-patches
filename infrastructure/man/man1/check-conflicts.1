@@ -1,4 +1,4 @@
-.\"	$OpenBSD: check-conflicts.1,v 1.5 2013/10/12 10:19:20 espie Exp $
+.\"	$OpenBSD: check-conflicts.1,v 1.7 2014/02/08 13:22:24 espie Exp $
 .\"
 .\" Copyright (c) 2010 Marc Espie <espie@openbsd.org>
 .\"
@@ -14,7 +14,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: October 12 2013 $
+.Dd $Mdocdate: February 8 2014 $
 .Dt CHECK-CONFLICTS 1
 .Os
 .Sh NAME
@@ -24,7 +24,7 @@
 .Nm check-conflicts
 .Op Fl ev
 .Op Fl d Ar plist_dir
-.Op Fl p ports_dir
+.Op Fl p Ar ports_dir
 .Op Ar pkgname ...
 .Sh DESCRIPTION
 .Nm
@@ -85,6 +85,15 @@ Traverse the ports directory for packing-lists, using
 More than one directory could be specified by delimiting them by colon,
 e.g.:
 .Pa /usr/ports/x11/kde:/usr/ports/x11/kde4 .
+.Pp
+If
+.Fl d Ar plist-dir
+is also used, traverse only the directories corresponding to the packages
+under
+.Ar plist-dir
+to figure out current pkgnames, and annotate those with a
+.Sq !
+in the report.
 .El
 .Sh SEE ALSO
 .Xr pkg_add 1 ,

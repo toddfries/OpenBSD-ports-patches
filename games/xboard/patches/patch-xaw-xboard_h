@@ -1,0 +1,23 @@
+$OpenBSD: patch-xaw-xboard_h,v 1.1 2014/01/28 09:20:12 dcoppa Exp $
+--- xaw/xboard.h.orig	Mon Jan  6 03:54:33 2014
++++ xaw/xboard.h	Tue Jan 28 08:24:02 2014
+@@ -118,8 +118,8 @@ typedef struct {
+ 
+ #define BORDER_X_OFFSET 3
+ #define BORDER_Y_OFFSET 27
+-#define FIRST_CHESS_PROGRAM	"fairymax"
+-#define SECOND_CHESS_PROGRAM	"fairymax"
++#define FIRST_CHESS_PROGRAM	"gnuchess"
++#define SECOND_CHESS_PROGRAM	"gnuchess"
+ #define FIRST_DIRECTORY         "."
+ #define SECOND_DIRECTORY        "."
+ #define SOUND_BELL              ""
+@@ -127,7 +127,7 @@ typedef struct {
+ #define FCP_NAMES               ""
+ #define SCP_NAMES               ""
+ #define ICS_TEXT_MENU_DEFAULT   ""
+-#define SETTINGS_FILE           SYSCONFDIR"/xboard.conf"
++#define SETTINGS_FILE           SYSCONFDIR"/xboard/xboard.conf"
+ #define COLOR_BKGD              "white"
+ 
+ void NewTagsPopup P((char *text, char *msg));

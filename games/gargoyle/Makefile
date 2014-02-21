@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2013/08/22 20:06:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.17 2014/01/25 13:17:35 sthen Exp $
 
 SHARED_ONLY =	Yes
 
@@ -7,6 +7,7 @@ COMMENT =	cross-platform interactive fiction player
 DISTNAME =	gargoyle-2011.1-sources
 PKGNAME =	gargoyle-2011.1
 EPOCH =		0
+REVISION =	0
 
 CATEGORIES =	games x11
 

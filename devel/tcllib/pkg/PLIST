@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.10 2013/11/14 09:21:18 stu Exp $
+@comment $OpenBSD: PLIST,v 1.12 2014/02/09 12:27:05 stu Exp $
 bin/dtplite
 lib/tcl/aes/
 lib/tcl/aes/aes.tcl

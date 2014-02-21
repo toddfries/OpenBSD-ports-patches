@@ -1,7 +1,7 @@
-$OpenBSD: patch-plugins_c,v 1.2 2013/01/03 11:54:49 shadchin Exp $
---- plugins.c.orig	Fri Oct 19 21:58:50 2012
-+++ plugins.c	Tue Oct 23 22:32:14 2012
-@@ -1099,7 +1099,7 @@ plug_select_output (void) {
+$OpenBSD: patch-plugins_c,v 1.4 2014/02/07 22:20:13 dcoppa Exp $
+--- plugins.c.orig	Sun Jan 26 21:23:30 2014
++++ plugins.c	Fri Feb  7 21:57:30 2014
+@@ -1151,7 +1151,7 @@ plug_select_output (void) {
      return 0;
  #else
      char outplugname[100];
@@ -10,7 +10,7 @@ $OpenBSD: patch-plugins_c,v 1.2 2013/01/03 11:54:49 shadchin Exp $
      for (int i = 0; g_output_plugins[i]; i++) {
          DB_output_t *p = g_output_plugins[i];
          if (!strcmp (p->plugin.name, outplugname)) {
-@@ -1141,7 +1141,7 @@ plug_reinit_sound (void) {
+@@ -1193,7 +1193,7 @@ plug_reinit_sound (void) {
  
      if (plug_select_output () < 0) {
          char outplugname[100];

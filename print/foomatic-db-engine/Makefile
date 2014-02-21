@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.28 2013/12/12 14:52:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.30 2014/01/30 11:39:04 ajacoutot Exp $
 
 COMMENT=		Foomatic PPD generator
 
 DISTNAME=		foomatic-db-engine-4.0.9
 CATEGORIES=		print
-REVISION=		0
+REVISION=		2
 
 HOMEPAGE=		http://www.linux-foundation.org/en/OpenPrinting/Database/Foomatic
 

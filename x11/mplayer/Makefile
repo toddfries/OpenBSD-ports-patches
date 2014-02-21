@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.231 2014/01/10 21:52:29 brad Exp $
+# $OpenBSD: Makefile,v 1.235 2014/02/19 19:12:42 ratchov Exp $
 
 SHARED_ONLY=		Yes
 
@@ -15,6 +15,7 @@ SUBST_VARS += 		PREFIX CONFDIR
 # Distfiles must be hand-rolled, see README
 N =			mplayer
 DISTNAME =		mplayer-${V}
+REVISION =		3
 EXTRACT_SUFX =		.tar.xz
 
 CATEGORIES =		x11 multimedia

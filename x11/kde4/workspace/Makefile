@@ -1,7 +1,10 @@
-# $OpenBSD: Makefile,v 1.11 2014/01/15 19:42:12 zhuk Exp $
+# $OpenBSD: Makefile,v 1.18 2014/02/08 18:15:20 zhuk Exp $
 
 COMMENT =	KDE workspace
+MODKDE4_VERSION =	4.11.6
 DISTNAME =	kde-workspace-${MODKDE4_VERSION}
+
+MASTER_SITES =	${MASTER_SITE_KDE:=stable/4.12.2/src/}
 
 # TODO:
 # Port ksysguard to OpenBSD (sensors framework, lsof(1) call replace and others).
@@ -22,13 +25,13 @@ SHARED_LIBS +=	kickoff				51.0
 SHARED_LIBS +=	kscreensaver			51.0 # 5.0
 SHARED_LIBS +=	ksgrd				51.0 # 4.7
 SHARED_LIBS +=	ksignalplotter			51.0 # 4.7
-#SHARED_LIBS +=	kwineffects			51.0 # 1.0
+SHARED_LIBS +=	kwineffects			51.0 # 1.0
 #SHARED_LIBS +=	kwin4effects			0.0 # 1.0
 #SHARED_LIBS +=	kwinnvidiahack			1.0 # 4.7
-#SHARED_LIBS +=  kwinglutils			51.0 # 1.0
+SHARED_LIBS +=  kwinglutils			51.0 # 1.0
 #SHARED_LIBS +=  kwin4glutils			0.0 # 1.0
-SHARED_LIBS +=	kwinv4effects			0.0 # 1.0
-SHARED_LIBS +=	kwinv4glutils			0.0 # 1.0
+#SHARED_LIBS +=	kwinv4effects			0.0 # 1.0
+#SHARED_LIBS +=	kwinv4glutils			0.0 # 1.0
 SHARED_LIBS +=	kworkspace			51.0 # 4.7
 SHARED_LIBS +=	lsofui				51.0 # 4.7
 SHARED_LIBS +=	oxygenstyle			51.0 # 4.7
@@ -117,27 +120,26 @@ CONFIGURE_ARGS =	-DWITH_OpenGLES:Bool=False \
 			-DWITH_UDev:Bool=False \
 			-DWITH_Wayland:Bool=False
 
-# dont't use "kwin4", it creates conflict with kfourinline
-CONFIGURE_ARGS +=	-DKWIN_NAME:String=kwinv4
-
 MODKDE4_SYSCONF_FILES =	dbus-1		share/examples \
-			ksysguarddrc	share/examples/kde
+			ksysguarddrc	share/examples/kde \
+			kdm		share/examples/kde
 
-LOCALSTATEDIR =		${BASELOCALSTATEDIR}/kdm
-KDM_FACES_DIR =		${PREFIX}/share/apps/kdm/faces
+SUBST_VARS =		SYSCONFDIR
 
-SUBST_VARS =		LOCALSTATEDIR
+# generate really default configuration
+GENKDMCONF_FLAGS=	--in ${WRKINST}${SYSCONFDIR}/kdm --no-old
+MAKE_ENV =		GENKDMCONF_FLAGS="${GENKDMCONF_FLAGS}"
 
 # Note: struct ucred check results are not used, do not look there.
 
 post-extract:
 	cp ${FILESDIR}/checkpass_bsd.c ${WRKSRC}/kcheckpass/
 
+pre-configure:
+	${SUBST_CMD} ${WRKSRC}/kdm/config.def
+
 post-install:
-	rm -f ${PREFIX}/share/config/kdm/*.bak
-	${INSTALL_DATA_DIR} ${WRKINST}${LOCALSTATEDIR}/faces
-	rm -Rf ${KDM_FACES_DIR}
-	ln -s ${LOCALSTATEDIR}/faces ${KDM_FACES_DIR}
+	ln -sf ${SYSCONFDIR}/kdm/faces ${PREFIX}/share/apps/kdm/faces
 	mv ${PREFIX}/share/sounds/pop{,-kde4}.wav
 
 .include <bsd.port.mk>

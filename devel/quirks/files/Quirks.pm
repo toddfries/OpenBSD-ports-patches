@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.119 2014/01/22 12:00:32 sthen Exp $
+# $OpenBSD: Quirks.pm,v 1.123 2014/02/08 15:15:16 ajacoutot Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -359,6 +359,10 @@ my $obsolete_reason = {
 	'ez-ipupdate' => 3,
 	'tesseract-dan-frak' => 3,
 	'apc-upsd' => 3,
+	'mod_bandwidth' => 3,
+	'varconf' => 0,
+	'radiusd-cistron' => 2,
+	'radiusd-lucent' => 2,
 };
 
 # ->is_base_system($handle, $state):
@@ -420,7 +424,7 @@ sub tweak_search
 {
 	my ($self, $l, $handle, $state) = @_;
 
-	if (@$l != 1 || !$l->[0]->can("add_stem")) {
+	if (@$l == 0 || !$l->[0]->can("add_stem")) {
 		return;
 	}
 	my $stem = OpenBSD::PackageName::splitstem($handle->pkgname);

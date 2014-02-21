@@ -1,7 +1,21 @@
-$OpenBSD: patch-kdm_config_def,v 1.1.1.1 2013/04/24 19:17:42 zhuk Exp $
---- kdm/config.def.orig	Sat May 21 00:32:06 2011
-+++ kdm/config.def	Mon Sep  5 05:15:43 2011
-@@ -40,6 +40,9 @@
+$OpenBSD: patch-kdm_config_def,v 1.5 2014/01/31 17:45:35 zhuk Exp $
+OpenBSD specifics.
+--- kdm/config.def.orig	Thu Jan  2 23:27:49 2014
++++ kdm/config.def	Tue Jan 28 20:55:26 2014
+@@ -29,7 +29,11 @@
+ #define RCVERMAJOR 2
+ #define RCVERMINOR 4
+ 
+-#define KDMCONF KDE_CONFDIR "/kdm"
++#if defined(__OpenBSD__)
++# define KDMCONF "${SYSCONFDIR}/kdm"
++#else
++# define KDMCONF KDE_CONFDIR "/kdm"
++#endif
+ #define KDMDATA KDE_DATADIR "/kdm"
+ 
+ #include <sys/param.h> /* for #define BSD */
+@@ -40,6 +44,9 @@
  #elif defined(__linux__)
  # define HALT_CMD	"/sbin/shutdown -h -P now"
  # define REBOOT_CMD	"/sbin/shutdown -r now"
@@ -11,3 +25,21 @@ $OpenBSD: patch-kdm_config_def,v 1.1.1.1 2013/04/24 19:17:42 zhuk Exp $
  #elif defined(BSD)
  # define HALT_CMD	"/sbin/shutdown -p now"
  # define REBOOT_CMD	"/sbin/shutdown -r now"
+@@ -1036,7 +1043,7 @@ Key: GreeterUID
+ Type: string
+ Default: ""
+ User: core
+-Instance: "kdm"
++Instance: "_kdm"
+ Update: upd_greeteruid
+ Comment: &
+ Description:
+@@ -1435,7 +1442,7 @@ Key: ServerUID
+ Type: string
+ Default: ""
+ User: core
+-Instance: #:*/"_x11"
++Instance: :*/"_x11"
+ Comment: &
+ Description:
+  The user the &X-Server; should run as. Empty results in <systemitem class="username">root</systemitem>.

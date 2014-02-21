@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:31 zhuk Exp $
+# $OpenBSD: Makefile,v 1.6 2014/01/30 21:28:42 zhuk Exp $
 
 COMMENT =	KDE terminal emulator
 DISTNAME =	konsole-${MODKDE4_VERSION}
-
-# Check that sysctl() really could return EAGAIN (OpenBSDProcessInfo).
+REVISION =	1
 
 SHARED_LIBS =	kdeinit4_konsole	51.0
 SHARED_LIBS +=	konsoleprivate		51.0

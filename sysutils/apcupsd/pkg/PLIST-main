@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.4 2014/01/08 20:46:18 kirby Exp $
+@comment $OpenBSD: PLIST-main,v 1.7 2014/02/06 06:32:55 kirby Exp $
 @pkgpath sysutils/apcupsd,snmp
 @group bin
 @man man/man5/apcupsd.conf.5
@@ -7,9 +7,13 @@
 @man man/man8/apctest.8
 @man man/man8/apcupsd.8
 @bin sbin/apcaccess
+@owner root
+@mode 700
 @bin sbin/apctest
-sbin/apcupsctl
 @bin sbin/apcupsd
+@mode
+@owner
+sbin/apcupsctl
 @bin sbin/smtp
 @comment share/applications/
 @group
@@ -23,29 +27,23 @@ share/examples/apcupsd/
 share/examples/apcupsd/etc/
 @sample ${SYSCONFDIR}/
 share/examples/apcupsd/etc/apccontrol
-@mode 744
+@mode 750
 @sample ${SYSCONFDIR}/apccontrol
 @mode
+@mode 444
 share/examples/apcupsd/etc/apcupsd.conf
+@mode
 @sample ${SYSCONFDIR}/apcupsd.conf
+@mode 700
 share/examples/apcupsd/etc/changeme
-@mode 744
 @sample ${SYSCONFDIR}/changeme
-@mode
 share/examples/apcupsd/etc/commfailure
-@mode 744
 @sample ${SYSCONFDIR}/commfailure
-@mode
 share/examples/apcupsd/etc/commok
-@mode 744
 @sample ${SYSCONFDIR}/commok
-@mode
 share/examples/apcupsd/etc/offbattery
-@mode 744
 @sample ${SYSCONFDIR}/offbattery
-@mode
 share/examples/apcupsd/etc/onbattery
-@mode 744
 @sample ${SYSCONFDIR}/onbattery
 @mode
 share/examples/apcupsd/rpt/

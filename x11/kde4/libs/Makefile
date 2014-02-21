@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.42 2014/01/15 19:42:11 zhuk Exp $
+# $OpenBSD: Makefile,v 1.47 2014/02/08 16:54:25 zhuk Exp $
 
 COMMENT-main =		KDE core libraries
 COMMENT-en_US =		KDE en_US locale data
@@ -11,6 +11,7 @@ PKGNAME-langlist =	kde4-langlist-${MODKDE4_VERSION}
 PKG_ARCH-en_US =	*
 PKG_ARCH-langlist =	*
 PKGSPEC-main =		kdelibs->=4
+REVISION-main =		4
 
 DPB_PROPERTIES =	parallel tag:kde4
 
@@ -164,5 +165,6 @@ post-extract:
 
 pre-configure:
 	perl -pi -e 's/\bkjscmd\b/$$&4/g' ${WRKSRC}/doc/kjscmd/*
+	${SUBST_CMD} ${WRKSRC}/kio/kio/ksambashare.cpp
 
 .include <bsd.port.mk>

@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# $OpenBSD: portcheck,v 1.60 2014/01/13 11:47:31 zhuk Exp $
+# $OpenBSD: portcheck,v 1.71 2014/02/09 19:26:25 zhuk Exp $
 # Copyright (c) 2013 Vadim Zhukov
 # 
 # Permission to use, copy, modify, and distribute this software for any
@@ -20,8 +20,8 @@ set +X
 set -u
 
 usage() {
-	echo "usage: ${0##*/} [-CdPU] [-p portsdir] [-x glob]" >&2
-	echo "       ${0##*/} [-AdP] [-p portsdir] [-x glob] [subdir ...]" >&2
+	echo "usage: ${0##*/} [-dNP] [-p portsdir] [-x glob]" >&2
+	echo "       ${0##*/} -A [-dP] [-p portsdir] [-x glob] [subdir ...]" >&2
 	exit 1
 }
 
@@ -30,8 +30,8 @@ usage() {
 # Parsing command line options
 #
 
-existing_port=false
-ignore_cvs=false
+existing_port=true
+ignore_cvs=true
 plist_checks=true
 portsdir=
 rootrun=false
@@ -39,9 +39,10 @@ debugging=false
 
 ignore_list=; unset ignore_list[0]
 
-while getopts "ACdPp:Ux:" OPT; do
+while getopts "AdNPp:x:" OPT; do
 	case $OPT in
 	A)
+		$existing_port || usage
 		if ! $rootrun; then
 			ignore_list[${#ignore_list[@]}]=.cvsignore
 			ignore_list[${#ignore_list[@]}]=.fslckout
@@ -50,32 +51,33 @@ while getopts "ACdPp:Ux:" OPT; do
 			ignore_list[${#ignore_list[@]}]=.hg
 			ignore_list[${#ignore_list[@]}]=.hgignore
 			ignore_list[${#ignore_list[@]}]=.svn
-			ignore_list[${#ignore_list[@]}]=.FINISHED
-			ignore_list[${#ignore_list[@]}]=.INDEX
-			ignore_list[${#ignore_list[@]}]=.README
-			ignore_list[${#ignore_list[@]}]=.README.md
-			ignore_list[${#ignore_list[@]}]=.bulk
-			ignore_list[${#ignore_list[@]}]=.distfiles
-			ignore_list[${#ignore_list[@]}]=.infrastructure
-			ignore_list[${#ignore_list[@]}]=.lost+found
-			ignore_list[${#ignore_list[@]}]=.mystuff
-			ignore_list[${#ignore_list[@]}]=.openbsd-wip
-			ignore_list[${#ignore_list[@]}]=.packages
-			ignore_list[${#ignore_list[@]}]=.plist
-			ignore_list[${#ignore_list[@]}]=.pobj
-			ignore_list[${#ignore_list[@]}]=.update
+			ignore_list[${#ignore_list[@]}]=FINISHED
+			ignore_list[${#ignore_list[@]}]=INDEX
+			ignore_list[${#ignore_list[@]}]=README
+			ignore_list[${#ignore_list[@]}]=README.md
+			ignore_list[${#ignore_list[@]}]=bulk
+			ignore_list[${#ignore_list[@]}]=distfiles
+			ignore_list[${#ignore_list[@]}]=infrastructure
+			ignore_list[${#ignore_list[@]}]=lost+found
+			ignore_list[${#ignore_list[@]}]=mystuff
+			ignore_list[${#ignore_list[@]}]=openbsd-wip
+			ignore_list[${#ignore_list[@]}]=packages
+			ignore_list[${#ignore_list[@]}]=plist
+			ignore_list[${#ignore_list[@]}]=pobj
+			ignore_list[${#ignore_list[@]}]=tests
+			ignore_list[${#ignore_list[@]}]=update
 		fi
 		rootrun=true
-		existing_port=true
-		ignore_cvs=true
-		;;
-
-	C)
-		ignore_cvs=true
 		;;
 
 	d)
 		debugging=true
+		;;
+
+	N)
+		$rootrun && usage
+		existing_port=false
+		ignore_cvs=false
 		;;
 
 	P)
@@ -84,10 +86,6 @@ while getopts "ACdPp:Ux:" OPT; do
 
 	p)
 		portsdir=$OPTARG
-		;;
-
-	U)
-		existing_port=true
 		;;
 
 	x)
@@ -1113,7 +1111,7 @@ check_wantlib() {
 			    "in WANTLIB (check other libs, too!)"
 			;;
 
-		kdecore?(?('>')=+([0-9])))
+		@(kdecore|kdeui|kio)?(?('>')=+([0-9])))
 			if $kde4_module; then
 				err "$portref$v instead of \${KDE4LIB}/$v" \
 				    "in WANTLIB (check other libs, too!)"
@@ -1219,6 +1217,7 @@ check_pkg_dir() {
 
 	check_perms_in_dir "$dir"
 
+	dir="${dir#./}"
 	for F in "$dir"/* "$dir"/.*; do case "${F##*/}" in
 	DESCR?(-*))
 		empty=false
@@ -1226,7 +1225,7 @@ check_pkg_dir() {
 			err "$F is not a file"
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
-		check_long_lines 72 "$F"
+		check_long_lines "$F"
 		check_hardcoded "$F"
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
@@ -1265,7 +1264,7 @@ check_pkg_dir() {
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
-		check_long_lines 80 "$F"
+		check_long_lines "$F"
 		check_hardcoded "$F"
 		head -n 1 -- "$F" |
 			egrep -q '^(#[[:space:]]*)?\$OpenBSD(:.*)?\$$' ||
@@ -1275,8 +1274,10 @@ check_pkg_dir() {
 	*.rc)
 		[[ -f $F ]] ||
 			err "$F is not a file"
+		[[ ${F##*/} == [A-Za-z_]*([A-Za-z0-9_]).rc ]] ||
+			err "$F name will not work in rc.subr(8)"
 		check_trailing_whitespace "$F"
-		check_long_lines 80 "$F"
+		check_long_lines "$F"
 		check_hardcoded "$F"
 		head -n 5 -- "$F" |
 			egrep -q '^#[[:space:]]*\$OpenBSD(:.*)?\$$' ||
@@ -1289,7 +1290,7 @@ check_pkg_dir() {
 		[[ -n $subst_cmd ]] && check_subst_vars "$F" "$subst_cmd"
 		check_trailing_whitespace "$F"
 		check_newline_at_eof "$F"
-		check_long_lines 72 "$F"
+		check_long_lines "$F"
 		check_hardcoded "$F"
 		egrep -q '\$OpenBSD.*\$' "$F" &&
 			err "$F should not contain \$OpenBSD\$ tag"
@@ -1304,7 +1305,8 @@ check_pkg_dir() {
 }
 
 # Checks made:
-#   * There are no hardcoded /usr/local or /var paths in file
+#   * There are no hardcoded /usr/local or /var paths in file.
+#     XXX /var/log should not trigger the warning.
 check_hardcoded() {
 	$debugging && echo "CALLED: check_hardcoded($*)" >&2
 
@@ -1314,22 +1316,22 @@ check_hardcoded() {
 }
 
 # Checks made:
-#   * There are no lines longer than given number of characters that
-#     have at least one space (avoids warnings on long URLs etc.).
+#   * There are no lines longer than 80 characters that have at least
+#     one space (avoids warnings on long URLs etc.).
 check_long_lines() {
 	$debugging && echo "CALLED: check_long_lines($*)" >&2
-	local max_width=$1; shift;
 	local file=$1; shift
 
-	local n=$(awk <"$file" -v max="$max_width" \
-		  '/[[:space:]]/ && length > max { n++ } END { print n+0 }')
+	local n=$(awk <"$file" \
+		  '/[[:space:]]/ && length > 80 { n++ } END { print n+0 }')
 	(($n > 0 )) &&
-		err "$n line(s) longer than $max_width chars in $file"
+		err "$n line(s) longer than 80 chars in $file"
 }
 
 # Checks made:
 #   * There is an OpenBSD RCS tag at the top.
 #   * No items with ${FULLPKGNAME} are allowed, except readme.
+#   * No empty lines.
 check_plist_file() {
 	$debugging && echo "CALLED: check_plist_file($*)" >&2
 
@@ -1346,6 +1348,8 @@ check_plist_file() {
 	egrep -v '^(share/doc/pkg-readmes/\$\{FULLPKGNAME\}|@comment .*)$' "$1" |
 		egrep '.\$\{FULLPKGNAME\}|\$\{FULLPKGNAME\}.' >&2 &&
 		err "$1 contains item(s) with \${FULLPKGNAME} in it, see above"
+
+	egrep -q '^[[:space:]]*$' "$1" && err "$1 contains empty lines"
 }
 
 # Checks made:
@@ -1375,18 +1379,20 @@ check_makefile() {
 
 	local F="$1"
 	check_trailing_whitespace "$F"
-	check_long_lines 80 "$F"
+	check_long_lines "$F"
 	head -n 1 -- "$F" |
 		egrep -q '^#[[:space:]]*\$OpenBSD.*\$' ||
 		err "$F does not have \$OpenBSD\$ RCS tag at the top"
 
-	local iflevel=0 l lnum=0 revs= t r mkvars= var dupfound
+	local iflevel=0 l lnum=0 revs= t r mkvars= var duprevfound
 	# do not unset mkvars, having empty element(-s) is fine
 	unset revs[0]
 	local tab="$(print '\t')"
+	IFS=
 	while read -r l; do ((++lnum))
+		unset IFS
 		set -A t -- $l
-		dupfound=false
+		duprevfound=false
 
 		case $l in
 		*(" ")REVISION*)
@@ -1398,7 +1404,7 @@ check_makefile() {
 					if [[ $var == "$r" ]]; then
 						err "duplicated $r in $F"
 						# avoid dup error messages
-						dupfound=true
+						duprevfound=true
 						break
 					fi
 				done
@@ -1422,8 +1428,8 @@ check_makefile() {
 		esac
 
 		if [[ $l == *(" ")+([A-Za-z0-9_-])*(" "|"$tab")?(\?)=* ]] &&
-		   ((iflevel == 0)) && ! $dupfound; then
-			var=${t[0]%?(\?)=}
+		   ((iflevel == 0)) && ! $duprevfound; then
+			var=${t[0]%?(\?)=*}
 			for v in "${mkvars[@]}"; do
 				if [[ $v == "$var" ]]; then
 					err "duplicated assignment of $v" \
@@ -1433,7 +1439,9 @@ check_makefile() {
 			done
 			mkvars[${#mkvars[@]}]=$var
 		fi
+		IFS=
 	done <"$F"
+	unset IFS
 }
 
 # Checks made:

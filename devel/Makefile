@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1192 2014/01/22 16:12:48 jasper Exp $
+# $OpenBSD: Makefile,v 1.1197 2014/02/08 22:15:13 espie Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -41,6 +41,7 @@
      SUBDIR += bzr-svn
      SUBDIR += c2hs
      SUBDIR += cabal-install
+     SUBDIR += capstone
      SUBDIR += catalyst
      SUBDIR += catalyst-tutorial
      SUBDIR += ccache
@@ -668,8 +669,11 @@
      SUBDIR += p5-Devel-Cycle
      SUBDIR += p5-Devel-Declare
      SUBDIR += p5-Devel-FastProf
+     SUBDIR += p5-Devel-FindRef
+     SUBDIR += p5-Devel-Gladiator
      SUBDIR += p5-Devel-GlobalDestruction
      SUBDIR += p5-Devel-Leak
+     SUBDIR += p5-Devel-Leak-Object
      SUBDIR += p5-Devel-NYTProf
      SUBDIR += p5-Devel-PartialDump
      SUBDIR += p5-Devel-SawAmpersand
@@ -1410,7 +1414,6 @@
      SUBDIR += utop
      SUBDIR += uuid
      SUBDIR += vanessa
-     SUBDIR += varconf
      SUBDIR += vim-taglist
      SUBDIR += vtags
      SUBDIR += vtcl

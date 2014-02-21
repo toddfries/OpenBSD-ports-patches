@@ -1,6 +1,6 @@
-# $OpenBSD: Makefile,v 1.15 2013/12/29 13:04:23 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2014/02/01 09:10:31 ajacoutot Exp $
 
-MODPY_EGG_VERSION=	3.0.1
+MODPY_EGG_VERSION=	3.0.2
 REVISION=		#empty
 
 COMMENT=		server of the Tryton application platform
@@ -12,7 +12,6 @@ CATEGORIES=		www
 RUN_DEPENDS=		databases/py-psycopg2 \
 			databases/py-sql \
 			devel/py-dateutil \
-			devel/py-simplejson \
 			devel/py-tz \
 			print/py-relatorio \
 			security/py-openssl \

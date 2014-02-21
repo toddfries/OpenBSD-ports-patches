@@ -1,4 +1,4 @@
-# $OpenBSD: mk.conf.template,v 1.12 2013/11/25 14:16:35 sthen Exp $
+# $OpenBSD: mk.conf.template,v 1.14 2014/02/06 12:49:17 sthen Exp $
 
 # This file contains some mk.conf entries suitable for ports work.
 #
@@ -24,6 +24,7 @@
 .poison MODGCC3_ARCHES
 .poison MODGCC4_ARCHES
 .poison MODPY_BUILDEP
+.poison NO_TESTS
 .poison NOT_FOR_ARCH
 .poison NOT_FOR_ARCHES
 .poison ONLY_FOR_ARCH
@@ -33,7 +34,6 @@
 .poison RUN_DEPEND
 .poison SEPERATE_BUILD
 .poison SUBIDR
-.poison VMEM_WARNING
 .poison WABTLIB
 .poison WATNLIB
 .poison WKRBUILD
@@ -44,3 +44,6 @@
 
 # not a misspelling, but wrong, BUILD_DEPENDS isn't subpackaged
 .poison BUILD_DEPENDS-main
+
+# used to exist, but now retired
+.poison VMEM_WARNING

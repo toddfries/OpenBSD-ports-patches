@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.7 2013/10/01 09:07:14 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2014/02/08 17:49:11 jeremy Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	Playstation 1 emulator
 
-DISTNAME =	pcsxr-1.9.92
-REVISION =	1
+DISTNAME =	pcsxr-1.9.94.r87113p0
+PKGNAME =	pcsxr-1.9.94beta0
 
 CATEGORIES =	emulators games
 HOMEPAGE =	http://pcsxr.codeplex.com/
@@ -15,28 +15,36 @@ MAINTAINER =	Jeremy Evans <jeremy@openbsd.org>
 # GPLv2
 PERMIT_PACKAGE_CDROM =	Yes
 
-MASTER_SITES =	https://distfiles.bsdfrog.org/
-EXTRACT_SUFX =	.tar.bz2
+MASTER_SITES =	http://www.elsasser.org/openbsd/distfiles/
 
 USE_GMAKE =	Yes
 
-MODULES =	devel/gettext
+MODULES =	devel/gettext textproc/intltool
 
-WANTLIB += GL SDL X11 Xau Xcomposite Xcursor Xdamage Xdmcp Xext
-WANTLIB += Xfixes Xi Xinerama Xrandr Xrender Xtst Xv Xxf86vm atk-1.0
-WANTLIB += c cairo cdio drm expat fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0
-WANTLIB += gio-2.0 glade-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
+WANTLIB += GL ICE SDL2 SM X11 X11-xcb Xau Xcomposite Xcursor Xdamage
+WANTLIB += Xdmcp Xext Xfixes Xi Xinerama Xrandr Xrender Xtst Xv
+WANTLIB += Xxf86vm atk-1.0 atk-bridge-2.0 atspi c cairo cairo-gobject
+WANTLIB += cdio dbus-1 drm expat ffi fontconfig freetype gdk-3
+WANTLIB += gdk_pixbuf-2.0 gio-2.0 glapi glib-2.0 gmodule-2.0 gobject-2.0
+WANTLIB += graphite2 gthread-2.0 gtk-3 harfbuzz m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += sndio usbhid xcb xcb-render xcb-shm xml2 z
+WANTLIB += sndio stdc++ usbhid xcb xcb-dri2 xcb-glx xcb-render
+WANTLIB += xcb-shm z
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ENV =		CFLAGS="-I/usr/X11R6/include/"
-CONFIGURE_ARGS =	--enable-libcdio --enable-opengl
+CONFIGURE_ENV =		CPPFLAGS="-I${X11BASE}/include" \
+			LDFLAGS="-L${X11BASE}/lib"
+CONFIGURE_ARGS =	--enable-libcdio --enable-opengl --enable-dynarec=no
+LIBTOOL_FLAGS =		--tag=disable-static
 
 LIB_DEPENDS =	audio/libcdio \
-		devel/libglade2 \
-		devel/sdl
+		x11/gtk+3 \
+		devel/sdl2
 RUN_DEPENDS =	devel/desktop-file-utils
+
+post-install:
+	find ${WRKINST} -name '*.la' -print0 | xargs -0 rm
+
+NO_TEST =	Yes
 
 .include <bsd.port.mk>

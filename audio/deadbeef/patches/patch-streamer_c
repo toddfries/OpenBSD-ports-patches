@@ -1,0 +1,14 @@
+$OpenBSD: patch-streamer_c,v 1.2 2014/02/07 22:20:13 dcoppa Exp $
+--- streamer.c.orig	Mon Jan 27 22:24:32 2014
++++ streamer.c	Fri Feb  7 22:33:30 2014
+@@ -52,6 +52,10 @@
+ #include "plugins/libparser/parser.h"
+ #include "strdupa.h"
+ 
++#if defined(__GNUC__) && defined(__STRICT_ANSI__)
++#define alloca(size)   __builtin_alloca(size)
++#endif
++
+ //#define trace(...) { fprintf(stderr, __VA_ARGS__); }
+ #define trace(fmt,...)
+ 
