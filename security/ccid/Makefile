@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile,v 1.10 2013/12/06 06:35:34 dcoppa Exp $
+# $OpenBSD: Makefile,v 1.12 2014/03/27 13:55:43 dcoppa Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	USB Chip/Smart Card Interface Devices driver
 
-DISTNAME =	ccid-1.4.14
+DISTNAME =	ccid-1.4.16
 
 CATEGORIES =	security
 
 HOMEPAGE =	http://pcsclite.alioth.debian.org/ccid.html
 
-MASTER_SITES =	https://alioth.debian.org/frs/download.php/latestfile/112/
+# MASTER_SITES = https://alioth.debian.org/frs/download.php/latestfile/112/
+MASTER_SITES =	http://spacehopper.org/mirrors/
 
 EXTRACT_SUFX =	.tar.bz2
 

@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.44 2013/03/21 08:48:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.46 2014/03/24 17:53:00 sthen Exp $
 
 COMMENT=	glib bindings for dbus message system
 
-DISTNAME=	dbus-glib-0.100.2
+DISTNAME=	dbus-glib-0.102
 EPOCH=		0
 
-SHARED_LIBS+=	dbus-glib-1	4.3 # .4.2
+SHARED_LIBS +=  dbus-glib-1          4.4      # 4.2
 
 CATEGORIES=	x11
 
@@ -17,7 +17,7 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += c dbus-1 expat gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 pcre pthread z ffi
+WANTLIB += pcre pthread z ffi
 
 MASTER_SITES=	http://dbus.freedesktop.org/releases/dbus-glib/
 

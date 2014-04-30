@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST-main,v 1.2 2013/11/16 19:20:46 sthen Exp $
+@comment $OpenBSD: PLIST-main,v 1.5 2014/04/24 14:26:21 sthen Exp $
 @pkgpath www/squid[,ldap][,ntlm][,snmp][,transparent]
 @pkgpath www/squid,-main
 @newgroup _squid:515
@@ -16,19 +16,24 @@ libexec/squid/basic_db_auth
 @bin libexec/squid/basic_nis_auth
 libexec/squid/basic_pop3_auth
 @bin libexec/squid/basic_radius_auth
+@comment @bin libexec/squid/basic_smb_auth
+@comment libexec/squid/basic_smb_auth.sh
 @bin libexec/squid/cachemgr.cgi
+libexec/squid/cert_valid.pl
 @bin libexec/squid/digest_file_auth
 @bin libexec/squid/diskd
 @bin libexec/squid/ext_file_userip_acl
 libexec/squid/ext_sql_session_acl
 @bin libexec/squid/ext_time_quota_acl
 @bin libexec/squid/ext_unix_group_acl
+@comment libexec/squid/ext_wbinfo_group_acl
 libexec/squid/helper-mux.pl
 libexec/squid/log_db_daemon
 @bin libexec/squid/log_file_daemon
-@bin libexec/squid/negotiate_kerberos_auth
-@bin libexec/squid/negotiate_kerberos_auth_test
 @bin libexec/squid/negotiate_wrapper_auth
+@comment @bin libexec/squid/ntlm_fake_auth
+@comment @bin libexec/squid/ntlm_smb_lm_auth
+libexec/squid/storeid_file_rewrite
 @bin libexec/squid/unlinkd
 @bin libexec/squid/url_fake_rewrite
 libexec/squid/url_fake_rewrite.sh
@@ -42,9 +47,10 @@ libexec/squid/url_fake_rewrite.sh
 @man man/man8/ext_sql_session_acl.8
 @man man/man8/ext_time_quota_acl.8
 @man man/man8/ext_unix_group_acl.8
+@comment @man man/man8/ext_wbinfo_group_acl.8
 @man man/man8/log_db_daemon.8
-@man man/man8/negotiate_kerberos_auth.8
 @man man/man8/squid.8
+@man man/man8/storeid_file_rewrite.8
 @bin sbin/squid
 share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/squid/
@@ -1410,6 +1416,7 @@ share/squid/errors/pt-br/ERR_URN_RESOLVE
 share/squid/errors/pt-br/ERR_WRITE_ERROR
 share/squid/errors/pt-br/ERR_ZERO_SIZE_OBJECT
 share/squid/errors/pt-br/error-details.txt
+share/squid/errors/pt-bz
 share/squid/errors/pt-pt
 share/squid/errors/pt/ERR_ACCESS_DENIED
 share/squid/errors/pt/ERR_ACL_TIME_QUOTA_EXCEEDED

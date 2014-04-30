@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.6 2013/11/14 14:11:44 jasper Exp $
+# $OpenBSD: Makefile,v 1.11 2014/04/02 09:36:12 jasper Exp $
 
-TRACKER_VERSION=	0.16
+TRACKER_VERSION=	1.0
 
 COMMENT=		simple note editor
 
 GNOME_PROJECT=		bijiben
-GNOME_VERSION=		3.10.2
+GNOME_VERSION=		3.12.0
 
 # GPLv3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -27,7 +27,7 @@ WANTLIB += icudata icui18n icuuc javascriptcoregtk-3.0 jpeg json-glib-1.0
 WANTLIB += kvm m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png pthread pthread-stubs secret-1 soup-2.4 sqlite3
 WANTLIB += stdc++ uuid webkitgtk-3.0 webp xcb xcb-render xcb-shm
-WANTLIB += xml2 xslt z zeitgeist-2.0 orc-0.4
+WANTLIB += xml2 xslt z zeitgeist-2.0 orc-0.4 cogl-path
 WANTLIB += tracker-sparql-${TRACKER_VERSION}
 WANTLIB += lib/tracker-${TRACKER_VERSION}/tracker-common
 WANTLIB += lib/tracker-${TRACKER_VERSION}/tracker-data
@@ -40,9 +40,6 @@ LIB_DEPENDS=		graphics/clutter/clutter-gtk \
 # needs xdg-email
 RUN_DEPENDS=		devel/xdg-utils
 
-MODGNOME_TOOLS=		yelp
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_MIME_FILE=	Yes
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache shared-mime-info yelp
 
 .include <bsd.port.mk>

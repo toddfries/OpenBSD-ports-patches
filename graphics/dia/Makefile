@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.98 2013/12/07 09:18:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.104 2014/04/02 09:36:11 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,7 +6,7 @@ COMMENT=		technical diagrams drawing tool
 
 GNOME_PROJECT=		dia
 GNOME_VERSION=		0.97.2
-REVISION=		9
+REVISION=		11
 
 CATEGORIES=		graphics
 
@@ -26,22 +26,16 @@ WANTLIB += xcb-shm xml2 xslt z
 MODULES=		devel/gettext \
 			x11/gnome
 
-BUILD_DEPENDS=		textproc/docbook-xsl
-
 LIB_DEPENDS=		x11/gtk+2 \
 			graphics/libart \
 			textproc/libxslt
 
 RUN_DEPENDS=		devel/xdg-utils
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-
-LIBTOOL_FLAGS=		--tag=disable-static
+MODGNOME_TOOLS += desktop-file-utils docbook gtk-update-icon-cache
 
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		--disable-static \
-			--without-hardbooks \
+CONFIGURE_ARGS=		--without-hardbooks \
 			--without-python \
 			--without-swig \
 			--disable-db2html \
@@ -51,6 +45,6 @@ CONFIGURE_ARGS=		--disable-static \
 post-install:
 	mv ${PREFIX}/share/man/fr ${PREFIX}/man
 	rmdir ${PREFIX}/share/man/ ${PREFIX}/share/oaf/
-	rm ${PREFIX}/lib/dia/*.la
+	rm ${PREFIX}/lib/dia/*.{a,la}
 
 .include <bsd.port.mk>

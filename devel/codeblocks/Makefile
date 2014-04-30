@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2013/05/31 15:34:41 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2014/04/01 14:52:09 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -8,7 +8,7 @@ V=		10.05
 P=		1
 DISTNAME=	codeblocks-${V}-${P}debian-src
 PKGNAME=	codeblocks-${V}
-REVISION=	8
+REVISION=	11
 
 EXTRACT_SUFX=	.tar.bz2
 WRKDIST=	${WRKDIR}/codeblocks-${V}
@@ -52,15 +52,11 @@ RUN_DEPENDS=	devel/desktop-file-utils \
 
 MODULES=	devel/gettext
 
-LIBTOOL_FLAGS=	--tag=disable-static
-
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib \
-			-Wl,-rpath,${TRUEPREFIX}/lib/wxSmithContribItems"
+		LDFLAGS="-L${LOCALBASE}/lib"
 # XXX lib_finder.cpp:302: error: syntax error before `->' token
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
 		--with-contrib-plugins=all,-libfinder
 
 post-extract:
@@ -68,14 +64,13 @@ post-extract:
 
 pre-configure:
 	ln -s /usr/bin/true ${WRKDIR}/bin/svn
-	${SUBST_CMD} ${WRKSRC}/src/sdk/resources/lexers/lexer_bash.sample \
-		${WRKSRC}/src/plugins/compilergcc/compilergcc.cpp
-	rm ${WRKSRC}/src/sdk/resources/lexers/lexer_bash.sample.{beforesubst,orig}
+	${SUBST_CMD} ${WRKSRC}/src/plugins/compilergcc/compilergcc.cpp
 
 # template files are copied to HOME with their original mode which makes
 # it impossible to edit them by default
 post-install:
 	find ${PREFIX}/share/codeblocks/templates/ -type f -perm 444 | \
 		xargs chmod 644
+	rm ${PREFIX}/lib/codeblocks/plugins/*.{a,la}
 
 .include <bsd.port.mk>

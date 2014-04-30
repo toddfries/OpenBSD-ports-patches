@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.20 2013/09/28 08:51:20 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2014/04/03 12:08:40 jasper Exp $
 
 COMMENT=	extra icons for GNOME
 
 GNOME_PROJECT=	gnome-icon-theme-extras
-GNOME_VERSION=	3.6.2
-REVISION=	1
+GNOME_VERSION=	3.12.0
 
 CATEGORIES=	x11
 
@@ -18,10 +17,9 @@ BUILD_DEPENDS=	x11/icon-naming-utils \
 
 PKG_ARCH=	*
 
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS += gtk-update-icon-cache
 
 CONFIGURE_ENV=	ac_cv_path_GIT=false \
 		ac_cv_path_INKSCAPE=false
-CONFIGURE_ARGS=	--enable-icon-mapping
 
 .include <bsd.port.mk>

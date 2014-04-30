@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.34 2014/01/27 17:58:34 jasper Exp $
+# $OpenBSD: Makefile,v 1.39 2014/04/15 07:10:56 jasper Exp $
 
 COMMENT=		text widget that extends the GTK3 GtkTextView widget
 
 GNOME_PROJECT=		gtksourceview
-GNOME_VERSION=		3.10.2
+GNOME_VERSION=		3.12.1
 PKGNAME=		${GNOME_PROJECT}3-${GNOME_VERSION}
 
-SHARED_LIBS +=	gtksourceview-3.0    1.0      # .0.0
+SHARED_LIBS +=	gtksourceview-3.0    2.0      # .0.0
 CATEGORIES=		x11
 
 MAJOR_VERSION=		3.0
@@ -33,7 +33,7 @@ MODULES=		devel/gettext \
 LIB_DEPENDS=		textproc/libxml \
 			x11/gtk+3
 
-MODGNOME_TOOLS= 	gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 CONFIGURE_STYLE=	gnu
 

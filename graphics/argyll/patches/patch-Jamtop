@@ -1,4 +1,4 @@
-$OpenBSD: patch-Jamtop,v 1.2 2014/01/03 10:22:12 ajacoutot Exp $
+$OpenBSD: patch-Jamtop,v 1.4 2014/03/24 07:23:28 espie Exp $
 --- Jamtop.orig	Mon Nov 18 23:13:20 2013
 +++ Jamtop	Fri Jan  3 11:13:17 2014
 @@ -73,7 +73,9 @@ if $(UNIX) {

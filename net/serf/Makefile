@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.4 2014/01/24 17:00:47 stsp Exp $
+# $OpenBSD: Makefile,v 1.6 2014/04/21 12:47:04 stsp Exp $
 
 COMMENT =		high performance HTTP client library
-DISTNAME =		serf-1.3.3
+DISTNAME =		serf-1.3.4
+REVISION =		1
 SHARED_LIBS = 		serf-1                    1.0 # 1.3.0
 CATEGORIES =		net
 HOMEPAGE =		https://code.google.com/p/serf/
@@ -10,9 +11,8 @@ MAINTAINER =		Stefan Sperling <stsp@openbsd.org>
 # APLv2
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB = 		apr-1 aprutil-1 asn1 com_err crypto db expat gssapi \
-			heimbase krb5 pthread roken ssl wind z
-MASTER_SITES =		https://serf.googlecode.com/files/
+WANTLIB = 		apr-1 aprutil-1 crypto db expat pthread ssl z
+MASTER_SITES =		https://serf.googlecode.com/svn/src_releases/
 EXTRACT_SUFX =		.tar.bz2
 
 MODULES = 		converters/libiconv \
@@ -22,8 +22,7 @@ MODSCONS_ENV=	CC="${CC}" \
 		PREFIX="${PREFIX}" \
 		DEBUG=0 \
 		APR=${LOCALBASE}/bin/apr-1-config \
-		APU=${LOCALBASE}/bin/apu-1-config \
-		GSSAPI=/usr
+		APU=${LOCALBASE}/bin/apu-1-config
 
 # XXX scons doesn't support x.y library versioning scheme, only x.y.z
 post-patch:

@@ -1,8 +1,12 @@
-# $OpenBSD: Makefile,v 1.2 2013/12/07 10:47:20 sthen Exp $
+# $OpenBSD: Makefile,v 1.9 2014/04/26 12:06:52 sthen Exp $
 
-V=		3.3.11
+V=		3.4.4.2
+REVISION=	1
 
-EXTERNAL_ACL=	SQL_session file_userip time_quota session unix_group \
-		wbinfo_group # kerberos_ldap_group (requires sasl)
+EXTERNAL_ACL=	LDAP_group SQL_session file_userip time_quota session \
+		unix_group wbinfo_group
+
+CONFIGURE_ARGS=	--disable-strict-error-checking \
+		--disable-arch-native
 
 .include <bsd.port.mk>

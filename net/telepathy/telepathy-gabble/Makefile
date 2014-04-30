@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.63 2013/10/26 08:02:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.66 2014/03/20 20:48:21 jasper Exp $
 
 COMMENT=		flexible communications framework, xmpp component
 
-DISTNAME=		telepathy-gabble-0.18.1
-REVISION=		0
+DISTNAME=		telepathy-gabble-0.18.2
 
 MASTER_SITES=		${MASTER_SITES_TP:=telepathy-gabble/}
 
@@ -29,6 +28,9 @@ BUILD_DEPENDS +=	devel/py-twisted/words \
 # bin/telepathy-gabble-xmpp-console
 RUN_DEPENDS +=		devel/py-gobject3
 
+# pygobject GTK3 introspection (not provided by indirect dependencies)
+RUN_DEPENDS +=		x11/gtk+3
+
 MODPY_ADJ_FILES=	plugins/telepathy-gabble-xmpp-console
 
 CONFIGURE_ARGS=		--with-ca-certificates=/etc/ssl/cert.pem \
@@ -36,5 +38,8 @@ CONFIGURE_ARGS=		--with-ca-certificates=/etc/ssl/cert.pem \
 			--enable-plugins
 
 MODGNU_CONFIG_GUESS_DIRS= ${WRKSRC} ${WRKSRC}/lib/ext/wocky
+
+post-install:
+	rm ${PREFIX}/lib/telepathy/gabble-0/*/*.{a,la}
 
 .include <bsd.port.mk>

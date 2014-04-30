@@ -1,9 +1,9 @@
-$OpenBSD: patch-docs_polkit_Makefile_am,v 1.4 2013/05/30 18:22:05 ajacoutot Exp $
+$OpenBSD: patch-docs_polkit_Makefile_am,v 1.8 2014/03/26 14:56:23 ajacoutot Exp $
 
-Force disabling gtk-doc.
+Remove when updating to a newer release with integrated bsd_auth(3) support.
 
---- docs/polkit/Makefile.am.orig	Wed May 15 22:24:48 2013
-+++ docs/polkit/Makefile.am	Thu May 30 20:09:52 2013
+--- docs/polkit/Makefile.am.orig	Wed Mar 26 15:38:54 2014
++++ docs/polkit/Makefile.am	Wed Mar 26 15:39:16 2014
 @@ -80,11 +80,7 @@ HTML_IMAGES = 						\
  # Extra options to supply to gtkdoc-fixref
  FIXXREF_OPTIONS=

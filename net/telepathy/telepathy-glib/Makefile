@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.55 2014/01/30 10:09:58 jasper Exp $
+# $OpenBSD: Makefile,v 1.58 2014/03/26 18:03:01 jasper Exp $
 
 COMMENT=		flexible communications framework, glib bindings
 
-DISTNAME=		telepathy-glib-0.22.1
+DISTNAME=		telepathy-glib-0.24.0
 
-SHARED_LIBS +=	telepathy-glib       79.0      # 80.1
+SHARED_LIBS +=	telepathy-glib       80.0      # 84.0
 
 HOMEPAGE=		${HOMEPAGE_TP:=Telepathy GLib}
 
@@ -17,6 +17,7 @@ MODULES=		devel/gettext \
 			lang/python
 
 MODPY_RUNDEP=           No
+# https://bugs.freedesktop.org/show_bug.cgi?id=76495
 MODPY_ADJ_FILES=	tests/all-errors-documented.py
 
 BUILD_DEPENDS=		devel/gobject-introspection>=1.30.0 \

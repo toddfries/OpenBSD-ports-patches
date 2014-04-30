@@ -1,11 +1,10 @@
-# $OpenBSD: Makefile,v 1.8 2013/03/11 10:50:14 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2014/03/23 22:13:18 jasper Exp $
 
 COMMENT= 	alternative object layout in perl
 
 MODULES=	cpan
 
-DISTNAME=	Class-InsideOut-1.09
-REVISION=	1
+DISTNAME=	Class-InsideOut-1.13
 
 CATEGORIES=	devel
 USE_GROFF=	Yes
@@ -13,9 +12,6 @@ USE_GROFF=	Yes
 # perl
 PERMIT_PACKAGE_CDROM=	Yes
 
-CONFIGURE_STYLE=modbuild
-
 RUN_DEPENDS=	devel/p5-Class-ISA
-TEST_DEPENDS= ${RUN_DEPENDS}
 
 .include <bsd.port.mk>

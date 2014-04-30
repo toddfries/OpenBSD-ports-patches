@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.115 2014/01/11 12:45:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.122 2014/04/02 09:36:14 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		official media player for GNOME
 
 GNOME_PROJECT=		totem
-GNOME_VERSION=		3.10.1
-REVISION=		2
+GNOME_VERSION=		3.12.0
+REVISION=		0
 
 SHARED_LIBS +=  totem                0.0      # unknown
 
@@ -18,7 +18,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 WANTLIB += ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi
 WANTLIB += Xinerama Xrandr Xrender archive atk-1.0 atk-bridge-2.0
 WANTLIB += atspi bz2 c cairo cairo-gobject clutter-1.0 clutter-gst-2.0
-WANTLIB += clutter-gtk-1.0 cogl cogl-pango dbus-1 dbus-glib-1
+WANTLIB += clutter-gtk-1.0 cogl cogl-pango dbus-1 cogl-path grlpls-0.2
 WANTLIB += expat ffi fontconfig freetype gcrypt gdk-3 gdk_pixbuf-2.0
 WANTLIB += gio-2.0 girepository-1.0 glib-2.0 gmime-2.6 gmodule-2.0
 WANTLIB += gobject-2.0 gpg-error graphite2 grilo-0.2 gstaudio-1.0
@@ -43,9 +43,10 @@ BUILD_DEPENDS +=	devel/pylint
 
 RUN_DEPENDS=		devel/gsettings-desktop-schemas \
 			devel/py-gobject3 \
-			devel/py-xdg \
-			x11/dbus-python \
-			x11/gnome/grilo-plugins
+			x11/dbus-python
+
+# calls grl_registry_load...plugin
+RUN_DEPENDS +=		x11/gnome/grilo-plugins
 
 LIB_DEPENDS=		x11/gnome/totem-pl-parser \
 			devel/gobject-introspection \
@@ -61,17 +62,18 @@ LIB_DEPENDS=		x11/gnome/totem-pl-parser \
 RUN_DEPENDS +=		multimedia/gstreamer1/plugins-good \
 			multimedia/gstreamer1/plugins-libav
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS=		gi vala yelp
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection gtk-update-icon-cache
+MODGNOME_TOOLS += vala yelp
 
-LIBTOOL_FLAGS=		--tag=disable-static
-
-CONFIGURE_ARGS=		--disable-static
+pre-configure:
+# XXX cc1: error: unrecognized command line option "-Wno-unused-but-set-variable"
+	find ${WRKSRC} -name Makefile.in | xargs -r \
+		perl -pi -e 's,-Wno-unused-but-set-variable,,' \
+		${WRKSRC}/src/Makefile.in
 
 post-install:
-	rm ${PREFIX}/lib/totem/plugins/*/*.la
-	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.la
-	rm ${PREFIX}/lib/mozilla/plugins/*.la
+	rm ${PREFIX}/lib/totem/plugins/*/*.{a,la}
+	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.{a,la}
+	rm ${PREFIX}/lib/mozilla/plugins/*.{a,la}
 
 .include <bsd.port.mk>

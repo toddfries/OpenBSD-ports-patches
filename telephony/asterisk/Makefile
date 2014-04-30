@@ -1,13 +1,12 @@
-# $OpenBSD: Makefile,v 1.191 2013/12/30 23:04:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.197 2014/04/26 11:59:51 sthen Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT-main=		open source multi-protocol PBX and telephony toolkit
 
-VER=			11.7.0
+VER=			11.9.0
 DISTNAME=		asterisk-${VER:S/beta/-beta/:S/rc/-rc/}
 PKGNAME-main=		asterisk-${VER}
-REVISION-main=		0
 
 CATEGORIES=		telephony
 
@@ -51,7 +50,7 @@ LIB_DEPENDS-main=	audio/gsm \
 			textproc/libxml \
 			${MODGETTEXT_LIB_DEPENDS}
 RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
-			telephony/asterisk-sounds/core-sounds/en,gsm \
+			telephony/asterisk-sounds/core-sounds/en,gsm>=1.4.25 \
 			telephony/asterisk-sounds/moh-opsound,wav
 BUILD_DEPENDS=		security/libsrtp>=1.4.4 # statically linked
 
@@ -128,7 +127,7 @@ CONFIGURE_ARGS+=	--with-imap=yes
 MAKE_FLAGS+=		MENUSELECT_OPTS_app_voicemail=IMAP_STORAGE
 CPPFLAGS+=		-I${LOCALBASE}/include/c-client
 LIB_DEPENDS-main+=	mail/alpine,-c-client
-WANTLIB-main+=		c-client gssapi krb5
+WANTLIB-main+=		c-client
 .else
 CONFIGURE_ARGS+=	--with-imap=no
 .endif
@@ -138,9 +137,9 @@ CONFIGURE_ARGS+=	--with-imap=no
 
 # calendar
 COMMENT-calendar=	calendar support for Asterisk
-WANTLIB-calendar=	${MODGETTEXT_WANTLIB} asn1 crypto expat gssapi \
-			ical iksemel krb5 m neon proxy ssl xml2 z wind \
-			com_err heimbase roken
+WANTLIB-calendar=	${MODGETTEXT_WANTLIB} crypto expat ical iksemel
+WANTLIB-calendar+=	m neon proxy ssl xml2 z
+
 LIB_DEPENDS-calendar=	net/neon \
 			textproc/libical \
 			${MODGETTEXT_LIB_DEPENDS}
@@ -206,7 +205,7 @@ CONFIGURE_ARGS+=	--with-postgres=no
 
 # snmp
 COMMENT-snmp=		Net-SNMP support for Asterisk
-WANTLIB-snmp=		m netsnmp netsnmpagent netsnmpmibs crypto kvm wrap
+WANTLIB-snmp=		m netsnmp netsnmpagent netsnmpmibs crypto kvm
 LIB_DEPENDS-snmp=	net/net-snmp
 .if !${BUILD_PACKAGES:M-snmp}
 CONFIGURE_ARGS+=	--with-snmp=no

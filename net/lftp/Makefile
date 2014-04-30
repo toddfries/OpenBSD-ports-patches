@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.95 2013/10/22 06:03:54 benoit Exp $
+# $OpenBSD: Makefile,v 1.97 2014/04/24 16:29:03 benoit Exp $
 
 COMMENT=	shell-like command line ftp and sftp client
 
-DISTNAME=	lftp-4.4.10
+DISTNAME =	lftp-4.4.15
 CATEGORIES=	net
 
 HOMEPAGE=	http://lftp.yar.ru/
@@ -24,7 +24,7 @@ CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--with-openssl \
 		--without-gnutls \
 		--disable-shared
-CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include" \
+CONFIGURE_ENV=  CPPFLAGS="-I${LOCALBASE}/include/ereadline -I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
 MODULES=	devel/gettext

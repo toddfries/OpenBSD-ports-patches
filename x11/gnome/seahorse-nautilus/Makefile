@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.13 2013/10/17 08:01:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.16 2014/04/02 09:36:14 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,6 +6,7 @@ COMMENT=	GnuPG extension for nautilus(1)
 
 GNOME_PROJECT=	seahorse-nautilus
 GNOME_VERSION=	3.10.1
+REVISION=	0
 
 CATEGORIES=	security
 
@@ -31,13 +32,9 @@ MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
-MODGNOME_DESKTOP_FILE=	Yes
-
-LIBTOOL_FLAGS=	--tag=disable-static
-
-CONFIGURE_ARGS=	--disable-static
+MODGNOME_TOOLS +=	desktop-file-utils
 
 post-install:
-	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.la
+	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.{a,la}
 
 .include <bsd.port.mk>

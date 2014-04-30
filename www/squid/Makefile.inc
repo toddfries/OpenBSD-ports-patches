@@ -1,16 +1,17 @@
-# $OpenBSD: Makefile.inc,v 1.1 2013/11/15 19:09:17 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.6 2014/04/24 14:26:21 sthen Exp $
 
-MULTI_PACKAGES=	-main -ntlm
+MULTI_PACKAGES=	-main
+# -ntlm may come back with samba 4
 
 COMMENT-main=	WWW and FTP proxy cache and accelerator
 COMMENT-ldap=	LDAP authentication/ACL support for Squid
-COMMENT-ntlm=	NTLM authentication/ACL support for Squid
+#COMMENT-ntlm=	NTLM authentication/ACL support for Squid
 
-DISTNAME=	squid-$V
+DISTNAME?=	squid-$V
 EXTRACT_SUFX?=	.tar.xz
 PKGNAME-main=	squid-$V
 PKGNAME-ldap=	squid-ldap-$V
-PKGNAME-ntlm=	squid-ntlm-$V
+#PKGNAME-ntlm=	squid-ntlm-$V
 CATEGORIES=	www
 
 # bzr repository at https://code.launchpad.net/squid
@@ -23,18 +24,17 @@ HOMEPAGE=	http://www.squid-cache.org/
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += c m pthread stdc++
+WANTLIB += c m nettle pthread stdc++
 
-WANTLIB-main=	${WANTLIB} asn1 crypto db execinfo gssapi krb5 ssl \
-		com_err heimbase roken wind
+WANTLIB-main +=	${WANTLIB} crypto db execinfo ssl
 
-LIB_DEPENDS-main= ${LIB_DEPENDS} \
+LIB_DEPENDS-main += ${LIB_DEPENDS} \
 		databases/db/v4 \
-		devel/libexecinfo
+		devel/libexecinfo \
+		security/libnettle
 
 SYSCONFDIR=	${BASESYSCONFDIR}/squid
 LOCALSTATEDIR=	${BASELOCALSTATEDIR}/squid
-SUBST_VARS=	LOCALSTATEDIR
 
 PSEUDO_FLAVORS=	no_ldap
 FLAVOR?=
@@ -72,10 +72,12 @@ CONFIGURE_ARGS+= ${CONFIGURE_SHARED} \
 		--enable-referer-log \
 		--enable-removal-policies="lru heap" \
 		--enable-ssl \
+		--with-openssl \
 		--enable-stacktraces \
 		--enable-storeio="aufs ufs diskd rock" \
 		--with-default-user="_squid" \
 		--with-filedescriptors=8192 \
+		--with-krb5-config=no \
 		--with-pidfile="/var/run/squid.pid" \
 		--with-pthreads \
 		--with-swapdir="${LOCALSTATEDIR}/cache"
@@ -101,16 +103,19 @@ TEST_DEPENDS= devel/cppunit
 MULTI_PACKAGES+= -ldap
 EXTERNAL_ACL+=	LDAP_group eDirectory_userip
 RUN_DEPENDS-ldap= ${BASE_PKGPATH}
-LIB_DEPENDS-ldap= ${LIB_DEPENDS} databases/openldap
-WANTLIB-ldap +=	${WANTLIB} asn1 com_err crypto gssapi krb5
-WANTLIB-ldap +=	lber-2.4 ldap-2.4 sasl2 ssl wind
-WANTLIB-ldap +=	com_err heimbase roken
+LIB_DEPENDS-ldap += ${LIB_DEPENDS} databases/openldap
+WANTLIB-ldap +=	${WANTLIB} crypto lber-2.4 ldap-2.4 sasl2 ssl
 .endif
 
-RUN_DEPENDS-ntlm= net/samba,ads ${BASE_PKGPATH}
+#RUN_DEPENDS-ntlm= net/samba,ads ${BASE_PKGPATH}
+#LIB_DEPENDS-ntlm += security/libnettle
+#WANTLIB-ntlm +=	${WANTLIB}
 
 post-patch:
-	cd ${WRKSRC}; AUTOCONF_VERSION=${AUTOCONF_VERSION} AUTOMAKE_VERSION=${AUTOMAKE_VERSION} LOCALBASE=${LOCALBASE} ./bootstrap.sh
+	cd ${WRKSRC}; \
+	    AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+	    AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+	    LOCALBASE=${LOCALBASE} ./bootstrap.sh
 
 pre-build:
 	@cd ${WRKSRC}; \

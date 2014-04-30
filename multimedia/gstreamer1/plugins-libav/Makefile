@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.22 2013/12/29 10:36:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.24 2014/04/19 17:48:24 ajacoutot Exp $
 
 COMMENT=		ffmpeg elements for GStreamer
 

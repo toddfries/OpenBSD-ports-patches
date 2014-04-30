@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.107 2014/01/23 15:35:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.113 2014/04/21 12:23:22 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,7 +9,7 @@ COMMENT-hpcups=		HP native CUPS driver
 COMMENT-hpijs=		HP ghostscript driver (spooler independent)
 COMMENT-gui=		HPLIP graphical tools
 
-V=			3.14.1
+V=			3.14.4
 DISTNAME=		hplip-${V}
 SUBST_VARS=		V
 
@@ -20,7 +20,9 @@ PKGNAME-hpcups=		hpcups-${V}
 PKGNAME-hpijs=		hpijs-${V}
 PKGNAME-gui=		hplip-gui-${V}
 
-REVISION-main=		2
+REVISION-main=		0
+REVISION-hpaio=		0
+REVISION-hpcups=	0
 
 SHARED_LIBS +=  hpmud		2.0 # 0.6
 SHARED_LIBS +=  hpip		2.0 # 0.1
@@ -47,9 +49,8 @@ cWANTLIB += crypto m pthread
 
 ### -main
 WANTLIB-main += ${WANTLIB} ${cWANTLIB}
-WANTLIB-main += asn1 avahi-client avahi-common com_err cups dbus-1
-WANTLIB-main += gssapi heimbase hpmud krb5 netsnmp roken ssl usb-1.0
-WANTLIB-main += wind z
+WANTLIB-main += avahi-client avahi-common cups dbus-1 hpmud netsnmp
+WANTLIB-main += ssl usb-1.0 z
 
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			print/cups,-libs \
@@ -59,7 +60,7 @@ RUN_DEPENDS-main=	${MODPY_RUN_DEPENDS} \
 			${MODGETTEXT_RUN_DEPENDS} \
 			print/py-reportlab/reportlab \
 			x11/dbus-python \
-			graphics/py-Imaging \
+			graphics/py-Pillow \
 			print/hplip,-hpcups \
 			print/hplip,-hpaio
 
@@ -76,9 +77,8 @@ RUN_DEPENDS-common=	#empty
 
 ### -hpaio
 WANTLIB-hpaio += ${WANTLIB} ${cWANTLIB}
-WANTLIB-hpaio += asn1 avahi-client avahi-common com_err cups dbus-1
-WANTLIB-hpaio += gssapi heimbase hpip hpmud jpeg krb5 netsnmp roken
-WANTLIB-hpaio += sane ssl tiff usb usb-1.0 wind z
+WANTLIB-hpaio += avahi-client avahi-common cups dbus-1 hpip hpmud
+WANTLIB-hpaio += jpeg netsnmp sane ssl tiff usb usb-1.0 z
 
 LIB_DEPENDS-hpaio=	print/hplip,-common \
 			graphics/sane-backends
@@ -86,10 +86,9 @@ LIB_DEPENDS-hpaio=	print/hplip,-common \
 RUN_DEPENDS-hpaio=	${MODGETTEXT_RUN_DEPENDS}
 
 ### -hpcups
-WANTLIB-hpcups += ${WANTLIB} ${cWANTLIB} z asn1 gssapi krb5 ssl
+WANTLIB-hpcups += ${WANTLIB} ${cWANTLIB} z ssl netsnmp
 WANTLIB-hpcups += c jpeg stdc++ hpip cups cupsimage dbus-1
-WANTLIB-hpcups += com_err heimbase roken wind usb-1.0
-WANTLIB-hpcups += avahi-client avahi-common hpmud netsnmp
+WANTLIB-hpcups += z ssl usb-1.0 avahi-client avahi-common hpmud
 
 LIB_DEPENDS-hpcups=	graphics/jpeg \
 			print/hplip,-common \
@@ -124,7 +123,6 @@ RUN_DEPENDS-gui +=	graphics/xsane
 
 LIB_DEPENDS-gui=	#empty
 
-LIBTOOL_FLAGS=		--tag=disable-static
 FAKE_FLAGS=		hplip_confdir=${PREFIX}/share/examples/hplip/hp \
 			hplip_statedir=${PREFIX}/share/examples/hplip/db \
 			mimedir=${PREFIX}/share/examples/hplip/cups \
@@ -134,7 +132,6 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-static \
 			--with-hpppddir=${PREFIX}/share/foomatic/db/source/PPD/HP \
 			--with-cupsbackenddir=${PREFIX}/libexec/cups/backend \
 			--with-cupsfilterdir=${PREFIX}/libexec/cups/filter \
@@ -193,7 +190,7 @@ post-install:
 	rm -r ${WRKINST}/usr/lib
 	rm -r ${WRKINST}/etc/udev
 	mv ${PREFIX}/share/doc/hplip-${V} ${PREFIX}/share/doc/hplip/html
-	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.la
-	rm ${PREFIX}/lib/sane/*.la
+	rm ${PREFIX}/lib/python${MODPY_VERSION}/site-packages/*.{a,la}
+	rm ${PREFIX}/lib/sane/*.{a,la}
 
 .include <bsd.port.mk>

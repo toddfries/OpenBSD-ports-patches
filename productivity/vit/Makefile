@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2013/10/31 18:54:40 bcallah Exp $
+# $OpenBSD: Makefile,v 1.3 2014/04/22 18:00:24 bcallah Exp $
 
 COMMENT =		ncurses front-end for taskwarrior
 
-DISTNAME =		vit-1.1
+DISTNAME =		vit-1.2
+REVISION =		0
 CATEGORIES =		productivity
 
-HOMEPAGE =		http://taskwarrior.org/projects/1/wiki/Vit
+HOMEPAGE =		http://tasktools.org/projects/vit.html
 MAINTAINER =		Kent R. Spillner <kspillner@acm.org>
 
 # GPLv3+

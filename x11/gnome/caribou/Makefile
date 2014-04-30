@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.24 2013/11/18 18:06:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.27 2014/04/01 13:21:45 ajacoutot Exp $
 
 COMMENT=	input assistive technology
 
 GNOME_PROJECT=	caribou
 GNOME_VERSION=	0.4.13
+REVISION=	2
 
 SHARED_LIBS +=  caribou                   0.0 # 0.0
 
@@ -18,7 +19,7 @@ WANTLIB += gdk_pixbuf-2.0 gee-0.8 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 graphite2 gthread-2.0 gtk-3 gtk-x11-2.0
 WANTLIB += harfbuzz json-glib-1.0 m pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs xcb xcb-render
-WANTLIB += xcb-shm xkbfile xklavier xml2 z
+WANTLIB += xcb-shm xkbfile xklavier xml2 z cogl-path
 
 MODULES=	devel/gettext \
 		devel/dconf \
@@ -37,16 +38,9 @@ LIB_DEPENDS=	devel/libgee \
 		x11/gtk+2 \
 		x11/gtk+3
 
-LIBTOOL_FLAGS=	--tag=disable-static
-
-MODPY_ADJ_FILES=tools/fix_gir.py \
-		tools/make_schema.py
-
-CONFIGURE_ARGS=	--disable-static
-
 FAKE_FLAGS=	sysconfdir=${PREFIX}/share/examples/caribou
 
 post-install:
-	rm ${PREFIX}/lib/gtk-{2,3}.0/modules/*.la
+	rm ${PREFIX}/lib/gtk-{2,3}.0/modules/*.{a,la}
 
 .include <bsd.port.mk>

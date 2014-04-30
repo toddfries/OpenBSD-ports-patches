@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.16 2014/01/28 17:45:33 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.18 2014/04/01 13:21:45 ajacoutot Exp $
 @conflict gnucash-docs-*
 @pkgpath productivity/gnucash-docs
 bin/gnc-fq-check
@@ -12,7 +12,6 @@ bin/gnucash-valgrind
 include/gnucash/
 include/gnucash/Account.h
 include/gnucash/FreqSpec.h
-include/gnucash/GNCId.h
 include/gnucash/Query.h
 include/gnucash/QuickFill.h
 include/gnucash/Recurrence.h
@@ -252,18 +251,25 @@ lib/gnucash/libgncmod-standard-reports.so
 lib/gnucash/libgncmod-stylesheets.so
 lib/gnucash/libgncmod-tax-us.so
 lib/gnucash/libgncmod-utility-reports.so
+lib/libgnc-backend-sql.a
 lib/libgnc-backend-sql.la
 @lib lib/libgnc-backend-sql.so.${LIBgnc-backend-sql_VERSION}
+lib/libgnc-backend-xml-utils.a
 lib/libgnc-backend-xml-utils.la
 @lib lib/libgnc-backend-xml-utils.so.${LIBgnc-backend-xml-utils_VERSION}
+lib/libgnc-business-ledger.a
 lib/libgnc-business-ledger.la
 @lib lib/libgnc-business-ledger.so.${LIBgnc-business-ledger_VERSION}
+lib/libgnc-core-utils.a
 lib/libgnc-core-utils.la
 @lib lib/libgnc-core-utils.so.${LIBgnc-core-utils_VERSION}
+lib/libgnc-gnome.a
 lib/libgnc-gnome.la
 @lib lib/libgnc-gnome.so.${LIBgnc-gnome_VERSION}
+lib/libgnc-module.a
 lib/libgnc-module.la
 @lib lib/libgnc-module.so.${LIBgnc-module_VERSION}
+lib/libgnc-qof.a
 lib/libgnc-qof.la
 @lib lib/libgnc-qof.so.${LIBgnc-qof_VERSION}
 libexec/gnucash/
@@ -486,7 +492,6 @@ share/gnome/help/gnucash-guide/C/figures/invest_AccountsPredef.png
 share/gnome/help/gnucash-guide/C/figures/invest_SetupPortfolio2.png
 share/gnome/help/gnucash-guide/C/figures/invest_dividendcash.png
 share/gnome/help/gnucash-guide/C/figures/invest_dividendreinvest1.png
-share/gnome/help/gnucash-guide/C/figures/invest_dividendreinvest2.png
 share/gnome/help/gnucash-guide/C/figures/invest_int1.png
 share/gnome/help/gnucash-guide/C/figures/invest_int2-1.png
 share/gnome/help/gnucash-guide/C/figures/invest_int2.png
@@ -1441,7 +1446,6 @@ share/gnucash/accounts/sk/acctchrt_spouseinc.gnucash-xea
 share/gnucash/accounts/sk/acctchrt_spouseretire.gnucash-xea
 share/gnucash/accounts/sv_SE/
 share/gnucash/accounts/sv_SE/bas_2012.gnucash-xea
-share/gnucash/accounts/sv_SE/swedish_small_business.gnucash-xea
 share/gnucash/accounts/tr_TR/
 share/gnucash/accounts/tr_TR/acctchrt_TEKDUZ.gnucash-xea
 share/gnucash/accounts/tr_TR/acctchrt_brokerage.gnucash-xea

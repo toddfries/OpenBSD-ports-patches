@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.72 2013/12/22 19:24:34 zhuk Exp $
+# $OpenBSD: Makefile,v 1.74 2014/04/20 12:55:39 espie Exp $
 
 COMMENT =		K Desktop Environment, addons
 CATEGORIES =		x11 x11/kde

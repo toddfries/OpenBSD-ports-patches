@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2013/09/28 08:51:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.56 2014/04/01 18:06:32 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -19,8 +19,7 @@ WANTLIB += pthread z
 MODULES=	devel/gettext \
 		x11/gnome
 
-MODGNOME_TOOLS=	gi
-
+MODGNOME_TOOLS +=	gobject-introspection
 LIB_DEPENDS=	devel/glib2
 
 FAKE_FLAGS=	schemadir=${PREFIX}/share/schemas/nautilus-sendto

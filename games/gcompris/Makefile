@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.55 2013/11/05 17:15:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.57 2014/04/11 14:52:46 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	educational game for children
 
-DISTNAME=	gcompris-13.11
+DISTNAME=	gcompris-14.03
 EXTRACT_SUFX=	.tar.bz2
 
 CATEGORIES=	games education
@@ -26,7 +26,7 @@ WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += rsvg-2 sqlite3 util xcb xcb-render xcb-shm xml2 z
 WANTLIB += ${MODPY_WANTLIB}
 
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gcompris/}
+MASTER_SITES=	http://gcompris.net/download/
 
 MODULES=	devel/gettext \
 		lang/python \
@@ -52,14 +52,10 @@ RUN_DEPENDS=	games/gnuchess \
 
 USE_GMAKE=	Yes
 
-LIBTOOL_FLAGS=	--tag=disable-static
-
 CONFIGURE_STYLE=gnu
 CONFIGURE_ENV=	CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
-		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib -pthread" \
-		ac_cv_path_TETEX=no
+		LDFLAGS="-L${X11BASE}/lib -L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
-		--disable-static \
 		--enable-py-build-only \
 		--with-python=${MODPY_BIN}
 
@@ -71,7 +67,7 @@ pre-configure:
 		${WRKSRC}/src/electric-activity/electric.py
 
 post-install:
-	rm ${PREFIX}/lib/gcompris/*.la
+	rm ${PREFIX}/lib/gcompris/*.{a,la}
 	find ${PREFIX}/share/gcompris -type f -perm 755 -exec chmod 644 {} \;
 	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/gcompris
 

@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.17 2013/04/15 07:39:29 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.19 2014/03/31 09:58:33 jasper Exp $
 @bin bin/peas-demo
 include/libpeas-1.0/
 include/libpeas-1.0/libpeas/
@@ -21,24 +21,21 @@ lib/libpeas-1.0/
 lib/libpeas-1.0.la
 @lib lib/libpeas-1.0.so.${LIBpeas-1.0_VERSION}
 lib/libpeas-1.0/loaders/
-lib/libpeas-1.0/loaders/libgjsloader.so
 lib/libpeas-1.0/loaders/libpython3loader.so
 lib/libpeas-1.0/loaders/libpythonloader.so
 lib/libpeas-gtk-1.0.la
 @lib lib/libpeas-gtk-1.0.so.${LIBpeas-gtk-1.0_VERSION}
 lib/peas-demo/
 lib/peas-demo/plugins/
-lib/peas-demo/plugins/gjshello/
-lib/peas-demo/plugins/gjshello/gjshello.js
-lib/peas-demo/plugins/gjshello/gjshello.plugin
 lib/peas-demo/plugins/helloworld/
 lib/peas-demo/plugins/helloworld/helloworld.plugin
 lib/peas-demo/plugins/helloworld/libhelloworld.so
 lib/peas-demo/plugins/pythonhello/
+lib/peas-demo/plugins/pythonhello/${MODPY_PYCACHE}/
+lib/peas-demo/plugins/pythonhello/${MODPY_PYCACHE}pythonhello.${MODPY_PYC_MAGIC_TAG}pyc
+lib/peas-demo/plugins/pythonhello/${MODPY_PYCACHE}pythonhello.${MODPY_PYC_MAGIC_TAG}pyo
 lib/peas-demo/plugins/pythonhello/pythonhello.plugin
 lib/peas-demo/plugins/pythonhello/pythonhello.py
-lib/peas-demo/plugins/pythonhello/pythonhello.pyc
-lib/peas-demo/plugins/pythonhello/pythonhello.pyo
 lib/peas-demo/plugins/secondtime/
 lib/peas-demo/plugins/secondtime/libsecondtime.so
 lib/peas-demo/plugins/secondtime/secondtime.plugin
@@ -64,13 +61,16 @@ share/gtk-doc/html/libpeas/ch03.html
 share/gtk-doc/html/libpeas/home.png
 share/gtk-doc/html/libpeas/index.html
 share/gtk-doc/html/libpeas/index.sgml
+share/gtk-doc/html/libpeas/left-insensitive.png
 share/gtk-doc/html/libpeas/left.png
 share/gtk-doc/html/libpeas/libpeas-PeasExtension.html
 share/gtk-doc/html/libpeas/libpeas.devhelp2
 share/gtk-doc/html/libpeas/peas-gtk-plugin-manager.png
 share/gtk-doc/html/libpeas/pt01.html
+share/gtk-doc/html/libpeas/right-insensitive.png
 share/gtk-doc/html/libpeas/right.png
 share/gtk-doc/html/libpeas/style.css
+share/gtk-doc/html/libpeas/up-insensitive.png
 share/gtk-doc/html/libpeas/up.png
 share/icons/hicolor/16x16/actions/libpeas-plugin.png
 share/icons/hicolor/22x22/actions/libpeas-plugin.png
@@ -97,8 +97,6 @@ share/locale/eu/LC_MESSAGES/libpeas.mo
 share/locale/fa/LC_MESSAGES/libpeas.mo
 share/locale/fi/LC_MESSAGES/libpeas.mo
 share/locale/fr/LC_MESSAGES/libpeas.mo
-share/locale/fur/
-share/locale/fur/LC_MESSAGES/
 share/locale/fur/LC_MESSAGES/libpeas.mo
 share/locale/gl/LC_MESSAGES/libpeas.mo
 share/locale/gu/LC_MESSAGES/libpeas.mo

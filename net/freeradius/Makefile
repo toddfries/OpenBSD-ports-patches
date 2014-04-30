@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.52 2014/01/24 21:30:36 landry Exp $
+# $OpenBSD: Makefile,v 1.55 2014/04/21 13:09:47 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 SHARED_LIBS +=  freeradius-radius    4.1      # .0.0
@@ -15,7 +15,7 @@ DISTNAME=	freeradius-server-$V
 EXTRACT_SUFX=	.tar.bz2
 
 PKGNAME-main=	freeradius-$V
-REVISION-main=	2
+REVISION-main=	5
 PKGNAME-iodbc=	freeradius-iodbc-$V
 REVISION-iodbc=	4
 PKGNAME-mysql=	freeradius-mysql-$V
@@ -23,7 +23,7 @@ REVISION-mysql=	4
 PKGNAME-pgsql=	freeradius-pgsql-$V
 REVISION-pgsql=	2
 PKGNAME-ldap=	freeradius-ldap-$V
-REVISION-ldap=	2
+REVISION-ldap=	3
 
 CATEGORIES=	net security
 
@@ -41,11 +41,7 @@ MODULES=	devel/gettext
 
 CONFIGURE_STYLE=autoconf dest
 AUTOCONF_VERSION=2.61
-# we only patch {WRKSRC}/configure.in so there's no need
-# to set AUTOCONF_DIR for the modules
-CFLAGS+=	-I${LOCALBASE}/include $$(krb5-config --cflags)
-LDFLAGS+=	-L${LOCALBASE}/lib
-CONFIGURE_ENV=	LDFLAGS="${LDFLAGS}"
+CONFIGURE_ENV=	LDFLAGS="-L${LOCALBASE}/lib"
 
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-large-files \
@@ -58,7 +54,6 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--without-rlm_sql_oracle \
 		--without-rlm_sql_db2 \
 		--without-rlm_sql_unixodbc \
-		--enable-heimdal-krb5 \
 		--disable-ltdl-install \
 		--with-system-libltdl
 
@@ -69,18 +64,17 @@ TEST_IS_INTERACTIVE=Yes # doesn't exit properly
 MULTI_PACKAGES=	-main -ldap -mysql -pgsql -iodbc
 SUBST_VARS+=	V
 
+CFLAGS=		-I${LOCALBASE}/include
+
 USE_GMAKE=	Yes
 # undefined reference to `lt__PROGRAM__LTX_preloaded_symbols'
 USE_LIBTOOL=	gnu
-USE_GROFF =	Yes
 
-TAR=			${LOCALBASE}/bin/gtar
+BUILD_DEPENDS=		net/net-snmp
 
-BUILD_DEPENDS=		archivers/gtar \
-			net/net-snmp
 LIB_DEPENDS-main =	databases/gdbm \
 			devel/libtool,-ltdl
-WANTLIB-main=		${WANTLIB} c com_err krb5 pcap pthread readline \
+WANTLIB-main=		${WANTLIB} c pcap pthread readline \
 			termcap gdbm>=3 ltdl>=4 crypto ssl
 
 PSEUDO_FLAVORS=	no_ldap no_mysql no_pgsql no_iodbc
@@ -105,9 +99,8 @@ CONFIGURE_ARGS+=	--without-rlm_ldap
 
 LIB_DEPENDS-ldap=	databases/openldap \
 			${BASE_PKGPATH}
-WANTLIB-ldap=		crypto ssl sasl2 asn1 com_err gssapi krb5 \
-			lber>=8 ldap_r>=8 freeradius-radius>=1 pthread \
-			heimbase roken wind
+WANTLIB-ldap=		crypto ssl sasl2 \
+			lber>=8 ldap_r>=8 freeradius-radius>=1 pthread
 RUN_DEPENDS-ldap=	#empty
 
 .if !${BUILD_PACKAGES:M-mysql}
@@ -133,14 +126,19 @@ RUN_DEPENDS$i +=	freeradius-$V:net/freeradius
 .endfor
 
 post-configure:
-	@perl -pi -e 's,/etc/raddb,${SYSCONFDIR}/raddb,g' ${WRKSRC}/man/*/*
+	perl -pi -e 's,/etc/raddb,${SYSCONFDIR}/raddb,g' ${WRKSRC}/man/*/*
+	${SUBST_CMD} ${WRKSRC}/src/modules/rlm_sql/drivers/rlm_sql_iodbc/configure
 
 post-install:
+	mv ${WRKINST}/etc/raddb ${PREFIX}/share/examples/freeradius
+
 .for f in bin/radlast bin/radtest sbin/checkrad sbin/radwatch \
     share/examples/freeradius/dictionary share/examples/freeradius/radiusd.conf 
-	@perl -pi -e 's,\$${DESTDIR},,g' ${PREFIX}/$f
+	perl -pi -e 's,\$${DESTDIR},,g' ${PREFIX}/$f
 .endfor
-	rm ${PREFIX}/lib/freeradius/*.la ${PREFIX}/lib/freeradius/*.a
+
+	rm ${PREFIX}/lib/freeradius/*.la ${PREFIX}/lib/freeradius/*.a \
+		${PREFIX}/lib/libfreeradius-eap-*.la
 
 pre-test:
 	perl -pi -e 's,\$${DESTDIR},${DESTDIR},g' ${WRKSRC}/raddb/radiusd.conf

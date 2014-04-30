@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.51 2013/09/28 08:51:25 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.55 2014/04/02 09:36:13 jasper Exp $
 
 COMMENT=	mouse accessibility enhancements for GNOME
 
 GNOME_PROJECT=	mousetweaks
-GNOME_VERSION=	3.10.0
-REVISION=	0
+GNOME_VERSION=	3.12.0
 
 # GPLv3 - GFDLv1.3
 PERMIT_PACKAGE_CDROM=	Yes
@@ -22,6 +21,6 @@ BUILD_DEPENDS=	devel/gsettings-desktop-schemas
 RUN_DEPENDS=	devel/gsettings-desktop-schemas
 LIB_DEPENDS=	x11/gtk+3
 
-MODGNOME_TOOLS= yelp
+MODGNOME_TOOLS +=	yelp
 
 .include <bsd.port.mk>

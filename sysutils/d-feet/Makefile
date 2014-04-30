@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2013/12/16 08:24:04 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.38 2014/04/02 14:34:47 ajacoutot Exp $
 
 COMMENT=		dbus debugger
 
@@ -15,9 +15,8 @@ MODULES=		devel/dconf \
 			lang/python \
 			x11/gnome
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS=		gi yelp
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection gtk-update-icon-cache
+MODGNOME_TOOLS += yelp
 
 BUILD_DEPENDS=		x11/gtk+3
 
@@ -26,7 +25,7 @@ BUILD_DEPENDS +=	devel/pep8
 
 RUN_DEPENDS=		devel/py-gobject3
 
-# pygobject introspection for gtk+3
+# pygobject GTK3 introspection (not provided by indirect dependencies)
 RUN_DEPENDS +=		x11/gtk+3
 
 # src/dfeet/wnck_utils.py

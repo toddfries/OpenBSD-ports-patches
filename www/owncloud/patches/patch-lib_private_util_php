@@ -1,0 +1,12 @@
+$OpenBSD: patch-lib_private_util_php,v 1.2 2014/04/29 14:47:39 ajacoutot Exp $
+--- lib/private/util.php.orig	Tue Apr 29 03:26:10 2014
++++ lib/private/util.php	Tue Apr 29 16:38:15 2014
+@@ -289,7 +289,7 @@ class OC_Util {
+ 	 */
+ 	public static function checkServer() {
+ 		$errors = array();
+-		$CONFIG_DATADIRECTORY = OC_Config::getValue('datadirectory', OC::$SERVERROOT . '/data');
++		$CONFIG_DATADIRECTORY = OC_Config::getValue('datadirectory', '/owncloud-data' );
+ 
+ 		if (!\OC::needUpgrade() && OC_Config::getValue('installed', false)) {
+ 			// this check needs to be done every time

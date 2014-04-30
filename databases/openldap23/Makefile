@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.13 2013/06/20 06:54:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.15 2014/04/21 12:47:59 sthen Exp $
 
-COMMENT=	Open source LDAP software (server)
+COMMENT=	open-source LDAP software (server, legacy version)
 
 DISTNAME=	openldap-2.3.43
 PKGNAME=	${DISTNAME:S/-/-server-/}
-REVISION=	13
+REVISION=	15
 
 CATEGORIES=	databases net
 
@@ -12,8 +12,7 @@ HOMEPAGE=	http://www.openldap.org/
 
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += asn1 c com_err crypto gssapi heimbase
-WANTLIB += krb5 m perl pthread roken sasl2 ssl util wind wrap
+WANTLIB += c crypto m perl pthread sasl2 ssl util
 
 MASTER_SITES=	http://mirror.switch.ch/ftp/mirror/OpenLDAP/openldap-release/ \
 		http://gd.tuwien.ac.at/infosys/network/OpenLDAP/openldap-release/ \
@@ -35,7 +34,6 @@ CONFIGURE_ARGS+=	--enable-slapd \
 			--enable-cleartext \
 			--enable-crypt \
 			--enable-rewrite \
-			--enable-wrappers \
 			--with-cyrus-sasl \
 			--enable-spasswd
 
@@ -71,8 +69,6 @@ pre-build:
 	@cd ${WRKBUILD}; ${MAKE_PROGRAM} depend
 
 pre-configure:
-	@perl -pi -e 's,KRB5_LIBS=,KRB5_LIBS="-lgssapi -lkrb5 -lasn1 \
-		-lcom_err",g' ${WRKSRC}/configure
 	@perl -pi -e 's,database	bdb,database	ldbm,' \
 		${WRKSRC}/servers/slapd/slapd.conf
 

@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.47 2013/09/28 08:51:10 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.52 2014/04/02 09:36:12 jasper Exp $
 
 COMMENT=		fd.o menu editor for GNOME
 
 GNOME_PROJECT=		alacarte
-GNOME_VERSION=		3.10.0
-REVISION=		0
+GNOME_VERSION=		3.11.91
 
 CATEGORIES=		sysutils
 
@@ -20,9 +19,11 @@ BUILD_DEPENDS=		devel/py-gobject3 \
 RUN_DEPENDS=		devel/py-gobject3 \
 			x11/gnome/menus
 
+# pygobject GTK3 introspection (not provided by indirect dependencies)
+RUN_DEPENDS +=		x11/gtk+3
+
 PKG_ARCH=		*
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS += desktop-file-utils docbook gtk-update-icon-cache
 
 .include <bsd.port.mk>

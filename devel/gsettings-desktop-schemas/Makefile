@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.42 2013/10/16 08:33:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.45 2014/04/01 18:06:28 jasper Exp $
 
 COMMENT=	collection of shared GSettings schemas
 
 GNOME_PROJECT=	gsettings-desktop-schemas
-GNOME_VERSION=	3.10.1
+GNOME_VERSION=	3.12.0
 
 CATEGORIES=	devel
 
@@ -17,7 +17,7 @@ MODULES=	devel/dconf \
 
 BUILD_DEPENDS=	devel/gettext
 
-MODGNOME_TOOLS=	gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 CONFIGURE_STYLE=gnu
 

@@ -1,13 +1,13 @@
-# $OpenBSD: Makefile,v 1.18 2014/02/14 09:46:18 jasper Exp $
+# $OpenBSD: Makefile,v 1.24 2014/04/25 20:35:23 rpe Exp $
 
 COMMENT =		ssh based config management framework
 
-MODPY_EGG_VERSION =	1.4.5
+MODPY_EGG_VERSION =	1.5.5
 DISTNAME =		ansible-${MODPY_EGG_VERSION}
 
 CATEGORIES =		sysutils
 
-HOMEPAGE =		http://ansible.com/
+HOMEPAGE =		http://www.ansible.com/
 
 MAINTAINER =		Robert Peichaer <rpe@openbsd.org>
 
@@ -18,12 +18,12 @@ MASTER_SITES =		http://releases.ansible.com/ansible/
 
 MODULES =		lang/python
 
-RUN_DEPENDS =		security/py-paramiko \
+RUN_DEPENDS =		security/py-keyczar \
+			security/py-paramiko \
 			textproc/py-yaml \
 			www/py-httplib2 \
 			www/py-jinja2
 
-USE_GROFF =		Yes
 NO_TEST =		Yes
 
 DOCDIR =		${PREFIX}/share/doc/ansible
@@ -48,7 +48,6 @@ post-install:
 	${SUBST_CMD} ${EXDIR}/hosts
 	@rm ${EXDIR}/hosts.beforesubst
 	${INSTALL_DATA} ${WRKSRC}/docs/man/man1/*.1 ${MANDIR}/man1
-	${INSTALL_DATA} ${WRKSRC}/docs/man/man3/*.3 ${MANDIR}/man3
 	${INSTALL_DATA} ${WRKSRC}/{COPYING,README.md} ${DOCDIR}/
 
 .include <bsd.port.mk>

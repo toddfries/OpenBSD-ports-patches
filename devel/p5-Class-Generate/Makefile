@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.5 2013/03/11 10:50:14 espie Exp $
+# $OpenBSD: Makefile,v 1.7 2014/04/13 01:01:38 naddy Exp $
 
 COMMENT=        generate Perl class hierarchies
 
 MODULES=	cpan
-DISTNAME=	Class-Generate-1.10
-REVISION=	0
+DISTNAME=	Class-Generate-1.14
 CATEGORIES=     devel
-USE_GROFF =	Yes
 
 MAINTAINER=	Simon Bertrang <simon@openbsd.org>
 
 # Perl
 PERMIT_PACKAGE_CDROM=	Yes
+
+CONFIGURE_STYLE=	modbuild
 
 .include <bsd.port.mk>

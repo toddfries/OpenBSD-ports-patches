@@ -1,18 +1,19 @@
-# $OpenBSD: Makefile,v 1.20 2013/07/05 09:34:36 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2014/03/17 23:22:21 sthen Exp $
 
 COMMENT=		Squid Analysis Report Generator
 
-DISTNAME=		sarg-2.3.7
+DISTNAME=		sarg-2.3.8
+REVISION=		0
 CATEGORIES=		www
 
-HOMEPAGE=	 	http://sarg.sourceforge.net/
+HOMEPAGE=		http://sarg.sourceforge.net/
 
 MAINTAINER=		Robert Peichaer <rpe@openbsd.org>
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB=		c gd m pcre
+WANTLIB=		c gd m pcre pthread
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=sarg/}
 
@@ -48,22 +49,14 @@ NO_TEST=		Yes
 
 EXAMPLESDIR=		${PREFIX}/share/examples/sarg
 
-pre-configure:
-	@chmod u=rwx,go=rx ${WRKSRC}/configure
-
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/sarg ${PREFIX}/bin
 	${INSTALL_MAN} ${WRKSRC}/sarg.1 ${PREFIX}/man/man1/sarg.1
-	${INSTALL_DATA_DIR} ${EXAMPLESDIR}
-	${INSTALL_DATA_DIR} ${EXAMPLESDIR}/images
-	${INSTALL_DATA_DIR} ${EXAMPLESDIR}/fonts
-	${INSTALL_DATA_DIR} ${EXAMPLESDIR}/sarg-php
-	${INSTALL_DATA} ${WRKSRC}/css.tpl ${EXAMPLESDIR}/
-	${INSTALL_DATA} ${WRKSRC}/exclude_codes ${EXAMPLESDIR}/
-	${INSTALL_DATA} ${WRKSRC}/images/* ${EXAMPLESDIR}/images/
-	${INSTALL_DATA} ${WRKSRC}/sarg.conf ${EXAMPLESDIR}/
+	${INSTALL_DATA_DIR} ${EXAMPLESDIR}/{images,fonts,sarg-php}
+	${INSTALL_DATA} ${WRKSRC}/{css.tpl,exclude_codes,sarg.conf} \
+		${EXAMPLESDIR}/
 	${INSTALL_DATA} ${WRKSRC}/fonts/*.ttf ${EXAMPLESDIR}/fonts/
-	${INSTALL_DATA} ${WRKSRC}/sarg-php/*php ${EXAMPLESDIR}/sarg-php/
-	cp -R ${WRKSRC}/sarg-php/locale ${EXAMPLESDIR}/sarg-php/
+	${INSTALL_DATA} ${WRKSRC}/images/* ${EXAMPLESDIR}/images/
+	cp -R ${WRKSRC}/sarg-php/{locale,*.php} ${EXAMPLESDIR}/sarg-php/
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.9 2014/01/11 19:28:40 brad Exp $
+# $OpenBSD: Makefile,v 1.13 2014/04/01 18:26:56 brad Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT-main=	multithreaded SQL database (client)
 COMMENT-server=	multithreaded SQL database (server)
 COMMENT-tests=	multithreaded SQL database (regression test suite/benchmark)
 
-VERSION=	10.0.7
+VERSION=	10.0.10
 DISTNAME=	mariadb-${VERSION}
 PKGNAME-main=	mariadb-client-${VERSION}
 PKGNAME-server=	mariadb-server-${VERSION}
@@ -14,6 +14,8 @@ PKGNAME-tests= 	mariadb-tests-${VERSION}
 CATEGORIES=	databases
 MASTER_SITES=	http://ftp.osuosl.org/pub/mariadb/${DISTNAME}/kvm-tarbake-jaunty-x86/ \
 		http://ftp.heanet.ie/mirrors/mariadb/${DISTNAME}/kvm-tarbake-jaunty-x86/
+
+REVISION-server= 0
 
 LIB_VERSION=	25
 SHARED_LIBS=	mysqlclient_r	${LIB_VERSION}.0 \
@@ -28,7 +30,7 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB=	c crypto m pthread ssl stdc++ z
 WANTLIB-main=	curses readline ${WANTLIB}
-WANTLIB-server=	mysqlclient wrap ${WANTLIB}
+WANTLIB-server=	mysqlclient ${WANTLIB}
 WANTLIB-tests=	mysqlclient ${WANTLIB}
 
 LOCALSTATEDIR=	${BASELOCALSTATEDIR}/mysql
@@ -66,7 +68,6 @@ CONFIGURE_ARGS+=-DCMAKE_INSTALL_PREFIX="${PREFIX}" \
 		-DWITH_COMMENT='OpenBSD port: ${FULLPKGNAME-server}' \
 		-DWITH_SSL=system \
 		-DWITH_LIBEDIT=Off \
-		-DWITH_LIBWRAP=On \
 		-DCONNECT_WITH_LIBXML2=Off
 
 MULTI_PACKAGES=	-main -server -tests

@@ -1,18 +1,19 @@
-# $OpenBSD: Makefile,v 1.48 2013/12/22 14:09:05 jasper Exp $
+# $OpenBSD: Makefile,v 1.56 2014/04/15 07:01:15 jasper Exp $
+
+TRACKER_VERSION=	1.0
 
 SHARED_ONLY=		Yes
 
 COMMENT=		home media solution that allows easy media sharing
 
 GNOME_PROJECT=		rygel
-GNOME_VERSION=		0.20.3
+GNOME_VERSION=		0.22.1
+API_V=			2.2
 
-SHARED_LIBS +=  rygel-core-2.0         0.0      # .1.0
-SHARED_LIBS +=  rygel-renderer-2.0     0.0      # .1.0
-SHARED_LIBS +=  rygel-server-2.0       0.0      # .1.0
-SHARED_LIBS +=  rygel-renderer-gst-2.0 0.0      # .1.0
-
-TRACKER_VERSION=	0.16
+SHARED_LIBS +=  rygel-core-${API_V}         0.0      # .2.2
+SHARED_LIBS +=  rygel-renderer-${API_V}     0.0      # .2.2
+SHARED_LIBS +=  rygel-server-${API_V}       0.0      # .2.2
+SHARED_LIBS +=  rygel-renderer-gst-${API_V} 0.0      # .2.2
 
 CATEGORIES=		multimedia
 
@@ -43,20 +44,14 @@ LIB_DEPENDS=		converters/libunistring \
 			net/gupnp/dlna \
 			x11/gnome/tracker>=${TRACKER_VERSION}
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS=		vala
-
-# XXX undefined reference to `memset'
-USE_LIBTOOL=		gnu
-
-LIBTOOL_FLAGS=		--tag=disable-static
-
-CONFIGURE_ARGS+=	--disable-static
+MODGNOME_TOOLS += 	desktop-file-utils gtk-update-icon-cache vala
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/rygel/
 
+SUBST_VARS +=		API_V
+
 post-install:
-	rm ${PREFIX}/lib/rygel-2.0/{engines,plugins}/*.la
+	rm ${PREFIX}/lib/rygel-${API_V}/{engines,plugins}/*.{a,la}
+	chown -R ${SHAREOWN}:${SHAREGRP} ${PREFIX}/share/gtk-doc/html/
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.159 2013/11/01 11:20:19 robert Exp $
+# $OpenBSD: Makefile,v 1.164 2014/04/21 18:43:10 ajacoutot Exp $
 
 COMMENT-main=	MS Exchange groupware suite replacement
 COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
@@ -6,6 +6,9 @@ COMMENT-web=	zarafa webaccess frontend and MAPI extensions for PHP
 PKGNAME=	zarafa-${V}
 PKGNAME-main=	zarafa-${V}
 PKGNAME-web=	zarafa-webaccess-${V}
+
+REVISION-main=	0
+REVISION-web=	0
 
 CATEGORIES=	mail www productivity
 
@@ -22,6 +25,8 @@ SHARED_LIBS +=  icalmapi             2.0      # .1.0
 SHARED_LIBS +=  inetmapi             2.0      # .1.0
 SHARED_LIBS +=  archiver             1.0      # .0.0
 SHARED_LIBS +=  archiver-core        0.0      # .0.0
+SHARED_LIBS +=  mapicalendar         0.0      # .0.0
+SHARED_LIBS +=  mapitimezone         0.0      # .0.0
 
 MULTI_PACKAGES=	-main -web
 
@@ -34,7 +39,8 @@ MESSAGE-main=	# empty
 UNMESSAGE-main=	# empty
 
 BUILD_DEPENDS=	devel/swig \
-		textproc/xmlto
+		textproc/xmlto \
+		sysutils/coreutils
 
 # libcurl is searched by configure but unused
 BUILD_DEPENDS += net/curl
@@ -44,10 +50,9 @@ WANTLIB += m pthread stdc++ z vmime execinfo icudata icui18n icuuc
 WANTLIB += boost_filesystem-mt boost_system-mt uuid
 
 WANTLIB-main += ${WANTLIB} ${MODPY_WANTLIB}
-WANTLIB-main += asn1 c com_err crypto gssapi ical icalss krb5 lber-2.4
-WANTLIB-main += mysqlclient ncursesw sasl2 ssl util xml2 kyotocabinet
-WANTLIB-main += heimbase ldap_r-2.4 roken wind
-WANTLIB-main += clucene-core clucene-shared
+WANTLIB-main += c crypto ical icalss lber-2.4
+WANTLIB-main += mysqlclient ncurses sasl2 ssl util xml2 kyotocabinet
+WANTLIB-main += ldap_r-2.4 clucene-core clucene-shared
 
 RUN_DEPENDS-main=${MODGETTEXT_RUN_DEPENDS} \
 		${MODPY_RUN_DEPENDS} \
@@ -67,7 +72,7 @@ LIB_DEPENDS-main= ${MODGETTEXT_LIB_DEPENDS} \
 
 WANTLIB-web += ${WANTLIB}
 WANTLIB-web += common_util freebusy ical icalmapi icalss inetmapi mapi
-WANTLIB-web += common_mapi
+WANTLIB-web += common_mapi xml2
 
 LIB_DEPENDS-web= ${BASE_PKGPATH}>=${V}
 RUN_DEPENDS-web= ${MODPHP_RUN_DEPENDS} \
@@ -105,6 +110,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--with-userscript-prefix=${SYSCONFDIR}/zarafa/userscripts \
 		--with-quotatemplate-prefix=${SYSCONFDIR}/zarafa/quotamail \
 		--with-searchscripts-prefix=${SYSCONFDIR}/zarafa/searchscripts \
+		--with-mapi-timezonedir=${LOCALBASE}/share/zarafa/timezones \
 		--enable-release \
 		--enable-oss \
 		--enable-unicode \
@@ -139,6 +145,7 @@ post-patch:
 	mv ${WRKSRC}/php-webclient-ajax/client/layout/img/login.jpg \
 		${WRKSRC}/php-webclient-ajax/client/layout/img/login.jpg.dist
 	ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
+	ln -sf ${LOCALBASE}/bin/gcp ${WRKDIR}/bin/cp
 
 pre-configure:
 	cd ${WRKSRC}/installer/linux && \

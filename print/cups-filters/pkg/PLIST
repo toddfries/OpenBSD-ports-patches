@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.13 2014/01/20 11:01:42 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.16 2014/04/27 17:07:24 ajacoutot Exp $
 @conflict cups-<1.6.0
 @conflict ghostscript-<9.06p3
 @conflict foomatic-filters-*
@@ -24,7 +24,6 @@ lib/libfontembed.la
 @lib lib/libfontembed.so.${LIBfontembed_VERSION}
 lib/pkgconfig/libcupsfilters.pc
 lib/pkgconfig/libfontembed.pc
-libexec/cups/
 libexec/cups/backend/
 @bin libexec/cups/backend/parallel
 @bin libexec/cups/backend/serial
@@ -61,6 +60,7 @@ share/cups/
 share/cups/banners/
 share/cups/banners/classified
 share/cups/banners/confidential
+share/cups/banners/form
 share/cups/banners/secret
 share/cups/banners/standard
 share/cups/banners/topsecret
@@ -72,6 +72,10 @@ share/cups/charsets/pdf.utf-8.simple
 share/cups/data/
 share/cups/data/default-testpage.pdf
 share/cups/data/default.pdf
+share/cups/data/form_english.pdf
+share/cups/data/form_english_in.odt
+share/cups/data/form_russian.pdf
+share/cups/data/form_russian_in.odt
 share/cups/data/testprint
 share/cups/drv/
 share/cups/drv/cupsfilters.drv
@@ -90,7 +94,7 @@ share/doc/cups-filters/README
 share/doc/pkg-readmes/${FULLPKGNAME}
 share/examples/cups-filters/
 share/examples/cups-filters/99pdftoopvp.conf
-@sample ${SYSCONFDIR}/fonts/conf.d/99-pdftoopvp.conf
+@sample /etc/fonts/conf.d/99-pdftoopvp.conf
 share/examples/cups-filters/cups/
 @mode 0644
 share/examples/cups-filters/cups/cups-browsed.conf

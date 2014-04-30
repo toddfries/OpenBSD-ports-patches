@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.8 2013/03/11 11:23:54 espie Exp $
+# $OpenBSD: Makefile,v 1.10 2014/03/13 21:05:38 sthen Exp $
 
 # vax:	no fenv.h support
 NOT_FOR_ARCHS =		vax
@@ -7,8 +7,13 @@ BROKEN-mips64 =		ICE on Interval_nt.h:98
 
 COMMENT =		Computational Geometry Algorithms Library
 
-DISTNAME =		CGAL-4.1
+# when updating this port, don't just change the version number here.
+# MASTER_SITES needs to be adapted for every new tarball.
+# See https://gforge.inria.fr/frs/?group_id=52 for files index.
+DISTNAME =		CGAL-3.8
+MASTER_SITES =		https://gforge.inria.fr/frs/download.php/28500/
 PKGNAME =		${DISTNAME:L}
+EPOCH =			0
 
 SHARED_ONLY =		Yes
 SHARED_LIBS =		CGAL		0.0 \
@@ -27,17 +32,11 @@ PERMIT_PACKAGE_CDROM =	Yes
 WANTLIB =		GL GLU ICE SM X11 Xext boost_thread-mt gmp gmpxx \
 			lib/qt4/QtGui lib/qt4/QtOpenGL m>=5.3 mpfr stdc++ z
 
-# Awkward hosting site; see https://gforge.inria.fr/frs/?group_id=52 for files index.
-MASTER_SITES =		https://gforge.inria.fr/frs/download.php/28500/
-
 MODULES =		devel/cmake \
 			x11/qt4
 LIB_DEPENDS =		devel/boost \
 			devel/gmp \
 			devel/mpfr
-
-# wow, forgot to change version?
-WRKDIST =		${WRKDIR}/CGAL-3.8
 
 CFLAGS +=		-I${X11BASE}/include
 

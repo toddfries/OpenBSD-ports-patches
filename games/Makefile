@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.283 2013/12/19 19:24:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.285 2014/04/18 15:15:13 pascal Exp $
 
      SUBDIR =
      SUBDIR += abuse
@@ -151,6 +151,7 @@
      SUBDIR += openarena
      SUBDIR += opensonic
      SUBDIR += openttd
+     SUBDIR += opentyrian
      SUBDIR += openxcom
      SUBDIR += pacman-arena
      SUBDIR += pathological
@@ -217,6 +218,7 @@
      SUBDIR += uqm
      SUBDIR += valyriatear
      SUBDIR += vectoroids
+     SUBDIR += vegastrike
      SUBDIR += vitetris
      SUBDIR += vms-empire
      SUBDIR += vodovod

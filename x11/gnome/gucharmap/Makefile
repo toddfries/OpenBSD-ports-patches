@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.80 2013/11/14 15:00:17 jasper Exp $
+# $OpenBSD: Makefile,v 1.87 2014/04/02 09:36:13 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		Unicode character map for the GNOME project
 
 GNOME_PROJECT=		gucharmap
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.12.0
+REVISION=		0
 
 SHARED_LIBS +=  gucharmap_2_90            7.0 # 7.0
 
@@ -24,9 +25,7 @@ MODULES=		devel/gettext \
 			devel/dconf \
 			x11/gnome
 
-MODGNOME_TOOLS= 	gi vala yelp
-MODGNOME_DESKTOP_FILE=	Yes
-
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection vala yelp
 LIB_DEPENDS=		x11/gtk+3,-main
 
 # error: -Bsymbolic requested but not supported by ld

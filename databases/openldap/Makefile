@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.129 2013/11/18 16:40:07 sthen Exp $
+# $OpenBSD: Makefile,v 1.133 2014/04/21 12:41:49 sthen Exp $
 
 COMMENT-main =		open-source LDAP software (client)
 COMMENT-server =	open-source LDAP software (server)
 
-DISTNAME =		openldap-2.4.38
+DISTNAME =		openldap-2.4.39
+REVISION =		1
 PKGNAME-main =		${DISTNAME:S/-/-client-/}
 PKGNAME-server =	${DISTNAME:S/-/-server-/}
-
 
 # overwrite -main pkgname/path to strip FLAVOR, aci only affects the server
 FULLPKGNAME-main =	${DISTNAME:S/-/-client-/}
@@ -26,8 +26,7 @@ HOMEPAGE =	http://www.openldap.org/
 # OpenLDAP Public License
 PERMIT_PACKAGE_CDROM =	Yes
 
-WANTLIB += asn1 c com_err crypto gssapi heimbase
-WANTLIB += krb5 roken ssl wind
+WANTLIB += c crypto ssl
 
 MASTER_SITES =	http://mirror.switch.ch/ftp/mirror/OpenLDAP/openldap-release/ \
 		http://gd.tuwien.ac.at/infosys/network/OpenLDAP/openldap-release/ \
@@ -55,7 +54,6 @@ CONFIGURE_ARGS +=	--enable-slapd \
 			--enable-cleartext \
 			--enable-crypt \
 			--enable-rewrite \
-			--enable-wrappers \
 			--with-cyrus-sasl \
 			--enable-spasswd
 
@@ -106,7 +104,7 @@ CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include/sasl -I${LOCALBASE}/include/db
 			LDFLAGS="-L${LOCALBASE}/lib/db4 -L${LOCALBASE}/lib"
 
 RUN_DEPENDS-server =	databases/openldap,-main
-WANTLIB-server +=	${WANTLIB} perl util wrap m icudata icuuc uuid
+WANTLIB-server +=	${WANTLIB} perl util m icudata icuuc uuid
 WANTLIB-server +=	stdc++ lib/db4/db>=4
 
 pre-build:

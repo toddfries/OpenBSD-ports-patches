@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.71 2013/12/03 23:00:07 jasper Exp $
+# $OpenBSD: Makefile,v 1.78 2014/04/19 12:11:10 ajacoutot Exp $
 
 COMMENT=		plugins for Gedit
 
 GNOME_PROJECT=		gedit-plugins
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.12.1
 
 CATEGORIES=		editors
 
@@ -29,7 +29,6 @@ MODPY_VERSION=		${MODPY_DEFAULT_VERSION_3}
 BUILD_DEPENDS=		devel/gsettings-desktop-schemas \
 			devel/libgit2/libgit2-glib>=0.0.6p0 \
 			devel/vte3 \
-			textproc/gsed \
 			x11/gnome/gedit \
 			x11/gnome/gucharmap
 
@@ -44,18 +43,11 @@ RUN_DEPENDS=		devel/gsettings-desktop-schemas \
 			x11/gnome/gedit \
 			x11/gnome/gucharmap
 
-MODGNOME_TOOLS=		yelp
-
+MODGNOME_TOOLS +=	yelp
 # dashboard plugin
 RUN_DEPENDS +=		productivity/zeitgeist
 
-LIBTOOL_FLAGS=		--tag=disable-static
-
-AUTOCONF_VERSION=	2.69
-CONFIGURE_STYLE=	autoconf
-CONFIGURE_ARGS=		--disable-static
-
 post-install:
-	rm ${PREFIX}/lib/gedit/plugins/*.la
+	rm ${PREFIX}/lib/gedit/plugins/*.{a,la}
 
 .include <bsd.port.mk>

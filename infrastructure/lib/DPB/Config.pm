@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Config.pm,v 1.26 2014/01/10 11:26:43 espie Exp $
+# $OpenBSD: Config.pm,v 1.29 2014/04/28 12:51:41 espie Exp $
 #
 # Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
@@ -126,6 +126,7 @@ sub parse_command_line
 
 	# keep cmdline subst values
 	my %cmdline = %{$state->{subst}};
+
 	$class->parse_config_files($state);
 	# ... as those must override the config files contents
 	while (my ($k, $v) = each %cmdline) {
@@ -188,16 +189,6 @@ sub parse_command_line
 	if ($state->opt('f')) {
 		$state->{want_fetchinfo} = 1;
 	}
-	if (!$state->{subst}->empty('HISTORY_ONLY')) {
-		$state->{want_fetchinfo} = 1;
-		$state->{opt}{f} = 0;
-		$state->{opt}{j} = 1;
-		$state->{opt}{e} = 1;
-		$state->{all} = 1;
-		$state->{scan_only} = 1;
-		# XXX not really random, but no need to use dependencies
-		$state->{random} = 1;
-	}
 
 	# redo this in case config files changed it
 	$state->{logdir} = $state->expand_path($state->{logdir});
@@ -221,7 +212,6 @@ sub parse_command_line
 	$state->{permanent_log} = $state->{build_files}[-1];
 	$state->{display_timeout} =
 	    $state->{subst}->value('DISPLAY_TIMEOUT') // 10;
-	$state->{build_once} = $state->{all};
 	if ($state->defines("DONT_BUILD_ONCE")) {
 		$state->{build_once} = 0;
 	}
@@ -243,6 +233,16 @@ sub command_line_overrides
 		if (defined $state->{$k}) {
 			$override_prop->{$k} = $state->{$k};
 		}
+	}
+	if (!$state->{subst}->empty('HISTORY_ONLY')) {
+		$state->{want_fetchinfo} = 1;
+		$state->{opt}{f} = 0;
+		$state->{opt}{j} = 1;
+		$state->{opt}{e} = 1;
+		$state->{all} = 1;
+		$state->{scan_only} = 1;
+		# XXX not really random, but no need to use dependencies
+		$state->{random} = 1;
 	}
 	if ($state->opt('j')) {
 		$override_prop->{jobs} = $state->opt('j');
@@ -320,7 +320,6 @@ sub parse_hosts_file
 	my ($class, $filename, $state, $default, $override) = @_;
 	open my $fh, '<', $filename or
 		$state->fatal("Can't read host files #1: #2", $filename, $!);
-	my $_;
 	my $cores = {};
 	while (<$fh>) {
 		chomp;
@@ -333,8 +332,8 @@ sub parse_hosts_file
 		# copy default properties
 		my $prop = DPB::HostProperties->new($default);
 		my ($host, @properties) = split(/\s+/, $_);
-		for my $_ (@properties) {
-			if (m/^(.*?)=(.*)$/) {
+		for my $arg (@properties) {
+			if ($arg =~ m/^(.*?)=(.*)$/) {
 				$prop->{$1} = $2;
 			}
 		}
@@ -407,14 +406,14 @@ sub finalize
 		}
 	}
 	if (defined $prop->{memory}) {
-		my $_ = $prop->{memory};
-		if (s/K$//) {
-		} elsif (s/M$//) {
-			$_ *= 1024;
-		} elsif (s/G$//) {
-			$_ *= 1024 * 1024;
+		my $m = $prop->{memory};
+		if ($m =~ s/K$//) {
+		} elsif ($m =~ s/M$//) {
+			$m *= 1024;
+		} elsif ($m =~ s/G$//) {
+			$m *= 1024 * 1024;
 		}
-		$prop->{memory} = $_;
+		$prop->{memory} = $m;
 		if ($prop->{memory} > 0) {
 			$has_mem = 1;
 		}

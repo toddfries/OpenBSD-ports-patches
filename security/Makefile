@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.330 2014/01/18 09:29:55 jasper Exp $
+# $OpenBSD: Makefile,v 1.339 2014/04/21 12:27:56 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -44,7 +44,6 @@
      SUBDIR += easy-rsa
      SUBDIR += encfs
      SUBDIR += erl-bcrypt
-     SUBDIR += erl-oauth
      SUBDIR += fcrackzip
      SUBDIR += fragroute
      SUBDIR += fragrouter
@@ -99,6 +98,7 @@
      SUBDIR += libotr
      SUBDIR += libperseus
      SUBDIR += libpwquality
+     SUBDIR += libscrypt
      SUBDIR += libsodium
      SUBDIR += libsrtp
      SUBDIR += libssh
@@ -133,7 +133,6 @@
      SUBDIR += p0f
      SUBDIR += p11-kit
      SUBDIR += p5-Authen-Htpasswd
-     SUBDIR += p5-Authen-Krb5-Simple
      SUBDIR += p5-Authen-NTLM
      SUBDIR += p5-Authen-Radius
      SUBDIR += p5-Authen-SASL
@@ -180,13 +179,12 @@
      SUBDIR += p5-Digest-SHA1
      SUBDIR += p5-Digest-Skein
      SUBDIR += p5-GPG
-     SUBDIR += p5-GSSAPI
      SUBDIR += p5-GnuPG
      SUBDIR += p5-GnuPG-Interface
      SUBDIR += p5-IO-Socket-SSL
      SUBDIR += p5-MD5
      SUBDIR += p5-Module-Signature
-     SUBDIR += p5-Mozilla-CA
+     SUBDIR += p5-Mozilla-CA-Fake
      SUBDIR += p5-Net-SSLGlue
      SUBDIR += p5-Net-SSL-ExpireDate
      SUBDIR += p5-Net_SSLeay
@@ -207,6 +205,7 @@
      SUBDIR += pgpdump
      SUBDIR += pidgin-otr
      SUBDIR += pinentry
+     SUBDIR += polarssl
      SUBDIR += portscanner
      SUBDIR += portsentry
      SUBDIR += ppgen
@@ -216,16 +215,17 @@
      SUBDIR += py-M2Crypto
      SUBDIR += py-Rijndael
      SUBDIR += py-bcrypt
+     SUBDIR += py-bcrypt,python3
      SUBDIR += py-crack
      SUBDIR += py-cryptkit
      SUBDIR += py-crypto
      SUBDIR += py-crypto,python3
      SUBDIR += py-ecdsa
      SUBDIR += py-gnupg
+     SUBDIR += py-keyczar
      SUBDIR += py-openssl
      SUBDIR += py-paramiko
      SUBDIR += py-pefile
-     SUBDIR += py-pykpass
      SUBDIR += py-sslwrapper
      SUBDIR += qca
      SUBDIR += qca2
@@ -268,7 +268,6 @@
      SUBDIR += ssh-askpass-fullscreen
      SUBDIR += ssh-ldap-helper
      SUBDIR += sshguard
-     SUBDIR += sshguard,tcpd
      SUBDIR += sslScanner
      SUBDIR += sslscan
      SUBDIR += sslsplit

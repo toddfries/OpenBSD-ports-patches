@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.163 2014/02/10 18:34:59 robert Exp $
+# $OpenBSD: Makefile,v 1.172 2014/04/28 22:04:21 sthen Exp $
 
 ONLY_FOR_ARCHS=		i386 amd64
 DPB_PROPERTIES=		parallel
 
 COMMENT=		Chromium browser
 
-V=			32.0.1700.102
+V=			34.0.1847.131
+REVISION=		0
 DISTNAME=		chromium-${V}
 
 CATEGORIES=		www
@@ -17,7 +18,7 @@ MAINTAINER=		Robert Nagy <robert@openbsd.org>
 EXTRACT_SUFX=		.tar.xz
 
 # The proprietary flavor compiles and enables patented codecs like H.264
-FLAVORS=	proprietary
+FLAVORS=	proprietary debug
 FLAVOR?=
 
 # BSD-like
@@ -39,21 +40,24 @@ MODPY_RUNDEP=	No
 
 PATCHORIG=	.orig.port
 
-WANTLIB += X11 Xext Xfixes Xrender Xss bz2 c cairo cups dbus-1 event
+WANTLIB += X11 Xext Xfixes Xrender Xss c cairo cups dbus-1 event
 WANTLIB += execinfo expat fontconfig freetype gconf-2 gcrypt gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 glib-2.0 gobject-2.0 gtk-x11-2.0
 WANTLIB += jpeg m nspr4 nss3 nssutil3 pango-1.0 pangocairo-1.0
 WANTLIB += plc4 png pthread smime3 speex
 WANTLIB += xml2 xslt
-WANTLIB += atk-1.0 usb-1.0 Xrandr sndio
+WANTLIB += atk-1.0 usb-1.0 sndio
 WANTLIB += Xcomposite
 WANTLIB += stdc++
+WANTLIB += Xi Xtst
+WANTLIB += icui18n icuuc
 
 RUN_DEPENDS=	devel/xdg-utils \
 		devel/desktop-file-utils \
 		x11/gnome/libgnome-keyring \
 		x11/gtk+2,-guic
-BUILD_DEPENDS=	audio/pulseaudio \
+BUILD_DEPENDS=	archivers/bzip2 \
+		audio/pulseaudio \
 		devel/gperf \
 		devel/bison \
 		devel/flex \
@@ -63,11 +67,11 @@ BUILD_DEPENDS=	audio/pulseaudio \
 		sysutils/pciutils \
 		x11/gnome/libgnome-keyring
 BUILD_DEPENDS+=	devel/ninja
-LIB_DEPENDS=	archivers/bzip2 \
-		devel/libexecinfo \
+LIB_DEPENDS=	devel/libexecinfo \
 		devel/libusb1 \
 		security/nss \
 		devel/gconf2 \
+		textproc/icu4c \
 		textproc/libxslt \
 		x11/gtk+2 \
 		audio/speex \
@@ -76,7 +80,11 @@ LIB_DEPENDS=	archivers/bzip2 \
 .include <bsd.own.mk>
 
 # Set BUILDTYPE to Debug for a debug build
+.if ${FLAVOR:Mdebug}
+BUILDTYPE=	Debug
+.else
 BUILDTYPE=	Release
+.endif
 
 TEST_TARGET=	base_unittests
 
@@ -101,10 +109,11 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Duse_system_yasm=1 \
 		-Duse_system_zlib=0 \
 		-Duse_system_ssl=0 \
+		-Duse_system_icu=1 \
 		-Ddisable_nacl=1 \
 		-Dlinux_breakpad=0 \
 		-Dlinux_use_tcmalloc=0 \
-		-Dlinux_strip_binary=1 \
+		-Dlinux_strip_binary=0 \
 		-Dlinux_use_heapchecker=0 \
 		-Denable_webrtc=0 \
 		-Denable_one_click_signin=1 \
@@ -112,6 +121,7 @@ GYP_DEFS=	-Duse_system_bzip2=1 \
 		-Duse_sndio=1 \
 		-Dclang=1 \
 		-Dclang_use_chrome_plugins=0 \
+		-Dwerror= \
 		-Dno_gc_sections=1 \
 		-DOS=openbsd
 
@@ -124,6 +134,11 @@ GYP_DEFS+=	-Dgoogle_api_key='AIzaSyA015yecfJyWi8UQpneQVrNzIKlxjv4MhI' \
 .if ${FLAVOR:Mproprietary}
 GYP_DEFS+=	-Dffmpeg_branding=Chrome \
 		-Dproprietary_codecs=1
+.endif
+
+.if ${FLAVOR:Mdebug}
+GYP_DEFS+=	-Dremove_webcore_debug_symbols=1
+MAKE_ENV+=	V=1
 .endif
 
 MODPY_ADJ_FILES=build/linux/unbundle/replace_gyp_files.py
@@ -139,7 +154,7 @@ pre-configure:
 		${WRKSRC}/third_party/ffmpeg/chromium/config/Chromium/openbsd/${_arch}/libavutil
 .endfor
 	@mkdir -p ${WRKSRC}/media/audio/sndio
-	@cp files/sndio_output.{cc,h} ${WRKSRC}/media/audio/sndio
+	@cp ${FILESDIR}/sndio_output.{cc,h} ${WRKSRC}/media/audio/sndio
 
 # gyp_chromium generates all the Makefiles from gyp
 do-configure:
@@ -160,7 +175,7 @@ do-install:
 	chmod ${BINMODE} ${PREFIX}/bin/chrome
 	${INSTALL_MAN} ${BUILDDIR}/chrome.1 ${PREFIX}/man/man1
 
-.for p in chrome chrome_100_percent content_resources resources
+.for p in chrome_100_percent content_resources resources
 	${INSTALL_DATA} ${BUILDDIR}/${p}.pak ${PREFIX}/chrome
 .endfor
 	${INSTALL_DATA_DIR} ${PREFIX}/chrome/locales

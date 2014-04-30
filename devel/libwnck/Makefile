@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.56 2014/02/18 11:02:49 stsp Exp $
+# $OpenBSD: Makefile,v 1.60 2014/04/14 19:50:09 matthieu Exp $
 
 COMMENT=		window navigator construction kit
 
 GNOME_PROJECT=		libwnck
 GNOME_VERSION=		2.30.7
-REVISION=		3
+REVISION=		4
 
 SHARED_LIBS +=	wnck-1               24.0     # .25.26
 
@@ -24,13 +24,14 @@ WANTLIB += atk-1.0 c cairo drm expat fontconfig freetype
 WANTLIB += gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gthread-2.0 gtk-x11-2.0 m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += startup-notification-1 xcb xcb-aux xcb-render xcb-shm
+WANTLIB += startup-notification-1 xcb xcb-util xcb-render xcb-shm
 WANTLIB += z
 
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS= 	gi
+MODGNOME_TOOLS +=	gobject-introspection
+
 LIB_DEPENDS=		x11/gtk+2 \
 			devel/startup-notification
 

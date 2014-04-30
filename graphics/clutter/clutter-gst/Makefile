@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.28 2014/01/13 07:49:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.36 2014/04/22 10:27:51 ajacoutot Exp $
 
 COMMENT=		clutter GStreamer integration library
 
 GNOME_PROJECT=		clutter-gst
 GNOME_VERSION=		2.0.10
+REVISION=		1
 
 API_VERSION=		2.0
 
@@ -16,14 +17,14 @@ WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
 WANTLIB += graphite2 gstaudio-1.0 gstbase-1.0 gstreamer-1.0 gsttag-1.0
 WANTLIB += gstvideo-1.0 gthread-2.0 harfbuzz json-glib-1.0 m orc-0.4
 WANTLIB += pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
-WANTLIB += png pthread pthread-stubs xcb xcb-render xcb-shm z
+WANTLIB += png pthread pthread-stubs xcb xcb-render xcb-shm z cogl-path
 
-MODGNOME_TOOLS=		gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 LIB_DEPENDS=		graphics/clutter/core>=${MAJOR} \
 			multimedia/gstreamer1/plugins-base
 
 post-install:
-	rm ${PREFIX}/lib/gstreamer-1.0/*.la
+	rm ${PREFIX}/lib/gstreamer-1.0/*.{a,la}
 
 .include <bsd.port.mk>

@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.38 2013/06/05 12:27:48 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.44 2014/04/02 09:36:12 jasper Exp $
 
 COMMENT=	GTK C code documentation system
 
-GNOME_VERSION=	1.19
+GNOME_VERSION=	1.20
 GNOME_PROJECT=	gtk-doc
+REVISION=	0
 
 CATEGORIES=    	textproc devel
 
@@ -16,7 +17,7 @@ MODULES=		x11/gnome \
 			lang/python
 
 MODPY_RUNDEP=		No
-MODGNOME_TOOLS= 	yelp
+MODGNOME_TOOLS += docbook yelp
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-highlight=source-highlight
@@ -26,7 +27,8 @@ CONFIGURE_ENV=		ac_cv_path_DBLATEX= \
 # only files under tests/ are compiled but not installed
 PKG_ARCH=		*
 
-BUILD_DEPENDS=		textproc/docbook-xsl \
+# glib2 needed to build regression tests
+BUILD_DEPENDS=		devel/glib2 \
 			textproc/openjade \
 			textproc/source-highlight
 

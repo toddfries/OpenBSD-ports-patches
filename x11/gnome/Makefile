@@ -1,9 +1,8 @@
-# $OpenBSD: Makefile,v 1.223 2014/02/07 13:40:51 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.234 2014/04/19 18:06:17 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += alacarte
      SUBDIR += anjuta
-     SUBDIR += anjuta-extras
      SUBDIR += at-spi2-atk
      SUBDIR += at-spi2-core
      SUBDIR += backgrounds
@@ -24,7 +23,6 @@
      SUBDIR += dictionary
      SUBDIR += doc-utils
      SUBDIR += documents
-     SUBDIR += ekiga
      SUBDIR += empathy
      SUBDIR += eog
      SUBDIR += eog-plugins
@@ -32,13 +30,13 @@
      SUBDIR += font-viewer
      SUBDIR += gcr
      SUBDIR += gdl
-     SUBDIR += gdlmm
      SUBDIR += gdm
      SUBDIR += gedit
      SUBDIR += gedit-code-assistance
-     SUBDIR += gedit-cossa
      SUBDIR += gedit-latex
      SUBDIR += gedit-plugins
+     SUBDIR += getting-started-docs
+     SUBDIR += gfbgraph
      SUBDIR += ghex
      SUBDIR += gjs
      SUBDIR += grilo
@@ -70,18 +68,17 @@
      SUBDIR += menus
      SUBDIR += mime-data
      SUBDIR += mono-gnome
-     SUBDIR += moserial
      SUBDIR += mousetweaks
      SUBDIR += music
      SUBDIR += mutter
      SUBDIR += nautilus
      SUBDIR += nautilus-sendto
-     SUBDIR += nemiver
      SUBDIR += online-accounts
      SUBDIR += online-miners
      SUBDIR += orca
      SUBDIR += photos
      SUBDIR += planner
+     SUBDIR += polari
      SUBDIR += power-manager
      SUBDIR += py-atspi
      SUBDIR += rygel
@@ -89,13 +86,11 @@
      SUBDIR += seahorse
      SUBDIR += seahorse-nautilus
      SUBDIR += seahorse-sharing
-     SUBDIR += search-tool
      SUBDIR += session
      SUBDIR += settings-daemon
      SUBDIR += shell
      SUBDIR += shell-extensions
      SUBDIR += sushi
-     SUBDIR += system-log
      SUBDIR += system-monitor
      SUBDIR += terminal
      SUBDIR += themes-standard

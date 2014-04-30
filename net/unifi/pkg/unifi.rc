@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# $OpenBSD: unifi.rc,v 1.2 2014/04/18 22:01:23 sthen Exp $
+
+daemon="${TRUEPREFIX}/share/unifi/lib/ace.jar"
+daemon_user="_unifi"
+
+. /etc/rc.d/rc.subr
+
+java="$(${LOCALBASE}/bin/javaPathHelper -c unifi)"
+pexp="${java} -jar ${daemon} start"
+
+rc_reload=NO
+
+rc_start() {
+	${rcexec} "${java} -jar ${daemon} start" &
+}
+
+rc_stop() {
+	${rcexec} "${java} -jar ${daemon} stop"
+}
+
+rc_cmd $1

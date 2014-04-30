@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.5 2013/10/14 12:38:15 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.14 2014/04/14 09:13:33 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		GNOME music playing application
 
 GNOME_PROJECT=		gnome-music
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.12.1
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM=	Yes
@@ -23,9 +23,8 @@ MODULES=		x11/gnome \
 			lang/python \
 			devel/gettext
 
-MODGNOME_TOOLS=		gi
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS +=	desktop-file-utils gobject-introspection yelp
+MODGNOME_TOOLS +=	gtk-update-icon-cache
 MODPY_VERSION=		${MODPY_DEFAULT_VERSION_3}
 MODPY_ADJ_FILES=	gnome-music.in
 
@@ -41,11 +40,7 @@ RUN_DEPENDS=		devel/py-gobject3${MODPY_FLAVOR} \
 # sndio(7) support
 RUN_DEPENDS +=	multimedia/gstreamer1/plugins-base
 
-LIBTOOL_FLAGS=		--tag=disable-static
-
-CONFIGURE_ARGS=		--disable-static
-
 post-install:
-	rm ${PREFIX}/lib/gnome-music/libgd.la
+	rm ${PREFIX}/lib/gnome-music/*.{a,la}
 
 .include <bsd.port.mk>

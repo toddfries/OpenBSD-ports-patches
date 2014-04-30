@@ -1,19 +1,20 @@
-# $OpenBSD: Makefile,v 1.86 2014/02/04 22:22:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.93 2014/04/02 09:36:10 jasper Exp $
 
-# XXX when OPENBSD_5_7 is branched
+# XXX when OPENBSD_5_6 is branched
 # drop removal of ${SYSCONFDIR}/pango/pango.modules
 
 SHARED_ONLY=		Yes
 
 COMMENT=		library for layout and rendering of text
 
-GNOME_VERSION=		1.36.2
+GNOME_VERSION=		1.36.3
 GNOME_PROJECT=		pango
+REVISION=		0
 
-SHARED_LIBS +=  pango-1.0            3600.0   # 3600.2
-SHARED_LIBS +=  pangoft2-1.0         3600.0   # 3600.2
-SHARED_LIBS +=  pangoxft-1.0         3600.0   # 3600.2
-SHARED_LIBS +=  pangocairo-1.0       3600.0   # 3600.2
+SHARED_LIBS +=  pango-1.0            3600.0   # 3600.3
+SHARED_LIBS +=  pangoft2-1.0         3600.0   # 3600.3
+SHARED_LIBS +=  pangoxft-1.0         3600.0   # 3600.3
+SHARED_LIBS +=  pangocairo-1.0       3600.0   # 3600.3
 
 CATEGORIES=		devel x11
 
@@ -32,18 +33,14 @@ WANTLIB += xcb xcb-render xcb-shm z
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS=		gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 LIB_DEPENDS=		devel/glib2>=2.38.0 \
 			devel/harfbuzz
 
-LIBTOOL_FLAGS=		--tag=disable-static
-
 CONFIGURE_STYLE=	gnu
-CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-static
 
 post-install:
-	rm ${PREFIX}/lib/pango/1.8.0/modules/*.la
+	rm ${PREFIX}/lib/pango/1.8.0/modules/*.{a,la}
 
 .include <bsd.port.mk>

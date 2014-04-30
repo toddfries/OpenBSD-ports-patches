@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.44 2013/09/28 08:51:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.48 2014/04/02 09:36:13 jasper Exp $
 
 COMMENT=		GNOME Docking Library
 
 GNOME_PROJECT=		gdl
-GNOME_VERSION=		3.10.0
-REVISION=		0
+GNOME_VERSION=		3.12.0
 
 SHARED_LIBS +=  gdl-3                3.1      # 5.6
 
@@ -25,6 +24,6 @@ MODULES=	devel/gettext \
 LIB_DEPENDS=	textproc/libxml \
 		x11/gtk+3
 
-MODGNOME_TOOLS= gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 .include <bsd.port.mk>

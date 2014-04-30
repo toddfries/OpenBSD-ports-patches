@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.67 2013/10/11 22:14:18 landry Exp $
+# $OpenBSD: Makefile,v 1.72 2014/04/22 19:26:45 naddy Exp $
 
 SHARED_ONLY=		Yes
 
@@ -10,7 +10,7 @@ COMMENT-htmlviewer=	fancy htmlviewer plugin
 COMMENT-pdfviewer=	pdfviewer plugin
 COMMENT-gdata=		gdata plugin
 
-V=			3.9.2
+V=			3.9.3
 REVISION=		1
 DISTNAME=		claws-mail-${V}
 PKGNAME-main=		${DISTNAME}
@@ -48,21 +48,21 @@ WANTLIB += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
 WANTLIB += Xrandr Xrender archive atk-1.0 bz2 cairo crypto curl
 WANTLIB += etpan execinfo expat ffi fontconfig freetype gdk-x11-2.0
 WANTLIB += gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB += gthread-2.0 gtk-x11-2.0 harfbuzz idn lzma m pango-1.0
-WANTLIB += pangocairo-1.0 pangoft2-1.0 pcre pixman-1 png pthread
-WANTLIB += pthread-stubs sasl2 ssl xcb xcb-render xcb-shm z
-WANTLIB += asn1 com_err graphite2 gssapi heimbase krb5 roken wind
+WANTLIB += graphite2 gthread-2.0 gtk-x11-2.0 harfbuzz idn lzma
+WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
+WANTLIB += png pthread pthread-stubs sasl2 ssl xcb xcb-render
+WANTLIB += xcb-shm z
 
 WANTLIB-main =  ${WANTLIB}
 WANTLIB-main += ICE SM X11-xcb assuan c dbus-1 dbus-glib-1 enchant
 WANTLIB-main += gmp gnutls gpg-error gpgme hogweed nettle p11-kit perl
-WANTLIB-main += startup-notification-1 stdc++ tasn1 util xcb-aux xml2
+WANTLIB-main += startup-notification-1 stdc++ tasn1 util xcb-util xml2
 WANTLIB-main += canberra canberra-gtk notify ltdl ogg vorbis vorbisfile
 
-WANTLIB-gdata = ${WANTLIB} 
+WANTLIB-gdata = ${WANTLIB}
 WANTLIB-gdata += gck-1 gcr-base-3 gcrypt gdata goa-1.0 gpg-error nspr4
 WANTLIB-gdata += nss3 oauth p11-kit plc4 plds4 smime3 softokn3 soup-2.4
-WANTLIB-gdata += soup-gnome-2.4 sqlite3 ssl3 xml2
+WANTLIB-gdata += sqlite3 ssl3 xml2
 
 WANTLIB-htmlviewer =  ${WANTLIB}
 WANTLIB-htmlviewer += EGL GL ICE SM Xt dbus-1 dbus-glib-1 enchant

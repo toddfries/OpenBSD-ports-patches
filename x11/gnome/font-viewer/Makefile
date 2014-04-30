@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.9 2013/09/28 08:51:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.11 2014/04/01 18:38:53 jasper Exp $
 
 COMMENT=		font viewer for GNOME
 
 GNOME_PROJECT=		gnome-font-viewer
-GNOME_VERSION=		3.10.0
-REVISION=		0
+GNOME_VERSION=		3.12.0
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -23,6 +22,6 @@ LIB_DEPENDS=		x11/gnome/desktop
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS +=	desktop-file-utils
 
 .include <bsd.port.mk>

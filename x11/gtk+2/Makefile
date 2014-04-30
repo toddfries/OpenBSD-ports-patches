@@ -1,24 +1,21 @@
-# $OpenBSD: Makefile,v 1.181 2014/02/09 14:36:10 zhuk Exp $
-
-# XXX remove '@exec ... gtk-2.0/gtk.immodules' after OPENBSD_5_5 is branched
-# XXX remove '@exec rm -f %D/share/icons/icon-theme.cache' after OPENBSD_5_5 is branched
+# $OpenBSD: Makefile,v 1.192 2014/04/25 15:11:55 ajacoutot Exp $
 
 COMMENT-main=		multi-platform graphical toolkit
 COMMENT-guic=		gtk+ icon theme caching utility
 
-GNOME_VERSION=		2.24.22
+GNOME_VERSION=		2.24.23
 GNOME_PROJECT=		gtk+
 
 PKGNAME-main=		gtk+2-${GNOME_VERSION}
 PKGNAME-guic=		gtk-update-icon-cache-${GNOME_VERSION}
 
-REVISION-main=		0
+REVISION-main=		2
 REVISION-guic=		1
 
 CATEGORIES=		x11 devel
 
-SHARED_LIBS +=  gdk-x11-2.0          2400.0   # 2400.22
-SHARED_LIBS +=  gtk-x11-2.0          2400.0   # 2400.22
+SHARED_LIBS +=  gdk-x11-2.0          2400.0   # 2400.23
+SHARED_LIBS +=  gtk-x11-2.0          2400.0   # 2400.23
 SHARED_LIBS +=  gailutil             26.0     # 18.1
 
 HOMEPAGE=		http://www.gtk.org/
@@ -57,14 +54,13 @@ LIB_DEPENDS-main= 	${LIB_DEPENDS} \
 # (+see gtkrc in post-install)
 RUN_DEPENDS-main +=	x11/gnome/icon-theme-symbolic #pulls in gnome-icon-theme+librsvg
 
-WANTLIB-main += ${WANTLIB} c pthread glib-2.0 gmodule-2.0 gobject-2.0
-WANTLIB-main += gio-2.0 pango-1.0 pangocairo-1.0 pangoft2-1.0 atk-1.0
-WANTLIB-main += X11 Xcomposite Xcursor Xdamage Xext Xfixes graphite2
-WANTLIB-main += Xi Xinerama Xrandr Xrender cairo expat dbus-1
-WANTLIB-main += fontconfig freetype pixman-1 pthread-stubs xcb
-WANTLIB-main += xcb-render xcb-shm asn1 crypto cups gssapi krb5 ssl
-WANTLIB-main += harfbuzz avahi-client avahi-common gthread-2.0
-WANTLIB-main += com_err heimbase roken wind
+WANTLIB-main += ${WANTLIB}
+WANTLIB-main += X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi Xinerama
+WANTLIB-main += Xrandr Xrender atk-1.0 avahi-client avahi-common c
+WANTLIB-main += cairo crypto cups dbus-1 expat fontconfig freetype
+WANTLIB-main += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 graphite2
+WANTLIB-main += gthread-2.0 harfbuzz pango-1.0 pangocairo-1.0 pangoft2-1.0
+WANTLIB-main += pixman-1 pthread pthread-stubs ssl xcb xcb-render xcb-shm
 
 WANTLIB-guic += ${WANTLIB}
 WANTLIB-guic += c gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 pthread
@@ -73,7 +69,8 @@ MODPY_BUILDDEP=		No
 MODPY_RUNDEP=		No
 MODPY_ADJ_FILES=	gtk/gtk-builder-convert
 
-MODGNOME_TOOLS=		gi
+MODGNOME_TOOLS +=	gobject-introspection
+
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include/freetype2
 
 TEST_IS_INTERACTIVE=	x11

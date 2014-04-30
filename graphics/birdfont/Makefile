@@ -1,7 +1,7 @@
-# $OpenBSD: Makefile,v 1.2 2013/09/13 07:09:35 bcallah Exp $
+# $OpenBSD: Makefile,v 1.5 2014/03/26 12:57:18 jasper Exp $
 
 COMMENT =	free font editor for TTF, EOT, and SVG fonts
-DISTNAME =	birdfont-0.31
+DISTNAME =	birdfont-0.36
 CATEGORIES =	graphics print
 
 SHARED_LIBS +=	birdfont			0.0 # 0.0
@@ -28,7 +28,7 @@ MODULES =	devel/gettext \
 
 MODPY_ADJ_FILES =	configure install.py
 
-BUILD_DEPENDS =	devel/py-doit \
+BUILD_DEPENDS =	devel/py-doit>=0.24 \
 		lang/vala
 
 LIB_DEPENDS =	devel/libgee \
@@ -42,7 +42,7 @@ CONFIGURE_STYLE =	simple
 NO_TEST =	Yes
 SUBST_VARS +=	DESTDIR
 
-post-patch:
+pre-configure:
 	perl -pi -e "s,bash,sh,g" ${WRKSRC}/*.sh ${WRKSRC}/scripts/run.py
 	${SUBST_CMD} ${WRKSRC}/configure ${WRKSRC}/install.py ${WRKSRC}/dodo.py ${WRKSRC}/scripts/bavala.py
 
@@ -50,6 +50,6 @@ do-build:
 	cd ${WRKSRC} && ${LOCALBASE}/bin/doit
 
 do-install:
-	cd ${WRKSRC} && ./install.py
+	cd ${WRKSRC} && ./install.py --nogzip=1
 
 .include <bsd.port.mk>

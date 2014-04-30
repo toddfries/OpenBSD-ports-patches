@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.19 2013/09/25 12:41:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2014/03/26 08:30:20 ajacoutot Exp $
 
 COMMENT=	python bindings for at-spi2
 
 GNOME_PROJECT=	pyatspi
-GNOME_VERSION=	2.10.0
+GNOME_VERSION=	2.12.0
 
 PKGNAME=	py-atspi-${GNOME_VERSION}
 
@@ -22,7 +22,10 @@ PKG_ARCH=	*
 
 BUILD_DEPENDS=	devel/py-gobject3${MODPY_FLAVOR}
 RUN_DEPENDS=	devel/py-gobject3${MODPY_FLAVOR} \
-		x11/gnome/at-spi2-core>=2.10.0
+		x11/gnome/at-spi2-core>=2.12.0
+
+# pygobject GTK3 introspection (not provided by indirect dependencies)
+RUN_DEPENDS +=		x11/gtk+3
 
 # connects to DBus
 TEST_IS_INTERACTIVE=	x11

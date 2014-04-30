@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.50 2013/12/21 20:52:21 jasper Exp $
+# $OpenBSD: Makefile,v 1.54 2014/04/17 18:12:09 jasper Exp $
 
 COMMENT=	Ruby library for retrieving facts from operating systems
 
-VERSION=	1.7.4
+VERSION=	2.0.1
 REVISION=	0
 
 DISTNAME=	facter-${VERSION}
@@ -17,7 +17,7 @@ MASTER_SITES=	https://puppetlabs.com/downloads/facter/
 PERMIT_PACKAGE_CDROM=	Yes
 
 MODULES=	lang/ruby
-MODRUBY_REV=	1.9
+MODRUBY_REV=	2.0
 
 NO_BUILD=	Yes
 BUILD_DEPENDS=	lang/ruby/${MODRUBY_REV}
@@ -33,7 +33,8 @@ pre-configure:
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/${MODRUBY_RELEXAMPLEDIR}-facter
-	@cd ${WRKSRC} && ${ALL_FAKE_FLAGS} ${RUBY} install.rb
+	@cd ${WRKSRC} && \
+		${ALL_FAKE_FLAGS} ${RUBY} install.rb --destdir=${WRKINST}
 	${INSTALL_DATA} ${WRKSRC}/etc/facter.conf \
 		${PREFIX}/${MODRUBY_RELEXAMPLEDIR}-facter
 	cd ${PREFIX}/man/man8 && gunzip facter.8.gz

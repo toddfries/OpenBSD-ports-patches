@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.94 2013/08/24 09:22:25 sthen Exp $
+# $OpenBSD: Makefile,v 1.96 2014/03/24 17:39:35 sthen Exp $
 
 CATEGORIES =		mail
 COMMENT-main =		flexible mail transfer agent
 COMMENT-eximon =	X11 monitor tool for Exim MTA
 VERSION =		4.80.1
+REVISION-main =		1
 DISTNAME =		exim-${VERSION}
 PKGNAME-main =		exim-${VERSION}
 FULLPKGNAME-eximon =	exim-eximon-${VERSION}
@@ -26,7 +27,7 @@ MULTI_PACKAGES =	-main -eximon
 MODULES =		converters/libiconv
 LIB_DEPENDS-main =	${LIB_DEPENDS} devel/pcre
 cWANTLIB =		c m
-WANTLIB-main =		${WANTLIB} ${cWANTLIB} crypto perl ssl util wrap pcre
+WANTLIB-main =		${WANTLIB} ${cWANTLIB} crypto perl ssl util pcre
 WANTLIB-eximon =	${cWANTLIB} X11 Xaw Xext Xmu Xt pcre
 RUN_DEPENDS-eximon =	${PKGPATH},-main
 LIB_DEPENDS-eximon =	devel/pcre
@@ -77,7 +78,7 @@ LIB_DEPENDS-main +=	security/cyrus-sasl2
 WANTLIB-main +=		sasl2
 .endif
 
-EXIM_EXTRA_LIBS +=	-lwrap -L${LOCALBASE}/lib -liconv
+EXIM_EXTRA_LIBS +=	-L${LOCALBASE}/lib -liconv
 
 EXIM_MAKECAT +=		"BIN_DIRECTORY=${PREFIX}/bin\n"
 EXIM_MAKECAT +=		"CONFIGURE_FILE=${SYSCONFDIR}/exim/configure\n"

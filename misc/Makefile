@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.162 2014/01/05 18:43:48 bcallah Exp $
+# $OpenBSD: Makefile,v 1.164 2014/03/27 10:25:14 jasper Exp $
 
      SUBDIR =
      SUBDIR += WordGenerator
      SUBDIR += amanda
+     SUBDIR += appdata-tools
      SUBDIR += astrolog
      SUBDIR += bible-kjv
      SUBDIR += brltty
@@ -19,7 +20,6 @@
      SUBDIR += delay
      SUBDIR += dialog
      SUBDIR += digitemp
-     SUBDIR += dnetc
      SUBDIR += dtach
      SUBDIR += dtcltiny
      SUBDIR += dvtm

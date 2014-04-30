@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.20 2014/01/12 09:54:03 jasper Exp $
+# $OpenBSD: Makefile.inc,v 1.26 2014/04/17 18:10:28 jasper Exp $
 
 PKG_ARCH ?=	*
 COMMENT ?=	centralised configuration management for networks
@@ -12,32 +12,34 @@ FILESDIR ?=	${.CURDIR}/../files
 PKGDIR ?=	${.CURDIR}/../pkg
 PLIST ?=	${.CURDIR}/pkg/PLIST
 
-CATEGORIES +=	sysutils net
+CATEGORIES +=	sysutils
 SUBST_VARS +=	RUBY
 
 # For maintenance/ease of use, the following ports should use the same
 # Ruby version as Puppet. Please consult this matrix before adjusting:
 # http://docs.puppetlabs.com/guides/platforms.html
 #  devel/ruby-rgen
+#  databases/puppetdb
 #  databases/ruby-hiera
 #  databases/ruby-hiera-file
+#  net/ruby-msgpack
 #  sysutils/mcollective
 #  sysutils/ruby-augeas
 #  sysutils/ruby-facter
 #  sysutils/ruby-shadow
 #  www/puppet-dashboard
 MODULES +=	lang/ruby
-MODRUBY_REV ?=	1.9
+MODRUBY_REV ?=	2.0
 
 BUILD_DEPENDS +=${RUN_DEPENDS}
 RUN_DEPENDS +=	converters/ruby-json,${MODRUBY_FLAVOR} \
 		databases/ruby-hiera,${MODRUBY_FLAVOR} \
 		sysutils/ruby-augeas,${MODRUBY_FLAVOR} \
-		sysutils/ruby-facter \
+		sysutils/ruby-facter>=2.0.1p0 \
 		sysutils/ruby-shadow,${MODRUBY_FLAVOR} \
 		${MODRUBY_ICONV_DEPENDS}
 
-# Apache
+# Apache2
 PERMIT_PACKAGE_CDROM=	Yes
 
 do-install:
@@ -48,6 +50,7 @@ do-install:
 	${INSTALL_DATA} ${FILESDIR}/puppet.conf ${PREFIX}/${MODRUBY_RELEXAMPLEDIR}-puppet
 	${INSTALL_DATA_DIR} ${PREFIX}/share/emacs/site-lisp/
 	${INSTALL_DATA} ${WRKSRC}/ext/emacs/* ${PREFIX}/share/emacs/site-lisp/
+	gunzip ${PREFIX}/man/*/*.gz
 
 post-install:
 	find ${PREFIX} -type f \( -name '*.beforesubst' -or -name '*.orig' \) -exec rm {} \;

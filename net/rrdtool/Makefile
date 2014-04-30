@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.77 2013/11/07 01:02:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.80 2014/04/26 20:57:58 sthen Exp $
 
 SHARED_ONLY=	Yes
 
@@ -9,8 +9,10 @@ COMMENT-ruby=	ruby interface to librrd
 
 MODPY_EGG_VERSION= 0.2.2
 VERSION=	1.4.8
-REVISION-main=	1
-REVISION-ruby=	1
+REVISION-main=	4
+REVISION-ruby=	3
+REVISION-python=0
+REVISION-update=0
 DISTNAME=	rrdtool-${VERSION}
 PKGNAME-main=	${DISTNAME}
 PKGNAME-update=	rrdupdate-${VERSION}
@@ -36,8 +38,7 @@ USE_GMAKE=	Yes
 PSEUDO_FLAVORS=	no_ruby no_python
 MULTI_PACKAGES= -main -python -ruby -update
 
-MODULES=	lang/python lang/ruby
-MODRUBY_REV=	1.8# XXX ruby 1.9/2.0 work too, but don't build on sparc64 et al
+MODULES=	devel/gettext lang/python lang/ruby
 
 CONFIGURE_STYLE= gnu
 CPPFLAGS+=	-I${X11BASE}/include/ \
@@ -79,15 +80,15 @@ CONFIGURE_ENV+=	CPPFLAGS="${CPPFLAGS}" \
 CONFIGURE_ENV+=	NROFF="/usr/bin/true" \
 		TROFF="/usr/bin/true"
 
-WANTLIB=	pthread
-WANTLIB-update=	${WANTLIB} c m
-WANTLIB-python=	${WANTLIB} ${MODPY_WANTLIB} rrd
-WANTLIB-ruby=	${WANTLIB} ${MODRUBY_WANTLIB} c m rrd
+cWANTLIB=	pthread
+WANTLIB-update=	${cWANTLIB} c m
+WANTLIB-python=	${cWANTLIB} ${MODPY_WANTLIB} rrd
+WANTLIB-ruby=	${cWANTLIB} ${MODRUBY_WANTLIB} c m rrd
 # depends on Perl ABI
-WANTLIB-main=	${WANTLIB} perl
+WANTLIB-main=	${cWANTLIB} ${MODGETTEXT_WANTLIB} perl
 WANTLIB-main += X11 Xext Xrender c cairo expat ffi fontconfig freetype
 WANTLIB-main += glib-2.0 gmodule-2.0 gobject-2.0 graphite2 gthread-2.0
-WANTLIB-main += harfbuzz iconv intl m pango-1.0 pangocairo-1.0
+WANTLIB-main += harfbuzz m pango-1.0 pangocairo-1.0
 WANTLIB-main += pangoft2-1.0 pcre pixman-1 png pthread-stubs xcb
 WANTLIB-main += xcb-render xcb-shm xml2 z
 
@@ -96,6 +97,7 @@ LIB_DEPENDS-main=	graphics/png \
 			textproc/libxml
 RUN_DEPENDS-main=	rrdupdate-${VERSION}:net/rrdtool,-update
 
+LIB_DEPENDS-update=
 RUN_DEPENDS-update=
 
 LIB_DEPENDS-python=	rrdtool-${VERSION}:net/rrdtool
@@ -103,6 +105,7 @@ RUN_DEPENDS-python=	${MODPY_RUN_DEPENDS}
 
 LIB_DEPENDS-ruby=	rrdtool-${VERSION}:net/rrdtool \
 			${MODRUBY_LIB_DEPENDS}
+RUN_DEPENDS-ruby=	${MODRUBY_RUN_DEPENDS}
 
 post-install:
 	cd ${WRKSRC}; ${INSTALL_DATA} CHANGES CONTRIBUTORS COPYRIGHT \

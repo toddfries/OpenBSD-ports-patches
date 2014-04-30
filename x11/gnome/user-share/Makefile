@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.13 2013/11/12 14:09:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2014/04/02 11:37:36 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		personal file-sharing service for GNOME
 
 GNOME_PROJECT=		gnome-user-share
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.10.2
 
 CATEGORIES=		www sysutils
 
@@ -31,15 +31,11 @@ LIB_DEPENDS=		x11/gnome/nautilus \
 
 RUN_DEPENDS=		www/ap2-mod_dnssd
 
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_DESKTOP_FILE=	Yes
-
-LIBTOOL_FLAGS=		--tag=disable-static
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache
 
 FAKE_FLAGS=		sysconfdir=${PREFIX}/share/examples/gnome-user-share
 
-CONFIGURE_ARGS=		--disable-static \
-			--with-httpd=${LOCALBASE}/sbin/httpd2 \
+CONFIGURE_ARGS=		--with-httpd=${LOCALBASE}/sbin/httpd2 \
 			--with-modules-path=${LOCALBASE}/lib/apache2
 
 # needs gnome-bluetooth
@@ -50,6 +46,6 @@ pre-configure:
 		${WRKSRC}/data/dav_user_2.*.conf
 
 post-install:
-	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.la
+	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.{a,la}
 
 .include <bsd.port.mk>

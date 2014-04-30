@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.93 2013/11/14 14:21:49 jasper Exp $
+# $OpenBSD: Makefile,v 1.98 2014/04/15 07:39:09 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	archive manager utility for GNOME
 
 GNOME_PROJECT=	file-roller
-GNOME_VERSION=	3.10.2
+GNOME_VERSION=	3.12.1
 
 CATEGORIES=	archivers
 
@@ -41,9 +41,7 @@ LIB_DEPENDS=	archivers/libarchive \
 		devel/libmagic \
 		x11/gnome/nautilus
 
-MODGNOME_TOOLS= 	yelp
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache yelp
 
 post-install:
 	rm ${PREFIX}/lib/nautilus/extensions-3.0/*.{a,la}

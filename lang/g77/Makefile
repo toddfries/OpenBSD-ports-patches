@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.27 2014/01/12 22:16:02 pascal Exp $
+# $OpenBSD: Makefile,v 1.29 2014/03/23 17:30:19 pascal Exp $
 
 V =			3.3.6
 PKGNAME =		g77-$V
-REVISION =		5
+REVISION =		6
 EPOCH =			1
 DISTFILES = 		g77-openbsd-3.3.6.tgz
 
@@ -12,7 +12,7 @@ SYSV =			4.2.1
 SYSLIBPATH =		 `cc -v 2>&1| sed -n -e '/gcc-lib/s%^[^/]*\(/.*\)/[^/]*%\1%p'`
 LIBDIR =		${PREFIX}/lib/gcc-lib/${CONFIG}/$V
 
-.if ${MACHINE_ARCH} == "m68k" || ${MACHINE_ARCH} == "m88k"
+.if ${MACHINE_ARCH} == "m88k"
 PKG_ARGS += -DPIC=1
 .else
 PKG_ARGS += -DPIC=0

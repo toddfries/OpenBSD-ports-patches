@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.93 2014/02/14 09:07:30 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.98 2014/04/08 12:28:48 ajacoutot Exp $
 
 COMMENT=	GNU Transport Layer Security library
 
-V=		3.2.10
+V=		3.2.13
 DISTNAME=	gnutls-${V}
 EXTRACT_SUFX=	.tar.xz
-REVISION=	0
 
 CATEGORIES=	security
 
-SHARED_LIBS +=  gnutls               41.3     # 57.1
+SHARED_LIBS +=  gnutls               41.4     # 58.3
 SHARED_LIBS +=  gnutlsxx             29.1     # 29.0
 SHARED_LIBS +=  gnutls-xssl          0.0      # 0.0
 SHARED_LIBS +=  gnutls-openssl       27.2     # 27.2
@@ -41,20 +40,21 @@ CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--disable-gtk-doc \
 		--disable-guile \
-		--disable-valgrind-tests
+		--disable-valgrind-tests \
+		--with-default-trust-store-file=/etc/ssl/cert.pem
 
-# add dependency on net/unbound; see post-install as well
+# OpenBSD's unbound does not provide libdane
 CONFIGURE_ARGS += --disable-libdane
 
 # requires security/trousers: not committed (aja@), needs kernel support
 # for tpm(4): http://bsssd.sourceforge.net/
 CONFIGURE_ARGS += --without-tpm
 
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
-		LDFLAGS="-L${LOCALBASE}/lib"
-
 # prevents dependency on devel/autogen
 CONFIGURE_ARGS+=--enable-local-libopts
+
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 
 # If one of these tools is found at configure stage, it might be used,
 # no matter whether we use --disable-gtk-doc or not.

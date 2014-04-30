@@ -1,17 +1,17 @@
-# $OpenBSD: Makefile,v 1.16 2014/01/07 08:55:05 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.23 2014/04/28 14:45:13 ajacoutot Exp $
 
 COMMENT =		event logging framework
 
 V =			0.9.14
 DISTNAME =		zeitgeist-${V}
 EPOCH =			0
-REVISION =		1
+REVISION =		4
 
 SHARED_LIBS +=	zeitgeist-2.0             0.0 # 0.0
 
 CATEGORIES =		productivity
 
-HOMEPAGE =		http://zeitgeist-project.com/
+HOMEPAGE =		https://launchpad.net/zeitgeist
 
 MAINTAINER =		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 
@@ -34,7 +34,9 @@ MODULES =		devel/gettext \
 			lang/python \
 			x11/gnome
 
-MODGNOME_TOOLS =	gi vala
+MODGNOME_TOOLS +=	gobject-introspection vala
+
+MODPY_ADJ_FILES =	data/ontology2code
 
 BUILD_DEPENDS =		textproc/py-rdflib \
 			textproc/raptor
@@ -52,5 +54,13 @@ FAKE_FLAGS=		zeitgeistdocdir="${PREFIX}/share/doc/zeitgeist/" \
 			sysconfdir="${PREFIX}/share/examples/zeitgeist/"
 
 CONFIGURE_STYLE =	gnu
+
+# http://cgit.freedesktop.org/zeitgeist/zeitgeist/patch/?id=d2c966faf4979b5745ea0df8062795fc82b9fcc1
+pre-configure:
+.for i in datahub/Makefile.in examples/vala/Makefile.in extensions/Makefile.in \
+    extensions/fts++/Makefile.in libzeitgeist/Makefile.in src/Makefile.in \
+    test/direct/Makefile.in
+	perl -pi -e 's,--target-glib=2.26,--target-glib=2.36,g' ${WRKSRC}/$i
+.endfor
 
 .include <bsd.port.mk>

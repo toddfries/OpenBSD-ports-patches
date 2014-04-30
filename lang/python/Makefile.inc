@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.104 2013/10/27 18:32:55 fgsch Exp $
+# $OpenBSD: Makefile.inc,v 1.106 2014/04/13 07:11:10 rpointel Exp $
 
 # IMPORTANT!  If you make any changes to the Python ports, be sure
 # to also update files/CHANGES.OpenBSD for your change.  This is a
@@ -75,7 +75,7 @@ WANTLIB-main =		bz2 c crypto expat ffi m ncursesw panelw pthread \
 			${MODGETTEXT_WANTLIB}
 .if ${VERSION} == "2.7"
 WANTLIB-main +=		ossaudio
-.elif ${VERSION} == "3.3"
+.elif ${VERSION} == "3.3" || ${VERSION} == "3.4"
 LIB_DEPENDS-main +=	archivers/xz
 WANTLIB-main +=		lzma
 .endif
@@ -123,7 +123,7 @@ CONFIGURE_ARGS +=	--srcdir=${WRKSRC} \
 			--with-system-expat \
 			--with-system-ffi
 
-CONFIGURE_ENV += OPT='${CFLAGS} -fPIC' \
+CONFIGURE_ENV += OPT='${CFLAGS} -fPIC' CPPFLAGS='-I${LOCALBASE}/include' \
 		LDFLAGS='-L${LOCALBASE}/lib/' SVNVERSION=no \
 		LOCALBASE=${LOCALBASE} X11BASE=${X11BASE}
 MAKE_ENV +=	LOCALBASE=${LOCALBASE} X11BASE=${X11BASE}

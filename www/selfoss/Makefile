@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.6 2013/11/02 15:17:41 rpe Exp $
+# $OpenBSD: Makefile,v 1.8 2014/03/20 18:44:39 ajacoutot Exp $
 
 COMMENT=		rss reader, live stream, mashup, aggregation webapp
 
-DISTNAME=		selfoss-2.9
+DISTNAME=		selfoss-2.10
 CATEGORIES=		www
+REVISION=		0
 
 HOMEPAGE=		http://selfoss.aditu.de/
 

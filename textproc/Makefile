@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.403 2014/01/21 22:43:42 landry Exp $
+# $OpenBSD: Makefile,v 1.409 2014/04/28 20:11:27 edd Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -26,12 +26,12 @@
      SUBDIR += docbook-dsssl
      SUBDIR += docbook-to-man
      SUBDIR += docbook-xsl
+     SUBDIR += docbook2mdoc
      SUBDIR += docbook2x
+     SUBDIR += doclifter
      SUBDIR += docx2txt
      SUBDIR += ebook-tools
      SUBDIR += enchant
-     SUBDIR += erl-edown
-     SUBDIR += erl-neotoma
      SUBDIR += eruby
      SUBDIR += exempi
      SUBDIR += fcbanner
@@ -143,13 +143,16 @@
      SUBDIR += p5-LibXML-Common
      SUBDIR += p5-Libxml
      SUBDIR += p5-Lingua-EN-Fathom
+     SUBDIR += p5-Lingua-EN-FindNumber
      SUBDIR += p5-Lingua-EN-Inflect
      SUBDIR += p5-Lingua-EN-Inflect-Number
      SUBDIR += p5-Lingua-EN-Inflect-Phrase
+     SUBDIR += p5-Lingua-EN-Number-IsOrdinal
      SUBDIR += p5-Lingua-EN-Sentence
      SUBDIR += p5-Lingua-EN-Summarize
      SUBDIR += p5-Lingua-EN-Syllable
      SUBDIR += p5-Lingua-EN-Tagger
+     SUBDIR += p5-Lingua-EN-Words2Nums
      SUBDIR += p5-Lingua-PT-Stemmer
      SUBDIR += p5-Lingua-Stem
      SUBDIR += p5-Lingua-Stem-Fr
@@ -289,6 +292,7 @@
      SUBDIR += pear-XML-Util
      SUBDIR += pilot_makedoc
      SUBDIR += pinfo
+     SUBDIR += pod2mdoc
      SUBDIR += py-Chart
      SUBDIR += py-HappyDoc
      SUBDIR += py-MarkupSafe
@@ -303,6 +307,7 @@
      SUBDIR += py-jaxml
      SUBDIR += py-lxml
      SUBDIR += py-nltk
+     SUBDIR += py-numpydoc
      SUBDIR += py-pdf
      SUBDIR += py-polib
      SUBDIR += py-prettytable
@@ -401,6 +406,7 @@
      SUBDIR += tinyxml
      SUBDIR += tre
      SUBDIR += txt2tags
+     SUBDIR += uchardet
      SUBDIR += uncrustify
      SUBDIR += unrtf
      SUBDIR += urlview

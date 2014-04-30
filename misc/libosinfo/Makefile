@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2013/12/22 09:33:54 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.10 2014/04/03 12:48:35 jasper Exp $
 
 COMMENT=		library for managing information about operating systems
 
-DISTNAME=		libosinfo-0.2.9
+DISTNAME=		libosinfo-0.2.10
+REVISION=		1
 
-SHARED_LIBS +=  osinfo-1.0                0.0 # 2.9
+SHARED_LIBS +=  osinfo-1.0           0.0      # .2.10
 
 CATEGORIES=		misc devel
 
@@ -23,7 +24,7 @@ MASTER_SITES=		https://fedorahosted.org/releases/l/i/libosinfo/
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS=		gi vala
+MODGNOME_TOOLS +=	gobject-introspection vala
 
 # needed for test
 BUILD_DEPENDS +=	devel/check \
@@ -34,12 +35,12 @@ LIB_DEPENDS=		devel/glib2 \
 
 RUN_DEPENDS=		misc/hwdata
 
-# XXX
-USE_LIBTOOL=		gnu
-
 CONFIGURE_STYLE=	gnu
 
 CONFIGURE_ARGS=		--with-usb-ids-path=${LOCALBASE}/share/hwdata/usb.ids \
 			--with-pci-ids-path=${LOCALBASE}/share/hwdata/pnp.ids
+
+# https://fedorahosted.org/libosinfo/ticket/5
+MAKE_FLAGS=		NO_UNDEFINED_FLAGS=
 
 .include <bsd.port.mk>

@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: dpb,v 1.104 2013/10/18 07:48:09 espie Exp $
+# $OpenBSD: dpb,v 1.108 2014/04/28 12:51:41 espie Exp $
 #
 # Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
@@ -61,9 +61,9 @@ BEGIN {
 	my $trace = 1;
 	if ($trace) {
 		$SIG{__WARN__} = sub {
-			my $_ = pop @_;
-			s/(.*)( at .*? line .*?\n$)/$1/s;
-			push @_, $_;
+			my $a = pop @_;
+			$a =~ s/(.*)( at .*? line .*?\n$)/$1/s;
+			push @_, $a;
 			$SIG{__WARN__} = $oldwarn;
 			if (defined $reporter) {
 				$reporter->myprint(&trace_message);
@@ -74,9 +74,9 @@ BEGIN {
 
 		$SIG{__DIE__} = sub {
 	 		die @_ if $^S;
-			my $_ = pop @_;
-			s/(.*)( at .*? line .*?\n$)/$1/s;
-			push @_, $_;
+			my $a = pop @_;
+			$a =~ s/(.*)( at .*? line .*?\n$)/$1/s;
+			push @_, $a;
 			if (defined $reporter) {
 				$reporter->reset_cursor;
 			}
@@ -178,6 +178,7 @@ $state->interpret_paths(@{$state->{xpaths}},
 if ($state->opt('a')) {
 	$state->{all} = 1;
 }
+$state->{build_once} //= $state->{all};
 
 DPB::Core->reap;
 $state->handle_build_files;
@@ -192,9 +193,15 @@ while (!DPB::Core->avail) {
 	DPB::Core->reap;
 	sleep 1;
 }
+
+# XXX placeholder
+sub reread_config
+{
+}
+
 my $core = DPB::Core->get;
 
-if (!$state->{fetch_only} && 
+if (!$state->{fetch_only} && !$state->{scan_only} &&
     DPB::Core::Init->hostcount == 1 && $core->prop->{jobs} == 1) {
 	$core->clone->mark_ready;
 	$state->{opt}{e} = 1;
@@ -244,6 +251,7 @@ sub handle_non_waiting_jobs
 		}
 	}
 	DPB::Core->log_concurrency(time(), $state->{concurrent});
+	DPB::Core->wake_jobs;
 	$reporter->report($force_report);
 }
 

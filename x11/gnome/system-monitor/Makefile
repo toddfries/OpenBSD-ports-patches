@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.50 2014/01/23 14:28:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.54 2014/04/15 07:13:32 jasper Exp $
 
 COMMENT=	sytem monitor for GNOME
 
 GNOME_PROJECT=	gnome-system-monitor
-GNOME_VERSION=	3.10.2
-REVISION=	3
+GNOME_VERSION=	3.12.1
 
 CATEGORIES=	sysutils
 
@@ -36,9 +35,7 @@ RUN_DEPENDS +=	sysutils/polkit
 # polkit(8) almost always needs to know the "active" session
 RUN_DEPENDS +=	sysutils/consolekit
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_TOOLS= yelp
-
+MODGNOME_TOOLS += desktop-file-utils yelp
 CONFIGURE_ARGS=	--disable-systemd
 
 .include <bsd.port.mk>

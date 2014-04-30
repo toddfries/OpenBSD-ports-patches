@@ -1,0 +1,115 @@
+@comment $OpenBSD: PLIST,v 1.3 2014/04/19 14:40:51 sthen Exp $
+include/polarssl/
+include/polarssl/aes.h
+include/polarssl/aesni.h
+include/polarssl/arc4.h
+include/polarssl/asn1.h
+include/polarssl/asn1write.h
+include/polarssl/base64.h
+include/polarssl/bignum.h
+include/polarssl/blowfish.h
+include/polarssl/bn_mul.h
+include/polarssl/camellia.h
+include/polarssl/certs.h
+include/polarssl/cipher.h
+include/polarssl/cipher_wrap.h
+include/polarssl/compat-1.2.h
+include/polarssl/config.h
+include/polarssl/ctr_drbg.h
+include/polarssl/debug.h
+include/polarssl/des.h
+include/polarssl/dhm.h
+include/polarssl/ecdh.h
+include/polarssl/ecdsa.h
+include/polarssl/ecp.h
+include/polarssl/entropy.h
+include/polarssl/entropy_poll.h
+include/polarssl/error.h
+include/polarssl/gcm.h
+include/polarssl/havege.h
+include/polarssl/hmac_drbg.h
+include/polarssl/md.h
+include/polarssl/md2.h
+include/polarssl/md4.h
+include/polarssl/md5.h
+include/polarssl/md_wrap.h
+include/polarssl/memory.h
+include/polarssl/memory_buffer_alloc.h
+include/polarssl/net.h
+include/polarssl/oid.h
+include/polarssl/openssl.h
+include/polarssl/padlock.h
+include/polarssl/pbkdf2.h
+include/polarssl/pem.h
+include/polarssl/pk.h
+include/polarssl/pk_wrap.h
+include/polarssl/pkcs11.h
+include/polarssl/pkcs12.h
+include/polarssl/pkcs5.h
+include/polarssl/platform.h
+include/polarssl/ripemd160.h
+include/polarssl/rsa.h
+include/polarssl/sha1.h
+include/polarssl/sha256.h
+include/polarssl/sha512.h
+include/polarssl/ssl.h
+include/polarssl/ssl_cache.h
+include/polarssl/ssl_ciphersuites.h
+include/polarssl/threading.h
+include/polarssl/timing.h
+include/polarssl/version.h
+include/polarssl/x509.h
+include/polarssl/x509_crl.h
+include/polarssl/x509_crt.h
+include/polarssl/x509_csr.h
+include/polarssl/xtea.h
+lib/libpolarssl.a
+@lib lib/libpolarssl.so.${LIBpolarssl_VERSION}
+share/doc/polarssl/
+share/doc/polarssl/ChangeLog
+share/doc/polarssl/README.rst
+share/examples/polarssl/
+share/examples/polarssl/README
+@bin share/examples/polarssl/aescrypt2
+@bin share/examples/polarssl/benchmark
+@bin share/examples/polarssl/cert_app
+@bin share/examples/polarssl/cert_req
+@bin share/examples/polarssl/cert_write
+@bin share/examples/polarssl/crl_app
+@bin share/examples/polarssl/crypt_and_hash
+@bin share/examples/polarssl/dh_client
+@bin share/examples/polarssl/dh_genprime
+@bin share/examples/polarssl/dh_server
+@bin share/examples/polarssl/gen_entropy
+@bin share/examples/polarssl/gen_key
+@bin share/examples/polarssl/gen_random_ctr_drbg
+@bin share/examples/polarssl/gen_random_havege
+@bin share/examples/polarssl/generic_sum
+@bin share/examples/polarssl/hello
+@bin share/examples/polarssl/key_app
+@bin share/examples/polarssl/md5sum
+@bin share/examples/polarssl/mpi_demo
+@bin share/examples/polarssl/o_p_test
+@bin share/examples/polarssl/pem2der
+@bin share/examples/polarssl/pk_decrypt
+@bin share/examples/polarssl/pk_encrypt
+@bin share/examples/polarssl/pk_sign
+@bin share/examples/polarssl/pk_verify
+@bin share/examples/polarssl/req_app
+@bin share/examples/polarssl/rsa_decrypt
+@bin share/examples/polarssl/rsa_encrypt
+@bin share/examples/polarssl/rsa_genkey
+@bin share/examples/polarssl/rsa_sign
+@bin share/examples/polarssl/rsa_verify
+@bin share/examples/polarssl/selftest
+@bin share/examples/polarssl/sha1sum
+@bin share/examples/polarssl/sha2sum
+@bin share/examples/polarssl/ssl_cert_test
+@bin share/examples/polarssl/ssl_client1
+@bin share/examples/polarssl/ssl_client2
+@bin share/examples/polarssl/ssl_fork_server
+@bin share/examples/polarssl/ssl_mail_client
+@bin share/examples/polarssl/ssl_pthread_server
+@bin share/examples/polarssl/ssl_server
+@bin share/examples/polarssl/ssl_test
+@bin share/examples/polarssl/strerror

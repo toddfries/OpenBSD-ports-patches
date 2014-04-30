@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2013/11/21 17:00:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.20 2014/04/19 17:47:58 ajacoutot Exp $
 
 COMMENT=		ugly elements for GStreamer
 

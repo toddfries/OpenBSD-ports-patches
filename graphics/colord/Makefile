@@ -1,13 +1,14 @@
-# $OpenBSD: Makefile,v 1.33 2014/01/28 08:46:34 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2014/04/18 08:22:21 ajacoutot Exp $
 
 COMMENT=	device color profile management daemon
 
-V=		1.0.6
+V=		1.2.0
 DISTNAME=	colord-${V}
 EXTRACT_SUFX=	.tar.xz
+REVISION=	0
 
-SHARED_LIBS +=  colordprivate        0.1      # 1.22
-SHARED_LIBS +=  colord               0.4      # 1.22
+SHARED_LIBS +=  colordprivate        1.0      # 2.1
+SHARED_LIBS +=  colord               1.0      # 2.1
 
 CATEGORIES=	graphics print
 
@@ -29,7 +30,8 @@ MODULES=	devel/dconf \
 
 BUILD_DEPENDS=	devel/gobject-introspection \
 		lang/vala \
-		textproc/docbook2x
+		textproc/docbook2x \
+		x11/dbus
 
 LIB_DEPENDS=	graphics/lcms2 \
 		sysutils/polkit
@@ -51,7 +53,7 @@ CONFIGURE_ARGS=	${CONFIGURE_SHARED} \
 		--enable-vala \
 		--disable-gtk-doc \
 		--disable-systemd-login \
-		--disable-gudev \
+		--disable-udev \
 		--disable-gusb \
 		--with-daemon-user=_colord
 
@@ -70,14 +72,12 @@ CONFIGURE_ARGS += --disable-bash-completion
 
 FAKE_FLAGS=	sysconfdir="${PREFIX}/share/examples/colord"
 
+# our old gcc does not handle some of the warning flags
+MAKE_FLAGS=	WARNINGFLAGS_C=
+
 pre-configure:
-	${SUBST_CMD} ${WRKSRC}/src/{cd-profile-store.c,cd-profile.c}
-	perl -pi -e 's,-Wclobbered,,g;' \
-		-e 's,-Wempty-body,,g;' \
-		-e 's,-Wignored-qualifiers,,g;' \
-		-e 's,-Wtype-limits,,g;' \
-		-e 's,-Wmissing-parameter-type,,g' \
-		${WRKSRC}/configure
+	${SUBST_CMD} ${WRKSRC}/lib/colord/cd-icc-store.c \
+		${WRKSRC}/src/cd-main.c
 
 post-install:
 	rm -r ${WRKINST}/rules.d

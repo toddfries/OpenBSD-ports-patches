@@ -1,4 +1,4 @@
-# $OpenBSD: mozilla.port.mk,v 1.65 2013/12/12 19:49:51 landry Exp $
+# $OpenBSD: mozilla.port.mk,v 1.69 2014/04/29 21:16:26 landry Exp $
 
 SHARED_ONLY =	Yes
 ONLY_FOR_ARCHS=	amd64 arm i386 powerpc sparc64
@@ -39,8 +39,9 @@ MODMOZ_BUILD_DEPENDS =	devel/libIDL \
 			archivers/zip>=2.3
 
 MODMOZ_LIB_DEPENDS =	x11/gtk+2 \
-			devel/nspr>=4.10.2 \
-			security/nss>=3.15.3.1
+			textproc/hunspell \
+			devel/nspr>=4.10.3 \
+			security/nss>=3.16
 
 # bug #736961
 SEPARATE_BUILD =	Yes
@@ -55,8 +56,8 @@ MODMOZ_WANTLIB +=	X11 Xcomposite Xcursor Xdamage Xext Xfixes Xi \
 		fontconfig freetype gdk-x11-2.0 gdk_pixbuf-2.0 gio-2.0 glib-2.0 \
 		gobject-2.0 gthread-2.0 gtk-x11-2.0 m \
 		nspr4 nss3 pango-1.0 pangocairo-1.0 pangoft2-1.0 \
-		plc4 plds4 pthread event kvm sqlite3>=23 \
-		smime3 sndio nssutil3 ssl3 stdc++ z
+		plc4 plds4 pthread event kvm sqlite3>=27 \
+		smime3 sndio nssutil3 ssl3 stdc++ z hunspell-1.3
 
 # hack to build against systemwide sqlite3 (# 546162)
 CONFIGURE_ENV +=	ac_cv_sqlite_secure_delete=yes
@@ -78,7 +79,6 @@ USE_GMAKE ?=	Yes
 
 # no --with-system-jpeg starting with fx 18, requires libjpeg-turbo because of bug 791305
 # no --with-system-cairo, too much gfx problems because of version mismatch
-# gecko doesnt link anymore with krb5 since 22 (bug 648730)
 # no --with-system-ffi, needs 3.0.10 when not using gcc
 # no --with-system-png, apng support not bundled in
 
@@ -88,6 +88,7 @@ CONFIGURE_ARGS +=	--with-system-zlib=/usr	\
 		--with-system-bz2=${LOCALBASE}	\
 		--with-system-nspr		\
 		--with-system-nss		\
+		--enable-system-hunspell	\
 		--enable-system-sqlite		\
 		--enable-official-branding	\
 		--enable-gio			\
@@ -125,15 +126,10 @@ MOZILLA_VER =	${MOZILLA_VERSION:C/b.$//:C/esr$//}
 SUBST_VARS +=	MOZILLA_PROJECT MOZILLA_VER MOZILLA_VERSION
 
 MAKE_ENV +=	MOZILLA_OFFICIAL=1 \
+		SHELL=/bin/sh \
 		SO_VERSION="${SO_VERSION}"
 
 CONFIGURE_ENV +=	${MAKE_ENV}
-
-MODGNU_CONFIG_GUESS_DIRS +=	${WRKSRC}/${_MOZDIR}/build/autoconf \
-				${WRKSRC}/${_MOZDIR}/js/src/build/autoconf
-
-# files to run SUBST_CMD on
-MOZILLA_SUBST_FILES +=	${_MOZDIR}/extensions/spellcheck/hunspell/src/mozHunspell.cpp \
 
 pre-configure:
 .for d in ${MOZILLA_AUTOCONF_DIRS}

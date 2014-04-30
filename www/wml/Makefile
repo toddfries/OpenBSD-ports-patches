@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2013/03/22 21:52:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.19 2014/03/24 07:47:23 jasper Exp $
 
 COMMENT=		Website META Language: off-line HTML generation toolkit
 
 DISTNAME=		wml-2.0.11
-REVISION=		4
+REVISION=		7
 CATEGORIES=		www
 
 HOMEPAGE=		http://www.thewml.org/
@@ -23,7 +23,6 @@ RUN_DEPENDS=		devel/p5-Term-ReadKey \
 			www/p5-HTML-Clean \
 			www/tidyp>=1.04p1
 BUILD_DEPENDS=		${RUN_DEPENDS}
-TEST_DEPENDS=		${RUN_DEPENDS}
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-openworld

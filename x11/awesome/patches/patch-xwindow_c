@@ -1,15 +1,22 @@
-$OpenBSD: patch-xwindow_c,v 1.4 2013/10/15 09:28:47 dcoppa Exp $
+$OpenBSD: patch-xwindow_c,v 1.6 2014/04/15 14:56:45 dcoppa Exp $
 
-Revert to the old xcb-util-0.3.6 API
+commit c9ff826fbef2b9d4df84c1ef5ec5eba33661abee
+Author: Uli Schlachter <psychon@znc.in>
+Date:   Mon Apr 14 10:04:14 2014 +0200
 
---- xwindow.c.orig	Mon Apr  1 13:44:46 2013
-+++ xwindow.c	Fri May 24 16:58:00 2013
-@@ -62,7 +62,7 @@ uint32_t
- xwindow_get_state_reply(xcb_get_property_cookie_t cookie)
- {
-     /* If no property is set, we just assume a sane default. */
--    uint32_t result = XCB_ICCCM_WM_STATE_NORMAL;
-+    uint32_t result = XCB_WM_STATE_NORMAL;
-     xcb_get_property_reply_t *prop_r;
+xwindow_shape_pixmap: Correctly handle invalid geometry
+
+Signed-off-by: Uli Schlachter <psychon@znc.in>
+
+--- xwindow.c.orig	Tue Apr 15 16:30:41 2014
++++ xwindow.c	Tue Apr 15 16:32:02 2014
+@@ -330,6 +330,9 @@ xwindow_shape_pixmap(int width, int height, cairo_surf
+     cairo_surface_t *dest;
+     cairo_t *cr;
  
-     if((prop_r = xcb_get_property_reply(globalconf.connection, cookie, NULL)))
++    if (width <= 0 || height <= 0)
++        return XCB_NONE;
++
+     xcb_create_pixmap(globalconf.connection, 1, pixmap, globalconf.screen->root, width, height);
+     dest = cairo_xcb_surface_create_for_bitmap(globalconf.connection, globalconf.screen, pixmap, width, height);
+ 

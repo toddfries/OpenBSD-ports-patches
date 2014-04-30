@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.103 2013/11/16 21:00:43 jasper Exp $
+# $OpenBSD: Makefile,v 1.113 2014/04/14 18:13:23 jasper Exp $
 
 SHARED_ONLY=	Yes
 
@@ -7,16 +7,16 @@ COMMENT-dvi=	evince document viewer backend for dvi documents
 COMMENT-nautilus= evince plugin for nautilus
 
 GNOME_PROJECT=	evince
-GNOME_VERSION=	3.10.3
+GNOME_VERSION=	3.12.1
+
+PKGNAME-main=	${DISTNAME}
+PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
+PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
 MAJ_V=		3.0
 SUBST_VARS=	MAJ_V
 
 CATEGORIES=	graphics print
-
-PKGNAME-main=	${DISTNAME}
-PKGNAME-dvi=	evince-dvi-${GNOME_VERSION}
-PKGNAME-nautilus= nautilus-evince-${GNOME_VERSION}
 
 SHARED_LIBS +=  evdocument3               0.2 # 4.0
 SHARED_LIBS +=  evview3                   0.0 # 3.0
@@ -43,7 +43,8 @@ WANTLIB += xcb-shm xcb xcb-render z gthread-2.0 cairo-gobject m ffi
 WANTLIB += atk-bridge-2.0 atspi harfbuzz
 WANTLIB += gmodule-2.0 graphite2
 
-MODGNOME_TOOLS= gi yelp
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection yelp
+MODGNOME_TOOLS += gtk-update-icon-cache shared-mime-info
 
 LIB_DEPENDS=	x11/gtk+3
 
@@ -77,14 +78,7 @@ LIB_DEPENDS-nautilus= ${BASE_PKGPATH} \
 		x11/gnome/nautilus
 RUN_DEPENDS-nautilus=${MODGETTEXT_RUN_DEPENDS}
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_MIME_FILE=	Yes
-
-LIBTOOL_FLAGS=	--tag=disable-static
-
 CONFIGURE_STYLE=gnu
-CONFIGURE_ARGS+= --disable-static
 
 MODGNOME_CPPFLAGS=${CFLAGS}
 CONFIGURE_ENV=	CXXFLAGS="${CXXFLAGS} -I${LOCALBASE}/include"
@@ -110,8 +104,8 @@ post-install:
 # This will fail if no_nautilus is found in FLAVOR, so make sure we don't
 # do it if it is.
 .if ${BUILD_PACKAGES:M-nautilus}
-	rm ${PREFIX}/lib/nautilus/extensions-${MAJ_V}/*.la
+	rm ${PREFIX}/lib/nautilus/extensions-${MAJ_V}/*.{a,la}
 .endif
-	rm ${PREFIX}/lib/evince/4/backends/*.la
+	rm ${PREFIX}/lib/evince/4/backends/*.{a,la}
 
 .include <bsd.port.mk>

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.54 2013/09/28 08:50:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.60 2014/04/02 09:36:10 jasper Exp $
 
 SHARED_ONLY=		Yes
 
@@ -6,13 +6,12 @@ COMMENT-main=		configuration backend system
 COMMENT-editor=		graphical dconf(1) editor
 
 GNOME_PROJECT=		dconf
-GNOME_VERSION=		0.18.0
+GNOME_VERSION=		0.20.0
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-editor=		dconf-editor-${GNOME_VERSION}
 
 REVISION-main=		0
-REVISION-editor=	0
 
 SHARED_LIBS +=		dconf        1.0 # 1.0.0
 SHARED_LIBS +=		dconf-dbus-1 1.0 # 1.0.0
@@ -43,13 +42,7 @@ MODULES=		devel/dconf \
 			devel/gettext \
 			x11/gnome
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-
-BUILD_DEPENDS=		lang/vala
-
-# man pages (adds textproc/libxslt)
-BUILD_DEPENDS +=	textproc/docbook-xsl
+MODGNOME_TOOLS += desktop-file-utils docbook gtk-update-icon-cache vala
 
 RUN_DEPENDS-main=	# empty
 LIB_DEPENDS-main=	devel/glib2 \

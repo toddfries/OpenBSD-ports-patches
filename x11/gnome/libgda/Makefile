@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.87 2013/12/24 08:18:46 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.95 2014/04/21 13:24:30 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -19,6 +19,12 @@ PKGNAME-ldap=		libgda-ldap-${GNOME_VERSION}
 PKGNAME-mysql=		libgda-mysql-${GNOME_VERSION}
 PKGNAME-pgsql=		libgda-pgsql-${GNOME_VERSION}
 PKGNAME-ui=		libgda-ui-${GNOME_VERSION}
+
+REVISION-main=		2
+REVISION-ldap=		1
+REVISION-mysql=		0
+REVISION-pgsql=		1
+REVISION-ui=		1
 
 EPOCH-main=		2
 EPOCH-ldap=		0
@@ -44,9 +50,6 @@ WANTLIB += gthread-2.0 xml2 gcrypt secret-1 gpg-error ffi pthread
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-
 # /libgda-5.1.2_writes_to_HOME/.cache/g-ir-scanner
 PORTHOME=		${WRKDIST}
 
@@ -66,16 +69,13 @@ BUILD_DEPENDS=		databases/db/v4 \
 
 TEST_DEPENDS=	devel/check
 
-MODGNOME_TOOLS= 	gi yelp
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection gtk-update-icon-cache yelp
 
-LIBTOOL_FLAGS=		--tag=disable-static
-CONFIGURE_ARGS+=	--disable-static \
-			--enable-system-sqlite \
-			--enable-gda-gi \
+CONFIGURE_ARGS=		--enable-system-sqlite \
 			--enable-gdaui-gi \
 			--enable-gdaui-vala \
 			--enable-vala-extensions \
-			--with-bdb="${LOCALBASE}" \
+			--with-bdb-includedir-name=include/db4 \
 			--without-firebird \
 			--without-oracle \
 			--without-mdb \
@@ -86,7 +86,6 @@ CONFIGURE_ARGS+=	--disable-vala-extensions \
 			--disable-gdaui-vala \
 			--disable-vala
 
-MODGNOME_CPPFLAGS=	-I${LOCALBASE}/include/db4/
 MODGNOME_LDFLAGS=	-lm
 CONFIGURE_ENV=		LIBCRYPTO_CFLAGS="-I/usr/include/ssl" \
 			LIBCRYPTO_LIBS="-lcrypto" \
@@ -97,8 +96,7 @@ FAKE_FLAGS=		configdir="${PREFIX}/share/examples/libgda"
 WANTLIB-main += ${WANTLIB} c gcrypt gpg-error ncurses sqlite3
 WANTLIB-main += readline soup-2.4 crypto gdk_pixbuf-2.0 png xslt
 
-RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS} \
-			devel/iso-codes
+RUN_DEPENDS-main=	${MODGETTEXT_RUN_DEPENDS}
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/libsoup \
 			textproc/libxslt \
@@ -124,6 +122,8 @@ LIB_DEPENDS-ui=		${LIB_DEPENDS} \
 			x11/dbus \
 			x11/gnome/libgda \
 			x11/gtksourceview3
+RUN_DEPENDS-ui=		${RUN_DEPENDS} \
+			devel/iso-codes
 .endif
 
 .if ${FLAVOR:Mno_mysql}
@@ -144,8 +144,7 @@ CONFIGURE_ARGS+=	--without-postgres
 .else
 RUN_DEPENDS-pgsql=	${MODGETTEXT_RUN_DEPENDS}
 MULTI_PACKAGES+=	-pgsql
-WANTLIB-pgsql=		${WANTLIB} gda-${GDA_MAJOR} pq com_err crypto ssl \
-			asn1 heimbase krb5 roken wind
+WANTLIB-pgsql=		${WANTLIB} gda-${GDA_MAJOR} pq crypto ssl
 LIB_DEPENDS-pgsql=	${LIB_DEPENDS} \
 			x11/gnome/libgda \
 			databases/postgresql
@@ -155,21 +154,21 @@ CONFIGURE_ARGS+=	--with-postgres="${LOCALBASE}"
 # ldap (no PSEUDO_FLAVORS, see above)
 RUN_DEPENDS-ldap=	${MODGETTEXT_RUN_DEPENDS}
 MULTI_PACKAGES+=	-ldap
-WANTLIB-ldap=		${WANTLIB} crypto gda-${GDA_MAJOR} gssapi krb5 lber-2.4 \
-			ldap-2.4 sasl2 ssl asn1 com_err heimbase \
-			roken wind
+WANTLIB-ldap=		${WANTLIB} crypto gda-${GDA_MAJOR} lber-2.4 \
+			ldap-2.4 sasl2 ssl
 LIB_DEPENDS-ldap=	${LIB_DEPENDS} \
 			x11/gnome/libgda \
 			databases/openldap
 CONFIGURE_ARGS+=	--with-ldap
 
-# XXX sync LIBdb_VERSION with databases/db/v4
-LIBdb_VERSION=	5.0
-SUBST_VARS+=	LIBdb_VERSION
-pre-configure:
-	${SUBST_CMD} ${WRKSRC}/configure
+# XXX sync with LIBdb_VERSION in databases/db/v4
+# (find a proper way to push upstream)
+AUTOCONF_VERSION=	2.69
+CONFIGURE_STYLE=	autoconf no-autoheader
+post-patch:
+	perl -pi -e 's,bdb_libext="\$$linklibext",bdb_libext=".so.5.0",' ${WRKSRC}/m4/bdb.m4
 
 post-install:
-	rm ${PREFIX}/lib/libgda-${GDA_MAJOR}/{plugins,providers}/*.la
+	rm ${PREFIX}/lib/libgda-${GDA_MAJOR}/{plugins,providers}/*.{a,la}
 
 .include <bsd.port.mk>

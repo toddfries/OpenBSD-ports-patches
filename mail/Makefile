@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.301 2014/02/08 18:58:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.304 2014/04/21 11:47:08 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += abook
@@ -39,6 +39,7 @@
      SUBDIR += dspam,domainscale
      SUBDIR += dspam,ldap
      SUBDIR += elm
+     SUBDIR += enigmail
      SUBDIR += evolution
      SUBDIR += evolution-ews
      SUBDIR += evolution-rss
@@ -66,7 +67,6 @@
      SUBDIR += imapsync
      SUBDIR += isync
      SUBDIR += kbiff
-     SUBDIR += kpoppassd
      SUBDIR += ldapvacation
      SUBDIR += libetpan
      SUBDIR += libspf2
@@ -179,6 +179,7 @@
      SUBDIR += rcube-sieverules
      SUBDIR += rcube-yubikey-plugin
      SUBDIR += relaydb
+     SUBDIR += rmail
      SUBDIR += roundcubemail
      SUBDIR += rss2email
      SUBDIR += ruby-mail

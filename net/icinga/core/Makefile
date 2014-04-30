@@ -1,7 +1,6 @@
-# $OpenBSD: Makefile,v 1.55 2014/01/24 23:00:16 sthen Exp $
+# $OpenBSD: Makefile,v 1.61 2014/04/25 11:52:09 sthen Exp $
 
-V =			1.10.2
-REVISION-main =		0
+V =			1.11.2
 
 COMMENT-main =		network monitoring system (improved fork of Nagios)
 COMMENT-cgi =		cgi scripts for Icinga (classic Nagios-style UI)
@@ -12,7 +11,9 @@ PKGNAME-main =		icinga-$V
 PKGNAME-cgi =		icinga-cgi-$V
 PKGNAME-ido =		icinga-idoutils-$V
 
-WANTLIB =		c crypto m pthread ssl
+MASTER_SITES =	https://github.com/Icinga/icinga-core/releases/download/v$V/
+
+WANTLIB =		c crypto m pthread ssl z
 
 MULTI_PACKAGES =	-main -cgi -ido
 PREFIX-cgi =		${VARBASE}/www
@@ -70,11 +71,11 @@ CFLAGS +=	-fPIC \
 INSTALL_TARGET = install-unstripped install-idoutils install-config \
 		 install-webconf
 
-# perl tests work; C tests require --enable-libtap in configure and
-# fixing up WRKSRC/tap/configure
+# perl tests work; C tests fail if embedded-perl is enabled
 TEST_TARGET = test
-TEST_DEPENDS = devel/p5-IPC-Run3
-# devel/p5-Test-Most
+TEST_DEPENDS =	devel/p5-IPC-Run3 \
+		devel/p5-Test-Most \
+		www/p5-HTML-Lint
 
 post-install:
 	${INSTALL_DATA_DIR} ${WRKINST}${PREFIX-cgi}/conf/modules.sample

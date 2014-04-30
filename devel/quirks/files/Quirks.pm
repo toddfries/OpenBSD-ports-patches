@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.123 2014/02/08 15:15:16 ajacoutot Exp $
+# $OpenBSD: Quirks.pm,v 1.155 2014/04/22 10:03:26 ajacoutot Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -94,6 +94,8 @@ my $base_exceptions = {
 	'nsd' => "/usr/sbin/nsd",
 # 5.2
 	'sqlite3' => '/usr/bin/sqlite3',
+# 5.6
+	'unbound' => '/usr/sbin/unbound',
 };
 
 my $stem_extensions = {
@@ -282,7 +284,6 @@ my $stem_extensions = {
 	'vte-ptyhelper' => 'vte',
 # 5.2
 	'gpsbabel-gui' => 'gpsbabel-tk',
-	'gnome-extras' => 'gnome-extra',
 	'maatkit' => 'percona-toolkit',
 	'scrotwm' => 'spectrwm',
 	'gnuls' => 'coreutils',
@@ -328,9 +329,27 @@ my $stem_extensions = {
 	'libungif' => 'giflib',
 	'mentry' =>'tklib',
 	'wcb' =>'tklib',
-	'foomatic-filters' =>'cups-filters',
+	'foomatic-filters' => 'cups-filters',
 	'faad-xmms' => 'xmms-faad',
 	'p5-MojoX-Renderer-TT' => 'p5-Mojolicious-Plugin-TtRenderer',
+
+# 5.6
+	'p5-Class-MOP' => 'p5-Moose',
+	'libproxy-mozilla' => 'libproxy-webkit',
+	'p5-Mozilla-CA' => 'p5-Mozilla-CA-Fake',
+	'gnome-extra' => 'gnome-extras',
+	'py-Imaging' => 'py-Pillow',
+	'p5-Nagios-Plugin' => 'p5-Monitoring-Plugin',
+	'nagios-plugins' => 'monitoring-plugins',
+	'nagios-plugins-fping' => 'monitoring-plugins-fping',
+	'nagios-plugins-game' => 'monitoring-plugins-game',
+	'nagios-plugins-ntp' => 'monitoring-plugins', # merged to -main
+	'nagios-plugins-samba' => 'monitoring-plugins-samba',
+	'nagios-plugins-snmp' => 'monitoring-plugins-snmp',
+	'nagios-plugins-dbi' => 'monitoring-plugins-dbi',
+	'nagios-plugins-ldap' => 'monitoring-plugins-ldap',
+	'nagios-plugins-mysql' => 'monitoring-plugins-mysql',
+	'nagios-plugins-pgsql' => 'monitoring-plugins-pgsql',
 };
 
 # reasons for obsolete packages
@@ -363,6 +382,38 @@ my $obsolete_reason = {
 	'varconf' => 0,
 	'radiusd-cistron' => 2,
 	'radiusd-lucent' => 2,
+	'emesene' => 0,
+	'celt051' => 0,
+	'lasem' => 0,
+	'memphis' => 3,
+	'bzip' => 3,
+	'silverstripe' => 1,
+	'dnetc' => 0,
+	'gitlist' => 1,
+	'telepathy-inspector' => 0,
+	'telepathy-spec' => 0,
+	'svk' => 3,
+	'p5-SVN-Dump' => 3,
+	'p5-SVN-Mirror' => 3,
+	'chipmunk' => 0,
+	'maple' => 3,
+	'mapleshare' => 3,
+	'p5-Event-Lib' => 3,
+	'gnome-search-tool' => 3,
+	'gnome-system-log' => 3,
+	'mash' => 3,
+	'p5-RTx-Tags' => 0,
+	'gedit-cossa' => 3,
+	'anjuta-extras' => 3,
+	'moserial' => 3,
+	'ethos' => 3,
+	'ekiga' => 0,
+	'kpoppassd' => 2,
+	'p5-Authen-Krb5-Simple' => 2,
+	'py-pykpass' => 2,
+	'mod_auth_kerb' => 2,
+	'p5-GSSAPI' => 2,
+	'opal' => 0,
 };
 
 # ->is_base_system($handle, $state):

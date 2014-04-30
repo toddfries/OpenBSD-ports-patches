@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.321 2014/01/18 09:33:08 jasper Exp $
+# $OpenBSD: Makefile,v 1.324 2014/04/16 02:02:32 bcallah Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -23,7 +23,6 @@
      SUBDIR += cd-discid
      SUBDIR += cdparanoia
      SUBDIR += celt
-     SUBDIR += celt051
      SUBDIR += celt07
      SUBDIR += checkmate
      SUBDIR += chromaprint
@@ -47,6 +46,7 @@
      SUBDIR += faad
      SUBDIR += festival
      SUBDIR += flac
+     SUBDIR += flac123
      SUBDIR += flite
      SUBDIR += fluidsynth
      SUBDIR += fookebox
@@ -177,6 +177,7 @@
      SUBDIR += p5-gnupod
      SUBDIR += p5-libvorbis
      SUBDIR += pacpl
+     SUBDIR += paulstretch
      SUBDIR += pianobar
      SUBDIR += picard
      SUBDIR += pithos

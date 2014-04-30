@@ -1,4 +1,4 @@
-$OpenBSD: patch-makefiles_objects_mk,v 1.1 2013/06/01 14:51:10 bentley Exp $
+$OpenBSD: patch-makefiles_objects_mk,v 1.3 2014/03/23 18:17:34 kili Exp $
 --- makefiles/objects.mk.orig	Sun May  5 17:29:00 2013
 +++ makefiles/objects.mk	Sun May  5 17:29:04 2013
 @@ -4,5 +4,5 @@

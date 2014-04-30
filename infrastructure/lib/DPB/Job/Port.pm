@@ -1,5 +1,5 @@
 # ex:ts=8 sw=4:
-# $OpenBSD: Port.pm,v 1.143 2014/01/10 11:26:43 espie Exp $
+# $OpenBSD: Port.pm,v 1.150 2014/03/17 10:47:45 espie Exp $
 #
 # Copyright (c) 2010-2013 Marc Espie <espie@openbsd.org>
 #
@@ -177,6 +177,21 @@ sub finalize
 	return 0;
 }
 
+# return swallowed cores at the end of fake: package is inherently sequential
+# and there's some "thundering herd" effect when we release lots of cores,
+# so release them a bit early, so by the time we're finished packaging,
+# they're mostly out of "waiting-for-lock"
+package DPB::Task::Port::Fake;
+our @ISA = qw(DPB::Task::Port);
+
+sub finalize
+{
+	my ($self, $core) = @_;
+	$core->unswallow;
+	delete $core->job->{nojunk};
+	$self->SUPER::finalize($core);
+}
+
 package DPB::Task::Port::Signature;
 our @ISA =qw(DPB::Task::BasePort);
 
@@ -283,14 +298,17 @@ sub want_percent { 0 }
 sub setup
 {
 	my ($task, $core) = @_;
-	if (!$core->job->{locked}) {
+	my $job = $core->job;
+	if (!$job->{locked}) {
 		$task->try_lock($core);
 	}
-	if (!$core->job->{locked}) {
-		unshift(@{$core->job->{tasks}}, $task);
+	if (!$job->{locked}) {
+		unshift(@{$job->{tasks}}, $task);
+		$job->{wakemeup} = 1;
+		$job->{lock_order} = $core->prop->{waited_for_lock}++;
 		return DPB::Task::Port::Lock->new(
-		    'waiting-for-lock #'.$core->prop->{waited_for_lock}++);
-	}
+		    'waiting-for-lock #'.$job->{lock_order});
+	} 
 
 	return $task;
 }
@@ -319,6 +337,7 @@ sub junk_unlock
 		print {$core->job->{logfh}} "(Junk lock released for ", 
 		    $core->hostname, " at ", time(), ")\n";
 		delete $core->job->{locked};
+		$core->job->wake_others($core);
 	}
 }
 
@@ -352,18 +371,21 @@ sub run
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
-	my $try = 1;
+	$SIG{IO} = sub { print {$job->{logfh}} "Received IO\n"; };
+	my $date = time;
+	use POSIX;
 
 	while (1) {
-		$try++;
 		$self->try_lock($core);
 		if ($job->{locked}) {
 			print {$job->{builder}{lockperf}} 
 			    time(), ":", $core->hostname, 
-			    ": $self->{phase}: $try seconds\n";
+			    ": $self->{phase}: ", time() - $date, " seconds\n";
 			exit(0);
 		}
-		sleep 1;
+		print {$job->{logfh}} "(Junk lock failure for ",
+		    $core->hostname, " at ", time(), ")\n";
+		pause;
 	}
 }
 
@@ -371,6 +393,7 @@ sub finalize
 {
 	my ($self, $core) = @_;
 	$core->job->{locked} = 1;
+	delete $core->job->{wakemeup};
 	$self->SUPER::finalize($core);
 }
 
@@ -379,16 +402,67 @@ our @ISA=qw(DPB::Task::Port::Serialized);
 
 sub notime { 1 }
 
+sub recompute_depends
+{
+	my ($self, $core) = @_;
+	# we're running this synchronously with other jobs, so 
+	# let's try avoid running pkg_add if we can !
+	# compute all missing deps for all jobs currently waiting
+	my $deps = {};
+
+	# XXX not a "same_host_jobs" as we're in setup, so not
+	# actually running
+	for my $d (keys %{$core->job->{depends}}) {
+		$deps->{$d} = $d;
+	}
+	for my $job ($core->same_host_jobs) {
+		next if $job->{shunt_depends};
+		for my $d (keys %{$job->{depends}}) {
+			$deps->{$d} = $d;
+			$job->{shunt_depends} = $core->job->{path};
+		}
+	}
+	for my $job ($core->same_host_jobs) {
+		next unless defined $job->{live_depends};
+		for my $d (@{$job->{live_depends}}) {
+			delete $deps->{$d};
+		}
+	}
+	return $deps;
+}
+
+sub setup
+{
+	my ($task, $core) = @_;
+	my $job = $core->job;
+
+	# first, we must be sure to have the lock !
+	$task = $task->SUPER::setup($core);
+	if (!$job->{locked}) {
+		return $task;
+	}
+
+	if ($job->{shunt_depends}) {
+		return $job->next_task($core);
+	}
+	my $dep = $task->recompute_depends($core);
+	if (keys %$dep == 0) {
+		return $job->next_task($core);
+	} else {
+		$job->{dodeps} = $dep;
+		return $task;
+	}
+}
+
 sub run
 {
 	my ($self, $core) = @_;
 	my $job = $core->job;
-	my $dep = $job->{depends};
+	$self->handle_output($job);
 	if ($core->prop->{syslog}) {
 		Sys::Syslog::syslog('info', "start $job->{path}(depends)");
 	}
 
-	$self->handle_output($job);
 	if (defined $core->prop->{last_junk}) {
 		print "   last junk was in ",
 		    $core->prop->{last_junk}->fullpkgpath, "\n";
@@ -409,10 +483,12 @@ sub run
 	if ($job->{builder}{state}{localbase} ne '/usr/local') {
 		push(@cmd, "-L", $job->{builder}{state}{localbase});
 	}
-	print join(' ', @cmd, (sort keys %$dep)), "\n";
+	my @l = (sort keys %{$job->{dodeps}});
+	print join(' ', @cmd, @l), "\n";
+	print "was: ", join(' ', @cmd, (sort keys %{$job->{depends}})), "\n";
+	print join(' ', @cmd, @l), "\n";
 	my $path = $job->{builder}{fullrepo}.'/';
-	$core->shell->env(PKG_PATH => $path)->sudo
-	    ->exec(@cmd, (sort keys %$dep));
+	$core->shell->env(PKG_PATH => $path)->sudo->exec(@cmd, @l);
 	exit(1);
 }
 
@@ -439,6 +515,7 @@ sub finalize
 	my $v = $job->{v};
 	# reopen log at right location
 	my $fh;
+	$job->{pos} //= 0;
 	if (open($fh, '<', $job->{log}) && seek($fh, $job->{pos}, 0)) {
 		my @r;
 		while (<$fh>) {
@@ -505,7 +582,7 @@ sub setup
 			$still_tainted = 1;
 		}
 	}
-	if (defined $core->job->{builder}->locker ->find_tag($core->hostname)) {
+	if (defined $core->job->{builder}->locker->find_tag($core->hostname)) {
 		$still_tainted = 1;
 	}
 	print $fh "Still tainted: $still_tainted\n";
@@ -528,8 +605,12 @@ sub add_live_depends
 {
 	my ($self, $h, $core) = @_;
 	for my $job ($core->same_host_jobs) {
-		next unless defined $job->{live_depends};
-		for my $d (@{$job->{live_depends}}) {
+		if (defined $job->{live_depends}) {
+			for my $d (@{$job->{live_depends}}) {
+				$h->{$d} = 1;
+			}
+		}
+		for my $d (keys %{$job->{depends}}) {
 			$h->{$d} = 1;
 		}
 	}
@@ -547,7 +628,7 @@ sub run
 	my $h = $job->{builder}->locker->find_dependencies($core->hostname);
 	if (defined $h && $self->add_live_depends($h, $core)) {
 		$self->add_dontjunk($job, $h);
-		my $opt = '-aiX';
+		my $opt = '-aIX';
 		if ($core->prop->{nochecksum}) {
 			$opt .= 'q';
 		}
@@ -776,6 +857,7 @@ my $repo = {
 	'show-size' => 'DPB::Task::Port::ShowSize',
 	junk => 'DPB::Task::Port::Uninstall',
 	inbetween => 'DPB::Task::Port::InBetween',
+	fake => 'DPB::Task::Port::Fake',
 };
 
 sub create
@@ -842,6 +924,13 @@ sub save_depends
 	print {$job->{lock}} "needed=", join(' ', sort @$l), "\n";
 }
 
+sub save_wanted_depends
+{
+	my $job = shift;
+	print {$job->{lock}} "wanted=", 
+	    join(' ', sort keys %{$job->{depends}}), "\n";
+}
+
 sub need_depends
 {
 	my ($self, $core, $with_tests) = @_;
@@ -868,6 +957,7 @@ sub need_depends
 		print {$self->{logfh}} "Avoided depends for ", 
 		    join(' ', @live), "\n";
 	} else {
+		$self->save_wanted_depends;
 		$self->{depends} = $dep;
 	}
 	return $c;
@@ -1117,6 +1207,26 @@ sub add_normal_tasks
 		push @todo, 'clean';
 	}
 	$self->add_tasks(map {DPB::Port::TaskFactory->create($_)} @todo);
+}
+
+sub wake_others
+{
+	my ($self, $core) = @_;
+	my ($minjob, $minpid);
+	$core->walk_same_host_jobs(
+	    sub {
+		my ($pid, $job) = @_;
+		return unless $job->{wakemeup};
+		if (!defined $minjob || 
+		    $job->{lock_order} < $minjob->{lock_order}) {
+			$minjob = $job;
+			$minpid = $pid;
+		}
+	    });
+	if (defined $minjob) {
+		kill IO => $minpid;
+		print {$core->job->{logfh}} "Woken up $minjob->{path}\n";
+	}
 }
 
 package DPB::Job::Port::Test;

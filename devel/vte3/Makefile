@@ -1,16 +1,15 @@
-# $OpenBSD: Makefile,v 1.36 2014/01/17 14:17:37 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.43 2014/04/26 22:28:32 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		terminal emulation library
 
 GNOME_PROJECT=		vte
-GNOME_VERSION=		0.34.9
-REVISION=		1
+GNOME_VERSION=		0.36.1
 
 PKGNAME=		vte3-${GNOME_VERSION}
 
-SHARED_LIBS +=  vte2_90              1.0      # 3409.9
+SHARED_LIBS +=  vte2_90              1.0      # 3609.0
 
 CATEGORIES=		devel
 
@@ -33,7 +32,11 @@ MODULES=		devel/gettext \
 
 LIB_DEPENDS=		x11/gtk+3
 
-MODGNOME_TOOLS= 	gi
+MODGNOME_TOOLS +=	gobject-introspection
+
+MODGNU_CONFIG_GUESS_DIRS= \
+			${WRKSRC} \
+			${WRKSRC}/gnome-pty-helper
 
 CONFIGURE_STYLE=	gnu
 
@@ -41,10 +44,6 @@ CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS +=	--disable-Bsymbolic
 
 TEST_DEPENDS=		shells/bash
-
-pre-configure:
-	perl -pi -e "s,/bin/bash,${LOCALBASE}/bin/bash,g" \
-		${WRKSRC}/src/test-vte-sh.sh
 
 # XXX: https://bugzilla.gnome.org/show_bug.cgi?id=675987
 post-install:

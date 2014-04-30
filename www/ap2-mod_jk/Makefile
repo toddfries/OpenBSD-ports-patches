@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.3 2013/03/21 08:48:55 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2014/04/18 19:55:19 dcoppa Exp $
 
 SHARED_ONLY =	Yes
 
 COMMENT =	Apache-Tomcat AJP Connector for Apache2
 
-V =		1.2.37
+V =		1.2.40
 DISTNAME =	tomcat-connectors-${V}-src
 PKGNAME =	ap2-mod_jk-${V}
 CATEGORIES =	www

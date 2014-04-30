@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.98 2013/10/15 13:36:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.102 2014/04/02 09:36:14 jasper Exp $
 
 COMMENT=		GNOME help browser
 
 GNOME_PROJECT=		yelp
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.12.0
 
 SHARED_LIBS +=  yelp                 0.0      # unknown
 
@@ -35,6 +35,6 @@ RUN_DEPENDS=		x11/gnome/yelp-xsl
 LIB_DEPENDS=		archivers/xz \
 			www/webkit,gtk3
 
-MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS +=	desktop-file-utils
 
 .include <bsd.port.mk>

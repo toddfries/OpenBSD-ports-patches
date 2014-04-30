@@ -1,6 +1,6 @@
-@comment $OpenBSD: PLIST-en,v 1.2 2013/05/16 21:53:32 sthen Exp $
+@comment $OpenBSD: PLIST-en,v 1.4 2014/04/09 00:41:03 sthen Exp $
 @option no-default-conflict
-@conflict asterisk-extra-en-*-${MODAS_CODEC}
+@conflict asterisk-extra-en-${MODAS_CODEC}-*
 @conflict asterisk-sounds-*
 @pkgpath telephony/asterisk-sounds
 share/asterisk/
@@ -61,7 +61,6 @@ ${MODAS_INST}/all-reps-busy.${MODAS_CODEC}
 ${MODAS_INST}/all-your-base.${MODAS_CODEC}
 ${MODAS_INST}/altitude.${MODAS_CODEC}
 ${MODAS_INST}/ampersand.${MODAS_CODEC}
-${MODAS_INST}/an-error-has-occured.${MODAS_CODEC}
 ${MODAS_INST}/an-error-has-occurred.${MODAS_CODEC}
 ${MODAS_INST}/and-area-code.${MODAS_CODEC}
 ${MODAS_INST}/and-or.${MODAS_CODEC}

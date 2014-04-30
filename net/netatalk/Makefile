@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.52 2013/10/31 21:12:13 sthen Exp $
+# $OpenBSD: Makefile,v 1.55 2014/04/23 05:53:36 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	AFP file and print services for IP networks
 
 DISTNAME=	netatalk-2.2.5
-REVISION=	0
+REVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=netatalk/}
 EXTRACT_SUFX=	.tar.bz2
@@ -15,8 +15,7 @@ HOMEPAGE=	http://netatalk.sourceforge.net/
 # GPLv2+ and BSD or similar
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += asn1 c com_err crypto db gcrypt gpg-error gssapi heimbase
-WANTLIB += krb5 pthread roken rpcsvc wind wrap
+WANTLIB += c crypto db gcrypt gpg-error pthread rpcsvc
 
 MODULES=	devel/gettext
 LIB_DEPENDS=	databases/db/v4 \
@@ -26,7 +25,7 @@ USE_GROFF=	Yes
 CONFIGURE_STYLE= gnu
 CONFIGURE_ARGS=	--disable-cups \
 		--disable-overwrite \
-		--enable-krbV-uam \
+		--disable-tcp-wrappers \
 		--with-ssl-dir=/usr \
 		--with-uams-path=${PREFIX}/lib/netatalk/uams \
 		--without-ldap \

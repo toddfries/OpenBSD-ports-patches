@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.47 2013/06/24 19:35:18 espie Exp $
+# $OpenBSD: Makefile,v 1.49 2014/03/22 10:26:38 jasper Exp $
 
 SHARED_ONLY =	Yes
 
@@ -17,9 +17,9 @@ SHARED_LIBS =	csirocsa	3.0	\
 PKGNAME-main =	${DISTNAME}
 PKGNAME-c++ =	plplot-c++-${VERSION}
 PKGNAME-f77 =	plplot-f77-${VERSION}
-REVISION-main =	8
-REVISION-c++ =	8
-REVISION-f77 =	11
+REVISION-main =	9
+REVISION-c++ =	9
+REVISION-f77 =	12
 
 CATEGORIES =	math graphics
 
@@ -70,12 +70,9 @@ FLAVOR ?=
 
 MULTI_PACKAGES =	-main -c++ -f77
 
-myWANTLIB =	GL ICE SM X11 Xext \
-		Xrender cairo expat fontconfig \
-		freetype gd glib-2.0 gmodule-2.0 gobject-2.0 \
-		gthread-2.0 jpeg m pango-1.0 pangocairo-1.0 \
-		pangoft2-1.0 pixman-1 png pthread-stubs xcb \
-		xcb-render xcb-shm z ${MODGETTEXT_WANTLIB}
+myWANTLIB += ICE SM X11 Xext cairo fontconfig freetype gd glib-2.0
+myWANTLIB += gobject-2.0 jpeg m pango-1.0 pangocairo-1.0 pangoft2-1.0
+myWANTLIB += png z ${MODGETTEXT_WANTLIB}
 
 WANTLIB-main =	${myWANTLIB} c pthread
 WANTLIB-c++ =	${myWANTLIB} csirocsa plplotd stdc++

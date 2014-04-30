@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.88 2014/01/23 10:51:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.93 2014/04/24 15:59:26 sthen Exp $
 
-COMMENT =		SOAP implementation in C
+COMMENT =		HTTP client/server library for GNOME
 
 GNOME_PROJECT =		libsoup
-GNOME_VERSION =		2.44.2
+GNOME_VERSION =		2.46.0
+REVISION =		0
 
 SHARED_LIBS +=  soup-2.4             8.0      # 8.0
 SHARED_LIBS +=  soup-gnome-2.4       8.0      # 8.0
@@ -26,7 +27,7 @@ MODULES =		devel/gettext \
 			lang/python \
 			x11/gnome
 
-MODGNOME_TOOLS = 	gi
+MODGNOME_TOOLS +=	gobject-introspection
 MODPY_ADJ_FILES =	libsoup/tld-parser.py
 MODPY_RUNDEP =		No
 

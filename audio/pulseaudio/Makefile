@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.55 2013/10/30 10:49:31 stsp Exp $
+# $OpenBSD: Makefile,v 1.59 2014/04/01 14:52:09 ajacoutot Exp $
 
 # XXX
 # util.c: implement pa_get_binary_name()
@@ -16,14 +16,14 @@ SHARED_ONLY=		Yes
 
 COMMENT=		cross-platform networked sound server
 
-VERSION=		4.0
+VERSION=		5.0
 DISTNAME=		pulseaudio-${VERSION}
 EXTRACT_SUFX=		.tar.xz
-REVISION=		1
+REVISION=		0
 
-SHARED_LIBS +=  pulse                2.1      # .16.2
-SHARED_LIBS +=  pulse-simple         0.0      # .0.4
-SHARED_LIBS +=  pulse-mainloop-glib  0.0      # .0.4
+SHARED_LIBS +=  pulse                3.0      # .17.3
+SHARED_LIBS +=  pulse-simple         0.0      # .1.0
+SHARED_LIBS +=  pulse-mainloop-glib  1.0      # .0.5
 
 CATEGORIES=		audio
 
@@ -45,9 +45,12 @@ MODULES=		devel/gettext \
 			textproc/intltool
 
 USE_GMAKE=		Yes
-# undefined reference to `lt__PROGRAM__LTX_preloaded_symbols'
+
+# XXX undefined reference to `lt__PROGRAM__LTX_preloaded_symbols';
+# XXX remove -rpath from LDFLAGS when switching back to our libtool(1)
+# and remove the following patches:
+# patch-libpulse-mainloop-glib_pc_in patch-libpulse-simple_pc_in patch-libpulse_pc_in
 USE_LIBTOOL=		gnu
-LIBTOOL_FLAGS=		--tag=disable-static
 
 # needed for tests
 BUILD_DEPENDS +=	devel/check
@@ -71,7 +74,6 @@ CONFIGURE_STYLE=	gnu
 # sndiod(1) is the default sound server on OpenBSD and pulseaudio is only
 # needed for a couple of use cases (volume control, media-keys)
 CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
-			--disable-static \
 			--disable-atomic-arm-linux-helpers \
 			--disable-default-build-tests \
 			--with-system-user=_pulse \
@@ -84,12 +86,14 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-adrian-aec \
 			--disable-alsa \
 			--disable-asyncns \
-			--disable-bluez \
+			--disable-bluez4 \
+			--disable-bluez5 \
 			--disable-esound \
 			--disable-gtk3 \
 			--disable-jack \
 			--disable-hal-compat \
 			--disable-systemd \
+			--disable-systemd-journal \
 			--disable-udev \
 			--disable-lirc \
 			--disable-samplerate \
@@ -100,8 +104,8 @@ CONFIGURE_ARGS=		${CONFIGURE_SHARED} \
 			--disable-gconf \
 			--disable-avahi \
 			--disable-orc
-# linked "privately" to lib/pulseaudio/libpulsecommon-X.Y.so
-CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include" \
+
+CONFIGURE_ENV=		CPPFLAGS="-I${X11BASE}/include -I${LOCALBASE}/include" \
 			LDFLAGS="-L${LOCALBASE}/lib \
 				-Wl,-rpath,${TRUEPREFIX}/lib/pulseaudio:${TRUEPREFIX}/lib/pulse-${VERSION}/modules" \
 			ac_cv_prog_M4=m4
@@ -111,7 +115,7 @@ FAKE_FLAGS=		pulseconfdir="${PREFIX}/share/examples/pulseaudio/pulse" \
 
 ### SNDIO ###
 AUTOCONF_VERSION=	2.69
-AUTOMAKE_VERSION=	1.12
+AUTOMAKE_VERSION=	1.14
 BUILD_DEPENDS +=	${MODGNU_AUTOMAKE_DEPENDS} \
 			${MODGNU_AUTOCONF_DEPENDS}
 BUILD_DEPENDS +=	devel/libtool # needs needs libtoolize
@@ -123,16 +127,17 @@ pre-configure:
 	cd ${WRKSRC} && \
 		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
 		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
-		autoreconf -i
+		autoreconf -i --force && \
+		AUTOMAKE_VERSION=${AUTOMAKE_VERSION} \
+		AUTOCONF_VERSION=${AUTOCONF_VERSION} \
+		aclocal && \
+		intltoolize --force
 ### END SNDIO ###
 	${SUBST_CMD} ${WRKSRC}/src/daemon/default.pa.in
 
-# remove man pages for utilities we don't install
 post-install:
-	cd ${PREFIX} && \
-		rm man/man1/pax11publish.1 \
-			man/man1/padsp.1 \
-			man/man1/start-pulseaudio-kde.1 \
-			man/man1/start-pulseaudio-x11.1
+	rm ${PREFIX}/lib/pulse-${VERSION}/modules/*.a
+# we don't install padsp
+	cd ${PREFIX} && rm man/man1/padsp.1
 
 .include <bsd.port.mk>

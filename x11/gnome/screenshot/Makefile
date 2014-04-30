@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.13 2013/11/19 13:27:45 jasper Exp $
+# $OpenBSD: Makefile,v 1.16 2014/04/02 09:36:14 jasper Exp $
 
 COMMENT=		screenshot application for GNOME
 
 GNOME_PROJECT=		gnome-screenshot
-GNOME_VERSION=		3.10.1
+GNOME_VERSION=		3.12.0
 
 # GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -19,6 +19,6 @@ MODULES=		devel/dconf \
 			devel/gettext \
 			x11/gnome
 
-MODGNOME_DESKTOP_FILE=	Yes
+MODGNOME_TOOLS +=	desktop-file-utils
 
 .include <bsd.port.mk>

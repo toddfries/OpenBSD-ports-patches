@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.44 2014/01/25 13:12:12 espie Exp $
+# $OpenBSD: Makefile,v 1.46 2014/04/21 16:27:20 sthen Exp $
 
 COMMENT-main=		authentication library for courier
 COMMENT-ldap=		ldap authentication module for courier-authLib
@@ -6,12 +6,8 @@ COMMENT-mysql=		mysql authentication module for courier-authLib
 COMMENT-pgsql=		pgsql authentication module for courier-authLib
 COMMENT-userdb=		userdb authentication module for courier-authLib
 
-DISTNAME=			courier-authlib-0.65.0
-REVISION-main=		2
-REVISION-mysql=		5
-REVISION-ldap=		5
-REVISION-pgsql=		5
-REVISION-userdb=	0
+DISTNAME=		courier-authlib-0.66.1
+REVISION=		0
 PKGNAME-main=		${DISTNAME}
 PKGNAME-ldap=		${DISTNAME:S/lib-/lib-ldap-/}
 PKGNAME-mysql=		${DISTNAME:S/lib-/lib-mysql-/}
@@ -46,7 +42,9 @@ CONFIGURE_STYLE=	gnu
 
 CONFIGURE_ENV=		LIBS="-L${LOCALBASE}/lib" \
 			LDFLAGS="-L${LOCALBASE}/lib" \
-			CPPFLAGS="-I${LOCALBASE}/include"
+			CPPFLAGS="-I${LOCALBASE}/include" \
+			ac_cv_lib_db_dbopen=no \
+			ac_cv_lib_db_db_env_create=no
 
 COURIERSTATE=		/var/run/courier-auth
 EXAMPLE_DIR=		${PREFIX}/share/examples/courier-authlib
@@ -86,9 +84,8 @@ WANTLIB-main=		c ltdl sqlite3
 
 LIB_DEPENDS-main=	devel/libtool,-ltdl
 
-WANTLIB-ldap=		crypto ssl asn1 com_err gssapi krb5 \
-			courierauthcommon courierauth ldap-2.4 lber-2.4 sasl2 \
-			asn1 heimbase krb5 roken wind
+WANTLIB-ldap=		crypto ssl courierauthcommon courierauth \
+			ldap-2.4 lber-2.4 sasl2
 RUN_DEPENDS-ldap=
 LIB_DEPENDS-ldap=	${BUILD_PKGPATH} \
 			databases/openldap \
@@ -99,8 +96,7 @@ RUN_DEPENDS-mysql=
 LIB_DEPENDS-mysql=	${BUILD_PKGPATH} \
 			databases/mysql
 
-WANTLIB-pgsql=		m courierauthcommon courierauth pq com_err crypto ssl \
-			asn1 heimbase krb5 roken wind
+WANTLIB-pgsql=		m courierauthcommon courierauth pq crypto ssl
 RUN_DEPENDS-pgsql=
 LIB_DEPENDS-pgsql=	${BUILD_PKGPATH} \
 			databases/postgresql

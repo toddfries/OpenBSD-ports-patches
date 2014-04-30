@@ -1,11 +1,17 @@
-$OpenBSD: patch-tests_check_testutils_c,v 1.3 2013/03/26 13:56:48 jasper Exp $
---- tests/check/testutils.c.orig	Tue Mar 26 14:50:53 2013
-+++ tests/check/testutils.c	Tue Mar 26 14:54:06 2013
-@@ -28,6 +28,7 @@
- 
- #ifdef HAVE_GETIFADDRS
+$OpenBSD: patch-tests_check_testutils_c,v 1.5 2014/03/30 12:36:28 jasper Exp $
+
+From: 5f52c16b14fd8fac562aaf04e926a0d8e9a298e1 Mon Sep 17 00:00:00 2001
+From: Jasper Lievisse Adriaanse <jasper@humppa.nl>
+Date: Mon Mar 3 15:39:00 2014 +0100
+Subject: Include <netinet/in.h> for struct sin_addr.
+
+--- tests/check/testutils.c.orig	Mon Mar  3 15:36:28 2014
++++ tests/check/testutils.c	Mon Mar  3 15:38:37 2014
+@@ -30,6 +30,7 @@
   #include <sys/socket.h>
-+ #include <netinet/in.h>
   #include <ifaddrs.h>
   #include <net/if.h>
++ #include <netinet/in.h>
   #include <arpa/inet.h>
+ #endif
+ 

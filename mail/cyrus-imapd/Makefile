@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.80 2013/06/20 06:54:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.82 2014/04/21 12:35:45 ajacoutot Exp $
 
 SHARED_ONLY=	Yes
 
@@ -6,7 +6,7 @@ COMMENT=	Cyrus IMAP server
 
 V=		2.4.17
 DISTNAME=	cyrus-imapd-${V}
-REVISION=	3
+REVISION=	4
 
 CATEGORIES=	mail
 
@@ -17,8 +17,7 @@ MAINTAINER=	Antoine Jacoutot <ajacoutot@openbsd.org>
 # CMU - see COPYRIGHT file in package
 PERMIT_PACKAGE_CDROM=	yes
 
-WANTLIB += asn1 c com_err crypto lib/db4/db>=4 gssapi heimbase
-WANTLIB += krb5 pcre pcreposix pthread roken sasl2 ssl wind z
+WANTLIB += c crypto db pcre pcreposix pthread sasl2 ssl z
 
 MASTER_SITES=	http://cyrusimap.org/releases/ \
 		ftp://ftp.cyrusimap.org/cyrus-imapd/ \
@@ -33,9 +32,8 @@ NO_TEST=	Yes
 PATCH_LIST=	patch-*
 
 CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include $$(krb5-config --cflags)" \
-		LDFLAGS="-L${LOCALBASE}/lib" \
-		LIBS="$$(krb5-config --libs gssapi)"
+CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
+		LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_ARGS=	--with-service-path=${LOCALBASE}/libexec/cyrus-imapd \
 		--with-bdb \
 		--with-bdb-libdir=${LOCALBASE}/lib/db4 \
@@ -47,7 +45,6 @@ CONFIGURE_ARGS=	--with-service-path=${LOCALBASE}/libexec/cyrus-imapd \
 		--enable-idled \
 		--enable-murder \
 		--enable-nntp \
-		--without-libwrap \
 		--without-zephyr \
 		--without-snmp \
 		--with-perl \

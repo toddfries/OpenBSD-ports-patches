@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.3 2013/10/28 07:29:03 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2014/04/29 08:05:33 ajacoutot Exp $
 
 TRYTOND_MODULE =	sale_supply
 

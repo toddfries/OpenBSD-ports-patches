@@ -1,10 +1,12 @@
-# $OpenBSD: Makefile,v 1.13 2013/03/10 23:04:44 espie Exp $
+# $OpenBSD: Makefile,v 1.16 2014/03/28 11:40:16 sthen Exp $
+
+BROKEN=		needs update for perl 5.18
 
 COMMENT=	perl tools for bioinformatics
 
 DISTNAME=	BioPerl-1.6.1
 PKGNAME=	${DISTNAME:L}# No p5-prefix here.
-REVISION=	1
+REVISION=	2
 CATEGORIES=	biology
 
 HOMEPAGE=	http://bioperl.org/
@@ -53,8 +55,6 @@ RUN_DEPENDS=	biology/AcePerl \
 		www/p5-SOAP-Lite \
 		www/p5-URI \
 		www/p5-libwww
-
-TEST_DEPENDS=${RUN_DEPENDS}
 
 # Optional (not ported) dependencies:
 # Postscript-TextBlock

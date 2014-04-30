@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.86 2013/09/28 08:50:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.89 2014/04/01 18:06:28 jasper Exp $
 
 COMMENT=	configuration database system for GNOME
 
@@ -6,7 +6,7 @@ GNOME_PROJECT=	GConf
 GNOME_VERSION=	3.2.6
 PKGNAME=	gconf2-${GNOME_VERSION}
 
-REVISION=	3
+REVISION=	4
 
 SHARED_LIBS +=	gconf-2              6.2      # 5.5
 
@@ -34,7 +34,7 @@ MODPY_ADJ_FILES=gsettings/gsettings-schema-convert
 LIB_DEPENDS=	textproc/libxml \
 		x11/dbus-glib
 
-MODGNOME_TOOLS=	gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 CONFIGURE_STYLE=gnu
 CONFIGURE_ARGS=	--without-openldap \

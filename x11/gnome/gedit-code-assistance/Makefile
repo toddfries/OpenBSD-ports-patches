@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.19 2013/11/16 09:36:40 jasper Exp $
+# $OpenBSD: Makefile,v 1.22 2014/04/01 18:06:31 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	code assistance for Gedit
 
 GNOME_PROJECT=	gedit-code-assistance
-GNOME_VERSION=	0.3.0
+GNOME_VERSION=	0.3.1
 
 CATEGORIES=	editors devel
 
@@ -25,8 +25,7 @@ WANTLIB += m pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre peas-1.0
 WANTLIB += peas-gtk-1.0 pixman-1 png pthread pthread-stubs
 WANTLIB += xcb xcb-render xcb-shm xml2 z
 
-MODGNOME_TOOLS=	gi
-
+MODGNOME_TOOLS +=	gobject-introspection
 LIB_DEPENDS=	devel/libgee
 
 BUILD_DEPENDS=	x11/gnome/gedit

@@ -1,17 +1,18 @@
-# $OpenBSD: Makefile,v 1.7 2013/06/12 12:57:20 jasper Exp $
+# $OpenBSD: Makefile,v 1.9 2014/03/10 22:16:19 juanfra Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	complete, efficient and reliable implementation of Scheme
 BROKEN-hppa =	cc: Internal error: Illegal instruction
 
-V=		4.6.8
+V=		4.7.2
+REVISION=	0
 DISTNAME=	gambc-v${V:S/./_/g}
 PKGNAME=	gambit-$V
 
 CATEGORIES=	lang
 
-HOMEPAGE=	http://dynamo.iro.umontreal.ca/~gambit/
+HOMEPAGE=	gambitscheme.org/
 
 # LGPLv2.1 / Apachev2.0
 PERMIT_PACKAGE_CDROM=	Yes
@@ -27,10 +28,8 @@ CONFIGURE_ARGS+=--disable-cplusplus \
 		--disable-absolute-shared-libs \
 		--docdir=${PREFIX}/share/doc/gambit-c/ \
 		--includedir=${PREFIX}/include/gambit-c/ \
-		--libdir=${PREFIX}/lib/gambit-c/
-
-# https://github.com/feeley/gambit/pull/29
-CONFIGURE_ARGS+=ac_cv_func_get_fpc_csr=no
+		--libdir=${PREFIX}/lib/gambit-c/ \
+		--enable-c-opt="${CFLAGS}"
 
 MAKE_FILE=	${WRKSRC}/makefile
 

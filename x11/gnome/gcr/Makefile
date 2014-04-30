@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.32 2013/10/17 07:26:26 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.39 2014/04/19 15:47:37 ajacoutot Exp $
 
 COMMENT=	library for bits of crypto UI and parsing
 
 GNOME_PROJECT=	gcr
-GNOME_VERSION=	3.10.1
+GNOME_VERSION=	3.12.0
+REVISION=	0
 
 SHARED_LIBS +=  gck-1                1.0      # 0.0
 SHARED_LIBS +=  gcr-base-3           2.0      # 1.0
@@ -18,29 +19,38 @@ WANTLIB += Xinerama Xrandr Xrender atk-1.0 atk-bridge-2.0 atspi
 WANTLIB += c cairo cairo-gobject dbus-1 expat ffi fontconfig freetype
 WANTLIB += gcrypt gdk-3 gdk_pixbuf-2.0 gio-2.0 glib-2.0 gmodule-2.0
 WANTLIB += gobject-2.0 gpg-error graphite2 gthread-2.0 gtk-3 harfbuzz
-WANTLIB += m p11-kit pango-1.0 pangocairo-1.0
-WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
-WANTLIB += xcb xcb-render xcb-shm z
+WANTLIB += m p11-kit pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre
+WANTLIB += pixman-1 png pthread pthread-stubs xcb xcb-render xcb-shm
+WANTLIB += z
 
 MODULES=	devel/gettext \
 		x11/gnome \
 		devel/dconf
 
-MODGNOME_TOOLS=		gi vala
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_MIME_FILE=	Yes
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection vala
+MODGNOME_TOOLS += gtk-update-icon-cache shared-mime-info
 
 LIB_DEPENDS=	x11/gtk+3 \
 		security/libgcrypt \
 		security/p11-kit
 
-# XXX push a proper fix upstream
-BUILD_DEPENDS += textproc/gsed
-pre-configure:
-	perl -pi -e 's,sed -i,gsed -i,g' \
-		${WRKSRC}/{,ui,ui/tests,gcr,gcr/tests,gck,gck/tests,egg,egg/tests}/Makefile.in \
-		${WRKSRC}/Makefile.decl
-	${SUBST_CMD} ${WRKSRC}/ui/Makefile.in
+BUILD_DEPENDS=	security/gnupg
+RUN_DEPENDS=	security/gnupg
+
+# Need xsltproc in order to build with gobject introspection
+BUILD_DEPENDS += textproc/libxslt
+
+# regression tests call 'env python'
+MODULES +=		lang/python
+TEST_DEPENDS +=		${MODPY_RUN_DEPENDS}
+MODPY_RUNDEP=		No
+MODPY_BUILDDEP=		No
+pre-test:
+	ln -sf ${MODPY_BIN} ${WRKDIR}/bin/python
+
+post-install:
+	grep -q '/libgcr-3.so' ${WRKSRC}/Makefile || exit 1
+	cd ${PREFIX}/lib && \
+		ln -s libgcr-ui-3.so.${LIBgcr-ui-3_VERSION} libgcr-3.so.${LIBgcr-ui-3_VERSION}
 
 .include <bsd.port.mk>

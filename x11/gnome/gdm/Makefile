@@ -1,14 +1,15 @@
-# $OpenBSD: Makefile,v 1.189 2014/01/30 16:58:58 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.210 2014/04/25 14:37:19 ajacoutot Exp $
 
-# XXX configuring GDM from gnome-cc does not work
+# XXX remove from PLIST when OPENBSD_5_6 is branched:
+# @unexec rm -f ${SYSCONFDIR}/dconf/db/gdm
 
 SHARED_ONLY=		Yes
 
 COMMENT=		GNOME display manager
 
 GNOME_PROJECT=		gdm
-GNOME_VERSION=		3.10.0.1
-REVISION=		13
+GNOME_VERSION=		3.12.1
+REVISION=		0
 
 SHARED_LIBS +=  gdm                  0.0      # 1.0
 
@@ -29,14 +30,24 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/dconf
 
-BUILD_DEPENDS=		devel/check
+BUILD_DEPENDS=		devel/check \
+			devel/iso-codes
+
+RUN_DEPENDS=		devel/iso-codes
+
+# 'dconf compile'
+BUILD_DEPENDS +=	devel/dconf
 
 # cyclic dependency, see pkg/DESCR
 # bring _all_ runtime dependencies (including consolekit and zenity)
 #RUN_DEPENDS +=		x11/gnome/session
 
+# cyclic dependency
 # gnome-initial-setup is an opt-in handled in meta/gnome
 #RUN_DEPENDS +=		x11/gnome/initial-setup
+
+# caribou-autostart.desktop
+RUN_DEPENDS +=		x11/gnome/caribou
 
 # orca-autostart.desktop
 RUN_DEPENDS +=		x11/gnome/orca
@@ -45,17 +56,15 @@ LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 			security/openpam \
 			sysutils/accountsservice
 
-LIBTOOL_FLAGS=		--tag=disable-static
-
-MODGNOME_TOOLS= 	gi yelp
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS += gobject-introspection gtk-update-icon-cache yelp
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include -DHAS_SA_LEN
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 
 CONFIGURE_STYLE=	autoconf
 AUTOCONF_VERSION=	2.69
 
-CONFIGURE_ARGS=		--disable-static \
+CONFIGURE_ARGS=		--disable-systemd-journal \
+			--without-systemd \
 			--mandir=${PREFIX}/man \
 			--with-lang-file=${SYSCONFDIR}/gdm/locale.conf \
 			--with-at-spi-registryd-directory=${LOCALBASE}/libexec \
@@ -71,8 +80,7 @@ CONFIGURE_ARGS=		--disable-static \
 			--with-group=_gdm \
 			--with-console-kit \
 			--with-xauth-dir=/var/run/gdm \
-			--with-initial-vt=05 \
-			--without-tcp-wrappers
+			--with-initial-vt=05
 
 pre-configure:
 	perl -pi -e 's,root:root,root:wheel,g;' \
@@ -91,7 +99,6 @@ post-install:
 		${PREFIX}/share/glib-2.0/schemas
 	mv ${WRKINST}/etc/gdm ${PREFIX}/share/examples/gdm/etc
 	mv ${WRKINST}/etc/dbus-1 ${PREFIX}/share/examples/gdm/etc
-	mv ${WRKINST}/etc/dconf ${PREFIX}/share/examples/gdm/etc
 	mv ${WRKINST}/var/db/gdm ${PREFIX}/share/examples/gdm/var/db
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/gdm/var/db/gdm/.pulse
 	${INSTALL_DATA} ${FILESDIR}/client.conf \

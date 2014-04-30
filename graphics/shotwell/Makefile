@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.37 2013/11/26 08:25:57 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.41 2014/04/02 09:36:11 jasper Exp $
 
 COMMENT =	digital photo organizer
 
-V =		0.15.1
-DISTNAME =	shotwell-${V}
-EXTRACT_SUFX =	.tar.xz
+GNOME_VERSION =	0.18.0
+GNOME_PROJECT =	shotwell
+
 CATEGORIES =	graphics
-MASTER_SITES =	http://yorba.org/download/shotwell/${V:C/^([0-9]+\.[0-9]+).*/\1/}/
+
 HOMEPAGE =	http://yorba.org/shotwell/
 
 # LGPLv2
@@ -27,17 +27,17 @@ MODULES =	devel/dconf \
 		devel/gettext \
 		x11/gnome
 
-MODGNOME_TOOLS = 	vala yelp
-MODGNOME_DESKTOP_FILE =	Yes
-MODGNOME_ICON_CACHE =	Yes
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache vala yelp
+
+BUILD_DEPENDS =	www/webkit,gtk3
+RUN_DEPENDS =	www/webkit,gtk3
 
 LIB_DEPENDS =	devel/json-glib \
 		devel/libgee \
 		graphics/libgexiv2 \
 		graphics/libgphoto2 \
 		graphics/libraw \
-		net/librest \
-		www/webkit,gtk3
+		net/librest
 
 # beware: configure is an horrible homemade shell script
 CONFIGURE_STYLE =	simple

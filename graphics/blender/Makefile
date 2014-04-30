@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.56 2013/11/25 20:11:24 landry Exp $
+# $OpenBSD: Makefile,v 1.58 2014/03/25 10:38:07 pascal Exp $
+
+ONLY_FOR_ARCHS = amd64 i386
 
 COMMENT =	3D creation software
-BROKEN-sparc64 = error: cast from 'ccl::uchar*' to 'CUdeviceptr' loses precision
-BROKEN-powerpc = build stuck on makesrna/intern/rna_nodetree_gen.c
 
-DISTNAME =	blender-2.67
+DISTNAME =	blender-2.70
 REVISION =	0
 
 CATEGORIES =	graphics
@@ -20,13 +20,17 @@ MASTER_SITES =	http://download.blender.org/source/ \
 		http://mirror.cs.umn.edu/blender.org/source/
 
 MODULES =	devel/cmake \
-		lang/python
+		lang/python \
+		gcc4
+MODGCC4_ARCHS = *
+MODGCC4_LANGS += c++
 MODPY_VERSION =	${MODPY_DEFAULT_VERSION_3}
 
 CONFIGURE_ARGS =	-DPYTHON_INCLUDE_DIR="${MODPY_INCDIR}" \
 			-DPYTHON_VERSION=${MODPY_VERSION} \
 			-DWITH_CODEC_FFMPEG=ON \
-			-DWITH_INTERNATIONAL=OFF
+			-DWITH_INTERNATIONAL=OFF \
+			-DWITH_RAYOPTIMIZATION=OFF
 
 BUILD_DEPENDS =	devel/gflags
 LIB_DEPENDS =	graphics/png \
@@ -45,12 +49,12 @@ LIB_DEPENDS =	graphics/png \
 RUN_DEPENDS =	devel/desktop-file-utils \
 		x11/gnome/librsvg
 
-WANTLIB += GL GLEW GLU Half Iex IlmImf IlmThread Imath OpenImageIO
-WANTLIB += SDL X11 Xi Xxf86vm avcodec avdevice avformat avutil
-WANTLIB += boost_filesystem-mt boost_regex-mt boost_system-mt
-WANTLIB += boost_thread-mt c freetype jpeg m openal openjpeg png
-WANTLIB += pthread ${MODPY_WANTLIB} stdc++ swscale tiff util z
-WANTLIB += boost_date_time-mt fftw3
+WANTLIB += GL GLEW GLU Half Iex IlmImf IlmThread Imath OpenColorIO
+WANTLIB += OpenImageIO SDL X11 Xi Xxf86vm avcodec avdevice avformat
+WANTLIB += avutil boost_date_time-mt boost_filesystem-mt boost_regex-mt
+WANTLIB += boost_system-mt boost_thread-mt c fftw3 freetype jpeg
+WANTLIB += m openal openjpeg png pthread ${MODPY_WANTLIB} swscale tiff
+WANTLIB += tinyxml util yaml-cpp z
 
 NO_TEST =	Yes
 

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.32 2013/09/27 17:49:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2014/04/02 09:36:09 jasper Exp $
 
 COMMENT=	GNOME multimode HF terminal
 
 GNOME_PROJECT=	gmfsk
 GNOME_VERSION=	0.6
-REVISION=	21
+REVISION=	22
 CATEGORIES=	comms hamradio
 
 HOMEPAGE=	http://gmfsk.connect.fi/
@@ -29,7 +29,8 @@ MODULES=		devel/gettext \
 			x11/gnome \
 			devel/gconf2
 
-MODGNOME_TOOLS= 	yelp
+MODGNOME_TOOLS +=	yelp
+
 USE_GMAKE=		No
 MODGCONF2_SCHEMAS_DIR=	gmfsk
 

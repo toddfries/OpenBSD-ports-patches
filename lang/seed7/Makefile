@@ -1,8 +1,6 @@
-# $OpenBSD: Makefile,v 1.14 2014/01/19 20:21:01 bcallah Exp $
+# $OpenBSD: Makefile,v 1.18 2014/04/20 21:32:49 bcallah Exp $
 
-BROKEN-hppa =	SIGILL compiling prg/s7c
-
-V =		20140119
+V =		20140420
 COMMENT =	high-level, extensible programming language
 DISTNAME =	seed7_05_${V}
 PKGNAME =	seed7-${V}

@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.78 2013/11/11 16:14:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.82 2014/04/15 14:26:10 ajacoutot Exp $
 
 COMMENT=	API documentation browser for GNOME
 
 GNOME_PROJECT=	devhelp
-GNOME_VERSION=	3.10.2
+GNOME_VERSION=	3.12.1
 
 SHARED_LIBS +=  devhelp-3                 0.0 # 0.0
 
@@ -36,7 +36,6 @@ LIB_DEPENDS=	www/webkit,gtk3
 # for convenience
 RUN_DEPENDS +=	x11/gnome/devel-docs
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache
 
 .include <bsd.port.mk>

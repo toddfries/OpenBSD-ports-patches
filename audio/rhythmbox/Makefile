@@ -1,11 +1,12 @@
-# $OpenBSD: Makefile,v 1.131 2013/10/13 09:27:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.139 2014/04/02 09:36:09 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		integrated music management application for GNOME
 
 GNOME_PROJECT=		rhythmbox
-GNOME_VERSION=		3.0.1
+GNOME_VERSION=		3.0.2
+REVISION=		1
 
 SHARED_LIBS +=  rhythmbox-core       0.0      # 7.0
 
@@ -29,7 +30,7 @@ WANTLIB += gstvideo-1.0 gthread-2.0 gtk-3 harfbuzz harfbuzz-icu
 WANTLIB += icudata icui18n icuuc javascriptcoregtk-3.0 jpeg json-glib-1.0
 WANTLIB += lzma m notify orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre peas-1.0 peas-gtk-1.0 pixman-1 plist png pthread
-WANTLIB += pthread-stubs secret-1 soup-2.4 soup-gnome-2.4 sqlite3
+WANTLIB += pthread-stubs secret-1 soup-2.4 sqlite3
 WANTLIB += stdc++ tdb totem-plparser webkitgtk-3.0 webp xcb xcb-render
 WANTLIB += xcb-shm xml2 xslt z
 
@@ -56,7 +57,7 @@ LIB_DEPENDS=		audio/libgpod \
 # context plugin
 RUN_DEPENDS +=		www/py-mako${MODPY_FLAVOR}
 
-# grilo plugin
+# calls grl_registry_load...plugin
 RUN_DEPENDS +=		x11/gnome/grilo-plugins
 
 # rbzeitgeist plugin
@@ -68,18 +69,15 @@ RUN_DEPENDS +=		multimedia/gstreamer1/plugins-good
 # needed for mp3 support
 RUN_DEPENDS +=		multimedia/gstreamer1/plugins-ugly
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS= 	gi vala yelp
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection gtk-update-icon-cache
+MODGNOME_TOOLS += vala yelp
+
 MODGNOME_LDFLAGS=	-L${X11BASE}/lib
 MODGNOME_CPPFLAGS=	-I${X11BASE}/include
 MODPY_VERSION=		${MODPY_DEFAULT_VERSION_3}
 
-LIBTOOL_FLAGS=		--tag=disable-static
-
 CONFIGURE_STYLE= 	gnu
-CONFIGURE_ARGS=		--disable-static \
-			--without-brasero \
+CONFIGURE_ARGS=		--without-brasero \
 			--without-hal \
 			--without-gudev \
 			--disable-fm-radio \
@@ -99,10 +97,9 @@ TEST_IS_INTERACTIVE=	x11
 
 post-install:
 	rm ${PREFIX}/lib/rhythmbox/{,sample-}plugins/*/*.la
-	rm ${PREFIX}/lib/mozilla/plugins/*.la
+	rm ${PREFIX}/lib/rhythmbox/sample-plugins/*/*.a
+	rm ${PREFIX}/lib/mozilla/plugins/*.{a,la}
 	# XXX hangs: check at next upgrade of rhythmbox
 	rm -rf ${PREFIX}/{lib,share}/rhythmbox/plugins/replaygain
-	# requires cdda support in gvfs -> HAL/gudev
-	rm -rf ${PREFIX}/{lib,share}/rhythmbox/plugins/audiocd
 
 .include <bsd.port.mk>

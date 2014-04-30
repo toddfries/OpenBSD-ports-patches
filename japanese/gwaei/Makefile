@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.10 2013/05/31 15:34:49 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.13 2014/04/02 09:36:11 jasper Exp $
 
 COMMENT =	japanese-english dictionary program
 
@@ -36,9 +36,7 @@ LIB_DEPENDS =	net/curl \
 CONFIGURE_STYLE = gnu
 CONFIGURE_ARGS += ENCHANT="${LOCALBASE}/bin/enchant"
 
-MODGNOME_TOOLS =	yelp
-MODGNOME_DESKTOP_FILE =	Yes
-MODGNOME_ICON_CACHE =	Yes
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache yelp
 
 pre-configure:
 	${SUBST_CMD} ${WRKSRC}/src/gwaei/help/C/*.{in,xml}

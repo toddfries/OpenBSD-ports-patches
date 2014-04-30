@@ -1,14 +1,13 @@
-# $OpenBSD: Makefile,v 1.56 2014/02/03 13:00:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.62 2014/04/15 07:17:33 jasper Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		weather information access library
 
 GNOME_PROJECT=		libgweather
-GNOME_VERSION=		3.10.2
-REVISION=		0
+GNOME_VERSION=		3.12.1
 
-SHARED_LIBS +=		gweather-3             2.0      # 2.0
+SHARED_LIBS +=		gweather-3             2.1      # 7.3
 
 CATEGORIES=		net
 
@@ -29,9 +28,7 @@ MODULES=		devel/gettext \
 			devel/dconf \
 			x11/gnome
 
-MODGNOME_TOOLS= 	gi vala
-MODGNOME_ICON_CACHE=	Yes
-
+MODGNOME_TOOLS += gobject-introspection gtk-update-icon-cache vala
 LIB_DEPENDS=		devel/libsoup>=2.42.0 \
 			x11/gtk+3
 

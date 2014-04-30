@@ -1,18 +1,18 @@
-# $OpenBSD: Makefile,v 1.74 2014/01/07 21:55:54 sthen Exp $
+# $OpenBSD: Makefile,v 1.79 2014/04/21 11:41:11 sthen Exp $
 
 COMMENT-main=		UPS monitoring program supporting many brands
 COMMENT-cgi=		CGIs for monitoring Nut-based UPSs
 COMMENT-snmp=		driver for monitoring UPS via SNMP
 COMMENT-xml=		driver for monitoring UPS via XML/HTTP
 
-DISTNAME=		nut-2.7.1
+DISTNAME=		nut-2.7.2
 
 PKGNAME-main=		${DISTNAME}
 PKGNAME-cgi=		${DISTNAME:S/-/-cgi-/}
 PKGNAME-snmp=		${DISTNAME:S/-/-snmp-/}
 PKGNAME-xml=		${DISTNAME:S/-/-xml-/}
 
-SHARED_LIBS +=	upsclient            2.0      # .3.1
+SHARED_LIBS +=	upsclient            3.0      # .4.0
 SHARED_LIBS +=	nutclient            0.0      # .0.0
 SHARED_LIBS +=	nutscan              1.0      # .1.0
 
@@ -25,9 +25,8 @@ MAINTAINER=		Stuart Henderson <sthen@openbsd.org>
 PERMIT_PACKAGE_CDROM=	Yes
 
 COMMON +=	c crypto pthread
-WANTLIB-main +=	${COMMON} ltdl m ssl stdc++ usb usb-1.0 wrap
-WANTLIB-xml +=	${COMMON} ${MODGETTEXT_WANTLIB} asn1 expat gssapi krb5 neon ssl z proxy
-WANTLIB-xml +=	com_err heimbase roken wind
+WANTLIB-main +=	${COMMON} ltdl m ssl stdc++ usb usb-1.0
+WANTLIB-xml +=	${COMMON} ${MODGETTEXT_WANTLIB} expat neon proxy ssl z
 WANTLIB-cgi +=	${COMMON} ${MODGETTEXT_WANTLIB} X11 expat fontconfig
 WANTLIB-cgi +=	freetype gd jpeg m png ssl upsclient xcb z
 WANTLIB-snmp +=	${COMMON} m netsnmp
@@ -54,6 +53,7 @@ CONFIGURE_STYLE=	gnu
 SYSCONFDIR=		${BASESYSCONFDIR}/nut
 LDFLAGS+=		-L${LOCALBASE}/lib -pthread
 CONFIGURE_ARGS+=	--datadir=${PREFIX}/share/ups \
+			--htmldir=${PREFIX}/share/doc/nut \
 			--with-doc=html-single \
 			--with-hal-libs="" \
 			--with-ssl \

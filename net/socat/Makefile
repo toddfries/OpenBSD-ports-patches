@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.15 2013/05/29 20:57:58 benoit Exp $
+# $OpenBSD: Makefile,v 1.17 2014/04/24 15:17:08 sthen Exp $
 
 COMMENT=	relay for bidirectional data transfer
 
-DISTNAME=	socat-1.7.2.2
+DISTNAME=	socat-1.7.2.4
+REVISION=	0
 CATEGORIES=	net
 
 HOMEPAGE=	http://www.dest-unreach.org/socat/
@@ -14,14 +15,17 @@ PERMIT_PACKAGE_CDROM=	Yes
 
 MASTER_SITES=	${HOMEPAGE}/download/
 
-WANTLIB=	curses c readline crypto util ssl wrap
+WANTLIB=	curses c readline crypto util ssl
 
 NO_TEST=	Yes
 
 CONFIGURE_STYLE=gnu
 
+CONFIGURE_ARGS +=	--disable-libwrap
+
 pre-build:
 	${SUBST_CMD} ${WRKSRC}/doc/socat.1
+	${SUBST_CMD} ${WRKSRC}/doc/socat.html
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/socat

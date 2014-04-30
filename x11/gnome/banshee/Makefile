@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.17 2013/10/15 09:43:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.21 2014/04/01 18:06:30 jasper Exp $
 
 SHARED_ONLY=	Yes
 
 COMMENT=	music management and playback application for GNOME
 
-GNOME_VERSION=	2.6.1
+GNOME_VERSION=	2.6.2
 GNOME_PROJECT=	banshee
-REVISION=	4
+REVISION=	0
 
 CATEGORIES=	audio multimedia
 
@@ -15,17 +15,17 @@ HOMEPAGE=	http://banshee.fm/
 # MIT/X11
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB += GL ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
+WANTLIB += EGL GL ICE SM X11 Xcomposite Xcursor Xdamage Xext Xfixes
 WANTLIB += Xi Xinerama Xrandr Xrender Xt Xxf86vm atk-1.0 cairo
 WANTLIB += dbus-1 dbus-glib-1 enchant expat ffi fontconfig freetype
-WANTLIB += gailutil gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 geoclue
-WANTLIB += gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gpg-error
-WANTLIB += graphite2 gstapp-1.0 gstaudio-1.0 gstbase-0.10 gstbase-1.0
-WANTLIB += gstcdda-0.10 gstcontroller-0.10 gstdataprotocol-0.10
-WANTLIB += gstfft-0.10 gstfft-1.0 gstinterfaces-0.10 gstpbutils-0.10
-WANTLIB += gstpbutils-1.0 gstreamer-0.10 gstreamer-1.0 gsttag-0.10
-WANTLIB += gsttag-1.0 gstvideo-0.10 gstvideo-1.0 gthread-2.0 gtk-x11-2.0
-WANTLIB += harfbuzz icui18n javascriptcoregtk-1.0
+WANTLIB += gcrypt gdk-x11-2.0 gdk_pixbuf-2.0 geoclue gio-2.0 glib-2.0
+WANTLIB += gmodule-2.0 gobject-2.0 gpg-error graphite2 gstapp-1.0
+WANTLIB += gstaudio-1.0 gstbase-0.10 gstbase-1.0 gstcdda-0.10
+WANTLIB += gstcontroller-0.10 gstdataprotocol-0.10 gstfft-0.10
+WANTLIB += gstfft-1.0 gstinterfaces-0.10 gstpbutils-0.10 gstpbutils-1.0
+WANTLIB += gstreamer-0.10 gstreamer-1.0 gsttag-0.10 gsttag-1.0
+WANTLIB += gstvideo-0.10 gstvideo-1.0 gthread-2.0 gtk-x11-2.0
+WANTLIB += harfbuzz harfbuzz-icu icudata icui18n icuuc javascriptcoregtk-1.0
 WANTLIB += jpeg m orc-0.4 pango-1.0 pangocairo-1.0 pangoft2-1.0
 WANTLIB += pcre pixman-1 png pthread pthread-stubs secret-1 soup-2.4
 WANTLIB += soup-gnome-2.4 sqlite3 stdc++ webkitgtk-1.0 webp xcb
@@ -55,24 +55,23 @@ RUN_DEPENDS +=	multimedia/gstreamer-0.10/plugins-ugly #mp3 support
 LIB_DEPENDS=	www/webkit \
 		multimedia/gstreamer-0.10/plugins-base
 
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_MIME_FILE=	Yes
-MODGNOME_TOOLS=		yelp
-
-LIBTOOL_FLAGS=	--tag=disable-static
-
-CONFIGURE_ARGS=	--disable-static \
-		--with-vendor-build-id="OpenBSD Ports" \
-		--disable-gio-hardware \
-		--disable-appledevice \
-		--disable-karma \
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache shared-mime-info yelp
+CONFIGURE_ARGS=	--with-vendor-build-id="OpenBSD Ports" \
 		--disable-shave
 
 # XXX lang/boo is marked as BROKEN
 CONFIGURE_ARGS += --disable-boo
 
-# requires gio-sharp
+# requires gtk-sharp-beans (not ported)
+CONFIGURE_ARGS += --disable-gio-hardware
+
+# requires libgpod-sharp (not ported)
+CONFIGURE_ARGS += --disable-appledevice
+
+# requires karma-sharp (not ported)
+CONFIGURE_ARGS += --disable-karma
+
+# requires gio-sharp (not ported)
 CONFIGURE_ARGS += --disable-gio
 
 DLLMAP_FILES=	src/Hyena/Hyena/Hyena.dll.config \
@@ -95,7 +94,7 @@ MAKE_FLAGS +=	INSTALL_DATA='/usr/bin/install -c -m 444'
 .endif
 
 post-install:
-	rm ${PREFIX}/lib/banshee/Backends/*.la
-	rm ${PREFIX}/lib/banshee/*.la
+	rm ${PREFIX}/lib/banshee/Backends/*.{a,la}
+	rm ${PREFIX}/lib/banshee/*.{a,la}
 
 .include <bsd.port.mk>

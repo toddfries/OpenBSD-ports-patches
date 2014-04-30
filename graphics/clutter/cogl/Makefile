@@ -1,12 +1,14 @@
-# $OpenBSD: Makefile,v 1.22 2014/01/21 09:49:38 jasper Exp $
+# $OpenBSD: Makefile,v 1.28 2014/04/02 09:36:11 jasper Exp $
 
 COMMENT=		modern 3D graphics API
 
 GNOME_PROJECT=		cogl
-GNOME_VERSION=		${MAJOR}.2
+GNOME_VERSION=		${MAJOR}.0
+REVISION=		0
 
-SHARED_LIBS +=  cogl                 2.0      # 14.0
-SHARED_LIBS +=  cogl-pango           2.0      # 14.0
+SHARED_LIBS +=  cogl                 3.0      # 21.0
+SHARED_LIBS +=	cogl-path            0.0      # 21.0
+SHARED_LIBS +=  cogl-pango           3.0      # 21.0
 
 WANTLIB += X11 Xcomposite Xdamage Xext Xfixes Xrandr Xrender cairo
 WANTLIB += expat ffi fontconfig freetype gdk_pixbuf-2.0 gio-2.0
@@ -15,7 +17,7 @@ WANTLIB += harfbuzz m pango-1.0 pangocairo-1.0
 WANTLIB += pangoft2-1.0 pcre pixman-1 png pthread pthread-stubs
 WANTLIB += xcb xcb-render xcb-shm z
 
-MODGNOME_TOOLS=		gi
+MODGNOME_TOOLS +=	gobject-introspection
 
 LIB_DEPENDS=		devel/pango \
 			graphics/gdk-pixbuf2
@@ -27,6 +29,7 @@ CONFIGURE_ARGS=		--with-gl-libname=libGL.so \
 TEST_DEPENDS=		shells/bash
 TEST_IS_INTERACTIVE=	x11
 
+# https://bugzilla.gnome.org/show_bug.cgi?id=726910
 pre-configure:
 	perl -pi -e 's,/bin/bash,${LOCALBASE}/bin/bash,' \
 		${WRKSRC}/tests/run-tests.sh

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.364 2014/01/11 22:56:03 jeremy Exp $
+# $OpenBSD: Makefile,v 1.367 2014/04/06 21:10:21 sthen Exp $
 
      SUBDIR =
      SUBDIR += DevIL
@@ -114,7 +114,6 @@
      SUBDIR += kimdaba
      SUBDIR += kipi-plugins
      SUBDIR += l2p
-     SUBDIR += lasem
      SUBDIR += lcms
      SUBDIR += lcms2
      SUBDIR += lensfun
@@ -164,6 +163,7 @@
      SUBDIR += node-canvas
      SUBDIR += ocaml-camlimages
      SUBDIR += ocrad
+     SUBDIR += opencolorio
      SUBDIR += opencsg
      SUBDIR += opencv
      SUBDIR += openexr
@@ -214,7 +214,6 @@
      SUBDIR += pqiv
      SUBDIR += prison
      SUBDIR += pstoedit
-     SUBDIR += py-Imaging
      SUBDIR += py-Pillow
      SUBDIR += py-cairo
      SUBDIR += py-dot

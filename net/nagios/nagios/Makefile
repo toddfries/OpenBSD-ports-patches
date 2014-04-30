@@ -1,9 +1,11 @@
-# $OpenBSD: Makefile,v 1.63 2013/11/07 10:31:38 rpe Exp $
+# $OpenBSD: Makefile,v 1.65 2014/04/07 12:32:23 sthen Exp $
 
 COMMENT-main=	host and service monitor
 COMMENT-web=	cgis and webpages for nagios
 
 V=		4.0.1
+REVISION-web=	0
+REVISION-main=	0
 DISTNAME=	nagios-$V
 PKGNAME-main=	nagios-$V
 PKGNAME-web=	nagios-web-$V
@@ -67,7 +69,7 @@ LIB_DEPENDS-web=
 RUN_DEPENDS-web= nagios-${V}-chroot:net/nagios/nagios,chroot \
 		 lang/php/${MODPHP_VERSION},-gd
 .else
-WANTLIB-web=	${WANTLIB} fontconfig freetype gd jpeg png z
+WANTLIB-web=	${WANTLIB} fontconfig freetype gd jpeg png pthread z
 LIB_DEPENDS-web= graphics/gd
 RUN_DEPENDS-web= nagios-${V}-!chroot:net/nagios/nagios \
 		 lang/php/${MODPHP_VERSION},-gd

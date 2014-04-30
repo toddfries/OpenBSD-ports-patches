@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.41 2014/02/07 17:41:32 rpointel Exp $
+# $OpenBSD: Makefile,v 1.43 2014/03/14 17:26:18 ajacoutot Exp $
 
 COMMENT=	GTK+ client for the Music Player Daemon
 
@@ -6,6 +6,7 @@ MODPY_EGG_VERSION=1.7a2
 #DISTNAME=	sonata-${MODPY_EGG_VERSION}
 DISTNAME=	sonata-1.7.1.20140207
 CATEGORIES=	audio
+REVISION=	0
 
 HOMEPAGE=	http://sonata.berlios.de/
 
@@ -29,7 +30,7 @@ RUN_DEPENDS=	audio/py-mpd2${MODPY_FLAVOR} \
 		devel/xdg-utils \
 		x11/dbus-python${MODPY_FLAVOR}
 
-# pygobject introspection for gtk+3
+# pygobject GTK3 introspection (not provided by indirect dependencies)
 RUN_DEPENDS +=	x11/gtk+3
 
 post-install:

@@ -1,12 +1,12 @@
-# $OpenBSD: Makefile,v 1.19 2014/01/24 09:22:49 espie Exp $
+# $OpenBSD: Makefile,v 1.21 2014/03/30 21:08:24 jasper Exp $
 
 COMMENT =		Lisp-1 dialect for the Java Virtual Machine
 
-V =			1.5.1
-DISTNAME =		clojure-${V}
-EXTRACT_SUFX =		.zip
-PKG_ARCH =		*
+VER =			1.6.0
+DISTNAME =		clojure-${VER}
 REVISION =		0
+
+PKG_ARCH =		*
 
 CATEGORIES =		lang
 
@@ -17,13 +17,16 @@ MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>
 # Eclipse Public License EPL 1.0
 PERMIT_PACKAGE_CDROM =	Yes
 
-MASTER_SITES =		http://repo1.maven.org/maven2/org/clojure/clojure/$V/
+MASTER_SITES =		https://github.com/clojure/clojure/archive/
+DISTFILES=		${DISTNAME}{clojure-${VER}}${EXTRACT_SUFX}
 
 MODULES =		java
 MODJAVA_VER =		1.6+
 MODJAVA_BUILD = 	ant
 MODJAVA_BUILD_TARGET_NAME =	jar
 MODJAVA_JRERUN = 	Yes
+
+WRKDIST =		${WRKDIR}/clojure-${DISTNAME}/
 
 RUN_DEPENDS =		java/javaPathHelper \
 			misc/rlwrap

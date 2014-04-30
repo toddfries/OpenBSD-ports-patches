@@ -1,35 +1,15 @@
-$OpenBSD: patch-spamd_spamd_raw,v 1.3 2012/06/25 22:12:30 sthen Exp $
+$OpenBSD: patch-spamd_spamd_raw,v 1.5 2014/04/25 09:20:27 bluhm Exp $
 
-Remove the SSLv2 support.
+This patch should be removed after OpenBSD got support for AI_ADDRCONFIG.
 
---- spamd/spamd.raw.orig	Mon Jun 25 08:06:20 2012
-+++ spamd/spamd.raw	Mon Jun 25 08:07:32 2012
-@@ -717,8 +717,8 @@ sub compose_listen_info_string {
-       $sslport = ( getservbyname($sslport, 'tcp') )[2];
-       die "spamd: invalid ssl-port: $opt{'port'}\n" unless $sslport;
-     }
--    $sslversion = $opt{'ssl-version'} || 'sslv23';
--    if ($sslversion !~ /^(?:sslv([23]|23)|(tlsv1))$/) {
-+    $sslversion = $opt{'ssl-version'} || 'sslv3';
-+    if ($sslversion !~ /^(?:sslv3|tlsv1)$/) {
-       die "spamd: invalid ssl-version: $opt{'ssl-version'}\n";
-     }
- 
-@@ -3341,12 +3341,11 @@ more details.
- 
- =item B<--ssl-version>=I<sslversion>
- 
--Specify the SSL protocol version to use, one of
--B<sslv2>, B<sslv3>, B<tlsv1>, or B<sslv23>.
--The default, B<sslv23>, is the most flexible, accepting a SSLv2 or higher
--hello handshake, then negotiating use of SSLv3 or TLSv1 protocol if the client
--can accept it.
--Specifying B<--ssl-version> implies B<--ssl>.
-+Specify the SSL protocol version to use, one of B<sslv3> or B<tlsv1>.
-+The default, B<sslv3>, is the most flexible, accepting a SSLv3 or
-+higher hello handshake, then negotiating use of SSLv3 or TLSv1
-+protocol if the client can accept it.  Specifying B<--ssl-version>
-+implies B<--ssl>.
- 
- =item B<--server-key> I<keyfile>
+--- spamd/spamd.raw.orig	Fri Feb  7 09:36:38 2014
++++ spamd/spamd.raw	Thu Apr 24 01:45:37 2014
+@@ -59,7 +59,7 @@ BEGIN {
+     Socket->VERSION(1.96);  # provides NIx_NOSERV, and Exporter tag :addrinfo
+   # Socket->VERSION(1.97);  # IO::Socket::IP depends on Socket 1.97
+     import Socket qw(/^(?:AI|NI|NIx|EAI)_/);
+-    &AI_ADDRCONFIG; &AI_PASSIVE;  # enable inlining
++    &AI_PASSIVE;  # enable inlining
+     &NI_NUMERICHOST, &NI_NUMERICSERV; &NIx_NOSERV; 1;
+   };
  

@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.41 2014/02/04 07:28:11 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.47 2014/04/02 09:36:11 jasper Exp $
 
 COMMENT=		graphic library for gtk+2
 
 GNOME_PROJECT=		gdk-pixbuf
-GNOME_VERSION=		2.30.4
+GNOME_VERSION=		2.30.7
 
 CATEGORIES=		graphics
 
-SHARED_LIBS +=  gdk_pixbuf-2.0       3000.0   # 3000.4
-SHARED_LIBS +=  gdk_pixbuf_xlib-2.0  3000.0   # 3000.4
+SHARED_LIBS +=  gdk_pixbuf-2.0       3000.0   # 3000.7
+SHARED_LIBS +=  gdk_pixbuf_xlib-2.0  3000.0   # 3000.7
 
 HOMEPAGE=		http://www.gtk.org/
 
@@ -32,8 +32,7 @@ LIB_DEPENDS=		devel/glib2 \
 # (g_content_type_from_mime_type requires shared-mime-info)
 BUILD_DEPENDS +=	misc/shared-mime-info
 
-MODGNOME_MIME_FILE=	Yes
-MODGNOME_TOOLS=		gi
+MODGNOME_TOOLS += gobject-introspection shared-mime-info
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--with-libjasper \

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.655 2014/01/29 14:06:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.660 2014/04/21 11:47:08 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -10,6 +10,7 @@
      SUBDIR += ap2-mod_perl
      SUBDIR += ap2-mod_wsgi
      SUBDIR += apache-httpd
+     SUBDIR += apache-httpd-openbsd
      SUBDIR += aria2
      SUBDIR += arora
      SUBDIR += asql
@@ -55,7 +56,6 @@
      SUBDIR += firefox-i18n
      SUBDIR += gcap
      SUBDIR += gecko-mediaplayer
-     SUBDIR += gitlist
      SUBDIR += gnash
      SUBDIR += goaccess
      SUBDIR += gtkhtml3
@@ -112,7 +112,6 @@
      SUBDIR += mimetex
      SUBDIR += minitube
      SUBDIR += mod_auth_bsd
-     SUBDIR += mod_auth_kerb
      SUBDIR += mod_auth_ldap
      SUBDIR += mod_auth_mysql
      SUBDIR += mod_auth_pgsql
@@ -304,7 +303,6 @@
      SUBDIR += p5-Plack-Test-ExternalServer
      SUBDIR += p5-Plagger
      SUBDIR += p5-PodToHTML
-     SUBDIR += p5-RTx-Tags
      SUBDIR += p5-Rose-HTML-Objects
      SUBDIR += p5-Rose-HTMLx-Form-Field-Autocomplete
      SUBDIR += p5-Rose-URI
@@ -490,7 +488,6 @@
      SUBDIR += seamonkey
      SUBDIR += seamonkey-i18n
      SUBDIR += selfoss
-     SUBDIR += silverstripe
      SUBDIR += slowhttptest
      SUBDIR += snownews
      SUBDIR += sogo

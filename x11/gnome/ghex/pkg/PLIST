@@ -1,4 +1,4 @@
-@comment $OpenBSD: PLIST,v 1.15 2013/09/27 10:25:19 jasper Exp $
+@comment $OpenBSD: PLIST,v 1.17 2014/04/15 07:39:07 jasper Exp $
 @bin bin/ghex
 include/gtkhex-3/
 include/gtkhex-3/gtkhex.h
@@ -34,6 +34,13 @@ share/help/de/ghex/figures/ghex_window_empty.png
 share/help/de/ghex/figures/ghex_window_open.png
 share/help/de/ghex/index.docbook
 share/help/de/ghex/legal.xml
+share/help/el/
+share/help/el/ghex/
+share/help/el/ghex/figures/
+share/help/el/ghex/figures/ghex_window_empty.png
+share/help/el/ghex/figures/ghex_window_open.png
+share/help/el/ghex/index.docbook
+share/help/el/ghex/legal.xml
 share/help/es/
 share/help/es/ghex/
 share/help/es/ghex/figures/
@@ -83,6 +90,13 @@ share/help/oc/ghex/figures/ghex_window_empty.png
 share/help/oc/ghex/figures/ghex_window_open.png
 share/help/oc/ghex/index.docbook
 share/help/oc/ghex/legal.xml
+share/help/pt_BR/
+share/help/pt_BR/ghex/
+share/help/pt_BR/ghex/figures/
+share/help/pt_BR/ghex/figures/ghex_window_empty.png
+share/help/pt_BR/ghex/figures/ghex_window_open.png
+share/help/pt_BR/ghex/index.docbook
+share/help/pt_BR/ghex/legal.xml
 share/help/sl/
 share/help/sl/ghex/
 share/help/sl/ghex/figures/
@@ -201,6 +215,8 @@ share/locale/zh_CN/LC_MESSAGES/ghex-3.0.mo
 share/locale/zh_TW/LC_MESSAGES/ghex-3.0.mo
 @exec %D/bin/update-desktop-database
 @unexec-delete %D/bin/update-desktop-database
+@exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/HighContrast
+@unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/HighContrast
 @exec %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @unexec-delete %D/bin/gtk-update-icon-cache -q -t %D/share/icons/hicolor
 @exec %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null

@@ -1,18 +1,14 @@
-@comment $OpenBSD: PLIST,v 1.12 2013/11/17 09:48:27 ajacoutot Exp $
+@comment $OpenBSD: PLIST,v 1.15 2014/04/03 09:05:47 ajacoutot Exp $
 @bin bin/deja-dup
 @bin bin/deja-dup-preferences
 lib/deja-dup/
-@comment lib/deja-dup/libcommon.la
-lib/deja-dup/libcommon.so
-@comment lib/deja-dup/libwidgets.la
+lib/deja-dup/libdeja.so
 lib/deja-dup/libwidgets.so
-@comment lib/nautilus/extensions-3.0/libdeja-dup.la
 lib/nautilus/extensions-3.0/libdeja-dup.so
 libexec/deja-dup/
 @bin libexec/deja-dup/deja-dup-monitor
 libexec/deja-dup/tools/
 libexec/deja-dup/tools/duplicity.plugin
-@comment libexec/deja-dup/tools/libduplicity.la
 libexec/deja-dup/tools/libduplicity.so
 man/ar/
 man/ar/man1/
@@ -74,6 +70,10 @@ man/en_AU/
 man/en_AU/man1/
 @man man/en_AU/man1/deja-dup-preferences.1
 @man man/en_AU/man1/deja-dup.1
+man/en_CA/
+man/en_CA/man1/
+@man man/en_CA/man1/deja-dup-preferences.1
+@man man/en_CA/man1/deja-dup.1
 man/en_GB/
 man/en_GB/man1/
 @man man/en_GB/man1/deja-dup-preferences.1
@@ -180,6 +180,10 @@ man/lv/man1/
 @man man/lv/man1/deja-dup.1
 @man man/man1/deja-dup-preferences.1
 @man man/man1/deja-dup.1
+man/mhr/
+man/mhr/man1/
+@man man/mhr/man1/deja-dup-preferences.1
+@man man/mhr/man1/deja-dup.1
 man/ml/
 man/ml/man1/
 @man man/ml/man1/deja-dup-preferences.1
@@ -236,6 +240,10 @@ man/ru/
 man/ru/man1/
 @man man/ru/man1/deja-dup-preferences.1
 @man man/ru/man1/deja-dup.1
+man/se/
+man/se/man1/
+@man man/se/man1/deja-dup-preferences.1
+@man man/se/man1/deja-dup.1
 man/shn/
 man/shn/man1/
 @man man/shn/man1/deja-dup-preferences.1
@@ -309,6 +317,7 @@ man/zh_TW/man1/
 @man man/zh_TW/man1/deja-dup-preferences.1
 @man man/zh_TW/man1/deja-dup.1
 share/GConf/gsettings/deja-dup.convert
+share/appdata/deja-dup.appdata.xml
 share/applications/deja-dup-preferences.desktop
 share/applications/deja-dup.desktop
 share/deja-dup/
@@ -327,6 +336,8 @@ share/help/C/deja-dup/backup-auto.page
 share/help/C/deja-dup/backup-first.page
 share/help/C/deja-dup/contribute.page
 share/help/C/deja-dup/credits.page
+share/help/C/deja-dup/figures/
+share/help/C/deja-dup/figures/deja-dup-icon.png
 share/help/C/deja-dup/index.page
 share/help/C/deja-dup/license.page
 share/help/C/deja-dup/prefs.page
@@ -632,6 +643,19 @@ share/help/ja/deja-dup/restore-lost.page
 share/help/ja/deja-dup/restore-revert.page
 share/help/ja/deja-dup/restore-worst-case.page
 share/help/ja/deja-dup/support.page
+share/help/ko/deja-dup/
+share/help/ko/deja-dup/backup-auto.page
+share/help/ko/deja-dup/backup-first.page
+share/help/ko/deja-dup/contribute.page
+share/help/ko/deja-dup/credits.page
+share/help/ko/deja-dup/index.page
+share/help/ko/deja-dup/license.page
+share/help/ko/deja-dup/prefs.page
+share/help/ko/deja-dup/restore-full.page
+share/help/ko/deja-dup/restore-lost.page
+share/help/ko/deja-dup/restore-revert.page
+share/help/ko/deja-dup/restore-worst-case.page
+share/help/ko/deja-dup/support.page
 share/help/lt/
 share/help/lt/deja-dup/
 share/help/lt/deja-dup/backup-auto.page
@@ -912,6 +936,7 @@ share/locale/da/LC_MESSAGES/deja-dup.mo
 share/locale/de/LC_MESSAGES/deja-dup.mo
 share/locale/el/LC_MESSAGES/deja-dup.mo
 share/locale/en_AU/LC_MESSAGES/deja-dup.mo
+share/locale/en_CA/LC_MESSAGES/deja-dup.mo
 share/locale/en_GB/LC_MESSAGES/deja-dup.mo
 share/locale/eo/LC_MESSAGES/deja-dup.mo
 share/locale/es/LC_MESSAGES/deja-dup.mo
@@ -938,6 +963,9 @@ share/locale/ko/LC_MESSAGES/deja-dup.mo
 share/locale/ku/LC_MESSAGES/deja-dup.mo
 share/locale/lt/LC_MESSAGES/deja-dup.mo
 share/locale/lv/LC_MESSAGES/deja-dup.mo
+share/locale/mhr/
+share/locale/mhr/LC_MESSAGES/
+share/locale/mhr/LC_MESSAGES/deja-dup.mo
 share/locale/ml/LC_MESSAGES/deja-dup.mo
 share/locale/ms/LC_MESSAGES/deja-dup.mo
 share/locale/my/LC_MESSAGES/deja-dup.mo
@@ -952,6 +980,9 @@ share/locale/pt/LC_MESSAGES/deja-dup.mo
 share/locale/pt_BR/LC_MESSAGES/deja-dup.mo
 share/locale/ro/LC_MESSAGES/deja-dup.mo
 share/locale/ru/LC_MESSAGES/deja-dup.mo
+share/locale/se/
+share/locale/se/LC_MESSAGES/
+share/locale/se/LC_MESSAGES/deja-dup.mo
 share/locale/shn/
 share/locale/shn/LC_MESSAGES/
 share/locale/shn/LC_MESSAGES/deja-dup.mo

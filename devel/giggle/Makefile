@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.32 2013/09/28 08:50:44 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.35 2014/04/02 09:36:10 jasper Exp $
 
 COMMENT=	gtk-based git repository viewer
 
@@ -32,9 +32,8 @@ RUN_DEPENDS=	devel/git
 BUILD_DEPENDS+=	devel/git
 LIB_DEPENDS=	x11/gtksourceview3
 
-MODGNOME_TOOLS= 	yelp
-MODGNOME_DESKTOP_FILE=	Yes
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache yelp
+
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS+=	--disable-evolution-data-server
 

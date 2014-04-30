@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1197 2014/02/08 22:15:13 espie Exp $
+# $OpenBSD: Makefile,v 1.1221 2014/04/28 14:51:58 afresh1 Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -15,9 +15,8 @@
      SUBDIR += argtable
      SUBDIR += arm-elf
      SUBDIR += asm6
-     SUBDIR += asp2php
-     SUBDIR += asp2php,no_x11
      SUBDIR += astyle
+     SUBDIR += atf
      SUBDIR += atk
      SUBDIR += atk2mm
      SUBDIR += atlas
@@ -33,6 +32,7 @@
      SUBDIR += blame
      SUBDIR += boehm-gc
      SUBDIR += boost
+     SUBDIR += boris
      SUBDIR += bouml
      SUBDIR += bpython
      SUBDIR += bullet
@@ -54,6 +54,7 @@
      SUBDIR += cil
      SUBDIR += cln
      SUBDIR += cmake
+     SUBDIR += cmocka
      SUBDIR += cmockery
      SUBDIR += coccigrep
      SUBDIR += coccinelle
@@ -101,20 +102,6 @@
      SUBDIR += eclipse
      SUBDIR += ectags
      SUBDIR += emacs-haskell
-     SUBDIR += erl-automeck
-     SUBDIR += erl-bear
-     SUBDIR += erl-depsolver
-     SUBDIR += erl-ej
-     SUBDIR += erl-ejson
-     SUBDIR += erl-eper
-     SUBDIR += erl-fast_log
-     SUBDIR += erl-folsom
-     SUBDIR += erl-gen_server2
-     SUBDIR += erl-jiffy
-     SUBDIR += erl-meck
-     SUBDIR += erl-mixer
-     SUBDIR += erl-pooler
-     SUBDIR += ethos
      SUBDIR += fasm
      SUBDIR += ffcall
      SUBDIR += flatzebra
@@ -123,6 +110,7 @@
      SUBDIR += fossil
      SUBDIR += fossil,static
      SUBDIR += fox
+     SUBDIR += frama-c
      SUBDIR += fribidi
      SUBDIR += gconf-editor
      SUBDIR += gconf2
@@ -299,6 +287,7 @@
      SUBDIR += hs-uniplate
      SUBDIR += hs-unix-compat
      SUBDIR += hs-unordered-containers
+     SUBDIR += hs-uuid
      SUBDIR += hs-vault
      SUBDIR += hs-vector
      SUBDIR += hs-vector-algorithms
@@ -322,6 +311,8 @@
      SUBDIR += json-glib
      SUBDIR += kdbg
      SUBDIR += kdiff3
+     SUBDIR += kyua-cli
+     SUBDIR += kyua-testers
      SUBDIR += lam
      SUBDIR += legit
      SUBDIR += libIDL
@@ -438,6 +429,7 @@
      SUBDIR += luarings
      SUBDIR += luastdlib
      SUBDIR += luastdlib,lua52
+     SUBDIR += lutok
      SUBDIR += m4
      SUBDIR += maven
      SUBDIR += mcs
@@ -447,12 +439,14 @@
      SUBDIR += mingw
      SUBDIR += mk
      SUBDIR += mm
+     SUBDIR += mm-common
      SUBDIR += mono-addins
      SUBDIR += mono-gdata
      SUBDIR += mono-notify
      SUBDIR += monodevelop
      SUBDIR += monotone
      SUBDIR += mowgli
+     SUBDIR += mozjs17
      SUBDIR += mpfr
      SUBDIR += msp430
      SUBDIR += mspdebug
@@ -576,11 +570,12 @@
      SUBDIR += p5-Class-InsideOut
      SUBDIR += p5-Class-Inspector
      SUBDIR += p5-Class-Load
+     SUBDIR += p5-Class-Load-XS
      SUBDIR += p5-Class-Loader
-     SUBDIR += p5-Class-MOP
      SUBDIR += p5-Class-MakeMethods
      SUBDIR += p5-Class-Meta
      SUBDIR += p5-Class-Meta-Express
+     SUBDIR += p5-Class-Method-Modifiers
      SUBDIR += p5-Class-MethodMaker
      SUBDIR += p5-Class-MethodMapper
      SUBDIR += p5-Class-Multimethods
@@ -693,16 +688,19 @@
      SUBDIR += p5-EV
      SUBDIR += p5-Env-PS1
      SUBDIR += p5-Error
+     SUBDIR += p5-Eval-Closure
      SUBDIR += p5-Event
      SUBDIR += p5-Event-ExecFlow
-     SUBDIR += p5-Event-Lib
      SUBDIR += p5-Exception-Class
      SUBDIR += p5-Expect
      SUBDIR += p5-Expect-Simple
      SUBDIR += p5-Exporter-Lite
      SUBDIR += p5-Exporter-Tidy
      SUBDIR += p5-ExtUtils-CChecker
+     SUBDIR += p5-ExtUtils-Config
      SUBDIR += p5-ExtUtils-Depends
+     SUBDIR += p5-ExtUtils-Helpers
+     SUBDIR += p5-ExtUtils-InstallPaths
      SUBDIR += p5-ExtUtils-PkgConfig
      SUBDIR += p5-ExtUtils-XSBuilder
      SUBDIR += p5-ExtUtils-XSpp
@@ -774,6 +772,7 @@
      SUBDIR += p5-IO-LockedFile
      SUBDIR += p5-IO-Multiplex
      SUBDIR += p5-IO-Pager
+     SUBDIR += p5-IO-SessionData
      SUBDIR += p5-IO-String
      SUBDIR += p5-IO-Tee
      SUBDIR += p5-IO-Tty
@@ -783,6 +782,7 @@
      SUBDIR += p5-IPC-Run3
      SUBDIR += p5-IPC-ShareLite
      SUBDIR += p5-IPC-Shareable
+     SUBDIR += p5-Import-Into
      SUBDIR += p5-Inline
      SUBDIR += p5-Internals
      SUBDIR += p5-Iterator
@@ -811,8 +811,13 @@
      SUBDIR += p5-MLDBM-Sync
      SUBDIR += p5-MRO-Compat
      SUBDIR += p5-Memoize-ExpireLRU
+     SUBDIR += p5-Module-Build-Tiny
      SUBDIR += p5-Module-Find
+     SUBDIR += p5-Module-Implementation
      SUBDIR += p5-Module-Install
+     SUBDIR += p5-Module-Install-AuthorTests
+     SUBDIR += p5-Module-Install-Repository
+     SUBDIR += p5-Module-Install-XSUtil
      SUBDIR += p5-Module-Manifest
      SUBDIR += p5-Module-Pluggable-Fast
      SUBDIR += p5-Module-Refresh
@@ -822,6 +827,7 @@
      SUBDIR += p5-Module-Starter-Plugin-CGIApp
      SUBDIR += p5-Module-Versions-Report
      SUBDIR += p5-Module-Which
+     SUBDIR += p5-Moo
      SUBDIR += p5-Moose
      SUBDIR += p5-MooseX-Aliases
      SUBDIR += p5-MooseX-AttributeHelpers
@@ -896,6 +902,8 @@
      SUBDIR += p5-Parse-PlainConfig
      SUBDIR += p5-Parse-RecDescent
      SUBDIR += p5-Path-Class
+     SUBDIR += p5-Path-Tiny
+     SUBDIR += p5-Perl-Command
      SUBDIR += p5-Perl-Critic
      SUBDIR += p5-Perl6-Junction
      SUBDIR += p5-PerlIO-eol
@@ -916,10 +924,9 @@
      SUBDIR += p5-Regexp-IPv6
      SUBDIR += p5-Regexp-Shellish
      SUBDIR += p5-Return-Value
+     SUBDIR += p5-Role-Tiny
      SUBDIR += p5-SDL
      SUBDIR += p5-SUPER
-     SUBDIR += p5-SVN-Dump
-     SUBDIR += p5-SVN-Mirror
      SUBDIR += p5-SVN-Notify
      SUBDIR += p5-SVN-Simple
      SUBDIR += p5-SVN-Web
@@ -944,6 +951,7 @@
      SUBDIR += p5-String-Scanf
      SUBDIR += p5-String-Truncate
      SUBDIR += p5-Sub-Exporter
+     SUBDIR += p5-Sub-Exporter-Progressive
      SUBDIR += p5-Sub-Identify
      SUBDIR += p5-Sub-Install
      SUBDIR += p5-Sub-Lambda
@@ -990,6 +998,7 @@
      SUBDIR += p5-Test-File
      SUBDIR += p5-Test-File-Contents
      SUBDIR += p5-Test-Group
+     SUBDIR += p5-Test-Harness
      SUBDIR += p5-Test-HTML-Tidy
      SUBDIR += p5-Test-Inline
      SUBDIR += p5-Test-Inter
@@ -1001,6 +1010,7 @@
      SUBDIR += p5-Test-MockModule
      SUBDIR += p5-Test-MockObject
      SUBDIR += p5-Test-MockTime
+     SUBDIR += p5-Test-Most
      SUBDIR += p5-Test-NoTabs
      SUBDIR += p5-Test-NoWarnings
      SUBDIR += p5-Test-Object
@@ -1082,10 +1092,12 @@
      SUBDIR += p5-capitalization
      SUBDIR += p5-common-sense
      SUBDIR += p5-enum
+     SUBDIR += p5-indirect
      SUBDIR += p5-libintl
      SUBDIR += p5-namespace-autoclean
      SUBDIR += p5-namespace-clean
      SUBDIR += p5-prefork
+     SUBDIR += p5-strictures
      SUBDIR += pango
      SUBDIR += pangomm
      SUBDIR += pangox-compat
@@ -1124,6 +1136,7 @@
      SUBDIR += py-async
      SUBDIR += py-babel
      SUBDIR += py-babel,python3
+     SUBDIR += py-backports-ssl-match-hostname
      SUBDIR += py-blinker
      SUBDIR += py-buildbot
      SUBDIR += py-buildslave
@@ -1322,8 +1335,9 @@
      SUBDIR += ruby-rcov,ruby19
      SUBDIR += ruby-rdoc
      SUBDIR += ruby-ref
-     SUBDIR += ruby-rgen
-     SUBDIR += ruby-rgen,ruby18
+     SUBDIR += ruby-rgen,ruby19
+     SUBDIR += ruby-rgen,ruby20
+     SUBDIR += ruby-rgen,ruby21
      SUBDIR += ruby-rr
      SUBDIR += ruby-rspec
      SUBDIR += ruby-ruby2ruby
@@ -1392,7 +1406,6 @@
      SUBDIR += stm32loader
      SUBDIR += stp
      SUBDIR += subversion
-     SUBDIR += svk
      SUBDIR += swig
      SUBDIR += t1lib
      SUBDIR += tclap

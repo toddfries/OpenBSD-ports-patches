@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.114 2013/06/20 14:57:21 bcallah Exp $
+# $OpenBSD: Makefile,v 1.116 2014/03/23 18:50:39 naddy Exp $
 
      SUBDIR =
      SUBDIR += R
@@ -45,8 +45,6 @@
      SUBDIR += logic2cnf
      SUBDIR += lpsolve
      SUBDIR += lrs
-     SUBDIR += maple
-     SUBDIR += maple-share
      SUBDIR += mathomatic
      SUBDIR += matio
      SUBDIR += maxima
@@ -74,6 +72,7 @@
      SUBDIR += p5-Math-Base85
      SUBDIR += p5-Math-Bezier
      SUBDIR += p5-Math-BigInt-GMP
+     SUBDIR += p5-Math-BigInt-Pari
      SUBDIR += p5-Math-Calc-Units
      SUBDIR += p5-Math-Derivative
      SUBDIR += p5-Math-FFT

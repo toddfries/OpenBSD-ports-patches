@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.222 2014/02/22 10:14:56 stsp Exp $
+# $OpenBSD: Makefile,v 1.234 2014/04/20 21:18:53 ajacoutot Exp $
 
 COMMENT=		general-purpose utility library
 
 GNOME_PROJECT=		glib
-GNOME_VERSION=		2.38.2
+GNOME_VERSION=		2.40.0
 PKGNAME=		${DISTNAME:S/glib/glib2/}
-REVISION=		6
+REVISION=		7
 
 CATEGORIES=		devel
 
@@ -13,11 +13,11 @@ HOMEPAGE=		http://www.gtk.org/
 
 MAINTAINER=		Antoine Jacoutot <ajacoutot@openbsd.org>
 
-SHARED_LIBS +=  glib-2.0             3800.0   # 3800.2
-SHARED_LIBS +=  gmodule-2.0          3800.0   # 3800.2
-SHARED_LIBS +=  gthread-2.0          3800.0   # 3800.2
-SHARED_LIBS +=  gobject-2.0          3800.0   # 3800.2
-SHARED_LIBS +=  gio-2.0              3800.0   # 3800.2
+SHARED_LIBS +=  glib-2.0             4000.0   # 4000.0
+SHARED_LIBS +=  gmodule-2.0          4000.0   # 4000.0
+SHARED_LIBS +=  gthread-2.0          4000.0   # 4000.0
+SHARED_LIBS +=  gobject-2.0          4000.0   # 4000.0
+SHARED_LIBS +=  gio-2.0              4000.0   # 4000.0
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -28,8 +28,7 @@ MODULES=		devel/gettext \
 			lang/python \
 			x11/gnome
 
-# man pages
-BUILD_DEPENDS +=	textproc/docbook-xsl
+MODGNOME_TOOLS +=	docbook
 
 LIB_DEPENDS=		devel/pcre \
 			devel/libelf \
@@ -51,6 +50,10 @@ CONFIGURE_ARGS=		--enable-static \
 .if ${PROPERTIES:Mgcc3}
 PATCH_LIST=	patch-* gcc3-*
 .endif
+
+# XXX rm at next release; patch-configure_ac, patch-gobject_Makefile_in
+CONFIGURE_STYLE=	autoconf
+AUTOCONF_VERSION=	2.69
 
 pre-configure:
 	perl -pi -e "s,/usr/local,${LOCALBASE},g;" \

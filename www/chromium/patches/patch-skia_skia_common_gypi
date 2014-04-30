@@ -1,0 +1,12 @@
+$OpenBSD: patch-skia_skia_common_gypi,v 1.1 2014/04/17 16:27:53 robert Exp $
+--- skia/skia_common.gypi.orig.port	Tue Apr 15 19:57:28 2014
++++ skia/skia_common.gypi	Tue Apr 15 19:57:45 2014
+@@ -61,7 +61,7 @@
+     }],
+ 
+     #Settings for text blitting, chosen to approximate the system browser.
+-    [ 'OS == "linux"', {
++    [ 'OS == "linux" or os_bsd == 1', {
+       'defines': [
+         'SK_GAMMA_EXPONENT=1.2',
+         'SK_GAMMA_CONTRAST=0.2',

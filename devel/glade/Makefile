@@ -1,8 +1,8 @@
-# $OpenBSD: Makefile,v 1.59 2013/12/21 08:24:37 jasper Exp $
+# $OpenBSD: Makefile,v 1.67 2014/04/15 07:35:39 jasper Exp $
 
 COMMENT=	user interface builder for the gtk+3 toolkit
 
-GNOME_VERSION=	3.16.1
+GNOME_VERSION=	3.18.2
 GNOME_PROJECT= 	glade
 
 CATEGORIES=	devel
@@ -31,22 +31,16 @@ MODULES=	devel/gettext \
 
 BUILD_DEPENDS=	devel/py-gobject3
 
-# man pages
-BUILD_DEPENDS += textproc/docbook-xsl
-
 LIB_DEPENDS=	x11/gtk+3>=3.5.18 \
 		devel/libffi
 
 RUN_DEPENDS=	x11/gnome/devhelp \
 		devel/py-gobject3
 
-MODGNOME_DESKTOP_FILE= 	Yes
-MODGNOME_ICON_CACHE=	Yes
-MODGNOME_TOOLS= gi yelp
+MODGNOME_TOOLS += desktop-file-utils docbook gtk-update-icon-cache
+MODGNOME_TOOLS += gobject-introspection yelp
 
 CONFIGURE_STYLE=	gnu
-MODGNOME_CPPFLAGS=	-pthread
-MODGNOME_LDFLAGS=	-pthread -lutil
 
 post-install:
 	rm ${PREFIX}/lib/glade/modules/*.{a,la}

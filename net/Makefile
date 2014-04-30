@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.828 2014/02/08 15:13:36 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.842 2014/04/22 10:02:10 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += GeoIP
@@ -78,14 +78,8 @@
      SUBDIR += echoping
      SUBDIR += ejabberd
      SUBDIR += ekg
-     SUBDIR += emesene
      SUBDIR += enet
      SUBDIR += epic4
-     SUBDIR += erl-amqp_client
-     SUBDIR += erl-gen_bunny
-     SUBDIR += erl-ibrowse
-     SUBDIR += erl-mini_s3
-     SUBDIR += erl-rabbit_common
      SUBDIR += etherape
      SUBDIR += ettercap
      SUBDIR += ettercap,no_x11
@@ -126,6 +120,7 @@
      SUBDIR += hs-HTTP
      SUBDIR += hs-curl
      SUBDIR += hs-hostname
+     SUBDIR += hs-network-info
      SUBDIR += httptunnel
      SUBDIR += icb
      SUBDIR += icbirc
@@ -268,7 +263,6 @@
      SUBDIR += oinkmaster
      SUBDIR += olsrd
      SUBDIR += onioncat
-     SUBDIR += opal
      SUBDIR += openafs
      SUBDIR += openconnect
      SUBDIR += openfire
@@ -351,6 +345,7 @@
      SUBDIR += p5-Net-Ping-External
      SUBDIR += p5-Net-Radius
      SUBDIR += p5-Net-RawIP
+     SUBDIR += p5-Net-SCP
      SUBDIR += p5-Net-SFTP
      SUBDIR += p5-Net-SFTP-Foreign
      SUBDIR += p5-Net-SMTP-SSL
@@ -358,6 +353,7 @@
      SUBDIR += p5-Net-SMTP_auth
      SUBDIR += p5-Net-SNMP
      SUBDIR += p5-Net-SNPP
+     SUBDIR += p5-Net-SSH
      SUBDIR += p5-Net-SSH-Expect
      SUBDIR += p5-Net-SSH-Perl
      SUBDIR += p5-Net-SSH2
@@ -518,6 +514,9 @@
      SUBDIR += ruby-macaddr
      SUBDIR += ruby-macaddr,ruby18
      SUBDIR += ruby-minion
+     SUBDIR += ruby-msgpack,ruby19
+     SUBDIR += ruby-msgpack,ruby20
+     SUBDIR += ruby-msgpack,ruby21
      SUBDIR += ruby-net-dns
      SUBDIR += ruby-net-http-digest_auth
      SUBDIR += ruby-net-http-digest_auth,ruby18
@@ -530,7 +529,6 @@
      SUBDIR += ruby-stomp
      SUBDIR += ruby-xmpp4r
      SUBDIR += samba
-     SUBDIR += samba,ads
      SUBDIR += samba,ldap
      SUBDIR += scamper
      SUBDIR += scapy
@@ -581,6 +579,7 @@
      SUBDIR += tinyfugue
      SUBDIR += tircd
      SUBDIR += tircproxy
+     SUBDIR += tkabber
      SUBDIR += tkirc
      SUBDIR += tn5250
      SUBDIR += tor
@@ -597,15 +596,17 @@
      SUBDIR += ucspi-unix
      SUBDIR += udns
      SUBDIR += udptunnel
-     SUBDIR += unbound
+     SUBDIR += unifi
      SUBDIR += unison
      SUBDIR += unworkable
      SUBDIR += ushare
      SUBDIR += uucp
+     SUBDIR += uucpd
      SUBDIR += valknut
      SUBDIR += vicq
      SUBDIR += vncsnapshot
      SUBDIR += vnstat
+     SUBDIR += vpnc-scripts
      SUBDIR += vsftpd
      SUBDIR += walker
      SUBDIR += weechat

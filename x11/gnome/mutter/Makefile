@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.31 2014/02/20 17:55:29 jasper Exp $
+# $OpenBSD: Makefile,v 1.39 2014/04/16 07:24:15 jasper Exp $
 
 COMMENT=		window and compositing manager
 
 GNOME_PROJECT=		mutter
-GNOME_VERSION=		3.10.4
+GNOME_VERSION=		3.12.1
 
 SHARED_LIBS +=  mutter                    0.1 # 0.0
 
@@ -19,14 +19,14 @@ WANTLIB += glib-2.0 gmodule-2.0 gobject-2.0 graphite2 gthread-2.0
 WANTLIB += gtk-3 harfbuzz json-glib-1.0 ltdl
 WANTLIB += m ogg pango-1.0 pangocairo-1.0 pangoft2-1.0 pcre pixman-1
 WANTLIB += png pthread pthread-stubs startup-notification-1 vorbis
-WANTLIB += vorbisfile xcb xcb-aux xcb-render xcb-shm z
-WANTLIB += dbus-glib-1 gnome-desktop-3 upower-glib xkbfile
+WANTLIB += vorbisfile xcb xcb-util xcb-render xcb-shm z
+WANTLIB += gnome-desktop-3 upower-glib cogl-path
 
 MODULES=		devel/dconf \
 			devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS=		gi
+MODGNOME_TOOLS += desktop-file-utils gobject-introspection
 
 LIB_DEPENDS=		audio/libcanberra,-gtk3 \
 			devel/startup-notification \
@@ -42,11 +42,6 @@ RUN_DEPENDS=		devel/gsettings-desktop-schemas \
 			x11/gnome/themes-standard \
 			x11/gnome/zenity
 
-DESKTOP_FILES=		Yes
-
-LIBTOOL_FLAGS+= 	--tag=disable-static
-
-CONFIGURE_ARGS +=	--disable-static
 # disable -Werror which breaks at least hppa/mips64/sparc64
 CONFIGURE_ARGS +=	--enable-compile-warnings=yes
 

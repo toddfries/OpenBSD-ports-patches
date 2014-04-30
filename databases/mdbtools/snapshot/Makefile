@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.35 2013/09/27 17:49:02 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.38 2014/04/02 09:36:10 jasper Exp $
 
 COMMENT-main=		read microsoft Access MDB
 COMMENT-gmdb=		graphical interface to MDB tools
@@ -9,7 +9,7 @@ PKGNAME-main=		mdbtools-${DATE}
 PKGNAME-gmdb=		gmdb-${DATE}
 
 REVISION-main=		9
-REVISION-gmdb=		14
+REVISION-gmdb=		15
 
 CATEGORIES=		databases converters
 HOMEPAGE=		http://mdbtools.sourceforge.net/
@@ -45,7 +45,8 @@ WANTLIB-gmdb += xcb-render xcb-shm xml2 z
 MODULES=		devel/gettext \
 			x11/gnome
 
-MODGNOME_TOOLS= 	yelp
+MODGNOME_TOOLS +=	yelp
+
 WRKDIST=		${WRKDIR}/mdbtools
 
 BUILD_DEPENDS=		devel/bison \

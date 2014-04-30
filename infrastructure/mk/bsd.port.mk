@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1256 2014/02/11 10:34:34 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1265 2014/04/25 15:28:52 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -166,8 +166,12 @@ PACKAGE_REPOSITORY ?= ${PORTSDIR}/packages
 PORTS_BUILD_XENOCARA_TOO ?= No
 
 .if ${PORTS_BUILD_XENOCARA_TOO:L} == "no"
-.  if !exists(${X11BASE}/man/whatis.db)
+.  if !exists(${X11BASE}/man/mandoc.db)
+.    if exists(${X11BASE}/man/whatis.db)
+ERRORS += "Your X11/system is not current"
+.    else
 ERRORS += "Fatal: building ports requires correctly installed X11"
+.    endif
 .  endif
 .endif
 
@@ -382,9 +386,15 @@ BUILD_DEPENDS += devel/libtool
 LIBTOOL ?= /usr/bin/libtool
 MAKE_ENV += PORTSDIR="${PORTSDIR}"
 .  endif
-CONFIGURE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
-MAKE_ENV += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
-MAKE_FLAGS += LIBTOOL="${LIBTOOL} ${LIBTOOL_FLAGS}" ${_lt_libs}
+# Intermediate variable because some tools like python to not properly
+# parse variables with trailing spaces and add a bogus "" argument.
+_LIBTOOL = ${LIBTOOL}
+.if !empty(LIBTOOL_FLAGS)
+_LIBTOOL += "${LIBTOOL_FLAGS}"
+.endif
+CONFIGURE_ENV += LIBTOOL="${_LIBTOOL}" ${_lt_libs}
+MAKE_ENV += LIBTOOL="${_LIBTOOL}" ${_lt_libs}
+MAKE_FLAGS += LIBTOOL="${_LIBTOOL}" ${_lt_libs}
 .endif
 MAKE_FLAGS += SHARED_LIBS_LOG=${WRKBUILD}/shared_libs.log
 USE_CCACHE ?= No
@@ -940,7 +950,7 @@ _lt_libs += lib${_n:S/+/_/g:S/-/_/g:S/./_/g}_ltversion=${_v}
 # Create the generic variable substitution list, from subst vars
 SUBST_VARS += MACHINE_ARCH ARCH HOMEPAGE ^PREFIX ^SYSCONFDIR FLAVOR_EXT \
 	FULLPKGNAME MAINTAINER ^BASE_PKGPATH ^LOCALBASE ^X11BASE ^TRUEPREFIX \
-	^RCDIR
+	^RCDIR ^LOCALSTATEDIR
 _tmpvars =
 
 _PKG_ADD_AUTO ?=
@@ -1250,7 +1260,7 @@ EXTRACT_CASES += *.shar | *.sh) \
 EXTRACT_CASES += *.tar.gz|*.tgz) \
 	${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
 EXTRACT_CASES += *.gz) \
-	${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive >`basename $$archive .gz`;;
+	${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive >$$(basename $$archive .gz);;
 EXTRACT_CASES += *) \
 	${GZIP_CMD} -dc ${FULLDISTDIR}/$$archive | ${TAR} xf -;;
 
@@ -1658,7 +1668,7 @@ _do_checksum_package = \
 	mkdir -p ${_PACKAGE_CHECKSUM_DIR} && \
 	cd ${_TMP_REPO} && \
 	cksum -b -a sha256 $$pkgname \
-		>${_PACKAGE_CHECKSUM_DIR}/`basename $$pkgname .tgz`.sha256
+		>${_PACKAGE_CHECKSUM_DIR}/$$(basename $$pkgname .tgz).sha256
 
 .if ${CHECKSUM_PACKAGES:L} == "yes"
 _checksum_package = ${_do_checksum_package}
@@ -1703,7 +1713,7 @@ _parse_spec = \
 
 _compute_default = \
 	set -f; \
-	if set -- `eval $$toset exec ${MAKE} _print-metadata`; then \
+	if set -- $$(eval $$toset exec ${MAKE} _print-metadata); then \
 		default=$$1; pkgspec=$$2; pkgpath=$$3; \
 	else \
 		echo 1>&2 "Problem with dependency $$d"; \
@@ -1717,7 +1727,7 @@ _complete_pkgspec = \
 	X) \
 		pkg=$$pkgspec;; \
 	XSTEM*) \
-		stem=`echo $$default|${_version2stem}`; \
+		stem=$$(echo $$default|${_version2stem}); \
 		pkg="$$stem$${pkg\#STEM}";; \
 	esac
 
@@ -1730,11 +1740,17 @@ _emit_run_depends = for i in ${RUN_DEPENDS${SUBPACKAGE}:QL}; do echo "$$i"; done
 # XXX assumes it's running under _cache_fragment, either directly, or from
 # a target up there
 
+# XXX if we can't move the tmpfile, we remove it, because we've been pre-empted
+# by someone with more rights who created the correct file for us
 _libs2cache = \
 	cached_libs=$${_DEPENDS_CACHE}/$$(echo $$subdir|sed -e 's/\//--/g'); \
 	if ! test -f $$cached_libs; then \
-		if ! eval $$toset ${MAKE} print-plist-libs >$$cached_libs; \
-		then \
+		t=$$(mktemp $${_DEPENDS_CACHE}/tmp.XXXXXXXXXX||exit 1); \
+		if eval $$toset ${MAKE} print-plist-libs >$$t; \
+		then  \
+			chmod 0644 $$t; \
+			mv $$t $$cached_libs || rm $$t; \
+		else \
 			echo 1>&2 "Problem with dependency $$subdir"; \
 			exit 1; \
 		fi; \
@@ -1886,15 +1902,15 @@ ${_PACKAGE_COOKIE${_S}}:
 	@${ECHO_MSG} "Create ${_PACKAGE_COOKIE${_S}}"
 	@cd ${.CURDIR} && \
 	tmp=${_TMP_REPO}${_PKGFILE${_S}} pkgname=${_PKGFILE${_S}} permit_ftp=${PERMIT_PACKAGE_FTP${_S}:L:Q} permit_cdrom=${PERMIT_PACKAGE_CDROM${_S}:L:Q} && \
-	if deps=`SUBPACKAGE=${_S} wantlib_args=${_pkg_wantlib_args} \
-			${MAKE} print-package-args` && \
+	if deps=$$(SUBPACKAGE=${_S} wantlib_args=${_pkg_wantlib_args} \
+			${MAKE} print-package-args) && \
 		${SUDO} ${_PKG_CREATE} -DPORTSDIR="${PORTSDIR}" \
 			$$deps ${PKG_ARGS${_S}} $$tmp && \
 		${_check_lib_depends} $$tmp && \
 		${_register_plist${_S}} $$tmp && \
 		${_checksum_package} && \
 		mv $$tmp ${_PACKAGE_COOKIE${_S}} && \
-		mode=`id -u`:`id -g` && \
+		mode=$$(id -u):$$(id -g) && \
 		${SUDO} chown $${mode} ${_PACKAGE_COOKIE${_S}}; then \
 		 	exit 0; \
 	else \
@@ -1935,8 +1951,8 @@ ${_UPDATE_COOKIE${_S}}:
 	@mkdir -p ${UPDATE_COOKIES_DIR}
 .  endif
 	@${ECHO_MSG} "===> Updating for ${FULLPKGNAME${_S}}"
-	@b=`cd ${.CURDIR} && SUBPACKAGE=${_S} ${MAKE} print-plist|sed -ne '/^@pkgpath /s,,-e ,p'`; \
-	a=`${PKG_INFO} -e ${FULLPKGPATH${_S}} $$b 2>/dev/null |sort -u`; \
+	@b=$$(cd ${.CURDIR} && SUBPACKAGE=${_S} ${MAKE} print-plist|sed -ne '/^@pkgpath /s,,-e ,p'); \
+	a=$$(${PKG_INFO} -e ${FULLPKGPATH${_S}} $$b 2>/dev/null |sort -u); \
 	case $$a in \
 		'') ${ECHO_MSG} "Not installed, no update";; \
 		*) cd ${.CURDIR} && SUBPACKAGE=${_S} _DEPENDS_TARGET=package PKGPATH=${PKGPATH} \
@@ -2059,7 +2075,7 @@ ${WRKDIR}/.dep-${_i:C,>=,ge-,g:C,<=,le-,g:C,<,lt-,g:C,>,gt-,g:C,\*,ANY,g:C,[|:/=
 						second_pass=true;; \
 				esac; \
 				$$try_install && ${_force_update_fragment}; \
-				if `${PKG_INFO} -e "$$pkg" -r "$$pkg" $$default >$@t`; then \
+				if $$(${PKG_INFO} -e "$$pkg" -r "$$pkg" $$default >$@t); then \
 					sed -ne '/^inst:/s///p' <$@t| \
 						{ read v || v=found; \
 							echo "$$v" >$@; \
@@ -2221,7 +2237,7 @@ port-lib-depends-check: ${WRKINST}/.saved_libs
 _internal-manpages-check: ${_FAKE_COOKIE}
 	@cd ${WRKINST}${TRUEPREFIX}/man && \
 		${SUDO} /usr/libexec/makewhatis -p . && \
-		cat whatis.db
+		cat mandoc.db
 
 # Most standard port targets create a cookie to avoid being re-run.
 #
@@ -2272,7 +2288,8 @@ _internal-checksum: _internal-fetch
 	  cd ${DISTDIR}; OK=true; list=''; \
 		for file in ${CHECKSUMFILES}; do \
 		  for cipher in ${PREFERRED_CIPHERS}; do \
-			set -- `grep -i "^$$cipher ($$file)" ${CHECKSUM_FILE}` && break || \
+			set -- $$(grep -i "^$$cipher ($$file)" ${CHECKSUM_FILE}) \
+			  && break || \
 			  ${ECHO_MSG} ">> No $$cipher checksum recorded for $$file."; \
 		  done; \
 		  case "$$4" in \
@@ -2360,7 +2377,7 @@ _do_libs_too = NO_SHARED_LIBS=Yes
 _extra_info =
 .  for _s in ${MULTI_PACKAGES}
 _extra_info += PLIST${_s}='${PLIST${_s}}'
-_extra_info += DEPPATHS${_s}="`${SETENV} FLAVOR=${FLAVOR:Q} SUBPACKAGE=${_s} PKGPATH=${PKGPATH} ${MAKE} show-run-depends ${_do_libs_too}`"
+_extra_info += DEPPATHS${_s}="$$(${SETENV} FLAVOR=${FLAVOR:Q} SUBPACKAGE=${_s} PKGPATH=${PKGPATH} ${MAKE} show-run-depends ${_do_libs_too})"
 .  endfor
 
 _internal-plist _internal-update-plist: _internal-fake
@@ -2374,8 +2391,8 @@ _internal-plist _internal-update-plist: _internal-fake
 	FLAVORS='${FLAVORS}' MULTI_PACKAGES='${MULTI_PACKAGES}' \
 	OKAY_FILES='${_FAKE_COOKIE} ${_INSTALL_PRE_COOKIE} ${WRKINST}/.saved_libs' \
 	SHARED_ONLY="${SHARED_ONLY}" \
-	OWNER=`id -u` \
-	GROUP=`id -g` \
+	OWNER=$$(id -u) \
+	GROUP=$$(id -g) \
 	${SUDO} ${_PERLSCRIPT}/make-plist \
 	${_extra_info} ${_tmpvars}
 
@@ -2463,6 +2480,11 @@ ${_WRKDIR_COOKIE}:
 		exit 1; \
 	fi
 .endif
+	@if [ x`SUDO_PORT_V1=ah ${SUDO} /bin/sh -c 'eval echo $${SUDO_PORT_V1}'` \
+		!= xah ]; then \
+			echo >&2 "Error: sudo does not let env variables through"; \
+			exit 1; \
+	fi
 	@mkdir -p ${WRKDIR} ${WRKDIR}/bin ${DEPDIR}
 #	@ln -s ${LOCALBASE}/bin/pkg-config ${WRKDIR}/bin
 .if ${USE_CCACHE:L} == "yes" && ${NO_CCACHE:L} == "no"
@@ -3124,8 +3146,8 @@ lib-depends-args:
 
 wantlib-args:
 	@${_cache_fragment}; \
-	a=$${_DEPENDS_CACHE}/portstree${SUBPACKAGE}; \
-	b=$${_DEPENDS_CACHE}/inst${SUBPACKAGE}; \
+	a=$${_DEPENDS_CACHE}/portstree-${FULLPKGNAME${SUBPACKAGE}}; \
+	b=$${_DEPENDS_CACHE}/inst-${FULLPKGNAME${SUBPACKAGE}}; \
 	if cd ${.CURDIR} && \
 	${MAKE} port-wantlib-args >$$a && \
 	${MAKE} fake-wantlib-args >$$b; then \
@@ -3136,6 +3158,7 @@ wantlib-args:
 			diff 1>&2 -u $$a $$b ${_check_error}; \
 		fi; \
 		cat $$b; \
+		rm $$a $$b; \
 	else \
 		exit 1; \
 	fi

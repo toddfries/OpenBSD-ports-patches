@@ -1,10 +1,9 @@
-# $OpenBSD: Makefile,v 1.63 2013/09/28 08:51:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.67 2014/04/26 14:48:40 jasper Exp $
 
 COMMENT=		dialogs for GNOME
 
 GNOME_PROJECT=		zenity
-GNOME_VERSION=		3.8.0
-REVISION=		2
+GNOME_VERSION=		3.12.1
 
 # LGPLv2
 PERMIT_PACKAGE_CDROM=	Yes
@@ -20,6 +19,6 @@ MODULES=		devel/gettext \
 LIB_DEPENDS=		devel/libnotify>=0.7.2 \
 			www/webkit,gtk3
 
-MODGNOME_TOOLS= 	yelp
+MODGNOME_TOOLS +=	yelp
 
 .include <bsd.port.mk>

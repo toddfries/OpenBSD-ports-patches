@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.30 2013/10/14 12:51:43 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.36 2014/04/07 10:17:46 ajacoutot Exp $
 
 COMMENT=	base icon theme extension for special UI contexts
 
 GNOME_PROJECT=	gnome-icon-theme-symbolic
-GNOME_VERSION=	3.10.1
+GNOME_VERSION=	3.12.0
+REVISION=	1
 
 CATEGORIES=	x11
 
@@ -19,15 +20,12 @@ RUN_DEPENDS=	x11/gnome/icon-theme
 
 PKG_ARCH=	*
 
-MODGNOME_ICON_CACHE=	Yes
+MODGNOME_TOOLS=	gtk-update-icon-cache
 
 CONFIGURE_ENV=	ac_cv_path_GIT=false \
 		ac_cv_path_INKSCAPE=false
-CONFIGURE_ARGS=	--enable-icon-mapping
 
-# gtk-update-icon-cache is checked by configure but do not enforce the
-# dependency: we don't need to run it, the package takes care of that
-pre-configure:
-	ln -s /usr/bin/true ${WRKDIR}/bin/gtk-update-icon-cache
+# do not enforce build dependency on gtk-update-icon-cache
+CONFIGURE_ENV +=ac_cv_path_GTK_UPDATE_ICON_CACHE=/usr/bin/true
 
 .include <bsd.port.mk>

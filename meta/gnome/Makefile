@@ -1,20 +1,20 @@
-# $OpenBSD: Makefile,v 1.86 2014/01/08 10:09:29 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.99 2014/04/19 16:59:06 ajacoutot Exp $
 
 COMMENT-main=		GNOME desktop meta-package (base installation)
-COMMENT-extra=		GNOME desktop meta-package (full installation)
+COMMENT-extras=		GNOME desktop meta-package (full installation)
 
-V=			3.10.2
+V=			3.12.1
 PKGNAME=		gnome-${V}
 
 PKGNAME-main=		gnome-${V}
-PKGNAME-extra=		gnome-extra-${V}
+PKGNAME-extras=		gnome-extras-${V}
 
-REVISION-main=		3
+REVISION-extras=	0
 
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 			Antoine Jacoutot <ajacoutot@openbsd.org>
 
-MULTI_PACKAGES=		-main -extra
+MULTI_PACKAGES=		-main -extras
 
 # remove when we don't use gtk+2 apps in GNOME
 # Gtk-Message: Failed to load module "canberra-gtk-module"
@@ -32,12 +32,11 @@ RUN_DEPENDS-main +=	x11/gnome/controlcenter \
 # gnome-classic.session
 RUN_DEPENDS-main +=	x11/gnome/shell-extensions
 
-# colord and gtk+3 are already dependencies
-RUN_DEPENDS-main +=	graphics/colord-gtk
-
 # GNOME spooler is CUPS (gnome-printers-panel in gnome-control-center)
-# add gtk+3-cups so that gtkprint() can see native CUPS printers
+# add gtk+3-cups so that gtkprint() can see native CUPS printers;
+# add gtk+3-cloudprint, gnome-online-accounts is already a dependency
 RUN_DEPENDS-main +=	x11/gtk+3,-cups
+RUN_DEPENDS-main +=	x11/gtk+3,-cloudprint
 
 # add commonly used utilities
 RUN_DEPENDS-main +=	graphics/evince,-nautilus \
@@ -51,12 +50,12 @@ RUN_DEPENDS-main +=	graphics/evince,-nautilus \
 RUN_DEPENDS-main +=	x11/gnome/baobab \
 			x11/gnome/dictionary \
 			x11/gnome/font-viewer \
-			x11/gnome/screenshot \
-			x11/gnome/search-tool \
-			x11/gnome/system-log
+			x11/gnome/screenshot
 
 # gnome-initial-setup, gnome-getting-started-docs
-RUN_DEPENDS-main +=	x11/gnome/initial-setup
+#RUN_DEPENDS-main +=	x11/gnome/initial-setup
+# XXX remove when x11/gnome/initial-setup is back in working state
+RUN_DEPENDS-main +=	x11/gnome/getting-started-docs
 
 # gnome-control-center already depends on samba and gnome-online-accounts
 RUN_DEPENDS-main +=	x11/gnome/gvfs,-goa, \
@@ -65,6 +64,7 @@ RUN_DEPENDS-main +=	x11/gnome/gvfs,-goa, \
 # "Make it fancy!"
 RUN_DEPENDS-main +=	x11/gnome/alacarte \
 			x11/gnome/bijiben \
+			x11/gnome/contacts \
 			x11/gnome/documents \
 			x11/gnome/eog-plugins \
 			x11/gnome/gedit-plugins \
@@ -82,20 +82,19 @@ RUN_DEPENDS-main +=	x11/gnome/alacarte \
 			x11/gnome/vino \
 			x11/gnome/weather
 
-RUN_DEPENDS-extra +=	STEM-=${V}:${BASE_PKGPATH},-main \
+RUN_DEPENDS-extras +=	STEM-=${V}:${BASE_PKGPATH},-main \
 			audio/rhythmbox \
 			graphics/simple-scan \
-			mail/evolution,-plugins \
+			mail/evolution \
 			mail/evolution-rss \
 			sysutils/deja-dup \
-			x11/gnome/ekiga \
+			www/epiphany \
 			x11/gnome/empathy \
 			x11/gnome/icon-theme-extras \
+			x11/gnome/polari \
 			x11/gnome/rygel \
 			x11/gnome/totem \
 			x11/gnome/user-share \
 			x11/gnome/vinagre
-
-# RUN_DEPENDS-extra +=	www/epiphany
 
 .include <bsd.port.mk>

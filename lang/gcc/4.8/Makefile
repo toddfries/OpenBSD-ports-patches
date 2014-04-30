@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.28 2014/02/07 01:31:40 tobiasu Exp $
+# $OpenBSD: Makefile,v 1.33 2014/03/30 19:30:28 naddy Exp $
 
 ONLY_FOR_ARCHS = alpha amd64 i386 powerpc sparc64
 DPB_PROPERTIES = parallel
@@ -28,12 +28,12 @@ PKGNAME-ada =   gnat-${FULL_PKGVERSION}
 #PKGNAME-go =	gccgo-${FULL_PKGVERSION}
 PKGSPEC-main = gcc->=4.8,<4.9
 
-REVISION-main	= 2
-REVISION-c++	= 2
+REVISION-main	= 3
+REVISION-c++	= 4
 #REVISION-estdc	=
-REVISION-f95	= 2
-REVISION-java	= 2
-REVISION-objc	= 2
+REVISION-f95	= 3
+REVISION-java	= 3
+REVISION-objc	= 3
 REVISION-ada	= 3
 #REVISION-go	=
 
@@ -258,6 +258,10 @@ post-extract:
 .if ${BUILD_PACKAGES:M-java}
 	cp ${FULLDISTDIR}/${ECJ} ${WRKSRC}/ecj.jar
 .endif
+.if ${BUILD_PACKAGES:M-ada}
+	perl -pi -e 's,^#define (_GLIBCXX_HAVE_GETS) .*,/* #undef $$1 */,' \
+		${WRKDIR}/bootstrap/include/c++/*/*/bits/c++config.h
+.endif
 
 post-install:
 .if ${BUILD_PACKAGES:M-ada}
@@ -304,4 +308,3 @@ adastrap: ${ADA_PACKAGE} ${GCC_PACKAGE} ${GXX_PACKAGE}
 	cd ${WRKDIR}/prepare && tar cf - bootstrap | \
 		xz > ${FULLDISTDIR}/${ADASTRAP-${MACHINE_ARCH}}
 .endif
-

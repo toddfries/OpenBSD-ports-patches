@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.50 2014/01/16 23:17:32 sthen Exp $
+# $OpenBSD: Makefile.inc,v 1.55 2014/04/23 08:39:58 edd Exp $
 
 # This port currently only works with archs supporting dynamic loading
 # and has Apache that supports DSO's.
@@ -75,11 +75,18 @@ CONFIGURE_ARGS+=	--enable-shared \
 			--with-sqlite3 \
 			--program-suffix=-${PV}
 
+# readline is broken in PHP-5.3
+.if ${PV} != 5.3
+CONFIGURE_ARGS +=	--with-readline
+.endif
+
 .if ${FLAVOR:Map2}
 CONFIGURE_ARGS+=	--with-apxs2=${LOCALBASE}/sbin/apxs2
 BUILD_DEPENDS=		www/apache-httpd
 .else
-CONFIGURE_ARGS+=	--with-apxs=/usr/sbin/apxs
+# doesn't use apache-module.port.mk so MODAPACHE_APXS not available
+CONFIGURE_ARGS+=	--with-apxs=${LOCALBASE}/sbin/apxs
+BUILD_DEPENDS=		www/apache-httpd-openbsd
 .endif
 
 # default included extensions
@@ -169,10 +176,9 @@ WANTLIB-intl=		icudata icui18n icuio icuuc m pthread
 MULTI_PACKAGES+=	-imap
 COMMENT-imap=		imap, pop3 and nntp extensions for php5
 CONFIGURE_ARGS+=	--with-imap=shared,${LOCALBASE} \
-			--with-imap-ssl --with-kerberos
+			--with-imap-ssl
 LIB_DEPENDS-imap=	mail/alpine,-c-client
-WANTLIB-imap=		pthread crypto gssapi krb5 ssl c-client>=5 \
-			asn1 com_err heimbase roken wind
+WANTLIB-imap=		pthread crypto ssl c-client>=5
 
 # ldap
 MULTI_PACKAGES+=	-ldap
@@ -207,8 +213,7 @@ MULTI_PACKAGES+=	-odbc
 COMMENT-odbc=		odbc database access extensions for php5
 CONFIGURE_ARGS+=        --with-iodbc=shared,${LOCALBASE}
 LIB_DEPENDS-odbc=	databases/iodbc
-WANTLIB-odbc=		iodbc>=2 pthread
-# php 5.4/5.5 : WANTLIB-odbc+=iodbcinst
+WANTLIB-odbc=		iodbcinst iodbc>=2 pthread
 
 # pdo-mysql
 MULTI_PACKAGES+=	-pdo_mysql
@@ -311,9 +316,7 @@ PHPXS_SUBST+= -e 's,${i},${${i}},'
 
 MODULES=		converters/libiconv devel/gettext
 
-WANTLIB-main=		c crypto ssl z pthread gssapi krb5 xml2>=8 \
-			m asn1 com_err heimbase roken \
-			wind ${MODGETTEXT_WANTLIB}
+WANTLIB-main+=		c crypto m pthread ssl xml2>=8 z ${MODGETTEXT_WANTLIB}
 # php 5.4/5.5 : WANTLIB-main += stdc++
 WANTLIB-fastcgi=	${WANTLIB-main}
 LIB_DEPENDS-main=	textproc/libxml

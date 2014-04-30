@@ -1,7 +1,7 @@
-$OpenBSD: patch-base_base_gypi,v 1.24 2014/01/18 11:42:03 robert Exp $
---- base/base.gypi.orig.port	Mon Jan 13 22:00:00 2014
-+++ base/base.gypi	Thu Jan 16 12:26:42 2014
-@@ -902,11 +902,15 @@
+$OpenBSD: patch-base_base_gypi,v 1.26 2014/04/17 16:27:53 robert Exp $
+--- base/base.gypi.orig.port	Wed Apr  2 21:03:59 2014
++++ base/base.gypi	Sat Apr 12 09:40:41 2014
+@@ -918,11 +918,15 @@
                'process/memory_stubs.cc',
              ],
              'sources/': [
@@ -17,4 +17,4 @@ $OpenBSD: patch-base_base_gypi,v 1.24 2014/01/18 11:42:03 robert Exp $
 +              ['exclude', '^process/process_metrics_linux\\.cc$'],
              ],
            }],
-           ['<(chromeos)!=1 or >(nacl_untrusted_build)==1', {
+           # Remove all unnecessary files for build_nexe.py to avoid exceeding
