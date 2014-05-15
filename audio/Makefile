@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.324 2014/04/16 02:02:32 bcallah Exp $
+# $OpenBSD: Makefile,v 1.327 2014/05/12 16:06:46 benoit Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -185,6 +185,7 @@
      SUBDIR += portaudio-svn
      SUBDIR += potamus
      SUBDIR += pulseaudio
+     SUBDIR += puddletag
      SUBDIR += py-ao
      SUBDIR += py-audio
      SUBDIR += py-cddb
@@ -194,6 +195,7 @@
      SUBDIR += py-mpd
      SUBDIR += py-mpd2
      SUBDIR += py-mpd2,python3
+     SUBDIR += py-musicbrainzngs
      SUBDIR += py-mutagen
      SUBDIR += py-ogg
      SUBDIR += py-tagger
@@ -225,6 +227,7 @@
      SUBDIR += shntool
      SUBDIR += shorten
      SUBDIR += sidplay
+     SUBDIR += siren
      SUBDIR += snack
      SUBDIR += solfege
      SUBDIR += sonata

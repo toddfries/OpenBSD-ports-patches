@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.339 2014/04/21 12:27:56 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.342 2014/05/15 12:05:24 jturner Exp $
 
      SUBDIR =
      SUBDIR += ADMfzap
@@ -225,6 +225,8 @@
      SUBDIR += py-keyczar
      SUBDIR += py-openssl
      SUBDIR += py-paramiko
+     SUBDIR += py-passlib
+     SUBDIR += py-passlib,python3
      SUBDIR += py-pefile
      SUBDIR += py-sslwrapper
      SUBDIR += qca
@@ -236,6 +238,7 @@
      SUBDIR += radiusniff
      SUBDIR += rarcrack
      SUBDIR += rdp
+     SUBDIR += reop
      SUBDIR += ruby-akami,ruby19
      SUBDIR += ruby-akami,ruby20
      SUBDIR += ruby-akami,ruby21

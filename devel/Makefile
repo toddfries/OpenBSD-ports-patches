@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1221 2014/04/28 14:51:58 afresh1 Exp $
+# $OpenBSD: Makefile,v 1.1228 2014/05/12 16:21:46 benoit Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -123,6 +123,7 @@
      SUBDIR += giggle
      SUBDIR += gindent
      SUBDIR += git
+     SUBDIR += git-bz
      SUBDIR += git-cola
      SUBDIR += git-cvs
      SUBDIR += glade
@@ -155,6 +156,7 @@
      SUBDIR += harfbuzz
      SUBDIR += hasktags
      SUBDIR += help2man
+     SUBDIR += hgview
      SUBDIR += hmake
      SUBDIR += hs-BoundedChan
      SUBDIR += hs-ConfigFile
@@ -887,6 +889,7 @@
      SUBDIR += p5-Package-Generator
      SUBDIR += p5-Package-Stash
      SUBDIR += p5-Package-Stash-XS
+     SUBDIR += p5-Package-Variant
      SUBDIR += p5-PadWalker
      SUBDIR += p5-Pango
      SUBDIR += p5-Parallel-ForkManager
@@ -1036,6 +1039,7 @@
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
      SUBDIR += p5-Test-Warn
+     SUBDIR += p5-Test-Warnings
      SUBDIR += p5-Test-Weaken
      SUBDIR += p5-Test-YAML-Valid
      SUBDIR += p5-Test-use-ok
@@ -1094,6 +1098,7 @@
      SUBDIR += p5-enum
      SUBDIR += p5-indirect
      SUBDIR += p5-libintl
+     SUBDIR += p5-lib-abs
      SUBDIR += p5-namespace-autoclean
      SUBDIR += p5-namespace-clean
      SUBDIR += p5-prefork
@@ -1129,6 +1134,7 @@
      SUBDIR += py-Checker
      SUBDIR += py-SOAPpy
      SUBDIR += py-addons
+     SUBDIR += py-algorithm-munkres
      SUBDIR += py-altgraph
      SUBDIR += py-argh
      SUBDIR += py-argcomplete
@@ -1156,6 +1162,7 @@
      SUBDIR += py-dulwich
      SUBDIR += py-editdist
      SUBDIR += py-elftools
+     SUBDIR += py-enum34
      SUBDIR += py-epsilon
      SUBDIR += py-extremes
      SUBDIR += py-fpconst

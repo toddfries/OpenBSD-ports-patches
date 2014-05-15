@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.842 2014/04/22 10:02:10 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.844 2014/05/01 20:19:52 sthen Exp $
 
      SUBDIR =
      SUBDIR += GeoIP
@@ -161,6 +161,7 @@
      SUBDIR += irssi-silc
      SUBDIR += irssi-xmpp
      SUBDIR += isc-bind
+     SUBDIR += isc-bind,geoip
      SUBDIR += isc-dhcp
      SUBDIR += jabberd,mysql
      SUBDIR += jabberd,mysql,ldap
@@ -197,6 +198,7 @@
      SUBDIR += libupnp
      SUBDIR += livemedia
      SUBDIR += lldpd
+     SUBDIR += lldpd,snmp
      SUBDIR += loudmouth
      SUBDIR += luasocket
      SUBDIR += luasocket,lua52

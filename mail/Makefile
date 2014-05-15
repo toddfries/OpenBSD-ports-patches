@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.304 2014/04/21 11:47:08 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.306 2014/05/13 14:27:53 sthen Exp $
 
      SUBDIR =
      SUBDIR += abook
@@ -95,6 +95,11 @@
      SUBDIR += mozilla-thunderbird
      SUBDIR += msmtp
      SUBDIR += mutt
+     SUBDIR += mutt,sasl
+     SUBDIR += mutt,slang
+     SUBDIR += mutt,compressed,sidebar
+     SUBDIR += mutt,compressed,sidebar,sasl
+     SUBDIR += mutt,compressed,sidebar,sasl,slang
      SUBDIR += s-nail
      SUBDIR += nmh
      SUBDIR += nmh,sasl
@@ -125,7 +130,6 @@
      SUBDIR += p5-Email-Valid-Loose
      SUBDIR += p5-FuzzyOcr
      SUBDIR += p5-GMail-IMAPD
-     SUBDIR += p5-GetLive
      SUBDIR += p5-Log-Procmail
      SUBDIR += p5-MIME-Base32
      SUBDIR += p5-MIME-Charset

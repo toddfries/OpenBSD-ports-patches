@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.312 2014/04/18 11:29:44 weerd Exp $
+# $OpenBSD: Makefile,v 1.315 2014/05/14 09:58:12 jasper Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -85,6 +85,7 @@
      SUBDIR += librelp
      SUBDIR += libstatgrab
      SUBDIR += libvirt
+     SUBDIR += libvirt-python
      SUBDIR += logfmon
      SUBDIR += login_fingerprint
      SUBDIR += login_ldap
@@ -206,6 +207,7 @@
      SUBDIR += stow
      SUBDIR += stress
      SUBDIR += superscript
+     SUBDIR += supervisor
      SUBDIR += supuner
      SUBDIR += symon
      SUBDIR += sysgen
@@ -230,6 +232,7 @@
      SUBDIR += usbutil
      SUBDIR += usbutils
      SUBDIR += vifm
+     SUBDIR += virt-manager
      SUBDIR += vmwh
      SUBDIR += wdsetup
      SUBDIR += whowatch

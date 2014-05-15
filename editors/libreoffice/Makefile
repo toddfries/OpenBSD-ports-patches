@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.106 2014/03/26 07:27:17 robert Exp $
+# $OpenBSD: Makefile,v 1.112 2014/05/15 16:21:19 robert Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -7,7 +7,7 @@ COMMENT-kde=	optional integration of LibreOffice to the KDE environment
 COMMENT-java=	optional integration of LibreOffice java features
 
 BV=		4.1
-VERSION=	4.1.5.3
+VERSION=	4.1.6.2
 DISTNAME=	libreoffice-${VERSION}
 WRKDIST=	${WRKDIR}/libreoffice-${VERSION}
 PKGNAME=	libreoffice-${VERSION}
@@ -16,6 +16,9 @@ PKGNAME-kde=	libreoffice-kde-${VERSION}
 PKGNAME-java=	libreoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 DPB_PROPERTIES=	parallel tag:kde3
+
+REVISION-main=	0
+REVISION-kde=	0
 
 EPOCH=		0
 
@@ -107,13 +110,8 @@ MULTI_PACKAGES=		-main -java -kde
 
 PSEUDO_FLAVORS=	parallel no_lang
 FLAVORS=	debug no_java
-.if ${MACHINE_ARCH:Mi386}
-# XXX hack to fix i386 builds for now which don't have working java
-# XXX N.B. no_java is a *flavour* not a pseudo-flavour
-FLAVOR?=	no_java
-.else
 FLAVOR?=
-.endif
+# N.B. no_java is a *flavour* not a pseudo-flavour
 
 .if !${FLAVOR:Mno_lang}
 LANGS=			ar bg ca de es fa fi fr hu it \
@@ -134,13 +132,12 @@ BUILD_DEPENDS+=	archivers/zip \
 		archivers/unzip \
 		archivers/gtar \
 		databases/db/v4 \
-		databases/openldap \
 		devel/bison \
+		devel/gpatch \
 		devel/gperf \
 		devel/libexecinfo \
 		shells/bash \
 		archivers/p5-Archive-Zip \
-		boost->=1.41.0:devel/boost \
 		misc/findutils \
 		security/nss \
 		sysutils/coreutils \
@@ -165,6 +162,8 @@ MODPY_VERSION=	3.3
 
 LIB_DEPENDS-main=x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
+		boost->=1.41.0:devel/boost \
+		databases/openldap \
 		databases/postgresql \
 		graphics/lcms2 \
 		${MODGCC4_CPPLIBDEP} \
@@ -172,15 +171,15 @@ LIB_DEPENDS-main=x11/gtk+2 \
 		textproc/raptor \
 		net/curl \
 		net/neon \
+		print/poppler \
 		textproc/icu4c \
 		textproc/redland \
-		textproc/hunspell \
-		print/poppler
+		textproc/hunspell
 
 WANTLIB-main=	estdc++ gdk-x11-2.0>=400.14 gtk-x11-2.0>=400.14 \
 		xslt>=3 curl>=7 neon>=24 pq>=2 \
 		icuuc>=0 icui18n icule \
-		rdf>=0 poppler
+		rdf>=0
 WANTLIB-main+=	ICE SM X11 Xcomposite Xcursor Xdamage \
 		Xext Xfixes Xi Xinerama Xrandr Xrender atk-1.0 c cairo \
 		crypto expat fontconfig freetype gio-2.0 glib-2.0 \
@@ -195,6 +194,9 @@ WANTLIB-main+=	Xt clucene-contribs-lib clucene-core clucene-shared
 WANTLIB-main+=	cups exslt gcrypt gpg-error icudata lcms2
 WANTLIB-main+=	nspr4 nss3 plc4 plds4 smime3 softokn3 ssl3
 WANTLIB-main+=	png raptor2
+WANTLIB-main+=	boost_date_time-mt boost_system
+WANTLIB-main+=	lber ldap
+WANTLIB-main+=	poppler
 
 RUN_DEPENDS-main=	devel/desktop-file-utils \
 			devel/libexecinfo \
@@ -211,7 +213,8 @@ LIB_DEPENDS-kde=	${MODQT_LIB_DEPENDS} \
 WANTLIB-kde=		${MODQT_WANTLIB} \
 			X11 c estdc++ m pthread \
 			lib/kde3/kdecore \
-			lib/kde3/kdeui lib/kde3/kio
+			lib/kde3/kdeui lib/kde3/kio \
+			lib/kde3/kabc
 WANTLIB-kde+=		ICE SM Xext icule icuuc
 WANTLIB-kde+=		Xrender
 
@@ -219,7 +222,7 @@ WANTLIB-kde+=		Xrender
 
 .if ${BUILD_PACKAGES:M-java}
 MODULES+=		java
-MODJAVA_VER=		1.6
+MODJAVA_VER=		1.7+
 MODJAVA_JRERUN=		Yes
 .endif
 LIB_DEPENDS-java=	${MODGCC4_CPPLIBDEP}
@@ -346,6 +349,7 @@ SUBST_VARS+=	BV OA
 pre-patch:
 	@ln -fs /bin/md5 ${WRKDIR}/bin/md5sum
 	@ln -fs /usr/local/bin/gfind ${WRKDIR}/bin/find
+	@ln -fs /usr/local/bin/gpatch ${WRKDIR}/bin/patch
 	@ln -fs /usr/local/bin/gcat ${WRKDIR}/bin/cat
 	@ln -fs /usr/local/bin/gsed ${WRKDIR}/bin/sed
 	@ln -fs /usr/local/bin/gtouch ${WRKDIR}/bin/touch

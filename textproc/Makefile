@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.409 2014/04/28 20:11:27 edd Exp $
+# $OpenBSD: Makefile,v 1.411 2014/05/14 10:06:39 sthen Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -40,6 +40,7 @@
      SUBDIR += glimpse
      SUBDIR += gnuvd
      SUBDIR += gonzui
+     SUBDIR += grepcidr
      SUBDIR += groff
      SUBDIR += gsed
      SUBDIR += gtk-doc
@@ -316,6 +317,7 @@
      SUBDIR += py-rdflib,python3
      SUBDIR += py-rtf
      SUBDIR += py-sphinx
+     SUBDIR += py-unidecode
      SUBDIR += py-vatnumber
      SUBDIR += py-vobject
      SUBDIR += py-xml

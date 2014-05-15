@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# $OpenBSD: portcheck,v 1.73 2014/04/27 17:57:14 zhuk Exp $
+# $OpenBSD: portcheck,v 1.81 2014/05/09 20:34:36 kirby Exp $
 # Copyright (c) 2013 Vadim Zhukov
 # 
 # Permission to use, copy, modify, and distribute this software for any
@@ -694,15 +694,18 @@ sub_checks() {
 				check_permit_subpkg "$portref" "$subpkg" \
 				    "$perm_pkg_cdrom" "$perm_pkg_ftp" ||
 				    error=true
+
+				if $plist_checks; then
+					(make "${make_args[@]}" \
+					    print-plist-with-depends || true) \
+					    </dev/null |&
+					check_plist "$portref" "$fullpkgname" \
+					    "$flavor" "${subpkg%-}" "$modules"
+					wait
+				fi
+
 				! $error
 			} || error=true
-
-			if $plist_checks; then
-				(make "${make_args[@]}" print-plist-with-depends ||
-				    true) </dev/null |&
-				check_plist "$portref" "$fullpkgname" "$flavor"
-				wait
-			fi
 
 			! $error
 		) || error=true
@@ -730,17 +733,26 @@ sub_checks() {
 #     misc/shared-mime-info dependency and @exec/@unexec-delete with
 #     %D/bin/update-mime-database %D/share/mime
 #
+#   * If package adds a GLib schema, it should have @exec/@unexec-delete
+#     with %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null
+#     and "devel/dconf" in MODULES (or at least RDEP on devel/dconf).
+#
 #   * If package installs .mo files under ${PREFIX}/share/locale/, then
 #     run-time dependency on devel/gettext should exists.
 #
 #   * Each .py should have corresponding .pyc files, to avoid
 #     generation of the latter at run-time.
+#
+#   * Manual (man and info) pages should go under ${PREFIX}/{man,info},
+#     not under ${PREFIx}/share/{man,info}.
 check_plist() {
 	$debugging && echo "CALLED: check_plist($*)" >&2
 
 	local portref=$1; shift
 	local fullpkgname=$1; shift
 	local flavor_list=$1; shift
+	local subpkg=$1; shift
+	local modules_list=$1; shift
 
 	local flavor is_static=false
 	for flavor in $flavor_list; do
@@ -762,6 +774,17 @@ check_plist() {
 	local mimepkg_exec_cnt=0
 	local mimepkg_unexec_cnt=0
 
+	local dconf_module
+	if [[ $modules_list == ?(* )devel/dconf?( *) ]]; then
+		dconf_module=true
+	else
+		dconf_module=false
+	fi
+	local dconf_dep=false
+	local dconf_dep_needed=false
+	local dconf_exec_cnt=0
+	local dconf_unexec_cnt=0
+
 	# Lists of icon themes discovered through reading
 	# @file, @exec and @unexec lines, accordingly.
 	local icon_themes= exec_icon_themes= unexec_icon_themes=
@@ -775,6 +798,8 @@ check_plist() {
 	# Lists of .py, .pyc and .pyo items found, accordingly
 	local py_files=   pyc_files=   pyo_files=
 	unset py_files[0] pyc_files[0] pyo_files[0]
+
+	local wrong_man=false wrong_info=false
 
 	# Temporary ones
 	local app l theme varname py
@@ -885,6 +910,23 @@ check_plist() {
 			    "invocation: ${l#@* }"
 			;;
 
+		share/glib-2.0/schemas/*.xml)
+			dconf_dep_needed=true
+			;;
+		"@depend devel/dconf"*)
+			dconf_dep=true
+			;;
+		"@exec %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null")
+			((++dconf_exec_cnt))
+			;;
+		"@unexec-delete %D/bin/glib-compile-schemas %D/share/glib-2.0/schemas >/dev/null")
+			((++dconf_unexec_cnt))
+			;;
+		@?(un)exec?(-delete|-update)" %D/bin/glib-compile-schemas"*)
+			err "${portref}incorrect glib-compile-schemas" \
+			    "invocation: ${l#@* }"
+			;;
+
 		"@depend devel/gettext"*)
 			gettext_dep=true
 			;;
@@ -904,6 +946,13 @@ check_plist() {
 			;;
 		*.pyo)
 			pyo_files[${#pyo_files[@]}]=$(normalize_pyco "$l")
+			;;
+
+		share/man/*)
+			wrong_man=true
+			;;
+		share/info/*)
+			wrong_info=true
 			;;
 		esac
 	done
@@ -1006,11 +1055,41 @@ check_plist() {
 		err "${portref}missing @unexec-delete of update-mime-database"
 	fi
 
+	# glib-compile-schemas (almost same as previous)
+	#
+	# TODO: detect situation of extra devel/dconf in MODULES
+	# (requires investigation of all subpackages).
+	if $dconf_dep_needed; then
+		if ! $dconf_module; then
+			err "${portref}GLib2 XML schemas found without" \
+			    "devel/dconf in MODULES"
+		elif ! $dconf_dep; then
+			err "${portref}missing" \
+			    "RUN_DEPENDS${subpkg}+=\${MODDCONF_RUN_DEPENDS}"
+		fi
+	fi
+
+	if $dconf_dep_needed; then
+		((dconf_exec_cnt--)) || true
+		((dconf_unexec_cnt--)) || true
+	fi
+	if ((dconf_exec_cnt > 0)) &&
+	    [[ $fullpkgname != glib2-* ]]; then
+		err "${portref}extra @exec of glib-compile-schemas"
+	elif ((dconf_exec_cnt < 0)); then
+		err "${portref}missing @exec of glib-compile-schemas"
+	fi
+	if ((dconf_unexec_cnt > 0)); then
+		err "${portref}extra @unexec-delete of glib-compile-schemas"
+	elif ((dconf_unexec_cnt < 0)); then
+		err "${portref}missing @unexec-delete of glib-compile-schemas"
+	fi
+
 	# gettext
 	$translation_found && ! $gettext_dep && ! $is_static &&
 		[[ $fullpkgname != gettext-* ]] &&
 		err "${portref}translation file(s) found without" \
-		    "devel/gettext dependency"
+		    "devel/gettext dependency in MODULES or RUN_DEPENDS"
 
 	# Python modules
 	((${#py_files[@]} > 0))  && set -sA py_files  -- "${py_files[@]}"
@@ -1031,7 +1110,7 @@ check_plist() {
 		else
 			err "${portref}Python module without" \
 			    "compiled version, consider using" \
-			    "\${MODPY_LIBDIR}/compileall.py: $py"
+			    "\${MODPY_BIN} \${MODPY_LIBDIR}/compileall.py: $py"
 		fi
 
 		while [[ $io -lt ${#pyo_files[@]} ]]; do
@@ -1064,6 +1143,11 @@ check_plist() {
 	#	    "expected: ${pyo_files[$io]%o}"
 	#	((++io))
 	#done
+
+	$wrong_man && err "${portref}manual pages should go under" \
+	    "\${PREFIX}/man/ rather than under \${PREFIX}/share/man/"
+	$wrong_info && err "${portref}info pages should go under" \
+	    "\${PREFIX}/info/ rather than under \${PREFIX}/share/info/"
 }
 
 # Checks made:
@@ -1467,6 +1551,7 @@ check_makefile() {
 	local F="$1"
 	check_trailing_whitespace "$F"
 	check_long_lines "$F"
+	check_hardcoded "$F"
 	head -n 1 -- "$F" |
 		egrep -q '^#[[:space:]]*\$OpenBSD.*\$' ||
 		err "$F does not have \$OpenBSD\$ RCS tag at the top"
@@ -1475,9 +1560,7 @@ check_makefile() {
 	# do not unset mkvars, having empty element(-s) is fine
 	unset revs[0]
 	local tab="$(print '\t')"
-	IFS=
-	while read -r l; do ((++lnum))
-		unset IFS
+	while IFS= read -r l; do ((++lnum))
 		set -A t -- $l
 		duprevfound=false
 
@@ -1526,9 +1609,7 @@ check_makefile() {
 			done
 			mkvars[${#mkvars[@]}]=$var
 		fi
-		IFS=
 	done <"$F"
-	unset IFS
 }
 
 # Checks made:
