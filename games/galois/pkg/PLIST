@@ -1,0 +1,8 @@
+@comment $OpenBSD: PLIST,v 1.2 2014/05/15 15:26:48 bcallah Exp $
+@bin bin/galois
+@man man/man6/galois.6
+share/applications/galois.desktop
+share/pixmaps/
+share/pixmaps/galois.png
+@exec %D/bin/update-desktop-database
+@unexec-delete %D/bin/update-desktop-database
