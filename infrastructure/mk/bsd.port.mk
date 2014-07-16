@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1266 2014/06/05 10:06:09 sthen Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1272 2014/07/14 08:21:00 zhuk Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -82,7 +82,7 @@ CLEANDEPENDS ?= No
 USE_SYSTRACE ?= No
 BULK ?= Auto
 RECURSIVE_FETCH_LIST ?= No
-WRKDIR_LINKNAME ?= 
+WRKDIR_LINKNAME ?=
 _FETCH_MAKEFILE ?= /dev/stdout
 
 .if ${USE_SYSTRACE:L} == "yes"
@@ -111,9 +111,9 @@ DPB_PROPERTIES ?=
 # All variables relevant to the port's description
 _ALL_VARIABLES = BUILD_DEPENDS IS_INTERACTIVE \
 	SUBPACKAGE FLAVOR BUILD_PACKAGES DPB_PROPERTIES \
-	MULTI_PACKAGES 
+	MULTI_PACKAGES
 # and stuff needing to be MULTI_PACKAGE'd
-_ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS IGNORE 
+_ALL_VARIABLES_INDEXED = FULLPKGNAME RUN_DEPENDS LIB_DEPENDS IGNORE
 _ALL_VARIABLES_PER_ARCH =
 
 
@@ -135,7 +135,7 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	CONFIGURE_STYLE USE_LIBTOOL SEPARATE_BUILD \
 	SHARED_LIBS TARGETS PSEUDO_FLAVOR \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS \
-	PKG_ARCH
+	PKG_ARCH GH_ACCOUNT GH_COMMIT GH_PROJECT GH_TAGNAME 
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
@@ -213,7 +213,7 @@ PKG_DELETE ?= /usr/sbin/pkg_delete
 
 _PKG_ADD = ${PKG_ADD} ${_PROGRESS} -I
 _PKG_CREATE = ${PKG_CREATE} ${_PROGRESS} ${SIGNING_PARAMETERS}
-_PKG_ADD_LOCAL = PKG_PATH=${_PKG_REPO} ${_PKG_ADD} 
+_PKG_ADD_LOCAL = PKG_PATH=${_PKG_REPO} ${_PKG_ADD}
 _PKG_DELETE = ${PKG_DELETE} ${_PROGRESS}
 
 SIGNING_PARAMETERS ?=
@@ -576,7 +576,7 @@ _PKG_ARGS += -DUSE_GROFF=1
 PKGNAME ?= ${DISTNAME}
 FULLPKGNAME ?= ${PKGNAME}${FLAVOR_EXT}
 _MASTER ?=
-_DEPENDENCY_STACK ?= 
+_DEPENDENCY_STACK ?=
 
 .if ${MULTI_PACKAGES} == "-"
 # XXX "parse" FULLPKGNAME: is there a flavor after the version number
@@ -779,7 +779,19 @@ _WRKDIRS += ${WRKOBJDIR_MFS}/${_WRKDIR_STEM}
 WRKDIR ?= ${.CURDIR}/${OLD_WRKDIR_NAME}
 .endif
 
+# github related variables
+GH_TAGNAME ?=
+GH_COMMIT ?=
+GH_ACCOUNT ?=
+GH_PROJECT ?=
+
+.if !empty(GH_TAGNAME)
+WRKDIST ?= ${WRKDIR}/${GH_PROJECT}-${GH_TAGNAME:C/^v//}
+.elif !empty(GH_COMMIT)
+WRKDIST ?= ${WRKDIR}/${GH_PROJECT}-${GH_COMMIT}
+.else
 WRKDIST ?= ${WRKDIR}/${DISTNAME}
+.endif
 
 WRKSRC ?= ${WRKDIST}
 
@@ -806,14 +818,16 @@ FAKE_TARGET ?= ${INSTALL_TARGET}
 
 TEST_TARGET ?= test
 TEST_FLAGS ?= 
+TEST_ENV ?=
 ALL_TEST_FLAGS = ${MAKE_FLAGS} ${TEST_FLAGS}
+ALL_TEST_ENV = ${MAKE_ENV} ${TEST_ENV}
 TEST_LOGFILE ?= ${WRKDIR}/test.log
 TEST_LOG ?= | tee ${TEST_LOGFILE}
 IS_INTERACTIVE ?= No
 TEST_IS_INTERACTIVE ?= No
 
 .if ${TEST_IS_INTERACTIVE:L} == "x11"
-TEST_FLAGS += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
+TEST_ENV += DISPLAY=${DISPLAY} XAUTHORITY=${XAUTHORITY}
 XAUTHORITY ?= ${HOME}/.Xauthority
 .endif
 
@@ -1045,7 +1059,7 @@ DESCR ?= ${PKGDIR}/DESCR
 ${_v}- = ${${_v}}
 .    endif
 .  endfor
-.else 
+.else
 .  for _S in ${MULTI_PACKAGES}
 PLIST${_S} ?= ${PKGDIR}/PLIST${_S}
 
@@ -1127,8 +1141,19 @@ MASTER_SITE_OVERRIDE ?= No
 .include "${PORTSDIR}/infrastructure/templates/network.conf.template"
 .endif
 
+.if !empty(GH_ACCOUNT) && !empty(GH_PROJECT)
+.  if ${GH_TAGNAME} == master
+ERRORS += "Fatal: using master as GH_TAGNAME is invalid"
+.  endif
+MASTER_SITES_GITHUB += \
+	https://github.com/${GH_ACCOUNT}/${GH_PROJECT}/archive/${GH_TAGNAME:S/$/\//}
+
+MASTER_SITES ?= ${MASTER_SITES_GITHUB}
+.else
 # Empty declarations to avoid "variable XXX is recursive" errors
 MASTER_SITES ?=
+.endif
+
 # I guess we're in the master distribution business! :)  As we gain mirror
 # sites for distfiles, add them to this list.
 .if ${MASTER_SITE_OVERRIDE:L} == "no"
@@ -1173,7 +1198,11 @@ _CDROM_OVERRIDE =:
 
 EXTRACT_SUFX ?= .tar.gz
 
+.if !empty(GH_COMMIT)
+DISTFILES ?= ${DISTNAME}${EXTRACT_SUFX}{${GH_COMMIT}${EXTRACT_SUFX}}
+.else
 DISTFILES ?= ${DISTNAME}${EXTRACT_SUFX}
+.endif
 
 _FILES=
 .for v in DISTFILES PATCHFILES SUPDISTFILES
@@ -1280,6 +1309,9 @@ PATCH_CASES += *) \
 
 # Documentation
 MAINTAINER ?= The OpenBSD ports mailing-list <ports@openbsd.org>
+.if empty(MAINTAINER)
+ERRORS += "Fatal: defining MAINTAINER to empty is an error"
+.endif
 
 .if !defined(CATEGORIES)
 ERRORS += "Fatal: CATEGORIES is mandatory."
@@ -1323,7 +1355,7 @@ CONFIGURE_SHARED ?= --enable-shared
 .endif
 
 FETCH_MANUALLY ?= No
-MISSING_FILES = 
+MISSING_FILES =
 .if ${FETCH_MANUALLY:L} != "no"
 .  for _F in ${CHECKSUMFILES}
 .    if !exists(${DISTDIR}/${_F})
@@ -1376,7 +1408,7 @@ IGNORE += "is marked as broken for ${ARCH}: ${BROKEN-${ARCH}:Q}"
 .  if ${MACHINE_ARCH} != ${ARCH} && defined(BROKEN-${MACHINE_ARCH})
 IGNORE += "is marked as broken for ${MACHINE_ARCH}: ${BROKEN-${MACHINE_ARCH}:Q}"
 .  endif
-.  if defined(BROKEN) 
+.  if defined(BROKEN)
 IGNORE += "is marked as broken: ${BROKEN:Q}"
 .  endif
 .endif
@@ -1387,7 +1419,7 @@ IGNORE += "-- ${FULLPKGNAME${SUBPACKAGE}:C/-[0-9].*//g} comes with OpenBSD as of
 IGNORE_IS_FATAL ?= "No"
 # XXX even if subpackage is invalid, define this, so that errors come out
 # from ERRORS and not make internals.
-IGNORE${SUBPACKAGE} ?= 
+IGNORE${SUBPACKAGE} ?=
 .if (!empty(IGNORE${SUBPACKAGE}) || defined(_EXTRA_IGNORE)) && ${IGNORE_IS_FATAL:L} == "yes"
 ERRORS += "Fatal: can't build"
 ERRORS += ${IGNORE${SUBPACKAGE}} ${_EXTRA_IGNORE}
@@ -1401,7 +1433,7 @@ _DEPENDS_TARGET ?= install
 
 # Various dependency styles
 _resolve_lib = LOCALBASE=${LOCALBASE} X11BASE=${X11BASE} \
-			${_PERLSCRIPT}/resolve-lib 
+			${_PERLSCRIPT}/resolve-lib
 
 .if ${NO_SHARED_LIBS:L} == "yes"
 _resolve_lib += -noshared
@@ -1419,7 +1451,7 @@ _check_error = || true
 _pkg_wantlib_args = wantlib-args
 _check_msg = Error
 # let diff error out
-_check_error = 
+_check_error =
 .endif
 wantlib_args ?= port-wantlib-args
 lib_depends_args ?= lib-depends-args
@@ -1797,7 +1829,7 @@ _register_plist =:
 _register_plist = mkdir -p ${PLIST_DB:S/:/ /g} && ${_PERLSCRIPT}/register-plist ${PLIST_DB}
 .endif
 .if ${CHECK_LIB_DEPENDS:L} == "yes"
-_check_lib_depends = ${_CHECK_LIB_DEPENDS} 
+_check_lib_depends = ${_CHECK_LIB_DEPENDS}
 .else
 _check_lib_depends =:
 .endif
@@ -2439,11 +2471,11 @@ unlock:
 subpackage:
 	@${_DO_LOCK}; (${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-subpackage)
 
-_internal-package: 
+_internal-package:
 	@${_cache_fragment}; cd ${.CURDIR} && ${MAKE} _internal-package-only
 # XXX loop needed for M to work
 .for p in ${PKGPATH}
-.  if ${BULK_$p:L} == "yes" 
+.  if ${BULK_$p:L} == "yes"
 	@${_MAKE} ${_BULK_COOKIE}
 .  elif ${BULK_$p:L} == "auto"
 .    if !empty(_DEPENDENCY_STACK)
@@ -2724,7 +2756,7 @@ ${_TEST_COOKIE}: ${_BUILD_COOKIE}
 .  else
 # What TEST normally does:
 	@cd ${WRKBUILD} && exec 3>&1 && exit `exec 4>&1 1>&3; \
-		(exec; set +e; ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} \
+		(exec; set +e; ${SETENV} ${ALL_TEST_ENV} ${MAKE_PROGRAM} \
 		${ALL_TEST_FLAGS} -f ${MAKE_FILE} ${TEST_TARGET}; \
 		echo $$? >&4) 2>&1 ${TEST_LOG}`
 # End of TEST
@@ -3123,7 +3155,7 @@ all-lib-depends-args:
 		echo "-P $$pkgpath:$$pkg:$$default"; \
 	done
 
-# - remove lib-depends-args if we're only scanning for common dirs in 
+# - remove lib-depends-args if we're only scanning for common dirs in
 # update-plist and we're not shared only
 # - zap wantlib-args when we're only solving for @depends in pkg_create(1).
 no-lib-depends-args no-wantlib-args:

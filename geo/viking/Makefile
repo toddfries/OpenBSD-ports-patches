@@ -1,8 +1,9 @@
-# $OpenBSD: Makefile,v 1.22 2014/06/06 11:18:24 kirby Exp $
+# $OpenBSD: Makefile,v 1.24 2014/07/09 17:43:52 ajacoutot Exp $
 
 COMMENT =	GPS track manager
 
 DISTNAME =	viking-1.5.1
+REVISION =	0
 
 CATEGORIES =	geo x11
 
@@ -15,10 +16,12 @@ PERMIT_PACKAGE_CDROM =	Yes
 MASTER_SITES =	${MASTER_SITE_SOURCEFORGE:=viking/}
 EXTRACT_SUFX = .tar.bz2
 
-MODULES =	devel/gettext x11/gnome
+MODULES =	devel/gettext textproc/intltool x11/gnome
 
 CONFIGURE_STYLE =	gnu
 MODGNOME_TOOLS += desktop-file-utils gtk-update-icon-cache yelp
+
+USE_GMAKE =	Yes
 
 LIB_DEPENDS =	archivers/bzip2 \
 		devel/libidn \

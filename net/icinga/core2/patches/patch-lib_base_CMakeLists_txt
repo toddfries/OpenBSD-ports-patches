@@ -1,0 +1,14 @@
+$OpenBSD: patch-lib_base_CMakeLists_txt,v 1.2 2014/06/25 11:14:50 sthen Exp $
+--- lib/base/CMakeLists.txt.orig	Mon Jun 16 08:02:43 2014
++++ lib/base/CMakeLists.txt	Tue Jun 24 16:43:15 2014
+@@ -37,8 +37,8 @@ add_library(base SHARED
+ 
+ target_link_libraries(base ${CMAKE_DL_LIBS} ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} cJSON mmatch)
+ 
+-if(HAVE_LIBEXECINFO)
+-  target_link_libraries(base execinfo)
++if(Backtrace_FOUND)
++  target_link_libraries(base ${Backtrace_LIBRARIES})
+ endif()
+ 
+ include_directories(${icinga2_SOURCE_DIR}/third-party/cJSON)

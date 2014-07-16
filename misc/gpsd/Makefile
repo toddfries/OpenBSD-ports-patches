@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.57 2013/11/10 12:12:26 espie Exp $
+# $OpenBSD: Makefile,v 1.59 2014/07/09 16:49:35 jasper Exp $
 
 COMMENT-main=		service daemon that monitors one or more GPSes
 COMMENT-x11=		GUI test apps using gpsd
@@ -13,16 +13,17 @@ SHARED_LIBS=		gps	19.0 \
 			gpsd	0.0
 CATEGORIES=		misc geo
 
-REVISION-main=		5
-REVISION-php=		5
-REVISION-x11=		1
+REVISION-main=		6
+REVISION-php=		6
+REVISION-x11=		2
 
-HOMEPAGE=		http://gpsd.berlios.de/
+HOMEPAGE=		http://www.catb.org/gpsd/
 
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
 
-MASTER_SITES=		${MASTER_SITE_BERLIOS:=gpsd/}
+MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=gpsd.berlios/} \
+			${MASTER_SITE_SAVANNAH:=gpsd/}
 
 MODULES +=		lang/python lang/php
 MODPHP_BUILDDEP=	No

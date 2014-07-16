@@ -1,7 +1,7 @@
-# $OpenBSD: kde4.port.mk,v 1.18 2014/01/15 19:42:08 zhuk Exp $
+# $OpenBSD: kde4.port.mk,v 1.21 2014/07/15 18:06:00 zhuk Exp $
 
 # The version of KDE SC in x11/kde4
-_MODKDE4_STABLE =	4.11.5
+_MODKDE4_STABLE =	4.13.2
 
 # List of currently supported KDE SC versions, except "stable"
 _MODKDE4_OTHERS =
@@ -51,13 +51,15 @@ ONLY_FOR_ARCHS ?=	${GCC4_ARCHS}
 EXTRACT_SUFX ?=		.tar.xz
 
 .if "${NO_BUILD:L}" != "yes"
-MODULES +=		devel/cmake
-SEPARATE_BUILD ?=	flavored
-
 # CONFIGURE_STYLE needs separate handling because it is set to empty
 # string in bsd.port.mk initially.
 .   if "${CONFIGURE_STYLE}" == ""
 CONFIGURE_STYLE =	cmake
+.   endif
+
+.   if ${CONFIGURE_STYLE:Mcmake}
+MODULES +=		devel/cmake
+SEPARATE_BUILD ?=	flavored
 .   endif
 .endif
 
@@ -99,6 +101,9 @@ MODKDE4_RESOURCES ?=	No
 
 .if ${MODKDE4_RESOURCES:L} == "no"
 MODKDE4_USE ?=		runtime
+MODULES +=		gcc4
+MODGCC4_ARCHS =		*
+MODGCC4_LANGS =		c++
 .else
 MODKDE4_USE ?=		libs
 .endif
@@ -152,7 +157,7 @@ MODKDE4_BUILD_DEPENDS +=	devel/automoc
 PKG_ARCH ?=		*
 MODKDE4_NO_QT ?=	Yes	# resources usually don't need Qt
 .   if ${MODKDE4_USE:L:Mworkspace}
-MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION},<5
+MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/workspace>=4.11,<5
 .   endif
 .   if ${MODKDE4_USE:L:Mlibs}
 MODKDE4_BUILD_DEPENDS +=	${MODKDE4_DEP_DIR}/libs,-main>=${MODKDE4_DEP_VERSION},<5
@@ -183,7 +188,7 @@ MODKDE4_RUN_DEPENDS +=		${MODKDE4_DEP_DIR}/pim-runtime>=${MODKDE4_DEP_VERSION},<
 .           endif
 
 .           if ${MODKDE4_USE:L:Mworkspace}
-MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/workspace>=${MODKDE4_DEP_VERSION},<5
+MODKDE4_LIB_DEPENDS +=		${MODKDE4_DEP_DIR}/workspace>=4.11,<5
 .           endif
 .       endif
 .   endif    # ${MODKDE4_USE:L:Mlibs}

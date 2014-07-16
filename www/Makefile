@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.662 2014/05/28 22:17:46 jeremy Exp $
+# $OpenBSD: Makefile,v 1.667 2014/07/11 07:40:18 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += ajaxterm
@@ -31,7 +31,6 @@
      SUBDIR += cherokee
      SUBDIR += chive
      SUBDIR += chromium
-     SUBDIR += chromium,proprietary
      SUBDIR += clearsilver
      SUBDIR += cntlm
      SUBDIR += conkeror
@@ -66,7 +65,6 @@
      SUBDIR += haserl,no_lua,static
      SUBDIR += havp
      SUBDIR += hiawatha
-     SUBDIR += horde
      SUBDIR += hs-cgi
      SUBDIR += hs-clientsession
      SUBDIR += hs-html
@@ -137,7 +135,6 @@
      SUBDIR += mongrel2
      SUBDIR += mono-xsp
      SUBDIR += mozilla-firefox
-     SUBDIR += mozilla-sync
      SUBDIR += mozplugger
      SUBDIR += netsurf
      SUBDIR += newsbeuter
@@ -423,8 +420,9 @@
      SUBDIR += py-webpy
      SUBDIR += py-webtest
      SUBDIR += py-werkzeug
-     SUBDIR += py-wtforms
      SUBDIR += py-wsgiproxy
+     SUBDIR += py-wtforms
+     SUBDIR += py-wtools
      SUBDIR += rackmonkey
      SUBDIR += racktables
      SUBDIR += raggle
@@ -453,6 +451,8 @@
      SUBDIR += ruby-ntlm,ruby21
      SUBDIR += ruby-passenger,ruby18
      SUBDIR += ruby-passenger,ruby19
+     SUBDIR += ruby-passenger,ruby20
+     SUBDIR += ruby-passenger,ruby21
      SUBDIR += ruby-rack
      SUBDIR += ruby-rack-protection
      SUBDIR += ruby-rack-test

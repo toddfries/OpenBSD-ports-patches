@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.2 2014/06/04 13:52:40 sthen Exp $
+# $OpenBSD: Makefile,v 1.4 2014/07/10 11:06:37 rpe Exp $
 
 COMMENT =		extremely fast password cracker, with community patches
 
@@ -6,11 +6,11 @@ V =		1.8.0
 JV =		20140604
 
 # when jumbo1 is out, use JV=1 and change PKGNAME to use pl${JV} not pre${JV}
-T =		3f5494dc78c2ee64fbbbd8c74d495d0bcc895dbc
-WRKDIST =	${WRKDIR}/JohnTheRipper-$T
+GH_ACCOUNT =	magnumripper
+GH_PROJECT =	JohnTheRipper
+GH_COMMIT =	3f5494dc78c2ee64fbbbd8c74d495d0bcc895dbc
 
 DISTNAME =	john-$V-jumbo-${JV}
-DISTFILES =	${DISTNAME}{$T}.tar.gz
 PKGNAME =	john-jumbo-$Vpre${JV}
 CATEGORIES =	security
 
@@ -25,7 +25,6 @@ WANTLIB += softokn3 sqlite3 ssl ssl3 z
 
 # Using a bleeding-jumbo snapshot for now.
 # Releases: http://www.openwall.com/john/g/
-MASTER_SITES =		https://github.com/magnumripper/JohnTheRipper/archive/
 
 LIB_DEPENDS =		security/nss
 
@@ -48,7 +47,8 @@ CFLAGS +=		-c -DHAVE_NSS `pkg-config --cflags nss` \
 LDFLAGS +=		-lssl -lcrypto -lm -lz `pkg-config --libs nss`
 
 MAKE_FLAGS =		CC="${CC}" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
-			COPTFLAGS="${COPTFLAGS}" HAVE_NSS="-DHAVE_NSS"
+			COPTFLAGS="${COPTFLAGS}" HAVE_NSS="-DHAVE_NSS" \
+			J=${MAKE_JOBS}
 
 .if ${MACHINE_ARCH} == "i386"
 # there is actually a fallback method to allow use of sse where available and

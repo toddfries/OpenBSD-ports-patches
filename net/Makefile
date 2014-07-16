@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.846 2014/05/27 09:59:16 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.854 2014/07/14 15:51:13 sthen Exp $
 
      SUBDIR =
      SUBDIR += GeoIP
@@ -62,6 +62,7 @@
      SUBDIR += dclib
      SUBDIR += ddclient
      SUBDIR += dhcdrop
+     SUBDIR += dhcpcd
      SUBDIR += dhcping
      SUBDIR += dictd
      SUBDIR += dlint
@@ -114,6 +115,7 @@
      SUBDIR += gupnp
      SUBDIR += h323plus
      SUBDIR += haproxy
+     SUBDIR += hexchat
      SUBDIR += honeyd
      SUBDIR += hping
      SUBDIR += hpodder
@@ -170,7 +172,9 @@
      SUBDIR += jnettop
      SUBDIR += kismet
      SUBDIR += kissd
+     SUBDIR += konversation
      SUBDIR += ktorrent
+     SUBDIR += ktorrent-kde4
      SUBDIR += ladvd
      SUBDIR += ldistfp
      SUBDIR += ldns
@@ -212,6 +216,7 @@
      SUBDIR += microblog-purple
      SUBDIR += minbif
      SUBDIR += miniupnp
+     SUBDIR += mirall
      SUBDIR += mirmon
      SUBDIR += mirror
      SUBDIR += mktorrent
@@ -354,6 +359,7 @@
      SUBDIR += p5-Net-SMTP-SSL
      SUBDIR += p5-Net-SMTP-TLS-ButMaintained
      SUBDIR += p5-Net-SMTP_auth
+     SUBDIR += p5-Net-SMTPS
      SUBDIR += p5-Net-SNMP
      SUBDIR += p5-Net-SNPP
      SUBDIR += p5-Net-SSH
@@ -597,6 +603,7 @@
      SUBDIR += ttg
      SUBDIR += twirssi
      SUBDIR += twitux
+     SUBDIR += ucspi-tcp
      SUBDIR += ucspi-unix
      SUBDIR += udns
      SUBDIR += udptunnel
@@ -620,6 +627,7 @@
      SUBDIR += wide-dhcp
      SUBDIR += wide-dhcpv6
      SUBDIR += winexe
+     SUBDIR += wireshark
      SUBDIR += wmifinfo
      SUBDIR += wmnet
      SUBDIR += wmnetload

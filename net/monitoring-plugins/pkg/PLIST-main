@@ -1,0 +1,66 @@
+@comment $OpenBSD: PLIST-main,v 1.1 2014/07/11 20:08:04 sthen Exp $
+@conflict nagios-plugins-*
+@conflict nagios-plugins-ntp-*
+@pkgpath net/nagios/plugins
+@pkgpath net/nagios/plugins,-ntp
+@pkgpath net/nagios/plugins,-main
+@comment lib/charset.alias
+libexec/nagios/
+@bin libexec/nagios/check_apt
+@bin libexec/nagios/check_by_ssh
+libexec/nagios/check_clamd
+@bin libexec/nagios/check_cluster
+@bin libexec/nagios/check_dhcp
+@bin libexec/nagios/check_dig
+@bin libexec/nagios/check_disk
+@bin libexec/nagios/check_dns
+@bin libexec/nagios/check_dummy
+libexec/nagios/check_file_age
+libexec/nagios/check_flexlm
+libexec/nagios/check_ftp
+@bin libexec/nagios/check_http
+@mode 4555
+@bin libexec/nagios/check_icmp
+@mode
+libexec/nagios/check_imap
+libexec/nagios/check_ircd
+libexec/nagios/check_jabber
+@bin libexec/nagios/check_load
+libexec/nagios/check_log
+libexec/nagios/check_mailq
+@bin libexec/nagios/check_mrtg
+@bin libexec/nagios/check_mrtgtraf
+@bin libexec/nagios/check_nagios
+libexec/nagios/check_nntp
+libexec/nagios/check_nntps
+@bin libexec/nagios/check_nt
+@bin libexec/nagios/check_ntp
+@bin libexec/nagios/check_ntp_peer
+@bin libexec/nagios/check_ntp_time
+@bin libexec/nagios/check_nwstat
+libexec/nagios/check_oracle
+@bin libexec/nagios/check_overcr
+@bin libexec/nagios/check_ping
+libexec/nagios/check_pop
+@bin libexec/nagios/check_procs
+@bin libexec/nagios/check_real
+libexec/nagios/check_rpc
+libexec/nagios/check_sensors
+libexec/nagios/check_simap
+@bin libexec/nagios/check_smtp
+libexec/nagios/check_spop
+@bin libexec/nagios/check_ssh
+libexec/nagios/check_ssmtp
+@bin libexec/nagios/check_swap
+@bin libexec/nagios/check_tcp
+@bin libexec/nagios/check_time
+libexec/nagios/check_udp
+@bin libexec/nagios/check_ups
+@bin libexec/nagios/check_users
+libexec/nagios/check_wave
+@bin libexec/nagios/negate
+@bin libexec/nagios/urlize
+libexec/nagios/utils.pm
+libexec/nagios/utils.sh
+share/locale/de/LC_MESSAGES/monitoring-plugins.mo
+share/locale/fr/LC_MESSAGES/monitoring-plugins.mo

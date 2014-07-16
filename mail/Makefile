@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.308 2014/06/01 00:41:53 jturner Exp $
+# $OpenBSD: Makefile,v 1.311 2014/07/16 12:10:29 jca Exp $
 
      SUBDIR =
      SUBDIR += abook
@@ -71,7 +71,6 @@
      SUBDIR += libetpan
      SUBDIR += libspf2
      SUBDIR += lumail
-     SUBDIR += mailcrypt
      SUBDIR += maildrop
      SUBDIR += mailgraph
      SUBDIR += mailman
@@ -142,6 +141,7 @@
      SUBDIR += p5-Mail-Audit
      SUBDIR += p5-Mail-Box
      SUBDIR += p5-Mail-DKIM
+     SUBDIR += p5-Mail-DMARC
      SUBDIR += p5-Mail-GnuPG
      SUBDIR += p5-Mail-IMAPClient
      SUBDIR += p5-Mail-IMAPTalk
@@ -166,6 +166,7 @@
      SUBDIR += pgpsendmail
      SUBDIR += pine-pgp-filters
      SUBDIR += pop3d
+     SUBDIR += popa3d
      SUBDIR += popclient
      SUBDIR += poppassd
      SUBDIR += poppy

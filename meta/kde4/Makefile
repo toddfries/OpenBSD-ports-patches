@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.7 2014/01/23 18:52:23 zhuk Exp $
+# $OpenBSD: Makefile,v 1.10 2014/07/12 11:25:44 sthen Exp $
 
 PKGNAME =		kde4-${MODKDE4_VERSION}
 
@@ -20,9 +20,11 @@ PKGNAME-network =	kdenetwork-${MODKDE4_VERSION}
 PKGNAME-sdk =		kdesdk-${MODKDE4_VERSION}
 PKGNAME-toys =		kdetoys-${MODKDE4_VERSION}
 
-REVISION-minimal =	1
-REVISION-main =		2
-REVISION-network =	0
+REVISION-accessiblity =	1
+REVISION-edu =		0
+REVISION-minimal =	3
+REVISION-main =		3
+REVISION-network =	1
 
 MAINTAINER =		KDE porting team <openbsd-kde@googlegroups.com>
 
@@ -63,6 +65,7 @@ KDE4-bindings = \
 	${MODKDE4_DEP_DIR}/kimono
 
 KDE4-edu = \
+	${MODKDE4_DEP_DIR}/artikulate	\
 	${MODKDE4_DEP_DIR}/blinken	\
 	${MODKDE4_DEP_DIR}/cantor	\
 	${MODKDE4_DEP_DIR}/analitza	\
@@ -159,12 +162,12 @@ KDE4-multimedia = \
 RUN_DEPENDS-network = \
 	${MODKDE4_DEP_DIR}/network-filesharing \
 	${MODKDE4_DEP_DIR}/network-strigi-analyzers \
-	${MODKDE4_DEP_DIR}/kdnssd	\
-	${MODKDE4_DEP_DIR}/kget		\
-	${MODKDE4_DEP_DIR}/kopete	\
-	${MODKDE4_DEP_DIR}/kppp		\
-	${MODKDE4_DEP_DIR}/krdc		\
-	${MODKDE4_DEP_DIR}/krfb
+	${MODKDE4_DEP_DIR}/kget			\
+	${MODKDE4_DEP_DIR}/kopete		\
+	${MODKDE4_DEP_DIR}/kppp			\
+	${MODKDE4_DEP_DIR}/krdc			\
+	${MODKDE4_DEP_DIR}/krfb			\
+	${MODKDE4_DEP_DIR}/zeroconf-ioslave
 
 RUN_DEPENDS-sdk = \
 	${MODKDE4_DEP_DIR}/cervisia		\
@@ -200,12 +203,12 @@ KDE4-utils = \
 	${MODKDE4_DEP_DIR}/sweeper
 
 RUN_DEPENDS-minimal = \
-	${KDE4-accessibility}		\
-	${MODKDE4_DEP_DIR}/baseapps	\
-	${MODKDE4_DEP_DIR}/kate		\
-	${MODKDE4_DEP_DIR}/kgpg		\
-	${MODKDE4_DEP_DIR}/konsole	\
-	${MODKDE4_DEP_DIR}/kwallet	\
+	${KDE4-accessibility}			\
+	${MODKDE4_DEP_DIR}/baseapps		\
+	${MODKDE4_DEP_DIR}/kate			\
+	${MODKDE4_DEP_DIR}/kgpg			\
+	${MODKDE4_DEP_DIR}/konsole		\
+	${MODKDE4_DEP_DIR}/kwalletmanager	\
 	${MODKDE4_DEP_DIR}/workspace
 
 RUN_DEPENDS-main = \
@@ -215,19 +218,19 @@ RUN_DEPENDS-main = \
 	${BUILD_PKGPATH},-network=${MODKDE4_VERSION} \
 	${BUILD_PKGPATH},-sdk=${MODKDE4_VERSION} \
 	${BUILD_PKGPATH},-toys=${MODKDE4_VERSION} \
-	${KDE4-accessibility}		\
-	${KDE4-edu}			\
-	${KDE4-graphics}		\
-	${KDE4-multimedia}		\
-	${KDE4-utils}			\
-	${MODKDE4_DEP_DIR}/artwork	\
-	${MODKDE4_DEP_DIR}/base-artwork	\
-	${MODKDE4_DEP_DIR}/kate		\
-	${MODKDE4_DEP_DIR}/kgpg		\
-	${MODKDE4_DEP_DIR}/konsole	\
-	${MODKDE4_DEP_DIR}/kwallet	\
-	${MODKDE4_DEP_DIR}/pim		\
-	${MODKDE4_DEP_DIR}/wallpapers	\
+	${KDE4-accessibility}			\
+	${KDE4-edu}				\
+	${KDE4-graphics}			\
+	${KDE4-multimedia}			\
+	${KDE4-utils}				\
+	${MODKDE4_DEP_DIR}/artwork		\
+	${MODKDE4_DEP_DIR}/base-artwork		\
+	${MODKDE4_DEP_DIR}/kate			\
+	${MODKDE4_DEP_DIR}/kgpg			\
+	${MODKDE4_DEP_DIR}/konsole		\
+	${MODKDE4_DEP_DIR}/kwalletmanager	\
+	${MODKDE4_DEP_DIR}/pim			\
+	${MODKDE4_DEP_DIR}/wallpapers		\
 	${MODKDE4_DEP_DIR}/workspace
 
 RUN_DEPENDS-extras = \

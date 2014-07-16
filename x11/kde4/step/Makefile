@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.4 2013/12/08 19:13:34 zhuk Exp $
+# $OpenBSD: Makefile,v 1.6 2014/07/10 19:55:27 zhuk Exp $
 
 COMMENT =	KDE interactive physics simulator
 DISTNAME =	step-${MODKDE4_VERSION}
+REVISION =	0
 
-WANTLIB =  c m pthread stdc++
+WANTLIB =  c m pthread
 WANTLIB += lib/qt4/QtDBus lib/qt4/QtGui lib/qt4/QtNetwork
 WANTLIB += lib/qt4/QtOpenGL lib/qt4/QtSvg lib/qt4/QtXml
 WANTLIB += ${KDE4LIB}/kdeui ${KDE4LIB}/khtml ${KDE4LIB}/kio ${KDE4LIB}/kjs

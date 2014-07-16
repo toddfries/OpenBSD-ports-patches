@@ -1,16 +1,16 @@
-# $OpenBSD: Makefile,v 1.9 2013/10/11 23:48:49 naddy Exp $
+# $OpenBSD: Makefile,v 1.11 2014/06/26 08:55:51 sthen Exp $
 
-COMMENT= 	locate install data per-module
+COMMENT=	locate install data per-module
 
 MODULES=	cpan
-DISTNAME=	File-ShareDir-1.00
-REVISION=	0
+DISTNAME=	File-ShareDir-1.102
 CATEGORIES=	devel
 
 # perl
 PERMIT_PACKAGE_CDROM=	Yes
 
-RUN_DEPENDS=	devel/p5-Params-Util \
-		devel/p5-Class-Inspector
+BUILD_DEPENDS=	${RUN_DEPENDS}
+RUN_DEPENDS=	devel/p5-Class-Inspector \
+		devel/p5-File-ShareDir-Install
 
 .include <bsd.port.mk>

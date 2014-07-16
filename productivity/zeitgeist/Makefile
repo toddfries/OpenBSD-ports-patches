@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.23 2014/04/28 14:45:13 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.25 2014/07/09 17:43:52 ajacoutot Exp $
 
 COMMENT =		event logging framework
 
 V =			0.9.14
 DISTNAME =		zeitgeist-${V}
 EPOCH =			0
-REVISION =		4
+REVISION =		5
 
 SHARED_LIBS +=	zeitgeist-2.0             0.0 # 0.0
 
@@ -32,7 +32,10 @@ EXTRACT_SUFX =		.tar.xz
 
 MODULES =		devel/gettext \
 			lang/python \
+			textproc/intltool \
 			x11/gnome
+
+USE_GMAKE =		Yes
 
 MODGNOME_TOOLS +=	gobject-introspection vala
 

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.113 2014/06/05 11:11:01 sthen Exp $
+# $OpenBSD: Makefile,v 1.117 2014/07/14 21:31:05 zhuk Exp $
 
 ONLY_FOR_ARCHS= amd64 i386
 
@@ -17,7 +17,7 @@ PKGNAME-java=	libreoffice-java-${VERSION}
 CATEGORIES=	editors productivity
 DPB_PROPERTIES=	parallel tag:kde3
 
-REVISION-main=	0
+REVISION-main=	2
 REVISION-kde=	0
 
 EPOCH=		0
@@ -164,7 +164,10 @@ MODGCC4_LANGS=	c++
 MODULES+=	lang/python \
 		devel/gettext
 
+# XXX can't use ${MODPY_DEFAULT_VERSION_3}, it specifically wants 3.3 and
+# will try (and fail) to build its own copy if not available.
 MODPY_VERSION=	3.3
+
 
 LIB_DEPENDS-main=x11/gtk+2 \
 		${MODPY_LIB_DEPENDS} \
@@ -331,15 +334,14 @@ PARALLEL_BUILD = No
 .if defined(MAKE_JOBS)
 NCPU=		${MAKE_JOBS}
 .elif ${FLAVOR:Mparallel}
-NCPU=		$$(expr $$(sysctl hw.ncpu + 1))
+NCPU!=		echo $$((`sysctl -n hw.ncpu` + 1))
 .else
 NCPU=		1
 .endif
 CONFIGURE_ARGS+=--with-parallelism=${NCPU}
 
 .if ${FLAVOR:Mdebug}
-CONFIGURE_ARGS+=--enable-debug \
-		--enable-symbols
+CONFIGURE_ARGS+=--enable-debug
 .endif
 
 MAKE_ENV+=	PYTHON="${MODPY_BIN}" verbose=f

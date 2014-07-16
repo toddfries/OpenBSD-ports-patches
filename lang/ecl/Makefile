@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2013/08/07 09:14:38 sthen Exp $
+# $OpenBSD: Makefile,v 1.23 2014/07/11 13:10:53 ajacoutot Exp $
 
 COMMENT =	embeddable common-lisp
 CATEGORIES =	lang
@@ -10,6 +10,8 @@ V =		13.5.1
 DISTNAME =	ecl-$V
 SHARED_LIBS +=	ecl	3.0
 SHARED_ONLY =	Yes
+
+REVISION =	1
 
 HOMEPAGE =	http://ecls.sourceforge.net/
 SUBST_VARS =	V
@@ -41,12 +43,11 @@ CONFIGURE_ENV +=	ETAGS=/usr/bin/true
 CONFIGURE_ARGS +=	--with-debug-cflags=-g
 .endif
 
-BUILD_DEPENDS += devel/boehm-gc,-atomic
-
 LIB_DEPENDS +=	devel/gmp \
-		devel/boehm-gc \
+		devel/boehm-gc,-main \
+		devel/boehm-gc,-atomic \
 		devel/libffi
 
-WANTLIB +=	c ffi gc gmp m pthread
+WANTLIB +=	atomic_ops c ffi gc gmp m pthread
 
 .include <bsd.port.mk>

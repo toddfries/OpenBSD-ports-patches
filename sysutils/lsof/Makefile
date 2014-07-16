@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.92 2013/08/06 18:43:15 naddy Exp $
+# $OpenBSD: Makefile,v 1.94 2014/07/03 15:19:17 ajacoutot Exp $
 
 COMMENT=	list information about open files
 
 VERSION=	4.87
 DISTNAME=	lsof_${VERSION}
 PKGNAME=	${DISTNAME:S/_/-/}
-REVISION=	3
+REVISION=	4
 CATEGORIES=	sysutils
 MASTER_SITES=	http://www.mirrorservice.org/sites/lsof.itap.purdue.edu/pub/tools/unix/lsof/ \
 		ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/ \
@@ -41,7 +41,7 @@ MAKE_FLAGS=	DEBUG="${CFLAGS}"
 CONFIGURE_STYLE= simple
 CONFIGURE_SCRIPT= Configure
 CONFIGURE_ARGS=	-n openbsd
-CONFIGURE_ENV=	LSOF_CC="${CC}"
+CONFIGURE_ENV=	LSOF_CC="${CC}" OPENBSD_SYS="${BSDSRCDIR}/sys"
 
 NO_TEST=	Yes
 
@@ -52,15 +52,8 @@ post-extract:
 	cd ${WRKDIST}/.. ; grep MD5.*tar README.${DISTNAME} | \
 		cksum -c - && tar -xf ${SRCBALL_NAME}.tar
 
-pre-configure:
-	@if [ ! -d /sys ]; then \
-	    echo ""; \
-	    echo "*** Error: Building this package requires the" ; \
-	    echo "*** kernel sources to be available under /sys" ; \
-	    echo ""; \
-	    exit 1; \
-	fi
 # XXX: CVS keyword found in patch
+pre-configure:
 	perl -pi -e 'print "#!/usr/bin/awk -f\n" if $$. == 1' \
 		${WRKSRC}/scripts/list_fields.awk
 

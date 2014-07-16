@@ -3,5 +3,7 @@ of the packages containing them. This is in a format suitable for use with
 locate(1), for instance through the convenience script 
 ${PREFIX}/bin/pkg_locate
 
-Flavor: 
-- src: also includes information from src and X sets
+The files from src and X are now in
+/usr/lib/locate/src.db
+and
+${X11BASE}/lib/locate/xorg.db

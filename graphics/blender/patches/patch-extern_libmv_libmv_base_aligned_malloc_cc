@@ -1,0 +1,22 @@
+$OpenBSD: patch-extern_libmv_libmv_base_aligned_malloc_cc,v 1.1 2014/07/03 14:41:48 pascal Exp $
+--- extern/libmv/libmv/base/aligned_malloc.cc.orig	Sun Jun 29 15:44:24 2014
++++ extern/libmv/libmv/base/aligned_malloc.cc	Sun Jun 29 15:45:16 2014
+@@ -21,7 +21,8 @@
+ #include "libmv/base/aligned_malloc.h"
+ #include "libmv/logging/logging.h"
+ 
+-#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__NetBSD__)
++#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && \
++	!defined(__OpenBSD__)
+ // Needed for memalign on Linux and _aligned_alloc on Windows.
+ #  ifdef FREE_WINDOWS
+ /* make sure _aligned_malloc is included */
+@@ -49,7 +50,7 @@ void *aligned_malloc(int size, int alignment) {
+   // they work natively with SSE types with no further work.
+   CHECK_EQ(alignment, 16);
+   return malloc(size);
+-#elif defined(__FreeBSD__) || defined(__NetBSD__)
++#elif defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+   void *result;
+ 
+   if (posix_memalign(&result, alignment, size)) {

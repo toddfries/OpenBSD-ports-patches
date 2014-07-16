@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.28 2014/04/23 20:14:40 brad Exp $
+# $OpenBSD: Makefile,v 1.30 2014/07/15 08:56:20 espie Exp $
 
 SHARED_ONLY =		Yes
 
 COMMENT =		CD/DVD creator
 
 DISTNAME =		k3b-1.0.4
-REVISION=		21
+REVISION=		22
 CATEGORIES =		multimedia
 
 SHARED_LIBS =		k3b	0.0	# 3.0
@@ -19,8 +19,8 @@ PERMIT_PACKAGE_CDROM =	Yes
 WANTLIB =  FLAC FLAC++ ICE SM X11 Xext Xfixes Xrender Xt
 WANTLIB += art_lgpl_2 avcodec avformat avutil bz2 c crypto
 WANTLIB += dvdread expat fam fontconfig freetype gsm idn jpeg
-WANTLIB += m mad mp3lame
-WANTLIB += mpcdec ogg orc-0.4 png pthread samplerate schroedinger-1.0
+WANTLIB += m mad mp3lame mpcdec
+WANTLIB += ogg opus orc-0.4 png pthread samplerate schroedinger-1.0
 WANTLIB += sndfile speex ssl stdc++ tag theoradec theoraenc util vorbis
 WANTLIB += vorbisenc vorbisfile vpx x264 xcb xvidcore z
 WANTLIB += ${KDE}/DCOP ${KDE}/artsc ${KDE}/kdecore ${KDE}/kdefx

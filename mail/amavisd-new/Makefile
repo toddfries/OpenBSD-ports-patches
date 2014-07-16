@@ -1,15 +1,14 @@
-# $OpenBSD: Makefile,v 1.33 2013/12/05 10:21:49 sthen Exp $
+# $OpenBSD: Makefile,v 1.36 2014/07/14 08:56:30 giovanni Exp $
 
 COMMENT=		interface between mailer MTA and content checkers
 
-DISTNAME=		amavisd-new-2.8.1
-REVISION=		0
+DISTNAME=		amavisd-new-2.9.1
 CATEGORIES=		mail security
 
 HOMEPAGE=		http://www.amavis.org/
 MAINTAINER=		Giovanni Bechis <giovanni@openbsd.org>
 
-# GPLv2
+# BSD / GPLv2
 PERMIT_PACKAGE_CDROM=	Yes
 
 MASTER_SITES=		${HOMEPAGE} \
@@ -27,9 +26,7 @@ RUN_DEPENDS=		archivers/arc \
 			archivers/ripole \
 			archivers/unzip \
 			archivers/zoo \
-			converters/p5-Convert-TNEF \
 			rpm2cpio-*|rpm-*:converters/rpm2cpio \
-			converters/p5-Convert-UUlib>=1.05 \
 			databases/p5-BerkeleyDB \
 			devel/p5-Net-Server \
 			devel/p5-IO-Multiplex \
@@ -37,6 +34,7 @@ RUN_DEPENDS=		archivers/arc \
 			mail/p5-Mail-DKIM>=0.31 \
 			mail/p5-MIME-tools \
 			net/net-snmp,-perl \
+			net/p5-IO-Socket-INET6 \
 			net/p5-IO-Socket-IP \
 			security/clamav \
 			sysutils/p5-Unix-Syslog

@@ -1,10 +1,10 @@
-# $OpenBSD: Makefile,v 1.17 2014/05/15 21:24:33 sthen Exp $
+# $OpenBSD: Makefile,v 1.20 2014/07/09 14:19:58 ajacoutot Exp $
 
-D=		20140506-r13398
+D=		20140626-r13480
 V=		3.5pre${D:C/-.*//}
-REVISION=	0
 DISTNAME=	squid-3.HEAD-$D
 EXTRACT_SUFX=	.tar.bz2
+REVISION=	0
 
 # future versions will be requiring c++11 support, so let's build
 # the devel version in squid/snapshot with a newer compiler to get
@@ -19,8 +19,6 @@ CONFIGURE_ARGS=	--disable-strict-error-checking \
 		--disable-arch-native \
 		--enable-ssl-crtd
 
-BUILD_DEPENDS+=	devel/cppunit
-# alternatively set ac_cv_path_CPPUNITCONFIG=false to disable
 LIB_DEPENDS+=	security/gnutls
 MODULES+=	devel/gettext
 WANTLIB+=	ffi gmp gnutls hogweed p11-kit tasn1 z
@@ -30,6 +28,9 @@ AUTOMAKE_VERSION?= 1.14
 BUILD_DEPENDS=	${MODGNU_AUTOCONF_DEPENDS} \
 		${MODGNU_AUTOMAKE_DEPENDS} \
 		devel/libtool
+
+# for stable version, replace with setting ac_cv_path_CPPUNITCONFIG=false
+BUILD_DEPENDS+=	devel/cppunit
 
 post-patch:
 	cd ${WRKSRC}; \

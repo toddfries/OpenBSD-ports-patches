@@ -1,13 +1,16 @@
-# $OpenBSD: Makefile,v 1.13 2014/05/14 17:51:40 juanfra Exp $
+# $OpenBSD: Makefile,v 1.16 2014/07/15 15:32:41 juanfra Exp $
 
-BROKEN-hppa =		error: struct Scheme_Cont has no member named buf (setjmpup.c)
+BROKEN-hppa =		segfault while racket compiles XFORMS (at xsrc)
+BROKEN-mips64el =	sigbus while racket compiles XFORMS (at xsrc)
+BROKEN-powerpc =	racket builds but does not pass the tests (with or without JIT)
 
 SHARED_ONLY =		Yes
-ONLY_FOR_ARCHS =	i386 amd64 hppa
+ONLY_FOR_ARCHS =	i386 amd64 hppa mips64el powerpc
 
 COMMENT =		multi-paradigm programming language
 
 V =			6.0.1
+REVISION =		2
 PKGNAME =		racket-$V
 DISTNAME =		racket-$V-src-builtpkgs
 

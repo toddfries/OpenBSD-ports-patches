@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.528 2014/05/23 21:32:47 zhuk Exp $
+# $OpenBSD: Makefile,v 1.533 2014/07/13 12:30:47 zhuk Exp $
 
      SUBDIR =
      SUBDIR += Xaw3d
@@ -134,6 +134,7 @@
      SUBDIR += kde4
      SUBDIR += kdirstat
      SUBDIR += keybinder
+     SUBDIR += keybinder3
      SUBDIR += keynav
      SUBDIR += klavaro
      SUBDIR += kmplayer
@@ -143,6 +144,8 @@
      SUBDIR += libdnd
      SUBDIR += libfm
      SUBDIR += libgdiplus
+     SUBDIR += libkscreen
+     SUBDIR += libqaccessibilityclient
      SUBDIR += libsexy
      SUBDIR += libxdg-basedir
      SUBDIR += lsw
@@ -173,6 +176,7 @@
      SUBDIR += openmotif
      SUBDIR += oroborus
      SUBDIR += osd_clock
+     SUBDIR += p5-AnyEvent-I3
      SUBDIR += p5-Clipboard
      SUBDIR += p5-Gtk2
      SUBDIR += p5-Gtk2-Ex-FormFactory
@@ -252,6 +256,7 @@
      SUBDIR += tango-icon-theme
      SUBDIR += tango-icon-theme-extras
      SUBDIR += tellico
+     SUBDIR += tellico-kde4
      SUBDIR += terminator
      SUBDIR += thewidgetfactory
      SUBDIR += tilda
@@ -364,6 +369,7 @@
      SUBDIR += xrestop
      SUBDIR += xrootconsole
      SUBDIR += xruskb
+     SUBDIR += xscope
      SUBDIR += xscreensaver
      SUBDIR += xscribble
      SUBDIR += xsel

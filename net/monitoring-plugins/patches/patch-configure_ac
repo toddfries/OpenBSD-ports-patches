@@ -1,0 +1,31 @@
+$OpenBSD: patch-configure_ac,v 1.1 2014/07/11 20:08:04 sthen Exp $
+--- configure.ac.orig	Tue Jun 24 14:10:09 2014
++++ configure.ac	Wed Jun 25 20:29:20 2014
+@@ -209,13 +209,13 @@ AC_ARG_WITH(pgsql,
+ 	ACX_HELP_STRING([--with-pgsql=DIR],
+ 		[sets path to pgsql installation]),
+ 	PGSQL=$withval,)
+-AC_CHECK_LIB(crypt,main)
+-if test "$ac_cv_lib_crypt_main" = "yes" -a "x$PGSQL" != "xno"; then
++AC_CHECK_LIB(crypto,main)
++if test "$ac_cv_lib_crypto_main" = "yes" -a "x$PGSQL" != "xno"; then
+   if test -n "$PGSQL"; then
+     LDFLAGS="$LDFLAGS -L$PGSQL/lib"
+     CPPFLAGS="$CPPFLAGS -I$PGSQL/include"
+   fi
+-  AC_CHECK_LIB(pq,PQsetdbLogin,,,-lcrypt)
++  AC_CHECK_LIB(pq,PQsetdbLogin,,,-lcrypto)
+   if test "$ac_cv_lib_pq_PQsetdbLogin" = "yes"; then
+     AC_CHECK_HEADERS(pgsql/libpq-fe.h)
+     AC_CHECK_HEADERS(postgresql/libpq-fe.h)
+@@ -227,8 +227,8 @@ if test "$ac_cv_lib_crypt_main" = "yes" -a "x$PGSQL" !
+       PGLIBS="-lpq -lcrypt"
+       PGINCLUDE="-I/usr/include/pgsql"
+     elif test  "$ac_cv_header_postgresql_libpq_fe_h" = "yes"; then
+-      PGLIBS="-L$PGSQL/lib -lpq -lcrypt"
+-      PGINCLUDE="-I/usr/include/postgresql"
++      PGLIBS="-L$PGSQL/lib -lpq -lcrypto"
++      PGINCLUDE="-I$PGSQL/include/postgresql"
+     elif test  "$ac_cv_header_libpq_fe_h" = "yes"; then
+       PGLIBS="-L$PGSQL/lib -lpq -lcrypt"
+       PGINCLUDE="-I$PGSQL/include"

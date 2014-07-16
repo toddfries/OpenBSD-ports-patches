@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.156 2014/05/06 17:55:59 jasper Exp $
+# $OpenBSD: Quirks.pm,v 1.161 2014/07/15 10:07:16 ajacoutot Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -26,14 +26,14 @@ package OpenBSD::Quirks;
 sub new
 {
 	my ($class, $version) = @_;
-	if ($version == 1) {
-		return OpenBSD::Quirks1->new;
+	if ($version == 1 || $version == 2) {
+		return OpenBSD::Quirks2->new;
 	} else {
 		return undef;
 	}
 }
 
-package OpenBSD::Quirks1;
+package OpenBSD::Quirks2;
 use Config;
 sub new
 {
@@ -350,6 +350,8 @@ my $stem_extensions = {
 	'nagios-plugins-ldap' => 'monitoring-plugins-ldap',
 	'nagios-plugins-mysql' => 'monitoring-plugins-mysql',
 	'nagios-plugins-pgsql' => 'monitoring-plugins-pgsql',
+	'kdnssd' => 'zeroconf-ioslave',
+	'kwallet' => 'kwalletmanager',
 };
 
 # reasons for obsolete packages
@@ -415,6 +417,9 @@ my $obsolete_reason = {
 	'p5-GSSAPI' => 2,
 	'opal' => 0,
 	'p5-GetLive' => 3,
+	'bonk' => 3,
+	'xmms-bonk' => 3,
+	'mailcrypt' => 0,
 };
 
 # ->is_base_system($handle, $state):
@@ -489,6 +494,26 @@ sub tweak_search
 		} else {
 			$l->[0]->add_stem($extra);
 		}
+	}
+}
+
+# list of
+#   cat/path => badspec
+my $cve = { 
+	'print/cups,-main' => 'cups-<1.7.4',
+};
+
+# ->check_security($path)
+#	return an insecure specification for the matching path
+#	e.g., you should update.
+
+sub check_security
+{
+	my ($self, $path) = @_;
+	if (defined $cve->{$path}) {
+		return $cve->{$path};
+	} else {
+		return undef;
 	}
 }
 

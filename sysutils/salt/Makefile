@@ -1,10 +1,11 @@
-# $OpenBSD: Makefile,v 1.11 2014/05/27 14:51:52 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.17 2014/07/15 15:49:37 ajacoutot Exp $
 
 # optional dependencies
-# https://github.com/saltstack/salt/blob/develop/doc/conf.py#L37
+# https://github.com/saltstack/salt/blob/develop/doc/conf.py#L42
 # libvirt-python
 # py-GitPython
 # py-django
+# py-libcloud
 # py-mako
 # py-mongo
 # py-mysql
@@ -15,9 +16,8 @@
 
 COMMENT =		remote execution and configuration management system
 
-MODPY_EGG_VERSION =	2014.1.4
+MODPY_EGG_VERSION =	2014.1.7
 DISTNAME =		salt-${MODPY_EGG_VERSION}
-REVISION =		2
 
 CATEGORIES =		sysutils net devel
 
@@ -39,6 +39,8 @@ RUN_DEPENDS =		net/py-msgpack \
 			textproc/py-yaml \
 			www/py-jinja2
 
+# for tests
+PORTHOME =		${WRKDIST}
 TEST_DEPENDS =		devel/py-pip \
 			sysutils/salt-testing
 
@@ -50,7 +52,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/conf/!(*.orig) \
 		${PREFIX}/share/examples/salt/
 
-# FAILED (total=816, skipped=179, passed=612, failures=16, errors=9)
+# FAILED (total=815, skipped=186, passed=590, failures=31, errors=8)
 do-test:
 	ln -sf ${LOCALBASE}/bin/pip-${MODPY_VERSION} ${WRKDIR}/bin/pip
 	@${MODPY_TEST_TARGET}

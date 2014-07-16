@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.75 2014/05/05 11:53:34 brad Exp $
+# $OpenBSD: Makefile,v 1.79 2014/07/14 09:17:57 zhuk Exp $
 
      SUBDIR =
      SUBDIR += atomicparsley
@@ -19,7 +19,9 @@
      SUBDIR += hdhomerun
      SUBDIR += imagination
      SUBDIR += k3b
+     SUBDIR += k3b-kde4
      SUBDIR += kaffeine
+     SUBDIR += kdenlive
      SUBDIR += kguitar
      SUBDIR += libaacs
      SUBDIR += libass
@@ -36,6 +38,7 @@
      SUBDIR += livestreamer
      SUBDIR += livestreamer-curses
      SUBDIR += lsdvd
+     SUBDIR += mediainfo
      SUBDIR += mediatomb
      SUBDIR += ming
      SUBDIR += minidlna
@@ -43,6 +46,7 @@
      SUBDIR += mjpegtools,quicktime
      SUBDIR += mkvtoolnix
      SUBDIR += mkvtoolnix,no_x11
+     SUBDIR += mlt
      SUBDIR += moovida
      SUBDIR += mpgtx
      SUBDIR += oggconvert
@@ -55,6 +59,7 @@
      SUBDIR += p5-Storable-AMF
      SUBDIR += phonon
      SUBDIR += phonon-backend
+     SUBDIR += qt-gstreamer
      SUBDIR += regionset
      SUBDIR += schroedinger
      SUBDIR += shrip

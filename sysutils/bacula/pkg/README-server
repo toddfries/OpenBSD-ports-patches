@@ -1,4 +1,4 @@
-$OpenBSD: README-server,v 1.9 2014/04/19 09:44:11 ajacoutot Exp $
+$OpenBSD: README-server,v 1.11 2014/07/10 13:09:07 ajacoutot Exp $
 
 +-----------------------------------------------------------------------
 | Running ${FULLPKGNAME} on OpenBSD
@@ -10,7 +10,7 @@ Also, the Director and Storage Daemons must be upgraded at the same
 time, but older File Daemons can be used with 5.2.x.
 
 The official Bacula documentation can be found at:
-    http://bacula.org/5.2.x-manuals/en/main/main/index.html
+    http://blog.bacula.org/documentation/documentation/
 
 Setting up the database for the Bacula Director
 ===============================================
@@ -74,6 +74,6 @@ rw mode by the "_bacula-sd" user (and/or the "_bacula" group).
 be accessible in rw mode by the "_bacula-sd" user (and/or the "_bacula"
 group); alternatively the "_bacula-sd" user can be added to the
 "operator" group instead.
-e.g. for an autochanger, add the following lines in rc.conf.local(5)
+e.g. for an autochanger, add the following lines in rc.conf.local(8)
 chgrp _bacula /dev/ch0
 chgrp _bacula /dev/nrst0

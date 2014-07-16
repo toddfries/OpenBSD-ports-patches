@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.268 2014/05/30 09:22:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.272 2014/07/12 16:37:05 espie Exp $
 
      SUBDIR =
      SUBDIR += apache-couchdb
@@ -24,7 +24,6 @@
      SUBDIR += hs-resource-pool
      SUBDIR += iodbc
      SUBDIR += jxplorer
-     SUBDIR += keximdb
      SUBDIR += kyotocabinet
      SUBDIR += lbdb
      SUBDIR += leveldb
@@ -40,6 +39,7 @@
      SUBDIR += mongodb
      SUBDIR += mydumper
      SUBDIR += mysql
+     SUBDIR += mysql-utilities
      SUBDIR += mysql-zrm
      SUBDIR += mysql2pgsql
      SUBDIR += mysqlcc
@@ -103,6 +103,7 @@
      SUBDIR += p5-DBIx-DataModel
      SUBDIR += p5-DBIx-Migration
      SUBDIR += p5-DBIx-SearchBuilder
+     SUBDIR += p5-DBIx-Simple
      SUBDIR += p5-DBIx-XHTML_Table
      SUBDIR += p5-DBM-Deep
      SUBDIR += p5-Data-Page
@@ -149,7 +150,6 @@
      SUBDIR += pgtcl
      SUBDIR += pgworksheet
      SUBDIR += pkglocatedb
-     SUBDIR += pkglocatedb,src
      SUBDIR += ports-readmes
      SUBDIR += ports-readmes-dancer
      SUBDIR += postgresql

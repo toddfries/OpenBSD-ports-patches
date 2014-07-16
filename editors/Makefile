@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.104 2013/11/09 14:09:38 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.106 2014/07/12 10:45:32 zhuk Exp $
 
      SUBDIR =
      SUBDIR += abiword
@@ -6,6 +6,7 @@
      SUBDIR += beav
      SUBDIR += beaver
      SUBDIR += bvi
+     SUBDIR += calligra
      SUBDIR += cooledit
      SUBDIR += cooledit,python
      SUBDIR += dhex
@@ -31,6 +32,7 @@
      SUBDIR += joe
      SUBDIR += jove
      SUBDIR += kile
+     SUBDIR += kile-kde4
      SUBDIR += kxmleditor
      SUBDIR += ldapvi
      SUBDIR += leafpad

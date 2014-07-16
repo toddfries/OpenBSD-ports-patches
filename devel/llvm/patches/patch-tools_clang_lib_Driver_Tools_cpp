@@ -1,11 +1,71 @@
-$OpenBSD: patch-tools_clang_lib_Driver_Tools_cpp,v 1.19 2014/05/29 00:23:36 brad Exp $
+$OpenBSD: patch-tools_clang_lib_Driver_Tools_cpp,v 1.21 2014/07/10 19:26:48 brad Exp $
+
+r211624
+Use appropriate default PIE settings for OpenBSD.
+
+r210883
+Use dwarf-2 by default on OpenBSD and FreeBSD.
 
 r209479
 Don't reduce the stack protector level given -fstack-protector.
 
 --- tools/clang/lib/Driver/Tools.cpp.orig	Sun Mar  2 22:03:41 2014
-+++ tools/clang/lib/Driver/Tools.cpp	Thu May 22 17:52:57 2014
-@@ -3197,9 +3197,10 @@ void Clang::ConstructJob(Compilation &C, const JobActi
++++ tools/clang/lib/Driver/Tools.cpp	Wed Jun 18 23:14:53 2014
+@@ -2261,6 +2261,27 @@ void Clang::ConstructJob(Compilation &C, const JobActi
+     }
+   }
+ 
++  // OpenBSD-specific defaults for PIE
++  if (getToolChain().getTriple().getOS() == llvm::Triple::OpenBSD) {
++    switch (getToolChain().getTriple().getArch()) {
++    case llvm::Triple::mips64:
++    case llvm::Triple::mips64el:
++    case llvm::Triple::sparc:
++    case llvm::Triple::x86:
++    case llvm::Triple::x86_64:
++      IsPICLevelTwo = false; // "-fpie"
++      break;
++
++    case llvm::Triple::ppc:
++    case llvm::Triple::sparcv9:
++      IsPICLevelTwo = true; // "-fPIE"
++      break;
++
++    default:
++      break;
++    }
++  }
++
+   // For the PIC and PIE flag options, this logic is different from the
+   // legacy logic in very old versions of GCC, as that logic was just
+   // a bug no one had ever fixed. This logic is both more rational and
+@@ -2696,8 +2717,10 @@ void Clang::ConstructJob(Compilation &C, const JobActi
+       // FIXME: we should support specifying dwarf version with
+       // -gline-tables-only.
+       CmdArgs.push_back("-gline-tables-only");
+-      // Default is dwarf-2 for darwin.
+-      if (getToolChain().getTriple().isOSDarwin())
++      // Default is dwarf-2 for Darwin, OpenBSD and FreeBSD.
++      const llvm::Triple &Triple = getToolChain().getTriple();
++      if (Triple.isOSDarwin() || Triple.getOS() == llvm::Triple::OpenBSD ||
++          Triple.getOS() == llvm::Triple::FreeBSD)
+         CmdArgs.push_back("-gdwarf-2");
+     } else if (A->getOption().matches(options::OPT_gdwarf_2))
+       CmdArgs.push_back("-gdwarf-2");
+@@ -2707,8 +2730,10 @@ void Clang::ConstructJob(Compilation &C, const JobActi
+       CmdArgs.push_back("-gdwarf-4");
+     else if (!A->getOption().matches(options::OPT_g0) &&
+              !A->getOption().matches(options::OPT_ggdb0)) {
+-      // Default is dwarf-2 for darwin.
+-      if (getToolChain().getTriple().isOSDarwin())
++      // Default is dwarf-2 for Darwin, OpenBSD and FreeBSD.
++      const llvm::Triple &Triple = getToolChain().getTriple();
++      if (Triple.isOSDarwin() || Triple.getOS() == llvm::Triple::OpenBSD ||
++          Triple.getOS() == llvm::Triple::FreeBSD)
+         CmdArgs.push_back("-gdwarf-2");
+       else
+         CmdArgs.push_back("-g");
+@@ -3197,9 +3222,10 @@ void Clang::ConstructJob(Compilation &C, const JobActi
                                 options::OPT_fstack_protector_all,
                                 options::OPT_fstack_protector_strong,
                                 options::OPT_fstack_protector)) {
@@ -19,7 +79,7 @@ Don't reduce the stack protector level given -fstack-protector.
        StackProtectorLevel = LangOptions::SSPStrong;
      else if (A->getOption().matches(options::OPT_fstack_protector_all))
        StackProtectorLevel = LangOptions::SSPReq;
-@@ -5743,6 +5744,7 @@ void openbsd::Link::ConstructJob(Compilation &C, const
+@@ -5743,6 +5769,7 @@ void openbsd::Link::ConstructJob(Compilation &C, const
                                         "/4.2.1"));
  
    Args.AddAllArgs(CmdArgs, options::OPT_L);

@@ -1,4 +1,4 @@
-$OpenBSD: user.list,v 1.226 2014/06/01 00:07:38 jturner Exp $
+$OpenBSD: user.list,v 1.232 2014/07/16 12:31:15 jca Exp $
 
 This file lists all users and groups that are created by ports or that
 users are encouraged to create after installing a port (these are marked
@@ -230,7 +230,7 @@ id  user		group		port options
 719 _puppetdb		_puppetdb	databases/puppetdb
 720 _lldpd		_lldpd		net/lldpd
 721 _dkimproxy		_dkimproxy	mail/dkimproxy
-722 _salt-master	_salt		sysutils/salt
+722 _salt		_salt		sysutils/salt
 723 _barman		_barman		databases/barman
 724 _gnome-initial-setup _gnome-initial-setup	x11/gnome/initial-setup
 725 _opengroupware	_opengroupware	www/opengroupware
@@ -242,3 +242,8 @@ id  user		group		port options
 731 _geoclue		_geoclue	geo/geoclue2
 732 _unifi		_unifi		net/unifi
 733 _pop3d		_pop3d		mail/pop3d
+734 			_icingacmd	net/icinga
+735 			_wireshark	net/wireshark
+736 _conserver		_conserver	comms/conserver
+737 _popa3d		_popa3d		mail/popa3d
+738 _dnsreflector	_dnsreflector	net/dnsreflector

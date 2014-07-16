@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.6 2014/01/20 19:08:10 zhuk Exp $
+# $OpenBSD: Makefile,v 1.8 2014/07/10 19:55:28 zhuk Exp $
 
 COMMENT =	extra KDE plasmoids
 DISTNAME =	kdeplasma-addons-${MODKDE4_VERSION}
@@ -12,7 +12,7 @@ SHARED_LIBS +=	plasmapotdprovidercore		51.0 # 1.0
 SHARED_LIBS +=	plasmaweather			51.0 # 4.7
 SHARED_LIBS +=	rtm				51.0 # 4.7
 
-WANTLIB =  c m pthread stdc++
+WANTLIB =  c m pthread
 WANTLIB += ICE SM X11 Xext Xrender Xtst
 WANTLIB += lib/qt4/QtDBus lib/qt4/QtDeclarative lib/qt4/QtGui
 WANTLIB += lib/qt4/QtNetwork lib/qt4/QtScript lib/qt4/QtSql lib/qt4/QtSvg

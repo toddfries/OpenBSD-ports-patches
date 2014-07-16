@@ -1,7 +1,8 @@
-# $OpenBSD: Makefile,v 1.60 2013/12/07 12:50:15 landry Exp $
+# $OpenBSD: Makefile,v 1.64 2014/07/12 22:09:13 landry Exp $
 
      SUBDIR =
      SUBDIR += akonadi
+     SUBDIR += akonadi-googledata
      SUBDIR += aqbanking
      SUBDIR += attica
      SUBDIR += baikal
@@ -19,10 +20,14 @@
      SUBDIR += gtg
      SUBDIR += homebank
      SUBDIR += impressive
+     SUBDIR += kmymoney
      SUBDIR += ledger
+     SUBDIR += libalkimia
+     SUBDIR += libgcal
      SUBDIR += libkfbapi
      SUBDIR += libkgapi
      SUBDIR += libqzeitgeist
+     SUBDIR += librcps
      SUBDIR += osmo
      SUBDIR += p5-Business-Tax-VAT-Validation
      SUBDIR += palm2ical
@@ -34,6 +39,7 @@
      SUBDIR += siag
      SUBDIR += sl
      SUBDIR += slideml
+     SUBDIR += taskd
      SUBDIR += taskjuggler
      SUBDIR += taskwarrior
      SUBDIR += tdl

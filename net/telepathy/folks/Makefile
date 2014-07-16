@@ -1,20 +1,20 @@
-# $OpenBSD: Makefile,v 1.69 2014/04/21 13:41:33 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.72 2014/07/09 18:27:57 jasper Exp $
 
 COMMENT=		people aggregation library
 
 GNOME_PROJECT=		folks
-GNOME_VERSION=		0.9.6
+GNOME_VERSION=		0.9.7.1
 # MODULE_VERSION in config.h
-API_V=			41
-REVISION=		2
+API_V=			42
 
-SHARED_LIBS +=  folks-telepathy           5.1 # 41.1
-SHARED_LIBS +=  folks                     5.4 # 41.1
-SHARED_LIBS +=  folks-eds                 1.1 # 41.1
+SHARED_LIBS +=  folks-telepathy           5.1 # 42.0
+SHARED_LIBS +=  folks                     5.4 # 42.0
+SHARED_LIBS +=  folks-eds                 1.1 # 42.0
+SHARED_LIBS +=  folks-dummy               0.0 # 42.0
 
 SUBST_VARS=		API_V
 
-HOMEPAGE=		${HOMEPAGE_TP:=Folks}
+HOMEPAGE=		https://wiki.gnome.org/Projects/Folks
 
 WANTLIB += c camel-1.2 db dbus-1 dbus-glib-1 ebackend-1.2 ebook-1.2
 WANTLIB += ebook-contacts-1.2 edata-book-1.2 edataserver-1.2 ffi
@@ -47,12 +47,7 @@ CONFIGURE_ARGS += 	--disable-ofono-backend
 CONFIGURE_ARGS +=	--disable-bluez-backend
 
 # https://git.gnome.org/browse/folks/commit/Makefile.am?id=8ebe13c457660de380521874a006425083151741
-CONFIGURE_ARGS += --disable-fatal-warnings
-
-# XXX our pkg-config(1) does not behave properly
-# g-ir-scanner <...> --include=Folks-0.6
-# Package folks was not found in the pkg-config search path
-MAKE_ENV=	PKG_CONFIG_PATH=${WRKBUILD}/folks
+CONFIGURE_ARGS += 	--disable-fatal-warnings
 
 post-install:
 	rm ${PREFIX}/lib/folks/${API_V}/backends/*/*.{a,la}

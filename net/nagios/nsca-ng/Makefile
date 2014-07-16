@@ -1,9 +1,9 @@
-# $OpenBSD: Makefile,v 1.6 2013/11/07 10:34:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.8 2014/07/15 22:25:21 sthen Exp $
 
 COMMENT-main=	server to accept passive check results for Nagios/Icinga
 COMMENT-client=	client to send passive check results to Nagios/Icinga
 
-V=		1.2
+V=		1.3
 DISTNAME=	nsca-ng-$V
 PKGNAME-main=	nsca-ng-$V
 PKGNAME-client=	nsca-ng-client-$V
@@ -16,17 +16,20 @@ MAINTAINER=	Stuart Henderson <sthen@openbsd.org>
 # BSD
 PERMIT_PACKAGE_CDROM=	Yes
 
-WANTLIB=	c crypto ev ssl
+WANTLIB=	c ev lib/eopenssl/crypto lib/eopenssl/ssl
 WANTLIB-main=	${WANTLIB} confuse
 
 MASTER_SITES=		https://www.nsca-ng.org/download/
 
-LIB_DEPENDS=		devel/libev
+LIB_DEPENDS=		devel/libev \
+			security/openssl
 LIB_DEPENDS-main=	${LIB_DEPENDS} \
 			devel/libconfuse
 
 CONFIGURE_STYLE=	gnu
 CONFIGURE_ARGS=		--enable-server
+CONFIGURE_ENV=		CPPFLAGS="-I${LOCALBASE}/include/eopenssl" \
+			LDFLAGS="-L${LOCALBASE}/lib/eopenssl -Wl,-rpath,${LOCALBASE}/lib/eopenssl"
 SEPARATE_BUILD=		Yes
 
 MULTI_PACKAGES=		-main -client

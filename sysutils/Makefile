@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.316 2014/06/05 15:40:45 sthen Exp $
+# $OpenBSD: Makefile,v 1.319 2014/07/10 13:11:11 bentley Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -10,9 +10,7 @@
      SUBDIR += augeas
      SUBDIR += autossh
      SUBDIR += backuppc
-     SUBDIR += bacula,mysql
-     SUBDIR += bacula,pgsql
-     SUBDIR += bacula,sqlite3
+     SUBDIR += bacula
      SUBDIR += bchunk
      SUBDIR += binwalk
      SUBDIR += bubblemon-dockapp
@@ -35,6 +33,7 @@
      SUBDIR += curlftpfs
      SUBDIR += cyphertite
      SUBDIR += d-feet
+     SUBDIR += dateutils
      SUBDIR += dcfldd
      SUBDIR += dcled
      SUBDIR += ddrescue
@@ -161,6 +160,7 @@
      SUBDIR += ranger
      SUBDIR += ranval
      SUBDIR += rdiff-backup
+     SUBDIR += relayd-updateconf
      SUBDIR += resmon
      SUBDIR += rpl
      SUBDIR += rsyslog

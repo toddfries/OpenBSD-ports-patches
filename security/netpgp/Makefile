@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.3 2013/03/21 08:48:53 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.5 2014/07/12 11:28:23 sthen Exp $
 
 COMMENT =		BSD-licensed PGP implementation
 
-DISTNAME =		netpgp-20101107
+DISTNAME =		netpgp-20140220
 
-SHARED_LIBS +=		mj                        0.0 # 0.0
-SHARED_LIBS +=		netpgp                    0.0 # 0.0
+SHARED_LIBS +=		mj                        1.0 # 0.0
+SHARED_LIBS +=		netpgp                    1.0 # 0.0
 
 CATEGORIES =		security
 
@@ -18,7 +18,8 @@ PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB +=		bz2 c crypto z
 
-MASTER_SITES =		ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/LOCAL_PORTS/
+MASTER_SITES =		http://ftp.netbsd.org/pub/pkgsrc/distfiles/LOCAL_PORTS/ \
+			ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/LOCAL_PORTS/
 
 LIB_DEPENDS =		archivers/bzip2
 TEST_DEPENDS =	devel/autoconf/2.68

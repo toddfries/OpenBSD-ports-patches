@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.37 2014/04/02 09:36:10 jasper Exp $
+# $OpenBSD: Makefile,v 1.40 2014/07/09 17:43:52 ajacoutot Exp $
 
 COMMENT=	brain teaser game
 
-DISTNAME=	gbrainy-2.2.2
+DISTNAME=	gbrainy-2.2.3
 EPOCH=		0
+REVISION=	0
 
 CATEGORIES=	games
 
@@ -20,8 +21,11 @@ EXTRACT_SUFX=	.tar.gz
 MODULES=	lang/mono \
 		x11/gnome
 
+USE_GMAKE=	Yes
+
 BUILD_DEPENDS=	devel/mono-addins \
 		shells/bash \
+		textproc/intltool \
 		x11/gnome/mono-gnome \
 		x11/gnome/librsvg
 

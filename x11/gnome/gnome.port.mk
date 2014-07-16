@@ -1,4 +1,4 @@
-# $OpenBSD: gnome.port.mk,v 1.85 2014/04/08 17:25:35 ajacoutot Exp $
+# $OpenBSD: gnome.port.mk,v 1.88 2014/07/09 17:45:51 ajacoutot Exp $
 #
 # Module for GNOME related ports
 
@@ -9,33 +9,32 @@ HOMEPAGE?=		https://wiki.gnome.org/
 MASTER_SITES?=		${MASTER_SITE_GNOME:=sources/${GNOME_PROJECT}/${GNOME_VERSION:C/^([0-9]+\.[0-9]+).*/\1/}/}
 EXTRACT_SUFX?=		.tar.xz
 CATEGORIES+=		x11/gnome
-.endif
-
-.if ${NO_BUILD:L} == "no"
+.    if ${NO_BUILD:L} == "no"
 MODULES+=		textproc/intltool
-.   if defined(CONFIGURE_STYLE) && ${CONFIGURE_STYLE:Mgnu}
-        CONFIGURE_ARGS += ${CONFIGURE_SHARED}
-      # https://mail.gnome.org/archives/desktop-devel-list/2011-September/msg00064.html
-.     if !defined(AUTOCONF_VERSION) && !defined(AUTOMAKE_VERSION)
-          CONFIGURE_ARGS += --disable-maintainer-mode
-.     endif
-        # If a port needs extra CPPFLAGS, they can just set MODGNOME_CPPFLAGS
-        # to the desired value, like -I${X11BASE}/include
-        _MODGNOME_cppflags ?= CPPFLAGS="-I${LOCALBASE}/include ${MODGNOME_CPPFLAGS}"
-        _MODGNOME_ldflags ?= LDFLAGS="-L${LOCALBASE}/lib ${MODGNOME_LDFLAGS}"
-        CONFIGURE_ENV += ${_MODGNOME_cppflags} \
-                         ${_MODGNOME_ldflags}
-        # If one of these tools is found at configure stage, it might be used, no
-        # matter whether we use --disable-gtk-doc or not.
-.       if !defined(MODGNOME_TOOLS) || defined(MODGNOME_TOOLS) && ! ${MODGNOME_TOOLS:Mgtk-doc}
-            CONFIGURE_ENV += ac_cv_path_GTKDOC_CHECK="" \
-                             ac_cv_path_GTKDOC_REBASE="" \
-                             ac_cv_path_GTKDOC_MKPDF=""
-.       endif
-.   endif
+USE_GMAKE?=		Yes
+.    endif
 .endif
 
-USE_GMAKE?=		Yes
+.if ${CONFIGURE_STYLE:Mgnu} || ${CONFIGURE_STYLE:Msimple}
+     CONFIGURE_ARGS += ${CONFIGURE_SHARED}
+     # https://mail.gnome.org/archives/desktop-devel-list/2011-September/msg00064.html
+.    if !defined(AUTOCONF_VERSION) && !defined(AUTOMAKE_VERSION)
+         CONFIGURE_ARGS += --disable-maintainer-mode
+.    endif
+     # If a port needs extra CPPFLAGS, they can just set MODGNOME_CPPFLAGS
+     # to the desired value, like -I${X11BASE}/include
+     _MODGNOME_cppflags ?= CPPFLAGS="-I${LOCALBASE}/include ${MODGNOME_CPPFLAGS}"
+     _MODGNOME_ldflags ?= LDFLAGS="-L${LOCALBASE}/lib ${MODGNOME_LDFLAGS}"
+     CONFIGURE_ENV += ${_MODGNOME_cppflags} \
+                      ${_MODGNOME_ldflags}
+     # If one of these tools is found at configure stage, it might be used, no
+     # matter whether we use --disable-gtk-doc or not.
+.    if !defined(MODGNOME_TOOLS) || defined(MODGNOME_TOOLS) && ! ${MODGNOME_TOOLS:Mgtk-doc}
+         CONFIGURE_ENV += ac_cv_path_GTKDOC_CHECK="" \
+                          ac_cv_path_GTKDOC_REBASE="" \
+                          ac_cv_path_GTKDOC_MKPDF=""
+.    endif
+.endif
 
 # Use MODGNOME_TOOLS to indicate certain tools are needed for building bindings
 # or for ensuring documentation is available. If an option is not set, it's
@@ -122,9 +121,11 @@ ERRORS += "Fatal: unknown MODGNOME_TOOLS option: ${_t}\n(not in ${_VALID_TOOLS})
 .   endif
 .endif
 
+.if ${CONFIGURE_STYLE:Mgnu} || ${CONFIGURE_STYLE:Msimple}
 CONFIGURE_ARGS+=${MODGNOME_CONFIGURE_ARGS_gi} \
 		${MODGNOME_CONFIGURE_ARGS_gtkdoc} \
 		${MODGNOME_CONFIGURE_ARGS_vala}
+.endif
 
 .if defined(MODGNOME_BUILD_DEPENDS)
 BUILD_DEPENDS+=		${MODGNOME_BUILD_DEPENDS}

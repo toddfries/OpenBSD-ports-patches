@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.inc,v 1.11 2013/11/25 04:34:27 william Exp $
+# $OpenBSD: Makefile.inc,v 1.13 2014/06/28 20:31:10 kili Exp $
 
 COMMENT=	robust and small HTTP server and mail proxy server
 
@@ -74,9 +74,9 @@ CONFIGURE_ARGS+=	--add-module=${WRKDIR}/nginx_upstream_check_module-master
 NGX_UPSTREAM_CHECK_PATCH= check_1.2.6+.patch
 
 .if ${FLAVOR:Mpassenger}
-CONFIGURE_ARGS+=	--add-module=${LOCALBASE}/lib/phusion-passenger19/ext/nginx
-BUILD_DEPENDS+=		ruby19-passenger-*:www/ruby-passenger,-main
-RUN_DEPENDS+=		ruby-passenger-*|ruby19-passenger-*:www/ruby-passenger,-main
+CONFIGURE_ARGS+=	--add-module=${LOCALBASE}/lib/phusion-passenger20/ext/nginx
+BUILD_DEPENDS+=		ruby20-passenger-*:www/ruby-passenger,-main
+RUN_DEPENDS+=		ruby-passenger-*|ruby19-passenger-*|ruby20-passenger-*|ruby21-passenger-*:www/ruby-passenger,-main
 WANTLIB+=		m pthread stdc++
 .endif
 

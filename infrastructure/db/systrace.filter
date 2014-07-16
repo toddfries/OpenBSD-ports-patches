@@ -94,6 +94,7 @@
 	native-futimens: permit
 	native-getdents: permit
 	native-getegid: permit
+	native-getentropy: permit
 	native-geteuid: permit
 	native-getfsstat: permit
 	native-getgid: permit
@@ -136,6 +137,8 @@
 	native-listen: permit
 	native-lseek: permit
 	native-madvise: permit
+	native-mincore: permit
+	native-minherit: permit
 	native-mknod: filename match "/tmp" then permit
 	native-mknod: filename match "/var/tmp" then permit
 	native-mknod: filename match "${TMPDIR}" then permit
@@ -144,7 +147,6 @@
 	native-mknodat: filename match "/var/tmp" then permit
 	native-mknodat: filename match "${TMPDIR}" then permit
 	native-mknodat: filename match "${WRKDIR}" then permit
-	native-mincore: permit
 	native-mlock: permit
 	native-mlockall: permit
 	native-mmap: permit
@@ -193,6 +195,7 @@
 	native-sendmsg: sockaddr match "${TMPDIR}" then permit
 	native-sendmsg: sockaddr match "${WRKDIR}" then permit
 	native-sendmsg: sockaddr match "/<non-existent filename>: *" then deny[enoent]
+	native-sendsyslog: permit
 	native-sendto: permit
 	native-setegid: permit
 	native-setgid: permit

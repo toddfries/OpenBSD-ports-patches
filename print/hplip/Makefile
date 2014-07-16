@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.113 2014/04/21 12:23:22 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.115 2014/06/17 08:51:18 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
@@ -9,7 +9,7 @@ COMMENT-hpcups=		HP native CUPS driver
 COMMENT-hpijs=		HP ghostscript driver (spooler independent)
 COMMENT-gui=		HPLIP graphical tools
 
-V=			3.14.4
+V=			3.14.6
 DISTNAME=		hplip-${V}
 SUBST_VARS=		V
 
@@ -19,10 +19,6 @@ PKGNAME-hpaio=		hpaio-${V}
 PKGNAME-hpcups=		hpcups-${V}
 PKGNAME-hpijs=		hpijs-${V}
 PKGNAME-gui=		hplip-gui-${V}
-
-REVISION-main=		0
-REVISION-hpaio=		0
-REVISION-hpcups=	0
 
 SHARED_LIBS +=  hpmud		2.0 # 0.6
 SHARED_LIBS +=  hpip		2.0 # 0.1
@@ -165,7 +161,10 @@ pre-configure:
 		${WRKSRC}/fax/backend/hpfax.py \
 		${WRKSRC}/base/codes.py \
 		${WRKSRC}/base/g.py \
+		${WRKSRC}/base/queues.py \
 		${WRKSRC}/base/services.py \
+		${WRKSRC}/base/utils.py \
+		${WRKSRC}/common/utils.c \
 		${WRKSRC}/prnt/cups.py \
 		${WRKSRC}/installer/core_install.py \
 		${WRKSRC}/doc/upgrading.html \
@@ -180,7 +179,8 @@ pre-configure:
 		${WRKSRC}/setup.py \
 		${WRKSRC}/ui4/nodevicesdialog.py \
 		${WRKSRC}/ui/devmgr4.py \
-		${WRKSRC}/ui/nodevicesform.py
+		${WRKSRC}/ui/nodevicesform.py \
+		${WRKSRC}/logcapture.py
 
 post-install:
 	${SUBST_CMD} -o ${SHAREOWN} -g ${SHAREGRP} -c ${FILESDIR}/hplip.state \

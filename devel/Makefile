@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1230 2014/05/30 09:22:21 sthen Exp $
+# $OpenBSD: Makefile,v 1.1237 2014/07/15 18:12:27 giovanni Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -312,6 +312,8 @@
      SUBDIR += json-c
      SUBDIR += json-glib
      SUBDIR += kdbg
+     SUBDIR += kdevelop
+     SUBDIR += kdevplatform
      SUBDIR += kdiff3
      SUBDIR += kyua-cli
      SUBDIR += kyua-testers
@@ -354,6 +356,7 @@
      SUBDIR += libguess
      SUBDIR += libhid
      SUBDIR += libidn
+     SUBDIR += libinotify
      SUBDIR += libio
      SUBDIR += libivykis
      SUBDIR += libixp
@@ -685,6 +688,7 @@
      SUBDIR += p5-Devel-ebug
      SUBDIR += p5-Devel-ptkdb
      SUBDIR += p5-Device-USB
+     SUBDIR += p5-Dir-Self
      SUBDIR += p5-Directory-Scratch
      SUBDIR += p5-Dist-CheckConflicts
      SUBDIR += p5-EV
@@ -733,6 +737,7 @@
      SUBDIR += p5-File-Remove
      SUBDIR += p5-File-RsyncP
      SUBDIR += p5-File-ShareDir
+     SUBDIR += p5-File-ShareDir-Install
      SUBDIR += p5-File-Slurp
      SUBDIR += p5-File-Sync
      SUBDIR += p5-File-Tail
@@ -1012,6 +1017,7 @@
      SUBDIR += p5-Test-Memory-Cycle
      SUBDIR += p5-Test-MockModule
      SUBDIR += p5-Test-MockObject
+     SUBDIR += p5-Test-MockSleep
      SUBDIR += p5-Test-MockTime
      SUBDIR += p5-Test-Most
      SUBDIR += p5-Test-NoTabs
@@ -1035,6 +1041,7 @@
      SUBDIR += p5-Test-TrailingSpace
      SUBDIR += p5-Test-Trap
      SUBDIR += p5-Test-URI
+     SUBDIR += p5-Test-Without-Module
      SUBDIR += p5-Test-Unit
      SUBDIR += p5-Test-WWW-Mechanize
      SUBDIR += p5-Test-WWW-Mechanize-Catalyst
@@ -1089,6 +1096,9 @@
      SUBDIR += p5-YAML-Syck
      SUBDIR += p5-YAML-Tiny
      SUBDIR += p5-YAML-XS
+     SUBDIR += p5-ZMQ
+     SUBDIR += p5-ZMQ-Constants
+     SUBDIR += p5-ZMQ-LibZMQ3
      SUBDIR += p5-accessors
      SUBDIR += p5-aliased
      SUBDIR += p5-autobox
@@ -1147,11 +1157,13 @@
      SUBDIR += py-buildbot
      SUBDIR += py-buildslave
      SUBDIR += py-bytecodeassembler
+     SUBDIR += py-cffi
      SUBDIR += py-cheetah
      SUBDIR += py-clint
      SUBDIR += py-configobj
      SUBDIR += py-country
      SUBDIR += py-coverage
+     SUBDIR += py-cparser
      SUBDIR += py-dateutil
      SUBDIR += py-decorator
      SUBDIR += py-decoratortools

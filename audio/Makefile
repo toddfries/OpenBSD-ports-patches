@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.333 2014/05/28 22:17:46 jeremy Exp $
+# $OpenBSD: Makefile,v 1.335 2014/07/06 17:29:44 naddy Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -18,7 +18,6 @@
      SUBDIR += aumix
      SUBDIR += beets
      SUBDIR += bladeenc
-     SUBDIR += bonk
      SUBDIR += calf
      SUBDIR += caps-plugins
      SUBDIR += cd-discid
@@ -196,6 +195,7 @@
      SUBDIR += py-eyed3
      SUBDIR += py-id3
      SUBDIR += py-last
+     SUBDIR += py-last,python3
      SUBDIR += py-mpd
      SUBDIR += py-mpd2
      SUBDIR += py-mpd2,python3
@@ -280,7 +280,6 @@
      SUBDIR += xmix
      SUBDIR += xmmix
      SUBDIR += xmms
-     SUBDIR += xmms-bonk
      SUBDIR += xmms-flac
      SUBDIR += xmms-fmradio
      SUBDIR += xmms-mad

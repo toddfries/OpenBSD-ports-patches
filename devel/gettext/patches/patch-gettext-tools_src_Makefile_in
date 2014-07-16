@@ -1,7 +1,13 @@
-$OpenBSD: patch-gettext-tools_src_Makefile_in,v 1.5 2013/01/21 22:08:52 naddy Exp $
---- gettext-tools/src/Makefile.in.orig	Tue Dec 25 06:33:34 2012
-+++ gettext-tools/src/Makefile.in	Wed Jan 16 23:06:10 2013
-@@ -1869,7 +1869,7 @@ urlget_SOURCES = urlget.c
+$OpenBSD: patch-gettext-tools_src_Makefile_in,v 1.7 2014/07/10 22:41:11 naddy Exp $
+
+Use standard shared library versioning.
+
+Do not remove static library after building.  
+This was also a race if MAKE_JOBS > 1.
+
+--- gettext-tools/src/Makefile.in.orig	Tue Jun 10 07:42:50 2014
++++ gettext-tools/src/Makefile.in	Thu Jul 10 23:27:04 2014
+@@ -2004,7 +2004,7 @@ urlget_SOURCES = urlget.c
  # Need @LTLIBINTL@ because many source files use gettext().
  # Need @LTLIBICONV@ because po-charset.c, po-lex.c, msgl-iconv.c, write-po.c
  # use iconv().
@@ -9,4 +15,13 @@ $OpenBSD: patch-gettext-tools_src_Makefile_in,v 1.5 2013/01/21 22:08:52 naddy Ex
 +libgettextsrc_la_LDFLAGS = \
  	../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ \
  	@LTLIBICONV@ -lc -no-undefined $(am__append_2)
+ libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS) $(am__append_3)
+@@ -3372,7 +3372,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIB
  
+ 
+ # No need to install libgettextsrc.a, except on AIX.
+-install-exec-local: install-libLTLIBRARIES install-exec-clean
++install-exec-local: install-libLTLIBRARIES
+ install-exec-clean:
+ 	case "@host_os@" in \
+ 	  aix*) ;; \
