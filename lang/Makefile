@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.159 2014/03/30 00:01:14 jturner Exp $
+# $OpenBSD: Makefile,v 1.161 2014/06/02 19:47:04 juanfra Exp $
 
      SUBDIR =
      SUBDIR += STk
@@ -50,7 +50,9 @@
      SUBDIR += librep
      SUBDIR += lua
      SUBDIR += luajit
+     SUBDIR += luajit,lua52
      SUBDIR += mawk
+     SUBDIR += moarvm
      SUBDIR += mono
      SUBDIR += mono-basic
      SUBDIR += myhdl

@@ -1,42 +1,58 @@
-# $OpenBSD: Makefile,v 1.5 2013/12/27 10:19:30 landry Exp $
+# $OpenBSD: Makefile,v 1.11 2014/05/27 14:51:52 ajacoutot Exp $
 
-COMMENT =	remote execution and configuration management system
+# optional dependencies
+# https://github.com/saltstack/salt/blob/develop/doc/conf.py#L37
+# libvirt-python
+# py-GitPython
+# py-django
+# py-mako
+# py-mongo
+# py-mysql
+# py-openssl
+# py-redis
+# py-requests
+# rabbitmq
 
-MODPY_EGG_VERSION =	0.17.4
-DISTNAME =	salt-${MODPY_EGG_VERSION}
+COMMENT =		remote execution and configuration management system
 
-CATEGORIES =	sysutils net devel
+MODPY_EGG_VERSION =	2014.1.4
+DISTNAME =		salt-${MODPY_EGG_VERSION}
+REVISION =		2
 
-HOMEPAGE =	http://saltstack.org/
+CATEGORIES =		sysutils net devel
+
+HOMEPAGE =		http://saltstack.org/
+
+MAINTAINER =		Antoine Jacoutot <ajacoutot@openbsd.org>
 
 # Apache 2.0
 PERMIT_PACKAGE_CDROM =	Yes
 
-MASTER_SITES =	${MASTER_SITE_PYPI:=s/salt/}
+MASTER_SITES =		${MASTER_SITE_PYPI:=s/salt/}
 
-MODULES =	lang/python
-RUN_DEPENDS =	net/py-zmq \
-		net/py-msgpack \
-		www/py-jinja2 \
-		security/py-M2Crypto \
-		security/py-crypto \
-		textproc/py-yaml
+MODULES =		lang/python
 
-TEST_DEPENDS =	devel/py-pip \
-		sysutils/salt-testing
+RUN_DEPENDS =		net/py-msgpack \
+			net/py-zmq \
+			security/py-M2Crypto \
+			security/py-crypto \
+			textproc/py-yaml \
+			www/py-jinja2
 
-#FAILED (total=569, skipped=33, passed=511, failures=16, errors=9) 
-do-test:
-	ln -sf ${LOCALBASE}/bin/pip-${MODPY_VERSION} ${WRKDIR}/bin/pip
-	@${MODPY_TEST_TARGET}
+TEST_DEPENDS =		devel/py-pip \
+			sysutils/salt-testing
+
+pre-configure:
+	perl -pi -e 's,share/man,man,g' ${WRKSRC}/setup.py
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/salt/
-	${INSTALL_DATA} ${WRKSRC}/conf/master \
-		${PREFIX}/share/examples/salt/master.sample
-	${INSTALL_DATA} ${WRKSRC}/conf/minion \
-		${PREFIX}/share/examples/salt/minion.sample
+	${INSTALL_DATA} ${WRKSRC}/conf/!(*.orig) \
+		${PREFIX}/share/examples/salt/
 
-# devel/py-gitpython for fileserver backend ?
+# FAILED (total=816, skipped=179, passed=612, failures=16, errors=9)
+do-test:
+	ln -sf ${LOCALBASE}/bin/pip-${MODPY_VERSION} ${WRKDIR}/bin/pip
+	@${MODPY_TEST_TARGET}
 
 .include <bsd.port.mk>

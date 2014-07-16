@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.844 2014/05/01 20:19:52 sthen Exp $
+# $OpenBSD: Makefile,v 1.846 2014/05/27 09:59:16 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += GeoIP
@@ -158,6 +158,7 @@
      SUBDIR += irssi
      SUBDIR += irssi,socks
      SUBDIR += irssi-icb
+     SUBDIR += irssi-otr
      SUBDIR += irssi-silc
      SUBDIR += irssi-xmpp
      SUBDIR += isc-bind
@@ -478,6 +479,7 @@
      SUBDIR += py-impacket
      SUBDIR += py-ipaddr
      SUBDIR += py-irclib
+     SUBDIR += py-libcloud
      SUBDIR += py-libpcap
      SUBDIR += py-medusa
      SUBDIR += py-msgpack

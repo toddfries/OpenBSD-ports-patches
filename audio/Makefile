@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.327 2014/05/12 16:06:46 benoit Exp $
+# $OpenBSD: Makefile,v 1.333 2014/05/28 22:17:46 jeremy Exp $
 
      SUBDIR =
      SUBDIR += abcde
@@ -16,6 +16,7 @@
      SUBDIR += audacious-plugins
      SUBDIR += audacity
      SUBDIR += aumix
+     SUBDIR += beets
      SUBDIR += bladeenc
      SUBDIR += bonk
      SUBDIR += calf
@@ -152,6 +153,7 @@
      SUBDIR += opennap
      SUBDIR += opus
      SUBDIR += opus-tools
+     SUBDIR += opusfile
      SUBDIR += p5-Audio-CD
      SUBDIR += p5-Audio-FLAC-Header
      SUBDIR += p5-Audio-M4P
@@ -186,9 +188,11 @@
      SUBDIR += potamus
      SUBDIR += pulseaudio
      SUBDIR += puddletag
+     SUBDIR += py-acoustid
      SUBDIR += py-ao
      SUBDIR += py-audio
      SUBDIR += py-cddb
+     SUBDIR += py-discogs-client
      SUBDIR += py-eyed3
      SUBDIR += py-id3
      SUBDIR += py-last
@@ -205,6 +209,7 @@
      SUBDIR += py-xmms
      SUBDIR += pykaraoke
      SUBDIR += pympd
+     SUBDIR += quodlibet
      SUBDIR += rhythmbox
      SUBDIR += rioutil
      SUBDIR += rplay
@@ -217,6 +222,10 @@
      SUBDIR += ruby-sonos,ruby19
      SUBDIR += ruby-sonos,ruby20
      SUBDIR += ruby-sonos,ruby21
+     SUBDIR += ruby-taglib,ruby18
+     SUBDIR += ruby-taglib,ruby19
+     SUBDIR += ruby-taglib,ruby20
+     SUBDIR += ruby-taglib,ruby21
      SUBDIR += ruby-vorbis_comment,ruby18
      SUBDIR += ruby-vorbis_comment,ruby19
      SUBDIR += ruby-vorbis_comment,ruby20

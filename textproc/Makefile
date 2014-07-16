@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.411 2014/05/14 10:06:39 sthen Exp $
+# $OpenBSD: Makefile,v 1.413 2014/05/28 22:17:46 jeremy Exp $
 
      SUBDIR =
      SUBDIR += TclXML
@@ -72,6 +72,7 @@
      SUBDIR += hyperestraier
      SUBDIR += icu4c
      SUBDIR += idiff
+     SUBDIR += igor
      SUBDIR += iksemel
      SUBDIR += info2html
      SUBDIR += intltool
@@ -335,6 +336,10 @@
      SUBDIR += ruby-classifier
      SUBDIR += ruby-fastercsv,ruby18
      SUBDIR += ruby-fastri,ruby18
+     SUBDIR += ruby-fast_xs,ruby18
+     SUBDIR += ruby-fast_xs,ruby19
+     SUBDIR += ruby-fast_xs,ruby20
+     SUBDIR += ruby-fast_xs,ruby21
      SUBDIR += ruby-fast-stemmer,ruby18
      SUBDIR += ruby-fast-stemmer,ruby19
      SUBDIR += ruby-fast-stemmer,ruby20

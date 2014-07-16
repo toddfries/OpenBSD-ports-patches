@@ -1,11 +1,11 @@
-# $OpenBSD: Makefile,v 1.229 2014/05/12 13:40:35 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.231 2014/06/09 09:12:09 ajacoutot Exp $
 
 SHARED_ONLY=		Yes
 
 COMMENT=		integrated email and PIM software for GNOME
 
 GNOME_PROJECT=		evolution
-GNOME_VERSION=		3.12.2
+GNOME_VERSION=		3.12.3
 
 # NOTE: when EVO_VERSION changes, increment accordingly and bump:
 # mail/evolution-ews
@@ -19,7 +19,7 @@ CATEGORIES=		mail
 MAINTAINER=		Jasper Lievisse Adriaanse <jasper@openbsd.org>, \
 			Antoine Jacoutot <ajacoutot@openbsd.org>
 
-# # GPLv2+ - LGPLv2+ - OpenLDAP license - GFDL 1.1
+# GPLv2+ - LGPLv2+ - OpenLDAP license - GFDL 1.1
 PERMIT_PACKAGE_CDROM=	Yes
 
 WANTLIB += atk-1.0 c cairo cairo-gobject camel-1.2 canberra canberra-gtk3
